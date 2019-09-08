@@ -1,0 +1,160 @@
+Main:
+  prefix: '&7[&3ODV&7] '
+  projectname: ODV
+  projectnameColorcode: '&3'
+  supportPluginAds: false
+  scoreboard: true
+  nametags: true
+  playTime: -1
+  dailyBackups: false
+  unregisteredPlayerJoin: true
+  removeHitDelay: true
+OfflineVillager:
+  enableOfflineVillager: false
+Backpacks:
+  allowBackpacks: false
+  backpackSize: 54
+  allowTeamAccess: true
+Protections:
+  joinProtectionTime: 10
+  canWalkOnJoinProtection: false
+  startperiodProtectiontime: -1
+Serverlist:
+  changeMotd: true
+  fakeMaxSlots: -1
+Teams:
+  friendlyFire: true
+  teamChatTrigger: '#'
+  teamRequests: true
+  teamRequestExpiretime: 30
+  teamRequestMaxTeamMembers: 2
+  teamRequestMaxTeamnameLength: 10
+JoinSystems:
+  ignoreJoinSystemsAsOP: true
+  resetSessionHour: 1
+  timeJoinHours: -1
+  sessionPerDay: -1
+  sessionPerDayAddSessions: false
+  preProduceAmount: -1
+  onlyJoinBetweenHours: false
+  onlyJoinBetweenHoursHour1: 14
+  onlyJoinBetweenHoursHour2: 16
+  kickAtServerClose: false
+Death:
+  deathSound: false
+  kickDelayAfterDeath: -1
+  stopServerOnWin: -1
+  killerHealthAddOnKill: -1
+  playerSpectateAfterDeath: false
+  teamLifes: 1
+World:
+  blockDestroyLogger: true
+  setAlwaysTime: 1000
+  alwaysTimeUseAfterStart: false
+  randomChestFillRadius: 30
+  randomChestMaxItems: 5
+  spawnProtectionRadius: 0
+  setPlayerSpawns: false
+  setNameTagOverSpawn: true
+Start:
+  startCountdown: 30
+  canMoveBeforeStart: false
+  doRandomTeamAtStart: true
+  doSortAtStart: true
+  removePlayersArentAtStart: true
+Disconnect:
+  maxDisconnectsPerSessions: 3
+  strikeOnMaxDisconnect: false
+  banAfterDisconnectMinutes: 10
+  noDisconnectPing: 200
+Combatlog:
+  combatlogTime: 30
+  strikeOnCombatlog: false
+  killOnCombatlog: true
+Border:
+  onDeathBorderDecrease: -1
+  decreaseBlocksPerSecond: 1
+  borderDamage: 1
+  timeBorderDecrease: -1
+  timeBorderDecreaseSize: 50
+  minBorderSize: 100
+  showDistanceToBorder: false
+Chat:
+  canChatBeforeStart: true
+  chatCooldownInSeconds: 3
+  chatCooldownIfStarted: false
+Activity:
+  noBloodlustDays: -1
+  strikeOnBloodlust: false
+  noActivityDays: -1
+  strikeOnNoActivity: false
+Report:
+  enabled: true
+  reportDelay: 30
+  logReports: true
+  reportStaffMember: true
+YouTube:
+  enabled: false
+  setOwnLink: true
+  videoIdentifier: Varo
+Discord:
+  discordBotEnabled: true
+  botToken: ENTER TOKEN HERE
+  eventChannelID: -1
+  serverGuildID: -1
+  verifySystem: true
+  verifySystemMySQL: false
+  mysql_verify:
+    mysql_host: HOST_HERE
+    mysql_user: USER_HERE
+    mysql_password: PASSWORD_HERE
+    mysql_database: DATABASE_HERE
+  registerChannelID: -1
+  announcementChannelID: -1
+  resultChannelID: -1
+  youtubeChannelID: -1
+  addPokalOnWin: true
+  setTeamAsGroup: false
+  inviteLink: https://discord.gg/UPCZ9eX
+  commandTrigger: 'varo '
+  gameState: ODV | Plugin by Cuuky
+Telegram:
+  telegrambotEnabled: false
+  botToken: ENTER TOKEN HERE
+  eventChatId: -1
+  videosChatId: -1
+Autosetup:
+  enabled: true
+  border: 2000
+  autostart:
+    time:
+      hour: 18
+      minute: 0
+  portal:
+    width: 4
+    height: 5
+  lobby:
+    schematic: plugins/Varo/schematics/lobby.schematic
+    size: 25
+    height: 10
+  spawns:
+    radius: 30
+    amount: 40
+    block:
+      material: STONE_BRICK_SLAB
+      meta: 5
+    sideblock:
+      material: GRASS
+      meta: 0
+Other:
+  playerChestLimit: 2
+  playerFurnaceLimit: -1
+  noKickDistance: 30
+  showTimeInActionbar: false
+  disableLabyModFunctions: false
+  kickLabyModPlayer: false
+  onlyLabyModPlayer: false
+  minimalSpectatorHeight: 70
+  broadcastIntervalInSeconds: -1
+  hideNametags: false
+  debugOptions: true

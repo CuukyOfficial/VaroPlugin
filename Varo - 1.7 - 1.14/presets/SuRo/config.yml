@@ -1,0 +1,161 @@
+Main:
+  prefix: '&7[&cSuRo&7] '
+  projectname: SuRo
+  projectnameColorcode: '&c'
+  supportPluginAds: false
+  scoreboard: false
+  nametags: true
+  playTime: -1
+  dailyBackups: true
+  unregisteredPlayerJoin: false
+  removeHitDelay: true
+OfflineVillager:
+  enableOfflineVillager: true
+  noSatiationRegenerate: true
+Backpacks:
+  allowBackpacks: false
+  backpackSize: 54
+  allowTeamAccess: true
+Protections:
+  joinProtectionTime: -1
+  canWalkOnJoinProtection: false
+  startperiodProtectiontime: -1
+Serverlist:
+  changeMotd: true
+  fakeMaxSlots: -1
+Teams:
+  friendlyFire: false
+  teamChatTrigger: '#'
+  teamRequests: false
+  teamRequestExpiretime: 30
+  teamRequestMaxTeamMembers: 2
+  teamRequestMaxTeamnameLength: 10
+JoinSystems:
+  ignoreJoinSystemsAsOP: true
+  resetSessionHour: 1
+  timeJoinHours: -1
+  sessionPerDay: -1
+  sessionPerDayAddSessions: false
+  preProduceAmount: -1
+  onlyJoinBetweenHours: true
+  onlyJoinBetweenHoursHour1: 18
+  onlyJoinBetweenHoursHour2: 19
+  kickAtServerClose: true
+Death:
+  deathSound: true
+  kickDelayAfterDeath: -1
+  stopServerOnWin: -1
+  killerHealthAddOnKill: -1
+  playerSpectateAfterDeath: false
+  teamLifes: 1
+World:
+  blockDestroyLogger: true
+  setAlwaysTime: -1
+  alwaysTimeUseAfterStart: false
+  randomChestFillRadius: -1
+  randomChestMaxItems: 5
+  spawnProtectionRadius: 0
+  setPlayerSpawns: false
+  setNameTagOverSpawn: false
+Start:
+  startCountdown: 30
+  canMoveBeforeStart: false
+  doRandomTeamAtStart: false
+  doSortAtStart: false
+  removePlayersArentAtStart: true
+Disconnect:
+  maxDisconnectsPerSessions: -1
+  strikeOnMaxDisconnect: false
+  banAfterDisconnectMinutes: -1
+  noDisconnectPing: 200
+Combatlog:
+  combatlogTime: 10
+  strikeOnCombatlog: false
+  killOnCombatlog: true
+Border:
+  onDeathBorderDecrease: 0
+  decreaseBlocksPerSecond: 1
+  borderDamage: 1
+  timeBorderDecrease: -1
+  timeBorderDecreaseSize: 50
+  minBorderSize: 100
+  showDistanceToBorder: false
+Chat:
+  canChatBeforeStart: true
+  chatCooldownInSeconds: 3
+  chatCooldownIfStarted: false
+Activity:
+  noBloodlustDays: -1
+  strikeOnBloodlust: false
+  noActivityDays: -1
+  strikeOnNoActivity: false
+Report:
+  enabled: true
+  reportDelay: 30
+  logReports: true
+  reportStaffMember: true
+YouTube:
+  enabled: false
+  setOwnLink: true
+  videoIdentifier: Suro
+Discord:
+  discordBotEnabled: false
+  botToken: ENTER TOKEN HERE
+  eventChannelID: -1
+  serverGuildID: -1
+  verifySystem: false
+  verifySystemMySQL: false
+  mysql_verify:
+    mysql_host: HOST_HERE
+    mysql_user: USER_HERE
+    mysql_password: PASSWORD_HERE
+    mysql_database: DATABASE_HERE
+  registerChannelID: -1
+  announcementChannelID: -1
+  resultChannelID: -1
+  youtubeChannelID: -1
+  addPokalOnWin: true
+  setTeamAsGroup: false
+  inviteLink: ENTER LINK HERE
+  commandTrigger: 'suro '
+  gameState: Suro | Config by UeberallGebannt
+Telegram:
+  telegrambotEnabled: false
+  botToken: ENTER TOKEN HERE
+  eventChatId: -1
+  videosChatId: -1
+Autosetup:
+  enabled: false
+  border: 2000
+  autostart:
+    time:
+      hour: -1
+      minute: -1
+  portal:
+    width: 4
+    height: 5
+  lobby:
+    schematic: plugins/Varo/schematics/lobby.schematic
+    size: 25
+    height: 10
+  spawns:
+    radius: 30
+    amount: 40
+    block:
+      material: STONE_SLAB
+      meta: 5
+    sideblock:
+      material: GRASS
+      meta: 0
+Other:
+  playerChestLimit: 2
+  playerFurnaceLimit: -1
+  noKickDistance: -1
+  showTimeInActionbar: false
+  disableLabyModFunctions: true
+  kickLabyModPlayer: false
+  onlyLabyModPlayer: false
+  minimalSpectatorHeight: 70
+  broadcastIntervalInSeconds: -1
+  hideNametags: false
+  debugOptions: true

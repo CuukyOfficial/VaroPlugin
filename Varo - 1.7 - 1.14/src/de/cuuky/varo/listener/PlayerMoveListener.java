@@ -1,0 +1,53 @@
+package de.cuuky.varo.listener;
+
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.player.VaroPlayer;
+
+public class PlayerMoveListener implements Listener {
+
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent event) {
+		Location from = event.getFrom();
+		Location to = event.getTo();
+		Player player = event.getPlayer();
+		VaroPlayer vp = VaroPlayer.getPlayer(player);
+
+		if(from.getX() == to.getX() && from.getZ() == to.getZ())
+			return;
+
+		if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null || Main.getGame().isStarting() && !vp.getStats().isSpectator()) {
+			event.setTo(from);
+			return;
+		}
+
+		if(Main.getGame().getGameState() == GameState.LOBBY) {
+			if(ConfigEntry.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
+				return;
+
+			event.setTo(from);
+			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue());
+			return;
+		} else if(Main.getGame().getGameState() == GameState.STARTED) {
+			if(Main.getGame().isStarting() || vp.getStats().isSpectator() || ConfigEntry.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Main.getGame().isFirstTime() || vp.isAdminIgnore())
+				return;
+
+			if(vp.isInProtection()) {
+				event.setTo(from);
+				player.sendMessage(ConfigMessages.JOIN_NO_MOVE_IN_PROTECTION.getValue());
+				return;
+			}
+		}
+	}
+}

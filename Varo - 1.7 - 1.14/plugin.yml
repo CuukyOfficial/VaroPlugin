@@ -1,0 +1,73 @@
+name: Varo
+author: Cuuky
+version: 0.1.3
+api-version: 1.13
+main: de.cuuky.varo.Main
+
+commands:
+  varo:
+    aliases: [titan, uhc, odv, onedayvaro, suro]
+    description: Hauptbefehl des Plugins
+  Broadcast:
+    aliases: [bc]
+    description: Sendet eine Nachricht an den Server
+  ChatClear:
+     aliases: [cc]
+     description: Leert den Chat
+  Day:
+     description: Setzt die Tageszeit auf Tag
+  Night:
+     description: Setzt die Tageszeit auf Nacht
+  Fly:
+     description: Laesst dich oder einen Spieler fliegen
+  Freeze:
+     aliases: [nomove]
+     description: Laesst einen Spieler einfrieren
+  Gamemode:
+     aliases: [gm]
+     description: Setzt den Spielmodus von dir oder einem Spieler
+  Heal:
+     aliases: [feed]
+     description: Heilt einen Spieler
+  Info:
+     aliases: [life]
+     description: Zeigt Infos ueber einen Spieler
+  Invsee:
+     aliases: [inventorysee]
+     description: Zeigt das Inventar eines anderen Spielers
+  Ping:
+     description: Zeigt den Ping von dir oder einem Spieler
+  Speed:
+     description: Setzt die Geschwindigkeit von dir oder einem Spieler
+  Vanish:
+     aliases: [v]
+     description: Versteckt dich oder einen Spieler vor allen anderen
+  Message:
+     aliases: [msg]
+     description: Schreibt einen Spieler eine Nachricht
+  Reply:
+     aliases: [r]
+     description: Antwortet einem Spieler
+  Mute:
+     description: Stummt einen Spieler
+  Protect:
+     description: Beschuetzt Spieler vor Schaden
+  Report:
+     description: Reporte einen Spieler
+  Usage:
+     description: Zeigt die Nutzung des Servers
+  Border:
+     aliases: [setborder]
+     description: Zeigt Infos zur Border
+  SetWorldspawn:
+     description: Setzt die WorldBorder
+  Spawn:
+     description: Zeigt Distanz und Information zum Spawn
+  Thunder:
+     description: Wechselt zu Gewitter
+  Rain:
+     description: Wechselt zu Regen
+  Sun:
+     description: Wechselt zu schoenem Wetter
+  Countdown:
+     description: Startet einen Countdown
