@@ -37,6 +37,11 @@ public class VaroInventory implements VaroSerializeable {
 	public Inventory getInventory() {
 		return inventory;
 	}
+	
+	public void clear() {
+		inventoryList.clear();
+		inventory.clear();
+	}
 
 	@Override
 	public void onDeserializeEnd() {
