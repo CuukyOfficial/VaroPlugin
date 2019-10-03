@@ -40,7 +40,7 @@ public class Main extends JavaPlugin {
 	private static Updater updater;
 	private static Game game;
 
-	private String RESCOURCE_ID = "%%__RESOURCE__%%";
+	private String RESCOURCE_ID = "71075";
 	private boolean failed = false;
 
 	@Override
