@@ -140,6 +140,8 @@ public class DataManager {
 					out.close();
 				}
 			}
+			
+			zip.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

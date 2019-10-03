@@ -43,6 +43,8 @@ public class YouTubeCheck extends Checker {
 
 			while(scanner.hasNextLine())
 				lines.add(scanner.nextLine());
+			
+			scanner.close();
 		} catch(Exception ex) {
 			System.out.println(Main.getConsolePrefix() + "Could not load videos for " + player.getName());
 			new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Could not load videos for " + player.getName());
