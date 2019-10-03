@@ -23,6 +23,11 @@ import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.world.AutoSetup;
 
 public class Main extends JavaPlugin {
+	
+	/*
+	 * Plugin by Cuuky @ 2019
+	 * All rights reserved!
+	 */
 
 	private static final String CONSOLE_PREFIX = "[Varo] ";
 	private static Main instance;
