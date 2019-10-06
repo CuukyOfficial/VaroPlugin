@@ -92,8 +92,40 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lTeams§7§l:");
-			for(Team team : Team.getTeams()) {
+			int teamNumber = Team.getTeams().size();
+			int teamSeiten = 1 + (teamNumber / 30);
+			
+			int lastTeamAufSeite = 30;
+			int seite = 1;
+			
+			if (args.length != 1) {
+				try {
+				   seite = Integer.parseInt(args[1]);
+				}
+				catch (NumberFormatException e) {
+				   seite = 1;
+				}
+				
+				lastTeamAufSeite = seite * 30;
+			}
+			
+			if (seite == teamSeiten) {
+				lastTeamAufSeite = teamNumber;
+			}
+			
+			if (seite > teamSeiten) {
+				sender.sendMessage(Main.getPrefix() + "Keine Seite " + seite + " der Teams gefunden!");
+				return;
+			}
+			
+			if (teamSeiten == 1) {
+				sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lTeams§7§l:");
+			} else {
+				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lTeams§7§l " + ((seite - 1) * 30 + 1) + " bis " + lastTeamAufSeite + ":");
+			}
+			
+			for (int i = (seite - 1) * 30; i < lastTeamAufSeite; i++) {
+				Team team = Team.getTeams().get(i);
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " §l" + team.getId() + "§7; " + Main.getColorCode() + team.getName());
 				String list = "";
 				for(VaroPlayer member : team.getMember())
@@ -101,6 +133,18 @@ public class TeamCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "  " + list);
 				sender.sendMessage(Main.getPrefix());
 			}
+			
+			int lastTeamNextSeite = 0;
+			if (seite + 1 < teamSeiten) {
+				lastTeamNextSeite = (seite + 1) * 30;
+			} else if (seite + 1 == teamSeiten) {
+				lastTeamNextSeite = teamNumber;
+			} 
+			
+			if (seite < teamSeiten) {
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (seite + 1) + " §7für " + Main.getColorCode() + "Teams §7 " + (seite * 30 + 1) + " bis " + lastTeamNextSeite);
+			}
+			
 			return;
 		} else if(args[0].equalsIgnoreCase("rename")) {
 			if(args.length != 3) {
