@@ -129,7 +129,7 @@ public class TeamCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " §l" + team.getId() + "§7; " + Main.getColorCode() + team.getName());
 				String list = "";
 				for(VaroPlayer member : team.getMember())
-					list = (list.isEmpty() ? member.getName() : list + "§7, " + Main.getColorCode() + member.getName());
+					list = (list.isEmpty() ? Main.getColorCode() + member.getName() : list + "§7, " + Main.getColorCode() + member.getName());
 				sender.sendMessage(Main.getPrefix() + "  " + list);
 				sender.sendMessage(Main.getPrefix());
 			}
