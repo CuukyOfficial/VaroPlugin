@@ -137,8 +137,15 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			if(varoplayer == null) {
-				sender.sendMessage(Main.getPrefix() + "Spieler nicht gefunden!");
-				return;
+				String uuid = null;
+				try {
+					uuid = UUIDUtils.getUUID(args[1]).toString();
+				} catch(Exception e) {
+					sender.sendMessage(Main.getPrefix() + args[1] + " besitzt keinen Minecraft-Account!");
+					return;
+				}
+
+				varoplayer = new VaroPlayer(args[1], uuid);
 			}
 
 			if(varoplayer.getTeam() != null) {
