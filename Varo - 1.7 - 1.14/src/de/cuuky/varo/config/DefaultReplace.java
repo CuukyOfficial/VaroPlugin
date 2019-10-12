@@ -31,7 +31,7 @@ public class DefaultReplace {
 		replaced = replaced.contains("%colorcode%") ? replaced.replaceAll("%colorcode%", Main.getColorCode()) : replaced;
 		replaced = replaced.contains("%discordLink%") ? replaced.replaceAll("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
 
-		return replaced.replaceAll("&", "ยง").replaceAll("%heart%", "โค").replaceAll("%nextLine%", "\n").replace("%null%", "");
+		return replaced.replaceAll("&", "ง").replaceAll("%heart%", "ค").replaceAll("%nextLine%", "\n").replace("%null%", "");
 	}
 
 	public String getReplaced(VaroPlayer vp) {

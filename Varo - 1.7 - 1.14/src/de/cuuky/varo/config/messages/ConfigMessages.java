@@ -10,11 +10,11 @@ public enum ConfigMessages {
 	// Server
 	SERVER_MODT_OPEN("Server.motd.serverOpen", "&aSei nun bei %projectname% &adabei! \n&7Viel Spass!"),
 	SERVER_MODT_NOT_OPENED("Server.motd.serverNotOpened", "&cDer Server wurde noch nicht fÃ¼r alle geoeffnet! %nextLine%&7Versuche es spÃ¤ter erneut!"),
-	SERVER_MODT_CANT_JOIN_HOURS("Server.motd.cantJoinHours", "&cDu kannst nur zwischen &4%minHour% &cund &4%maxHour%&c Uhr joinen! %nextLine%&7Versuche es spÃƒÂ¤ter erneut! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
+	SERVER_MODT_CANT_JOIN_HOURS("Server.motd.cantJoinHours", "&cDu kannst nur zwischen &4%minHour% &cund &4%maxHour%&c Uhr joinen! %nextLine%&7Versuche es spÃƒ¤ter erneut! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
 
 	LABYMOD_DISABLED("General.labyModDisabled", "&7Alle deine LabyMod Funktionen wurden deaktiviert!"),
 	DISTANCE_BORDER("General.distanceToBorder", "&7Distanz zur Border: %colorcode%%size% &7BlÃ¶cke"),
-	TEAMCHAT_FORMAT("General.teamchatFormat", "&7[%colorcode%%team%&7] %player% &8Â» &f%message%"),
+	TEAMCHAT_FORMAT("General.teamchatFormat", "&7[%colorcode%%team%&7] %player% &8» &f%message%"),
 
 	// GAME
 	GAME_START_COUNTDOWN("Game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunde(n)!"),
@@ -22,7 +22,7 @@ public enum ConfigMessages {
 	GAME_VARO_START_TITLE("Game.start.startTitle", "%colorcode%%countdown%\n&7Viel Glueck!"),
 
 	// PROTECTION
-	PROTECTION_NO_MOVE_START("Protection.noMoveStart", "Â§7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
+	PROTECTION_NO_MOVE_START("Protection.noMoveStart", "§7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
 	PROTECTION_TIME_RUNNING("Protection.timeRunning", "&7Die %colorcode%Schutzzeit &7laeuft noch!"),
 	PROTECTION_START("Protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
 	PROTECTION_TIME_OVER("Protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorrÃ¼ber!"),
@@ -109,13 +109,13 @@ public enum ConfigMessages {
 	TABLIST_PLAYER_WITHOUT_TEAM_RANK("Tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
 
 	// COMBAT
-	COMBAT_FRIENDLY_FIRE("Combat.friendlyfire", "Â§7Dieser Spieler ist in deinem Team!"),
+	COMBAT_FRIENDLY_FIRE("Combat.friendlyfire", "§7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT("Combat.inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),
-	COMBAT_NOT_IN_FIGHT("Combat.notInFight", "Â§7Du bist nun nicht mehr im &cKampf&7!"),
+	COMBAT_NOT_IN_FIGHT("Combat.notInFight", "§7Du bist nun nicht mehr im &cKampf&7!"),
 	COMBAT_LOGGED_OUT("Combat.loggedOut", "&c%player% &7hat den Server waehrend eines Kampfes verlassen!"),
 
 	// CHAT
-	CHAT_FORMAT("Chat.format", "Â§7%player% Â§8Â» Â§f"),
+	CHAT_FORMAT("Chat.format", "§7%player% §8» §f"),
 	CHAT_WHEN_START("Chat.chatOnStart", "&7Du kannst erst ab dem Start wieder schreiben!"),
 	CHAT_MUTED("Chat.muted", "&7Du wurdest gemutet!"),
 
