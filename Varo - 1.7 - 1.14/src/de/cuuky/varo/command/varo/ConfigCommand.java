@@ -33,7 +33,7 @@ public class ConfigCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "§b/config §7set <key> <value>");
 				return;
 			}
-
+	
 			for(ConfigEntry entry : ConfigEntry.values()) {
 				if(!entry.getPath().equalsIgnoreCase(args[1]))
 					continue;
