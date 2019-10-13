@@ -53,7 +53,7 @@ public class Broadcaster {
 		if(!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
-			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewaehlt werden.");
+			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewählt werden.");
 
 			if(!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
@@ -87,7 +87,7 @@ public class Broadcaster {
 		if(random == 0) {
 			messages = new String[] { "", "", "" };
 			messages[0] = "§7-----------------------------------------";
-			messages[1] = "&7Du mÃ¶chtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
+			messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
 			messages[2] = "§7-----------------------------------------";
 		} else {
 			messages = new String[] { "", "", "", "" };

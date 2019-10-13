@@ -37,7 +37,7 @@ public class WinEvent extends BukkitEvent {
 		try {
 			db.getController().setNickname(member, member.getUser().getName() + " | " + wins + " ð").complete();
 		} catch(PermissionException e) {
-			System.out.println("[Varo] Konnte den Pokal fÃ¼r '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
+			System.out.println("[Varo] Konnte den Pokal für '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
 		}
 	}
 }

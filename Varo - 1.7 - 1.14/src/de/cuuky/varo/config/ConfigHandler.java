@@ -128,7 +128,7 @@ public class ConfigHandler {
 	 * @return Every description of every ConfigEntry combined
 	 */
 	private String getConfigHeader() {
-		String header = "Config Einstellungen \r\n" + "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRAEGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
+		String header = "Config Einstellungen \r\n" + "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
 		String desc = "";
 		for(ConfigSection section : ConfigSection.values()) {
 			desc = desc + "\n----------- " + section.getName() + " -----------";
