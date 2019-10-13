@@ -11,20 +11,20 @@ import de.cuuky.varo.world.PlayerSort;
 public class SortCommand extends VaroCommand {
 
 	public SortCommand() {
-		super("sort", "Sortiert die Spieler in ihre Löcher", "varo.sort");
+		super("sort", "Sortiert die Spieler in ihre LÃ¶cher", "varo.sort");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length != 0) {
-			sender.sendMessage(Main.getPrefix() + "§7/sort");
+			sender.sendMessage(Main.getPrefix() + "Â§7/sort");
 			return;
 		}
 
 		PlayerSort sort = new PlayerSort();
 		if(sort.hasNotFound())
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für alle Spieler ein Loch gefunden werden!");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht fÃ¼r alle Spieler ein Loch gefunden werden!");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler Â§7wurden sortiert!");
 		return;
 	}
 }

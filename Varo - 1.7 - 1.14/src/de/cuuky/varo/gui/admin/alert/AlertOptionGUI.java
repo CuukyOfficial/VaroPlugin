@@ -19,7 +19,7 @@ public class AlertOptionGUI extends SuperInventory {
 	private Alert alert;
 
 	public AlertOptionGUI(Player opener, Alert alert, AlertGUIType type) {
-		super("§7Alert §c" + alert.getId(), opener, 9, false);
+		super("Â§7Alert Â§c" + alert.getId(), opener, 9, false);
 
 		this.type = type;
 		this.alert = alert;
@@ -28,7 +28,7 @@ public class AlertOptionGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(4, new ItemBuilder().displayname(alert.isOpen() ? "§cClose" : "§aOpen").itemstack(new ItemStack(alert.isOpen() ? Materials.REDSTONE.parseMaterial() : Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname(alert.isOpen() ? "Â§cClose" : "Â§aOpen").itemstack(new ItemStack(alert.isOpen() ? Materials.REDSTONE.parseMaterial() : Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {

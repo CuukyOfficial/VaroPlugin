@@ -21,27 +21,27 @@ public class SuroStart {
 	public SuroStart() {
 		titles = new ArrayList<>();
 
-		titles.add("§a%name%");
-		titles.add("§6...du bist gestrandet...");
-		titles.add("§c...auf einer Insel...");
-		titles.add("§6...genau so wie...");
-		titles.add("§c%players% weitere Spieler auch!");
-		titles.add("§6Bist du bereit, §a%name%§6?");
-		titles.add("§aJa?");
-		titles.add("§6dann viel Glück bei...");
-		titles.add("§cMINECRAFT SURO!");
-		titles.add("§cWach auf!");
-		titles.add("§c10!");
+		titles.add("Â§a%name%");
+		titles.add("Â§6...du bist gestrandet...");
+		titles.add("Â§c...auf einer Insel...");
+		titles.add("Â§6...genau so wie...");
+		titles.add("Â§c%players% weitere Spieler auch!");
+		titles.add("Â§6Bist du bereit, Â§a%name%Â§6?");
+		titles.add("Â§aJa?");
+		titles.add("Â§6dann viel GlÃ¼ck bei...");
+		titles.add("Â§cMINECRAFT SURO!");
+		titles.add("Â§cWach auf!");
+		titles.add("Â§c10!");
 		titles.add("");
 		titles.add("");
 		titles.add("");
 		titles.add("");
-		titles.add("§c5!");
-		titles.add("§c4!");
-		titles.add("§c3!");
-		titles.add("§c2!");
-		titles.add("§c1!");
-		titles.add("§cGO!");
+		titles.add("Â§c5!");
+		titles.add("Â§c4!");
+		titles.add("Â§c3!");
+		titles.add("Â§c2!");
+		titles.add("Â§c1!");
+		titles.add("Â§cGO!");
 
 		start(60, 0, false);
 	}

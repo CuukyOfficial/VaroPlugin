@@ -166,7 +166,7 @@ public class ChatClearCommand implements CommandExecutor {
 		Bukkit.broadcastMessage(" ");
 		Bukkit.broadcastMessage(" ");
 		Bukkit.broadcastMessage(" ");
-		Bukkit.broadcastMessage(Main.getPrefix() + "§7Der Chat wurde §7gecleart§7!");
+		Bukkit.broadcastMessage(Main.getPrefix() + "Â§7Der Chat wurde Â§7gecleartÂ§7!");
 		return false;
 	}
 

@@ -14,9 +14,9 @@ public class VaroCommandListener implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro §7§lCommands:");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Â§lVaro Â§7Â§lCommands:");
 			for (VaroCommand command : VaroCommand.getVaroCommand())
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo " + command.getName() + "§8: §7"
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo " + command.getName() + "Â§8: Â§7"
 						+ command.getDescription());
 			return false;
 		}
@@ -24,7 +24,7 @@ public class VaroCommandListener implements CommandExecutor {
 		VaroCommand command = VaroCommand.getCommand(args[0]);
 		if (command == null) {
 			sender.sendMessage(
-					Main.getPrefix() + "§7Kommando '" + Main.getColorCode() + args[0] + "§7' nicht gefunden!");
+					Main.getPrefix() + "Â§7Kommando '" + Main.getColorCode() + args[0] + "Â§7' nicht gefunden!");
 			return false;
 		}
 

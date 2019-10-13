@@ -79,7 +79,7 @@ public class Main extends JavaPlugin {
 				updater = new Updater(Main.this, Integer.valueOf(RESCOURCE_ID));
 				updater.postResults();
 				if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE)
-					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dichdennoch auf dem Discord.");
+					new Alert(AlertType.UPDATE_AVAILABLE, "Â§cEin neues Update des Plugins ist verfÃ¼gbar!\nÂ§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\nÂ§7informiere dichdennoch auf dem Discord.");
 			} catch(NumberFormatException e) {}
 
 			new DailyTimer();

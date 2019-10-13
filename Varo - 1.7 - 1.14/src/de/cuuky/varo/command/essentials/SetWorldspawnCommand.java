@@ -25,12 +25,12 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		if(args.length != 0) {
-			p.sendMessage(Main.getPrefix() + "ง7/setworldspawn");
+			p.sendMessage(Main.getPrefix() + "ยง7/setworldspawn");
 			return false;
 		}
 
 		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
-		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn ง7erfolgreich gesetzt!");
+		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn ยง7erfolgreich gesetzt!");
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;
 	}

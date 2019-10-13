@@ -34,7 +34,7 @@ public class MainMenu extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(4, new ItemBuilder().displayname("§5Events").itemstack(new ItemStack(Material.APPLE)).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("Â§5Events").itemstack(new ItemStack(Material.APPLE)).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -42,7 +42,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { new LocationFormatter(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z").format(opener.getWorld().getSpawnLocation()) }).build(), new Runnable() {
+		linkItemTo(10, new ItemBuilder().displayname("Â§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { new LocationFormatter(Main.getColorCode() + "xÂ§7, " + Main.getColorCode() + "yÂ§7, " + Main.getColorCode() + "z").format(opener.getWorld().getSpawnLocation()) }).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -53,7 +53,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(16, new ItemBuilder().player(opener).amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).displayname("§aSpieler").buildSkull(), new Runnable() {
+		linkItemTo(16, new ItemBuilder().player(opener).amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).displayname("Â§aSpieler").buildSkull(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -61,7 +61,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(18, new ItemBuilder().displayname("§6Strikes").itemstack(new ItemStack(Material.PAPER)).amount(getFixedSize(VaroPlayer.getPlayer(opener).getStats().getStrikes().size())).build(), new Runnable() {
+		linkItemTo(18, new ItemBuilder().displayname("Â§6Strikes").itemstack(new ItemStack(Material.PAPER)).amount(getFixedSize(VaroPlayer.getPlayer(opener).getStats().getStrikes().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -69,7 +69,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(22, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Material.CHEST)).amount(getFixedSize(VaroSaveable.getSaveable(VaroPlayer.getPlayer(opener)).size())).build(), new Runnable() {
+		linkItemTo(22, new ItemBuilder().displayname("Â§eKisten/Ã–fen").itemstack(new ItemStack(Material.CHEST)).amount(getFixedSize(VaroSaveable.getSaveable(VaroPlayer.getPlayer(opener)).size())).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -77,7 +77,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(26, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(Team.getTeams().size())).build(), new Runnable() {
+		linkItemTo(26, new ItemBuilder().displayname("Â§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(Team.getTeams().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -85,7 +85,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(34, new ItemBuilder().displayname("§5Videos").itemstack(new ItemStack(Material.COMPASS)).amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), new Runnable() {
+		linkItemTo(34, new ItemBuilder().displayname("Â§5Videos").itemstack(new ItemStack(Material.COMPASS)).amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -94,7 +94,7 @@ public class MainMenu extends SuperInventory {
 		});
 
 		if(opener.hasPermission("varo.admin")) {
-			linkItemTo(36, new ItemBuilder().displayname("§cAdmin-Section").itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), new Runnable() {
+			linkItemTo(36, new ItemBuilder().displayname("Â§cAdmin-Section").itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), new Runnable() {
 
 				@Override
 				public void run() {
@@ -104,14 +104,14 @@ public class MainMenu extends SuperInventory {
 		}
 
 		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
-			linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
+			linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("Â§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
 
 				@Override
 				public void run() {
-					opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin by Cuuky");
-					opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
-					opener.sendMessage(Main.getPrefix() + "§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
-					opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
+					opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "Â§lVaro Plugin by Cuuky");
+					opener.sendMessage(Main.getPrefix() + "Â§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
+					opener.sendMessage(Main.getPrefix() + "Â§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
+					opener.sendMessage(Main.getPrefix() + "Â§7All rights reserved!");
 				}
 			});
 

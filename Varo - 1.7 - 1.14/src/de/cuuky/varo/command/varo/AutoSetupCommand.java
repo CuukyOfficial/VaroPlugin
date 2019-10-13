@@ -18,9 +18,9 @@ public class AutoSetupCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7<true/false>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7run");
-			sender.sendMessage(Main.getPrefix() + "§cVorsicht: §7Dieser Command setzt fest, dass beim nächsten Start des Servers der AutoStart genutzt wird.");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7<true/false>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7run");
+			sender.sendMessage(Main.getPrefix() + "Â§cVorsicht: Â§7Dieser Command setzt fest, dass beim nÃ¤chsten Start des Servers der AutoStart genutzt wird.");
 			return;
 		}
 		
@@ -39,13 +39,13 @@ public class AutoSetupCommand extends VaroCommand {
 		try {
 			toggle = Boolean.valueOf(args[0]);
 		} catch(ClassCastException e) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7<true/false>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7<true/false>");
 		}
 
 		Main.getGame().setWillSetupNext(toggle);
 		if(toggle)
-			sender.sendMessage(Main.getPrefix() + "AutoSetup wird beim nächsten Start ausgeführt!");
+			sender.sendMessage(Main.getPrefix() + "AutoSetup wird beim nÃ¤chsten Start ausgefÃ¼hrt!");
 		else
-			sender.sendMessage(Main.getPrefix() + "AutoSetup wird beim nächsten Start nicht ausgeführt!");
+			sender.sendMessage(Main.getPrefix() + "AutoSetup wird beim nÃ¤chsten Start nicht ausgefÃ¼hrt!");
 	}
 }

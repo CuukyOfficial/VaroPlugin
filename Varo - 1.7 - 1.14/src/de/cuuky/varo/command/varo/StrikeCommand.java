@@ -20,11 +20,11 @@ public class StrikeCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "ง7------ " + Main.getColorCode() + "Strike ง7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike ง7<Player> [Grund]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike list ง7<Player>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike remove ง7<Player> <StrikeNummer>");
-			sender.sendMessage(Main.getPrefix() + "ง7-----------------------");
+			sender.sendMessage(Main.getPrefix() + "ยง7------ " + Main.getColorCode() + "Strike ยง7-----");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike ยง7<Player> [Grund]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike list ยง7<Player>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike remove ยง7<Player> <StrikeNummer>");
+			sender.sendMessage(Main.getPrefix() + "ยง7-----------------------");
 			return;
 		}
 
@@ -45,19 +45,19 @@ public class StrikeCommand extends VaroCommand {
 			return;
 		} else if(args[0].equalsIgnoreCase("remove")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/strike remove ง7<Spieler> <Zahl>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/strike remove ยง7<Spieler> <Zahl>");
 				return;
 			}
 
 			VaroPlayer varoPlayer = VaroPlayer.getPlayer(args[1]);
 
 			if(varoPlayer == null) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " ง7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " ยง7nicht gefunden!");
 				return;
 			}
 
 			if(varoPlayer.getStats().getStrikes().size() < 1) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoPlayer.getName() + " ง7hat keine Strikes!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoPlayer.getName() + " ยง7hat keine Strikes!");
 				return;
 			}
 
@@ -75,35 +75,35 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			varoPlayer.getStats().removeStrike(varoPlayer.getStats().getStrikes().get(num));
-			sender.sendMessage(Main.getPrefix() + "ง7Du hast " + Main.getColorCode() + vp.getName() + " ง7einen Strike entfernt! Er hat noch " + Main.getColorCode() + vp.getStats().getStrikes().size() + " ง7strikes!");
+			sender.sendMessage(Main.getPrefix() + "ยง7Du hast " + Main.getColorCode() + vp.getName() + " ยง7einen Strike entfernt! Er hat noch " + Main.getColorCode() + vp.getStats().getStrikes().size() + " ยง7strikes!");
 		} else if(args[0].equalsIgnoreCase("list")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/strike list ง7<Spieler>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/strike list ยง7<Spieler>");
 				return;
 			}
 
 			VaroPlayer varoPlayer = VaroPlayer.getPlayer(args[1]);
 
 			if(varoPlayer == null) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " ง7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " ยง7nicht gefunden!");
 				return;
 			}
 
 			if(varoPlayer.getStats().getStrikes().size() < 1) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoPlayer.getName() + " ง7hat keine Strikes!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoPlayer.getName() + " ยง7hat keine Strikes!");
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "Strikes von " + Main.getColorCode() + varoPlayer.getName() + "ง7:");
+			sender.sendMessage(Main.getPrefix() + "Strikes von " + Main.getColorCode() + varoPlayer.getName() + "ยง7:");
 			for(int i = 1; i < varoPlayer.getStats().getStrikes().size(); i++) {
 				Strike strike = varoPlayer.getStats().getStrikes().get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + i + "ง8:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason: ง7" + strike.getReason());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker: ง7" + strike.getStriker());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: ง7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + i + "ยง8:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason: ยง7" + strike.getReason());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker: ยง7" + strike.getStriker());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: ยง7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));
 			}
 		} else
-			sender.sendMessage(Main.getPrefix() + "ง7Nicht gefunden! " + Main.getColorCode() + "/strike ง7für hilfe.");
+			sender.sendMessage(Main.getPrefix() + "ยง7Nicht gefunden! " + Main.getColorCode() + "/strike ยง7fรผr hilfe.");
 		return;
 
 	}
