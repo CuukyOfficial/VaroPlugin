@@ -20,6 +20,8 @@ import de.cuuky.varo.api.event.events.player.PlayerStateChangeEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeRemoveEvent;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
@@ -529,8 +531,8 @@ public class Stats implements VaroSerializeable {
 
 		if(VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
 			result = KickResult.SERVER_FULL;
-
-		if(result != KickResult.ALLOW && result != KickResult.SPECTATOR)
+		
+		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR)
 			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().isStarted() && player.isOp()) {
 				if(Main.getGame().isStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
@@ -560,19 +562,22 @@ public class Stats implements VaroSerializeable {
 					result = KickResult.NO_PREPRODUCES_LEFT;
 			}
 		}
-
+		
+		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
+			if(curr.before(getTimeBanUntil()))
+				result = KickResult.NO_TIME;
+		
+		if(VaroEvent.getMassRecEvent().isEnabled())
+			result = KickResult.MASS_RECORDING_JOIN;
+		
 		if(Main.isBootedUp())
 			if(!Main.getDataManager().getTimeChecker().canJoin())
 				result = KickResult.NOT_IN_TIME;
-
+					
 		for(Strike strike : strikes)
 			if(strike.getBanUntil() != null)
 				if(curr.before(strike.getBanUntil()))
 					result = KickResult.STRIKE_BAN;
-
-		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
-			if(curr.before(getTimeBanUntil()))
-				result = KickResult.NO_TIME;
 
 		if(!this.isAlive())
 			result = KickResult.DEAD;

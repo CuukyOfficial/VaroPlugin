@@ -118,6 +118,7 @@ public class PlayerLoginListener implements Listener {
 		case SERVER_NOT_PUBLISHED:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));
 			break;
+		case MASS_RECORDING_JOIN:
 		default:
 			event.allow();
 			if(!vp.isRegistered())

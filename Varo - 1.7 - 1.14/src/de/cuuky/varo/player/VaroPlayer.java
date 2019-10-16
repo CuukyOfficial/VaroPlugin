@@ -16,6 +16,7 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -70,6 +71,9 @@ public class VaroPlayer implements VaroSerializeable {
 	private Player player;
 	private Nametag nametag;
 	private NetworkMananager networkManager;
+	private boolean alreadyHadMassProtectionTime = false;
+	private boolean inMassProtectionTime = false;
+	private boolean MassenaufnahmeKick = false;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -122,7 +126,11 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public boolean isInProtection() {
-		return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
+		if (VaroEvent.getMassRecEvent().isEnabled()) {
+			return inMassProtectionTime;
+		} else {
+			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
+		}
 	}
 
 	@Override
@@ -222,6 +230,30 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+	
+	public boolean getinMassProtectionTime() {
+		return inMassProtectionTime;
+	}
+	
+	public void setinMassProtectionTime(boolean inMassProtectionTime) {
+		this.inMassProtectionTime = inMassProtectionTime;
+	}
+	
+	public boolean getalreadyHadMassProtectionTime() {
+		return alreadyHadMassProtectionTime;
+	}
+	
+	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
+		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
+	}
+	
+	public boolean getMassenaufnahmeKick() {
+		return MassenaufnahmeKick;
+	}
+	
+	public void setMassenaufnahmeKick(boolean MassenaufnahmeKick) {
+		this.MassenaufnahmeKick = MassenaufnahmeKick;
 	}
 
 	public String getName() {

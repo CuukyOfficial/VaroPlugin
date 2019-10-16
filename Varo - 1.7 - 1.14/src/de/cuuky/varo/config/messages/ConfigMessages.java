@@ -41,6 +41,7 @@ public enum ConfigMessages {
 	JOIN_WITH_REMAINING_TIME("Join.joinWithRemainingTime", "%prefix%&a%player% &7hatte den Server zu früh verlassen und hat jetzt noch %colorcode%%seconds% &7Sekunden übrig! Verbleibende &cDisconnects&7: &c%remainingDisconnects%"),
 	JOIN_NO_MOVE_IN_PROTECTION("Join.notMoveinProtection", "&7Du kannst dich nicht bewegen, solange du noch in der %colorcode%Schutzzeit &7bist!"),
 	JOIN_SPECTATOR("Join.spectator", "&a%player% &7hat den Server als Spectator betreten!"),
+	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%10 &7Sekunden anfreifbar!"),
 
 	JOIN_KICK_NO_PREPRODUCES_LEFT_TODAY("Join.kick.noPreproducesLeftToday", "&7Du hast für heute bereits vorproduziert! %nextLine%&7Versuche es morgen erneut."),
 	JOIN_KICK_NOT_USER_OF_PROJECT("Join.kick.notUserOfTheProject", "&7Du bist kein Teilnehmer dieses %projectname%&7's!"),
@@ -56,10 +57,11 @@ public enum ConfigMessages {
 	KICK_DELAY_OVER("Kick.protectionOver", "%colorcode%%player% &7wurde aufgrund seines Todes jetzt gekickt!"),
 	KICK_LABY_MOD("Kick.labyMod", "&cLabyMod isn't allowed on this server."),
 	KICK_MESSAGE("Kick.kickMessage", "&cDeine Aufnahmezeit ist abgelaufen, %nextLine%&7deswegen wurdest du gekickt!"),
+	KICK_MESSAGE_MASS_REC("Kick.kickMessageMassRec", "&cDie Massenaufnahme ist beendet, %nextLine%&7deswegen wurdest du gekickt!"),
 	KICK_BROADCAST("Kick.broadcast", "%colorcode%%player% &7wurde gekickt!"),
 	KICK_IN_SECONDS("Kick.kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunde(n) gekickt!"),
 	KICK_PLAYER_NEARBY("Kick.noKickPlayerNearby", "&cEs befindet sich ein Spieler &4%distance% &cBlöcke in deiner Nähe!%nextLine%&7Um gekickt zu werden, entferne dich von diesem Spieler!"),
-	KICK_SERVER_CLOSE_SOON("Kick.serverCloseSoon", "&7Der Server schließt in &c%minutes% &7Minuten!"),
+	KICK_SERVER_CLOSE_SOON("Kick.serverCloseSoon", "&7Der Server schließt in &c%minutes% &7Minuten!"),
 
 	// SORT
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
@@ -166,6 +168,7 @@ public enum ConfigMessages {
 	ALERT_TELEPORTED_TO_MIDDLE("Alert.teleportedToMiddle", "%player% wurde zur Mitte teleportiert!"),
 	ALERT_PLAYER_JOIN_NORMAL("Alert.playerJoinNormal", "%player% hat das Spiel betreten!"),
 	ALERT_PLAYER_JOINED("Alert.playerJoined", "%player% hat den Server betreten und spielt nun die %episodesPlayed%te Folge!"),
+	ALERT_PLAYER_JOIN_MASSREC("Alert.playerJoinMassrec", "%player% hat den Server in der Massenaufnahme betreten und spielt nun die %episodesPlayed%te Folge"),
 	ALERT_PLAYER_QUIT("Alert.playerQuit", "%player% hat das Spiel verlassen!"),
 	ALERT_PLAYER_DC_TO_EARLY("Alert.playerQuitToEarly", "%player% hat das Spiel vorzeitig verlassen! %player% hat noch %seconds% Sekunden Spielzeit über!"),
 	ALERT_PLAYER_RECONNECT("Alert.playerReconnect", "%player% hatte das Spiel vorzeitig verlassen und ist rejoint! %player% hat noch %seconds% Sekunden verbleibend!"),

@@ -21,9 +21,9 @@ public class VaroEventGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		int i = 1;
+		int i = 0;
 		for(VaroEvent event : VaroEvent.getEvents()) {
-			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(Utils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, Utils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(Utils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, Utils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).deleteDamageAnnotation().build(), new Runnable() {
 
 				@Override
 				public void run() {

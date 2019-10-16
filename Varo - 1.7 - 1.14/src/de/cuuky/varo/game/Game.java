@@ -22,6 +22,7 @@ import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.start.ProtectionTime;
@@ -122,7 +123,7 @@ public class Game implements VaroSerializeable {
 									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}
 
-							if(countdown == playTime - protectionTime - 1 && !firstTime)
+							if(countdown == playTime - protectionTime - 1 && !firstTime && !VaroEvent.getMassRecEvent().isEnabled())
 								Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
 
 							if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {

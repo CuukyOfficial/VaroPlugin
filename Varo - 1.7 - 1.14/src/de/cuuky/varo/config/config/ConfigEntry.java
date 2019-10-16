@@ -7,7 +7,7 @@ public enum ConfigEntry {
 	// MAIN
 	PREFIX(ConfigSection.MAIN, "prefix", "&7[&3Varo&7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
 	PROJECT_NAME(ConfigSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
-	PROJECTNAME_COLORCODE(ConfigSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Maßgebende,\nder überall im Projekt verwendet wird.."),
+	PROJECTNAME_COLORCODE(ConfigSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Maßgebende,\nder überall im Projekt verwendet wird.."),
 	SUPPORT_PLUGIN_ADS(ConfigSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 	SCOREBOARD(ConfigSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten."),
 	NAMETAGS(ConfigSection.MAIN, "nametags", true, "Ob das Plugin die Nametags über\nden Köpfen der Spieler verändern soll.\nHinweis: du kannst diese in der messages.yml einstellen."),
@@ -22,7 +22,7 @@ public enum ConfigEntry {
 
 	// BACKPACKS
 	BACKPACK_ALLOW(ConfigSection.BACKPACKS, "allowBackpacks", false, "Erlaubt den Spielern den Zugriff\nauf ihr Backpack mit /varo bp"),
-	BACKPACK_SIZE(ConfigSection.BACKPACKS, "backpackSize", 54, "Größe der Backpacks (Max = 54)"),
+	BACKPACK_SIZE(ConfigSection.BACKPACKS, "backpackSize", 54, "Größe der Backpacks (Max = 54)"),
 	BACKPACK_ALLOW_TEAMACCESS(ConfigSection.BACKPACKS, "allowTeamAccess", true, "Ob Teampartner mit /varo vp auf den\nRucksackes Mitspielers zugreifen dürfen"),
 	BACKPACK_DROP_CONTENT_DEATH(ConfigSection.BACKPACKS, "dropContentOnDeath", true, "Ob der Inhalt des Rucksacks bei\nTod gedropptwerden soll."),
 
@@ -58,7 +58,8 @@ public enum ConfigEntry {
 	ONLY_JOIN_BETWEEN_HOURS(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHours", false, "Stellt ein, ob Spieler nur zwischen\n2 unten festgelegten Zeiten joinen dürfen.\nViertes JoinSystem."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR1(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour1", 14, "Erste Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR2(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour2", 16, "Zweite Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
-	KICK_AT_SERVER_CLOSE(ConfigSection.JOIN_SYSTEMS, "kickAtServerClose", false, "Kickt den Spieler, sobald er außerhalb\ndererlaubten Zeit auf dem Server ist"),
+	KICK_AT_SERVER_CLOSE(ConfigSection.JOIN_SYSTEMS, "kickAtServerClose", false, "Kickt den Spieler, sobald er außerhalb\ndererlaubten Zeit auf dem Server ist."),
+	MASS_RECORDING_TIME(ConfigSection.JOIN_SYSTEMS, "massrecordingTime", 15, "Die Länge der Massenaufnahme, in der alle joinen können."),
 
 	// DEATH
 	DEATH_SOUND(ConfigSection.DEATH, "deathSound", false, "Ob ein Withersound für alle abgespielt werden soll,\nsobald ein Spieler stirbt."),
