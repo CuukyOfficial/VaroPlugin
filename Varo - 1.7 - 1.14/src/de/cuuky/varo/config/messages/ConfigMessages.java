@@ -36,12 +36,12 @@ public enum ConfigMessages {
 
 	// JOIN
 	JOIN("Join.join", "%prefix%&a%player% &7hat den Server betreten!"),
-	JOIN_PROTECTION_TIME("Join.joinProtectionTime", "%prefix%&a%player% &7hat den Server betreten und ist in %colorcode%10 &7Sekunden angreifbar!"),
+	JOIN_PROTECTION_TIME("Join.joinProtectionTime", "%prefix%&a%player% &7hat den Server betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
 	JOIN_PROTECTION_OVER("Join.joinProtectionTimeOver", "%prefix%&a%player% &7ist nun angreifbar!"),
 	JOIN_WITH_REMAINING_TIME("Join.joinWithRemainingTime", "%prefix%&a%player% &7hatte den Server zu früh verlassen und hat jetzt noch %colorcode%%seconds% &7Sekunden übrig! Verbleibende &cDisconnects&7: &c%remainingDisconnects%"),
 	JOIN_NO_MOVE_IN_PROTECTION("Join.notMoveinProtection", "&7Du kannst dich nicht bewegen, solange du noch in der %colorcode%Schutzzeit &7bist!"),
 	JOIN_SPECTATOR("Join.spectator", "&a%player% &7hat den Server als Spectator betreten!"),
-	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%10 &7Sekunden anfreifbar!"),
+	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
 
 	JOIN_KICK_NO_PREPRODUCES_LEFT_TODAY("Join.kick.noPreproducesLeftToday", "&7Du hast für heute bereits vorproduziert! %nextLine%&7Versuche es morgen erneut."),
 	JOIN_KICK_NOT_USER_OF_PROJECT("Join.kick.notUserOfTheProject", "&7Du bist kein Teilnehmer dieses %projectname%&7's!"),

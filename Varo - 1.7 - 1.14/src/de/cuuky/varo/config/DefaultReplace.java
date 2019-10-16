@@ -30,6 +30,7 @@ public class DefaultReplace {
 		replaced = replaced.contains("%bordersize%") ? replaced.replaceAll("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getDataManager().getWorldHandler().getBorder().getSize())) : replaced;
 		replaced = replaced.contains("%colorcode%") ? replaced.replaceAll("%colorcode%", Main.getColorCode()) : replaced;
 		replaced = replaced.contains("%discordLink%") ? replaced.replaceAll("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
+		replaced = replaced.contains("%protectionTime%") ? replaced.replaceAll("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString()) : replaced ;
 
 		return replaced.replaceAll("&", "§").replaceAll("%heart%", "¤").replaceAll("%nextLine%", "\n").replace("%null%", "");
 	}
