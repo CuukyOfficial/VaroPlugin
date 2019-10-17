@@ -34,27 +34,21 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 		ArrayList<VaroSaveable> list = VaroSaveable.getSaveable(target);
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			VaroSaveable saveable;
 			try {
 				saveable = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + String.valueOf(saveable.getId()))
-					.itemstack(
-							new ItemStack(saveable.getType() == SaveableType.CHEST ? Material.CHEST : Material.FURNACE))
-					.lore("§7Location§8: " + new LocationFormatter(Main.getColorCode() + "x§7, " + Main.getColorCode()
-							+ "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world")
-									.format(saveable.getBlock().getLocation()))
-					.build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + String.valueOf(saveable.getId())).itemstack(new ItemStack(saveable.getType() == SaveableType.CHEST ? Material.CHEST : Material.FURNACE)).lore("§7Location§8: " + new LocationFormatter(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world").format(saveable.getBlock().getLocation())).build(), new Runnable() {
 
-						@Override
-						public void run() {
-							new PlayerSaveableGUI(opener, saveable);
-						}
-					});
+				@Override
+				public void run() {
+					new PlayerSaveableGUI(opener, saveable);
+				}
+			});
 			start++;
 		}
 
@@ -62,12 +56,10 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -75,6 +67,5 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

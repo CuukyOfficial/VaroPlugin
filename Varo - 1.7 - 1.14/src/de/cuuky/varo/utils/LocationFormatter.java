@@ -11,9 +11,6 @@ public class LocationFormatter {
 	}
 
 	public String format(Location location) {
-		return format.replaceAll("x", String.valueOf(location.getBlockX()))
-				.replaceAll("y", String.valueOf(location.getBlockY()))
-				.replaceAll("z", String.valueOf(location.getBlockZ()))
-				.replaceAll("world", location.getWorld().getName());
+		return format.replaceAll("x", String.valueOf(location.getBlockX())).replaceAll("y", String.valueOf(location.getBlockY())).replaceAll("z", String.valueOf(location.getBlockZ())).replaceAll("world", location.getWorld().getName());
 	}
 }

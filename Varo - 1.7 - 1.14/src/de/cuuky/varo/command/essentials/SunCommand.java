@@ -13,7 +13,7 @@ public class SunCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!(sender.hasPermission("varo.sun"))) {
+		if(!(sender.hasPermission("varo.sun"))) {
 			sender.sendMessage(Main.getPrefix() + "Dazu bist du nicht berechtigt!");
 			return false;
 		}

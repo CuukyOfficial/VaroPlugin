@@ -12,7 +12,7 @@ public class ChatClearCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.chatclear")) {
+		if(!sender.hasPermission("varo.chatclear")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.chatclear"));
 			return false;
 		}

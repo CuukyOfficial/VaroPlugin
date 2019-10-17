@@ -12,19 +12,19 @@ public class BroadcastCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.broadcast")) {
+		if(!sender.hasPermission("varo.broadcast")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.broadcast"));
 			return false;
 		}
 
-		if (args.length == 0) {
+		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7/bc <Message>");
 			return false;
 		}
 
 		String msg = "";
-		for (String arg : args)
-			if (!msg.equals(""))
+		for(String arg : args)
+			if(!msg.equals(""))
 				msg = msg + " " + arg;
 			else
 				msg = arg;

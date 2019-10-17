@@ -19,7 +19,7 @@ public class SpawnHandler extends VaroSerializeHandler {
 	public void onSave() {
 		clearOld();
 
-		for (Spawn spawn : Spawn.getSpawns())
+		for(Spawn spawn : Spawn.getSpawns())
 			save(String.valueOf(spawn.getNumber()), spawn, getConfiguration());
 
 		saveFile();

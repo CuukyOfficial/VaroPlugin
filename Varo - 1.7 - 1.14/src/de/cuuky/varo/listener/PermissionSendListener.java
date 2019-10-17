@@ -21,10 +21,10 @@ public class PermissionSendListener implements Listener {
 
 	@EventHandler
 	public void labyModJoin(LabyModPlayerJoinEvent event) {
-		if (ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
+		if(ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
 			labyJoined.add(event.getPlayer());
 
-		if (ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean())
+		if(ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean())
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 				@Override
@@ -36,8 +36,8 @@ public class PermissionSendListener implements Listener {
 
 	@EventHandler
 	public void onPermissionSend(PermissionsSendEvent event) {
-		if (ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean())
-			for (Entry<Permission, Boolean> permissionEntry : event.getPermissions().entrySet())
+		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean())
+			for(Entry<Permission, Boolean> permissionEntry : event.getPermissions().entrySet())
 				permissionEntry.setValue(false);
 	}
 }

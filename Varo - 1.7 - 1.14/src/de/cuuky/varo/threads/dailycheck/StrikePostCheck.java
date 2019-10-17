@@ -7,9 +7,9 @@ public class StrikePostCheck extends Checker {
 
 	@Override
 	public void check() {
-		for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
-			for (Strike strike : vp.getStats().getStrikes())
-				if (!strike.isPosted())
+		for(VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
+			for(Strike strike : vp.getStats().getStrikes())
+				if(!strike.isPosted())
 					strike.post();
 		}
 	}

@@ -14,11 +14,7 @@ import de.cuuky.varo.team.request.TeamRequest;
 public class TeamRequestItem extends LobbyItem {
 
 	public TeamRequestItem() {
-		super(new ItemBuilder()
-				.lore(new String[] { "§7Mit diesem Item kannst du Spieler schlagen",
-						"§7woraufhin sie in dein Team eingeladen werden!" })
-				.itemstack(new ItemStack(Material.DIAMOND_SWORD))
-				.displayname(Main.getColorCode() + "Schlagen §7für Team").build(), 0);
+		super(new ItemBuilder().lore(new String[] { "§7Mit diesem Item kannst du Spieler schlagen", "§7woraufhin sie in dein Team eingeladen werden!" }).itemstack(new ItemStack(Material.DIAMOND_SWORD)).displayname(Main.getColorCode() + "Schlagen §7für Team").build(), 0);
 	}
 
 	@Override
@@ -26,7 +22,7 @@ public class TeamRequestItem extends LobbyItem {
 		Player hitted = (Player) event.getEntity();
 		Player player = (Player) event.getDamager();
 
-		if (TeamRequest.getByAll(VaroPlayer.getPlayer(hitted), VaroPlayer.getPlayer(player)) != null)
+		if(TeamRequest.getByAll(VaroPlayer.getPlayer(hitted), VaroPlayer.getPlayer(player)) != null)
 			player.performCommand("varo tr accept " + hitted.getName());
 		else
 			player.performCommand("varo tr invite " + hitted.getName());

@@ -15,19 +15,19 @@ public class ProtectCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.protect")) {
+		if(!sender.hasPermission("varo.protect")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.protect"));
 			return false;
 		}
 
-		if (args.length != 1) {
+		if(args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/protect <Player>");
 			return false;
 		}
 
-		if (args[0].equalsIgnoreCase("all")) {
-			for (Player player : Bukkit.getOnlinePlayers())
-				if (VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
+		if(args[0].equalsIgnoreCase("all")) {
+			for(Player player : Bukkit.getOnlinePlayers())
+				if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
 					VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
 				else
 					new VaroCancelAble(CancelAbleType.PROTECTION, player);
@@ -36,20 +36,18 @@ public class ProtectCommand implements CommandExecutor {
 			return false;
 		}
 
-		if (Bukkit.getPlayerExact(args[0]) == null) {
+		if(Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if (VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
+		if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
 			VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
 		else
 			new VaroCancelAble(CancelAbleType.PROTECTION, player);
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich "
-				+ (VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null ? "protected!"
-						: "entprotected!"));
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich " + (VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null ? "protected!" : "entprotected!"));
 		return false;
 	}
 }

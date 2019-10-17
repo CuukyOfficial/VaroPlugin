@@ -18,12 +18,12 @@ public class IntroCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (suroStart != null) {
+		if(suroStart != null) {
 			sender.sendMessage(Main.getPrefix() + "Intro läuft bereits!");
 			return;
 		}
 
-		if (Main.getGame().isStarted()) {
+		if(Main.getGame().isStarted()) {
 			sender.sendMessage(Main.getPrefix() + "Das Spiel wurde bereits gestartet!");
 			return;
 		}

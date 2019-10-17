@@ -18,7 +18,7 @@ public class GameHandler extends VaroSerializeHandler {
 		super(Game.class, "/stats/game.yml");
 
 		load();
-		if (Main.getGame() == null)
+		if(Main.getGame() == null)
 			Main.setGame(new Game(true));
 	}
 

@@ -32,12 +32,12 @@ public class Vanish {
 	}
 
 	private void hide() {
-		for (Player allplayer : Bukkit.getOnlinePlayers())
+		for(Player allplayer : Bukkit.getOnlinePlayers())
 			allplayer.hidePlayer(player);
 	}
 
 	private void unhide() {
-		for (Player allplayer : Bukkit.getOnlinePlayers())
+		for(Player allplayer : Bukkit.getOnlinePlayers())
 			allplayer.showPlayer(player);
 	}
 
@@ -59,8 +59,8 @@ public class Vanish {
 	}
 
 	public static Vanish getVanish(Player player) {
-		for (Vanish vanish : vanishes)
-			if (vanish.getPlayer().equals(player))
+		for(Vanish vanish : vanishes)
+			if(vanish.getPlayer().equals(player))
 				return vanish;
 
 		return null;
@@ -74,17 +74,17 @@ public class Vanish {
 
 		@EventHandler
 		public void onPlayerJoin(PlayerJoinEvent event) {
-			for (Vanish vanish : vanishes)
+			for(Vanish vanish : vanishes)
 				vanish.hideFor(event.getPlayer());
 		}
 
 		@EventHandler
 		public void onPlayerLeave(PlayerQuitEvent event) {
 			Vanish v = Vanish.getVanish(event.getPlayer());
-			if (v != null)
+			if(v != null)
 				v.remove();
 
-			for (Vanish vanish : vanishes)
+			for(Vanish vanish : vanishes)
 				vanish.unHideFor(event.getPlayer());
 		}
 	}

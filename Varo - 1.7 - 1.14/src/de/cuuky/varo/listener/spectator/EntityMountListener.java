@@ -13,17 +13,17 @@ public class EntityMountListener implements Listener {
 
 	@EventHandler
 	public void onEntityMount(EntityMountEvent event) {
-		if (cancelEvent(event.getEntity()))
+		if(cancelEvent(event.getEntity()))
 			event.setCancelled(true);
 	}
 
 	private static boolean cancelEvent(Entity interact) {
-		if (!(interact instanceof Player))
+		if(!(interact instanceof Player))
 			return false;
 
 		Player player = (Player) interact;
 
-		if (Vanish.getVanish(player) == null || player.getGameMode() != GameMode.ADVENTURE)
+		if(Vanish.getVanish(player) == null || player.getGameMode() != GameMode.ADVENTURE)
 			return false;
 
 		return true;

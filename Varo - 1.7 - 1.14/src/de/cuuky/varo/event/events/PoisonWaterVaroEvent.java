@@ -23,8 +23,8 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 
 			@Override
 			public void run() {
-				for (Player p : VersionUtils.getOnlinePlayer()) {
-					if (p.getLocation().getBlock().getType().toString().contains("WATER"))
+				for(Player p : VersionUtils.getOnlinePlayer()) {
+					if(p.getLocation().getBlock().getType().toString().contains("WATER"))
 						p.damage(0.75);
 				}
 			}

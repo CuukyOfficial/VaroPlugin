@@ -21,8 +21,7 @@ public class VaroInventory implements VaroSerializeable {
 
 	private Inventory inventory;
 
-	public VaroInventory() {
-	}
+	public VaroInventory() {}
 
 	public VaroInventory(int size) {
 		inventoryList = new HashMap<>();
@@ -48,15 +47,15 @@ public class VaroInventory implements VaroSerializeable {
 	public void onDeserializeEnd() {
 		createInventory();
 
-		for (String i : inventoryList.keySet())
+		for(String i : inventoryList.keySet())
 			inventory.setItem(Integer.valueOf(i), inventoryList.get(i));
 	}
 
 	@Override
 	public void onSerializeStart() {
-		for (int i = 0; i < inventory.getSize(); i++) {
+		for(int i = 0; i < inventory.getSize(); i++) {
 			ItemStack stack = inventory.getItem(i);
-			if (stack != null && stack.getType() != Material.AIR)
+			if(stack != null && stack.getType() != Material.AIR)
 				inventoryList.put(String.valueOf(i), stack);
 		}
 	}

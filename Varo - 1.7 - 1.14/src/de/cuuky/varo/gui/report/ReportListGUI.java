@@ -26,19 +26,18 @@ public class ReportListGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			Report reports;
 			try {
 				reports = Report.getReports().get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
 			ArrayList<String> lore = new ArrayList<>();
 			lore.add("§c" + reports.getId());
 
-			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reports.getReported().getName())
-					.itemstack(new ItemStack(Material.PAPER)).lore(lore).build());
+			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reports.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build());
 			start++;
 		}
 
@@ -46,8 +45,7 @@ public class ReportListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 
 	@Override
 	public void onClick(InventoryClickEvent event) {
@@ -56,7 +54,7 @@ public class ReportListGUI extends SuperInventory {
 		Report report = Report.getReport(id);
 		this.close(true);
 
-		if (report == null) {
+		if(report == null) {
 			update();
 			return;
 		}
@@ -71,8 +69,7 @@ public class ReportListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {

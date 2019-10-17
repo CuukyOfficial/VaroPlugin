@@ -58,16 +58,16 @@ public class ConfigHandler {
 	 */
 	private void loadConfig(YamlConfiguration cfg, File file, boolean configEntry, boolean existed) {
 		boolean save = false;
-		if (configEntry)
-			for (ConfigEntry entry : ConfigEntry.values()) {
-				if (cfg.get(entry.getPath()) == null)
+		if(configEntry)
+			for(ConfigEntry entry : ConfigEntry.values()) {
+				if(cfg.get(entry.getPath()) == null)
 					save = true;
 
 				cfg.addDefault(entry.getFullPath(), entry.getDefaultValue());
 			}
 		else
-			for (ConfigMessages message : ConfigMessages.values()) {
-				if (cfg.get(message.getPath()) == null)
+			for(ConfigMessages message : ConfigMessages.values()) {
+				if(cfg.get(message.getPath()) == null)
 					save = true;
 
 				cfg.addDefault(message.getPath(), message.getDefaultValue());
@@ -75,39 +75,39 @@ public class ConfigHandler {
 
 		cfg.options().copyDefaults(true);
 
-		if (configEntry)
+		if(configEntry)
 			cfg.options().header(getConfigHeader());
 		else
 			cfg.options().header("Die Liste aller Placeholder steht auf der Seite");
 
-		if (!existed) {
+		if(!existed) {
 			save(file, cfg);
 			return;
 		}
 
-		for (String key : cfg.getKeys(true)) {
-			if (cfg.get(key) instanceof MemorySection)
+		for(String key : cfg.getKeys(true)) {
+			if(cfg.get(key) instanceof MemorySection)
 				continue;
 
 			try {
-				if (!configEntry)
+				if(!configEntry)
 					ConfigMessages.getEntryByPath(key).setValue(String.valueOf(cfg.get(key)));
 				else
 					ConfigEntry.getEntryByPath(key).setValue(cfg.get(key), false);
-			} catch (NullPointerException e) {
+			} catch(NullPointerException e) {
 				cfg.set(key, null);
 				save = true;
 			}
 		}
 
-		if (save)
+		if(save)
 			save(file, cfg);
 	}
 
 	private void save(File file, YamlConfiguration cfg) {
 		try {
 			cfg.save(file);
-		} catch (IOException e) {
+		} catch(IOException e) {
 			System.out.println(Main.getConsolePrefix() + "Failed saving file " + file.getName());
 		}
 	}
@@ -119,7 +119,7 @@ public class ConfigHandler {
 	public void saveConfig() {
 		try {
 			configCfg.save(configFile);
-		} catch (IOException e) {
+		} catch(IOException e) {
 			System.out.println(Main.getConsolePrefix() + "Failed saving file " + configFile.getName());
 		}
 	}
@@ -128,16 +128,14 @@ public class ConfigHandler {
 	 * @return Every description of every ConfigEntry combined
 	 */
 	private String getConfigHeader() {
-		String header = "Config Einstellungen \r\n"
-				+ "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
+		String header = "Config Einstellungen \r\n" + "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
 		String desc = "";
-		for (ConfigSection section : ConfigSection.values()) {
+		for(ConfigSection section : ConfigSection.values()) {
 			desc = desc + "\n----------- " + section.getName() + " -----------";
 
-			for (ConfigEntry entry : section.getEntries()) {
+			for(ConfigEntry entry : section.getEntries()) {
 				String description = Utils.getArgsToString(entry.getDescription(), "\n  ");
-				desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: "
-						+ entry.getDefaultValue() + "\r\n";
+				desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValue() + "\r\n";
 			}
 		}
 		return header + desc + "-------------------------";

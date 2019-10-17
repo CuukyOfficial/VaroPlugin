@@ -41,7 +41,7 @@ public class Alert implements VaroSerializeable {
 
 	private int generateId() {
 		int i = alerts.size() + 1;
-		while (getAlert(i) != null)
+		while(getAlert(i) != null)
 			i++;
 
 		return i;
@@ -76,8 +76,8 @@ public class Alert implements VaroSerializeable {
 	}
 
 	public static Alert getAlert(int id) {
-		for (Alert alert : alerts)
-			if (alert.getId() == id)
+		for(Alert alert : alerts)
+			if(alert.getId() == id)
 				return alert;
 
 		return null;
@@ -89,8 +89,8 @@ public class Alert implements VaroSerializeable {
 
 	public static ArrayList<Alert> getOpenAlerts() {
 		ArrayList<Alert> open = new ArrayList<Alert>();
-		for (Alert alert : alerts)
-			if (alert.isOpen())
+		for(Alert alert : alerts)
+			if(alert.isOpen())
 				open.add(alert);
 
 		return open;
@@ -98,18 +98,16 @@ public class Alert implements VaroSerializeable {
 
 	public static ArrayList<Alert> getClosedAlerts() {
 		ArrayList<Alert> closed = new ArrayList<Alert>();
-		for (Alert alert : alerts)
-			if (!alert.isOpen())
+		for(Alert alert : alerts)
+			if(!alert.isOpen())
 				closed.add(alert);
 
 		return closed;
 	}
 
 	@Override
-	public void onDeserializeEnd() {
-	}
+	public void onDeserializeEnd() {}
 
 	@Override
-	public void onSerializeStart() {
-	}
+	public void onSerializeStart() {}
 }

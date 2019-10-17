@@ -22,23 +22,23 @@ public class ShutdownCommand extends DiscordBotCommand {
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
 		try {
-			if (BotRegister.getRegister(event.getAuthor()) == null) {
+			if(BotRegister.getRegister(event.getAuthor()) == null) {
 				event.getTextChannel().sendMessage("Du musst mit dem Bot authentifiziert sein!").queue();
 				return;
 			}
 
 			BotRegister reg = BotRegister.getRegister(event.getAuthor());
 			try {
-				if (Bukkit.getOfflinePlayer(reg.getPlayerName()) == null) {
+				if(Bukkit.getOfflinePlayer(reg.getPlayerName()) == null) {
 					event.getTextChannel().sendMessage("Spieler nicht gefunden!").queue();
 					return;
 				}
-			} catch (NullPointerException e) {
+			} catch(NullPointerException e) {
 				return;
 			}
 
 			OfflinePlayer player = Bukkit.getOfflinePlayer(reg.getPlayerName());
-			if (!player.isOp()) {
+			if(!player.isOp()) {
 				event.getTextChannel().sendMessage("Dazu bist du nicht berechtigt!").queue();
 				return;
 			}
@@ -51,7 +51,7 @@ public class ShutdownCommand extends DiscordBotCommand {
 					getDiscordBot().disconnect();
 				}
 			}, 20);
-		} catch (Exception e) {
+		} catch(Exception e) {
 			super.getDiscordBot().disconnect();
 		}
 	}

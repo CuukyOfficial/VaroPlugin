@@ -30,69 +30,61 @@ public class BackupListGUI extends SuperInventory {
 	public boolean onOpen() {
 		ArrayList<String> list = Backup.getBackups();
 		int start = getSize() * (getPage() - 1);
-		if (start != 0)
+		if(start != 0)
 			start -= 2;
 
-		for (int i = 0; i != getSize() - 2; i++) {
+		for(int i = 0; i != getSize() - 2; i++) {
 			String filename;
 			try {
 				filename = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
 			ArrayList<String> lore = new ArrayList<>();
 			lore.add("Backup made date: ");
 			String[] split1 = filename.split("_");
-			lore.add("Year: " + split1[0].split("-")[0] + ", Month: " + split1[0].split("-")[1] + ", Day: "
-					+ split1[0].split("-")[2]);
-			lore.add("Hour: " + split1[1].split("-")[0] + ", Minute: " + split1[1].split("-")[1] + ", Second: "
-					+ split1[1].split("-")[2].replace(".zip", ""));
-			linkItemTo(i, new ItemBuilder().displayname("§7" + filename).itemstack(new ItemStack(Material.DISPENSER))
-					.lore(lore).build(), new Runnable() {
+			lore.add("Year: " + split1[0].split("-")[0] + ", Month: " + split1[0].split("-")[1] + ", Day: " + split1[0].split("-")[2]);
+			lore.add("Hour: " + split1[1].split("-")[0] + ", Minute: " + split1[1].split("-")[1] + ", Second: " + split1[1].split("-")[2].replace(".zip", ""));
+			linkItemTo(i, new ItemBuilder().displayname("§7" + filename).itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build(), new Runnable() {
 
-						@Override
-						public void run() {
-							new BackupGUI(opener, filename);
-						}
-					});
+				@Override
+				public void run() {
+					new BackupGUI(opener, filename);
+				}
+			});
 			start++;
 		}
 
-		linkItemTo(44,
-				new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(),
-				new Runnable() {
+		linkItemTo(44, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						if (Backup.isBackup(getCurrentDate())) {
-							opener.sendMessage(
-									Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
-							return;
-						}
+			@Override
+			public void run() {
+				if(Backup.isBackup(getCurrentDate())) {
+					opener.sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
+					return;
+				}
 
-						new Backup();
-						updateInventory();
-					}
+				new Backup();
+				updateInventory();
+			}
 
-					private String getCurrentDate() {
-						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-						Date date = new Date();
+			private String getCurrentDate() {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+				Date date = new Date();
 
-						return dateFormat.format(date);
-					}
-				});
+				return dateFormat.format(date);
+			}
+		});
 
 		return calculatePages(list.size(), getSize() - 2) == page;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -101,6 +93,5 @@ public class BackupListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

@@ -36,14 +36,13 @@ public class Updater {
 	public Updater(JavaPlugin plugin, Integer resourceId) {
 		this.result = UpdateResult.NO_UPDATE;
 		this.rescourceId = resourceId;
-		if (resourceId == 0)
+		if(resourceId == 0)
 			return;
 
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL(
-					"https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openConnection();
+			HttpURLConnection con = (HttpURLConnection) new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openConnection();
 			version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-			switch (new Version(version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
+			switch(new Version(version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
 			case EQUAL:
 				result = UpdateResult.NO_UPDATE;
 				break;
@@ -54,13 +53,13 @@ public class Updater {
 				result = UpdateResult.TEST_BUILD;
 				break;
 			}
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			result = UpdateResult.FAIL_SPIGOT;
 		}
 	}
 
 	public void postResults() {
-		if (rescourceId == 0)
+		if(rescourceId == 0)
 			return;
 
 		System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());

@@ -18,7 +18,7 @@ public class ReportHandler extends VaroSerializeHandler {
 	public void onSave() {
 		clearOld();
 
-		for (Report report : Report.getReports())
+		for(Report report : Report.getReports())
 			save(String.valueOf(report.getId()), report, getConfiguration());
 
 		saveFile();

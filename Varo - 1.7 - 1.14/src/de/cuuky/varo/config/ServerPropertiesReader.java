@@ -15,15 +15,15 @@ public class ServerPropertiesReader {
 	public ServerPropertiesReader() {
 		try {
 			scanner = new Scanner(new File("server.properties"));
-		} catch (FileNotFoundException e) {
+		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public Object get(String key) {
-		while (scanner.hasNextLine()) {
+		while(scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-			if (!line.split("=")[0].equals(key))
+			if(!line.split("=")[0].equals(key))
 				continue;
 
 			return line.split("=")[1];

@@ -103,8 +103,7 @@ public class PlayerChooseInventory {
 
 	private PlayerInventoryHandler invHandler;
 
-	public PlayerChooseInventory(Player player, Player[] players, PlayerChooseHandler handler,
-			PlayerInventoryHandler invHandler) {
+	public PlayerChooseInventory(Player player, Player[] players, PlayerChooseHandler handler, PlayerInventoryHandler invHandler) {
 		this.player = player;
 		this.chooseHandler = handler;
 		this.size = 54;
@@ -123,18 +122,16 @@ public class PlayerChooseInventory {
 			@EventHandler
 			public void onInventoryClick(InventoryClickEvent event) {
 				Inventory inventory = new InventoryClickUtil(event).getInventory();
-				if (inventory == null || event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null
-						|| event.getCurrentItem().getItemMeta().getDisplayName() == null)
+				if(inventory == null || event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null || event.getCurrentItem().getItemMeta().getDisplayName() == null)
 					return;
 
-				if (!inv.equals(event.getInventory()))
+				if(!inv.equals(event.getInventory()))
 					return;
 
 				String displayname = event.getCurrentItem().getItemMeta().getDisplayName();
 
-				if (displayname.contains("Backwards") || displayname.contains("Forwards")) {
-					page = displayname.contains("Backwards") ? Integer.valueOf(displayname.split("| ")[1]) - 1
-							: Integer.valueOf(displayname.split("§8| §7")[1]) + 1;
+				if(displayname.contains("Backwards") || displayname.contains("Forwards")) {
+					page = displayname.contains("Backwards") ? Integer.valueOf(displayname.split("| ")[1]) - 1 : Integer.valueOf(displayname.split("§8| §7")[1]) + 1;
 					open();
 					return;
 				}
@@ -149,7 +146,7 @@ public class PlayerChooseInventory {
 
 			@EventHandler
 			public void onInventoryClose(InventoryCloseEvent event) {
-				if (!inv.equals(event.getInventory()))
+				if(!inv.equals(event.getInventory()))
 					return;
 
 				handler.onPlayerChoose(new PlayerChooseEvent(null, false));
@@ -165,43 +162,40 @@ public class PlayerChooseInventory {
 		int start = size * (page - 1);
 		boolean notEnough = false;
 		Player[] players = this.players != null ? this.players : (Player[]) VersionUtils.getOnlinePlayer().toArray();
-		for (int i = 0; i != (size - 3); i++) {
+		for(int i = 0; i != (size - 3); i++) {
 			Player player;
 
 			try {
 				player = (Player) players[start];
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
 			ItemStack stack = new ItemBuilder().player(player).build();
-			if (invHandler != null) {
+			if(invHandler != null) {
 				PlayerAddEvent event = new PlayerAddEvent(player);
 				invHandler.onPlayerInventoryAdd(event);
-				if (event.getDisplayName() != null)
+				if(event.getDisplayName() != null)
 					stack.getItemMeta().setDisplayName(event.getDisplayName());
 
-				if (event.getLore() != null)
+				if(event.getLore() != null)
 					stack.getItemMeta().setLore(Utils.collectionToArray(event.getLore()));
 			}
 
 			inv.setItem(start, stack);
 			start++;
 
-			if (start == size - 3)
+			if(start == size - 3)
 				notEnough = true;
 		}
 
-		inv.setItem(51, new ItemBuilder().displayname("§aChoose all")
-				.itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build());
+		inv.setItem(51, new ItemBuilder().displayname("§aChoose all").itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build());
 
-		if (notEnough)
-			inv.setItem(53, new ItemBuilder().displayname("§aForwards")
-					.itemstack(new ItemBuilder().playername("MHF_ArrowRight").buildSkull()).build());
+		if(notEnough)
+			inv.setItem(53, new ItemBuilder().displayname("§aForwards").itemstack(new ItemBuilder().playername("MHF_ArrowRight").buildSkull()).build());
 
-		if (page != 1)
-			inv.setItem(52, new ItemBuilder().displayname("§cBackwards")
-					.itemstack(new ItemBuilder().playername("MHF_ArrowLeft").buildSkull()).build());
+		if(page != 1)
+			inv.setItem(52, new ItemBuilder().displayname("§cBackwards").itemstack(new ItemBuilder().playername("MHF_ArrowLeft").buildSkull()).build());
 
 		this.player.openInventory(inv);
 	}

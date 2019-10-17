@@ -19,12 +19,11 @@ public class BlockedEnchantmentsListener implements Listener {
 
 	@EventHandler
 	public void onEnchant(EnchantItemEvent event) {
-		if (event.getItem() == null)
+		if(event.getItem() == null)
 			return;
 
-		for (Enchantment enc : event.getEnchantsToAdd().keySet())
-			if (Main.getDataManager().getItemHandler().getBlockedEnchantments().isBlocked(enc,
-					event.getEnchantsToAdd().get(enc))) {
+		for(Enchantment enc : event.getEnchantsToAdd().keySet())
+			if(Main.getDataManager().getItemHandler().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
 				event.setCancelled(true);
 				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
 				return;
@@ -33,30 +32,28 @@ public class BlockedEnchantmentsListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryClick(InventoryClickEvent event) {
-		if (event.isCancelled())
+		if(event.isCancelled())
 			return;
 
 		Inventory inv = event.getInventory();
 
-		if (!(inv instanceof AnvilInventory))
+		if(!(inv instanceof AnvilInventory))
 			return;
 
 		InventoryView view = event.getView();
 		int rawSlot = event.getRawSlot();
 
-		if (rawSlot != view.convertSlot(rawSlot) || rawSlot != 2)
+		if(rawSlot != view.convertSlot(rawSlot) || rawSlot != 2)
 			return;
 
 		ItemStack item = event.getCurrentItem();
-		if (item == null)
+		if(item == null)
 			return;
 
-		for (Enchantment enc : item.getEnchantments().keySet())
-			if (Main.getDataManager().getItemHandler().getBlockedEnchantments().isBlocked(enc,
-					item.getEnchantments().get(enc))) {
+		for(Enchantment enc : item.getEnchantments().keySet())
+			if(Main.getDataManager().getItemHandler().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
 				event.setCancelled(true);
-				((Player) event.getWhoClicked())
-						.sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
+				((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
 				return;
 			}
 	}

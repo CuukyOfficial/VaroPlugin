@@ -50,7 +50,7 @@ public class Report implements VaroSerializeable {
 
 	private int generateId() {
 		int id = Utils.randomInt(1000, 9999999);
-		while (getReport(id) != null)
+		while(getReport(id) != null)
 			generateId();
 
 		return id;
@@ -77,8 +77,8 @@ public class Report implements VaroSerializeable {
 	}
 
 	public static Report getReport(int id) {
-		for (Report r : reports)
-			if (r.getId() == id)
+		for(Report r : reports)
+			if(r.getId() == id)
 				return r;
 
 		return null;
@@ -92,9 +92,9 @@ public class Report implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {
-		if (reporter != null)
+		if(reporter != null)
 			this.reporterId = reporter.getId();
-		if (reported != null)
+		if(reported != null)
 			this.reportedId = reported.getId();
 	}
 }

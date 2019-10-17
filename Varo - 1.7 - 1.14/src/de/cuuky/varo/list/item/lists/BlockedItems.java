@@ -11,7 +11,7 @@ public class BlockedItems extends ItemList {
 	public BlockedItems() {
 		super("BlockedItems");
 
-		if (!items.isEmpty())
+		if(!items.isEmpty())
 			return;
 
 		items.add(Materials.AIR.parseItem());
@@ -20,8 +20,8 @@ public class BlockedItems extends ItemList {
 	@SuppressWarnings("deprecation")
 	public boolean isBlocked(ItemStack itemstack) {
 		itemstack = fixItem(itemstack);
-		for (ItemStack stack : items)
-			if (stack.equals(itemstack))
+		for(ItemStack stack : items)
+			if(stack.equals(itemstack))
 				return true;
 
 		return false;

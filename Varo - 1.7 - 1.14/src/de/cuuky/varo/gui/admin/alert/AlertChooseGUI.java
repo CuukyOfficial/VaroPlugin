@@ -19,7 +19,8 @@ import de.cuuky.varo.version.types.Materials;
 public class AlertChooseGUI extends SuperInventory {
 
 	public enum AlertGUIType {
-		CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()), ALL("§fALL", Material.BOOK),
+		CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()),
+		ALL("§fALL", Material.BOOK),
 		OPEN("§eOPENED", Material.EMERALD);
 
 		private String typeName;
@@ -39,7 +40,7 @@ public class AlertChooseGUI extends SuperInventory {
 		}
 
 		public ArrayList<Alert> getList() {
-			switch (this) {
+			switch(this) {
 			case ALL:
 				return Alert.getAlerts();
 			case CLOSED:
@@ -52,8 +53,8 @@ public class AlertChooseGUI extends SuperInventory {
 		}
 
 		public static AlertGUIType getType(String name) {
-			for (AlertGUIType type : values())
-				if (type.getTypeName().equals(name))
+			for(AlertGUIType type : values())
+				if(type.getTypeName().equals(name))
 					return type;
 
 			return null;
@@ -76,54 +77,46 @@ public class AlertChooseGUI extends SuperInventory {
 		Collections.reverse(alerts);
 
 		int start = getSize() * (getPage() - 1);
-		if (start != 0)
+		if(start != 0)
 			start -= 2;
 
-		for (int i = 0; i != getSize() - 2; i++) {
+		for(int i = 0; i != getSize() - 2; i++) {
 			Alert alert;
 			try {
 				alert = alerts.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId())
-					.itemstack(new ItemStack(Material.BOOK))
-					.lore(new String[] { "§7Message: §f" + alert.getMessage(),
-							"§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()),
-							"§7Open: §f" + alert.isOpen() })
-					.build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId()).itemstack(new ItemStack(Material.BOOK)).lore(new String[] { "§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()), "§7Open: §f" + alert.isOpen() }).build(), new Runnable() {
 
-						@Override
-						public void run() {
-							new AlertOptionGUI(opener, alert, type);
-						}
-					});
+				@Override
+				public void run() {
+					new AlertOptionGUI(opener, alert, type);
+				}
+			});
 			start++;
 		}
 
-		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§cClose all")
-				.itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(), new Runnable() {
+		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§cClose all").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						for (Alert alert : alerts)
-							alert.setOpen(false);
+			@Override
+			public void run() {
+				for(Alert alert : alerts)
+					alert.setOpen(false);
 
-						updateInventory();
-					}
-				});
+				updateInventory();
+			}
+		});
 
 		return calculatePages(alerts.size(), getSize()) == getPage();
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -132,6 +125,5 @@ public class AlertChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

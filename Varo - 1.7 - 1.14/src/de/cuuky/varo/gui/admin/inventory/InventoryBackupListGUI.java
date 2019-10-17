@@ -34,56 +34,49 @@ public class InventoryBackupListGUI extends SuperInventory {
 		ArrayList<InventoryBackup> backups = target.getStats().getInventoryBackups();
 
 		int start = getSize() * (getPage() - 1);
-		if (start != 0)
+		if(start != 0)
 			start -= 2;
 
-		for (int i = 0; i != getSize() - 2; i++) {
+		for(int i = 0; i != getSize() - 2; i++) {
 			InventoryBackup backup;
 			try {
 				backup = backups.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i,
-					new ItemBuilder().displayname(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(backup.getDate()))
-							.itemstack(new ItemStack(Material.BOOK)).build(),
-					new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(backup.getDate())).itemstack(new ItemStack(Material.BOOK)).build(), new Runnable() {
 
-						@Override
-						public void run() {
-							new InventoryBackupGUI(opener, backup);
-						}
-					});
+				@Override
+				public void run() {
+					new InventoryBackupGUI(opener, backup);
+				}
+			});
 			start++;
 		}
 
-		linkItemTo(getSize() - 1,
-				new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(),
-				new Runnable() {
+		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						if (!target.isOnline()) {
-							opener.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
-							return;
-						}
+			@Override
+			public void run() {
+				if(!target.isOnline()) {
+					opener.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
+					return;
+				}
 
-						target.getStats().addInventoryBackup(new InventoryBackup(target));
-						updateInventory();
-					}
-				});
+				target.getStats().addInventoryBackup(new InventoryBackup(target));
+				updateInventory();
+			}
+		});
 
 		return calculatePages(backups.size(), getSize() - 2) == getPage();
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -92,6 +85,5 @@ public class InventoryBackupListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

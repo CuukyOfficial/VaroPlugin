@@ -4,7 +4,9 @@ import de.cuuky.varo.player.stats.stat.PlayerState;
 
 public enum VaroAPIState {
 
-	ALIVE(PlayerState.ALIVE), DEAD(PlayerState.DEAD), SPECTATOR(PlayerState.SPECTATOR);
+	ALIVE(PlayerState.ALIVE),
+	DEAD(PlayerState.DEAD),
+	SPECTATOR(PlayerState.SPECTATOR);
 
 	private PlayerState origin;
 
@@ -17,8 +19,8 @@ public enum VaroAPIState {
 	}
 
 	public static VaroAPIState getState(PlayerState state) {
-		for (VaroAPIState apistate : values())
-			if (apistate.getOrigin() == state)
+		for(VaroAPIState apistate : values())
+			if(apistate.getOrigin() == state)
 				return apistate;
 
 		return null;

@@ -23,20 +23,16 @@ public class Broadcaster {
 	private ArrayList<String> messages = new ArrayList<>();
 
 	public Broadcaster() {
-		if (ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean()) {
-			int delay = (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) > 0
-					? (((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) > 0
-							? ((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) * 20
-							: 900 * 20)
-					: 900 * 20;
+		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean()) {
+			int delay = (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 				@Override
 				public void run() {
-					if (VersionUtils.getOnlinePlayer().size() == 0)
+					if(VersionUtils.getOnlinePlayer().size() == 0)
 						return;
 
-					for (String m : getRandomAd())
+					for(String m : getRandomAd())
 						Bukkit.broadcastMessage(m.replaceAll("&", "�"));
 				}
 			}, delay, delay);
@@ -44,7 +40,7 @@ public class Broadcaster {
 
 		loadMessages();
 
-		if (!ConfigEntry.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
+		if(!ConfigEntry.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
 			return;
 
 		starteSchedule();
@@ -54,18 +50,18 @@ public class Broadcaster {
 		File file = new File("plugins/Varo", "broadcasts.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
-		if (!file.exists()) {
+		if(!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
 			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewählt werden.");
 
-			if (!cfg.contains("messages"))
+			if(!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
 			cfg.options().copyDefaults(true);
 
 			try {
 				cfg.save(file);
-			} catch (IOException e) {
+			} catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -88,7 +84,7 @@ public class Broadcaster {
 	private static String[] getRandomAd() {
 		int random = Utils.randomInt(0, 1);
 		String[] messages = null;
-		if (random == 0) {
+		if(random == 0) {
 			messages = new String[] { "", "", "" };
 			messages[0] = "�7-----------------------------------------";
 			messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";

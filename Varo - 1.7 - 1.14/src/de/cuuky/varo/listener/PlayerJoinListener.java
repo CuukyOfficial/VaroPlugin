@@ -31,9 +31,9 @@ public class PlayerJoinListener implements Listener {
 		vplayer.setPlayer(player);
 		vplayer.onEvent(BukkitEventType.JOINED);
 
-		if (Main.getGame().getGameState() == GameState.LOBBY) {
+		if(Main.getGame().getGameState() == GameState.LOBBY) {
 			Spawn spawn = Spawn.getSpawn(vplayer);
-			if (spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
+			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
 				player.teleport(Main.getDataManager().getWorldHandler().getTeleportLocation());
@@ -43,43 +43,35 @@ public class PlayerJoinListener implements Listener {
 			player.updateInventory();
 			LobbyItem.giveItems(player);
 
-			if (ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
-				if (VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
+			if(ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
+				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
 					Main.getGame().start();
 				else
-					Bukkit.broadcastMessage(
-							Main.getPrefix() + "Es werden noch "
-									+ (ConfigEntry.START_AT_PLAYERS.getValueAsInt()
-											- VaroPlayer.getOnlineAndAlivePlayer().size())
-									+ " Spieler zum Start benötigt!");
+					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
 			}
 		} else {
-			if (isOutsideOfBorder(player)) {
+			if(isOutsideOfBorder(player)) {
 				player.teleport(player.getWorld().getSpawnLocation());
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
-						ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
+				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
 			}
 
-			if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
+			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
-			} else if (!ConfigEntry.PLAY_TIME.isIntActivated()) {
+			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
-						ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
-			} else if (VaroEvent.getMassRecEvent().isEnabled()) {
-				if (VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
+			} else if(VaroEvent.getMassRecEvent().isEnabled()) {
+				if(VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getTimer());
-					if (!vplayer.getalreadyHadMassProtectionTime()) {
+					if(!vplayer.getalreadyHadMassProtectionTime()) {
 						vplayer.getStats().addSessionPlayed();
 					}
 				} else
-					vplayer.getStats().setCountdown(
-							VaroEvent.getMassRecEvent().getCountdown(vplayer) + VaroEvent.getMassRecEvent().getTimer());
+					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getCountdown(vplayer) + VaroEvent.getMassRecEvent().getTimer());
 
-				if (!vplayer.getalreadyHadMassProtectionTime()) {
+				if(!vplayer.getalreadyHadMassProtectionTime()) {
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
-					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
-							ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
+					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -91,17 +83,14 @@ public class PlayerJoinListener implements Listener {
 					}, ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
 					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
-							ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 				}
-			} else if (!vplayer.getStats().hasTimeLeft()) {
+			} else if(!vplayer.getStats().hasTimeLeft()) {
 				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
-						ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
+				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
 			} else {
 				event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
-						ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 			}
 			return;
 		}
@@ -110,7 +99,7 @@ public class PlayerJoinListener implements Listener {
 	}
 
 	private boolean isOutsideOfBorder(Player p) {
-		if (VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
 			return false;
 
 		try {
@@ -119,8 +108,8 @@ public class PlayerJoinListener implements Listener {
 			double size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
 			Location center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
 			double x = loc.getX() - center.getX(), z = loc.getZ() - center.getZ();
-			return ((x > size || (-x) > size) || (z > size || (-z) > size));
-		} catch (Exception e) {
+			return((x > size || (-x) > size) || (z > size || (-z) > size));
+		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
 		}

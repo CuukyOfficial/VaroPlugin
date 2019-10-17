@@ -9,15 +9,9 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public enum DecreaseReason {
 
-	TIME_DAYS(ConfigEntry.BORDER_TIME_DAY_DECREASE, ConfigEntry.BORDER_TIME_DAY_DECREASE_SIZE,
-			ConfigEntry.BORDER_TIME_DAY_DECREASE_SPEED, ConfigEntry.BORDER_TIME_DAY_DECREASE_DAYS,
-			ConfigMessages.BORDER_DECREASE_DAYS, ConfigMessages.ALERT_BORDER_DECREASED_TIME_DAYS),
-	TIME_MINUTES(ConfigEntry.BORDER_TIME_MINUTE_DECREASE, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_SIZE,
-			ConfigEntry.BORDER_TIME_MINUTE_DECREASE_SPEED, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_MINUTES,
-			ConfigMessages.BORDER_DECREASE_MINUTES, ConfigMessages.ALERT_BORDER_DECREASED_TIME_MINUTE),
-	DEATH(ConfigEntry.BORDER_DEATH_DECREASE, ConfigEntry.BORDER_DEATH_DECREASE_SIZE,
-			ConfigEntry.BORDER_DEATH_DECREASE_SPEED, null, ConfigMessages.BORDER_DECREASE_DEATH,
-			ConfigMessages.ALERT_BORDER_DECREASED_DEATH);
+	TIME_DAYS(ConfigEntry.BORDER_TIME_DAY_DECREASE, ConfigEntry.BORDER_TIME_DAY_DECREASE_SIZE, ConfigEntry.BORDER_TIME_DAY_DECREASE_SPEED, ConfigEntry.BORDER_TIME_DAY_DECREASE_DAYS, ConfigMessages.BORDER_DECREASE_DAYS, ConfigMessages.ALERT_BORDER_DECREASED_TIME_DAYS),
+	TIME_MINUTES(ConfigEntry.BORDER_TIME_MINUTE_DECREASE, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_SIZE, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_SPEED, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_MINUTES, ConfigMessages.BORDER_DECREASE_MINUTES, ConfigMessages.ALERT_BORDER_DECREASED_TIME_MINUTE),
+	DEATH(ConfigEntry.BORDER_DEATH_DECREASE, ConfigEntry.BORDER_DEATH_DECREASE_SIZE, ConfigEntry.BORDER_DEATH_DECREASE_SPEED, null, ConfigMessages.BORDER_DECREASE_DEATH, ConfigMessages.ALERT_BORDER_DECREASED_DEATH);
 
 	private ConfigEntry enabled;
 	private ConfigEntry size;
@@ -27,8 +21,7 @@ public enum DecreaseReason {
 	private ConfigMessages broadcast;
 	private ConfigMessages alert;
 
-	private DecreaseReason(ConfigEntry enabled, ConfigEntry size, ConfigEntry speed, ConfigEntry time,
-			ConfigMessages broadcast, ConfigMessages alert) {
+	private DecreaseReason(ConfigEntry enabled, ConfigEntry size, ConfigEntry speed, ConfigEntry time, ConfigMessages broadcast, ConfigMessages alert) {
 		this.enabled = enabled;
 		this.size = size;
 		this.speed = speed;
@@ -52,23 +45,16 @@ public enum DecreaseReason {
 	public double getDecreaseSpeed() {
 		try {
 			return speed.getValueAsInt();
-		} catch (IllegalArgumentException e) {
+		} catch(IllegalArgumentException e) {
 			return speed.getValueAsDouble();
 		}
 	}
 
 	public void postBroadcast() {
-		Bukkit.broadcastMessage(broadcast.getValue().replace("%size%", String.valueOf(getSize()))
-				.replace("%speed%", String.valueOf(getDecreaseSpeed()))
-				.replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "")
-				.replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+		Bukkit.broadcastMessage(broadcast.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
 	}
 
 	public void postAlert() {
-		Main.getLoggerMaster().getEventLogger().println(LogType.BORDER,
-				alert.getValue().replace("%size%", String.valueOf(getSize()))
-						.replace("%speed%", String.valueOf(getDecreaseSpeed()))
-						.replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "")
-						.replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+		Main.getLoggerMaster().getEventLogger().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
 	}
 }

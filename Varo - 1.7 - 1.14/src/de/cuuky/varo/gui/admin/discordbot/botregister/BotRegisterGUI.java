@@ -24,44 +24,37 @@ public class BotRegisterGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(),
-				new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						register.delete();
-					}
-				});
+			@Override
+			public void run() {
+				register.delete();
+			}
+		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§cUnregister").itemstack(new ItemStack(Material.COAL)).build(),
-				new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§cUnregister").itemstack(new ItemStack(Material.COAL)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						register.setUserId(-1);
-					}
-				});
+			@Override
+			public void run() {
+				register.setUserId(-1);
+			}
+		});
 
-		linkItemTo(7,
-				new ItemBuilder().displayname((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass")
-						.itemstack(new ItemStack(register.isBypass() ? Material.ANVIL : Material.EMERALD)).build(),
-				new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass").itemstack(new ItemStack(register.isBypass() ? Material.ANVIL : Material.EMERALD)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						register.setBypass(!register.isBypass());
-					}
-				});
+			@Override
+			public void run() {
+				register.setBypass(!register.isBypass());
+			}
+		});
 		return true;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -70,6 +63,5 @@ public class BotRegisterGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

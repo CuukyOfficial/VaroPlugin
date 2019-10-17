@@ -65,11 +65,9 @@ public class Main extends JavaPlugin {
 		System.out.println("############################################################################");
 
 		System.out.println(CONSOLE_PREFIX);
-		System.out.println(CONSOLE_PREFIX + "Enabling " + this.getDescription().getName() + " v"
-				+ this.getDescription().getVersion() + " by " + this.getDescription().getAuthors().get(0) + "...");
+		System.out.println(CONSOLE_PREFIX + "Enabling " + this.getDescription().getName() + " v" + this.getDescription().getVersion() + " by " + this.getDescription().getAuthors().get(0) + "...");
 		System.out.println(CONSOLE_PREFIX + "Running on " + Bukkit.getVersion());
-		System.out.println(
-				CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
+		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		instance = this;
 
@@ -79,11 +77,9 @@ public class Main extends JavaPlugin {
 			try {
 				updater = new Updater(Main.this, Integer.valueOf(RESCOURCE_ID));
 				updater.postResults();
-				if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE)
-					new Alert(AlertType.UPDATE_AVAILABLE,
-							"§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord.");
-			} catch (NumberFormatException e) {
-			}
+				if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE)
+					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord.");
+			} catch(NumberFormatException e) {}
 
 			new DailyTimer();
 
@@ -91,16 +87,16 @@ public class Main extends JavaPlugin {
 			discordBot = botLauncher.getDiscordbot();
 			telegramBot = botLauncher.getTelegrambot();
 			new BukkitRegisterer();
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 			failed = true;
 			Bukkit.getPluginManager().disablePlugin(Main.this);
 		}
 
-		if (failed)
+		if(failed)
 			return;
 
-		if (ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean() && game.willSetupNext())
+		if(ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean() && game.willSetupNext())
 			new AutoSetup();
 
 		System.out.println(CONSOLE_PREFIX + "Enabled!");
@@ -115,19 +111,18 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
 
-		if (dataManager != null && !failed) {
+		if(dataManager != null && !failed) {
 			System.out.println(CONSOLE_PREFIX + "Saving files...");
 			dataManager.save();
 		}
 
-		if (botLauncher != null) {
+		if(botLauncher != null) {
 			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
 			botLauncher.disconnect();
 		}
 
-		if (!failed)
-			VersionUtils.getOnlinePlayer()
-					.forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		if(!failed)
+			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
 		Bukkit.getScheduler().cancelTasks(this);
 
 		System.out.println(CONSOLE_PREFIX + "Disabled!");

@@ -16,8 +16,10 @@ import de.cuuky.varo.version.types.Materials;
 public class TeamListGUI extends SuperInventory {
 
 	public enum TeamGUIType {
-		DEAD("§4DEAD", Materials.REDSTONE.parseMaterial()), REGISTERED("§bREGISTERED", Material.BOOK),
-		ALIVE("§aALIVE", Material.POTION), ONLINE("§eONLINE", Material.EMERALD);
+		DEAD("§4DEAD", Materials.REDSTONE.parseMaterial()),
+		REGISTERED("§bREGISTERED", Material.BOOK),
+		ALIVE("§aALIVE", Material.POTION),
+		ONLINE("§eONLINE", Material.EMERALD);
 
 		private String typeName;
 		private Material icon;
@@ -36,7 +38,7 @@ public class TeamListGUI extends SuperInventory {
 		}
 
 		public ArrayList<Team> getList() {
-			switch (this) {
+			switch(this) {
 			case DEAD:
 				return Team.getDeadTeams();
 			case REGISTERED:
@@ -65,22 +67,21 @@ public class TeamListGUI extends SuperInventory {
 		ArrayList<Team> list = type.getList();
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			Team team;
 			try {
 				team = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname(team.getDisplay()).playername(team.getMember().get(0).getName())
-					.buildSkull(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(team.getDisplay()).playername(team.getMember().get(0).getName()).buildSkull(), new Runnable() {
 
-						@Override
-						public void run() {
-							new TeamGUI(opener, team);
-						}
-					});
+				@Override
+				public void run() {
+					new TeamGUI(opener, team);
+				}
+			});
 			start++;
 		}
 
@@ -88,12 +89,10 @@ public class TeamListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {

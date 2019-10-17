@@ -17,8 +17,10 @@ public class PlayerListGUI extends SuperInventory {
 
 	public enum PlayerGUIType {
 		SPECTATOR("§fSPECTATOR", Materials.REDSTONE.parseMaterial()),
-		DEAD("§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial()), REGISTERED("§bREGISTERED", Material.BOOK),
-		ALIVE("§aALIVE", Material.POTION), ONLINE("§eONLINE", Material.EMERALD);
+		DEAD("§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial()),
+		REGISTERED("§bREGISTERED", Material.BOOK),
+		ALIVE("§aALIVE", Material.POTION),
+		ONLINE("§eONLINE", Material.EMERALD);
 
 		private String typeName;
 		private Material icon;
@@ -37,7 +39,7 @@ public class PlayerListGUI extends SuperInventory {
 		}
 
 		public ArrayList<VaroPlayer> getList() {
-			switch (this) {
+			switch(this) {
 			case SPECTATOR:
 				return VaroPlayer.getSpectator();
 			case DEAD:
@@ -54,8 +56,8 @@ public class PlayerListGUI extends SuperInventory {
 		}
 
 		public static PlayerGUIType getType(String name) {
-			for (PlayerGUIType type : values())
-				if (type.getTypeName().equals(name))
+			for(PlayerGUIType type : values())
+				if(type.getTypeName().equals(name))
 					return type;
 
 			return null;
@@ -78,27 +80,24 @@ public class PlayerListGUI extends SuperInventory {
 		ArrayList<VaroPlayer> list = type.getList();
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			VaroPlayer players;
 			try {
 				players = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i,
-					new ItemBuilder().playername(players.getName())
-							.lore((showStats ? players.getStats().getStatsListed() : new String[] {})).buildSkull(),
-					new Runnable() {
+			linkItemTo(i, new ItemBuilder().playername(players.getName()).lore((showStats ? players.getStats().getStatsListed() : new String[] {})).buildSkull(), new Runnable() {
 
-						@Override
-						public void run() {
-							if (!opener.hasPermission("varo.player"))
-								return;
+				@Override
+				public void run() {
+					if(!opener.hasPermission("varo.player"))
+						return;
 
-							new PlayerGUI(opener, players, type);
-						}
-					});
+					new PlayerGUI(opener, players, type);
+				}
+			});
 			start++;
 		}
 
@@ -106,16 +105,13 @@ public class PlayerListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {

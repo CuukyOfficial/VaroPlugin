@@ -34,50 +34,43 @@ public class BackupGUI extends SuperInventory {
 		int i = -1;
 		do {
 			i += 1;
-			if (i != 1 && i != 4 && i != 7)
+			if(i != 1 && i != 4 && i != 7)
 				inv.setItem(i, new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15));
 			else {
-				if (i == 1)
-					linkItemTo(i,
-							new ItemBuilder().displayname("§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(),
-							new Runnable() {
+				if(i == 1)
+					linkItemTo(i, new ItemBuilder().displayname("§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
-								@Override
-								public void run() {
-									if (Backup.unzip(file.getPath(), "plugins/Varo")) {
-										opener.sendMessage(Main.getPrefix() + "Backup erfolgreich wieder hergestellt!");
-										Main.getDataManager().setDoSave(false);
-										Bukkit.getServer().reload();
-									} else
-										opener.sendMessage(
-												Main.getPrefix() + "Backup konnte nicht wieder hergestellt werden!");
-								}
-							});
+						@Override
+						public void run() {
+							if(Backup.unzip(file.getPath(), "plugins/Varo")) {
+								opener.sendMessage(Main.getPrefix() + "Backup erfolgreich wieder hergestellt!");
+								Main.getDataManager().setDoSave(false);
+								Bukkit.getServer().reload();
+							} else
+								opener.sendMessage(Main.getPrefix() + "Backup konnte nicht wieder hergestellt werden!");
+						}
+					});
 
-				if (i == 7)
-					linkItemTo(i,
-							new ItemBuilder().displayname("§4Delete").itemstack(Materials.REDSTONE.parseItem()).build(),
-							new Runnable() {
+				if(i == 7)
+					linkItemTo(i, new ItemBuilder().displayname("§4Delete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
-								@Override
-								public void run() {
-									file.delete();
-									new BackupListGUI(opener);
-								}
-							});
+						@Override
+						public void run() {
+							file.delete();
+							new BackupListGUI(opener);
+						}
+					});
 			}
-		} while (i != inv.getSize() - 1);
+		} while(i != inv.getSize() - 1);
 
 		return true;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -85,6 +78,5 @@ public class BackupGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

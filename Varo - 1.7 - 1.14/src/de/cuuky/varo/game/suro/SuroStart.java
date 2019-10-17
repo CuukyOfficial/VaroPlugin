@@ -53,15 +53,15 @@ public class SuroStart {
 
 			@Override
 			public void run() {
-				if (titles.size() - 11 == i && !ignore) {
+				if(titles.size() - 11 == i && !ignore) {
 					Bukkit.getScheduler().cancelTask(sched);
 					start(20, i, true);
 				}
 
-				if (i >= titles.size()) {
+				if(i >= titles.size()) {
 					Bukkit.getScheduler().cancelTask(sched);
 					Main.getGame().setGamestate(GameState.STARTED);
-					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+					for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
 						VaroCancelAble.getCancelAble(vp.getPlayer(), CancelAbleType.FREEZE).remove();
@@ -71,16 +71,15 @@ public class SuroStart {
 					return;
 				}
 
-				for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+				for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 					new VaroCancelAble(CancelAbleType.FREEZE, vp.getPlayer());
 					new VaroCancelAble(CancelAbleType.MUTE, vp.getPlayer());
 					new VaroCancelAble(CancelAbleType.PROTECTION, vp.getPlayer());
 
 					vp.cleanUpPlayer();
 					vp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
-					if (!titles.get(i).isEmpty())
-						vp.getNetworkManager().sendTitle(titles.get(i).replace("%name%", vp.getName())
-								.replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size())), "");
+					if(!titles.get(i).isEmpty())
+						vp.getNetworkManager().sendTitle(titles.get(i).replace("%name%", vp.getName()).replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size())), "");
 				}
 
 				i++;

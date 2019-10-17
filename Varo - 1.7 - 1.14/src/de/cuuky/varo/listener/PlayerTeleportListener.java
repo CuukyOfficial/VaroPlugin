@@ -12,10 +12,10 @@ public class PlayerTeleportListener implements Listener {
 	@EventHandler
 	public void onTeleport(PlayerTeleportEvent event) {
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-		if (!vp.getStats().isSpectator() && !vp.isAdminIgnore() || event.getPlayer().isOp())
+		if(!vp.getStats().isSpectator() && !vp.isAdminIgnore() || event.getPlayer().isOp())
 			return;
 
-		if (event.getTo().getY() >= ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt())
+		if(event.getTo().getY() >= ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt())
 			return;
 
 		event.setCancelled(true);

@@ -6,10 +6,16 @@ import java.util.GregorianCalendar;
 public enum StartDelay {
 
 	MONTH(new GregorianCalendar().getActualMaximum(Calendar.DAY_OF_MONTH) * 86400, "Monat", "einem"),
-	WEEK(604800, "Woche", "einer"), DAY(86400, "Tag", "einem"), HOUR(3600, "Stunde", "einer"),
-	HALF_HOUR(1800, "Stunde", "einer halben"), TEN_MINTUES(60 * 10, "Minuten", "zehn"),
-	FIVE_MINTUES(60 * 5, "Minuten", "fünf"), FOUR_MINTUES(60 * 4, "Minuten", "vier"),
-	THREE_MINTUES(60 * 3, "Minuten", "drei"), TWO_MINTUES(60 * 2, "Minuten", "zwei"), MINTUE(60, "Minute", "einer"),
+	WEEK(604800, "Woche", "einer"),
+	DAY(86400, "Tag", "einem"),
+	HOUR(3600, "Stunde", "einer"),
+	HALF_HOUR(1800, "Stunde", "einer halben"),
+	TEN_MINTUES(60 * 10, "Minuten", "zehn"),
+	FIVE_MINTUES(60 * 5, "Minuten", "fünf"),
+	FOUR_MINTUES(60 * 4, "Minuten", "vier"),
+	THREE_MINTUES(60 * 3, "Minuten", "drei"),
+	TWO_MINTUES(60 * 2, "Minuten", "zwei"),
+	MINTUE(60, "Minute", "einer"),
 	GO(0, null, null);
 
 	private double delay;
@@ -45,11 +51,11 @@ public enum StartDelay {
 	}
 
 	public static StartDelay getStartDelay(long delay) {
-		for (StartDelay sd : values()) {
-			if (!(delay >= sd.getDelay()))
+		for(StartDelay sd : values()) {
+			if(!(delay >= sd.getDelay()))
 				continue;
 
-			if (sd.isUsed())
+			if(sd.isUsed())
 				continue;
 
 			sd.setUsed(true);
@@ -60,7 +66,7 @@ public enum StartDelay {
 	}
 
 	public static void reset() {
-		for (StartDelay sd : values())
+		for(StartDelay sd : values())
 			sd.setUsed(false);
 	}
 }

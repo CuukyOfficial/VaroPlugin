@@ -6,15 +6,14 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 public enum SpawnType implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "NUMBERS")
-	NUMBERS, @VaroSerializeField(enumValue = "PLAYER")
+	NUMBERS,
+	@VaroSerializeField(enumValue = "PLAYER")
 	PLAYER;
 
 	@Override
-	public void onDeserializeEnd() {
-	}
+	public void onDeserializeEnd() {}
 
 	@Override
-	public void onSerializeStart() {
-	}
+	public void onSerializeStart() {}
 
 }

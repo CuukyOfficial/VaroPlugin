@@ -17,7 +17,7 @@ public class ConfigCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer player, Command cmd, String label, String[] args) {
-		if (args.length == 0) {
+		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Config §7-----");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config reload");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/conifg set §7<key> <value>");
@@ -25,24 +25,22 @@ public class ConfigCommand extends VaroCommand {
 			return;
 		}
 
-		if (args[0].equals("reload") || args[0].equals("refresh")) {
+		if(args[0].equals("reload") || args[0].equals("refresh")) {
 			Main.getDataManager().reloadConfig();
-			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich " + Main.getColorCode() + "alle Listen§7, die "
-					+ Main.getColorCode() + "Messages §7und die " + Main.getColorCode() + "Config §7neu geladen!");
-		} else if (args[0].equals("set")) {
-			if (args.length != 3) {
+			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich " + Main.getColorCode() + "alle Listen§7, die " + Main.getColorCode() + "Messages §7und die " + Main.getColorCode() + "Config §7neu geladen!");
+		} else if(args[0].equals("set")) {
+			if(args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + "§b/config §7set <key> <value>");
 				return;
 			}
 
-			for (ConfigEntry entry : ConfigEntry.values()) {
-				if (!entry.getPath().equalsIgnoreCase(args[1]))
+			for(ConfigEntry entry : ConfigEntry.values()) {
+				if(!entry.getPath().equalsIgnoreCase(args[1]))
 					continue;
 
 				Object arg = Utils.getStringObject(args[2]);
 				entry.setValue(arg, true);
-				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich den Eintrag '§a" + entry.getPath() + "§7' auf '§a"
-						+ entry.getValue() + "§7' gesetzt!");
+				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich den Eintrag '§a" + entry.getPath() + "§7' auf '§a" + entry.getValue() + "§7' gesetzt!");
 				return;
 			}
 

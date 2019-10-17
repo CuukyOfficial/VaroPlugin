@@ -17,17 +17,17 @@ public class ScoreboardCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (vp == null) {
+		if(vp == null) {
 			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 			return;
 		}
 
-		if (!ConfigEntry.SCOREBOARD.getValueAsBoolean()) {
+		if(!ConfigEntry.SCOREBOARD.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "Scoreboards wurden deaktiviert!");
 			return;
 		}
 
-		if (vp.getStats().isShowScoreboard()) {
+		if(vp.getStats().isShowScoreboard()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			vp.sendMessage(Main.getPrefix() + "Du siehst nun nicht mehr das Scoreboard!");
 			vp.getStats().setShowScoreboard(false);

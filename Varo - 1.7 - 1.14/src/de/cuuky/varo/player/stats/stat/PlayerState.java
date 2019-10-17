@@ -6,8 +6,10 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 public enum PlayerState implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "DEAD")
-	DEAD("DEAD"), @VaroSerializeField(enumValue = "ALIVE")
-	ALIVE("ALIVE"), @VaroSerializeField(enumValue = "SPECTATOR")
+	DEAD("DEAD"),
+	@VaroSerializeField(enumValue = "ALIVE")
+	ALIVE("ALIVE"),
+	@VaroSerializeField(enumValue = "SPECTATOR")
 	SPECTATOR("SPECTATOR");
 
 	private String name;
@@ -21,12 +23,10 @@ public enum PlayerState implements VaroSerializeable {
 	}
 
 	@Override
-	public void onDeserializeEnd() {
-	}
+	public void onDeserializeEnd() {}
 
 	@Override
-	public void onSerializeStart() {
-	}
+	public void onSerializeStart() {}
 
 	@Override
 	public String toString() {
@@ -34,8 +34,8 @@ public enum PlayerState implements VaroSerializeable {
 	}
 
 	public static PlayerState getByName(String name) {
-		for (PlayerState state : values())
-			if (state.getName().equalsIgnoreCase(name))
+		for(PlayerState state : values())
+			if(state.getName().equalsIgnoreCase(name))
 				return state;
 
 		return null;

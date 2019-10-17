@@ -57,7 +57,7 @@ public class Rank implements VaroSerializeable {
 	public void setTablistLocation(int tablistLocation) {
 		this.tablistLocation = tablistLocation;
 
-		if (tablistLocation > highestLocation)
+		if(tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
@@ -75,13 +75,12 @@ public class Rank implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if (tablistLocation > highestLocation)
+		if(tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
 	@Override
-	public void onSerializeStart() {
-	}
+	public void onSerializeStart() {}
 
 	public static int getHighestLocation() {
 		return highestLocation;

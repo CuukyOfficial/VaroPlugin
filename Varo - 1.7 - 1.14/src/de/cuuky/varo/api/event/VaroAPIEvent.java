@@ -9,11 +9,10 @@ public class VaroAPIEvent {
 		this.cancelAble = cancelAble;
 	}
 
-	public VaroAPIEvent() {
-	}
+	public VaroAPIEvent() {}
 
 	public void setCancelled(boolean cancelled) {
-		if (this.cancelAble)
+		if(this.cancelAble)
 			this.cancelled = cancelled;
 	}
 

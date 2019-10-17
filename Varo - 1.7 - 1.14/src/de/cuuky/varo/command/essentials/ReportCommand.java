@@ -16,50 +16,49 @@ public class ReportCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
+		if(!ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "§cReports §7wurden in der Config deaktiviert!");
 			return false;
 		}
 
-		if (!(sender instanceof Player)) {
+		if(!(sender instanceof Player)) {
 			sender.sendMessage(Main.getPrefix() + "Only for Player");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(sender.getName());
 
-		if (args.length == 0 || args.length > 1) {
+		if(args.length == 0 || args.length > 1) {
 			sender.sendMessage(Main.getPrefix() + "§7------ §cReport §7------");
 			sender.sendMessage(Main.getPrefix() + "§c/report §7<Player>");
-			if (sender.hasPermission("varo.reports"))
+			if(sender.hasPermission("varo.reports"))
 				sender.sendMessage(Main.getPrefix() + "§c/report list");
 			sender.sendMessage(Main.getPrefix() + "§7-------------------");
 			return false;
 		}
 
-		if (args[0].equals("list") && player.hasPermission("varo.reports")) {
+		if(args[0].equals("list") && player.hasPermission("varo.reports")) {
 			new ReportListGUI(player);
 			return false;
 		}
 
 		VaroPlayer reported = VaroPlayer.getPlayer(args[0]);
-		if (reported == null) {
+		if(reported == null) {
 			sender.sendMessage(Main.getPrefix() + "Dieser Spieler existiert nicht!");
 			return false;
 		}
 
-		if (!reported.isOnline()) {
+		if(!reported.isOnline()) {
 			sender.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
 			return false;
 		}
 
-		if (reported.getPlayer().equals(sender)) {
+		if(reported.getPlayer().equals(sender)) {
 			sender.sendMessage(Main.getPrefix() + "Du kannst dich nicht §cselbst §7reporten!");
 			return false;
 		}
 
-		if (reported.getPlayer().hasPermission("varo.ignorereport")
-				&& !ConfigEntry.REPORT_STAFF_MEMBER.getValueAsBoolean()) {
+		if(reported.getPlayer().hasPermission("varo.ignorereport") && !ConfigEntry.REPORT_STAFF_MEMBER.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "Du kannst keine §cTeammitglieder §7reporten!");
 			return false;
 		}

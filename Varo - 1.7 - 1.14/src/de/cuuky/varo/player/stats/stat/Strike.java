@@ -32,8 +32,7 @@ public class Strike implements VaroSerializeable {
 
 	private VaroPlayer striked;
 
-	public Strike() {
-	}
+	public Strike() {}
 
 	public Strike(String reason, VaroPlayer striked, String striker) {
 		this.reason = reason;
@@ -63,11 +62,10 @@ public class Strike implements VaroSerializeable {
 	public void activate(int number) {
 		this.number = number;
 
-		if (ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated()
-				&& !ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
+		if(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
 			banUntil = DateUtils.addHours(new Date(), ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
-		switch (number) {
+		switch(number) {
 		case 1:
 			break;
 		case 2:
@@ -75,45 +73,37 @@ public class Strike implements VaroSerializeable {
 			break;
 		case 3:
 			striked.getStats().setState(PlayerState.DEAD);
-			if (striked.isOnline())
+			if(striked.isOnline())
 				striked.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue());
 			break;
 		default:
 			striked.getStats().setState(PlayerState.DEAD);
-			if (striked.isOnline())
+			if(striked.isOnline())
 				striked.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue());
 			break;
 		}
 
-		if (!ConfigEntry.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
+		if(!ConfigEntry.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
 			post();
 	}
 
 	public void post() {
-		if (ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated()
-				&& ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
+		if(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
 			banUntil = DateUtils.addHours(new Date(), ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
-		switch (number) {
+		switch(number) {
 		case 1:
-			Location loc = striked.isOnline() ? striked.getPlayer().getLocation()
-					: striked.getStats().getLastLocation();
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE,
-					ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%",
-							"X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: "
-									+ loc.getWorld().getName()));
+			Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
 			break;
 		case 2:
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE,
-					ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()));
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()));
 			break;
 		case 3:
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE,
-					ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()));
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()));
 			break;
 		default:
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE,
-					striked.getName() + " hat nun den " + number + "ten Strike!");
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, striked.getName() + " hat nun den " + number + "ten Strike!");
 			break;
 		}
 
@@ -134,6 +124,5 @@ public class Strike implements VaroSerializeable {
 	}
 
 	@Override
-	public void onSerializeStart() {
-	}
+	public void onSerializeStart() {}
 }

@@ -12,7 +12,7 @@ public class UsageCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-		if (!sender.hasPermission("varo.usage")) {
+		if(!sender.hasPermission("varo.usage")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue().replace("%permission%", "varo.usage"));
 			return false;
 		}
@@ -23,12 +23,9 @@ public class UsageCommand implements CommandExecutor {
 		sender.sendMessage(Main.getPrefix() + "§7System Version: §c" + System.getProperty("os.version"));
 		sender.sendMessage(Main.getPrefix() + "§7Java Version: §c" + System.getProperty("java.version"));
 		sender.sendMessage(Main.getPrefix() + "§7Bukkit/Spigot Version: §c" + Bukkit.getVersion());
-		sender.sendMessage(
-				Main.getPrefix() + "§7Plugin Version: §c" + Main.getInstance().getDescription().getVersion());
-		sender.sendMessage(Main.getPrefix() + "§7Total memory usage of every plugin: §c"
-				+ (r.totalMemory() - r.freeMemory()) / 1048576 + "MB§7!");
-		sender.sendMessage(
-				Main.getPrefix() + "§7Total memory usage of the server: §c" + r.totalMemory() / 1048576 + "MB§7!");
+		sender.sendMessage(Main.getPrefix() + "§7Plugin Version: §c" + Main.getInstance().getDescription().getVersion());
+		sender.sendMessage(Main.getPrefix() + "§7Total memory usage of every plugin: §c" + (r.totalMemory() - r.freeMemory()) / 1048576 + "MB§7!");
+		sender.sendMessage(Main.getPrefix() + "§7Total memory usage of the server: §c" + r.totalMemory() / 1048576 + "MB§7!");
 		sender.sendMessage(Main.getPrefix() + "§7Memory available: §c" + r.maxMemory() / 1048576 + "MB§7!");
 		return false;
 	}

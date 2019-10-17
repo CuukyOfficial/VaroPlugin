@@ -13,7 +13,7 @@ public class RainCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!(sender.hasPermission("varo.rain"))) {
+		if(!(sender.hasPermission("varo.rain"))) {
 			sender.sendMessage(Main.getPrefix() + "Dazu bist du nicht berechtigt!");
 			return false;
 		}

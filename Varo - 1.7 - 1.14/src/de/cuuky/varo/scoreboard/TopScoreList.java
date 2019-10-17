@@ -23,7 +23,7 @@ public class TopScoreList {
 
 			@Override
 			public int compare(VaroPlayer o1, VaroPlayer o2) {
-				if (o1.getStats().getKills() == o2.getStats().getKills())
+				if(o1.getStats().getKills() == o2.getStats().getKills())
 					return 0;
 
 				return o1.getStats().getKills() > o2.getStats().getKills() ? -1 : 1;
@@ -34,7 +34,7 @@ public class TopScoreList {
 
 			@Override
 			public int compare(Team o1, Team o2) {
-				if (o1.getKills() == o2.getKills())
+				if(o1.getKills() == o2.getKills())
 					return 0;
 
 				return o1.getKills() > o2.getKills() ? -1 : 1;
@@ -48,17 +48,17 @@ public class TopScoreList {
 		topPlayer.clear();
 		topTeams.clear();
 
-		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+		for(VaroPlayer player : VaroPlayer.getVaroPlayer()) {
 			int kills = player.getStats().getKills();
 
-			if (kills > 0)
+			if(kills > 0)
 				topPlayer.add(player);
 		}
 
-		for (Team team : Team.getTeams()) {
+		for(Team team : Team.getTeams()) {
 			int kills = team.getKills();
 
-			if (kills > 0)
+			if(kills > 0)
 				topTeams.add(team);
 		}
 
@@ -67,14 +67,14 @@ public class TopScoreList {
 	}
 
 	public VaroPlayer getPlayer(int rank) {
-		if (rank - 1 < topPlayer.size())
+		if(rank - 1 < topPlayer.size())
 			return (VaroPlayer) topPlayer.toArray()[rank - 1];
 		else
 			return null;
 	}
 
 	public Team getTeam(int rank) {
-		if (rank - 1 < topTeams.size())
+		if(rank - 1 < topTeams.size())
 			return (Team) topTeams.toArray()[rank - 1];
 		else
 			return null;

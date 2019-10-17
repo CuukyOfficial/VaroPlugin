@@ -28,18 +28,13 @@ public class AlertOptionGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(4,
-				new ItemBuilder().displayname(alert.isOpen() ? "§cClose" : "§aOpen")
-						.itemstack(
-								new ItemStack(alert.isOpen() ? Materials.REDSTONE.parseMaterial() : Material.EMERALD))
-						.build(),
-				new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname(alert.isOpen() ? "§cClose" : "§aOpen").itemstack(new ItemStack(alert.isOpen() ? Materials.REDSTONE.parseMaterial() : Material.EMERALD)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						alert.switchOpenState();
-					}
-				});
+			@Override
+			public void run() {
+				alert.switchOpenState();
+			}
+		});
 
 		return true;
 	}
@@ -50,8 +45,7 @@ public class AlertOptionGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -60,6 +54,5 @@ public class AlertOptionGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

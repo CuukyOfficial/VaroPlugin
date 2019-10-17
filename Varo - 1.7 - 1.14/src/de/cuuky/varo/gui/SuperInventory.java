@@ -67,7 +67,7 @@ public abstract class SuperInventory {
 		this.modifier = new ArrayList<Integer>(Arrays.asList(inv.getSize() - 1, inv.getSize() - 9, inv.getSize() - 5));
 
 		SuperInventory inv = getInventory(opener);
-		if (inv != null)
+		if(inv != null)
 			inv.close(true);
 
 		guis.add(this);
@@ -85,7 +85,7 @@ public abstract class SuperInventory {
 	 * Getter for the back button
 	 */
 	private String getBack() {
-		if (!homePage)
+		if(!homePage)
 			return "§4Zurück";
 		else
 			return "§4Schließen";
@@ -95,43 +95,36 @@ public abstract class SuperInventory {
 	 * Set Back and Forwards
 	 */
 	private void setSwitcher() {
-		inv.setItem(modifier.get(2),
-				new ItemBuilder().displayname(getBack())
-						.itemstack(getBack().equals("§4Zurück") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial())
-								: Materials.REDSTONE.parseItem())
-						.build());
-		if (!hasMorePages)
+		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("§4Zurück") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
+		if(!hasMorePages)
 			return;
 
-		if (!isLastPage)
+		if(!isLastPage)
 			inv.setItem(modifier.get(0), forward);
 
-		if (page != 1)
+		if(page != 1)
 			inv.setItem(modifier.get(1), backwards);
 	}
 
 	private void fillSpace() {
-		if (!FILL_INVENTORY)
+		if(!FILL_INVENTORY)
 			return;
 
-		for (int i = 0; i < inv.getSize(); i++)
-			if (inv.getItem(i) == null)
-				inv.setItem(i,
-						new ItemBuilder().displayname("§c").itemstack(
-								new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15))
-								.build());
+		for(int i = 0; i < inv.getSize(); i++)
+			if(inv.getItem(i) == null)
+				inv.setItem(i, new ItemBuilder().displayname("§c").itemstack(new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15)).build());
 	}
 
 	@SuppressWarnings("deprecation")
 	private void doAnimation() {
-		if (!ANIMATIONS)
+		if(!ANIMATIONS)
 			return;
 
 		HashMap<Integer, ItemStack> itemlist = new HashMap<Integer, ItemStack>();
-		for (int i = 0; i < (inv.getSize() - 9); i++)
+		for(int i = 0; i < (inv.getSize() - 9); i++)
 			itemlist.put(i, inv.getItem(i));
 
-		for (int i = 0; i < (inv.getSize() - 9); i++)
+		for(int i = 0; i < (inv.getSize() - 9); i++)
 			inv.setItem(i, null);
 		opener.updateInventory();
 
@@ -142,13 +135,13 @@ public abstract class SuperInventory {
 			@Override
 			public void run() {
 				int middle = (int) Math.ceil(itemlist.size() / 2);
-				for (int radius = 0; middle + radius != itemlist.size(); radius++) {
-					if (!isOpen())
+				for(int radius = 0; middle + radius != itemlist.size(); radius++) {
+					if(!isOpen())
 						break;
 
 					try {
 						Thread.sleep(delay);
-					} catch (InterruptedException e) {
+					} catch(InterruptedException e) {
 						e.printStackTrace();
 					}
 
@@ -157,7 +150,7 @@ public abstract class SuperInventory {
 
 					try {
 						Thread.sleep(delay);
-					} catch (InterruptedException e) {
+					} catch(InterruptedException e) {
 						e.printStackTrace();
 					}
 
@@ -165,10 +158,10 @@ public abstract class SuperInventory {
 					opener.updateInventory();
 				}
 
-				if ((inv.getSize() - 9) % 2 == 0 && isOpen()) {
+				if((inv.getSize() - 9) % 2 == 0 && isOpen()) {
 					try {
 						Thread.sleep(delay);
-					} catch (InterruptedException e) {
+					} catch(InterruptedException e) {
 						e.printStackTrace();
 					}
 					inv.setItem(0, itemlist.get(0));
@@ -195,7 +188,7 @@ public abstract class SuperInventory {
 	 * Updating inventory items
 	 */
 	public void updateInventory() {
-		if (opener.getOpenInventory() != null) {
+		if(opener.getOpenInventory() != null) {
 			ignoreNextClose = true;
 			opener.closeInventory();
 		}
@@ -213,7 +206,7 @@ public abstract class SuperInventory {
 	 */
 	public void open() {
 		isLastPage = this.onOpen();
-		if (!isLastPage)
+		if(!isLastPage)
 			hasMorePages = true;
 
 		setSwitcher();
@@ -223,8 +216,8 @@ public abstract class SuperInventory {
 	}
 
 	public int getFixedSize(int size) {
-		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8))
-			return (size < 1 ? 1 : (size > 64 ? 64 : size));
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8))
+			return(size < 1 ? 1 : (size > 64 ? 64 : size));
 		else
 			return size;
 	}
@@ -266,7 +259,7 @@ public abstract class SuperInventory {
 	public void back() {
 		close(true);
 
-		if (!onBackClick())
+		if(!onBackClick())
 			new MainMenu(opener);
 	}
 
@@ -275,7 +268,7 @@ public abstract class SuperInventory {
 	}
 
 	protected void close(boolean unregister) {
-		if (!unregister)
+		if(!unregister)
 			ignoreNextClose = true;
 		else
 			guis.remove(this);
@@ -284,7 +277,7 @@ public abstract class SuperInventory {
 	}
 
 	public void closeInventory() {
-		if (ignoreNextClose) {
+		if(ignoreNextClose) {
 			ignoreNextClose = false;
 			return;
 		}
@@ -294,8 +287,8 @@ public abstract class SuperInventory {
 	}
 
 	public void clear() {
-		for (int i = 0; i < inv.getContents().length; i++) {
-			if (modifier.contains(i))
+		for(int i = 0; i < inv.getContents().length; i++) {
+			if(modifier.contains(i))
 				continue;
 
 			inv.setItem(i, new ItemStack(Material.AIR));
@@ -310,8 +303,8 @@ public abstract class SuperInventory {
 	 * Executes itemlinks
 	 */
 	public void executeLink(ItemStack item) {
-		for (ItemMeta stack : itemlinks.keySet())
-			if (stack.getDisplayName().equals(item.getItemMeta().getDisplayName())) {
+		for(ItemMeta stack : itemlinks.keySet())
+			if(stack.getDisplayName().equals(item.getItemMeta().getDisplayName())) {
 				itemlinks.get(stack).run();
 				break;
 			}
@@ -330,7 +323,7 @@ public abstract class SuperInventory {
 	 */
 	protected static int calculatePages(int amount, int pageSize) {
 		int res = (int) Math.ceil((double) amount / pageSize);
-		if (res == 0)
+		if(res == 0)
 			res = 1;
 		return res;
 	}
@@ -353,8 +346,8 @@ public abstract class SuperInventory {
 	public abstract void onClose(InventoryCloseEvent event);
 
 	public static SuperInventory getInventory(Player player) {
-		for (SuperInventory inventory : guis)
-			if (inventory.getOpener().equals(player))
+		for(SuperInventory inventory : guis)
+			if(inventory.getOpener().equals(player))
 				return inventory;
 
 		return null;

@@ -20,50 +20,42 @@ public class RegisterCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if (event.getAuthor().isBot() || event.getAuthor().equals(super.getDiscordBot().getJda().getSelfUser()))
+		if(event.getAuthor().isBot() || event.getAuthor().equals(super.getDiscordBot().getJda().getSelfUser()))
 			return;
 
-		if (super.getDiscordBot().getRegisterChannel() == null)
+		if(super.getDiscordBot().getRegisterChannel() == null)
 			return;
 
-		if (super.getDiscordBot().getRegisterChannel().getIdLong() != event.getTextChannel().getIdLong()) {
-			getDiscordBot().sendMessage(
-					"Bitte nutze den " + super.getDiscordBot().getRegisterChannel().getAsMention()
-							+ " Channel zum verifizieren, " + event.getAuthor().getAsMention() + "!",
-					"ERROR", Color.RED, event.getTextChannel());
+		if(super.getDiscordBot().getRegisterChannel().getIdLong() != event.getTextChannel().getIdLong()) {
+			getDiscordBot().sendMessage("Bitte nutze den " + super.getDiscordBot().getRegisterChannel().getAsMention() + " Channel zum verifizieren, " + event.getAuthor().getAsMention() + "!", "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 
 		TextChannel channel = event.getTextChannel();
 
-		if (args.length == 0) {
-			getDiscordBot().sendMessage("Usage: '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString()
-					+ "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
+		if(args.length == 0) {
+			getDiscordBot().sendMessage("Usage: '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 
 		int code;
 		try {
 			code = Integer.valueOf(args[0]);
-		} catch (Exception e) {
-			getDiscordBot().sendMessage("Usage: '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString()
-					+ "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
+		} catch(Exception e) {
+			getDiscordBot().sendMessage("Usage: '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 
-		for (BotRegister reg : BotRegister.getBotRegister())
-			if (reg.isActive() && reg.getUserId() == event.getAuthor().getIdLong()) {
+		for(BotRegister reg : BotRegister.getBotRegister())
+			if(reg.isActive() && reg.getUserId() == event.getAuthor().getIdLong()) {
 				channel.sendMessage("Discord Account already used! " + event.getAuthor().getAsMention()).queue();
 				return;
 			}
 
-		for (BotRegister reg : BotRegister.getBotRegister()) {
-			if (reg.getCode() == code && !reg.isActive()) {
+		for(BotRegister reg : BotRegister.getBotRegister()) {
+			if(reg.getCode() == code && !reg.isActive()) {
 				reg.setUserId(Long.valueOf(event.getAuthor().getId()));
-				getDiscordBot().sendMessage(
-						"Discord Account '" + event.getAuthor().getAsMention()
-								+ "' successfully linked with the MC-Account '" + reg.getPlayerName() + "'!",
-						"SUCCESS", Color.GREEN, event.getTextChannel());
+				getDiscordBot().sendMessage("Discord Account '" + event.getAuthor().getAsMention() + "' successfully linked with the MC-Account '" + reg.getPlayerName() + "'!", "SUCCESS", Color.GREEN, event.getTextChannel());
 				reg.setCode(reg.generateCode());
 				return;
 			}

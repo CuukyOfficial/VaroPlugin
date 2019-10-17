@@ -16,7 +16,7 @@ public class RestartCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (Main.getGame().getGameState() == GameState.LOBBY) {
+		if(Main.getGame().getGameState() == GameState.LOBBY) {
 			sender.sendMessage(Main.getPrefix() + "Varo wurde bereits neu gestartet!");
 			return;
 		}

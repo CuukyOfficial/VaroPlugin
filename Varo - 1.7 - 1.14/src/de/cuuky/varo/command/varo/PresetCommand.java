@@ -18,21 +18,21 @@ public class PresetCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (args.length == 0) {
+		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7load <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7save <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7list");
 			return;
 		}
 
-		if (args[0].equalsIgnoreCase("load")) {
-			if (args.length != 2) {
+		if(args[0].equalsIgnoreCase("load")) {
+			if(args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7load <PresetPath>");
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
-			if (!loader.getFile().isDirectory()) {
+			if(!loader.getFile().isDirectory()) {
 				sender.sendMessage(Main.getPrefix() + args[1] + " nicht gefunden!");
 				return;
 			}
@@ -40,20 +40,19 @@ public class PresetCommand extends VaroCommand {
 			loader.loadSettings();
 			Main.getDataManager().reloadConfig();
 			sender.sendMessage(Main.getPrefix() + "Einstellungen '" + args[1] + "' erfolgreich geladen!");
-		} else if (args[0].equalsIgnoreCase("save")) {
-			if (args.length != 2) {
+		} else if(args[0].equalsIgnoreCase("save")) {
+			if(args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7save <PresetPath>");
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
 			loader.copyCurrentSettingsTo();
-			sender.sendMessage(
-					Main.getPrefix() + "Derzeitige Einstellungen erfolgreich unter '" + args[1] + "' gespeichert!");
-		} else if (args[0].equalsIgnoreCase("list")) {
+			sender.sendMessage(Main.getPrefix() + "Derzeitige Einstellungen erfolgreich unter '" + args[1] + "' gespeichert!");
+		} else if(args[0].equalsIgnoreCase("list")) {
 			File file = new File("plugins/Varo/presets");
 			sender.sendMessage(Main.getPrefix() + "§lListe aller Presets:");
-			for (File f : file.listFiles())
+			for(File f : file.listFiles())
 				sender.sendMessage(Main.getPrefix() + f.getName());
 		} else
 			sender.sendMessage(Main.getPrefix() + "Command not found! /varo preset");

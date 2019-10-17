@@ -30,10 +30,10 @@ public abstract class Checker {
 	}
 
 	public static void checkAll() {
-		for (Checker checkers : checker) {
+		for(Checker checkers : checker) {
 			try {
 				checkers.check();
-			} catch (Exception e) {
+			} catch(Exception e) {
 				e.printStackTrace();
 				continue;
 			}

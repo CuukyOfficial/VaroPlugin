@@ -26,28 +26,21 @@ public class BotRegisterListGUI extends SuperInventory {
 		ArrayList<BotRegister> list = BotRegister.getBotRegister();
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			BotRegister register;
 			try {
 				register = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i,
-					new ItemBuilder().playername(register.getPlayerName())
-							.lore(new String[] { "§7Player Name: " + Main.getColorCode() + register.getUUID(),
-									"§7Player Name: " + Main.getColorCode() + register.getPlayerName(),
-									"§7Is Bypassing: " + Main.getColorCode() + register.isBypass(),
-									"§7Discord User: " + Main.getColorCode() + register.getMember().getAsMention() })
-							.amount(getFixedSize(list.size())).buildSkull(),
-					new Runnable() {
+			linkItemTo(i, new ItemBuilder().playername(register.getPlayerName()).lore(new String[] { "§7Player Name: " + Main.getColorCode() + register.getUUID(), "§7Player Name: " + Main.getColorCode() + register.getPlayerName(), "§7Is Bypassing: " + Main.getColorCode() + register.isBypass(), "§7Discord User: " + Main.getColorCode() + register.getMember().getAsMention() }).amount(getFixedSize(list.size())).buildSkull(), new Runnable() {
 
-						@Override
-						public void run() {
-							new BotRegisterGUI(opener, register);
-						}
-					});
+				@Override
+				public void run() {
+					new BotRegisterGUI(opener, register);
+				}
+			});
 
 			start++;
 		}
@@ -56,12 +49,10 @@ public class BotRegisterListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -70,6 +61,5 @@ public class BotRegisterListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }

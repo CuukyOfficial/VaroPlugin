@@ -13,22 +13,22 @@ public class InvSeeCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.invsee")) {
+		if(!sender.hasPermission("varo.invsee")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.invsee"));
 			return false;
 		}
 
-		if (args.length != 1) {
+		if(args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/Invsee <Player>");
 			return false;
 		}
 
-		if (!(sender instanceof Player)) {
+		if(!(sender instanceof Player)) {
 			sender.sendMessage(Main.getPrefix() + "Nicht für die Konsole!");
 			return false;
 		}
 
-		if (Bukkit.getPlayerExact(args[0]) == null) {
+		if(Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}

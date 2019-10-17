@@ -24,35 +24,32 @@ public class ResetCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (args.length == 0) {
+		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo reset §7<Modifier1> <Modifier2> ...");
-			sender.sendMessage(
-					Main.getPrefix() + Main.getColorCode() + "Modifier 1: §7Resettet den kompletten Plugin Ordner");
-			sender.sendMessage(
-					Main.getPrefix() + Main.getColorCode() + "Modifier 2: §7Resettet logs + stats (keine configs)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 1: §7Resettet den kompletten Plugin Ordner");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 2: §7Resettet logs + stats (keine configs)");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 3: §7Löscht alle Welten");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode()
-					+ "Example: §7/varo reset 2 3 - Löscht alle Stats und Welten");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo reset 2 3 - Löscht alle Stats und Welten");
 			sender.sendMessage(Main.getPrefix() + "§cWarnung: §7Der Server wird nach dem Vorgang gestoppt");
 			return;
 		}
 
-		for (Player pl : VersionUtils.getOnlinePlayer())
+		for(Player pl : VersionUtils.getOnlinePlayer())
 			pl.kickPlayer("§cRESET");
 
 		Main.getDataManager().save();
 		List<Integer> success = new ArrayList<Integer>();
 		List<File> toDelete = new ArrayList<File>();
-		for (String arg : args) {
+		for(String arg : args) {
 			int mod = -1;
 			try {
 				mod = Integer.valueOf(arg);
-			} catch (NumberFormatException e) {
+			} catch(NumberFormatException e) {
 				sender.sendMessage(Main.getPrefix() + arg + " ist keine Zahl!");
 				continue;
 			}
 
-			switch (mod) {
+			switch(mod) {
 			case 1:
 				toDelete.add(new File("plugins/Varo/"));
 				break;
@@ -61,10 +58,10 @@ public class ResetCommand extends VaroCommand {
 				toDelete.add(new File("plugins/Varo/stats/"));
 				break;
 			case 3:
-				for (World world : Bukkit.getWorlds()) {
+				for(World world : Bukkit.getWorlds()) {
 					world.setAutoSave(false);
 					Bukkit.unloadWorld(world, false);
-					for (Chunk chunk : world.getLoadedChunks())
+					for(Chunk chunk : world.getLoadedChunks())
 						chunk.unload(false);
 
 					deleteDirectory(world.getWorldFolder());
@@ -78,23 +75,23 @@ public class ResetCommand extends VaroCommand {
 			success.add(mod);
 		}
 
-		if (!toDelete.isEmpty()) {
+		if(!toDelete.isEmpty()) {
 			Main.getDataManager().setDoSave(false);
-			for (File file : toDelete) {
-				if (file.isDirectory())
+			for(File file : toDelete) {
+				if(file.isDirectory())
 					deleteDirectory(file);
 				else
 					file.delete();
 			}
 		}
 
-		if (!success.isEmpty())
+		if(!success.isEmpty())
 			Bukkit.getServer().shutdown();
 	}
 
 	private void deleteDirectory(File file) {
-		for (File listFile : file.listFiles()) {
-			if (listFile.isDirectory())
+		for(File listFile : file.listFiles()) {
+			if(listFile.isDirectory())
 				deleteDirectory(listFile);
 
 			listFile.delete();

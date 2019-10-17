@@ -14,10 +14,10 @@ public class HealtLoseListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onHealthLose(EntityDamageEvent event) {
-		if (!(event.getEntity() instanceof Player))
+		if(!(event.getEntity() instanceof Player))
 			return;
 
-		if (event.isCancelled())
+		if(event.isCancelled())
 			return;
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -26,7 +26,7 @@ public class HealtLoseListener implements Listener {
 			public void run() {
 				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getEntity());
 
-				if (vp.getNametag() != null)
+				if(vp.getNametag() != null)
 					VaroPlayer.getPlayer((Player) event.getEntity()).getNametag().heartsChanged();
 			}
 		}, 1);

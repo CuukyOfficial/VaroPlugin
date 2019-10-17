@@ -13,12 +13,10 @@ public class BlockLogger extends Logger {
 	}
 
 	public void println(Block block, Player player) {
-		if (!Main.getDataManager().getItemHandler().getDestroyedBlocks().shallLog(block))
+		if(!Main.getDataManager().getItemHandler().getDestroyedBlocks().shallLog(block))
 			return;
 
-		String log = "[" + getCurrentDate() + "] " + player.getName() + " mined " + block.getType().toString()
-				+ " at x:" + block.getLocation().getBlockX() + " y:" + block.getLocation().getBlockY() + " z:"
-				+ block.getLocation().getBlockZ() + " in the world '" + block.getWorld().getName() + "'!";
+		String log = "[" + getCurrentDate() + "] " + player.getName() + " mined " + block.getType().toString() + " at x:" + block.getLocation().getBlockX() + " y:" + block.getLocation().getBlockY() + " z:" + block.getLocation().getBlockZ() + " in the world '" + block.getWorld().getName() + "'!";
 
 		pw.println(log);
 		logs.add(log);

@@ -41,11 +41,11 @@ public class Backup {
 		File file = new File("plugins/Varo/backups/" + (date != null ? date : getCurrentDate()) + ".zip");
 		try {
 			File file1 = new File("plugins/Varo/backups");
-			if (!file1.isDirectory())
+			if(!file1.isDirectory())
 				file1.mkdirs();
-			if (!file.exists())
+			if(!file.exists())
 				file.createNewFile();
-		} catch (IOException e1) {
+		} catch(IOException e1) {
 			e1.printStackTrace();
 		}
 		String zipFileName = file.getPath();
@@ -55,7 +55,7 @@ public class Backup {
 				@Override
 				public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
 					try {
-						if (file.getFileName().toString().endsWith(".zip"))
+						if(file.getFileName().toString().endsWith(".zip"))
 							return FileVisitResult.CONTINUE;
 
 						Path targetFile = sourceDir.relativize(file);
@@ -63,14 +63,14 @@ public class Backup {
 						byte[] bytes = Files.readAllBytes(file);
 						outputStream.write(bytes, 0, bytes.length);
 						outputStream.closeEntry();
-					} catch (IOException e) {
+					} catch(IOException e) {
 						e.printStackTrace();
 					}
 					return FileVisitResult.CONTINUE;
 				}
 			});
 			outputStream.close();
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -87,13 +87,13 @@ public class Backup {
 	public static boolean unzip(String zipFilePath, String destDirectory) {
 		try {
 			File destDir = new File(destDirectory);
-			if (!destDir.exists())
+			if(!destDir.exists())
 				destDir.mkdir();
 			ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath));
 			ZipEntry entry = zipIn.getNextEntry();
-			while (entry != null) {
+			while(entry != null) {
 				String filePath = destDirectory + File.separator + entry.getName();
-				if (!entry.isDirectory()) {
+				if(!entry.isDirectory()) {
 					extractFile(zipIn, filePath);
 				} else {
 					File dir = new File(filePath);
@@ -104,7 +104,7 @@ public class Backup {
 			}
 			zipIn.close();
 			return true;
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -114,7 +114,7 @@ public class Backup {
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
 		byte[] bytesIn = new byte[BUFFER_SIZE];
 		int read = 0;
-		while ((read = zipIn.read(bytesIn)) != -1) {
+		while((read = zipIn.read(bytesIn)) != -1) {
 			bos.write(bytesIn, 0, read);
 		}
 		bos.close();
@@ -127,11 +127,11 @@ public class Backup {
 	public static ArrayList<String> getBackups() {
 		File file = new File("plugins/Varo/backups/");
 		ArrayList<String> temp = new ArrayList<>();
-		if (!file.isDirectory())
+		if(!file.isDirectory())
 			return temp;
 
-		for (File listFile : file.listFiles())
-			if (listFile.getName().endsWith(".zip"))
+		for(File listFile : file.listFiles())
+			if(listFile.getName().endsWith(".zip"))
 				temp.add(listFile.getName());
 		return temp;
 	}

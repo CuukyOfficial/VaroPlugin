@@ -32,66 +32,58 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "§7Enter Value for " + Main.getColorCode() + entry.getName() + " §8(§7Current: §a"
-				+ entry.getValue() + "§8):", new ChatHookListener() {
+		new ChatHook(opener, "§7Enter Value for " + Main.getColorCode() + entry.getName() + " §8(§7Current: §a" + entry.getValue() + "§8):", new ChatHookListener() {
 
-					@Override
-					public void onChat(String message) {
-						try {
-							entry.setValue(Utils.getStringObject(message), true);
-						} catch (Exception e) {
-							opener.sendMessage(Main.getPrefix() + e.getMessage());
-							hookChat(entry);
-							return;
-						}
+			@Override
+			public void onChat(String message) {
+				try {
+					entry.setValue(Utils.getStringObject(message), true);
+				} catch(Exception e) {
+					opener.sendMessage(Main.getPrefix() + e.getMessage());
+					hookChat(entry);
+					return;
+				}
 
-						opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-						opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a"
-								+ message + "§7' gesetzt!");
-						reopenSoon();
-					}
-				});
+				opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
+				opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
+				reopenSoon();
+			}
+		});
 	}
 
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for (ConfigEntry entry : section.getEntries()) {
+		for(ConfigEntry entry : section.getEntries()) {
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
-			for (String strin : entry.getDescription())
+			for(String strin : entry.getDescription())
 				lore.add(Main.getColorCode() + strin);
 
 			lore.add(" ");
 			lore.add("Value: " + entry.getValue());
 
-			linkItemTo(i,
-					new ItemBuilder().displayname("§7" + entry.getPath())
-							.itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build(),
-					new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§7" + entry.getPath()).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build(), new Runnable() {
 
-						@Override
-						public void run() {
-							close(false);
-							hookChat(entry);
-						}
-					});
+				@Override
+				public void run() {
+					close(false);
+					hookChat(entry);
+				}
+			});
 		}
 
 		return true;
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+	public void onClick(InventoryClickEvent event) {}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {

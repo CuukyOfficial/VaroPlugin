@@ -24,40 +24,33 @@ public class DiscordBotGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 
-		linkItemTo(1,
-				new ItemBuilder().displayname(Main.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart")
-						.itemstack(
-								new ItemStack(Main.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD))
-						.build(),
-				new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname(Main.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(Main.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						boolean enabled = Main.getDiscordBot().isEnabled();
-						if (enabled)
-							Main.getDiscordBot().disconnect();
-						else
-							Main.getDiscordBot().connect();
+			@Override
+			public void run() {
+				boolean enabled = Main.getDiscordBot().isEnabled();
+				if(enabled)
+					Main.getDiscordBot().disconnect();
+				else
+					Main.getDiscordBot().connect();
 
-						if (Main.getDiscordBot().isEnabled() == enabled)
-							opener.sendMessage(Main.getPrefix() + "§7Could not start DiscordBot.");
-						else
-							opener.sendMessage(Main.getPrefix() + "§7Erfolg!");
-					}
-				});
+				if(Main.getDiscordBot().isEnabled() == enabled)
+					opener.sendMessage(Main.getPrefix() + "§7Could not start DiscordBot.");
+				else
+					opener.sendMessage(Main.getPrefix() + "§7Erfolg!");
+			}
+		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§eBotRegister").itemstack(new ItemStack(Material.BOOK)).build(),
-				new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§eBotRegister").itemstack(new ItemStack(Material.BOOK)).build(), new Runnable() {
 
-					@Override
-					public void run() {
-						if (Main.getDiscordBot().isEnabled()
-								|| !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-							opener.sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
-							return;
-						}
-					}
-				});
+			@Override
+			public void run() {
+				if(Main.getDiscordBot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+					opener.sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
+					return;
+				}
+			}
+		});
 
 		return true;
 	}
@@ -68,8 +61,7 @@ public class DiscordBotGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onBackClick() {
@@ -78,6 +70,5 @@ public class DiscordBotGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 }
