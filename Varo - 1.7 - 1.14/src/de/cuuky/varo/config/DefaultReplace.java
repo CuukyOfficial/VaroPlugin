@@ -32,7 +32,7 @@ public class DefaultReplace {
 		replaced = replaced.contains("%discordLink%") ? replaced.replaceAll("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
 		replaced = replaced.contains("%protectionTime%") ? replaced.replaceAll("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString()) : replaced ;
 
-		return replaced.replaceAll("&", "§").replaceAll("%heart%", "¤").replaceAll("%nextLine%", "\n").replace("%null%", "");
+		return replaced.replaceAll("&", "§").replaceAll("%heart%", "♥").replaceAll("%nextLine%", "\n").replace("%null%", "");
 	}
 
 	public String getReplaced(VaroPlayer vp) {

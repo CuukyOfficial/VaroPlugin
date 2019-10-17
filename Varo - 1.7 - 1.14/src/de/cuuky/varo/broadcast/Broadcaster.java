@@ -33,7 +33,7 @@ public class Broadcaster {
 						return;
 
 					for(String m : getRandomAd())
-						Bukkit.broadcastMessage(m.replaceAll("&", "ยง"));
+						Bukkit.broadcastMessage(m.replaceAll("&", "ง"));
 				}
 			}, delay, delay);
 		}
@@ -86,15 +86,15 @@ public class Broadcaster {
 		String[] messages = null;
 		if(random == 0) {
 			messages = new String[] { "", "", "" };
-			messages[0] = "ยง7-----------------------------------------";
+			messages[0] = "ง7-----------------------------------------";
 			messages[1] = "&7Du mรถchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
-			messages[2] = "ยง7-----------------------------------------";
+			messages[2] = "ง7-----------------------------------------";
 		} else {
 			messages = new String[] { "", "", "", "" };
-			messages[0] = "ยง7-----------------------------------------";
+			messages[0] = "ง7-----------------------------------------";
 			messages[1] = "&7Du hast Lust auf OneDayVaros? &7Link: https://discord.gg/UPCZ9eX";
 			messages[2] = "&cLink zum normalen VaroPlugin-Discord: &7https://discord.gg/CnDSVVx";
-			messages[3] = "ยง7-----------------------------------------";
+			messages[3] = "ง7-----------------------------------------";
 		}
 		return messages;
 	}
