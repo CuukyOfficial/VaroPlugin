@@ -93,37 +93,37 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			int teamNumber = Team.getTeams().size();
-			int teamSeiten = 1 + (teamNumber / 30);
+			int teamPages = 1 + (teamNumber / 30);
 
-			int lastTeamAufSeite = 30;
-			int seite = 1;
+			int lastTeamOnPage = 30;
+			int page = 1;
 
 			if(args.length != 1) {
 				try {
-					seite = Integer.parseInt(args[1]);
+					page = Integer.parseInt(args[1]);
 				} catch(NumberFormatException e) {
-					seite = 1;
+					page = 1;
 				}
 
-				lastTeamAufSeite = seite * 30;
+				lastTeamOnPage = page * 30;
 			}
 
-			if(seite == teamSeiten) {
-				lastTeamAufSeite = teamNumber;
+			if(page == teamPages) {
+				lastTeamOnPage = teamNumber;
 			}
 
-			if(seite > teamSeiten) {
-				sender.sendMessage(Main.getPrefix() + "Keine Seite " + seite + " der Teams gefunden!");
+			if(page > teamPages) {
+				sender.sendMessage(Main.getPrefix() + "Keine Seite " + page + " der Teams gefunden!");
 				return;
 			}
 
-			if(teamSeiten == 1) {
+			if(teamPages == 1) {
 				sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lTeams§7§l:");
 			} else {
-				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lTeams§7§l " + ((seite - 1) * 30 + 1) + " bis " + lastTeamAufSeite + ":");
+				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lTeams§7§l " + ((page - 1) * 30 + 1) + " bis " + lastTeamOnPage + ":");
 			}
 
-			for(int i = (seite - 1) * 30; i < lastTeamAufSeite; i++) {
+			for(int i = (page - 1) * 30; i < lastTeamOnPage; i++) {
 				Team team = Team.getTeams().get(i);
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " §l" + team.getId() + "§7; " + Main.getColorCode() + team.getName());
 				String list = "";
@@ -134,16 +134,14 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			int lastTeamNextSeite = 0;
-			if(seite + 1 < teamSeiten) {
-				lastTeamNextSeite = (seite + 1) * 30;
-			} else if(seite + 1 == teamSeiten) {
+			if(page + 1 < teamPages) 
+				lastTeamNextSeite = (page + 1) * 30;
+			else if(page + 1 == teamPages) 
 				lastTeamNextSeite = teamNumber;
-			}
+			
 
-			if(seite < teamSeiten) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (seite + 1) + " §7für " + Main.getColorCode() + "Teams §7 " + (seite * 30 + 1) + " bis " + lastTeamNextSeite);
-			}
-
+			if(page < teamPages) 
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (page + 1) + " §7für " + Main.getColorCode() + "Teams §7 " + (page * 30 + 1) + " bis " + lastTeamNextSeite);
 			return;
 		} else if(args[0].equalsIgnoreCase("rename")) {
 			if(args.length != 3) {
