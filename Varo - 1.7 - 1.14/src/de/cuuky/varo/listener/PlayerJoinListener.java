@@ -66,9 +66,8 @@ public class PlayerJoinListener implements Listener {
 					if (!vplayer.getalreadyHadMassProtectionTime()) {
 						vplayer.getStats().addSessionPlayed();
 					}
-				} else {
+				} else 
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getCountdown(vplayer) + VaroEvent.getMassRecEvent().getTimer());
-				}
 				
 				if (!vplayer.getalreadyHadMassProtectionTime()) {
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
