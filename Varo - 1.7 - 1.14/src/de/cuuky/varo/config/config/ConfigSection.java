@@ -12,7 +12,7 @@ public enum ConfigSection {
 
 	OFFLINEVILLAGER("OfflineVillager", Materials.EMERALD.parseMaterial(), "Einstellungen zu den OfflineVillagern"),
 
-	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucks‰cken"),
+	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucks√§cken"),
 
 	PROTECTIONS("Protections", Material.DIAMOND_CHESTPLATE, "Hier kannst du alle Einstellungen zu Schutzzeiten vornehmen."),
 
@@ -20,7 +20,7 @@ public enum ConfigSection {
 
 	TEAMS("Teams", Material.BOOK, "Hier kannst du Einstellungen zu Teams vornehmen."),
 
-	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen d¸rfen."),
+	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen d√ºrfen."),
 
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
 
@@ -30,15 +30,15 @@ public enum ConfigSection {
 
 	START("Start", Material.ACTIVATOR_RAIL, "Hier kannst du Einstellungen zum Start deines Plugins vornehmen."),
 
-	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu fr¸h disconnected."),
+	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu fr√ºh disconnected."),
 
-	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich w‰hrend des Kampfes ausloggt."),
+	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich w√§hrend des Kampfes ausloggt."),
 
 	BORDER("Border", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
 
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
 
-	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivit‰t eines Spielers vornehmen."),
+	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivit√§t eines Spielers vornehmen."),
 
 	REPORT("Report", Materials.REDSTONE_TORCH.parseMaterial(), "Hier kannst du Einstellungen zum Report-System vornehmen."),
 

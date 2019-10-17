@@ -26,28 +26,28 @@ public class AutoStartCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(Main.getGame().isStarted()) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " ง7wurde bereits gestartet!");
+			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " ยง7wurde bereits gestartet!");
 			return;
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "ง7-------- " + Main.getColorCode() + "AutoStart ง7-------");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ง7info");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ง7set <Hour> <Minute> <Day> <Month> <Year>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ง7remove");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ง7delay <Minutes>");
-			sender.sendMessage(Main.getPrefix() + "ง7------------------------");
+			sender.sendMessage(Main.getPrefix() + "ยง7-------- " + Main.getColorCode() + "AutoStart ยง7-------");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ยง7info");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ยง7set <Hour> <Minute> <Day> <Month> <Year>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ยง7remove");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart ยง7delay <Minutes>");
+			sender.sendMessage(Main.getPrefix() + "ยง7------------------------");
 			return;
 		}
 
 		if(args[0].equalsIgnoreCase("set")) {
 			if(Main.getGame().getAutoStart() != null) {
-				sender.sendMessage(Main.getPrefix() + "ง7Entferne erst den AutoStart, bevor du einen neuen setzt!");
+				sender.sendMessage(Main.getPrefix() + "ยง7Entferne erst den AutoStart, bevor du einen neuen setzt!");
 				return;
 			}
 
 			if(args.length != 6) {
-				sender.sendMessage(Main.getPrefix() + "งb/autostart ง7set <Hour> <Minute> <Day> <Month> <Year>");
+				sender.sendMessage(Main.getPrefix() + "ยงb/autostart ยง7set <Hour> <Minute> <Day> <Month> <Year>");
 				return;
 			}
 
@@ -62,13 +62,13 @@ public class AutoStartCommand extends VaroCommand {
 				month = Integer.parseInt(args[4]) - 1;
 				year = Integer.parseInt(args[5]);
 			} catch(NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + "Eines der Argumente war งckeine ง7Zahl!");
+				sender.sendMessage(Main.getPrefix() + "Eines der Argumente war ยงckeine ยง7Zahl!");
 				return;
 			}
 
 			Calendar start = new GregorianCalendar(year, month, day, hour, min, 0);
 			if(new GregorianCalendar().after(start)) {
-				sender.sendMessage(Main.getPrefix() + "ง7Das " + Main.getColorCode() + "Datum ง7darf nicht in der Vergangenheit sein!");
+				sender.sendMessage(Main.getPrefix() + "ยง7Das " + Main.getColorCode() + "Datum ยง7darf nicht in der Vergangenheit sein!");
 				return;
 			}
 
@@ -76,20 +76,20 @@ public class AutoStartCommand extends VaroCommand {
 			return;
 		} else if(args[0].equalsIgnoreCase("remove")) {
 			if(Main.getGame().getAutoStart() == null) {
-				sender.sendMessage(Main.getPrefix() + "ง7Es wurde noch kein " + Main.getColorCode() + "Autostart ง7festegelegt!");
+				sender.sendMessage(Main.getPrefix() + "ยง7Es wurde noch kein " + Main.getColorCode() + "Autostart ยง7festegelegt!");
 				return;
 			}
 
 			Main.getGame().getAutoStart().stop();
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoStart ง7erfolgreich entfernt!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoStart ยง7erfolgreich entfernt!");
 		} else if(args[0].equalsIgnoreCase("delay")) {
 			if(Main.getGame().getAutoStart() == null) {
-				sender.sendMessage(Main.getPrefix() + "ง7Es wurde noch kein " + Main.getColorCode() + "Autostart ง7festegelegt!");
+				sender.sendMessage(Main.getPrefix() + "ยง7Es wurde noch kein " + Main.getColorCode() + "Autostart ยง7festegelegt!");
 				return;
 			}
 
 			if(args.length < 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart delay ง7<Delay in Minutes>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart delay ยง7<Delay in Minutes>");
 				return;
 			}
 
@@ -97,7 +97,7 @@ public class AutoStartCommand extends VaroCommand {
 			try {
 				delay = Integer.parseInt(args[1]);
 			} catch(NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " ง7ist keine Zahl!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " ยง7ist keine Zahl!");
 				return;
 			}
 
@@ -107,18 +107,18 @@ public class AutoStartCommand extends VaroCommand {
 			}
 
 			Main.getGame().getAutoStart().delay(delay);
-			sender.sendMessage(Main.getPrefix() + "ง7Der Start wurde um " + Main.getColorCode() + delay + " ง7Minuten verz๖gert!");
+			sender.sendMessage(Main.getPrefix() + "ยง7Der Start wurde um " + Main.getColorCode() + delay + " ยง7Minuten verzรถgert!");
 		} else if(args[0].equalsIgnoreCase("info")) {
 			if(Main.getGame().getAutoStart() == null)
 				sender.sendMessage(Main.getPrefix() + "AutoStart nicht aktiv");
 			else {
-				sender.sendMessage(Main.getPrefix() + "AutoStart งaaktivง7:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: ง7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getGame().getAutoStart().getStart()));
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: ง7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteam: ง7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsBoolean());
+				sender.sendMessage(Main.getPrefix() + "AutoStart ยงaaktivยง7:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: ยง7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getGame().getAutoStart().getStart()));
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: ยง7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteam: ยง7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsBoolean());
 			}
 		} else
-			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart ง7for help!");
+			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart ยง7for help!");
 		return;
 
 	}

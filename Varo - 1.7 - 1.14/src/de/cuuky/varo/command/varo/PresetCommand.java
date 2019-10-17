@@ -13,21 +13,21 @@ import de.cuuky.varo.preset.PresetLoader;
 public class PresetCommand extends VaroCommand {
 
 	public PresetCommand() {
-		super("preset", "Command für die Presets", "varo.preset", "presettings", "presets");
+		super("preset", "Command fÃ¼r die Presets", "varo.preset", "presettings", "presets");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7load <PresetPath>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7save <PresetPath>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset Â§7load <PresetPath>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset Â§7save <PresetPath>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset Â§7list");
 			return;
 		}
 
 		if(args[0].equalsIgnoreCase("load")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7load <PresetPath>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset Â§7load <PresetPath>");
 				return;
 			}
 
@@ -42,7 +42,7 @@ public class PresetCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Einstellungen '" + args[1] + "' erfolgreich geladen!");
 		} else if(args[0].equalsIgnoreCase("save")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7save <PresetPath>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset Â§7save <PresetPath>");
 				return;
 			}
 
@@ -51,7 +51,7 @@ public class PresetCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Derzeitige Einstellungen erfolgreich unter '" + args[1] + "' gespeichert!");
 		} else if(args[0].equalsIgnoreCase("list")) {
 			File file = new File("plugins/Varo/presets");
-			sender.sendMessage(Main.getPrefix() + "§lListe aller Presets:");
+			sender.sendMessage(Main.getPrefix() + "Â§lListe aller Presets:");
 			for(File f : file.listFiles())
 				sender.sendMessage(Main.getPrefix() + f.getName());
 		} else

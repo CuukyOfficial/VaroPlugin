@@ -29,7 +29,7 @@ public class NoJoinCheck extends Checker {
 			Date current = new Date();
 
 			if(vp.getStats().getLastJoined().before(DateUtils.addDays(current, -ConfigEntry.NO_ACTIVITY_DAYS.getValueAsInt()))) {
-				new Alert(AlertType.NO_JOIN, vp.getName() + " hat die Anzahl an maximal inaktiven Tagen überschritten!");
+				new Alert(AlertType.NO_JOIN, vp.getName() + " hat die Anzahl an maximal inaktiven Tagen Ã¼berschritten!");
 				if(ConfigEntry.STRIKE_ON_NO_ACTIVITY.getValueAsBoolean()) {
 					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN_STRIKE.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 

@@ -28,7 +28,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 	private PlayerGUIType type;
 
 	public PlayerOptionsGUI(Player opener, VaroPlayer target, PlayerGUIType type) {
-		super("§2" + target.getName() + " §7(" + target.getId() + ")", opener, 54, false);
+		super("Â§2" + target.getName() + " Â§7(" + target.getId() + ")", opener, 54, false);
 
 		this.target = target;
 		this.stats = target.getStats();
@@ -40,26 +40,26 @@ public class PlayerOptionsGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		if(getPage() == 1) {
-			inv.setItem(8, new ItemBuilder().displayname("§aAdd Kill").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(0, new ItemBuilder().displayname("§cRemove Kill").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(8, new ItemBuilder().displayname("Â§aAdd Kill").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(0, new ItemBuilder().displayname("Â§cRemove Kill").itemstack(Materials.REDSTONE.parseItem()).build());
 
-			inv.setItem(17, new ItemBuilder().displayname("§aSet Rank").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(9, new ItemBuilder().displayname("§cRemove Rank").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(17, new ItemBuilder().displayname("Â§aSet Rank").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(9, new ItemBuilder().displayname("Â§cRemove Rank").itemstack(Materials.REDSTONE.parseItem()).build());
 
-			inv.setItem(26, new ItemBuilder().displayname("§aSet Link").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(18, new ItemBuilder().displayname("§cRemove Link").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(26, new ItemBuilder().displayname("Â§aSet Link").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(18, new ItemBuilder().displayname("Â§cRemove Link").itemstack(Materials.REDSTONE.parseItem()).build());
 
-			inv.setItem(35, new ItemBuilder().displayname("§aAdd Session").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(27, new ItemBuilder().displayname("§cRemove Session").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(35, new ItemBuilder().displayname("Â§aAdd Session").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(27, new ItemBuilder().displayname("Â§cRemove Session").itemstack(Materials.REDSTONE.parseItem()).build());
 
-			inv.setItem(44, new ItemBuilder().displayname("§aAdd Preproduced").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(36, new ItemBuilder().displayname("§cRemove Preproduced").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(44, new ItemBuilder().displayname("Â§aAdd Preproduced").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(36, new ItemBuilder().displayname("Â§cRemove Preproduced").itemstack(Materials.REDSTONE.parseItem()).build());
 		} else if(getPage() == 2) {
-			inv.setItem(8, new ItemBuilder().displayname("§aAdd EpisodesPlayed").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(0, new ItemBuilder().displayname("§cRemove EpisodesPlayed").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(8, new ItemBuilder().displayname("Â§aAdd EpisodesPlayed").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(0, new ItemBuilder().displayname("Â§cRemove EpisodesPlayed").itemstack(Materials.REDSTONE.parseItem()).build());
 
-			inv.setItem(17, new ItemBuilder().displayname("§aReset Countdown").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(9, new ItemBuilder().displayname("§cRemove Countdown").itemstack(Materials.REDSTONE.parseItem()).build());
+			inv.setItem(17, new ItemBuilder().displayname("Â§aReset Countdown").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(9, new ItemBuilder().displayname("Â§cRemove Countdown").itemstack(Materials.REDSTONE.parseItem()).build());
 		}
 
 		updateStats();
@@ -68,19 +68,19 @@ public class PlayerOptionsGUI extends SuperInventory {
 
 	private void updateStats() {
 		if(getPage() == 1) {
-			inv.setItem(4, new ItemBuilder().displayname("§cKills").itemstack(new ItemStack(Material.DIAMOND_SWORD)).lore(new String[] { "§7Current: " + stats.getKills() }).build());
-			inv.setItem(13, new ItemBuilder().displayname("§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay()) }).build());
-			inv.setItem(22, new ItemBuilder().displayname("§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + stats.getYoutubeLink() }).build());
-			inv.setItem(31, new ItemBuilder().displayname("§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[] { "§7Current: " + stats.getSessions() }).build());
-			inv.setItem(40, new ItemBuilder().displayname("§aPreproduced Sessions").itemstack(new ItemStack(Material.ANVIL)).lore(new String[] { "§7Current: " + stats.getPreProduced() }).build());
+			inv.setItem(4, new ItemBuilder().displayname("Â§cKills").itemstack(new ItemStack(Material.DIAMOND_SWORD)).lore(new String[] { "Â§7Current: " + stats.getKills() }).build());
+			inv.setItem(13, new ItemBuilder().displayname("Â§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "Â§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay()) }).build());
+			inv.setItem(22, new ItemBuilder().displayname("Â§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "Â§7Current: " + stats.getYoutubeLink() }).build());
+			inv.setItem(31, new ItemBuilder().displayname("Â§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[] { "Â§7Current: " + stats.getSessions() }).build());
+			inv.setItem(40, new ItemBuilder().displayname("Â§aPreproduced Sessions").itemstack(new ItemStack(Material.ANVIL)).lore(new String[] { "Â§7Current: " + stats.getPreProduced() }).build());
 		} else if(getPage() == 2) {
-			inv.setItem(4, new ItemBuilder().displayname("§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[] { "§7Current: " + stats.getSessionsPlayed() }).build());
-			inv.setItem(13, new ItemBuilder().displayname("§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + stats.getCountdown() }).build());
+			inv.setItem(4, new ItemBuilder().displayname("Â§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[] { "Â§7Current: " + stats.getSessionsPlayed() }).build());
+			inv.setItem(13, new ItemBuilder().displayname("Â§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "Â§7Current: " + stats.getCountdown() }).build());
 
-			inv.setItem(36, new ItemBuilder().displayname("§7Change §cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[] { "§7Current: " + stats.isWillClear() }).build());
-			inv.setItem(37, new ItemBuilder().displayname("§7Change §cMax Produced").itemstack(new ItemStack(Material.ITEM_FRAME)).lore(new String[] { "§7Current: " + stats.isMaxProduced() }).build());
-			inv.setItem(38, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "§7Current: " + stats.getState().getName() }).build());
-			inv.setItem(39, new ItemBuilder().displayname("§7Remove §cTimeHoursban").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + (stats.getTimeBanUntil()) }).build());
+			inv.setItem(36, new ItemBuilder().displayname("Â§7Change Â§cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[] { "Â§7Current: " + stats.isWillClear() }).build());
+			inv.setItem(37, new ItemBuilder().displayname("Â§7Change Â§cMax Produced").itemstack(new ItemStack(Material.ITEM_FRAME)).lore(new String[] { "Â§7Current: " + stats.isMaxProduced() }).build());
+			inv.setItem(38, new ItemBuilder().displayname("Â§7Change Â§6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "Â§7Current: " + stats.getState().getName() }).build());
+			inv.setItem(39, new ItemBuilder().displayname("Â§7Remove Â§cTimeHoursban").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "Â§7Current: " + (stats.getTimeBanUntil()) }).build());
 		}
 	}
 
@@ -158,7 +158,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 			if(itemname.contains("Set")) {
 				close(false);
 
-				new ChatHook(opener, "§7Enter Rank", new ChatHookListener() {
+				new ChatHook(opener, "Â§7Enter Rank", new ChatHookListener() {
 
 					@Override
 					public void onChat(String message) {

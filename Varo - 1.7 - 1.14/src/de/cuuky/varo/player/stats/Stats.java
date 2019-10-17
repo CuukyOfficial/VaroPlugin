@@ -20,6 +20,8 @@ import de.cuuky.varo.api.event.events.player.PlayerStateChangeEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeRemoveEvent;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
@@ -529,8 +531,8 @@ public class Stats implements VaroSerializeable {
 
 		if(VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
 			result = KickResult.SERVER_FULL;
-
-		if(result != KickResult.ALLOW && result != KickResult.SPECTATOR)
+		
+		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR)
 			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().isStarted() && player.isOp()) {
 				if(Main.getGame().isStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
@@ -560,19 +562,22 @@ public class Stats implements VaroSerializeable {
 					result = KickResult.NO_PREPRODUCES_LEFT;
 			}
 		}
-
+		
+		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
+			if(curr.before(getTimeBanUntil()))
+				result = KickResult.NO_TIME;
+		
+		if(VaroEvent.getMassRecEvent().isEnabled())
+			result = KickResult.MASS_RECORDING_JOIN;
+		
 		if(Main.isBootedUp())
 			if(!Main.getDataManager().getTimeChecker().canJoin())
 				result = KickResult.NOT_IN_TIME;
-
+					
 		for(Strike strike : strikes)
 			if(strike.getBanUntil() != null)
 				if(curr.before(strike.getBanUntil()))
 					result = KickResult.STRIKE_BAN;
-
-		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
-			if(curr.before(getTimeBanUntil()))
-				result = KickResult.NO_TIME;
 
 		if(!this.isAlive())
 			result = KickResult.DEAD;
@@ -588,6 +593,6 @@ public class Stats implements VaroSerializeable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
-		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7PreProduced Sessions§8: " + colorcode + preProduced, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7MaxProduced§8: " + colorcode + maxProduced, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormatter(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world").format(lastLocation) : "/"), "§7TimeBanUntil§8: " + colorcode + (timeBanUntil != null ? dateFormat.format(timeBanUntil.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
+		return new String[] { "Â§7IDÂ§8: " + colorcode + owner.getId(), "Â§7UUIDÂ§8: " + colorcode + owner.getUuid(), "Â§7TeamÂ§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "Â§7RankÂ§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "Â§7SessionsÂ§8: " + colorcode + sessions, "Â§7PreProduced SessionsÂ§8: " + colorcode + preProduced, "Â§7Sessions PlayedÂ§8: " + colorcode + sessionsPlayed, "Â§7CountdownÂ§8: " + colorcode + countdown, "Â§7KillsÂ§8: " + colorcode + kills, "Â§7MaxProducedÂ§8: " + colorcode + maxProduced, "Â§7WillClearInventoryÂ§8: " + colorcode + willClear, "Â§7ShowScoreboardÂ§8: " + colorcode + showScoreboard, "Â§7LastLocationÂ§8: " + colorcode + (lastLocation != null ? new LocationFormatter(colorcode + "xÂ§7, " + colorcode + "yÂ§7, " + colorcode + "zÂ§7 in " + colorcode + "world").format(lastLocation) : "/"), "Â§7TimeBanUntilÂ§8: " + colorcode + (timeBanUntil != null ? dateFormat.format(timeBanUntil.getTime()) : "/"), "Â§7FirstTimeJoinedÂ§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "Â§7LastTimeJoinedÂ§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "Â§7LastEnemyContactÂ§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "Â§7DiedAtÂ§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "Â§7YouTubeLinkÂ§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "Â§7YouTubeVideosÂ§8: " + colorcode + (videos == null ? videos.size() : 0), "Â§7StrikeAmountÂ§8: " + colorcode + (strikes == null ? strikes.size() : 0), "Â§7StateÂ§8: " + colorcode + state.getName() };
 	}
 }

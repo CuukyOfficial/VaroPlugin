@@ -22,6 +22,7 @@ import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.start.ProtectionTime;
@@ -101,7 +102,7 @@ public class Game implements VaroSerializeable {
 							if(!Main.getDataManager().getTimeChecker().canJoin())
 								for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 									vp.getStats().setCountdown(0);
-									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+									vp.getPlayer().kickPlayer("Â§cDie Spielzeit ist nun vorÃ¼ber!\nÂ§7Versuche es morgen erneut");
 								}
 						}
 					}
@@ -115,14 +116,14 @@ public class Game implements VaroSerializeable {
 							Player p = vp.getPlayer();
 
 							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
-								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
+								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "Â§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 							else if(showDistanceToBorder) {
 								int distance = (int) Main.getDataManager().getWorldHandler().getBorder().getDistanceTo(p);
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
-									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
+									vp.getNetworkManager().sendActionbar("Â§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}
 
-							if(countdown == playTime - protectionTime - 1 && !firstTime)
+							if(countdown == playTime - protectionTime - 1 && !firstTime && !VaroEvent.getMassRecEvent().isEnabled())
 								Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
 
 							if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
@@ -280,7 +281,7 @@ public class Game implements VaroSerializeable {
 
 	public void abort() {
 		Bukkit.getScheduler().cancelTask(startScheduler);
-		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
+		Bukkit.broadcastMessage("Â§7Der Start wurde Â§cabgebrochenÂ§7!");
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
 
@@ -332,12 +333,12 @@ public class Game implements VaroSerializeable {
 			}
 		}
 
-		Bukkit.broadcastMessage(Main.getColorCode() + first + " §7" + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! §5Herzlichen Glückwunsch!");
-		Main.getLoggerMaster().getEventLogger().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! Herzlichen Glückwunsch!");
+		Bukkit.broadcastMessage(Main.getColorCode() + first + " Â§7" + (first.contains("&") ? "haben" : "hat") + " das Projekt fÃ¼r sich entschieden! Â§5Herzlichen GlÃ¼ckwunsch!");
+		Main.getLoggerMaster().getEventLogger().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt fÃ¼r sich entschieden! Herzlichen GlÃ¼ckwunsch!");
 		VaroDiscordBot db = Main.getDiscordBot();
 		if(db != null && db.isEnabled()) {
 			if(db.getResultChannel() != null && db.isEnabled())
-				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getDiscordBot().getResultChannel());
+				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen GlÃ¼ckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getDiscordBot().getResultChannel());
 
 			File file = new File("plugins/Varo/logs", "logs.yml");
 			if(file.exists())
@@ -389,7 +390,7 @@ public class Game implements VaroSerializeable {
 			}
 		}
 
-		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefüllt§7!");
+		Bukkit.broadcastMessage("Â§7Alle Kisten um den " + Main.getColorCode() + "Spawn Â§7wurden " + Main.getColorCode() + "aufgefÃ¼lltÂ§7!");
 	}
 
 	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {

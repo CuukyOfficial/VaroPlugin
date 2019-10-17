@@ -18,7 +18,7 @@ public class InventoryBackupGUI extends SuperInventory {
 	private InventoryBackup backup;
 
 	public InventoryBackupGUI(Player opener, InventoryBackup backup) {
-		super("§b" + backup.getVaroPlayer().getName(), opener, 9, false);
+		super("Â§b" + backup.getVaroPlayer().getName(), opener, 9, false);
 
 		this.backup = backup;
 
@@ -27,7 +27,7 @@ public class InventoryBackupGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aShow").itemstack(new ItemStack(Material.CHEST)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("Â§aShow").itemstack(new ItemStack(Material.CHEST)).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -35,13 +35,13 @@ public class InventoryBackupGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("Â§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {
 				if(!backup.getVaroPlayer().isOnline()) {
 					backup.getVaroPlayer().getStats().setRestoreBackup(backup);
-					opener.sendMessage(Main.getPrefix() + "Inventar wird beim nächsten Betreten wiederhergestellt!");
+					opener.sendMessage(Main.getPrefix() + "Inventar wird beim nÃ¤chsten Betreten wiederhergestellt!");
 					return;
 				}
 
@@ -50,7 +50,7 @@ public class InventoryBackupGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§cRemove").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("Â§cRemove").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
 			@Override
 			public void run() {

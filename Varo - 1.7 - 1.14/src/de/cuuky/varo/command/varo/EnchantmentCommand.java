@@ -28,18 +28,18 @@ public class EnchantmentCommand extends VaroCommand {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Enchantments §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7<enchantmentlist> [Remove / Add / List]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo item Befehl blockt alle Items.");
+			sender.sendMessage(Main.getPrefix() + "Â§7----- " + Main.getColorCode() + "Enchantments Â§7-----");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment Â§7<enchantmentlist> [Remove / Add / List]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item Â§7list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: Â§7Der /varo item Befehl blockt alle Items.");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fügt alle Verzauberungungen des Items, das du in der Hand hältst, der Liste hinzu.");
-			sender.sendMessage(Main.getPrefix() + "§7--------------------");
+			sender.sendMessage(Main.getPrefix() + "Â§7Dieser Command fÃ¼gt alle Verzauberungungen des Items, das du in der Hand hÃ¤ltst, der Liste hinzu.");
+			sender.sendMessage(Main.getPrefix() + "Â§7--------------------");
 			return;
 		}
 
 		if(args.length == 1 && args[0].equalsIgnoreCase("list")) {
-			sender.sendMessage(Main.getPrefix() + "Liste aller " + Main.getColorCode() + "Enchantmentlisten§7:");
+			sender.sendMessage(Main.getPrefix() + "Liste aller " + Main.getColorCode() + "EnchantmentlistenÂ§7:");
 			for(EnchantmentList list : EnchantmentList.getEnchantmentLists())
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + list.getLocation());
 			return;
@@ -57,7 +57,7 @@ public class EnchantmentCommand extends VaroCommand {
 		}
 
 		if(args[1].equalsIgnoreCase("list")) {
-			sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "§7:");
+			sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "Â§7:");
 			for(String enc1 : list.getEnchantments())
 				sender.sendMessage(Main.getPrefix() + enc1);
 			return;
@@ -79,7 +79,7 @@ public class EnchantmentCommand extends VaroCommand {
 				}
 
 				list.addEnchantment(enc, encs.get(enc));
-				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich zu " + list.getLocation() + " hinzugefügt!");
+				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich zu " + list.getLocation() + " hinzugefÃ¼gt!");
 			} else if(args[1].equalsIgnoreCase("remove")) {
 				if(!list.hasEnchantment(enc, encs.get(enc))) {
 					sender.sendMessage(Main.getPrefix() + "Verzauberung '" + enc.getName() + " (" + encs.get(enc) + ")' steht nicht auf dieser Liste!");
@@ -89,11 +89,11 @@ public class EnchantmentCommand extends VaroCommand {
 				list.removeEnchantment(enc, encs.get(enc));
 				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich von " + list.getLocation() + " entfernt!");
 			} else if(args[1].equalsIgnoreCase("list")) {
-				sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "§7:");
+				sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "Â§7:");
 				for(String enc1 : list.getEnchantments())
 					sender.sendMessage(Main.getPrefix() + enc1);
 			} else
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7<enchantmentlist> [Remove / Add / List]");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment Â§7<enchantmentlist> [Remove / Add / List]");
 		}
 	}
 }

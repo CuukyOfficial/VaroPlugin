@@ -12,7 +12,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class GameCommand extends VaroCommand {
 
 	public GameCommand() {
-		super("game", "Öffnet das Spieloptionen Menü", "varo.game");
+		super("game", "Ã–ffnet das Spieloptionen MenÃ¼", "varo.game");
 	}
 
 	@Override

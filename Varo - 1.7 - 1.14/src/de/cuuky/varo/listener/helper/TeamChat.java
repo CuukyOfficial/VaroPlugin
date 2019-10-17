@@ -9,7 +9,7 @@ public class TeamChat {
 
 	public TeamChat(VaroPlayer player, String message) {
 		if(player.getTeam() == null) {
-			player.sendMessage(Main.getPrefix() + "ง7Du bist in keinem Team!");
+			player.sendMessage(Main.getPrefix() + "ยง7Du bist in keinem Team!");
 			return;
 		}
 

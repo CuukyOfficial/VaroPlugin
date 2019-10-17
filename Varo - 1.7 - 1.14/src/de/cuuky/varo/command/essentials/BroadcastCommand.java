@@ -18,7 +18,7 @@ public class BroadcastCommand implements CommandExecutor {
 		}
 
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7/bc <Message>");
+			sender.sendMessage(Main.getPrefix() + "Â§7/bc <Message>");
 			return false;
 		}
 
@@ -29,7 +29,7 @@ public class BroadcastCommand implements CommandExecutor {
 			else
 				msg = arg;
 
-		Bukkit.broadcastMessage("§7[§cBroadcast§7] §c" + msg.replaceAll("&", "§"));
+		Bukkit.broadcastMessage("Â§7[Â§cBroadcastÂ§7] Â§c" + msg.replaceAll("&", "Â§"));
 		return false;
 	}
 

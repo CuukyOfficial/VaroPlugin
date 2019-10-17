@@ -1,6 +1,6 @@
 name: Varo
 author: Cuuky
-version: 0.1.5
+version: 0.2
 api-version: 1.13
 main: de.cuuky.varo.Main
 
@@ -19,10 +19,10 @@ commands:
   Night:
      description: Setzt die Tageszeit auf Nacht
   Fly:
-     description: Laesst dich oder einen Spieler fliegen
+     description: Lässt dich oder einen Spieler fliegen
   Freeze:
      aliases: [nomove]
-     description: Laesst einen Spieler einfrieren
+     description: Lässt einen Spieler einfrieren
   Gamemode:
      aliases: [gm]
      description: Setzt den Spielmodus von dir oder einem Spieler
@@ -31,7 +31,7 @@ commands:
      description: Heilt einen Spieler
   Info:
      aliases: [life]
-     description: Zeigt Infos ueber einen Spieler
+     description: Zeigt Infos über einen Spieler
   Invsee:
      aliases: [inventorysee]
      description: Zeigt das Inventar eines anderen Spielers
@@ -51,7 +51,7 @@ commands:
   Mute:
      description: Stummt einen Spieler
   Protect:
-     description: Beschuetzt Spieler vor Schaden
+     description: Beschützt Spieler vor Schaden
   Report:
      description: Reporte einen Spieler
   Usage:
@@ -68,6 +68,6 @@ commands:
   Rain:
      description: Wechselt zu Regen
   Sun:
-     description: Wechselt zu schoenem Wetter
+     description: Wechselt zu schönem Wetter
   Countdown:
      description: Startet einen Countdown

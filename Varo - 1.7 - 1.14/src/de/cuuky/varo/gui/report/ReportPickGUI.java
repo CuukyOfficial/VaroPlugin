@@ -19,7 +19,7 @@ public class ReportPickGUI extends SuperInventory {
 	private VaroPlayer varoPlayer;
 
 	public ReportPickGUI(VaroPlayer opener, Report report) {
-		super("§cReport " + report.getId(), opener.getPlayer(), 9, false);
+		super("Â§cReport " + report.getId(), opener.getPlayer(), 9, false);
 
 		this.report = report;
 		this.varoPlayer = opener;
@@ -29,25 +29,25 @@ public class ReportPickGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(0, new ItemBuilder().displayname("§5Teleport").itemstack(new ItemStack(Material.ENDER_PEARL)).build(), new Runnable() {
+		linkItemTo(0, new ItemBuilder().displayname("Â§5Teleport").itemstack(new ItemStack(Material.ENDER_PEARL)).build(), new Runnable() {
 
 			@Override
 			public void run() {
 				if(report.getReported().isOnline()) {
 					varoPlayer.getPlayer().teleport(report.getReported().getPlayer());
-					varoPlayer.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
+					varoPlayer.sendMessage(Main.getPrefix() + "Â§7Du wurdest zum reporteten Spieler teleportiert!");
 					return;
 				}
 
-				varoPlayer.sendMessage(Main.getPrefix() + "§7Der reportete Spieler ist nicht mehr online!");
+				varoPlayer.sendMessage(Main.getPrefix() + "Â§7Der reportete Spieler ist nicht mehr online!");
 			}
 		});
 
-		linkItemTo(8, new ItemBuilder().displayname("§cClose").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
+		linkItemTo(8, new ItemBuilder().displayname("Â§cClose").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				varoPlayer.sendMessage(Main.getPrefix() + "§7Du hast den Report §c" + +report.getId() + " §7geschlossen");
+				varoPlayer.sendMessage(Main.getPrefix() + "Â§7Du hast den Report Â§c" + +report.getId() + " Â§7geschlossen");
 				report.close();
 				new ReportListGUI(varoPlayer.getPlayer());
 			}

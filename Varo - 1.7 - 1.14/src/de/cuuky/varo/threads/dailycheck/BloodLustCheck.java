@@ -26,7 +26,7 @@ public class BloodLustCheck extends Checker {
 			Date lastContact = player.getStats().getLastEnemyContact();
 
 			if(lastContact.before(DateUtils.addDays(new Date(), -days))) {
-				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gek‰mpft!");
+				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gek√§mpft!");
 				if(strike) {
 					player.getStats().addStrike(new Strike("Bloodlust", player, "CONSOLE"));
 					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(player).replace("%days%", String.valueOf(days)));

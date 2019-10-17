@@ -58,7 +58,7 @@ public class PlayerChatListener implements Listener {
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
 					if(seconds < ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt()) {
-						player.sendMessage(Main.getPrefix() + "ง7Du kannst nur alle ง7" + ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " ง7Sekunden schreiben!");
+						player.sendMessage(Main.getPrefix() + "ยง7Du kannst nur alle ยง7" + ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " ยง7Sekunden schreiben!");
 						event.setCancelled(true);
 						return;
 					}
@@ -72,9 +72,9 @@ public class PlayerChatListener implements Listener {
 				return;
 			}
 		} else
-			message = message.replaceAll("&", "ง");
+			message = message.replaceAll("&", "ยง");
 
-		Main.getLoggerMaster().getChatLogger().println(ChatLogType.CHAT, player.getName() + "ป '" + message + "'");
+		Main.getLoggerMaster().getChatLogger().println(ChatLogType.CHAT, player.getName() + "ยป '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);
 	}
 
