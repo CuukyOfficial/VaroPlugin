@@ -1,7 +1,5 @@
 package de.cuuky.varo.listener;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -73,7 +71,6 @@ public class PlayerJoinListener implements Listener {
 				}
 				
 				if (!vplayer.getalreadyHadMassProtectionTime()) {
-					
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
 					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
 					vplayer.setalreadyHadMassProtectionTime(true);
