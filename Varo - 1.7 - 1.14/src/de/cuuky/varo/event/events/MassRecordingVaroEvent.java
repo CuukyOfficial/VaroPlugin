@@ -81,7 +81,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			VaroPlayer vp = VaroPlayer.getPlayer(Speicher[0]);
 			vp.getStats().setCountdown(Speicher[1]);
 			if(Speicher[1] == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-				vp.setMassenaufnahmeKick(true);
+				vp.setMassRecordingKick(true);
 
 				Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
 				vp.onEvent(BukkitEventType.KICKED);

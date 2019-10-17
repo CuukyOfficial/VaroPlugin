@@ -71,9 +71,8 @@ public class VaroPlayer implements VaroSerializeable {
 	private Player player;
 	private Nametag nametag;
 	private NetworkMananager networkManager;
-	private boolean alreadyHadMassProtectionTime = false;
-	private boolean inMassProtectionTime = false;
-	private boolean MassenaufnahmeKick = false;
+	
+	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -248,12 +247,12 @@ public class VaroPlayer implements VaroSerializeable {
 		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
 	}
 
-	public boolean getMassenaufnahmeKick() {
-		return MassenaufnahmeKick;
+	public boolean isMassRecordingKick() {
+		return massRecordingKick;
 	}
 
-	public void setMassenaufnahmeKick(boolean MassenaufnahmeKick) {
-		this.MassenaufnahmeKick = MassenaufnahmeKick;
+	public void setMassRecordingKick(boolean massRecordingKick) {
+		this.massRecordingKick = massRecordingKick;
 	}
 
 	public String getName() {
