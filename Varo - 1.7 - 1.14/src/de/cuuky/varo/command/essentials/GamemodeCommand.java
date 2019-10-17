@@ -24,7 +24,7 @@ public class GamemodeCommand implements CommandExecutor {
 
 		if (args.length == 1) {
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "§7Entweder '/gamemode <Mode> [Player]' oder Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Entweder '/gamemode <Mode> [Player]' oder Spieler sein!");
 				return false;
 			}
 
@@ -32,7 +32,7 @@ public class GamemodeCommand implements CommandExecutor {
 			try {
 				mode = Integer.valueOf(args[0]);
 			} catch (Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen Mode angegeben!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Du hast gÃ¼ltigen keinen Mode angegeben!");
 			}
 			Player p = (Player) sender;
 			GameMode gm = null;
@@ -48,24 +48,24 @@ public class GamemodeCommand implements CommandExecutor {
 				break;
 			case 3:
 				if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
-					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar in der 1.7!");
+					sender.sendMessage(Main.getPrefix() + "Nicht verfÃ¼gbar in der 1.7!");
 					return false;
 				}
 				
 				gm = GameMode.valueOf("SPECTATOR");
 				break;
 			default:
-				sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Die Zahl muss 0-3 betragen!");
 				return false;
 			}
 			
 			p.setGameMode(gm);
-			sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode "
-					+ ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
+			sender.sendMessage(Main.getPrefix() + "Â§7Du bist nun im Gamemode "
+					+ ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "Â§7!");
 		} else if (args.length == 2) {
 			Player to = Bukkit.getPlayerExact(args[1]);
 			if (to == null) {
-				sender.sendMessage(Main.getPrefix() + "§7" + args[1] + "§7 nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "Â§7" + args[1] + "Â§7 nicht gefunden!");
 				return false;
 			}
 
@@ -73,7 +73,7 @@ public class GamemodeCommand implements CommandExecutor {
 			try {
 				mode = Integer.valueOf(args[0]);
 			} catch (Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen Mode angegeben!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Du hast gÃ¼ltigen keinen Mode angegeben!");
 			}
 			GameMode gm = null;
 			switch (mode) {
@@ -88,21 +88,21 @@ public class GamemodeCommand implements CommandExecutor {
 				break;
 			case 3:
 				if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
-					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar in der 1.7!");
+					sender.sendMessage(Main.getPrefix() + "Nicht verfÃ¼gbar in der 1.7!");
 					return false;
 				}
 				
 				gm = GameMode.valueOf("SPECTATOR");
 				break;
 			default:
-				sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Die Zahl muss 0-3 betragen!");
 				return false;
 			}
 			to.setGameMode(gm);
-			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + " ist nun im Gamemode "
-					+ ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "" + gm.toString() + "§7!");
+			sender.sendMessage(Main.getPrefix() + "Â§7" + to.getName() + " ist nun im Gamemode "
+					+ ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "" + gm.toString() + "Â§7!");
 		} else
-			sender.sendMessage(Main.getPrefix() + "§7/gamemode <Mode> [Player]");
+			sender.sendMessage(Main.getPrefix() + "Â§7/gamemode <Mode> [Player]");
 
 		return false;
 	}

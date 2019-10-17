@@ -16,7 +16,7 @@ public class GetLinkCommand extends DiscordBotCommand {
 	 */
 
 	public GetLinkCommand() {
-		super("getLink", new String[] { "getVerify" }, "Gibt den verlinkten MC-Account des Spielers zurück.");
+		super("getLink", new String[] { "getVerify" }, "Gibt den verlinkten MC-Account des Spielers zurÃ¼ck.");
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class GetLinkCommand extends DiscordBotCommand {
 
 		User user = super.getDiscordBot().getJda().getUserById(reg.getUserId());
 		if(user == null) {
-			event.getChannel().sendMessage(Main.getPrefix() + "User für diesen Spieler nicht gefunden!").queue();
+			event.getChannel().sendMessage(Main.getPrefix() + "User fÃ¼r diesen Spieler nicht gefunden!").queue();
 			return;
 		}
 

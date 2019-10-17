@@ -10,14 +10,17 @@ import de.cuuky.varo.event.events.ExposedVaroEvent;
 import de.cuuky.varo.event.events.MoonGravityVaroEvent;
 import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
+import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 
 public class VaroEvent {
 
 	private static ArrayList<VaroEvent> events;
+	private static MassRecordingVaroEvent MassRecEvent;
 
 	static {
 		events = new ArrayList<>();
-
+		
+		MassRecEvent = new MassRecordingVaroEvent();
 		new PoisonWaterVaroEvent();
 		new PoisonRainVaroEvent();
 		new MoonGravityVaroEvent();
@@ -73,6 +76,10 @@ public class VaroEvent {
 
 	public static ArrayList<VaroEvent> getEvents() {
 		return events;
+	}
+	
+	public static MassRecordingVaroEvent getMassRecEvent() {
+		return MassRecEvent;
 	}
 
 	public static ArrayList<VaroEvent> getEnabledEvents() {

@@ -22,7 +22,7 @@ public class PlayerGUI extends SuperInventory {
 	private PlayerGUIType type;
 
 	public PlayerGUI(Player opener, VaroPlayer target, PlayerGUIType type) {
-		super("§2" + target.getName() + " §7(" + target.getId() + ")", opener, 27, false);
+		super("Â§2" + target.getName() + " Â§7(" + target.getId() + ")", opener, 27, false);
 
 		this.target = target;
 		this.type = type;
@@ -34,7 +34,7 @@ public class PlayerGUI extends SuperInventory {
 	public boolean onOpen() {
 		// TODO: Strikes
 
-		linkItemTo(1, new ItemBuilder().displayname("§aInventory Backups").itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("§7Click to see more options").build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("Â§aInventory Backups").itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("Â§7Click to see more options").build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -42,7 +42,7 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormatter("x, y, z in world").format(target.getStats().getLastLocation()) : "/") }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("Â§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "Â§cClick to teleport", "Â§7" + (target.getStats().getLastLocation() != null ? new LocationFormatter("x, y, z in world").format(target.getStats().getLastLocation()) : "/") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -53,7 +53,7 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).amount(getFixedSize(target.getStats().getSaveables().size())).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("Â§eKisten/Ã–fen").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).amount(getFixedSize(target.getStats().getSaveables().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -61,7 +61,7 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(11, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), new Runnable() {
+		linkItemTo(11, new ItemBuilder().displayname("Â§4Remove").itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -73,19 +73,19 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(15, new ItemBuilder().displayname("§cReset").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
+		linkItemTo(15, new ItemBuilder().displayname("Â§cReset").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
 
 			@Override
 			public void run() {
 				if(target.isOnline())
-					target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
+					target.getPlayer().kickPlayer("Â§7You've been resetted.\nÂ§cPlease join again.");
 
 				target.getStats().loadDefaults();
 				updateInventory();
 			}
 		});
 
-		linkItemTo(22, new ItemBuilder().displayname("§5More Options").itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(), new Runnable() {
+		linkItemTo(22, new ItemBuilder().displayname("Â§5More Options").itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -71,7 +71,7 @@ public class Utils {
 				continue;
 			}
 
-			if(c == 'ง' || c == '&') {
+			if(c == 'ยง' || c == '&') {
 				lastPara = true;
 				continue;
 			}

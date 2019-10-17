@@ -75,7 +75,7 @@ public class OfflineVillager implements VaroSerializeable {
 		for(Entity ent : location.getWorld().getEntities())
 			if(ent.getType().toString().contains("ZOMBIE")) {
 				Zombie zombie = (Zombie) ent;
-				if(zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {
+				if(zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("Â§c" + vp.getName())) {
 					this.zombie = (Zombie) ent;
 					this.entity = ent;
 				}
@@ -98,7 +98,7 @@ public class OfflineVillager implements VaroSerializeable {
 
 				EntityType type = VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
 				zombie = (Zombie) location.getWorld().spawnEntity(location, type);
-				zombie.setCustomName("§c" + vp.getName());
+				zombie.setCustomName("Â§c" + vp.getName());
 				zombie.setCustomNameVisible(true);
 
 				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_9))

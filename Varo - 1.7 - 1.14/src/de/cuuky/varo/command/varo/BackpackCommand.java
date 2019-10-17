@@ -11,7 +11,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class BackpackCommand extends VaroCommand {
 
 	public BackpackCommand() {
-		super("backpack", "Öffnet das Backpack von dir oder einem Spieler", null, "bp");
+		super("backpack", "Ã–ffnet das Backpack von dir oder einem Spieler", null, "bp");
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class BackpackCommand extends VaroCommand {
 		}
 
 		if(!ConfigEntry.BACKPACK_ALLOW.getValueAsBoolean()) {
-			sender.sendMessage(Main.getPrefix() + "Rucksäcke sind nicht aktiviert!");
+			sender.sendMessage(Main.getPrefix() + "RucksÃ¤cke sind nicht aktiviert!");
 			return;
 		}
 
@@ -37,12 +37,12 @@ public class BackpackCommand extends VaroCommand {
 			VaroPlayer p = VaroPlayer.getPlayer(args[0]);
 			if(!vp.getPlayer().isOp()) {
 				if(p == null) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7nicht gefunden!");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " Â§7nicht gefunden!");
 					return;
 				}
 
 				if(vp.getTeam() == null || !vp.getTeam().equals(p.getTeam())) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7ist nicht in deinem Team!");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " Â§7ist nicht in deinem Team!");
 					return;
 				}
 
@@ -54,6 +54,6 @@ public class BackpackCommand extends VaroCommand {
 
 			vp.getPlayer().openInventory(p.getStats().getBackpack().getInventory());
 		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp §7[Player]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp Â§7[Player]");
 	}
 }
