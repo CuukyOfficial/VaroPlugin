@@ -30,7 +30,7 @@ public class SignChangeListener implements Listener {
 		Sign sign = (Sign) e.getBlock().getState().getData();
 		if(e.getPlayer().isOp())
 			for(int i = 0; i < e.getLines().length; i++)
-				e.setLine(i, e.getLines()[i].replace("&", "Â§"));
+				e.setLine(i, e.getLines()[i].replace("&", "§"));
 
 		if(e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
 			return;
@@ -48,7 +48,7 @@ public class SignChangeListener implements Listener {
 				secChest = (Chest) ((DoubleChest) ih).getRightSide();
 
 			if(ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() == 0) {
-				e.getPlayer().sendMessage(Main.getPrefix() + "Â§7Die Chestsicherung wurde in der Config Â§7deaktiviert!");
+				e.getPlayer().sendMessage(Main.getPrefix() + "§7Die Chestsicherung wurde in der Config §7deaktiviert!");
 				return;
 			}
 
@@ -64,13 +64,13 @@ public class SignChangeListener implements Listener {
 			}
 
 			if(sorted.size() >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt()) {
-				p.sendMessage(Main.getPrefix() + "Â§7Die maximale Anzahl an gesetzten Kisten fÃ¼r das Team " + Main.getColorCode() + player.getTeam().getName() + " Â§7wurde bereits Â§7erreicht! (Anzahl: Â§6" + sorted.size() + " Â§7Max: Â§6" + ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() + "Â§7)");
+				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten für das Team " + Main.getColorCode() + player.getTeam().getName() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 				e.setCancelled(true);
 				return;
 			}
 
 			if(VaroSaveable.getByLocation(chest.getLocation()) != null || secChest != null && VaroSaveable.getByLocation(secChest.getLocation()) != null) {
-				p.sendMessage(Main.getPrefix() + "Â§7Diese " + Main.getColorCode() + " Kiste Â§7ist bereits gesichert!");
+				p.sendMessage(Main.getPrefix() + "§7Diese " + Main.getColorCode() + " Kiste §7ist bereits gesichert!");
 				e.setCancelled(true);
 				return;
 			}
@@ -78,10 +78,10 @@ public class SignChangeListener implements Listener {
 			if(secChest != null)
 				new VaroSaveable(SaveableType.CHEST, secChest.getLocation(), player);
 
-			e.setLine(0, "Â§8--------------");
-			e.setLine(1, "Â§lSavedChest");
+			e.setLine(0, "§8--------------");
+			e.setLine(1, "§lSavedChest");
 			e.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
-			e.setLine(3, "Â§8--------------");
+			e.setLine(3, "§8--------------");
 			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 			p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 			p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
@@ -96,7 +96,7 @@ public class SignChangeListener implements Listener {
 			Furnace furnace = (Furnace) attached.getState();
 
 			if(ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() == 0) {
-				e.getPlayer().sendMessage(Main.getPrefix() + "Â§7Die Furnacesicherung wurde in der Config Â§7deaktiviert!");
+				e.getPlayer().sendMessage(Main.getPrefix() + "§7Die Furnacesicherung wurde in der Config §7deaktiviert!");
 				return;
 			}
 
@@ -113,22 +113,22 @@ public class SignChangeListener implements Listener {
 			}
 
 			if(VaroSaveable.getByLocation(furnace.getLocation()) != null) {
-				p.sendMessage(Main.getPrefix() + "Â§7Diese " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + " Furnace Â§7ist bereits gesichert!");
+				p.sendMessage(Main.getPrefix() + "§7Diese " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + " Furnace §7ist bereits gesichert!");
 				e.setCancelled(true);
 				return;
 			}
 
 			if(ConfigEntry.PLAYER_FURNACE_LIMIT.isIntActivated())
 				if(sorted.size() >= ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
-					p.sendMessage(Main.getPrefix() + "Â§7Die maximale Anzahl an gesetzten Furnaces fÃ¼r das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " Â§7wurde bereits Â§7erreicht! (Anzahl: Â§6" + sorted.size() + " Â§7Max: Â§6" + ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() + "Â§7)");
+					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces für das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
 					e.setCancelled(true);
 					return;
 				}
 
-			e.setLine(0, "Â§8--------------");
-			e.setLine(1, "Â§lSavedFurnace");
+			e.setLine(0, "§8--------------");
+			e.setLine(1, "§lSavedFurnace");
 			e.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
-			e.setLine(3, "Â§8--------------");
+			e.setLine(3, "§8--------------");
 			p.playSound(furnace.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);

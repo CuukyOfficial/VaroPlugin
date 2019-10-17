@@ -58,29 +58,11 @@ public class PlayerLoginListener implements Listener {
 
 		KickResult kickResult = vp.getStats().getKickResult(player);
 		switch(kickResult) {
-		case NO_PROJECTUSER:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp));
-			break;
-		case BANNED:
-			for(BanEntry entry : Bukkit.getBanList(Type.NAME).getBanEntries()) {
-				if(entry.getTarget().equals(player.getName())) {
-					event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_BANNED.getValue(vp).replace("%reason%", entry.getReason()));
-					break;
-				}
-			}
-			break;
-		case DEAD:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.DEATH_KICK_DEAD.getValue());
-			break;
-		case STRIKE_BAN:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp).replace("%hours%", String.valueOf(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
-			break;
-		case NOT_IN_TIME:
-			Date date = new Date();
-			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replaceAll("%minHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replaceAll("%maxHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replaceAll("%hours%", new SimpleDateFormat("HH").format(date)).replaceAll("%minutes%", new SimpleDateFormat("mm").format(date)).replaceAll("%seconds%", new SimpleDateFormat("ss").format(date)));
-			break;
 		case SERVER_FULL:
 			event.disallow(Result.KICK_FULL, ConfigMessages.JOIN_KICK_SERVER_FULL.getValue(vp));
+			break;
+		case NO_PROJECTUSER:
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp));
 			break;
 		case NO_SESSIONS_LEFT:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_SESSIONS_LEFT.getValue(vp));
@@ -115,10 +97,37 @@ public class PlayerLoginListener implements Listener {
 
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replaceAll("%timeHours%", ConfigEntry.TIME_JOIN_HOURS.getValueAsInt() + "").replaceAll("%stunden%", hours).replaceAll("%minuten%", minutes).replaceAll("%sekunden%", seconds));
 			break;
+		case NOT_IN_TIME:
+			Date date = new Date();
+			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replaceAll("%minHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replaceAll("%maxHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replaceAll("%hours%", new SimpleDateFormat("HH").format(date)).replaceAll("%minutes%", new SimpleDateFormat("mm").format(date)).replaceAll("%seconds%", new SimpleDateFormat("ss").format(date)));
+			break;
+		case DEAD:
+			event.disallow(Result.KICK_OTHER, ConfigMessages.DEATH_KICK_DEAD.getValue());
+			break;
+		case BANNED:
+			System.out.println("TEST");
+			for(BanEntry entry : Bukkit.getBanList(Type.NAME).getBanEntries()) {
+				if(entry.getTarget().equals(player.getName())) {
+					event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_BANNED.getValue(vp).replace("%reason%", entry.getReason()));
+					break;
+				}
+			}
+
+			for(BanEntry entry : Bukkit.getBanList(Type.IP).getBanEntries()) {
+				System.out.println("TARGET: " + entry.getTarget() + " : " + event.getAddress().toString());
+				if(entry.getTarget().equals(event.getAddress().toString())) {
+					event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_BANNED.getValue(vp).replace("%reason%", entry.getReason()));
+					break;
+				}
+			}
+
+			break;
 		case SERVER_NOT_PUBLISHED:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));
 			break;
-		case MASS_RECORDING_JOIN:
+		case STRIKE_BAN:
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp).replace("%hours%", String.valueOf(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
+			break;
 		default:
 			event.allow();
 			if(!vp.isRegistered())

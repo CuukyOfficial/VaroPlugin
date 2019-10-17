@@ -22,41 +22,41 @@ import de.cuuky.varo.version.types.Materials;
 public class DebugGUI extends SuperInventory {
 
 	public DebugGUI(Player opener) {
-		super("Â§6DEBUG", opener, 18, false);
+		super("§6DEBUG", opener, 18, false);
 
 		open();
 	}
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("Â§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "Â§7FÃ¼hrt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen" }).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Führt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen" }).build(), new Runnable() {
 
 			@Override
 			public void run() {
 				close(false);
 
-				new ChatHook(opener, "Â§7Enter Event Message:", new ChatHookListener() {
+				new ChatHook(opener, "§7Enter Event Message:", new ChatHookListener() {
 
 					@Override
 					public void onChat(String message) {
 						Main.getLoggerMaster().getEventLogger().println(LogType.INFO, message);
-						opener.sendMessage(Main.getPrefix() + "Â§aErfolgreich!");
+						opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
 
 					}
 				});
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("Â§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[] { "Â§7FÃ¼hrt die Dinge aus, die sonst immer", "Â§7Nachts ausgefÃ¼hrt werden, wie Sessionreset" }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[] { "§7Führt die Dinge aus, die sonst immer", "§7Nachts ausgeführt werden, wie Sessionreset" }).build(), new Runnable() {
 
 			@Override
 			public void run() {
 				Checker.checkAll();
-				opener.sendMessage(Main.getPrefix() + "Â§aErfolgreich!");
+				opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("Â§cTrigger Coordpost").itemstack(new ItemStack(Material.ANVIL)).amount(1).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§cTrigger Coordpost").itemstack(new ItemStack(Material.ANVIL)).amount(1).build(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -53,7 +53,7 @@ public class Broadcaster {
 		if(!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
-			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewählt werden.");
+			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewaehlt werden.");
 
 			if(!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);

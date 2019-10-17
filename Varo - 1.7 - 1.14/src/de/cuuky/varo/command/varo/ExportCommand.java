@@ -22,7 +22,7 @@ public class ExportCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "ยง7----- ยงl" + Main.getColorCode() + "Export" + "ยง7 -----");
+			sender.sendMessage(Main.getPrefix() + "ง7----- งl" + Main.getColorCode() + "Export" + "ง7 -----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players | Exportiert alle Spieler");
 		}
 

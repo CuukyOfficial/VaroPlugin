@@ -24,7 +24,7 @@ public class ConfigGUI extends SuperInventory {
 	private ConfigSection section;
 
 	public ConfigGUI(Player opener, ConfigSection section) {
-		super("ยงa" + section.getName(), opener, 18, false);
+		super("งa" + section.getName(), opener, 18, false);
 
 		this.section = section;
 
@@ -32,7 +32,7 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "ยง7Enter Value for " + Main.getColorCode() + entry.getName() + " ยง8(ยง7Current: ยงa" + entry.getValue() + "ยง8):", new ChatHookListener() {
+		new ChatHook(opener, "ง7Enter Value for " + Main.getColorCode() + entry.getName() + " ง8(ง7Current: งa" + entry.getValue() + "ง8):", new ChatHookListener() {
 
 			@Override
 			public void onChat(String message) {
@@ -45,7 +45,7 @@ public class ConfigGUI extends SuperInventory {
 				}
 
 				opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-				opener.sendMessage(Main.getPrefix() + "ยง7'ยงa" + entry.getName() + "ยง7' erfolgreich auf 'ยงa" + message + "ยง7' gesetzt!");
+				opener.sendMessage(Main.getPrefix() + "ง7'งa" + entry.getName() + "ง7' erfolgreich auf 'งa" + message + "ง7' gesetzt!");
 				reopenSoon();
 			}
 		});
@@ -64,7 +64,7 @@ public class ConfigGUI extends SuperInventory {
 			lore.add("Value: " + entry.getValue());
 
 			
-			linkItemTo(i, new ItemBuilder().displayname("ยง7" + entry.getPath()).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("ง7" + entry.getPath()).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build(), new Runnable() {
 
 				@Override
 				public void run() {

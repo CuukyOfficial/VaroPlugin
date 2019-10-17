@@ -26,12 +26,12 @@ public class TeamRequestCommand extends VaroCommand {
 		}
 
 		if(!ConfigEntry.TEAMREQUESTS.getValueAsBoolean()) {
-			sender.sendMessage(Main.getPrefix() + "ยง7Das " + Main.getColorCode() + "Teamanfragen-System ยง7wurde in der Config deaktiviert!");
+			sender.sendMessage(Main.getPrefix() + "ง7Das " + Main.getColorCode() + "Teamanfragen-System ง7wurde in der Config deaktiviert!");
 			return;
 		}
 
 		if(Main.getGame().isStarted()) {
-			sender.sendMessage(Main.getPrefix() + "ยง7Du kannst dein Team nicht wechseln, da " + Main.getProjectName() + " schon gestartet ist!");
+			sender.sendMessage(Main.getPrefix() + "ง7Du kannst dein Team nicht wechseln, da " + Main.getProjectName() + " schon gestartet ist!");
 			return;
 		}
 
@@ -45,7 +45,7 @@ public class TeamRequestCommand extends VaroCommand {
 
 		if(args[0].equalsIgnoreCase("invite")) {
 			if(args.length < 2) {
-				sender.sendMessage(Main.getPrefix() + "ยง7/tr invite ยง7<Player 1, Player 2, ...>");
+				sender.sendMessage(Main.getPrefix() + "ง7/tr invite ง7<Player 1, Player 2, ...>");
 				return;
 			}
 
@@ -55,38 +55,38 @@ public class TeamRequestCommand extends VaroCommand {
 
 				VaroPlayer invite = VaroPlayer.getPlayer(arg);
 				if(invite == null) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " ยง7nicht gefunden!");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " ง7nicht gefunden!");
 					continue;
 				}
 
 				if(invite.equals(player)) {
-					sender.sendMessage(Main.getPrefix() + "ยง7Du kannst dich nicht selbst einladen!");
+					sender.sendMessage(Main.getPrefix() + "ง7Du kannst dich nicht selbst einladen!");
 					continue;
 				}
 
 				if(TeamRequest.getByAll(player, invite) != null) {
-					sender.sendMessage(Main.getPrefix() + "ยง7Du hast bereits eine Anfrage an ยง7" + arg + " ยง7verschickt! Versuche es in " + ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt() + " Sekunden erneut!");
+					sender.sendMessage(Main.getPrefix() + "ง7Du hast bereits eine Anfrage an ง7" + arg + " ง7verschickt! Versuche es in " + ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt() + " Sekunden erneut!");
 					return;
 				}
 
 				if(invite.getTeam() != null && player.getTeam() != null)
 					if(invite.getTeam().equals(player.getTeam())) {
-						sender.sendMessage(Main.getPrefix() + "ยง7Du und " + Main.getColorCode() + invite.getName() + " ยง7sind bereits im selben Team!");
+						sender.sendMessage(Main.getPrefix() + "ง7Du und " + Main.getColorCode() + invite.getName() + " ง7sind bereits im selben Team!");
 						continue;
 					}
 
 				invite.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_TEAM_REQUEST_RECIEVED.getValue(player).replaceAll("%invitor%", player.getName()));
-				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " ยง7gesendet");
+				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " ง7gesendet");
 				new TeamRequest(player, invite);
 			}
 		} else if(args[0].equalsIgnoreCase("accept") || args[0].equalsIgnoreCase("decline")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + "ยง7/tr accept/decline <Player>");
+				sender.sendMessage(Main.getPrefix() + "ง7/tr accept/decline <Player>");
 				return;
 			}
 
 			if(Bukkit.getPlayerExact(args[1]) == null) {
-				sender.sendMessage(Main.getPrefix() + "ยง7Spieler " + Main.getColorCode() + args[1] + " ยง7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "ง7Spieler " + Main.getColorCode() + args[1] + " ง7nicht gefunden!");
 				return;
 			}
 
@@ -94,27 +94,27 @@ public class TeamRequestCommand extends VaroCommand {
 			TeamRequest tr = TeamRequest.getByAll(varoPlayer, player);
 
 			if(tr == null) {
-				sender.sendMessage(Main.getPrefix() + "ยง7Einladung von " + Main.getColorCode() + "" + args[1] + " ยง7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "ง7Einladung von " + Main.getColorCode() + "" + args[1] + " ง7nicht gefunden!");
 				return;
 			}
 
 			if(args[0].equalsIgnoreCase("accept")) {
-				player.sendMessage(Main.getPrefix() + "Du hast die Anfrage von " + Main.getColorCode() + varoPlayer.getName() + " ยง7angenommen");
-				varoPlayer.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " ยง7hat deine Team anfrage angenommen!");
+				player.sendMessage(Main.getPrefix() + "Du hast die Anfrage von " + Main.getColorCode() + varoPlayer.getName() + " ง7angenommen");
+				varoPlayer.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " ง7hat deine Team anfrage angenommen!");
 				tr.accept();
 			} else {
-				player.sendMessage(Main.getPrefix() + "Du hast die Anfrage von " + Main.getColorCode() + varoPlayer.getName() + " ยงabgelehnt!");
-				varoPlayer.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " ยง7hat deine Team anfrage abgelehnt!");
+				player.sendMessage(Main.getPrefix() + "Du hast die Anfrage von " + Main.getColorCode() + varoPlayer.getName() + " งabgelehnt!");
+				varoPlayer.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " ง7hat deine Team anfrage abgelehnt!");
 				tr.decline();
 			}
 		} else if(args[0].equalsIgnoreCase("revoke")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + "ยง7/tr revoke <Player>");
+				sender.sendMessage(Main.getPrefix() + "ง7/tr revoke <Player>");
 				return;
 			}
 
 			if(Bukkit.getPlayer(args[1]) == null) {
-				sender.sendMessage(Main.getPrefix() + "ยง7Spieler ยง7" + args[1] + " ยง7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "ง7Spieler ง7" + args[1] + " ง7nicht gefunden!");
 				return;
 			}
 
@@ -122,26 +122,26 @@ public class TeamRequestCommand extends VaroCommand {
 			TeamRequest tr = TeamRequest.getByInvitor(VaroPlayer.getPlayer(args[1]));
 
 			if(tr == null) {
-				sender.sendMessage(Main.getPrefix() + "ยง7Du hast keine Einladung an " + Main.getColorCode() + "" + args[1] + " ยง7verschickt!");
+				sender.sendMessage(Main.getPrefix() + "ง7Du hast keine Einladung an " + Main.getColorCode() + "" + args[1] + " ง7verschickt!");
 				return;
 			}
 
 			tr.revoke();
 		} else if(args[0].equalsIgnoreCase("leave")) {
 			if(args.length != 1) {
-				sender.sendMessage(Main.getPrefix() + "ยง7/tr leave");
+				sender.sendMessage(Main.getPrefix() + "ง7/tr leave");
 				return;
 			}
 
 			if(player.getTeam() == null) {
-				sender.sendMessage(Main.getPrefix() + "ยง7Du bist in keinem Team!");
+				sender.sendMessage(Main.getPrefix() + "ง7Du bist in keinem Team!");
 				return;
 			}
 
-			player.sendMessage(Main.getPrefix() + "ยง7Du hast dein Team " + Main.getColorCode() + player.getTeam().getDisplay() + " ยง7erfolgreich verlassen!");
+			player.sendMessage(Main.getPrefix() + "ง7Du hast dein Team " + Main.getColorCode() + player.getTeam().getDisplay() + " ง7erfolgreich verlassen!");
 			player.getTeam().removeMember(player);
 		} else {
-			player.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " ยงkein Argument!");
+			player.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " งkein Argument!");
 			sendInfo(player.getPlayer());
 		}
 
@@ -149,14 +149,14 @@ public class TeamRequestCommand extends VaroCommand {
 	}
 
 	public void sendInfo(Player sender) {
-		sender.sendMessage(Main.getPrefix() + "ยง7--- " + Main.getColorCode() + "TeamRequestor-System ยง7---");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr invite ยง7<Player 1, Player 2, ...>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr revoke ยง7<Player>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr decline ยง7<Player>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr accept ยง7<Player>");
+		sender.sendMessage(Main.getPrefix() + "ง7--- " + Main.getColorCode() + "TeamRequestor-System ง7---");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr invite ง7<Player 1, Player 2, ...>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr revoke ง7<Player>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr decline ง7<Player>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr accept ง7<Player>");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr leave");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr help");
-		sender.sendMessage(Main.getPrefix() + "ยง7--------------------------");
+		sender.sendMessage(Main.getPrefix() + "ง7--------------------------");
 	}
 
 }

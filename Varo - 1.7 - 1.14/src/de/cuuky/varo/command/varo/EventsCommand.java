@@ -11,7 +11,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class EventsCommand extends VaroCommand {
 
 	public EventsCommand() {
-		super("events", "Ã–ffnet das Event MenÃ¼", "varo.events", "event");
+		super("events", "Öffnet das Event Menü", "varo.events", "event");
 	}
 
 	@Override

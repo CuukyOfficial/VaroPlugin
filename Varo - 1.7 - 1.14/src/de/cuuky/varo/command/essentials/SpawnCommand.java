@@ -16,13 +16,13 @@ public class SpawnCommand implements CommandExecutor {
 		Location loc = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation();
 		if(!(sender instanceof Player)) {
 			if(loc == null)
-				sender.sendMessage(Main.getPrefix() + "ยง7Main World not found!");
+				sender.sendMessage(Main.getPrefix() + "ง7Main World not found!");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN.getValue().replaceAll("%x%", loc.getBlockX() + "").replaceAll("%y%", loc.getBlockY() + "").replaceAll("%z%", loc.getBlockZ() + ""));
 			return false;
 		}
 
 		if(args.length != 0) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/spawn");
+			sender.sendMessage(Main.getPrefix() + "ง7/spawn");
 			return false;
 		}
 

@@ -16,10 +16,10 @@ import de.cuuky.varo.version.types.Materials;
 public class TeamListGUI extends SuperInventory {
 
 	public enum TeamGUIType {
-		DEAD("Â§4DEAD", Materials.REDSTONE.parseMaterial()),
-		REGISTERED("Â§bREGISTERED", Material.BOOK),
-		ALIVE("Â§aALIVE", Material.POTION),
-		ONLINE("Â§eONLINE", Material.EMERALD);
+		DEAD("§4DEAD", Materials.REDSTONE.parseMaterial()),
+		REGISTERED("§bREGISTERED", Material.BOOK),
+		ALIVE("§aALIVE", Material.POTION),
+		ONLINE("§eONLINE", Material.EMERALD);
 
 		private String typeName;
 		private Material icon;
@@ -56,7 +56,7 @@ public class TeamListGUI extends SuperInventory {
 	private TeamGUIType type;
 
 	public TeamListGUI(Player opener, TeamGUIType type) {
-		super("Â§7Choose Team", opener, 45, false);
+		super("§7Choose Team", opener, 45, false);
 
 		this.type = type;
 		open();

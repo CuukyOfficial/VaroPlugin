@@ -11,7 +11,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class LeaveTeamItem extends LobbyItem {
 
 	public LeaveTeamItem() {
-		super(new ItemBuilder().displayname("Â§cTeam verlassen").itemstack(new ItemStack(Material.NETHER_STAR)).lore(new String[] { "Â§7Verlasse dein Team" }).build(), 1);
+		super(new ItemBuilder().displayname("§cTeam verlassen").itemstack(new ItemStack(Material.NETHER_STAR)).lore(new String[] { "§7Verlasse dein Team" }).build(), 1);
 	}
 
 	@Override

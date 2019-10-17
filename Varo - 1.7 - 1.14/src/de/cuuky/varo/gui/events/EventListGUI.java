@@ -17,7 +17,7 @@ import de.cuuky.varo.version.types.Materials;
 public class EventListGUI extends SuperInventory {
 
 	public EventListGUI(Player opener) {
-		super("ยง5Events", opener, 45, false);
+		super("ง5Events", opener, 45, false);
 
 		open();
 	}
@@ -38,8 +38,8 @@ public class EventListGUI extends SuperInventory {
 
 			line[0] = line[0].replace("[", "");
 			ArrayList<String> s = new ArrayList<>();
-			s.add("ยงc" + line[0]);
-			linkItemTo(i, new ItemBuilder().displayname("ยง7" + line[1]).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(s).build(), new Runnable() {
+			s.add("งc" + line[0]);
+			linkItemTo(i, new ItemBuilder().displayname("ง7" + line[1]).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(s).build(), new Runnable() {
 
 				@Override
 				public void run() {

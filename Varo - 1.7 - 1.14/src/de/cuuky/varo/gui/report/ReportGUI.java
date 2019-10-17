@@ -21,7 +21,7 @@ public class ReportGUI extends SuperInventory {
 	private VaroPlayer reporter;
 
 	public ReportGUI(Player opener, VaroPlayer reported) {
-		super("Â§cReport", opener, 9, false);
+		super("§cReport", opener, 9, false);
 
 		this.reporter = VaroPlayer.getPlayer(opener);
 		this.reported = reported;
@@ -36,9 +36,9 @@ public class ReportGUI extends SuperInventory {
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
 			for(String strin : reasons.getDescription().split("\n"))
-				lore.add("Â§c" + strin);
+				lore.add("§c" + strin);
 
-			getInventory().setItem(i, new ItemBuilder().displayname("Â§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());
+			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());
 		}
 
 		return true;
@@ -51,10 +51,10 @@ public class ReportGUI extends SuperInventory {
 	public void onClick(InventoryClickEvent event) {
 		this.close(true);
 
-		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replaceAll("Â§7", "");
+		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§7", "");
 		ReportReason reason = ReportReason.getByName(reportName);
 		new Report(reporter, reported, reason);
-		reporter.sendMessage(Main.getPrefix() + Main.getColorCode() + reported.getName() + " Â§7wurde erfolgreich reportet!");
+		reporter.sendMessage(Main.getPrefix() + Main.getColorCode() + reported.getName() + " §7wurde erfolgreich reportet!");
 	}
 
 	@Override

@@ -14,13 +14,13 @@ public class ReplyCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "ยงb/r ยง7<Message>");
+			sender.sendMessage(Main.getPrefix() + "งb/r ง7<Message>");
 			return false;
 		}
 
 		if (!MessageCommand.lastChat.containsKey(sender.getName())) {
 			sender.sendMessage(
-					Main.getPrefix() + "Letzter Chat konnte " + Main.getColorCode() + "nicht ยง7gefunden werden.");
+					Main.getPrefix() + "Letzter Chat konnte " + Main.getColorCode() + "nicht ง7gefunden werden.");
 			return false;
 		}
 
@@ -28,13 +28,13 @@ public class ReplyCommand implements CommandExecutor {
 		Player to = Bukkit.getPlayerExact(to1);
 
 		if (to == null) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to1 + " ยง7ist nicht mehr online!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to1 + " ง7ist nicht mehr online!");
 			return false;
 		}
 
 		String message = Utils.getArgsToString(args, " ");
-		to.sendMessage(Main.getColorCode() + sender.getName() + " ยง8-> ยง7Dirยง8: ยงf" + message);
-		sender.sendMessage("ยง7Du ยง8-> " + Main.getColorCode() + to.getName() + "ยง8: ยงf" + message);
+		to.sendMessage(Main.getColorCode() + sender.getName() + " ง8-> ง7Dirง8: งf" + message);
+		sender.sendMessage("ง7Du ง8-> " + Main.getColorCode() + to.getName() + "ง8: งf" + message);
 		if (MessageCommand.lastChat.containsKey(to.getName()))
 			MessageCommand.lastChat.remove(to.getName());
 

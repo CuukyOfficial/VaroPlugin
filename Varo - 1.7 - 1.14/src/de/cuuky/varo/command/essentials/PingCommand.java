@@ -31,13 +31,13 @@ public class PingCommand implements CommandExecutor {
 
 			Player p = Bukkit.getPlayerExact(args[0]);
 			if(p == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0] + " Â§7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0] + " §7nicht gefunden!");
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "Â§7Der Ping von " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0] + " Â§7betrÃ¤gt " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + String.valueOf(VaroPlayer.getPlayer(p).getNetworkManager().getPing()) + "msÂ§7!");
+			sender.sendMessage(Main.getPrefix() + "§7Der Ping von " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0] + " §7beträgt " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + String.valueOf(VaroPlayer.getPlayer(p).getNetworkManager().getPing()) + "ms§7!");
 		} else
-			sender.sendMessage(Main.getPrefix() + "Â§b/ping Â§7[Player]");
+			sender.sendMessage(Main.getPrefix() + "§b/ping §7[Player]");
 
 		return false;
 	}

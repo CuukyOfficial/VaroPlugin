@@ -36,8 +36,8 @@ public abstract class SuperInventory {
 
 	static {
 		guis = new ArrayList<>();
-		forward = new ItemBuilder().displayname("Â§aSeite vorwÃ¤rts").itemstack(new ItemStack(Material.ARROW)).build();
-		backwards = new ItemBuilder().displayname("Â§cSeite rÃ¼ckwÃ¤rts").itemstack(new ItemStack(Material.ARROW)).build();
+		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
+		backwards = new ItemBuilder().displayname("§cSeite rückwärts").itemstack(new ItemStack(Material.ARROW)).build();
 	}
 
 	protected String firstTitle;
@@ -77,7 +77,7 @@ public abstract class SuperInventory {
 	 * String for page title
 	 */
 	private String getPageUpdate() {
-		String suff = (hasMorePages ? " Â§7" + page : "");
+		String suff = (hasMorePages ? " §7" + page : "");
 		return firstTitle + (firstTitle.length() + suff.length() > 32 ? "" : suff);
 	}
 
@@ -86,16 +86,16 @@ public abstract class SuperInventory {
 	 */
 	private String getBack() {
 		if(!homePage)
-			return "Â§4ZurÃ¼ck";
+			return "§4Zurück";
 		else
-			return "Â§4SchlieÃŸen";
+			return "§4Schließen";
 	}
 
 	/*
 	 * Set Back and Forwards
 	 */
 	private void setSwitcher() {
-		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("Â§4ZurÃ¼ck") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
+		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("§4Zurück") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
 		if(!hasMorePages)
 			return;
 
@@ -112,7 +112,7 @@ public abstract class SuperInventory {
 
 		for(int i = 0; i < inv.getSize(); i++)
 			if(inv.getItem(i) == null)
-				inv.setItem(i, new ItemBuilder().displayname("Â§c").itemstack(new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15)).build());
+				inv.setItem(i, new ItemBuilder().displayname("§c").itemstack(new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15)).build());
 	}
 
 	@SuppressWarnings("deprecation")

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -62,18 +61,6 @@ public class ItemBuilder {
 
 	public ItemBuilder playername(String playername) {
 		this.playerName = playername;
-		return this;
-	}
-	
-	public ItemBuilder deleteDamageAnnotation() {
-		ItemMeta Meta = stack.getItemMeta();
-		Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-		Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-		Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-		stack.setItemMeta(Meta);
 		return this;
 	}
 

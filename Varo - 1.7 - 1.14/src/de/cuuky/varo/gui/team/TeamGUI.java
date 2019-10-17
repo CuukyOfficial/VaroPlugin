@@ -16,7 +16,7 @@ public class TeamGUI extends SuperInventory {
 	private Team team;
 
 	public TeamGUI(Player opener, Team team) {
-		super("Â§7Team Â§2" + team.getId(), opener, 9, false);
+		super("§7Team §2" + team.getId(), opener, 9, false);
 
 		this.team = team;
 		open();
@@ -24,7 +24,7 @@ public class TeamGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("Â§cRemove").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
 
 			@Override
 			public void run() {

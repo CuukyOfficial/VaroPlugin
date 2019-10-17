@@ -13,7 +13,7 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 	private int sched;
 
 	public PoisonWaterVaroEvent() {
-		super("Â§bPoisoned Water", Material.WATER_BUCKET, "Bei Kontakt mit Wasser erhÃ¤lt man Schaden");
+		super("§bPoisoned Water", Material.WATER_BUCKET, "Bei Kontakt mit Wasser erhält man Schaden");
 
 	}
 

@@ -16,11 +16,11 @@ import de.cuuky.varo.version.types.Materials;
 public class PlayerListGUI extends SuperInventory {
 
 	public enum PlayerGUIType {
-		SPECTATOR("Â§fSPECTATOR", Materials.REDSTONE.parseMaterial()),
-		DEAD("Â§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial()),
-		REGISTERED("Â§bREGISTERED", Material.BOOK),
-		ALIVE("Â§aALIVE", Material.POTION),
-		ONLINE("Â§eONLINE", Material.EMERALD);
+		SPECTATOR("§fSPECTATOR", Materials.REDSTONE.parseMaterial()),
+		DEAD("§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial()),
+		REGISTERED("§bREGISTERED", Material.BOOK),
+		ALIVE("§aALIVE", Material.POTION),
+		ONLINE("§eONLINE", Material.EMERALD);
 
 		private String typeName;
 		private Material icon;
@@ -68,7 +68,7 @@ public class PlayerListGUI extends SuperInventory {
 	private PlayerGUIType type;
 
 	public PlayerListGUI(Player opener, boolean showstats, PlayerGUIType type) {
-		super("Â§cPlayer", opener, 45, false);
+		super("§cPlayer", opener, 45, false);
 
 		this.showStats = showstats;
 		this.type = type;
