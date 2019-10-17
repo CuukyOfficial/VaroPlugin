@@ -15,11 +15,12 @@ import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
 public class VaroEvent {
 
 	private static ArrayList<VaroEvent> events;
+	private static MassRecordingVaroEvent massRecEvent;
 
 	static {
 		events = new ArrayList<>();
 
-		new MassRecordingVaroEvent();
+		massRecEvent = new MassRecordingVaroEvent();
 		new PoisonWaterVaroEvent();
 		new PoisonRainVaroEvent();
 		new MoonGravityVaroEvent();
@@ -29,7 +30,6 @@ public class VaroEvent {
 	private String name;
 	private Material icon;
 	private String description;
-	
 	protected boolean enabled;
 
 	public VaroEvent(String name, Material icon, String description) {
@@ -76,6 +76,10 @@ public class VaroEvent {
 
 	public static ArrayList<VaroEvent> getEvents() {
 		return events;
+	}
+
+	public static MassRecordingVaroEvent getMassRecEvent() {
+		return massRecEvent;
 	}
 	
 	public static VaroEvent getEvent(String name) {
