@@ -6,11 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.event.events.ExposedVaroEvent;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.event.events.MoonGravityVaroEvent;
 import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
+import de.cuuky.varo.game.state.GameState;
 
 public class VaroEvent {
 
@@ -50,6 +52,9 @@ public class VaroEvent {
 	}
 
 	public void setEnabled(boolean enabled) {
+		if(Main.getGame().getGameState() != GameState.STARTED && enabled)
+			return;
+
 		this.enabled = enabled;
 
 		if(enabled)
@@ -81,12 +86,12 @@ public class VaroEvent {
 	public static MassRecordingVaroEvent getMassRecEvent() {
 		return massRecEvent;
 	}
-	
+
 	public static VaroEvent getEvent(String name) {
 		for(VaroEvent event : events)
 			if(event.getName().equals(name))
 				return event;
-		
+
 		return null;
 	}
 
