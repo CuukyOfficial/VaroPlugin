@@ -18,21 +18,21 @@ import net.dv8tion.jda.core.entities.User;
 public class DiscordCommand extends VaroCommand {
 
 	public DiscordCommand() {
-		super("discord", "Der Hauptbefehl für den DiscordBot", "varo.discord");
+		super("discord", "Der Hauptbefehl fÃ¼r den DiscordBot", "varo.discord");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7----- " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "Discord-Commands §7-----");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord getLink §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord unlink §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord bypassRegister §7<Spieler> <true/false>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord sendMessage §7<Nachricht>");
+			sender.sendMessage(Main.getPrefix() + "Â§7----- " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "Discord-Commands Â§7-----");
+			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord getLink Â§7<Spieler>");
+			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord unlink Â§7<Spieler>");
+			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord bypassRegister Â§7<Spieler> <true/false>");
+			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord sendMessage Â§7<Nachricht>");
 			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord reload");
 			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord shutdown");
 			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord settings");
-			sender.sendMessage(Main.getPrefix() + "§7--------------------------");
+			sender.sendMessage(Main.getPrefix() + "Â§7--------------------------");
 			return;
 		}
 
@@ -42,86 +42,86 @@ public class DiscordCommand extends VaroCommand {
 		} catch(Exception e) {}
 		
 		if(Main.getDiscordBot() == null) {
-			sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde beim Start nicht aufgesetzt, bitte reloade!");
+			sender.sendMessage(Main.getPrefix() + "Â§7Der DiscordBot wurde beim Start nicht aufgesetzt, bitte reloade!");
 			return;
 		}
 
 		if(args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
 			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Das Verifzierungs-System wurde in der Config deaktiviert!");
 				return;
 			}
 
 			if(Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled()) {
-				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
 
 			if(reg == null) {
-				sender.sendMessage(Main.getPrefix() + "§7Der Spieler §7" + args[1] + " §7hat den Server noch nie betreten!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der Spieler Â§7" + args[1] + " Â§7hat den Server noch nie betreten!");
 				return;
 			}
 
 			User user = Main.getDiscordBot().getJda().getUserById(reg.getUserId());
 			if(user == null) {
-				sender.sendMessage(Main.getPrefix() + "§7User für diesen Spieler nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "Â§7User fÃ¼r diesen Spieler nicht gefunden!");
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heißt: " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + user.getName() + "§7 und die ID lautet " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + user.getId() + "§7!");
+			sender.sendMessage(Main.getPrefix() + "Â§7Der Discord Account von " + args[1] + " heiÃŸt: " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + user.getName() + "Â§7 und die ID lautet " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + user.getId() + "Â§7!");
 		} else if(args[0].equalsIgnoreCase("unlink")) {
 			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Das Verifzierungs-System wurde in der Config deaktiviert!");
 				return;
 			}
 
 			if(Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled()) {
-				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
 
 			if(reg == null) {
-				sender.sendMessage(Main.getPrefix() + "§7Der Spieler §7" + args[1] + " §7hat den Server noch nie betreten!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der Spieler Â§7" + args[1] + " Â§7hat den Server noch nie betreten!");
 				return;
 			}
 
 			reg.setUserId(-1);
-			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account wurde erfolgreich von §7" + args[1] + "§7 entkoppelt!");
+			sender.sendMessage(Main.getPrefix() + "Â§7Der Discord Account wurde erfolgreich von Â§7" + args[1] + "Â§7 entkoppelt!");
 			if(Bukkit.getPlayerExact(reg.getPlayerName()) != null)
 				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(reg.getKickMessage());
 		} else if(args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
 			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Das Verifzierungs-System wurde in der Config deaktiviert!");
 				return;
 			}
 
 			if(Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled()) {
-				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
 
 			if(reg == null) {
-				sender.sendMessage(Main.getPrefix() + "§7Der Spieler §7" + args[1] + " §7hat den Server noch nie betreten!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der Spieler Â§7" + args[1] + " Â§7hat den Server noch nie betreten!");
 				return;
 			}
 
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <Spieler> <true/false>");
+				sender.sendMessage(Main.getPrefix() + "Â§7/varo discord bypass <Spieler> <true/false>");
 				return;
 			}
 
 			if(args[2].equalsIgnoreCase("true") || args[2].equalsIgnoreCase("false")) {
 				reg.setBypass(args[2].equalsIgnoreCase("true") ? true : false);
-				sender.sendMessage(Main.getPrefix() + "§7" + args[1] + "§7 bypasst jetzt " + (reg.isBypass() ? "" : "§7nicht mehr§7") + " das Register-System!");
+				sender.sendMessage(Main.getPrefix() + "Â§7" + args[1] + "Â§7 bypasst jetzt " + (reg.isBypass() ? "" : "Â§7nicht mehrÂ§7") + " das Register-System!");
 			} else
-				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <add/remove> <Spielername>");
+				sender.sendMessage(Main.getPrefix() + "Â§7/varo discord bypass <add/remove> <Spielername>");
 		} else if(args[0].equalsIgnoreCase("reload")) {
 			Main.getDiscordBot().disconnect();
 			Main.getDiscordBot().connect();
 			for(Player pl : Bukkit.getOnlinePlayers())
 				if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
-					pl.kickPlayer("§7Das Discord Verify System wurde aktiviert!");
-			sender.sendMessage(Main.getPrefix() + "§7DiscordBot §aerfolgreich §7neu geladen!");
+					pl.kickPlayer("Â§7Das Discord Verify System wurde aktiviert!");
+			sender.sendMessage(Main.getPrefix() + "Â§7DiscordBot Â§aerfolgreich Â§7neu geladen!");
 		} else if(args[0].equalsIgnoreCase("settings")) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Only for players!");
@@ -131,15 +131,15 @@ public class DiscordCommand extends VaroCommand {
 			new DiscordBotGUI((Player) sender);
 		} else if(args[0].equalsIgnoreCase("shutdown")) {
 			if(Main.getDiscordBot().getJda() == null) {
-				sender.sendMessage(Main.getPrefix() + "Der §bDiscordBot §7ist nicht online!");
+				sender.sendMessage(Main.getPrefix() + "Der Â§bDiscordBot Â§7ist nicht online!");
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§bDiscordBot §7erfolgreich heruntergefahren!");
+			sender.sendMessage(Main.getPrefix() + "Â§bDiscordBot Â§7erfolgreich heruntergefahren!");
 			Main.getDiscordBot().disconnect();
 		} else if(args[0].equalsIgnoreCase("sendMessage")) {
 			if(Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled()) {
-				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
+				sender.sendMessage(Main.getPrefix() + "Â§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
 
@@ -155,7 +155,7 @@ public class DiscordCommand extends VaroCommand {
 
 			Main.getDiscordBot().sendMessage(message, "MESSAGE", Color.YELLOW, Main.getDiscordBot().getEventChannel());
 		} else
-			sender.sendMessage(Main.getPrefix() + "§7/varo discord " + args[0] + " not found! §7Type /discord for help.");
+			sender.sendMessage(Main.getPrefix() + "Â§7/varo discord " + args[0] + " not found! Â§7Type /discord for help.");
 		return;
 	}
 }

@@ -17,7 +17,7 @@ public class ReportCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
-			sender.sendMessage(Main.getPrefix() + "§cReports §7wurden in der Config deaktiviert!");
+			sender.sendMessage(Main.getPrefix() + "Â§cReports Â§7wurden in der Config deaktiviert!");
 			return false;
 		}
 		
@@ -29,11 +29,11 @@ public class ReportCommand implements CommandExecutor {
 		Player player = Bukkit.getPlayerExact(sender.getName());
 
 		if(args.length == 0 || args.length > 1) {
-			sender.sendMessage(Main.getPrefix() + "§7------ §cReport §7------");
-			sender.sendMessage(Main.getPrefix() + "§c/report §7<Player>");
+			sender.sendMessage(Main.getPrefix() + "Â§7------ Â§cReport Â§7------");
+			sender.sendMessage(Main.getPrefix() + "Â§c/report Â§7<Player>");
 			if(sender.hasPermission("varo.reports"))
-				sender.sendMessage(Main.getPrefix() + "§c/report list");
-			sender.sendMessage(Main.getPrefix() + "§7-------------------");
+				sender.sendMessage(Main.getPrefix() + "Â§c/report list");
+			sender.sendMessage(Main.getPrefix() + "Â§7-------------------");
 			return false;
 		}
 
@@ -54,12 +54,12 @@ public class ReportCommand implements CommandExecutor {
 		}
 
 		if(reported.getPlayer().equals(sender)) {
-			sender.sendMessage(Main.getPrefix() + "Du kannst dich nicht §cselbst §7reporten!");
+			sender.sendMessage(Main.getPrefix() + "Du kannst dich nicht Â§cselbst Â§7reporten!");
 			return false;
 		}
 
 		if(reported.getPlayer().hasPermission("varo.ignorereport") && !ConfigEntry.REPORT_STAFF_MEMBER.getValueAsBoolean()) {
-			sender.sendMessage(Main.getPrefix() + "Du kannst keine §cTeammitglieder §7reporten!");
+			sender.sendMessage(Main.getPrefix() + "Du kannst keine Â§cTeammitglieder Â§7reporten!");
 			return false;
 		}
 

@@ -18,18 +18,18 @@ public class UsageCommand implements CommandExecutor {
 		}
 
 		Runtime r = Runtime.getRuntime();
-		sender.sendMessage("§7-----------§7 §c§lSERVER-USAGE §7-----------");
-		sender.sendMessage(Main.getPrefix() + "§7System OS: §c" + System.getProperty("os.name"));
-		sender.sendMessage(Main.getPrefix() + "§7System Version: §c" + System.getProperty("os.version"));
-		sender.sendMessage(Main.getPrefix() + "§7Java Version: §c" + System.getProperty("java.version"));
-		sender.sendMessage(Main.getPrefix() + "§7Bukkit/Spigot Version: §c" + Bukkit.getVersion());
+		sender.sendMessage("Â§7-----------Â§7 Â§cÂ§lSERVER-USAGE Â§7-----------");
+		sender.sendMessage(Main.getPrefix() + "Â§7System OS: Â§c" + System.getProperty("os.name"));
+		sender.sendMessage(Main.getPrefix() + "Â§7System Version: Â§c" + System.getProperty("os.version"));
+		sender.sendMessage(Main.getPrefix() + "Â§7Java Version: Â§c" + System.getProperty("java.version"));
+		sender.sendMessage(Main.getPrefix() + "Â§7Bukkit/Spigot Version: Â§c" + Bukkit.getVersion());
 		sender.sendMessage(
-				Main.getPrefix() + "§7Plugin Version: §c" + Main.getInstance().getDescription().getVersion());
-		sender.sendMessage(Main.getPrefix() + "§7Total memory usage of every plugin: §c"
-				+ (r.totalMemory() - r.freeMemory()) / 1048576 + "MB§7!");
+				Main.getPrefix() + "Â§7Plugin Version: Â§c" + Main.getInstance().getDescription().getVersion());
+		sender.sendMessage(Main.getPrefix() + "Â§7Total memory usage of every plugin: Â§c"
+				+ (r.totalMemory() - r.freeMemory()) / 1048576 + "MBÂ§7!");
 		sender.sendMessage(
-				Main.getPrefix() + "§7Total memory usage of the server: §c" + r.totalMemory() / 1048576 + "MB§7!");
-		sender.sendMessage(Main.getPrefix() + "§7Memory available: §c" + r.maxMemory() / 1048576 + "MB§7!");
+				Main.getPrefix() + "Â§7Total memory usage of the server: Â§c" + r.totalMemory() / 1048576 + "MBÂ§7!");
+		sender.sendMessage(Main.getPrefix() + "Â§7Memory available: Â§c" + r.maxMemory() / 1048576 + "MBÂ§7!");
 		return false;
 	}
 

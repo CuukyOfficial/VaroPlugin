@@ -32,32 +32,32 @@ public class VanishCommand implements CommandExecutor {
 			Vanish v = Vanish.getVanish((Player) sender);
 			if(v == null) {
 				v = new Vanish((Player) sender);
-				sender.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "gevanished§7!");
+				sender.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "gevanishedÂ§7!");
 				return false;
 			}
 
 			v.remove();
-			sender.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "unvanished§7!");
+			sender.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "unvanishedÂ§7!");
 		} else if(args.length == 1) {
 			Player player = Bukkit.getPlayerExact(args[0]);
 			if(player == null) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " Â§7nicht gefunden!");
 				return false;
 			}
 
 			Vanish v = Vanish.getVanish(player);
 			if(v == null) {
 				v = new Vanish(player);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " §7erfolgreich gevanished!");
-				player.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "gevanished§7!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " Â§7erfolgreich gevanished!");
+				player.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "gevanishedÂ§7!");
 				return false;
 			}
 
 			v.remove();
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " §7erfolgreich unvanished!");
-			player.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "unvanished§7!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " Â§7erfolgreich unvanished!");
+			player.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "unvanishedÂ§7!");
 		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/vanish §7[Spieler]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/vanish Â§7[Spieler]");
 		return false;
 	}
 }

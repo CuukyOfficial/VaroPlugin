@@ -31,7 +31,7 @@ public class VaroInventory implements VaroSerializeable {
 	}
 
 	private void createInventory() {
-		inventory = Bukkit.createInventory(null, size, "§aBackpack");
+		inventory = Bukkit.createInventory(null, size, "Â§aBackpack");
 	}
 
 	public Inventory getInventory() {

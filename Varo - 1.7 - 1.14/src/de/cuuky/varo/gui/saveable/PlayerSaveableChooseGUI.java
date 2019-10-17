@@ -22,7 +22,7 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 	private VaroPlayer target;
 
 	public PlayerSaveableChooseGUI(Player opener, VaroPlayer target) {
-		super("§eÖfen/Kisten", opener, 45, false);
+		super("Â§eÃ–fen/Kisten", opener, 45, false);
 
 		this.target = target;
 
@@ -42,7 +42,7 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + String.valueOf(saveable.getId())).itemstack(new ItemStack(saveable.getType() == SaveableType.CHEST ? Material.CHEST : Material.FURNACE)).lore("§7Location§8: " + new LocationFormatter(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world").format(saveable.getBlock().getLocation()).split("-+")).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + String.valueOf(saveable.getId())).itemstack(new ItemStack(saveable.getType() == SaveableType.CHEST ? Material.CHEST : Material.FURNACE)).lore("Â§7LocationÂ§8: " + new LocationFormatter(Main.getColorCode() + "xÂ§7, " + Main.getColorCode() + "yÂ§7, " + Main.getColorCode() + "zÂ§7 in " + Main.getColorCode() + "world").format(saveable.getBlock().getLocation())).build(), new Runnable() {
 
 				@Override
 				public void run() {

@@ -12,25 +12,25 @@ import de.cuuky.varo.utils.Utils;
 public class ConfigCommand extends VaroCommand {
 
 	public ConfigCommand() {
-		super("config", "Hauptbefehl für die Config", "varo.config", "configuration");
+		super("config", "Hauptbefehl fรผr die Config", "varo.config", "configuration");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer player, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "ง7----- " + Main.getColorCode() + "Config ง7-----");
+			sender.sendMessage(Main.getPrefix() + "ยง7----- " + Main.getColorCode() + "Config ยง7-----");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config reload");
-			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/conifg set ง7<key> <value>");
-			sender.sendMessage(Main.getPrefix() + "ง7----------------------");
+			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/conifg set ยง7<key> <value>");
+			sender.sendMessage(Main.getPrefix() + "ยง7----------------------");
 			return;
 		}
 
 		if(args[0].equals("reload") || args[0].equals("refresh")) {
 			Main.getDataManager().reloadConfig();
-			sender.sendMessage(Main.getPrefix() + "ง7Erfolgreich " + Main.getColorCode() + "alle Listenง7, die " + Main.getColorCode() + "Messages ง7und die " + Main.getColorCode() + "Config ง7neu geladen!");
+			sender.sendMessage(Main.getPrefix() + "ยง7Erfolgreich " + Main.getColorCode() + "alle Listenยง7, die " + Main.getColorCode() + "Messages ยง7und die " + Main.getColorCode() + "Config ยง7neu geladen!");
 		} else if(args[0].equals("set")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + "งb/config ง7set <key> <value>");
+				sender.sendMessage(Main.getPrefix() + "ยงb/config ยง7set <key> <value>");
 				return;
 			}
 	
@@ -40,13 +40,13 @@ public class ConfigCommand extends VaroCommand {
 
 				Object arg = Utils.getStringObject(args[2]);
 				entry.setValue(arg, true);
-				sender.sendMessage(Main.getPrefix() + "ง7Erfolgreich den Eintrag 'งa" + entry.getPath() + "ง7' auf 'งa" + entry.getValue() + "ง7' gesetzt!");
+				sender.sendMessage(Main.getPrefix() + "ยง7Erfolgreich den Eintrag 'ยงa" + entry.getPath() + "ยง7' auf 'ยงa" + entry.getValue() + "ยง7' gesetzt!");
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "ง7Den Eintrag ง7" + args[1] + "ง7 gibt es nicht in der Config!");
+			sender.sendMessage(Main.getPrefix() + "ยง7Den Eintrag ยง7" + args[1] + "ยง7 gibt es nicht in der Config!");
 		} else
-			sender.sendMessage(Main.getPrefix() + "ง7Command '" + args[0] + "' not found! ง7Type /config for help.");
+			sender.sendMessage(Main.getPrefix() + "ยง7Command '" + args[0] + "' not found! ยง7Type /config for help.");
 		return;
 	}
 }

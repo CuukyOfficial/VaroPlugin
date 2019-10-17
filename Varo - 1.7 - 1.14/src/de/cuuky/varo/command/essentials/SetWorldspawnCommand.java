@@ -14,7 +14,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		if(!(sender instanceof Player)) {
-			System.out.println("Nicht fuer die Konsole");
+			System.out.println("Nicht fÃ¼r die Konsole");
 			return false;
 		}
 
@@ -25,12 +25,12 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		if(args.length != 0) {
-			p.sendMessage(Main.getPrefix() + "§7/setworldspawn");
+			p.sendMessage(Main.getPrefix() + "Â§7/setworldspawn");
 			return false;
 		}
 
 		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
-		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn §7erfolgreich gesetzt!");
+		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn Â§7erfolgreich gesetzt!");
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;
 	}

@@ -15,7 +15,7 @@ public class ShutdownCommand extends DiscordBotCommand {
 	 */
 
 	public ShutdownCommand() {
-		super("shutdown", new String[] { "disconnect" }, "Fährt den Bot herunter.");
+		super("shutdown", new String[] { "disconnect" }, "FÃ¤hrt den Bot herunter.");
 	}
 
 	@SuppressWarnings("deprecation")

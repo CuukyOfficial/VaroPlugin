@@ -21,7 +21,7 @@ public class BackupGUI extends SuperInventory {
 	private String filename;
 
 	public BackupGUI(Player opener, String filename) {
-		super("§7Backup §a" + filename.replace(".zip", ""), opener, 0, false);
+		super("Â§7Backup Â§a" + filename.replace(".zip", ""), opener, 0, false);
 
 		this.filename = filename;
 		open();
@@ -38,7 +38,7 @@ public class BackupGUI extends SuperInventory {
 				inv.setItem(i, new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15));
 			else {
 				if(i == 1)
-					linkItemTo(i, new ItemBuilder().displayname("§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
+					linkItemTo(i, new ItemBuilder().displayname("Â§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
 						@Override
 						public void run() {
@@ -52,7 +52,7 @@ public class BackupGUI extends SuperInventory {
 					});
 
 				if(i == 7)
-					linkItemTo(i, new ItemBuilder().displayname("§4Delete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
+					linkItemTo(i, new ItemBuilder().displayname("Â§4Delete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
 						@Override
 						public void run() {

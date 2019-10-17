@@ -26,18 +26,18 @@ public class ItemCommand extends VaroCommand {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Item §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> [Remove / Add]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
+			sender.sendMessage(Main.getPrefix() + "Â§7----- " + Main.getColorCode() + "Item Â§7-----");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item Â§7<itemlist> [Remove / Add]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item Â§7list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: Â§7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fügt die Sachen der Listen hinzu, die du in der Hand hältst.");
-			sender.sendMessage(Main.getPrefix() + "§7-----------------");
+			sender.sendMessage(Main.getPrefix() + "Â§7Dieser Command fÃ¼gt die Sachen der Listen hinzu, die du in der Hand hÃ¤ltst.");
+			sender.sendMessage(Main.getPrefix() + "Â§7-----------------");
 			return;
 		}
 
 		if(args.length == 1 && args[0].equalsIgnoreCase("list")) {
-			sender.sendMessage(Main.getPrefix() + "Liste aller " + Main.getColorCode() + "Itemlisten§7:");
+			sender.sendMessage(Main.getPrefix() + "Liste aller " + Main.getColorCode() + "ItemlistenÂ§7:");
 			for(VaroList list : ItemList.getLists())
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + list.getLocation());
 			return;
@@ -56,7 +56,7 @@ public class ItemCommand extends VaroCommand {
 		}
 
 		if(args[1].equalsIgnoreCase("list")) {
-			sender.sendMessage(Main.getPrefix() + "Liste aller Items von " + Main.getColorCode() + list.getLocation() + "§7:");
+			sender.sendMessage(Main.getPrefix() + "Liste aller Items von " + Main.getColorCode() + list.getLocation() + "Â§7:");
 			for(ItemStack stack : list.getItems())
 				sender.sendMessage(Main.getPrefix() + stack.toString());
 			return;
@@ -76,7 +76,7 @@ public class ItemCommand extends VaroCommand {
 			}
 
 			list.addItem(item);
-			sender.sendMessage(Main.getPrefix() + "Item erfolgreich zu " + list.getLocation() + " hinzugefügt!");
+			sender.sendMessage(Main.getPrefix() + "Item erfolgreich zu " + list.getLocation() + " hinzugefÃ¼gt!");
 		} else if(args[1].equalsIgnoreCase("remove")) {
 			if(!list.hasItem(item)) {
 				sender.sendMessage(Main.getPrefix() + "Item steht nicht auf dieser Liste!");
@@ -86,6 +86,6 @@ public class ItemCommand extends VaroCommand {
 			list.removeItem(item);
 			sender.sendMessage(Main.getPrefix() + "Item erfolgreich von " + list.getLocation() + " entfernt!");
 		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> [Remove / Add]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item Â§7<itemlist> [Remove / Add]");
 	}
 }
