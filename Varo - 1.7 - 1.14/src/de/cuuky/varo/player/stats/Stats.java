@@ -21,7 +21,6 @@ import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeRemoveEvent;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
