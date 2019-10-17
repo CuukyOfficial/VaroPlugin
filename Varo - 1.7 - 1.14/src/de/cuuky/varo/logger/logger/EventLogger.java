@@ -19,8 +19,7 @@ public class EventLogger extends Logger {
 		KILL("KILL", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_KILL),
 		DEATH("DEATH", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_DEATH),
 		ALERT("ALERT", Color.RED, ConfigEntry.DISCORDBOT_EVENT_ALERT),
-		YOUTUBE("YOUTUBE", Color.ORANGE, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE),
-		LOG("LOG", Color.RED, null);
+		YOUTUBE("YOUTUBE", Color.ORANGE, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE), LOG("LOG", Color.RED, null);
 
 		private String name;
 		private Color color;
@@ -41,12 +40,12 @@ public class EventLogger extends Logger {
 		}
 
 		public long getPostChannel() {
-			if(idEntry == null || Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled())
+			if (idEntry == null || Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled())
 				return -1;
 
 			try {
 				idEntry.getValueAsLong();
-			} catch(IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				return ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
 			}
 
@@ -54,8 +53,8 @@ public class EventLogger extends Logger {
 		}
 
 		public static LogType getType(String s) {
-			for(LogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
+			for (LogType type : values())
+				if (type.getName().equalsIgnoreCase(s))
 					return type;
 
 			return null;
@@ -76,7 +75,7 @@ public class EventLogger extends Logger {
 
 		pw.flush();
 
-		if(type.getPostChannel() == -1 || message.contains("%noBot%"))
+		if (type.getPostChannel() == -1 || message.contains("%noBot%"))
 			return;
 
 		sendToDiscord(type, message);
@@ -84,28 +83,28 @@ public class EventLogger extends Logger {
 	}
 
 	private void sendToTelegram(LogType type, String message) {
-		if(Main.getTelegramBot() == null)
+		if (Main.getTelegramBot() == null)
 			return;
 
 		try {
-			if(!type.equals(LogType.YOUTUBE))
+			if (!type.equals(LogType.YOUTUBE))
 				Main.getTelegramBot().sendEvent(message);
 			else
 				Main.getTelegramBot().sendVideo(message);
-		} catch(ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException e) {
 			Main.getTelegramBot().sendEvent(message);
 		}
 	}
 
 	private void sendToDiscord(LogType type, String msg) {
-		if(type.getPostChannel() == -1 || Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled())
+		if (type.getPostChannel() == -1 || Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled())
 			return;
 
 		try {
 			Main.getDiscordBot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
-		} catch(NoClassDefFoundError | BootstrapMethodError e) {
+		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}

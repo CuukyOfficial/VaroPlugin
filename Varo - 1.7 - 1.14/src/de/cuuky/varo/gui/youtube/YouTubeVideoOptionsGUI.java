@@ -26,32 +26,36 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				opener.sendMessage(Main.getPrefix() + "Link:");
-				opener.sendMessage(Main.getPrefix() + video.getLink());
-			}
-		});
+					@Override
+					public void run() {
+						opener.sendMessage(Main.getPrefix() + "Link:");
+						opener.sendMessage(Main.getPrefix() + video.getLink());
+					}
+				});
 
-		linkItemTo(8, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
+		linkItemTo(8, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				video.remove();
-				new YouTubeVideoListGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						video.remove();
+						new YouTubeVideoListGUI(opener);
+					}
+				});
 
 		return true;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -59,5 +63,6 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

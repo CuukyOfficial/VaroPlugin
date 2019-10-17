@@ -29,11 +29,11 @@ public class ListHandler {
 
 		VaroList.saveLists();
 	}
-	
+
 	public BlockedRecipes getBlockedRecipes() {
 		return blockedRecipes;
 	}
-	
+
 	public DeathItems getDeathItems() {
 		return deathItems;
 	}

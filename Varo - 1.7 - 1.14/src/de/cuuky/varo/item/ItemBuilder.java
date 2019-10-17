@@ -64,7 +64,7 @@ public class ItemBuilder {
 		this.playerName = playername;
 		return this;
 	}
-	
+
 	public ItemBuilder deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
 		Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -79,10 +79,10 @@ public class ItemBuilder {
 
 	public ItemStack build() {
 		ItemMeta stackMeta = stack.getItemMeta();
-		if(displayName != null && stack.getType() != Material.AIR)
+		if (displayName != null && stack.getType() != Material.AIR)
 			stackMeta.setDisplayName(displayName);
 
-		if(lore != null)
+		if (lore != null)
 			stackMeta.setLore(lore);
 		stack.setItemMeta(stackMeta);
 		stack.setAmount(amount);
@@ -95,10 +95,11 @@ public class ItemBuilder {
 		stack = Materials.PLAYER_HEAD.parseItem();
 		SkullMeta skullMeta = (SkullMeta) stack.getItemMeta();
 
-		skullMeta.setDisplayName(displayName != null ? Main.getColorCode() + displayName : Main.getColorCode() + playerName);
+		skullMeta.setDisplayName(
+				displayName != null ? Main.getColorCode() + displayName : Main.getColorCode() + playerName);
 		skullMeta.setOwner(playerName != null ? playerName : displayName);
 
-		if(lore != null)
+		if (lore != null)
 			skullMeta.setLore(lore);
 
 		stack.setItemMeta(skullMeta);

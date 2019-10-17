@@ -22,8 +22,8 @@ public class PlayerSort {
 		finished = new ArrayList<VaroPlayer>();
 		finishedSpawns = new ArrayList<>();
 
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			if(!vp.getStats().isSpectator())
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			if (!vp.getStats().isSpectator())
 				continue;
 
 			vp.getPlayer().teleport(vp.getPlayer().getWorld().getSpawnLocation());
@@ -31,11 +31,11 @@ public class PlayerSort {
 			finished.add(vp);
 		}
 
-		for(Spawn spawn : Spawn.getSpawns()) {
-			if(spawn.getPlayer() == null)
+		for (Spawn spawn : Spawn.getSpawns()) {
+			if (spawn.getPlayer() == null)
 				continue;
 
-			if(!spawn.getPlayer().isOnline())
+			if (!spawn.getPlayer().isOnline())
 				continue;
 
 			setFullHealth(spawn.getPlayer().getPlayer());
@@ -47,34 +47,36 @@ public class PlayerSort {
 
 		notFound = false;
 
-		spawnLoop: for(Spawn spawn : Spawn.getSpawns()) {
-			if(finishedSpawns.contains(spawn))
+		spawnLoop: for (Spawn spawn : Spawn.getSpawns()) {
+			if (finishedSpawns.contains(spawn))
 				continue spawnLoop;
 
-			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				if(finished.contains(player) || player.getStats().isSpectator())
+			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+				if (finished.contains(player) || player.getStats().isSpectator())
 					continue;
 
 				setFullHealth(player.getPlayer());
 				player.getPlayer().teleport(spawn.getLocation());
-				player.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawn.getNumber())));
+				player.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%",
+						String.valueOf(spawn.getNumber())));
 				finished.add(player);
 				finishedSpawns.add(spawn);
 
-				if(player.getTeam() == null)
+				if (player.getTeam() == null)
 					continue spawnLoop;
 
-				teamLoop: for(VaroPlayer teamPl : player.getTeam().getMember()) {
-					if(!teamPl.isOnline() || finished.contains(teamPl) || teamPl.getStats().isSpectator())
+				teamLoop: for (VaroPlayer teamPl : player.getTeam().getMember()) {
+					if (!teamPl.isOnline() || finished.contains(teamPl) || teamPl.getStats().isSpectator())
 						continue teamLoop;
 
-					for(Spawn teamSpawn : Spawn.getSpawns()) {
-						if(finishedSpawns.contains(teamSpawn))
+					for (Spawn teamSpawn : Spawn.getSpawns()) {
+						if (finishedSpawns.contains(teamSpawn))
 							continue;
 
 						setFullHealth(teamPl.getPlayer());
 						teamPl.getPlayer().teleport(teamSpawn.getLocation());
-						teamPl.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(teamSpawn.getNumber())));
+						teamPl.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue()
+								.replace("%number%", String.valueOf(teamSpawn.getNumber())));
 						finished.add(teamPl);
 						finishedSpawns.add(teamSpawn);
 						continue teamLoop;
@@ -85,8 +87,8 @@ public class PlayerSort {
 			}
 		}
 
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-			if(!finished.contains(vp))
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
+			if (!finished.contains(vp))
 				vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue());
 
 		notFound = finished.size() != VersionUtils.getOnlinePlayer().size();

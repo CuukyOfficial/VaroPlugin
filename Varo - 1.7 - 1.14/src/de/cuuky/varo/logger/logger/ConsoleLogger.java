@@ -27,7 +27,7 @@ public class ConsoleLogger extends Logger {
 			public void println(Object x) {
 				super.println(x);
 
-				if(x == null)
+				if (x == null)
 					ConsoleLogger.this.println("null");
 				else
 					ConsoleLogger.this.println(x.toString());

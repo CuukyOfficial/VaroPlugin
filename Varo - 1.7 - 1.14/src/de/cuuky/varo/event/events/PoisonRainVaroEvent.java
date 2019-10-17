@@ -23,10 +23,12 @@ public class PoisonRainVaroEvent extends VaroEvent {
 
 			@Override
 			public void run() {
-				playerLoop: for(Player p : VersionUtils.getOnlinePlayer()) {
-					if(p.getWorld().hasStorm() && !p.getLocation().getBlock().getBiome().toString().contains("SAVANNA")) {
-						for(int i = p.getLocation().getBlockY(); i < p.getWorld().getMaxHeight(); i++)
-							if(!BlockUtils.isAir(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i, p.getLocation().getBlockZ())))
+				playerLoop: for (Player p : VersionUtils.getOnlinePlayer()) {
+					if (p.getWorld().hasStorm()
+							&& !p.getLocation().getBlock().getBiome().toString().contains("SAVANNA")) {
+						for (int i = p.getLocation().getBlockY(); i < p.getWorld().getMaxHeight(); i++)
+							if (!BlockUtils.isAir(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i,
+									p.getLocation().getBlockZ())))
 								continue playerLoop;
 
 						p.damage(0.75);

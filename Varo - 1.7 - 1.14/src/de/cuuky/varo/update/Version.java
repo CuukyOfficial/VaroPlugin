@@ -1,7 +1,7 @@
 package de.cuuky.varo.update;
 
 public class Version {
-	
+
 	/*
 	 * 
 	 */
@@ -19,17 +19,17 @@ public class Version {
 	public Version(String version) {
 		if (version == null)
 			throw new IllegalArgumentException("Version can not be null");
-		
+
 		if (!version.matches("[0-9]+(\\.[0-9]+)*"))
 			throw new IllegalArgumentException("Invalid version format");
-		
+
 		this.version = version;
 	}
 
 	public VersionResult compareTo(Version that) {
 		if (that == null)
 			return VersionResult.GREATER;
-		
+
 		String[] thisParts = this.get().split("\\.");
 		String[] thatParts = that.get().split("\\.");
 		int length = Math.max(thisParts.length, thatParts.length);
@@ -48,13 +48,13 @@ public class Version {
 	public boolean equals(Object that) {
 		if (this == that)
 			return true;
-		
+
 		if (that == null)
 			return false;
-		
+
 		if (this.getClass() != that.getClass())
 			return false;
-		
+
 		return this.compareTo((Version) that) == VersionResult.EQUAL;
 	}
 }

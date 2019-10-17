@@ -10,7 +10,7 @@ public class BlockedEnchantments extends EnchantmentList {
 	public BlockedEnchantments() {
 		super("BlockedEnchantments");
 
-		if(!enchantments.isEmpty())
+		if (!enchantments.isEmpty())
 			return;
 
 		enchantments.add(Enchantment.ARROW_INFINITE.getName() + ":1");
@@ -18,7 +18,7 @@ public class BlockedEnchantments extends EnchantmentList {
 
 	@SuppressWarnings("deprecation")
 	public boolean isBlocked(Enchantment ench, int amplifier) {
-		if(enchantments.contains(ench.getName() + ":" + amplifier))
+		if (enchantments.contains(ench.getName() + ":" + amplifier))
 			return true;
 
 		return false;

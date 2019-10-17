@@ -26,38 +26,39 @@ public class PlayerQuitListener implements Listener {
 		event.setQuitMessage(null);
 
 		// IF HE WAS A SPECTATOR
-		if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
+		if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 			event.setQuitMessage(ConfigMessages.QUIT_SPECTATOR.getValue(vplayer));
 			vplayer.onEvent(BukkitEventType.QUIT);
 			return;
 		}
 
-		if(Main.getGame().getGameState() == GameState.STARTED) {
+		if (Main.getGame().getGameState() == GameState.STARTED) {
 			// IF HE WAS KICKED OR DEAD
-			if(ConfigEntry.PLAY_TIME.isIntActivated())
-				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
+			if (ConfigEntry.PLAY_TIME.isIntActivated())
+				if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
-					if(vplayer.getStats().getState() != PlayerState.DEAD)
-						Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
+					if (vplayer.getStats().getState() != PlayerState.DEAD)
+						Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
+								ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
 					return;
 				}
 
 			// CHECK IF HE COMBATLOG
 			CombatlogCheck check = new CombatlogCheck(event);
-			if(check.isCombatLog()) {
+			if (check.isCombatLog()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}
 
 			// CHECK DISCONNECTS
-			if(vplayer.getStats().hasTimeLeft()) {
-				if(ConfigEntry.DISCONNECT_PER_SESSION.isIntActivated()) {
+			if (vplayer.getStats().hasTimeLeft()) {
+				if (ConfigEntry.DISCONNECT_PER_SESSION.isIntActivated()) {
 					Disconnect dc = Disconnect.getDisconnect(player);
-					if(dc == null)
+					if (dc == null)
 						dc = new Disconnect(player);
 					dc.addDisconnect();
 
-					if(dc.check()) {
+					if (dc.check()) {
 						vplayer.onEvent(BukkitEventType.QUIT);
 						return;
 					}
@@ -65,7 +66,8 @@ public class PlayerQuitListener implements Listener {
 
 				Disconnect.disconnected(vplayer.getName());
 				Bukkit.broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
+				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE,
+						ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}

@@ -16,16 +16,16 @@ import de.cuuky.varo.bot.discord.commands.ShutdownCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class DiscordBotCommand {
-	
+
 	/*
 	 * OLD CODE
 	 */
 
 	private static ArrayList<DiscordBotCommand> commands;
-	
+
 	static {
 		commands = new ArrayList<>();
-		
+
 		new HelpCommand();
 		new InfoCommand();
 		new ServerCommand();
@@ -37,7 +37,7 @@ public abstract class DiscordBotCommand {
 		new ShutdownCommand();
 		new GetLinkCommand();
 	}
-	
+
 	private String name;
 	private String desc;
 	private String[] aliases;
@@ -46,7 +46,7 @@ public abstract class DiscordBotCommand {
 		this.name = name;
 		this.desc = description;
 		this.aliases = aliases;
-		
+
 		commands.add(this);
 	}
 
@@ -65,7 +65,7 @@ public abstract class DiscordBotCommand {
 	public VaroDiscordBot getDiscordBot() {
 		return Main.getDiscordBot();
 	}
-	
+
 	public static ArrayList<DiscordBotCommand> getCommands() {
 		return commands;
 	}

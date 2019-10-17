@@ -19,7 +19,8 @@ public class SetupHelpGUI extends SuperInventory {
 		CONFIG_SETUP("Config Setup", "Haben sie die Config augesetzt? (GUI)", Materials.SIGN.parseMaterial()),
 		TEAM_SETUP("Team Setup", "Haben sie alle Teams oder Spieler eingetragen? /varo team", Material.DIAMOND_HELMET),
 		SPAWN_SETUP("Spawn Setup", "Haben sie die Spawns gesetzt? /varo spawns", Materials.OAK_SLAB.parseMaterial()),
-		WORLDSPAWN_SETUP("Worlspawn Setup", "Haben sie den Worldspawn in der Mitte\ngesetzt? /setworldspawn", Material.BEACON),
+		WORLDSPAWN_SETUP("Worlspawn Setup", "Haben sie den Worldspawn in der Mitte\ngesetzt? /setworldspawn",
+				Material.BEACON),
 		LOBBY_SETUP("Lobby Setup", "Haben sie die Lobby gesetzt? (GUI) (/Lobby)", Material.DIAMOND),
 		PORTAL_SETUP("Portal Setup", "Haben sie das Portal gesetzt?", Material.OBSIDIAN),
 		SCOREBOARD_SETUP("Scoreboard Setup", "Haben sie das Scoreboard aufgesetzt?", Material.REDSTONE),
@@ -67,19 +68,20 @@ public class SetupHelpGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		for(int i = 0; i < SetupCheckList.values().length; i++) {
+		for (int i = 0; i < SetupCheckList.values().length; i++) {
 			SetupCheckList check = SetupCheckList.values()[i];
 
-			
-			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + check.getName()).itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon())).lore(check.getDescription()).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + check.getName())
+					.itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon()))
+					.lore(check.getDescription()).build(), new Runnable() {
 
-				@Override
-				public void run() {
-					check.setChecked(!check.isChecked());
-				}
-			});
+						@Override
+						public void run() {
+							check.setChecked(!check.isChecked());
+						}
+					});
 		}
-		
+
 		return true;
 	}
 
@@ -89,7 +91,8 @@ public class SetupHelpGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -98,5 +101,6 @@ public class SetupHelpGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

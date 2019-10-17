@@ -34,77 +34,94 @@ public class PlayerGUI extends SuperInventory {
 	public boolean onOpen() {
 		// TODO: Strikes
 
-		linkItemTo(1, new ItemBuilder().displayname("§aInventory Backups").itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("§7Click to see more options").build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aInventory Backups")
+				.itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("§7Click to see more options").build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				new InventoryBackupListGUI(opener, target);
-			}
-		});
+					@Override
+					public void run() {
+						new InventoryBackupListGUI(opener, target);
+					}
+				});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormatter("x, y, z in world").format(target.getStats().getLastLocation()) : "/") }).build(), new Runnable() {
+		linkItemTo(4,
+				new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial()))
+						.lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null
+								? new LocationFormatter("x, y, z in world").format(target.getStats().getLastLocation())
+								: "/") })
+						.build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				if(target.getStats().getLastLocation() == null)
-					return;
+					@Override
+					public void run() {
+						if (target.getStats().getLastLocation() == null)
+							return;
 
-				opener.teleport(target.getStats().getLastLocation());
-			}
-		});
+						opener.teleport(target.getStats().getLastLocation());
+					}
+				});
 
-		linkItemTo(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).amount(getFixedSize(target.getStats().getSaveables().size())).build(), new Runnable() {
+		linkItemTo(7,
+				new ItemBuilder().displayname("§eKisten/Öfen")
+						.itemstack(new ItemStack(Materials.REDSTONE.parseMaterial()))
+						.amount(getFixedSize(target.getStats().getSaveables().size())).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				new PlayerSaveableChooseGUI(opener, target);
-			}
-		});
+					@Override
+					public void run() {
+						new PlayerSaveableChooseGUI(opener, target);
+					}
+				});
 
-		linkItemTo(11, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), new Runnable() {
+		linkItemTo(11, new ItemBuilder().displayname("§4Remove")
+				.itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				target.delete();
-				if(type != null)
-					new PlayerListGUI(opener, true, type);
-				else
-					new PlayerListChooseGUI(opener, true);
-			}
-		});
+					@Override
+					public void run() {
+						target.delete();
+						if (type != null)
+							new PlayerListGUI(opener, true, type);
+						else
+							new PlayerListChooseGUI(opener, true);
+					}
+				});
 
-		linkItemTo(15, new ItemBuilder().displayname("§cReset").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
+		linkItemTo(15, new ItemBuilder().displayname("§cReset").itemstack(new ItemStack(Material.BUCKET)).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				if(target.isOnline())
-					target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
+					@Override
+					public void run() {
+						if (target.isOnline())
+							target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 
-				target.getStats().loadDefaults();
-				updateInventory();
-			}
-		});
+						target.getStats().loadDefaults();
+						updateInventory();
+					}
+				});
 
-		linkItemTo(22, new ItemBuilder().displayname("§5More Options").itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(), new Runnable() {
+		linkItemTo(22, new ItemBuilder().displayname("§5More Options").itemstack(new ItemStack(Material.BOOK))
+				.lore(target.getStats().getStatsListed()).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				new PlayerOptionsGUI(opener, target, type);
-			}
-		});
+					@Override
+					public void run() {
+						new PlayerOptionsGUI(opener, target, type);
+					}
+				});
 
 		return true;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
-		if(type != null)
+		if (type != null)
 			new PlayerListGUI(opener, true, type);
 		else
 			new PlayerListChooseGUI(opener, true);
@@ -112,5 +129,6 @@ public class PlayerGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

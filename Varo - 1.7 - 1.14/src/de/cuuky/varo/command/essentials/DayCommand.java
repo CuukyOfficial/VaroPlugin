@@ -13,12 +13,13 @@ public class DayCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.day")) {
+		if (!sender.hasPermission("varo.day")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.day"));
 			return false;
 		}
 
-		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getDataManager().getWorldHandler().getWorld();
+		World world = sender instanceof Player ? ((Player) sender).getWorld()
+				: Main.getDataManager().getWorldHandler().getWorld();
 		world.setTime(1000);
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Tag§7!");
 		return false;

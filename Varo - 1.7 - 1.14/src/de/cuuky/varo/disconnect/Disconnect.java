@@ -40,7 +40,8 @@ public class Disconnect {
 	}
 
 	public void addDisconnect() {
-		if(VaroPlayer.getPlayer(name).getNetworkManager().getPing() >= ConfigEntry.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
+		if (VaroPlayer.getPlayer(name).getNetworkManager().getPing() >= ConfigEntry.NO_DISCONNECT_PING.getValueAsInt()
+				|| playerIsDead())
 			return;
 
 		amount++;
@@ -55,19 +56,21 @@ public class Disconnect {
 	}
 
 	public boolean check() {
-		if(amount <= ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())
+		if (amount <= ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())
 			return false;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(name);
 		vp.getStats().setBan();
-		if(vp.getStats().hasTimeLeft())
+		if (vp.getStats().hasTimeLeft())
 			vp.getStats().removeCountdown();
 
-		if(ConfigEntry.STRIKE_ON_DISCONNECT.getValueAsBoolean())
+		if (ConfigEntry.STRIKE_ON_DISCONNECT.getValueAsBoolean())
 			vp.getStats().addStrike(new Strike("Zu oft verlassen", vp, "CONSOLE"));
 
-		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
-		Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(vp));
+		new Alert(AlertType.DISCONNECT,
+				vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
+		Main.getLoggerMaster().getEventLogger().println(LogType.ALERT,
+				ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(vp));
 		Bukkit.broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN.getValue(vp));
 		this.remove();
 		return true;
@@ -75,51 +78,52 @@ public class Disconnect {
 
 	public boolean playerIsDead() {
 		Player p = Bukkit.getPlayerExact(name);
-		if(p != null)
-			if(!p.isDead() && p.getHealth() != 0)
+		if (p != null)
+			if (!p.isDead() && p.getHealth() != 0)
 				return false;
 
 		return true;
 	}
 
 	public static Disconnect getDisconnect(Player p) {
-		for(Disconnect disconnect : disconnects)
-			if(disconnect.getPlayer().equals(p.getName()))
+		for (Disconnect disconnect : disconnects)
+			if (disconnect.getPlayer().equals(p.getName()))
 				return disconnect;
 
 		return null;
 	}
 
 	public static void disconnected(String playerName) {
-		if(!ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
+		if (!ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
-		if(Main.getGame().getGameState() != GameState.STARTED)
+		if (Main.getGame().getGameState() != GameState.STARTED)
 			return;
 
-		if(!VaroPlayer.getPlayer(playerName).getStats().isAlive())
+		if (!VaroPlayer.getPlayer(playerName).getStats().isAlive())
 			return;
 
 		scheds.put(playerName, Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
-				if(Bukkit.getPlayerExact(playerName) != null)
+				if (Bukkit.getPlayerExact(playerName) != null)
 					return;
 
-				if(Main.getGame().getGameState() != GameState.STARTED)
+				if (Main.getGame().getGameState() != GameState.STARTED)
 					return;
 
 				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
-				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(vp).replace("%banTime%", String.valueOf(ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
+				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(vp).replace("%banTime%",
+						String.valueOf(ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
 			}
 		}, (ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
 	}
 
 	public static void joinedAgain(String playerName) {
-		if(scheds.containsKey(playerName)) {
+		if (scheds.containsKey(playerName)) {
 			Bukkit.getScheduler().cancelTask(scheds.get(playerName));
 			scheds.remove(playerName);
 		}

@@ -19,10 +19,10 @@ public class DailyTimer {
 
 	public DailyTimer() {
 		new TimeTimer();
-		if(Main.getGame().getGameState() == GameState.STARTED && Main.getGame().getLastDayTimer() != null) {
+		if (Main.getGame().getGameState() == GameState.STARTED && Main.getGame().getLastDayTimer() != null) {
 			Date date = Main.getGame().getLastDayTimer();
-			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
-				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+			for (int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
+				if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RE");
 
 				doDailyStuff();
@@ -40,8 +40,8 @@ public class DailyTimer {
 					new Backup();
 					Main.getGame().setLastDayTimer(new Date());
 
-					if(Main.getGame().getGameState() == GameState.STARTED) {
-						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+					if (Main.getGame().getGameState() == GameState.STARTED) {
+						if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 
 						doDailyStuff();
@@ -54,7 +54,7 @@ public class DailyTimer {
 							new DailyTimer();
 						}
 					}, 100);
-				} catch(Exception e) {
+				} catch (Exception e) {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 
 						@Override
@@ -68,10 +68,10 @@ public class DailyTimer {
 	}
 
 	private void doDailyStuff() {
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
 
-			if(vp.isOnline())
+			if (vp.isOnline())
 				vp.getPlayer().kickPlayer("RESET");
 		}
 
@@ -85,7 +85,7 @@ public class DailyTimer {
 		reset.setSeconds(0);
 		Date current = new Date();
 		reset.setHours(ConfigEntry.RESET_SESSION_HOUR.getValueAsInt());
-		if(reset.before(current))
+		if (reset.before(current))
 			reset = DateUtils.addDays(reset, 1);
 		return (reset.getTime() - current.getTime()) / 1000;
 	}

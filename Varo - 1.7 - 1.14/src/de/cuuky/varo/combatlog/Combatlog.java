@@ -17,15 +17,17 @@ public class Combatlog {
 	/*
 	 * OLD CODE
 	 */
-	
+
 	public Combatlog(VaroPlayer player) {
 		player.onEvent(BukkitEventType.KICKED);
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");
-		if(ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
+		if (ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
 			player.getStats().addStrike(new Strike("CombatLog", player, "CONSOLE"));
-			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
+			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT,
+					ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
 		} else
-			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(player));
+			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT,
+					ConfigMessages.ALERT_COMBAT_LOG.getValue(player));
 
 		Bukkit.broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT.getValue(player));
 	}

@@ -21,7 +21,7 @@ public class ChatHook {
 		this.player = player;
 		this.listener = chatHookListener;
 
-		if(getChatHook(player) != null)
+		if (getChatHook(player) != null)
 			getChatHook(player).remove();
 
 		player.sendMessage(Main.getPrefix() + message);
@@ -44,8 +44,8 @@ public class ChatHook {
 	}
 
 	public static ChatHook getChatHook(Player player) {
-		for(ChatHook hook : chathooks)
-			if(hook.getPlayer().equals(player))
+		for (ChatHook hook : chathooks)
+			if (hook.getPlayer().equals(player))
 				return hook;
 
 		return null;

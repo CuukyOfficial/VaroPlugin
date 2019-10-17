@@ -41,7 +41,7 @@ public class VaroSaveable implements VaroSerializeable {
 
 		saveables.add(this);
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -82,20 +82,20 @@ public class VaroSaveable implements VaroSerializeable {
 	}
 
 	public boolean holderDead() {
-		if(this.player.getTeam() == null && this.player.getStats().isAlive())
+		if (this.player.getTeam() == null && this.player.getStats().isAlive())
 			return false;
 
-		if(this.player.getTeam() != null && !this.player.getTeam().isDead())
+		if (this.player.getTeam() != null && !this.player.getTeam().isDead())
 			return false;
 
 		return true;
 	}
 
 	public boolean canModify(VaroPlayer player) {
-		if(this.player.getTeam() == null && !player.equals(this.player))
+		if (this.player.getTeam() == null && !player.equals(this.player))
 			return false;
 
-		if(this.player.getTeam() != null && !this.player.getTeam().isMember(player))
+		if (this.player.getTeam() != null && !this.player.getTeam().isMember(player))
 			return false;
 
 		return true;
@@ -103,7 +103,7 @@ public class VaroSaveable implements VaroSerializeable {
 
 	private int generateId() {
 		int id = Utils.randomInt(1000, 9999999);
-		while(getSaveable(id) != null)
+		while (getSaveable(id) != null)
 			generateId();
 
 		return id;
@@ -111,20 +111,21 @@ public class VaroSaveable implements VaroSerializeable {
 
 	public enum SaveableType implements VaroSerializeable {
 		@VaroSerializeField(enumValue = "CHEST")
-		CHEST,
-		@VaroSerializeField(enumValue = "FURNACE")
+		CHEST, @VaroSerializeField(enumValue = "FURNACE")
 		FURNANCE;
 
 		@Override
-		public void onDeserializeEnd() {}
+		public void onDeserializeEnd() {
+		}
 
 		@Override
-		public void onSerializeStart() {}
+		public void onSerializeStart() {
+		}
 	}
 
 	public static VaroSaveable getSaveable(int id) {
-		for(VaroSaveable save : saveables) {
-			if(save.getId() != id)
+		for (VaroSaveable save : saveables) {
+			if (save.getId() != id)
 				continue;
 
 			return save;
@@ -138,9 +139,10 @@ public class VaroSaveable implements VaroSerializeable {
 	}
 
 	public static VaroSaveable getByLocation(Location loc) {
-		for(VaroSaveable save : VaroSaveable.getSaveables()) {
+		for (VaroSaveable save : VaroSaveable.getSaveables()) {
 			Location loc1 = save.getBlock().getLocation();
-			if(loc1.getBlockX() == loc.getBlockX() && loc1.getBlockY() == loc.getBlockY() && loc.getBlockZ() == loc1.getBlockZ() && loc1.getWorld().equals(loc.getWorld()))
+			if (loc1.getBlockX() == loc.getBlockX() && loc1.getBlockY() == loc.getBlockY()
+					&& loc.getBlockZ() == loc1.getBlockZ() && loc1.getWorld().equals(loc.getWorld()))
 				return save;
 		}
 

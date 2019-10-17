@@ -6,7 +6,7 @@ public class TeamHandler extends VaroSerializeHandler {
 
 	public TeamHandler() {
 		super(Team.class, "/stats/teams.yml");
-		
+
 		load();
 	}
 
@@ -14,7 +14,7 @@ public class TeamHandler extends VaroSerializeHandler {
 	public void onSave() {
 		clearOld();
 
-		for(Team team : Team.getTeams())
+		for (Team team : Team.getTeams())
 			save(String.valueOf(team.getId()), team, getConfiguration());
 
 		saveFile();

@@ -22,51 +22,53 @@ public class PlayerChatListener implements Listener {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		if(event.isCancelled())
+		if (event.isCancelled())
 			return;
 
 		Player player = event.getPlayer();
 
 		String message = event.getMessage();
 		ChatHook hook = ChatHook.getChatHook(player);
-		if(hook != null) {
+		if (hook != null) {
 			hook.run(message);
 			event.setCancelled(true);
 			return;
 		}
 
-		if(message.contains("%"))
+		if (message.contains("%"))
 			message = message.replaceAll("%", "");
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		String tc = ConfigEntry.TEAMCHAT_TRIGGER.getValueAsString();
-		if(message.startsWith(tc)) {
+		if (message.startsWith(tc)) {
 			new TeamChat(vp, message.replaceFirst("\\" + tc, ""));
 			event.setCancelled(true);
 			return;
 		}
 
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null) {
+		if (VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null) {
 			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue());
 			event.setCancelled(true);
 			return;
 		}
 
-		if(!player.isOp()) {
-			if(ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getGame().isStarted() || !Main.getGame().isStarted()) {
+		if (!player.isOp()) {
+			if (ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getGame().isStarted()
+					|| !Main.getGame().isStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
-				if(msg != null) {
+				if (msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
-					if(seconds < ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt()) {
-						player.sendMessage(Main.getPrefix() + "§7Du kannst nur alle §7" + ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " §7Sekunden schreiben!");
+					if (seconds < ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt()) {
+						player.sendMessage(Main.getPrefix() + "§7Du kannst nur alle §7"
+								+ ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " §7Sekunden schreiben!");
 						event.setCancelled(true);
 						return;
 					}
-				} else if(!player.isOp())
+				} else if (!player.isOp())
 					new ChatMessage(player, message);
 			}
 
-			if(Main.getGame().isStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if (Main.getGame().isStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;
@@ -79,13 +81,13 @@ public class PlayerChatListener implements Listener {
 	}
 
 	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
-		if(vp.getStats().getYoutubeLink() == null) {
+		if (vp.getStats().getYoutubeLink() == null) {
 			event.setCancelled(false);
 			event.setFormat(msg);
 			return;
 		}
 
-		for(VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
+		for (VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
 			vpo.getNetworkManager().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
 		event.setCancelled(true);
 	}

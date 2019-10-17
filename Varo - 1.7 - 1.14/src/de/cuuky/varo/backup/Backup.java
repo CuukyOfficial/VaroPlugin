@@ -20,12 +20,13 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class Backup {
-	
+
 	/*
 	 * OLD CODE
 	 */
 
 	private String date = null;
+
 	public Backup() {
 		zip();
 	}
@@ -118,7 +119,7 @@ public class Backup {
 		}
 		bos.close();
 	}
-	
+
 	public static boolean isBackup(String filename) {
 		return new File("plugins/Varo/backups/" + filename + ".zip").exists();
 	}

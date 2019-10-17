@@ -13,10 +13,10 @@ public class BlockedItemsListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(event.getItem() == null)
+		if (event.getItem() == null)
 			return;
 
-		if(!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getItem()))
+		if (!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getItem()))
 			return;
 
 		event.setCancelled(true);
@@ -25,13 +25,15 @@ public class BlockedItemsListener implements Listener {
 
 	@EventHandler
 	public void onCraft(CraftItemEvent event) {
-		if(event.getCurrentItem() == null)
+		if (event.getCurrentItem() == null)
 			return;
 
-		if(!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getCurrentItem()) && !Main.getDataManager().getItemHandler().getBlockedRecipes().isBlocked(event.getCurrentItem()))
+		if (!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getCurrentItem())
+				&& !Main.getDataManager().getItemHandler().getBlockedRecipes().isBlocked(event.getCurrentItem()))
 			return;
 
 		event.setCancelled(true);
-		((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
+		((Player) event.getWhoClicked())
+				.sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
 	}
 }

@@ -4,7 +4,7 @@ import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class HelpCommand extends DiscordBotCommand {
-	
+
 	/*
 	 * OLD CODE
 	 */
@@ -27,7 +27,8 @@ public class HelpCommand extends DiscordBotCommand {
 					+ cmd.getDescription();
 		}
 
-		super.getDiscordBot().sendRawMessage("``` Hier eine Übersicht aller Commands: " + cmds + "```", event.getTextChannel());
+		super.getDiscordBot().sendRawMessage("``` Hier eine Übersicht aller Commands: " + cmds + "```",
+				event.getTextChannel());
 	}
 
 }

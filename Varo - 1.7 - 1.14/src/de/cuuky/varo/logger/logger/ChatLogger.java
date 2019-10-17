@@ -6,9 +6,7 @@ import de.cuuky.varo.utils.Utils;
 public class ChatLogger extends Logger {
 
 	public enum ChatLogType {
-		CHAT("CHAT"),
-		PRIVATE_CHAT("PRIVATECHAT"),
-		TEAMCHAT("TEAMCHAT");
+		CHAT("CHAT"), PRIVATE_CHAT("PRIVATECHAT"), TEAMCHAT("TEAMCHAT");
 
 		private String name;
 
@@ -21,8 +19,8 @@ public class ChatLogger extends Logger {
 		}
 
 		public static ChatLogType getType(String s) {
-			for(ChatLogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
+			for (ChatLogType type : values())
+				if (type.getName().equalsIgnoreCase(s))
 					return type;
 
 			return null;

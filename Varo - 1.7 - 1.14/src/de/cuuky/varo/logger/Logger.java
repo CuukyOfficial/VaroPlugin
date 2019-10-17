@@ -23,7 +23,7 @@ public abstract class Logger {
 		this.logs = new ArrayList<String>();
 
 		try {
-			if(!file.exists()) {
+			if (!file.exists()) {
 				new File(file.getParent()).mkdirs();
 				file.createNewFile();
 			}
@@ -32,10 +32,10 @@ public abstract class Logger {
 			pw = new PrintWriter(fw);
 			scanner = new Scanner(file);
 
-			if(loadPrevious)
-				while(scanner.hasNextLine())
+			if (loadPrevious)
+				while (scanner.hasNextLine())
 					logs.add(scanner.nextLine());
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

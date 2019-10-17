@@ -19,7 +19,7 @@ public class VaroEvent {
 
 	static {
 		events = new ArrayList<>();
-		
+
 		MassRecEvent = new MassRecordingVaroEvent();
 		new PoisonWaterVaroEvent();
 		new PoisonRainVaroEvent();
@@ -52,7 +52,7 @@ public class VaroEvent {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 
-		if(enabled)
+		if (enabled)
 			onEnable();
 		else
 			onDisable();
@@ -66,26 +66,30 @@ public class VaroEvent {
 		return description;
 	}
 
-	public void onEnable() {}
+	public void onEnable() {
+	}
 
-	public void onDisable() {}
+	public void onDisable() {
+	}
 
-	public void onInteract(PlayerInteractEvent event) {}
+	public void onInteract(PlayerInteractEvent event) {
+	}
 
-	public void onMove(PlayerMoveEvent event) {}
+	public void onMove(PlayerMoveEvent event) {
+	}
 
 	public static ArrayList<VaroEvent> getEvents() {
 		return events;
 	}
-	
+
 	public static MassRecordingVaroEvent getMassRecEvent() {
 		return MassRecEvent;
 	}
 
 	public static ArrayList<VaroEvent> getEnabledEvents() {
 		ArrayList<VaroEvent> enabledEvents = new ArrayList<>();
-		for(VaroEvent event : events)
-			if(event.isEnabled())
+		for (VaroEvent event : events)
+			if (event.isEnabled())
 				enabledEvents.add(event);
 
 		return enabledEvents;

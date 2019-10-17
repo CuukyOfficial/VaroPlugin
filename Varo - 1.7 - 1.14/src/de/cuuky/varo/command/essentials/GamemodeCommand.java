@@ -47,18 +47,18 @@ public class GamemodeCommand implements CommandExecutor {
 				gm = GameMode.ADVENTURE;
 				break;
 			case 3:
-				if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
+				if (VersionUtils.getVersion() == BukkitVersion.ONE_7) {
 					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar in der 1.7!");
 					return false;
 				}
-				
+
 				gm = GameMode.valueOf("SPECTATOR");
 				break;
 			default:
 				sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
 				return false;
 			}
-			
+
 			p.setGameMode(gm);
 			sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode "
 					+ ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
@@ -87,11 +87,11 @@ public class GamemodeCommand implements CommandExecutor {
 				gm = GameMode.ADVENTURE;
 				break;
 			case 3:
-				if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
+				if (VersionUtils.getVersion() == BukkitVersion.ONE_7) {
 					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar in der 1.7!");
 					return false;
 				}
-				
+
 				gm = GameMode.valueOf("SPECTATOR");
 				break;
 			default:

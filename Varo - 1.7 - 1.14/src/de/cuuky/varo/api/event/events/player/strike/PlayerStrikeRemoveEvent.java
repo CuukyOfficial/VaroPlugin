@@ -7,9 +7,10 @@ import de.cuuky.varo.player.stats.stat.Strike;
 public class PlayerStrikeRemoveEvent extends VaroPlayerEvent {
 
 	private VaroAPIStrike strike;
+
 	public PlayerStrikeRemoveEvent(Strike strike) {
 		super(strike.getStriked(), true);
-		
+
 		this.strike = new VaroAPIStrike(strike);
 	}
 

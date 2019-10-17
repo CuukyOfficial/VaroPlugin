@@ -17,7 +17,7 @@ public class AbortCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (!Main.getGame().isStarting())
 			return;
-		
+
 		Main.getGame().abort();
 	}
 }

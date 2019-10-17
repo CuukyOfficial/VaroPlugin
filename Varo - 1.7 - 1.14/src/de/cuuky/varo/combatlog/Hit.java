@@ -17,7 +17,7 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class Hit {
-	
+
 	/*
 	 * OLD CODE
 	 */
@@ -34,7 +34,7 @@ public class Hit {
 
 	@SuppressWarnings("deprecation")
 	public Hit(Player player, Player opponent) {
-		if(!hasOld(player))
+		if (!hasOld(player))
 			player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_IN_FIGHT.getValue());
 
 		this.player = player;
@@ -70,8 +70,8 @@ public class Hit {
 	}
 
 	public boolean hasOld(Player p) {
-		for(Hit hit : hits) {
-			if(!hit.getPlayer().equals(p))
+		for (Hit hit : hits) {
+			if (!hit.getPlayer().equals(p))
 				continue;
 
 			hit.remove();
@@ -82,8 +82,8 @@ public class Hit {
 	}
 
 	public static Hit getHit(Player p) {
-		for(Hit hit : hits) {
-			if(!hit.getPlayer().equals(p))
+		for (Hit hit : hits) {
+			if (!hit.getPlayer().equals(p))
 				continue;
 
 			return hit;
@@ -96,23 +96,23 @@ public class Hit {
 
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onHit(EntityDamageByEntityEvent event) {
-			if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
+			if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 				return;
 
-			if(!Main.getGame().isStarted() || event.isCancelled())
+			if (!Main.getGame().isStarted() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());
 			VaroPlayer vp1 = VaroPlayer.getPlayer(((Player) event.getDamager()).getName());
 
-			if(vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
+			if (vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
 				return;
 
 			Date current = new Date();
 			vp.getStats().setLastEnemyContact(current);
 			vp1.getStats().setLastEnemyContact(current);
 
-			if(!ConfigEntry.COMBATLOG_TIME.isIntActivated())
+			if (!ConfigEntry.COMBATLOG_TIME.isIntActivated())
 				return;
 
 			Player player1 = (Player) event.getDamager();

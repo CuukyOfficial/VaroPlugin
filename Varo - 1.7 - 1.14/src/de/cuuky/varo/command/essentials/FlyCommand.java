@@ -41,8 +41,8 @@ public class FlyCommand implements CommandExecutor {
 			boolean set = !to.getAllowFlight();
 			to.setAllowFlight(set);
 			to.setFlying(set);
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + to.getName() + " §7kann jetzt "
-					+ (to.getAllowFlight() ? "§afliegen§7!" : "§7nicht mehr fliegen§7!"));
+			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + to.getName()
+					+ " §7kann jetzt " + (to.getAllowFlight() ? "§afliegen§7!" : "§7nicht mehr fliegen§7!"));
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7/fly [Player]");
 		return false;

@@ -1,6 +1,6 @@
 package de.cuuky.varo.version.commandsender;
 
-public class NewCommandSender  {
+public class NewCommandSender {
 
 //	private OfflinePlayer player;
 //	private String[] args;

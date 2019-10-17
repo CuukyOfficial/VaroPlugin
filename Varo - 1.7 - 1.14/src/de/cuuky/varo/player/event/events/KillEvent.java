@@ -12,12 +12,13 @@ public class KillEvent extends BukkitEvent {
 	public KillEvent() {
 		super(BukkitEventType.KILL);
 	}
-	
+
 	@Override
 	public void onExec(VaroPlayer player) {
-		if(ConfigEntry.DEATH_SOUND.getValueAsBoolean())
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.playSound(pl.getLocation(), Sounds.WITHER_IDLE.bukkitSound(), 1, 1));
-		
+		if (ConfigEntry.DEATH_SOUND.getValueAsBoolean())
+			VersionUtils.getOnlinePlayer()
+					.forEach(pl -> pl.playSound(pl.getLocation(), Sounds.WITHER_IDLE.bukkitSound(), 1, 1));
+
 		player.getStats().addKill();
 		super.onExec(player);
 	}

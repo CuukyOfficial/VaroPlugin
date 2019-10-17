@@ -31,11 +31,11 @@ public class OreLoggerListGUI extends SuperInventory {
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			String str;
 			try {
 				str = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -45,7 +45,10 @@ public class OreLoggerListGUI extends SuperInventory {
 			String minedAt = str.split("at ")[1].replaceAll("!", "");
 
 			Material blocktype = Material.matchMaterial(str.split("mined ")[1].split(" ")[0]);
-			Location loc = new Location(Bukkit.getWorld(minedAt.split("\\'")[1]), Integer.valueOf(minedAt.split("x:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("y:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("z:")[1].split(" ")[0]));
+			Location loc = new Location(Bukkit.getWorld(minedAt.split("\\'")[1]),
+					Integer.valueOf(minedAt.split("x:")[1].split(" ")[0]),
+					Integer.valueOf(minedAt.split("y:")[1].split(" ")[0]),
+					Integer.valueOf(minedAt.split("z:")[1].split(" ")[0]));
 
 			lore.add("Block Type: §c" + blocktype.name());
 			lore.add("Mined at: §c" + minedAt);
@@ -54,13 +57,14 @@ public class OreLoggerListGUI extends SuperInventory {
 			lore.add(" ");
 			lore.add("§cClick to teleport!");
 
-			linkItemTo(i, new ItemBuilder().displayname(name).itemstack(new ItemStack(blocktype)).lore(lore).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(name).itemstack(new ItemStack(blocktype)).lore(lore).build(),
+					new Runnable() {
 
-				@Override
-				public void run() {
-					opener.teleport(loc);
-				}
-			});
+						@Override
+						public void run() {
+							opener.teleport(loc);
+						}
+					});
 
 			start++;
 		}
@@ -69,10 +73,12 @@ public class OreLoggerListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -81,5 +87,6 @@ public class OreLoggerListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

@@ -22,14 +22,18 @@ public class VaroEventGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = 0;
-		for(VaroEvent event : VaroEvent.getEvents()) {
-			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(Utils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, Utils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).deleteDamageAnnotation().build(), new Runnable() {
+		for (VaroEvent event : VaroEvent.getEvents()) {
+			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon()))
+					.lore(Utils.combineArrays(
+							new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" },
+							Utils.addIntoEvery(event.getDescription().split("\n"), "§7", true)))
+					.deleteDamageAnnotation().build(), new Runnable() {
 
-				@Override
-				public void run() {
-					event.setEnabled(!event.isEnabled());
-				}
-			});
+						@Override
+						public void run() {
+							event.setEnabled(!event.isEnabled());
+						}
+					});
 
 			i += 2;
 		}
@@ -53,5 +57,6 @@ public class VaroEventGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

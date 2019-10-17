@@ -71,7 +71,7 @@ public class DataManager {
 	}
 
 	public void save() {
-		if(!doSave)
+		if (!doSave)
 			return;
 
 		VaroSerializeHandler.saveAll();
@@ -79,7 +79,8 @@ public class DataManager {
 
 		try {
 			BotRegister.saveAll();
-		} catch(NoClassDefFoundError e) {}
+		} catch (NoClassDefFoundError e) {
+		}
 	}
 
 	public void reloadConfig() {
@@ -87,7 +88,7 @@ public class DataManager {
 		Main.getDataManager().getConfigHandler().reload();
 		Main.getDataManager().getScoreboardHandler().loadScores();
 
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			Main.getDataManager().getScoreboardHandler().sendScoreBoard(vp);
 			vp.getNametag().giveAll();
@@ -108,21 +109,21 @@ public class DataManager {
 	private void copyDefaultPresets() {
 		try {
 			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
-			while(true) {
+			while (true) {
 				ZipEntry e = zip.getNextEntry();
-				if(e == null)
+				if (e == null)
 					break;
 
 				String name = e.getName();
 				e.isDirectory();
-				if(name.startsWith("presets")) {
+				if (name.startsWith("presets")) {
 					File file = new File("plugins/Varo/" + name);
-					if(e.isDirectory()) {
+					if (e.isDirectory()) {
 						file.mkdir();
 						continue;
 					}
 
-					if(!file.exists()) {
+					if (!file.exists()) {
 						new File(file.getParent()).mkdirs();
 						file.createNewFile();
 					} else
@@ -132,7 +133,7 @@ public class DataManager {
 
 					byte[] byteBuff = new byte[1024];
 					int bytesRead = 0;
-					while((bytesRead = zip.read(byteBuff)) != -1) {
+					while ((bytesRead = zip.read(byteBuff)) != -1) {
 						out.write(byteBuff, 0, bytesRead);
 					}
 
@@ -140,9 +141,9 @@ public class DataManager {
 					out.close();
 				}
 			}
-			
+
 			zip.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

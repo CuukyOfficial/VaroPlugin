@@ -21,7 +21,7 @@ public class Rank implements VaroSerializeable {
 
 	@VaroSerializeField(path = "tablistLocation")
 	private int tablistLocation;
-	
+
 	@VaroSerializeField(path = "colorcode")
 	private int colorcode;
 
@@ -45,19 +45,19 @@ public class Rank implements VaroSerializeable {
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setColorcode(int colorcode) {
 		this.colorcode = colorcode;
 	}
-	
+
 	public int getColorcode() {
 		return colorcode;
 	}
 
 	public void setTablistLocation(int tablistLocation) {
 		this.tablistLocation = tablistLocation;
-		
-		if(tablistLocation > highestLocation)
+
+		if (tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
@@ -75,13 +75,14 @@ public class Rank implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(tablistLocation > highestLocation)
+		if (tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
 	@Override
-	public void onSerializeStart() {}
-	
+	public void onSerializeStart() {
+	}
+
 	public static int getHighestLocation() {
 		return highestLocation;
 	}

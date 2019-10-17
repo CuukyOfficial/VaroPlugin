@@ -27,46 +27,52 @@ public class InventoryBackupGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aShow").itemstack(new ItemStack(Material.CHEST)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aShow").itemstack(new ItemStack(Material.CHEST)).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				new InventoryBackupShowGUI(opener, backup);
-			}
-		});
+					@Override
+					public void run() {
+						new InventoryBackupShowGUI(opener, backup);
+					}
+				});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				if(!backup.getVaroPlayer().isOnline()) {
-					backup.getVaroPlayer().getStats().setRestoreBackup(backup);
-					opener.sendMessage(Main.getPrefix() + "Inventar wird beim nächsten Betreten wiederhergestellt!");
-					return;
-				}
+					@Override
+					public void run() {
+						if (!backup.getVaroPlayer().isOnline()) {
+							backup.getVaroPlayer().getStats().setRestoreBackup(backup);
+							opener.sendMessage(
+									Main.getPrefix() + "Inventar wird beim nächsten Betreten wiederhergestellt!");
+							return;
+						}
 
-				backup.restoreUpdate(backup.getVaroPlayer().getPlayer());
-				opener.sendMessage(Main.getPrefix() + "Inventar wurde wiederhergestellt!");
-			}
-		});
+						backup.restoreUpdate(backup.getVaroPlayer().getPlayer());
+						opener.sendMessage(Main.getPrefix() + "Inventar wurde wiederhergestellt!");
+					}
+				});
 
-		linkItemTo(7, new ItemBuilder().displayname("§cRemove").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§cRemove").itemstack(Materials.REDSTONE.parseItem()).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				backup.getVaroPlayer().getStats().removeInventoryBackup(backup);
-				new InventoryBackupListGUI(opener, backup.getVaroPlayer());
-			}
-		});
+					@Override
+					public void run() {
+						backup.getVaroPlayer().getStats().removeInventoryBackup(backup);
+						new InventoryBackupListGUI(opener, backup.getVaroPlayer());
+					}
+				});
 
 		return true;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -75,5 +81,6 @@ public class InventoryBackupGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

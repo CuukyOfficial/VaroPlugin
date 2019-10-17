@@ -37,12 +37,12 @@ public class VaroAPIStats {
 	public void setCountdown(int time) {
 		stats.setCountdown(time);
 	}
-	
+
 	public ArrayList<VaroAPIInventoryBackup> getInventoryBackups() {
 		ArrayList<VaroAPIInventoryBackup> backups = new ArrayList<>();
-		for(InventoryBackup invB : stats.getInventoryBackups())
+		for (InventoryBackup invB : stats.getInventoryBackups())
 			backups.add(new VaroAPIInventoryBackup(invB));
-		
+
 		return backups;
 	}
 
@@ -60,7 +60,7 @@ public class VaroAPIStats {
 
 	public List<VaroAPIStrike> getStrikes() {
 		List<VaroAPIStrike> strikes = new ArrayList<VaroAPIStrike>();
-		for(Strike strike : stats.getStrikes())
+		for (Strike strike : stats.getStrikes())
 			strikes.add(new VaroAPIStrike(strike));
 
 		return strikes;

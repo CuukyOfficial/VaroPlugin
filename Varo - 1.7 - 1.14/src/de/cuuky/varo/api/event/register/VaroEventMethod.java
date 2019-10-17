@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface VaroEventMethod {
-	
+
 	/**
 	 * Annonation for registering the methods
 	 */
-	
+
 }

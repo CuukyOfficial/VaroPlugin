@@ -16,7 +16,7 @@ public class BukkitEvent {
 
 	static {
 		events = new ArrayList<BukkitEvent>();
-		
+
 		new DeadEvent();
 		new KickEvent();
 		new JoinEvent();
@@ -33,8 +33,8 @@ public class BukkitEvent {
 	}
 
 	public BukkitEvent(VaroPlayer player, BukkitEventType eventType) {
-		for(BukkitEvent event : events)
-			if(event.getEventType().equals(eventType))
+		for (BukkitEvent event : events)
+			if (event.getEventType().equals(eventType))
 				event.onExec(player);
 	}
 
@@ -42,5 +42,6 @@ public class BukkitEvent {
 		return eventType;
 	}
 
-	public void onExec(VaroPlayer player) {}
+	public void onExec(VaroPlayer player) {
+	}
 }

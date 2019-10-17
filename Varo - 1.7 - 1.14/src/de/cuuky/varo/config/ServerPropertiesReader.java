@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ServerPropertiesReader {
-	
+
 	/*
 	 * OLD CODE
 	 */

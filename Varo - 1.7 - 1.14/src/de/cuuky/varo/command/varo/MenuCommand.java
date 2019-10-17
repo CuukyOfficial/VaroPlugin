@@ -21,7 +21,7 @@ public class MenuCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 			return;
 		}
-		
+
 		new MainMenu((Player) sender);
 	}
 }

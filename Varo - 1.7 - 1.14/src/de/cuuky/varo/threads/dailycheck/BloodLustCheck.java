@@ -19,19 +19,22 @@ public class BloodLustCheck extends Checker {
 	public void check() {
 		int days = ConfigEntry.BLOODLUST_DAYS.getValueAsInt();
 		boolean strike = ConfigEntry.STRIKE_ON_BLOODLUST.getValueAsBoolean();
-		if(!ConfigEntry.BLOODLUST_DAYS.isIntActivated())
+		if (!ConfigEntry.BLOODLUST_DAYS.isIntActivated())
 			return;
 
-		for(VaroPlayer player : VaroPlayer.getAlivePlayer()) {
+		for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
 			Date lastContact = player.getStats().getLastEnemyContact();
 
-			if(lastContact.before(DateUtils.addDays(new Date(), -days))) {
+			if (lastContact.before(DateUtils.addDays(new Date(), -days))) {
 				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekämpft!");
-				if(strike) {
+				if (strike) {
 					player.getStats().addStrike(new Strike("Bloodlust", player, "CONSOLE"));
-					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(player).replace("%days%", String.valueOf(days)));
+					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT,
+							ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(player).replace("%days%",
+									String.valueOf(days)));
 				} else
-					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(player).replace("%days%", String.valueOf(days)));
+					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT,
+							ConfigMessages.ALERT_NO_BLOODLUST.getValue(player).replace("%days%", String.valueOf(days)));
 			}
 		}
 	}

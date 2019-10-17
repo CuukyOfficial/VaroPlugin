@@ -13,7 +13,8 @@ public class ProtectionTime {
 	}
 
 	private void startTimer() {
-		Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
+		Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%",
+				String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 			@Override

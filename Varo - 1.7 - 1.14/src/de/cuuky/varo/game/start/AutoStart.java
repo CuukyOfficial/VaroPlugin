@@ -30,12 +30,17 @@ public class AutoStart implements VaroSerializeable {
 		start();
 		Main.getGame().setAutoStart(this);
 
-		postMessage(Main.getProjectName() + " §7wird am " + Main.getColorCode() + getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " §7den " + Main.getColorCode() + getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "§7." + Main.getColorCode() + getWithZero(start.get(Calendar.MONTH) + 1) + "§7." + Main.getColorCode() + start.get(Calendar.YEAR) + " §7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "§7:" + Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " §7starten!");
+		postMessage(Main.getProjectName() + " §7wird am " + Main.getColorCode()
+				+ getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " §7den " + Main.getColorCode()
+				+ getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "§7." + Main.getColorCode()
+				+ getWithZero(start.get(Calendar.MONTH) + 1) + "§7." + Main.getColorCode() + start.get(Calendar.YEAR)
+				+ " §7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "§7:"
+				+ Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " §7starten!");
 	}
 
 	@SuppressWarnings("deprecation")
 	private void start() {
-		if(new Date().after(start)) {
+		if (new Date().after(start)) {
 			stop();
 			return;
 		}
@@ -51,10 +56,11 @@ public class AutoStart implements VaroSerializeable {
 			public void run() {
 				try {
 					Thread.sleep(1000);
-				} catch(InterruptedException e) {}
+				} catch (InterruptedException e) {
+				}
 
 				Bukkit.getScheduler().cancelTask(sched);
-				if(startDelay == StartDelay.GO) {
+				if (startDelay == StartDelay.GO) {
 					stop();
 					Main.getGame().start();
 					Bukkit.broadcastMessage(Main.getProjectName() + " §7wird gestartet...");
@@ -74,8 +80,11 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private void postMessage(String message) {
-		if(Main.getDiscordBot() != null && Main.getDiscordBot().isEnabled() && Main.getDiscordBot().getAnnouncementChannel() != null)
-			Main.getDiscordBot().sendRawMessage(Utils.replaceAllColors(message) + " " + Main.getDiscordBot().getMentionRole(), Main.getDiscordBot().getAnnouncementChannel());
+		if (Main.getDiscordBot() != null && Main.getDiscordBot().isEnabled()
+				&& Main.getDiscordBot().getAnnouncementChannel() != null)
+			Main.getDiscordBot().sendRawMessage(
+					Utils.replaceAllColors(message) + " " + Main.getDiscordBot().getMentionRole(),
+					Main.getDiscordBot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
 
@@ -91,7 +100,7 @@ public class AutoStart implements VaroSerializeable {
 		StartDelay.reset();
 		start();
 	}
-	
+
 	public Date getStart() {
 		return start;
 	}
@@ -102,10 +111,11 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	private String getDayByInt(int i) {
-		switch(i) {
+		switch (i) {
 		case 1:
 			return "Sonntag";
 		case 2:

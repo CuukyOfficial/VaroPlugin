@@ -9,11 +9,11 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class PlayerRespawnListener implements Listener {
-	
+
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-			
+
 			@Override
 			public void run() {
 				VaroPlayer.getPlayer(event.getPlayer()).setNormalAttackSpeed();

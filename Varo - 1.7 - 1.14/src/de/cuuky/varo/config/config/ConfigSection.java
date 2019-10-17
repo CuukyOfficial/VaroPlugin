@@ -14,15 +14,19 @@ public enum ConfigSection {
 
 	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksäcken"),
 
-	PROTECTIONS("Protections", Material.DIAMOND_CHESTPLATE, "Hier kannst du alle Einstellungen zu Schutzzeiten vornehmen."),
+	PROTECTIONS("Protections", Material.DIAMOND_CHESTPLATE,
+			"Hier kannst du alle Einstellungen zu Schutzzeiten vornehmen."),
 
-	SERVER_LIST("Serverlist", Materials.SIGN.parseMaterial(), "Hier kannst du die Anzeige des Servers in der Serverliste konfigurieren."),
+	SERVER_LIST("Serverlist", Materials.SIGN.parseMaterial(),
+			"Hier kannst du die Anzeige des Servers in der Serverliste konfigurieren."),
 
 	TEAMS("Teams", Material.BOOK, "Hier kannst du Einstellungen zu Teams vornehmen."),
 
-	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen dürfen."),
+	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(),
+			"Hier kannst du einstellen, wann und wie oft Spieler joinen dürfen."),
 
-	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
+	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(),
+			"Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
 
 	STRIKE("Strike", Materials.PAPER.parseMaterial(), "Hier kannst du Einstellungen zu den Strikes vornehmen."),
 
@@ -30,9 +34,11 @@ public enum ConfigSection {
 
 	START("Start", Material.ACTIVATOR_RAIL, "Hier kannst du Einstellungen zum Start deines Plugins vornehmen."),
 
-	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu früh disconnected."),
+	DISCONNECT("Disconnect", Material.COAL,
+			"Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu früh disconnected."),
 
-	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich während des Kampfes ausloggt."),
+	COMBATLOG("Combatlog", Material.DIAMOND_SWORD,
+			"Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich während des Kampfes ausloggt."),
 
 	BORDER("Border", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
 
@@ -40,7 +46,8 @@ public enum ConfigSection {
 
 	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivität eines Spielers vornehmen."),
 
-	REPORT("Report", Materials.REDSTONE_TORCH.parseMaterial(), "Hier kannst du Einstellungen zum Report-System vornehmen."),
+	REPORT("Report", Materials.REDSTONE_TORCH.parseMaterial(),
+			"Hier kannst du Einstellungen zum Report-System vornehmen."),
 
 	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zum Report-System vornehmen."),
 
@@ -80,8 +87,8 @@ public enum ConfigSection {
 
 	public ArrayList<ConfigEntry> getEntries() {
 		ArrayList<ConfigEntry> temp = new ArrayList<>();
-		for(ConfigEntry entry : ConfigEntry.values()) {
-			if(!entry.getSection().equals(this))
+		for (ConfigEntry entry : ConfigEntry.values()) {
+			if (!entry.getSection().equals(this))
 				continue;
 
 			temp.add(entry);
@@ -91,8 +98,8 @@ public enum ConfigSection {
 	}
 
 	public static ConfigSection getSection(String name) {
-		for(ConfigSection section : ConfigSection.values()) {
-			if(!section.getName().equalsIgnoreCase(name))
+		for (ConfigSection section : ConfigSection.values()) {
+			if (!section.getName().equalsIgnoreCase(name))
 				continue;
 
 			return section;

@@ -16,26 +16,31 @@ public class PingCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String ping, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_PING.getValue().replaceAll("%ping%", String.valueOf(VaroPlayer.getPlayer((Player) sender).getNetworkManager().getPing())));
-		} else if(args.length == 1) {
-			if(!sender.hasPermission("varo.ping")) {
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_PING.getValue().replaceAll("%ping%",
+					String.valueOf(VaroPlayer.getPlayer((Player) sender).getNetworkManager().getPing())));
+		} else if (args.length == 1) {
+			if (!sender.hasPermission("varo.ping")) {
 				sender.sendMessage(VaroCommand.getNoPermission("varo.ping"));
 				return false;
 			}
 
 			Player p = Bukkit.getPlayerExact(args[0]);
-			if(p == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0] + " §7nicht gefunden!");
+			if (p == null) {
+				sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0]
+						+ " §7nicht gefunden!");
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Ping von " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + args[0] + " §7beträgt " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + String.valueOf(VaroPlayer.getPlayer(p).getNetworkManager().getPing()) + "ms§7!");
+			sender.sendMessage(
+					Main.getPrefix() + "§7Der Ping von " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString()
+							+ args[0] + " §7beträgt " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString()
+							+ String.valueOf(VaroPlayer.getPlayer(p).getNetworkManager().getPing()) + "ms§7!");
 		} else
 			sender.sendMessage(Main.getPrefix() + "§b/ping §7[Player]");
 

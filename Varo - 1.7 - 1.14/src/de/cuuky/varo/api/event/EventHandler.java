@@ -23,7 +23,8 @@ public class EventHandler {
 			method.invoke(listener, event);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			System.err.println(Main.getConsolePrefix()
-					+ "An error occured on invoking a method, did you register it right? Listener: " + this.listener.getClass().getName());
+					+ "An error occured on invoking a method, did you register it right? Listener: "
+					+ this.listener.getClass().getName());
 			return;
 		}
 	}

@@ -23,7 +23,7 @@ public class LoggerMaster {
 	public EventLogger getEventLogger() {
 		return fileLogger;
 	}
-	
+
 	public ChatLogger getChatLogger() {
 		return chatLogger;
 	}

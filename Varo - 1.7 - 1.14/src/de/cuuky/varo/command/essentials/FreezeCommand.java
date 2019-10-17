@@ -15,19 +15,19 @@ public class FreezeCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.freeze")) {
+		if (!sender.hasPermission("varo.freeze")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.freeze"));
 			return false;
 		}
 
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/freeze <Player>");
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("all")) {
-			for(Player player : Bukkit.getOnlinePlayers())
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
+		if (args[0].equalsIgnoreCase("all")) {
+			for (Player player : Bukkit.getOnlinePlayers())
+				if (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
 					VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
 				else
 					new VaroCancelAble(CancelAbleType.FREEZE, player);
@@ -36,18 +36,19 @@ public class FreezeCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(Bukkit.getPlayerExact(args[0]) == null) {
+		if (Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
+		if (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
 			VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
 		else
 			new VaroCancelAble(CancelAbleType.FREEZE, player);
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich " + (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null ? "gefreezed!" : "entfreezed!"));
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich "
+				+ (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null ? "gefreezed!" : "entfreezed!"));
 		return false;
 	}
 }

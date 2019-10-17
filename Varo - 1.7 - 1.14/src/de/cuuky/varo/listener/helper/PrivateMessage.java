@@ -23,7 +23,8 @@ public class PrivateMessage {
 		this.message = message;
 		this.written = new Date();
 
-		Main.getLoggerMaster().getChatLogger().println(ChatLogType.PRIVATE_CHAT, sender.getName() + " >> " + reciever.getName() + ": " + message);
+		Main.getLoggerMaster().getChatLogger().println(ChatLogType.PRIVATE_CHAT,
+				sender.getName() + " >> " + reciever.getName() + ": " + message);
 
 		messages.add(this);
 	}
@@ -45,8 +46,8 @@ public class PrivateMessage {
 	}
 
 	public static PrivateMessage getMessage(Player player) {
-		for(PrivateMessage pmessage : messages) {
-			if(pmessage.getReciever().equals(player))
+		for (PrivateMessage pmessage : messages) {
+			if (pmessage.getReciever().equals(player))
 				continue;
 
 			return pmessage;

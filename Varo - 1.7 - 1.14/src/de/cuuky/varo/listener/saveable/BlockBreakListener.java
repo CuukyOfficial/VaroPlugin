@@ -21,7 +21,7 @@ public class BlockBreakListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(!Main.getGame().isStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if (!Main.getGame().isStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			event.setCancelled(true);
 			return;
 		}
@@ -30,22 +30,23 @@ public class BlockBreakListener implements Listener {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
 		Block block = event.getBlock();
 
-		if(!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
+		if (!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
 			return;
 
-		if(!Main.getGame().isStarted())
-			if(varoPlayer.getStats().isSpectator() || !player.hasPermission("varo.setup"))
+		if (!Main.getGame().isStarted())
+			if (varoPlayer.getStats().isSpectator() || !player.hasPermission("varo.setup"))
 				return;
 
 		Location loc = block.getLocation();
 		VaroSaveable saveable = VaroSaveable.getByLocation(loc);
 
-		if(saveable == null)
+		if (saveable == null)
 			return;
 		VaroPlayer holder = saveable.getPlayer();
 
-		if(saveable.canModify(varoPlayer)) {
-			player.sendMessage(Main.getPrefix() + ConfigMessages.REMOVED_SAVEABLE.getValue().replaceAll("%saveable%", block.getState() instanceof Chest ? "Chest" : "Furnace"));
+		if (saveable.canModify(varoPlayer)) {
+			player.sendMessage(Main.getPrefix() + ConfigMessages.REMOVED_SAVEABLE.getValue().replaceAll("%saveable%",
+					block.getState() instanceof Chest ? "Chest" : "Furnace"));
 			player.playSound(player.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 			player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
 			player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
@@ -54,14 +55,16 @@ public class BlockBreakListener implements Listener {
 			return;
 		}
 
-		if(saveable.holderDead())
+		if (saveable.holderDead())
 			return;
 
-		if(!player.hasPermission("varo.ignoreSaveable")) {
-			player.sendMessage(Main.getPrefix() + ConfigMessages.NOT_TEAM_CHEST.getValue().replaceAll("%player%", holder.getName()));
+		if (!player.hasPermission("varo.ignoreSaveable")) {
+			player.sendMessage(Main.getPrefix()
+					+ ConfigMessages.NOT_TEAM_CHEST.getValue().replaceAll("%player%", holder.getName()));
 			event.setCancelled(true);
 		} else {
-			player.sendMessage(Main.getPrefix() + "§7Diese Kiste gehörte " + Main.getColorCode() + saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstören!");
+			player.sendMessage(Main.getPrefix() + "§7Diese Kiste gehörte " + Main.getColorCode()
+					+ saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstören!");
 			saveable.remove();
 		}
 	}

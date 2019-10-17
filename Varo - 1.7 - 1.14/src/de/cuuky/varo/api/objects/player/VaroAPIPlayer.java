@@ -37,7 +37,7 @@ public class VaroAPIPlayer {
 
 	public static List<VaroAPIPlayer> getVaroPlayers() {
 		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
 			alive.add(new VaroAPIPlayer(vp));
 
 		return alive;
@@ -45,7 +45,7 @@ public class VaroAPIPlayer {
 
 	public static List<VaroAPIPlayer> getOnlinePlayers() {
 		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer())
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
 			alive.add(new VaroAPIPlayer(vp));
 
 		return alive;
@@ -53,7 +53,7 @@ public class VaroAPIPlayer {
 
 	public static List<VaroAPIPlayer> getAlivePlayers() {
 		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
+		for (VaroPlayer vp : VaroPlayer.getAlivePlayer())
 			alive.add(new VaroAPIPlayer(vp));
 
 		return alive;

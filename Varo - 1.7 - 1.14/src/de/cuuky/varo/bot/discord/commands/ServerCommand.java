@@ -9,7 +9,7 @@ import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ServerCommand extends DiscordBotCommand {
-	
+
 	/*
 	 * OLD CODE
 	 */
@@ -20,6 +20,8 @@ public class ServerCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Main.getGame().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
+		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort()
+				+ "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: "
+				+ Main.getGame().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
 	}
 }

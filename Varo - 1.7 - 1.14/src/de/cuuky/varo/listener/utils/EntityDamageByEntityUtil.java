@@ -13,12 +13,12 @@ public class EntityDamageByEntityUtil {
 	}
 
 	public Player getDamager() {
-		if(event.getDamager() instanceof Arrow) {
-			if(!(((Arrow) event.getDamager()).getShooter() instanceof Player))
+		if (event.getDamager() instanceof Arrow) {
+			if (!(((Arrow) event.getDamager()).getShooter() instanceof Player))
 				return null;
 
-			return((Player) ((Arrow) event.getDamager()).getShooter());
-		} else if(event.getDamager() instanceof Player)
+			return ((Player) ((Arrow) event.getDamager()).getShooter());
+		} else if (event.getDamager() instanceof Player)
 			return (Player) event.getDamager();
 		else
 			return null;

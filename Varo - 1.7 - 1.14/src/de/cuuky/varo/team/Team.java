@@ -47,7 +47,7 @@ public class Team implements VaroSerializeable {
 		teams.add(this);
 
 		Nametag.refreshAll();
-		if(this.id > highestNumber)
+		if (this.id > highestNumber)
 			highestNumber = id;
 	}
 
@@ -64,7 +64,7 @@ public class Team implements VaroSerializeable {
 	}
 
 	public void addMember(VaroPlayer vp) {
-		if(this.isMember(vp))
+		if (this.isMember(vp))
 			return;
 
 		this.member.add(vp);
@@ -75,13 +75,13 @@ public class Team implements VaroSerializeable {
 		this.member.remove(vp);
 		vp.setTeam(null);
 
-		if(member.size() == 0)
+		if (member.size() == 0)
 			teams.remove(this);
 	}
 
 	public boolean isOnline() {
-		for(VaroPlayer vp : member)
-			if(!vp.isOnline())
+		for (VaroPlayer vp : member)
+			if (!vp.isOnline())
 				return false;
 
 		return true;
@@ -89,21 +89,21 @@ public class Team implements VaroSerializeable {
 
 	public ArrayList<VaroSaveable> getSaveables() {
 		ArrayList<VaroSaveable> save = new ArrayList<VaroSaveable>();
-		for(VaroPlayer vp : member)
+		for (VaroPlayer vp : member)
 			save.addAll(vp.getStats().getSaveablesRaw());
 
 		return save;
 	}
 
 	public void removeSaveable(VaroSaveable saveable) {
-		for(VaroPlayer vp : member)
-			if(vp.getStats().getSaveables().contains(saveable))
+		for (VaroPlayer vp : member)
+			if (vp.getStats().getSaveables().contains(saveable))
 				vp.getStats().removeSaveable(saveable);
 	}
 
 	public int getKills() {
 		int kills = 0;
-		for(VaroPlayer player : member)
+		for (VaroPlayer player : member)
 			kills += player.getStats().getKills();
 
 		return kills;
@@ -156,14 +156,14 @@ public class Team implements VaroSerializeable {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	public boolean isDead() {
-		for(VaroPlayer player : member) {
-			if(player.getStats().getState() != PlayerState.ALIVE)
+		for (VaroPlayer player : member) {
+			if (player.getStats().getState() != PlayerState.ALIVE)
 				continue;
 
 			return false;
@@ -174,15 +174,15 @@ public class Team implements VaroSerializeable {
 
 	private int generateId() {
 		int i = teams.size() + 1;
-		while(getTeam(i) != null)
+		while (getTeam(i) != null)
 			i++;
 
 		return i;
 	}
 
 	public static Team getTeam(int id) {
-		for(Team team : teams) {
-			if(team.getId() != id)
+		for (Team team : teams) {
+			if (team.getId() != id)
 				continue;
 
 			return team;
@@ -193,8 +193,8 @@ public class Team implements VaroSerializeable {
 
 	public static ArrayList<Team> getAliveTeams() {
 		ArrayList<Team> alive = new ArrayList<Team>();
-		for(Team team : teams)
-			if(!team.isDead())
+		for (Team team : teams)
+			if (!team.isDead())
 				alive.add(team);
 
 		return alive;
@@ -202,8 +202,8 @@ public class Team implements VaroSerializeable {
 
 	public static ArrayList<Team> getDeadTeams() {
 		ArrayList<Team> dead = new ArrayList<Team>();
-		for(Team team : teams)
-			if(team.isDead())
+		for (Team team : teams)
+			if (team.isDead())
 				dead.add(team);
 
 		return dead;
@@ -211,16 +211,16 @@ public class Team implements VaroSerializeable {
 
 	public static ArrayList<Team> getOnlineTeams() {
 		ArrayList<Team> online = new ArrayList<Team>();
-		for(Team team : teams)
-			if(team.isOnline())
+		for (Team team : teams)
+			if (team.isOnline())
 				online.add(team);
 
 		return online;
 	}
 
 	public static Team getTeam(String name) {
-		for(Team team : teams) {
-			if(!team.getName().equals(name) && !String.valueOf(team.getId()).equals(name))
+		for (Team team : teams) {
+			if (!team.getName().equals(name) && !String.valueOf(team.getId()).equals(name))
 				continue;
 
 			return team;
@@ -235,24 +235,25 @@ public class Team implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		for(int id : memberid) {
+		for (int id : memberid) {
 			VaroPlayer vp = VaroPlayer.getPlayer(id);
-			if(vp == null) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
+			if (vp == null) {
+				Main.getLoggerMaster().getEventLogger().println(LogType.LOG,
+						id + " has been removed without reason - please report this to the creator of this plugin");
 				continue;
 			}
 
 			addMember(vp);
 		}
 
-		if(id > highestNumber)
+		if (id > highestNumber)
 			highestNumber = id;
 		memberid.clear();
 	}
 
 	@Override
 	public void onSerializeStart() {
-		for(VaroPlayer member : member)
+		for (VaroPlayer member : member)
 			memberid.add(member.getId());
 	}
 

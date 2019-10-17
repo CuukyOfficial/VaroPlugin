@@ -16,7 +16,7 @@ public class MySQL {
 	private boolean connected;
 
 	public MySQL() {
-		if(!ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean())
+		if (!ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean())
 			return;
 
 		this.host = ConfigEntry.DISCORDBOT_VERIFY_HOST.getValueAsString();
@@ -28,27 +28,29 @@ public class MySQL {
 		System.out.println(Main.getConsolePrefix() + "Connecting to MySQL...");
 		connect();
 
-		if(connected)
+		if (connected)
 			update("CREATE TABLE IF NOT EXISTS verify(uuid VARCHAR(255) NOT NULL, userid long, code int, bypass boolean, name VARCHAR(255) NOT NULL);");
 	}
 
 	public void connect() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/" + database + "?autoReconnect=true", user, password);
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://" + host + ":3306/" + database + "?autoReconnect=true", user, password);
 			connected = true;
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			System.err.println(Main.getConsolePrefix() + "MYSQL USERNAME, IP ODER PASSWORT FALSCH! -> Disabled");
 			return;
 		}
 	}
 
 	public void close() {
-		if(connection == null)
+		if (connection == null)
 			return;
 
 		try {
 			connection.close();
-		} catch(SQLException e) {}
+		} catch (SQLException e) {
+		}
 
 		this.connected = false;
 	}
@@ -58,7 +60,7 @@ public class MySQL {
 			Statement st = connection.createStatement();
 			st.executeUpdate(qry);
 			st.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
 			connect();
@@ -71,7 +73,7 @@ public class MySQL {
 		try {
 			Statement st = connection.createStatement();
 			rs = st.executeQuery(qry);
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
 			connect();

@@ -24,22 +24,25 @@ public class PlayerSaveableGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§cDelete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§cDelete").itemstack(Materials.REDSTONE.parseItem()).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				saveable.remove();
-				back();
-			}
-		});
+					@Override
+					public void run() {
+						saveable.remove();
+						back();
+					}
+				});
 		return true;
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -48,5 +51,6 @@ public class PlayerSaveableGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

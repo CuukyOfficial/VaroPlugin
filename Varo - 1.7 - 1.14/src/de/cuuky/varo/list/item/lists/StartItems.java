@@ -15,7 +15,7 @@ public class StartItems extends ItemList {
 
 		if (!items.isEmpty())
 			return;
-		
+
 		items.add(Materials.AIR.parseItem());
 	}
 

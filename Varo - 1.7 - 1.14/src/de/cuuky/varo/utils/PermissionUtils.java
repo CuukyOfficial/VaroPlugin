@@ -7,11 +7,14 @@ public class PermissionUtils {
 	@SuppressWarnings("unchecked")
 	public static String getPermissionsExPrefix(VaroPlayer player) {
 		try {
-			Object permissionUser = Class.forName("ru.tehkode.permissions.bukkit.PermissionsEx").getDeclaredMethod("getUser", String.class).invoke(null, player.getName());
-			Object group = ((Object[]) permissionUser.getClass().getDeclaredMethod("getGroups").invoke(permissionUser))[0];
+			Object permissionUser = Class.forName("ru.tehkode.permissions.bukkit.PermissionsEx")
+					.getDeclaredMethod("getUser", String.class).invoke(null, player.getName());
+			Object group = ((Object[]) permissionUser.getClass().getDeclaredMethod("getGroups")
+					.invoke(permissionUser))[0];
 
 			return (String) group.getClass().getMethod("getPrefix").invoke(group);
-		} catch(Throwable e) {}
+		} catch (Throwable e) {
+		}
 
 		return "";
 	}
@@ -26,11 +29,14 @@ public class PermissionUtils {
 			Object group = api.getClass().getMethod("getGroup", String.class).invoke(api, groupname);
 			Object cachedData = group.getClass().getMethod("getCachedData").invoke(group);
 
-			Object contexts = Class.forName("me.lucko.luckperms.api.Contexts").getDeclaredMethod("allowAll").invoke(null);
+			Object contexts = Class.forName("me.lucko.luckperms.api.Contexts").getDeclaredMethod("allowAll")
+					.invoke(null);
 
-			Object metadata = cachedData.getClass().getMethod("getMetaData", contexts.getClass()).invoke(cachedData, contexts);
+			Object metadata = cachedData.getClass().getMethod("getMetaData", contexts.getClass()).invoke(cachedData,
+					contexts);
 			return (String) metadata.getClass().getMethod("getPrefix").invoke(metadata);
-		} catch(Throwable e) {}
+		} catch (Throwable e) {
+		}
 
 		return "";
 	}

@@ -38,43 +38,48 @@ public class TeamRequest {
 	}
 
 	private void sendChatHook() {
-		new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue().replace("%invited%", invited.getName()), new ChatHookListener() {
+		new ChatHook(invitor.getPlayer(),
+				Main.getColorCode()
+						+ ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue().replace("%invited%", invited.getName()),
+				new ChatHookListener() {
 
-			@Override
-			public void onChat(String message) {
-				if(message.contains("#")) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_HASHTAG.getValue());
-					sendChatHook();
-					return;
-				}
+					@Override
+					public void onChat(String message) {
+						if (message.contains("#")) {
+							invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_HASHTAG.getValue());
+							sendChatHook();
+							return;
+						}
 
-				if(message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_COLORCODE.getValue());
-					sendChatHook();
-					return;
-				}
+						if (message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
+							invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_COLORCODE.getValue());
+							sendChatHook();
+							return;
+						}
 
-				int maxLength = ConfigEntry.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
-				if(message.length() > (maxLength) - 1) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH.getValue().replace("%maxLength%", String.valueOf(maxLength)));
-					sendChatHook();
-					return;
-				}
+						int maxLength = ConfigEntry.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
+						if (message.length() > (maxLength) - 1) {
+							invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH
+									.getValue().replace("%maxLength%", String.valueOf(maxLength)));
+							sendChatHook();
+							return;
+						}
 
-				addToTeam(invitor.getTeam() == null ? new Team(message) : invitor.getTeam());
-			}
-		});
+						addToTeam(invitor.getTeam() == null ? new Team(message) : invitor.getTeam());
+					}
+				});
 	}
 
 	private void addToTeam(Team team) {
-		if(!team.isMember(invitor))
+		if (!team.isMember(invitor))
 			team.addMember(invitor);
 
-		if(invited.getTeam() != null)
+		if (invited.getTeam() != null)
 			invited.getTeam().removeMember(invited);
 
-		if(ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
-			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue().replace("%invited%", invited.getName()));
+		if (ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
+			invitor.sendMessage(Main.getPrefix()
+					+ ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue().replace("%invited%", invited.getName()));
 			return;
 		}
 
@@ -83,18 +88,20 @@ public class TeamRequest {
 
 	@SuppressWarnings("deprecation")
 	private void startSched() {
-		if(!ConfigEntry.TEAMREQUEST_EXPIRETIME.isIntActivated())
+		if (!ConfigEntry.TEAMREQUEST_EXPIRETIME.isIntActivated())
 			return;
 
 		this.sched = Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
-				if(VaroPlayer.getPlayer(invitor.getPlayer()) != null)
-					invitor.sendMessage(Main.getPrefix() + "§7Deine Einladung an " + Main.getColorCode() + invited.getName() + " §7ist abgelaufen!");
+				if (VaroPlayer.getPlayer(invitor.getPlayer()) != null)
+					invitor.sendMessage(Main.getPrefix() + "§7Deine Einladung an " + Main.getColorCode()
+							+ invited.getName() + " §7ist abgelaufen!");
 
-				if(VaroPlayer.getPlayer(invited.getPlayer()) != null)
-					invited.sendMessage(Main.getPrefix() + "§7Die Einladung von " + Main.getColorCode() + invitor.getName() + " §7ist abgelaufen!");
+				if (VaroPlayer.getPlayer(invited.getPlayer()) != null)
+					invited.sendMessage(Main.getPrefix() + "§7Die Einladung von " + Main.getColorCode()
+							+ invitor.getName() + " §7ist abgelaufen!");
 
 				remove();
 			}
@@ -103,13 +110,14 @@ public class TeamRequest {
 	}
 
 	public void accept() {
-		if(!invitor.isOnline()) {
-			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
+		if (!invitor.isOnline()) {
+			invited.sendMessage(Main.getPrefix()
+					+ ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
 			remove();
 			return;
 		}
 
-		if(invitor.getTeam() == null)
+		if (invitor.getTeam() == null)
 			sendChatHook();
 		else
 			addToTeam(invitor.getTeam());
@@ -135,24 +143,24 @@ public class TeamRequest {
 	}
 
 	public static TeamRequest getByInvitor(VaroPlayer invitor) {
-		for(TeamRequest req : requests) {
-			if(req.getInvitor().equals(invitor))
+		for (TeamRequest req : requests) {
+			if (req.getInvitor().equals(invitor))
 				return req;
 		}
 		return null;
 	}
 
 	public static TeamRequest getByInvited(VaroPlayer invited) {
-		for(TeamRequest req : requests)
-			if(req.getInvitor().equals(invited))
+		for (TeamRequest req : requests)
+			if (req.getInvitor().equals(invited))
 				return req;
 
 		return null;
 	}
 
 	public static TeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {
-		for(TeamRequest req : requests)
-			if(req.getInvitor().equals(inviter) && req.getInvited().equals(invited))
+		for (TeamRequest req : requests)
+			if (req.getInvitor().equals(inviter) && req.getInvited().equals(invited))
 				return req;
 
 		return null;

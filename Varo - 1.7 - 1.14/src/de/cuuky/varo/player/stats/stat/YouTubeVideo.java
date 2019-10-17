@@ -42,9 +42,9 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 
 	public void remove() {
 		VaroPlayer owner = getOwner();
-		if(owner != null)
+		if (owner != null)
 			owner.getStats().removeVideo(this);
-		
+
 		videos.remove(this);
 	}
 
@@ -69,16 +69,16 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	}
 
 	public VaroPlayer getOwner() {
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
-			if(vp.getStats().getVideos().contains(this))
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
+			if (vp.getStats().getVideos().contains(this))
 				return vp;
 
 		return null;
 	}
 
 	public static YouTubeVideo getVideo(String videoId) {
-		for(YouTubeVideo video : videos)
-			if(video.getVideoId().equals(videoId))
+		for (YouTubeVideo video : videos)
+			if (video.getVideoId().equals(videoId))
 				return video;
 
 		return null;
@@ -95,8 +95,10 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	}
 
 	@Override
-	public void onDeserializeEnd() {}
+	public void onDeserializeEnd() {
+	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 }

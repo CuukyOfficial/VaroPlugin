@@ -14,13 +14,13 @@ public class SpeedCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.speed")) {
+		if (!sender.hasPermission("varo.speed")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.speed"));
 			return false;
 		}
 
-		if(args.length == 1) {
-			if(!(sender instanceof Player)) {
+		if (args.length == 1) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "§7Entweder '/speed <Speed> [Player]' oder Spieler sein!");
 				return false;
 			}
@@ -30,44 +30,47 @@ public class SpeedCommand implements CommandExecutor {
 			try {
 				speed = Float.valueOf(args[0]);
 				speed = getRealMoveSpeed(Float.valueOf(args[0]), p.isFlying());
-			} catch(Exception e) {
+			} catch (Exception e) {
 				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen §bSpeed §7angegeben!");
 				return false;
 			}
 
-			if(Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
+			if (Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
 				sender.sendMessage(Main.getPrefix() + "§7Der Speed muss 0-10 betragen!");
 				return false;
 			}
 
-			if(p.isFlying())
+			if (p.isFlying())
 				p.setFlySpeed(speed);
 			else
 				p.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "§7Deine " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
-		} else if(args.length == 2) {
+			sender.sendMessage(Main.getPrefix() + "§7Deine " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString()
+					+ (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
+		} else if (args.length == 2) {
 			try {
-				if(Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
+				if (Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
 					sender.sendMessage(Main.getPrefix() + "§7Der Speed muss 0-10 betragen!");
 					return false;
 				}
-			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen " + Main.getColorCode() + "Speed §7angegeben!");
+			} catch (Exception e) {
+				sender.sendMessage(
+						Main.getPrefix() + "§7Du hast gültigen keinen " + Main.getColorCode() + "Speed §7angegeben!");
 				return false;
 			}
 
-			if(args[1].equalsIgnoreCase("all")) {
-				for(Player pl : Bukkit.getOnlinePlayers()) {
+			if (args[1].equalsIgnoreCase("all")) {
+				for (Player pl : Bukkit.getOnlinePlayers()) {
 					Float speed = null;
 					try {
 						speed = Float.valueOf(args[0]);
 						speed = getRealMoveSpeed(Float.valueOf(args[0]), pl.isFlying());
-					} catch(Exception e) {
-						sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen " + Main.getColorCode() + "Speed §7angegeben!");
+					} catch (Exception e) {
+						sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen " + Main.getColorCode()
+								+ "Speed §7angegeben!");
 						return false;
 					}
 
-					if(pl.isFlying())
+					if (pl.isFlying())
 						pl.setFlySpeed(speed);
 					else
 						pl.setWalkSpeed(speed);
@@ -77,7 +80,7 @@ public class SpeedCommand implements CommandExecutor {
 			}
 
 			Player to = Bukkit.getPlayerExact(args[1]);
-			if(to == null) {
+			if (to == null) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + "§7 nicht gefunden!");
 				return false;
 			}
@@ -86,16 +89,18 @@ public class SpeedCommand implements CommandExecutor {
 			try {
 				speed = Float.valueOf(args[0]);
 				speed = getRealMoveSpeed(Float.valueOf(args[0]), to.isFlying());
-			} catch(Exception e) {
+			} catch (Exception e) {
 				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen §bSpeed §7angegeben!");
 				return false;
 			}
 
-			if(to.isFlying())
+			if (to.isFlying())
 				to.setFlySpeed(speed);
 			else
 				to.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s "
+					+ ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (to.isFlying() ? "Flug" : "Lauf")
+					+ "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed §7<Speed> [Player]");
 		return false;
@@ -105,7 +110,7 @@ public class SpeedCommand implements CommandExecutor {
 		float defaultSpeed = isFly ? 0.1f : 0.2f;
 		float maxSpeed = 1f;
 
-		if(userSpeed < 1f) {
+		if (userSpeed < 1f) {
 			return defaultSpeed * userSpeed;
 		} else {
 			float ratio = ((userSpeed - 1) / 9) * (maxSpeed - defaultSpeed);

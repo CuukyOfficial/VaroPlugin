@@ -22,7 +22,8 @@ public class ExposedVaroEvent extends VaroEvent {
 	private PotionEffectType type;
 
 	public ExposedVaroEvent() {
-		super("§cExposed", Material.REDSTONE, "Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete");
+		super("§cExposed", Material.REDSTONE,
+				"Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete");
 
 		type = PotionEffectType.getByName("GLOWING");
 	}
@@ -33,12 +34,13 @@ public class ExposedVaroEvent extends VaroEvent {
 
 			@Override
 			public void run() {
-				FireworkEffect effect = FireworkEffect.builder().withColor(Color.RED, Color.WHITE).withFade(Color.PURPLE).with(FireworkEffect.Type.BURST).trail(false).flicker(true).build();
+				FireworkEffect effect = FireworkEffect.builder().withColor(Color.RED, Color.WHITE)
+						.withFade(Color.PURPLE).with(FireworkEffect.Type.BURST).trail(false).flicker(true).build();
 
-				for(VaroPlayer vpl : VaroPlayer.getOnlineAndAlivePlayer()) {
+				for (VaroPlayer vpl : VaroPlayer.getOnlineAndAlivePlayer()) {
 					Player pl = vpl.getPlayer();
 
-					if(type != null)
+					if (type != null)
 						pl.getPlayer().addPotionEffect(new PotionEffect(type, 11, 1));
 					else {
 						Firework fw = (Firework) pl.getWorld().spawnEntity(pl.getLocation(), EntityType.FIREWORK);
@@ -56,8 +58,8 @@ public class ExposedVaroEvent extends VaroEvent {
 
 	@Override
 	public void onDisable() {
-		if(type != null)
-			for(Player pl : VersionUtils.getOnlinePlayer())
+		if (type != null)
+			for (Player pl : VersionUtils.getOnlinePlayer())
 				pl.removePotionEffect(type);
 
 		Bukkit.getScheduler().cancelTask(scheduler);

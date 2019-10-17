@@ -114,7 +114,7 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void register() {
-		if(this.stats == null)
+		if (this.stats == null)
 			this.stats = new Stats(this);
 
 		stats.loadDefaults();
@@ -129,31 +129,34 @@ public class VaroPlayer implements VaroSerializeable {
 		if (VaroEvent.getMassRecEvent().isEnabled()) {
 			return inMassProtectionTime;
 		} else {
-			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
+			return ConfigEntry.PLAY_TIME.isIntActivated()
+					&& stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60)
+							- ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
 		}
 	}
 
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
-		if(isOnline()) {
+		if (isOnline()) {
 			update();
 
-			if(getStats().isSpectator() || isAdminIgnore())
+			if (getStats().isSpectator() || isAdminIgnore())
 				setSpectacting();
 
 			setNormalAttackSpeed();
 
-			if(Main.getGame().getGameState() == GameState.LOBBY)
+			if (Main.getGame().getGameState() == GameState.LOBBY)
 				LobbyItem.giveItems(player);
-		} else if(isAdminIgnore())
+		} else if (isAdminIgnore())
 			adminIgnore = false;
 
 		this.stats.setOwner(this);
 	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	public void setSpectacting() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -167,14 +170,14 @@ public class VaroPlayer implements VaroSerializeable {
 				player.getPlayer().setHealth(20);
 				player.getPlayer().setFoodLevel(20);
 
-				if(!adminIgnore) {
+				if (!adminIgnore) {
 					player.getInventory().clear();
 					player.getInventory().setArmorContents(new ItemStack[] {});
 				}
 			}
 		}, 1);
 	}
-	
+
 	public UUID getRealUUID() {
 		return UUID.fromString(uuid);
 	}
@@ -189,7 +192,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 	private int generateId() {
 		int id = Utils.randomInt(1000, 9999999);
-		while(getPlayer(id) != null)
+		while (getPlayer(id) != null)
 			generateId();
 
 		return id;
@@ -231,27 +234,27 @@ public class VaroPlayer implements VaroSerializeable {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	
+
 	public boolean getinMassProtectionTime() {
 		return inMassProtectionTime;
 	}
-	
+
 	public void setinMassProtectionTime(boolean inMassProtectionTime) {
 		this.inMassProtectionTime = inMassProtectionTime;
 	}
-	
+
 	public boolean getalreadyHadMassProtectionTime() {
 		return alreadyHadMassProtectionTime;
 	}
-	
+
 	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
 		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
 	}
-	
+
 	public boolean getMassenaufnahmeKick() {
 		return MassenaufnahmeKick;
 	}
-	
+
 	public void setMassenaufnahmeKick(boolean MassenaufnahmeKick) {
 		this.MassenaufnahmeKick = MassenaufnahmeKick;
 	}
@@ -277,16 +280,16 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void delete() {
-		if(team != null)
+		if (team != null)
 			team.removeMember(this);
 
-		if(rank != null)
+		if (rank != null)
 			rank.remove();
 
-		if(isOnline())
+		if (isOnline())
 			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this));
 
-		if(villager != null)
+		if (villager != null)
 			villager.remove();
 
 		stats.remove();
@@ -296,10 +299,10 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public String getPrefix() {
 		String pr = "";
-		if(team != null)
+		if (team != null)
 			pr = team.getDisplay() + " ";
 
-		if(rank != null)
+		if (rank != null)
 			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
 		return pr;
 	}
@@ -307,23 +310,26 @@ public class VaroPlayer implements VaroSerializeable {
 	public void setTeam(Team team) {
 		this.team = team;
 
-		if(!Main.isBootedUp())
+		if (!Main.isBootedUp())
 			return;
 
 		VaroDiscordBot db = Main.getDiscordBot();
-		if(db != null && db.isEnabled()) {
+		if (db != null && db.isEnabled()) {
 			GuildController controller = db.getController();
-			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
+			if (ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
 				Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
-				if(this.team != null)
-					if(controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
+				if (this.team != null)
+					if (controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
 						Role role = controller.getGuild().getRolesByName(this.team.getName(), true).get(0);
 						controller.removeSingleRoleFromMember(member, role).complete();
 					}
 
-				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0 ? controller.getGuild().getRolesByName(team.getName(), true).get(0) : null;
-				if(role == null)
-					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true).setName(team.getName()).complete();
+				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0
+						? controller.getGuild().getRolesByName(team.getName(), true).get(0)
+						: null;
+				if (role == null)
+					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true)
+							.setName(team.getName()).complete();
 
 				controller.addRolesToMember(member, role).complete();
 			}
@@ -334,25 +340,25 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void update() {
-		if(!isOnline())
+		if (!isOnline())
 			return;
 
-		if(nametag == null)
+		if (nametag == null)
 			nametag = new Nametag(player.getUniqueId(), player);
 		else
 			nametag.refresh();
 
-		if(VersionUtils.getVersion() != BukkitVersion.ONE_7) {
+		if (VersionUtils.getVersion() != BukkitVersion.ONE_7) {
 			getNetworkManager().sendTablist();
 			String listname = "";
-			if(getTeam() != null) {
-				if(getRank() == null) {
+			if (getTeam() != null) {
+				if (getRank() == null) {
 					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
 				} else {
 					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
 				}
 			} else {
-				if(getRank() == null) {
+				if (getRank() == null) {
 					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
 				} else {
 					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
@@ -380,22 +386,22 @@ public class VaroPlayer implements VaroSerializeable {
 	 * @return Returns if a player is nearby
 	 */
 	public boolean canBeKicked(int noKickDistance) {
-		if(noKickDistance < 1)
+		if (noKickDistance < 1)
 			return true;
 
-		for(Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
-			if(!(entity instanceof Player))
+		for (Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
+			if (!(entity instanceof Player))
 				continue;
 
 			VaroPlayer vp = getPlayer((Player) entity);
-			if(vp.equals(this))
+			if (vp.equals(this))
 				continue;
 
-			if(vp.getTeam() != null)
-				if(vp.getTeam().equals(team))
+			if (vp.getTeam() != null)
+				if (vp.getTeam().equals(team))
 					continue;
 
-			if(vp.getStats().isSpectator() || vp.isAdminIgnore())
+			if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 				continue;
 
 			return false;
@@ -420,8 +426,8 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public static VaroPlayer getPlayer(int id) {
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getId() != id)
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getId() != id)
 				continue;
 
 			return vp;
@@ -431,24 +437,27 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	/**
-	 * @return Returns the varoplayer and sets the name right if the player
-	 *         changed it before
+	 * @return Returns the varoplayer and sets the name right if the player changed
+	 *         it before
 	 */
 	public static VaroPlayer getPlayer(Player player) {
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getUuid() != null)
-				if(!vp.getUuid().equals(player.getUniqueId().toString()))
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getUuid() != null)
+				if (!vp.getUuid().equals(player.getUniqueId().toString()))
 					continue;
 
-			if(vp.getUuid() == null && player.getName().equalsIgnoreCase(vp.getName()))
+			if (vp.getUuid() == null && player.getName().equalsIgnoreCase(vp.getName()))
 				vp.setUuid(player.getUniqueId().toString());
-			else if(vp.getUuid() == null)
+			else if (vp.getUuid() == null)
 				continue;
 
-			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
-				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
-				new Alert(AlertType.NAME_SWITCH, player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
+			if (!vp.getName().equalsIgnoreCase(player.getName())) {
+				Main.getLoggerMaster().getEventLogger().println(LogType.ALERT,
+						ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c"
+						+ vp.getName() + " §7bekannt!");
+				new Alert(AlertType.NAME_SWITCH, player.getName()
+						+ " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
 				vp.setName(player.getName());
 			}
 
@@ -459,8 +468,8 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public static VaroPlayer getPlayer(String name) {
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getName().equalsIgnoreCase(name))
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getName().equalsIgnoreCase(name))
 				continue;
 
 			return vp;
@@ -474,8 +483,8 @@ public class VaroPlayer implements VaroSerializeable {
 	 */
 	public static ArrayList<VaroPlayer> getAlivePlayer() {
 		ArrayList<VaroPlayer> alive = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isAlive())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getStats().isAlive())
 				continue;
 
 			alive.add(vp);
@@ -489,8 +498,8 @@ public class VaroPlayer implements VaroSerializeable {
 	 */
 	public static ArrayList<VaroPlayer> getOnlinePlayer() {
 		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.isOnline())
 				continue;
 
 			online.add(vp);
@@ -501,8 +510,8 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
 		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline() || !vp.getStats().isAlive())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.isOnline() || !vp.getStats().isAlive())
 				continue;
 
 			online.add(vp);
@@ -513,8 +522,8 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public static ArrayList<VaroPlayer> getSpectator() {
 		ArrayList<VaroPlayer> spectator = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isSpectator())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getStats().isSpectator())
 				continue;
 
 			spectator.add(vp);
@@ -525,8 +534,8 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public static ArrayList<VaroPlayer> getDeadPlayer() {
 		ArrayList<VaroPlayer> dead = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getStats().getState() != PlayerState.DEAD)
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getStats().getState() != PlayerState.DEAD)
 				continue;
 
 			dead.add(vp);

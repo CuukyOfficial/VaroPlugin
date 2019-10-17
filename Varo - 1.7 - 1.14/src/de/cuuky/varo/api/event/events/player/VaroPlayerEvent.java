@@ -5,12 +5,12 @@ import de.cuuky.varo.api.objects.player.VaroAPIPlayer;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class VaroPlayerEvent extends VaroAPIEvent {
-	
+
 	private VaroAPIPlayer player;
-	
+
 	public VaroPlayerEvent(VaroPlayer player, boolean cancelAble) {
 		super(cancelAble);
-		
+
 		this.player = new VaroAPIPlayer(player);
 	}
 

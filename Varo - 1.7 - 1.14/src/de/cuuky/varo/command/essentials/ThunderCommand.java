@@ -13,7 +13,7 @@ public class ThunderCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender.hasPermission("varo.thunder"))) {
+		if (!(sender.hasPermission("varo.thunder"))) {
 			sender.sendMessage(Main.getPrefix() + "Dazu bist du nicht berechtigt!");
 			return false;
 		}

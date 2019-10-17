@@ -9,7 +9,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 public class TimeTimer {
 
 	public TimeTimer() {
-		if(!ConfigEntry.ALWAYS_TIME.isIntActivated())
+		if (!ConfigEntry.ALWAYS_TIME.isIntActivated())
 			return;
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
@@ -18,10 +18,10 @@ public class TimeTimer {
 
 			@Override
 			public void run() {
-				if(Main.getGame().isStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean())
+				if (Main.getGame().isStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean())
 					return;
 
-				for(World world : Bukkit.getWorlds()) {
+				for (World world : Bukkit.getWorlds()) {
 					world.setTime(time);
 					world.setThundering(false);
 					world.setStorm(false);

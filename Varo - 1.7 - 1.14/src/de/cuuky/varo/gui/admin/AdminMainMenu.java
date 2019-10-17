@@ -38,122 +38,147 @@ public class AdminMainMenu extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(0, new ItemBuilder().displayname("§eSetup Assistant").itemstack(new ItemStack(Materials.ENDER_EYE.parseMaterial())).build(), new Runnable() {
+		linkItemTo(0, new ItemBuilder().displayname("§eSetup Assistant")
+				.itemstack(new ItemStack(Materials.ENDER_EYE.parseMaterial())).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				new SetupHelpGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new SetupHelpGUI(opener);
+					}
+				});
 
-		linkItemTo(4, new ItemBuilder().displayname("§cConfig").itemstack(new ItemStack(Materials.WHEAT.parseMaterial())).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§cConfig")
+				.itemstack(new ItemStack(Materials.WHEAT.parseMaterial())).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				new ConfigSectionGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new ConfigSectionGUI(opener);
+					}
+				});
 
-		linkItemTo(10, new ItemBuilder().displayname("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(), new Runnable() {
+		linkItemTo(10, new ItemBuilder().displayname("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD))
+				.amount(getFixedSize(Report.getReports().size())).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				new ReportListGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new ReportListGUI(opener);
+					}
+				});
 
-		linkItemTo(16, new ItemBuilder().playername(opener.getName()).displayname("§aSpieler").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).buildSkull(), new Runnable() {
+		linkItemTo(16, new ItemBuilder().playername(opener.getName()).displayname("§aSpieler")
+				.amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).buildSkull(), new Runnable() {
 
-			@Override
-			public void run() {
-				new PlayerListChooseGUI(opener, true);
-			}
-		});
+					@Override
+					public void run() {
+						new PlayerListChooseGUI(opener, true);
+					}
+				});
 
-		linkItemTo(18, new ItemBuilder().displayname("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(), new Runnable() {
+		linkItemTo(18, new ItemBuilder().displayname("§cAlerts").itemstack(new ItemStack(Material.BOOK))
+				.amount(getFixedSize(Alert.getOpenAlerts().size())).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				new AlertTypeChooseGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new AlertTypeChooseGUI(opener);
+					}
+				});
 
-		linkItemTo(22, new ItemBuilder().displayname("§aBackups").itemstack(Materials.WRITTEN_BOOK.parseItem()).build(), new Runnable() {
+		linkItemTo(22, new ItemBuilder().displayname("§aBackups").itemstack(Materials.WRITTEN_BOOK.parseItem()).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				new BackupListGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new BackupListGUI(opener);
+					}
+				});
 
-		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(Main.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
-			public void run() {
-				if(Main.getDiscordBot() == null) {
-					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
-					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
-					opener.sendMessage(Main.getPrefix() + "http://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
-					return;
-				}
+		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot")
+				.itemstack(new ItemStack(
+						Main.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial()))
+				.build(), new Runnable() {
+					public void run() {
+						if (Main.getDiscordBot() == null) {
+							opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
+							opener.sendMessage(Main.getPrefix()
+									+ "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
+							opener.sendMessage(
+									Main.getPrefix() + "http://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+							return;
+						}
 
-				new DiscordBotGUI(opener);
-			}
-		});
+						new DiscordBotGUI(opener);
+					}
+				});
 
-		linkItemTo(28, new ItemBuilder().displayname("§5Game").itemstack(new ItemStack(Material.CAKE)).build(), new Runnable() {
+		linkItemTo(28, new ItemBuilder().displayname("§5Game").itemstack(new ItemStack(Material.CAKE)).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				new GameOptionsGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new GameOptionsGUI(opener);
+					}
+				});
 
-		linkItemTo(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(Team.getTeams().size())).build(), new Runnable() {
+		linkItemTo(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
+				.amount(getFixedSize(Team.getTeams().size())).build(), new Runnable() {
 
-			@Override
-			public void run() {
-				new TeamChooseGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new TeamChooseGUI(opener);
+					}
+				});
 
-		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(Main.getLoggerMaster().getBlockLogger().getLogs().size())).build(), new Runnable() {
+		linkItemTo(40,
+				new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE))
+						.amount(getFixedSize(Main.getLoggerMaster().getBlockLogger().getLogs().size())).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				new OreLoggerListGUI(opener);
-			}
-		});
+					@Override
+					public void run() {
+						new OreLoggerListGUI(opener);
+					}
+				});
 
-		if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
-			linkItemTo(inv.getSize() - 9, new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
+		if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+			linkItemTo(inv.getSize() - 9,
+					new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(),
+					new Runnable() {
 
-				@Override
-				public void run() {
-					new DebugGUI(opener);
-				}
-			});
+						@Override
+						public void run() {
+							new DebugGUI(opener);
+						}
+					});
 
-		linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
+		linkItemTo(inv.getSize() - 1,
+				new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(),
+				new Runnable() {
 
-			@Override
-			public void run() {
-				opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin by Cuuky");
-				opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
-				opener.sendMessage(Main.getPrefix() + "§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
-				opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
-			}
-		});
+					@Override
+					public void run() {
+						opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin by Cuuky");
+						opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode()
+								+ Main.getInstance().getDescription().getVersion());
+						opener.sendMessage(
+								Main.getPrefix() + "§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
+						opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
+					}
+				});
 
 		return true;
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {

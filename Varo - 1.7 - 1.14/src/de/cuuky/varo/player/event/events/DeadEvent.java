@@ -29,16 +29,16 @@ public class DeadEvent extends BukkitEvent {
 		player.getStats().setDiedAt(new Date());
 		player.getStats().setState(PlayerState.DEAD);
 
-		if(ConfigEntry.BACKPACK_DROP_CONTENT_DEATH.getValueAsBoolean()) 
-			if(player.getStats().getBackpack() != null) {
-				for(ItemStack item : player.getStats().getBackpack().getInventory().getContents())
-					if(item != null && item.getType() != Material.AIR)
+		if (ConfigEntry.BACKPACK_DROP_CONTENT_DEATH.getValueAsBoolean())
+			if (player.getStats().getBackpack() != null) {
+				for (ItemStack item : player.getStats().getBackpack().getInventory().getContents())
+					if (item != null && item.getType() != Material.AIR)
 						player.getPlayer().getWorld().dropItemNaturally(player.getPlayer().getLocation(), item);
-				
+
 				player.getStats().getBackpack().clear();
 			}
 
-		if(Main.getGame().getGameState() == GameState.STARTED)
+		if (Main.getGame().getGameState() == GameState.STARTED)
 			Main.getDataManager().getWorldHandler().getBorder().decrease(DecreaseReason.DEATH);
 	}
 }

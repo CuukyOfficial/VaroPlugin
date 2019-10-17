@@ -38,14 +38,16 @@ public class SchematicLoader {
 			clipboardFormatsClass = Class.forName("com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats");
 			blockVectorClass = Class.forName("com.sk89q.worldedit.math.BlockVector3");
 			old = false;
-		} catch(Exception | Error e) {}
+		} catch (Exception | Error e) {
+		}
 
 		try {
 			vectorClass = Class.forName("com.sk89q.worldedit.Vector");
 			cuboidClipClass = Class.forName("com.sk89q.worldedit.CuboidClipboard");
 			localWorldClass = Class.forName("com.sk89q.worldedit.LocalWorld");
 			old = true;
-		} catch(Exception | Error e) {}
+		} catch (Exception | Error e) {
+		}
 	}
 
 	private File file;
@@ -55,9 +57,10 @@ public class SchematicLoader {
 	}
 
 	public void paste(Location location) {
-		if(!old) {
+		if (!old) {
 			try {
-				ClipboardFormat format = (ClipboardFormat) clipboardFormatsClass.getDeclaredMethod("findByFile", File.class).invoke(null, file);
+				ClipboardFormat format = (ClipboardFormat) clipboardFormatsClass
+						.getDeclaredMethod("findByFile", File.class).invoke(null, file);
 				Clipboard clipboard = null;
 				ClipboardReader reader = format.getReader(new FileInputStream(file));
 				clipboard = (Clipboard) reader.getClass().getDeclaredMethod("read").invoke(reader, null);
@@ -69,27 +72,32 @@ public class SchematicLoader {
 
 				ClipboardHolder cholder = ClipboardHolder.class.getConstructor(Clipboard.class).newInstance(clipboard);
 
-				Object vector3 = blockVectorClass.getDeclaredMethod("at", int.class, int.class, int.class).invoke(null, location.getBlockX(), location.getBlockY(), location.getBlockZ());
+				Object vector3 = blockVectorClass.getDeclaredMethod("at", int.class, int.class, int.class).invoke(null,
+						location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
-				Object paste = cholder.getClass().getDeclaredMethod("createPaste", Extent.class).invoke(cholder, editSession);
+				Object paste = cholder.getClass().getDeclaredMethod("createPaste", Extent.class).invoke(cholder,
+						editSession);
 				Object to = paste.getClass().getDeclaredMethod("to", vector3.getClass()).invoke(paste, vector3);
 
 				Operation operation = ((PasteBuilder) to).ignoreAirBlocks(false).build();
 
 				Operations.complete(operation);
 				editSession.getClass().getDeclaredMethod("flushSession").invoke(editSession, null);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
-				Object origin = vectorClass.getDeclaredMethod("toBlockPoint", double.class, double.class, double.class).invoke(null, location.getX(), location.getY(), location.getZ());
+				Object origin = vectorClass.getDeclaredMethod("toBlockPoint", double.class, double.class, double.class)
+						.invoke(null, location.getX(), location.getY(), location.getZ());
 
-				EditSession es = EditSession.class.getConstructor(localWorldClass, int.class).newInstance(new BukkitWorld(location.getWorld()), 999999999);
+				EditSession es = EditSession.class.getConstructor(localWorldClass, int.class)
+						.newInstance(new BukkitWorld(location.getWorld()), 999999999);
 
 				Object clipboard = cuboidClipClass.getDeclaredMethod("loadSchematic", File.class).invoke(null, file);
-				clipboard.getClass().getMethod("paste", es.getClass(), vectorClass, boolean.class).invoke(clipboard, es, origin, false);
-			} catch(Exception e2) {
+				clipboard.getClass().getMethod("paste", es.getClass(), vectorClass, boolean.class).invoke(clipboard, es,
+						origin, false);
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}

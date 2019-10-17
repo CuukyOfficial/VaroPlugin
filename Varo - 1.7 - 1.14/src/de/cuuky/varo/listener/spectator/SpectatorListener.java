@@ -34,9 +34,9 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
-		if(!event.getPlayer().isOp())
-			if(cancelEvent(event.getPlayer()))
-				if(event.getTo().getY() < ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt()) {
+		if (!event.getPlayer().isOp())
+			if (cancelEvent(event.getPlayer()))
+				if (event.getTo().getY() < ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt()) {
 					Location tp = event.getFrom();
 					tp.setY(ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
 					event.setTo(tp);
@@ -48,34 +48,34 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onInventoryMove(InventoryDragEvent event) {
-		if(cancelEvent(event.getWhoClicked()))
+		if (cancelEvent(event.getWhoClicked()))
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if (Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
-		if(cancelEvent(event.getPlayer()))
+		if (cancelEvent(event.getPlayer()))
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onItemDrop(PlayerPickupItemEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if (Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
-		if(cancelEvent(event.getPlayer()))
+		if (cancelEvent(event.getPlayer()))
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onItemPickup(PlayerDropItemEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if (Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
-		if(cancelEvent(event.getPlayer()))
+		if (cancelEvent(event.getPlayer()))
 			event.setCancelled(true);
 	}
 
@@ -84,15 +84,15 @@ public class SpectatorListener implements Listener {
 		Entity entityDamager = event.getDamager();
 		Entity entityDamaged = event.getEntity();
 
-		if(cancelEvent(event.getEntity())) {
-			if(entityDamager instanceof Arrow) {
-				if(((Arrow) entityDamager).getShooter() instanceof Player) {
+		if (cancelEvent(event.getEntity())) {
+			if (entityDamager instanceof Arrow) {
+				if (((Arrow) entityDamager).getShooter() instanceof Player) {
 					Arrow arrow = (Arrow) entityDamager;
 
 					Player shooter = (Player) arrow.getShooter();
 					Player damaged = (Player) entityDamaged;
 
-					if(Vanish.getVanish((Player) entityDamaged) != null) {
+					if (Vanish.getVanish((Player) entityDamaged) != null) {
 						damaged.teleport(entityDamaged.getLocation().add(0, 5, 0));
 
 						Arrow newArrow = (Arrow) arrow.getWorld().spawnEntity(arrow.getLocation(), EntityType.ARROW);
@@ -107,38 +107,38 @@ public class SpectatorListener implements Listener {
 			}
 		}
 
-		if(cancelEvent(entityDamager))
+		if (cancelEvent(entityDamager))
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onEntityTarget(EntityTargetLivingEntityEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY)
+		if (Main.getGame().getGameState() == GameState.LOBBY)
 			event.setCancelled(true);
 
-		if(cancelEvent(event.getTarget()))
+		if (cancelEvent(event.getTarget()))
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onHealthLose(EntityDamageEvent event) {
-		if(cancelEvent(event.getEntity()))
+		if (cancelEvent(event.getEntity()))
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onFoodLose(FoodLevelChangeEvent event) {
-		if(cancelEvent(event.getEntity()))
+		if (cancelEvent(event.getEntity()))
 			event.setCancelled(true);
 	}
 
 	private static boolean cancelEvent(Entity interact) {
-		if(!(interact instanceof Player))
+		if (!(interact instanceof Player))
 			return false;
 
 		Player player = (Player) interact;
 
-		if(Vanish.getVanish(player) == null || player.getGameMode() != GameMode.ADVENTURE)
+		if (Vanish.getVanish(player) == null || player.getGameMode() != GameMode.ADVENTURE)
 			return false;
 
 		return true;

@@ -20,7 +20,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 				|| lowerMessage.startsWith("/version") || lowerMessage.startsWith("/bukkit:version")
 				|| lowerMessage.startsWith("/ver") || lowerMessage.startsWith("/about")
 				|| lowerMessage.startsWith("/bukkit:about")) {
-			
+
 			if (event.getPlayer().hasPermission("varo.readInfo"))
 				return;
 

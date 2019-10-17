@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 
 public class CountdownCommand implements CommandExecutor {
-	
+
 	/*
 	 * OLD CODE
 	 */
@@ -18,12 +18,12 @@ public class CountdownCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.countdowm")) {
+		if (!sender.hasPermission("varo.countdowm")) {
 			sender.sendMessage("No permission");
 			return false;
 		}
 
-		if(sched != -1) {
+		if (sched != -1) {
 			Bukkit.getScheduler().cancelTask(sched);
 			sched = -1;
 
@@ -31,7 +31,7 @@ public class CountdownCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/countdown <seconds>");
 			return false;
 		}
@@ -39,11 +39,11 @@ public class CountdownCommand implements CommandExecutor {
 		time = 0;
 		try {
 			time = Integer.parseInt(args[0]);
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7ist keine Zahl!");
 		}
 
-		if(time < 1) {
+		if (time < 1) {
 			sender.sendMessage(Main.getPrefix() + "§7Der Countdown kann nicht - sein!");
 			return false;
 		}
@@ -52,7 +52,7 @@ public class CountdownCommand implements CommandExecutor {
 
 			@Override
 			public void run() {
-				if(time == 0) {
+				if (time == 0) {
 					Bukkit.broadcastMessage(Main.getPrefix() + Main.getColorCode() + "Los geht's!");
 					Bukkit.getScheduler().cancelTask(sched);
 					time = -1;

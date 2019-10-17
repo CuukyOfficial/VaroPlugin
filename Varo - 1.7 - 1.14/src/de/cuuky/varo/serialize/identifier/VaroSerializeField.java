@@ -10,7 +10,9 @@ import java.lang.annotation.Target;
 public @interface VaroSerializeField {
 
 	String path() default "PATH";
+
 	String enumValue() default "ENUM";
-	Class<? extends VaroSerializeable> arrayClass() default NullClass.class;	
+
+	Class<? extends VaroSerializeable> arrayClass() default NullClass.class;
 
 }

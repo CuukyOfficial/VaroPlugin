@@ -21,21 +21,22 @@ public class EntityDamageByEntityListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
-		if(!(event.getEntity() instanceof Player))
+		if (!(event.getEntity() instanceof Player))
 			return;
 
-		if(Main.getGame().getGameState() == GameState.END)
+		if (Main.getGame().getGameState() == GameState.END)
 			return;
 
 		Player p = (Player) event.getEntity();
-		if(Main.getGame().getProtection() != null) {
+		if (Main.getGame().getProtection() != null) {
 			p.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
 			event.setCancelled(true);
 			return;
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(p);
-		if(Main.getGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(p, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
+		if (Main.getGame().getGameState() == GameState.LOBBY
+				|| VaroCancelAble.getCancelAble(p, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}
@@ -48,20 +49,22 @@ public class EntityDamageByEntityListener implements Listener {
 //				axeHits.put(p, curr);
 //		}
 
-		if(ConfigEntry.FRIENDLYFIRE.getValueAsBoolean())
+		if (ConfigEntry.FRIENDLYFIRE.getValueAsBoolean())
 			return;
 
 		Player damager = new EntityDamageByEntityUtil(event).getDamager();
-		if(damager == null)
+		if (damager == null)
 			return;
 
 		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
-		if(VaroCancelAble.getCancelAble(vdamager.getPlayer(), CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Main.getGame().isFirstTime()) {
+		if (VaroCancelAble.getCancelAble(vdamager.getPlayer(), CancelAbleType.PROTECTION) != null
+				|| vdamager.isInProtection() && !Main.getGame().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if(damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null || !vp.getTeam().equals(vdamager.getTeam()))
+		if (damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null
+				|| !vp.getTeam().equals(vdamager.getTeam()))
 			return;
 
 		event.setCancelled(true);

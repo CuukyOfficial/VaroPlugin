@@ -16,14 +16,14 @@ public class PlayerRegenerateListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onHealthRegenerate(EntityRegainHealthEvent event) {
-		if(!(event.getEntity() instanceof Player))
+		if (!(event.getEntity() instanceof Player))
 			return;
 
-		if(event.isCancelled())
+		if (event.isCancelled())
 			return;
 
-		if(event.getRegainReason() == RegainReason.SATIATED)
-			if(ConfigEntry.NO_SATIATION_REGENERATE.getValueAsBoolean()) {
+		if (event.getRegainReason() == RegainReason.SATIATED)
+			if (ConfigEntry.NO_SATIATION_REGENERATE.getValueAsBoolean()) {
 				event.setCancelled(true);
 				return;
 			}
@@ -34,7 +34,7 @@ public class PlayerRegenerateListener implements Listener {
 			public void run() {
 				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getEntity());
 
-				if(vp.getNametag() != null)
+				if (vp.getNametag() != null)
 					VaroPlayer.getPlayer((Player) event.getEntity()).getNametag().heartsChanged();
 			}
 		}, 1);
