@@ -15,13 +15,13 @@ import de.cuuky.varo.team.Team;
 public class RandomTeamCommand extends VaroCommand {
 
 	public RandomTeamCommand() {
-		super("randomteam", "Gibt allen Spielern, die noch kein Team haben, einen zufÃ¤lligen Teampartner mit GrÃ¶ÃŸe", "varo.randomteam", "rt");
+		super("randomteam", "Gibt allen Spielern, die noch kein Team haben, einen zufälligen Teampartner mit Größe", "varo.randomteam", "rt");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vpsender, Command cmd, String label, String[] args) {
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "Â§7/randomTeam <1 / 2>");
+			sender.sendMessage(Main.getPrefix() + "§7/randomTeam <1 / 2>");
 			return;
 		}
 
@@ -29,7 +29,7 @@ public class RandomTeamCommand extends VaroCommand {
 		try {
 			teamsize = Integer.parseInt(args[0]);
 		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " Â§7ist keine Zahl!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7ist keine Zahl!");
 			return;
 		}
 
@@ -57,7 +57,7 @@ public class RandomTeamCommand extends VaroCommand {
 				}
 
 				if(teamMember.size() != teamsize)
-					vp.getPlayer().sendMessage(Main.getPrefix() + "Â§7FÃ¼r dich wurden nicht genug" + Main.getColorCode() + " Teampartner Â§7gefunden!");
+					vp.getPlayer().sendMessage(Main.getPrefix() + "§7Für dich wurden nicht genug" + Main.getColorCode() + " Teampartner §7gefunden!");
 
 				String teamName = "";
 				for(VaroPlayer teamPl : teamMember)
@@ -76,8 +76,8 @@ public class RandomTeamCommand extends VaroCommand {
 			}
 		}
 
-		sender.sendMessage(Main.getPrefix() + "Â§7Alle Spieler sind nun in " + Main.getColorCode() + teamsize + "Â§7'(n)er Teams!");
+		sender.sendMessage(Main.getPrefix() + "§7Alle Spieler sind nun in " + Main.getColorCode() + teamsize + "§7'(n)er Teams!");
 		if(ConfigEntry.TEAMREQUESTS.getValueAsBoolean())
-			Bukkit.broadcastMessage("Â§7Spieler, die schon ein " + Main.getColorCode() + "Team Â§7hatten, wurden in kein Team gesetzt, da das" + Main.getColorCode() + " TeamRequestor System Â§7aktiv ist.");
+			Bukkit.broadcastMessage("§7Spieler, die schon ein " + Main.getColorCode() + "Team §7hatten, wurden in kein Team gesetzt, da das" + Main.getColorCode() + " TeamRequestor System §7aktiv ist.");
 	}
 }

@@ -20,7 +20,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class OreLoggerListGUI extends SuperInventory {
 
 	public OreLoggerListGUI(Player opener) {
-		super("Â§6OreLogger", opener, 45, false);
+		super("§6OreLogger", opener, 45, false);
 
 		open();
 	}
@@ -47,12 +47,12 @@ public class OreLoggerListGUI extends SuperInventory {
 			Material blocktype = Material.matchMaterial(str.split("mined ")[1].split(" ")[0]);
 			Location loc = new Location(Bukkit.getWorld(minedAt.split("\\'")[1]), Integer.valueOf(minedAt.split("x:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("y:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("z:")[1].split(" ")[0]));
 
-			lore.add("Block Type: Â§c" + blocktype.name());
-			lore.add("Mined at: Â§c" + minedAt);
-			lore.add("Time mined: Â§c" + str.split("\\]")[0].split("\\[")[1]);
+			lore.add("Block Type: §c" + blocktype.name());
+			lore.add("Mined at: §c" + minedAt);
+			lore.add("Time mined: §c" + str.split("\\]")[0].split("\\[")[1]);
 			lore.add("Mined by: " + Main.getColorCode() + name);
 			lore.add(" ");
-			lore.add("Â§cClick to teleport!");
+			lore.add("§cClick to teleport!");
 
 			linkItemTo(i, new ItemBuilder().displayname(name).itemstack(new ItemStack(blocktype)).lore(lore).build(), new Runnable() {
 

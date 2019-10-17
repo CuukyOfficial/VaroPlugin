@@ -19,17 +19,17 @@ public class InvSeeCommand implements CommandExecutor {
 		}
 
 		if (args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/Invsee <Player>");
+			sender.sendMessage(Main.getPrefix() + "ง7/Invsee <Player>");
 			return false;
 		}
 
 		if (!(sender instanceof Player)) {
-			sender.sendMessage(Main.getPrefix() + "Nicht fรผr die Konsole!");
+			sender.sendMessage(Main.getPrefix() + "Nicht fuer die Konsole!");
 			return false;
 		}
 
 		if (Bukkit.getPlayerExact(args[0]) == null) {
-			sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7nicht gefunden!");
+			sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7nicht gefunden!");
 			return false;
 		}
 

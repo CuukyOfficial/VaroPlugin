@@ -21,7 +21,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class BackupListGUI extends SuperInventory {
 
 	public BackupListGUI(Player opener) {
-		super("Â§aBackups", opener, 45, false);
+		super("§aBackups", opener, 45, false);
 
 		open();
 	}
@@ -46,7 +46,7 @@ public class BackupListGUI extends SuperInventory {
 			String[] split1 = filename.split("_");
 			lore.add("Year: " + split1[0].split("-")[0] + ", Month: " + split1[0].split("-")[1] + ", Day: " + split1[0].split("-")[2]);
 			lore.add("Hour: " + split1[1].split("-")[0] + ", Minute: " + split1[1].split("-")[1] + ", Second: " + split1[1].split("-")[2].replace(".zip", ""));
-			linkItemTo(i, new ItemBuilder().displayname("Â§7" + filename).itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§7" + filename).itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build(), new Runnable() {
 
 				@Override
 				public void run() {
@@ -56,7 +56,7 @@ public class BackupListGUI extends SuperInventory {
 			start++;
 		}
 
-		linkItemTo(44, new ItemBuilder().displayname("Â§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(44, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -138,7 +138,7 @@ public class PlayerDeathListener implements Listener {
 				killer.setHealth(20.0);
 			else
 				killer.setHealth(hearts);
-			killer.sendMessage(Main.getPrefix() + "ยง7Du hast durch den Kill an ยง4" + healthAdd / 2 + "ยง7 Herzen regeneriert bekommen!");
+			killer.sendMessage(Main.getPrefix() + "ง7Du hast durch den Kill an ง4" + healthAdd / 2 + "ง7 Herzen regeneriert bekommen!");
 		}
 	}
 }

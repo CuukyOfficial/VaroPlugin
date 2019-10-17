@@ -19,7 +19,7 @@ public class InfoCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/info ยง7<Spieler>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/info ง7<Spieler>");
 			return false;
 		}
 
@@ -29,11 +29,11 @@ public class InfoCommand implements CommandExecutor {
 			return false;
 		}
 
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "ยงl" + player.getName() + "ยง7:");
-		sender.sendMessage(Main.getPrefix() + "Leben: " + Main.getColorCode() + player.getHealth() + "ยง7/20.0");
-		sender.sendMessage(Main.getPrefix() + "Hunger: " + Main.getColorCode() + player.getFoodLevel() + "ยง7/20.0");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "งl" + player.getName() + "ง7:");
+		sender.sendMessage(Main.getPrefix() + "Leben: " + Main.getColorCode() + player.getHealth() + "ง7/20.0");
+		sender.sendMessage(Main.getPrefix() + "Hunger: " + Main.getColorCode() + player.getFoodLevel() + "ง7/20.0");
 		sender.sendMessage(Main.getPrefix() + "Level: " + Main.getColorCode() + player.getLevel());
-		sender.sendMessage(Main.getPrefix() + "Location: x:" + Main.getColorCode() + player.getLocation().getBlockX() + "ยง7, y:" + Main.getColorCode() + player.getLocation().getBlockY() + "ยง7, z:" + Main.getColorCode() + player.getLocation().getBlockZ());
+		sender.sendMessage(Main.getPrefix() + "Location: x:" + Main.getColorCode() + player.getLocation().getBlockX() + "ง7, y:" + Main.getColorCode() + player.getLocation().getBlockY() + "ง7, z:" + Main.getColorCode() + player.getLocation().getBlockZ());
 		sender.sendMessage(Main.getPrefix() + "IP: " + Main.getColorCode() + player.getAddress().getAddress().toString());
 		return false;
 	}

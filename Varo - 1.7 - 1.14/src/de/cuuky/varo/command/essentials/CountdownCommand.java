@@ -27,12 +27,12 @@ public class CountdownCommand implements CommandExecutor {
 			Bukkit.getScheduler().cancelTask(sched);
 			sched = -1;
 
-			sender.sendMessage(Main.getPrefix() + "ยง7Der Countdown wurde abgebrochen!");
+			sender.sendMessage(Main.getPrefix() + "ง7Der Countdown wurde abgebrochen!");
 			return false;
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/countdown <seconds>");
+			sender.sendMessage(Main.getPrefix() + "ง7/countdown <seconds>");
 			return false;
 		}
 
@@ -40,11 +40,11 @@ public class CountdownCommand implements CommandExecutor {
 		try {
 			time = Integer.parseInt(args[0]);
 		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7ist keine Zahl!");
+			sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7ist keine Zahl!");
 		}
 
 		if(time < 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7Der Countdown kann nicht - sein!");
+			sender.sendMessage(Main.getPrefix() + "ง7Der Countdown kann nicht - sein!");
 			return false;
 		}
 

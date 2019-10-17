@@ -27,7 +27,7 @@ public class HelpCommand extends DiscordBotCommand {
 					+ cmd.getDescription();
 		}
 
-		super.getDiscordBot().sendRawMessage("``` Hier eine Ãœbersicht aller Commands: " + cmds + "```", event.getTextChannel());
+		super.getDiscordBot().sendRawMessage("``` Hier eine Übersicht aller Commands: " + cmds + "```", event.getTextChannel());
 	}
 
 }

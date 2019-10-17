@@ -15,7 +15,7 @@ public class PlayerSaveableGUI extends SuperInventory {
 	private VaroSaveable saveable;
 
 	public PlayerSaveableGUI(Player opener, VaroSaveable saveable) {
-		super("Â§7Saveable Â§e" + saveable.getId(), opener, 0, false);
+		super("§7Saveable §e" + saveable.getId(), opener, 0, false);
 
 		this.saveable = saveable;
 
@@ -24,7 +24,7 @@ public class PlayerSaveableGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("Â§cDelete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§cDelete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -61,7 +61,7 @@ public class BotRegister {
 
 	public void delete() {
 		if(getPlayer() != null)
-			getPlayer().kickPlayer("Â§cBotRegister Â§7unregistered");
+			getPlayer().kickPlayer("§cBotRegister §7unregistered");
 
 		register.remove(this);
 	}

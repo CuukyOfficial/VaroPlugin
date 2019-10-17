@@ -21,7 +21,7 @@ public class SpeedCommand implements CommandExecutor {
 
 		if(args.length == 1) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Entweder '/speed <Speed> [Player]' oder Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + "§7Entweder '/speed <Speed> [Player]' oder Spieler sein!");
 				return false;
 			}
 
@@ -31,12 +31,12 @@ public class SpeedCommand implements CommandExecutor {
 				speed = Float.valueOf(args[0]);
 				speed = getRealMoveSpeed(Float.valueOf(args[0]), p.isFlying());
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Du hast gÃ¼ltigen keinen Â§bSpeed Â§7angegeben!");
+				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen §bSpeed §7angegeben!");
 				return false;
 			}
 
 			if(Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Der Speed muss 0-10 betragen!");
+				sender.sendMessage(Main.getPrefix() + "§7Der Speed muss 0-10 betragen!");
 				return false;
 			}
 
@@ -44,15 +44,15 @@ public class SpeedCommand implements CommandExecutor {
 				p.setFlySpeed(speed);
 			else
 				p.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "Â§7Deine " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit Â§7betrÃ¤gt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7Deine " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else if(args.length == 2) {
 			try {
 				if(Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
-					sender.sendMessage(Main.getPrefix() + "Â§7Der Speed muss 0-10 betragen!");
+					sender.sendMessage(Main.getPrefix() + "§7Der Speed muss 0-10 betragen!");
 					return false;
 				}
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Du hast gÃ¼ltigen keinen " + Main.getColorCode() + "Speed Â§7angegeben!");
+				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen " + Main.getColorCode() + "Speed §7angegeben!");
 				return false;
 			}
 
@@ -63,7 +63,7 @@ public class SpeedCommand implements CommandExecutor {
 						speed = Float.valueOf(args[0]);
 						speed = getRealMoveSpeed(Float.valueOf(args[0]), pl.isFlying());
 					} catch(Exception e) {
-						sender.sendMessage(Main.getPrefix() + "Â§7Du hast gÃ¼ltigen keinen " + Main.getColorCode() + "Speed Â§7angegeben!");
+						sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen " + Main.getColorCode() + "Speed §7angegeben!");
 						return false;
 					}
 
@@ -72,13 +72,13 @@ public class SpeedCommand implements CommandExecutor {
 					else
 						pl.setWalkSpeed(speed);
 				}
-				sender.sendMessage(Main.getPrefix() + "Â§7Speed erfolgreich fÃ¼r alle gesetzt!");
+				sender.sendMessage(Main.getPrefix() + "§7Speed erfolgreich für alle gesetzt!");
 				return false;
 			}
 
 			Player to = Bukkit.getPlayerExact(args[1]);
 			if(to == null) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + "Â§7 nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + "§7 nicht gefunden!");
 				return false;
 			}
 
@@ -87,7 +87,7 @@ public class SpeedCommand implements CommandExecutor {
 				speed = Float.valueOf(args[0]);
 				speed = getRealMoveSpeed(Float.valueOf(args[0]), to.isFlying());
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Du hast gÃ¼ltigen keinen Â§bSpeed Â§7angegeben!");
+				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen §bSpeed §7angegeben!");
 				return false;
 			}
 
@@ -95,9 +95,9 @@ public class SpeedCommand implements CommandExecutor {
 				to.setFlySpeed(speed);
 			else
 				to.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "Â§7" + to.getName() + "'s " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit Â§7betrÃ¤gt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed Â§7<Speed> [Player]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed §7<Speed> [Player]");
 		return false;
 	}
 

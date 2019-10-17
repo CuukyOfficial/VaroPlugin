@@ -13,7 +13,7 @@ import de.cuuky.varo.troll.TrollModule;
 public class TrollGUI extends SuperInventory {
 
 	public TrollGUI(Player opener) {
-		super("ยง5Troll", opener, 9, false);
+		super("ง5Troll", opener, 9, false);
 
 		open();
 	}
@@ -22,7 +22,7 @@ public class TrollGUI extends SuperInventory {
 	public boolean onOpen() {
 		int i = 1;
 		for(TrollModule mod : TrollModule.getModules()) {
-			linkItemTo(i, new ItemBuilder().displayname(mod.getName()).itemstack(new ItemStack(mod.getIcon())).lore(new String[] { "ยง7Enabled for: {2DO}", "", "ยง7" + mod.getDescription() }).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(mod.getName()).itemstack(new ItemStack(mod.getIcon())).lore(new String[] { "ง7Enabled for: {2DO}", "", "ง7" + mod.getDescription() }).build(), new Runnable() {
 
 				@Override
 				public void run() {

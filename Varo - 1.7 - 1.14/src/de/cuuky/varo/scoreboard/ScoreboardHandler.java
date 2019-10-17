@@ -67,7 +67,7 @@ public class ScoreboardHandler {
 		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
 		Collections.reverse(scoreboardLines);
 
-		this.header = ConfigMessages.SCOREBOARD_HEADER.getValue().replaceAll("&", "Â§");
+		this.header = ConfigMessages.SCOREBOARD_HEADER.getValue().replaceAll("&", "§");
 		this.topScores = new TopScoreList();
 
 		String space = "";
@@ -83,7 +83,7 @@ public class ScoreboardHandler {
 	private String getConvString(String line, VaroPlayer vp, Scoreboard sb) {
 		if(line.contains("%min%") || line.contains("%sec%"))
 			if(ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
-				return "Â§cUnlimited";
+				return "§cUnlimited";
 
 		for(int rank : getConvNumbers(line, "%topplayer-")) {
 			VaroPlayer player = topScores.getPlayer(rank);

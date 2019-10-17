@@ -22,7 +22,7 @@ public class SunCommand implements CommandExecutor {
 		
 		world.setStorm(false);
 		world.setThundering(false);
-		sender.sendMessage(Main.getPrefix() + "Wechsle zu schÃ¶nem Wetter...");
+		sender.sendMessage(Main.getPrefix() + "Wechsle zu schönem Wetter...");
 		return false;
 	}
 

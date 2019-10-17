@@ -111,11 +111,6 @@ public class Team implements VaroSerializeable {
 
 	public void delete() {
 		this.member.forEach(member -> member.setTeam(null));
-		int id = this.getId();
-		int number = Team.getTeams().size();
-		for (int i = id; i < number; i++) {
-			Team.getTeams().get(i).setId(i);
-		}
 		teams.remove(this);
 	}
 
@@ -155,10 +150,6 @@ public class Team implements VaroSerializeable {
 
 	public int getId() {
 		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public boolean isDead() {

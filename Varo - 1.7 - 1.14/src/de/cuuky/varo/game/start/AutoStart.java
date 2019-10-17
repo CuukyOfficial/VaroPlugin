@@ -30,7 +30,7 @@ public class AutoStart implements VaroSerializeable {
 		start();
 		Main.getGame().setAutoStart(this);
 
-		postMessage(Main.getProjectName() + " ยง7wird am " + Main.getColorCode() + getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " ยง7den " + Main.getColorCode() + getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "ยง7." + Main.getColorCode() + getWithZero(start.get(Calendar.MONTH) + 1) + "ยง7." + Main.getColorCode() + start.get(Calendar.YEAR) + " ยง7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "ยง7:" + Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " ยง7starten!");
+		postMessage(Main.getProjectName() + " ง7wird am " + Main.getColorCode() + getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " ง7den " + Main.getColorCode() + getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "ง7." + Main.getColorCode() + getWithZero(start.get(Calendar.MONTH) + 1) + "ง7." + Main.getColorCode() + start.get(Calendar.YEAR) + " ง7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "ง7:" + Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " ง7starten!");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -57,11 +57,11 @@ public class AutoStart implements VaroSerializeable {
 				if(startDelay == StartDelay.GO) {
 					stop();
 					Main.getGame().start();
-					Bukkit.broadcastMessage(Main.getProjectName() + " ยง7wird gestartet...");
+					Bukkit.broadcastMessage(Main.getProjectName() + " ง7wird gestartet...");
 					return;
 				}
 
-				postMessage(Main.getProjectName() + " ยง7startet in " + startDelay.getFormated("ยง7") + "!");
+				postMessage(Main.getProjectName() + " ง7startet in " + startDelay.getFormated("ง7") + "!");
 
 				start();
 			}

@@ -11,7 +11,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class SetupCommand extends VaroCommand {
 
 	public SetupCommand() {
-		super("setup", "Ã–ffnet die Setuphilfe", "varo.setup");
+		super("setup", "Öffnet die Setuphilfe", "varo.setup");
 	}
 
 	@Override

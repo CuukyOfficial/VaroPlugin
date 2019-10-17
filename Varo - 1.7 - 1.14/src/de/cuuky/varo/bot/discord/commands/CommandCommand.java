@@ -12,14 +12,14 @@ public class CommandCommand extends DiscordBotCommand {
 	 */
 
 	public CommandCommand() {
-		super("command", new String[] { "consolecommand", "executecommand" }, "FÃ¼hrt einen Command in der Konsole aus.");
+		super("command", new String[] { "consolecommand", "executecommand" }, "Führt einen Command in der Konsole aus.");
 	}
 
 	// private OfflinePlayer player = null;
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage("Feature aufgrund der 1.7-1.14 KompatibilitÃ¤t entfernt.", "INFO", Color.MAGENTA, event.getTextChannel());
+		getDiscordBot().sendMessage("Feature aufgrund der 1.7-1.14 Kompatibilität entfernt.", "INFO", Color.MAGENTA, event.getTextChannel());
 
 		// if(BotRegister.getRegister(event.getAuthor()) != null) {
 		// BotRegister reg = BotRegister.getRegister(event.getAuthor());

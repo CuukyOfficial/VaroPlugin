@@ -16,7 +16,6 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -71,9 +70,6 @@ public class VaroPlayer implements VaroSerializeable {
 	private Player player;
 	private Nametag nametag;
 	private NetworkMananager networkManager;
-	private boolean alreadyHadMassProtectionTime = false;
-	private boolean inMassProtectionTime = false;
-	private boolean MassenaufnahmeKick = false;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -126,11 +122,7 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public boolean isInProtection() {
-		if (VaroEvent.getMassRecEvent().isEnabled()) {
-			return inMassProtectionTime;
-		} else {
-			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
-		}
+		return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
 	}
 
 	@Override
@@ -231,30 +223,6 @@ public class VaroPlayer implements VaroSerializeable {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	
-	public boolean getinMassProtectionTime() {
-		return inMassProtectionTime;
-	}
-	
-	public void setinMassProtectionTime(boolean inMassProtectionTime) {
-		this.inMassProtectionTime = inMassProtectionTime;
-	}
-	
-	public boolean getalreadyHadMassProtectionTime() {
-		return alreadyHadMassProtectionTime;
-	}
-	
-	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
-		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
-	}
-	
-	public boolean getMassenaufnahmeKick() {
-		return MassenaufnahmeKick;
-	}
-	
-	public void setMassenaufnahmeKick(boolean MassenaufnahmeKick) {
-		this.MassenaufnahmeKick = MassenaufnahmeKick;
-	}
 
 	public String getName() {
 		return name;
@@ -300,7 +268,7 @@ public class VaroPlayer implements VaroSerializeable {
 			pr = team.getDisplay() + " ";
 
 		if(rank != null)
-			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " ยง8| ") + pr;
+			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " ง8| ") + pr;
 		return pr;
 	}
 
@@ -447,8 +415,8 @@ public class VaroPlayer implements VaroSerializeable {
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
 				Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
-				Bukkit.broadcastMessage("ยงc" + player.getName() + " ยง7hat seinen Namen gewechselt und ist nun unter ยงc" + vp.getName() + " ยง7bekannt!");
-				new Alert(AlertType.NAME_SWITCH, player.getName() + " ยง7hat seinen Namen gewechselt und ist nun unter ยงc" + vp.getName() + " ยง7bekannt!");
+				Bukkit.broadcastMessage("งc" + player.getName() + " ง7hat seinen Namen gewechselt und ist nun unter งc" + vp.getName() + " ง7bekannt!");
+				new Alert(AlertType.NAME_SWITCH, player.getName() + " ง7hat seinen Namen gewechselt und ist nun unter งc" + vp.getName() + " ง7bekannt!");
 				vp.setName(player.getName());
 			}
 

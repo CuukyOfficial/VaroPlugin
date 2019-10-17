@@ -60,7 +60,7 @@ public class SetupHelpGUI extends SuperInventory {
 	}
 
 	public SetupHelpGUI(Player opener) {
-		super("Â§eSetup Assistant", opener, 9, false);
+		super("§eSetup Assistant", opener, 9, false);
 
 		open();
 	}
