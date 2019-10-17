@@ -7,20 +7,20 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import de.cuuky.varo.event.events.ExposedVaroEvent;
+import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.event.events.MoonGravityVaroEvent;
 import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
-import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 
 public class VaroEvent {
 
 	private static ArrayList<VaroEvent> events;
-	private static MassRecordingVaroEvent MassRecEvent;
+	private static MassRecordingVaroEvent massRecEvent;
 
 	static {
 		events = new ArrayList<>();
 
-		MassRecEvent = new MassRecordingVaroEvent();
+		massRecEvent = new MassRecordingVaroEvent();
 		new PoisonWaterVaroEvent();
 		new PoisonRainVaroEvent();
 		new MoonGravityVaroEvent();
@@ -52,7 +52,7 @@ public class VaroEvent {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 
-		if (enabled)
+		if(enabled)
 			onEnable();
 		else
 			onDisable();
@@ -66,30 +66,26 @@ public class VaroEvent {
 		return description;
 	}
 
-	public void onEnable() {
-	}
+	public void onEnable() {}
 
-	public void onDisable() {
-	}
+	public void onDisable() {}
 
-	public void onInteract(PlayerInteractEvent event) {
-	}
+	public void onInteract(PlayerInteractEvent event) {}
 
-	public void onMove(PlayerMoveEvent event) {
-	}
+	public void onMove(PlayerMoveEvent event) {}
 
 	public static ArrayList<VaroEvent> getEvents() {
 		return events;
 	}
 
 	public static MassRecordingVaroEvent getMassRecEvent() {
-		return MassRecEvent;
+		return massRecEvent;
 	}
 
 	public static ArrayList<VaroEvent> getEnabledEvents() {
 		ArrayList<VaroEvent> enabledEvents = new ArrayList<>();
-		for (VaroEvent event : events)
-			if (event.isEnabled())
+		for(VaroEvent event : events)
+			if(event.isEnabled())
 				enabledEvents.add(event);
 
 		return enabledEvents;
