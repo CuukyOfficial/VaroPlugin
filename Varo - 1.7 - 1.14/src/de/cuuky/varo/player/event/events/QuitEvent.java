@@ -17,7 +17,7 @@ public class QuitEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
-		if(Main.getGame().isStarted() && player.getStats().getState() == PlayerState.ALIVE) {
+		if(Main.getGame().isRunning() && player.getStats().getState() == PlayerState.ALIVE) {
 			player.getStats().addInventoryBackup(new InventoryBackup(player));
 
 			if(ConfigEntry.OFFLINEVILLAGER.getValueAsBoolean())

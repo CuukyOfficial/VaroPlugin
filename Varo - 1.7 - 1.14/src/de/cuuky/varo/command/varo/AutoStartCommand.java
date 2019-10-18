@@ -25,7 +25,7 @@ public class AutoStartCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7wurde bereits gestartet!");
 			return;
 		}

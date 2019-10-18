@@ -509,7 +509,7 @@ public class Stats implements VaroSerializeable {
 
 	public KickResult getKickResult(Player player) {
 		KickResult result = KickResult.ALLOW;
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			if(owner.isRegistered())
 				result = getVaroKickResult();
 			else
@@ -532,8 +532,8 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.SERVER_FULL;
 
 		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().isStarted() && player.isOp()) {
-				if(Main.getGame().isStarted())
+			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().hasStarted() && player.isOp()) {
+				if(Main.getGame().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
 					else

@@ -35,7 +35,7 @@ public class SignChangeListener implements Listener {
 		if(e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
 			return;
 
-		if(!Main.getGame().isStarted())
+		if(!Main.getGame().hasStarted())
 			return;
 
 		Block attached = e.getBlock().getRelative(sign.getAttachedFace());

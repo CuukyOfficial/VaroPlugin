@@ -18,7 +18,7 @@ public class ServerListPingListener implements Listener {
 			event.setMaxPlayers(slots);
 
 		if(ConfigEntry.CHANGE_MOTD.getValueAsBoolean()) {
-			if(!Main.getGame().isStarted()) {
+			if(!Main.getGame().hasStarted()) {
 				if(Bukkit.getServer().hasWhitelist())
 					event.setMotd(ConfigMessages.SERVER_MODT_NOT_OPENED.getValue());
 				else
@@ -26,7 +26,7 @@ public class ServerListPingListener implements Listener {
 				return;
 			}
 
-			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || Main.getDataManager().getTimeChecker().canJoin() || !Main.getGame().isStarted()) {
+			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || Main.getDataManager().getTimeChecker().canJoin() || !Main.getGame().hasStarted()) {
 				event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}

@@ -20,7 +20,7 @@ import de.cuuky.varo.world.generators.PortalGenerator;
 public class AutoSetup {
 
 	public AutoSetup() {
-		if(Main.getGame().isStarted())
+		if(Main.getGame().hasStarted())
 			return;
 
 		World world = Main.getDataManager().getWorldHandler().getWorld();

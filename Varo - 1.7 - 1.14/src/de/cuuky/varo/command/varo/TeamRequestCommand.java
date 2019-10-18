@@ -30,7 +30,7 @@ public class TeamRequestCommand extends VaroCommand {
 			return;
 		}
 
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst dein Team nicht wechseln, da " + Main.getProjectName() + " schon gestartet ist!");
 			return;
 		}

@@ -23,7 +23,7 @@ public class IntroCommand extends VaroCommand {
 			return;
 		}
 
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "Das Spiel wurde bereits gestartet!");
 			return;
 		}

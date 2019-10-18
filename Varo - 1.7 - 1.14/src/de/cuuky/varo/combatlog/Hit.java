@@ -99,7 +99,7 @@ public class Hit {
 			if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 				return;
 
-			if(!Main.getGame().isStarted() || event.isCancelled())
+			if(!Main.getGame().isRunning() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());

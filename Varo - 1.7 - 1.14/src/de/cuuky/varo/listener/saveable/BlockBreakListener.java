@@ -21,7 +21,7 @@ public class BlockBreakListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(!Main.getGame().isStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if(!Main.getGame().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			event.setCancelled(true);
 			return;
 		}
@@ -33,7 +33,7 @@ public class BlockBreakListener implements Listener {
 		if(!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
 			return;
 
-		if(!Main.getGame().isStarted())
+		if(!Main.getGame().hasStarted())
 			if(varoPlayer.getStats().isSpectator() || !player.hasPermission("varo.setup"))
 				return;
 

@@ -30,7 +30,7 @@ public class PlayerDeathListener implements Listener {
 		VaroPlayer killer = killerPlayer == null ? null : VaroPlayer.getPlayer(killerPlayer);
 		event.setDeathMessage(null);
 
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			Hit hit = Hit.getHit(deadPlayer);
 			if(hit != null)
 				hit.over();

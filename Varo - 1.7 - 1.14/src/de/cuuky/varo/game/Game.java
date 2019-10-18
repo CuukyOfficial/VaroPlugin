@@ -163,7 +163,7 @@ public class Game implements VaroSerializeable {
 	}
 
 	public void start() {
-		if(isStarted() || isStarting())
+		if(hasStarted() || isStarting())
 			return;
 
 		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsBoolean())
@@ -425,8 +425,12 @@ public class Game implements VaroSerializeable {
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
 
-	public boolean isStarted() {
+	public boolean hasStarted() {
 		return gamestate != GameState.LOBBY;
+	}
+	
+	public boolean isRunning() {
+		return gamestate == GameState.STARTED;
 	}
 
 	public void setGamestate(GameState gamestate) {

@@ -19,7 +19,7 @@ public class EntityExplodeListener implements Listener {
 
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if(!Main.getGame().isStarted()) {
+		if(!Main.getGame().hasStarted()) {
 			event.setCancelled(true);
 			return;
 		}

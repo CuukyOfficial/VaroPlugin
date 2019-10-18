@@ -22,7 +22,7 @@ public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(final BlockPlaceEvent e) {
-		if(!Main.getGame().isStarted())
+		if(!Main.getGame().hasStarted())
 			return;
 
 		Block placed = e.getBlock();
