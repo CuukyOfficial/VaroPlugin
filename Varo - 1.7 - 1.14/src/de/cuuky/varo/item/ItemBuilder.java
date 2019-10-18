@@ -65,7 +65,7 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder deleteDamageAnnotation() {
+	public void deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
 		Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
@@ -74,7 +74,6 @@ public class ItemBuilder {
 		Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		stack.setItemMeta(Meta);
-		return this;
 	}
 
 	public ItemStack build() {
@@ -85,6 +84,7 @@ public class ItemBuilder {
 		if(lore != null)
 			stackMeta.setLore(lore);
 		stack.setItemMeta(stackMeta);
+		this.deleteDamageAnnotation();
 		stack.setAmount(amount);
 
 		return stack;
