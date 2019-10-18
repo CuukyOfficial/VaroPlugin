@@ -39,8 +39,9 @@ public class PlayerChatListener implements Listener {
 			message = message.replaceAll("%", "");
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		String tc = ConfigEntry.TEAMCHAT_TRIGGER.getValueAsString();
-		if(message.startsWith(tc)) {
+		String tc = ConfigEntry.CHAT_TRIGGER.getValueAsString();
+		boolean globalTrigger = ConfigEntry.TRIGGER_FOR_GLOBAL.getValueAsBoolean();
+		if((message.startsWith(tc) && !globalTrigger) || (!message.startsWith(tc) && globalTrigger)) {
 			new TeamChat(vp, message.replaceFirst("\\" + tc, ""));
 			event.setCancelled(true);
 			return;
