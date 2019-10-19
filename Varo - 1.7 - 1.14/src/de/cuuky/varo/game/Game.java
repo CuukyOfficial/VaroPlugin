@@ -82,11 +82,6 @@ public class Game implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
-		if (ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt() > 0) {
-			maxAllowedSessions = ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt();
-		} else if (ConfigEntry.SESSION_PER_DAY.getValueAsInt() > 0) {
-			maxAllowedSessions = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
-		}
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
@@ -240,6 +235,11 @@ public class Game implements VaroSerializeable {
 					fillChests();
 					Main.getDataManager().getWorldHandler().getWorld().strikeLightningEffect(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
 					firstTime = true;
+					if (ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt() > 0) {
+						maxAllowedSessions = ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt() + 1;
+					} else if (ConfigEntry.SESSION_PER_DAY.getValueAsInt() > 0) {
+						maxAllowedSessions = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
+					}
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 					Main.getLoggerMaster().getEventLogger().println(LogType.INFO, ConfigMessages.ALERT_GAME_STARTED.getValue());
 					startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();

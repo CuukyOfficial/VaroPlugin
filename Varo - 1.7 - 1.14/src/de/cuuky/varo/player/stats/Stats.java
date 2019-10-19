@@ -146,8 +146,8 @@ public class Stats implements VaroSerializeable {
 		lastJoined = new Date();
 		lastEnemyContact = new Date();
 		sessions = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
-		preProduced = 0;
-		sessionsPlayed = 1;
+		preProduced = -1;
+		sessionsPlayed = 0;
 		countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 

@@ -22,10 +22,10 @@ public class SessionCheck extends Checker {
 			}
 
 			if(preProduceable > 0) {
-				if(vp.getStats().getPreProduced() > 0)
+				if(vp.getStats().getPreProduced() > -1)
 					vp.getStats().setPreProduced(vp.getStats().getPreProduced() - 1);
 
-				if(vp.getStats().getPreProduced() <= 0)
+				if(vp.getStats().getPreProduced() <= -1)
 					vp.getStats().setMaxProduced(false);
 				else
 					vp.getStats().setMaxProduced(true);
