@@ -32,10 +32,14 @@ public class SessionCheck extends Checker {
 			}
 		}
 
-		if(sessionsPerDay > 0)
+		if(sessionsPerDay > 0) {
 			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SESSION_RESET.getValue().replace("%amount%", String.valueOf(sessionsPerDay)));
+		}
 
-		if(preProduceable > 0)
+		if(preProduceable > 0) {
 			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_REMOVED_PRE_PRODUCED.getValue());
+		}
+		
+		Main.getGame().addMaxAllowedSessions(preProduceable > 0 ? 1 : sessionsPerDay);
 	}
 }

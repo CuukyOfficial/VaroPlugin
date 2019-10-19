@@ -56,6 +56,7 @@ public enum ConfigEntry {
 	SESSION_PER_DAY_ADDSESSIONS(ConfigSection.JOIN_SYSTEMS, "sessionPerDayAddSessions", false, "Ob, wenn die Spieler ihre Sessions bekommen,\ndie neuen Sessionszu den alten hinzugefügt werden sollen.\nSonst werden sie gesetzt."),
 	PRE_PRODUCE_AMOUNT(ConfigSection.JOIN_SYSTEMS, "preProduceAmount", -1, "Stellt ein, wie viele Folgen ein Spieler vorproduzieren darf.\nIst unabhängig vom SessionSystem.\nOff = -1\nDrittes JoinSystem"),
 	BAN_AFTER_PREPRODUCE_DAY(ConfigSection.JOIN_SYSTEMS, "banAfterPreproduceDay", false, "Legt fest, ob Spieler, sobald sie gespielt haben,\num diefestgelegte Uhrzeit für die Tage gesperrt werden.\nWenn nicht, dann können sie auch am nächsten Tag bis\nzur festgelegten Zahl spielen."),
+	CATCH_UP_SESSIONS(ConfigSection.JOIN_SYSTEMS, "catchUpSessions", false, "Legt fest, ob Spieler Folgen nachholen können, also joinen dürfen, bis sie die maximale Anzahl an Folgen mit dem System haben\nGilt nur für Join-System 2 oder 3."),
 	ONLY_JOIN_BETWEEN_HOURS(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHours", false, "Stellt ein, ob Spieler nur zwischen\n2 unten festgelegten Zeiten joinen dürfen.\nViertes JoinSystem."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR1(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour1", 14, "Erste Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR2(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour2", 16, "Zweite Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),

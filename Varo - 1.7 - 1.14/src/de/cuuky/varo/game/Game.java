@@ -62,7 +62,7 @@ public class Game implements VaroSerializeable {
 	private Date lastCoordsPost;
 
 	private boolean showDistanceToBorder, showTimeInActionBar, firstTime = false;
-	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler;
+	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler, maxAllowedSessions;
 	private ProtectionTime protection;
 	private BorderDecreaseMinuteTimer minuteTimer;
 
@@ -82,6 +82,12 @@ public class Game implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
+		if (ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt() > 0) {
+			maxAllowedSessions = ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt();
+		} else if (ConfigEntry.SESSION_PER_DAY.getValueAsInt() > 0) {
+			maxAllowedSessions = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
+		}
+		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			int seconds = 0;
@@ -439,6 +445,13 @@ public class Game implements VaroSerializeable {
 
 	public int getStartCountdown() {
 		return startCountdown;
+	}
+	
+	public int getMaxAllowedSessions() {
+		return maxAllowedSessions;
+	}
+	public void addMaxAllowedSessions(int maxAllowedSessionsPlus) {
+		this.maxAllowedSessions += maxAllowedSessionsPlus;
 	}
 
 	public GameState getGameState() {

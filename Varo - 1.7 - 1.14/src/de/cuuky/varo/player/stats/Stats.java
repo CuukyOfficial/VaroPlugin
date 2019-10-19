@@ -565,6 +565,12 @@ public class Stats implements VaroSerializeable {
 		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
 			if(curr.before(getTimeBanUntil()))
 				result = KickResult.NO_TIME;
+		
+		if ((result == KickResult.NO_PREPRODUCES_LEFT || result == KickResult.NO_SESSIONS_LEFT) && ConfigEntry.CATCH_UP_SESSIONS.getValueAsBoolean()) {
+			if (sessions < Main.getGame().getMaxAllowedSessions()) {
+				result = KickResult.ALLOW;
+			}
+		}
 
 		if(VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;

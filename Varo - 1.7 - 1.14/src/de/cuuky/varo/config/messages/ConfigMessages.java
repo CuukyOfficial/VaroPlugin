@@ -61,7 +61,7 @@ public enum ConfigMessages {
 	KICK_BROADCAST("Kick.broadcast", "%colorcode%%player% &7wurde gekickt!"),
 	KICK_IN_SECONDS("Kick.kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunde(n) gekickt!"),
 	KICK_PLAYER_NEARBY("Kick.noKickPlayerNearby", "&cEs befindet sich ein Spieler &4%distance% &cBlöcke in deiner Nähe!%nextLine%&7Um gekickt zu werden, entferne dich von diesem Spieler!"),
-	KICK_SERVER_CLOSE_SOON("Kick.serverCloseSoon", "&7Der Server schlieÃŸt in &c%minutes% &7Minuten!"),
+	KICK_SERVER_CLOSE_SOON("Kick.serverCloseSoon", "&7Der Server schließt in &c%minutes% &7Minuten!"),
 
 	// SORT
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
