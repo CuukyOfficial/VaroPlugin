@@ -48,7 +48,6 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			vp.getStats().addSessionPlayed();
 			Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
 		}
-		Main.getGame().addMaxAllowedSessions(1);
 
 		timer = ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() * 60;
 

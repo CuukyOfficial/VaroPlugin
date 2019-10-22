@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -62,7 +63,7 @@ public class Game implements VaroSerializeable {
 	private Date lastCoordsPost;
 
 	private boolean showDistanceToBorder, showTimeInActionBar, firstTime = false;
-	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler, maxAllowedSessions;
+	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler;
 	private ProtectionTime protection;
 	private BorderDecreaseMinuteTimer minuteTimer;
 
@@ -159,6 +160,23 @@ public class Game implements VaroSerializeable {
 					Main.getDataManager().getScoreboardHandler().update(vp);
 					vp.getNetworkManager().sendTablist();
 				}
+				
+				if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+					for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+						if (vp.getStats().getTimeUntilAddSession() == null) {
+							continue;
+						}
+						if (new Date().after(vp.getStats().getTimeUntilAddSession())) {
+							vp.getStats().setSessions(vp.getStats().getSessions() + 1);
+							if (vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
+								vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt()));
+							} else {
+								vp.getStats().setTimeUntilAddSession(null);
+							}
+						}
+					}
+				}
+				
 			}
 		}, 0, 20);
 	}
@@ -235,11 +253,6 @@ public class Game implements VaroSerializeable {
 					fillChests();
 					Main.getDataManager().getWorldHandler().getWorld().strikeLightningEffect(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
 					firstTime = true;
-					if (ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt() > 0) {
-						maxAllowedSessions = ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt() + 1;
-					} else if (ConfigEntry.SESSION_PER_DAY.getValueAsInt() > 0) {
-						maxAllowedSessions = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
-					}
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 					Main.getLoggerMaster().getEventLogger().println(LogType.INFO, ConfigMessages.ALERT_GAME_STARTED.getValue());
 					startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
@@ -445,13 +458,6 @@ public class Game implements VaroSerializeable {
 
 	public int getStartCountdown() {
 		return startCountdown;
-	}
-	
-	public int getMaxAllowedSessions() {
-		return maxAllowedSessions;
-	}
-	public void addMaxAllowedSessions(int maxAllowedSessionsPlus) {
-		this.maxAllowedSessions += maxAllowedSessionsPlus;
 	}
 
 	public GameState getGameState() {

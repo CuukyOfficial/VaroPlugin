@@ -132,7 +132,6 @@ public class StatsCommand extends VaroCommand {
 		KILLS("kills"),
 		SESSIONS("sessions"),
 		EPISODES_PLAYED("episodesplayed"),
-		PRE_PRODUCED("preproduced"),
 		RANK("rank"),
 		COUNTDOWN("countdown"),
 		WINS("wins"),
@@ -160,9 +159,6 @@ public class StatsCommand extends VaroCommand {
 					break;
 				case EPISODES_PLAYED:
 					vp.getStats().setSessionsPlayed(Integer.valueOf(value));
-					break;
-				case PRE_PRODUCED:
-					vp.getStats().setPreProduced(Integer.valueOf(value));
 					break;
 				case RANK:
 					vp.setRank(new Rank(value));
@@ -195,13 +191,10 @@ public class StatsCommand extends VaroCommand {
 				vp.getStats().setKills(0);
 				break;
 			case SESSIONS:
-				vp.getStats().setSessions(ConfigEntry.SESSION_PER_DAY.getValueAsInt());
+				vp.getStats().setSessions(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt());
 				break;
 			case EPISODES_PLAYED:
 				vp.getStats().setSessionsPlayed(0);
-				break;
-			case PRE_PRODUCED:
-				vp.getStats().setPreProduced(0);
 				break;
 			case RANK:
 				vp.setRank(null);

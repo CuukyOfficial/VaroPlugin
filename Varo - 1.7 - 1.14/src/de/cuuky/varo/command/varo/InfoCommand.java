@@ -25,7 +25,7 @@ public class InfoCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + "§7----------------------");
 		sender.sendMessage(Main.getPrefix());
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin§7:");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Author§7: " + pdf.getAuthors().get(0));
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Authors§7: " + pdf.getAuthors().get(0));
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Version§7: " + pdf.getVersion());
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Commands§7: " + pdf.getCommands().size());
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Server-Version§7: " + Bukkit.getServer().getVersion());

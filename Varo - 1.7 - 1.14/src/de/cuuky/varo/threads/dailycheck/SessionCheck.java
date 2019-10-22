@@ -10,36 +10,33 @@ public class SessionCheck extends Checker {
 
 	@Override
 	public void check() {
-		int sessionsPerDay = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
-		int preProduceable = ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt();
-
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			if(sessionsPerDay > 0) {
-				if(ConfigEntry.SESSION_PER_DAY_ADDSESSIONS.getValueAsBoolean())
-					vp.getStats().setSessions(vp.getStats().getSessions() + sessionsPerDay);
-				else
-					vp.getStats().setSessions(sessionsPerDay);
-			}
-
-			if(preProduceable > 0) {
-				if(vp.getStats().getPreProduced() > -1)
-					vp.getStats().setPreProduced(vp.getStats().getPreProduced() - 1);
-
-				if(vp.getStats().getPreProduced() <= -1)
-					vp.getStats().setMaxProduced(false);
-				else
-					vp.getStats().setMaxProduced(true);
-			}
-		}
-
-		if(sessionsPerDay > 0) {
-			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SESSION_RESET.getValue().replace("%amount%", String.valueOf(sessionsPerDay)));
-		}
-
-		if(preProduceable > 0) {
-			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_REMOVED_PRE_PRODUCED.getValue());
+		
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+			return;
 		}
 		
-		Main.getGame().addMaxAllowedSessions(preProduceable > 0 ? 1 : sessionsPerDay);
+		
+		int normalSessions = ConfigEntry.SESSIONS_PER_DAY.getValueAsInt();
+		int preProduceSessions;
+		if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+			preProduceSessions = ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt();
+		} else {
+			preProduceSessions = 0;
+		}
+		
+		for (VaroPlayer vp: VaroPlayer.getVaroPlayer()) {
+			
+			vp.getStats().setSessions(vp.getStats().getSessions() + normalSessions);
+			
+			if (!ConfigEntry.CATCH_UP_SESSIONS.getValueAsBoolean() && vp.getStats().getSessions() > (normalSessions + preProduceSessions)) {
+				vp.getStats().setSessions(normalSessions + preProduceSessions);
+			}
+		}
+		
+		if (ConfigEntry.CATCH_UP_SESSIONS.getValueAsBoolean()) {
+			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS_FOR_ALL.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
+		} else {
+			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
+		}
 	}
 }

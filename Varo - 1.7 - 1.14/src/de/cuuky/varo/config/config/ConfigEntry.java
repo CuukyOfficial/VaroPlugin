@@ -51,17 +51,15 @@ public enum ConfigEntry {
 
 	// JOINSYSTEMS
 	IGNORE_JOINSYSTEMS_AS_OP(ConfigSection.JOIN_SYSTEMS, "ignoreJoinSystemsAsOP", true, "Ob OP-Spieler die JoinSysteme ignorieren."),
-	TIME_JOIN_HOURS(ConfigSection.JOIN_SYSTEMS, "timeJoinHours", -1, "Stellt ein, nach wie vielen Stunden\nSpieler wieder den Server betreten können.\nOff = -1\nErstes JoinSystem."),
-	SESSION_PER_DAY(ConfigSection.JOIN_SYSTEMS, "sessionPerDay", 1, "Stellt ein, wie oft pro Tag\nein Spieler joinen darf.\nOff = -1\nZweites JoinSystem."),
-	SESSION_PER_DAY_ADDSESSIONS(ConfigSection.JOIN_SYSTEMS, "sessionPerDayAddSessions", false, "Ob, wenn die Spieler ihre Sessions bekommen,\ndie neuen Sessionszu den alten hinzugefügt werden sollen.\nSonst werden sie gesetzt."),
-	PRE_PRODUCE_AMOUNT(ConfigSection.JOIN_SYSTEMS, "preProduceAmount", -1, "Stellt ein, wie viele Folgen ein Spieler vorproduzieren darf.\nIst unabhängig vom SessionSystem.\nOff = -1\nDrittes JoinSystem"),
-	BAN_AFTER_PREPRODUCE_DAY(ConfigSection.JOIN_SYSTEMS, "banAfterPreproduceDay", false, "Legt fest, ob Spieler, sobald sie gespielt haben,\num diefestgelegte Uhrzeit für die Tage gesperrt werden.\nWenn nicht, dann können sie auch am nächsten Tag bis\nzur festgelegten Zahl spielen."),
-	CATCH_UP_SESSIONS(ConfigSection.JOIN_SYSTEMS, "catchUpSessions", false, "Legt fest, ob Spieler Folgen nachholen können, also joinen dürfen, bis sie die maximale Anzahl an Folgen mit dem System haben\nGilt nur für Join-System 2 oder 3."),
-	ONLY_JOIN_BETWEEN_HOURS(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHours", false, "Stellt ein, ob Spieler nur zwischen\n2 unten festgelegten Zeiten joinen dürfen.\nViertes JoinSystem."),
+	SESSIONS_PER_DAY(ConfigSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulär betreten dürfen."),
+	JOIN_AFTER_HOURS(ConfigSection.JOIN_SYSTEMS, "joinAfterHours", -1, "ZWEITES JOIN SYSTEM\nStellt ein, nach wie vielen Stunden\nSpieler regulär wieder den Server betreten dürfen"),
+	PRE_PRODUCE_SESSIONS(ConfigSection.JOIN_SYSTEMS, "preProduceSessions", 3, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusätzlich zu\nden Regulären vorproduzieren darf."),
+	CATCH_UP_SESSIONS(ConfigSection.JOIN_SYSTEMS, "catchUpSessions", false, "NUR FÜR ERSTES JOIN SYSTEM\nStellt ein, ob man verpasste Folgen nachholen darf."),
+	ONLY_JOIN_BETWEEN_HOURS(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHours", false, "FÜR BEIDE JOIN SYSTEME\nStellt ein, ob Spieler nur zwischen\n2 unten festgelegten Zeiten joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR1(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour1", 14, "Erste Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR2(ConfigSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour2", 16, "Zweite Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	KICK_AT_SERVER_CLOSE(ConfigSection.JOIN_SYSTEMS, "kickAtServerClose", false, "Kickt den Spieler, sobald er außerhalb\ndererlaubten Zeit auf dem Server ist."),
-	MASS_RECORDING_TIME(ConfigSection.JOIN_SYSTEMS, "massrecordingTime", 15, "Die Länge der Massenaufnahme, in der alle joinen können."),
+	MASS_RECORDING_TIME(ConfigSection.JOIN_SYSTEMS, "massRecordingTime", 15, "Die Länge der Massenaufnahme, in der alle joinen können."),
 
 	// DEATH
 	DEATH_SOUND(ConfigSection.DEATH, "deathSound", false, "Ob ein Withersound für alle abgespielt werden soll,\nsobald ein Spieler stirbt."),
