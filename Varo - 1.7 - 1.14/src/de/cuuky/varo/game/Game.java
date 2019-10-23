@@ -459,6 +459,10 @@ public class Game implements VaroSerializeable {
 	public int getStartCountdown() {
 		return startCountdown;
 	}
+	
+	public void setStartCountdown(int startCountdown) {
+		this.startCountdown = startCountdown;
+	}
 
 	public GameState getGameState() {
 		return gamestate;

@@ -38,6 +38,11 @@ public class ConfigGUI extends SuperInventory {
 			public void onChat(String message) {
 				try {
 					entry.setValue(Utils.getStringObject(message), true);
+					
+					if (entry.getName() == "startCountdown") {
+						Main.getGame().setStartCountdown(Integer.parseInt(message));
+					}
+					
 				} catch(Exception e) {
 					opener.sendMessage(Main.getPrefix() + e.getMessage());
 					hookChat(entry);
