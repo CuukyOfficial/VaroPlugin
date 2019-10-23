@@ -44,7 +44,7 @@ public enum ConfigMessages {
 	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
 
 	JOIN_KICK_NOT_USER_OF_PROJECT("Join.kick.notUserOfTheProject", "&7Du bist kein Teilnehmer dieses %projectname%&7's!"),
-	JOIN_KICK_NO_TIME_LEFT("Join.kick.noTimeLeft", "&cDu darfst nur alle &4%timeHours% &cStunden regulär spielen! %nextLine%&7Du kannst erst in &c%stunden%&7:&c%minuten%&7:&c%sekunden% &wieder joinen!"),
+	JOIN_KICK_NO_TIME_LEFT("Join.kick.noTimeLeft", "&cDu darfst nur alle &4%timeHours% &cStunden regulär spielen! %nextLine%&7Du kannst erst in &c%stunden%&7:&c%minuten%&7:&c%sekunden% &7wieder joinen!"),
 	JOIN_KICK_NO_SESSIONS_LEFT("Join.kick.noSessionLeft", "&cDu hast keine Sessions mehr übrig! %nextLine%&7Warte bis morgen, damit du wieder spielen kannst!"),
 	JOIN_KICK_SERVER_FULL("Join.kick.serverFull", "&cDer Server ist voll!%nextLine%&7Sprich mit dem Owner, falls das das ein Irrtum sein sollte!"),
 	JOIN_KICK_NO_PREPRODUCES_LEFT("Join.kick.noPreproduceLeft", "&cDu hast bereits vorproduziert! %nextLine%&7Versuche es morgen erneut."),

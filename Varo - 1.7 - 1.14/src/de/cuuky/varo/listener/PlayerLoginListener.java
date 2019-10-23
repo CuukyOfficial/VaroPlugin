@@ -92,8 +92,8 @@ public class PlayerLoginListener implements Listener {
 			Date current = new Date();
 			long milli = vp.getStats().getTimeUntilAddSession().getTime() - current.getTime();
 			long sec = (milli / 1000) % 60;
-			long min = (milli / 1000 * 60) % 60;
-			long hr = (milli / 1000 * 60 * 60) % 24;
+			long min = (milli / 1000 / 60) % 60;
+			long hr = (milli / 1000 / 60 / 60) % 24;
 			String seconds = "";
 			String minutes = "";
 			String hours = "";
