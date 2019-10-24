@@ -136,7 +136,7 @@ public class AdminMainMenu extends SuperInventory {
 
 			@Override
 			public void run() {
-				opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin by Cuuky");
+				opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin by Cuuky, Korne127");
 				opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
 				opener.sendMessage(Main.getPrefix() + "§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
 				opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");

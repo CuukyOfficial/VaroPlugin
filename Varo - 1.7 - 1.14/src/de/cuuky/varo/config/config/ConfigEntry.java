@@ -42,6 +42,7 @@ public enum ConfigEntry {
 
 	// TEAMS
 	FRIENDLYFIRE(ConfigSection.TEAMS, "friendlyFire", false, "Zufügen von Schaden unter Teamkameraden."),
+	TEAM_PLACE_SPAWN(ConfigSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplätzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Lücke für fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen großen Kreis gibt."),
 	TRIGGER_FOR_GLOBAL(ConfigSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den globalen Chat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	CHAT_TRIGGER(ConfigSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat auslöst."),
 	TEAMREQUESTS(ConfigSection.TEAMS, "teamRequests", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen können.\nSehr gute Funktion für ODV's."),
@@ -176,7 +177,7 @@ public enum ConfigEntry {
 	DISCORDBOT_INVITELINK(ConfigSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 	DISCORDBOT_COMMANDTRIGGER(ConfigSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
 	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufällige Farbe haben sollen"),
-	DISCORDBOT_GAMESTATE(ConfigSection.DISCORD, "gameState", "Varo | Plugin by Cuuky", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
+	DISCORDBOT_GAMESTATE(ConfigSection.DISCORD, "gameState", "Varo | Plugin by Cuuky, Korne127", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 
 	// TELEGRAM
 	TELEGRAM_ENABLED(ConfigSection.TELEGRAM, "telegrambotEnabled", false, "Ob der Telegrambot aktiviert werden soll."),

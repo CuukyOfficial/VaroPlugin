@@ -66,7 +66,8 @@ public enum ConfigMessages {
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
 	SORT_OWN_HOLE("Sort.ownHoleTeleport", "Du wurdest in dein Loch einsortiert!"),
 	SORT_NUMBER_HOLE("Sort.numberHoleTeleport", "Du wurdest in das Loch %colorcode%%number% &7teleportiert!"),
-	SORT_NO_HOLE_FOUND("Sort.noHoleFound", "Für dich konnte kein Loch gefunden werden!"),
+	SORT_NO_HOLE_FOUND("Sort.noHoleFound", "Es konnte für dich kein Loch gefunden werden!"),
+	SORT_NO_HOLE_FOUND_TEAM("Sort.noHoleFoundTeam", "Es konnte für dich kein Loch bei deinen Teampartnern gefunden werden."),
 
 	// DEATH
 	DEATH_KILLED_BY("Death.killed", "%colorcode%%death% &7wurde von &c%killer% &7getötet!"),
