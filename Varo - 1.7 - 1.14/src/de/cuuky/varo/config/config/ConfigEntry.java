@@ -87,14 +87,14 @@ public enum ConfigEntry {
 	STARTCOUNTDOWN(ConfigSection.START, "startCountdown", 30, "Wie lange der Startcountdown\nbei Start in Sekunden ist."),
 	CAN_MOVE_BEFORE_START(ConfigSection.START, "canMoveBeforeStart", false, "Ob die Spieler sich vor Start bewegen können."),
 	DO_RANDOMTEAM_AT_START(ConfigSection.START, "doRandomTeamAtStart", false, "Ob beim Start die Teamlosen\neinen Partner bekommen sollen."),
-	DO_SORT_AT_START(ConfigSection.START, "doSortAtStart", false, "Ob beim Start /sort ausgeführt werden soll."),
+	DO_SORT_AT_START(ConfigSection.START, "doSortAtStart", true, "Ob beim Start /sort ausgeführt werden soll."),
 	REMOVE_PLAYERS_ARENT_AT_START(ConfigSection.START, "removePlayersArentAtStart", true, "Ob das Plugin alle Spieler, die nicht beim\nStart dabei sind vom Projekt entferenen soll."),
 	SPAWN_TELEPORT_JOIN(ConfigSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfür sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),
 	START_AT_PLAYERS(ConfigSection.START, "startAtPlayers", -1, "Startet das Projekt automatisch wenn die\nAnzahl der Online Spieler dieser entspricht."),
 
 	// DISCONNECT
 	DISCONNECT_PER_SESSION(ConfigSection.DISCONNECT, "maxDisconnectsPerSessions", 3, "Wie oft ein Spieler pro\nSession maximal disconnecten darf,\nbevor er bestraft wird.Off = -1"),
-	STRIKE_ON_DISCONNECT(ConfigSection.DISCONNECT, "strikeOnMaxDisconnect", false, "Wenn ein Spieler die maximalen\nDisconnects erreicht hat, ob er\ngestriket werden soll."),
+	STRIKE_ON_DISCONNECT(ConfigSection.DISCONNECT, "strikeOnMaxDisconnect", false, "Ob ein Spieler gestriket werden soll\nwenn zu oft disconnected wurde."),
 	BAN_AFTER_DISCONNECT_MINUTES(ConfigSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
 	NO_DISCONNECT_PING(ConfigSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zählt."),
 
@@ -134,7 +134,7 @@ public enum ConfigEntry {
 	STRIKE_ON_BLOODLUST(ConfigSection.ACTIVITY, "strikeOnBloodlust", false, "Ob der Spieler nach den oben\ngenannten Tagen ohne Gegnerkontakt\ngestriket werden soll."),
 	NO_ACTIVITY_DAYS(ConfigSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviät auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 	STRIKE_ON_NO_ACTIVITY(ConfigSection.ACTIVITY, "strikeOnNoActivity", false, "Ob der Spieler nach den oben genannten Tagen\nohne Aktivität auf dem Servergestriket werden soll."),
-	POST_COORDS_DAYS(ConfigSection.ACTIVITY, "postCoordsDays", -1, "Postet nach den genannten Tagen\nvon allen Spielern die Koordinatenum die Uhrzeit,\nwo auch Sessions etc. geprüft werden"),
+	POST_COORDS_DAYS(ConfigSection.ACTIVITY, "postCoordsDays", -1, "Postet nach den genannten Tagen\nvon allen Spielern die Koordinatenum die Uhrzeit,\num der auch Sessions etc. geprüft werden"),
 
 	// REPORT
 	REPORTSYSTEM_ENABLED(ConfigSection.REPORT, "enabled", true, "Ob das Report-System angeschaltet sein soll."),
