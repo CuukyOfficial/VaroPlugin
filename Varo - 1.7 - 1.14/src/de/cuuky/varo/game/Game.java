@@ -53,8 +53,6 @@ public class Game implements VaroSerializeable {
 	private AutoStart autostart;
 	@VaroSerializeField(path = "borderDecrease")
 	private BorderDecreaseDayTimer borderDecrease;
-	@VaroSerializeField(path = "setupNext")
-	private boolean setupNext;
 	@VaroSerializeField(path = "lobby")
 	private Location lobby;
 	@VaroSerializeField(path = "lastDayTimer")
@@ -77,7 +75,6 @@ public class Game implements VaroSerializeable {
 		startRefreshTimer();
 		loadVariables();
 
-		setupNext = false;
 		gamestate = GameState.LOBBY;
 		borderDecrease = new BorderDecreaseDayTimer(true);
 	}
@@ -474,14 +471,6 @@ public class Game implements VaroSerializeable {
 
 	public void setAutoStart(AutoStart autoStart) {
 		this.autostart = autoStart;
-	}
-
-	public void setWillSetupNext(boolean hasBeenExecuted) {
-		setupNext = hasBeenExecuted;
-	}
-
-	public boolean willSetupNext() {
-		return setupNext;
 	}
 
 	public Location getLobby() {

@@ -96,9 +96,6 @@ public class Main extends JavaPlugin {
 		if(failed)
 			return;
 
-		if(ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean() && game.willSetupNext())
-			new AutoSetup();
-
 		System.out.println(CONSOLE_PREFIX + "Enabled!");
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");

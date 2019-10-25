@@ -98,7 +98,6 @@ public class AutoSetup {
 			new AutoStart(start);
 		}
 
-		Main.getGame().setWillSetupNext(false);
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
 	}
 }

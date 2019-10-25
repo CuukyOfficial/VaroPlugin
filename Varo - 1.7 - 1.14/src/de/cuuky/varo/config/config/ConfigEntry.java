@@ -185,9 +185,9 @@ public enum ConfigEntry {
 	TELEGRAM_EVENT_CHAT_ID(ConfigSection.TELEGRAM, "eventChatId", -1, "In diesen Chat werden alle Events gepostet."),
 	TELEGRAM_VIDEOS_CHAT_ID(ConfigSection.TELEGRAM, "videosChatId", -1, "Hier kannst du die ID des Chats angeben, wo\ndie Videos der User gepostet werden sollen."),
 
-	// AUTOSTART
-	AUTOSETUP_ENABLED(ConfigSection.AUTOSETUP, "enabled", false, "Wenn autosetup aktiviert ist, werden beim\nStart des servers alle spawns automatisch gesetzt &\nein autostart eingerichtet.\nHinweis: Um diese Uhrzeit startet der Countdown"),
-	AUTOSETUP_BORDER(ConfigSection.AUTOSETUP, "border", 2000, "Wie groß die Border beim\nAutoStart gesetzt werden soll"),
+	// AUTOSETUP
+	AUTOSETUP_ENABLED(ConfigSection.AUTOSETUP, "enabled", false, "Wenn Autosetup aktiviert ist, werden beim\nStart des Servers alle Spawns automatisch gesetzt und\noptional ein Autostart eingerichtet."),
+	AUTOSETUP_BORDER(ConfigSection.AUTOSETUP, "border", 2000, "Wie groß die Border beim\nAutoSetup gesetzt werden soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_PORTAL_ENABLED(ConfigSection.AUTOSETUP, "portal", true, "Ob ein Portal gespawnt werden soll"),
