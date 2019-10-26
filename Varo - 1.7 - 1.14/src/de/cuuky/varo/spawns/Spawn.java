@@ -82,7 +82,7 @@ public class Spawn implements VaroSerializeable {
 		return i;
 	}
 
-	public void remove() {
+	private void remove() {
 		removeNameTag();
 		spawns.remove(this);
 	}
