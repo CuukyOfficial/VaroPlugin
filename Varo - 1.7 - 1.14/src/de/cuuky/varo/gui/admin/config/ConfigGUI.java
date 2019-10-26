@@ -38,9 +38,7 @@ public class ConfigGUI extends SuperInventory {
 			public void onChat(String message) {
 				if (message.equalsIgnoreCase("cancel")) {
 					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
-					System.out.println("PING: "+message);
 				} else {
-					System.out.println("PONG: "+message);
 					try {
 						entry.setValue(Utils.getStringObject(message), true);
 						
