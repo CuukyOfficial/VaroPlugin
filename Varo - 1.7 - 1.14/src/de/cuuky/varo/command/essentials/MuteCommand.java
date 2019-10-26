@@ -21,8 +21,8 @@ public class MuteCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/mute <Player/All>");
-			sender.sendMessage(Main.getPrefix() + "§7/unmute <Player/All>");
+			sender.sendMessage(Main.getPrefix() + "§7/mute <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/unmute <Player/@a>");
 			return false;
 		}
 

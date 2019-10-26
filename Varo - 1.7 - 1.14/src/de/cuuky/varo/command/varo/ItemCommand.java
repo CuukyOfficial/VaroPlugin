@@ -30,7 +30,7 @@ public class ItemCommand extends VaroCommand {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Item §7-----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Add <Anzahl>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [All/Anzahl]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [@a/Anzahl]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
 			sender.sendMessage(Main.getPrefix());
@@ -106,7 +106,7 @@ public class ItemCommand extends VaroCommand {
 			int Anzahl = 1;
 
 			if(args.length > 2) {
-				if(args[2].equalsIgnoreCase("All")) {
+				if(args[2].equalsIgnoreCase("@a")) {
 					while(list.hasItem(item)) {
 						list.removeItem(item);
 					}
@@ -131,7 +131,7 @@ public class ItemCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Item erfolgreich " + Anzahl + " mal von " + list.getLocation() + " entfernt!");
 		} else {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Add <Anzahl>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [All/Anzahl]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [@a/Anzahl]");
 		}
 	}
 }

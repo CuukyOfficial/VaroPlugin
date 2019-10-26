@@ -114,7 +114,7 @@ public class SpawnsCommand extends VaroCommand {
 			}
 
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + "/varo spawns " + args[0] + " [Zahl/Spieler/All]");
+				sender.sendMessage(Main.getPrefix() + "/varo spawns " + args[0] + " [Zahl/Spieler/@a]");
 				return;
 			}
 
