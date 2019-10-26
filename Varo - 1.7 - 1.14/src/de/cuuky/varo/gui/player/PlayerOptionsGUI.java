@@ -88,7 +88,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 
 		if(itemname.contains("EpisodesPlayed")) {
 			if(itemname.contains("Add"))
-				stats.setSessionsPlayed(stats.getSessionsPlayed() + 1);
+				stats.addSessionPlayed();
 			else if(itemname.contains("Remove"))
 				stats.setSessionsPlayed(stats.getSessionsPlayed() - 1);
 		}
