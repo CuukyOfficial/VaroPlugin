@@ -18,7 +18,7 @@ public class InfoCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage("Varo Plugin | DiscordBot & more by Cuuky, Korne127", "Version: " + Main.getInstance().getDescription().getVersion() + "\n  Link: https://discord.gg/CnDSVVx", Color.BLUE, event.getTextChannel());
+		getDiscordBot().sendMessage(Main.getPluginName(), "Version: " + Main.getInstance().getDescription().getVersion() + "\n  Link: https://discord.gg/CnDSVVx", Color.BLUE, event.getTextChannel());
 	}
 
 }

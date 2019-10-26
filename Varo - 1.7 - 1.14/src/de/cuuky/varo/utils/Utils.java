@@ -1,6 +1,7 @@
 package de.cuuky.varo.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Utils {
@@ -138,7 +139,7 @@ public class Utils {
 		return randomNum;
 	}
 
-	public static String[] arrayToCollection(ArrayList<String> strings) {
+	public static String[] arrayToCollection(List<String> strings) {
 		String[] newStrings = new String[strings.size()];
 
 		for(int i = 0; i < strings.size(); i++)

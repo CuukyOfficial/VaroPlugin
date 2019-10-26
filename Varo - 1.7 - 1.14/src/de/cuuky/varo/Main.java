@@ -19,12 +19,13 @@ import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.threads.DailyTimer;
 import de.cuuky.varo.update.Updater;
 import de.cuuky.varo.update.Updater.UpdateResult;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Main extends JavaPlugin {
 
 	/*
-	 * Plugin by Cuuky, Korne127 @ 2019 All rights reserved!
+	 * Plugin by Cuuky @ 2019 All rights reserved! Contributors: Korne127
 	 */
 
 	private static final String CONSOLE_PREFIX = "[Varo] ";
@@ -43,6 +44,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onLoad() {
+		instance = this;
+
 		new ConsoleLogger();
 		super.onLoad();
 	}
@@ -59,16 +62,17 @@ public class Main extends JavaPlugin {
 		System.out.println("#    # #   #    # #   #  #    #    #       #      #    # #    # # #   ##   #");
 		System.out.println("#     #    #    # #    #  ####     #       ######  ####   ####  # #    #   #");
 		System.out.println("#                                                                          #");
-		System.out.println("#                          by Cuuky, Korne127                              #");
+		System.out.println("#                               by Cuuky                                   #");
+		System.out.println("#                                                                          #");
+		System.out.println("#                             Contributors:                                #");
+		System.out.println("#                               Korne127                                   #");
 		System.out.println("#                                                                          #");
 		System.out.println("############################################################################");
 
 		System.out.println(CONSOLE_PREFIX);
-		System.out.println(CONSOLE_PREFIX + "Enabling " + this.getDescription().getName() + " v" + this.getDescription().getVersion() + " by " + this.getDescription().getAuthors().get(0) + "...");
+		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
 		System.out.println(CONSOLE_PREFIX + "Running on " + Bukkit.getVersion());
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
-
-		instance = this;
 
 		try {
 			dataManager = new DataManager();
@@ -189,5 +193,13 @@ public class Main extends JavaPlugin {
 
 	public static boolean isBootedUp() {
 		return dataManager != null;
+	}
+	
+	public static String getContributors() {
+		return Utils.getArgsToString(Utils.removeString(Utils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
+	}
+
+	public static String getPluginName() {
+		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
 	}
 }
