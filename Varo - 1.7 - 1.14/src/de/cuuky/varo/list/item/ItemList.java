@@ -111,13 +111,13 @@ public class ItemList extends VaroList {
 
 		return iList;
 	}
-	
-	//Keine dauerhafte Lösung
+
+	// Keine dauerhafte Lösung
 	public static ArrayList<ItemList> getItemListsMultipleAdd() {
 		ArrayList<ItemList> itemLists = getItemLists();
 		ArrayList<ItemList> multipleAdd = new ArrayList<>();
-		for (ItemList list : itemLists) {
-			switch (list.getLocation()) {
+		for(ItemList list : itemLists) {
+			switch(list.getLocation()) {
 			case "ChestItems":
 			case "StartItems":
 			case "DeathItems":

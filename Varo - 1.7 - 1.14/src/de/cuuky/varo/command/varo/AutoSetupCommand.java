@@ -17,8 +17,8 @@ public class AutoSetupCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (args.length >= 1) {
-			if (args[0].equalsIgnoreCase("run")) {
+		if(args.length >= 1) {
+			if(args[0].equalsIgnoreCase("run")) {
 				if(!ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean()) {
 					sender.sendMessage(Main.getPrefix() + "Der AutoSetup wurde noch nicht in der Config eingerichtet!");
 					return;
@@ -29,7 +29,7 @@ public class AutoSetupCommand extends VaroCommand {
 				return;
 			}
 		}
-		
+
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autosetup run §7startet den Autosetup");
 		sender.sendMessage(Main.getPrefix() + "§cVorsicht: §7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und §loptional§7 einen Autostart.");
 	}

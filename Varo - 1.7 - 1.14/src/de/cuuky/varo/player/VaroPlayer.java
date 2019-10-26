@@ -71,7 +71,7 @@ public class VaroPlayer implements VaroSerializeable {
 	private Player player;
 	private Nametag nametag;
 	private NetworkMananager networkManager;
-	
+
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 
 	public VaroPlayer() {

@@ -28,10 +28,10 @@ public class MuteCommand implements CommandExecutor {
 
 		if(args[0].equalsIgnoreCase("all")) {
 			for(Player player : Bukkit.getOnlinePlayers()) {
-				if (player.isOp()) {
+				if(player.isOp()) {
 					continue;
 				}
-				
+
 				if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
 					VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();
 				new VaroCancelAble(CancelAbleType.MUTE, player);
@@ -47,12 +47,11 @@ public class MuteCommand implements CommandExecutor {
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if (player.isOp()) {
+		if(player.isOp()) {
 			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gemutet werden!");
 			return false;
 		}
-		
-		
+
 		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
 			VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();
 		new VaroCancelAble(CancelAbleType.MUTE, player);

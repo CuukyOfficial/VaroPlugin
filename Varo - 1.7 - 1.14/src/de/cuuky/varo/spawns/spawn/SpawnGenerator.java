@@ -14,11 +14,11 @@ public class SpawnGenerator {
 
 	@SuppressWarnings("deprecation")
 	public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {
-		
+
 		for(Spawn spawn : Spawn.getSpawnsClone()) {
 			spawn.delete();
 		}
-		
+
 		int i = 0;
 		for(Location loc : generateSpawns(location, radius, amount)) {
 			i++;

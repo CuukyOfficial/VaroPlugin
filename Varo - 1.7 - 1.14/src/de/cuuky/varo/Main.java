@@ -20,7 +20,6 @@ import de.cuuky.varo.threads.DailyTimer;
 import de.cuuky.varo.update.Updater;
 import de.cuuky.varo.update.Updater.UpdateResult;
 import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.world.AutoSetup;
 
 public class Main extends JavaPlugin {
 

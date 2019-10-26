@@ -33,7 +33,7 @@ public class VaroEventGUI extends SuperInventory {
 						opener.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
 						return;
 					}
-					
+
 					event.setEnabled(!event.isEnabled());
 				}
 			});

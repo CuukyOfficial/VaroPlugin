@@ -45,7 +45,7 @@ public class PlayerChatListener implements Listener {
 			new TeamChat(vp, message.replaceFirst("\\" + tc, ""));
 			event.setCancelled(true);
 			return;
-		} else if (message.startsWith(tc)) {
+		} else if(message.startsWith(tc)) {
 			message = message.replaceFirst("\\" + tc, "");
 		}
 

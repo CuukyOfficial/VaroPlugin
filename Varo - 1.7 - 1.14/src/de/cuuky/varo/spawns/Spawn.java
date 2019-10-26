@@ -195,10 +195,10 @@ public class Spawn implements VaroSerializeable {
 	public static ArrayList<Spawn> getSpawns() {
 		return spawns;
 	}
-	
+
 	public static ArrayList<Spawn> getSpawnsClone() {
 		ArrayList<Spawn> returnSpawns = new ArrayList<>();
-		for (Spawn spawn : spawns) {
+		for(Spawn spawn : spawns) {
 			returnSpawns.add(spawn);
 		}
 		return returnSpawns;

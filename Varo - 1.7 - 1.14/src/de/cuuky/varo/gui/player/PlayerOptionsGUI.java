@@ -175,9 +175,8 @@ public class PlayerOptionsGUI extends SuperInventory {
 
 		if(itemname.contains("TimeUntilAddSession")) {
 			stats.setTimeUntilAddSession(null);
-			stats.setSessions(stats.getSessions()+1);
+			stats.setSessions(stats.getSessions() + 1);
 		}
-			
 
 		updateStats();
 	}

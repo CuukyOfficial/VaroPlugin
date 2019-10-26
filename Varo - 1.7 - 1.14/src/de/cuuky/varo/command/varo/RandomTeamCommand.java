@@ -2,13 +2,11 @@ package de.cuuky.varo.command.varo;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.team.Team;
 
@@ -32,8 +30,8 @@ public class RandomTeamCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7ist keine Zahl!");
 			return;
 		}
-		
-		if (teamsize < 1) {
+
+		if(teamsize < 1) {
 			sender.sendMessage(Main.getPrefix() + "§7Die Teamgröße muss mindestens 1 betragen.");
 			return;
 		} else {
@@ -42,7 +40,7 @@ public class RandomTeamCommand extends VaroCommand {
 
 		sender.sendMessage(Main.getPrefix() + "§7Alle Spieler, die ohne Teams waren, sind nun in " + Main.getColorCode() + teamsize + "§7er Teams!");
 	}
-	
+
 	public void doRandomTeam(int teamSize) {
 		if(teamSize >= 2) {
 			ArrayList<VaroPlayer> finished = new ArrayList<>();

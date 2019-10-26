@@ -46,7 +46,7 @@ public class Stats implements VaroSerializeable {
 	private int kills;
 	@VaroSerializeField(path = "wins")
 	private int wins;
-	
+
 	@VaroSerializeField(path = "willClear")
 	private boolean willClear;
 	@VaroSerializeField(path = "showScoreboard")
@@ -140,12 +140,12 @@ public class Stats implements VaroSerializeable {
 		firstTimeJoined = new Date();
 		lastJoined = new Date();
 		lastEnemyContact = new Date();
-		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
 			sessions = ConfigEntry.SESSIONS_PER_DAY.getValueAsInt();
 		} else {
 			sessions = 1;
 		}
-		if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+		if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 			sessions += ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt();
 		}
 		sessionsPlayed = 0;
@@ -235,7 +235,7 @@ public class Stats implements VaroSerializeable {
 	public Location getLastLocation() {
 		return lastLocation;
 	}
-	
+
 	public Date getTimeUntilAddSession() {
 		return timeUntilAddSession;
 	}
@@ -475,8 +475,8 @@ public class Stats implements VaroSerializeable {
 
 	public void setBan() {
 		sessions--;
-		
-		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
 			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt());
 		}
 	}
@@ -522,11 +522,11 @@ public class Stats implements VaroSerializeable {
 	public KickResult getVaroKickResult() {
 		GregorianCalendar curr = new GregorianCalendar();
 		KickResult result = KickResult.ALLOW;
-		if (this.sessions > 0) {
+		if(this.sessions > 0) {
 			result = KickResult.ALLOW;
 		} else {
-			if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
-				if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+			if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+				if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 					result = KickResult.NO_PREPRODUCES_LEFT;
 				} else {
 					result = KickResult.NO_SESSIONS_LEFT;

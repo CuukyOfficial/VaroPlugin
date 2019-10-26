@@ -81,7 +81,7 @@ public class Game implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
-		
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			int seconds = 0;
@@ -158,15 +158,15 @@ public class Game implements VaroSerializeable {
 					Main.getDataManager().getScoreboardHandler().update(vp);
 					vp.getNetworkManager().sendTablist();
 				}
-				
-				if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
-					for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-						if (vp.getStats().getTimeUntilAddSession() == null) {
+
+				if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+					for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+						if(vp.getStats().getTimeUntilAddSession() == null) {
 							continue;
 						}
-						if (new Date().after(vp.getStats().getTimeUntilAddSession())) {
+						if(new Date().after(vp.getStats().getTimeUntilAddSession())) {
 							vp.getStats().setSessions(vp.getStats().getSessions() + 1);
-							if (vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
+							if(vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
 								vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt()));
 							} else {
 								vp.getStats().setTimeUntilAddSession(null);
@@ -174,7 +174,7 @@ public class Game implements VaroSerializeable {
 						}
 					}
 				}
-				
+
 			}
 		}, 0, 20);
 	}
@@ -446,7 +446,7 @@ public class Game implements VaroSerializeable {
 	public boolean hasStarted() {
 		return gamestate != GameState.LOBBY;
 	}
-	
+
 	public boolean isRunning() {
 		return gamestate == GameState.STARTED;
 	}
@@ -458,7 +458,7 @@ public class Game implements VaroSerializeable {
 	public int getStartCountdown() {
 		return startCountdown;
 	}
-	
+
 	public void setStartCountdown(int startCountdown) {
 		this.startCountdown = startCountdown;
 	}

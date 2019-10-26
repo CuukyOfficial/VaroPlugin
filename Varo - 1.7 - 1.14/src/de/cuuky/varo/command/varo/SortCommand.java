@@ -22,11 +22,11 @@ public class SortCommand extends VaroCommand {
 		}
 
 		PlayerSort sort = new PlayerSort();
-		if (sort.hasTeamNotFound()) {
+		if(sort.hasTeamNotFound()) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loche bei den Teampartnern gefunden werden!");
 			return;
 		}
-		if (sort.hasNotFound()) {
+		if(sort.hasNotFound()) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loch gefunden werden!");
 			return;
 		}

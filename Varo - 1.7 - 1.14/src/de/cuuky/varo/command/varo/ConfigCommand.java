@@ -40,16 +40,16 @@ public class ConfigCommand extends VaroCommand {
 
 				Object arg = Utils.getStringObject(args[2]);
 				entry.setValue(arg, true);
-				
-				if (entry.getName() == "startCountdown") {
+
+				if(entry.getName() == "startCountdown") {
 					try {
 						int ct = Integer.parseInt(args[2]);
 						Main.getGame().setStartCountdown(ct);
-					} catch (NumberFormatException e) {
+					} catch(NumberFormatException e) {
 						return;
 					}
 				}
-				
+
 				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich den Eintrag '§a" + entry.getPath() + "§7' auf '§a" + entry.getValue() + "§7' gesetzt!");
 				return;
 			}

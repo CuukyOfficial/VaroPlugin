@@ -46,8 +46,8 @@ public class TeamCommand extends VaroCommand {
 
 			team = new Team(args[1]);
 			sender.sendMessage(Main.getPrefix() + "Team " + Main.getColorCode() + team.getName() + " §7mit der ID " + Main.getColorCode() + team.getId() + " §7erfolgreich erstellt!");
-			
-			for (int i=2; i<args.length; i++) {
+
+			for(int i = 2; i < args.length; i++) {
 				String arg = args[i];
 
 				VaroPlayer varoplayer = VaroPlayer.getPlayer(arg);
@@ -133,13 +133,12 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			int lastTeamNextSeite = 0;
-			if(page + 1 < teamPages) 
+			if(page + 1 < teamPages)
 				lastTeamNextSeite = (page + 1) * 30;
-			else if(page + 1 == teamPages) 
+			else if(page + 1 == teamPages)
 				lastTeamNextSeite = teamNumber;
-			
 
-			if(page < teamPages) 
+			if(page < teamPages)
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (page + 1) + " §7für " + Main.getColorCode() + "Teams §7 " + (page * 30 + 1) + " bis " + lastTeamNextSeite);
 			return;
 		} else if(args[0].equalsIgnoreCase("rename")) {
