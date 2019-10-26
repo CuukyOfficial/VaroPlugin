@@ -35,7 +35,7 @@ public class HealCommand implements CommandExecutor {
 				return false;
 			}
 
-			if(args[0].equals("all")) {
+			if(args[0].equals("@a")) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					p.setHealth(20);
 					p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));

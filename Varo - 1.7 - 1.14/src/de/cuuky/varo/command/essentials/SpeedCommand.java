@@ -56,7 +56,7 @@ public class SpeedCommand implements CommandExecutor {
 				return false;
 			}
 
-			if(args[1].equalsIgnoreCase("all")) {
+			if(args[1].equalsIgnoreCase("@a")) {
 				for(Player pl : Bukkit.getOnlinePlayers()) {
 					Float speed = null;
 					try {

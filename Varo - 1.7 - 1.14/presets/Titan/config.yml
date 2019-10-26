@@ -152,7 +152,7 @@ Discord:
   inviteLink: ENTER LINK HERE
   commandTrigger: '!titan '
   randomMessageColor: false
-  gameState: Titan | Plugin by Cuuky, Korne127
+  gameState: Titan | Plugin by Cuuky
 Telegram:
   telegrambotEnabled: false
   botToken: ENTER TOKEN HERE

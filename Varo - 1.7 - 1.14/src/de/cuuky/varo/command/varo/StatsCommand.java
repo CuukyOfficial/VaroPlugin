@@ -29,7 +29,7 @@ public class StatsCommand extends VaroCommand {
 
 		String t = args.length == 1 ? args[0] : args[1];
 		VaroPlayer target = VaroPlayer.getPlayer(t);
-		if(target == null && !t.equalsIgnoreCase("all")) {
+		if(target == null && !t.equalsIgnoreCase("@a")) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + t + " §7nicht gefunden!");
 			return;
 		}

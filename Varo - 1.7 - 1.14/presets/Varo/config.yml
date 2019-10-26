@@ -152,7 +152,7 @@ Discord:
   inviteLink: ENTER LINK HERE
   commandTrigger: '!varo '
   randomMessageColor: false
-  gameState: Varo | Plugin by Cuuky, Korne127
+  gameState: Varo | Plugin by Cuuky
 Telegram:
   telegrambotEnabled: false
   botToken: ENTER TOKEN HERE

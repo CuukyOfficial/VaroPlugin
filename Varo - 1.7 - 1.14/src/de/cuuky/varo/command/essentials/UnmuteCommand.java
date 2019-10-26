@@ -26,7 +26,7 @@ public class UnmuteCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("all")) {
+		if(args[0].equalsIgnoreCase("@a")) {
 			for(Player player : Bukkit.getOnlinePlayers()) {
 				if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
 					VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();

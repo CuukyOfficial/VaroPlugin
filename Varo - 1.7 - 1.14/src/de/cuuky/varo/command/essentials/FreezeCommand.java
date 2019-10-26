@@ -25,7 +25,7 @@ public class FreezeCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("all")) {
+		if(args[0].equalsIgnoreCase("@a")) {
 			for(Player player : Bukkit.getOnlinePlayers())
 				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
 					VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();

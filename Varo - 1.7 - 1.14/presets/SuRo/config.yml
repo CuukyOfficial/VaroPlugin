@@ -152,7 +152,7 @@ Discord:
   inviteLink: ENTER LINK HERE
   commandTrigger: 'suro '
   randomMessageColor: false
-  gameState: Suro | Plugin by Cuuky, Korne127
+  gameState: Suro | Plugin by Cuuky
 Telegram:
   telegrambotEnabled: false
   botToken: ENTER TOKEN HERE

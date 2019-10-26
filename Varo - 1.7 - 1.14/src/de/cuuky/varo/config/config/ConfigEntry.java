@@ -177,7 +177,7 @@ public enum ConfigEntry {
 	DISCORDBOT_INVITELINK(ConfigSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 	DISCORDBOT_COMMANDTRIGGER(ConfigSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
 	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufällige Farbe haben sollen"),
-	DISCORDBOT_GAMESTATE(ConfigSection.DISCORD, "gameState", "Varo | Plugin by Cuuky, Korne127", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
+	DISCORDBOT_GAMESTATE(ConfigSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 
 	// TELEGRAM
 	TELEGRAM_ENABLED(ConfigSection.TELEGRAM, "telegrambotEnabled", false, "Ob der Telegrambot aktiviert werden soll."),

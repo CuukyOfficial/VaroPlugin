@@ -118,7 +118,7 @@ public class SpawnsCommand extends VaroCommand {
 				return;
 			}
 
-			if(args[1].equalsIgnoreCase("all")) {
+			if(args[1].equalsIgnoreCase("@a")) {
 				for(Spawn spawn : Spawn.getSpawnsClone()) {
 					spawn.delete();
 				}

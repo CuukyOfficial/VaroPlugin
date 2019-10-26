@@ -26,7 +26,7 @@ public class MuteCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("all")) {
+		if(args[0].equalsIgnoreCase("@a")) {
 			for(Player player : Bukkit.getOnlinePlayers()) {
 				if(player.isOp()) {
 					continue;
