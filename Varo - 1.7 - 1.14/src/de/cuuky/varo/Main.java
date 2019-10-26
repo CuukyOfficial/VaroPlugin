@@ -25,7 +25,7 @@ import de.cuuky.varo.world.AutoSetup;
 public class Main extends JavaPlugin {
 
 	/*
-	 * Plugin by Cuuky @ 2019 All rights reserved!
+	 * Plugin by Cuuky, Korne127 @ 2019 All rights reserved!
 	 */
 
 	private static final String CONSOLE_PREFIX = "[Varo] ";
@@ -60,7 +60,7 @@ public class Main extends JavaPlugin {
 		System.out.println("#    # #   #    # #   #  #    #    #       #      #    # #    # # #   ##   #");
 		System.out.println("#     #    #    # #    #  ####     #       ######  ####   ####  # #    #   #");
 		System.out.println("#                                                                          #");
-		System.out.println("#                                 by Cuuky                                 #");
+		System.out.println("#                          by Cuuky, Korne127                              #");
 		System.out.println("#                                                                          #");
 		System.out.println("############################################################################");
 
@@ -95,9 +95,6 @@ public class Main extends JavaPlugin {
 
 		if(failed)
 			return;
-
-		if(ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean() && game.willSetupNext())
-			new AutoSetup();
 
 		System.out.println(CONSOLE_PREFIX + "Enabled!");
 		System.out.println(CONSOLE_PREFIX + " ");

@@ -25,8 +25,7 @@ public class SpawnsCommand extends VaroCommand {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Commands§7§l:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set [Zahl/Spieler]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 remove [Zahl/Spieler] - (Löscht nur den Eintrag)");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete [Zahl/Spieler] - (Löscht auch Spawn in der Welt)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete [Zahl/Spieler] - (Löscht den Spawneintrag und den Spawn in der Welt)");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius> <amount> [Half-Step-Materiall] [Side-Block-Material]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo spawns generate 30 40 STONE_SLAB");
@@ -122,11 +121,8 @@ public class SpawnsCommand extends VaroCommand {
 			}
 
 			if(args[1].equalsIgnoreCase("all")) {
-				for(Spawn spawn : (ArrayList<Spawn>) Spawn.getSpawns().clone()) {
-					if(args[0].equalsIgnoreCase("remove"))
-						spawn.remove();
-					else
-						spawn.delete();
+				for(Spawn spawn : Spawn.getSpawnsClone()) {
+					spawn.delete();
 				}
 
 				sender.sendMessage(Main.getPrefix() + "Alle Spawns erfolgreich entfernt!");
@@ -151,10 +147,7 @@ public class SpawnsCommand extends VaroCommand {
 					return;
 				}
 
-				if(args[0].equalsIgnoreCase("remove"))
-					spawn.remove();
-				else
-					spawn.delete();
+				spawn.delete();
 				sender.sendMessage(Main.getPrefix() + "Spawn " + Main.getColorCode() + spawn.getNumber() + " §7entfernt!");
 			} else {
 				VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
@@ -171,11 +164,7 @@ public class SpawnsCommand extends VaroCommand {
 
 				sender.sendMessage(Main.getPrefix() + "Spawn von " + Main.getColorCode() + varoplayer.getName() + " §7entfernt!");
 			}
-
-			if(args[0].equalsIgnoreCase("remove"))
-				spawn.remove();
-			else
-				spawn.delete();
+			spawn.delete();
 			return;
 		} else if(args[0].equalsIgnoreCase("list")) {
 			if(Spawn.getSpawns().isEmpty()) {

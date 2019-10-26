@@ -42,7 +42,7 @@ public enum ConfigSection {
 
 	REPORT("Report", Materials.REDSTONE_TORCH.parseMaterial(), "Hier kannst du Einstellungen zum Report-System vornehmen."),
 
-	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zum Report-System vornehmen."),
+	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen."),
 
 	DISCORD("Discord", Material.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
 

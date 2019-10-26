@@ -111,6 +111,21 @@ public class ItemList extends VaroList {
 
 		return iList;
 	}
+	
+	//Keine dauerhafte Lösung
+	public static ArrayList<ItemList> getItemListsMultipleAdd() {
+		ArrayList<ItemList> itemLists = getItemLists();
+		ArrayList<ItemList> multipleAdd = new ArrayList<>();
+		for (ItemList list : itemLists) {
+			switch (list.getLocation()) {
+			case "ChestItems":
+			case "StartItems":
+			case "DeathItems":
+				multipleAdd.add(list);
+			}
+		}
+		return multipleAdd;
+	}
 
 	public static ItemList getItemList(String list) {
 		for(ItemList iList : getItemLists())

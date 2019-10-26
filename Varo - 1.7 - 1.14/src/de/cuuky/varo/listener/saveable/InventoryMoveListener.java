@@ -15,7 +15,7 @@ public class InventoryMoveListener implements Listener {
 
 	@EventHandler
 	public void onInventoryMove(InventoryMoveItemEvent e) {
-		if(!Main.getGame().isStarted())
+		if(!Main.getGame().hasStarted())
 			return;
 
 		if(!(e.getInitiator().getHolder() instanceof Hopper))

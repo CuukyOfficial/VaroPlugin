@@ -82,7 +82,7 @@ public class Spawn implements VaroSerializeable {
 		return i;
 	}
 
-	public void remove() {
+	private void remove() {
 		removeNameTag();
 		spawns.remove(this);
 	}
@@ -194,6 +194,14 @@ public class Spawn implements VaroSerializeable {
 
 	public static ArrayList<Spawn> getSpawns() {
 		return spawns;
+	}
+	
+	public static ArrayList<Spawn> getSpawnsClone() {
+		ArrayList<Spawn> returnSpawns = new ArrayList<>();
+		for (Spawn spawn : spawns) {
+			returnSpawns.add(spawn);
+		}
+		return returnSpawns;
 	}
 
 	@Override

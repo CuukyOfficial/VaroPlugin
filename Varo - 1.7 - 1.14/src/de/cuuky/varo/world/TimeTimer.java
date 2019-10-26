@@ -18,7 +18,7 @@ public class TimeTimer {
 
 			@Override
 			public void run() {
-				if(Main.getGame().isStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean())
+				if(Main.getGame().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean())
 					return;
 
 				for(World world : Bukkit.getWorlds()) {

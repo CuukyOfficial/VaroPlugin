@@ -1,6 +1,6 @@
 name: Varo
-author: Cuuky
-version: 0.2
+author: Cuuky, Korne127
+version: 0.3
 api-version: 1.13
 main: de.cuuky.varo.Main
 
@@ -49,11 +49,13 @@ commands:
      aliases: [r]
      description: Antwortet einem Spieler
   Mute:
-     description: Stummt einen Spieler
+     description: Mutet einen Spieler
   Protect:
      description: Beschützt Spieler vor Schaden
   Report:
      description: Reporte einen Spieler
+  Unmute:
+     description: Entmutet einen Spieler
   Usage:
      description: Zeigt die Nutzung des Servers
   Border:

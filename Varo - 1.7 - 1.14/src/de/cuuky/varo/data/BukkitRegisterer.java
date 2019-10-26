@@ -30,6 +30,7 @@ import de.cuuky.varo.command.essentials.SpawnCommand;
 import de.cuuky.varo.command.essentials.SpeedCommand;
 import de.cuuky.varo.command.essentials.SunCommand;
 import de.cuuky.varo.command.essentials.ThunderCommand;
+import de.cuuky.varo.command.essentials.UnmuteCommand;
 import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -135,6 +136,7 @@ public class BukkitRegisterer {
 		registerCommand("speed", new SpeedCommand());
 		registerCommand("vanish", new VanishCommand());
 		registerCommand("report", new ReportCommand());
+		registerCommand("unmute", new UnmuteCommand());
 		registerCommand("usage", new UsageCommand());
 		registerCommand("border", new BorderCommand());
 		registerCommand("setworldspawn", new SetWorldspawnCommand());

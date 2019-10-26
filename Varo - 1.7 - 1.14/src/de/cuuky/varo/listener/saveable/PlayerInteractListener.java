@@ -20,10 +20,10 @@ public class PlayerInteractListener implements Listener {
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if(!Main.getGame().isStarted())
+		if(!Main.getGame().hasStarted())
 			return;
 
-		if(!Main.getGame().isStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if(!Main.getGame().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			e.setCancelled(true);
 			return;
 		}

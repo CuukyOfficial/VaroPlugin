@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -20,6 +21,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
+import de.cuuky.varo.command.varo.RandomTeamCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
@@ -52,8 +54,6 @@ public class Game implements VaroSerializeable {
 	private AutoStart autostart;
 	@VaroSerializeField(path = "borderDecrease")
 	private BorderDecreaseDayTimer borderDecrease;
-	@VaroSerializeField(path = "setupNext")
-	private boolean setupNext;
 	@VaroSerializeField(path = "lobby")
 	private Location lobby;
 	@VaroSerializeField(path = "lastDayTimer")
@@ -76,12 +76,12 @@ public class Game implements VaroSerializeable {
 		startRefreshTimer();
 		loadVariables();
 
-		setupNext = false;
 		gamestate = GameState.LOBBY;
 		borderDecrease = new BorderDecreaseDayTimer(true);
 	}
 
 	private void startRefreshTimer() {
+		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			int seconds = 0;
@@ -158,16 +158,34 @@ public class Game implements VaroSerializeable {
 					Main.getDataManager().getScoreboardHandler().update(vp);
 					vp.getNetworkManager().sendTablist();
 				}
+				
+				if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+					for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+						if (vp.getStats().getTimeUntilAddSession() == null) {
+							continue;
+						}
+						if (new Date().after(vp.getStats().getTimeUntilAddSession())) {
+							vp.getStats().setSessions(vp.getStats().getSessions() + 1);
+							if (vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
+								vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt()));
+							} else {
+								vp.getStats().setTimeUntilAddSession(null);
+							}
+						}
+					}
+				}
+				
 			}
 		}, 0, 20);
 	}
 
 	public void start() {
-		if(isStarted() || isStarting())
+		if(hasStarted() || isStarting())
 			return;
 
-		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsBoolean())
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "varo randomteam 2");
+		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
+			new RandomTeamCommand().doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+		}
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
 			new PlayerSort();
@@ -425,8 +443,12 @@ public class Game implements VaroSerializeable {
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
 
-	public boolean isStarted() {
+	public boolean hasStarted() {
 		return gamestate != GameState.LOBBY;
+	}
+	
+	public boolean isRunning() {
+		return gamestate == GameState.STARTED;
 	}
 
 	public void setGamestate(GameState gamestate) {
@@ -435,6 +457,10 @@ public class Game implements VaroSerializeable {
 
 	public int getStartCountdown() {
 		return startCountdown;
+	}
+	
+	public void setStartCountdown(int startCountdown) {
+		this.startCountdown = startCountdown;
 	}
 
 	public GameState getGameState() {
@@ -447,14 +473,6 @@ public class Game implements VaroSerializeable {
 
 	public void setAutoStart(AutoStart autoStart) {
 		this.autostart = autoStart;
-	}
-
-	public void setWillSetupNext(boolean hasBeenExecuted) {
-		setupNext = hasBeenExecuted;
-	}
-
-	public boolean willSetupNext() {
-		return setupNext;
 	}
 
 	public Location getLobby() {

@@ -80,7 +80,7 @@ public class PlayerCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7Account von §c" + vps.getName() + " §7wurde erfolgreich resettet!");
 			return;
 		} else if(args[0].equalsIgnoreCase("kill")) {
-			if(args[1].equalsIgnoreCase("@a")) {
+			if(args[1].equalsIgnoreCase("all")) {
 				for(VaroPlayer pl : VaroPlayer.getVaroPlayer())
 					if(pl.isOnline())
 						pl.getPlayer().setHealth(0);
@@ -107,7 +107,7 @@ public class PlayerCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7" + vps.getName() + " §7erfolgreich getötet!");
 			return;
 		} else if(args[0].equalsIgnoreCase("remove")) {
-			if(args[1].equalsIgnoreCase("@a")) {
+			if(args[1].equalsIgnoreCase("all")) {
 				for(VaroPlayer pl : VaroPlayer.getVaroPlayer()) {
 					if(pl.isOnline())
 						pl.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue());
@@ -150,7 +150,7 @@ public class PlayerCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " §7wurde erfolgreich zu " + Main.getColorCode() + Main.getProjectName() + " §7hinzugefügt!");
 			}
 		} else if(args[0].equalsIgnoreCase("respawn")) {
-			if(args[1].equalsIgnoreCase("@a")) {
+			if(args[1].equalsIgnoreCase("all")) {
 				for(VaroPlayer pl : VaroPlayer.getVaroPlayer())
 					pl.getStats().setState(PlayerState.ALIVE);
 				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Spieler wiederbelebt!");

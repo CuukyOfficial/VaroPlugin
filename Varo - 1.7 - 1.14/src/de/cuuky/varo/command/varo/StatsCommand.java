@@ -19,17 +19,17 @@ public class StatsCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats §7<Spieler/@a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set §7<Spieler/@a> <Stat> <Value>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Spieler/@a> <Stat>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats reset §7<Spieler/@a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats odvReset §7<Spieler/@a> | Resettet alles außer Kills, Wins, Rank, Team und YT-Link");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats §7<Spieler/All>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set §7<Spieler/All> <Stat> <Value>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Spieler/All> <Stat>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats reset §7<Spieler/All>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats odvReset §7<Spieler/All> | Resettet alles außer Kills, Wins, Rank, Team und YT-Link");
 			return;
 		}
 
 		String t = args.length == 1 ? args[0] : args[1];
 		VaroPlayer target = VaroPlayer.getPlayer(t);
-		if(target == null && !t.equals("@a")) {
+		if(target == null && !t.equalsIgnoreCase("all")) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + t + " §7nicht gefunden!");
 			return;
 		}
@@ -52,12 +52,12 @@ public class StatsCommand extends VaroCommand {
 			SetArgumentType type = SetArgumentType.getByName(args[2]);
 			if(args[0].equalsIgnoreCase("set")) {
 				if(args.length != 4) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set §7<Spieler/@a> <Stat> <Value>");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set §7<Spieler/All> <Stat> <Value>");
 					return;
 				}
 			} else {
 				if(args.length != 3) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Spieler/@a> <Stat>");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Spieler/All> <Stat>");
 					return;
 				}
 			}
@@ -132,7 +132,6 @@ public class StatsCommand extends VaroCommand {
 		KILLS("kills"),
 		SESSIONS("sessions"),
 		EPISODES_PLAYED("episodesplayed"),
-		PRE_PRODUCED("preproduced"),
 		RANK("rank"),
 		COUNTDOWN("countdown"),
 		WINS("wins"),
@@ -160,9 +159,6 @@ public class StatsCommand extends VaroCommand {
 					break;
 				case EPISODES_PLAYED:
 					vp.getStats().setSessionsPlayed(Integer.valueOf(value));
-					break;
-				case PRE_PRODUCED:
-					vp.getStats().setPreProduced(Integer.valueOf(value));
 					break;
 				case RANK:
 					vp.setRank(new Rank(value));
@@ -195,13 +191,10 @@ public class StatsCommand extends VaroCommand {
 				vp.getStats().setKills(0);
 				break;
 			case SESSIONS:
-				vp.getStats().setSessions(ConfigEntry.SESSION_PER_DAY.getValueAsInt());
+				vp.getStats().setSessions(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt());
 				break;
 			case EPISODES_PLAYED:
 				vp.getStats().setSessionsPlayed(0);
-				break;
-			case PRE_PRODUCED:
-				vp.getStats().setPreProduced(0);
 				break;
 			case RANK:
 				vp.setRank(null);

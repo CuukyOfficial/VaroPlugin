@@ -38,8 +38,6 @@ public class Stats implements VaroSerializeable {
 
 	@VaroSerializeField(path = "sessions")
 	private int sessions;
-	@VaroSerializeField(path = "preProduced")
-	private int preProduced;
 	@VaroSerializeField(path = "sessionsPlayed")
 	private int sessionsPlayed;
 	@VaroSerializeField(path = "countdown")
@@ -48,9 +46,7 @@ public class Stats implements VaroSerializeable {
 	private int kills;
 	@VaroSerializeField(path = "wins")
 	private int wins;
-
-	@VaroSerializeField(path = "maxProduced")
-	private boolean maxProduced;
+	
 	@VaroSerializeField(path = "willClear")
 	private boolean willClear;
 	@VaroSerializeField(path = "showScoreboard")
@@ -60,8 +56,8 @@ public class Stats implements VaroSerializeable {
 
 	@VaroSerializeField(path = "lastLocation")
 	private Location lastLocation;
-	@VaroSerializeField(path = "timeBanUntil")
-	private Date timeBanUntil;
+	@VaroSerializeField(path = "timeUntilAddSession")
+	private Date timeUntilAddSession;
 	@VaroSerializeField(path = "firstTimeJoined")
 	private Date firstTimeJoined;
 	@VaroSerializeField(path = "lastJoined")
@@ -136,18 +132,23 @@ public class Stats implements VaroSerializeable {
 		inventoryBackups = new ArrayList<InventoryBackup>();
 		backpack = new VaroInventory(ConfigEntry.BACKPACK_SIZE.getValueAsInt());
 
-		maxProduced = false;
 		willClear = false;
 		showScoreboard = true;
 		diedAt = null;
-		timeBanUntil = null;
+		timeUntilAddSession = null;
 
 		firstTimeJoined = new Date();
 		lastJoined = new Date();
 		lastEnemyContact = new Date();
-		sessions = ConfigEntry.SESSION_PER_DAY.getValueAsInt();
-		preProduced = 0;
-		sessionsPlayed = 1;
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+			sessions = ConfigEntry.SESSIONS_PER_DAY.getValueAsInt();
+		} else {
+			sessions = 1;
+		}
+		if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+			sessions += ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt();
+		}
+		sessionsPlayed = 0;
 		countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 
@@ -234,13 +235,13 @@ public class Stats implements VaroSerializeable {
 	public Location getLastLocation() {
 		return lastLocation;
 	}
-
-	public Date getTimeBanUntil() {
-		return timeBanUntil;
+	
+	public Date getTimeUntilAddSession() {
+		return timeUntilAddSession;
 	}
 
-	public void setTimeBanUntil(Date timeBanUntil) {
-		this.timeBanUntil = timeBanUntil;
+	public void setTimeUntilAddSession(Date timeUntilNewSession) {
+		this.timeUntilAddSession = timeUntilNewSession;
 	}
 
 	public void removeStrikes() {
@@ -355,26 +356,6 @@ public class Stats implements VaroSerializeable {
 
 	public void setWillClear(boolean willClear) {
 		this.willClear = willClear;
-	}
-
-	public void setMaxProduced(boolean maxProduced) {
-		this.maxProduced = maxProduced;
-	}
-
-	public int getPreProduced() {
-		return preProduced;
-	}
-
-	public void setPreProduced(int preProduced) {
-		this.preProduced = preProduced;
-	}
-
-	public boolean hasMaxProduced() {
-		return preProduced >= ConfigEntry.PRE_PRODUCE_AMOUNT.getValueAsInt();
-	}
-
-	public boolean isMaxProduced() {
-		return maxProduced;
 	}
 
 	public Date getFirstTimeJoined() {
@@ -493,23 +474,16 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void setBan() {
-		if(ConfigEntry.SESSION_PER_DAY.isIntActivated())
-			if(getSessions() > 0)
-				sessions--;
-
-		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
-			timeBanUntil = DateUtils.addHours(new Date(), ConfigEntry.TIME_JOIN_HOURS.getValueAsInt());
-
-		if(ConfigEntry.PRE_PRODUCE_AMOUNT.isIntActivated()) {
-			preProduced++;
-			if(hasMaxProduced())
-				maxProduced = true;
+		sessions--;
+		
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt());
 		}
 	}
 
 	public KickResult getKickResult(Player player) {
 		KickResult result = KickResult.ALLOW;
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			if(owner.isRegistered())
 				result = getVaroKickResult();
 			else
@@ -532,8 +506,8 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.SERVER_FULL;
 
 		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().isStarted() && player.isOp()) {
-				if(Main.getGame().isStarted())
+			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().hasStarted() && player.isOp()) {
+				if(Main.getGame().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
 					else
@@ -548,23 +522,19 @@ public class Stats implements VaroSerializeable {
 	public KickResult getVaroKickResult() {
 		GregorianCalendar curr = new GregorianCalendar();
 		KickResult result = KickResult.ALLOW;
-		if(ConfigEntry.SESSION_PER_DAY.isIntActivated())
-			if(this.getSessions() <= 0)
-				result = KickResult.NO_SESSIONS_LEFT;
-
-		if(ConfigEntry.PRE_PRODUCE_AMOUNT.isIntActivated()) {
-			if(ConfigEntry.BAN_AFTER_PREPRODUCE_DAY.getValueAsBoolean()) {
-				if(isMaxProduced())
+		if (this.sessions > 0) {
+			result = KickResult.ALLOW;
+		} else {
+			if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+				if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 					result = KickResult.NO_PREPRODUCES_LEFT;
+				} else {
+					result = KickResult.NO_SESSIONS_LEFT;
+				}
 			} else {
-				if(hasMaxProduced())
-					result = KickResult.NO_PREPRODUCES_LEFT;
+				result = KickResult.NO_TIME;
 			}
 		}
-
-		if(ConfigEntry.TIME_JOIN_HOURS.isIntActivated())
-			if(curr.before(getTimeBanUntil()))
-				result = KickResult.NO_TIME;
 
 		if(VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
@@ -592,6 +562,6 @@ public class Stats implements VaroSerializeable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
-		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7PreProduced Sessions§8: " + colorcode + preProduced, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7MaxProduced§8: " + colorcode + maxProduced, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormatter(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world").format(lastLocation) : "/"), "§7TimeBanUntil§8: " + colorcode + (timeBanUntil != null ? dateFormat.format(timeBanUntil.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
+		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormatter(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world").format(lastLocation) : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
 	}
 }

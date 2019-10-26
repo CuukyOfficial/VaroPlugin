@@ -40,16 +40,15 @@ public class TeamCommand extends VaroCommand {
 
 			Team team = Team.getTeam(args[1]);
 			if(team != null) {
-				sender.sendMessage(Main.getPrefix() + "Dieses Team existiert bereits!");
+				sender.sendMessage(Main.getPrefix() + "Dieser Teamname ist bereits benutzt!");
 				return;
 			}
 
 			team = new Team(args[1]);
 			sender.sendMessage(Main.getPrefix() + "Team " + Main.getColorCode() + team.getName() + " §7mit der ID " + Main.getColorCode() + team.getId() + " §7erfolgreich erstellt!");
-
-			for(String arg : args) {
-				if(arg.equals(args[0]) || arg.equals(args[1]))
-					continue;
+			
+			for (int i=2; i<args.length; i++) {
+				String arg = args[i];
 
 				VaroPlayer varoplayer = VaroPlayer.getPlayer(arg);
 				if(varoplayer == null) {

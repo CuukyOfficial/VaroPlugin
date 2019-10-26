@@ -32,23 +32,34 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "§7Enter Value for " + Main.getColorCode() + entry.getName() + " §8(§7Current: §a" + entry.getValue() + "§8):", new ChatHookListener() {
+		new ChatHook(opener, "§7Gebe einen Wert ein für " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
 
 			@Override
 			public void onChat(String message) {
-				try {
-					entry.setValue(Utils.getStringObject(message), true);
-				} catch(Exception e) {
-					opener.sendMessage(Main.getPrefix() + e.getMessage());
-					hookChat(entry);
-					return;
-				}
+				if (message.equalsIgnoreCase("cancel")) {
+					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
+				} else {
+					try {
+						entry.setValue(Utils.getStringObject(message), true);
+						
+						if (entry.getName() == "startCountdown") {
+							Main.getGame().setStartCountdown(Integer.parseInt(message));
+						}
+						
+					} catch(Exception e) {
+						opener.sendMessage(Main.getPrefix() + e.getMessage());
+						hookChat(entry);
+						return;
+					}
 
-				opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-				opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
+					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
+					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
+				}
+				
 				reopenSoon();
 			}
 		});
+		opener.sendMessage(Main.getPrefix() + "§7Gebe zum Abbruch §ccancel§7 ein.");
 	}
 
 	@Override

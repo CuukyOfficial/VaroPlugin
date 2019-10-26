@@ -86,17 +86,14 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_SESSIONS_LEFT.getValue(vp));
 			break;
 		case NO_PREPRODUCES_LEFT:
-			if(vp.getStats().getPreProduced() == 1)
-				event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_PREPRODUCES_LEFT_TODAY.getValue().replace("%days%", String.valueOf(vp.getStats().getPreProduced())));
-			else
-				event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_PREPRODUCES_LEFT.getValue().replace("%days%", String.valueOf(vp.getStats().getPreProduced())));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_PREPRODUCES_LEFT.getValue());
 			break;
 		case NO_TIME:
 			Date current = new Date();
-			long milli = vp.getStats().getTimeBanUntil().getTime() - current.getTime();
+			long milli = vp.getStats().getTimeUntilAddSession().getTime() - current.getTime();
 			long sec = (milli / 1000) % 60;
-			long min = (milli / 1000 * 60) % 60;
-			long hr = (milli / 1000 * 60 * 60) % 24;
+			long min = (milli / 1000 / 60) % 60;
+			long hr = (milli / 1000 / 60 / 60) % 24;
 			String seconds = "";
 			String minutes = "";
 			String hours = "";
@@ -113,7 +110,7 @@ public class PlayerLoginListener implements Listener {
 			else
 				hours = "" + hr;
 
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replaceAll("%timeHours%", ConfigEntry.TIME_JOIN_HOURS.getValueAsInt() + "").replaceAll("%stunden%", hours).replaceAll("%minuten%", minutes).replaceAll("%sekunden%", seconds));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replaceAll("%timeHours%", ConfigEntry.JOIN_AFTER_HOURS.getValueAsString()).replaceAll("%stunden%", hours).replaceAll("%minuten%", minutes).replaceAll("%sekunden%", seconds));
 			break;
 		case SERVER_NOT_PUBLISHED:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));

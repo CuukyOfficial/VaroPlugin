@@ -51,9 +51,6 @@ public class PlayerOptionsGUI extends SuperInventory {
 
 			inv.setItem(35, new ItemBuilder().displayname("§aAdd Session").itemstack(new ItemStack(Material.APPLE)).build());
 			inv.setItem(27, new ItemBuilder().displayname("§cRemove Session").itemstack(Materials.REDSTONE.parseItem()).build());
-
-			inv.setItem(44, new ItemBuilder().displayname("§aAdd Preproduced").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(36, new ItemBuilder().displayname("§cRemove Preproduced").itemstack(Materials.REDSTONE.parseItem()).build());
 		} else if(getPage() == 2) {
 			inv.setItem(8, new ItemBuilder().displayname("§aAdd EpisodesPlayed").itemstack(new ItemStack(Material.APPLE)).build());
 			inv.setItem(0, new ItemBuilder().displayname("§cRemove EpisodesPlayed").itemstack(Materials.REDSTONE.parseItem()).build());
@@ -72,15 +69,13 @@ public class PlayerOptionsGUI extends SuperInventory {
 			inv.setItem(13, new ItemBuilder().displayname("§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay()) }).build());
 			inv.setItem(22, new ItemBuilder().displayname("§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + stats.getYoutubeLink() }).build());
 			inv.setItem(31, new ItemBuilder().displayname("§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[] { "§7Current: " + stats.getSessions() }).build());
-			inv.setItem(40, new ItemBuilder().displayname("§aPreproduced Sessions").itemstack(new ItemStack(Material.ANVIL)).lore(new String[] { "§7Current: " + stats.getPreProduced() }).build());
 		} else if(getPage() == 2) {
 			inv.setItem(4, new ItemBuilder().displayname("§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[] { "§7Current: " + stats.getSessionsPlayed() }).build());
 			inv.setItem(13, new ItemBuilder().displayname("§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + stats.getCountdown() }).build());
 
 			inv.setItem(36, new ItemBuilder().displayname("§7Change §cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[] { "§7Current: " + stats.isWillClear() }).build());
-			inv.setItem(37, new ItemBuilder().displayname("§7Change §cMax Produced").itemstack(new ItemStack(Material.ITEM_FRAME)).lore(new String[] { "§7Current: " + stats.isMaxProduced() }).build());
-			inv.setItem(38, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "§7Current: " + stats.getState().getName() }).build());
-			inv.setItem(39, new ItemBuilder().displayname("§7Remove §cTimeHoursban").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + (stats.getTimeBanUntil()) }).build());
+			inv.setItem(37, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "§7Current: " + stats.getState().getName() }).build());
+			inv.setItem(38, new ItemBuilder().displayname("§7Remove §cTimeUntilAddSession").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + (stats.getTimeUntilAddSession()) }).build());
 		}
 	}
 
@@ -105,9 +100,6 @@ public class PlayerOptionsGUI extends SuperInventory {
 				stats.setCountdown(1);
 		}
 
-		if(itemname.contains("Max Produced"))
-			stats.setMaxProduced(!stats.isMaxProduced());
-
 		if(itemname.contains("Will InventoryClear"))
 			stats.setWillClear(!stats.isWillClear());
 
@@ -123,13 +115,6 @@ public class PlayerOptionsGUI extends SuperInventory {
 				stats.setSessions(stats.getSessions() + 1);
 			else if(itemname.contains("Remove"))
 				stats.setSessions(stats.getSessions() - 1);
-		}
-
-		if(itemname.contains("Preproduced")) {
-			if(itemname.contains("Add"))
-				stats.setPreProduced(stats.getPreProduced() + 1);
-			else if(itemname.contains("Remove"))
-				stats.setPreProduced(stats.getPreProduced() - 1);
 		}
 
 		if(itemname.contains("Link")) {
@@ -188,8 +173,11 @@ public class PlayerOptionsGUI extends SuperInventory {
 			stats.setState(state);
 		}
 
-		if(itemname.contains("TimeHoursban"))
-			stats.setTimeBanUntil(null);
+		if(itemname.contains("TimeUntilAddSession")) {
+			stats.setTimeUntilAddSession(null);
+			stats.setSessions(stats.getSessions()+1);
+		}
+			
 
 		updateStats();
 	}

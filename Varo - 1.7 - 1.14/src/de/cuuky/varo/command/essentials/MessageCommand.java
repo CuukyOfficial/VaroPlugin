@@ -22,7 +22,7 @@ public class MessageCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(!Main.getGame().isStarted() && !sender.hasPermission("varo.setup")) {
+		if(!Main.getGame().hasStarted() && !sender.hasPermission("varo.setup")) {
 			sender.sendMessage(Main.getPrefix() + "Du kannst nicht als nicht-Admin vor dem " + Main.getProjectName() + "-Start §7privat schreiben.");
 			return false;
 		}

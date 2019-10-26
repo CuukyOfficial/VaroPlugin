@@ -1,5 +1,7 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.ArrayList;
+
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -27,7 +29,8 @@ public class ItemCommand extends VaroCommand {
 
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Item §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> [Remove / Add]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Add <Anzahl>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [All/Anzahl]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
 			sender.sendMessage(Main.getPrefix());
@@ -69,23 +72,66 @@ public class ItemCommand extends VaroCommand {
 		}
 
 		ItemStack item = player.getItemInHand();
-		if(args[1].contains("add")) {
-			if(list.hasItem(item)) {
-				sender.sendMessage(Main.getPrefix() + "Item steht bereits auf dieser Liste!");
-				return;
+		if(args[1].equalsIgnoreCase("add")) {
+			int Anzahl = 1;
+			if (args.length > 2) {
+				try {
+					Anzahl = Integer.parseInt(args[2]);
+				} catch(NumberFormatException e) {
+					Anzahl = 1;
+				}
+			}
+			ArrayList<ItemList> multipleAdd = ItemList.getItemListsMultipleAdd();
+			if (multipleAdd.contains(list)) {
+				for (int i = 0; i < Anzahl; i++) {
+					list.addItem(item);
+				}
+				sender.sendMessage(Main.getPrefix() + "Item erfolgreich " + String.valueOf(Anzahl) + " mal zu " + list.getLocation() + " hinzugefügt!");
+			} else {
+				if (list.hasItem(item)) {
+					sender.sendMessage(Main.getPrefix() + "Auf dieser Liste kann ein item nicht mehrmals stehen.\n" + Main.getPrefix() + "Das item steht bereits auf dieser Liste.");
+					return;
+				} else {
+					sender.sendMessage(Main.getPrefix() + "Item erfolgreich zu " + list.getLocation() + " hinzugefügt!");
+					list.addItem(item);
+				}
 			}
 
-			list.addItem(item);
-			sender.sendMessage(Main.getPrefix() + "Item erfolgreich zu " + list.getLocation() + " hinzugefügt!");
-		} else if(args[1].equalsIgnoreCase("remove")) {
-			if(!list.hasItem(item)) {
+		} else if(args[1].equalsIgnoreCase("remove")) {			
+			if (!list.hasItem(item)) {
 				sender.sendMessage(Main.getPrefix() + "Item steht nicht auf dieser Liste!");
 				return;
 			}
-
-			list.removeItem(item);
-			sender.sendMessage(Main.getPrefix() + "Item erfolgreich von " + list.getLocation() + " entfernt!");
-		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> [Remove / Add]");
+			
+			int Anzahl = 1;
+			
+			if (args.length > 2) {
+				if (args[2].equalsIgnoreCase("All")) {
+					while (list.hasItem(item)) {
+						list.removeItem(item);
+					}
+					sender.sendMessage(Main.getPrefix() + "Item erfolgreich komplett von " + list.getLocation() + " entfernt!");
+					return;
+				} else {
+					try {
+						Anzahl = Integer.parseInt(args[2]);
+					} catch(NumberFormatException e) {
+						Anzahl = 1;
+					}
+				}
+			}
+			for (int i=0; i<Anzahl; i++) {
+				if (!list.hasItem(item)) {
+					sender.sendMessage(Main.getPrefix() + "Item steht nur " + String.valueOf(i) + " mal auf der Liste.\n" + Main.getPrefix() + "Item wurde komplett von der Liste entfernt.");
+					return;
+				}
+				list.removeItem(item);
+			}
+			
+			sender.sendMessage(Main.getPrefix() + "Item erfolgreich " + Anzahl + " mal von " + list.getLocation() + " entfernt!");
+		} else {
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Add <Anzahl>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [All/Anzahl]");
+		}
 	}
 }

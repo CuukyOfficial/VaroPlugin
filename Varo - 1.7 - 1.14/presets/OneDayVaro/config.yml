@@ -8,13 +8,15 @@ Main:
   playTime: -1
   dailyBackups: false
   unregisteredPlayerJoin: true
-  removeHitDelay: true
+  resetSessionHour: 1
 OfflineVillager:
   enableOfflineVillager: false
+  noSatiationRegenerate: false
 Backpacks:
   allowBackpacks: false
   backpackSize: 54
   allowTeamAccess: true
+  dropContentOnDeath: true
 Protections:
   joinProtectionTime: 10
   canWalkOnJoinProtection: false
@@ -22,24 +24,29 @@ Protections:
 Serverlist:
   changeMotd: true
   fakeMaxSlots: -1
+Strike:
+  postAtResetHour: false
+  banOnPostHours: -1
+  banAtPost: true
 Teams:
   friendlyFire: true
-  teamChatTrigger: '#'
+  triggerForGlobal: false
+  chatTrigger: '#'
   teamRequests: true
   teamRequestExpiretime: 30
   teamRequestMaxTeamMembers: 2
   teamRequestMaxTeamnameLength: 10
 JoinSystems:
   ignoreJoinSystemsAsOP: true
-  resetSessionHour: 1
-  timeJoinHours: -1
-  sessionPerDay: -1
-  sessionPerDayAddSessions: false
-  preProduceAmount: -1
+  sessionsPerDay: -1
+  joinAfterHours: -1
+  preProduceSessions: -1
+  catchUpSessions: false
   onlyJoinBetweenHours: false
   onlyJoinBetweenHoursHour1: 14
   onlyJoinBetweenHoursHour2: 16
   kickAtServerClose: false
+  massRecordingTime: 15
 Death:
   deathSound: false
   kickDelayAfterDeath: -1
@@ -47,6 +54,8 @@ Death:
   killerHealthAddOnKill: -1
   playerSpectateAfterDeath: false
   teamLifes: 1
+  respawnProtection: 120
+  addTeamLifesOnKill: -1
 World:
   blockDestroyLogger: true
   setAlwaysTime: 1000
@@ -54,14 +63,17 @@ World:
   randomChestFillRadius: 30
   randomChestMaxItems: 5
   spawnProtectionRadius: 0
-  setPlayerSpawns: false
   setNameTagOverSpawn: true
+  nametagSpawnHeight: 3
+  blockUserPortals: true
 Start:
   startCountdown: 30
   canMoveBeforeStart: false
   doRandomTeamAtStart: true
   doSortAtStart: true
   removePlayersArentAtStart: true
+  spawnTeleportAtLobbyPhase: true
+  startAtPlayers: -1
 Disconnect:
   maxDisconnectsPerSessions: 3
   strikeOnMaxDisconnect: false
@@ -72,13 +84,25 @@ Combatlog:
   strikeOnCombatlog: false
   killOnCombatlog: true
 Border:
-  onDeathBorderDecrease: -1
-  decreaseBlocksPerSecond: 1
-  borderDamage: 1
-  timeBorderDecrease: -1
-  timeBorderDecreaseSize: 50
+  deathBorderDecrease:
+    enabled: false
+    size: 25
+    speed: 1
+  minuteBorderDecrease:
+    enabled: false
+    minutes: 30
+    size: 50
+    speed: 5
+  dayBorderDecrease:
+    enabled: false
+    days: 3
+    size: 50
+    speed: 5
   minBorderSize: 100
   showDistanceToBorder: false
+  distanceToBorderRequired: -1
+  borderDamage: 1
+  outsideBorderSpawnTeleport: true
 Chat:
   canChatBeforeStart: true
   chatCooldownInSeconds: 3
@@ -88,6 +112,7 @@ Activity:
   strikeOnBloodlust: false
   noActivityDays: -1
   strikeOnNoActivity: false
+  postCoordsDays: -1
 Report:
   enabled: true
   reportDelay: 30
@@ -96,11 +121,20 @@ Report:
 YouTube:
   enabled: false
   setOwnLink: true
-  videoIdentifier: Varo
+  videoIdentifier: ODV
 Discord:
   discordBotEnabled: true
   botToken: ENTER TOKEN HERE
   eventChannelID: -1
+  eventChannel:
+    strike: -1
+    joinLeave: -1
+    win: -1
+    info: -1
+    kill: -1
+    death: -1
+    alert: -1
+    youtube: -1
   serverGuildID: -1
   verifySystem: true
   verifySystemMySQL: false
@@ -111,13 +145,14 @@ Discord:
     mysql_database: DATABASE_HERE
   registerChannelID: -1
   announcementChannelID: -1
+  announcementPingRoleID: -1
   resultChannelID: -1
-  youtubeChannelID: -1
   addPokalOnWin: true
   setTeamAsGroup: false
   inviteLink: https://discord.gg/UPCZ9eX
-  commandTrigger: 'varo '
-  gameState: ODV | Plugin by Cuuky
+  commandTrigger: '!varo '
+  randomMessageColor: false
+  gameState: ODV | Plugin by Cuuky, Korne127
 Telegram:
   telegrambotEnabled: false
   botToken: ENTER TOKEN HERE
@@ -142,10 +177,8 @@ Autosetup:
     amount: 40
     block:
       material: STONE_BRICK_SLAB
-      meta: 5
     sideblock:
       material: GRASS
-      meta: 0
 Other:
   playerChestLimit: 2
   playerFurnaceLimit: -1
@@ -156,5 +189,6 @@ Other:
   onlyLabyModPlayer: false
   minimalSpectatorHeight: 70
   broadcastIntervalInSeconds: -1
-  hideNametags: false
+  removeHitDelay: true
+  allowTrolling: false
   debugOptions: true

@@ -39,11 +39,14 @@ public class PlayerChatListener implements Listener {
 			message = message.replaceAll("%", "");
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		String tc = ConfigEntry.TEAMCHAT_TRIGGER.getValueAsString();
-		if(message.startsWith(tc)) {
+		String tc = ConfigEntry.CHAT_TRIGGER.getValueAsString();
+		boolean globalTrigger = ConfigEntry.TRIGGER_FOR_GLOBAL.getValueAsBoolean();
+		if((message.startsWith(tc) && !globalTrigger) || (!message.startsWith(tc) && globalTrigger)) {
 			new TeamChat(vp, message.replaceFirst("\\" + tc, ""));
 			event.setCancelled(true);
 			return;
+		} else if (message.startsWith(tc)) {
+			message = message.replaceFirst("\\" + tc, "");
 		}
 
 		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null) {
@@ -53,7 +56,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(!player.isOp()) {
-			if(ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getGame().isStarted() || !Main.getGame().isStarted()) {
+			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getGame().hasStarted()) || !Main.getGame().hasStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
@@ -66,7 +69,7 @@ public class PlayerChatListener implements Listener {
 					new ChatMessage(player, message);
 			}
 
-			if(Main.getGame().isStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if(Main.getGame().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;

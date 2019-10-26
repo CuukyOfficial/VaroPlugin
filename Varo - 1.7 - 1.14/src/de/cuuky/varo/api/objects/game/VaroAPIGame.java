@@ -20,10 +20,6 @@ public class VaroAPIGame {
 		return VaroAPIGameState.getState(game.getGameState());
 	}
 
-	public void setWillSetupNextStart(boolean arg1) {
-		game.setWillSetupNext(arg1);
-	}
-
 	public void setLobbyLocation(Location lobby) {
 		game.setLobby(lobby);
 	}

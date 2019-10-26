@@ -25,7 +25,7 @@ public class AutoStartCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(Main.getGame().isStarted()) {
+		if(Main.getGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7wurde bereits gestartet!");
 			return;
 		}
@@ -115,7 +115,7 @@ public class AutoStartCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "AutoStart §aaktiv§7:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: §7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getGame().getAutoStart().getStart()));
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: §7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteam: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsBoolean());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgröße: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			}
 		} else
 			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart §7for help!");

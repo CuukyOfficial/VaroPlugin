@@ -16,7 +16,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 			if(event.getPlayer().hasPermission("varo.readInfo"))
 				return;
 
-			if(Main.getGame().isStarted())
+			if(Main.getGame().isRunning())
 				if(lowerMessage.contains("tell"))
 					return;
 
