@@ -21,6 +21,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
+import de.cuuky.varo.command.varo.RandomTeamCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
@@ -182,8 +183,9 @@ public class Game implements VaroSerializeable {
 		if(hasStarted() || isStarting())
 			return;
 
-		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsBoolean())
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "varo randomteam 2");
+		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
+			new RandomTeamCommand().doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+		}
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
 			new PlayerSort();
