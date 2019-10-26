@@ -49,11 +49,13 @@ commands:
      aliases: [r]
      description: Antwortet einem Spieler
   Mute:
-     description: Stummt einen Spieler
+     description: Mutet einen Spieler
   Protect:
      description: Beschützt Spieler vor Schaden
   Report:
      description: Reporte einen Spieler
+  Unmute:
+     description: Entmutet einen Spieler
   Usage:
      description: Zeigt die Nutzung des Servers
   Border:

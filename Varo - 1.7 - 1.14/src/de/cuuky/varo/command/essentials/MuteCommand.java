@@ -21,18 +21,23 @@ public class MuteCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/mute <Player>");
+			sender.sendMessage(Main.getPrefix() + "§7/mute <Player/All>");
+			sender.sendMessage(Main.getPrefix() + "§7/unmute <Player/All>");
 			return false;
 		}
 
 		if(args[0].equalsIgnoreCase("all")) {
-			for(Player player : Bukkit.getOnlinePlayers())
+			for(Player player : Bukkit.getOnlinePlayers()) {
+				if (player.isOp()) {
+					continue;
+				}
+				
 				if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
 					VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();
-				else
-					new VaroCancelAble(CancelAbleType.MUTE, player);
+				new VaroCancelAble(CancelAbleType.MUTE, player);
+			}
 
-			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler (ent- / ge-) muted!");
+			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gemuted!");
 			return false;
 		}
 
@@ -42,12 +47,17 @@ public class MuteCommand implements CommandExecutor {
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
+		if (player.isOp()) {
+			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gemutet werden!");
+			return false;
+		}
+		
+		
 		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
 			VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();
-		else
-			new VaroCancelAble(CancelAbleType.MUTE, player);
+		new VaroCancelAble(CancelAbleType.MUTE, player);
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich " + (VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null ? "gemuted!" : "entmuted!"));
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gemuted!");
 		return false;
 	}
 }
