@@ -170,6 +170,10 @@ public class Main extends JavaPlugin {
 	public static String getConsolePrefix() {
 		return CONSOLE_PREFIX;
 	}
+	
+	public static Updater getUpdater() {
+		return updater;
+	}
 
 	public static Main getInstance() {
 		return instance;

@@ -9,8 +9,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
@@ -18,6 +21,9 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.team.Team;
+import de.cuuky.varo.update.Updater;
+import de.cuuky.varo.update.Updater.UpdateResult;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -48,6 +54,18 @@ public class PlayerJoinListener implements Listener {
 					Main.getGame().start();
 				else
 					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
+			}
+			
+			if (player.isOp()) {
+					try {
+						Updater updater = Main.getUpdater();
+						if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+							if (Team.getTeams().isEmpty()) {
+								vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
+							}
+							player.sendMessage("§cUpdate verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+						}
+					} catch(NumberFormatException e) {}
 			}
 		} else {
 			if (vplayer.getStats().getSessionsPlayed() == 0) {

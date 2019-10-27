@@ -37,6 +37,7 @@ import de.cuuky.varo.command.varo.StrikeCommand;
 import de.cuuky.varo.command.varo.TeamCommand;
 import de.cuuky.varo.command.varo.TeamRequestCommand;
 import de.cuuky.varo.command.varo.TrollCommand;
+import de.cuuky.varo.command.varo.UpdateCommand;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -76,6 +77,7 @@ public abstract class VaroCommand {
 		new TrollCommand();
 		new ExportCommand();
 		new StatsCommand();
+		new UpdateCommand();
 		// new TestCommand();
 	}
 
