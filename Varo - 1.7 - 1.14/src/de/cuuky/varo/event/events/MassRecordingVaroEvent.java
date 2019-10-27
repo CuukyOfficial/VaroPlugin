@@ -60,12 +60,8 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			@Override
 			public void run() {
 				if(timer < 1) {
-					timerEnd = true;
+					timerEnd = true;					
 					setEnabled(false);
-					for(VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-						vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
-
-					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
 				}
 				timer -= 1;
 			}
@@ -81,21 +77,31 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			VaroPlayer vp = VaroPlayer.getPlayer(Speicher[0]);
 			vp.getStats().setCountdown(Speicher[1]);
 			if(Speicher[1] == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-				vp.setMassRecordingKick(true);
+				if (vp.isOnline()) {
+					vp.setMassRecordingKick(true);
 
-				Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
-				vp.onEvent(BukkitEventType.KICKED);
-				vp.getPlayer().kickPlayer(ConfigMessages.KICK_MESSAGE_MASS_REC.getValue(vp));
+					Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
+					vp.onEvent(BukkitEventType.KICKED);
+					vp.getPlayer().kickPlayer(ConfigMessages.KICK_MESSAGE_MASS_REC.getValue(vp));
+				}
 			}
 		}
 
-		if(!timerEnd)
+		if(!timerEnd) {
 			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme wurde beendet.");
 
 				Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
 			}
-
+		} else {
+			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
+				
+				Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
+			}
+			
+		}
+		
 		countdowns.clear();
 		timerEnd = false;
 	}

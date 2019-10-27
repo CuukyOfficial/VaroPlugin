@@ -54,13 +54,13 @@ public class VaroEvent {
 	public void setEnabled(boolean enabled) {
 		if(Main.getGame().getGameState() != GameState.STARTED && enabled)
 			return;
-
-		this.enabled = enabled;
-
+		
 		if(enabled)
 			onEnable();
 		else
 			onDisable();
+
+		this.enabled = enabled;
 	}
 
 	public Material getIcon() {

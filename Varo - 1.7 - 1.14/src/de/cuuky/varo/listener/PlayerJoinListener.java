@@ -87,13 +87,12 @@ public class PlayerJoinListener implements Listener {
 			} else if(VaroEvent.getMassRecEvent().isEnabled()) {
 				if(VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getTimer());
-					if(!vplayer.getalreadyHadMassProtectionTime()) {
-						vplayer.getStats().addSessionPlayed();
-					}
-				} else
+				} else {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getCountdown(vplayer) + VaroEvent.getMassRecEvent().getTimer());
+				}
 
 				if(!vplayer.getalreadyHadMassProtectionTime()) {
+					vplayer.getStats().addSessionPlayed();
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
 					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
 					vplayer.setalreadyHadMassProtectionTime(true);
