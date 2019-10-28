@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommandListener;
+import de.cuuky.varo.command.essentials.AntiXrayCommand;
 import de.cuuky.varo.command.essentials.BorderCommand;
 import de.cuuky.varo.command.essentials.BroadcastCommand;
 import de.cuuky.varo.command.essentials.ChatClearCommand;
@@ -119,6 +120,7 @@ public class BukkitRegisterer {
 
 	private void registerCommands() {
 		registerCommand("varo", new VaroCommandListener());
+		registerCommand("antixray", new AntiXrayCommand());
 		registerCommand("broadcast", new BroadcastCommand());
 		registerCommand("chatclear", new ChatClearCommand());
 		registerCommand("day", new DayCommand());

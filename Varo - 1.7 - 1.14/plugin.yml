@@ -9,6 +9,8 @@ commands:
   varo:
     aliases: [titan, uhc, odv, onedayvaro, suro]
     description: Hauptbefehl des Plugins
+  Antixray:
+    description: Schaltet einen Schutz vor X-Ray an und aus
   Broadcast:
     aliases: [bc]
     description: Sendet eine Nachricht an den Server

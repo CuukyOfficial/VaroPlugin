@@ -15,7 +15,7 @@ public class UnmuteCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.freeze")) {
+		if(!sender.hasPermission("varo.unmute")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.unmute"));
 			return false;
 		}

@@ -152,7 +152,7 @@ Discord:
   inviteLink: https://discord.gg/UPCZ9eX
   commandTrigger: '!varo '
   randomMessageColor: false
-  gameState: ODV | Plugin by Cuuky
+  gameState: 'ODV | Plugin by Cuuky - Contributors: Korne127'
 Telegram:
   telegrambotEnabled: false
   botToken: ENTER TOKEN HERE
