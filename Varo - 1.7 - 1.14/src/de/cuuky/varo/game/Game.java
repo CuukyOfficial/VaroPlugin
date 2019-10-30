@@ -263,7 +263,7 @@ public class Game implements VaroSerializeable {
 						public void run() {
 							firstTime = false;
 						}
-					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
+					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
 					Main.getDataManager().getItemHandler().getStartItems().giveToAll();
 					if(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0)
