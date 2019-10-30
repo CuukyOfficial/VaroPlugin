@@ -79,7 +79,7 @@ public class UpdateCommand extends VaroCommand {
 			FileOutputStream fout = null;
 			
 			try {
-				System.out.println(Main.getPrefix() + "Starte Download");
+				System.out.println("Starte Download");
 				in = new BufferedInputStream(download.openStream());
 				fout = new FileOutputStream("plugins" + System.getProperty("file.separator") + Main.getInstance().getDescription().getName() + ".jar");
 				
