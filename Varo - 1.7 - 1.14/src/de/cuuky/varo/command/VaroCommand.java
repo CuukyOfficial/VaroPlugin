@@ -78,7 +78,6 @@ public abstract class VaroCommand {
 		new ExportCommand();
 		new StatsCommand();
 		new UpdateCommand();
-		// new TestCommand();
 	}
 
 	private String name;

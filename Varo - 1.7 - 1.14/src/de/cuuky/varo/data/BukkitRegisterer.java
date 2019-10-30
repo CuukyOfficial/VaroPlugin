@@ -114,7 +114,7 @@ public class BukkitRegisterer {
 				LabyModAPI.class.getName();
 				registerEvent(new PermissionSendListener());
 			} catch(NoClassDefFoundError e) {
-				System.out.println(Main.getConsolePrefix() + "Plugin LabyModAPI could not be found. You wont be able to use the AntiLabyMod feature.");
+				System.out.println(Main.getConsolePrefix() + "Plugin LabyModAPI could not be found. You won't be able to use the LabyMod features.");
 			}
 	}
 

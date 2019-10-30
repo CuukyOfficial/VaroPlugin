@@ -144,7 +144,7 @@ public enum ConfigMessages {
 	NAMETAG_TEAM_PREFIX("NameTag.nametagWithTeam", "%colorcode%%team% &7"),
 
 	// DISCORD
-	DISCORD_NOT_REGISTERED_DISCORD("Discord.notRegisteredDiscord", "&cDu bist noch nicht mit dem Discord authentifiziert!\n&7Um dich zu authentifizieren, schreibe in den #verify -Channel &c'varo verify <Deine ID>' &7auf dem Discord!\nLink zum Discord: &c%discordLink%\n&7Deine ID lautet: &c%code%"),
+	DISCORD_NOT_REGISTERED_DISCORD("Discord.notRegisteredDiscord", "&cDu bist noch nicht mit dem Discord authentifiziert!\n&7Um dich zu authentifizieren, schreibe in den #verify -Channel &c'varo verify <Deine ID>' &7auf dem Discord!\nLink zum Discordserver: &c%discordLink%\n&7Deine ID lautet: &c%code%"),
 	DISCORD_NO_SERVER_USER("Discord.noServerUser", "&cDein Account ist nicht auf dem Discord!%nextLine%&7Joine dem Discord und versuche es erneut."),
 
 	// OTHER

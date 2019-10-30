@@ -91,7 +91,7 @@ public class AdminMainMenu extends SuperInventory {
 				if(Main.getDiscordBot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
-					opener.sendMessage(Main.getPrefix() + "http://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
 					return;
 				}
 
@@ -138,7 +138,7 @@ public class AdminMainMenu extends SuperInventory {
 			public void run() {
 				opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
 				opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
-				opener.sendMessage(Main.getPrefix() + "§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
+				opener.sendMessage(Main.getPrefix() + "§7Discordserver: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
 				opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
 			}
 		});

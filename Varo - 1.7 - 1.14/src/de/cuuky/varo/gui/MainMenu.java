@@ -110,7 +110,7 @@ public class MainMenu extends SuperInventory {
 				public void run() {
 					opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
 					opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
-					opener.sendMessage(Main.getPrefix() + "§7Discord: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
+					opener.sendMessage(Main.getPrefix() + "§7Discordserver: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
 					opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
 				}
 			});
