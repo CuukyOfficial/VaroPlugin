@@ -19,7 +19,7 @@ public class Updater {
 
 		NO_UPDATE("Es ist kein Update verfuegbar!"),
 		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
-		UPDATE_AVAILABLE("Es ist ein Update verfuegbar! https://www.spigotmc.org/resources/71075/"),
+		UPDATE_AVAILABLE("Es ist ein Update verfügbar! https://www.spigotmc.org/resources/71075/"),
 		TEST_BUILD("Du nutzt einen TestBuild des Plugins - bitte Fehler umgehend melden!");
 
 		private String message;

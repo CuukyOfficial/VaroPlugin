@@ -15,7 +15,7 @@ public class MuteCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.freeze")) {
+		if(!sender.hasPermission("varo.mute")) {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.mute"));
 			return false;
 		}

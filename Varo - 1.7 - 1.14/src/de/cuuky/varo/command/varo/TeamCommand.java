@@ -18,7 +18,7 @@ public class TeamCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Kommands:");
+			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Befehle:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Teamname> <Spieler 1, 2, 3...>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add §7<Player> <Team/TeamID>");
@@ -201,7 +201,7 @@ public class TeamCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich in das Team " + Main.getColorCode() + team.getName() + " §7gesetzt!");
 			return;
 		} else
-			sender.sendMessage(Main.getPrefix() + "§7Kommand nicht gefunden! " + Main.getColorCode() + "/team");
+			sender.sendMessage(Main.getPrefix() + "§7Befehl nicht gefunden! " + Main.getColorCode() + "/team");
 		return;
 	}
 }

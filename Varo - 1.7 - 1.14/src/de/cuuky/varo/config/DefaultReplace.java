@@ -48,7 +48,7 @@ public class DefaultReplace {
 		replaced = replaced.contains("%prefix%") ? replaced.replaceAll("%prefix%", vp.getPrefix()) : replaced;
 		replaced = replaced.contains("%team%") ? replaced.replaceAll("%team%", vp.getTeam() != null ? vp.getTeam().getDisplay() : "-") : replaced;
 		replaced = replaced.contains("%rank%") ? replaced.replaceAll("%rank%", vp.getRank() != null ? vp.getRank().getDisplay() : "-") : replaced;
-		replaced = replaced.contains("%episodesPlayed%") ? replaced.replaceAll("%episodesPlayed%", String.valueOf(vp.getStats().getSessionsPlayed())) : replaced;
+		replaced = replaced.contains("%episodesPlayedPlus1%") ? replaced.replaceAll("%episodesPlayedPlus1%", String.valueOf(vp.getStats().getSessionsPlayed() + 1)) : replaced;
 		replaced = replaced.contains("%sessions%") ? replaced.replaceAll("%sessions%", String.valueOf(vp.getStats().getSessions())) : replaced;
 		replaced = replaced.contains("%seconds%") ? replaced.replaceAll("%seconds%", String.valueOf(vp.getStats().getCountdown())) : replaced;
 		replaced = replaced.contains("%remainingDisconnects%") ? replaced.replaceAll("%remainingDisconnects%", String.valueOf(Disconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - Disconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())) : replaced;

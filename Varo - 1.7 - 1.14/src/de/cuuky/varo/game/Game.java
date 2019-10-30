@@ -127,7 +127,7 @@ public class Game implements VaroSerializeable {
 								Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
 
 							if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
-								if(countdown == 0) {
+								if(countdown == 0 && !VaroEvent.getMassRecEvent().isEnabled()) {
 									Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
 									vp.onEvent(BukkitEventType.KICKED);
 									p.kickPlayer(ConfigMessages.KICK_MESSAGE.getValue(vp));
