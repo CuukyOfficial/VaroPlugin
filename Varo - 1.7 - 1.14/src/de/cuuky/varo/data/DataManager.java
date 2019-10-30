@@ -1,11 +1,9 @@
 package de.cuuky.varo.data;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -33,12 +31,15 @@ import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
+import de.cuuky.varo.spigot.downloader.PluginDownloader;
 import de.cuuky.varo.team.TeamHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.world.WorldHandler;
 import net.labymod.serverapi.LabyModAPI;
 
 public class DataManager {
+
+	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
 	private WorldHandler worldHandler;
 	private ConfigHandler configHandler;
@@ -52,7 +53,7 @@ public class DataManager {
 	public DataManager() {
 		load();
 		loadPlugins();
-		
+
 		startAutoSave();
 		doSave = true;
 	}
@@ -79,107 +80,75 @@ public class DataManager {
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}
-	
+
 	private void loadPlugins() {
 		boolean discordNewDownload = false;
-		if (ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
+		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			VaroDiscordBot discordbot;
 			try {
 				discordbot = new VaroDiscordBot();
 				discordbot.connect();
-			} catch (NoClassDefFoundError | BootstrapMethodError ef) {
+			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
 				discordbot = null;
-				System.out.println("Das Discordbot-Plugin wird automatisch heruntergeladen");
-				discordNewDownload = loadAdditionalPlugin("https://socialme.online/VaroPlugin/Discordbot.jar", "Discordbot.jar");
+				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
+				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
 			}
 		}
-		
+
 		boolean telegramNewDownload = false;
-		if (ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
+		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			VaroTelegramBot telegrambot;
 			try {
 				telegrambot = new VaroTelegramBot();
 				telegrambot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
 				telegrambot = null;
-				System.out.println("Das Telegrambot-Plugin wird automatisch heruntergeladen");
-				telegramNewDownload = loadAdditionalPlugin("https://socialme.online/VaroPlugin/Telegrambot.jar", "Telegrambot.jar");
+				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
+				telegramNewDownload = loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
 			}
 		}
-		
+
 		boolean labymodNewDownload = false;
-		if (ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
+		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
 			try {
 				LabyModAPI.class.getName();
 				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
 			} catch(NoClassDefFoundError e) {
-				System.out.println("Das Labymod-Plugin wird automatisch heruntergeladen");
-				labymodNewDownload = loadAdditionalPlugin("https://socialme.online/VaroPlugin/Labymod.jar", "Labymod.jar");
+				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
+				labymodNewDownload = loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
 			}
 		}
-		
-		if (discordNewDownload || telegramNewDownload || labymodNewDownload) {
-			System.out.println("Der Server wird heruntergefahren, damit das Heruntergeladene angewandt werden kann.");
-			System.out.println("Bitte fahre den Server wieder hoch.");
+
+		if(discordNewDownload || telegramNewDownload || labymodNewDownload) {
+			System.out.println(Main.getConsolePrefix() + "Der Server wird heruntergefahren, damit das Heruntergeladene angewandt werden kann.");
+			System.out.println(Main.getConsolePrefix() + "Bitte fahre den Server wieder hoch.");
 			Bukkit.getServer().shutdown();
 		}
-		
+
 	}
-	
-	public boolean loadAdditionalPlugin(String urlDownload, String dataName) {
+
+	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
 		try {
-			URL download = new URL(urlDownload);
-			BufferedInputStream in = null;
-			FileOutputStream fout = null;
-			
-			try {
-				System.out.println("Starte Download");
-				in = new BufferedInputStream(download.openStream());
-				fout = new FileOutputStream("plugins" + System.getProperty("file.separator") + dataName);
-				
-				final byte data[] = new byte[1024];
-				int count;
-				while ((count = in.read(data, 0, 1024)) != -1) {
-					fout.write(data, 0, count);
-				}
-				
-			} catch (IOException e) {
-				System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
-				System.out.println("---------- Stack Trace ----------");
-				e.printStackTrace();
-				System.out.println("---------- Stack Trace ----------");
-				
-				if (in != null) {
-					in.close();
-				}
-				if (fout != null) {
-					fout.close();
-				}
-				
-				return false;
-			} finally {
-				if (in != null) {
-					in.close();
-				}
-				if (fout != null) {
-					fout.close();
-				}
-			}
-			
+			PluginDownloader pd = new PluginDownloader(resourceId, dataName);
+
+			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
+
+			pd.startDownload();
+
+			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
 			return true;
-			
-		} catch (IOException e) {
-			System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
-			System.out.println("---------- Stack Trace ----------");
+		} catch(IOException e) {
+			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
+			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
 			e.printStackTrace();
-			System.out.println("---------- Stack Trace ----------");
+			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
 			return false;
 		}
-		
-	//True: Plugin wurde neu heruntergeladen -> Neustart
-	//False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
+
+		// True: Plugin wurde neu heruntergeladen -> Neustart
+		// False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
 	}
-	
+
 	public void save() {
 		if(!doSave)
 			return;

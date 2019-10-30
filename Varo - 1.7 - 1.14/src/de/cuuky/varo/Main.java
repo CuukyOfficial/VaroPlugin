@@ -16,9 +16,9 @@ import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
+import de.cuuky.varo.spigot.checker.UpdateChecker;
+import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
 import de.cuuky.varo.threads.DailyTimer;
-import de.cuuky.varo.update.Updater;
-import de.cuuky.varo.update.Updater.UpdateResult;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -36,10 +36,9 @@ public class Main extends JavaPlugin {
 	private static VaroDiscordBot discordBot;
 	private static VaroTelegramBot telegramBot;
 	private static BotLauncher botLauncher;
-	private static Updater updater;
+	private static UpdateChecker updateChecker;
 	private static Game game;
 
-	private String RESCOURCE_ID = "71075";
 	private boolean failed = false;
 
 	@Override
@@ -78,9 +77,9 @@ public class Main extends JavaPlugin {
 			dataManager = new DataManager();
 
 			try {
-				updater = new Updater(Main.this, Integer.valueOf(RESCOURCE_ID));
-				updater.postResults();
-				if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE)
+				updateChecker = new UpdateChecker(this);
+				updateChecker.postResults();
+				if(updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE)
 					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord.");
 			} catch(NumberFormatException e) {}
 
@@ -171,8 +170,8 @@ public class Main extends JavaPlugin {
 		return CONSOLE_PREFIX;
 	}
 	
-	public static Updater getUpdater() {
-		return updater;
+	public static UpdateChecker getUpdater() {
+		return updateChecker;
 	}
 
 	public static Main getInstance() {

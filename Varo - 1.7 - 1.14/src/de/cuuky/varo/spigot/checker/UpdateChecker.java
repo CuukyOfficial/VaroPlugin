@@ -1,4 +1,4 @@
-package de.cuuky.varo.update;
+package de.cuuky.varo.spigot.checker;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,18 +8,18 @@ import java.net.URL;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.spigot.SpigotObject;
 
-public class Updater {
+public class UpdateChecker extends SpigotObject {
 
-	private Updater.UpdateResult result;
+	private UpdateChecker.UpdateResult result;
 	private String version;
-	private Integer rescourceId;
 
 	public enum UpdateResult {
 
 		NO_UPDATE("Es ist kein Update verfuegbar!"),
 		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
-		UPDATE_AVAILABLE("Es ist ein Update verfügbar! https://www.spigotmc.org/resources/71075/"),
+		UPDATE_AVAILABLE("Es ist ein Update verfuegbar! https://www.spigotmc.org/resources/" + RESOURCE_ID + "/"),
 		TEST_BUILD("Du nutzt einen TestBuild des Plugins - bitte Fehler umgehend melden!");
 
 		private String message;
@@ -33,14 +33,13 @@ public class Updater {
 		}
 	}
 
-	public Updater(JavaPlugin plugin, Integer resourceId) {
+	public UpdateChecker(JavaPlugin plugin) {
 		this.result = UpdateResult.NO_UPDATE;
-		this.rescourceId = resourceId;
-		if(resourceId == 0)
+		if(RESOURCE_ID == 0)
 			return;
 
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openConnection();
+			HttpURLConnection con = (HttpURLConnection) new URL(SPIGOT_API_URL + "/update.php?resource=" + RESOURCE_ID).openConnection();
 			version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
 			switch(new Version(version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
 			case EQUAL:
@@ -59,7 +58,7 @@ public class Updater {
 	}
 
 	public void postResults() {
-		if(rescourceId == 0)
+		if(RESOURCE_ID == 0)
 			return;
 
 		System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());

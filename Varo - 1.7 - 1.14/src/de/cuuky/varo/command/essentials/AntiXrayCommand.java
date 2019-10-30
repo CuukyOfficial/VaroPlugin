@@ -42,7 +42,6 @@ public class AntiXrayCommand implements CommandExecutor {
 		}
 		
 		
-		
 		if (xrayAvailable == 0) {
 			String enabled = Bukkit.getServer().spigot().getConfig().getString("world-settings.default.anti-xray.enabled");
 			String engineMode = Bukkit.getServer().spigot().getConfig().getString("world-settings.default.anti-xray.engine-mode");
@@ -67,7 +66,7 @@ public class AntiXrayCommand implements CommandExecutor {
 			} else {
 				sender.sendMessage(Main.getPrefix() + "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren.");
 				
-				boolean xrayDownload = Main.getDataManager().loadAdditionalPlugin("https://socialme.online/VaroPlugin/Anti-Xray.jar", "Anti-Xray.jar");
+				boolean xrayDownload = Main.getDataManager().loadAdditionalPlugin(22818, "Anti-Xray.jar");
 				
 				if (!xrayDownload) {
 					sender.sendMessage(Main.getPrefix() + "Es gab einen kritischen Fehler beim Download des Plugins.");
@@ -92,7 +91,6 @@ public class AntiXrayCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "§7/antixray off - Deaktiviert den Schutz vor X-Ray");
 			return false;
 		}
-		
 		
 		
 		if(args[0].equalsIgnoreCase("on")) {

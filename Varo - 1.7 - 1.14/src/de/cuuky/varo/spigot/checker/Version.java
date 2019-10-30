@@ -1,9 +1,9 @@
-package de.cuuky.varo.update;
+package de.cuuky.varo.spigot.checker;
 
 public class Version {
 
 	/*
-	 * 
+	 * Stolen code, it's very old I don't remember where it's from
 	 */
 
 	private String version;
