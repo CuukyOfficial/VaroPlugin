@@ -1,5 +1,7 @@
 package de.cuuky.varo.player.event.events;
 
+import org.bukkit.Bukkit;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -38,6 +40,10 @@ public class WinEvent extends BukkitEvent {
 			db.getController().setNickname(member, member.getUser().getName() + " | " + wins + " ð").complete();
 		} catch(PermissionException e) {
 			System.out.println("[Varo] Konnte den Pokal für '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
+		}
+		
+		if (ConfigEntry.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
+			Bukkit.getServer().shutdown();
 		}
 	}
 }
