@@ -91,7 +91,7 @@ public class AdminMainMenu extends SuperInventory {
 				if(Main.getDiscordBot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
-					opener.sendMessage(Main.getPrefix() + "http://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
 					return;
 				}
 

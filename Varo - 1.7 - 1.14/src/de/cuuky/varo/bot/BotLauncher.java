@@ -31,7 +31,7 @@ public class BotLauncher {
 			discordbot = null;
 			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
 			System.out.println(Main.getConsolePrefix() + "If you want to use the discordbot please install this plugin:");
-			System.out.println(Main.getConsolePrefix() + "http://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+			System.out.println(Main.getConsolePrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
 		}
 	}
 
