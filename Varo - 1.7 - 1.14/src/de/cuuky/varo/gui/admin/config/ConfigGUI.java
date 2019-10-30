@@ -42,16 +42,13 @@ public class ConfigGUI extends SuperInventory {
 					try {
 						entry.setValue(Utils.getStringObject(message), true);
 
-						if(entry.getName() == "startCountdown") {
-							Main.getGame().setStartCountdown(Integer.parseInt(message));
-						}
-
 					} catch(Exception e) {
 						opener.sendMessage(Main.getPrefix() + e.getMessage());
 						hookChat(entry);
 						return;
 					}
-
+					
+					Main.getDataManager().reloadConfig();
 					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
 					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
 				}
