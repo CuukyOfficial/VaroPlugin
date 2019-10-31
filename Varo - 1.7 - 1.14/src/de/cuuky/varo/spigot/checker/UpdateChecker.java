@@ -17,7 +17,7 @@ public class UpdateChecker extends SpigotObject {
 
 	public enum UpdateResult {
 
-		NO_UPDATE("Es ist kein Update verfuegbar!"),
+		NO_UPDATE("Es ist kein Update verfügbar!"),
 		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
 		UPDATE_AVAILABLE("Es ist ein Update verfuegbar! https://www.spigotmc.org/resources/" + RESOURCE_ID + "/"),
 		TEST_BUILD("Du nutzt einen TestBuild des Plugins - bitte Fehler umgehend melden!");

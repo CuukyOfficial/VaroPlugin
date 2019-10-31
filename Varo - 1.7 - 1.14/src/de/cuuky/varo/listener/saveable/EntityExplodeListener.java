@@ -24,17 +24,15 @@ public class EntityExplodeListener implements Listener {
 			return;
 		}
 
-		if(event.getEntity().getType().equals(EntityType.PRIMED_TNT)) {
-			final Iterator<Block> iter = event.blockList().iterator();
-			while(iter.hasNext()) {
-				Block block = iter.next();
-				if(block.getState() instanceof Chest || block.getState() instanceof Furnace) {
-					if(VaroSaveable.getByLocation(block.getLocation()) != null)
-						iter.remove();
-				} else if(block.getState() instanceof Sign)
-					if(chestNearby(block.getLocation()))
-						iter.remove();
-			}
+		final Iterator<Block> iter = event.blockList().iterator();
+		while(iter.hasNext()) {
+			Block block = iter.next();
+			if(block.getState() instanceof Chest || block.getState() instanceof Furnace) {
+				if(VaroSaveable.getByLocation(block.getLocation()) != null)
+					iter.remove();
+			} else if(block.getState() instanceof Sign)
+				if(chestNearby(block.getLocation()))
+					iter.remove();
 		}
 	}
 
