@@ -29,7 +29,9 @@ public class SpawnCommand implements CommandExecutor {
 		Player player = (Player) sender;
 		loc = player.getWorld().getSpawnLocation();
 		
-		if (player.getWorld().getName().equalsIgnoreCase("world")) {
+		System.out.println("Name: " + player.getWorld().getName());
+		
+		if (!player.getWorld().getName().equalsIgnoreCase("world")) {
 			sender.sendMessage(Main.getPrefix() + "§7Im Nether und Ende kann dir der Spawn nicht angegeben werden.");
 			return false;
 		}
