@@ -39,10 +39,11 @@ public class Main extends JavaPlugin {
 	private static UpdateChecker updateChecker;
 	private static Game game;
 
-	private boolean failed = false;
+	private boolean failed;
 
 	@Override
 	public void onLoad() {
+		failed = false;
 		instance = this;
 
 		new ConsoleLogger();
