@@ -9,9 +9,9 @@ import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
 public class GameHandler extends VaroSerializeObject {
 
 	static {
-		VaroSerializeObject.registerEnum(GameState.class);
-		VaroSerializeObject.registerClass(AutoStart.class);
-		VaroSerializeObject.registerClass(BorderDecreaseDayTimer.class);
+		registerEnum(GameState.class);
+		registerClass(AutoStart.class);
+		registerClass(BorderDecreaseDayTimer.class);
 	}
 
 	public GameHandler() {

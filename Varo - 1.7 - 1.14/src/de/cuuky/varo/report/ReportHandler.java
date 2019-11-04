@@ -5,7 +5,7 @@ import de.cuuky.varo.serialize.VaroSerializeObject;
 public class ReportHandler extends VaroSerializeObject {
 
 	static {
-		VaroSerializeObject.registerEnum(ReportReason.class);
+		registerEnum(ReportReason.class);
 	}
 
 	public ReportHandler() {
