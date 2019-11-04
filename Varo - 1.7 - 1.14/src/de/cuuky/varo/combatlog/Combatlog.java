@@ -22,7 +22,7 @@ public class Combatlog {
 		player.onEvent(BukkitEventType.KICKED);
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");
 		if(ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
-			player.getStats().addStrike(new Strike("CombatLog", player, "CONSOLE"));
+			player.getStats().addStrike(new Strike("Es wurde sich während des Kampfes ausgeloggt.", player, "CONSOLE"));
 			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
 		} else
 			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(player));

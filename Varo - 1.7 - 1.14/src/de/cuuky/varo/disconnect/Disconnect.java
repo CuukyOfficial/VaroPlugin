@@ -64,7 +64,7 @@ public class Disconnect {
 			vp.getStats().removeCountdown();
 
 		if(ConfigEntry.STRIKE_ON_DISCONNECT.getValueAsBoolean())
-			vp.getStats().addStrike(new Strike("Zu oft verlassen", vp, "CONSOLE"));
+			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
 		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
 		Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(vp));

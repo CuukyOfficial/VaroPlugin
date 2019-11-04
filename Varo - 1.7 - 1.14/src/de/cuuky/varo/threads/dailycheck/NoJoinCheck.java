@@ -33,7 +33,7 @@ public class NoJoinCheck extends Checker {
 				if(ConfigEntry.STRIKE_ON_NO_ACTIVITY.getValueAsBoolean()) {
 					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN_STRIKE.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 
-					vp.getStats().addStrike(new Strike("Activity Strike", vp, "CONSOLE"));
+					vp.getStats().addStrike(new Strike("Es wurde für zu viele Tage nicht auf den Server gejoint.", vp, "CONSOLE"));
 				} else
 					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 			}
