@@ -21,18 +21,22 @@ public class FreezeCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/freeze <Player>");
+			sender.sendMessage(Main.getPrefix() + "§7/freeze <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/unfreeze <Player/@a>");
 			return false;
 		}
 
 		if(args[0].equalsIgnoreCase("@a")) {
-			for(Player player : Bukkit.getOnlinePlayers())
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
-					VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
-				else
+			for(Player player : Bukkit.getOnlinePlayers()) {
+				if(player.isOp()) {
+					continue;
+				}
+				
+				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) == null)
 					new VaroCancelAble(CancelAbleType.FREEZE, player);
+			}
 
-			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler (ent- / ge-) freezed!");
+			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gefreezed!");
 			return false;
 		}
 
@@ -42,12 +46,16 @@ public class FreezeCommand implements CommandExecutor {
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
-			VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
-		else
+		if(player.isOp()) {
+			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gefreezed werden!");
+			return false;
+		}
+		
+		if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) == null)
 			new VaroCancelAble(CancelAbleType.FREEZE, player);
+			
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich " + (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null ? "gefreezed!" : "entfreezed!"));
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gefreezed!");
 		return false;
 	}
 }
