@@ -57,6 +57,8 @@ commands:
      description: Beschützt Spieler vor Schaden
   Report:
      description: Reporte einen Spieler
+  Unfreeze:
+     description: Entfreezed einen Spieler
   Unmute:
      description: Entmutet einen Spieler
   Usage:
