@@ -9,11 +9,14 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 public class ProtectionTime {
 
 	public ProtectionTime() {
-		startTimer();
+		startGeneralTimer(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
 	}
-
-	private void startTimer() {
-		Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
+	
+	public ProtectionTime(int Timer) {
+		startGeneralTimer(Timer);
+	}
+	
+	private void startGeneralTimer(int timer) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 			@Override
@@ -21,6 +24,6 @@ public class ProtectionTime {
 				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
 				Main.getGame().setProtection(null);
 			}
-		}, ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() * 20 + 1);
+		}, timer * 20 + 1);
 	}
 }

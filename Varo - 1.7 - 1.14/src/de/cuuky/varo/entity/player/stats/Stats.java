@@ -505,7 +505,7 @@ public class Stats implements VaroSerializeable {
 		if(VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
 			result = KickResult.SERVER_FULL;
 
-		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR)
+		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
 			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().hasStarted() && player.isOp()) {
 				if(Main.getGame().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
@@ -538,6 +538,10 @@ public class Stats implements VaroSerializeable {
 
 		if(VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
+		
+		if (Main.getGame().getFinaleJoinStart()) {
+			result = KickResult.FINALE_JOIN;
+		}
 
 		if(Main.isBootedUp())
 			if(!Main.getDataManager().getTimeChecker().canJoin())

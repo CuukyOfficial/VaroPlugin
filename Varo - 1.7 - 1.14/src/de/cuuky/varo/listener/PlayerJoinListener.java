@@ -105,6 +105,10 @@ public class PlayerJoinListener implements Listener {
 					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
 					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 				}
+			} else if (Main.getGame().getFinaleJoinStart()) {
+				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
+				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
+				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 			} else if(!vplayer.getStats().hasTimeLeft()) {
 				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(vplayer));
 				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));

@@ -71,6 +71,11 @@ public enum ConfigEntry {
 	TEAM_LIFES(ConfigSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
 	RESPAWN_PROTECTION(ConfigSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschützt sind"),
 	ADD_TEAM_LIFE_ON_KILL(ConfigSection.DEATH, "addTeamLifesOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler tötet."),
+	
+	//FINALE
+	PLAYER_SPECTATE_IN_FINALE(ConfigSection.FINALE, "playerSpectateInFinale", true, "Ob die toten Spieler während des Finales spectaten dürfen."),
+	BORDER_SIZE_IN_FINALE(ConfigSection.FINALE, "borderSizeInFinale", 300, "Auf diese Größe wird die Border beim Starten des Finales gestellt."),
+	FINALE_PROTECTION_TIME(ConfigSection.FINALE, "finaleProtectionTime", 30, "Länge der Schutzzeit nachdem alle Spieler in die Mitte teleportiert werden."),
 
 	// WORLD
 	BLOCK_DESTROY_LOGGER(ConfigSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Blöcke, die ihr\nunten eintragt unter 'oreLogger.yml'."),

@@ -61,7 +61,7 @@ public class Game implements VaroSerializeable {
 	@VaroSerializeField(path = "lastCoordsPost")
 	private Date lastCoordsPost;
 
-	private boolean showDistanceToBorder, showTimeInActionBar, firstTime = false;
+	private boolean showDistanceToBorder, showTimeInActionBar, finaleJoinStart, firstTime = false;
 	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler;
 	private ProtectionTime protection;
 	private BorderDecreaseMinuteTimer minuteTimer;
@@ -78,6 +78,7 @@ public class Game implements VaroSerializeable {
 
 		gamestate = GameState.LOBBY;
 		borderDecrease = new BorderDecreaseDayTimer(true);
+		finaleJoinStart = false;
 	}
 
 	private void startRefreshTimer() {
@@ -266,8 +267,10 @@ public class Game implements VaroSerializeable {
 					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
 					Main.getDataManager().getItemHandler().getStartItems().giveToAll();
-					if(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0)
+					if (ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+						Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 						protection = new ProtectionTime();
+					}
 
 					return;
 				}
@@ -477,6 +480,14 @@ public class Game implements VaroSerializeable {
 
 	public Location getLobby() {
 		return lobby;
+	}
+	
+	public boolean getFinaleJoinStart() {
+		return finaleJoinStart;
+	}
+	
+	public void setFinaleJoinStart(boolean finaleJoinStart) {
+		this.finaleJoinStart = finaleJoinStart;
 	}
 
 	public void setLobby(Location lobby) {

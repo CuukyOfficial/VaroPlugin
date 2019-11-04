@@ -16,6 +16,7 @@ import de.cuuky.varo.command.varo.DiscordCommand;
 import de.cuuky.varo.command.varo.EnchantmentCommand;
 import de.cuuky.varo.command.varo.EventsCommand;
 import de.cuuky.varo.command.varo.ExportCommand;
+import de.cuuky.varo.command.varo.FinaleCommand;
 import de.cuuky.varo.command.varo.GameCommand;
 import de.cuuky.varo.command.varo.InfoCommand;
 import de.cuuky.varo.command.varo.IntroCommand;
@@ -78,6 +79,7 @@ public abstract class VaroCommand {
 		new ExportCommand();
 		new StatsCommand();
 		new UpdateCommand();
+		new FinaleCommand();
 	}
 
 	private String name;

@@ -14,6 +14,7 @@ public enum KickResult {
 	ALLOW,
 	SPECTATOR,
 	MASS_RECORDING_JOIN,
+	FINALE_JOIN,
 	SERVER_FULL;
 
 }

@@ -42,6 +42,7 @@ public enum ConfigMessages {
 	JOIN_NO_MOVE_IN_PROTECTION("Join.notMoveinProtection", "&7Du kannst dich nicht bewegen, solange du noch in der %colorcode%Schutzzeit &7bist!"),
 	JOIN_SPECTATOR("Join.spectator", "&a%player% &7hat den Server als Spectator betreten!"),
 	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
+	JOIN_FINALE("Join.finale", "%prefix%&a%player% &7hat den Server zum Finale betreten."),
 
 	JOIN_KICK_NOT_USER_OF_PROJECT("Join.kick.notUserOfTheProject", "&7Du bist kein Teilnehmer dieses %projectname%&7's!"),
 	JOIN_KICK_NO_TIME_LEFT("Join.kick.noTimeLeft", "&cDu darfst nur alle &4%timeHours% &cStunden regulär spielen! %nextLine%&7Du kannst erst in &c%stunden%&7:&c%minuten%&7:&c%sekunden% &7wieder joinen!"),
@@ -169,6 +170,7 @@ public enum ConfigMessages {
 	ALERT_PLAYER_JOIN_NORMAL("Alert.playerJoinNormal", "%player% hat das Spiel betreten!"),
 	ALERT_PLAYER_JOINED("Alert.playerJoined", "%player% hat den Server betreten und spielt nun die %episodesPlayedPlus1%te Folge!"),
 	ALERT_PLAYER_JOIN_MASSREC("Alert.playerJoinMassrec", "%player% hat den Server in der Massenaufnahme betreten und spielt nun die %episodesPlayedPlus1%te Folge"),
+	ALERT_JOIN_FINALE("Alert.finale", "%player% &7hat den Server zum Finale betreten."),
 	ALERT_PLAYER_QUIT("Alert.playerQuit", "%player% hat das Spiel verlassen!"),
 	ALERT_PLAYER_DC_TO_EARLY("Alert.playerQuitToEarly", "%player% hat das Spiel vorzeitig verlassen! %player% hat noch %seconds% Sekunden Spielzeit über!"),
 	ALERT_PLAYER_RECONNECT("Alert.playerReconnect", "%player% hatte das Spiel vorzeitig verlassen und ist rejoint! %player% hat noch %seconds% Sekunden verbleibend!"),

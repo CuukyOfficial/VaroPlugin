@@ -23,6 +23,8 @@ public enum ConfigSection {
 	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen dürfen."),
 
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
+	
+	FINALE("Finale", Materials.END_PORTAL_FRAME.parseMaterial(), "Hier kannst du Einstellungen zum Finale des Projektes vornehmen."),
 
 	STRIKE("Strike", Materials.PAPER.parseMaterial(), "Hier kannst du Einstellungen zu den Strikes vornehmen."),
 
