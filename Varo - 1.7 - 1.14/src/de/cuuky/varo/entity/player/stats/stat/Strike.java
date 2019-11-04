@@ -33,7 +33,7 @@ public class Strike implements VaroSerializeable {
 	private VaroPlayer striked;
 
 	public Strike() {}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		this.striked = VaroPlayer.getPlayer(strikedId);
@@ -50,7 +50,7 @@ public class Strike implements VaroSerializeable {
 		this.acquired = new Date();
 		this.posted = false;
 	}
-	
+
 	public void activate(int number) {
 		this.number = number;
 

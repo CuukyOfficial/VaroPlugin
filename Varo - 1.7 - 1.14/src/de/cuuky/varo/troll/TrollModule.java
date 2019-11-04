@@ -28,7 +28,7 @@ public class TrollModule {
 
 		modules.add(this);
 	}
-	
+
 	public void setEnabledFor(Player player, boolean enable) {
 		if(enable) {
 			enabledFor.add(player);

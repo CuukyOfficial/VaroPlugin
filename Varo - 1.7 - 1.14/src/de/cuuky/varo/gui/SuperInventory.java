@@ -36,7 +36,7 @@ public abstract class SuperInventory {
 
 	static {
 		guis = new ArrayList<>();
-		
+
 		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
 		backwards = new ItemBuilder().displayname("§cSeite rückwärts").itemstack(new ItemStack(Material.ARROW)).build();
 	}
@@ -44,8 +44,8 @@ public abstract class SuperInventory {
 	protected String firstTitle, title;
 	protected Player opener;
 	protected Inventory inv;
-	protected int page,size;
-	protected boolean hasMorePages, isLastPage, homePage,ignoreNextClose;
+	protected int page, size;
+	protected boolean hasMorePages, isLastPage, homePage, ignoreNextClose;
 	protected ArrayList<Integer> modifier;
 
 	private HashMap<ItemMeta, Runnable> itemlinks;
@@ -217,7 +217,7 @@ public abstract class SuperInventory {
 		else
 			return size;
 	}
-	
+
 	public void pageForwards() {
 		page++;
 		updateInventory();
@@ -227,7 +227,7 @@ public abstract class SuperInventory {
 		page--;
 		updateInventory();
 	}
-	
+
 	public void back() {
 		close(true);
 

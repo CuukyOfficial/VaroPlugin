@@ -37,7 +37,7 @@ public class Rank implements VaroSerializeable {
 
 		Nametag.refreshAll();
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		if(tablistLocation > highestLocation)

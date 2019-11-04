@@ -19,7 +19,7 @@ public class ChatLogger extends Logger {
 
 		pw.flush();
 	}
-	
+
 	public enum ChatLogType {
 		CHAT("CHAT"),
 		PRIVATE_CHAT("PRIVATECHAT"),

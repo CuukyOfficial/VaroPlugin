@@ -24,7 +24,6 @@ public class Backup {
 	/*
 	 * OLD CODE
 	 */
-	
 
 	private static final int BUFFER_SIZE = 4096;
 
@@ -77,7 +76,7 @@ public class Backup {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
 		byte[] bytesIn = new byte[BUFFER_SIZE];
@@ -98,7 +97,7 @@ public class Backup {
 	public static boolean isBackup(String filename) {
 		return new File("plugins/Varo/backups/" + filename + ".zip").exists();
 	}
-	
+
 	public static boolean unzip(String zipFilePath, String destDirectory) {
 		try {
 			File destDir = new File(destDirectory);

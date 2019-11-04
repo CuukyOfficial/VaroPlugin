@@ -44,7 +44,7 @@ public class ConfigHandler {
 		this.messagesExisted = messagesFile.exists();
 		this.messagesCfg = YamlConfiguration.loadConfiguration(messagesFile);
 	}
-	
+
 	/**
 	 * @return Every description of every ConfigEntry combined
 	 */
@@ -61,7 +61,7 @@ public class ConfigHandler {
 		}
 		return header + desc + "-------------------------";
 	}
-	
+
 	private void save(File file, YamlConfiguration cfg) {
 		try {
 			cfg.save(file);
@@ -120,7 +120,7 @@ public class ConfigHandler {
 		if(save)
 			save(file, cfg);
 	}
-	
+
 	/**
 	 * Main method to load the configs
 	 */

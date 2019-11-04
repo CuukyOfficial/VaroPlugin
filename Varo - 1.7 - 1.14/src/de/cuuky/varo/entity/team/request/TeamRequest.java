@@ -121,7 +121,7 @@ public class TeamRequest {
 		Bukkit.getScheduler().cancelTask(sched);
 		requests.remove(this);
 	}
-	
+
 	public VaroPlayer getInvited() {
 		return invited;
 	}

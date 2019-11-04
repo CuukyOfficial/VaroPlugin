@@ -103,7 +103,7 @@ public class PlayerSort {
 		}
 
 	}
-	
+
 	private void setFullHealth(Player p) {
 		p.setGameMode(GameMode.SURVIVAL);
 		p.setHealth(20);

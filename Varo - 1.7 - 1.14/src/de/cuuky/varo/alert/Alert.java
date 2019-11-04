@@ -46,13 +46,13 @@ public class Alert implements VaroSerializeable {
 
 		return i;
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {}
 
 	@Override
 	public void onSerializeStart() {}
-	
+
 	public void switchOpenState() {
 		this.open = !this.open;
 	}

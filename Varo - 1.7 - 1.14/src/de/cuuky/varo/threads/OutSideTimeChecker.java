@@ -41,7 +41,7 @@ public class OutSideTimeChecker {
 	public GregorianCalendar getDate1() {
 		return this.date1;
 	}
-	
+
 	public GregorianCalendar getDate2() {
 		return this.date2;
 	}

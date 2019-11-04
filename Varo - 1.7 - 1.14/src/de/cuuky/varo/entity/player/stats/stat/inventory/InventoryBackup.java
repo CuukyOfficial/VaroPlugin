@@ -48,7 +48,7 @@ public class InventoryBackup implements VaroSerializeable {
 
 		allBackups.add(this);
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		this.varoplayer = VaroPlayer.getPlayer(vpId);

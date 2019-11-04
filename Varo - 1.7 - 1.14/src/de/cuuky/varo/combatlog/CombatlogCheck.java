@@ -58,7 +58,7 @@ public class CombatlogCheck {
 
 		punish(vp);
 	}
-	
+
 	private void punish(VaroPlayer player) {
 		player.onEvent(BukkitEventType.KICKED);
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");

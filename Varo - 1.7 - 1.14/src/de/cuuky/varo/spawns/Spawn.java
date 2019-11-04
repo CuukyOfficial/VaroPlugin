@@ -22,19 +22,19 @@ public class Spawn implements VaroSerializeable {
 
 	@VaroSerializeField(path = "number")
 	private int number;
-	
+
 	@VaroSerializeField(path = "type")
 	private SpawnType type;
-	
+
 	@VaroSerializeField(path = "location")
 	private Location location;
-	
+
 	@VaroSerializeField(path = "nameTagLocation")
 	private Location nameTagLocation;
-	
+
 	@VaroSerializeField(path = "nameTagName")
 	private String nameTagName;
-	
+
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
 

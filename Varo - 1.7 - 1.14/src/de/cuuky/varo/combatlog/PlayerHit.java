@@ -72,7 +72,7 @@ public class PlayerHit {
 
 		return false;
 	}
-	
+
 	public Player getOpponent() {
 		return this.opponent;
 	}

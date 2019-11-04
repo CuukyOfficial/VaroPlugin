@@ -29,7 +29,7 @@ public class WorldHandler {
 	public World getWorld() {
 		return world;
 	}
-	
+
 	public VaroBorder getBorder() {
 		return border;
 	}

@@ -12,7 +12,7 @@ public class EventLogger extends Logger {
 	public EventLogger(String name) {
 		super(name, true);
 	}
-	
+
 	private void sendToTelegram(LogType type, String message) {
 		if(Main.getTelegramBot() == null)
 			return;
@@ -57,7 +57,7 @@ public class EventLogger extends Logger {
 		sendToDiscord(type, message);
 		sendToTelegram(type, message);
 	}
-	
+
 	public enum LogType {
 
 		STRIKE("STRIKE", Color.YELLOW, ConfigEntry.DISCORDBOT_EVENT_STRIKE),
@@ -93,7 +93,7 @@ public class EventLogger extends Logger {
 
 			return idEntry.getValueAsLong();
 		}
-		
+
 		public String getName() {
 			return name;
 		}

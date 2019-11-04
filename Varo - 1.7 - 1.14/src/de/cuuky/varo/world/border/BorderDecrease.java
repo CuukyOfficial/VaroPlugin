@@ -31,7 +31,7 @@ public class BorderDecrease {
 
 		decreases.add(this);
 	}
-	
+
 	private static void startShrinking() {
 		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
 
@@ -58,7 +58,7 @@ public class BorderDecrease {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void shrink() {
 		VaroBorder border = Main.getDataManager().getWorldHandler().getBorder();
 

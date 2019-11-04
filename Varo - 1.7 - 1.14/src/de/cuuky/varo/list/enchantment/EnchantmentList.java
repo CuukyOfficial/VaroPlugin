@@ -34,7 +34,7 @@ public class EnchantmentList extends VaroList {
 	public ArrayList<String> getEnchantments() {
 		return enchantments;
 	}
-	
+
 	@Override
 	public void onLoad(List<?> list) {
 		enchantments = new ArrayList<String>();

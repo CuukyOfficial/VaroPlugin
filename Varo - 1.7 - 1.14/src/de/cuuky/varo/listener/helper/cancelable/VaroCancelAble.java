@@ -37,7 +37,7 @@ public class VaroCancelAble {
 
 		cancelables.add(this);
 	}
-	
+
 	private void schedule(int time) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 

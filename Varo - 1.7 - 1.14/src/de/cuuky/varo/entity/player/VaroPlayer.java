@@ -99,7 +99,7 @@ public class VaroPlayer extends VaroEntity {
 		this.stats = new Stats(this);
 		stats.loadDefaults();
 	}
-	
+
 	private int generateId() {
 		int id = Utils.randomInt(1000, 9999999);
 		while(getPlayer(id) != null)
@@ -169,7 +169,7 @@ public class VaroPlayer extends VaroEntity {
 			}
 		}, 1);
 	}
-	
+
 	public void delete() {
 		if(team != null)
 			team.removeMember(this);
@@ -370,7 +370,7 @@ public class VaroPlayer extends VaroEntity {
 	public void setMassRecordingKick(boolean massRecordingKick) {
 		this.massRecordingKick = massRecordingKick;
 	}
-	
+
 	public void setVillager(OfflineVillager villager) {
 		this.villager = villager;
 	}

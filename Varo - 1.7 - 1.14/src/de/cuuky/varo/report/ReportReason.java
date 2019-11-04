@@ -33,7 +33,7 @@ public enum ReportReason implements VaroSerializeable {
 	public String getDescription() {
 		return description;
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {}
 

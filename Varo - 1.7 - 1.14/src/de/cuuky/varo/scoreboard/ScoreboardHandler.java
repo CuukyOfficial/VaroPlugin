@@ -184,7 +184,7 @@ public class ScoreboardHandler {
 			}
 		}
 	}
-	
+
 	public void updateList() {
 		loadScores();
 	}

@@ -25,7 +25,7 @@ public class Nametag {
 
 	static {
 		nametags = new ArrayList<>();
-		
+
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			try {
 				Class<?> visibilityClass = Class.forName("org.bukkit.scoreboard.NameTagVisibility");
@@ -77,7 +77,7 @@ public class Nametag {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private String checkName() {
 		String name = this.getPlayer().getName();
 
@@ -227,7 +227,7 @@ public class Nametag {
 
 		return team;
 	}
-	
+
 	public void remove() {
 		nametags.remove(this);
 	}

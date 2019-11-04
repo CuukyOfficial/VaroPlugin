@@ -26,7 +26,7 @@ public abstract class Checker {
 		long diffInMillies = date2.getTime() - date1.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
-	
+
 	public abstract void check();
 
 	public static void checkAll() {

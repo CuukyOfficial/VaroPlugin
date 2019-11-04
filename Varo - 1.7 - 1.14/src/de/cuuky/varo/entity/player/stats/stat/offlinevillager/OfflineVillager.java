@@ -130,7 +130,7 @@ public class OfflineVillager implements VaroSerializeable {
 				e.printStackTrace();
 			}
 	}
-	
+
 	public void kill(VaroPlayer killer) {
 		if(zombie != null)
 			zombie.getWorld().strikeLightningEffect(zombie.getLocation());

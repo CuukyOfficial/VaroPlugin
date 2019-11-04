@@ -55,7 +55,7 @@ public class VaroInventory implements VaroSerializeable {
 				inventoryList.put(String.valueOf(i), stack);
 		}
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}

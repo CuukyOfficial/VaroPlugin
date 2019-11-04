@@ -53,7 +53,7 @@ public class Vanish {
 		unhide();
 		vanishes.remove(this);
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}

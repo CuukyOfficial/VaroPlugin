@@ -276,7 +276,7 @@ public class Game implements VaroSerializeable {
 			}
 		}, 0, 20);
 	}
-	
+
 	public void end(WinnerCheck check) {
 		this.gamestate = GameState.END;
 
@@ -391,7 +391,7 @@ public class Game implements VaroSerializeable {
 		}
 		return blocks;
 	}
-	
+
 	public void loadVariables() {
 		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
 		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
@@ -400,13 +400,13 @@ public class Game implements VaroSerializeable {
 		playTime = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
-	
+
 	public void abort() {
 		Bukkit.getScheduler().cancelTask(startScheduler);
 		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		startRefreshTimer();
@@ -439,7 +439,7 @@ public class Game implements VaroSerializeable {
 	public void setLastDayTimer(Date lastDayTimer) {
 		this.lastDayTimer = lastDayTimer;
 	}
-	
+
 	public ProtectionTime getProtection() {
 		return protection;
 	}

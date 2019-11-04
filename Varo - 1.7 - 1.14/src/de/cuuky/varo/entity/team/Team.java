@@ -50,7 +50,7 @@ public class Team extends VaroEntity {
 		if(this.id > highestNumber)
 			highestNumber = id;
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		for(int id : memberid) {
@@ -159,11 +159,11 @@ public class Team extends VaroEntity {
 
 		return null;
 	}
-	
+
 	public void loadDefaults() {
 		this.lifes = ConfigEntry.TEAM_LIFES.getValueAsInt();
 	}
-	
+
 	public void statChanged() {
 		this.member.forEach(member -> member.update());
 	}

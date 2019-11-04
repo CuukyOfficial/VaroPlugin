@@ -164,7 +164,7 @@ public class VaroDiscordBot implements VaroBot {
 
 		jda = null;
 	}
-	
+
 	private Color getRandomColor() {
 		Random random = new Random();
 		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());

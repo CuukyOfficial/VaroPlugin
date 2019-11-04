@@ -14,7 +14,7 @@ public class ItemList extends VaroList {
 	public ItemList(String location) {
 		super(location);
 	}
-	
+
 	protected ItemStack fixItem(ItemStack item) {
 		item = item.clone();
 		item.setAmount(1);
@@ -22,7 +22,7 @@ public class ItemList extends VaroList {
 			item.setDurability((short) 0);
 		return item;
 	}
-	
+
 	protected boolean isDamageable(ItemStack item) {
 		if(item == null)
 			return false;
@@ -92,7 +92,7 @@ public class ItemList extends VaroList {
 			}
 		}
 	}
-	
+
 	@Override
 	public ArrayList<?> getAsList() {
 		return items;

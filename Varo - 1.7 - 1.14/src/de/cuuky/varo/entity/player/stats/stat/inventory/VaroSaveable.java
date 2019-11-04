@@ -15,20 +15,20 @@ import de.cuuky.varo.utils.Utils;
 public class VaroSaveable implements VaroSerializeable {
 
 	private static ArrayList<VaroSaveable> saveables;
-	
+
 	static {
 		saveables = new ArrayList<>();
 	}
 
 	@VaroSerializeField(path = "type")
 	private SaveableType type;
-	
+
 	@VaroSerializeField(path = "blockLocation")
 	private Location blockLocation;
-	
+
 	@VaroSerializeField(path = "id")
 	private int id;
-	
+
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
 
@@ -48,7 +48,7 @@ public class VaroSaveable implements VaroSerializeable {
 
 		saveables.add(this);
 	}
-	
+
 	private int generateId() {
 		int id = Utils.randomInt(1000, 9999999);
 		while(getSaveable(id) != null)
@@ -74,7 +74,7 @@ public class VaroSaveable implements VaroSerializeable {
 		this.playerId = player.getId();
 		this.blockLocation = block.getLocation();
 	}
-	
+
 	public boolean holderDead() {
 		if(this.player.getTeam() == null && this.player.getStats().isAlive())
 			return false;
@@ -99,7 +99,7 @@ public class VaroSaveable implements VaroSerializeable {
 		player.getStats().removeSaveable(this);
 		saveables.remove(this);
 	}
-	
+
 	public Block getBlock() {
 		return block;
 	}
@@ -115,7 +115,7 @@ public class VaroSaveable implements VaroSerializeable {
 	public VaroPlayer getPlayer() {
 		return player;
 	}
-	
+
 	public static VaroSaveable getSaveable(int id) {
 		for(VaroSaveable save : saveables) {
 			if(save.getId() != id)
@@ -144,7 +144,7 @@ public class VaroSaveable implements VaroSerializeable {
 	public static ArrayList<VaroSaveable> getSaveables() {
 		return saveables;
 	}
-	
+
 	public enum SaveableType implements VaroSerializeable {
 		@VaroSerializeField(enumValue = "CHEST")
 		CHEST,
