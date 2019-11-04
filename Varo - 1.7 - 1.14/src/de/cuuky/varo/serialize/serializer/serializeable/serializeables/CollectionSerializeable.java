@@ -17,7 +17,7 @@ public class CollectionSerializeable extends VaroSerialize {
 	public CollectionSerializeable() {
 		super(VaroSerializeLoopType.CONTINUE);
 	}
-	
+
 	@Override
 	public Object deserialize(Field field, Object obj, MemorySection section, String path, VaroSerializeObject object) {
 		if(Collection.class.isAssignableFrom(field.getType())) {
@@ -43,7 +43,7 @@ public class CollectionSerializeable extends VaroSerialize {
 				}
 			}
 		}
-		
+
 		return null;
 	}
 }

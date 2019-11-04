@@ -47,7 +47,7 @@ public class ConfigGUI extends SuperInventory {
 						hookChat(entry);
 						return;
 					}
-					
+
 					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
 					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
 				}

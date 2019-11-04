@@ -37,15 +37,15 @@ public class PlayerChatListener implements Listener {
 
 		if(message.contains("%"))
 			message = message.replaceAll("%", "");
-		
+
 		boolean mentionsHack = false;
-		String[] hackMentions = {"hack", "cheat", "x-ray", "xray", "unlegit"};
-		for (String mention : hackMentions) {
-			if (message.toLowerCase().contains(mention)) {
+		String[] hackMentions = { "hack", "cheat", "x-ray", "xray", "unlegit" };
+		for(String mention : hackMentions) {
+			if(message.toLowerCase().contains(mention)) {
 				mentionsHack = true;
 			}
 		}
-		if (mentionsHack == true && ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
+		if(mentionsHack == true && ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
 			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Cheats und ähnliches mit §l/report");
 		}
 

@@ -54,7 +54,7 @@ public class VaroEvent {
 	public void setEnabled(boolean enabled) {
 		if(Main.getGame().getGameState() != GameState.STARTED && enabled)
 			return;
-		
+
 		if(enabled)
 			onEnable();
 		else

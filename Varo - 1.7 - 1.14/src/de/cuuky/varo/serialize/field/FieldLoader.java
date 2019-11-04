@@ -10,10 +10,10 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class FieldLoader {
-	
+
 	private Map<String, Field> fields;
 	private Map<Field, Class<? extends VaroSerializeable>> arrayTypes;
-	
+
 	public FieldLoader(Class<?> clazz) {
 		this.fields = new HashMap<String, Field>();
 		this.arrayTypes = new HashMap<Field, Class<? extends VaroSerializeable>>();
@@ -31,11 +31,11 @@ public class FieldLoader {
 				arrayTypes.put(field, anno.arrayClass());
 		}
 	}
-	
+
 	public Map<String, Field> getFields() {
 		return fields;
 	}
-	
+
 	public Map<Field, Class<? extends VaroSerializeable>> getArrayTypes() {
 		return arrayTypes;
 	}

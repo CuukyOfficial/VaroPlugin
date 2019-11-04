@@ -80,7 +80,7 @@ public class UpdateCommand extends VaroCommand {
 			System.out.println("---------- Stack Trace ----------");
 			return;
 		}
-		
+
 		sender.sendMessage(Main.getPrefix() + "Update erfolgreich installiert");
 
 		// Step 2: Deleting old directory if wanted

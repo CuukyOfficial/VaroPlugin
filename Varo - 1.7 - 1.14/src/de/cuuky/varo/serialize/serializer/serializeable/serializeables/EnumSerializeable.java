@@ -20,7 +20,7 @@ public class EnumSerializeable extends VaroSerialize {
 		VaroSerializeable ser = getEnumByString((String) obj);
 		if(ser == null)
 			return null;
-		
+
 		return ser;
 	}
 }

@@ -15,10 +15,10 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 public class VaroSerializeHandler {
 
 	protected static final String NULL_REPLACE;
-	
+
 	static {
 		NULL_REPLACE = "nullReplace";
-		
+
 		handler = new ArrayList<VaroSerializeObject>();
 		enumsRepl = new HashMap<VaroSerializeable, String>();
 		configs = new HashMap<String, YamlConfiguration>();
@@ -70,11 +70,11 @@ public class VaroSerializeHandler {
 			}
 		}
 	}
-	
+
 	protected static void registerClass(Class<? extends VaroSerializeable> clazz) {
 		new VaroSerializeObject(clazz);
 	}
-	
+
 	public static void saveAll() {
 		for(VaroSerializeObject handl : handler)
 			if(handl.getConfiguration() != null)

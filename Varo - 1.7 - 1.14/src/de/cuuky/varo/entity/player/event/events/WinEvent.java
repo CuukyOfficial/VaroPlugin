@@ -41,8 +41,8 @@ public class WinEvent extends BukkitEvent {
 		} catch(PermissionException e) {
 			System.out.println("[Varo] Konnte den Pokal für '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
 		}
-		
-		if (ConfigEntry.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
+
+		if(ConfigEntry.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
 			Bukkit.getServer().shutdown();
 		}
 	}

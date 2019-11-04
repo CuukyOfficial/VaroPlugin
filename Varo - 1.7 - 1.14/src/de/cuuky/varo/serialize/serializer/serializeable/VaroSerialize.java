@@ -46,7 +46,7 @@ public class VaroSerialize extends VaroSerializeHandler {
 	public Object deserialize(Field field, Object obj, MemorySection section, String path, VaroSerializeObject object) {
 		return null;
 	}
-	
+
 	public static ArrayList<VaroSerialize> getSerializes() {
 		return serializes;
 	}

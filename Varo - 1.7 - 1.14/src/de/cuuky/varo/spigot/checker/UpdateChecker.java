@@ -44,10 +44,10 @@ public class UpdateChecker extends SpigotObject {
 			while((line = reader.readLine()) != null) {
 				if(!line.contains("name"))
 					continue;
-				
+
 				this.version = line.split(": ")[1].split(",")[0].replaceAll("\"", "");
 			}
-			
+
 			switch(new Version(this.version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
 			case EQUAL:
 				result = UpdateResult.NO_UPDATE;

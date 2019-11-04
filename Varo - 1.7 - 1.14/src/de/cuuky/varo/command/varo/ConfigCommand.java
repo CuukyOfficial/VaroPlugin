@@ -40,7 +40,7 @@ public class ConfigCommand extends VaroCommand {
 
 				Object arg = Utils.getStringObject(args[2]);
 				entry.setValue(arg, true);
-				
+
 				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich den Eintrag '§a" + entry.getPath() + "§7' auf '§a" + entry.getValue() + "§7' gesetzt!");
 				return;
 			}

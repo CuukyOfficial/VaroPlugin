@@ -52,22 +52,22 @@ public class PlayerJoinListener implements Listener {
 				else
 					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
 			}
-			
-			if (player.isOp()) {
-					try {
-						UpdateChecker updater = Main.getUpdater();
-						if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-							if (Team.getTeams().isEmpty()) {
-								vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
-							}
-							player.sendMessage("§cUpdate verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+
+			if(player.isOp()) {
+				try {
+					UpdateChecker updater = Main.getUpdater();
+					if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+						if(Team.getTeams().isEmpty()) {
+							vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 						}
-					} catch(NumberFormatException e) {}
+						player.sendMessage("§cUpdate verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+					}
+				} catch(NumberFormatException e) {}
 			}
 		} else {
-			if (vplayer.getStats().getSessionsPlayed() == 0) {
+			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
-				if (countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					player.teleport(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
 				}
 			}

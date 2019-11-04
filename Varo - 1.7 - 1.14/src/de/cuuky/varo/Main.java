@@ -130,7 +130,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
 	}
-	
+
 	public File getThisFile() {
 		return getFile();
 	}
@@ -170,7 +170,7 @@ public class Main extends JavaPlugin {
 	public static String getConsolePrefix() {
 		return CONSOLE_PREFIX;
 	}
-	
+
 	public static UpdateChecker getUpdater() {
 		return updateChecker;
 	}
@@ -198,7 +198,7 @@ public class Main extends JavaPlugin {
 	public static boolean isBootedUp() {
 		return dataManager != null;
 	}
-	
+
 	public static String getContributors() {
 		return Utils.getArgsToString(Utils.removeString(Utils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
 	}

@@ -59,7 +59,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 			}
 		}
 	}
-	
+
 	protected void save(String saveUnder, VaroSerializeable instance, YamlConfiguration saveTo) {
 		new VaroSerializer(saveUnder, instance, saveTo);
 	}
