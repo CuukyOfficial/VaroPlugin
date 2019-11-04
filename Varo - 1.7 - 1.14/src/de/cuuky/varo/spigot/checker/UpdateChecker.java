@@ -35,13 +35,19 @@ public class UpdateChecker extends SpigotObject {
 
 	public UpdateChecker(JavaPlugin plugin) {
 		this.result = UpdateResult.NO_UPDATE;
-		if(RESOURCE_ID == 0)
-			return;
 
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL(SPIGOT_API_URL + "/update.php?resource=" + RESOURCE_ID).openConnection();
-			version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-			switch(new Version(version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
+			HttpURLConnection con = (HttpURLConnection) new URL(SPIGET_VARO_RESOURCE_VERSION).openConnection();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String line = null;
+			while((line = reader.readLine()) != null) {
+				if(!line.contains("name"))
+					continue;
+				
+				this.version = line.split(": ")[1].split(",")[0].replaceAll("\"", "");
+			}
+			
+			switch(new Version(this.version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
 			case EQUAL:
 				result = UpdateResult.NO_UPDATE;
 				break;
@@ -58,9 +64,6 @@ public class UpdateChecker extends SpigotObject {
 	}
 
 	public void postResults() {
-		if(RESOURCE_ID == 0)
-			return;
-
 		System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
 	}
 
