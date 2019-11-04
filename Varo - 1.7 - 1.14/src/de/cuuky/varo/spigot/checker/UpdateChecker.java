@@ -38,6 +38,7 @@ public class UpdateChecker extends SpigotObject {
 
 		try {
 			HttpURLConnection con = (HttpURLConnection) new URL(SPIGET_VARO_RESOURCE_VERSION).openConnection();
+			con.setConnectTimeout(2000);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String line = null;
 			while((line = reader.readLine()) != null) {
