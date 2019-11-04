@@ -30,6 +30,7 @@ Strike:
   banAtPost: true
 Teams:
   friendlyFire: false
+  teamPlaceSpawn: -1
   triggerForGlobal: false
   chatTrigger: '#'
   teamRequests: false
@@ -56,6 +57,10 @@ Death:
   teamLifes: 1
   respawnProtection: 120
   addTeamLifesOnKill: -1
+Finale:
+  playerSpectateInFinale: false
+  borderSizeInFinale: 300
+  finaleProtectionTime: 30
 World:
   blockDestroyLogger: true
   setAlwaysTime: -1
@@ -69,7 +74,7 @@ World:
 Start:
   startCountdown: 30
   canMoveBeforeStart: false
-  doRandomTeamAtStart: false
+  doRandomTeamAtStart: -1
   doSortAtStart: false
   removePlayersArentAtStart: true
   spawnTeleportAtLobbyPhase: true
