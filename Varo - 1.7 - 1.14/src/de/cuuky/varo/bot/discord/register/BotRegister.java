@@ -33,14 +33,15 @@ public class BotRegister {
 		loadAll();
 	}
 
-	private String uuid;
-	private long userId = -1;
-	private int code = -1;
-	private boolean bypass = false;
-	private String name;
+	private String uuid, name;
+	private long userId;
+	private int code;
+	private boolean bypass;
 
 	public BotRegister(String uuid, boolean start) {
 		this.uuid = uuid;
+		this.userId = -1;
+		this.code = -1;
 
 		if(start)
 			if(code == -1)
@@ -70,10 +71,6 @@ public class BotRegister {
 		return this.code;
 	}
 
-	public String getPlayerName() {
-		return this.name;
-	}
-
 	public void setCode(int code) {
 		this.code = code;
 	}
@@ -95,10 +92,6 @@ public class BotRegister {
 		}
 	}
 
-	public boolean isBypass() {
-		return bypass;
-	}
-
 	public boolean isActive() {
 		if(bypass)
 			return true;
@@ -110,24 +103,32 @@ public class BotRegister {
 		this.userId = user;
 	}
 
+	public String getKickMessage() {
+		return ConfigMessages.DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
+	}
+
+	public boolean isBypass() {
+		return bypass;
+	}
+
 	public long getUserId() {
 		return this.userId;
+	}
+
+	public String getPlayerName() {
+		return this.name;
 	}
 
 	public String getUUID() {
 		return this.uuid;
 	}
 
-	public String getKickMessage() {
-		return ConfigMessages.DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
+	public Player getPlayer() {
+		return Bukkit.getPlayer(UUID.fromString(uuid));
 	}
 
 	public static ArrayList<BotRegister> getBotRegister() {
 		return register;
-	}
-
-	public Player getPlayer() {
-		return Bukkit.getPlayer(UUID.fromString(uuid));
 	}
 
 	public static BotRegister getRegister(String uuid) {

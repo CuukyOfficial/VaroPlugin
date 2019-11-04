@@ -31,7 +31,7 @@ public abstract class VaroList {
 
 		lists.add(this);
 	}
-
+	
 	public abstract ArrayList<?> getAsList();
 
 	public abstract void onLoad(List<?> list);

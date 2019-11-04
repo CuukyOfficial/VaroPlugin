@@ -37,6 +37,15 @@ public class Rank implements VaroSerializeable {
 
 		Nametag.refreshAll();
 	}
+	
+	@Override
+	public void onDeserializeEnd() {
+		if(tablistLocation > highestLocation)
+			highestLocation = tablistLocation;
+	}
+
+	@Override
+	public void onSerializeStart() {}
 
 	public void remove() {
 		ranks.remove(this);
@@ -72,15 +81,6 @@ public class Rank implements VaroSerializeable {
 	public static ArrayList<Rank> getRanks() {
 		return ranks;
 	}
-
-	@Override
-	public void onDeserializeEnd() {
-		if(tablistLocation > highestLocation)
-			highestLocation = tablistLocation;
-	}
-
-	@Override
-	public void onSerializeStart() {}
 
 	public static int getHighestLocation() {
 		return highestLocation;

@@ -140,14 +140,6 @@ public class ScoreboardHandler {
 		return list;
 	}
 
-	public void updateList() {
-		loadScores();
-	}
-
-	public void updateTopScores() {
-		topScores.update();
-	}
-
 	public void sendScoreBoard(VaroPlayer vp) {
 		if(!ConfigEntry.SCOREBOARD.getValueAsBoolean() || !vp.getStats().isShowScoreboard())
 			return;
@@ -191,6 +183,14 @@ public class ScoreboardHandler {
 				replacesLst.set(index, line);
 			}
 		}
+	}
+	
+	public void updateList() {
+		loadScores();
+	}
+
+	public void updateTopScores() {
+		topScores.update();
 	}
 
 	public String getHeader() {

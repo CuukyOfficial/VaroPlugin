@@ -16,13 +16,13 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
-public class Hit {
+public class PlayerHit {
 
 	/*
 	 * OLD CODE
 	 */
 
-	private static ArrayList<Hit> hits = new ArrayList<>();
+	private static ArrayList<PlayerHit> hits = new ArrayList<>();
 
 	static {
 		Bukkit.getPluginManager().registerEvents(new HitListener(), Main.getInstance());
@@ -33,7 +33,7 @@ public class Hit {
 	private int task;
 
 	@SuppressWarnings("deprecation")
-	public Hit(Player player, Player opponent) {
+	public PlayerHit(Player player, Player opponent) {
 		if(!hasOld(player))
 			player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_IN_FIGHT.getValue());
 
@@ -51,14 +51,6 @@ public class Hit {
 		hits.add(this);
 	}
 
-	public Player getOpponent() {
-		return this.opponent;
-	}
-
-	public Player getPlayer() {
-		return this.player;
-	}
-
 	public void over() {
 		player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_NOT_IN_FIGHT.getValue());
 		remove();
@@ -70,7 +62,7 @@ public class Hit {
 	}
 
 	public boolean hasOld(Player p) {
-		for(Hit hit : hits) {
+		for(PlayerHit hit : hits) {
 			if(!hit.getPlayer().equals(p))
 				continue;
 
@@ -80,9 +72,17 @@ public class Hit {
 
 		return false;
 	}
+	
+	public Player getOpponent() {
+		return this.opponent;
+	}
 
-	public static Hit getHit(Player p) {
-		for(Hit hit : hits) {
+	public Player getPlayer() {
+		return this.player;
+	}
+
+	public static PlayerHit getHit(Player p) {
+		for(PlayerHit hit : hits) {
 			if(!hit.getPlayer().equals(p))
 				continue;
 
@@ -117,8 +117,8 @@ public class Hit {
 
 			Player player1 = (Player) event.getDamager();
 			Player player2 = (Player) event.getEntity();
-			new Hit(player1, player2);
-			new Hit(player2, player1);
+			new PlayerHit(player1, player2);
+			new PlayerHit(player2, player1);
 		}
 	}
 }

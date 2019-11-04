@@ -103,15 +103,7 @@ public class PlayerSort {
 		}
 
 	}
-
-	public boolean hasNotFound() {
-		return this.notFound;
-	}
-
-	public boolean hasTeamNotFound() {
-		return this.tooSmallTeamSpawns;
-	}
-
+	
 	private void setFullHealth(Player p) {
 		p.setGameMode(GameMode.SURVIVAL);
 		p.setHealth(20);
@@ -120,5 +112,13 @@ public class PlayerSort {
 		p.getInventory().setArmorContents(new ItemStack[] {});
 		p.setExp(0);
 		p.setLevel(0);
+	}
+
+	public boolean hasNotFound() {
+		return this.notFound;
+	}
+
+	public boolean hasTeamNotFound() {
+		return this.tooSmallTeamSpawns;
 	}
 }

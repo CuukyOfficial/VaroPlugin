@@ -23,20 +23,8 @@ public class Broadcaster {
 	private ArrayList<String> messages = new ArrayList<>();
 
 	public Broadcaster() {
-		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean()) {
-			int delay = (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
-			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
-				@Override
-				public void run() {
-					if(VersionUtils.getOnlinePlayer().size() == 0)
-						return;
-
-					for(String m : getRandomAd())
-						Bukkit.broadcastMessage(m.replaceAll("&", "�"));
-				}
-			}, delay, delay);
-		}
+		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+			startPluginAd();
 
 		loadMessages();
 
@@ -44,6 +32,21 @@ public class Broadcaster {
 			return;
 
 		starteSchedule();
+	}
+
+	private void startPluginAd() {
+		int delay = (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				if(VersionUtils.getOnlinePlayer().size() == 0)
+					return;
+
+				for(String m : getRandomAd())
+					Bukkit.broadcastMessage(m.replaceAll("&", "�"));
+			}
+		}, delay, delay);
 	}
 
 	private void loadMessages() {
@@ -81,7 +84,7 @@ public class Broadcaster {
 		}, interval, interval);
 	}
 
-	private static String[] getRandomAd() {
+	private String[] getRandomAd() {
 		int random = Utils.randomInt(0, 1);
 		String[] messages = null;
 		if(random == 0) {

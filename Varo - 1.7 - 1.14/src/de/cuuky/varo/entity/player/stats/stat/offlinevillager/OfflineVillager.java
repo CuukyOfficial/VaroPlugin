@@ -130,26 +130,7 @@ public class OfflineVillager implements VaroSerializeable {
 				e.printStackTrace();
 			}
 	}
-
-	public void remove() {
-		if(zombie != null)
-			zombie.remove();
-
-		villagers.remove(this);
-	}
-
-	public Zombie getZombie() {
-		return zombie;
-	}
-
-	public VaroPlayer getVp() {
-		return vp;
-	}
-
-	public Entity getEntity() {
-		return entity;
-	}
-
+	
 	public void kill(VaroPlayer killer) {
 		if(zombie != null)
 			zombie.getWorld().strikeLightningEffect(zombie.getLocation());
@@ -169,6 +150,25 @@ public class OfflineVillager implements VaroSerializeable {
 
 		killer.onEvent(BukkitEventType.KILL);
 		vp.onEvent(BukkitEventType.KILLED);
+	}
+
+	public void remove() {
+		if(zombie != null)
+			zombie.remove();
+
+		villagers.remove(this);
+	}
+
+	public Zombie getZombie() {
+		return zombie;
+	}
+
+	public VaroPlayer getVp() {
+		return vp;
+	}
+
+	public Entity getEntity() {
+		return entity;
 	}
 
 	public static OfflineVillager getVillager(Entity entity) {

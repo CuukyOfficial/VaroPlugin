@@ -276,37 +276,7 @@ public class Game implements VaroSerializeable {
 			}
 		}, 0, 20);
 	}
-
-	public void setBorderDecrease(BorderDecreaseDayTimer borderDecrease) {
-		this.borderDecrease = borderDecrease;
-	}
-
-	public void setLastCoordsPost(Date lastCoordsPost) {
-		this.lastCoordsPost = lastCoordsPost;
-	}
-
-	public Date getLastCoordsPost() {
-		return lastCoordsPost;
-	}
-
-	public Date getLastDayTimer() {
-		return lastDayTimer;
-	}
-
-	public void setLastDayTimer(Date lastDayTimer) {
-		this.lastDayTimer = lastDayTimer;
-	}
-
-	public void abort() {
-		Bukkit.getScheduler().cancelTask(startScheduler);
-		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
-		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
-	}
-
-	public boolean isStarting() {
-		return startCountdown != ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
-	}
-
+	
 	public void end(WinnerCheck check) {
 		this.gamestate = GameState.END;
 
@@ -362,14 +332,6 @@ public class Game implements VaroSerializeable {
 			if(file.exists())
 				db.sendFile("Die Logs des Projektes", file, Main.getDiscordBot().getResultChannel());
 		}
-	}
-
-	public ProtectionTime getProtection() {
-		return protection;
-	}
-
-	public void setProtection(ProtectionTime protection) {
-		this.protection = protection;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -429,11 +391,7 @@ public class Game implements VaroSerializeable {
 		}
 		return blocks;
 	}
-
-	public boolean isFirstTime() {
-		return firstTime;
-	}
-
+	
 	public void loadVariables() {
 		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
 		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
@@ -441,6 +399,61 @@ public class Game implements VaroSerializeable {
 		noKickDistance = ConfigEntry.NO_KICK_DISTANCE.getValueAsInt();
 		playTime = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+	}
+	
+	public void abort() {
+		Bukkit.getScheduler().cancelTask(startScheduler);
+		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
+		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+	}
+	
+	@Override
+	public void onDeserializeEnd() {
+		startRefreshTimer();
+
+		loadVariables();
+
+		if(gamestate == GameState.STARTED)
+			minuteTimer = new BorderDecreaseMinuteTimer();
+	}
+
+	@Override
+	public void onSerializeStart() {}
+
+	public void setBorderDecrease(BorderDecreaseDayTimer borderDecrease) {
+		this.borderDecrease = borderDecrease;
+	}
+
+	public void setLastCoordsPost(Date lastCoordsPost) {
+		this.lastCoordsPost = lastCoordsPost;
+	}
+
+	public Date getLastCoordsPost() {
+		return lastCoordsPost;
+	}
+
+	public Date getLastDayTimer() {
+		return lastDayTimer;
+	}
+
+	public void setLastDayTimer(Date lastDayTimer) {
+		this.lastDayTimer = lastDayTimer;
+	}
+	
+	public ProtectionTime getProtection() {
+		return protection;
+	}
+
+	public void setProtection(ProtectionTime protection) {
+		this.protection = protection;
+	}
+
+	public boolean isStarting() {
+		return startCountdown != ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+	}
+
+	public boolean isFirstTime() {
+		return firstTime;
 	}
 
 	public boolean hasStarted() {
@@ -482,17 +495,4 @@ public class Game implements VaroSerializeable {
 	public void setLobby(Location lobby) {
 		this.lobby = lobby;
 	}
-
-	@Override
-	public void onDeserializeEnd() {
-		startRefreshTimer();
-
-		loadVariables();
-
-		if(gamestate == GameState.STARTED)
-			minuteTimer = new BorderDecreaseMinuteTimer();
-	}
-
-	@Override
-	public void onSerializeStart() {}
 }

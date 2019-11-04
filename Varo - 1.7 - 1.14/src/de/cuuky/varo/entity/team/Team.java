@@ -50,17 +50,28 @@ public class Team extends VaroEntity {
 		if(this.id > highestNumber)
 			highestNumber = id;
 	}
+	
+	@Override
+	public void onDeserializeEnd() {
+		for(int id : memberid) {
+			VaroPlayer vp = VaroPlayer.getPlayer(id);
+			if(vp == null) {
+				Main.getLoggerMaster().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
+				continue;
+			}
 
-	public void loadDefaults() {
-		this.lifes = ConfigEntry.TEAM_LIFES.getValueAsInt();
+			addMember(vp);
+		}
+
+		if(id > highestNumber)
+			highestNumber = id;
+		memberid.clear();
 	}
 
-	public double getLifes() {
-		return lifes;
-	}
-
-	public void setLifes(double lifes) {
-		this.lifes = lifes;
+	@Override
+	public void onSerializeStart() {
+		for(VaroPlayer member : member)
+			memberid.add(member.getId());
 	}
 
 	public void addMember(VaroPlayer vp) {
@@ -119,6 +130,40 @@ public class Team extends VaroEntity {
 		teams.remove(this);
 	}
 
+	public boolean isDead() {
+		for(VaroPlayer player : member) {
+			if(player.getStats().getState() != PlayerState.ALIVE)
+				continue;
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private int generateId() {
+		int i = teams.size() + 1;
+		while(getTeam(i) != null)
+			i++;
+
+		return i;
+	}
+
+	public static Team getTeam(int id) {
+		for(Team team : teams) {
+			if(team.getId() != id)
+				continue;
+
+			return team;
+		}
+
+		return null;
+	}
+	
+	public void loadDefaults() {
+		this.lifes = ConfigEntry.TEAM_LIFES.getValueAsInt();
+	}
+	
 	public void statChanged() {
 		this.member.forEach(member -> member.update());
 	}
@@ -161,34 +206,12 @@ public class Team extends VaroEntity {
 		this.id = id;
 	}
 
-	public boolean isDead() {
-		for(VaroPlayer player : member) {
-			if(player.getStats().getState() != PlayerState.ALIVE)
-				continue;
-
-			return false;
-		}
-
-		return true;
+	public double getLifes() {
+		return lifes;
 	}
 
-	private int generateId() {
-		int i = teams.size() + 1;
-		while(getTeam(i) != null)
-			i++;
-
-		return i;
-	}
-
-	public static Team getTeam(int id) {
-		for(Team team : teams) {
-			if(team.getId() != id)
-				continue;
-
-			return team;
-		}
-
-		return null;
+	public void setLifes(double lifes) {
+		this.lifes = lifes;
 	}
 
 	public static ArrayList<Team> getAliveTeams() {
@@ -231,29 +254,6 @@ public class Team extends VaroEntity {
 
 	public static ArrayList<Team> getTeams() {
 		return teams;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		for(int id : memberid) {
-			VaroPlayer vp = VaroPlayer.getPlayer(id);
-			if(vp == null) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
-				continue;
-			}
-
-			addMember(vp);
-		}
-
-		if(id > highestNumber)
-			highestNumber = id;
-		memberid.clear();
-	}
-
-	@Override
-	public void onSerializeStart() {
-		for(VaroPlayer member : member)
-			memberid.add(member.getId());
 	}
 
 	public static int getHighestNumber() {

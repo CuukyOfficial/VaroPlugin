@@ -16,7 +16,7 @@ public class InventoryBackup implements VaroSerializeable {
 	private static ArrayList<InventoryBackup> allBackups;
 
 	static {
-		allBackups = new ArrayList<InventoryBackup>();
+		allBackups = new ArrayList<>();
 	}
 
 	@VaroSerializeField(path = "inventory")
@@ -47,6 +47,17 @@ public class InventoryBackup implements VaroSerializeable {
 			addUpdate(vp.getPlayer());
 
 		allBackups.add(this);
+	}
+	
+	@Override
+	public void onDeserializeEnd() {
+		this.varoplayer = VaroPlayer.getPlayer(vpId);
+	}
+
+	@Override
+	public void onSerializeStart() {
+		if(varoplayer != null)
+			this.vpId = varoplayer.getId();
 	}
 
 	public void addUpdate(Player player) {
@@ -91,17 +102,6 @@ public class InventoryBackup implements VaroSerializeable {
 
 	public VaroPlayer getVaroPlayer() {
 		return varoplayer;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		this.varoplayer = VaroPlayer.getPlayer(vpId);
-	}
-
-	@Override
-	public void onSerializeStart() {
-		if(varoplayer != null)
-			this.vpId = varoplayer.getId();
 	}
 
 	public static ArrayList<InventoryBackup> getAllBackups() {

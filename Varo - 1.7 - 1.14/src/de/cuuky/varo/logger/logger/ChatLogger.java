@@ -5,6 +5,21 @@ import de.cuuky.varo.utils.Utils;
 
 public class ChatLogger extends Logger {
 
+	public ChatLogger(String name) {
+		super(name, false);
+	}
+
+	public void println(ChatLogType type, String message) {
+		message = Utils.replaceAllColors(message);
+
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
+
+		pw.println(log);
+		logs.add(log);
+
+		pw.flush();
+	}
+	
 	public enum ChatLogType {
 		CHAT("CHAT"),
 		PRIVATE_CHAT("PRIVATECHAT"),
@@ -27,20 +42,5 @@ public class ChatLogger extends Logger {
 
 			return null;
 		}
-	}
-
-	public ChatLogger(String name) {
-		super(name, false);
-	}
-
-	public void println(ChatLogType type, String message) {
-		message = Utils.replaceAllColors(message);
-
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
-
-		pw.println(log);
-		logs.add(log);
-
-		pw.flush();
 	}
 }

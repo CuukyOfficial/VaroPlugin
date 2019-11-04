@@ -10,7 +10,6 @@ public class SessionCheck extends Checker {
 
 	@Override
 	public void check() {
-
 		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
 			return;
 		}

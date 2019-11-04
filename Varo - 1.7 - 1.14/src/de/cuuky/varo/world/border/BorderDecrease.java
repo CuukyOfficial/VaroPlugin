@@ -31,6 +31,25 @@ public class BorderDecrease {
 
 		decreases.add(this);
 	}
+	
+	private static void startShrinking() {
+		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				if(running)
+					return;
+
+				for(int i = 0; i < decreases.size(); i++) {
+					running = true;
+					decreases.get(i).shrink();
+				}
+
+				running = false;
+			}
+		}, 1, 20);
+	}
 
 	private void waitForBorder(double d) {
 		try {
@@ -39,23 +58,7 @@ public class BorderDecrease {
 			e.printStackTrace();
 		}
 	}
-
-	public void remove() {
-		decreases.remove(this);
-	}
-
-	public double getBps() {
-		return bps;
-	}
-
-	public void setStartHook(Runnable startHook) {
-		this.startHook = startHook;
-	}
-
-	public void setFinishHook(Runnable finishHook) {
-		this.finishHook = finishHook;
-	}
-
+	
 	public void shrink() {
 		VaroBorder border = Main.getDataManager().getWorldHandler().getBorder();
 
@@ -81,22 +84,19 @@ public class BorderDecrease {
 		remove();
 	}
 
-	private static void startShrinking() {
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
+	public void remove() {
+		decreases.remove(this);
+	}
 
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				if(running)
-					return;
+	public double getBps() {
+		return bps;
+	}
 
-				for(int i = 0; i < decreases.size(); i++) {
-					running = true;
-					decreases.get(i).shrink();
-				}
+	public void setStartHook(Runnable startHook) {
+		this.startHook = startHook;
+	}
 
-				running = false;
-			}
-		}, 1, 20);
+	public void setFinishHook(Runnable finishHook) {
+		this.finishHook = finishHook;
 	}
 }

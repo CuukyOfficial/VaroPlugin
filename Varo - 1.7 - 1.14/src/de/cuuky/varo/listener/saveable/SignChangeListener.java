@@ -140,5 +140,4 @@ public class SignChangeListener implements Listener {
 			p.sendMessage(Main.getPrefix() + "Ofen erfolgreich gesichert!");
 		}
 	}
-
 }

@@ -30,7 +30,7 @@ public class ConfigFailureDetector {
 
 		System.out.println("[Varo] Configurations scanned for mistakes successfully!");
 	}
-
+	
 	private void scanDirectory(File newFile) {
 		for(File file : newFile.listFiles()) {
 			if(file.isDirectory()) {

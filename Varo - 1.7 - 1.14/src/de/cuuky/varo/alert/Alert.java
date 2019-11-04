@@ -46,6 +46,16 @@ public class Alert implements VaroSerializeable {
 
 		return i;
 	}
+	
+	@Override
+	public void onDeserializeEnd() {}
+
+	@Override
+	public void onSerializeStart() {}
+	
+	public void switchOpenState() {
+		this.open = !this.open;
+	}
 
 	public int getId() {
 		return id;
@@ -69,10 +79,6 @@ public class Alert implements VaroSerializeable {
 
 	public void setOpen(boolean open) {
 		this.open = open;
-	}
-
-	public void switchOpenState() {
-		this.open = !this.open;
 	}
 
 	public static Alert getAlert(int id) {
@@ -104,10 +110,4 @@ public class Alert implements VaroSerializeable {
 
 		return closed;
 	}
-
-	@Override
-	public void onDeserializeEnd() {}
-
-	@Override
-	public void onSerializeStart() {}
 }

@@ -33,6 +33,14 @@ public class Strike implements VaroSerializeable {
 	private VaroPlayer striked;
 
 	public Strike() {}
+	
+	@Override
+	public void onDeserializeEnd() {
+		this.striked = VaroPlayer.getPlayer(strikedId);
+	}
+
+	@Override
+	public void onSerializeStart() {}
 
 	public Strike(String reason, VaroPlayer striked, String striker) {
 		this.reason = reason;
@@ -42,23 +50,7 @@ public class Strike implements VaroSerializeable {
 		this.acquired = new Date();
 		this.posted = false;
 	}
-
-	public Date getAcquiredDate() {
-		return acquired;
-	}
-
-	public String getReason() {
-		return reason;
-	}
-
-	public String getStriker() {
-		return striker;
-	}
-
-	public VaroPlayer getStriked() {
-		return striked;
-	}
-
+	
 	public void activate(int number) {
 		this.number = number;
 
@@ -110,6 +102,22 @@ public class Strike implements VaroSerializeable {
 		posted = true;
 	}
 
+	public Date getAcquiredDate() {
+		return acquired;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public String getStriker() {
+		return striker;
+	}
+
+	public VaroPlayer getStriked() {
+		return striked;
+	}
+
 	public Date getBanUntil() {
 		return banUntil;
 	}
@@ -117,12 +125,4 @@ public class Strike implements VaroSerializeable {
 	public boolean isPosted() {
 		return posted;
 	}
-
-	@Override
-	public void onDeserializeEnd() {
-		this.striked = VaroPlayer.getPlayer(strikedId);
-	}
-
-	@Override
-	public void onSerializeStart() {}
 }

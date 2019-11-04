@@ -37,6 +37,17 @@ public class VaroCancelAble {
 
 		cancelables.add(this);
 	}
+	
+	private void schedule(int time) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				timerHook.run();
+				remove();
+			}
+		}, time * 20);
+	}
 
 	private void removeOld() {
 		for(int i = 0; i < cancelables.size(); i++) {
@@ -60,17 +71,6 @@ public class VaroCancelAble {
 
 	public void remove() {
 		cancelables.remove(this);
-	}
-
-	private void schedule(int time) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				timerHook.run();
-				remove();
-			}
-		}, time * 20);
 	}
 
 	public static VaroCancelAble getCancelAble(Player player, CancelAbleType type) {

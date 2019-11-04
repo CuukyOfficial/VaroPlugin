@@ -14,42 +14,7 @@ public class ItemList extends VaroList {
 	public ItemList(String location) {
 		super(location);
 	}
-
-	public void addItem(ItemStack item) {
-		items.add(fixItem(item));
-
-		saveList();
-	}
-
-	public void removeItem(ItemStack item) {
-		items.remove(fixItem(item));
-
-		saveList();
-	}
-
-	public boolean hasItem(ItemStack item) {
-		return items.contains(fixItem(item));
-	}
-
-	@Override
-	public ArrayList<?> getAsList() {
-		return items;
-	}
-
-	@Override
-	public void onLoad(List<?> list) {
-		items = new ArrayList<ItemStack>();
-
-		for(Object id : list) {
-			try {
-				ItemStack c = (ItemStack) id;
-				items.add(c);
-			} catch(Exception e) {
-				continue;
-			}
-		}
-	}
-
+	
 	protected ItemStack fixItem(ItemStack item) {
 		item = item.clone();
 		item.setAmount(1);
@@ -57,7 +22,7 @@ public class ItemList extends VaroList {
 			item.setDurability((short) 0);
 		return item;
 	}
-
+	
 	protected boolean isDamageable(ItemStack item) {
 		if(item == null)
 			return false;
@@ -96,6 +61,41 @@ public class ItemList extends VaroList {
 		default:
 			return false;
 		}
+	}
+
+	public void addItem(ItemStack item) {
+		items.add(fixItem(item));
+
+		saveList();
+	}
+
+	public void removeItem(ItemStack item) {
+		items.remove(fixItem(item));
+
+		saveList();
+	}
+
+	public boolean hasItem(ItemStack item) {
+		return items.contains(fixItem(item));
+	}
+
+	@Override
+	public void onLoad(List<?> list) {
+		items = new ArrayList<ItemStack>();
+
+		for(Object id : list) {
+			try {
+				ItemStack c = (ItemStack) id;
+				items.add(c);
+			} catch(Exception e) {
+				continue;
+			}
+		}
+	}
+	
+	@Override
+	public ArrayList<?> getAsList() {
+		return items;
 	}
 
 	public ArrayList<ItemStack> getItems() {

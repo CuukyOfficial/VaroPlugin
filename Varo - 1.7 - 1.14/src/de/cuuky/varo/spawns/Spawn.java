@@ -22,14 +22,19 @@ public class Spawn implements VaroSerializeable {
 
 	@VaroSerializeField(path = "number")
 	private int number;
+	
 	@VaroSerializeField(path = "type")
 	private SpawnType type;
+	
 	@VaroSerializeField(path = "location")
 	private Location location;
+	
 	@VaroSerializeField(path = "nameTagLocation")
 	private Location nameTagLocation;
+	
 	@VaroSerializeField(path = "nameTagName")
 	private String nameTagName;
+	
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
 
@@ -74,6 +79,31 @@ public class Spawn implements VaroSerializeable {
 		spawns.add(this);
 	}
 
+	private void setNameTag() {
+		if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || VersionUtils.getVersion() == BukkitVersion.ONE_7)
+			return;
+
+		nameTagLocation = location.clone().add(0, ConfigEntry.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
+		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.valueOf("ARMOR_STAND"));
+
+		try {
+			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
+			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
+			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
+			nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
+			armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void removeNameTag() {
+		if(armorStand == null)
+			return;
+
+		armorStand.remove();
+	}
+
 	private int generateId() {
 		int i = spawns.size() + 1;
 		while(getSpawn(i) != null)
@@ -85,6 +115,17 @@ public class Spawn implements VaroSerializeable {
 	private void remove() {
 		removeNameTag();
 		spawns.remove(this);
+	}
+
+	public void delete() {
+		location.getBlock().setType(Material.GRASS);
+		location.add(0, 1, 0);
+		location.clone().add(1, 0, 0).getBlock().setType(Material.AIR);
+		location.clone().add(-1, 0, 0).getBlock().setType(Material.AIR);
+		location.clone().add(0, 0, 1).getBlock().setType(Material.AIR);
+		location.clone().add(0, 0, -1).getBlock().setType(Material.AIR);
+
+		remove();
 	}
 
 	public Location getNameTagLocation() {
@@ -109,42 +150,6 @@ public class Spawn implements VaroSerializeable {
 
 	public void setPlayer(VaroPlayer player) {
 		this.player = player;
-	}
-
-	public void delete() {
-		location.getBlock().setType(Material.GRASS);
-		location.add(0, 1, 0);
-		location.clone().add(1, 0, 0).getBlock().setType(Material.AIR);
-		location.clone().add(-1, 0, 0).getBlock().setType(Material.AIR);
-		location.clone().add(0, 0, 1).getBlock().setType(Material.AIR);
-		location.clone().add(0, 0, -1).getBlock().setType(Material.AIR);
-
-		remove();
-	}
-
-	private void setNameTag() {
-		if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || VersionUtils.getVersion() == BukkitVersion.ONE_7)
-			return;
-
-		nameTagLocation = location.clone().add(0, ConfigEntry.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
-		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.valueOf("ARMOR_STAND"));
-
-		try {
-			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
-			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
-			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
-			nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
-			armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void removeNameTag() {
-		if(armorStand == null)
-			return;
-
-		armorStand.remove();
 	}
 
 	public static Spawn getSpawn(int number) {

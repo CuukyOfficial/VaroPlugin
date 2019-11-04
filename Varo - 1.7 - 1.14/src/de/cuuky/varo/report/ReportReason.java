@@ -33,6 +33,12 @@ public enum ReportReason implements VaroSerializeable {
 	public String getDescription() {
 		return description;
 	}
+	
+	@Override
+	public void onDeserializeEnd() {}
+
+	@Override
+	public void onSerializeStart() {}
 
 	public static ReportReason getByName(String name) {
 		for(ReportReason reasons : values()) {
@@ -42,10 +48,4 @@ public enum ReportReason implements VaroSerializeable {
 		}
 		return null;
 	}
-
-	@Override
-	public void onDeserializeEnd() {}
-
-	@Override
-	public void onSerializeStart() {}
 }

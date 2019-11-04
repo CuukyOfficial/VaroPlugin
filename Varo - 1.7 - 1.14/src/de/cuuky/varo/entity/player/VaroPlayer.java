@@ -99,17 +99,13 @@ public class VaroPlayer extends VaroEntity {
 		this.stats = new Stats(this);
 		stats.loadDefaults();
 	}
+	
+	private int generateId() {
+		int id = Utils.randomInt(1000, 9999999);
+		while(getPlayer(id) != null)
+			generateId();
 
-	public void setVillager(OfflineVillager villager) {
-		this.villager = villager;
-	}
-
-	public OfflineVillager getVillager() {
-		return villager;
-	}
-
-	public boolean isRegistered() {
-		return varoplayer.contains(this);
+		return id;
 	}
 
 	public void register() {
@@ -173,108 +169,7 @@ public class VaroPlayer extends VaroEntity {
 			}
 		}, 1);
 	}
-
-	public UUID getRealUUID() {
-		return UUID.fromString(uuid);
-	}
-
-	public NetworkMananager getNetworkManager() {
-		return networkManager == null ? new NetworkMananager(player) : networkManager;
-	}
-
-	public void setNetworkManager(NetworkMananager networkManager) {
-		this.networkManager = networkManager;
-	}
-
-	private int generateId() {
-		int id = Utils.randomInt(1000, 9999999);
-		while(getPlayer(id) != null)
-			generateId();
-
-		return id;
-	}
-
-	public boolean isAdminIgnore() {
-		return adminIgnore;
-	}
-
-	public void setAdminIgnore(boolean adminIgnore) {
-		this.adminIgnore = adminIgnore;
-	}
-
-	public Rank getRank() {
-		return rank;
-	}
-
-	public void setRank(Rank rank) {
-		this.rank = rank;
-		update();
-	}
-
-	public Stats getStats() {
-		return stats;
-	}
-
-	public Nametag getNametag() {
-		return nametag;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public boolean getinMassProtectionTime() {
-		return inMassProtectionTime;
-	}
-
-	public void setinMassProtectionTime(boolean inMassProtectionTime) {
-		this.inMassProtectionTime = inMassProtectionTime;
-	}
-
-	public boolean getalreadyHadMassProtectionTime() {
-		return alreadyHadMassProtectionTime;
-	}
-
-	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
-		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
-	}
-
-	public boolean isMassRecordingKick() {
-		return massRecordingKick;
-	}
-
-	public void setMassRecordingKick(boolean massRecordingKick) {
-		this.massRecordingKick = massRecordingKick;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-
-	public int getId() {
-		return id;
-	}
-
+	
 	public void delete() {
 		if(team != null)
 			team.removeMember(this);
@@ -401,6 +296,111 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		return true;
+	}
+
+	public UUID getRealUUID() {
+		return UUID.fromString(uuid);
+	}
+
+	public NetworkMananager getNetworkManager() {
+		return networkManager == null ? new NetworkMananager(player) : networkManager;
+	}
+
+	public void setNetworkManager(NetworkMananager networkManager) {
+		this.networkManager = networkManager;
+	}
+
+	public boolean isAdminIgnore() {
+		return adminIgnore;
+	}
+
+	public void setAdminIgnore(boolean adminIgnore) {
+		this.adminIgnore = adminIgnore;
+	}
+
+	public Rank getRank() {
+		return rank;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
+		update();
+	}
+
+	public Stats getStats() {
+		return stats;
+	}
+
+	public Nametag getNametag() {
+		return nametag;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public boolean getinMassProtectionTime() {
+		return inMassProtectionTime;
+	}
+
+	public void setinMassProtectionTime(boolean inMassProtectionTime) {
+		this.inMassProtectionTime = inMassProtectionTime;
+	}
+
+	public boolean getalreadyHadMassProtectionTime() {
+		return alreadyHadMassProtectionTime;
+	}
+
+	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
+		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
+	}
+
+	public boolean isMassRecordingKick() {
+		return massRecordingKick;
+	}
+
+	public void setMassRecordingKick(boolean massRecordingKick) {
+		this.massRecordingKick = massRecordingKick;
+	}
+	
+	public void setVillager(OfflineVillager villager) {
+		this.villager = villager;
+	}
+
+	public OfflineVillager getVillager() {
+		return villager;
+	}
+
+	public boolean isRegistered() {
+		return varoplayer.contains(this);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public void setNametag(Nametag nametag) {
