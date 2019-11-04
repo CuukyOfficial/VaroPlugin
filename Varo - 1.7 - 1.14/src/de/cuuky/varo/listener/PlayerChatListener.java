@@ -10,13 +10,13 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.listener.helper.TeamChat;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class PlayerChatListener implements Listener {
 

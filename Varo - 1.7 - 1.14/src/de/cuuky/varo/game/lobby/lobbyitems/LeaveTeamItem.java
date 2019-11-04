@@ -4,9 +4,9 @@ import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class LeaveTeamItem extends LobbyItem {
 

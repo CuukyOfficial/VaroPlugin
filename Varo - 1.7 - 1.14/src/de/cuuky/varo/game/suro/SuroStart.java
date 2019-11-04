@@ -7,10 +7,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
-import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.version.types.Sounds;
 
 public class SuroStart {

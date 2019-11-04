@@ -12,8 +12,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.version.VersionUtils;
 
 public class ExposedVaroEvent extends VaroEvent {

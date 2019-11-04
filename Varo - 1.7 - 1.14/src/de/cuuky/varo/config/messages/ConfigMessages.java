@@ -3,7 +3,7 @@ package de.cuuky.varo.config.messages;
 import java.util.ArrayList;
 
 import de.cuuky.varo.config.DefaultReplace;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public enum ConfigMessages {
 

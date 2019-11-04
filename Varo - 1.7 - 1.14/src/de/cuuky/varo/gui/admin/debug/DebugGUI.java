@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
@@ -14,7 +15,6 @@ import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.threads.dailycheck.Checker;
 import de.cuuky.varo.utils.LocationFormatter;
 import de.cuuky.varo.version.types.Materials;

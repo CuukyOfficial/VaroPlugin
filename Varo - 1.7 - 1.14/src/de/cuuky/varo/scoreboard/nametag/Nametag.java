@@ -12,8 +12,8 @@ import org.bukkit.scoreboard.Team;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.Rank;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -41,7 +41,7 @@ public class Nametag {
 	private UUID uniqueID;
 	private String prefix, suffix, name;
 	private Rank rank;
-	private de.cuuky.varo.team.Team team;
+	private de.cuuky.varo.entity.team.Team team;
 	private boolean init = false;
 	private boolean hearts = false;
 
@@ -248,7 +248,7 @@ public class Nametag {
 	private String checkName() {
 		String name = this.getPlayer().getName();
 
-		int teamsize = de.cuuky.varo.team.Team.getHighestNumber() + 1;
+		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
 		if(team != null)

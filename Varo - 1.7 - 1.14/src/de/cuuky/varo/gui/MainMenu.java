@@ -8,6 +8,10 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.events.EventListGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
@@ -17,10 +21,6 @@ import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.YouTubeVideo;
-import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.team.Team;
 import de.cuuky.varo.utils.LocationFormatter;
 import de.cuuky.varo.version.types.Materials;
 

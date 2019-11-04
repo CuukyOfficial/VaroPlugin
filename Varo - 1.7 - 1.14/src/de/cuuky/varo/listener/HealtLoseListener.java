@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class HealtLoseListener implements Listener {
 

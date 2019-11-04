@@ -6,9 +6,9 @@ import java.util.List;
 import org.bukkit.Location;
 
 import de.cuuky.varo.api.objects.player.VaroAPIState;
-import de.cuuky.varo.player.stats.Stats;
-import de.cuuky.varo.player.stats.stat.Strike;
-import de.cuuky.varo.player.stats.stat.inventory.InventoryBackup;
+import de.cuuky.varo.entity.player.stats.Stats;
+import de.cuuky.varo.entity.player.stats.stat.Strike;
+import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 
 public class VaroAPIStats {
 

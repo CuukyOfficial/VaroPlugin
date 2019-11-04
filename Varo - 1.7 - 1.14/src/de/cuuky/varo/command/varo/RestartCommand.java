@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class RestartCommand extends VaroCommand {
 

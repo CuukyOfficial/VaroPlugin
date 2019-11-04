@@ -39,7 +39,7 @@ import de.cuuky.varo.command.varo.TeamRequestCommand;
 import de.cuuky.varo.command.varo.TrollCommand;
 import de.cuuky.varo.command.varo.UpdateCommand;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public abstract class VaroCommand {
 

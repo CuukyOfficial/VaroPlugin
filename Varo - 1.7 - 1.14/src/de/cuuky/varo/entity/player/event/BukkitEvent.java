@@ -1,14 +1,14 @@
-package de.cuuky.varo.player.event;
+package de.cuuky.varo.entity.player.event;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.event.events.DeadEvent;
-import de.cuuky.varo.player.event.events.JoinEvent;
-import de.cuuky.varo.player.event.events.KickEvent;
-import de.cuuky.varo.player.event.events.KillEvent;
-import de.cuuky.varo.player.event.events.QuitEvent;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.event.events.DeadEvent;
+import de.cuuky.varo.entity.player.event.events.JoinEvent;
+import de.cuuky.varo.entity.player.event.events.KickEvent;
+import de.cuuky.varo.entity.player.event.events.KillEvent;
+import de.cuuky.varo.entity.player.event.events.QuitEvent;
 
 public class BukkitEvent {
 

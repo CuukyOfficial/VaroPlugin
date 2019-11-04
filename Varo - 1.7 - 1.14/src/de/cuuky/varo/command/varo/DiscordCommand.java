@@ -11,8 +11,8 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
-import de.cuuky.varo.player.VaroPlayer;
 import net.dv8tion.jda.core.entities.User;
 
 public class DiscordCommand extends VaroCommand {

@@ -6,8 +6,8 @@ import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.utils.LocationFormatter;
 
 public class CoordsCheck extends Checker {

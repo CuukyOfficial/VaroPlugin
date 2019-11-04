@@ -1,4 +1,4 @@
-package de.cuuky.varo.player.stats;
+package de.cuuky.varo.entity.player.stats;
 
 import java.util.HashMap;
 

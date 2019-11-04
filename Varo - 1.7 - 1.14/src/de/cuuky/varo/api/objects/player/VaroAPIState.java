@@ -1,6 +1,6 @@
 package de.cuuky.varo.api.objects.player;
 
-import de.cuuky.varo.player.stats.stat.PlayerState;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 
 public enum VaroAPIState {
 

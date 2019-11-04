@@ -2,7 +2,7 @@ package de.cuuky.varo.api.event.events.player;
 
 import de.cuuky.varo.api.event.VaroAPIEvent;
 import de.cuuky.varo.api.objects.player.VaroAPIPlayer;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class VaroPlayerEvent extends VaroAPIEvent {
 

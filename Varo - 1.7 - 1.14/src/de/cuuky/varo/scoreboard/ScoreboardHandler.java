@@ -16,8 +16,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import de.cuuky.varo.config.DefaultReplace;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.Team;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 

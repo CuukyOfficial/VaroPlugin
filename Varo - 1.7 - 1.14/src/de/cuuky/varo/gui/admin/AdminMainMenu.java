@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.alert.AlertTypeChooseGUI;
 import de.cuuky.varo.gui.admin.backup.BackupListGUI;
@@ -23,9 +25,7 @@ import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.report.Report;
-import de.cuuky.varo.team.Team;
 import de.cuuky.varo.version.types.Materials;
 
 public class AdminMainMenu extends SuperInventory {

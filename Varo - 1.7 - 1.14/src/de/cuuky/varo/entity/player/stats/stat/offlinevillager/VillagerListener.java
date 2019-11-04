@@ -1,4 +1,4 @@
-package de.cuuky.varo.player.stats.stat.offlinevillager;
+package de.cuuky.varo.entity.player.stats.stat.offlinevillager;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,8 +8,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.utils.EntityDamageByEntityUtil;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class VillagerListener implements Listener {
 

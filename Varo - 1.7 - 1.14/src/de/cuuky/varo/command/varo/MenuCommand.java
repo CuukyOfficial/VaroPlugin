@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.MainMenu;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class MenuCommand extends VaroCommand {
 

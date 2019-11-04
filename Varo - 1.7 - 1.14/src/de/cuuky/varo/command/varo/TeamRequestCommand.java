@@ -9,8 +9,8 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.request.TeamRequest;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.request.TeamRequest;
 
 public class TeamRequestCommand extends VaroCommand {
 

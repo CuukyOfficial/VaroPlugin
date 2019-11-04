@@ -8,8 +8,8 @@ import org.bukkit.command.ConsoleCommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.Strike;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.Strike;
 
 public class StrikeCommand extends VaroCommand {
 

@@ -1,4 +1,4 @@
-package de.cuuky.varo.player.event;
+package de.cuuky.varo.entity.player.event;
 
 public enum BukkitEventType {
 

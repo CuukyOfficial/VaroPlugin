@@ -1,13 +1,13 @@
-package de.cuuky.varo.player.event.events;
+package de.cuuky.varo.entity.player.event.events;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.event.BukkitEvent;
-import de.cuuky.varo.player.event.BukkitEventType;
-import de.cuuky.varo.player.stats.stat.PlayerState;
-import de.cuuky.varo.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.player.stats.stat.offlinevillager.OfflineVillager;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.event.BukkitEvent;
+import de.cuuky.varo.entity.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
+import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 
 public class QuitEvent extends BukkitEvent {
 

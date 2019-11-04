@@ -1,7 +1,7 @@
 package de.cuuky.varo.threads.dailycheck;
 
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.Strike;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.Strike;
 
 public class StrikePostCheck extends Checker {
 

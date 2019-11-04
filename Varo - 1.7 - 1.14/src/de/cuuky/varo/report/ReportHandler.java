@@ -1,11 +1,11 @@
 package de.cuuky.varo.report;
 
-import de.cuuky.varo.serialize.VaroSerializeHandler;
+import de.cuuky.varo.serialize.VaroSerializeObject;
 
-public class ReportHandler extends VaroSerializeHandler {
+public class ReportHandler extends VaroSerializeObject {
 
 	static {
-		VaroSerializeHandler.registerEnum(ReportReason.class);
+		VaroSerializeObject.registerEnum(ReportReason.class);
 	}
 
 	public ReportHandler() {

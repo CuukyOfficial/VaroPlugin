@@ -17,8 +17,8 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.KickResult;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.KickResult;
 import net.dv8tion.jda.core.entities.User;
 
 public class PlayerLoginListener implements Listener {

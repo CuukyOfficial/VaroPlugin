@@ -3,8 +3,8 @@ package de.cuuky.varo.api.objects.team;
 import java.util.ArrayList;
 
 import de.cuuky.varo.api.objects.player.VaroAPIPlayer;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.Team;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.Team;
 
 public class VaroAPITeam {
 

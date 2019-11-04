@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.version.VersionUtils;
 
 public class ResetCommand extends VaroCommand {

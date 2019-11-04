@@ -1,6 +1,6 @@
 package de.cuuky.varo.utils;
 
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PermissionUtils {
 

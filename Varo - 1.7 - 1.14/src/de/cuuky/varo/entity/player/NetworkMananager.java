@@ -1,4 +1,4 @@
-package de.cuuky.varo.player;
+package de.cuuky.varo.entity.player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

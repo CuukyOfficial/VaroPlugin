@@ -3,15 +3,15 @@ package de.cuuky.varo.game;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.serialize.VaroSerializeHandler;
+import de.cuuky.varo.serialize.VaroSerializeObject;
 import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
 
-public class GameHandler extends VaroSerializeHandler {
+public class GameHandler extends VaroSerializeObject {
 
 	static {
-		VaroSerializeHandler.registerEnum(GameState.class);
-		VaroSerializeHandler.registerClass(AutoStart.class);
-		VaroSerializeHandler.registerClass(BorderDecreaseDayTimer.class);
+		VaroSerializeObject.registerEnum(GameState.class);
+		VaroSerializeObject.registerClass(AutoStart.class);
+		VaroSerializeObject.registerClass(BorderDecreaseDayTimer.class);
 	}
 
 	public GameHandler() {

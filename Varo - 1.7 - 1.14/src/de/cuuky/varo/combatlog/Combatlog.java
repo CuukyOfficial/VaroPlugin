@@ -7,10 +7,10 @@ import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.event.BukkitEventType;
-import de.cuuky.varo.player.stats.stat.Strike;
 
 public class Combatlog {
 

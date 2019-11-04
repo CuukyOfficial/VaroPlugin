@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.list.item.ItemList;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class ItemCommand extends VaroCommand {
 

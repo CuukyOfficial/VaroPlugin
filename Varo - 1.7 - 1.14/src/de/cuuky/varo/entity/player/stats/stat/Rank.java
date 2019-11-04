@@ -1,4 +1,4 @@
-package de.cuuky.varo.player.stats.stat;
+package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.ArrayList;
 

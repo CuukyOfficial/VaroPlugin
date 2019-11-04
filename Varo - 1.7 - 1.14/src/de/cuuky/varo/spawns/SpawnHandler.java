@@ -1,12 +1,12 @@
 package de.cuuky.varo.spawns;
 
-import de.cuuky.varo.serialize.VaroSerializeHandler;
+import de.cuuky.varo.serialize.VaroSerializeObject;
 import de.cuuky.varo.spawns.spawn.SpawnType;
 
-public class SpawnHandler extends VaroSerializeHandler {
+public class SpawnHandler extends VaroSerializeObject {
 
 	static {
-		VaroSerializeHandler.registerEnum(SpawnType.class);
+		registerEnum(SpawnType.class);
 	}
 
 	public SpawnHandler() {

@@ -1,4 +1,4 @@
-package de.cuuky.varo.team.request;
+package de.cuuky.varo.entity.team.request;
 
 import java.util.ArrayList;
 
@@ -7,10 +7,10 @@ import org.bukkit.Bukkit;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.Team;
 
 public class TeamRequest {
 

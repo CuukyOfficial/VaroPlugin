@@ -3,8 +3,8 @@ package de.cuuky.varo.threads.dailycheck;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class SessionCheck extends Checker {
 

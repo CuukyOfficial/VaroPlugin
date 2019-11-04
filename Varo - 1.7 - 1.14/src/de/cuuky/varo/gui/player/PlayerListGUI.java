@@ -7,10 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.version.types.Materials;
 
 public class PlayerListGUI extends SuperInventory {

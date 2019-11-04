@@ -12,9 +12,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 
 public class PlayerInteractListener implements Listener {
 

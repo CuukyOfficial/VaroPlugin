@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.Team;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.Team;
 
 public class TopScoreList {
 

@@ -9,9 +9,9 @@ import java.util.TreeMap;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.event.BukkitEventType;
 
 public class WinnerCheck {
 

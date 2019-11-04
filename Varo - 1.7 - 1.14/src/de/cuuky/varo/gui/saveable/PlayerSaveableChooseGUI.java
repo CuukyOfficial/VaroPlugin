@@ -9,12 +9,12 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.cuuky.varo.utils.LocationFormatter;
 
 public class PlayerSaveableChooseGUI extends SuperInventory {

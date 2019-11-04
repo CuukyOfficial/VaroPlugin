@@ -6,7 +6,7 @@ import java.util.Date;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.disconnect.Disconnect;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.PermissionUtils;
 import de.cuuky.varo.version.VersionUtils;
 

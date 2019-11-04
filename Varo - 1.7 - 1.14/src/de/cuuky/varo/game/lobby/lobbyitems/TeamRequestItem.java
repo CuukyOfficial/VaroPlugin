@@ -6,10 +6,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.request.TeamRequest;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.request.TeamRequest;
 
 public class TeamRequestItem extends LobbyItem {
 

@@ -1,8 +1,8 @@
-package de.cuuky.varo.team;
+package de.cuuky.varo.entity.team;
 
-import de.cuuky.varo.serialize.VaroSerializeHandler;
+import de.cuuky.varo.serialize.VaroSerializeObject;
 
-public class TeamHandler extends VaroSerializeHandler {
+public class TeamHandler extends VaroSerializeObject {
 
 	public TeamHandler() {
 		super(Team.class, "/stats/teams.yml");

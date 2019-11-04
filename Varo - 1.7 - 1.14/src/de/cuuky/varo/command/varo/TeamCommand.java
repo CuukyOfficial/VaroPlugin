@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.team.Team;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.utils.UUIDUtils;
 
 public class TeamCommand extends VaroCommand {

@@ -5,7 +5,7 @@ import java.util.Date;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import de.cuuky.varo.player.stats.stat.inventory.InventoryBackup;
+import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 
 public class VaroAPIInventoryBackup {
 

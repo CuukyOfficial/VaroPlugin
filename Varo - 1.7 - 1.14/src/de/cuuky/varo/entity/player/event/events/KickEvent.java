@@ -1,8 +1,8 @@
-package de.cuuky.varo.player.event.events;
+package de.cuuky.varo.entity.player.event.events;
 
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.event.BukkitEvent;
-import de.cuuky.varo.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.event.BukkitEvent;
+import de.cuuky.varo.entity.player.event.BukkitEventType;
 
 public class KickEvent extends BukkitEvent {
 

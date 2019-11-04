@@ -1,4 +1,4 @@
-package de.cuuky.varo.player.stats.stat.inventory;
+package de.cuuky.varo.entity.player.stats.stat.inventory;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.Utils;

@@ -4,9 +4,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.PlayerState;
 
 public class CombatlogCheck {
 

@@ -1,4 +1,4 @@
-package de.cuuky.varo.player;
+package de.cuuky.varo.entity.player;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -16,20 +16,20 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.VaroEntity;
+import de.cuuky.varo.entity.player.event.BukkitEvent;
+import de.cuuky.varo.entity.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.stats.Stats;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.entity.player.stats.stat.Rank;
+import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
+import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.player.event.BukkitEvent;
-import de.cuuky.varo.player.event.BukkitEventType;
-import de.cuuky.varo.player.stats.Stats;
-import de.cuuky.varo.player.stats.stat.PlayerState;
-import de.cuuky.varo.player.stats.stat.Rank;
-import de.cuuky.varo.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.team.Team;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.vanish.Vanish;
 import de.cuuky.varo.version.BukkitVersion;
@@ -38,7 +38,7 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.managers.GuildController;
 
-public class VaroPlayer implements VaroSerializeable {
+public class VaroPlayer extends VaroEntity {
 
 	private static ArrayList<VaroPlayer> varoplayer;
 

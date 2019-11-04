@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.cuuky.varo.api.objects.player.stats.VaroAPIStats;
 import de.cuuky.varo.api.objects.team.VaroAPITeam;
-import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class VaroAPIPlayer {
 

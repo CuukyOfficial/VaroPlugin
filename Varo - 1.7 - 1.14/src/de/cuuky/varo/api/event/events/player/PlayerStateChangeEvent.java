@@ -1,7 +1,7 @@
 package de.cuuky.varo.api.event.events.player;
 
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.PlayerState;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 
 public class PlayerStateChangeEvent extends VaroPlayerEvent {
 

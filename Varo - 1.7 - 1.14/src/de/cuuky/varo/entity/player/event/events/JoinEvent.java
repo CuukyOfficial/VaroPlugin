@@ -1,4 +1,4 @@
-package de.cuuky.varo.player.event.events;
+package de.cuuky.varo.entity.player.event.events;
 
 import java.util.Date;
 
@@ -6,9 +6,9 @@ import org.bukkit.GameMode;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.disconnect.Disconnect;
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.event.BukkitEvent;
-import de.cuuky.varo.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.event.BukkitEvent;
+import de.cuuky.varo.entity.player.event.BukkitEventType;
 
 public class JoinEvent extends BukkitEvent {
 

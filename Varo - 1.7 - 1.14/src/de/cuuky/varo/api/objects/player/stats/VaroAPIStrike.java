@@ -2,8 +2,8 @@ package de.cuuky.varo.api.objects.player.stats;
 
 import java.util.Date;
 
-import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.player.stats.stat.Strike;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.Strike;
 
 public class VaroAPIStrike {
 

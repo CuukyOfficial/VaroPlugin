@@ -1,11 +1,11 @@
 package de.cuuky.varo.alert;
 
-import de.cuuky.varo.serialize.VaroSerializeHandler;
+import de.cuuky.varo.serialize.VaroSerializeObject;
 
-public class AlertHandler extends VaroSerializeHandler {
+public class AlertHandler extends VaroSerializeObject {
 
 	static {
-		VaroSerializeHandler.registerEnum(AlertType.class);
+		VaroSerializeObject.registerEnum(AlertType.class);
 	}
 
 	public AlertHandler() {
