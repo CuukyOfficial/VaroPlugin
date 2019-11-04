@@ -161,9 +161,10 @@ public enum ConfigMessages {
 	ALERT_BORDER_DECREASED_DEATH("Alert.borderDecrease.death", "Die Border wurde um %size% aufgrund eines Todes verringert!"),
 	ALERT_BORDER_DECREASED_TIME_DAYS("Alert.borderDecrease.days", "Die Border wurde um %size% verkleinert. Nächste Verkleinerung in %days% Tagen!"),
 
-	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Aufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
-	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Aufgrund dessen wurde das Inventar geleert!"),
-	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Damit ist %player% aus %projectname% ausgeschieden!"),
+	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Strike-Begründung: %strikeBegründung%\nAufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
+	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Strike-Begründung: %strikeBegründung%\nAufgrund dessen wurde das Inventar geleert!"),
+	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Strike-Begründung: %strikeBegründung%\nDamit ist %player% aus %projectname% ausgeschieden!"),
+	ALERT_GENERAL_STRIKE("Alert.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Strike-Begründung: %strikeBegründung%"),
 	ALERT_KICKED_PLAYER("Alert.kickedPlayer", "%player% wurde gekickt!"),
 	ALERT_DISCONNECT_TOO_OFTEN("Alert.disconnectTooOften", "%player% hat das Spiel zu oft verlassen, weswegen seine Session entfernt wurde!"),
 	ALERT_TELEPORTED_TO_MIDDLE("Alert.teleportedToMiddle", "%player% wurde zur Mitte teleportiert!"),

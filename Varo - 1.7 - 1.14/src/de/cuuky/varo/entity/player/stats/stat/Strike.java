@@ -94,16 +94,16 @@ public class Strike implements VaroSerializeable {
 		switch(number) {
 		case 1:
 			Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason));
 			break;
 		case 2:
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()));
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason));
 			break;
 		case 3:
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()));
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason));
 			break;
 		default:
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, striked.getName() + " hat nun den " + number + "ten Strike!");
+			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeNumber%", String.valueOf(number)).replace("%strikeBegründung%", reason));
 			break;
 		}
 
