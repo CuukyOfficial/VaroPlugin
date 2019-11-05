@@ -15,14 +15,6 @@ public class VersionUtils {
 		version = BukkitVersion.getVersion(nmsClass);
 	}
 
-	public static String getNmsClass() {
-		return nmsClass;
-	}
-
-	public static BukkitVersion getVersion() {
-		return version;
-	}
-
 	public static ArrayList<Player> getOnlinePlayer() {
 		ArrayList<Player> list = new ArrayList<Player>();
 		for(Player p : Bukkit.getOnlinePlayers())
@@ -41,5 +33,13 @@ public class VersionUtils {
 		}
 
 		return null;
+	}
+	
+	public static String getNmsClass() {
+		return nmsClass;
+	}
+
+	public static BukkitVersion getVersion() {
+		return version;
 	}
 }
