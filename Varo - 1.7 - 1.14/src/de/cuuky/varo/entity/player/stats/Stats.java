@@ -373,8 +373,15 @@ public class Stats implements VaroSerializeable {
 	public void removeStrike(Strike strike) {
 		if(VaroAPI.getEventManager().executeEvent(new PlayerStrikeRemoveEvent(strike)))
 			return;
-
+		
+		int strikeNumber = strike.getStrikeNumber();
 		this.strikes.remove(strike);
+		
+		for (Strike aStrike : this.strikes) {
+			if (aStrike.getStrikeNumber() > strikeNumber) {
+				aStrike.decreaseStrikeNumber();
+			}
+		}
 	}
 
 	public String getYoutubeLink() {

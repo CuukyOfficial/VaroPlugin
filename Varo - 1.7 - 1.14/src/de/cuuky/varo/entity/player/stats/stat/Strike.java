@@ -58,6 +58,14 @@ public class Strike implements VaroSerializeable {
 	public VaroPlayer getStriked() {
 		return striked;
 	}
+	
+	public int getStrikeNumber() {
+		return number;
+	}
+	
+	public void decreaseStrikeNumber() {
+		this.number -= 1;
+	}
 
 	public void activate(int number) {
 		this.number = number;

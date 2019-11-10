@@ -98,9 +98,8 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Strikes von " + Main.getColorCode() + varoPlayer.getName() + "§7:");
-			for(int i = 0; i < varoPlayer.getStats().getStrikes().size(); i++) {
-				Strike strike = varoPlayer.getStats().getStrikes().get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + (i+1) + "§8:");
+			for(Strike strike : varoPlayer.getStats().getStrikes()) {
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + strike.getStrikeNumber() + "§8:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason: §7" + strike.getReason());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker: §7" + strike.getStriker());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: §7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));
