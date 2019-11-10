@@ -163,6 +163,7 @@ public enum ConfigMessages {
 	ALERT_BORDER_DECREASED_TIME_DAYS("Alert.borderDecrease.days", "Die Border wurde um %size% verkleinert. Nächste Verkleinerung in %days% Tagen!"),
 
 	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Strike-Begründung: %strikeBegründung%\nAufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
+	ALERT_FIRST_STRIKE_NEVER_ONLINE("Alert.firstStrikeNeverOnline", "%player% hat nun einen Strike. Strike-Begründung: %strikeBegründung%\nDer Spieler war noch nicht online und wird an den Spawn-Koordinaten spawnen: %pos%!"),
 	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Strike-Begründung: %strikeBegründung%\nAufgrund dessen wurde das Inventar geleert!"),
 	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Strike-Begründung: %strikeBegründung%\nDamit ist %player% aus %projectname% ausgeschieden!"),
 	ALERT_GENERAL_STRIKE("Alert.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Strike-Begründung: %strikeBegründung%"),

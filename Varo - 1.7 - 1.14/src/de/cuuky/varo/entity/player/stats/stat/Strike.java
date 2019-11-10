@@ -89,8 +89,13 @@ public class Strike implements VaroSerializeable {
 
 		switch(number) {
 		case 1:
-			Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason));
+			if (striked.getStats().getLastLocation() == null) {
+				Location loc = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation();
+				Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason));
+			} else {
+				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
+				Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason));
+			}
 			break;
 		case 2:
 			Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason));
