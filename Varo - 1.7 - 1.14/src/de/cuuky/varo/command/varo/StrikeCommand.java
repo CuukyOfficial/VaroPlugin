@@ -31,12 +31,16 @@ public class StrikeCommand extends VaroCommand {
 		if(VaroPlayer.getPlayer(args[0]) != null) {
 			VaroPlayer varoPlayer = VaroPlayer.getPlayer(args[0]);
 
-			String reason = "Manueller Strike von: " + sender.getName();
+			String reason = "";
 			for(String key : args) {
 				if(key.equals(args[0]))
 					continue;
 
-				reason = reason.isEmpty() ? "Manuell: " + key : " " + key;
+				reason = reason.isEmpty() ? "Manueller Strike von: " + sender.getName() + ". Grund: " + key : " " + key;
+			}
+			
+			if (reason.isEmpty()) {
+				reason = "Manueller Strike von: " + sender.getName();
 			}
 
 			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
