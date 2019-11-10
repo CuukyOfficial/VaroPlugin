@@ -58,7 +58,11 @@ public class FinaleCommand extends VaroCommand {
 			
 			for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
 				if (player.getPlayer().isOnline()) {
-					player.getPlayer().teleport(Main.getDataManager().getWorldHandler().getTeleportLocation());
+					player.getPlayer().teleport(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
+					player.sendMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
+					if (ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
+						player.sendMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
+					}
 				} else {
 					if (ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
 						player.getStats().setState(PlayerState.SPECTATOR);
@@ -74,6 +78,9 @@ public class FinaleCommand extends VaroCommand {
 			border.setSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt());
 			
 			Main.getGame().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
+			
+			int playerNumber = VaroPlayer.getOnlinePlayer().size();
+			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");			
 			return;
 		}
 	}
