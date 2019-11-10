@@ -35,12 +35,11 @@ public class StrikeCommand extends VaroCommand {
 			for(String key : args) {
 				if(key.equals(args[0]))
 					continue;
-
-				reason = reason.isEmpty() ? "Manueller Strike von: " + sender.getName() + ". Grund: " + key : " " + key;
+				reason += key;
 			}
 			
 			if (reason.isEmpty()) {
-				reason = "Manueller Strike von: " + sender.getName();
+				reason = "Ohne Begründung";
 			}
 
 			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
