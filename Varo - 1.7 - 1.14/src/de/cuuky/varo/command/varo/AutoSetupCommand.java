@@ -25,7 +25,10 @@ public class AutoSetupCommand extends VaroCommand {
 				}
 
 				new AutoSetup();
-				sender.sendMessage(Main.getPrefix() + "Der AutoSetup ist fertig. Joine nun neu, um zu den Spawns zu kommen.");
+				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+					player.getPlayer().teleport(Main.getDataManager().getWorldHandler().getTeleportLocation());
+				}
+				sender.sendMessage(Main.getPrefix() + "Der AutoSetup ist fertig.");
 				return;
 			}
 		}
