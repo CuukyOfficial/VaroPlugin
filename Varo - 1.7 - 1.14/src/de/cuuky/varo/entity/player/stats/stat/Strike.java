@@ -72,14 +72,10 @@ public class Strike implements VaroSerializeable {
 			striked.getStats().clearInventory();
 			break;
 		case 3:
-			striked.getStats().setState(PlayerState.DEAD);
-			if(striked.isOnline())
-				striked.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue());
-			break;
 		default:
 			striked.getStats().setState(PlayerState.DEAD);
 			if(striked.isOnline())
-				striked.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue());
+				striked.getPlayer().kickPlayer(ConfigMessages.KICK_TOO_MANY_STRIKES.getValue());
 			break;
 		}
 
