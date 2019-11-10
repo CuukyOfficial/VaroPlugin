@@ -26,8 +26,9 @@ public class EntityDamageListener implements Listener {
 			return;
 
 		Player pl = (Player) e;
+		VaroPlayer vp = VaroPlayer.getPlayer(pl);
 
-		if(Main.getGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(pl, CancelAbleType.PROTECTION) != null || Main.getGame().getProtection() != null) {
+		if(Main.getGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || Main.getGame().getProtection() != null) {
 			event.setCancelled(true);
 			return;
 		}
@@ -35,7 +36,6 @@ public class EntityDamageListener implements Listener {
 		if(!ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Main.getGame().isStarting() || Main.getGame().isFirstTime())
 			return;
 
-		VaroPlayer vp = VaroPlayer.getPlayer(pl.getName());
 		if(vp.isInProtection()) {
 			event.setCancelled(true);
 			return;

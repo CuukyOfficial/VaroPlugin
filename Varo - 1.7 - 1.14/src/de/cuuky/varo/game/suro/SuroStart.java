@@ -64,17 +64,17 @@ public class SuroStart {
 					for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
-						VaroCancelAble.getCancelAble(vp.getPlayer(), CancelAbleType.FREEZE).remove();
-						VaroCancelAble.getCancelAble(vp.getPlayer(), CancelAbleType.MUTE).remove();
-						VaroCancelAble.getCancelAble(vp.getPlayer(), CancelAbleType.PROTECTION).remove();
+						VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE).remove();
+						VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE).remove();
+						VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION).remove();
 					}
 					return;
 				}
 
 				for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-					new VaroCancelAble(CancelAbleType.FREEZE, vp.getPlayer());
-					new VaroCancelAble(CancelAbleType.MUTE, vp.getPlayer());
-					new VaroCancelAble(CancelAbleType.PROTECTION, vp.getPlayer());
+					new VaroCancelAble(CancelAbleType.FREEZE, vp);
+					new VaroCancelAble(CancelAbleType.MUTE, vp);
+					new VaroCancelAble(CancelAbleType.PROTECTION, vp);
 
 					vp.cleanUpPlayer();
 					vp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));

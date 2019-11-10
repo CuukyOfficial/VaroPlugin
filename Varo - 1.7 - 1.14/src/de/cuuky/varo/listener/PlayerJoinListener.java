@@ -83,8 +83,8 @@ public class PlayerJoinListener implements Listener {
 			} else if (Main.getGame().getFinaleJoinStart()) {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
 				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
-				if (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) == null)
-					new VaroCancelAble(CancelAbleType.FREEZE, player);
+				if (VaroCancelAble.getCancelAble(vplayer, CancelAbleType.FREEZE) == null)
+					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));

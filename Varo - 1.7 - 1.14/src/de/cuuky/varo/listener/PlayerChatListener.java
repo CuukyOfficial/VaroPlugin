@@ -60,7 +60,7 @@ public class PlayerChatListener implements Listener {
 			message = message.replaceFirst("\\" + tc, "");
 		}
 
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null) {
+		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
 			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue());
 			event.setCancelled(true);
 			return;

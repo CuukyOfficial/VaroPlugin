@@ -76,7 +76,7 @@ public class PlayerDeathListener implements Listener {
 				}
 			} else {
 				if(ConfigEntry.RESPAWN_PROTECTION.isIntActivated()) {
-					VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadPlayer, ConfigEntry.RESPAWN_PROTECTION.getValueAsInt());
+					VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadP, ConfigEntry.RESPAWN_PROTECTION.getValueAsInt());
 					Bukkit.broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION.getValue(deadP).replace("%seconds%", String.valueOf(ConfigEntry.RESPAWN_PROTECTION.getValueAsInt())));
 					prot.setTimerHook(new Runnable() {
 

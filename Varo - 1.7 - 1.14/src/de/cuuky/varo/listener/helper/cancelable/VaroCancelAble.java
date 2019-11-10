@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class VaroCancelAble {
 
@@ -15,11 +16,11 @@ public class VaroCancelAble {
 		cancelables = new ArrayList<>();
 	}
 
-	protected Player player;
+	protected VaroPlayer player;
 	protected CancelAbleType type;
 	protected Runnable timerHook;
 
-	public VaroCancelAble(CancelAbleType type, Player player) {
+	public VaroCancelAble(CancelAbleType type, VaroPlayer player) {
 		this.player = player;
 		this.type = type;
 
@@ -28,7 +29,7 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
-	public VaroCancelAble(CancelAbleType type, Player player, int time) {
+	public VaroCancelAble(CancelAbleType type, VaroPlayer player, int time) {
 		this.player = player;
 		this.type = type;
 
@@ -54,7 +55,7 @@ public class VaroCancelAble {
 		return type;
 	}
 
-	public Player getPlayer() {
+	public VaroPlayer getPlayer() {
 		return player;
 	}
 
@@ -73,7 +74,7 @@ public class VaroCancelAble {
 		}, time * 20);
 	}
 
-	public static VaroCancelAble getCancelAble(Player player, CancelAbleType type) {
+	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
 		for(VaroCancelAble able : cancelables)
 			if(able.getPlayer().equals(player) && able.getType().equals(type))
 				return able;
