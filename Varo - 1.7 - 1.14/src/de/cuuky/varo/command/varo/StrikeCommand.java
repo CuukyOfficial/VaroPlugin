@@ -78,7 +78,7 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			varoPlayer.getStats().removeStrike(varoPlayer.getStats().getStrikes().get(num));
-			sender.sendMessage(Main.getPrefix() + "§7Du hast " + Main.getColorCode() + vp.getName() + " §7einen Strike entfernt! Er hat noch " + Main.getColorCode() + vp.getStats().getStrikes().size() + " §7strikes!");
+			sender.sendMessage(Main.getPrefix() + "§7Du hast " + Main.getColorCode() + varoPlayer.getName() + " §7einen Strike entfernt! Er hat noch " + Main.getColorCode() + varoPlayer.getStats().getStrikes().size() + " §7strikes!");
 		} else if(args[0].equalsIgnoreCase("list")) {
 			if(args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/strike list §7<Spieler>");
