@@ -22,18 +22,17 @@ public class ProtectCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/protect <Player>");
+			sender.sendMessage(Main.getPrefix() + "§7/protect <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/unprotect <Player/@a>");
 			return false;
 		}
 
 		if(args[0].equalsIgnoreCase("@a")) {
 			for(VaroPlayer player : VaroPlayer.getOnlinePlayer())
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
-					VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
-				else
+				if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) == null)
 					new VaroCancelAble(CancelAbleType.PROTECTION, player);
 
-			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler (ent- / ge-) protected!");
+			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler protected!");
 			return false;
 		}
 
@@ -44,12 +43,10 @@ public class ProtectCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null)
-			VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION).remove();
-		else
+		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) == null)
 			new VaroCancelAble(CancelAbleType.PROTECTION, vp);
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich " + (VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null ? "protected!" : "entprotected!"));
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich protected!");
 		return false;
 	}
 }
