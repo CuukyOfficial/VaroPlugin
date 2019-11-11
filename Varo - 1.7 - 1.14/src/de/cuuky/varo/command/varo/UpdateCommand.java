@@ -25,11 +25,30 @@ public class UpdateCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-
+		
+		UpdateResult result;
+		String updateVersion;
+		
+		try {
+			UpdateChecker updater = Main.getUpdater();
+			result = updater.getResult();
+			updateVersion = updater.getVersion();
+		} catch(NumberFormatException e) {
+			sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler beim Update-Prüfen.");
+			return;
+		}
+		
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
-			sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+			
+			if (result == UpdateResult.UPDATE_AVAILABLE) {
+				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
+				sender.sendMessage("");
+				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+			} else {
+				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
+			}
 			return;
 		}
 
@@ -48,17 +67,13 @@ public class UpdateCommand extends VaroCommand {
 		}
 
 		Main.getDataManager().setDoSave(false);
+		
+		if (result == UpdateResult.UPDATE_AVAILABLE) {
+			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
+			update(sender);
+		} else {
+			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 
-		try {
-			UpdateChecker updater = Main.getUpdater();
-			if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-				sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
-				update(sender);
-			} else {
-				sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem  neuesten Stand!");
-			}
-		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler beim Update-Prüfen.");
 		}
 
 	}
