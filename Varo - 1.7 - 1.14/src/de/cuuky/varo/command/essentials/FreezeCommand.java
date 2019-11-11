@@ -32,9 +32,7 @@ public class FreezeCommand implements CommandExecutor {
 				if(player.getPlayer().isOp()) {
 					continue;
 				}
-				
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) == null)
-					new VaroCancelAble(CancelAbleType.FREEZE, player);
+				new VaroCancelAble(CancelAbleType.FREEZE, player);
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gefreezed!");
@@ -53,9 +51,7 @@ public class FreezeCommand implements CommandExecutor {
 			return false;
 		}
 		
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) == null)
-			new VaroCancelAble(CancelAbleType.FREEZE, vp);
-			
+		new VaroCancelAble(CancelAbleType.FREEZE, vp);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gefreezed!");
 		return false;

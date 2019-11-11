@@ -32,9 +32,7 @@ public class MuteCommand implements CommandExecutor {
 				if(player.getPlayer().isOp()) {
 					continue;
 				}
-
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) == null)
-					new VaroCancelAble(CancelAbleType.MUTE, player);
+				new VaroCancelAble(CancelAbleType.MUTE, player);
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gemuted!");
@@ -53,8 +51,7 @@ public class MuteCommand implements CommandExecutor {
 		}
 		
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) == null)
-			new VaroCancelAble(CancelAbleType.MUTE, vp);
+		new VaroCancelAble(CancelAbleType.MUTE, vp);
 		
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gemuted!");

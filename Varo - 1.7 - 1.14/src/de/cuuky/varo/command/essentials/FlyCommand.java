@@ -10,8 +10,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 
 public class FlyCommand implements CommandExecutor {
 

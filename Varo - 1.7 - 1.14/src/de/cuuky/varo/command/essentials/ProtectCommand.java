@@ -29,8 +29,7 @@ public class ProtectCommand implements CommandExecutor {
 
 		if(args[0].equalsIgnoreCase("@a")) {
 			for(VaroPlayer player : VaroPlayer.getOnlinePlayer())
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) == null)
-					new VaroCancelAble(CancelAbleType.PROTECTION, player);
+				new VaroCancelAble(CancelAbleType.PROTECTION, player);
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler protected!");
 			return false;
@@ -43,8 +42,7 @@ public class ProtectCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) == null)
-			new VaroCancelAble(CancelAbleType.PROTECTION, vp);
+		new VaroCancelAble(CancelAbleType.PROTECTION, vp);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich protected!");
 		return false;

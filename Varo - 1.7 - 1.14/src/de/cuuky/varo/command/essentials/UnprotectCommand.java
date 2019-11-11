@@ -22,15 +22,14 @@ public class UnprotectCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/mute <Player/@a>");
-			sender.sendMessage(Main.getPrefix() + "§7/unmute <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/protect <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/unprotect <Player/@a>");
 			return false;
 		}
 
 		if(args[0].equalsIgnoreCase("@a")) {
 			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
-					VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
+				VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler unprotected!");
@@ -44,8 +43,7 @@ public class UnprotectCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null)
-			VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION).remove();
+		VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION).remove();
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich unprotected!");
 		return false;

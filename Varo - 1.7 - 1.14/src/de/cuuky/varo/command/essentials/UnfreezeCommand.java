@@ -29,8 +29,7 @@ public class UnfreezeCommand implements CommandExecutor {
 
 		if(args[0].equalsIgnoreCase("@a")) {
 			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null)
-					VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
+				VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler entfreezed!");
@@ -44,8 +43,7 @@ public class UnfreezeCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null)
-			VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE).remove();
+		VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE).remove();
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich entfreezed!");
 		return false;
