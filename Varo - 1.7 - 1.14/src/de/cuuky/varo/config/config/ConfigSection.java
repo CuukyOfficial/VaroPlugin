@@ -51,6 +51,8 @@ public enum ConfigSection {
 	TELEGRAM("Telegram", Materials.MAP.parseMaterial(), "Alle Einstellungen zum Telegram-Bot."),
 
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
+	
+	GUI("Gui", Materials.WHITE_BANNER.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
 
 	OTHER("Other", Material.REDSTONE, "Hier findest du alle restlichen Einstellungen.");
 

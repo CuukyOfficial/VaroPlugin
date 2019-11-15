@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.version.BukkitVersion;
@@ -21,14 +22,9 @@ import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public abstract class SuperInventory {
-
-	/*
-	 * Please leave me here, thanks <3 Source: spigotmc.org
-	 */
-	@SuppressWarnings("unused")
-	private static final String AUTHOR = "Cuuky", VERSION = "0.3.1";
-	private static final boolean FILL_INVENTORY = true;
-	private static final boolean ANIMATIONS = false;
+	
+	private static boolean FILL_INVENTORY = true;
+	private static boolean ANIMATIONS = false;
 
 	private static ArrayList<SuperInventory> guis;
 	private static ItemStack forward;
@@ -38,6 +34,8 @@ public abstract class SuperInventory {
 		guis = new ArrayList<>();
 		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
 		backwards = new ItemBuilder().displayname("§cSeite rückwärts").itemstack(new ItemStack(Material.ARROW)).build();
+		FILL_INVENTORY = ConfigEntry.GUI_FILL_INVENTORY.getValueAsBoolean();
+		ANIMATIONS = ConfigEntry.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();
 	}
 
 	protected String firstTitle;
@@ -55,6 +53,7 @@ public abstract class SuperInventory {
 	private HashMap<ItemMeta, Runnable> itemlinks;
 
 	public SuperInventory(String title, Player opener, int size, boolean homePage) {
+		
 		this.firstTitle = title;
 		this.opener = opener;
 		this.page = 1;
