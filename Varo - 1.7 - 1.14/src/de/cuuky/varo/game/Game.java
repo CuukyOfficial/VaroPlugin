@@ -254,7 +254,7 @@ public class Game implements VaroSerializeable {
 					Main.getDataManager().getWorldHandler().getWorld().strikeLightningEffect(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
-					Main.getLoggerMaster().getEventLogger().println(LogType.INFO, ConfigMessages.ALERT_GAME_STARTED.getValue());
+					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 					startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 					Bukkit.getScheduler().cancelTask(startScheduler);
 
