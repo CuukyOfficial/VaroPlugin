@@ -130,6 +130,7 @@ public enum ConfigEntry {
 	OUTSIDE_BORDER_SPAWN_TELEPORT(ConfigSection.BORDER, "outsideBorderSpawnTeleport", true, "Ob, wenn ein Spieler außerhalb der Border joint, er in die Mitte teleportiert werden soll."),
 
 	// CHAT
+	BLOCK_CHAT_ADS(ConfigSection.CHAT, "blockChatAds", true, "Wenn aktiviert, können keine Links in den öffentlichen Chat gepostet werden."),
 	CAN_CHAT_BEFORE_START(ConfigSection.CHAT, "canChatBeforeStart", true, "Ob die Spieler vor Start chatten können."),
 	CHAT_COOLDOWN_IN_SECONDS(ConfigSection.CHAT, "chatCooldownInSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden können.\nOff = -1"),
 	CHAT_COOLDOWN_IF_STARTED(ConfigSection.CHAT, "chatCooldownIfStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde."),

@@ -60,6 +60,19 @@ public class PlayerChatListener implements Listener {
 			message = message.replaceFirst("\\" + tc, "");
 		}
 
+		if (ConfigEntry.BLOCK_CHAT_ADS.getValueAsBoolean() && !player.isOp()) {
+			if (message.matches("(?ui).*((w\\s?w\\s?w)|(h\\s?t\\s?t\\s?p\\s?s?)|([.,;](\\s)?((d\\s?e)|(n\\s?e\\s?t)|(c\\s?o\\s?m)|(t\\s?v)))).*")) {
+				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Links.");
+				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
+				event.setCancelled(true);
+			}
+			if (message.matches("(?iu).*(meins?e?m?n?)\\s\\s?((Projekt)|(Plugin)|(Server)|(Netzwerk)|(Varo)).*")) {
+				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Eigenwerbung.");
+				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
+				event.setCancelled(true);
+			}
+		}
+
 		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
 			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue());
 			event.setCancelled(true);
