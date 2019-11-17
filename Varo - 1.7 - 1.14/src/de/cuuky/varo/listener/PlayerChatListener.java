@@ -61,15 +61,17 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if (ConfigEntry.BLOCK_CHAT_ADS.getValueAsBoolean() && !player.isOp()) {
-			if (message.matches("(?ui).*((w\\s?w\\s?w)|(h\\s?t\\s?t\\s?p\\s?s?)|([.,;](\\s)?((d\\s?e)|(n\\s?e\\s?t)|(c\\s?o\\s?m)|(t\\s?v)))).*")) {
+			if (message.matches("(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v)).*")) {
 				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Links.");
 				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
 				event.setCancelled(true);
+				return;
 			}
-			if (message.matches("(?iu).*(meins?e?m?n?)\\s\\s?((Projekt)|(Plugin)|(Server)|(Netzwerk)|(Varo)).*")) {
+			if (message.matches("(?iu).*(meins?e?m?n?)\\s*(Projekt|Plugin|Server|Netzwerk|Varo).*")) {
 				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Eigenwerbung.");
 				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
 				event.setCancelled(true);
+				return;
 			}
 		}
 
