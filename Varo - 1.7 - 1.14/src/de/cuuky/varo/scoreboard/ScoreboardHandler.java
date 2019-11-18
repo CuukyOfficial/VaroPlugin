@@ -13,7 +13,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import de.cuuky.varo.config.DefaultReplace;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -105,7 +104,7 @@ public class ScoreboardHandler {
 			line = line.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
 		}
 
-		line = new DefaultReplace(line).getReplaced(vp);
+		line = ConfigMessages.getValue(line, vp);
 
 		if(VersionUtils.getVersion() == BukkitVersion.ONE_7 && line.length() > 16)
 			line = line.substring(0, 16);

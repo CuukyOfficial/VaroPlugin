@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import de.cuuky.varo.config.messages.ConfigMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.DefaultReplace;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
@@ -53,7 +53,7 @@ public class Broadcaster {
 		if(!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
-			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewählt werden.");
+			sb.add("&7Du kannst hier unendlich viele Nachrichten einfügen, die dann Random ausgewählt werden.");
 
 			if(!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
@@ -76,7 +76,7 @@ public class Broadcaster {
 			@Override
 			public void run() {
 				int random = new Random().nextInt(((messages.size() - 1) - 0) + 1) + 0;
-				Bukkit.broadcastMessage(new DefaultReplace(messages.get(random)).getReplaced());
+				Bukkit.broadcastMessage(ConfigMessages.getValue(messages.get(random)));
 			}
 		}, interval, interval);
 	}
