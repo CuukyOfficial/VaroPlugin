@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -39,8 +40,20 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			Team team = Team.getTeam(args[1]);
+
 			if(team != null) {
-				sender.sendMessage(Main.getPrefix() + "Dieser Teamname ist bereits benutzt!");
+				boolean teamIdentical = true;
+				for (int i = 2; i < args.length; i++) {
+					VaroPlayer player = VaroPlayer.getPlayer(args[i]);
+					if (!team.getMember().contains(player) || player == null) {
+						teamIdentical = false;
+					}
+				}
+				if (teamIdentical) {
+					sender.sendMessage(Main.getPrefix() + "Dieses Team ist bereits registriert.");
+				} else {
+					sender.sendMessage(Main.getPrefix() + "§cDas Team konnte nicht registriert werden, der Teamname ist bereits belegt.");
+				}
 				return;
 			}
 
