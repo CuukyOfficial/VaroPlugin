@@ -142,7 +142,15 @@ public class PlayerCommand extends VaroCommand {
 				try {
 					uuid = UUIDUtils.getUUID(arg).toString();
 				} catch(Exception e) {
-					sender.sendMessage(Main.getPrefix() + arg + " besitzt keinen Minecraft-Account!");
+					sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
+					String newName;
+					try {
+						newName = UUIDUtils.getNamesChanged(arg);
+						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieß, hat sich in §7" + newName + " §cumbenannt.");
+						sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufügen.");
+					} catch (Exception f) {
+						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
+					}
 					continue;
 				}
 
