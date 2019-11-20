@@ -23,7 +23,7 @@ public class GamemodeCommand implements CommandExecutor {
 		}
 		
 		Player player;
-		if(args.length <= 2) {
+		if(args.length <= 2 && args.length != 0) {
 			if (args.length == 1) {
 				if(!(sender instanceof Player)) {
 					sender.sendMessage(Main.getPrefix() + "§7Du musst entweder einen Spieler angeben oder diesen Befehl als Spieler stellen.");
