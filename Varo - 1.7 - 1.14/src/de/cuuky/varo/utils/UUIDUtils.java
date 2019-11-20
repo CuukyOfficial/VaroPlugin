@@ -1,5 +1,8 @@
 package de.cuuky.varo.utils;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,15 +35,22 @@ public class UUIDUtils {
 			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name + "?at=" + String.valueOf(time)).openStream());
 		}
 		
-		if(scanner.hasNext()) {
-			String s1 = scanner.nextLine();
-			String s = s1.replaceAll("\\{", "").replaceAll("\\}", "").replaceAll("\"", "").split(",")[0].split(":")[1];
+		if(!scanner.hasNext()) {
 			scanner.close();
-			return UUID.fromString(s.replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
+			return null;
 		}
-		
+
+		String input = scanner.nextLine();
 		scanner.close();
-		return null;
+		try {
+			JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(input);
+			String uuidString = UUIDObject.get("id").toString();
+			String uuidSeperation = uuidString.replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5");
+			UUID uuid = UUID.fromString(uuidSeperation);
+			return uuid;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	private static ArrayList<UUID> getOldUUIDs(String name) throws Exception {
@@ -60,5 +70,4 @@ public class UUIDUtils {
 		
 		return UUIDs;
 	}
-	
 }
