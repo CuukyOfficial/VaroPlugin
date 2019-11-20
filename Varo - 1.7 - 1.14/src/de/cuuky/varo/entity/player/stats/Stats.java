@@ -446,6 +446,11 @@ public class Stats implements VaroSerializeable {
 		return this.countdown;
 	}
 
+	public String klklklkl() {
+		System.out.println("jetzt macht er diese Dumme Version");
+		return "0";
+	}
+
 	public String getCountdownMin(int sec) {
 		int min = sec / 60;
 

@@ -266,46 +266,46 @@ public enum ConfigMessages {
 
 	public static String getValue(String value) {
 		String replaced = value;
-		replaced = replaced.replace("%projectname%", Main.getProjectName());
-		replaced = replaced.replace("%remaining%", String.valueOf(VaroPlayer.getAlivePlayer().size()));
-		replaced = replaced.replace("%players%", String.valueOf(VaroPlayer.getVaroPlayer().size()));
-		replaced = replaced.replace("%online%", String.valueOf(VersionUtils.getOnlinePlayer().size()));
-		replaced = replaced.replace("%currHour%", new SimpleDateFormat("HH").format(new Date()));
-		replaced = replaced.replace("%currMin%", new SimpleDateFormat("mm").format(new Date()));
-		replaced = replaced.replace("%currSec%", new SimpleDateFormat("ss").format(new Date()));
-		replaced = replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getDataManager().getWorldHandler().getBorder().getSize()));
-		replaced = replaced.replace("%colorcode%", Main.getColorCode());
-		replaced = replaced.replace("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString());
-		replaced = replaced.replace("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString());
+		replaced = replaced.contains("%projectname%") ? replaced.replace("%projectname%", Main.getProjectName()) : replaced;
+		replaced = replaced.contains("%remaining%") ? replaced.replace("%remaining%", String.valueOf(VaroPlayer.getAlivePlayer().size())) : replaced;
+		replaced = replaced.contains("%players%") ? replaced.replace("%players%", String.valueOf(VaroPlayer.getVaroPlayer().size())) : replaced;
+		replaced = replaced.contains("%online%") ? replaced.replace("%online%", String.valueOf(VersionUtils.getOnlinePlayer().size())) : replaced;
+		replaced = replaced.contains("%currHour%") ? replaced.replace("%currHour%", new SimpleDateFormat("HH").format(new Date())) : replaced;
+		replaced = replaced.contains("%currMin%") ? replaced.replace("%currMin%", new SimpleDateFormat("mm").format(new Date())) : replaced;
+		replaced = replaced.contains("%currSec%") ? replaced.replace("%currSec%", new SimpleDateFormat("ss").format(new Date())) : replaced;
+		replaced = replaced.contains("%bordersize%") ? replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getDataManager().getWorldHandler().getBorder().getSize())) : replaced;
+		replaced = replaced.contains("%colorcode%") ? replaced.replace("%colorcode%", Main.getColorCode()) : replaced;
+		replaced = replaced.contains("%discordLink%") ? replaced.replace("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
+		replaced = replaced.contains("%protectionTime%") ? replaced.replace("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString()) : replaced;
 
-		replaced = replaced.replace("&", "§");
-		replaced = replaced.replace("%heart%", "♥");
-		replaced = replaced.replace("%nextLine%", "\n");
-		replaced = replaced.replace("%null%", "");
+		replaced = replaced.contains("&") ? replaced.replace("&", "§") : replaced;
+		replaced = replaced.contains("%heart%") ? replaced.replace("%heart%", "♥") : replaced;
+		replaced = replaced.contains("%nextLine%") ? replaced.replace("%nextLine%", "\n") : replaced;
+		replaced = replaced.contains("%null%") ? replaced.replace("%null%", "") : replaced;
 
 		return replaced;
 	}
 
 	public static String getValue(String value, VaroPlayer vp) {
 		String replaced = getValue(value);
-		replaced = replaced.replace("%distanceToBorder%", String.valueOf((int) Main.getDataManager().getWorldHandler().getBorder().getDistanceTo(vp.getPlayer())));
-		replaced = replaced.replace("%min%", vp.getStats().getCountdownMin(vp.getStats().getCountdown()));
-		replaced = replaced.replace("%sec%", vp.getStats().getCountdownSec(vp.getStats().getCountdown()));
-		replaced = replaced.replace("%kills%", String.valueOf(vp.getStats().getKills()));
-		replaced = replaced.replace("%strikes%", String.valueOf(vp.getStats().getStrikes().size()));
-		replaced = replaced.replace("%teamKills%", String.valueOf(vp.getTeam() != null ? vp.getTeam().getKills() : 0));
-		replaced = replaced.replace("%teamLifes%", String.valueOf((vp.getTeam() != null ? vp.getTeam().getLifes() : 0)));
-		replaced = replaced.replace("%player%", vp.getName());
-		replaced = replaced.replace("%prefix%", vp.getPrefix());
-		replaced = replaced.replace("%team%", vp.getTeam() != null ? vp.getTeam().getDisplay() : "-");
-		replaced = replaced.replace("%rank%", vp.getRank() != null ? vp.getRank().getDisplay() : "-");
-		replaced = replaced.replace("%episodesPlayedPlus1%", String.valueOf(vp.getStats().getSessionsPlayed() + 1));
-		replaced = replaced.replace("%sessions%", String.valueOf(vp.getStats().getSessions()));
-		replaced = replaced.replace("%seconds%", String.valueOf(vp.getStats().getCountdown()));
-		replaced = replaced.replace("%remainingDisconnects%", String.valueOf(Disconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - Disconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt()));
-		replaced = replaced.replace("%ping%", String.valueOf(vp.getNetworkManager().getPing()));
-		replaced = replaced.replace("%pexPrefix%", PermissionUtils.getPermissionsExPrefix(vp));
-		replaced = replaced.replace("%lpPrefix%", PermissionUtils.getLuckPermsPrefix(vp));
+		replaced = replaced.contains("%distanceToBorder%") ? replaced.replace("%distanceToBorder%", String.valueOf((int) Main.getDataManager().getWorldHandler().getBorder().getDistanceTo(vp.getPlayer()))) : replaced;
+		replaced = replaced.contains("%min%") ? replaced.replace("%min%", vp.getStats().getCountdownMin(vp.getStats().getCountdown())) : replaced;
+		replaced = replaced.contains("%sec%") ? replaced.replace("%sec%", vp.getStats().getCountdownSec(vp.getStats().getCountdown())) : replaced;
+		replaced = replaced.contains("%kills%") ? replaced.replace("%kills%", String.valueOf(vp.getStats().getKills())) : replaced;
+		replaced = replaced.contains("%strikes%") ? replaced.replace("%strikes%", String.valueOf(vp.getStats().getStrikes().size())) : replaced;
+		replaced = replaced.contains("%teamKills%") ? replaced.replace("%teamKills%", String.valueOf(vp.getTeam() != null ? vp.getTeam().getKills() : 0)) : replaced;
+		replaced = replaced.contains("%teamLifes%") ? replaced.replace("%teamLifes%", String.valueOf((vp.getTeam() != null ? vp.getTeam().getLifes() : 0))) : replaced;
+		replaced = replaced.contains("%player%") ? replaced.replace("%player%", vp.getName()) : replaced;
+		replaced = replaced.contains("%prefix%") ? replaced.replace("%prefix%", vp.getPrefix()) : replaced;
+		replaced = replaced.contains("%team%") ? replaced.replace("%team%", vp.getTeam() != null ? vp.getTeam().getDisplay() : "-") : replaced;
+		replaced = replaced.contains("%rank%") ? replaced.replace("%rank%", vp.getRank() != null ? vp.getRank().getDisplay() : "-") : replaced;
+		replaced = replaced.contains("%episodesPlayedPlus1%") ? replaced.replace("%episodesPlayedPlus1%", String.valueOf(vp.getStats().getSessionsPlayed() + 1)) : replaced;
+		replaced = replaced.contains("%sessions%") ? replaced.replace("%sessions%", String.valueOf(vp.getStats().getSessions())) : replaced;
+		replaced = replaced.contains("%seconds%") ? replaced.replace("%seconds%", String.valueOf(vp.getStats().getCountdown())) : replaced;
+		replaced = replaced.contains("%remainingDisconnects%") ? replaced.replace("%remainingDisconnects%", String.valueOf(Disconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - Disconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())) : replaced;
+		replaced = replaced.contains("%ping%") ? replaced.replace("%ping%", String.valueOf(vp.getNetworkManager().getPing())) : replaced;
+		replaced = replaced.contains("%pexPrefix%") ? replaced.replace("%pexPrefix%", PermissionUtils.getPermissionsExPrefix(vp)) : replaced;
+		replaced = replaced.contains("%lpPrefix%") ? replaced.replace("%lpPrefix%", PermissionUtils.getLuckPermsPrefix(vp)) : replaced;
 
 		return replaced;
 	}

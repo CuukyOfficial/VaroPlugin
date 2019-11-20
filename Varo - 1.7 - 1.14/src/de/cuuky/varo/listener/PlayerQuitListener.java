@@ -25,7 +25,7 @@ public class PlayerQuitListener implements Listener {
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 		event.setQuitMessage(null);
 
-		// IF HE WAS A SPECTATOR
+		// IF THEY WERE A SPECTATOR
 		if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 			event.setQuitMessage(ConfigMessages.QUIT_SPECTATOR.getValue(vplayer));
 			vplayer.onEvent(BukkitEventType.QUIT);
@@ -33,7 +33,7 @@ public class PlayerQuitListener implements Listener {
 		}
 
 		if(Main.getGame().getGameState() == GameState.STARTED) {
-			// IF HE WAS KICKED OR DEAD
+			// IF THEY WERE KICKED OR DEAD
 			if(ConfigEntry.PLAY_TIME.isIntActivated())
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
@@ -42,7 +42,7 @@ public class PlayerQuitListener implements Listener {
 					return;
 				}
 
-			// CHECK IF HE COMBATLOG
+			// CHECK IF THEY COMBATLOGGED
 			CombatlogCheck check = new CombatlogCheck(event);
 			if(check.isCombatLog()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
