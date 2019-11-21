@@ -47,5 +47,4 @@ public class MessageCommand implements CommandExecutor {
 		lastChat.put(to.getName(), sender.getName());
 		return false;
 	}
-
 }

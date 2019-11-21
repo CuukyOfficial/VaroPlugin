@@ -38,5 +38,4 @@ public class SpawnCommand implements CommandExecutor {
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_DISTANCE.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		return false;
 	}
-
 }

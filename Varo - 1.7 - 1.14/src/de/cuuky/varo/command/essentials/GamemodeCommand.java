@@ -84,5 +84,4 @@ public class GamemodeCommand implements CommandExecutor {
 
 		return false;
 	}
-
 }

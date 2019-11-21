@@ -42,9 +42,9 @@ public class PlayerCommand extends VaroCommand {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Player §7-----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player add §7<Player1> <Player2> ...");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player add §7<Spieler1> <Spieler2> ...");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player remove §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player respawn §7<Player / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player respawn §7<Spieler / @a>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player kill §7<Spieler / @a>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player reset §7<Spieler / @a>");
 			sender.sendMessage(Main.getPrefix() + "§7------------------");

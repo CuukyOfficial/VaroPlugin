@@ -34,5 +34,4 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;
 	}
-
 }

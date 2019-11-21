@@ -25,5 +25,4 @@ public class NightCommand implements CommandExecutor {
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Nacht§7!");
 		return false;
 	}
-
 }
