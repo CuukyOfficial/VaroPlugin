@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -26,18 +27,20 @@ public class GamemodeCommand implements CommandExecutor {
 		if(args.length <= 2 && args.length != 0) {
 			if (args.length == 1) {
 				if(!(sender instanceof Player)) {
-					sender.sendMessage(Main.getPrefix() + "§7Du musst entweder einen Spieler angeben oder diesen Befehl als Spieler stellen.");
+					sender.sendMessage(Main.getPrefix() + "§7/gamemode [Player/@a]");
 					return false;
 				}
 				player = (Player) sender;
 				
+			} else if (args[1].equalsIgnoreCase("@a")) {
+				player = null;
 			} else {
 				player = Bukkit.getPlayerExact(args[1]);
 				if(player == null) {
 					sender.sendMessage(Main.getPrefix() + "§7Spieler " + args[1] + "§7 nicht gefunden.");
 					return false;
 				}
-			}			
+			}
 
 			int mode = 0;
 			try {
@@ -47,7 +50,7 @@ public class GamemodeCommand implements CommandExecutor {
 				return false;
 			}
 			
-			GameMode gm = null;
+			GameMode gm;
 			switch(mode) {
 			case 0:
 				gm = GameMode.SURVIVAL;
@@ -70,13 +73,20 @@ public class GamemodeCommand implements CommandExecutor {
 				sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
 				return false;
 			}
-			
-			player.setGameMode(gm);
-			
-			if (args.length == 1) {
-				sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
+
+			if (player != null) {
+				player.setGameMode(gm);
+
+				if (args.length == 1) {
+					sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
+				} else {
+					sender.sendMessage(Main.getPrefix() + "§7" + player.getName() + " ist nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "" + gm.toString() + "§7!");
+				}
 			} else {
-				sender.sendMessage(Main.getPrefix() + "§7" + player.getName() + " ist nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "" + gm.toString() + "§7!");
+				for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+					vp.getPlayer().setGameMode(gm);
+				}
+				sender.sendMessage(Main.getPrefix() + "§7Alle Spieler sind nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
 			}
 
 		} else
