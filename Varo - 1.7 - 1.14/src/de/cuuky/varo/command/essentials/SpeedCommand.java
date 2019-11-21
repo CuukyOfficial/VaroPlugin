@@ -21,12 +21,12 @@ public class SpeedCommand implements CommandExecutor {
 
 		if(args.length == 1) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "§7Entweder '/speed <Speed> [Player]' oder Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + "§7Entweder '/speed <Speed> [Player/@a]' oder Spieler sein!");
 				return false;
 			}
 
 			Player p = (Player) sender;
-			Float speed = null;
+			Float speed;
 			try {
 				speed = Float.valueOf(args[0]);
 				speed = getRealMoveSpeed(Float.valueOf(args[0]), p.isFlying());

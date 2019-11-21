@@ -21,7 +21,7 @@ public class TeamCommand extends VaroCommand {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Befehle:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Teamname> <Spieler 1, 2, 3...>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player/@a>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add §7<Player> <Team/TeamID>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team-Name> <Neuer Team-Name>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list");
@@ -103,6 +103,11 @@ public class TeamCommand extends VaroCommand {
 			} else if(varoplayer != null) {
 				varoplayer.getTeam().removeMember(varoplayer);
 				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich aus seinem Team entfernt!");
+			} else if (args[1].equalsIgnoreCase("@a")) {
+				for (Team tm : Team.getTeams()) {
+					tm.delete();
+				}
+				sender.sendMessage(Main.getPrefix() + "Alle Teams erfolgreich gelöscht!");
 			} else
 				sender.sendMessage(Main.getPrefix() + "Team, TeamID oder Spieler nicht gefunden!");
 			return;

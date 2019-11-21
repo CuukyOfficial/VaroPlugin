@@ -20,7 +20,7 @@ public class HealCommand implements CommandExecutor {
 
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "§7/heal [Player]");
+				sender.sendMessage(Main.getPrefix() + "§7/heal [Player/@a]");
 				return false;
 			}
 
@@ -35,7 +35,7 @@ public class HealCommand implements CommandExecutor {
 				return false;
 			}
 
-			if(args[0].equals("@a")) {
+			if(args[0].equalsIgnoreCase("@a")) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					p.setHealth(20);
 					p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
