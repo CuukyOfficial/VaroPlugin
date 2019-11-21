@@ -2,7 +2,10 @@ package de.cuuky.varo.item;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.version.BukkitVersion;
+import de.cuuky.varo.version.VersionUtils;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemFlag;
@@ -67,12 +70,20 @@ public class ItemBuilder {
 
 	public void deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
-		Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-		Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-		Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		if (VersionUtils.getVersion() == BukkitVersion.ONE_7) {
+			Meta.getEnchants().keySet();
+			for (Enchantment e : Meta.getEnchants().keySet()) {
+				Meta.removeEnchant(e);
+			}
+			//TODO Hide other attributes?
+		} else {
+			Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+			Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+			Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+			Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+			Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+			Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		}
 		stack.setItemMeta(Meta);
 	}
 

@@ -52,7 +52,7 @@ public enum ConfigSection {
 
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
 	
-	GUI("Gui", Materials.WHITE_BANNER.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
+	GUI("Gui", Materials.COMPASS.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
 
 	OTHER("Other", Material.REDSTONE, "Hier findest du alle restlichen Einstellungen.");
 
