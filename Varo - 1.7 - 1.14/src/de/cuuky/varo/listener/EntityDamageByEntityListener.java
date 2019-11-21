@@ -17,8 +17,6 @@ import de.cuuky.varo.listener.utils.EntityDamageByEntityUtil;
 
 public class EntityDamageByEntityListener implements Listener {
 
-	// private HashMap<Player, Date> axeHits = new HashMap<>();
-
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		if(!(event.getEntity() instanceof Player))
@@ -39,16 +37,6 @@ public class EntityDamageByEntityListener implements Listener {
 			event.setCancelled(true);
 			return;
 		}
-
-		// if(p.getItemInHand() != null &&
-		// p.getItemInHand().getType().toString().contains("AXE")) {
-		// Date curr = new Date();
-		// if(axeHits.get(p) != null && ((axeHits.get(p).getTime() -
-		// curr.getTime()) * 1000) <= ConfigE) {
-		//
-		// } else
-		// axeHits.put(p, curr);
-		// }
 
 		if(ConfigEntry.FRIENDLYFIRE.getValueAsBoolean())
 			return;
