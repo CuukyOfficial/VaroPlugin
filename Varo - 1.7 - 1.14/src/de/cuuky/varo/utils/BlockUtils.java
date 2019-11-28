@@ -27,7 +27,7 @@ public class BlockUtils {
 	public static void setBlock(Block block, Materials mat) {
 		block.setType(mat.parseMaterial());
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_10__ONE_11)) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11)) {
 			try {
 				block.getClass().getDeclaredMethod("setData", byte.class).invoke(block, (byte) mat.getData());
 			} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -40,7 +40,7 @@ public class BlockUtils {
 		if(!type.toString().contains("GRASS"))
 			return false;
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_10__ONE_11))
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			return !type.toString().equals("GRASS");
 		else
 			return !type.toString().contains("BLOCK");

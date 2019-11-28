@@ -109,7 +109,7 @@ public class BukkitRegisterer {
 		registerEvent(new PlayerRespawnListener());
 		registerEvent(new VaroEventListener());
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_10__ONE_11))
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
 
 		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
