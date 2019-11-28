@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import de.cuuky.varo.version.BukkitVersion;
+import de.cuuky.varo.version.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,12 +28,11 @@ public class AntiXrayCommand implements CommandExecutor {
 			sender.sendMessage(VaroCommand.getNoPermission("varo.xray"));
 			return false;
 		}
-		Version = Bukkit.getBukkitVersion();
 		antiXrayActivated = false;
 
-		if(Version.contains("1.8") || Version.contains("1.7")) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8)) {
 			xrayAvailable = 0;
-		} else if(Version.contains("1.9") || Version.contains("1.10") || Version.contains("1.11") || Version.contains("1.12") || Version.contains("1.13")) {
+		} else if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_13)) {
 			xrayAvailable = 1;
 		} else {
 			xrayAvailable = 2;
