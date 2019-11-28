@@ -44,6 +44,11 @@ public class AntiXrayCommand implements CommandExecutor {
 		if(xrayAvailable == 0) {
 			String enabled = Bukkit.getServer().spigot().getConfig().getString("world-settings.default.anti-xray.enabled");
 			String engineMode = Bukkit.getServer().spigot().getConfig().getString("world-settings.default.anti-xray.engine-mode");
+			if (enabled == null || engineMode == null) {
+				sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler mit dem Anti-Xray-System.");
+				sender.sendMessage(Main.getPrefix() + "Dies kann daran liegen, dass du eine nicht-unterstützte Serverversion benutzt.");
+				return false;
+			}
 			if(!enabled.contentEquals("true") || !engineMode.contentEquals("2")) {
 				antiXrayActivated = false;
 			} else {
