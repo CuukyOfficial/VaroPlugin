@@ -2,6 +2,7 @@ package de.cuuky.varo.command.essentials;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import sun.jvm.hotspot.jdi.ConcreteMethodImpl;
 
 public class AntiXrayCommand implements CommandExecutor {
 
@@ -41,9 +43,20 @@ public class AntiXrayCommand implements CommandExecutor {
 			}
 		}
 
+		YamlConfiguration SpigotConfig;
+
+		try {
+			Method m = Bukkit.getServer().spigot().getClass().getMethod("getSpigotConfig");
+			m.setAccessible(true);
+			SpigotConfig = (YamlConfiguration) m.invoke(Bukkit.getServer().spigot());
+			m.setAccessible(false);
+		} catch (Exception e) {
+			SpigotConfig = Bukkit.getServer().spigot().getConfig();
+		}
+
 		if(xrayAvailable == 0) {
-			String enabled = Bukkit.getServer().spigot().getConfig().getString("world-settings.default.anti-xray.enabled");
-			String engineMode = Bukkit.getServer().spigot().getConfig().getString("world-settings.default.anti-xray.engine-mode");
+			String enabled = SpigotConfig.getString("world-settings.default.anti-xray.enabled");
+			String engineMode = SpigotConfig.getString("world-settings.default.anti-xray.engine-mode");
 			if (enabled == null || engineMode == null) {
 				sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler mit dem Anti-Xray-System.");
 				sender.sendMessage(Main.getPrefix() + "Dies kann daran liegen, dass du eine nicht-unterstützte Serverversion benutzt.");
@@ -101,11 +114,11 @@ public class AntiXrayCommand implements CommandExecutor {
 				return false;
 			} else {
 				if(xrayAvailable == 0) {
-					Bukkit.getServer().spigot().getConfig().set("world-settings.default.anti-xray.enabled", true);
-					Bukkit.getServer().spigot().getConfig().set("world-settings.default.anti-xray.engine-mode", 2);
+					SpigotConfig.set("world-settings.default.anti-xray.enabled", true);
+					SpigotConfig.set("world-settings.default.anti-xray.engine-mode", 2);
 
 					try {
-						Bukkit.getServer().spigot().getConfig().save("spigot.yml");
+						SpigotConfig.save("spigot.yml");
 					} catch(IOException e) {
 						sender.sendMessage(Main.getPrefix() + "§cFehler: §7Das Anti-Xray konnte nicht aktiviert werden.");
 						return false;
@@ -123,11 +136,11 @@ public class AntiXrayCommand implements CommandExecutor {
 				return false;
 			} else {
 				if(xrayAvailable == 0) {
-					Bukkit.getServer().spigot().getConfig().set("world-settings.default.anti-xray.enabled", true);
-					Bukkit.getServer().spigot().getConfig().set("world-settings.default.anti-xray.engine-mode", 1);
+					SpigotConfig.set("world-settings.default.anti-xray.enabled", true);
+					SpigotConfig.set("world-settings.default.anti-xray.engine-mode", 1);
 
 					try {
-						Bukkit.getServer().spigot().getConfig().save("spigot.yml");
+						SpigotConfig.save("spigot.yml");
 					} catch(IOException e) {
 						sender.sendMessage(Main.getPrefix() + "§cFehler: §7Das Anti-Xray konnte nicht deaktiviert werden.");
 						return false;
