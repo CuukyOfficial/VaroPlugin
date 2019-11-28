@@ -70,7 +70,7 @@ public class ItemBuilder {
 
 	public void deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
-		if (VersionUtils.getVersion() == BukkitVersion.ONE_7) {
+		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			Meta.getEnchants().keySet();
 			for (Enchantment e : Meta.getEnchants().keySet()) {
 				Meta.removeEnchant(e);

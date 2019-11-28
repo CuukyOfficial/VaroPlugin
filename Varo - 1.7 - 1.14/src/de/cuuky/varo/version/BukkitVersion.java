@@ -2,12 +2,14 @@ package de.cuuky.varo.version;
 
 public enum BukkitVersion {
 
+	OLDER_THAN_7(6),
 	ONE_7(7),
 	ONE_8(8),
 	ONE_9(9),
 	ONE_10__ONE_11(10, 11),
 	ONE_12(12),
-	ONE_13__ONE__14(13, 14);
+	ONE_13__ONE__14(13, 14),
+	NEWER_THAN_14;
 
 	private int[] identifier;
 
@@ -30,9 +32,9 @@ public enum BukkitVersion {
 				if(versionNumber == s)
 					return version;
 
-		if(versionNumber < values()[0].getIdentifier()[0])
+		if(versionNumber < values()[1].getIdentifier()[0])
 			return values()[0];
-		else if(versionNumber > values()[values().length - 1].getIdentifier()[values()[values().length - 1].getIdentifier().length - 1])
+		else if(versionNumber > values()[values().length - 2].getIdentifier()[values()[values().length - 1].getIdentifier().length - 1])
 			return values()[values().length - 1];
 
 		return null;

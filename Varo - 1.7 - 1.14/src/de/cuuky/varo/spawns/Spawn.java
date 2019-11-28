@@ -123,7 +123,7 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	private void setNameTag() {
-		if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		nameTagLocation = location.clone().add(0, ConfigEntry.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);

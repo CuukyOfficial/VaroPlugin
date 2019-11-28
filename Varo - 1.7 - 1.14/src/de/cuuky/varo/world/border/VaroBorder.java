@@ -18,7 +18,7 @@ public class VaroBorder {
 	public VaroBorder(World world) {
 		this.world = world;
 
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -29,7 +29,7 @@ public class VaroBorder {
 	}
 
 	public void setSize(double size, long time) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -40,7 +40,7 @@ public class VaroBorder {
 	}
 
 	public double getSize() {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return 0;
 
 		try {
@@ -53,7 +53,7 @@ public class VaroBorder {
 	}
 
 	public void setSize(double size) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -64,7 +64,7 @@ public class VaroBorder {
 	}
 
 	public void setCenter(Location loc) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -75,7 +75,7 @@ public class VaroBorder {
 	}
 
 	public void decrease(DecreaseReason reason) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7 || !reason.isEnabled())
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || !reason.isEnabled())
 			return;
 
 		BorderDecrease decr = new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed());
@@ -97,7 +97,7 @@ public class VaroBorder {
 	}
 
 	public double getDistanceTo(Player p) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7 || p == null)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || p == null)
 			return 0;
 
 		Location ploc = p.getLocation();

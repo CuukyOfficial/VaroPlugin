@@ -62,8 +62,8 @@ public class GamemodeCommand implements CommandExecutor {
 				gm = GameMode.ADVENTURE;
 				break;
 			case 3:
-				if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
-					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar in der 1.7!");
+				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
 					return false;
 				}
 

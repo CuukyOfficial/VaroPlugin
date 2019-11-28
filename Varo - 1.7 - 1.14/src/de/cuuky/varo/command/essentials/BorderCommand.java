@@ -20,8 +20,8 @@ public class BorderCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
-			sender.sendMessage(Main.getPrefix() + "Nicht verfügbar in der 1.7!");
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
 			return false;
 		}
 

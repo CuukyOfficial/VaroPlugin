@@ -111,7 +111,7 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	private void freezeVillager() {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 				@Override

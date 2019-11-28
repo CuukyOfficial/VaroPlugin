@@ -106,7 +106,7 @@ public class ScoreboardHandler {
 
 		line = ConfigMessages.getValue(line, vp);
 
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7 && line.length() > 16)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && line.length() > 16)
 			line = line.substring(0, 16);
 		else if(line.length() > 40)
 			line = line.substring(0, 40);
