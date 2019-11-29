@@ -1,6 +1,7 @@
 package de.cuuky.varo.command.essentials;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,13 +30,17 @@ public class SpawnCommand implements CommandExecutor {
 		Player player = (Player) sender;
 		loc = player.getWorld().getSpawnLocation();
 
-		if(!player.getWorld().getName().equalsIgnoreCase("world")) {
-			sender.sendMessage(Main.getPrefix() + "§7Im Nether und Ende kann dir der Spawn nicht angegeben werden.");
+		if (player.getWorld().getEnvironment() == World.Environment.THE_END) {
+			sender.sendMessage(Main.getPrefix() + "§7Im Ende kann dir der Spawn nicht angegeben werden.");
 			return false;
+		} else if (player.getWorld().getEnvironment() == World.Environment.NETHER) {
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_NETHER.getValue().replaceAll("%x%", loc.getBlockX() + "").replaceAll("%y%", loc.getBlockY() + "").replaceAll("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_DISTANCE_NETHER.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
+		} else {
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN.getValue().replaceAll("%x%", loc.getBlockX() + "").replaceAll("%y%", loc.getBlockY() + "").replaceAll("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_DISTANCE.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		}
 
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN.getValue().replaceAll("%x%", loc.getBlockX() + "").replaceAll("%y%", loc.getBlockY() + "").replaceAll("%z%", loc.getBlockZ() + ""));
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_DISTANCE.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		return false;
 	}
 }
