@@ -54,7 +54,7 @@ public class BotLauncher {
 		}
 
 		try {
-			telegrambot = new VaroTelegramBot();
+			telegrambot = VaroTelegramBot.getInstance();
 			telegrambot.connect();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;

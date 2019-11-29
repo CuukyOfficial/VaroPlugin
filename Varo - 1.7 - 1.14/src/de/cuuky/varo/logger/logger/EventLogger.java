@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.logger.Logger;
 import de.cuuky.varo.utils.Utils;
@@ -84,16 +85,16 @@ public class EventLogger extends Logger {
 	}
 
 	private void sendToTelegram(LogType type, String message) {
-		if(Main.getTelegramBot() == null)
+		if(VaroTelegramBot.getInstance() == null)
 			return;
 
 		try {
 			if(!type.equals(LogType.YOUTUBE))
-				Main.getTelegramBot().sendEvent(message);
+				VaroTelegramBot.getInstance().sendEvent(message);
 			else
-				Main.getTelegramBot().sendVideo(message);
+				VaroTelegramBot.getInstance().sendVideo(message);
 		} catch(ArrayIndexOutOfBoundsException e) {
-			Main.getTelegramBot().sendEvent(message);
+			VaroTelegramBot.getInstance().sendEvent(message);
 		}
 	}
 

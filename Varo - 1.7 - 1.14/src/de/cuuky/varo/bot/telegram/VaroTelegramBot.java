@@ -13,12 +13,21 @@ import de.cuuky.varo.config.config.ConfigEntry;
 
 public class VaroTelegramBot implements VaroBot {
 
+	private static VaroTelegramBot instance;
+
 	private TelegramBot telegrambot;
 
 	private long eventChannelId;
 	private long youtubeChannelId;
 
-	public VaroTelegramBot() {
+	public static VaroTelegramBot getInstance() {
+		if (instance == null) {
+			instance = new VaroTelegramBot();
+		}
+		return instance;
+	}
+
+	private VaroTelegramBot() {
 		eventChannelId = -1;
 		youtubeChannelId = -1;
 
@@ -41,7 +50,6 @@ public class VaroTelegramBot implements VaroBot {
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of videochat id");
 		}
 
-		Main.setTelegramBot(this);
 		System.out.println(Main.getConsolePrefix() + "Telegram Bot connected!");
 	}
 

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import com.pengrad.telegrambot.TelegramBot;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 
@@ -107,7 +108,7 @@ public class DataManager {
 		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			VaroTelegramBot telegrambot;
 			try {
-				telegrambot = new VaroTelegramBot();
+				telegrambot = VaroTelegramBot.getInstance();
 				telegrambot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
 				telegrambot = null;
