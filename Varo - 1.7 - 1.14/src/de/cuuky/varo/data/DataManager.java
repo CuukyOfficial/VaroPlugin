@@ -46,7 +46,6 @@ public class DataManager {
 
 	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
-	private MySQL mysql;
 	private ListHandler listHandler;
 
 	private boolean doSave;
@@ -82,7 +81,7 @@ public class DataManager {
 		ReportHandler.initialise(); //Initialisierung ReportHandler
 		AlertHandler.initialise(); //Initialisierung AlertHandler
 		OutSideTimeChecker.getInstance(); //Initialisierung TimeChecker
-		this.mysql = new MySQL();
+		MySQL.getInstance(); //Initialisierung MySQL
 		this.listHandler = new ListHandler();
 		new Broadcaster();
 
@@ -239,9 +238,5 @@ public class DataManager {
 
 	public ListHandler getItemHandler() {
 		return listHandler;
-	}
-
-	public MySQL getMysql() {
-		return mysql;
 	}
 }
