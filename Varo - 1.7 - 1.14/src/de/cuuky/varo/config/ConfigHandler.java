@@ -14,6 +14,8 @@ import de.cuuky.varo.utils.Utils;
 
 public class ConfigHandler {
 
+	private static ConfigHandler instance;
+
 	private File configFile;
 	private boolean configExisted;
 	private YamlConfiguration configCfg;
@@ -22,7 +24,14 @@ public class ConfigHandler {
 	private boolean messagesExisted;
 	private YamlConfiguration messagesCfg;
 
-	public ConfigHandler() {
+	public static ConfigHandler getInstance() {
+		if (instance == null) {
+			instance = new ConfigHandler();
+		}
+		return instance;
+	}
+
+	private ConfigHandler() {
 		reload();
 	}
 

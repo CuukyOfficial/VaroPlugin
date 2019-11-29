@@ -45,7 +45,6 @@ public class DataManager {
 	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
 	private WorldHandler worldHandler;
-	private ConfigHandler configHandler;
 	private ScoreboardHandler scoreboardHandler;
 	private MySQL mysql;
 	private OutSideTimeChecker timeChecker;
@@ -72,7 +71,7 @@ public class DataManager {
 		ConfigFailureDetector.detectConfig();
 
 		copyDefaultPresets();
-		this.configHandler = new ConfigHandler();
+		ConfigHandler.getInstance(); //Initialisierung
 
 		Main.setLogger(new LoggerMaster());
 		new GameHandler();
@@ -172,7 +171,7 @@ public class DataManager {
 
 	public void reloadConfig() {
 		VaroList.reloadLists();
-		DataManager.getInstance().getConfigHandler().reload();
+		ConfigHandler.getInstance().reload();
 		DataManager.getInstance().getScoreboardHandler().loadScores();
 
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
@@ -245,10 +244,6 @@ public class DataManager {
 
 	public OutSideTimeChecker getTimeChecker() {
 		return timeChecker;
-	}
-
-	public ConfigHandler getConfigHandler() {
-		return configHandler;
 	}
 
 	public WorldHandler getWorldHandler() {
