@@ -69,7 +69,7 @@ public class DataManager {
 	}
 
 	private void load() {
-		new ConfigFailureDetector();
+		ConfigFailureDetector.detectConfig();
 
 		copyDefaultPresets();
 		this.configHandler = new ConfigHandler();

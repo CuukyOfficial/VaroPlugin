@@ -83,7 +83,8 @@ public class Main extends JavaPlugin {
 			new DailyTimer();
 
 			botLauncher = BotLauncher.getInstance(); //Initialisierung
-			new BukkitRegisterer();
+			BukkitRegisterer.registerEvents();
+			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {
 			e.printStackTrace();
 			failed = true;

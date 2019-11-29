@@ -72,14 +72,9 @@ import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import net.labymod.serverapi.LabyModAPI;
 
-public class BukkitRegisterer {
+public final class BukkitRegisterer {
 
-	public BukkitRegisterer() {
-		registerEvents();
-		registerCommands();
-	}
-
-	private void registerEvents() {
+	public static void registerEvents() {
 		registerEvent(new PlayerJoinListener());
 		registerEvent(new PlayerQuitListener());
 		registerEvent(new PlayerMoveListener());
@@ -121,7 +116,7 @@ public class BukkitRegisterer {
 			}
 	}
 
-	private void registerCommands() {
+	public static void registerCommands() {
 		registerCommand("varo", new VaroCommandListener());
 		registerCommand("antixray", new AntiXrayCommand());
 		registerCommand("broadcast", new BroadcastCommand());
@@ -156,11 +151,11 @@ public class BukkitRegisterer {
 		registerCommand("countdown", new CountdownCommand());
 	}
 
-	private void registerCommand(String name, CommandExecutor cm) {
+	private static void registerCommand(String name, CommandExecutor cm) {
 		Main.getInstance().getCommand(name).setExecutor(cm);
 	}
 
-	private void registerEvent(Listener listener) {
+	private static void registerEvent(Listener listener) {
 		Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
 	}
 }
