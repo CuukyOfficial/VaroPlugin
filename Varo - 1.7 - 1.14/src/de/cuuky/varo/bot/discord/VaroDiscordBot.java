@@ -23,10 +23,19 @@ import net.dv8tion.jda.core.managers.GuildController;
 
 public class VaroDiscordBot implements VaroBot {
 
+	private static VaroDiscordBot instance;
+
 	private JDA jda;
 	private long registerChannel, eventChannel, announcementChannel, resultChannel, pingRole;
 
-	public VaroDiscordBot() {}
+	public static VaroDiscordBot getInstance() {
+		if (instance == null) {
+			instance = new VaroDiscordBot();
+		}
+		return instance;
+	}
+
+	private VaroDiscordBot() {}
 
 	@Override
 	public void connect() {

@@ -3,6 +3,7 @@ package de.cuuky.varo.logger.logger;
 import java.awt.Color;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.logger.Logger;
 import de.cuuky.varo.utils.Utils;
@@ -40,7 +41,7 @@ public class EventLogger extends Logger {
 		}
 
 		public long getPostChannel() {
-			if(idEntry == null || Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled())
+			if(idEntry == null || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
 				return -1;
 
 			try {
@@ -97,11 +98,11 @@ public class EventLogger extends Logger {
 	}
 
 	private void sendToDiscord(LogType type, String msg) {
-		if(type.getPostChannel() == -1 || Main.getDiscordBot() == null || !Main.getDiscordBot().isEnabled())
+		if(type.getPostChannel() == -1 || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
 			return;
 
 		try {
-			Main.getDiscordBot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
+			BotLauncher.getDiscordBot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			return;
 		} catch(Exception e) {

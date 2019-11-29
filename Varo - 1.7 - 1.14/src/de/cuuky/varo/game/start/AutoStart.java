@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
+import de.cuuky.varo.bot.BotLauncher;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 
@@ -74,8 +75,8 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private void postMessage(String message) {
-		if(Main.getDiscordBot() != null && Main.getDiscordBot().isEnabled() && Main.getDiscordBot().getAnnouncementChannel() != null)
-			Main.getDiscordBot().sendRawMessage(Utils.replaceAllColors(message) + " " + Main.getDiscordBot().getMentionRole(), Main.getDiscordBot().getAnnouncementChannel());
+		if(BotLauncher.getDiscordBot() != null && BotLauncher.getDiscordBot().isEnabled() && BotLauncher.getDiscordBot().getAnnouncementChannel() != null)
+			BotLauncher.getDiscordBot().sendRawMessage(Utils.replaceAllColors(message) + " " + BotLauncher.getDiscordBot().getMentionRole(), BotLauncher.getDiscordBot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
 

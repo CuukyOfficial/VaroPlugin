@@ -95,10 +95,9 @@ public class DataManager {
 		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			VaroDiscordBot discordbot;
 			try {
-				discordbot = new VaroDiscordBot();
+				discordbot = VaroDiscordBot.getInstance();
 				discordbot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
-				discordbot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
 				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
 			}

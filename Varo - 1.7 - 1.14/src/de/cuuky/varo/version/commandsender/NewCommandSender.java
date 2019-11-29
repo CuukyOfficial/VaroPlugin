@@ -105,7 +105,7 @@ public class NewCommandSender {
 	//
 	// @Override
 	// public void run() {
-	// Main.getDiscordBot().sendMessage(Utils.replaceAllColors(out), "Command '"
+	// BotLauncher.getDiscordBot().sendMessage(Utils.replaceAllColors(out), "Command '"
 	// + args[0] + "' returned:", Color.RED, event.getTextChannel());
 	// Bukkit.getScheduler().cancelTask(sched);
 	// sched = -1;

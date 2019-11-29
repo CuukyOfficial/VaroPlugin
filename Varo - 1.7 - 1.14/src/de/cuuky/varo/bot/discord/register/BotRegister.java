@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -89,7 +90,7 @@ public class BotRegister {
 
 	public Member getMember() {
 		try {
-			JDA jda = Main.getDiscordBot().getJda();
+			JDA jda = BotLauncher.getDiscordBot().getJda();
 			return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong()).getMemberById(this.userId);
 		} catch(Exception e) {
 			return null;

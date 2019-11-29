@@ -2,7 +2,6 @@ package de.cuuky.varo;
 
 import java.io.File;
 
-import net.dv8tion.jda.client.entities.Application;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -88,8 +87,8 @@ public class Main extends JavaPlugin {
 			new DailyTimer();
 
 			botLauncher = BotLauncher.getInstance(); //Initialisierung
-			discordBot = botLauncher.getDiscordbot();
-			telegramBot = botLauncher.getTelegrambot();
+			discordBot = botLauncher.getDiscordBot();
+			telegramBot = botLauncher.getTelegramBot();
 			new BukkitRegisterer();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -142,10 +141,6 @@ public class Main extends JavaPlugin {
 
 	public static void setTelegramBot(VaroTelegramBot telegramBot) {
 		Main.telegramBot = telegramBot;
-	}
-
-	public static VaroDiscordBot getDiscordBot() {
-		return discordBot;
 	}
 
 	public static LoggerMaster getLoggerMaster() {

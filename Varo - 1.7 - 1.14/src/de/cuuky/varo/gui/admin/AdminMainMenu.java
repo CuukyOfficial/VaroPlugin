@@ -1,5 +1,6 @@
 package de.cuuky.varo.gui.admin;
 
+import de.cuuky.varo.bot.BotLauncher;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -86,9 +87,9 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(Main.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
+		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(BotLauncher.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
 			public void run() {
-				if(Main.getDiscordBot() == null) {
+				if(BotLauncher.getDiscordBot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
 					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");

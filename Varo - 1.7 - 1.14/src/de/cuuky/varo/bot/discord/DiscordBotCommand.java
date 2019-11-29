@@ -3,6 +3,7 @@ package de.cuuky.varo.bot.discord;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.commands.CommandCommand;
 import de.cuuky.varo.bot.discord.commands.GetLinkCommand;
 import de.cuuky.varo.bot.discord.commands.HelpCommand;
@@ -63,7 +64,7 @@ public abstract class DiscordBotCommand {
 	}
 
 	public VaroDiscordBot getDiscordBot() {
-		return Main.getDiscordBot();
+		return BotLauncher.getDiscordBot();
 	}
 
 	public static ArrayList<DiscordBotCommand> getCommands() {

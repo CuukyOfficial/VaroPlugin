@@ -9,8 +9,8 @@ public class BotLauncher {
 
 	private static BotLauncher instance;
 
-	private VaroDiscordBot discordbot;
-	private VaroTelegramBot telegrambot;
+	private static VaroDiscordBot discordbot;
+	private static VaroTelegramBot telegrambot;
 
 	public static BotLauncher getInstance() {
 		if (instance == null) {
@@ -34,7 +34,7 @@ public class BotLauncher {
 		}
 
 		try {
-			discordbot = new VaroDiscordBot();
+			discordbot = VaroDiscordBot.getInstance();
 			discordbot.connect();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
@@ -72,11 +72,11 @@ public class BotLauncher {
 			telegrambot.disconnect();
 	}
 
-	public VaroDiscordBot getDiscordbot() {
+	public static VaroDiscordBot getDiscordBot() {
 		return discordbot;
 	}
 
-	public VaroTelegramBot getTelegrambot() {
+	public static VaroTelegramBot getTelegramBot() {
 		return telegrambot;
 	}
 }

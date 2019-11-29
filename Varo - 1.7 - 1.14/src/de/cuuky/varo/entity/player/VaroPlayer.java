@@ -3,6 +3,7 @@ package de.cuuky.varo.entity.player;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -310,7 +311,7 @@ public class VaroPlayer extends VaroEntity {
 		if(!Main.isBootedUp())
 			return;
 
-		VaroDiscordBot db = Main.getDiscordBot();
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
 		if(db != null && db.isEnabled()) {
 			GuildController controller = db.getController();
 			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
@@ -357,14 +358,14 @@ public class Game implements VaroSerializeable {
 
 		Bukkit.broadcastMessage(Main.getColorCode() + first + " §7" + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! §5Herzlichen Glückwunsch!");
 		Main.getLoggerMaster().getEventLogger().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! Herzlichen Glückwunsch!");
-		VaroDiscordBot db = Main.getDiscordBot();
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
 		if(db != null && db.isEnabled()) {
 			if(db.getResultChannel() != null && db.isEnabled())
-				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getDiscordBot().getResultChannel());
+				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, BotLauncher.getDiscordBot().getResultChannel());
 
 			File file = new File("plugins/Varo/logs", "logs.yml");
 			if(file.exists())
-				db.sendFile("Die Logs des Projektes", file, Main.getDiscordBot().getResultChannel());
+				db.sendFile("Die Logs des Projektes", file, BotLauncher.getDiscordBot().getResultChannel());
 		}
 	}
 

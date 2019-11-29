@@ -1,5 +1,6 @@
 package de.cuuky.varo.entity.player.event.events;
 
+import de.cuuky.varo.bot.BotLauncher;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
@@ -21,7 +22,7 @@ public class WinEvent extends BukkitEvent {
 	@Override
 	public void onExec(VaroPlayer player) {
 		player.getStats().addWin();
-		VaroDiscordBot db = Main.getDiscordBot();
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
 
 		if(db != null)
 			if(db.isEnabled() || !ConfigEntry.DISCORDBOT_ADD_POKAL_ON_WIN.getValueAsBoolean())
