@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -38,7 +39,7 @@ public class PlayerDeathListener implements Listener {
 				hit.over();
 
 			deadPlayer.getWorld().strikeLightningEffect(deadPlayer.getLocation());
-			for(ItemStack stack : DataManager.getInstance().getItemHandler().getDeathItems().getItems())
+			for(ItemStack stack : ListHandler.getInstance().getDeathItems().getItems())
 				if(stack.getType() != Material.AIR)
 					deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
 

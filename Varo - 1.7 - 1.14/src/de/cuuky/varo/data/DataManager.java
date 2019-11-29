@@ -46,8 +46,6 @@ public class DataManager {
 
 	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
-	private ListHandler listHandler;
-
 	private boolean doSave;
 
 	public static DataManager getInstance() {
@@ -82,7 +80,7 @@ public class DataManager {
 		AlertHandler.initialise(); //Initialisierung AlertHandler
 		OutSideTimeChecker.getInstance(); //Initialisierung TimeChecker
 		MySQL.getInstance(); //Initialisierung MySQL
-		this.listHandler = new ListHandler();
+		ListHandler.getInstance(); //Initialisierung ListHandler
 		new Broadcaster();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
@@ -234,9 +232,5 @@ public class DataManager {
 
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
-	}
-
-	public ListHandler getItemHandler() {
-		return listHandler;
 	}
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
@@ -272,7 +273,7 @@ public class Game implements VaroSerializeable {
 						}
 					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
-					DataManager.getInstance().getItemHandler().getStartItems().giveToAll();
+					ListHandler.getInstance().getStartItems().giveToAll();
 					if (ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
 						Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 						protection = new ProtectionTime();
@@ -401,7 +402,7 @@ public class Game implements VaroSerializeable {
 		Location loc2 = WorldHandler.getInstance().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
-		ArrayList<ItemStack> chestItems = DataManager.getInstance().getItemHandler().getChestItems().getItems();
+		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();
 		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
 			if(!(block.getState() instanceof Chest))
 				continue;
