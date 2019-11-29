@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -23,7 +24,7 @@ public class AutoSetup {
 		if(Main.getGame().hasStarted())
 			return;
 
-		World world = Main.getDataManager().getWorldHandler().getWorld();
+		World world = DataManager.getInstance().getWorldHandler().getWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 

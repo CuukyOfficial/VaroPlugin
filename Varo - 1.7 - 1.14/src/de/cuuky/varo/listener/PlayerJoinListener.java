@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -41,7 +42,7 @@ public class PlayerJoinListener implements Listener {
 			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
-				player.teleport(Main.getDataManager().getWorldHandler().getTeleportLocation());
+				player.teleport(DataManager.getInstance().getWorldHandler().getTeleportLocation());
 
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {});
@@ -70,7 +71,7 @@ public class PlayerJoinListener implements Listener {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-					player.teleport(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
+					player.teleport(DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation());
 				}
 			}
 			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {

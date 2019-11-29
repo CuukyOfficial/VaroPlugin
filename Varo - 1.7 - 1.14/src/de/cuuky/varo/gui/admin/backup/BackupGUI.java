@@ -2,6 +2,7 @@ package de.cuuky.varo.gui.admin.backup;
 
 import java.io.File;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class BackupGUI extends SuperInventory {
 						public void run() {
 							if(Backup.unzip(file.getPath(), "plugins/Varo")) {
 								opener.sendMessage(Main.getPrefix() + "Backup erfolgreich wieder hergestellt!");
-								Main.getDataManager().setDoSave(false);
+								DataManager.getInstance().setDoSave(false);
 								Bukkit.getServer().reload();
 							} else
 								opener.sendMessage(Main.getPrefix() + "Backup konnte nicht wieder hergestellt werden!");

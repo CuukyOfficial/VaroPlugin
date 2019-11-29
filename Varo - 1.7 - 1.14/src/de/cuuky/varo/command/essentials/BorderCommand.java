@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,9 +27,9 @@ public class BorderCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? new VaroBorder(((Player) sender).getWorld()).getSize() : Main.getDataManager().getWorldHandler().getBorder().getSize()) + " §7Blöcke groß!");
+			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? new VaroBorder(((Player) sender).getWorld()).getSize() : DataManager.getInstance().getWorldHandler().getBorder().getSize()) + " §7Blöcke groß!");
 			if(sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getDataManager().getWorldHandler().getBorder().getDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
+				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) DataManager.getInstance().getWorldHandler().getBorder().getDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
 
 			if(sender.hasPermission("varo.setup"))
 				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> §7setzen!");
@@ -45,7 +46,7 @@ public class BorderCommand implements CommandExecutor {
 				return false;
 			}
 
-			VaroBorder border = p != null ? new VaroBorder(p.getWorld()) : Main.getDataManager().getWorldHandler().getBorder();
+			VaroBorder border = p != null ? new VaroBorder(p.getWorld()) : DataManager.getInstance().getWorldHandler().getBorder();
 			try {
 				inSeconds = Integer.parseInt(args[1]);
 				border.setSize(border1, inSeconds);

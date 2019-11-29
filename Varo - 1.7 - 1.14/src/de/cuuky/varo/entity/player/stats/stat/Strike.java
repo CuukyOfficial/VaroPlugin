@@ -2,6 +2,7 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.Date;
 
+import de.cuuky.varo.data.DataManager;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Location;
 
@@ -98,7 +99,7 @@ public class Strike implements VaroSerializeable {
 		switch(number) {
 		case 1:
 			if (striked.getStats().getLastLocation() == null) {
-				Location loc = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation();
+				Location loc = DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation();
 				Main.getLoggerMaster().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();

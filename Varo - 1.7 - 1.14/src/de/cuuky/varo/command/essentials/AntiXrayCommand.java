@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import org.bukkit.Bukkit;
@@ -14,7 +15,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import sun.jvm.hotspot.jdi.ConcreteMethodImpl;
 
 public class AntiXrayCommand implements CommandExecutor {
 
@@ -84,7 +84,7 @@ public class AntiXrayCommand implements CommandExecutor {
 			} else {
 				sender.sendMessage(Main.getPrefix() + "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren.");
 
-				boolean xrayDownload = Main.getDataManager().loadAdditionalPlugin(22818, "Anti-Xray.jar");
+				boolean xrayDownload = DataManager.getInstance().loadAdditionalPlugin(22818, "Anti-Xray.jar");
 
 				if(!xrayDownload) {
 					sender.sendMessage(Main.getPrefix() + "Es gab einen kritischen Fehler beim Download des Plugins.");

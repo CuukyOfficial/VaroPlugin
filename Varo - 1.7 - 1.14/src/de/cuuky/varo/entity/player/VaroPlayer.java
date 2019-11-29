@@ -3,6 +3,7 @@ package de.cuuky.varo.entity.player;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -290,7 +291,7 @@ public class VaroPlayer extends VaroEntity {
 
 		stats.remove();
 		varoplayer.remove(this);
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		DataManager.getInstance().getScoreboardHandler().updateTopScores();
 	}
 
 	public String getPrefix() {
@@ -329,7 +330,7 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		update();
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		DataManager.getInstance().getScoreboardHandler().updateTopScores();
 	}
 
 	public void update() {

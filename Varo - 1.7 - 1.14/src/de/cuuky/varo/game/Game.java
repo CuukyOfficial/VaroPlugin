@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.cuuky.varo.data.DataManager;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -95,12 +96,12 @@ public class Game implements VaroSerializeable {
 					if(seconds == 60) {
 						seconds = 0;
 						if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-							double minutesToClose = (int) ((((long) Main.getDataManager().getTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+							double minutesToClose = (int) ((((long) DataManager.getInstance().getTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
 								Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
-							if(!Main.getDataManager().getTimeChecker().canJoin())
+							if(!DataManager.getInstance().getTimeChecker().canJoin())
 								for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 									vp.getStats().setCountdown(0);
 									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
@@ -119,7 +120,7 @@ public class Game implements VaroSerializeable {
 							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
 								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 							else if(showDistanceToBorder) {
-								int distance = (int) Main.getDataManager().getWorldHandler().getBorder().getDistanceTo(p);
+								int distance = (int) DataManager.getInstance().getWorldHandler().getBorder().getDistanceTo(p);
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}
@@ -156,7 +157,7 @@ public class Game implements VaroSerializeable {
 							vp.getStats().setState(PlayerState.ALIVE);
 					}
 
-					Main.getDataManager().getScoreboardHandler().update(vp);
+					DataManager.getInstance().getScoreboardHandler().update(vp);
 					vp.getNetworkManager().sendTablist();
 				}
 
@@ -251,7 +252,7 @@ public class Game implements VaroSerializeable {
 
 					setGamestate(GameState.STARTED);
 					fillChests();
-					Main.getDataManager().getWorldHandler().getWorld().strikeLightningEffect(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
+					DataManager.getInstance().getWorldHandler().getWorld().strikeLightningEffect(DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
@@ -266,7 +267,7 @@ public class Game implements VaroSerializeable {
 						}
 					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
-					Main.getDataManager().getItemHandler().getStartItems().giveToAll();
+					DataManager.getInstance().getItemHandler().getStartItems().giveToAll();
 					if (ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
 						Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 						protection = new ProtectionTime();
@@ -391,11 +392,11 @@ public class Game implements VaroSerializeable {
 			return;
 
 		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
-		ArrayList<ItemStack> chestItems = Main.getDataManager().getItemHandler().getChestItems().getItems();
+		ArrayList<ItemStack> chestItems = DataManager.getInstance().getItemHandler().getChestItems().getItems();
 		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
 			if(!(block.getState() instanceof Chest))
 				continue;

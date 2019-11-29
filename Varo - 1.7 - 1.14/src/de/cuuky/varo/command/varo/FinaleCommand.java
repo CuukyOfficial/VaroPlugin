@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -28,7 +29,6 @@ public class FinaleCommand extends VaroCommand {
 	private FinaleState Status = FinaleState.NO;
 	private int startScheduler;
 	private int Countdown;
-	private boolean isStarting = false;
 
 	public FinaleCommand() {
 		super("finale", "Hauptcommand für das Managen des Finales", "varo.finale");
@@ -147,7 +147,7 @@ public class FinaleCommand extends VaroCommand {
 
 		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
 			if (player.getPlayer().isOnline()) {
-				player.getPlayer().teleport(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
+				player.getPlayer().teleport(DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation());
 			} else {
 				if (ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
 					player.getStats().setState(PlayerState.SPECTATOR);
@@ -160,7 +160,7 @@ public class FinaleCommand extends VaroCommand {
 			}
 		}
 
-		VaroBorder border = Main.getDataManager().getWorldHandler().getBorder();
+		VaroBorder border = DataManager.getInstance().getWorldHandler().getBorder();
 		border.setSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt());
 
 		int playerNumber = VaroPlayer.getOnlinePlayer().size();

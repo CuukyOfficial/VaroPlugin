@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.lists;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,7 @@ public class BlockedItemsListener implements Listener {
 		if(event.getItem() == null)
 			return;
 
-		if(!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getItem()))
+		if(!DataManager.getInstance().getItemHandler().getBlockedItems().isBlocked(event.getItem()))
 			return;
 
 		event.setCancelled(true);
@@ -28,7 +29,7 @@ public class BlockedItemsListener implements Listener {
 		if(event.getCurrentItem() == null)
 			return;
 
-		if(!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getCurrentItem()) && !Main.getDataManager().getItemHandler().getBlockedRecipes().isBlocked(event.getCurrentItem()))
+		if(!DataManager.getInstance().getItemHandler().getBlockedItems().isBlocked(event.getCurrentItem()) && !DataManager.getInstance().getItemHandler().getBlockedRecipes().isBlocked(event.getCurrentItem()))
 			return;
 
 		event.setCancelled(true);

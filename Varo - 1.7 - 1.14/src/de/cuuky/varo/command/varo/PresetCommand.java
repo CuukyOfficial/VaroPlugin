@@ -2,6 +2,7 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -38,7 +39,7 @@ public class PresetCommand extends VaroCommand {
 			}
 
 			loader.loadSettings();
-			Main.getDataManager().reloadConfig();
+			DataManager.getInstance().reloadConfig();
 			sender.sendMessage(Main.getPrefix() + "Einstellungen '" + args[1] + "' erfolgreich geladen!");
 		} else if(args[0].equalsIgnoreCase("save")) {
 			if(args.length != 2) {

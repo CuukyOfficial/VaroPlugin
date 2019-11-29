@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import de.cuuky.varo.data.DataManager;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -182,13 +183,13 @@ public class Stats implements VaroSerializeable {
 	public void setKills(int kills) {
 		this.kills = kills;
 		owner.update();
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		DataManager.getInstance().getScoreboardHandler().updateTopScores();
 	}
 
 	public void addKill() {
 		this.kills++;
 		owner.update();
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		DataManager.getInstance().getScoreboardHandler().updateTopScores();
 	}
 
 	public ArrayList<VaroSaveable> getSaveables() {
@@ -556,7 +557,7 @@ public class Stats implements VaroSerializeable {
 		}
 
 		if(Main.isBootedUp())
-			if(!Main.getDataManager().getTimeChecker().canJoin())
+			if(!DataManager.getInstance().getTimeChecker().canJoin())
 				result = KickResult.NOT_IN_TIME;
 
 		for(Strike strike : strikes)

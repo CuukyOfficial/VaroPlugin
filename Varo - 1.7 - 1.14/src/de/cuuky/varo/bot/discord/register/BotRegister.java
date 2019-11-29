@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -158,13 +159,13 @@ public class BotRegister {
 			return;
 
 		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if(!Main.getDataManager().getMysql().isConnected())
+			if(!DataManager.getInstance().getMysql().isConnected())
 				return;
 
-			Main.getDataManager().getMysql().update("TRUNCATE TABLE verify;");
+			DataManager.getInstance().getMysql().update("TRUNCATE TABLE verify;");
 
 			for(final BotRegister reg : register) {
-				Main.getDataManager().getMysql().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
+				DataManager.getInstance().getMysql().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
 			}
 		} else {
 			File file = new File("plugins/Varo", "registrations.yml");
@@ -193,12 +194,12 @@ public class BotRegister {
 			return;
 
 		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if(!Main.getDataManager().getMysql().isConnected()) {
+			if(!DataManager.getInstance().getMysql().isConnected()) {
 				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
 				return;
 			}
 
-			ResultSet rs = Main.getDataManager().getMysql().getQuery("SELECT * FROM verify");
+			ResultSet rs = DataManager.getInstance().getMysql().getQuery("SELECT * FROM verify");
 
 			try {
 				while(rs.next()) {

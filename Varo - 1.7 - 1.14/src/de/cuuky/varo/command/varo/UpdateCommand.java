@@ -2,6 +2,7 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -66,7 +67,7 @@ public class UpdateCommand extends VaroCommand {
 			this.pluginNameChanged = true;
 		}
 
-		Main.getDataManager().setDoSave(false);
+		DataManager.getInstance().setDoSave(false);
 		
 		if (result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");

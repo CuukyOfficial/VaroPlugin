@@ -39,6 +39,8 @@ import net.labymod.serverapi.LabyModAPI;
 
 public class DataManager {
 
+	private static DataManager instance;
+
 	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
 	private WorldHandler worldHandler;
@@ -50,7 +52,14 @@ public class DataManager {
 
 	private boolean doSave;
 
-	public DataManager() {
+	public static DataManager getInstance() {
+		if (instance == null) {
+			instance = new DataManager();
+		}
+		return instance;
+	}
+
+	private DataManager() {
 		load();
 		loadPlugins();
 
@@ -163,12 +172,12 @@ public class DataManager {
 
 	public void reloadConfig() {
 		VaroList.reloadLists();
-		Main.getDataManager().getConfigHandler().reload();
-		Main.getDataManager().getScoreboardHandler().loadScores();
+		DataManager.getInstance().getConfigHandler().reload();
+		DataManager.getInstance().getScoreboardHandler().loadScores();
 
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			Main.getDataManager().getScoreboardHandler().sendScoreBoard(vp);
+			DataManager.getInstance().getScoreboardHandler().sendScoreBoard(vp);
 			vp.getNametag().giveAll();
 		}
 	}

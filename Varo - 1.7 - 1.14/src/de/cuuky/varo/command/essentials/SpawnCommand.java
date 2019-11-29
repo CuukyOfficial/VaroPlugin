@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -14,7 +15,7 @@ public class SpawnCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-		Location loc = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation();
+		Location loc = DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation();
 		if(!(sender instanceof Player)) {
 			if(loc == null)
 				sender.sendMessage(Main.getPrefix() + "§7Main World not found!");

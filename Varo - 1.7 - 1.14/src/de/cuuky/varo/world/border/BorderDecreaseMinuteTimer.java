@@ -1,5 +1,6 @@
 package de.cuuky.varo.world.border;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
@@ -23,7 +24,7 @@ public class BorderDecreaseMinuteTimer {
 					return;
 				}
 
-				Main.getDataManager().getWorldHandler().getBorder().decrease(DecreaseReason.TIME_MINUTES);
+				DataManager.getInstance().getWorldHandler().getBorder().decrease(DecreaseReason.TIME_MINUTES);
 			}
 		}, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20);
 	}

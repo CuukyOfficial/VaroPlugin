@@ -2,6 +2,7 @@ package de.cuuky.varo.entity.player.event.events;
 
 import java.util.Date;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.GameMode;
 
 import de.cuuky.varo.Main;
@@ -47,7 +48,7 @@ public class JoinEvent extends BukkitEvent {
 		else
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
 
-		Main.getDataManager().getScoreboardHandler().sendScoreBoard(player);
+		DataManager.getInstance().getScoreboardHandler().sendScoreBoard(player);
 		Disconnect.joinedAgain(player.getName());
 		player.update();
 	}

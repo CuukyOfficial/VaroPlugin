@@ -2,6 +2,7 @@ package de.cuuky.varo.world.border;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
@@ -57,7 +58,7 @@ public class BorderDecrease {
 	}
 
 	public void shrink() {
-		VaroBorder border = Main.getDataManager().getWorldHandler().getBorder();
+		VaroBorder border = DataManager.getInstance().getWorldHandler().getBorder();
 
 		int minsize = ConfigEntry.MIN_BORDER_SIZE.getValueAsInt();
 		double size = border.getSize();

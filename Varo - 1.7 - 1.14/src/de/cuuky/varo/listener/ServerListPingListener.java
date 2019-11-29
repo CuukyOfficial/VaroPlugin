@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,12 +27,12 @@ public class ServerListPingListener implements Listener {
 				return;
 			}
 
-			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || Main.getDataManager().getTimeChecker().canJoin() || !Main.getGame().hasStarted()) {
+			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || DataManager.getInstance().getTimeChecker().canJoin() || !Main.getGame().hasStarted()) {
 				event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}
 
-			if(!Main.getDataManager().getTimeChecker().canJoin())
+			if(!DataManager.getInstance().getTimeChecker().canJoin())
 				event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
 		}
 	}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -37,7 +38,7 @@ public class ResetCommand extends VaroCommand {
 		for(Player pl : VersionUtils.getOnlinePlayer())
 			pl.kickPlayer("§cRESET");
 
-		Main.getDataManager().save();
+		DataManager.getInstance().save();
 		List<Integer> success = new ArrayList<Integer>();
 		List<File> toDelete = new ArrayList<File>();
 		for(String arg : args) {
@@ -76,7 +77,7 @@ public class ResetCommand extends VaroCommand {
 		}
 
 		if(!toDelete.isEmpty()) {
-			Main.getDataManager().setDoSave(false);
+			DataManager.getInstance().setDoSave(false);
 			for(File file : toDelete) {
 				if(file.isDirectory())
 					deleteDirectory(file);

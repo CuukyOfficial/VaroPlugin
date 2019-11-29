@@ -2,6 +2,7 @@ package de.cuuky.varo.world.border;
 
 import java.util.Date;
 
+import de.cuuky.varo.data.DataManager;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,7 +35,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 			@Override
 			public void run() {
 				if(Main.getGame().isRunning())
-					Main.getDataManager().getWorldHandler().getBorder().decrease(DecreaseReason.TIME_DAYS);
+					DataManager.getInstance().getWorldHandler().getBorder().decrease(DecreaseReason.TIME_DAYS);
 
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 

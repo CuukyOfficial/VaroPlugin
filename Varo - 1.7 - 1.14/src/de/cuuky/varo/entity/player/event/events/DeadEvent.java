@@ -2,6 +2,7 @@ package de.cuuky.varo.entity.player.event.events;
 
 import java.util.Date;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -39,6 +40,6 @@ public class DeadEvent extends BukkitEvent {
 			}
 
 		if(Main.getGame().getGameState() == GameState.STARTED)
-			Main.getDataManager().getWorldHandler().getBorder().decrease(DecreaseReason.DEATH);
+			DataManager.getInstance().getWorldHandler().getBorder().decrease(DecreaseReason.DEATH);
 	}
 }

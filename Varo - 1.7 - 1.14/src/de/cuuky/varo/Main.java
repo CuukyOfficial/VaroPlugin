@@ -75,7 +75,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
-			dataManager = new DataManager();
+			dataManager = DataManager.getInstance(); //Initialisierung
 
 			try {
 				updateChecker = new UpdateChecker(this);
@@ -133,10 +133,6 @@ public class Main extends JavaPlugin {
 
 	public File getThisFile() {
 		return getFile();
-	}
-
-	public static DataManager getDataManager() {
-		return dataManager;
 	}
 
 	public static VaroTelegramBot getTelegramBot() {

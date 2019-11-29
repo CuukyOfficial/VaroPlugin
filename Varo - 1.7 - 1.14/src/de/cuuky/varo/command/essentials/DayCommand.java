@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +19,7 @@ public class DayCommand implements CommandExecutor {
 			return false;
 		}
 
-		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getDataManager().getWorldHandler().getWorld();
+		World world = sender instanceof Player ? ((Player) sender).getWorld() : DataManager.getInstance().getWorldHandler().getWorld();
 		world.setTime(1000);
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Tag§7!");
 		return false;

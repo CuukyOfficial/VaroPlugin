@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.data.DataManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,7 @@ public class NightCommand implements CommandExecutor {
 		if(sender instanceof Player)
 			((Player) sender).getWorld().setTime(13000);
 		else
-			Main.getDataManager().getWorldHandler().getWorld().setTime(13000);
+			DataManager.getInstance().getWorldHandler().getWorld().setTime(13000);
 
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Nacht§7!");
 		return false;

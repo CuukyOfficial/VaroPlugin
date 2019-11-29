@@ -1,6 +1,6 @@
 package de.cuuky.varo.config.config;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.data.DataManager;
 
 public enum ConfigEntry {
 
@@ -251,8 +251,8 @@ public enum ConfigEntry {
 	}
 
 	private void save() {
-		Main.getDataManager().getConfigHandler().getConfigCfg().set(section.getPath() + path, value);
-		Main.getDataManager().getConfigHandler().saveConfig();
+		DataManager.getInstance().getConfigHandler().getConfigCfg().set(section.getPath() + path, value);
+		DataManager.getInstance().getConfigHandler().saveConfig();
 	}
 
 	public Object getValue() {
