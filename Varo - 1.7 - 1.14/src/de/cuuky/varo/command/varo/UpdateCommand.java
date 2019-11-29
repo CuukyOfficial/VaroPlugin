@@ -2,6 +2,7 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 
+import com.avaje.ebean.Update;
 import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -31,7 +32,7 @@ public class UpdateCommand extends VaroCommand {
 		String updateVersion;
 		
 		try {
-			UpdateChecker updater = Main.getUpdater();
+			UpdateChecker updater = UpdateChecker.getInstance();
 			result = updater.getResult();
 			updateVersion = updater.getVersion();
 		} catch(NumberFormatException e) {

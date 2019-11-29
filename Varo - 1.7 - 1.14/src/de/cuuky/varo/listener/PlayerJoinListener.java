@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import com.avaje.ebean.Update;
 import de.cuuky.varo.data.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -58,7 +59,7 @@ public class PlayerJoinListener implements Listener {
 
 			if(player.isOp()) {
 				try {
-					UpdateChecker updater = Main.getUpdater();
+					UpdateChecker updater = UpdateChecker.getInstance();
 					if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
 						if(Team.getTeams().isEmpty()) {
 							vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");

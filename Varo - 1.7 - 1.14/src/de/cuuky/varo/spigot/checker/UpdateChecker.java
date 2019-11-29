@@ -12,6 +12,8 @@ import de.cuuky.varo.spigot.SpigotObject;
 
 public class UpdateChecker extends SpigotObject {
 
+	private static UpdateChecker instance;
+
 	private UpdateChecker.UpdateResult result;
 	private String version;
 
@@ -24,7 +26,7 @@ public class UpdateChecker extends SpigotObject {
 
 		private String message;
 
-		private UpdateResult(String message) {
+		UpdateResult(String message) {
 			this.message = message;
 		}
 
@@ -33,7 +35,14 @@ public class UpdateChecker extends SpigotObject {
 		}
 	}
 
-	public UpdateChecker(JavaPlugin plugin) {
+	public static UpdateChecker getInstance() {
+		if (instance == null) {
+			instance = new UpdateChecker();
+		}
+		return instance;
+	}
+
+	private UpdateChecker() {
 		this.result = UpdateResult.NO_UPDATE;
 
 		try {

@@ -78,7 +78,7 @@ public class Main extends JavaPlugin {
 			dataManager = DataManager.getInstance(); //Initialisierung
 
 			try {
-				updateChecker = new UpdateChecker(this);
+				updateChecker = UpdateChecker.getInstance(); //Initialisierung
 				updateChecker.postResults();
 				if(updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE)
 					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord.");
@@ -165,10 +165,6 @@ public class Main extends JavaPlugin {
 
 	public static String getConsolePrefix() {
 		return CONSOLE_PREFIX;
-	}
-
-	public static UpdateChecker getUpdater() {
-		return updateChecker;
 	}
 
 	public static Main getInstance() {
