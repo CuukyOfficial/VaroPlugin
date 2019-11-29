@@ -1,6 +1,7 @@
 package de.cuuky.varo.command.varo;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -27,7 +28,7 @@ public class AutoSetupCommand extends VaroCommand {
 
 				new AutoSetup();
 				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-					player.getPlayer().teleport(DataManager.getInstance().getWorldHandler().getTeleportLocation());
+					player.getPlayer().teleport(WorldHandler.getInstance().getTeleportLocation());
 				}
 				sender.sendMessage(Main.getPrefix() + "Der AutoSetup ist fertig.");
 				return;

@@ -11,10 +11,19 @@ import de.cuuky.varo.world.border.VaroBorder;
 
 public class WorldHandler {
 
+	private static WorldHandler instance;
+
 	private World world;
 	private VaroBorder border;
 
-	public WorldHandler() {
+	public static WorldHandler getInstance() {
+		if (instance == null) {
+			instance = new WorldHandler();
+		}
+		return instance;
+	}
+
+	private WorldHandler() {
 		this.world = Bukkit.getWorld((String) new ServerPropertiesReader().get("level-name"));
 		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 

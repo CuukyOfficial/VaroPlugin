@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -184,13 +185,13 @@ public class Stats implements VaroSerializeable {
 	public void setKills(int kills) {
 		this.kills = kills;
 		owner.update();
-		DataManager.getInstance().getScoreboardHandler().updateTopScores();
+		ScoreboardHandler.getInstance().updateTopScores();
 	}
 
 	public void addKill() {
 		this.kills++;
 		owner.update();
-		DataManager.getInstance().getScoreboardHandler().updateTopScores();
+		ScoreboardHandler.getInstance().updateTopScores();
 	}
 
 	public ArrayList<VaroSaveable> getSaveables() {

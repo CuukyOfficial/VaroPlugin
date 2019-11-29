@@ -16,6 +16,8 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class PlayerHandler extends VaroSerializeObject {
 
+	private static PlayerHandler instance;
+
 	static {
 		registerClass(Rank.class);
 		registerClass(Strike.class);
@@ -28,7 +30,13 @@ public class PlayerHandler extends VaroSerializeObject {
 		registerEnum(PlayerState.class);
 	}
 
-	public PlayerHandler() {
+	public static void initialise() {
+		if (instance == null) {
+			instance = new PlayerHandler();
+		}
+	}
+
+	private PlayerHandler() {
 		super(VaroPlayer.class, "/stats/players.yml");
 
 		load();

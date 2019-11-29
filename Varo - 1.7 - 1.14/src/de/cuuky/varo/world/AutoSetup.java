@@ -24,7 +24,7 @@ public class AutoSetup {
 		if(Main.getGame().hasStarted())
 			return;
 
-		World world = DataManager.getInstance().getWorldHandler().getWorld();
+		World world = WorldHandler.getInstance().getWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 

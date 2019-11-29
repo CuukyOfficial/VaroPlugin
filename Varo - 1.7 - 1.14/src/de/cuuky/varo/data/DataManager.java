@@ -8,7 +8,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.pengrad.telegrambot.TelegramBot;
+import de.cuuky.varo.spawns.Spawn;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
@@ -44,8 +46,6 @@ public class DataManager {
 
 	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
-	private WorldHandler worldHandler;
-	private ScoreboardHandler scoreboardHandler;
 	private MySQL mysql;
 	private OutSideTimeChecker timeChecker;
 	private ListHandler listHandler;
@@ -74,14 +74,14 @@ public class DataManager {
 		ConfigHandler.getInstance(); //Initialisierung
 
 		LoggerMaster.getInstance(); //Initialisierung
-		new GameHandler();
-		new PlayerHandler();
-		new TeamHandler();
-		new SpawnHandler();
-		this.worldHandler = new WorldHandler();
-		this.scoreboardHandler = new ScoreboardHandler();
-		new ReportHandler();
-		new AlertHandler();
+		GameHandler.initialise(); //Initialisierung GameHandler
+		PlayerHandler.initialise(); //Initialisierung PlayerHandler
+		TeamHandler.initialise(); //Initialisierung TeamHandler
+		SpawnHandler.initialise(); //Initialisierung SpawnHandler
+		WorldHandler.getInstance(); //Initialisierung WorldHandler
+		ScoreboardHandler.getInstance(); //Initialisierung ScoreboardHandler
+		ReportHandler.initialise(); //Initialisierung ReportHandler
+		AlertHandler.initialise(); //Initialisierung AlertHandler
 		this.timeChecker = new OutSideTimeChecker();
 		this.mysql = new MySQL();
 		this.listHandler = new ListHandler();
@@ -172,11 +172,11 @@ public class DataManager {
 	public void reloadConfig() {
 		VaroList.reloadLists();
 		ConfigHandler.getInstance().reload();
-		DataManager.getInstance().getScoreboardHandler().loadScores();
+		ScoreboardHandler.getInstance().loadScores();
 
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			DataManager.getInstance().getScoreboardHandler().sendScoreBoard(vp);
+			ScoreboardHandler.getInstance().sendScoreBoard(vp);
 			vp.getNametag().giveAll();
 		}
 	}
@@ -244,14 +244,6 @@ public class DataManager {
 
 	public OutSideTimeChecker getTimeChecker() {
 		return timeChecker;
-	}
-
-	public WorldHandler getWorldHandler() {
-		return worldHandler;
-	}
-
-	public ScoreboardHandler getScoreboardHandler() {
-		return scoreboardHandler;
 	}
 
 	public MySQL getMysql() {

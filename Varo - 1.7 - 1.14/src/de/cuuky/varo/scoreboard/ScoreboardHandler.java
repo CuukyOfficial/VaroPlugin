@@ -22,13 +22,22 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class ScoreboardHandler {
 
+	private static ScoreboardHandler instance;
+
 	private ArrayList<String> scoreboardLines;
 	private HashMap<Player, ArrayList<String>> replaces;
 
 	private String header;
 	private TopScoreList topScores;
 
-	public ScoreboardHandler() {
+	public static ScoreboardHandler getInstance() {
+		if (instance == null) {
+			instance = new ScoreboardHandler();
+		}
+		return instance;
+	}
+
+	private ScoreboardHandler() {
 		loadScores();
 	}
 

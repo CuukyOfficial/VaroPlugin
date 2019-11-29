@@ -8,13 +8,21 @@ import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
 
 public class GameHandler extends VaroSerializeObject {
 
+	private static GameHandler instance;
+
 	static {
 		registerEnum(GameState.class);
 		registerClass(AutoStart.class);
 		registerClass(BorderDecreaseDayTimer.class);
 	}
 
-	public GameHandler() {
+	public static void initialise() {
+		if (instance == null) {
+			instance = new GameHandler();
+		}
+	}
+
+	private GameHandler() {
 		super(Game.class, "/stats/game.yml");
 
 		load();

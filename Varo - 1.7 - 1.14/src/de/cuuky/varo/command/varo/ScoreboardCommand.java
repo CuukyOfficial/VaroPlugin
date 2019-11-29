@@ -1,6 +1,7 @@
 package de.cuuky.varo.command.varo;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -34,7 +35,7 @@ public class ScoreboardCommand extends VaroCommand {
 			vp.getStats().setShowScoreboard(false);
 		} else {
 			vp.getStats().setShowScoreboard(true);
-			DataManager.getInstance().getScoreboardHandler().sendScoreBoard(vp);
+			ScoreboardHandler.getInstance().sendScoreBoard(vp);
 			vp.sendMessage(Main.getPrefix() + "Du siehst nun das Scoreboard!");
 			vp.getNametag().giveAll();
 		}

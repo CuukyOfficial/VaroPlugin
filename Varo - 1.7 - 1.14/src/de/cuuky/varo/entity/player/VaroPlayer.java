@@ -6,6 +6,7 @@ import java.util.UUID;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -293,7 +294,7 @@ public class VaroPlayer extends VaroEntity {
 
 		stats.remove();
 		varoplayer.remove(this);
-		DataManager.getInstance().getScoreboardHandler().updateTopScores();
+		ScoreboardHandler.getInstance().updateTopScores();
 	}
 
 	public String getPrefix() {
@@ -332,7 +333,7 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		update();
-		DataManager.getInstance().getScoreboardHandler().updateTopScores();
+		ScoreboardHandler.getInstance().updateTopScores();
 	}
 
 	public void update() {

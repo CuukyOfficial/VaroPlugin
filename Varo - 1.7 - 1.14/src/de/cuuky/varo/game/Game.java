@@ -10,6 +10,8 @@ import java.util.List;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
+import de.cuuky.varo.world.WorldHandler;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -122,7 +124,7 @@ public class Game implements VaroSerializeable {
 							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
 								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 							else if(showDistanceToBorder) {
-								int distance = (int) DataManager.getInstance().getWorldHandler().getBorder().getDistanceTo(p);
+								int distance = (int) WorldHandler.getInstance().getBorder().getDistanceTo(p);
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}
@@ -159,7 +161,7 @@ public class Game implements VaroSerializeable {
 							vp.getStats().setState(PlayerState.ALIVE);
 					}
 
-					DataManager.getInstance().getScoreboardHandler().update(vp);
+					ScoreboardHandler.getInstance().update(vp);
 					vp.getNetworkManager().sendTablist();
 				}
 
@@ -254,7 +256,7 @@ public class Game implements VaroSerializeable {
 
 					setGamestate(GameState.STARTED);
 					fillChests();
-					DataManager.getInstance().getWorldHandler().getWorld().strikeLightningEffect(DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation());
+					WorldHandler.getInstance().getWorld().strikeLightningEffect(WorldHandler.getInstance().getWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 					LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
@@ -394,8 +396,8 @@ public class Game implements VaroSerializeable {
 			return;
 
 		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = WorldHandler.getInstance().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = WorldHandler.getInstance().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = DataManager.getInstance().getItemHandler().getChestItems().getItems();
