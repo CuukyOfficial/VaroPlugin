@@ -3,6 +3,7 @@ package de.cuuky.varo.gui.events;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -24,7 +25,7 @@ public class EventListGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		ArrayList<String> list = Main.getLoggerMaster().getEventLogger().getLogs();
+		ArrayList<String> list = LoggerMaster.getInstance().getEventLogger().getLogs();
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);

@@ -12,7 +12,6 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.spigot.checker.UpdateChecker;
 import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
@@ -29,7 +28,6 @@ public class Main extends JavaPlugin {
 	private static final String CONSOLE_PREFIX = "[Varo] ";
 	private static Main instance;
 
-	private static LoggerMaster logger;
 	private static DataManager dataManager;
 	private static BotLauncher botLauncher;
 	private static UpdateChecker updateChecker;
@@ -128,14 +126,6 @@ public class Main extends JavaPlugin {
 
 	public File getThisFile() {
 		return getFile();
-	}
-
-	public static LoggerMaster getLoggerMaster() {
-		return logger;
-	}
-
-	public static void setLogger(LoggerMaster logger) {
-		Main.logger = logger;
 	}
 
 	public static Game getGame() {

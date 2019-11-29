@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -93,7 +94,7 @@ public class PlayerDeathListener implements Listener {
 			}
 
 			if(killerPlayer == null) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()));
+				LoggerMaster.getInstance().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()));
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(deadP).replace("%death%", deadPlayer.getName()));
 			} else {
 				Hit hit1 = Hit.getHit(killerPlayer);
@@ -109,7 +110,7 @@ public class PlayerDeathListener implements Listener {
 					killer.sendMessage(ConfigMessages.KILL_LIFE_ADD.getValue());
 				}
 
-				Main.getLoggerMaster().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
+				LoggerMaster.getInstance().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replaceAll("%death%", deadPlayer.getName()).replaceAll("%killer%", killerPlayer.getName()));
 
 				killer.onEvent(BukkitEventType.KILL);

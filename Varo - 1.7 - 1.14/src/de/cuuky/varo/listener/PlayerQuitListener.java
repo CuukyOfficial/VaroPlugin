@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +39,7 @@ public class PlayerQuitListener implements Listener {
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
 					if(vplayer.getStats().getState() != PlayerState.DEAD)
-						Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
+						LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
 					return;
 				}
 
@@ -65,7 +66,7 @@ public class PlayerQuitListener implements Listener {
 
 				Disconnect.disconnected(vplayer.getName());
 				Bukkit.broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
+				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}

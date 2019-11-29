@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -447,7 +448,7 @@ public class VaroPlayer extends VaroEntity {
 				continue;
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
 				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
 				new Alert(AlertType.NAME_SWITCH, player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
 				vp.setName(player.getName());

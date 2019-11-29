@@ -73,7 +73,7 @@ public class DataManager {
 		copyDefaultPresets();
 		ConfigHandler.getInstance(); //Initialisierung
 
-		Main.setLogger(new LoggerMaster());
+		LoggerMaster.getInstance(); //Initialisierung
 		new GameHandler();
 		new PlayerHandler();
 		new TeamHandler();

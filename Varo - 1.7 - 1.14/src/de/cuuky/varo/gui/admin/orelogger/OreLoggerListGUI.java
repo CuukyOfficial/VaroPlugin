@@ -3,6 +3,7 @@ package de.cuuky.varo.gui.admin.orelogger;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,7 +28,7 @@ public class OreLoggerListGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		ArrayList<String> list = Main.getLoggerMaster().getBlockLogger().getLogs();
+		ArrayList<String> list = LoggerMaster.getInstance().getBlockLogger().getLogs();
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);

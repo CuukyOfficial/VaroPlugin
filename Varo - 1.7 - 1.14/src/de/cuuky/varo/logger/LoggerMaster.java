@@ -6,11 +6,20 @@ import de.cuuky.varo.logger.logger.EventLogger;
 
 public class LoggerMaster {
 
+	private static LoggerMaster instance;
+
 	private BlockLogger blockLogger;
 	private EventLogger fileLogger;
 	private ChatLogger chatLogger;
 
-	public LoggerMaster() {
+	public static LoggerMaster getInstance() {
+		if (instance == null) {
+			instance = new LoggerMaster();
+		}
+		return instance;
+	}
+
+	private LoggerMaster() {
 		blockLogger = new BlockLogger("blocklogs");
 		fileLogger = new EventLogger("logs");
 		chatLogger = new ChatLogger("chatlogs");

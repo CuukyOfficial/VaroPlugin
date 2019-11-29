@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.logger.LoggerMaster;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -218,7 +219,7 @@ public class Stats implements VaroSerializeable {
 	public void addVideo(YouTubeVideo video) {
 		videos.add(video);
 
-		Main.getLoggerMaster().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
+		LoggerMaster.getInstance().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
 	}
 
 	public void removeVideo(YouTubeVideo video) {

@@ -8,6 +8,7 @@ import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -238,7 +239,7 @@ public class Team extends VaroEntity {
 		for(int id : memberid) {
 			VaroPlayer vp = VaroPlayer.getPlayer(id);
 			if(vp == null) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
+				LoggerMaster.getInstance().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
 				continue;
 			}
 

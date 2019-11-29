@@ -1,6 +1,7 @@
 package de.cuuky.varo.gui.admin;
 
 import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -116,7 +117,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(Main.getLoggerMaster().getBlockLogger().getLogs().size())).build(), new Runnable() {
+		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(LoggerMaster.getInstance().getBlockLogger().getLogs().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {

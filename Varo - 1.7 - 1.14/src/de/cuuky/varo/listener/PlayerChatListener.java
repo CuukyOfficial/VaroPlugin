@@ -2,6 +2,7 @@ package de.cuuky.varo.listener;
 
 import java.util.Date;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -103,7 +104,7 @@ public class PlayerChatListener implements Listener {
 		} else
 			message = message.replaceAll("&", "§");
 
-		Main.getLoggerMaster().getChatLogger().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
+		LoggerMaster.getInstance().getChatLogger().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);
 	}
 

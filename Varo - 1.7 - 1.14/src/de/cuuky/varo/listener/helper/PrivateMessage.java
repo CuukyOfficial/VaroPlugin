@@ -3,6 +3,7 @@ package de.cuuky.varo.listener.helper;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
@@ -23,7 +24,7 @@ public class PrivateMessage {
 		this.message = message;
 		this.written = new Date();
 
-		Main.getLoggerMaster().getChatLogger().println(ChatLogType.PRIVATE_CHAT, sender.getName() + " >> " + reciever.getName() + ": " + message);
+		LoggerMaster.getInstance().getChatLogger().println(ChatLogType.PRIVATE_CHAT, sender.getName() + " >> " + reciever.getName() + ": " + message);
 
 		messages.add(this);
 	}

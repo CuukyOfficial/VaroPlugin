@@ -1,5 +1,6 @@
 package de.cuuky.varo.world.border;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
@@ -55,6 +56,6 @@ public enum DecreaseReason {
 	}
 
 	public void postAlert() {
-		Main.getLoggerMaster().getEventLogger().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+		LoggerMaster.getInstance().getEventLogger().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
 	}
 }

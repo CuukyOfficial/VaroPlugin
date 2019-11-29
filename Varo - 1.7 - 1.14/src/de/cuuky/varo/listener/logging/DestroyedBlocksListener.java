@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.logging;
 
+import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,6 +19,6 @@ public class DestroyedBlocksListener implements Listener {
 		if(event.isCancelled())
 			return;
 
-		Main.getLoggerMaster().getBlockLogger().println(event.getBlock(), event.getPlayer());
+		LoggerMaster.getInstance().getBlockLogger().println(event.getBlock(), event.getPlayer());
 	}
 }

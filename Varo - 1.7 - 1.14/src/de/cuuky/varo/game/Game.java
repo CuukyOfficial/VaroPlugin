@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.logger.LoggerMaster;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -256,7 +257,7 @@ public class Game implements VaroSerializeable {
 					DataManager.getInstance().getWorldHandler().getWorld().strikeLightningEffect(DataManager.getInstance().getWorldHandler().getWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
-					Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
+					LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 					startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 					Bukkit.getScheduler().cancelTask(startScheduler);
 
@@ -357,7 +358,7 @@ public class Game implements VaroSerializeable {
 		}
 
 		Bukkit.broadcastMessage(Main.getColorCode() + first + " §7" + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! §5Herzlichen Glückwunsch!");
-		Main.getLoggerMaster().getEventLogger().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! Herzlichen Glückwunsch!");
+		LoggerMaster.getInstance().getEventLogger().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! Herzlichen Glückwunsch!");
 		VaroDiscordBot db = BotLauncher.getDiscordBot();
 		if(db != null && db.isEnabled()) {
 			if(db.getResultChannel() != null && db.isEnabled())
