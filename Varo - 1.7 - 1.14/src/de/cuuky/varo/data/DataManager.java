@@ -81,7 +81,7 @@ public class DataManager {
 		OutSideTimeChecker.getInstance(); //Initialisierung TimeChecker
 		MySQL.getInstance(); //Initialisierung MySQL
 		ListHandler.getInstance(); //Initialisierung ListHandler
-		new Broadcaster();
+		Broadcaster.getInstance(); //Initialisierung Broadcaster
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}

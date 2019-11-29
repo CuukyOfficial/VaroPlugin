@@ -20,9 +20,18 @@ public class Broadcaster {
 	 * Partly old code
 	 */
 
+	public static Broadcaster instance;
+
 	private ArrayList<String> messages = new ArrayList<>();
 
-	public Broadcaster() {
+	public static Broadcaster getInstance() {
+		if (instance == null) {
+			instance = new Broadcaster();
+		}
+		return instance;
+	}
+
+	private Broadcaster() {
 		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean()) {
 			int delay = (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
