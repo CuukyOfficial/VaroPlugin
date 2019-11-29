@@ -7,10 +7,19 @@ import de.cuuky.varo.config.config.ConfigEntry;
 
 public class BotLauncher {
 
+	private static BotLauncher instance;
+
 	private VaroDiscordBot discordbot;
 	private VaroTelegramBot telegrambot;
 
-	public BotLauncher() {
+	public static BotLauncher getInstance() {
+		if (instance == null) {
+			instance = new BotLauncher();
+		}
+		return instance;
+	}
+
+	private BotLauncher() {
 		startupDiscord();
 		startupTelegram();
 	}

@@ -2,6 +2,7 @@ package de.cuuky.varo;
 
 import java.io.File;
 
+import net.dv8tion.jda.client.entities.Application;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -86,7 +87,7 @@ public class Main extends JavaPlugin {
 
 			new DailyTimer();
 
-			botLauncher = new BotLauncher();
+			botLauncher = BotLauncher.getInstance(); //Initialisierung
 			discordBot = botLauncher.getDiscordbot();
 			telegramBot = botLauncher.getTelegrambot();
 			new BukkitRegisterer();
