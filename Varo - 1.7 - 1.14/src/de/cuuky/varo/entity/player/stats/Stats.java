@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
+import de.cuuky.varo.threads.OutSideTimeChecker;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -559,7 +560,7 @@ public class Stats implements VaroSerializeable {
 		}
 
 		if(Main.isBootedUp())
-			if(!DataManager.getInstance().getTimeChecker().canJoin())
+			if(!OutSideTimeChecker.getInstance().canJoin())
 				result = KickResult.NOT_IN_TIME;
 
 		for(Strike strike : strikes)

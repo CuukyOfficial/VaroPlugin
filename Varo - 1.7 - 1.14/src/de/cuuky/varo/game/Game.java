@@ -11,6 +11,7 @@ import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
+import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.world.WorldHandler;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
@@ -100,12 +101,12 @@ public class Game implements VaroSerializeable {
 					if(seconds == 60) {
 						seconds = 0;
 						if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-							double minutesToClose = (int) ((((long) DataManager.getInstance().getTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+							double minutesToClose = (int) ((((long) OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
 								Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
-							if(!DataManager.getInstance().getTimeChecker().canJoin())
+							if(!OutSideTimeChecker.getInstance().canJoin())
 								for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 									vp.getStats().setCountdown(0);
 									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
