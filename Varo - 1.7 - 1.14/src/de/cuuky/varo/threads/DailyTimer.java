@@ -16,9 +16,9 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.threads.dailycheck.Checker;
 import de.cuuky.varo.world.TimeTimer;
 
-public class DailyTimer {
+public final class DailyTimer {
 
-	public DailyTimer() {
+	public static void startTimer() {
 		new TimeTimer();
 		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
 			Date date = Game.getInstance().getLastDayTimer();
@@ -52,7 +52,7 @@ public class DailyTimer {
 
 						@Override
 						public void run() {
-							new DailyTimer();
+							startTimer();
 						}
 					}, 100);
 				} catch(Exception e) {
@@ -60,7 +60,7 @@ public class DailyTimer {
 
 						@Override
 						public void run() {
-							new DailyTimer();
+							startTimer();
 						}
 					}, 100);
 				}
@@ -68,7 +68,7 @@ public class DailyTimer {
 		}, getNextReset() * 20);
 	}
 
-	private void doDailyStuff() {
+	private static void doDailyStuff() {
 		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
 
@@ -80,7 +80,7 @@ public class DailyTimer {
 	}
 
 	@SuppressWarnings("deprecation")
-	private long getNextReset() {
+	private static long getNextReset() {
 		Date reset = new Date();
 		reset.setMinutes(0);
 		reset.setSeconds(0);
@@ -91,7 +91,7 @@ public class DailyTimer {
 		return (reset.getTime() - current.getTime()) / 1000;
 	}
 
-	private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 		long diffInMillies = date2.getTime() - date1.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}

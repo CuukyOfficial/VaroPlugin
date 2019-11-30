@@ -75,7 +75,7 @@ public class Main extends JavaPlugin {
 					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 			} catch(NumberFormatException ignored) {}
 
-			new DailyTimer();
+			DailyTimer.startTimer();
 
 			botLauncher = BotLauncher.getInstance(); //Initialisierung
 			BukkitRegisterer.registerEvents();
