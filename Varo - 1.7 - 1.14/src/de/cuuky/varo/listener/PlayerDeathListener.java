@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
@@ -33,7 +34,7 @@ public class PlayerDeathListener implements Listener {
 		VaroPlayer killer = killerPlayer == null ? null : VaroPlayer.getPlayer(killerPlayer);
 		event.setDeathMessage(null);
 
-		if(Main.getGame().hasStarted()) {
+		if(Game.getInstance().hasStarted()) {
 			Hit hit = Hit.getHit(deadPlayer);
 			if(hit != null)
 				hit.over();

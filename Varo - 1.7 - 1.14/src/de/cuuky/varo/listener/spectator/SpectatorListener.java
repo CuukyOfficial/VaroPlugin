@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.spectator;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -54,7 +55,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(Game.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))
@@ -63,7 +64,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onItemDrop(PlayerPickupItemEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(Game.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))
@@ -72,7 +73,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onItemPickup(PlayerDropItemEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(Game.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))
@@ -113,7 +114,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onEntityTarget(EntityTargetLivingEntityEvent event) {
-		if(Main.getGame().getGameState() == GameState.LOBBY)
+		if(Game.getInstance().getGameState() == GameState.LOBBY)
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getTarget()))

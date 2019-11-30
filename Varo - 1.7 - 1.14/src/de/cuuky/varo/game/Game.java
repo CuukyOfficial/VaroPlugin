@@ -55,6 +55,8 @@ public class Game implements VaroSerializeable {
 	 * Partly OLD
 	 */
 
+	public static Game instance;
+
 	@VaroSerializeField(path = "gamestate")
 	private GameState gamestate;
 	@VaroSerializeField(path = "autostart")
@@ -68,24 +70,17 @@ public class Game implements VaroSerializeable {
 	@VaroSerializeField(path = "lastCoordsPost")
 	private Date lastCoordsPost;
 
-	private boolean showDistanceToBorder, showTimeInActionBar, finaleJoinStart, firstTime = false;
+	private boolean showDistanceToBorder, showTimeInActionBar, finaleJoinStart = false, firstTime = false;
 	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler;
 	private ProtectionTime protection;
 	private BorderDecreaseMinuteTimer minuteTimer;
 
-	public Game() {
-		Main.setGame(this);
+	public static Game getInstance() {
+		return instance;
 	}
 
-	public Game(boolean main) {
-		Main.setGame(this);
-
-		startRefreshTimer();
-		loadVariables();
-
-		gamestate = GameState.LOBBY;
-		borderDecrease = new BorderDecreaseDayTimer(true);
-		finaleJoinStart = false;
+	public Game() { //Für Deserializer
+		instance = this;
 	}
 
 	private void startRefreshTimer() {
@@ -102,7 +97,7 @@ public class Game implements VaroSerializeable {
 					if(seconds == 60) {
 						seconds = 0;
 						if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-							double minutesToClose = (int) ((((long) OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+							double minutesToClose = (int) (((OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
 								Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));

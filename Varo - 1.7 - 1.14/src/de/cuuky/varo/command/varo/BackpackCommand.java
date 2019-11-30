@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -16,7 +17,7 @@ public class BackpackCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Main.getGame().hasStarted()) {
+		if(!Game.getInstance().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestaret!");
 			return;
 		}

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
@@ -499,7 +500,7 @@ public class Stats implements VaroSerializeable {
 
 	public KickResult getKickResult(Player player) {
 		KickResult result = KickResult.ALLOW;
-		if(Main.getGame().hasStarted()) {
+		if(Game.getInstance().hasStarted()) {
 			if(owner.isRegistered())
 				result = getVaroKickResult();
 			else
@@ -508,7 +509,7 @@ public class Stats implements VaroSerializeable {
 			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
-			if(Main.getGame().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
+			if(Game.getInstance().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
 				result = KickResult.NO_PROJECTUSER;
 		}
 
@@ -522,8 +523,8 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.SERVER_FULL;
 
 		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getGame().hasStarted() && player.isOp()) {
-				if(Main.getGame().hasStarted())
+			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Game.getInstance().hasStarted() && player.isOp()) {
+				if(Game.getInstance().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
 					else
@@ -555,7 +556,7 @@ public class Stats implements VaroSerializeable {
 		if(VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 		
-		if (Main.getGame().getFinaleJoinStart()) {
+		if (Game.getInstance().getFinaleJoinStart()) {
 			result = KickResult.FINALE_JOIN;
 		}
 

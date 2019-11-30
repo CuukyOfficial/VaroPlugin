@@ -1,6 +1,7 @@
 package de.cuuky.varo.command.varo;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
@@ -71,7 +72,7 @@ public class FinaleCommand extends VaroCommand {
 					player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 			}
 			
-			Main.getGame().setFinaleJoinStart(true);
+			Game.getInstance().setFinaleJoinStart(true);
 			Status = FinaleState.JOIN_PHASE;
 			ConfigEntry.PLAY_TIME.setValue(-1, true);
 			
@@ -142,7 +143,7 @@ public class FinaleCommand extends VaroCommand {
 		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
 		if (ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
-			Main.getGame().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
+			Game.getInstance().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
 		} else {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
 		}

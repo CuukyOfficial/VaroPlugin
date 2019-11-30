@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -30,7 +31,7 @@ public class TeamRequestCommand extends VaroCommand {
 			return;
 		}
 
-		if(Main.getGame().hasStarted()) {
+		if(Game.getInstance().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst dein Team nicht wechseln, da " + Main.getProjectName() + " schon gestartet ist!");
 			return;
 		}

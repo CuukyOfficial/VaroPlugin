@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.saveable;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -21,7 +22,7 @@ public class BlockBreakListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(!Main.getGame().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if(!Game.getInstance().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			event.setCancelled(true);
 			return;
 		}
@@ -33,7 +34,7 @@ public class BlockBreakListener implements Listener {
 		if(!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
 			return;
 
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			if(varoPlayer.getStats().isSpectator() || !player.hasPermission("varo.setup"))
 				return;
 

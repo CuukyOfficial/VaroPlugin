@@ -1,5 +1,6 @@
 package de.cuuky.varo.world;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -18,7 +19,7 @@ public class TimeTimer {
 
 			@Override
 			public void run() {
-				if(Main.getGame().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean())
+				if(Game.getInstance().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean())
 					return;
 
 				for(World world : Bukkit.getWorlds()) {

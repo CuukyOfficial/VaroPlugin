@@ -1,5 +1,6 @@
 package de.cuuky.varo.gui.admin.game;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -24,29 +25,29 @@ public class GameOptionsGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + Main.getGame().getGameState().getName() }).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + Game.getInstance().getGameState().getName() }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				switch(Main.getGame().getGameState()) {
+				switch(Game.getInstance().getGameState()) {
 				case STARTED:
-					Main.getGame().setGamestate(GameState.END);
+					Game.getInstance().setGamestate(GameState.END);
 					break;
 				case END:
-					Main.getGame().setGamestate(GameState.LOBBY);
+					Game.getInstance().setGamestate(GameState.LOBBY);
 					break;
 				case LOBBY:
-					Main.getGame().setGamestate(GameState.STARTED);
+					Game.getInstance().setGamestate(GameState.STARTED);
 					break;
 				}
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Main.getGame().getLobby() != null ? new LocationFormatter("x, y, z in world").format(Main.getGame().getLobby()) : "§c-") }).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Game.getInstance().getLobby() != null ? new LocationFormatter("x, y, z in world").format(Game.getInstance().getLobby()) : "§c-") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				Main.getGame().setLobby(opener.getLocation());
+				Game.getInstance().setLobby(opener.getLocation());
 			}
 		});
 

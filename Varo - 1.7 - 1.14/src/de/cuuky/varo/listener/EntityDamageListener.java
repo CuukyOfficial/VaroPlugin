@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,18 +23,18 @@ public class EntityDamageListener implements Listener {
 		if(!(e instanceof Player))
 			return;
 
-		if(Main.getGame().getGameState() == GameState.END)
+		if(Game.getInstance().getGameState() == GameState.END)
 			return;
 
 		Player pl = (Player) e;
 		VaroPlayer vp = VaroPlayer.getPlayer(pl);
 
-		if(Main.getGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || Main.getGame().getProtection() != null) {
+		if(Game.getInstance().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || Game.getInstance().getProtection() != null) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if(!ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Main.getGame().isStarting() || Main.getGame().isFirstTime())
+		if(!ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Game.getInstance().isStarting() || Game.getInstance().isFirstTime())
 			return;
 
 		if(vp.isInProtection()) {

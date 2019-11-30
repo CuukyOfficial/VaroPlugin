@@ -1,5 +1,6 @@
 package de.cuuky.varo.game.start;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
@@ -22,7 +23,7 @@ public class ProtectionTime {
 			@Override
 			public void run() {
 				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
-				Main.getGame().setProtection(null);
+				Game.getInstance().setProtection(null);
 			}
 		}, timer * 20 + 1);
 	}

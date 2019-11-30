@@ -2,6 +2,7 @@ package de.cuuky.varo.listener;
 
 import java.util.Date;
 
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -83,7 +84,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(!player.isOp()) {
-			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getGame().hasStarted()) || !Main.getGame().hasStarted()) {
+			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Game.getInstance().hasStarted()) || !Game.getInstance().hasStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
@@ -96,7 +97,7 @@ public class PlayerChatListener implements Listener {
 					new ChatMessage(player, message);
 			}
 
-			if(Main.getGame().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if(Game.getInstance().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;

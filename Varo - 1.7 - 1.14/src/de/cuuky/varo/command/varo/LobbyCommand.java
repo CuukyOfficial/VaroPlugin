@@ -3,6 +3,7 @@ package de.cuuky.varo.command.varo;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -64,14 +65,14 @@ public class LobbyCommand extends VaroCommand {
 			}
 
 			uuid.remove(p.getUniqueId());
-			Main.getGame().setLobby(p.getLocation());
+			Game.getInstance().setLobby(p.getLocation());
 			new LobbyGenerator(p.getLocation(), height, size);
 		} else if(args[0].equalsIgnoreCase("setSpawn") || args[0].equalsIgnoreCase("set")) {
-			Main.getGame().setLobby(((Player) sender).getLocation());
+			Game.getInstance().setLobby(((Player) sender).getLocation());
 			sender.sendMessage(Main.getPrefix() + "§7Location für die " + Main.getColorCode() + "Lobby §7erfolgreich gesetzt!");
 			return;
 		} else if(args[0].equalsIgnoreCase("removeSpawn") || args[0].equalsIgnoreCase("remove")) {
-			Main.getGame().setLobby(null);
+			Game.getInstance().setLobby(null);
 			sender.sendMessage(Main.getPrefix() + "§7Location für die " + Main.getColorCode() + "Lobby §7erfolgreich entfernt!");
 			return;
 		} else

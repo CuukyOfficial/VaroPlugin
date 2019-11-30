@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import org.bukkit.Bukkit;
@@ -147,7 +148,7 @@ public class VaroPlayer extends VaroEntity {
 
 			setNormalAttackSpeed();
 
-			if(Main.getGame().getGameState() == GameState.LOBBY)
+			if(Game.getInstance().getGameState() == GameState.LOBBY)
 				LobbyItem.giveItems(player);
 		} else if(isAdminIgnore())
 			adminIgnore = false;

@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -27,20 +28,20 @@ public class PlayerMoveListener implements Listener {
 		if(from.getX() == to.getX() && from.getZ() == to.getZ())
 			return;
 
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null || Main.getGame().isStarting() && !vp.getStats().isSpectator()) {
+		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null || Game.getInstance().isStarting() && !vp.getStats().isSpectator()) {
 			event.setTo(from);
 			return;
 		}
 
-		if(Main.getGame().getGameState() == GameState.LOBBY) {
+		if(Game.getInstance().getGameState() == GameState.LOBBY) {
 			if(ConfigEntry.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
 				return;
 
 			event.setTo(from);
 			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue());
 			return;
-		} else if(Main.getGame().getGameState() == GameState.STARTED) {
-			if(Main.getGame().isStarting() || vp.getStats().isSpectator() || ConfigEntry.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Main.getGame().isFirstTime() || vp.isAdminIgnore()) {
+		} else if(Game.getInstance().getGameState() == GameState.STARTED) {
+			if(Game.getInstance().isStarting() || vp.getStats().isSpectator() || ConfigEntry.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Game.getInstance().isFirstTime() || vp.isAdminIgnore()) {
 				return;
 			}
 

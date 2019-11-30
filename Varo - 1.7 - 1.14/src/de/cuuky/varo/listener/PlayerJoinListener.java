@@ -2,6 +2,7 @@ package de.cuuky.varo.listener;
 
 import com.avaje.ebean.Update;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
@@ -40,7 +41,7 @@ public class PlayerJoinListener implements Listener {
 		vplayer.setPlayer(player);
 		vplayer.onEvent(BukkitEventType.JOINED);
 
-		if(Main.getGame().getGameState() == GameState.LOBBY) {
+		if(Game.getInstance().getGameState() == GameState.LOBBY) {
 			Spawn spawn = Spawn.getSpawn(vplayer);
 			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
@@ -54,7 +55,7 @@ public class PlayerJoinListener implements Listener {
 
 			if(ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
 				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
-					Main.getGame().start();
+					Game.getInstance().start();
 				else
 					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
 			}
@@ -84,7 +85,7 @@ public class PlayerJoinListener implements Listener {
 
 			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
-			} else if (Main.getGame().getFinaleJoinStart()) {
+			} else if (Game.getInstance().getFinaleJoinStart()) {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
 				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				if (VaroCancelAble.getCancelAble(vplayer, CancelAbleType.FREEZE) == null)

@@ -1,5 +1,6 @@
 package de.cuuky.varo.world;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -32,7 +33,7 @@ public class WorldHandler {
 	}
 
 	public Location getTeleportLocation() {
-		return Main.getGame().getLobby() != null ? Main.getGame().getLobby() : world.getSpawnLocation().add(0, 5, 0);
+		return Game.getInstance().getLobby() != null ? Game.getInstance().getLobby() : world.getSpawnLocation().add(0, 5, 0);
 	}
 
 	public VaroBorder getBorder() {

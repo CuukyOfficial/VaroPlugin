@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -15,9 +16,9 @@ public class AbortCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Main.getGame().isStarting())
+		if(!Game.getInstance().isStarting())
 			return;
 
-		Main.getGame().abort();
+		Game.getInstance().abort();
 	}
 }

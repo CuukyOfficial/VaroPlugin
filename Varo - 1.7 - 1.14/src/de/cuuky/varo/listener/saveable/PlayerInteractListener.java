@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.saveable;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -20,10 +21,10 @@ public class PlayerInteractListener implements Listener {
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			return;
 
-		if(!Main.getGame().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if(!Game.getInstance().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			e.setCancelled(true);
 			return;
 		}

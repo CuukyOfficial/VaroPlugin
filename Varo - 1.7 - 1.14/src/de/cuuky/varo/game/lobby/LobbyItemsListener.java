@@ -1,5 +1,6 @@
 package de.cuuky.varo.game.lobby;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +15,7 @@ public class LobbyItemsListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(event.getItem() == null || Main.getGame().getGameState() != GameState.LOBBY)
+		if(event.getItem() == null || Game.getInstance().getGameState() != GameState.LOBBY)
 			return;
 
 		LobbyItem item = LobbyItem.getLobbyItem(event.getItem());
@@ -27,7 +28,7 @@ public class LobbyItemsListener implements Listener {
 
 	@EventHandler
 	public void onInteractEntity(PlayerInteractEntityEvent event) {
-		if(event.getPlayer().getItemInHand() == null || event.getRightClicked() == null || Main.getGame().getGameState() != GameState.LOBBY)
+		if(event.getPlayer().getItemInHand() == null || event.getRightClicked() == null || Game.getInstance().getGameState() != GameState.LOBBY)
 			return;
 
 		LobbyItem item = LobbyItem.getLobbyItem(event.getPlayer().getItemInHand());
@@ -40,7 +41,7 @@ public class LobbyItemsListener implements Listener {
 
 	@EventHandler
 	public void onEntityHit(EntityDamageByEntityEvent event) {
-		if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player) || ((Player) event.getDamager()).getItemInHand() == null || Main.getGame().getGameState() != GameState.LOBBY)
+		if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player) || ((Player) event.getDamager()).getItemInHand() == null || Game.getInstance().getGameState() != GameState.LOBBY)
 			return;
 
 		Player damager = (Player) event.getDamager();

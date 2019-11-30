@@ -26,15 +26,13 @@ public class GameHandler extends VaroSerializeObject {
 		super(Game.class, "/stats/game.yml");
 
 		load();
-		if(Main.getGame() == null)
-			Main.setGame(new Game(true));
 	}
 
 	@Override
 	public void onSave() {
 		clearOld();
 
-		save("current", Main.getGame(), getConfiguration());
+		save("current", Game.getInstance(), getConfiguration());
 
 		saveFile();
 	}

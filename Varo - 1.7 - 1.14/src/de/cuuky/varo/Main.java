@@ -11,7 +11,6 @@ import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.spigot.checker.UpdateChecker;
 import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
@@ -31,7 +30,6 @@ public class Main extends JavaPlugin {
 	private static DataManager dataManager;
 	private static BotLauncher botLauncher;
 	private static UpdateChecker updateChecker;
-	private static Game game;
 
 	private boolean failed;
 
@@ -126,14 +124,6 @@ public class Main extends JavaPlugin {
 
 	public File getThisFile() {
 		return getFile();
-	}
-
-	public static Game getGame() {
-		return game;
-	}
-
-	public static void setGame(Game game) {
-		Main.game = game;
 	}
 
 	public static String getConsolePrefix() {

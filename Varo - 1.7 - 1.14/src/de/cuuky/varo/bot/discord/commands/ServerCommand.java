@@ -2,6 +2,7 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
@@ -20,6 +21,6 @@ public class ServerCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Main.getGame().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
+		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Game.getInstance().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
 	}
 }

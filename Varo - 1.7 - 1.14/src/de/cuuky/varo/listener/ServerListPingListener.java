@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,7 @@ public class ServerListPingListener implements Listener {
 			event.setMaxPlayers(slots);
 
 		if(ConfigEntry.CHANGE_MOTD.getValueAsBoolean()) {
-			if(!Main.getGame().hasStarted()) {
+			if(!Game.getInstance().hasStarted()) {
 				if(Bukkit.getServer().hasWhitelist())
 					event.setMotd(ConfigMessages.SERVER_MODT_NOT_OPENED.getValue());
 				else
@@ -28,7 +29,7 @@ public class ServerListPingListener implements Listener {
 				return;
 			}
 
-			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || OutSideTimeChecker.getInstance().canJoin() || !Main.getGame().hasStarted()) {
+			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || OutSideTimeChecker.getInstance().canJoin() || !Game.getInstance().hasStarted()) {
 				event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}

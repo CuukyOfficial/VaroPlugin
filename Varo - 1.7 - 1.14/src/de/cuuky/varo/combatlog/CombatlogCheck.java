@@ -1,5 +1,6 @@
 package de.cuuky.varo.combatlog;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
@@ -23,7 +24,7 @@ public class CombatlogCheck {
 	}
 
 	private void check(PlayerQuitEvent event) {
-		if(Main.getGame().getGameState() == GameState.END) {
+		if(Game.getInstance().getGameState() == GameState.END) {
 			this.combatLog = false;
 			return;
 		}

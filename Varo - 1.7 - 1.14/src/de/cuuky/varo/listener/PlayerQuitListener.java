@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,7 +34,7 @@ public class PlayerQuitListener implements Listener {
 			return;
 		}
 
-		if(Main.getGame().getGameState() == GameState.STARTED) {
+		if(Game.getInstance().getGameState() == GameState.STARTED) {
 			// IF THEY WERE KICKED OR DEAD
 			if(ConfigEntry.PLAY_TIME.isIntActivated())
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {

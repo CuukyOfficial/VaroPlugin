@@ -3,6 +3,7 @@ package de.cuuky.varo.entity.player.event.events;
 import java.util.Date;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,7 @@ public class DeadEvent extends BukkitEvent {
 				player.getStats().getBackpack().clear();
 			}
 
-		if(Main.getGame().getGameState() == GameState.STARTED)
+		if(Game.getInstance().getGameState() == GameState.STARTED)
 			WorldHandler.getInstance().getBorder().decrease(DecreaseReason.DEATH);
 	}
 }

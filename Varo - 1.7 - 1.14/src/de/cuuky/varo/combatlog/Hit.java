@@ -3,6 +3,7 @@ package de.cuuky.varo.combatlog;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -99,7 +100,7 @@ public class Hit {
 			if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 				return;
 
-			if(!Main.getGame().isRunning() || event.isCancelled())
+			if(!Game.getInstance().isRunning() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());

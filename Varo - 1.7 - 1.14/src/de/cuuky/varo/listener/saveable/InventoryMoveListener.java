@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.saveable;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Furnace;
@@ -15,7 +16,7 @@ public class InventoryMoveListener implements Listener {
 
 	@EventHandler
 	public void onInventoryMove(InventoryMoveItemEvent e) {
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			return;
 
 		if(!(e.getInitiator().getHolder() instanceof Hopper))

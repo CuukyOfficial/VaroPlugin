@@ -2,6 +2,7 @@ package de.cuuky.varo.command.essentials;
 
 import java.util.HashMap;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +23,7 @@ public class MessageCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(!Main.getGame().hasStarted() && !sender.hasPermission("varo.setup")) {
+		if(!Game.getInstance().hasStarted() && !sender.hasPermission("varo.setup")) {
 			sender.sendMessage(Main.getPrefix() + "Du kannst nicht als nicht-Admin vor dem " + Main.getProjectName() + "-Start §7privat schreiben.");
 			return false;
 		}

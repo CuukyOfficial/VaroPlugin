@@ -3,6 +3,7 @@ package de.cuuky.varo.disconnect;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -95,7 +96,7 @@ public class Disconnect {
 		if(!ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
-		if(Main.getGame().getGameState() != GameState.STARTED)
+		if(Game.getInstance().getGameState() != GameState.STARTED)
 			return;
 
 		if(!VaroPlayer.getPlayer(playerName).getStats().isAlive())
@@ -108,7 +109,7 @@ public class Disconnect {
 				if(Bukkit.getPlayerExact(playerName) != null)
 					return;
 
-				if(Main.getGame().getGameState() != GameState.STARTED)
+				if(Game.getInstance().getGameState() != GameState.STARTED)
 					return;
 
 				VaroPlayer vp = VaroPlayer.getPlayer(playerName);

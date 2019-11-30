@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.saveable;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -22,7 +23,7 @@ public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(final BlockPlaceEvent e) {
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			return;
 
 		Block placed = e.getBlock();

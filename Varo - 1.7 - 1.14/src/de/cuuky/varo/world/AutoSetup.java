@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -21,7 +22,7 @@ import de.cuuky.varo.world.generators.PortalGenerator;
 public class AutoSetup {
 
 	public AutoSetup() {
-		if(Main.getGame().hasStarted())
+		if(Game.getInstance().hasStarted())
 			return;
 
 		World world = WorldHandler.getInstance().getWorld();
@@ -58,7 +59,7 @@ public class AutoSetup {
 			else
 				new LobbyGenerator(lobby, file);
 
-			Main.getGame().setLobby(lobby);
+			Game.getInstance().setLobby(lobby);
 		}
 
 		if(ConfigEntry.AUTOSETUP_BORDER.isIntActivated()) {

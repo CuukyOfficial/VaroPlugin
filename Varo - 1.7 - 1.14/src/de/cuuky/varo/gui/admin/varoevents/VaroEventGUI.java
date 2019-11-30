@@ -1,5 +1,6 @@
 package de.cuuky.varo.gui.admin.varoevents;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -29,7 +30,7 @@ public class VaroEventGUI extends SuperInventory {
 
 				@Override
 				public void run() {
-					if(Main.getGame().getGameState() != GameState.STARTED) {
+					if(Game.getInstance().getGameState() != GameState.STARTED) {
 						opener.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
 						return;
 					}

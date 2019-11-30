@@ -2,6 +2,7 @@ package de.cuuky.varo.threads.dailycheck;
 
 import java.util.Date;
 
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.LoggerMaster;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -18,18 +19,18 @@ public class CoordsCheck extends Checker {
 		if(!ConfigEntry.POST_COORDS_DAYS.isIntActivated())
 			return;
 
-		if(Main.getGame().getLastCoordsPost() == null) {
-			Main.getGame().setLastCoordsPost(new Date());
+		if(Game.getInstance().getLastCoordsPost() == null) {
+			Game.getInstance().setLastCoordsPost(new Date());
 			return;
 		}
 
-		if(new Date().after(DateUtils.addDays(Main.getGame().getLastCoordsPost(), ConfigEntry.POST_COORDS_DAYS.getValueAsInt()))) {
+		if(new Date().after(DateUtils.addDays(Game.getInstance().getLastCoordsPost(), ConfigEntry.POST_COORDS_DAYS.getValueAsInt()))) {
 			String post = "";
 			for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
 				post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? new LocationFormatter("X:x Y:y Z:z in world").format(vp.getStats().getLastLocation()) : "/");
 
 			LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, post);
-			Main.getGame().setLastCoordsPost(new Date());
+			Game.getInstance().setLastCoordsPost(new Date());
 		}
 	}
 }

@@ -2,6 +2,7 @@ package de.cuuky.varo.listener.saveable;
 
 import java.util.Iterator;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -18,7 +19,7 @@ public class EntityExplodeListener implements Listener {
 
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if(!Main.getGame().hasStarted()) {
+		if(!Game.getInstance().hasStarted()) {
 			event.setCancelled(true);
 			return;
 		}

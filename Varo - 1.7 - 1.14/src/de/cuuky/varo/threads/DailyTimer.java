@@ -3,6 +3,7 @@ package de.cuuky.varo.threads;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import de.cuuky.varo.game.Game;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,8 +20,8 @@ public class DailyTimer {
 
 	public DailyTimer() {
 		new TimeTimer();
-		if(Main.getGame().getGameState() == GameState.STARTED && Main.getGame().getLastDayTimer() != null) {
-			Date date = Main.getGame().getLastDayTimer();
+		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
+			Date date = Game.getInstance().getLastDayTimer();
 			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
 				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RE");
@@ -28,7 +29,7 @@ public class DailyTimer {
 				doDailyStuff();
 			}
 
-			Main.getGame().setLastDayTimer(new Date());
+			Game.getInstance().setLastDayTimer(new Date());
 		}
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -38,9 +39,9 @@ public class DailyTimer {
 			public void run() {
 				try {
 					new Backup();
-					Main.getGame().setLastDayTimer(new Date());
+					Game.getInstance().setLastDayTimer(new Date());
 
-					if(Main.getGame().getGameState() == GameState.STARTED) {
+					if(Game.getInstance().getGameState() == GameState.STARTED) {
 						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 

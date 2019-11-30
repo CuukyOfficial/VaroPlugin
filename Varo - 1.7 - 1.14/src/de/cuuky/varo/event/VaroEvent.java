@@ -2,6 +2,7 @@ package de.cuuky.varo.event;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -52,7 +53,7 @@ public class VaroEvent {
 	}
 
 	public void setEnabled(boolean enabled) {
-		if(Main.getGame().getGameState() != GameState.STARTED && enabled)
+		if(Game.getInstance().getGameState() != GameState.STARTED && enabled)
 			return;
 
 		if(enabled)

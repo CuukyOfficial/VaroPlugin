@@ -2,6 +2,7 @@ package de.cuuky.varo.listener.saveable;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.game.Game;
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -35,7 +36,7 @@ public class SignChangeListener implements Listener {
 		if(e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
 			return;
 
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			return;
 
 		Block attached = e.getBlock().getRelative(sign.getAttachedFace());

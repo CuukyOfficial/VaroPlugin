@@ -1,6 +1,7 @@
 package de.cuuky.varo.world.border;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
 
@@ -20,7 +21,7 @@ public class BorderDecreaseMinuteTimer {
 
 			@Override
 			public void run() {
-				if(Main.getGame().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
+				if(Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
 					remove();
 					return;
 				}
