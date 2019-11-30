@@ -14,7 +14,7 @@ public enum GameState implements VaroSerializeable {
 
 	private String name;
 
-	private GameState(String name) {
+	GameState(String name) {
 		this.name = name;
 	}
 

@@ -29,7 +29,6 @@ public class Main extends JavaPlugin {
 
 	private static DataManager dataManager;
 	private static BotLauncher botLauncher;
-	private static UpdateChecker updateChecker;
 
 	private boolean failed;
 
@@ -70,11 +69,11 @@ public class Main extends JavaPlugin {
 			dataManager = DataManager.getInstance(); //Initialisierung
 
 			try {
-				updateChecker = UpdateChecker.getInstance(); //Initialisierung
+				UpdateChecker updateChecker = UpdateChecker.getInstance(); //Initialisierung
 				updateChecker.postResults();
 				if(updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE)
 					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
-			} catch(NumberFormatException e) {}
+			} catch(NumberFormatException ignored) {}
 
 			new DailyTimer();
 

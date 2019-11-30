@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
@@ -387,7 +386,6 @@ public class Game implements VaroSerializeable {
 				varoplayer.delete();
 	}
 
-	@SuppressWarnings("deprecation")
 	private void fillChests() {
 		if(!ConfigEntry.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
@@ -417,13 +415,13 @@ public class Game implements VaroSerializeable {
 	}
 
 	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {
-		List<Block> blocks = new ArrayList<Block>();
-		int topBlockX = (l1.getBlockX() < l2.getBlockX() ? l2.getBlockX() : l1.getBlockX());
-		int bottomBlockX = (l1.getBlockX() > l2.getBlockX() ? l2.getBlockX() : l1.getBlockX());
-		int topBlockY = (l1.getBlockY() < l2.getBlockY() ? l2.getBlockY() : l1.getBlockY());
-		int bottomBlockY = (l1.getBlockY() > l2.getBlockY() ? l2.getBlockY() : l1.getBlockY());
-		int topBlockZ = (l1.getBlockZ() < l2.getBlockZ() ? l2.getBlockZ() : l1.getBlockZ());
-		int bottomBlockZ = (l1.getBlockZ() > l2.getBlockZ() ? l2.getBlockZ() : l1.getBlockZ());
+		List<Block> blocks = new ArrayList<>();
+		int topBlockX = (Math.max(l1.getBlockX(), l2.getBlockX()));
+		int bottomBlockX = (Math.min(l1.getBlockX(), l2.getBlockX()));
+		int topBlockY = (Math.max(l1.getBlockY(), l2.getBlockY()));
+		int bottomBlockY = (Math.min(l1.getBlockY(), l2.getBlockY()));
+		int topBlockZ = (Math.max(l1.getBlockZ(), l2.getBlockZ()));
+		int bottomBlockZ = (Math.min(l1.getBlockZ(), l2.getBlockZ()));
 
 		for(int x = bottomBlockX; x <= topBlockX; x++) {
 			for(int y = bottomBlockY; y <= topBlockY; y++) {
@@ -439,7 +437,7 @@ public class Game implements VaroSerializeable {
 		return firstTime;
 	}
 
-	public void loadVariables() {
+	private void loadVariables() {
 		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
 		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
 		protectionTime = ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
@@ -462,10 +460,6 @@ public class Game implements VaroSerializeable {
 
 	public int getStartCountdown() {
 		return startCountdown;
-	}
-
-	public void setStartCountdown(int startCountdown) {
-		this.startCountdown = startCountdown;
 	}
 
 	public GameState getGameState() {
