@@ -44,7 +44,7 @@ public enum ConfigEntry {
 	// TEAMS
 	FRIENDLYFIRE(ConfigSection.TEAMS, "friendlyFire", false, "Zufügen von Schaden unter Teamkameraden."),
 	TEAM_PLACE_SPAWN(ConfigSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplätzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Lücke für fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen großen Kreis gibt."),
-	TRIGGER_FOR_GLOBAL(ConfigSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den globalen Chat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
+	TRIGGER_FOR_GLOBAL(ConfigSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	CHAT_TRIGGER(ConfigSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat auslöst."),
 	TEAMREQUESTS(ConfigSection.TEAMS, "teamRequests", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen können.\nSehr gute Funktion für ODV's."),
 	TEAMREQUEST_EXPIRETIME(ConfigSection.TEAMS, "teamRequestExpiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
