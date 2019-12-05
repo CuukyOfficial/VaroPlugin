@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener;
 
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.LoggerMaster;

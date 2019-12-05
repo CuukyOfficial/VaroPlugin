@@ -351,17 +351,9 @@ public class Game implements VaroSerializeable {
 			names = names + (won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
 			switch(i) {
-			case 1:
-				first = names;
-				break;
-			case 2:
-				second = names;
-				break;
-			case 3:
-				third = names;
-				break;
-			default:
-				break;
+			case 1: first = names; break;
+			case 2: second = names; break;
+			case 3: third = names; break;
 			}
 		}
 

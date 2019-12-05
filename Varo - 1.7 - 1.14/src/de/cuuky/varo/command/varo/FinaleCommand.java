@@ -168,6 +168,8 @@ public class FinaleCommand extends VaroCommand {
 		VaroBorder border = WorldHandler.getInstance().getBorder();
 		border.setSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt());
 
+		Game.getInstance().setFinaleJoinStart(false);
+
 		int playerNumber = VaroPlayer.getOnlinePlayer().size();
 		LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
 	}
