@@ -59,7 +59,7 @@ public class FinaleCommand extends VaroCommand {
 				return;
 			}
 
-			for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
+			for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer()) {
 				Player pl = player.getPlayer();
 				if(pl.isOp()) {
 					continue;
@@ -149,17 +149,19 @@ public class FinaleCommand extends VaroCommand {
 		}
 
 		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
-			if (player.getPlayer().isOnline()) {
-				player.getPlayer().teleport(WorldHandler.getInstance().getWorld().getSpawnLocation());
-			} else {
-				if (ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
-					player.getStats().setState(PlayerState.SPECTATOR);
-				} else {
-					player.getStats().setState(PlayerState.DEAD);
-				}
-			}
 			if (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null) {
 				VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
+			}
+			if (player.getPlayer() != null) {
+				if (player.getPlayer().isOnline()) {
+					player.getPlayer().teleport(WorldHandler.getInstance().getWorld().getSpawnLocation());
+					continue;
+				}
+			}
+			if (ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
+				player.getStats().setState(PlayerState.SPECTATOR);
+			} else {
+				player.getStats().setState(PlayerState.DEAD);
 			}
 		}
 
