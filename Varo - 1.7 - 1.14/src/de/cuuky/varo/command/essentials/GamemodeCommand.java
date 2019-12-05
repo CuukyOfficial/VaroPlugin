@@ -78,15 +78,15 @@ public class GamemodeCommand implements CommandExecutor {
 				player.setGameMode(gm);
 
 				if (args.length == 1) {
-					sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
+					sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode " + Main.getColorCode() + gm.toString() + "§7!");
 				} else {
-					sender.sendMessage(Main.getPrefix() + "§7" + player.getName() + " ist nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "" + gm.toString() + "§7!");
+					sender.sendMessage(Main.getPrefix() + "§7" + player.getName() + " ist nun im Gamemode " + Main.getColorCode() + "" + gm.toString() + "§7!");
 				}
 			} else {
-				for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-					vp.getPlayer().setGameMode(gm);
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					p.setGameMode(gm);
 				}
-				sender.sendMessage(Main.getPrefix() + "§7Alle Spieler sind nun im Gamemode " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + gm.toString() + "§7!");
+				sender.sendMessage(Main.getPrefix() + "§7Alle Spieler sind nun im Gamemode " + Main.getColorCode() + gm.toString() + "§7!");
 			}
 
 		} else

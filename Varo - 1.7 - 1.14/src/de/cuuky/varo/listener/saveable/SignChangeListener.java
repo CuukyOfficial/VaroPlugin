@@ -114,7 +114,7 @@ public class SignChangeListener implements Listener {
 			}
 
 			if(VaroSaveable.getByLocation(furnace.getLocation()) != null) {
-				p.sendMessage(Main.getPrefix() + "§7Diese " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + " Furnace §7ist bereits gesichert!");
+				p.sendMessage(Main.getPrefix() + "§7Diese " + Main.getColorCode() + " Furnace §7ist bereits gesichert!");
 				e.setCancelled(true);
 				return;
 			}

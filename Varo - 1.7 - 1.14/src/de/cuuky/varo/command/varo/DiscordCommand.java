@@ -25,14 +25,14 @@ public class DiscordCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7----- " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "Discord-Commands §7-----");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord getLink §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord unlink §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord bypassRegister §7<Spieler> <true/false>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord sendMessage §7<Nachricht>");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord reload");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord shutdown");
-			sender.sendMessage(Main.getPrefix() + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + "/varo discord settings");
+			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Discord-Commands §7-----");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord getLink §7<Spieler>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord unlink §7<Spieler>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord bypassRegister §7<Spieler> <true/false>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord sendMessage §7<Nachricht>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord reload");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord shutdown");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord settings");
 			sender.sendMessage(Main.getPrefix() + "§7--------------------------");
 			return;
 		}
@@ -69,7 +69,7 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heißt: " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + user.getName() + "§7 und die ID lautet " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + user.getId() + "§7!");
+			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heißt: " + Main.getColorCode() + user.getName() + "§7 und die ID lautet " + Main.getColorCode() + user.getId() + "§7!");
 		} else if(args[0].equalsIgnoreCase("unlink")) {
 			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
