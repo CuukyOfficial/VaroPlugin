@@ -26,6 +26,10 @@ public class GameHandler extends VaroSerializeObject {
 		super(Game.class, "/stats/game.yml");
 
 		load();
+
+		if (Game.getInstance() == null) {
+			Game.initialise(); //Wird beim ersten Mal ausgeführt, wenn noch keine Dateien existieren
+		}
 	}
 
 	@Override

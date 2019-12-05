@@ -82,6 +82,16 @@ public class Game implements VaroSerializeable {
 		instance = this;
 	}
 
+	public static void initialise() {
+		instance = new Game();
+
+		instance.startRefreshTimer();
+		instance.loadVariables();
+
+		instance.gamestate = GameState.LOBBY;
+		instance.borderDecrease = new BorderDecreaseDayTimer(true);
+	}
+
 	private void startRefreshTimer() {
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
