@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -450,7 +449,7 @@ public class VaroPlayer extends VaroEntity {
 				continue;
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
 				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
 				new Alert(AlertType.NAME_SWITCH, player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
 				vp.setName(player.getName());

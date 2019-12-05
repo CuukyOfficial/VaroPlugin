@@ -2,7 +2,7 @@ package de.cuuky.varo.entity.player.stats.stat.offlinevillager;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -165,7 +165,7 @@ public class OfflineVillager implements VaroSerializeable {
 			if(it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
 
-		LoggerMaster.getInstance().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
 		Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue().replaceAll("%death%", vp.getName()).replaceAll("%killer%", killer.getName()));
 
 		killer.onEvent(BukkitEventType.KILL);

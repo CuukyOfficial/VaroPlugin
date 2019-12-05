@@ -2,10 +2,9 @@ package de.cuuky.varo.threads.dailycheck;
 
 import java.util.Date;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.apache.commons.lang.time.DateUtils;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -30,9 +29,9 @@ public class BloodLustCheck extends Checker {
 				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekämpft!");
 				if(strike) {
 					player.getStats().addStrike(new Strike("Es wurde für zu viele Tage nicht gekämpft.", player, "CONSOLE"));
-					LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(player).replace("%days%", String.valueOf(days)));
+					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(player).replace("%days%", String.valueOf(days)));
 				} else
-					LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(player).replace("%days%", String.valueOf(days)));
+					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(player).replace("%days%", String.valueOf(days)));
 			}
 		}
 	}

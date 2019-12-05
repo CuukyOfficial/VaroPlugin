@@ -5,6 +5,8 @@ import de.cuuky.varo.utils.Utils;
 
 public class ChatLogger extends Logger {
 
+	private static ChatLogger instance;
+
 	public enum ChatLogType {
 		CHAT("CHAT"),
 		PRIVATE_CHAT("PRIVATECHAT"),
@@ -12,7 +14,7 @@ public class ChatLogger extends Logger {
 
 		private String name;
 
-		private ChatLogType(String name) {
+		ChatLogType(String name) {
 			this.name = name;
 		}
 
@@ -29,7 +31,14 @@ public class ChatLogger extends Logger {
 		}
 	}
 
-	public ChatLogger(String name) {
+	public static ChatLogger getInstance() {
+		if (instance == null) {
+			instance = new ChatLogger("chatlogs");
+		}
+		return instance;
+	}
+
+	private ChatLogger(String name) {
 		super(name, false);
 	}
 

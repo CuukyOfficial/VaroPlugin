@@ -1,12 +1,11 @@
 package de.cuuky.varo.listener.logging;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.BlockLogger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 
 public class DestroyedBlocksListener implements Listener {
@@ -19,6 +18,6 @@ public class DestroyedBlocksListener implements Listener {
 		if(event.isCancelled())
 			return;
 
-		LoggerMaster.getInstance().getBlockLogger().println(event.getBlock(), event.getPlayer());
+		BlockLogger.getInstance().println(event.getBlock(), event.getPlayer());
 	}
 }

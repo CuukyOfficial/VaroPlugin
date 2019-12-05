@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.debug;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -40,7 +40,7 @@ public class DebugGUI extends SuperInventory {
 
 					@Override
 					public void onChat(String message) {
-						LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, message);
+						EventLogger.getInstance().println(LogType.ALERT, message);
 						opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
 
 					}
@@ -65,7 +65,7 @@ public class DebugGUI extends SuperInventory {
 				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
 					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? new LocationFormatter("X:x Y:y Z:z in world").format(vp.getStats().getLastLocation()) : "/");
 
-				LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, post);
+				EventLogger.getInstance().println(LogType.ALERT, post);
 			}
 		});
 

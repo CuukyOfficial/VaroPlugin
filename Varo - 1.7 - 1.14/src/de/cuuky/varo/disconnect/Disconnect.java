@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -69,7 +69,7 @@ public class Disconnect {
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
 		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
-		LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(vp));
+		EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(vp));
 		Bukkit.broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN.getValue(vp));
 		this.remove();
 		return true;

@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 import org.apache.commons.lang.time.DateUtils;
@@ -222,7 +221,7 @@ public class Stats implements VaroSerializeable {
 	public void addVideo(YouTubeVideo video) {
 		videos.add(video);
 
-		LoggerMaster.getInstance().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
+		EventLogger.getInstance().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
 	}
 
 	public void removeVideo(YouTubeVideo video) {

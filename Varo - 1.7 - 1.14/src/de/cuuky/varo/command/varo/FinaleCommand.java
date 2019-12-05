@@ -1,8 +1,7 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -80,7 +79,7 @@ public class FinaleCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
 			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getötet.");
 			
-			LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
+			EventLogger.getInstance().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
 			
 			return;
 		} else if(args[0].equalsIgnoreCase("hauptstart") || args[0].equalsIgnoreCase("mainstart")) {
@@ -171,6 +170,6 @@ public class FinaleCommand extends VaroCommand {
 		Game.getInstance().setFinaleJoinStart(false);
 
 		int playerNumber = VaroPlayer.getOnlinePlayer().size();
-		LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
+		EventLogger.getInstance().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
 	}
 }

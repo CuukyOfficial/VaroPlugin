@@ -2,7 +2,7 @@ package de.cuuky.varo.event.events;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
@@ -47,12 +47,12 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 		for(VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			vp.getStats().addSessionPlayed();
-			LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
+			EventLogger.getInstance().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
 		}
 
 		timer = ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() * 60;
 
-		LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
+		EventLogger.getInstance().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle können für eine Minute joinen." : "Alle können für" + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 		}
@@ -92,13 +92,13 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme wurde beendet.");
 
-				LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
+				EventLogger.getInstance().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
 			}
 		} else {
 			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
 
-				LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
+				EventLogger.getInstance().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
 			}
 
 		}

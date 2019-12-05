@@ -2,13 +2,11 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.Date;
 
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.world.WorldHandler;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Location;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -102,20 +100,20 @@ public class Strike implements VaroSerializeable {
 		case 1:
 			if (striked.getStats().getLastLocation() == null) {
 				Location loc = WorldHandler.getInstance().getWorld().getSpawnLocation();
-				LoggerMaster.getInstance().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-				LoggerMaster.getInstance().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			}
 			break;
 		case 2:
-			LoggerMaster.getInstance().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+			EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			break;
 		case 3:
-			LoggerMaster.getInstance().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+			EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			break;
 		default:
-			LoggerMaster.getInstance().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeNumber%", String.valueOf(number)).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+			EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeNumber%", String.valueOf(number)).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			break;
 		}
 

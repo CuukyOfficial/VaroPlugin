@@ -9,8 +9,17 @@ import de.cuuky.varo.logger.Logger;
 
 public class BlockLogger extends Logger {
 
-	public BlockLogger(String name) {
+	private static BlockLogger instance;
+
+	private BlockLogger(String name) {
 		super(name, true);
+	}
+
+	public static BlockLogger getInstance() {
+		if (instance == null) {
+			instance = new BlockLogger("blocklogs");
+		}
+		return instance;
 	}
 
 	public void println(Block block, Player player) {

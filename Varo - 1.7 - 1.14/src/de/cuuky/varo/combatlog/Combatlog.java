@@ -1,6 +1,6 @@
 package de.cuuky.varo.combatlog;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.alert.Alert;
@@ -23,9 +23,9 @@ public class Combatlog {
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");
 		if(ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
 			player.getStats().addStrike(new Strike("Es wurde sich während des Kampfes ausgeloggt.", player, "CONSOLE"));
-			LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
+			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
 		} else
-			LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(player));
+			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(player));
 
 		Bukkit.broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT.getValue(player));
 	}

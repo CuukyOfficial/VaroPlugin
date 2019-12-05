@@ -1,9 +1,7 @@
 package de.cuuky.varo.listener;
 
-import com.avaje.ebean.Update;
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -80,14 +78,14 @@ public class PlayerJoinListener implements Listener {
 			}
 			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				player.teleport(player.getWorld().getSpawnLocation());
-				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
 			}
 
 			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
 			} else if (Game.getInstance().getFinaleJoinStart()) {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
-				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 				if (!player.isOp()) {
 					if (VaroCancelAble.getCancelAble(vplayer, CancelAbleType.FREEZE) == null)
@@ -95,7 +93,7 @@ public class PlayerJoinListener implements Listener {
 				}
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
-				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
 			} else if(VaroEvent.getMassRecEvent().isEnabled()) {
 				if(VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getTimer());
@@ -106,7 +104,7 @@ public class PlayerJoinListener implements Listener {
 				if(!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
-					LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
+					EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -118,14 +116,14 @@ public class PlayerJoinListener implements Listener {
 					}, ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
 					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-					LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+					EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 				}
 			} else if(!vplayer.getStats().hasTimeLeft()) {
 				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(vplayer));
-				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
 			} else {
 				event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-				LoggerMaster.getInstance().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 			}
 			return;
 		}

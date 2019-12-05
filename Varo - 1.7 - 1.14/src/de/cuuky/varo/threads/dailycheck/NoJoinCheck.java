@@ -3,10 +3,9 @@ package de.cuuky.varo.threads.dailycheck;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.apache.commons.lang.time.DateUtils;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -32,11 +31,11 @@ public class NoJoinCheck extends Checker {
 			if(vp.getStats().getLastJoined().before(DateUtils.addDays(current, -ConfigEntry.NO_ACTIVITY_DAYS.getValueAsInt()))) {
 				new Alert(AlertType.NO_JOIN, vp.getName() + " hat die Anzahl an maximal inaktiven Tagen überschritten!");
 				if(ConfigEntry.STRIKE_ON_NO_ACTIVITY.getValueAsBoolean()) {
-					LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN_STRIKE.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
+					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN_STRIKE.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 
 					vp.getStats().addStrike(new Strike("Es wurde für zu viele Tage nicht auf den Server gejoint.", vp, "CONSOLE"));
 				} else
-					LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
+					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 			}
 		}
 	}

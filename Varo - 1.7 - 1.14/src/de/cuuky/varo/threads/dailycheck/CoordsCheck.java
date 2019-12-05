@@ -3,10 +3,9 @@ package de.cuuky.varo.threads.dailycheck;
 import java.util.Date;
 
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.apache.commons.lang.time.DateUtils;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -29,7 +28,7 @@ public class CoordsCheck extends Checker {
 			for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
 				post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? new LocationFormatter("X:x Y:y Z:z in world").format(vp.getStats().getLastLocation()) : "/");
 
-			LoggerMaster.getInstance().getEventLogger().println(LogType.ALERT, post);
+			EventLogger.getInstance().println(LogType.ALERT, post);
 			Game.getInstance().setLastCoordsPost(new Date());
 		}
 	}

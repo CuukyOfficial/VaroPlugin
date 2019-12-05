@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import com.pengrad.telegrambot.TelegramBot;
-import de.cuuky.varo.spawns.Spawn;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
@@ -29,7 +26,6 @@ import de.cuuky.varo.game.GameHandler;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.listener.PermissionSendListener;
-import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.mysql.MySQL;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
@@ -69,7 +65,6 @@ public class DataManager {
 		copyDefaultPresets();
 		ConfigHandler.getInstance(); //Initialisierung
 
-		LoggerMaster.getInstance(); //Initialisierung
 		GameHandler.initialise(); //Initialisierung GameHandler
 		PlayerHandler.initialise(); //Initialisierung PlayerHandler
 		TeamHandler.initialise(); //Initialisierung TeamHandler

@@ -11,6 +11,8 @@ import de.cuuky.varo.utils.Utils;
 
 public class EventLogger extends Logger {
 
+	private static EventLogger instance;
+
 	public enum LogType {
 
 		STRIKE("STRIKE", Color.YELLOW, ConfigEntry.DISCORDBOT_EVENT_STRIKE),
@@ -27,7 +29,7 @@ public class EventLogger extends Logger {
 		private Color color;
 		private ConfigEntry idEntry;
 
-		private LogType(String name, Color color, ConfigEntry idEntry) {
+		LogType(String name, Color color, ConfigEntry idEntry) {
 			this.color = color;
 			this.name = name;
 			this.idEntry = idEntry;
@@ -63,8 +65,15 @@ public class EventLogger extends Logger {
 		}
 	}
 
-	public EventLogger(String name) {
+	private EventLogger(String name) {
 		super(name, true);
+	}
+
+	public static EventLogger getInstance() {
+		if (instance == null) {
+			instance = new EventLogger("logs");
+		}
+		return instance;
 	}
 
 	public void println(LogType type, String message) {
