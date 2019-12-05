@@ -39,7 +39,7 @@ public class FinaleCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart") && !args[0].equalsIgnoreCase("abort"))) {
+		if(args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart") && !args[0].equalsIgnoreCase("abort") && !args[0].equalsIgnoreCase("abbruch") && !!args[0].equalsIgnoreCase("abbrechen") && !!args[0].equalsIgnoreCase("stop"))) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Finale Befehle:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale joinStart");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale hauptStart [Countdown]");
@@ -122,7 +122,7 @@ public class FinaleCommand extends VaroCommand {
 			}
 
 			return;
-		} else if (args[0].equalsIgnoreCase("abort")) {
+		} else if (args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("abbruch") || args[0].equalsIgnoreCase("abbrechen") || args[0].equalsIgnoreCase("stop")) {
 			if (Status == FinaleState.NO || Status == FinaleState.JOIN_PHASE) {
 				sender.sendMessage(Main.getPrefix() + "Es gibt keinen Countdown zum Abbrechen.");
 				return;

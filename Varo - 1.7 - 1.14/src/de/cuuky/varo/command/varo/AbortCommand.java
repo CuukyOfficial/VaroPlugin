@@ -11,7 +11,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 public class AbortCommand extends VaroCommand {
 
 	public AbortCommand() {
-		super("abort", "Bricht den Startcountdown ab", "varo.abort");
+		super("abort", "Bricht den Startcountdown ab", "varo.abort", "abbruch", "abbrechen", "stop");
 	}
 
 	@Override
