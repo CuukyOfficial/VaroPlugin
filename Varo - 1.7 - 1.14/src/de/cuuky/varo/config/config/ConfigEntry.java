@@ -232,7 +232,7 @@ public enum ConfigEntry {
 	private Object defaultValue;
 	private ConfigSection section;
 
-	private ConfigEntry(ConfigSection section, String path, Object value, String description) {
+	ConfigEntry(ConfigSection section, String path, Object value, String description) {
 		this.section = section;
 		this.path = path;
 		this.value = value;
