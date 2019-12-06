@@ -44,7 +44,6 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
-import de.cuuky.varo.world.PlayerSort;
 import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
 import de.cuuky.varo.world.border.BorderDecreaseMinuteTimer;
 
@@ -200,7 +199,7 @@ public class Game implements VaroSerializeable {
 		}
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
-			new PlayerSort();
+			Utils.sortPlayers();
 
 		removeArentAtStart();
 		if(minuteTimer != null)

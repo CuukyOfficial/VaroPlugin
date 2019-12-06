@@ -1,5 +1,11 @@
 package de.cuuky.varo.utils;
 
+import de.cuuky.varo.Main;
+import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.spawns.Spawn;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -178,5 +184,98 @@ public class Utils {
 				string.add(strin);
 
 		return Utils.getAsArray(string);
+	}
+
+	public enum sortResult {
+		SORTED_WELL,
+		NO_SPAWN_WITH_TEAM,
+		NO_SPAWN;
+	}
+
+	public static sortResult sortPlayers() {
+		ArrayList<VaroPlayer> players = VaroPlayer.getOnlinePlayer();
+		ArrayList<Spawn> spawns = Spawn.getSpawnsClone();
+
+		for(VaroPlayer vp : players) {
+			if(!vp.getStats().isSpectator()) {
+				continue;
+			}
+			vp.getPlayer().teleport(vp.getPlayer().getWorld().getSpawnLocation());
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_SPECTATOR_TELEPORT.getValue());
+			players.remove(vp);
+		}
+
+		for(Spawn spawn : spawns) {
+			if(spawn.getPlayer() == null) {
+				continue;
+			} else if(!spawn.getPlayer().isOnline()) {
+				continue;
+			} else {
+				spawn.getPlayer().cleanUpPlayer();
+				spawn.getPlayer().getPlayer().teleport(spawn.getLocation());
+				spawn.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.SORT_OWN_HOLE.getValue());
+				players.remove(spawn.getPlayer());
+				spawns.remove(spawn);
+			}
+		}
+
+		sortResult result = sortResult.SORTED_WELL;
+
+		while(spawns.size() > 0) {
+			if(players.size() <= 0) {
+				break;
+			}
+
+			VaroPlayer player = players.get(0);
+			Spawn spawn = spawns.get(0);
+			player.cleanUpPlayer();
+			player.getPlayer().teleport(spawn.getLocation());
+			player.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawn.getNumber())));
+			players.remove(0);
+			spawns.remove(0);
+
+			if(player.getTeam() == null) {
+				continue;
+			}
+
+			int playerTeamRegistered = 1;
+			for(VaroPlayer teamPlayer : player.getTeam().getMember()) {
+				if(spawns.size() <= 0) {
+					break;
+				}
+
+				if(ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
+					if(playerTeamRegistered < ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt()) {
+						if(players.contains(teamPlayer)) {
+							teamPlayer.cleanUpPlayer();
+							teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());
+							teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawns.get(0).getNumber())));
+							players.remove(teamPlayer);
+						}
+						spawns.remove(0);
+						playerTeamRegistered++;
+					} else {
+						result = sortResult.NO_SPAWN_WITH_TEAM;
+						players.remove(teamPlayer);
+						teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND_TEAM.getValue());
+					}
+				} else if(players.contains(teamPlayer)) {
+					teamPlayer.cleanUpPlayer();
+					teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());
+					teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawns.get(0).getNumber())));
+					players.remove(teamPlayer);
+					spawns.remove(0);
+				}
+			}
+		}
+
+		for(VaroPlayer vp : players) {
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue());
+			if (result == sortResult.SORTED_WELL) {
+				result = sortResult.NO_SPAWN;
+			}
+		}
+
+		return result;
 	}
 }
