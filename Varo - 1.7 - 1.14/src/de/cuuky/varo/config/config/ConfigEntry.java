@@ -260,10 +260,6 @@ public enum ConfigEntry {
 		return this.value;
 	}
 
-	public boolean isStringNull() {
-		return getValueAsString().equals("-");
-	}
-
 	public String getValueAsString() {
 		try {
 			return String.valueOf(this.value).replaceAll("&", "§");
@@ -312,16 +308,6 @@ public enum ConfigEntry {
 		}
 
 		return (long) defaultValue;
-	}
-
-	public byte getValueAsByte() {
-		try {
-			return Byte.valueOf(String.valueOf(getValueAsInt()));
-		} catch(Exception e) {
-			sendFalseCast();
-		}
-
-		return (byte) defaultValue;
 	}
 
 	public ConfigSection getSection() {

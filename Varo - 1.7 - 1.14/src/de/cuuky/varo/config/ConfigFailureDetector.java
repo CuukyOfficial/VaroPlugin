@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.yaml.snakeyaml.scanner.ScannerException;
@@ -25,10 +26,11 @@ public final class ConfigFailureDetector {
 			newFile.mkdir();
 
 		if (scanDirectory(newFile)) {
-			System.out.println(Main.getPrefix() + "Configurations scanned for mistakes - mistakes have been found");
-			//TODO Plugin Shutdown
+			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
+			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
+			Bukkit.getPluginManager().disablePlugin(Main.getInstance());
 		} else {
-			System.out.println(Main.getPrefix() + "Configurations scanned for mistakes successfully!");
+			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes successfully!");
 		}
 	}
 
@@ -51,12 +53,13 @@ public final class ConfigFailureDetector {
 				if(e.getMessage().contains("deserialize"))
 					continue;
 
-				System.err.println("[Varo] Config failure detected!");
-				System.err.println("[Varo] File: " + file.getName());
-				System.err.println("[Varo] Usually the first information of the message gives you the location of the mistake. Just read the error and check the files.");
-				System.err.println("[Varo] Message: \n" + e.getMessage());
+				System.err.println(Main.getConsolePrefix() + "Config failure detected!");
+				System.err.println(Main.getConsolePrefix() + "File: " + file.getName());
+				System.err.println(Main.getConsolePrefix() + "Usually the first information of the message gives you the location of the mistake. Just read the error and check the files.");
+				System.err.println(Main.getConsolePrefix() + "Message: \n" + e.getMessage());
 				return true;
 			}
+
 		}
 		return false;
 	}

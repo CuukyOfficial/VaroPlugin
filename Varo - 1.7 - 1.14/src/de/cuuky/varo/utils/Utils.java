@@ -38,11 +38,11 @@ public final class Utils {
 
 		try {
 			return Long.parseLong(obj);
-		} catch(NumberFormatException e2) {}
+		} catch(NumberFormatException e) {}
 
 		try {
 			return Double.parseDouble(obj);
-		} catch(NumberFormatException e2) {}
+		} catch(NumberFormatException e) {}
 
 		if(obj.equalsIgnoreCase("true") || obj.equalsIgnoreCase("false"))
 			return obj.equalsIgnoreCase("true") ? true : false;
