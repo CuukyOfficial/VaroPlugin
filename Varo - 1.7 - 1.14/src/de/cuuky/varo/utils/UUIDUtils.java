@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class UUIDUtils {
+public final class UUIDUtils {
+
+	private UUIDUtils() {}
 
 	public static UUID getUUID(String name) throws Exception {
 		return getUUIDTime(name, -1);

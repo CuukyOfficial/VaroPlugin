@@ -1,5 +1,6 @@
 package de.cuuky.varo.gui.player;
 
+import de.cuuky.varo.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,7 +14,6 @@ import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.LocationFormatter;
 import de.cuuky.varo.version.types.Materials;
 
 public class PlayerGUI extends SuperInventory {
@@ -42,7 +42,7 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormatter("x, y, z in world").format(target.getStats().getLastLocation()) : "/") }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? Utils.formatLocation(target.getStats().getLastLocation(), "x, y, z in world") : "/") }).build(), new Runnable() {
 
 			@Override
 			public void run() {

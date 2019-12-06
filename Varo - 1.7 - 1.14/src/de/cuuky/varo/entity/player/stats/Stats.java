@@ -9,6 +9,7 @@ import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
+import de.cuuky.varo.utils.Utils;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -35,7 +36,6 @@ import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.LocationFormatter;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Stats implements VaroSerializeable {
@@ -582,6 +582,6 @@ public class Stats implements VaroSerializeable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
-		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormatter(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world").format(lastLocation) : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
+		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? Utils.formatLocation(lastLocation, colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
 	}
 }

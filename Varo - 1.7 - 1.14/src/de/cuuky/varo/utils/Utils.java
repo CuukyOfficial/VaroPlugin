@@ -5,12 +5,15 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Utils {
+public final class Utils {
+
+	private Utils() {}
 
 	public static ArrayList<Object> getAsList(String[] lis) {
 		ArrayList<Object> list = new ArrayList<>();
@@ -277,5 +280,9 @@ public class Utils {
 		}
 
 		return result;
+	}
+
+	public static String formatLocation(Location location, String unformatted) {
+		return unformatted.replaceAll("x", String.valueOf(location.getBlockX())).replaceAll("y", String.valueOf(location.getBlockY())).replaceAll("z", String.valueOf(location.getBlockZ())).replaceAll("world", location.getWorld().getName());
 	}
 }

@@ -9,7 +9,9 @@ import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
 
-public class BlockUtils {
+public final class BlockUtils {
+
+	private BlockUtils() {}
 
 	public static boolean isAir(Block block) {
 		Material type = block.getType();

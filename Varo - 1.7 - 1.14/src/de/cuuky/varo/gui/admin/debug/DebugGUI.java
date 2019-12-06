@@ -1,6 +1,7 @@
 package de.cuuky.varo.gui.admin.debug;
 
 import de.cuuky.varo.logger.logger.EventLogger;
+import de.cuuky.varo.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -17,7 +18,6 @@ import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.threads.dailycheck.Checker;
-import de.cuuky.varo.utils.LocationFormatter;
 import de.cuuky.varo.version.types.Materials;
 
 public class DebugGUI extends SuperInventory {
@@ -63,7 +63,7 @@ public class DebugGUI extends SuperInventory {
 			public void run() {
 				String post = "";
 				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
-					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? new LocationFormatter("X:x Y:y Z:z in world").format(vp.getStats().getLastLocation()) : "/");
+					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? Utils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
 
 				EventLogger.getInstance().println(LogType.ALERT, post);
 			}
