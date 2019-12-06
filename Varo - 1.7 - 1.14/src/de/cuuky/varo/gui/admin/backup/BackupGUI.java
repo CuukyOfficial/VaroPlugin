@@ -30,7 +30,7 @@ public class BackupGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		File file = new File("plugins/Varo/Backups/" + filename);
+		File file = new File("plugins/Varo/backups/" + filename);
 
 		int i = -1;
 		do {
