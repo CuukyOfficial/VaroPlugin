@@ -1,5 +1,6 @@
 package de.cuuky.varo.command;
 
+import de.cuuky.varo.config.messages.ConfigMessages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +28,7 @@ public class VaroCommandListener implements CommandExecutor {
 		}
 
 		if(command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
-			sender.sendMessage(VaroCommand.getNoPermission(command.getPermission()));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

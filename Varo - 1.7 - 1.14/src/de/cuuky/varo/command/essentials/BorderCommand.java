@@ -62,7 +62,7 @@ public class BorderCommand implements CommandExecutor {
 			if(p != null)
 				p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		} else
-			sender.sendMessage(Main.getPrefix() + "§7/border");
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 		return false;
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
@@ -25,7 +26,7 @@ public class AntiXrayCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.xray")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.xray"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 		antiXrayActivated = false;

@@ -20,7 +20,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 
 		Player p = (Player) sender;
 		if(!p.hasPermission("Varo.setup")) {
-			p.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.config.messages.ConfigMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,7 @@ public class UnmuteCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.unmute")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.unmute"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

@@ -161,7 +161,7 @@ public enum ConfigMessages {
 
 	// OTHER
 	OTHER_SORTED("Other.sorted", "&7Du wurdest in das Loch %colorcode%%zahl% &7teleportiert!"),
-	OTHER_NO_PERMISSION("Other.noPermission", "&7Dir fehlt die Berechtigung %colorcode%%permission%&7!"),
+	OTHER_NO_PERMISSION("Other.noPermission", "%colorcode%Dazu bist du nicht berechtigt!"),
 	OTHER_NOT_ALLOWED_CRAFT("Other.notAllowedCraft", "&7Das darfst du nicht craften, benutzen oder brauen!"),
 
 	// ALERTS

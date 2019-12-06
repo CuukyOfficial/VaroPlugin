@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.config.messages.ConfigMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +15,7 @@ public class InvSeeCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.invsee")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.invsee"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

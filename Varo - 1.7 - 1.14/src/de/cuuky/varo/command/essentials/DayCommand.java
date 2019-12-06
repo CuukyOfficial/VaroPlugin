@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.World;
@@ -16,7 +17,7 @@ public class DayCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.day")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.day"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

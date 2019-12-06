@@ -106,23 +106,8 @@ public abstract class VaroCommand {
 		this.name = name;
 	}
 
-	public String[] getAliases() {
-		return aliases;
-	}
-
 	public String getPermission() {
 		return permission;
-	}
-
-	/**
-	 * @return Returns the no Permission String
-	 */
-	public String getNoPermission() {
-		return getNoPermission(permission);
-	}
-
-	public void setAliases(String[] aliases) {
-		this.aliases = aliases;
 	}
 
 	public String getDescription() {
@@ -138,17 +123,6 @@ public abstract class VaroCommand {
 				return true;
 
 		return false;
-	}
-
-	/**
-	 * Returns the No Permission string
-	 * 
-	 * @param permission
-	 *            The Permission that should be added in the String
-	 * @return Returns the String + the Permission added
-	 */
-	public static String getNoPermission(String permission) {
-		return Main.getPrefix() + ConfigMessages.OTHER_NO_PERMISSION.getValue().replaceAll("%permission%", permission);
 	}
 
 	/**
