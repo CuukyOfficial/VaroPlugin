@@ -26,7 +26,7 @@ public class ReportListGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for(int i = 0; i < getSize(); i++) {
 			Report reports;
 			try {
 				reports = Report.getReports().get(start);

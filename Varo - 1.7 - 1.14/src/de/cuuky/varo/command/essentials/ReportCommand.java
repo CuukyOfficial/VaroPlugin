@@ -48,21 +48,6 @@ public class ReportCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(!reported.isOnline()) {
-			sender.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
-			return false;
-		}
-
-		if(reported.getPlayer().equals(sender)) {
-			sender.sendMessage(Main.getPrefix() + "Du kannst dich nicht §cselbst §7reporten!");
-			return false;
-		}
-
-		if(reported.getPlayer().hasPermission("varo.ignorereport") && !ConfigEntry.REPORT_STAFF_MEMBER.getValueAsBoolean()) {
-			sender.sendMessage(Main.getPrefix() + "Du kannst keine §cTeammitglieder §7reporten!");
-			return false;
-		}
-
 		new ReportGUI(player, reported);
 		return true;
 	}
