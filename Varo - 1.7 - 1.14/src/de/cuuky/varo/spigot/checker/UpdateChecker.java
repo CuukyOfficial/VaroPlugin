@@ -1,14 +1,12 @@
 package de.cuuky.varo.spigot.checker;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.bukkit.plugin.java.JavaPlugin;
+import java.util.Scanner;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.spigot.SpigotObject;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 public class UpdateChecker extends SpigotObject {
 
@@ -19,9 +17,9 @@ public class UpdateChecker extends SpigotObject {
 
 	public enum UpdateResult {
 
-		NO_UPDATE("Es ist kein Update verfügbar!"),
+		NO_UPDATE("Das Plugin ist auf dem neuesten Stand!"),
 		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
-		UPDATE_AVAILABLE("Es ist ein Update verfuegbar! https://www.spigotmc.org/resources/" + RESOURCE_ID + "/"),
+		UPDATE_AVAILABLE("Es ist ein Update verfuegbar! Benutze /varo update oder lade es unter https://www.spigotmc.org/resources/" + RESOURCE_ID + "/ herunter"),
 		TEST_BUILD("Du nutzt einen TestBuild des Plugins - bitte Fehler umgehend melden!");
 
 		private String message;
@@ -46,29 +44,21 @@ public class UpdateChecker extends SpigotObject {
 		this.result = UpdateResult.NO_UPDATE;
 
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL(SPIGET_VARO_RESOURCE_VERSION).openConnection();
-			con.setConnectTimeout(2000);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String line = null;
-			while((line = reader.readLine()) != null) {
-				if(!line.contains("name"))
-					continue;
-
-				this.version = line.split(": ")[1].split(",")[0].replaceAll("\"", "");
+			Scanner scanner = new Scanner(new URL(SPIGET_VARO_RESOURCE_VERSION).openStream());
+			String all = "";
+			while (scanner.hasNextLine()) {
+				all += scanner.nextLine();
 			}
+			scanner.close();
 
-			switch(new Version(this.version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
-			case EQUAL:
-				result = UpdateResult.NO_UPDATE;
-				break;
-			case GREATER:
-				result = UpdateResult.UPDATE_AVAILABLE;
-				break;
-			case LOWER:
-				result = UpdateResult.TEST_BUILD;
-				break;
+			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
+			this.version = scannerJSON.get("name").toString();
+			switch (new Version(this.version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
+				case EQUAL: result = UpdateResult.NO_UPDATE; break;
+				case GREATER: result = UpdateResult.UPDATE_AVAILABLE; break;
+				case LOWER: result = UpdateResult.TEST_BUILD; break;
 			}
-		} catch(Exception ex) {
+		} catch (Exception e) {
 			result = UpdateResult.FAIL_SPIGOT;
 		}
 	}
