@@ -5,7 +5,6 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.spigot.Version;
 import org.bukkit.Location;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -323,15 +322,41 @@ public final class Utils {
 
 			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
 			version = scannerJSON.get("name").toString();
-			switch (new Version(version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
-				case EQUAL: result = UpdateResult.NO_UPDATE; break;
-				case GREATER: result = UpdateResult.UPDATE_AVAILABLE; break;
-				case LOWER: result = UpdateResult.TEST_BUILD; break;
+			switch (compareVersions(version, Main.getInstance().getDescription().getVersion())) {
+				case VERSION1GREATER: result = UpdateResult.UPDATE_AVAILABLE; break;
+				case VERSIONS_EQUAL: result = UpdateResult.NO_UPDATE; break;
+				case VERSION2GREATER: result = UpdateResult.TEST_BUILD; break;
 			}
 		} catch (Exception e) {
 			result = UpdateResult.FAIL_SPIGOT;
 			version = "";
 		}
 		return new Object[]{result, version};
+	}
+
+	public enum VersionCompareResult {
+		VERSION1GREATER,
+		VERSIONS_EQUAL,
+		VERSION2GREATER;
+	}
+
+	public static VersionCompareResult compareVersions(String version1, String version2) {
+		if(!version1.matches("[0-9]+(\\.[0-9]+)*") || !version2.matches("[0-9]+(\\.[0-9]+)*")) {
+			throw new IllegalArgumentException("Invalid version format");
+		}
+
+		String[] version1Parts = version1.split("\\.");
+		String[] version2Parts = version2.split("\\.");
+
+		for(int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
+			int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
+			int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
+			if(version1Part < version2Part)
+				return VersionCompareResult.VERSION2GREATER;
+			if(version1Part > version2Part)
+				return VersionCompareResult.VERSION1GREATER;
+		}
+
+		return VersionCompareResult.VERSIONS_EQUAL;
 	}
 }
