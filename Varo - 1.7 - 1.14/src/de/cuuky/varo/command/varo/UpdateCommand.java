@@ -3,6 +3,7 @@ package de.cuuky.varo.command.varo;
 import java.io.File;
 
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,7 +12,6 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.spigot.downloader.PluginDownloader;
 
 public class UpdateCommand extends VaroCommand {
 
@@ -76,11 +76,11 @@ public class UpdateCommand extends VaroCommand {
 	private void update(CommandSender sender) {
 		// Step 1: Download new Version
 		try {
-			PluginDownloader pd = new PluginDownloader();
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/71075/download", "plugins/Varo.jar");
 
 			sender.sendMessage(Main.getPrefix() + "Starte Download...");
 
-			pd.startDownload();
+			fd.startDownload();
 		} catch(Exception e) {
 			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
 			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");

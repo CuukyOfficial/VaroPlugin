@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import de.cuuky.varo.spigot.FileDownloader;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 
@@ -31,7 +32,6 @@ import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
-import de.cuuky.varo.spigot.downloader.PluginDownloader;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.world.WorldHandler;
 import net.labymod.serverapi.LabyModAPI;
@@ -128,11 +128,11 @@ public class DataManager {
 
 	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
 		try {
-			PluginDownloader pd = new PluginDownloader(resourceId, dataName);
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
 
 			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
 
-			pd.startDownload();
+			fd.startDownload();
 
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
 			return true;

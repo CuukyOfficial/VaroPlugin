@@ -5,7 +5,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.spigot.checker.Version;
+import de.cuuky.varo.spigot.Version;
 import org.bukkit.Location;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;

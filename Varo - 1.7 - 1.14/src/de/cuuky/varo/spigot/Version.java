@@ -1,4 +1,4 @@
-package de.cuuky.varo.spigot.checker;
+package de.cuuky.varo.spigot;
 
 public class Version {
 
