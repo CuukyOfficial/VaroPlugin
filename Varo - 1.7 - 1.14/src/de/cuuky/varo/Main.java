@@ -12,8 +12,6 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
-import de.cuuky.varo.spigot.checker.UpdateChecker;
-import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
 import de.cuuky.varo.threads.DailyTimer;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
@@ -68,13 +66,12 @@ public class Main extends JavaPlugin {
 		try {
 			dataManager = DataManager.getInstance(); //Initialisierung
 
-			try {
-				UpdateChecker updateChecker = UpdateChecker.getInstance(); //Initialisierung
-				updateChecker.postResults();
-				if(updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE)
-					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
-			} catch(NumberFormatException ignored) {}
-
+			Object[] updater2 = Utils.checkForUpdates();
+			Utils.UpdateResult result = (Utils.UpdateResult) updater2[0];
+			String updateVersion = (String) updater2[1];
+			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
+			if(result == Utils.UpdateResult.UPDATE_AVAILABLE)
+				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 			DailyTimer.startTimer();
 
 			botLauncher = BotLauncher.getInstance(); //Initialisierung

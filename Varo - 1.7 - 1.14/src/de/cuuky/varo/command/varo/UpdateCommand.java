@@ -2,8 +2,8 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 
-import com.avaje.ebean.Update;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,8 +11,6 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.spigot.checker.UpdateChecker;
-import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
 import de.cuuky.varo.spigot.downloader.PluginDownloader;
 
 public class UpdateCommand extends VaroCommand {
@@ -28,21 +26,16 @@ public class UpdateCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		
-		UpdateResult result;
+		Utils.UpdateResult result;
 		String updateVersion;
 		
-		try {
-			UpdateChecker updater = UpdateChecker.getInstance();
-			result = updater.getResult();
-			updateVersion = updater.getVersion();
-		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler beim Update-Prüfen.");
-			return;
-		}
-		
+		Object[] updater = Utils.checkForUpdates();
+		result = (Utils.UpdateResult) updater[0];
+		updateVersion = (String) updater[1];
+
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
 			
-			if (result == UpdateResult.UPDATE_AVAILABLE) {
+			if (result == Utils.UpdateResult.UPDATE_AVAILABLE) {
 				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
@@ -70,7 +63,7 @@ public class UpdateCommand extends VaroCommand {
 
 		DataManager.getInstance().setDoSave(false);
 		
-		if (result == UpdateResult.UPDATE_AVAILABLE) {
+		if (result == Utils.UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
 			update(sender);
 		} else {

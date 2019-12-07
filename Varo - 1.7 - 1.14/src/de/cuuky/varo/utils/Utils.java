@@ -5,11 +5,16 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.spigot.checker.Version;
 import org.bukkit.Location;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public final class Utils {
 
@@ -284,5 +289,49 @@ public final class Utils {
 
 	public static String formatLocation(Location location, String unformatted) {
 		return unformatted.replaceAll("x", String.valueOf(location.getBlockX())).replaceAll("y", String.valueOf(location.getBlockY())).replaceAll("z", String.valueOf(location.getBlockZ())).replaceAll("world", location.getWorld().getName());
+	}
+
+	public enum UpdateResult {
+
+		NO_UPDATE("Das Plugin ist auf dem neuesten Stand!"),
+		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
+		UPDATE_AVAILABLE("Es ist ein Update verfügbar! Benutze /varo update oder lade es manuell unter https://www.spigotmc.org/resources/71075/ herunter"),
+		TEST_BUILD("Du nutzt einen TestBuild des Plugins - bitte Fehler umgehend melden!");
+
+		private String message;
+
+		UpdateResult(String message) {
+			this.message = message;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+	}
+
+	public static Object[] checkForUpdates() {
+		UpdateResult result = UpdateResult.NO_UPDATE;
+		String version;
+
+		try {
+			Scanner scanner = new Scanner(new URL("https://api.spiget.org/v2/resources/71075/versions/latest").openStream());
+			String all = "";
+			while (scanner.hasNextLine()) {
+				all += scanner.nextLine();
+			}
+			scanner.close();
+
+			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
+			version = scannerJSON.get("name").toString();
+			switch (new Version(version).compareTo(new Version(Main.getInstance().getDescription().getVersion()))) {
+				case EQUAL: result = UpdateResult.NO_UPDATE; break;
+				case GREATER: result = UpdateResult.UPDATE_AVAILABLE; break;
+				case LOWER: result = UpdateResult.TEST_BUILD; break;
+			}
+		} catch (Exception e) {
+			result = UpdateResult.FAIL_SPIGOT;
+			version = "";
+		}
+		return new Object[]{result, version};
 	}
 }

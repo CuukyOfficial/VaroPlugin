@@ -2,6 +2,7 @@ package de.cuuky.varo.listener;
 
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.logger.EventLogger;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,8 +25,6 @@ import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.spigot.checker.UpdateChecker;
-import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -59,15 +58,16 @@ public class PlayerJoinListener implements Listener {
 			}
 
 			if(player.isOp()) {
-				try {
-					UpdateChecker updater = UpdateChecker.getInstance();
-					if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-						if(Team.getTeams().isEmpty()) {
-							vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
-						}
-						player.sendMessage("§cUpdate verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+				Object[] updater = Utils.checkForUpdates();
+				Utils.UpdateResult result = (Utils.UpdateResult) updater[0];
+				String updateVersion = (String) updater[1];
+
+				if(result == Utils.UpdateResult.UPDATE_AVAILABLE) {
+					if(Team.getTeams().isEmpty()) {
+						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 					}
-				} catch(NumberFormatException e) {}
+					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+				}
 			}
 		} else {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
