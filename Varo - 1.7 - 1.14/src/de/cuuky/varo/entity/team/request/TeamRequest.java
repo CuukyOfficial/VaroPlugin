@@ -29,14 +29,6 @@ public class TeamRequest {
 		startSched();
 	}
 
-	public VaroPlayer getInvited() {
-		return invited;
-	}
-
-	public VaroPlayer getInvitor() {
-		return invitor;
-	}
-
 	private void sendChatHook() {
 		new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue().replace("%invited%", invited.getName()), new ChatHookListener() {
 
@@ -128,6 +120,14 @@ public class TeamRequest {
 	public void remove() {
 		Bukkit.getScheduler().cancelTask(sched);
 		requests.remove(this);
+	}
+
+	public VaroPlayer getInvited() {
+		return invited;
+	}
+
+	public VaroPlayer getInvitor() {
+		return invitor;
 	}
 
 	public static ArrayList<TeamRequest> getAllRequests() {

@@ -14,14 +14,21 @@ import de.cuuky.varo.utils.Utils;
 
 public class VaroSaveable implements VaroSerializeable {
 
-	private static ArrayList<VaroSaveable> saveables = new ArrayList<>();
+	private static ArrayList<VaroSaveable> saveables;
+
+	static {
+		saveables = new ArrayList<>();
+	}
 
 	@VaroSerializeField(path = "type")
 	private SaveableType type;
+
 	@VaroSerializeField(path = "blockLocation")
 	private Location blockLocation;
+
 	@VaroSerializeField(path = "id")
 	private int id;
+
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
 
@@ -42,6 +49,14 @@ public class VaroSaveable implements VaroSerializeable {
 		saveables.add(this);
 	}
 
+	private int generateId() {
+		int id = Utils.randomInt(1000, 9999999);
+		while(getSaveable(id) != null)
+			generateId();
+
+		return id;
+	}
+
 	@Override
 	public void onDeserializeEnd() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -58,27 +73,6 @@ public class VaroSaveable implements VaroSerializeable {
 	public void onSerializeStart() {
 		this.playerId = player.getId();
 		this.blockLocation = block.getLocation();
-	}
-
-	public Block getBlock() {
-		return block;
-	}
-
-	public void remove() {
-		player.getStats().removeSaveable(this);
-		saveables.remove(this);
-	}
-
-	public SaveableType getType() {
-		return type;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public VaroPlayer getPlayer() {
-		return player;
 	}
 
 	public boolean holderDead() {
@@ -101,25 +95,25 @@ public class VaroSaveable implements VaroSerializeable {
 		return true;
 	}
 
-	private int generateId() {
-		int id = Utils.randomInt(1000, 9999999);
-		while(getSaveable(id) != null)
-			generateId();
+	public void remove() {
+		player.getStats().removeSaveable(this);
+		saveables.remove(this);
+	}
 
+	public Block getBlock() {
+		return block;
+	}
+
+	public SaveableType getType() {
+		return type;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public enum SaveableType implements VaroSerializeable {
-		@VaroSerializeField(enumValue = "CHEST")
-		CHEST,
-		@VaroSerializeField(enumValue = "FURNACE")
-		FURNANCE;
-
-		@Override
-		public void onDeserializeEnd() {}
-
-		@Override
-		public void onSerializeStart() {}
+	public VaroPlayer getPlayer() {
+		return player;
 	}
 
 	public static VaroSaveable getSaveable(int id) {
@@ -149,5 +143,18 @@ public class VaroSaveable implements VaroSerializeable {
 
 	public static ArrayList<VaroSaveable> getSaveables() {
 		return saveables;
+	}
+
+	public enum SaveableType implements VaroSerializeable {
+		@VaroSerializeField(enumValue = "CHEST")
+		CHEST,
+		@VaroSerializeField(enumValue = "FURNACE")
+		FURNANCE;
+
+		@Override
+		public void onDeserializeEnd() {}
+
+		@Override
+		public void onSerializeStart() {}
 	}
 }

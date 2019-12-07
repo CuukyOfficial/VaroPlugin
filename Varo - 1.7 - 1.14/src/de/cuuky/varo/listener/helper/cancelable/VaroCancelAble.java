@@ -3,7 +3,6 @@ package de.cuuky.varo.listener.helper.cancelable;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -39,6 +38,17 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
+	private void schedule(int time) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				timerHook.run();
+				remove();
+			}
+		}, time * 20);
+	}
+
 	private void removeOld() {
 		for(int i = 0; i < cancelables.size(); i++) {
 			VaroCancelAble cancelable = cancelables.get(i);
@@ -61,17 +71,6 @@ public class VaroCancelAble {
 
 	public void remove() {
 		cancelables.remove(this);
-	}
-
-	private void schedule(int time) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				timerHook.run();
-				remove();
-			}
-		}, time * 20);
 	}
 
 	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {

@@ -35,16 +35,16 @@ public class VaroSerialize extends VaroSerializeHandler {
 		serializes.add(this);
 	}
 
-	public VaroSerializeLoopType getLoopType() {
-		return loopType;
-	}
-
 	public Object deserialize(Field field, Object obj) {
 		return null;
 	}
 
 	public Object deserialize(Field field, Object obj, MemorySection section, String path, VaroSerializeObject object) {
 		return null;
+	}
+
+	public VaroSerializeLoopType getLoopType() {
+		return loopType;
 	}
 
 	public static ArrayList<VaroSerialize> getSerializes() {

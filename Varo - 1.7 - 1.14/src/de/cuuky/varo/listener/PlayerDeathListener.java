@@ -13,7 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.combatlog.Hit;
+import de.cuuky.varo.combatlog.PlayerHit;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -34,7 +34,7 @@ public class PlayerDeathListener implements Listener {
 		event.setDeathMessage(null);
 
 		if(Game.getInstance().hasStarted()) {
-			Hit hit = Hit.getHit(deadPlayer);
+			PlayerHit hit = PlayerHit.getHit(deadPlayer);
 			if(hit != null)
 				hit.over();
 
@@ -98,7 +98,7 @@ public class PlayerDeathListener implements Listener {
 				EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()));
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(deadP).replace("%death%", deadPlayer.getName()));
 			} else {
-				Hit hit1 = Hit.getHit(killerPlayer);
+				PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
 				if(hit1 != null)
 					hit1.over();
 

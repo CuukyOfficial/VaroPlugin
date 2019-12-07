@@ -7,6 +7,17 @@ public class ChatLogger extends Logger {
 
 	private static ChatLogger instance;
 
+	private ChatLogger(String name) {
+		super(name, false);
+	}
+
+	public static ChatLogger getInstance() {
+		if (instance == null) {
+			instance = new ChatLogger("chatlogs");
+		}
+		return instance;
+	}
+
 	public enum ChatLogType {
 		CHAT("CHAT"),
 		PRIVATE_CHAT("PRIVATECHAT"),
@@ -29,17 +40,6 @@ public class ChatLogger extends Logger {
 
 			return null;
 		}
-	}
-
-	public static ChatLogger getInstance() {
-		if (instance == null) {
-			instance = new ChatLogger("chatlogs");
-		}
-		return instance;
-	}
-
-	private ChatLogger(String name) {
-		super(name, false);
 	}
 
 	public void println(ChatLogType type, String message) {

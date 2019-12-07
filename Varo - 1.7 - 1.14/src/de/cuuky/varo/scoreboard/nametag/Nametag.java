@@ -25,6 +25,7 @@ public class Nametag {
 
 	static {
 		nametags = new ArrayList<>();
+
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			try {
 				Class<?> visibilityClass = Class.forName("org.bukkit.scoreboard.NameTagVisibility");
@@ -42,8 +43,7 @@ public class Nametag {
 	private String prefix, suffix, name;
 	private Rank rank;
 	private de.cuuky.varo.entity.team.Team team;
-	private boolean init = false;
-	private boolean hearts = false;
+	private boolean init, hearts;
 
 	public Nametag(UUID uniqueID, Player p) {
 		if(!ConfigEntry.NAMETAGS.getValueAsBoolean())
@@ -78,14 +78,25 @@ public class Nametag {
 		}
 	}
 
-	public void remove() {
-		nametags.remove(this);
-	}
+	private String checkName() {
+		String name = this.getPlayer().getName();
 
-	public void refresh() {
-		refreshPrefix();
-		setToAll();
-		giveAll();
+		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
+		int ranks = Rank.getHighestLocation() + 1;
+
+		if(team != null)
+			name = team.getId() + name;
+		else
+			name = teamsize + name;
+
+		if(rank != null)
+			name = rank.getTablistLocation() + name;
+		else
+			name = ranks + name;
+
+		if(name.length() > 16)
+			name = name.substring(0, 16);
+		return name;
 	}
 
 	public void refreshPrefix() {
@@ -217,6 +228,16 @@ public class Nametag {
 		return team;
 	}
 
+	public void remove() {
+		nametags.remove(this);
+	}
+
+	public void refresh() {
+		refreshPrefix();
+		setToAll();
+		giveAll();
+	}
+
 	public Rank getRank() {
 		return rank;
 	}
@@ -243,27 +264,6 @@ public class Nametag {
 
 	public boolean isOnline() {
 		return p != null;
-	}
-
-	private String checkName() {
-		String name = this.getPlayer().getName();
-
-		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
-		int ranks = Rank.getHighestLocation() + 1;
-
-		if(team != null)
-			name = team.getId() + name;
-		else
-			name = teamsize + name;
-
-		if(rank != null)
-			name = rank.getTablistLocation() + name;
-		else
-			name = ranks + name;
-
-		if(name.length() > 16)
-			name = name.substring(0, 16);
-		return name;
 	}
 
 	public static void refreshGroups(Rank rank) {

@@ -36,11 +36,11 @@ public class WorldHandler {
 		return Game.getInstance().getLobby() != null ? Game.getInstance().getLobby() : world.getSpawnLocation().add(0, 5, 0);
 	}
 
-	public VaroBorder getBorder() {
-		return border;
-	}
-
 	public World getWorld() {
 		return world;
+	}
+
+	public VaroBorder getBorder() {
+		return border;
 	}
 }

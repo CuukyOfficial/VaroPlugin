@@ -34,10 +34,6 @@ public class VaroInventory implements VaroSerializeable {
 		inventory = Bukkit.createInventory(null, size, "§aBackpack");
 	}
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
 	public void clear() {
 		inventoryList.clear();
 		inventory.clear();
@@ -58,5 +54,9 @@ public class VaroInventory implements VaroSerializeable {
 			if(stack != null && stack.getType() != Material.AIR)
 				inventoryList.put(String.valueOf(i), stack);
 		}
+	}
+
+	public Inventory getInventory() {
+		return inventory;
 	}
 }

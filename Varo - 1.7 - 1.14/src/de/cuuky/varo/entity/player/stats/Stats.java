@@ -90,7 +90,7 @@ public class Stats implements VaroSerializeable {
 
 	private VaroPlayer owner;
 
-	public Stats() {}
+	public Stats() {} //Für Serialise
 
 	public Stats(VaroPlayer vp) {
 		this.owner = vp;
@@ -156,6 +156,27 @@ public class Stats implements VaroSerializeable {
 		countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 
+	public void addStrike(Strike strike) {
+		if(VaroAPI.getEventManager().executeEvent(new PlayerStrikeReceiveEvent(strike)))
+			return;
+
+		this.strikes.add(strike);
+		strike.activate(strikes.size());
+
+		new Alert(AlertType.STRIKE, this.owner.getName() + " hat einen Strike erhalten! " + this.owner.getName() + " hat jetzt " + strikes.size());
+	}
+
+	public void clearInventory() {
+		if(owner.isOnline()) {
+			owner.getPlayer().getInventory().clear();
+			for(ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
+				stack.setType(Material.AIR);
+		} else
+			setWillClear(true);
+
+		new Alert(AlertType.INVENTORY_CLEAR, this.owner.getName() + "'s Inventar wurde geleert!");
+	}
+
 	@Override
 	public void onDeserializeEnd() {}
 
@@ -173,6 +194,136 @@ public class Stats implements VaroSerializeable {
 			inventoryBackups.forEach(b -> b.remove());
 
 		setState(PlayerState.DEAD);
+	}
+
+	public String getCountdownMin(int sec) {
+		int min = sec / 60;
+
+		if(min < 10)
+			return "0" + min;
+		else
+			return min + "";
+	}
+
+	public String getCountdownSec(int sec) {
+		sec = sec % 60;
+
+		if(sec < 10)
+			return "0" + sec;
+		else
+			return sec + "";
+	}
+
+	public void setBan() {
+		sessions--;
+
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt());
+		}
+	}
+
+	public KickResult getKickResult(Player player) {
+		KickResult result = KickResult.ALLOW;
+		if(Game.getInstance().hasStarted()) {
+			if(owner.isRegistered())
+				result = getVaroKickResult();
+			else
+				result = KickResult.NO_PROJECTUSER;
+		} else {
+			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
+				result = KickResult.NO_PROJECTUSER;
+
+			if(Game.getInstance().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
+				result = KickResult.NO_PROJECTUSER;
+		}
+
+		if(Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
+			result = KickResult.SERVER_NOT_PUBLISHED;
+
+		if(player.isBanned())
+			result = KickResult.BANNED;
+
+		if(VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
+			result = KickResult.SERVER_FULL;
+
+		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
+			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Game.getInstance().hasStarted() && player.isOp()) {
+				if(Game.getInstance().hasStarted())
+					if(result == KickResult.DEAD || !owner.isRegistered())
+						setState(PlayerState.SPECTATOR);
+					else
+						owner.setAdminIgnore(true);
+
+				result = KickResult.ALLOW;
+			}
+
+		return result;
+	}
+
+	public KickResult getVaroKickResult() {
+		GregorianCalendar curr = new GregorianCalendar();
+		KickResult result = KickResult.ALLOW;
+		if(this.sessions > 0) {
+			result = KickResult.ALLOW;
+		} else {
+			if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+				if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+					result = KickResult.NO_PREPRODUCES_LEFT;
+				} else {
+					result = KickResult.NO_SESSIONS_LEFT;
+				}
+			} else {
+				result = KickResult.NO_TIME;
+			}
+		}
+
+		if(VaroEvent.getMassRecEvent().isEnabled())
+			result = KickResult.MASS_RECORDING_JOIN;
+
+		if (Game.getInstance().getFinaleJoinStart()) {
+			result = KickResult.FINALE_JOIN;
+		}
+
+		if(Main.isBootedUp())
+			if(!OutSideTimeChecker.getInstance().canJoin())
+				result = KickResult.NOT_IN_TIME;
+
+		for(Strike strike : strikes)
+			if(strike.getBanUntil() != null)
+				if(curr.before(strike.getBanUntil()))
+					result = KickResult.STRIKE_BAN;
+
+		if(!this.isAlive())
+			result = KickResult.DEAD;
+
+		if(isSpectator())
+			result = KickResult.SPECTATOR;
+
+		return result;
+	}
+
+	public String[] getStatsListed() {
+		String colorcode = Main.getColorCode();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
+
+		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? Utils.formatLocation(lastLocation, colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
+	}
+
+	public boolean hasTimeLeft() {
+		return (this.countdown >= 1) && this.countdown != ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+	}
+
+	public boolean hasFullTime() {
+		return countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+	}
+
+	public void setCountdown(int time) {
+		this.countdown = time;
+	}
+
+	public void removeCountdown() {
+		this.countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 
 	public VaroInventory getBackpack() {
@@ -286,27 +437,6 @@ public class Stats implements VaroSerializeable {
 
 	public Date getLastJoined() {
 		return lastJoined;
-	}
-
-	public void addStrike(Strike strike) {
-		if(VaroAPI.getEventManager().executeEvent(new PlayerStrikeReceiveEvent(strike)))
-			return;
-
-		this.strikes.add(strike);
-		strike.activate(strikes.size());
-
-		new Alert(AlertType.STRIKE, this.owner.getName() + " hat einen Strike erhalten! " + this.owner.getName() + " hat jetzt " + strikes.size());
-	}
-
-	public void clearInventory() {
-		if(owner.isOnline()) {
-			owner.getPlayer().getInventory().clear();
-			for(ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
-				stack.setType(Material.AIR);
-		} else
-			setWillClear(true);
-
-		new Alert(AlertType.INVENTORY_CLEAR, this.owner.getName() + "'s Inventar wurde geleert!");
 	}
 
 	public ArrayList<InventoryBackup> getInventoryBackups() {
@@ -448,140 +578,5 @@ public class Stats implements VaroSerializeable {
 
 	public int getCountdown() {
 		return this.countdown;
-	}
-
-	public String klklklkl() {
-		System.out.println("jetzt macht er diese Dumme Version");
-		return "0";
-	}
-
-	public String getCountdownMin(int sec) {
-		int min = sec / 60;
-
-		if(min < 10)
-			return "0" + min;
-		else
-			return min + "";
-	}
-
-	public String getCountdownSec(int sec) {
-		sec = sec % 60;
-
-		if(sec < 10)
-			return "0" + sec;
-		else
-			return sec + "";
-	}
-
-	public boolean hasTimeLeft() {
-		return (this.countdown >= 1) && this.countdown != ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
-	}
-
-	public boolean hasFullTime() {
-		return countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
-	}
-
-	public void setCountdown(int time) {
-		this.countdown = time;
-	}
-
-	public void removeCountdown() {
-		this.countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
-	}
-
-	public void setBan() {
-		sessions--;
-
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
-			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt());
-		}
-	}
-
-	public KickResult getKickResult(Player player) {
-		KickResult result = KickResult.ALLOW;
-		if(Game.getInstance().hasStarted()) {
-			if(owner.isRegistered())
-				result = getVaroKickResult();
-			else
-				result = KickResult.NO_PROJECTUSER;
-		} else {
-			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
-				result = KickResult.NO_PROJECTUSER;
-
-			if(Game.getInstance().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
-				result = KickResult.NO_PROJECTUSER;
-		}
-
-		if(Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
-			result = KickResult.SERVER_NOT_PUBLISHED;
-
-		if(player.isBanned())
-			result = KickResult.BANNED;
-
-		if(VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
-			result = KickResult.SERVER_FULL;
-
-		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Game.getInstance().hasStarted() && player.isOp()) {
-				if(Game.getInstance().hasStarted())
-					if(result == KickResult.DEAD || !owner.isRegistered())
-						setState(PlayerState.SPECTATOR);
-					else
-						owner.setAdminIgnore(true);
-
-				result = KickResult.ALLOW;
-			}
-
-		return result;
-	}
-
-	public KickResult getVaroKickResult() {
-		GregorianCalendar curr = new GregorianCalendar();
-		KickResult result = KickResult.ALLOW;
-		if(this.sessions > 0) {
-			result = KickResult.ALLOW;
-		} else {
-			if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
-				if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
-					result = KickResult.NO_PREPRODUCES_LEFT;
-				} else {
-					result = KickResult.NO_SESSIONS_LEFT;
-				}
-			} else {
-				result = KickResult.NO_TIME;
-			}
-		}
-
-		if(VaroEvent.getMassRecEvent().isEnabled())
-			result = KickResult.MASS_RECORDING_JOIN;
-		
-		if (Game.getInstance().getFinaleJoinStart()) {
-			result = KickResult.FINALE_JOIN;
-		}
-
-		if(Main.isBootedUp())
-			if(!OutSideTimeChecker.getInstance().canJoin())
-				result = KickResult.NOT_IN_TIME;
-
-		for(Strike strike : strikes)
-			if(strike.getBanUntil() != null)
-				if(curr.before(strike.getBanUntil()))
-					result = KickResult.STRIKE_BAN;
-
-		if(!this.isAlive())
-			result = KickResult.DEAD;
-
-		if(isSpectator())
-			result = KickResult.SPECTATOR;
-
-		return result;
-	}
-
-	public String[] getStatsListed() {
-		String colorcode = Main.getColorCode();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
-
-		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? Utils.formatLocation(lastLocation, colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? videos.size() : 0), "§7StrikeAmount§8: " + colorcode + (strikes == null ? strikes.size() : 0), "§7State§8: " + colorcode + state.getName() };
 	}
 }

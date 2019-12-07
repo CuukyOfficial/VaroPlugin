@@ -9,16 +9,24 @@ import de.cuuky.varo.utils.Utils;
 
 public class Report implements VaroSerializeable {
 
-	private static ArrayList<Report> reports = new ArrayList<>();
+	private static ArrayList<Report> reports;
+
+	static {
+		reports = new ArrayList<>();
+	}
 
 	@VaroSerializeField(path = "open")
 	private boolean open;
+
 	@VaroSerializeField(path = "id")
 	private int id;
+
 	@VaroSerializeField(path = "reason")
 	private ReportReason reason;
+
 	@VaroSerializeField(path = "reporterId")
 	private int reporterId;
+
 	@VaroSerializeField(path = "reportedId")
 	private int reportedId;
 
@@ -39,6 +47,14 @@ public class Report implements VaroSerializeable {
 		reports.add(this);
 	}
 
+	private int generateId() {
+		int id = Utils.randomInt(1000, 9999999);
+		while(getReport(id) != null)
+			generateId();
+
+		return id;
+	}
+
 	public boolean isOpen() {
 		return open;
 	}
@@ -46,14 +62,6 @@ public class Report implements VaroSerializeable {
 	public void close() {
 		this.open = false;
 		reports.remove(this);
-	}
-
-	private int generateId() {
-		int id = Utils.randomInt(1000, 9999999);
-		while(getReport(id) != null)
-			generateId();
-
-		return id;
 	}
 
 	public ReportReason getReason() {

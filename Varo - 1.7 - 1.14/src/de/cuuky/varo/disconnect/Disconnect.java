@@ -37,23 +37,11 @@ public class Disconnect {
 		disconnects.add(this);
 	}
 
-	public int getDisconnects() {
-		return this.amount;
-	}
-
 	public void addDisconnect() {
 		if(VaroPlayer.getPlayer(name).getNetworkManager().getPing() >= ConfigEntry.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
 			return;
 
 		amount++;
-	}
-
-	public void remove() {
-		disconnects.remove(this);
-	}
-
-	public String getPlayer() {
-		return this.name;
 	}
 
 	public boolean check() {
@@ -82,6 +70,18 @@ public class Disconnect {
 				return false;
 
 		return true;
+	}
+
+	public int getDisconnects() {
+		return this.amount;
+	}
+
+	public void remove() {
+		disconnects.remove(this);
+	}
+
+	public String getPlayer() {
+		return this.name;
 	}
 
 	public static Disconnect getDisconnect(Player p) {
@@ -121,9 +121,10 @@ public class Disconnect {
 	}
 
 	public static void joinedAgain(String playerName) {
-		if(scheds.containsKey(playerName)) {
-			Bukkit.getScheduler().cancelTask(scheds.get(playerName));
-			scheds.remove(playerName);
-		}
+		if(!scheds.containsKey(playerName))
+			return;
+
+		Bukkit.getScheduler().cancelTask(scheds.get(playerName));
+		scheds.remove(playerName);
 	}
 }

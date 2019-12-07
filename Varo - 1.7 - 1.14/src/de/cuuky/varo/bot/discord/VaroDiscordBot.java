@@ -101,11 +101,6 @@ public class VaroDiscordBot implements VaroBot {
 		}
 	}
 
-	private Color getRandomColor() {
-		Random random = new Random();
-		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
-	}
-
 	public void sendFile(String message, File file, TextChannel channel) {
 		channel.sendFile(file, new MessageBuilder().append(message.replace("_", "\\_")).build()).queue();
 	}
@@ -177,6 +172,11 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		jda = null;
+	}
+
+	private Color getRandomColor() {
+		Random random = new Random();
+		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
 	}
 
 	public boolean isEnabled() {

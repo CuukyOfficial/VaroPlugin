@@ -29,14 +29,6 @@ public class TrollModule {
 		modules.add(this);
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public ArrayList<Player> getEnabledFor() {
-		return enabledFor;
-	}
-
 	public void setEnabledFor(Player player, boolean enable) {
 		if(enable) {
 			enabledFor.add(player);
@@ -45,6 +37,14 @@ public class TrollModule {
 			enabledFor.remove(player);
 			onDisable(player);
 		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ArrayList<Player> getEnabledFor() {
+		return enabledFor;
 	}
 
 	public Material getIcon() {

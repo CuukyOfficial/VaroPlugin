@@ -29,6 +29,8 @@ public class LobbyGenerator {
 		glassTypes.add(Materials.PURPLE_STAINED_GLASS);
 	}
 
+	private Location last;
+
 	public LobbyGenerator(Location loc, File file) {
 		try {
 			new SchematicLoader(file).paste(loc);
@@ -47,8 +49,6 @@ public class LobbyGenerator {
 		makeWall(curr, 0, height, size);
 		makeWall(curr, size, -height, 0);
 	}
-
-	private Location last;
 
 	private void makeWall(Location one, int x1, int y1, int z1) {
 		Location from = last != null ? last : one;

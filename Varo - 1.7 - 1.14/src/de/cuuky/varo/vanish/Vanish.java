@@ -49,13 +49,13 @@ public class Vanish {
 		player.showPlayer(this.player);
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
 	public void remove() {
 		unhide();
 		vanishes.remove(this);
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	public static Vanish getVanish(Player player) {

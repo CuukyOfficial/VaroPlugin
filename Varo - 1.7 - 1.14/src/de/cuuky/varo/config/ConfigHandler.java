@@ -58,11 +58,28 @@ public class ConfigHandler {
 	}
 
 	/**
-	 * Main method to load the configs
+	 * @return Every description of every ConfigEntry combined
 	 */
-	public void load() {
-		loadConfig(configCfg, configFile, true, configExisted);
-		loadConfig(messagesCfg, messagesFile, false, messagesExisted);
+	private String getConfigHeader() {
+		String header = "Config Einstellungen \r\n" + "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
+		String desc = "";
+		for(ConfigSection section : ConfigSection.values()) {
+			desc = desc + "\n----------- " + section.getName() + " -----------";
+
+			for(ConfigEntry entry : section.getEntries()) {
+				String description = Utils.getArgsToString(entry.getDescription(), "\n  ");
+				desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValue() + "\r\n";
+			}
+		}
+		return header + desc + "-------------------------";
+	}
+
+	private void save(File file, YamlConfiguration cfg) {
+		try {
+			cfg.save(file);
+		} catch(IOException e) {
+			System.out.println(Main.getConsolePrefix() + "Failed saving file " + file.getName());
+		}
 	}
 
 	/**
@@ -162,16 +179,12 @@ public class ConfigHandler {
 			save(file, cfg);
 	}
 
-	private void save(File file, YamlConfiguration cfg) {
-		try {
-			cfg.save(file);
-		} catch(IOException e) {
-			System.out.println(Main.getConsolePrefix() + "Failed saving file " + file.getName());
-		}
-	}
-
-	public YamlConfiguration getConfigCfg() {
-		return configCfg;
+	/**
+	 * Main method to load the configs
+	 */
+	public void load() {
+		loadConfig(configCfg, configFile, true, configExisted);
+		loadConfig(messagesCfg, messagesFile, false, messagesExisted);
 	}
 
 	public void saveConfig() {
@@ -182,20 +195,7 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * @return Every description of every ConfigEntry combined
-	 */
-	private String getConfigHeader() {
-		String header = "Config Einstellungen \r\n" + "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
-		String desc = "";
-		for(ConfigSection section : ConfigSection.values()) {
-			desc = desc + "\n----------- " + section.getName() + " -----------";
-
-			for(ConfigEntry entry : section.getEntries()) {
-				String description = Utils.getArgsToString(entry.getDescription(), "\n  ");
-				desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValue() + "\r\n";
-			}
-		}
-		return header + desc + "-------------------------";
+	public YamlConfiguration getConfigCfg() {
+		return configCfg;
 	}
 }

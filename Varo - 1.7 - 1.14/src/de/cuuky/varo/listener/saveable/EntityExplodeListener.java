@@ -36,7 +36,7 @@ public class EntityExplodeListener implements Listener {
 		}
 	}
 
-	public boolean chestNearby(Location location) {
+	private boolean chestNearby(Location location) {
 		for(int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
 			for(int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
 				for(int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {

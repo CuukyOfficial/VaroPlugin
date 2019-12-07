@@ -36,16 +36,16 @@ public class EnchantmentList extends VaroList {
 	}
 
 	@Override
-	public ArrayList<String> getAsList() {
-		return enchantments;
-	}
-
-	@Override
 	public void onLoad(List<?> list) {
 		enchantments = new ArrayList<String>();
 
 		for(Object id : list)
 			enchantments.add((String) id);
+	}
+
+	@Override
+	public ArrayList<String> getAsList() {
+		return enchantments;
 	}
 
 	public static ArrayList<EnchantmentList> getEnchantmentLists() {

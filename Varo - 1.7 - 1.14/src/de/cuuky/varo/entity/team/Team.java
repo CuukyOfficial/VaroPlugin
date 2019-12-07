@@ -52,18 +52,6 @@ public class Team extends VaroEntity {
 			highestNumber = id;
 	}
 
-	public void loadDefaults() {
-		this.lifes = ConfigEntry.TEAM_LIFES.getValueAsInt();
-	}
-
-	public double getLifes() {
-		return lifes;
-	}
-
-	public void setLifes(double lifes) {
-		this.lifes = lifes;
-	}
-
 	public void addMember(VaroPlayer vp) {
 		if(this.isMember(vp))
 			return;
@@ -120,6 +108,40 @@ public class Team extends VaroEntity {
 		teams.remove(this);
 	}
 
+	public boolean isDead() {
+		for(VaroPlayer player : member) {
+			if(player.getStats().getState() != PlayerState.ALIVE)
+				continue;
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private int generateId() {
+		int i = teams.size() + 1;
+		while(getTeam(i) != null)
+			i++;
+
+		return i;
+	}
+
+	public static Team getTeam(int id) {
+		for(Team team : teams) {
+			if(team.getId() != id)
+				continue;
+
+			return team;
+		}
+
+		return null;
+	}
+
+	public void loadDefaults() {
+		this.lifes = ConfigEntry.TEAM_LIFES.getValueAsInt();
+	}
+
 	public void statChanged() {
 		this.member.forEach(member -> member.update());
 	}
@@ -162,34 +184,12 @@ public class Team extends VaroEntity {
 		this.id = id;
 	}
 
-	public boolean isDead() {
-		for(VaroPlayer player : member) {
-			if(player.getStats().getState() != PlayerState.ALIVE)
-				continue;
-
-			return false;
-		}
-
-		return true;
+	public double getLifes() {
+		return lifes;
 	}
 
-	private int generateId() {
-		int i = teams.size() + 1;
-		while(getTeam(i) != null)
-			i++;
-
-		return i;
-	}
-
-	public static Team getTeam(int id) {
-		for(Team team : teams) {
-			if(team.getId() != id)
-				continue;
-
-			return team;
-		}
-
-		return null;
+	public void setLifes(double lifes) {
+		this.lifes = lifes;
 	}
 
 	public static ArrayList<Team> getAliveTeams() {

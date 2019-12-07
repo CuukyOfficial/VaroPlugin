@@ -2,7 +2,6 @@ package de.cuuky.varo.logger.logger;
 
 import java.awt.Color;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -12,58 +11,6 @@ import de.cuuky.varo.utils.Utils;
 public class EventLogger extends Logger {
 
 	private static EventLogger instance;
-
-	public enum LogType {
-
-		STRIKE("STRIKE", Color.YELLOW, ConfigEntry.DISCORDBOT_EVENT_STRIKE),
-		JOIN_LEAVE("JOIN/LEAVE", Color.CYAN, ConfigEntry.DISCORDBOT_EVENT_JOIN_LEAVE),
-		WIN("WIN", Color.MAGENTA, ConfigEntry.DISCORDBOT_EVENT_WIN),
-		BORDER("BORDER", Color.GREEN, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE),
-		KILL("KILL", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_KILL),
-		DEATH("DEATH", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_DEATH),
-		ALERT("ALERT", Color.RED, ConfigEntry.DISCORDBOT_EVENT_ALERT),
-		YOUTUBE("YOUTUBE", Color.ORANGE, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE),
-		LOG("LOG", Color.RED, null);
-
-		private String name;
-		private Color color;
-		private ConfigEntry idEntry;
-
-		LogType(String name, Color color, ConfigEntry idEntry) {
-			this.color = color;
-			this.name = name;
-			this.idEntry = idEntry;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public Color getColor() {
-			return color;
-		}
-
-		public long getPostChannel() {
-			if(idEntry == null || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
-				return -1;
-
-			try {
-				idEntry.getValueAsLong();
-			} catch(IllegalArgumentException e) {
-				return ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
-			}
-
-			return idEntry.getValueAsLong();
-		}
-
-		public static LogType getType(String s) {
-			for(LogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
-					return type;
-
-			return null;
-		}
-	}
 
 	private EventLogger(String name) {
 		super(name, true);
@@ -118,6 +65,58 @@ public class EventLogger extends Logger {
 		} catch(Exception e) {
 			e.printStackTrace();
 			return;
+		}
+	}
+
+	public enum LogType {
+
+		STRIKE("STRIKE", Color.YELLOW, ConfigEntry.DISCORDBOT_EVENT_STRIKE),
+		JOIN_LEAVE("JOIN/LEAVE", Color.CYAN, ConfigEntry.DISCORDBOT_EVENT_JOIN_LEAVE),
+		WIN("WIN", Color.MAGENTA, ConfigEntry.DISCORDBOT_EVENT_WIN),
+		BORDER("BORDER", Color.GREEN, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE),
+		KILL("KILL", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_KILL),
+		DEATH("DEATH", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_DEATH),
+		ALERT("ALERT", Color.RED, ConfigEntry.DISCORDBOT_EVENT_ALERT),
+		YOUTUBE("YOUTUBE", Color.ORANGE, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE),
+		LOG("LOG", Color.RED, null);
+
+		private String name;
+		private Color color;
+		private ConfigEntry idEntry;
+
+		LogType(String name, Color color, ConfigEntry idEntry) {
+			this.color = color;
+			this.name = name;
+			this.idEntry = idEntry;
+		}
+
+		public long getPostChannel() {
+			if(idEntry == null || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
+				return -1;
+
+			try {
+				idEntry.getValueAsLong();
+			} catch(IllegalArgumentException e) {
+				return ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
+			}
+
+			return idEntry.getValueAsLong();
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public Color getColor() {
+			return color;
+		}
+
+		public static LogType getType(String s) {
+			for(LogType type : values())
+				if(type.getName().equalsIgnoreCase(s))
+					return type;
+
+			return null;
 		}
 	}
 }
