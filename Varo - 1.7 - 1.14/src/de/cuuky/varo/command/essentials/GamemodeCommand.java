@@ -47,7 +47,7 @@ public class GamemodeCommand implements CommandExecutor {
 			try {
 				mode = Integer.valueOf(args[0]);
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Du hast gültigen keinen Gamemode angegeben!");
+				sender.sendMessage(Main.getPrefix() + "§7Du hast keinen gültigen Gamemode angegeben!");
 				return false;
 			}
 			
