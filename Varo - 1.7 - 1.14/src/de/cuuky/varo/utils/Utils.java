@@ -4,8 +4,11 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.spawns.Spawn;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -16,6 +19,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public final class Utils {
+
+	private static int worldToTimeID = 0;
 
 	private Utils() {}
 
@@ -358,5 +363,33 @@ public final class Utils {
 		}
 
 		return VersionCompareResult.VERSIONS_EQUAL;
+	}
+
+	public static void setWorldToTime() {
+		if(!ConfigEntry.ALWAYS_TIME.isIntActivated())
+			return;
+
+		if (worldToTimeID != 0) {
+			Bukkit.getScheduler().cancelTask(worldToTimeID);
+		}
+
+		worldToTimeID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			int time = ConfigEntry.ALWAYS_TIME.getValueAsInt();
+
+			@Override
+			public void run() {
+				if(Game.getInstance().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
+					Bukkit.getScheduler().cancelTask(worldToTimeID);
+					return;
+				}
+
+				for(World world : Bukkit.getWorlds()) {
+					world.setTime(time);
+					world.setThundering(false);
+					world.setStorm(false);
+				}
+			}
+		}, 0, 40);
 	}
 }

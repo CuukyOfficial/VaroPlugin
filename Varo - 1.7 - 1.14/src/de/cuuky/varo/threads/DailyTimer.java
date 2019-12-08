@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import de.cuuky.varo.game.Game;
+import de.cuuky.varo.utils.Utils;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -14,12 +15,11 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.threads.dailycheck.Checker;
-import de.cuuky.varo.world.TimeTimer;
 
 public final class DailyTimer {
 
 	public static void startTimer() {
-		new TimeTimer();
+		Utils.setWorldToTime();
 		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
 			Date date = Game.getInstance().getLastDayTimer();
 			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {

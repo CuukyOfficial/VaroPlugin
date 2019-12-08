@@ -1,6 +1,7 @@
 package de.cuuky.varo.world;
 
 import de.cuuky.varo.game.Game;
+import de.cuuky.varo.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -29,7 +30,7 @@ public class WorldHandler {
 		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 
 		this.border = new VaroBorder(world);
-		new TimeTimer();
+		Utils.setWorldToTime();
 	}
 
 	public Location getTeleportLocation() {
