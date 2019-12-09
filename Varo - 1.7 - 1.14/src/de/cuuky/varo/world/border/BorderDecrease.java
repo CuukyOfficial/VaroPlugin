@@ -2,8 +2,6 @@ package de.cuuky.varo.world.border;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;

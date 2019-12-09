@@ -2,14 +2,11 @@ package de.cuuky.varo.entity.player.event.events;
 
 import java.util.Date;
 
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.world.WorldHandler;
 import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;

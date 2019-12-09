@@ -2,7 +2,7 @@ package de.cuuky.varo.command.varo;
 
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.logger.logger.EventLogger;
-import de.cuuky.varo.world.WorldHandler;
+import de.cuuky.varo.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -153,7 +153,7 @@ public class FinaleCommand extends VaroCommand {
 			}
 			if (player.getPlayer() != null) {
 				if (player.getPlayer().isOnline()) {
-					player.getPlayer().teleport(WorldHandler.getInstance().getWorld().getSpawnLocation());
+					player.getPlayer().teleport(Utils.getMainWorld().getSpawnLocation());
 					continue;
 				}
 			}

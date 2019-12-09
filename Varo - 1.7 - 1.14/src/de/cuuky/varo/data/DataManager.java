@@ -8,6 +8,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import de.cuuky.varo.spigot.FileDownloader;
+import de.cuuky.varo.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 
@@ -33,7 +34,6 @@ import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.world.WorldHandler;
 import net.labymod.serverapi.LabyModAPI;
 
 public class DataManager {
@@ -69,7 +69,6 @@ public class DataManager {
 		PlayerHandler.initialise(); //Initialisierung PlayerHandler
 		TeamHandler.initialise(); //Initialisierung TeamHandler
 		SpawnHandler.initialise(); //Initialisierung SpawnHandler
-		WorldHandler.getInstance(); //Initialisierung WorldHandler
 		ScoreboardHandler.getInstance(); //Initialisierung ScoreboardHandler
 		ReportHandler.initialise(); //Initialisierung ReportHandler
 		AlertHandler.initialise(); //Initialisierung AlertHandler
@@ -77,6 +76,10 @@ public class DataManager {
 		MySQL.getInstance(); //Initialisierung MySQL
 		ListHandler.getInstance(); //Initialisierung ListHandler
 		Broadcaster.getInstance(); //Initialisierung Broadcaster
+
+		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
+		Utils.setWorldToTime();
+
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}

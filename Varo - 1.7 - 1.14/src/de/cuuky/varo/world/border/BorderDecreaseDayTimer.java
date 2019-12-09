@@ -2,9 +2,7 @@ package de.cuuky.varo.world.border;
 
 import java.util.Date;
 
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
-import de.cuuky.varo.world.WorldHandler;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;

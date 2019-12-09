@@ -12,7 +12,6 @@ import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.world.WorldHandler;
 import de.cuuky.varo.world.border.VaroBorder;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
@@ -262,7 +261,7 @@ public class Game implements VaroSerializeable {
 
 					setGamestate(GameState.STARTED);
 					fillChests();
-					WorldHandler.getInstance().getWorld().strikeLightningEffect(WorldHandler.getInstance().getWorld().getSpawnLocation());
+					Utils.getMainWorld().strikeLightningEffect(Utils.getMainWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
@@ -355,8 +354,8 @@ public class Game implements VaroSerializeable {
 			return;
 
 		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = WorldHandler.getInstance().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = WorldHandler.getInstance().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = Utils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = Utils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();

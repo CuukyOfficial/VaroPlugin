@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -26,7 +27,7 @@ public class AutoSetup {
 		if(Game.getInstance().hasStarted())
 			return;
 
-		World world = WorldHandler.getInstance().getWorld();
+		World world = Utils.getMainWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 

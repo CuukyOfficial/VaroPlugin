@@ -1,7 +1,5 @@
 package de.cuuky.varo.command.essentials;
 
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.world.WorldHandler;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

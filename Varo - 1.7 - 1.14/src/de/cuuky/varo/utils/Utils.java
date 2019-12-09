@@ -1,6 +1,7 @@
 package de.cuuky.varo.utils;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.ServerPropertiesReader;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -391,5 +392,13 @@ public final class Utils {
 				}
 			}
 		}, 0, 40);
+	}
+
+	public static World getMainWorld() {
+		return Bukkit.getWorld((String) new ServerPropertiesReader().get("level-name"));
+	}
+
+	public static Location getTeleportLocation() {
+		return Game.getInstance().getLobby() != null ? Game.getInstance().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
 	}
 }
