@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.Game;
+import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.Location;
 import org.bukkit.World;
 

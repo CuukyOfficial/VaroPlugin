@@ -12,6 +12,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.PermissionUtils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.world.WorldHandler;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public enum ConfigMessages {
 
@@ -277,7 +278,7 @@ public enum ConfigMessages {
 		replaced = replaced.contains("%currHour%") ? replaced.replace("%currHour%", new SimpleDateFormat("HH").format(new Date())) : replaced;
 		replaced = replaced.contains("%currMin%") ? replaced.replace("%currMin%", new SimpleDateFormat("mm").format(new Date())) : replaced;
 		replaced = replaced.contains("%currSec%") ? replaced.replace("%currSec%", new SimpleDateFormat("ss").format(new Date())) : replaced;
-		replaced = replaced.contains("%bordersize%") ? replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) WorldHandler.getInstance().getBorder().getSize())) : replaced;
+		replaced = replaced.contains("%bordersize%") ? replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) VaroBorder.getInstance().getBorderSize(null))) : replaced;
 		replaced = replaced.contains("%colorcode%") ? replaced.replace("%colorcode%", Main.getColorCode()) : replaced;
 		replaced = replaced.contains("%discordLink%") ? replaced.replace("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
 		replaced = replaced.contains("%protectionTime%") ? replaced.replace("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString()) : replaced;
@@ -292,7 +293,7 @@ public enum ConfigMessages {
 
 	public static String getValue(String value, VaroPlayer vp) {
 		String replaced = getValue(value);
-		replaced = replaced.contains("%distanceToBorder%") ? replaced.replace("%distanceToBorder%", String.valueOf((int) WorldHandler.getInstance().getBorder().getDistanceTo(vp.getPlayer()))) : replaced;
+		replaced = replaced.contains("%distanceToBorder%") ? replaced.replace("%distanceToBorder%", String.valueOf((int) VaroBorder.getInstance().getBorderDistanceTo(vp.getPlayer()))) : replaced;
 		replaced = replaced.contains("%min%") ? replaced.replace("%min%", vp.getStats().getCountdownMin(vp.getStats().getCountdown())) : replaced;
 		replaced = replaced.contains("%sec%") ? replaced.replace("%sec%", vp.getStats().getCountdownSec(vp.getStats().getCountdown())) : replaced;
 		replaced = replaced.contains("%kills%") ? replaced.replace("%kills%", String.valueOf(vp.getStats().getKills())) : replaced;

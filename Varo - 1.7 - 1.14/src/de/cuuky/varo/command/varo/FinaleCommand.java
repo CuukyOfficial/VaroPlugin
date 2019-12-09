@@ -164,8 +164,7 @@ public class FinaleCommand extends VaroCommand {
 			}
 		}
 
-		VaroBorder border = WorldHandler.getInstance().getBorder();
-		border.setSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt());
+		VaroBorder.getInstance().setBorderSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
 
 		Game.getInstance().setFinaleJoinStart(false);
 

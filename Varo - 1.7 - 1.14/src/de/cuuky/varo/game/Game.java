@@ -13,6 +13,7 @@ import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.world.WorldHandler;
+import de.cuuky.varo.world.border.VaroBorder;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -129,7 +130,7 @@ public class Game implements VaroSerializeable {
 							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
 								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 							else if(showDistanceToBorder) {
-								int distance = (int) WorldHandler.getInstance().getBorder().getDistanceTo(p);
+								int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}

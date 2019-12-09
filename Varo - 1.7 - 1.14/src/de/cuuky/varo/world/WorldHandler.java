@@ -16,7 +16,6 @@ public class WorldHandler {
 	private static WorldHandler instance;
 
 	private World world;
-	private VaroBorder border;
 
 	public static WorldHandler getInstance() {
 		if (instance == null) {
@@ -29,7 +28,6 @@ public class WorldHandler {
 		this.world = Bukkit.getWorld((String) new ServerPropertiesReader().get("level-name"));
 		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 
-		this.border = new VaroBorder(world);
 		Utils.setWorldToTime();
 	}
 
@@ -39,9 +37,5 @@ public class WorldHandler {
 
 	public World getWorld() {
 		return world;
-	}
-
-	public VaroBorder getBorder() {
-		return border;
 	}
 }

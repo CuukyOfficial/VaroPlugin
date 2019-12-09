@@ -2,6 +2,7 @@ package de.cuuky.varo.gui.admin.game;
 
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -55,6 +56,7 @@ public class GameOptionsGUI extends SuperInventory {
 			@Override
 			public void run() {
 				opener.getWorld().setSpawnLocation(opener.getLocation().getBlockX(), opener.getLocation().getBlockY(), opener.getLocation().getBlockZ());
+				VaroBorder.getInstance().setBorderCenter(opener.getLocation());
 			}
 		});
 		return true;

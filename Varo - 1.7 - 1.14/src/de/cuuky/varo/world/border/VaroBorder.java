@@ -3,6 +3,7 @@ package de.cuuky.varo.world.border;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -12,69 +13,112 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class VaroBorder {
 
-	private World world;
-	private Object border;
+	private static VaroBorder instance;
 
-	public VaroBorder(World world) {
-		this.world = world;
+	private Object borders[] = new Object[2];
 
+	public static VaroBorder getInstance() {
+		if (instance == null) {
+			instance = new VaroBorder();
+		}
+		return instance;
+	}
+
+	private VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
-		try {
-			this.border = this.world.getClass().getDeclaredMethod("getWorldBorder").invoke(this.world);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
+		for (World world : Bukkit.getWorlds()) {
+			switch (world.getEnvironment()) {
+				case NORMAL:
+					try {
+						//Invoke, damit kein Fehler in einer IDE kommt mit 1.7 jar
+						borders[0] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				case NETHER:
+					try {
+						borders[1] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					break;
+			}
 		}
 	}
 
-	public void setSize(double size, long time) {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			return;
-
-		try {
-			border.getClass().getDeclaredMethod("setSize", double.class, long.class).invoke(border, size, time);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public double getSize() {
+	public double getBorderSize(World world) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return 0;
 
+		Object border;
+
+		if (world == null) {
+			border = borders[0];
+		} else {
+			switch (world.getEnvironment()) {
+				case NORMAL: border = borders[0]; break;
+				case NETHER: border = borders[1]; break;
+				default: return 0;
+			}
+		}
+
+
+
 		try {
 			return (double) border.getClass().getDeclaredMethod("getSize").invoke(border);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
 		return 0;
 	}
 
-	public void setSize(double size) {
+	public void setBorderSize(double size, long time, World world) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
+		Object border;
+
+		if (world == null) {
+			border = borders[0];
+		} else {
+			switch (world.getEnvironment()) {
+				case NORMAL: border = borders[0]; break;
+				case NETHER: border = borders[1]; break;
+				default: return;
+			}
+		}
+
 		try {
-			border.getClass().getDeclaredMethod("setSize", double.class).invoke(border, size);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			border.getClass().getDeclaredMethod("setSize", double.class, long.class).invoke(border, size, time);
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void setCenter(Location loc) {
+	public void setBorderCenter(Location loc) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
+
+		Object border;
+
+		switch (loc.getWorld().getEnvironment()) {
+			case NORMAL: border = borders[0]; break;
+			case NETHER: border = borders[1]; break;
+			default: return;
+		}
 
 		try {
 			border.getClass().getDeclaredMethod("setCenter", Location.class).invoke(border, loc);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void decrease(DecreaseReason reason) {
+	public void decreaseBorder(DecreaseReason reason) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || !reason.isEnabled())
 			return;
 
@@ -96,32 +140,39 @@ public class VaroBorder {
 		});
 	}
 
-	public double getDistanceTo(Player p) {
+	public double getBorderDistanceTo(Player p) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || p == null)
 			return 0;
 
-		Location ploc = p.getLocation();
-		World world = p.getLocation().getWorld();
+		Location playerLoc = p.getLocation();
+		World playerWorld = p.getLocation().getWorld();
 
 		Location center;
 		double size = 0;
+
+		Object border;
+
+		switch (playerWorld.getEnvironment()) {
+			case NORMAL: border = borders[0]; break;
+			case NETHER: border = borders[1]; break;
+			default: return 0;
+		}
+
 		try {
-			Object border = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
 			center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
 			size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
 		} catch(Exception e) {
 			e.printStackTrace();
-			center = p.getLocation();
+			return 0;
 		}
 
-		center.setY(p.getLocation().getY());
 		ArrayList<Double> distanceArray = new ArrayList<>();
-		double plocX = ploc.getX() - center.getX();
-		double plocZ = ploc.getZ() - center.getZ();
-		distanceArray.add(Math.abs(plocX + size));
-		distanceArray.add(Math.abs(plocX - size));
-		distanceArray.add(Math.abs(plocZ + size));
-		distanceArray.add(Math.abs(plocZ - size));
+		double playerDifferenceX = playerLoc.getX() - center.getX();
+		double playerDifferenceZ = playerLoc.getZ() - center.getZ();
+		distanceArray.add(Math.abs(playerDifferenceX + size));
+		distanceArray.add(Math.abs(playerDifferenceX - size));
+		distanceArray.add(Math.abs(playerDifferenceZ + size));
+		distanceArray.add(Math.abs(playerDifferenceZ - size));
 		double nearest = Double.MAX_VALUE;
 		for(double distance : distanceArray)
 			if(distance < nearest)

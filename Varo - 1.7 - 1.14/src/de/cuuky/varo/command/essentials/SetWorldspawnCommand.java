@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +31,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
+		VaroBorder.getInstance().setBorderCenter(p.getLocation());
 		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn §7erfolgreich gesetzt!");
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;

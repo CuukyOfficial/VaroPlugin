@@ -62,10 +62,10 @@ public class BorderDecrease {
 	}
 
 	public void shrink() {
-		VaroBorder border = WorldHandler.getInstance().getBorder();
+		VaroBorder border = VaroBorder.getInstance();
 
 		int minsize = ConfigEntry.MIN_BORDER_SIZE.getValueAsInt();
-		double size = border.getSize();
+		double size = border.getBorderSize(null);
 		if(size <= minsize) {
 			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());
 			remove();
@@ -75,10 +75,10 @@ public class BorderDecrease {
 		startHook.run();
 		if(minsize > 0)
 			if((int) (size - amount) < minsize) {
-				border.setSize((double) minsize, (long) ((size - minsize) / bps));
+				border.setBorderSize(minsize, (long) ((size - minsize) / bps), null);
 				waitForBorder((size - minsize) / bps);
 			} else {
-				border.setSize(size - amount, (long) (amount / bps));
+				border.setBorderSize(size - amount, (long) (amount / bps), null);
 				waitForBorder(amount / bps);
 			}
 

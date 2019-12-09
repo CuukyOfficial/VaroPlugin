@@ -2,6 +2,7 @@ package de.cuuky.varo.command.essentials;
 
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.world.WorldHandler;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,37 +29,37 @@ public class BorderCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? new VaroBorder(((Player) sender).getWorld()).getSize() : WorldHandler.getInstance().getBorder().getSize()) + " §7Blöcke groß!");
+			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? VaroBorder.getInstance().getBorderSize(((Player) sender).getWorld()) : VaroBorder.getInstance().getBorderSize(null)) + " §7Blöcke groß!");
 			if(sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) WorldHandler.getInstance().getBorder().getDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
+				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) VaroBorder.getInstance().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
 
-			if(sender.hasPermission("varo.setup"))
+			if(sender.hasPermission("varo.setup")) {
 				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> §7setzen!");
+				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border bleibt dann der WorldSpawn.");
+			}
 			return false;
 		} else if(args.length >= 1 && sender.hasPermission("varo.setup")) {
 			Player p = sender instanceof Player ? (Player) sender : null;
-			int border1;
+			int borderSize;
 			int inSeconds = -1;
 
 			try {
-				border1 = Integer.parseInt(args[0]);
+				borderSize = Integer.parseInt(args[0]);
 			} catch(NumberFormatException e) {
 				p.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
 				return false;
 			}
 
-			VaroBorder border = p != null ? new VaroBorder(p.getWorld()) : WorldHandler.getInstance().getBorder();
+			VaroBorder border = VaroBorder.getInstance();
+			World playerWorld = (p != null ? p.getWorld() : null);
 			try {
 				inSeconds = Integer.parseInt(args[1]);
-				border.setSize(border1, inSeconds);
-			} catch(ArrayIndexOutOfBoundsException e) {
-				border.setSize(border1);
+				border.setBorderSize(borderSize, inSeconds, playerWorld);
+			} catch(Exception e) {
+				border.setBorderSize(borderSize, 0, playerWorld);
 			}
 
-			if(p != null)
-				border.setCenter(p.getLocation());
-
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%zahl%", String.valueOf(border1)));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%zahl%", String.valueOf(borderSize)));
 			if(p != null)
 				p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		} else

@@ -25,8 +25,7 @@ public class BorderDecreaseMinuteTimer {
 					remove();
 					return;
 				}
-
-				WorldHandler.getInstance().getBorder().decrease(DecreaseReason.TIME_MINUTES);
+				VaroBorder.getInstance().decreaseBorder(DecreaseReason.TIME_MINUTES);
 			}
 		}, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20);
 	}
