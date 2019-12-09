@@ -1,6 +1,5 @@
 package de.cuuky.varo.command.essentials;
 
-import de.cuuky.varo.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -10,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.utils.Utils;
 
 public class SpawnCommand implements CommandExecutor {
 

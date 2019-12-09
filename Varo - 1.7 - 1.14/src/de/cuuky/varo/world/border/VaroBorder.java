@@ -1,6 +1,5 @@
 package de.cuuky.varo.world.border;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;

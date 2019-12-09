@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener.saveable;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -16,6 +15,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.version.types.Sounds;
 
 public class BlockBreakListener implements Listener {

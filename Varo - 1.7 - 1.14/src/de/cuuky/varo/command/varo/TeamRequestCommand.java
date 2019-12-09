@@ -1,6 +1,5 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,6 +11,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.TeamRequest;
+import de.cuuky.varo.game.Game;
 
 public class TeamRequestCommand extends VaroCommand {
 

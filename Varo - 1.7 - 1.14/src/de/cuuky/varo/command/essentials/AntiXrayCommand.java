@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,7 +11,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.version.BukkitVersion;
+import de.cuuky.varo.version.VersionUtils;
 
 public class AntiXrayCommand implements CommandExecutor {
 

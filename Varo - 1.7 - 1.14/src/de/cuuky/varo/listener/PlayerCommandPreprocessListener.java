@@ -1,11 +1,11 @@
 package de.cuuky.varo.listener;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.game.Game;
 
 public class PlayerCommandPreprocessListener implements Listener {
 

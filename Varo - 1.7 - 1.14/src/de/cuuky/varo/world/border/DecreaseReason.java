@@ -1,10 +1,10 @@
 package de.cuuky.varo.world.border;
 
-import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public enum DecreaseReason {

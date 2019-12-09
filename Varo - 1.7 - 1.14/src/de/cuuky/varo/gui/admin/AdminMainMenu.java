@@ -1,7 +1,5 @@
 package de.cuuky.varo.gui.admin;
 
-import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.logger.logger.BlockLogger;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -10,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.Team;
@@ -27,6 +26,7 @@ import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.logger.logger.BlockLogger;
 import de.cuuky.varo.report.Report;
 import de.cuuky.varo.version.types.Materials;
 

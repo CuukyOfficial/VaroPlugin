@@ -1,10 +1,10 @@
 package de.cuuky.varo.report;
 
-import de.cuuky.varo.version.types.Materials;
 import org.bukkit.Material;
 
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.version.types.Materials;
 
 public enum ReportReason implements VaroSerializeable {
 

@@ -1,19 +1,19 @@
 package de.cuuky.varo.gui.admin.game;
 
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.utils.Utils;
-import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class GameOptionsGUI extends SuperInventory {
 

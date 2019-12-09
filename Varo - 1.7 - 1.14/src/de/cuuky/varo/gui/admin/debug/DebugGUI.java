@@ -1,7 +1,5 @@
 package de.cuuky.varo.gui.admin.debug;
 
-import de.cuuky.varo.logger.logger.EventLogger;
-import de.cuuky.varo.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,8 +14,10 @@ import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.threads.dailycheck.Checker;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.types.Materials;
 
 public class DebugGUI extends SuperInventory {

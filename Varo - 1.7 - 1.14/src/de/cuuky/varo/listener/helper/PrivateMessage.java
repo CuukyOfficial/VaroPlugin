@@ -3,9 +3,9 @@ package de.cuuky.varo.listener.helper;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.cuuky.varo.logger.logger.ChatLogger;
 import org.bukkit.entity.Player;
 
+import de.cuuky.varo.logger.logger.ChatLogger;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PrivateMessage {

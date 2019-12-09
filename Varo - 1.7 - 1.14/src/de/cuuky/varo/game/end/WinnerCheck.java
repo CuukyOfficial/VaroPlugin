@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;

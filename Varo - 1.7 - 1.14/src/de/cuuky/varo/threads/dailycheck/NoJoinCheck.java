@@ -3,7 +3,6 @@ package de.cuuky.varo.threads.dailycheck;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import de.cuuky.varo.logger.logger.EventLogger;
 import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.alert.Alert;
@@ -12,6 +11,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class NoJoinCheck extends Checker {

@@ -1,7 +1,5 @@
 package de.cuuky.varo.listener.lists;
 
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.list.ListHandler;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.list.ListHandler;
 
 public class BlockedEnchantmentsListener implements Listener {
 

@@ -1,12 +1,12 @@
 package de.cuuky.varo.listener.logging;
 
-import de.cuuky.varo.logger.logger.BlockLogger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.logger.logger.BlockLogger;
 
 public class DestroyedBlocksListener implements Listener {
 

@@ -2,7 +2,6 @@ package de.cuuky.varo.gui.saveable;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,6 +15,7 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableTyp
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.utils.Utils;
 
 public class PlayerSaveableChooseGUI extends SuperInventory {
 

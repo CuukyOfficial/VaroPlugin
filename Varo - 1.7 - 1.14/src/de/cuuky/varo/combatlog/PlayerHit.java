@@ -3,7 +3,6 @@ package de.cuuky.varo.combatlog;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +15,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.Game;
 
 public class PlayerHit {
 

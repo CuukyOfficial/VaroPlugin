@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener.saveable;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Furnace;
@@ -9,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.game.Game;
 
 public class InventoryMoveListener implements Listener {
 

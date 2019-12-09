@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.command.varo.AbortCommand;
 import de.cuuky.varo.command.varo.ActionbarCommand;
 import de.cuuky.varo.command.varo.AutoSetupCommand;
@@ -39,7 +38,6 @@ import de.cuuky.varo.command.varo.TeamCommand;
 import de.cuuky.varo.command.varo.TeamRequestCommand;
 import de.cuuky.varo.command.varo.TrollCommand;
 import de.cuuky.varo.command.varo.UpdateCommand;
-import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public abstract class VaroCommand {

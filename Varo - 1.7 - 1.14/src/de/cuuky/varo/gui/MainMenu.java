@@ -1,6 +1,5 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.varo.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,6 +21,7 @@ import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.types.Materials;
 
 public class MainMenu extends SuperInventory {

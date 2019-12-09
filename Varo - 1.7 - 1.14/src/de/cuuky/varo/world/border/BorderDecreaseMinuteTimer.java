@@ -1,9 +1,9 @@
 package de.cuuky.varo.world.border;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 
 public class BorderDecreaseMinuteTimer {

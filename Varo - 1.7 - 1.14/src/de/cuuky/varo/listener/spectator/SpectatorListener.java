@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener.spectator;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,6 +22,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 

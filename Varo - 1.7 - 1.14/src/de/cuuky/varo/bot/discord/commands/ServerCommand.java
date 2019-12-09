@@ -1,13 +1,13 @@
 package de.cuuky.varo.bot.discord.commands;
 
-import java.awt.Color;
+import java.awt.*;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Bukkit;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import de.cuuky.varo.bot.discord.DiscordBotCommand;
+import de.cuuky.varo.game.Game;
 
 public class ServerCommand extends DiscordBotCommand {
 

@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import de.cuuky.varo.spigot.FileDownloader;
-import de.cuuky.varo.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
+
+import net.labymod.serverapi.LabyModAPI;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
@@ -33,8 +33,9 @@ import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
+import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.threads.OutSideTimeChecker;
-import net.labymod.serverapi.LabyModAPI;
+import de.cuuky.varo.utils.Utils;
 
 public class DataManager {
 

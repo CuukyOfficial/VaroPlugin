@@ -5,11 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.cuuky.varo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+
 import org.yaml.snakeyaml.scanner.ScannerException;
+
+import de.cuuky.varo.Main;
 
 public final class ConfigFailureDetector {
 

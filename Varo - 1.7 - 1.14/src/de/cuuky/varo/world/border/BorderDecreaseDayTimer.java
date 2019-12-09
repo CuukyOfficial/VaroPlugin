@@ -2,13 +2,14 @@ package de.cuuky.varo.world.border;
 
 import java.util.Date;
 
-import de.cuuky.varo.game.Game;
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 

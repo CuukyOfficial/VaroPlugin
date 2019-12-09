@@ -1,15 +1,10 @@
 package de.cuuky.varo.bot.discord;
 
-import java.awt.Color;
+import javax.security.auth.login.LoginException;
+import java.awt.*;
 import java.io.File;
 import java.util.Random;
 
-import javax.security.auth.login.LoginException;
-
-import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.VaroBot;
-import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
-import de.cuuky.varo.config.config.ConfigEntry;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
@@ -20,6 +15,11 @@ import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.exceptions.PermissionException;
 import net.dv8tion.jda.core.managers.GuildController;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.VaroBot;
+import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
+import de.cuuky.varo.config.config.ConfigEntry;
 
 public class VaroDiscordBot implements VaroBot {
 

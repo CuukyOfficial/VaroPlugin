@@ -1,10 +1,9 @@
 package de.cuuky.varo.logger.logger;
 
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.list.ListHandler;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.logger.Logger;
 
 public class BlockLogger extends Logger {

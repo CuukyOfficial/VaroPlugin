@@ -2,17 +2,16 @@ package de.cuuky.varo.event;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.event.events.ExposedVaroEvent;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.event.events.MoonGravityVaroEvent;
 import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 
 public class VaroEvent {

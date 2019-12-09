@@ -2,18 +2,18 @@ package de.cuuky.varo.item;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.version.BukkitVersion;
+import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public class ItemBuilder {

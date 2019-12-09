@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener.saveable;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -17,6 +16,7 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.version.types.Sounds;
 
 public class BlockPlaceListener implements Listener {

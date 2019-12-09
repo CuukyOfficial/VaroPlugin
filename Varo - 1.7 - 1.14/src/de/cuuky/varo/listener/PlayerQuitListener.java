@@ -1,7 +1,5 @@
 package de.cuuky.varo.listener;
 
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +13,9 @@ import de.cuuky.varo.disconnect.Disconnect;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class PlayerQuitListener implements Listener {

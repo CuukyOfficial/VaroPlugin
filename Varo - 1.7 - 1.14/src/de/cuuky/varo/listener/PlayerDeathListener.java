@@ -1,8 +1,5 @@
 package de.cuuky.varo.listener;
 
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.list.ListHandler;
-import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -19,8 +16,11 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.game.Game;
+import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class PlayerDeathListener implements Listener {

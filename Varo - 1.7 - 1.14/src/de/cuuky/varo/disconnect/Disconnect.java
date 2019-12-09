@@ -3,8 +3,6 @@ package de.cuuky.varo.disconnect;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -16,7 +14,9 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class Disconnect {

@@ -1,12 +1,12 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.utils.Utils;
 
 public class SortCommand extends VaroCommand {
 

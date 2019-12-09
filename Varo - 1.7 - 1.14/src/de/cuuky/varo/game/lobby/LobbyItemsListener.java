@@ -1,6 +1,5 @@
 package de.cuuky.varo.game.lobby;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,7 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 
 public class LobbyItemsListener implements Listener {

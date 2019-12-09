@@ -3,7 +3,6 @@ package de.cuuky.varo.gui.admin.orelogger;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import de.cuuky.varo.logger.logger.BlockLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,6 +16,7 @@ import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.logger.logger.BlockLogger;
 
 public class OreLoggerListGUI extends SuperInventory {
 

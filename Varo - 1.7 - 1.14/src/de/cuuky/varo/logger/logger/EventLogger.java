@@ -1,6 +1,6 @@
 package de.cuuky.varo.logger.logger;
 
-import java.awt.Color;
+import java.awt.*;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;

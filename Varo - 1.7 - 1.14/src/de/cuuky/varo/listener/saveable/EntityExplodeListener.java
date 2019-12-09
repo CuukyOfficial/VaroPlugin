@@ -2,7 +2,6 @@ package de.cuuky.varo.listener.saveable;
 
 import java.util.Iterator;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -12,8 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.game.Game;
 
 public class EntityExplodeListener implements Listener {
 

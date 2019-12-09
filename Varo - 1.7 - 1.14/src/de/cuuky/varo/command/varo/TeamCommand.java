@@ -1,6 +1,5 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

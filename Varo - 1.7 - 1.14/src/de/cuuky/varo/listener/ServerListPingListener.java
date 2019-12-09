@@ -1,16 +1,14 @@
 package de.cuuky.varo.listener;
 
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.threads.OutSideTimeChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.game.Game;
+import de.cuuky.varo.threads.OutSideTimeChecker;
 
 public class ServerListPingListener implements Listener {
 

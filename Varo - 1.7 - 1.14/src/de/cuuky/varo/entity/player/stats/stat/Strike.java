@@ -2,17 +2,18 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.Date;
 
-import de.cuuky.varo.logger.logger.EventLogger;
-import de.cuuky.varo.utils.Utils;
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Location;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.utils.Utils;
 
 public class Strike implements VaroSerializeable {
 

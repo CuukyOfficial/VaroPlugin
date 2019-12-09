@@ -2,7 +2,6 @@ package de.cuuky.varo.listener.saveable;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.game.Game;
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -21,6 +20,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.version.types.Materials;
 import de.cuuky.varo.version.types.Sounds;
 

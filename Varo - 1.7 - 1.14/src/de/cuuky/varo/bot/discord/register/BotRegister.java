@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
-import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.mysql.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.messages.ConfigMessages;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.mysql.MySQL;
 
 public class BotRegister {
 

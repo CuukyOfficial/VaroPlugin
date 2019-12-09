@@ -1,19 +1,12 @@
 
 package de.cuuky.varo.game;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.list.ListHandler;
-import de.cuuky.varo.logger.logger.EventLogger;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
-import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.world.border.VaroBorder;
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,9 +16,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.command.varo.RandomTeamCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -38,14 +34,19 @@ import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.list.ListHandler;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
 import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
 import de.cuuky.varo.world.border.BorderDecreaseMinuteTimer;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class Game implements VaroSerializeable {
 

@@ -3,7 +3,6 @@ package de.cuuky.varo.listener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import de.cuuky.varo.bot.BotLauncher;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
@@ -13,14 +12,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import de.cuuky.varo.Main;
+import net.dv8tion.jda.core.entities.User;
+
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
-import net.dv8tion.jda.core.entities.User;
 
 public class PlayerLoginListener implements Listener {
 

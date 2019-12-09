@@ -2,8 +2,6 @@ package de.cuuky.varo.entity.player.event.events;
 
 import java.util.Date;
 
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.world.border.VaroBorder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,8 +11,10 @@ import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.world.border.DecreaseReason;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class DeadEvent extends BukkitEvent {
 

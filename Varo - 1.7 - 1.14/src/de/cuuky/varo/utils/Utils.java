@@ -1,5 +1,18 @@
 package de.cuuky.varo.utils;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.ServerPropertiesReader;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -7,17 +20,6 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.spawns.Spawn;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 
 public final class Utils {
 
