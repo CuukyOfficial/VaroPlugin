@@ -68,7 +68,7 @@ public class GamemodeCommand implements CommandExecutor {
 					return false;
 				}
 
-				gm = GameMode.SPECTATOR;
+				gm = GameMode.valueOf("SPECTATOR"); //Damit keine IDE Fehler bei 1.7 kommen
 				break;
 			default:
 				sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
