@@ -22,9 +22,12 @@ import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public abstract class SuperInventory {
+
+	// AUTHOR: "Cuuky",
+	// VERSION: "0.3.1";
 	
-	private static boolean FILL_INVENTORY = true;
-	private static boolean ANIMATIONS = false;
+	private static boolean FILL_INVENTORY;
+	private static boolean ANIMATIONS;
 
 	private static ArrayList<SuperInventory> guis;
 	private static ItemStack forward;
