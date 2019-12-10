@@ -96,6 +96,10 @@ public class ConfigHandler {
 				continue;
 			}
 
+			if (dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
+				continue;
+			}
+
 			if (!dataTypeWanted.equals(dataTypeInConfig)) {
 				System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Der Eintrag " + entry.getName() + " muss vom Datentyp \"" + dataTypeWanted.getSimpleName() + "\" sein, ist aber vom Datentyp \"" + dataTypeInConfig.getSimpleName() + "\".");
 				shutdown = true;
