@@ -13,6 +13,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -75,7 +76,7 @@ public class ScoreboardHandler {
 		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
 		Collections.reverse(scoreboardLines);
 
-		this.header = ConfigMessages.SCOREBOARD_HEADER.getValue().replaceAll("&", "§");
+		this.header = Main.getProjectName().replaceAll("&", "§");
 		this.topScores = new TopScoreList();
 
 		String space = "";
@@ -88,7 +89,7 @@ public class ScoreboardHandler {
 		}
 	}
 
-	private String getConvString(String line, VaroPlayer vp, Scoreboard sb) {
+	private String getConvString(String line, VaroPlayer vp) {
 		if(line.contains("%min%") || line.contains("%sec%"))
 			if(ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
 				return "§cUnlimited";
@@ -115,10 +116,8 @@ public class ScoreboardHandler {
 
 		line = ConfigMessages.getValue(line, vp);
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && line.length() > 16)
+		if(line.length() > 16)
 			line = line.substring(0, 16);
-		else if(line.length() > 40)
-			line = line.substring(0, 40);
 
 		return line;
 	}
@@ -157,7 +156,7 @@ public class ScoreboardHandler {
 			return;
 
 		Scoreboard sb = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
-		Objective obj = sb.registerNewObjective(getConvString(header, vp, sb), "dummy");
+		Objective obj = sb.registerNewObjective(getConvString(header, vp), "dummy");
 
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		player.setScoreboard(sb);
@@ -180,7 +179,7 @@ public class ScoreboardHandler {
 		}
 
 		for(int index = 0; index < scoreboardLines.size(); index++) {
-			String line = getConvString(scoreboardLines.get(index), player, board);
+			String line = getConvString(scoreboardLines.get(index), player);
 
 			if(replacesLst.size() < scoreboardLines.size()) {
 				obj.getScore(line).setScore(index);

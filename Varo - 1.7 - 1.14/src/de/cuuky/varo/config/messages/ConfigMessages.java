@@ -97,9 +97,6 @@ public enum ConfigMessages {
 	TEAMREQUEST_PLAYER_NOT_ONLINE("Teamrequest.playerNotOnline", "%colorcode%%invitor% ist nicht mehr online!"),
 	TEAMREQUEST_REVOKED("Teamrequest.invationRevoked", "Einladung erfolgreich zurückgezogen!"),
 
-	// SCOREBOARD
-	SCOREBOARD_HEADER("Scoreboard.header", "%projectname%"),
-
 	// WORLD
 	WORLD_SPAWN_NUMBER("World.spawnNameTag.number", "&7Spawn &b%number%"),
 	WORLD_SPAWN_PLAYER("World.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
