@@ -209,9 +209,11 @@ public final class Utils {
 
 	public static sortResult sortPlayers() {
 		ArrayList<VaroPlayer> players = VaroPlayer.getOnlinePlayer();
+		ArrayList<VaroPlayer> playersForIterator = VaroPlayer.getOnlinePlayer();
 		ArrayList<Spawn> spawns = Spawn.getSpawnsClone();
+		ArrayList<Spawn> spawnsForIterator = Spawn.getSpawns();
 
-		for(VaroPlayer vp : players) {
+		for(VaroPlayer vp : playersForIterator) {
 			if(!vp.getStats().isSpectator()) {
 				continue;
 			}
@@ -220,7 +222,7 @@ public final class Utils {
 			players.remove(vp);
 		}
 
-		for(Spawn spawn : spawns) {
+		for(Spawn spawn : spawnsForIterator) {
 			if(spawn.getPlayer() == null) {
 				continue;
 			} else if(!spawn.getPlayer().isOnline()) {
