@@ -1,5 +1,7 @@
 package de.cuuky.varo.utils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.ServerPropertiesReader;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -399,10 +400,26 @@ public final class Utils {
 	}
 
 	public static World getMainWorld() {
-		return Bukkit.getWorld((String) new ServerPropertiesReader().get("level-name"));
+		return Bukkit.getWorld((String) Utils.readServerProperties("level-name"));
 	}
 
 	public static Location getTeleportLocation() {
 		return Game.getInstance().getLobby() != null ? Game.getInstance().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
+	}
+
+	public static Object readServerProperties(String key) {
+		try {
+			Scanner scanner = new Scanner(new File("server.properties"));
+			while(scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				if(!line.split("=")[0].equals(key))
+					continue;
+
+				return line.split("=")[1];
+			}
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
