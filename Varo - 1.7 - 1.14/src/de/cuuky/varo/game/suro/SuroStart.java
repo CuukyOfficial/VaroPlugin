@@ -65,15 +65,9 @@ public class SuroStart {
 					for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
-						if (VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null) {
-							VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE).remove();
-						}
-						if (VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
-							VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE).remove();
-						}
-						if (VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null) {
-							VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION).remove();
-						}
+						VaroCancelAble.removeCancelAble(vp, CancelAbleType.FREEZE);
+						VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);
+						VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
 					}
 					return;
 				}

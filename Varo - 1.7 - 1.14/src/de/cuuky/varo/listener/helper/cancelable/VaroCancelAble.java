@@ -50,11 +50,7 @@ public class VaroCancelAble {
 	}
 
 	private void removeOld() {
-		for(int i = 0; i < cancelables.size(); i++) {
-			VaroCancelAble cancelable = cancelables.get(i);
-			if(cancelable.getType().equals(type) && cancelable.getPlayer().equals(player))
-				cancelable.remove();
-		}
+		removeCancelAble(player, type);
 	}
 
 	public void setTimerHook(Runnable runnable) {
@@ -69,7 +65,7 @@ public class VaroCancelAble {
 		return player;
 	}
 
-	public void remove() {
+	private void remove() {
 		cancelables.remove(this);
 	}
 
@@ -79,5 +75,16 @@ public class VaroCancelAble {
 				return able;
 
 		return null;
+	}
+
+	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
+		for(int i = 0; i < cancelables.size(); i++) {
+			VaroCancelAble able = cancelables.get(i);
+			if(able.getPlayer().equals(player) && able.getType().equals(type)) {
+				able.remove();
+				i--;
+			}
+		}
+
 	}
 }

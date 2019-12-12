@@ -87,8 +87,7 @@ public class PlayerJoinListener implements Listener {
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 				if (!player.isOp()) {
-					if (VaroCancelAble.getCancelAble(vplayer, CancelAbleType.FREEZE) == null)
-						new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
+					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 				}
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));

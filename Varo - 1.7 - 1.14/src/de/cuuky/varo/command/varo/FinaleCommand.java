@@ -64,8 +64,7 @@ public class FinaleCommand extends VaroCommand {
 					continue;
 				}
 				
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) == null)
-					new VaroCancelAble(CancelAbleType.FREEZE, player);
+				new VaroCancelAble(CancelAbleType.FREEZE, player);
 				
 				if (pl.isOnline())
 					player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
@@ -148,9 +147,7 @@ public class FinaleCommand extends VaroCommand {
 		}
 
 		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
-			if (VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE) != null) {
-				VaroCancelAble.getCancelAble(player, CancelAbleType.FREEZE).remove();
-			}
+			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
 			if (player.getPlayer() != null) {
 				if (player.getPlayer().isOnline()) {
 					player.getPlayer().teleport(Utils.getMainWorld().getSpawnLocation());
