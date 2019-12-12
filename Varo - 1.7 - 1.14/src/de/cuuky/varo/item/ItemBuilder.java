@@ -71,9 +71,8 @@ public class ItemBuilder {
 	public void deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			Meta.getEnchants().keySet();
-			for (Enchantment e : Meta.getEnchants().keySet()) {
-				Meta.removeEnchant(e);
+			for (Enchantment key : Meta.getEnchants().keySet()) {
+				Meta.removeEnchant(key);
 			}
 			//TODO Hide other attributes?
 		} else {

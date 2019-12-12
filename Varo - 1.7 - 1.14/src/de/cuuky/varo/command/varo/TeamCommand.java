@@ -103,8 +103,8 @@ public class TeamCommand extends VaroCommand {
 				varoplayer.getTeam().removeMember(varoplayer);
 				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich aus seinem Team entfernt!");
 			} else if (args[1].equalsIgnoreCase("@a")) {
-				for (Team tm : Team.getTeams()) {
-					tm.delete();
+				while (Team.getTeams().size() > 0) {
+					Team.getTeams().get(0).delete();
 				}
 				sender.sendMessage(Main.getPrefix() + "Alle Teams erfolgreich gelöscht!");
 			} else
