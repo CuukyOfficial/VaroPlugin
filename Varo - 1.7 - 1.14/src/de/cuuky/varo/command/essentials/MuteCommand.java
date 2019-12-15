@@ -49,10 +49,9 @@ public class MuteCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gemutet werden!");
 			return false;
 		}
-		
+
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		new VaroCancelAble(CancelAbleType.MUTE, vp);
-		
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gemuted!");
 		return false;

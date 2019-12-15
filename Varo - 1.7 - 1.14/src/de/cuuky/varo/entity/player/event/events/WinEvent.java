@@ -2,9 +2,6 @@ package de.cuuky.varo.entity.player.event.events;
 
 import org.bukkit.Bukkit;
 
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.exceptions.PermissionException;
-
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -12,6 +9,8 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.exceptions.PermissionException;
 
 public class WinEvent extends BukkitEvent {
 

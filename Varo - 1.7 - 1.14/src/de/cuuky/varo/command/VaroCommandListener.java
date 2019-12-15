@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroCommandListener implements CommandExecutor {
 
@@ -32,7 +32,7 @@ public class VaroCommandListener implements CommandExecutor {
 			return false;
 		}
 
-		command.onCommand(sender, (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null), cmd, label, Utils.removeString(args, 0));
+		command.onCommand(sender, (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null), cmd, label, JavaUtils.removeString(args, 0));
 		return true;
 	}
 }

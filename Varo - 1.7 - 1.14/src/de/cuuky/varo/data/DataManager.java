@@ -10,8 +10,6 @@ import java.util.zip.ZipInputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 
-import net.labymod.serverapi.LabyModAPI;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
@@ -35,7 +33,8 @@ import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
+import net.labymod.serverapi.LabyModAPI;
 
 public class DataManager {
 
@@ -46,7 +45,7 @@ public class DataManager {
 	private boolean doSave;
 
 	public static DataManager getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new DataManager();
 		}
 		return instance;
@@ -64,23 +63,22 @@ public class DataManager {
 		ConfigFailureDetector.detectConfig();
 
 		copyDefaultPresets();
-		ConfigHandler.getInstance(); //Initialisierung
+		ConfigHandler.getInstance(); // Initialisierung
 
-		GameHandler.initialise(); //Initialisierung GameHandler
-		PlayerHandler.initialise(); //Initialisierung PlayerHandler
-		TeamHandler.initialise(); //Initialisierung TeamHandler
-		SpawnHandler.initialise(); //Initialisierung SpawnHandler
-		ScoreboardHandler.getInstance(); //Initialisierung ScoreboardHandler
-		ReportHandler.initialise(); //Initialisierung ReportHandler
-		AlertHandler.initialise(); //Initialisierung AlertHandler
-		OutSideTimeChecker.getInstance(); //Initialisierung TimeChecker
-		MySQL.getInstance(); //Initialisierung MySQL
-		ListHandler.getInstance(); //Initialisierung ListHandler
-		Broadcaster.getInstance(); //Initialisierung Broadcaster
+		GameHandler.initialise(); // Initialisierung GameHandler
+		PlayerHandler.initialise(); // Initialisierung PlayerHandler
+		TeamHandler.initialise(); // Initialisierung TeamHandler
+		SpawnHandler.initialise(); // Initialisierung SpawnHandler
+		ScoreboardHandler.getInstance(); // Initialisierung ScoreboardHandler
+		ReportHandler.initialise(); // Initialisierung ReportHandler
+		AlertHandler.initialise(); // Initialisierung AlertHandler
+		OutSideTimeChecker.getInstance(); // Initialisierung TimeChecker
+		MySQL.getInstance(); // Initialisierung MySQL
+		ListHandler.getInstance(); // Initialisierung ListHandler
+		Broadcaster.getInstance(); // Initialisierung Broadcaster
 
 		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
-		Utils.setWorldToTime();
-
+		VaroUtils.setWorldToTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}

@@ -23,7 +23,7 @@ import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -42,7 +42,7 @@ public class PlayerJoinListener implements Listener {
 			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
-				player.teleport(Utils.getTeleportLocation());
+				player.teleport(VaroUtils.getTeleportLocation());
 
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {});
@@ -57,11 +57,11 @@ public class PlayerJoinListener implements Listener {
 			}
 
 			if(player.isOp()) {
-				Object[] updater = Utils.checkForUpdates();
-				Utils.UpdateResult result = (Utils.UpdateResult) updater[0];
+				Object[] updater = VaroUtils.checkForUpdates();
+				VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater[0];
 				String updateVersion = (String) updater[1];
 
-				if(result == Utils.UpdateResult.UPDATE_AVAILABLE) {
+				if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
 					if(Team.getTeams().isEmpty()) {
 						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 					}
@@ -72,7 +72,7 @@ public class PlayerJoinListener implements Listener {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-					player.teleport(Utils.getMainWorld().getSpawnLocation());
+					player.teleport(VaroUtils.getMainWorld().getSpawnLocation());
 				}
 			}
 			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
@@ -82,11 +82,11 @@ public class PlayerJoinListener implements Listener {
 
 			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
-			} else if (Game.getInstance().getFinaleJoinStart()) {
+			} else if(Game.getInstance().getFinaleJoinStart()) {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
-				if (!player.isOp()) {
+				if(!player.isOp()) {
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 				}
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {

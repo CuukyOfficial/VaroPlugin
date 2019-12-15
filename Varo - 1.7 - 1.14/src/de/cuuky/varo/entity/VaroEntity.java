@@ -7,7 +7,8 @@ public abstract class VaroEntity implements VaroSerializeable {
 	/*
 	 * Coming soon
 	 * 
-	 * TODO: Onkill, OnEliminate, Stats for both
+	 * TODO: Onkill, OnEliminate, Stats for team and varoplayer
+	 * w
 	 */
 
 }

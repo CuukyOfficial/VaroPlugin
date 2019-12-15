@@ -34,7 +34,7 @@ public class VersionUtils {
 
 		return null;
 	}
-	
+
 	public static String getNmsClass() {
 		return nmsClass;
 	}

@@ -37,8 +37,8 @@ public class StrikeCommand extends VaroCommand {
 					continue;
 				reason += key;
 			}
-			
-			if (reason.isEmpty()) {
+
+			if(reason.isEmpty()) {
 				reason = "Ohne Begründung";
 			}
 

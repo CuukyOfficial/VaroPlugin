@@ -1,12 +1,13 @@
 
 package de.cuuky.varo.game;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -15,8 +16,6 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
@@ -41,7 +40,8 @@ import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
 import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
@@ -78,7 +78,7 @@ public class Game implements VaroSerializeable {
 		return instance;
 	}
 
-	public Game() { //Für Deserializer
+	public Game() { // Für Deserializer
 		instance = this;
 	}
 
@@ -200,7 +200,7 @@ public class Game implements VaroSerializeable {
 		}
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
-			Utils.sortPlayers();
+			VaroUtils.sortPlayers();
 
 		removeArentAtStart();
 		if(minuteTimer != null)
@@ -262,7 +262,7 @@ public class Game implements VaroSerializeable {
 
 					setGamestate(GameState.STARTED);
 					fillChests();
-					Utils.getMainWorld().strikeLightningEffect(Utils.getMainWorld().getSpawnLocation());
+					VaroUtils.getMainWorld().strikeLightningEffect(VaroUtils.getMainWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
@@ -278,7 +278,7 @@ public class Game implements VaroSerializeable {
 					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
 					ListHandler.getInstance().getStartItems().giveToAll();
-					if (ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+					if(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
 						Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 						protection = new ProtectionTime();
 					}
@@ -321,9 +321,15 @@ public class Game implements VaroSerializeable {
 			names = names + (won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
 			switch(i) {
-			case 1: first = names; break;
-			case 2: second = names; break;
-			case 3: third = names; break;
+			case 1:
+				first = names;
+				break;
+			case 2:
+				second = names;
+				break;
+			case 3:
+				third = names;
+				break;
 			}
 		}
 
@@ -355,8 +361,8 @@ public class Game implements VaroSerializeable {
 			return;
 
 		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = Utils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = Utils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = VaroUtils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = VaroUtils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();
@@ -367,11 +373,11 @@ public class Game implements VaroSerializeable {
 			Chest chest = (Chest) block.getState();
 			chest.getBlockInventory().clear();
 			for(int i = 0; i < itemsPerChest; i++) {
-				int random = Utils.randomInt(0, chest.getBlockInventory().getSize() - 1);
+				int random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
 				while(chest.getBlockInventory().getContents().length != chest.getBlockInventory().getSize())
-					random = Utils.randomInt(0, chest.getBlockInventory().getSize() - 1);
+					random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
 
-				chest.getBlockInventory().setItem(random, chestItems.get(Utils.randomInt(0, chestItems.size() - 1)));
+				chest.getBlockInventory().setItem(random, chestItems.get(JavaUtils.randomInt(0, chestItems.size() - 1)));
 			}
 		}
 
@@ -479,11 +485,11 @@ public class Game implements VaroSerializeable {
 	public Location getLobby() {
 		return lobby;
 	}
-	
+
 	public boolean getFinaleJoinStart() {
 		return finaleJoinStart;
 	}
-	
+
 	public void setFinaleJoinStart(boolean finaleJoinStart) {
 		this.finaleJoinStart = finaleJoinStart;
 	}

@@ -12,7 +12,7 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroEventGUI extends SuperInventory {
 
@@ -26,7 +26,7 @@ public class VaroEventGUI extends SuperInventory {
 	public boolean onOpen() {
 		int i = 0;
 		for(VaroEvent event : VaroEvent.getEvents()) {
-			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(Utils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, Utils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
 
 				@Override
 				public void run() {

@@ -11,7 +11,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.config.ConfigSection;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {
 
@@ -26,7 +26,7 @@ public class ConfigHandler {
 	private YamlConfiguration messagesCfg;
 
 	public static ConfigHandler getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new ConfigHandler();
 		}
 		return instance;
@@ -67,7 +67,7 @@ public class ConfigHandler {
 			desc = desc + "\n----------- " + section.getName() + " -----------";
 
 			for(ConfigEntry entry : section.getEntries()) {
-				String description = Utils.getArgsToString(entry.getDescription(), "\n  ");
+				String description = JavaUtils.getArgsToString(entry.getDescription(), "\n  ");
 				desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValue() + "\r\n";
 			}
 		}
@@ -87,46 +87,46 @@ public class ConfigHandler {
 	 */
 	public void testConfig() {
 		boolean shutdown = false;
-		for (ConfigEntry entry : ConfigEntry.values()) {
+		for(ConfigEntry entry : ConfigEntry.values()) {
 
-			Class dataTypeWanted = entry.getDefaultValue().getClass();
-			Class dataTypeInConfig = configCfg.get(entry.getFullPath()).getClass();
+			Class<?> dataTypeWanted = entry.getDefaultValue().getClass();
+			Class<?> dataTypeInConfig = configCfg.get(entry.getFullPath()).getClass();
 
-			if (dataTypeInConfig.equals(MemorySection.class)) {
+			if(dataTypeInConfig.equals(MemorySection.class)) {
 				continue;
 			}
 
-			if (dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
+			if(dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
 				continue;
 			}
 
-			if (!dataTypeWanted.equals(dataTypeInConfig)) {
+			if(!dataTypeWanted.equals(dataTypeInConfig)) {
 				System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Der Eintrag " + entry.getName() + " muss vom Datentyp \"" + dataTypeWanted.getSimpleName() + "\" sein, ist aber vom Datentyp \"" + dataTypeInConfig.getSimpleName() + "\".");
 				shutdown = true;
 			}
 		}
 
-		if (shutdown) {
+		if(shutdown) {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
 		}
 
-		if (ConfigEntry.BACKPACK_SIZE.getValueAsInt() > 54) {
+		if(ConfigEntry.BACKPACK_SIZE.getValueAsInt() > 54) {
 			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Backpacks darf nicht mehr als 54 betragen.");
 			shutdown = true;
 		}
 
-		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() <= 0 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() <= 0 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
 			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Wenn die Spielzeit nicht unendlich ist, muss ein JoinSystem aktiviert sein.");
 			shutdown = true;
 		}
 
-		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
 			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es dürfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
 			shutdown = true;
 		}
 
-		if (shutdown) {
+		if(shutdown) {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
 		}

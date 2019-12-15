@@ -18,7 +18,7 @@ public class MySQL {
 	private boolean connected;
 
 	public static MySQL getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new MySQL();
 		}
 		return instance;

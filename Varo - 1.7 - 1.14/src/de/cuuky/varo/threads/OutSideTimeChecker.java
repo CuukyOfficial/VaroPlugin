@@ -12,7 +12,7 @@ public class OutSideTimeChecker {
 	private GregorianCalendar date2;
 
 	public static OutSideTimeChecker getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new OutSideTimeChecker();
 		}
 		return instance;

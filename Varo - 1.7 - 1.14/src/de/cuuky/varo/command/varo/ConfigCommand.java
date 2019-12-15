@@ -8,7 +8,7 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigCommand extends VaroCommand {
 
@@ -40,7 +40,7 @@ public class ConfigCommand extends VaroCommand {
 				if(!entry.getPath().equalsIgnoreCase(args[1]))
 					continue;
 
-				Object arg = Utils.getStringObject(args[2]);
+				Object arg = JavaUtils.getStringObject(args[2]);
 				entry.setValue(arg, true);
 
 				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich den Eintrag '§a" + entry.getPath() + "§7' auf '§a" + entry.getValue() + "§7' gesetzt!");
@@ -48,13 +48,14 @@ public class ConfigCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "§7Den Eintrag §7" + args[1] + "§7 gibt es nicht in der Config!");
-		} else if (args[0].equalsIgnoreCase("reset")) {
-			for (ConfigEntry entry : ConfigEntry.values()) {
+		} else if(args[0].equalsIgnoreCase("reset")) {
+			for(ConfigEntry entry : ConfigEntry.values()) {
 				entry.setValue(entry.getDefaultValue(), true);
 			}
 			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Einträge zurückgesetzt!");
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Command '" + args[0] + "' not found! §7Type /config for help.");
-		} //TODO Nach set, reload und Änderung in GUI ein automatisches Plugin-Reload
+		} // TODO Nach set, reload und Änderung in GUI ein automatisches
+			// Plugin-Reload
 	}
 }

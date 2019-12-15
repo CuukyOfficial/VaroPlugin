@@ -16,12 +16,12 @@ public final class UUIDUtils {
 	public static UUID getUUID(String name) throws Exception {
 		return getUUIDTime(name, -1);
 	}
-	
+
 	public static String getNamesChanged(String name) throws Exception {
 		Date Date = new Date();
 		long Time = Date.getTime() / 1000;
 
-		UUID UUIDOld = getUUIDTime(name, (Time-(60*60*24*30)));
+		UUID UUIDOld = getUUIDTime(name, (Time - (60 * 60 * 24 * 30)));
 		String uuid = UUIDOld.toString().replace("-", "");
 
 		Scanner scanner = new Scanner(new URL("https://api.mojang.com/user/profiles/" + uuid + "/names").openStream());
@@ -29,15 +29,15 @@ public final class UUIDUtils {
 		scanner.close();
 
 		JSONArray nameArray = (JSONArray) JSONValue.parseWithException(input);
-		String playerSlot = nameArray.get(nameArray.size()-1).toString();
+		String playerSlot = nameArray.get(nameArray.size() - 1).toString();
 		JSONObject nameObject = (JSONObject) JSONValue.parseWithException(playerSlot);
 		String newName = nameObject.get("name").toString();
 		return newName;
 	}
-	
+
 	private static UUID getUUIDTime(String name, long time) throws Exception {
 		Scanner scanner;
-		if (time == -1) {
+		if(time == -1) {
 			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream());
 		} else {
 			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name + "?at=" + String.valueOf(time)).openStream());

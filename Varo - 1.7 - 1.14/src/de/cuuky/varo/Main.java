@@ -13,7 +13,8 @@ import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.threads.DailyTimer;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Main extends JavaPlugin {
@@ -64,17 +65,17 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
-			dataManager = DataManager.getInstance(); //Initialisierung
+			dataManager = DataManager.getInstance(); // Initialisierung
 
-			Object[] updater2 = Utils.checkForUpdates();
-			Utils.UpdateResult result = (Utils.UpdateResult) updater2[0];
+			Object[] updater2 = VaroUtils.checkForUpdates();
+			VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater2[0];
 			String updateVersion = (String) updater2[1];
 			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
-			if(result == Utils.UpdateResult.UPDATE_AVAILABLE)
+			if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
 				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 			DailyTimer.startTimer();
 
-			botLauncher = BotLauncher.getInstance(); //Initialisierung
+			botLauncher = BotLauncher.getInstance(); // Initialisierung
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {
@@ -151,7 +152,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getContributors() {
-		return Utils.getArgsToString(Utils.removeString(Utils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
+		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
 	}
 
 	public static String getPluginName() {

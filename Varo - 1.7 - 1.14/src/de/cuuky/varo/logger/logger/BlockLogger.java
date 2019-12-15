@@ -15,7 +15,7 @@ public class BlockLogger extends Logger {
 	}
 
 	public static BlockLogger getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new BlockLogger("blocklogs");
 		}
 		return instance;

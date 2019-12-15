@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.listener.utils.InventoryClickUtil;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
 
@@ -179,7 +179,7 @@ public class PlayerChooseInventory {
 					stack.getItemMeta().setDisplayName(event.getDisplayName());
 
 				if(event.getLore() != null)
-					stack.getItemMeta().setLore(Utils.collectionToArray(event.getLore()));
+					stack.getItemMeta().setLore(JavaUtils.collectionToArray(event.getLore()));
 			}
 
 			inv.setItem(start, stack);

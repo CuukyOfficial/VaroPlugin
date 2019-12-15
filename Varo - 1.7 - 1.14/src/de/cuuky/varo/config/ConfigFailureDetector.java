@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import org.yaml.snakeyaml.scanner.ScannerException;
 
 import de.cuuky.varo.Main;
@@ -27,7 +26,7 @@ public final class ConfigFailureDetector {
 		if(newFile.listFiles() == null)
 			newFile.mkdir();
 
-		if (scanDirectory(newFile)) {
+		if(scanDirectory(newFile)) {
 			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
 			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
 			Bukkit.getPluginManager().disablePlugin(Main.getInstance());

@@ -20,7 +20,7 @@ public class PlayerCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (args[0].equalsIgnoreCase("list")) {
+		if(args[0].equalsIgnoreCase("list")) {
 			if(VaroPlayer.getVaroPlayer().isEmpty()) {
 				sender.sendMessage(Main.getPrefix() + "Kein Spieler gefunden!");
 				return;
@@ -59,7 +59,7 @@ public class PlayerCommand extends VaroCommand {
 
 			for(int i = (page - 1) * 50; i < lastPlayerOnPage; i++) {
 				VaroPlayer player = VaroPlayer.getVaroPlayer().get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + (i+1) + "§7: " + Main.getColorCode() + player.getName());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + (i + 1) + "§7: " + Main.getColorCode() + player.getName());
 			}
 
 			int lastPlayerNextSite = 0;
@@ -202,7 +202,7 @@ public class PlayerCommand extends VaroCommand {
 						newName = UUIDUtils.getNamesChanged(arg);
 						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieß, hat sich in §7" + newName + " §cumbenannt.");
 						sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufügen.");
-					} catch (Exception f) {
+					} catch(Exception f) {
 						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 					}
 					continue;

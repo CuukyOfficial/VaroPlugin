@@ -21,7 +21,7 @@ public class ListHandler {
 	private DeathItems deathItems;
 
 	public static ListHandler getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new ListHandler();
 		}
 		return instance;

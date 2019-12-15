@@ -12,7 +12,7 @@ public class SpawnHandler extends VaroSerializeObject {
 	}
 
 	public static void initialise() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new SpawnHandler();
 		}
 	}

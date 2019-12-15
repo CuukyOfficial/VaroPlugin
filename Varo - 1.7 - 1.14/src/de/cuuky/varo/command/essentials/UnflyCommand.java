@@ -11,14 +11,14 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class UnflyCommand implements CommandExecutor {
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.unfly")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
-		
+
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "§7Entweder /unfly [Player/@a] oder Spieler sein!");
@@ -30,7 +30,7 @@ public class UnflyCommand implements CommandExecutor {
 			p.setFlying(false);
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst jetzt nicht mehr fliegen!");
 		} else if(args.length == 1) {
-			
+
 			if(args[0].equalsIgnoreCase("@a")) {
 				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 					player.getPlayer().setAllowFlight(false);
@@ -40,7 +40,7 @@ public class UnflyCommand implements CommandExecutor {
 				sender.sendMessage(Main.getPrefix() + "Niemand kann mehr fliegen!");
 				return false;
 			}
-			
+
 			Player to = Bukkit.getPlayerExact(args[0]);
 			if(to == null) {
 				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + "§7 nicht gefunden!");
@@ -54,8 +54,7 @@ public class UnflyCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "§7/fly [Player/@a]");
 			sender.sendMessage(Main.getPrefix() + "§7/unfly [Player/@a]");
 		}
-		
-		
+
 		return false;
 	}
 }

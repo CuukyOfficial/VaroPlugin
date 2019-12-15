@@ -3,7 +3,7 @@ package de.cuuky.varo.logger.logger;
 import java.io.PrintStream;
 
 import de.cuuky.varo.logger.Logger;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class ConsoleLogger extends Logger {
 
@@ -53,7 +53,7 @@ public class ConsoleLogger extends Logger {
 	}
 
 	public void println(String line) {
-		line = "[" + getCurrentDate() + "] " + Utils.replaceAllColors(line);
+		line = "[" + getCurrentDate() + "] " + JavaUtils.replaceAllColors(line);
 
 		pw.println(line);
 		logs.add(line);

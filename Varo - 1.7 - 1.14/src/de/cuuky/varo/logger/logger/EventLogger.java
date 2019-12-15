@@ -1,12 +1,12 @@
 package de.cuuky.varo.logger.logger;
 
-import java.awt.*;
+import java.awt.Color;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.logger.Logger;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class EventLogger extends Logger {
 
@@ -17,14 +17,14 @@ public class EventLogger extends Logger {
 	}
 
 	public static EventLogger getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new EventLogger("logs");
 		}
 		return instance;
 	}
 
 	public void println(LogType type, String message) {
-		message = Utils.replaceAllColors(message);
+		message = JavaUtils.replaceAllColors(message);
 
 		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replaceAll("%noBot%", "");
 

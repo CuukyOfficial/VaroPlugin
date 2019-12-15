@@ -9,10 +9,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.managers.GuildController;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -38,10 +34,13 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.vanish.Vanish;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.managers.GuildController;
 
 public class VaroPlayer extends VaroEntity {
 
@@ -106,7 +105,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	private int generateId() {
-		int id = Utils.randomInt(1000, 9999999);
+		int id = JavaUtils.randomInt(1000, 9999999);
 		while(getPlayer(id) != null)
 			generateId();
 

@@ -7,7 +7,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.world.AutoSetup;
 
 public class AutoSetupCommand extends VaroCommand {
@@ -26,8 +26,8 @@ public class AutoSetupCommand extends VaroCommand {
 				}
 
 				new AutoSetup();
-				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-					player.getPlayer().teleport(Utils.getTeleportLocation());
+				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+					player.getPlayer().teleport(VaroUtils.getTeleportLocation());
 				}
 				sender.sendMessage(Main.getPrefix() + "Der AutoSetup ist fertig.");
 				return;

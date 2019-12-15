@@ -8,13 +8,13 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
-public class  PlayerTeleportListener implements Listener {
+public class PlayerTeleportListener implements Listener {
 
 	@EventHandler
 	public void onTeleport(PlayerTeleportEvent event) {
-		if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.NETHER_PORTAL)) {
-			if (event.getFrom().getWorld().getEnvironment() == World.Environment.NORMAL && event.getTo().getWorld().getEnvironment() == World.Environment.NETHER) {
-				if (event.getFrom().distance(event.getFrom().getWorld().getSpawnLocation()) < 500) {
+		if(event.getCause().equals(PlayerTeleportEvent.TeleportCause.NETHER_PORTAL)) {
+			if(event.getFrom().getWorld().getEnvironment() == World.Environment.NORMAL && event.getTo().getWorld().getEnvironment() == World.Environment.NETHER) {
+				if(event.getFrom().distance(event.getFrom().getWorld().getSpawnLocation()) < 500) {
 					event.getTo().getWorld().setSpawnLocation(event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ());
 				}
 			}

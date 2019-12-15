@@ -50,7 +50,7 @@ public class FreezeCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gefreezed werden!");
 			return false;
 		}
-		
+
 		new VaroCancelAble(CancelAbleType.FREEZE, vp);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gefreezed!");

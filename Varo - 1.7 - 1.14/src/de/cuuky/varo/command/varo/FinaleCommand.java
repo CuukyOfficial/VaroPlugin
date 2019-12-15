@@ -16,7 +16,7 @@ import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.world.border.VaroBorder;
 
 public class FinaleCommand extends VaroCommand {
@@ -47,66 +47,66 @@ public class FinaleCommand extends VaroCommand {
 		}
 
 		if(args[0].equalsIgnoreCase("joinstart")) {
-			if (Status == FinaleState.JOIN_PHASE) {
+			if(Status == FinaleState.JOIN_PHASE) {
 				sender.sendMessage(Main.getPrefix() + "Der JoinStart wurde bereits aktiviert.");
 				return;
-			} else if (Status == FinaleState.COUNTDOWN_PHASE) {
+			} else if(Status == FinaleState.COUNTDOWN_PHASE) {
 				sender.sendMessage(Main.getPrefix() + "Der Finale-Countdown wurde bereits aktiviert.");
 				return;
-			} else if (Status == FinaleState.STARTED) {
+			} else if(Status == FinaleState.STARTED) {
 				sender.sendMessage(Main.getPrefix() + "Das Finale wurde bereits gestartet.");
 				return;
 			}
 
-			for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer()) {
+			for(VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer()) {
 				Player pl = player.getPlayer();
 				if(pl.isOp()) {
 					continue;
 				}
-				
+
 				new VaroCancelAble(CancelAbleType.FREEZE, player);
-				
-				if (pl.isOnline())
+
+				if(pl.isOnline())
 					player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 			}
-			
+
 			Game.getInstance().setFinaleJoinStart(true);
 			Status = FinaleState.JOIN_PHASE;
 			ConfigEntry.PLAY_TIME.setValue(-1, true);
-			
+
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es können nun alle zum Finale joinen.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
 			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getötet.");
-			
+
 			EventLogger.getInstance().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
-			
+
 			return;
 		} else if(args[0].equalsIgnoreCase("hauptstart") || args[0].equalsIgnoreCase("mainstart")) {
-			if (Status == FinaleState.NO) {
+			if(Status == FinaleState.NO) {
 				sender.sendMessage(Main.getPrefix() + "Der Join-Start wurde noch nicht aktiviert. Dies muss vor dem Hauptstart geschehen.");
 				return;
-			} else if (Status == FinaleState.COUNTDOWN_PHASE) {
+			} else if(Status == FinaleState.COUNTDOWN_PHASE) {
 				sender.sendMessage(Main.getPrefix() + "Der Finale-Countdown läuft bereits.");
 				return;
-			} else if (Status == FinaleState.STARTED) {
+			} else if(Status == FinaleState.STARTED) {
 				sender.sendMessage(Main.getPrefix() + "Das Finale wurde bereits gestartet.");
 				return;
 			}
 
 			Countdown = 0;
-			if (args.length != 1) {
+			if(args.length != 1) {
 				try {
 					Countdown = Integer.parseInt(args[1]);
 				} catch(NumberFormatException e) {
 					Countdown = 0;
 				}
 			}
-			if (Countdown != 0) {
+			if(Countdown != 0) {
 				Status = FinaleState.COUNTDOWN_PHASE;
 				startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 					@Override
 					public void run() {
-						if (Countdown != 0) {
+						if(Countdown != 0) {
 							Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + Countdown + " Sekunden!");
 						} else {
 							finaleStart();
@@ -120,11 +120,11 @@ public class FinaleCommand extends VaroCommand {
 			}
 
 			return;
-		} else if (args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("abbruch") || args[0].equalsIgnoreCase("abbrechen") || args[0].equalsIgnoreCase("stop")) {
-			if (Status == FinaleState.NO || Status == FinaleState.JOIN_PHASE) {
+		} else if(args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("abbruch") || args[0].equalsIgnoreCase("abbrechen") || args[0].equalsIgnoreCase("stop")) {
+			if(Status == FinaleState.NO || Status == FinaleState.JOIN_PHASE) {
 				sender.sendMessage(Main.getPrefix() + "Es gibt keinen Countdown zum Abbrechen.");
 				return;
-			} else if (Status == FinaleState.STARTED) {
+			} else if(Status == FinaleState.STARTED) {
 				sender.sendMessage(Main.getPrefix() + "Das Finale wurde bereits gestartet.");
 				return;
 			}
@@ -139,22 +139,22 @@ public class FinaleCommand extends VaroCommand {
 		Status = FinaleState.STARTED;
 
 		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
-		if (ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
+		if(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
 			Game.getInstance().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
 		} else {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
 		}
 
-		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+		for(VaroPlayer player : VaroPlayer.getVaroPlayer()) {
 			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
-			if (player.getPlayer() != null) {
-				if (player.getPlayer().isOnline()) {
-					player.getPlayer().teleport(Utils.getMainWorld().getSpawnLocation());
+			if(player.getPlayer() != null) {
+				if(player.getPlayer().isOnline()) {
+					player.getPlayer().teleport(VaroUtils.getMainWorld().getSpawnLocation());
 					continue;
 				}
 			}
-			if (ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
+			if(ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
 				player.getStats().setState(PlayerState.SPECTATOR);
 			} else {
 				player.getStats().setState(PlayerState.DEAD);

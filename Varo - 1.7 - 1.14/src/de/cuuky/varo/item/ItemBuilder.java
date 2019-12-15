@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
@@ -54,12 +54,12 @@ public class ItemBuilder {
 	}
 
 	public ItemBuilder lore(String[] lore) {
-		this.lore = Utils.collectionToArray(lore);
+		this.lore = JavaUtils.collectionToArray(lore);
 		return this;
 	}
 
 	public ItemBuilder lore(String lore) {
-		this.lore = Utils.collectionToArray(new String[] { lore });
+		this.lore = JavaUtils.collectionToArray(new String[] { lore });
 		return this;
 	}
 
@@ -70,11 +70,11 @@ public class ItemBuilder {
 
 	public void deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			for (Enchantment key : Meta.getEnchants().keySet()) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			for(Enchantment key : Meta.getEnchants().keySet()) {
 				Meta.removeEnchant(key);
 			}
-			//TODO Hide other attributes?
+			// TODO Hide other attributes?
 		} else {
 			Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 			Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);

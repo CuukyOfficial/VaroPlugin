@@ -11,7 +11,7 @@ public class ReportHandler extends VaroSerializeObject {
 	}
 
 	public static void initialise() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new ReportHandler();
 		}
 	}

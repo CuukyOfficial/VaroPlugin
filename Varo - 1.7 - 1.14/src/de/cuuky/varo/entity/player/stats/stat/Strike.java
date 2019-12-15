@@ -2,9 +2,8 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.Date;
 
-import org.bukkit.Location;
-
 import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.Location;
 
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
@@ -13,7 +12,7 @@ import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class Strike implements VaroSerializeable {
 
@@ -83,8 +82,8 @@ public class Strike implements VaroSerializeable {
 
 		switch(number) {
 		case 1:
-			if (striked.getStats().getLastLocation() == null) {
-				Location loc = Utils.getMainWorld().getSpawnLocation();
+			if(striked.getStats().getLastLocation() == null) {
+				Location loc = VaroUtils.getMainWorld().getSpawnLocation();
 				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();

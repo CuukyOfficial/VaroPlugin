@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 
-import net.labymod.serverapi.LabyModAPI;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommandListener;
 import de.cuuky.varo.command.essentials.AntiXrayCommand;
@@ -72,6 +70,7 @@ import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
+import net.labymod.serverapi.LabyModAPI;
 
 public final class BukkitRegisterer {
 

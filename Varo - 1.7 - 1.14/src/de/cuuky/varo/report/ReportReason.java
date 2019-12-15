@@ -19,7 +19,6 @@ public enum ReportReason implements VaroSerializeable {
 	@VaroSerializeField(enumValue = "TROLLING")
 	TROLLING("Trolling", Materials.BLACK_WOOL.parseMaterial(), "Benutze dies, falls jemand trollt.");
 
-
 	private String name;
 	private Material material;
 	private String description;

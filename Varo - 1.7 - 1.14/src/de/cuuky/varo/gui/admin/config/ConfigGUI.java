@@ -15,7 +15,7 @@ import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.types.Materials;
 import de.cuuky.varo.version.types.Sounds;
 
@@ -40,7 +40,7 @@ public class ConfigGUI extends SuperInventory {
 					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
 				} else {
 					try {
-						entry.setValue(Utils.getStringObject(message), true);
+						entry.setValue(JavaUtils.getStringObject(message), true);
 
 					} catch(Exception e) {
 						opener.sendMessage(Main.getPrefix() + e.getMessage());

@@ -15,7 +15,7 @@ import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.spawns.spawn.SpawnGenerator;
 import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.world.generators.LobbyGenerator;
 import de.cuuky.varo.world.generators.PortalGenerator;
 
@@ -25,7 +25,7 @@ public class AutoSetup {
 		if(Game.getInstance().hasStarted())
 			return;
 
-		World world = Utils.getMainWorld();
+		World world = VaroUtils.getMainWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 

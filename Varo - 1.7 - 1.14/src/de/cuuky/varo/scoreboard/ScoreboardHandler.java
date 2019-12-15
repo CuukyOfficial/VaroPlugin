@@ -18,8 +18,6 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.Team;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 
 public class ScoreboardHandler {
 
@@ -32,7 +30,7 @@ public class ScoreboardHandler {
 	private TopScoreList topScores;
 
 	public static ScoreboardHandler getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new ScoreboardHandler();
 		}
 		return instance;

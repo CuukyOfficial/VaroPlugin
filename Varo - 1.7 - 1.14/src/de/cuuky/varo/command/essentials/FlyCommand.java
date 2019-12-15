@@ -39,7 +39,7 @@ public class FlyCommand implements CommandExecutor {
 				sender.sendMessage(Main.getPrefix() + "Jeder kann jetzt fliegen!");
 				return false;
 			}
-			
+
 			Player to = Bukkit.getPlayerExact(args[0]);
 			if(to == null) {
 				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + "§7 nicht gefunden!");

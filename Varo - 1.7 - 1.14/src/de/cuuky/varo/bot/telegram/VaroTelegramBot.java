@@ -21,7 +21,7 @@ public class VaroTelegramBot implements VaroBot {
 	private long youtubeChannelId;
 
 	public static VaroTelegramBot getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new VaroTelegramBot();
 		}
 		return instance;

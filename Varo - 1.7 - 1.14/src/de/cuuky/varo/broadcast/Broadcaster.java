@@ -11,7 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Broadcaster {
@@ -25,7 +25,7 @@ public class Broadcaster {
 	private ArrayList<String> messages = new ArrayList<>();
 
 	public static Broadcaster getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new Broadcaster();
 		}
 		return instance;
@@ -94,7 +94,7 @@ public class Broadcaster {
 	}
 
 	private String[] getRandomAd() {
-		int random = Utils.randomInt(0, 1);
+		int random = JavaUtils.randomInt(0, 1);
 		String[] messages = null;
 		if(random == 0) {
 			messages = new String[] { "", "", "" };

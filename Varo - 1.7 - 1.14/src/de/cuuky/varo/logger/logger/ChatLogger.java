@@ -1,7 +1,7 @@
 package de.cuuky.varo.logger.logger;
 
 import de.cuuky.varo.logger.Logger;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class ChatLogger extends Logger {
 
@@ -12,7 +12,7 @@ public class ChatLogger extends Logger {
 	}
 
 	public static ChatLogger getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new ChatLogger("chatlogs");
 		}
 		return instance;
@@ -43,7 +43,7 @@ public class ChatLogger extends Logger {
 	}
 
 	public void println(ChatLogType type, String message) {
-		message = Utils.replaceAllColors(message);
+		message = JavaUtils.replaceAllColors(message);
 
 		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
 

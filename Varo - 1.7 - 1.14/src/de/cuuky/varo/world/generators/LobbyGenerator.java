@@ -7,7 +7,7 @@ import org.bukkit.Location;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.types.Materials;
 import de.cuuky.varo.world.schematic.SchematicLoader;
 
@@ -65,6 +65,6 @@ public class LobbyGenerator {
 		for(int x = bottomBlockX; x <= topBlockX; x++)
 			for(int y = bottomBlockY; y <= topBlockY; y++)
 				for(int z = bottomBlockZ; z <= topBlockZ; z++)
-					BlockUtils.setBlock(to.getWorld().getBlockAt(x, y, z), glassTypes.get(Utils.randomInt(0, glassTypes.size() - 1)));
+					BlockUtils.setBlock(to.getWorld().getBlockAt(x, y, z), glassTypes.get(JavaUtils.randomInt(0, glassTypes.size() - 1)));
 	}
 }

@@ -7,7 +7,7 @@ public class TeamHandler extends VaroSerializeObject {
 	private static TeamHandler instance;
 
 	public static void initialise() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new TeamHandler();
 		}
 	}

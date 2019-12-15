@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class DayCommand implements CommandExecutor {
 
@@ -19,7 +19,7 @@ public class DayCommand implements CommandExecutor {
 			return false;
 		}
 
-		World world = sender instanceof Player ? ((Player) sender).getWorld() : Utils.getMainWorld();
+		World world = sender instanceof Player ? ((Player) sender).getWorld() : VaroUtils.getMainWorld();
 		world.setTime(1000);
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Tag§7!");
 		return false;

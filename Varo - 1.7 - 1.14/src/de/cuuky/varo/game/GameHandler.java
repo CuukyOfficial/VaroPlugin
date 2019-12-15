@@ -16,7 +16,7 @@ public class GameHandler extends VaroSerializeObject {
 	}
 
 	public static void initialise() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new GameHandler();
 		}
 	}
@@ -26,8 +26,9 @@ public class GameHandler extends VaroSerializeObject {
 
 		load();
 
-		if (Game.getInstance() == null) {
-			Game.initialise(); //Wird beim ersten Mal ausgeführt, wenn noch keine Dateien existieren
+		if(Game.getInstance() == null) {
+			Game.initialise(); // Wird beim ersten Mal ausgeführt, wenn noch
+								// keine Dateien existieren
 		}
 	}
 

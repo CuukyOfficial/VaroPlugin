@@ -13,7 +13,7 @@ public class BotLauncher {
 	private static VaroTelegramBot telegrambot;
 
 	public static BotLauncher getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new BotLauncher();
 		}
 		return instance;

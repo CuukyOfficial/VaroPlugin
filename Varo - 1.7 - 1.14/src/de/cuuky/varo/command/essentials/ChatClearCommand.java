@@ -16,11 +16,11 @@ public class ChatClearCommand implements CommandExecutor {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
-		
-		for (int i=0; i<100; i++) {
+
+		for(int i = 0; i < 100; i++) {
 			Bukkit.broadcastMessage("");
 		}
-		
+
 		Bukkit.broadcastMessage(Main.getPrefix() + "§7Der Chat wurde §7gecleart§7!");
 		return false;
 	}

@@ -10,7 +10,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroSaveable implements VaroSerializeable {
 
@@ -50,7 +50,7 @@ public class VaroSaveable implements VaroSerializeable {
 	}
 
 	private int generateId() {
-		int id = Utils.randomInt(1000, 9999999);
+		int id = JavaUtils.randomInt(1000, 9999999);
 		while(getSaveable(id) != null)
 			generateId();
 

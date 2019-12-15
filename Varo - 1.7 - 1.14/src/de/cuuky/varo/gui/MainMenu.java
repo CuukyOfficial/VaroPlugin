@@ -21,7 +21,7 @@ import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public class MainMenu extends SuperInventory {
@@ -42,7 +42,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] {Utils.formatLocation(opener.getWorld().getSpawnLocation(), Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z")}).build(), new Runnable() {
+		linkItemTo(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { VaroUtils.formatLocation(opener.getWorld().getSpawnLocation(), Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z") }).build(), new Runnable() {
 
 			@Override
 			public void run() {

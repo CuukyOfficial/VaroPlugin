@@ -12,11 +12,11 @@ public class ProtectionTime {
 	public ProtectionTime() {
 		startGeneralTimer(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
 	}
-	
+
 	public ProtectionTime(int Timer) {
 		startGeneralTimer(Timer);
 	}
-	
+
 	private void startGeneralTimer(int timer) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 

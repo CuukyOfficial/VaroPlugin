@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroInventory implements VaroSerializeable {
 
@@ -25,7 +25,7 @@ public class VaroInventory implements VaroSerializeable {
 
 	public VaroInventory(int size) {
 		inventoryList = new HashMap<>();
-		this.size = 54 < size ? 54 : (size < 9 ? 9 : Utils.getNextToNine(size));
+		this.size = 54 < size ? 54 : (size < 9 ? 9 : JavaUtils.getNextToNine(size));
 
 		createInventory();
 	}

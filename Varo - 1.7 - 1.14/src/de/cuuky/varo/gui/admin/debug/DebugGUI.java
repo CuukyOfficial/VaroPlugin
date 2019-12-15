@@ -17,7 +17,7 @@ import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.threads.dailycheck.Checker;
-import de.cuuky.varo.utils.Utils;
+import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public class DebugGUI extends SuperInventory {
@@ -63,7 +63,7 @@ public class DebugGUI extends SuperInventory {
 			public void run() {
 				String post = "";
 				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
-					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? Utils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
+					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? VaroUtils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
 
 				EventLogger.getInstance().println(LogType.ALERT, post);
 			}

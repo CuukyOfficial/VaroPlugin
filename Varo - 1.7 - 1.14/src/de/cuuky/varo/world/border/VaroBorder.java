@@ -17,7 +17,7 @@ public class VaroBorder {
 	private Object borders[] = new Object[2];
 
 	public static VaroBorder getInstance() {
-		if (instance == null) {
+		if(instance == null) {
 			instance = new VaroBorder();
 		}
 		return instance;
@@ -27,23 +27,25 @@ public class VaroBorder {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
-		for (World world : Bukkit.getWorlds()) {
-			switch (world.getEnvironment()) {
-				case NORMAL:
-					try {
-						//Invoke, damit kein Fehler in einer IDE kommt mit 1.7 jar
-						borders[0] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-					break;
-				case NETHER:
-					try {
-						borders[1] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-					break;
+		for(World world : Bukkit.getWorlds()) {
+			switch(world.getEnvironment()) {
+			case NORMAL:
+				try {
+					// Invoke, damit kein Fehler in einer IDE kommt mit 1.7 jar
+					borders[0] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			case NETHER:
+				try {
+					borders[1] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -54,17 +56,20 @@ public class VaroBorder {
 
 		Object border;
 
-		if (world == null) {
+		if(world == null) {
 			border = borders[0];
 		} else {
-			switch (world.getEnvironment()) {
-				case NORMAL: border = borders[0]; break;
-				case NETHER: border = borders[1]; break;
-				default: return 0;
+			switch(world.getEnvironment()) {
+			case NORMAL:
+				border = borders[0];
+				break;
+			case NETHER:
+				border = borders[1];
+				break;
+			default:
+				return 0;
 			}
 		}
-
-
 
 		try {
 			return (double) border.getClass().getDeclaredMethod("getSize").invoke(border);
@@ -81,13 +86,18 @@ public class VaroBorder {
 
 		Object border;
 
-		if (world == null) {
+		if(world == null) {
 			border = borders[0];
 		} else {
-			switch (world.getEnvironment()) {
-				case NORMAL: border = borders[0]; break;
-				case NETHER: border = borders[1]; break;
-				default: return;
+			switch(world.getEnvironment()) {
+			case NORMAL:
+				border = borders[0];
+				break;
+			case NETHER:
+				border = borders[1];
+				break;
+			default:
+				return;
 			}
 		}
 
@@ -104,10 +114,15 @@ public class VaroBorder {
 
 		Object border;
 
-		switch (loc.getWorld().getEnvironment()) {
-			case NORMAL: border = borders[0]; break;
-			case NETHER: border = borders[1]; break;
-			default: return;
+		switch(loc.getWorld().getEnvironment()) {
+		case NORMAL:
+			border = borders[0];
+			break;
+		case NETHER:
+			border = borders[1];
+			break;
+		default:
+			return;
 		}
 
 		try {
@@ -151,10 +166,15 @@ public class VaroBorder {
 
 		Object border;
 
-		switch (playerWorld.getEnvironment()) {
-			case NORMAL: border = borders[0]; break;
-			case NETHER: border = borders[1]; break;
-			default: return 0;
+		switch(playerWorld.getEnvironment()) {
+		case NORMAL:
+			border = borders[0];
+			break;
+		case NETHER:
+			border = borders[1];
+			break;
+		default:
+			return 0;
 		}
 
 		try {

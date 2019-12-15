@@ -19,7 +19,6 @@ import de.cuuky.varo.version.VersionUtils;
 public class AntiXrayCommand implements CommandExecutor {
 
 	private boolean antiXrayActivated;
-	private String Version;
 	private byte xrayAvailable;
 
 	@Override
@@ -51,14 +50,14 @@ public class AntiXrayCommand implements CommandExecutor {
 			m.setAccessible(true);
 			SpigotConfig = (YamlConfiguration) m.invoke(Bukkit.getServer().spigot());
 			m.setAccessible(false);
-		} catch (Exception e) {
+		} catch(Exception e) {
 			SpigotConfig = Bukkit.getServer().spigot().getConfig();
 		}
 
 		if(xrayAvailable == 0) {
 			String enabled = SpigotConfig.getString("world-settings.default.anti-xray.enabled");
 			String engineMode = SpigotConfig.getString("world-settings.default.anti-xray.engine-mode");
-			if (enabled == null || engineMode == null) {
+			if(enabled == null || engineMode == null) {
 				sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler mit dem Anti-Xray-System.");
 				sender.sendMessage(Main.getPrefix() + "Dies kann daran liegen, dass du eine nicht-unterstützte Serverversion benutzt.");
 				return false;
