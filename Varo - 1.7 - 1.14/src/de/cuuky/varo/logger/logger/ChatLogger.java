@@ -5,19 +5,17 @@ import de.cuuky.varo.utils.Utils;
 
 public class ChatLogger extends Logger {
 
-	public ChatLogger(String name) {
+	private static ChatLogger instance;
+
+	private ChatLogger(String name) {
 		super(name, false);
 	}
 
-	public void println(ChatLogType type, String message) {
-		message = Utils.replaceAllColors(message);
-
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
-
-		pw.println(log);
-		logs.add(log);
-
-		pw.flush();
+	public static ChatLogger getInstance() {
+		if (instance == null) {
+			instance = new ChatLogger("chatlogs");
+		}
+		return instance;
 	}
 
 	public enum ChatLogType {
@@ -27,7 +25,7 @@ public class ChatLogger extends Logger {
 
 		private String name;
 
-		private ChatLogType(String name) {
+		ChatLogType(String name) {
 			this.name = name;
 		}
 
@@ -42,5 +40,16 @@ public class ChatLogger extends Logger {
 
 			return null;
 		}
+	}
+
+	public void println(ChatLogType type, String message) {
+		message = Utils.replaceAllColors(message);
+
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
+
+		pw.println(log);
+		logs.add(log);
+
+		pw.flush();
 	}
 }

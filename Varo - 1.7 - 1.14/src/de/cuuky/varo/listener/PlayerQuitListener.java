@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.CombatlogCheck;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
@@ -14,7 +13,9 @@ import de.cuuky.varo.disconnect.Disconnect;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class PlayerQuitListener implements Listener {
@@ -25,24 +26,24 @@ public class PlayerQuitListener implements Listener {
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 		event.setQuitMessage(null);
 
-		// IF HE WAS A SPECTATOR
+		// IF THEY WERE A SPECTATOR
 		if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 			event.setQuitMessage(ConfigMessages.QUIT_SPECTATOR.getValue(vplayer));
 			vplayer.onEvent(BukkitEventType.QUIT);
 			return;
 		}
 
-		if(Main.getGame().getGameState() == GameState.STARTED) {
-			// IF HE WAS KICKED OR DEAD
+		if(Game.getInstance().getGameState() == GameState.STARTED) {
+			// IF THEY WERE KICKED OR DEAD
 			if(ConfigEntry.PLAY_TIME.isIntActivated())
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
 					if(vplayer.getStats().getState() != PlayerState.DEAD)
-						Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
+						EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
 					return;
 				}
 
-			// CHECK IF HE COMBATLOG
+			// CHECK IF THEY COMBATLOGGED
 			CombatlogCheck check = new CombatlogCheck(event);
 			if(check.isCombatLog()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
@@ -65,7 +66,7 @@ public class PlayerQuitListener implements Listener {
 
 				Disconnect.disconnected(vplayer.getName());
 				Bukkit.broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}

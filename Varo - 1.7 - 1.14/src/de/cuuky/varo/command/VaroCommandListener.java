@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.Utils;
 
@@ -27,7 +28,7 @@ public class VaroCommandListener implements CommandExecutor {
 		}
 
 		if(command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
-			sender.sendMessage(VaroCommand.getNoPermission(command.getPermission()));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

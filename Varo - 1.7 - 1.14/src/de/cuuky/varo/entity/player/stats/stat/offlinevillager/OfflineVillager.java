@@ -18,6 +18,7 @@ import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -111,7 +112,7 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	private void freezeVillager() {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 				@Override
@@ -145,7 +146,7 @@ public class OfflineVillager implements VaroSerializeable {
 			if(it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
 
-		Main.getLoggerMaster().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
 		Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue().replaceAll("%death%", vp.getName()).replaceAll("%killer%", killer.getName()));
 
 		killer.onEvent(BukkitEventType.KILL);

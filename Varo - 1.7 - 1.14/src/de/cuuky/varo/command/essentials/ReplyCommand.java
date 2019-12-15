@@ -40,5 +40,4 @@ public class ReplyCommand implements CommandExecutor {
 		MessageCommand.lastChat.put(to.getName(), sender.getName());
 		return false;
 	}
-
 }

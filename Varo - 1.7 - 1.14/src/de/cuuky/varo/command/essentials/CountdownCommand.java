@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.messages.ConfigMessages;
 
 public class CountdownCommand implements CommandExecutor {
 
@@ -19,7 +20,7 @@ public class CountdownCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.countdowm")) {
-			sender.sendMessage("No permission");
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

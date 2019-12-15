@@ -15,12 +15,15 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.team.Team;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.spigot.checker.UpdateChecker;
-import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -34,12 +37,12 @@ public class PlayerJoinListener implements Listener {
 		vplayer.setPlayer(player);
 		vplayer.onEvent(BukkitEventType.JOINED);
 
-		if(Main.getGame().getGameState() == GameState.LOBBY) {
+		if(Game.getInstance().getGameState() == GameState.LOBBY) {
 			Spawn spawn = Spawn.getSpawn(vplayer);
 			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
-				player.teleport(Main.getDataManager().getWorldHandler().getTeleportLocation());
+				player.teleport(Utils.getTeleportLocation());
 
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {});
@@ -48,39 +51,47 @@ public class PlayerJoinListener implements Listener {
 
 			if(ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
 				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
-					Main.getGame().start();
+					Game.getInstance().start();
 				else
 					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
 			}
 
 			if(player.isOp()) {
-				try {
-					UpdateChecker updater = Main.getUpdater();
-					if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-						if(Team.getTeams().isEmpty()) {
-							vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
-						}
-						player.sendMessage("§cUpdate verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+				Object[] updater = Utils.checkForUpdates();
+				Utils.UpdateResult result = (Utils.UpdateResult) updater[0];
+				String updateVersion = (String) updater[1];
+
+				if(result == Utils.UpdateResult.UPDATE_AVAILABLE) {
+					if(Team.getTeams().isEmpty()) {
+						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 					}
-				} catch(NumberFormatException e) {}
+					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+				}
 			}
 		} else {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-					player.teleport(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
+					player.teleport(Utils.getMainWorld().getSpawnLocation());
 				}
 			}
 			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				player.teleport(player.getWorld().getSpawnLocation());
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
 			}
 
 			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
+			} else if (Game.getInstance().getFinaleJoinStart()) {
+				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
+				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
+				if (!player.isOp()) {
+					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
+				}
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
 			} else if(VaroEvent.getMassRecEvent().isEnabled()) {
 				if(VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getTimer());
@@ -91,7 +102,7 @@ public class PlayerJoinListener implements Listener {
 				if(!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
-					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
+					EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -103,14 +114,14 @@ public class PlayerJoinListener implements Listener {
 					}, ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
 					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-					Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+					EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 				}
 			} else if(!vplayer.getStats().hasTimeLeft()) {
 				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
 			} else {
 				event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getLoggerMaster().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 			}
 			return;
 		}

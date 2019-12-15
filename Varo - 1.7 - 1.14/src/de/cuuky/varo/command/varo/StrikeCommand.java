@@ -35,8 +35,11 @@ public class StrikeCommand extends VaroCommand {
 			for(String key : args) {
 				if(key.equals(args[0]))
 					continue;
-
-				reason = reason.isEmpty() ? key : " " + key;
+				reason += key;
+			}
+			
+			if (reason.isEmpty()) {
+				reason = "Ohne Begründung";
 			}
 
 			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
@@ -75,7 +78,7 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			varoPlayer.getStats().removeStrike(varoPlayer.getStats().getStrikes().get(num));
-			sender.sendMessage(Main.getPrefix() + "§7Du hast " + Main.getColorCode() + vp.getName() + " §7einen Strike entfernt! Er hat noch " + Main.getColorCode() + vp.getStats().getStrikes().size() + " §7strikes!");
+			sender.sendMessage(Main.getPrefix() + "§7Du hast " + Main.getColorCode() + varoPlayer.getName() + " §7einen Strike entfernt! Er hat noch " + Main.getColorCode() + varoPlayer.getStats().getStrikes().size() + " §7Strikes!");
 		} else if(args[0].equalsIgnoreCase("list")) {
 			if(args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/strike list §7<Spieler>");
@@ -95,9 +98,8 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Strikes von " + Main.getColorCode() + varoPlayer.getName() + "§7:");
-			for(int i = 1; i < varoPlayer.getStats().getStrikes().size(); i++) {
-				Strike strike = varoPlayer.getStats().getStrikes().get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + i + "§8:");
+			for(Strike strike : varoPlayer.getStats().getStrikes()) {
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + strike.getStrikeNumber() + "§8:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason: §7" + strike.getReason());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker: §7" + strike.getStriker());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: §7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));

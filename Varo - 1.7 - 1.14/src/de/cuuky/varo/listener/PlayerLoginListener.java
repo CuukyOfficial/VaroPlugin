@@ -12,14 +12,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import de.cuuky.varo.Main;
+import net.dv8tion.jda.core.entities.User;
+
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
-import net.dv8tion.jda.core.entities.User;
 
 public class PlayerLoginListener implements Listener {
 
@@ -28,7 +29,7 @@ public class PlayerLoginListener implements Listener {
 		Player player = event.getPlayer();
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 
-		VaroDiscordBot discordBot = Main.getDiscordBot();
+		VaroDiscordBot discordBot = BotLauncher.getDiscordBot();
 		if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
 			if(reg == null) {
@@ -116,6 +117,7 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));
 			break;
 		case MASS_RECORDING_JOIN:
+		case FINALE_JOIN:
 		default:
 			event.allow();
 			if(!vp.isRegistered())

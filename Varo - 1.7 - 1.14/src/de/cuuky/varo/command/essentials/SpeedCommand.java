@@ -7,26 +7,25 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.config.messages.ConfigMessages;
 
 public class SpeedCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.speed")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.speed"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
 		if(args.length == 1) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "§7Entweder '/speed <Speed> [Player]' oder Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + "§7Entweder '/speed <Speed> [Player/@a]' oder Spieler sein!");
 				return false;
 			}
 
 			Player p = (Player) sender;
-			Float speed = null;
+			Float speed;
 			try {
 				speed = Float.valueOf(args[0]);
 				speed = getRealMoveSpeed(Float.valueOf(args[0]), p.isFlying());
@@ -44,7 +43,7 @@ public class SpeedCommand implements CommandExecutor {
 				p.setFlySpeed(speed);
 			else
 				p.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "§7Deine " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7Deine " + Main.getColorCode() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else if(args.length == 2) {
 			try {
 				if(Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
@@ -95,7 +94,7 @@ public class SpeedCommand implements CommandExecutor {
 				to.setFlySpeed(speed);
 			else
 				to.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + Main.getColorCode() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed §7<Speed> [Player]");
 		return false;

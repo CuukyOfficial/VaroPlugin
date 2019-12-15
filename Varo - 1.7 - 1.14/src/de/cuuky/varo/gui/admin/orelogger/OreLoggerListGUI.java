@@ -16,6 +16,7 @@ import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.logger.logger.BlockLogger;
 
 public class OreLoggerListGUI extends SuperInventory {
 
@@ -27,7 +28,7 @@ public class OreLoggerListGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		ArrayList<String> list = Main.getLoggerMaster().getBlockLogger().getLogs();
+		ArrayList<String> list = BlockLogger.getInstance().getLogs();
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);

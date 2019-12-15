@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.list.ListHandler;
 
 public class BlockedItemsListener implements Listener {
 
@@ -16,7 +17,7 @@ public class BlockedItemsListener implements Listener {
 		if(event.getItem() == null)
 			return;
 
-		if(!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getItem()))
+		if(!ListHandler.getInstance().getBlockedItems().isBlocked(event.getItem()))
 			return;
 
 		event.setCancelled(true);
@@ -28,7 +29,7 @@ public class BlockedItemsListener implements Listener {
 		if(event.getCurrentItem() == null)
 			return;
 
-		if(!Main.getDataManager().getItemHandler().getBlockedItems().isBlocked(event.getCurrentItem()) && !Main.getDataManager().getItemHandler().getBlockedRecipes().isBlocked(event.getCurrentItem()))
+		if(!ListHandler.getInstance().getBlockedItems().isBlocked(event.getCurrentItem()) && !ListHandler.getInstance().getBlockedRecipes().isBlocked(event.getCurrentItem()))
 			return;
 
 		event.setCancelled(true);

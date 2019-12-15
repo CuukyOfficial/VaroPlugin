@@ -2,7 +2,9 @@ package de.cuuky.varo.bot.discord;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.Main;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.commands.CommandCommand;
 import de.cuuky.varo.bot.discord.commands.GetLinkCommand;
 import de.cuuky.varo.bot.discord.commands.HelpCommand;
@@ -13,7 +15,6 @@ import de.cuuky.varo.bot.discord.commands.RegisteredCommand;
 import de.cuuky.varo.bot.discord.commands.RemainingCommand;
 import de.cuuky.varo.bot.discord.commands.ServerCommand;
 import de.cuuky.varo.bot.discord.commands.ShutdownCommand;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract class DiscordBotCommand {
 
@@ -63,7 +64,7 @@ public abstract class DiscordBotCommand {
 	}
 
 	public VaroDiscordBot getDiscordBot() {
-		return Main.getDiscordBot();
+		return BotLauncher.getDiscordBot();
 	}
 
 	public static ArrayList<DiscordBotCommand> getCommands() {

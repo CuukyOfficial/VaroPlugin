@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.Team;
@@ -25,6 +26,7 @@ import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.logger.logger.BlockLogger;
 import de.cuuky.varo.report.Report;
 import de.cuuky.varo.version.types.Materials;
 
@@ -86,9 +88,9 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(Main.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
+		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(BotLauncher.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
 			public void run() {
-				if(Main.getDiscordBot() == null) {
+				if(BotLauncher.getDiscordBot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
 					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
@@ -115,7 +117,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(Main.getLoggerMaster().getBlockLogger().getLogs().size())).build(), new Runnable() {
+		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(BlockLogger.getInstance().getLogs().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {

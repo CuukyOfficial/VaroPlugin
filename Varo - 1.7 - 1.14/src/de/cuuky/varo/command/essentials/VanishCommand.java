@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.vanish.Vanish;
 
 public class VanishCommand implements CommandExecutor {
@@ -19,7 +19,7 @@ public class VanishCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.vanish")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.vanish"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

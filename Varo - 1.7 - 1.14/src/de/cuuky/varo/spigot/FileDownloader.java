@@ -1,13 +1,11 @@
-package de.cuuky.varo.spigot.downloader;
+package de.cuuky.varo.spigot;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
-import de.cuuky.varo.spigot.SpigotObject;
-
-public class FileDownloader extends SpigotObject {
+public class FileDownloader {
 
 	protected String link, path;
 
@@ -18,8 +16,8 @@ public class FileDownloader extends SpigotObject {
 
 	public void startDownload() throws IOException {
 		URL download = new URL(this.link);
-		BufferedInputStream in = null;
-		FileOutputStream fout = null;
+		BufferedInputStream in;
+		FileOutputStream fout;
 
 		in = new BufferedInputStream(download.openStream());
 		fout = new FileOutputStream(path);

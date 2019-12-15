@@ -7,7 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 
@@ -16,23 +17,21 @@ public class ProtectCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.protect")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.protect"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/protect <Player>");
+			sender.sendMessage(Main.getPrefix() + "§7/protect <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/unprotect <Player/@a>");
 			return false;
 		}
 
 		if(args[0].equalsIgnoreCase("@a")) {
-			for(Player player : Bukkit.getOnlinePlayers())
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
-					VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
-				else
-					new VaroCancelAble(CancelAbleType.PROTECTION, player);
+			for(VaroPlayer player : VaroPlayer.getOnlinePlayer())
+				new VaroCancelAble(CancelAbleType.PROTECTION, player);
 
-			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler (ent- / ge-) protected!");
+			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler protected!");
 			return false;
 		}
 
@@ -42,12 +41,10 @@ public class ProtectCommand implements CommandExecutor {
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null)
-			VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION).remove();
-		else
-			new VaroCancelAble(CancelAbleType.PROTECTION, player);
+		VaroPlayer vp = VaroPlayer.getPlayer(player);
+		new VaroCancelAble(CancelAbleType.PROTECTION, vp);
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich " + (VaroCancelAble.getCancelAble(player, CancelAbleType.PROTECTION) != null ? "protected!" : "entprotected!"));
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich protected!");
 		return false;
 	}
 }

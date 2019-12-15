@@ -40,7 +40,7 @@ public class StrikeListGUI extends SuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname("§c" + (i + 1)).itemstack(new ItemStack(Material.PAPER)).lore(new String[] { "§7Reason: §c" + strike.getReason(), "§7Striker: §c" + strike.getStriker(), "§7Date: §c" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(strike.getAcquiredDate()) }).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§c" + strike.getStrikeNumber()).itemstack(new ItemStack(Material.PAPER)).lore(new String[] { "§7Reason: §c" + strike.getReason(), "§7Striker: §c" + strike.getStriker(), "§7Date: §c" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(strike.getAcquiredDate()) }).build(), new Runnable() {
 
 				@Override
 				public void run() {

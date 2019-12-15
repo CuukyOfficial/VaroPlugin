@@ -8,13 +8,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.messages.ConfigMessages;
 
 public class SunCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!(sender.hasPermission("varo.sun"))) {
-			sender.sendMessage(Main.getPrefix() + "Dazu bist du nicht berechtigt!");
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

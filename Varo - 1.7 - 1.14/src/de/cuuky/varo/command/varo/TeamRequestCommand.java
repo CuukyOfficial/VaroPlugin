@@ -11,6 +11,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.TeamRequest;
+import de.cuuky.varo.game.Game;
 
 public class TeamRequestCommand extends VaroCommand {
 
@@ -30,7 +31,7 @@ public class TeamRequestCommand extends VaroCommand {
 			return;
 		}
 
-		if(Main.getGame().hasStarted()) {
+		if(Game.getInstance().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst dein Team nicht wechseln, da " + Main.getProjectName() + " schon gestartet ist!");
 			return;
 		}

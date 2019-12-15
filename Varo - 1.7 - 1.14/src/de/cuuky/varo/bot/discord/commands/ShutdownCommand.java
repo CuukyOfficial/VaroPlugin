@@ -3,10 +3,11 @@ package de.cuuky.varo.bot.discord.commands;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ShutdownCommand extends DiscordBotCommand {
 

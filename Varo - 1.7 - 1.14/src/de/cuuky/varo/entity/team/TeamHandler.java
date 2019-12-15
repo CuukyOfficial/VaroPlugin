@@ -4,7 +4,15 @@ import de.cuuky.varo.serialize.VaroSerializeObject;
 
 public class TeamHandler extends VaroSerializeObject {
 
-	public TeamHandler() {
+	private static TeamHandler instance;
+
+	public static void initialise() {
+		if (instance == null) {
+			instance = new TeamHandler();
+		}
+	}
+
+	private TeamHandler() {
 		super(Team.class, "/stats/teams.yml");
 
 		load();

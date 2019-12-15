@@ -1,9 +1,9 @@
 package de.cuuky.varo.threads.dailycheck;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class SessionCheck extends Checker {
@@ -32,9 +32,9 @@ public class SessionCheck extends Checker {
 		}
 
 		if(ConfigEntry.CATCH_UP_SESSIONS.getValueAsBoolean()) {
-			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS_FOR_ALL.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
+			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS_FOR_ALL.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
 		} else {
-			Main.getLoggerMaster().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
+			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
 		}
 	}
 }

@@ -8,6 +8,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
 
 public class ScoreboardCommand extends VaroCommand {
 
@@ -33,7 +34,7 @@ public class ScoreboardCommand extends VaroCommand {
 			vp.getStats().setShowScoreboard(false);
 		} else {
 			vp.getStats().setShowScoreboard(true);
-			Main.getDataManager().getScoreboardHandler().sendScoreBoard(vp);
+			ScoreboardHandler.getInstance().sendScoreBoard(vp);
 			vp.sendMessage(Main.getPrefix() + "Du siehst nun das Scoreboard!");
 			vp.getNametag().giveAll();
 		}

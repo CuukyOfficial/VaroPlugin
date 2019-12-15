@@ -66,7 +66,7 @@ public class NetworkMananager {
 		this.player = player;
 
 		pps.add(this);
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -79,7 +79,7 @@ public class NetworkMananager {
 	}
 
 	public void sendTablist() {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -106,7 +106,7 @@ public class NetworkMananager {
 	}
 
 	public void sendActionbar(String message) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
@@ -127,7 +127,7 @@ public class NetworkMananager {
 	}
 
 	public void sendTitle(String header, String footer) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {

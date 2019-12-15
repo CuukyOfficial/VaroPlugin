@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.utils.Utils;
 
 public class MessageCommand implements CommandExecutor {
@@ -22,7 +23,7 @@ public class MessageCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(!Main.getGame().hasStarted() && !sender.hasPermission("varo.setup")) {
+		if(!Game.getInstance().hasStarted() && !sender.hasPermission("varo.setup")) {
 			sender.sendMessage(Main.getPrefix() + "Du kannst nicht als nicht-Admin vor dem " + Main.getProjectName() + "-Start §7privat schreiben.");
 			return false;
 		}
@@ -47,5 +48,4 @@ public class MessageCommand implements CommandExecutor {
 		lastChat.put(to.getName(), sender.getName());
 		return false;
 	}
-
 }

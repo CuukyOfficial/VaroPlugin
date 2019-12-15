@@ -12,12 +12,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.messages.ConfigMessages;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.mysql.MySQL;
 
 public class BotRegister {
 
@@ -85,7 +88,7 @@ public class BotRegister {
 
 	public Member getMember() {
 		try {
-			JDA jda = Main.getDiscordBot().getJda();
+			JDA jda = BotLauncher.getDiscordBot().getJda();
 			return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong()).getMemberById(this.userId);
 		} catch(Exception e) {
 			return null;
@@ -159,13 +162,13 @@ public class BotRegister {
 			return;
 
 		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if(!Main.getDataManager().getMysql().isConnected())
+			if(!MySQL.getInstance().isConnected())
 				return;
 
-			Main.getDataManager().getMysql().update("TRUNCATE TABLE verify;");
+			MySQL.getInstance().update("TRUNCATE TABLE verify;");
 
 			for(final BotRegister reg : register) {
-				Main.getDataManager().getMysql().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
+				MySQL.getInstance().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
 			}
 		} else {
 			File file = new File("plugins/Varo", "registrations.yml");
@@ -194,12 +197,12 @@ public class BotRegister {
 			return;
 
 		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if(!Main.getDataManager().getMysql().isConnected()) {
+			if(!MySQL.getInstance().isConnected()) {
 				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
 				return;
 			}
 
-			ResultSet rs = Main.getDataManager().getMysql().getQuery("SELECT * FROM verify");
+			ResultSet rs = MySQL.getInstance().getQuery("SELECT * FROM verify");
 
 			try {
 				while(rs.next()) {

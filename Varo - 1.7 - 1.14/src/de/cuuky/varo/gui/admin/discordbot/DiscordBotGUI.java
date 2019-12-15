@@ -7,6 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
@@ -24,17 +25,17 @@ public class DiscordBotGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 
-		linkItemTo(1, new ItemBuilder().displayname(Main.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(Main.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname(BotLauncher.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(BotLauncher.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				boolean enabled = Main.getDiscordBot().isEnabled();
+				boolean enabled = BotLauncher.getDiscordBot().isEnabled();
 				if(enabled)
-					Main.getDiscordBot().disconnect();
+					BotLauncher.getDiscordBot().disconnect();
 				else
-					Main.getDiscordBot().connect();
+					BotLauncher.getDiscordBot().connect();
 
-				if(Main.getDiscordBot().isEnabled() == enabled)
+				if(BotLauncher.getDiscordBot().isEnabled() == enabled)
 					opener.sendMessage(Main.getPrefix() + "§7Could not start DiscordBot.");
 				else
 					opener.sendMessage(Main.getPrefix() + "§7Erfolg!");
@@ -45,7 +46,7 @@ public class DiscordBotGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(Main.getDiscordBot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+				if(BotLauncher.getDiscordBot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 					opener.sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
 					return;
 				}

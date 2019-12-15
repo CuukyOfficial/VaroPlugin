@@ -1,13 +1,12 @@
 
 package de.cuuky.varo.game;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -17,9 +16,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
+import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.command.varo.RandomTeamCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -32,21 +34,27 @@ import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.list.ListHandler;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
-import de.cuuky.varo.world.PlayerSort;
 import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
 import de.cuuky.varo.world.border.BorderDecreaseMinuteTimer;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class Game implements VaroSerializeable {
 
 	/*
 	 * Partly OLD
 	 */
+
+	public static Game instance;
 
 	@VaroSerializeField(path = "gamestate")
 	private GameState gamestate;
@@ -61,23 +69,27 @@ public class Game implements VaroSerializeable {
 	@VaroSerializeField(path = "lastCoordsPost")
 	private Date lastCoordsPost;
 
-	private boolean showDistanceToBorder, showTimeInActionBar, firstTime = false;
+	private boolean showDistanceToBorder, showTimeInActionBar, finaleJoinStart = false, firstTime = false;
 	private int protectionTime, noKickDistance, playTime, startCountdown, startScheduler;
 	private ProtectionTime protection;
 	private BorderDecreaseMinuteTimer minuteTimer;
 
-	public Game() {
-		Main.setGame(this);
+	public static Game getInstance() {
+		return instance;
 	}
 
-	public Game(boolean main) {
-		Main.setGame(this);
+	public Game() { //Für Deserializer
+		instance = this;
+	}
 
-		startRefreshTimer();
-		loadVariables();
+	public static void initialise() {
+		instance = new Game();
 
-		gamestate = GameState.LOBBY;
-		borderDecrease = new BorderDecreaseDayTimer(true);
+		instance.startRefreshTimer();
+		instance.loadVariables();
+
+		instance.gamestate = GameState.LOBBY;
+		instance.borderDecrease = new BorderDecreaseDayTimer(true);
 	}
 
 	private void startRefreshTimer() {
@@ -94,12 +106,12 @@ public class Game implements VaroSerializeable {
 					if(seconds == 60) {
 						seconds = 0;
 						if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-							double minutesToClose = (int) ((((long) Main.getDataManager().getTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+							double minutesToClose = (int) (((OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
 								Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
-							if(!Main.getDataManager().getTimeChecker().canJoin())
+							if(!OutSideTimeChecker.getInstance().canJoin())
 								for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 									vp.getStats().setCountdown(0);
 									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
@@ -118,7 +130,7 @@ public class Game implements VaroSerializeable {
 							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
 								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 							else if(showDistanceToBorder) {
-								int distance = (int) Main.getDataManager().getWorldHandler().getBorder().getDistanceTo(p);
+								int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}
@@ -155,7 +167,7 @@ public class Game implements VaroSerializeable {
 							vp.getStats().setState(PlayerState.ALIVE);
 					}
 
-					Main.getDataManager().getScoreboardHandler().update(vp);
+					ScoreboardHandler.getInstance().update(vp);
 					vp.getNetworkManager().sendTablist();
 				}
 
@@ -188,7 +200,7 @@ public class Game implements VaroSerializeable {
 		}
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
-			new PlayerSort();
+			Utils.sortPlayers();
 
 		removeArentAtStart();
 		if(minuteTimer != null)
@@ -250,10 +262,10 @@ public class Game implements VaroSerializeable {
 
 					setGamestate(GameState.STARTED);
 					fillChests();
-					Main.getDataManager().getWorldHandler().getWorld().strikeLightningEffect(Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation());
+					Utils.getMainWorld().strikeLightningEffect(Utils.getMainWorld().getSpawnLocation());
 					firstTime = true;
 					Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
-					Main.getLoggerMaster().getEventLogger().println(LogType.INFO, ConfigMessages.ALERT_GAME_STARTED.getValue());
+					EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 					startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 					Bukkit.getScheduler().cancelTask(startScheduler);
 
@@ -265,9 +277,11 @@ public class Game implements VaroSerializeable {
 						}
 					}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
-					Main.getDataManager().getItemHandler().getStartItems().giveToAll();
-					if(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0)
+					ListHandler.getInstance().getStartItems().giveToAll();
+					if (ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+						Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 						protection = new ProtectionTime();
+					}
 
 					return;
 				}
@@ -307,30 +321,22 @@ public class Game implements VaroSerializeable {
 			names = names + (won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
 			switch(i) {
-			case 1:
-				first = names;
-				break;
-			case 2:
-				second = names;
-				break;
-			case 3:
-				third = names;
-				break;
-			default:
-				break;
+			case 1: first = names; break;
+			case 2: second = names; break;
+			case 3: third = names; break;
 			}
 		}
 
 		Bukkit.broadcastMessage(Main.getColorCode() + first + " §7" + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! §5Herzlichen Glückwunsch!");
-		Main.getLoggerMaster().getEventLogger().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! Herzlichen Glückwunsch!");
-		VaroDiscordBot db = Main.getDiscordBot();
+		EventLogger.getInstance().println(LogType.WIN, first + " " + (first.contains("&") ? "haben" : "hat") + " das Projekt für sich entschieden! Herzlichen Glückwunsch!");
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
 		if(db != null && db.isEnabled()) {
 			if(db.getResultChannel() != null && db.isEnabled())
-				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getDiscordBot().getResultChannel());
+				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, BotLauncher.getDiscordBot().getResultChannel());
 
 			File file = new File("plugins/Varo/logs", "logs.yml");
 			if(file.exists())
-				db.sendFile("Die Logs des Projektes", file, Main.getDiscordBot().getResultChannel());
+				db.sendFile("Die Logs des Projektes", file, BotLauncher.getDiscordBot().getResultChannel());
 		}
 	}
 
@@ -344,17 +350,16 @@ public class Game implements VaroSerializeable {
 				varoplayer.delete();
 	}
 
-	@SuppressWarnings("deprecation")
 	private void fillChests() {
 		if(!ConfigEntry.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
 
 		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = Main.getDataManager().getWorldHandler().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = Utils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = Utils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
-		ArrayList<ItemStack> chestItems = Main.getDataManager().getItemHandler().getChestItems().getItems();
+		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();
 		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
 			if(!(block.getState() instanceof Chest))
 				continue;
@@ -374,13 +379,13 @@ public class Game implements VaroSerializeable {
 	}
 
 	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {
-		List<Block> blocks = new ArrayList<Block>();
-		int topBlockX = (l1.getBlockX() < l2.getBlockX() ? l2.getBlockX() : l1.getBlockX());
-		int bottomBlockX = (l1.getBlockX() > l2.getBlockX() ? l2.getBlockX() : l1.getBlockX());
-		int topBlockY = (l1.getBlockY() < l2.getBlockY() ? l2.getBlockY() : l1.getBlockY());
-		int bottomBlockY = (l1.getBlockY() > l2.getBlockY() ? l2.getBlockY() : l1.getBlockY());
-		int topBlockZ = (l1.getBlockZ() < l2.getBlockZ() ? l2.getBlockZ() : l1.getBlockZ());
-		int bottomBlockZ = (l1.getBlockZ() > l2.getBlockZ() ? l2.getBlockZ() : l1.getBlockZ());
+		List<Block> blocks = new ArrayList<>();
+		int topBlockX = (Math.max(l1.getBlockX(), l2.getBlockX()));
+		int bottomBlockX = (Math.min(l1.getBlockX(), l2.getBlockX()));
+		int topBlockY = (Math.max(l1.getBlockY(), l2.getBlockY()));
+		int bottomBlockY = (Math.min(l1.getBlockY(), l2.getBlockY()));
+		int topBlockZ = (Math.max(l1.getBlockZ(), l2.getBlockZ()));
+		int bottomBlockZ = (Math.min(l1.getBlockZ(), l2.getBlockZ()));
 
 		for(int x = bottomBlockX; x <= topBlockX; x++) {
 			for(int y = bottomBlockY; y <= topBlockY; y++) {
@@ -392,7 +397,7 @@ public class Game implements VaroSerializeable {
 		return blocks;
 	}
 
-	public void loadVariables() {
+	private void loadVariables() {
 		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
 		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
 		protectionTime = ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
@@ -406,19 +411,6 @@ public class Game implements VaroSerializeable {
 		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
 		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
-
-	@Override
-	public void onDeserializeEnd() {
-		startRefreshTimer();
-
-		loadVariables();
-
-		if(gamestate == GameState.STARTED)
-			minuteTimer = new BorderDecreaseMinuteTimer();
-	}
-
-	@Override
-	public void onSerializeStart() {}
 
 	public void setBorderDecrease(BorderDecreaseDayTimer borderDecrease) {
 		this.borderDecrease = borderDecrease;
@@ -472,10 +464,6 @@ public class Game implements VaroSerializeable {
 		return startCountdown;
 	}
 
-	public void setStartCountdown(int startCountdown) {
-		this.startCountdown = startCountdown;
-	}
-
 	public GameState getGameState() {
 		return gamestate;
 	}
@@ -491,8 +479,29 @@ public class Game implements VaroSerializeable {
 	public Location getLobby() {
 		return lobby;
 	}
+	
+	public boolean getFinaleJoinStart() {
+		return finaleJoinStart;
+	}
+	
+	public void setFinaleJoinStart(boolean finaleJoinStart) {
+		this.finaleJoinStart = finaleJoinStart;
+	}
 
 	public void setLobby(Location lobby) {
 		this.lobby = lobby;
 	}
+
+	@Override
+	public void onDeserializeEnd() {
+		startRefreshTimer();
+
+		loadVariables();
+
+		if(gamestate == GameState.STARTED)
+			minuteTimer = new BorderDecreaseMinuteTimer();
+	}
+
+	@Override
+	public void onSerializeStart() {}
 }

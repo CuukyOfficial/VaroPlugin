@@ -8,6 +8,7 @@ import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -49,29 +50,6 @@ public class Team extends VaroEntity {
 		Nametag.refreshAll();
 		if(this.id > highestNumber)
 			highestNumber = id;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		for(int id : memberid) {
-			VaroPlayer vp = VaroPlayer.getPlayer(id);
-			if(vp == null) {
-				Main.getLoggerMaster().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
-				continue;
-			}
-
-			addMember(vp);
-		}
-
-		if(id > highestNumber)
-			highestNumber = id;
-		memberid.clear();
-	}
-
-	@Override
-	public void onSerializeStart() {
-		for(VaroPlayer member : member)
-			memberid.add(member.getId());
 	}
 
 	public void addMember(VaroPlayer vp) {
@@ -254,6 +232,29 @@ public class Team extends VaroEntity {
 
 	public static ArrayList<Team> getTeams() {
 		return teams;
+	}
+
+	@Override
+	public void onDeserializeEnd() {
+		for(int id : memberid) {
+			VaroPlayer vp = VaroPlayer.getPlayer(id);
+			if(vp == null) {
+				EventLogger.getInstance().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
+				continue;
+			}
+
+			addMember(vp);
+		}
+
+		if(id > highestNumber)
+			highestNumber = id;
+		memberid.clear();
+	}
+
+	@Override
+	public void onSerializeStart() {
+		for(VaroPlayer member : member)
+			memberid.add(member.getId());
 	}
 
 	public static int getHighestNumber() {

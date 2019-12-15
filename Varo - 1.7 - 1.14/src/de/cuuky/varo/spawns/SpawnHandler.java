@@ -5,11 +5,19 @@ import de.cuuky.varo.spawns.spawn.SpawnType;
 
 public class SpawnHandler extends VaroSerializeObject {
 
+	private static SpawnHandler instance;
+
 	static {
 		registerEnum(SpawnType.class);
 	}
 
-	public SpawnHandler() {
+	public static void initialise() {
+		if (instance == null) {
+			instance = new SpawnHandler();
+		}
+	}
+
+	private SpawnHandler() {
 		super(Spawn.class, "/stats/spawns.yml");
 
 		load();

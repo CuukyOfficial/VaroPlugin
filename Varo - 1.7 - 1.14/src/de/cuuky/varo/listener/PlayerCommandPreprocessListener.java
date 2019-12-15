@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.game.Game;
 
 public class PlayerCommandPreprocessListener implements Listener {
 
@@ -16,7 +17,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 			if(event.getPlayer().hasPermission("varo.readInfo"))
 				return;
 
-			if(Main.getGame().isRunning())
+			if(Game.getInstance().isRunning())
 				if(lowerMessage.contains("tell"))
 					return;
 

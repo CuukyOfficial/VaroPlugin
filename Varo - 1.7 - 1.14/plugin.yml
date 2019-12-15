@@ -1,7 +1,7 @@
 name: Varo
 author: Cuuky
 authors: [Korne127]
-version: 1.2
+version: 2.0
 api-version: 1.13
 main: de.cuuky.varo.Main
 
@@ -57,10 +57,17 @@ commands:
      description: Beschützt Spieler vor Schaden
   Report:
      description: Reporte einen Spieler
+  Unfly:
+     description: Lässt dich oder einen Spieler nicht mehr fliegen
+  Unfreeze:
+     aliases: [move]
+     description: Entfriert einen Spieler
   Unmute:
      description: Entmutet einen Spieler
   Usage:
      description: Zeigt die Nutzung des Servers
+  Unprotect:
+     description: Beendet die Beschützung vor Schaden von Spielern
   Border:
      aliases: [setborder]
      description: Zeigt Infos zur Border

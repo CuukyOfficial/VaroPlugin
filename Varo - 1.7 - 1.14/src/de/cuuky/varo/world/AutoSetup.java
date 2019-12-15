@@ -10,20 +10,22 @@ import org.bukkit.World;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.spawns.spawn.SpawnGenerator;
 import de.cuuky.varo.utils.BlockUtils;
+import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.world.generators.LobbyGenerator;
 import de.cuuky.varo.world.generators.PortalGenerator;
 
 public class AutoSetup {
 
 	public AutoSetup() {
-		if(Main.getGame().hasStarted())
+		if(Game.getInstance().hasStarted())
 			return;
 
-		World world = Main.getDataManager().getWorldHandler().getWorld();
+		World world = Utils.getMainWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 
@@ -57,7 +59,7 @@ public class AutoSetup {
 			else
 				new LobbyGenerator(lobby, file);
 
-			Main.getGame().setLobby(lobby);
+			Game.getInstance().setLobby(lobby);
 		}
 
 		if(ConfigEntry.AUTOSETUP_BORDER.isIntActivated()) {

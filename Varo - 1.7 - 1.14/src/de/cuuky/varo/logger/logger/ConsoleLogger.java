@@ -40,7 +40,7 @@ public class ConsoleLogger extends Logger {
 			public void println(String x) {
 				super.println(x);
 
-				ConsoleLogger.this.println(x.toString());
+				ConsoleLogger.this.println(x);
 			}
 
 			@Override

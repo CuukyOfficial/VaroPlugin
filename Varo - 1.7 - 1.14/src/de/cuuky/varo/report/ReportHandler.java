@@ -4,11 +4,19 @@ import de.cuuky.varo.serialize.VaroSerializeObject;
 
 public class ReportHandler extends VaroSerializeObject {
 
+	private static ReportHandler instance;
+
 	static {
 		registerEnum(ReportReason.class);
 	}
 
-	public ReportHandler() {
+	public static void initialise() {
+		if (instance == null) {
+			instance = new ReportHandler();
+		}
+	}
+
+	private ReportHandler() {
 		super(Report.class, "/stats/reports.yml");
 
 		load();

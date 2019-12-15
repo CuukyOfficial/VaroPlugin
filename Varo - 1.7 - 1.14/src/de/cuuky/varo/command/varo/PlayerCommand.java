@@ -20,6 +20,59 @@ public class PlayerCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
+		if (args[0].equalsIgnoreCase("list")) {
+			if(VaroPlayer.getVaroPlayer().isEmpty()) {
+				sender.sendMessage(Main.getPrefix() + "Kein Spieler gefunden!");
+				return;
+			}
+
+			int playerNumber = VaroPlayer.getVaroPlayer().size();
+			int playerPages = 1 + (playerNumber / 50);
+
+			int lastPlayerOnPage = 50;
+			int page = 1;
+
+			if(args.length != 1) {
+				try {
+					page = Integer.parseInt(args[1]);
+				} catch(NumberFormatException e) {
+					page = 1;
+				}
+
+				lastPlayerOnPage = page * 50;
+			}
+
+			if(page == playerPages) {
+				lastPlayerOnPage = playerNumber;
+			}
+
+			if(page > playerPages) {
+				sender.sendMessage(Main.getPrefix() + "Keine Seite " + page + " der Spieler gefunden!");
+				return;
+			}
+
+			if(playerPages == 1) {
+				sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lSpieler§7§l:");
+			} else {
+				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lSpieler§7§l " + ((page - 1) * 50 + 1) + " bis " + lastPlayerOnPage + ":");
+			}
+
+			for(int i = (page - 1) * 50; i < lastPlayerOnPage; i++) {
+				VaroPlayer player = VaroPlayer.getVaroPlayer().get(i);
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + (i+1) + "§7: " + Main.getColorCode() + player.getName());
+			}
+
+			int lastPlayerNextSite = 0;
+			if(page + 1 < playerPages)
+				lastPlayerNextSite = (page + 1) * 50;
+			else if(page + 1 == playerPages)
+				lastPlayerNextSite = playerPages;
+
+			if(page < playerPages)
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player list " + (page + 1) + " §7für " + Main.getColorCode() + "Spieler §7 " + (page * 50 + 1) + " bis " + lastPlayerNextSite);
+			return;
+		}
+
 		if(args.length == 1 && VaroPlayer.getPlayer(args[0]) != null) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "§7Du musst Spieler sein, um diesen Command nutzen zu können!");
@@ -42,9 +95,10 @@ public class PlayerCommand extends VaroCommand {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Player §7-----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player add §7<Player1> <Player2> ...");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player add §7<Spieler1> <Spieler2> ...");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player remove §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player respawn §7<Player / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player respawn §7<Spieler / @a>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player kill §7<Spieler / @a>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player reset §7<Spieler / @a>");
 			sender.sendMessage(Main.getPrefix() + "§7------------------");
@@ -138,11 +192,19 @@ public class PlayerCommand extends VaroCommand {
 					continue;
 				}
 
-				String uuid = null;
+				String uuid;
 				try {
 					uuid = UUIDUtils.getUUID(arg).toString();
 				} catch(Exception e) {
-					sender.sendMessage(Main.getPrefix() + arg + " besitzt keinen Minecraft-Account!");
+					sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
+					String newName;
+					try {
+						newName = UUIDUtils.getNamesChanged(arg);
+						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieß, hat sich in §7" + newName + " §cumbenannt.");
+						sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufügen.");
+					} catch (Exception f) {
+						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
+					}
 					continue;
 				}
 

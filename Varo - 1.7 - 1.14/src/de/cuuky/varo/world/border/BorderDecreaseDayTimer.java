@@ -2,12 +2,14 @@ package de.cuuky.varo.world.border;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
@@ -19,12 +21,12 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 	public BorderDecreaseDayTimer() {}
 
 	public BorderDecreaseDayTimer(boolean new1) {
-		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getGame().isRunning())
+		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
 			return;
 
 		generateNextDecrease();
 		startTimer();
-		Main.getGame().setBorderDecrease(this);
+		Game.getInstance().setBorderDecrease(this);
 	}
 
 	private void startTimer() {
@@ -33,8 +35,8 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
-				if(Main.getGame().isRunning())
-					Main.getDataManager().getWorldHandler().getBorder().decrease(DecreaseReason.TIME_DAYS);
+				if(Game.getInstance().isRunning())
+					VaroBorder.getInstance().decreaseBorder(DecreaseReason.TIME_MINUTES);
 
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 
@@ -61,7 +63,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getGame().isRunning())
+		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
 			return;
 
 		if(nextDecrease == null)

@@ -20,6 +20,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.version.types.Materials;
 import de.cuuky.varo.version.types.Sounds;
 
@@ -35,7 +36,7 @@ public class SignChangeListener implements Listener {
 		if(e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
 			return;
 
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			return;
 
 		Block attached = e.getBlock().getRelative(sign.getAttachedFace());
@@ -113,7 +114,7 @@ public class SignChangeListener implements Listener {
 			}
 
 			if(VaroSaveable.getByLocation(furnace.getLocation()) != null) {
-				p.sendMessage(Main.getPrefix() + "§7Diese " + ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString() + " Furnace §7ist bereits gesichert!");
+				p.sendMessage(Main.getPrefix() + "§7Diese " + Main.getColorCode() + " Furnace §7ist bereits gesichert!");
 				e.setCancelled(true);
 				return;
 			}

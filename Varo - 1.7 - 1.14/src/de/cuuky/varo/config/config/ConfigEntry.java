@@ -1,6 +1,6 @@
 package de.cuuky.varo.config.config;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.config.ConfigHandler;
 
 public enum ConfigEntry {
 
@@ -36,14 +36,14 @@ public enum ConfigEntry {
 	FAKE_MAX_SLOTS(ConfigSection.SERVER_LIST, "fakeMaxSlots", -1, "Setzt die maximalen Slots des Servers gefaked.\nOff = -1"),
 
 	// STRIKE
-	STRIKE_POST_RESET_HOUR(ConfigSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostetwerden sollen"),
+	STRIKE_POST_RESET_HOUR(ConfigSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostet werden sollen"),
 	STRIKE_BAN_AFTER_STRIKE_HOURS(ConfigSection.STRIKE, "banOnPostHours", -1, "Für wie viele Stunden die Spieler\nnach einem Strike gestriket werden"),
 	STRIKE_BAN_AT_POST(ConfigSection.STRIKE, "banAtPost", true, "Ob der Spieler beim Posten des Strikes\num die oben genannte Zahl gebannt werden soll.\nSonst wird dieser beim Erhalten gebannt"),
 
 	// TEAMS
 	FRIENDLYFIRE(ConfigSection.TEAMS, "friendlyFire", false, "Zufügen von Schaden unter Teamkameraden."),
 	TEAM_PLACE_SPAWN(ConfigSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplätzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Lücke für fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen großen Kreis gibt."),
-	TRIGGER_FOR_GLOBAL(ConfigSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den globalen Chat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
+	TRIGGER_FOR_GLOBAL(ConfigSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	CHAT_TRIGGER(ConfigSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat auslöst."),
 	TEAMREQUESTS(ConfigSection.TEAMS, "teamRequests", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen können.\nSehr gute Funktion für ODV's."),
 	TEAMREQUEST_EXPIRETIME(ConfigSection.TEAMS, "teamRequestExpiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
@@ -71,6 +71,11 @@ public enum ConfigEntry {
 	TEAM_LIFES(ConfigSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
 	RESPAWN_PROTECTION(ConfigSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschützt sind"),
 	ADD_TEAM_LIFE_ON_KILL(ConfigSection.DEATH, "addTeamLifesOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler tötet."),
+	
+	//FINALE
+	PLAYER_SPECTATE_IN_FINALE(ConfigSection.FINALE, "playerSpectateInFinale", true, "Ob die toten Spieler während des Finales spectaten dürfen."),
+	BORDER_SIZE_IN_FINALE(ConfigSection.FINALE, "borderSizeInFinale", 300, "Auf diese Größe wird die Border beim Starten des Finales gestellt."),
+	FINALE_PROTECTION_TIME(ConfigSection.FINALE, "finaleProtectionTime", 30, "Länge der Schutzzeit nachdem alle Spieler in die Mitte teleportiert werden."),
 
 	// WORLD
 	BLOCK_DESTROY_LOGGER(ConfigSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Blöcke, die ihr\nunten eintragt unter 'oreLogger.yml'."),
@@ -125,6 +130,7 @@ public enum ConfigEntry {
 	OUTSIDE_BORDER_SPAWN_TELEPORT(ConfigSection.BORDER, "outsideBorderSpawnTeleport", true, "Ob, wenn ein Spieler außerhalb der Border joint, er in die Mitte teleportiert werden soll."),
 
 	// CHAT
+	BLOCK_CHAT_ADS(ConfigSection.CHAT, "blockChatAds", true, "Wenn aktiviert, können keine Links in den öffentlichen Chat gepostet werden."),
 	CAN_CHAT_BEFORE_START(ConfigSection.CHAT, "canChatBeforeStart", true, "Ob die Spieler vor Start chatten können."),
 	CHAT_COOLDOWN_IN_SECONDS(ConfigSection.CHAT, "chatCooldownInSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden können.\nOff = -1"),
 	CHAT_COOLDOWN_IF_STARTED(ConfigSection.CHAT, "chatCooldownIfStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde."),
@@ -155,7 +161,6 @@ public enum ConfigEntry {
 	DISCORDBOT_EVENT_STRIKE(ConfigSection.DISCORD, "eventChannel.strike", -1, "ID's des Channels, wo die Strikes gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_JOIN_LEAVE(ConfigSection.DISCORD, "eventChannel.joinLeave", -1, "ID's des Channels, wo die Joins/Leaves gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_WIN(ConfigSection.DISCORD, "eventChannel.win", -1, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_INFO(ConfigSection.DISCORD, "eventChannel.info", -1, "ID's des Channels, wo die Infos gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_KILL(ConfigSection.DISCORD, "eventChannel.kill", -1, "ID's des Channels, wo die Kills gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_DEATH(ConfigSection.DISCORD, "eventChannel.death", -1, "ID's des Channels, wo die Tode gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_ALERT(ConfigSection.DISCORD, "eventChannel.alert", -1, "ID's des Channels, wo die Benachrichtigungen gepostet werden.\n-1= EventChannelID wird genutzt"),
@@ -201,7 +206,11 @@ public enum ConfigEntry {
 	AUTOSETUP_SPAWNS_AMOUNT(ConfigSection.AUTOSETUP, "spawns.amount", 40, "Zu welcher Anzahl die Löcher\ngeneriert werden sollen"),
 	AUTOSETUP_SPAWNS_BLOCKID(ConfigSection.AUTOSETUP, "spawns.block.material", "STONE_BRICK_SLAB", "Welche Block-ID der Halftstep am Spawn haben soll"),
 	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSection.AUTOSETUP, "spawns.sideblock.material", "GRASS", "Welche Block-ID der Block,\nden man abbaut haben soll"),
-
+	
+	//GUI
+	GUI_INVENTORY_ANIMATIONS(ConfigSection.GUI, "guiInventoryAnimations", false, "Bestimmt, ob beim Klicken in der Gui eine Animation abgespielt wird."),
+	GUI_FILL_INVENTORY(ConfigSection.GUI, "guiFillInventory", true, "Bestimmt, ob die leeren Felder der Gui mit Kacheln aufgefüllt werden."),
+	
 	// OTHER
 	PLAYER_CHEST_LIMIT(ConfigSection.OTHER, "playerChestLimit", 2, "Wie viele Chests ein Team\nregistrieren darf.\nOff = 0, Unendlich = -1"),
 	PLAYER_FURNACE_LIMIT(ConfigSection.OTHER, "playerFurnaceLimit", -1, "Wie viele Furnaces ein\nSpieler registrieren darf.\nOff = 0, Undendlich = -1"),
@@ -222,7 +231,7 @@ public enum ConfigEntry {
 	private Object defaultValue;
 	private ConfigSection section;
 
-	private ConfigEntry(ConfigSection section, String path, Object value, String description) {
+	ConfigEntry(ConfigSection section, String path, Object value, String description) {
 		this.section = section;
 		this.path = path;
 		this.value = value;
@@ -242,16 +251,12 @@ public enum ConfigEntry {
 	}
 
 	private void save() {
-		Main.getDataManager().getConfigHandler().getConfigCfg().set(section.getPath() + path, value);
-		Main.getDataManager().getConfigHandler().saveConfig();
+		ConfigHandler.getInstance().getConfigCfg().set(section.getPath() + path, value);
+		ConfigHandler.getInstance().saveConfig();
 	}
 
 	public Object getValue() {
 		return this.value;
-	}
-
-	public boolean isStringNull() {
-		return getValueAsString().equals("-");
 	}
 
 	public String getValueAsString() {
@@ -302,16 +307,6 @@ public enum ConfigEntry {
 		}
 
 		return (long) defaultValue;
-	}
-
-	public byte getValueAsByte() {
-		try {
-			return Byte.valueOf(String.valueOf(getValueAsInt()));
-		} catch(Exception e) {
-			sendFalseCast();
-		}
-
-		return (byte) defaultValue;
 	}
 
 	public ConfigSection getSection() {

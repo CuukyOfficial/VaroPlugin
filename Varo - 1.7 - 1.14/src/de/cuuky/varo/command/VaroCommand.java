@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.command.varo.AbortCommand;
 import de.cuuky.varo.command.varo.ActionbarCommand;
 import de.cuuky.varo.command.varo.AutoSetupCommand;
@@ -16,6 +15,7 @@ import de.cuuky.varo.command.varo.DiscordCommand;
 import de.cuuky.varo.command.varo.EnchantmentCommand;
 import de.cuuky.varo.command.varo.EventsCommand;
 import de.cuuky.varo.command.varo.ExportCommand;
+import de.cuuky.varo.command.varo.FinaleCommand;
 import de.cuuky.varo.command.varo.GameCommand;
 import de.cuuky.varo.command.varo.InfoCommand;
 import de.cuuky.varo.command.varo.IntroCommand;
@@ -38,7 +38,6 @@ import de.cuuky.varo.command.varo.TeamCommand;
 import de.cuuky.varo.command.varo.TeamRequestCommand;
 import de.cuuky.varo.command.varo.TrollCommand;
 import de.cuuky.varo.command.varo.UpdateCommand;
-import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public abstract class VaroCommand {
@@ -78,6 +77,7 @@ public abstract class VaroCommand {
 		new ExportCommand();
 		new StatsCommand();
 		new UpdateCommand();
+		new FinaleCommand();
 	}
 
 	private String name;
@@ -104,23 +104,8 @@ public abstract class VaroCommand {
 		this.name = name;
 	}
 
-	public String[] getAliases() {
-		return aliases;
-	}
-
 	public String getPermission() {
 		return permission;
-	}
-
-	/**
-	 * @return Returns the no Permission String
-	 */
-	public String getNoPermission() {
-		return getNoPermission(permission);
-	}
-
-	public void setAliases(String[] aliases) {
-		this.aliases = aliases;
 	}
 
 	public String getDescription() {
@@ -136,17 +121,6 @@ public abstract class VaroCommand {
 				return true;
 
 		return false;
-	}
-
-	/**
-	 * Returns the No Permission string
-	 * 
-	 * @param permission
-	 *            The Permission that should be added in the String
-	 * @return Returns the String + the Permission added
-	 */
-	public static String getNoPermission(String permission) {
-		return Main.getPrefix() + ConfigMessages.OTHER_NO_PERMISSION.getValue().replaceAll("%permission%", permission);
 	}
 
 	/**

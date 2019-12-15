@@ -10,6 +10,8 @@ import java.util.zip.ZipInputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 
+import net.labymod.serverapi.LabyModAPI;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
@@ -26,31 +28,31 @@ import de.cuuky.varo.game.GameHandler;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.listener.PermissionSendListener;
-import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.mysql.MySQL;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
-import de.cuuky.varo.spigot.downloader.PluginDownloader;
+import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.world.WorldHandler;
-import net.labymod.serverapi.LabyModAPI;
+import de.cuuky.varo.utils.Utils;
 
 public class DataManager {
 
-	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
+	private static DataManager instance;
 
-	private WorldHandler worldHandler;
-	private ConfigHandler configHandler;
-	private ScoreboardHandler scoreboardHandler;
-	private MySQL mysql;
-	private OutSideTimeChecker timeChecker;
-	private ListHandler listHandler;
+	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
 	private boolean doSave;
 
-	public DataManager() {
+	public static DataManager getInstance() {
+		if (instance == null) {
+			instance = new DataManager();
+		}
+		return instance;
+	}
+
+	private DataManager() {
 		load();
 		loadPlugins();
 
@@ -59,24 +61,26 @@ public class DataManager {
 	}
 
 	private void load() {
-		new ConfigFailureDetector();
+		ConfigFailureDetector.detectConfig();
 
 		copyDefaultPresets();
-		this.configHandler = new ConfigHandler();
+		ConfigHandler.getInstance(); //Initialisierung
 
-		Main.setLogger(new LoggerMaster());
-		new GameHandler();
-		new PlayerHandler();
-		new TeamHandler();
-		new SpawnHandler();
-		this.worldHandler = new WorldHandler();
-		this.scoreboardHandler = new ScoreboardHandler();
-		new ReportHandler();
-		new AlertHandler();
-		this.timeChecker = new OutSideTimeChecker();
-		this.mysql = new MySQL();
-		this.listHandler = new ListHandler();
-		new Broadcaster();
+		GameHandler.initialise(); //Initialisierung GameHandler
+		PlayerHandler.initialise(); //Initialisierung PlayerHandler
+		TeamHandler.initialise(); //Initialisierung TeamHandler
+		SpawnHandler.initialise(); //Initialisierung SpawnHandler
+		ScoreboardHandler.getInstance(); //Initialisierung ScoreboardHandler
+		ReportHandler.initialise(); //Initialisierung ReportHandler
+		AlertHandler.initialise(); //Initialisierung AlertHandler
+		OutSideTimeChecker.getInstance(); //Initialisierung TimeChecker
+		MySQL.getInstance(); //Initialisierung MySQL
+		ListHandler.getInstance(); //Initialisierung ListHandler
+		Broadcaster.getInstance(); //Initialisierung Broadcaster
+
+		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
+		Utils.setWorldToTime();
+
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}
@@ -86,10 +90,9 @@ public class DataManager {
 		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			VaroDiscordBot discordbot;
 			try {
-				discordbot = new VaroDiscordBot();
+				discordbot = VaroDiscordBot.getInstance();
 				discordbot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
-				discordbot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
 				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
 			}
@@ -99,7 +102,7 @@ public class DataManager {
 		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			VaroTelegramBot telegrambot;
 			try {
-				telegrambot = new VaroTelegramBot();
+				telegrambot = VaroTelegramBot.getInstance();
 				telegrambot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
 				telegrambot = null;
@@ -129,11 +132,11 @@ public class DataManager {
 
 	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
 		try {
-			PluginDownloader pd = new PluginDownloader(resourceId, dataName);
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
 
 			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
 
-			pd.startDownload();
+			fd.startDownload();
 
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
 			return true;
@@ -163,12 +166,12 @@ public class DataManager {
 
 	public void reloadConfig() {
 		VaroList.reloadLists();
-		Main.getDataManager().getConfigHandler().reload();
-		Main.getDataManager().getScoreboardHandler().loadScores();
+		ConfigHandler.getInstance().reload();
+		ScoreboardHandler.getInstance().loadScores();
 
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			Main.getDataManager().getScoreboardHandler().sendScoreBoard(vp);
+			ScoreboardHandler.getInstance().sendScoreBoard(vp);
 			vp.getNametag().giveAll();
 		}
 	}
@@ -228,29 +231,5 @@ public class DataManager {
 
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
-	}
-
-	public ListHandler getItemHandler() {
-		return listHandler;
-	}
-
-	public OutSideTimeChecker getTimeChecker() {
-		return timeChecker;
-	}
-
-	public ConfigHandler getConfigHandler() {
-		return configHandler;
-	}
-
-	public WorldHandler getWorldHandler() {
-		return worldHandler;
-	}
-
-	public ScoreboardHandler getScoreboardHandler() {
-		return scoreboardHandler;
-	}
-
-	public MySQL getMysql() {
-		return mysql;
 	}
 }

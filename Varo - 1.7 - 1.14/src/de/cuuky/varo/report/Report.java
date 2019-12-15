@@ -55,20 +55,6 @@ public class Report implements VaroSerializeable {
 		return id;
 	}
 
-	@Override
-	public void onDeserializeEnd() {
-		this.reported = VaroPlayer.getPlayer(reportedId);
-		this.reporter = VaroPlayer.getPlayer(reporterId);
-	}
-
-	@Override
-	public void onSerializeStart() {
-		if(reporter != null)
-			this.reporterId = reporter.getId();
-		if(reported != null)
-			this.reportedId = reported.getId();
-	}
-
 	public boolean isOpen() {
 		return open;
 	}
@@ -104,5 +90,19 @@ public class Report implements VaroSerializeable {
 				return r;
 
 		return null;
+	}
+
+	@Override
+	public void onDeserializeEnd() {
+		this.reported = VaroPlayer.getPlayer(reportedId);
+		this.reporter = VaroPlayer.getPlayer(reporterId);
+	}
+
+	@Override
+	public void onSerializeStart() {
+		if(reporter != null)
+			this.reporterId = reporter.getId();
+		if(reported != null)
+			this.reportedId = reported.getId();
 	}
 }

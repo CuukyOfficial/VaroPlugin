@@ -8,10 +8,10 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.spigot.checker.UpdateChecker;
-import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
-import de.cuuky.varo.spigot.downloader.PluginDownloader;
+import de.cuuky.varo.spigot.FileDownloader;
+import de.cuuky.varo.utils.Utils;
 
 public class UpdateCommand extends VaroCommand {
 
@@ -25,11 +25,25 @@ public class UpdateCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
+		
+		Utils.UpdateResult result;
+		String updateVersion;
+		
+		Object[] updater = Utils.checkForUpdates();
+		result = (Utils.UpdateResult) updater[0];
+		updateVersion = (String) updater[1];
 
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
-			sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+			
+			if (result == Utils.UpdateResult.UPDATE_AVAILABLE) {
+				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
+				sender.sendMessage("");
+				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+			} else {
+				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
+			}
 			return;
 		}
 
@@ -47,18 +61,14 @@ public class UpdateCommand extends VaroCommand {
 			this.pluginNameChanged = true;
 		}
 
-		Main.getDataManager().setDoSave(false);
+		DataManager.getInstance().setDoSave(false);
+		
+		if (result == Utils.UpdateResult.UPDATE_AVAILABLE) {
+			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
+			update(sender);
+		} else {
+			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 
-		try {
-			UpdateChecker updater = Main.getUpdater();
-			if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-				sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
-				update(sender);
-			} else {
-				sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem  neuesten Stand!");
-			}
-		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler beim Update-Prüfen.");
 		}
 
 	}
@@ -66,11 +76,11 @@ public class UpdateCommand extends VaroCommand {
 	private void update(CommandSender sender) {
 		// Step 1: Download new Version
 		try {
-			PluginDownloader pd = new PluginDownloader();
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/71075/download", "plugins/Varo.jar");
 
 			sender.sendMessage(Main.getPrefix() + "Starte Download...");
 
-			pd.startDownload();
+			fd.startDownload();
 		} catch(Exception e) {
 			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
 			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");

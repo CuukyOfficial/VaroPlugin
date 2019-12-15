@@ -11,11 +11,20 @@ import de.cuuky.varo.config.config.ConfigEntry;
 
 public class MySQL {
 
+	private static MySQL instance;
+
 	private Connection connection;
 	private String host, database, user, password;
 	private boolean connected;
 
-	public MySQL() {
+	public static MySQL getInstance() {
+		if (instance == null) {
+			instance = new MySQL();
+		}
+		return instance;
+	}
+
+	private MySQL() {
 		if(!ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean())
 			return;
 

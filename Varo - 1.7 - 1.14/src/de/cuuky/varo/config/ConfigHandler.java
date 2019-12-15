@@ -3,6 +3,7 @@ package de.cuuky.varo.config;
 import java.io.File;
 import java.io.IOException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -14,6 +15,8 @@ import de.cuuky.varo.utils.Utils;
 
 public class ConfigHandler {
 
+	private static ConfigHandler instance;
+
 	private File configFile;
 	private boolean configExisted;
 	private YamlConfiguration configCfg;
@@ -22,7 +25,14 @@ public class ConfigHandler {
 	private boolean messagesExisted;
 	private YamlConfiguration messagesCfg;
 
-	public ConfigHandler() {
+	public static ConfigHandler getInstance() {
+		if (instance == null) {
+			instance = new ConfigHandler();
+		}
+		return instance;
+	}
+
+	private ConfigHandler() {
 		reload();
 	}
 
@@ -30,6 +40,8 @@ public class ConfigHandler {
 		loadConfigurations();
 
 		load();
+
+		testConfig();
 	}
 
 	/**
@@ -71,13 +83,63 @@ public class ConfigHandler {
 	}
 
 	/**
+	 * Method to test whether the entries in the Main Config are correct
+	 */
+	public void testConfig() {
+		boolean shutdown = false;
+		for (ConfigEntry entry : ConfigEntry.values()) {
+
+			Class dataTypeWanted = entry.getDefaultValue().getClass();
+			Class dataTypeInConfig = configCfg.get(entry.getFullPath()).getClass();
+
+			if (dataTypeInConfig.equals(MemorySection.class)) {
+				continue;
+			}
+
+			if (dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
+				continue;
+			}
+
+			if (!dataTypeWanted.equals(dataTypeInConfig)) {
+				System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Der Eintrag " + entry.getName() + " muss vom Datentyp \"" + dataTypeWanted.getSimpleName() + "\" sein, ist aber vom Datentyp \"" + dataTypeInConfig.getSimpleName() + "\".");
+				shutdown = true;
+			}
+		}
+
+		if (shutdown) {
+			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
+			Bukkit.getServer().shutdown();
+		}
+
+		if (ConfigEntry.BACKPACK_SIZE.getValueAsInt() > 54) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Backpacks darf nicht mehr als 54 betragen.");
+			shutdown = true;
+		}
+
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() <= 0 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Wenn die Spielzeit nicht unendlich ist, muss ein JoinSystem aktiviert sein.");
+			shutdown = true;
+		}
+
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es dürfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
+			shutdown = true;
+		}
+
+		if (shutdown) {
+			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
+			Bukkit.getServer().shutdown();
+		}
+	}
+
+	/**
 	 * Loads the ConfigType with the configs in the arguments
 	 */
 	private void loadConfig(YamlConfiguration cfg, File file, boolean configEntry, boolean existed) {
 		boolean save = false;
 		if(configEntry)
 			for(ConfigEntry entry : ConfigEntry.values()) {
-				if(cfg.get(entry.getPath()) == null)
+				if(cfg.get(entry.getFullPath()) == null)
 					save = true;
 
 				cfg.addDefault(entry.getFullPath(), entry.getDefaultValue());

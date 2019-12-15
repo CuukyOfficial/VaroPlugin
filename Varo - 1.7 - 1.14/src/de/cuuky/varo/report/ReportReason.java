@@ -4,19 +4,27 @@ import org.bukkit.Material;
 
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.version.types.Materials;
 
 public enum ReportReason implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "HACKING")
-	HACKING("Hacking", Material.TNT, "Benutze dies falls du jemanden hacken siehst"),
+	HACKING("Hacking", Materials.TNT.parseMaterial(), "Benutze dies, falls jemand hackt oder exploited."),
+	@VaroSerializeField(enumValue = "TEAMING")
+	TEAMING("Teaming", Materials.DIRT.parseMaterial(), "Benutze dies, falls Personen aus unterschiedlichen Teams teamen."),
+	@VaroSerializeField(enumValue = "CHAT")
+	CHAT("Chat", Materials.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhält."),
+	@VaroSerializeField(enumValue = "XRAY")
+	XRAY("Xray", Materials.STONE.parseMaterial(), "Benutze dies, falls jemand Xray benutzt."),
 	@VaroSerializeField(enumValue = "TROLLING")
-	TROLLING("Trolling", Material.DIRT, "Benutze dies falls dich jemand, oder dein Teammate, trollt");
+	TROLLING("Trolling", Materials.BLACK_WOOL.parseMaterial(), "Benutze dies, falls jemand trollt.");
+
 
 	private String name;
 	private Material material;
 	private String description;
 
-	private ReportReason(String s, Material mat, String desc) {
+	ReportReason(String s, Material mat, String desc) {
 		this.name = s;
 		this.material = mat;
 		this.description = desc;
@@ -34,12 +42,6 @@ public enum ReportReason implements VaroSerializeable {
 		return description;
 	}
 
-	@Override
-	public void onDeserializeEnd() {}
-
-	@Override
-	public void onSerializeStart() {}
-
 	public static ReportReason getByName(String name) {
 		for(ReportReason reasons : values()) {
 			if(reasons.getName().equals(name)) {
@@ -48,4 +50,10 @@ public enum ReportReason implements VaroSerializeable {
 		}
 		return null;
 	}
+
+	@Override
+	public void onDeserializeEnd() {}
+
+	@Override
+	public void onSerializeStart() {}
 }

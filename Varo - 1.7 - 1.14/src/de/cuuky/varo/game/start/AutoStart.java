@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.Utils;
@@ -20,7 +23,7 @@ public class AutoStart implements VaroSerializeable {
 	private int sched;
 
 	public AutoStart() {
-		Main.getGame().setAutoStart(this);
+		Game.getInstance().setAutoStart(this);
 	}
 
 	public AutoStart(Calendar start) {
@@ -28,7 +31,7 @@ public class AutoStart implements VaroSerializeable {
 		this.start.setSeconds(0);
 
 		start();
-		Main.getGame().setAutoStart(this);
+		Game.getInstance().setAutoStart(this);
 
 		postMessage(Main.getProjectName() + " §7wird am " + Main.getColorCode() + getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " §7den " + Main.getColorCode() + getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "§7." + Main.getColorCode() + getWithZero(start.get(Calendar.MONTH) + 1) + "§7." + Main.getColorCode() + start.get(Calendar.YEAR) + " §7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "§7:" + Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " §7starten!");
 	}
@@ -56,7 +59,7 @@ public class AutoStart implements VaroSerializeable {
 				Bukkit.getScheduler().cancelTask(sched);
 				if(startDelay == StartDelay.GO) {
 					stop();
-					Main.getGame().start();
+					Game.getInstance().start();
 					Bukkit.broadcastMessage(Main.getProjectName() + " §7wird gestartet...");
 					return;
 				}
@@ -74,14 +77,14 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private void postMessage(String message) {
-		if(Main.getDiscordBot() != null && Main.getDiscordBot().isEnabled() && Main.getDiscordBot().getAnnouncementChannel() != null)
-			Main.getDiscordBot().sendRawMessage(Utils.replaceAllColors(message) + " " + Main.getDiscordBot().getMentionRole(), Main.getDiscordBot().getAnnouncementChannel());
+		if(BotLauncher.getDiscordBot() != null && BotLauncher.getDiscordBot().isEnabled() && BotLauncher.getDiscordBot().getAnnouncementChannel() != null)
+			BotLauncher.getDiscordBot().sendRawMessage(Utils.replaceAllColors(message) + " " + BotLauncher.getDiscordBot().getMentionRole(), BotLauncher.getDiscordBot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
 
 	public void stop() {
 		Bukkit.getScheduler().cancelTask(sched);
-		Main.getGame().setAutoStart(null);
+		Game.getInstance().setAutoStart(null);
 		StartDelay.reset();
 	}
 

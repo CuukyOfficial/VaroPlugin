@@ -7,10 +7,19 @@ import de.cuuky.varo.config.config.ConfigEntry;
 
 public class BotLauncher {
 
-	private VaroDiscordBot discordbot;
-	private VaroTelegramBot telegrambot;
+	private static BotLauncher instance;
 
-	public BotLauncher() {
+	private static VaroDiscordBot discordbot;
+	private static VaroTelegramBot telegrambot;
+
+	public static BotLauncher getInstance() {
+		if (instance == null) {
+			instance = new BotLauncher();
+		}
+		return instance;
+	}
+
+	private BotLauncher() {
 		startupDiscord();
 		startupTelegram();
 	}
@@ -25,7 +34,7 @@ public class BotLauncher {
 		}
 
 		try {
-			discordbot = new VaroDiscordBot();
+			discordbot = VaroDiscordBot.getInstance();
 			discordbot.connect();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
@@ -45,7 +54,7 @@ public class BotLauncher {
 		}
 
 		try {
-			telegrambot = new VaroTelegramBot();
+			telegrambot = VaroTelegramBot.getInstance();
 			telegrambot.connect();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
@@ -63,11 +72,11 @@ public class BotLauncher {
 			telegrambot.disconnect();
 	}
 
-	public VaroDiscordBot getDiscordbot() {
+	public static VaroDiscordBot getDiscordBot() {
 		return discordbot;
 	}
 
-	public VaroTelegramBot getTelegrambot() {
+	public static VaroTelegramBot getTelegramBot() {
 		return telegrambot;
 	}
 }

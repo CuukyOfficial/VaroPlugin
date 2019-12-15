@@ -11,14 +11,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.game.Game;
 
 public class EntityExplodeListener implements Listener {
 
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if(!Main.getGame().hasStarted()) {
+		if(!Game.getInstance().hasStarted()) {
 			event.setCancelled(true);
 			return;
 		}

@@ -16,7 +16,7 @@ public class StartCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		Game game = Main.getGame();
+		Game game = Game.getInstance();
 		if(game.isStarting()) {
 			sender.sendMessage(Main.getPrefix() + "Das Spiel startet bereits!");
 			return;
@@ -27,32 +27,7 @@ public class StartCommand extends VaroCommand {
 			return;
 		}
 
-		// if (!isInternetAvailable()) {
-		// sender.sendMessage(Main.getPrefix() + "Es ist Internet erforderlich,
-		// um das Spiel zu starten!");
-		// return;
-		// }
-
 		game.start();
 		sender.sendMessage(Main.getPrefix() + "Spiel erfolgreich gestartet!");
 	}
-
-	// private boolean isInternetAvailable() {
-	// Enumeration<NetworkInterface> interfaces = null;
-	// try {
-	// interfaces = NetworkInterface.getNetworkInterfaces();
-	// } catch (SocketException e) {
-	// e.printStackTrace();
-	// }
-	// while (interfaces.hasMoreElements()) {
-	// NetworkInterface networkInterface = interfaces.nextElement();
-	// try {
-	// if (networkInterface.isUp())
-	// return true;
-	// } catch (SocketException e) {
-	// }
-	// }
-	//
-	// return false;
-	// }
 }

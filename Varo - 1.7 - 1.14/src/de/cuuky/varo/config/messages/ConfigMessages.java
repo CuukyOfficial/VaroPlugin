@@ -1,9 +1,16 @@
 package de.cuuky.varo.config.messages;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import de.cuuky.varo.config.DefaultReplace;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.disconnect.Disconnect;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.utils.PermissionUtils;
+import de.cuuky.varo.version.VersionUtils;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public enum ConfigMessages {
 
@@ -42,6 +49,7 @@ public enum ConfigMessages {
 	JOIN_NO_MOVE_IN_PROTECTION("Join.notMoveinProtection", "&7Du kannst dich nicht bewegen, solange du noch in der %colorcode%Schutzzeit &7bist!"),
 	JOIN_SPECTATOR("Join.spectator", "&a%player% &7hat den Server als Spectator betreten!"),
 	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
+	JOIN_FINALE("Join.finale", "%prefix%&a%player% &7hat den Server zum Finale betreten."),
 
 	JOIN_KICK_NOT_USER_OF_PROJECT("Join.kick.notUserOfTheProject", "&7Du bist kein Teilnehmer dieses %projectname%&7's!"),
 	JOIN_KICK_NO_TIME_LEFT("Join.kick.noTimeLeft", "&cDu darfst nur alle &4%timeHours% &cStunden regulär spielen! %nextLine%&7Du kannst erst in &c%stunden%&7:&c%minuten%&7:&c%sekunden% &7wieder joinen!"),
@@ -61,6 +69,7 @@ public enum ConfigMessages {
 	KICK_IN_SECONDS("Kick.kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunde(n) gekickt!"),
 	KICK_PLAYER_NEARBY("Kick.noKickPlayerNearby", "&cEs befindet sich ein Spieler &4%distance% &cBlöcke in deiner Nähe!%nextLine%&7Um gekickt zu werden, entferne dich von diesem Spieler!"),
 	KICK_SERVER_CLOSE_SOON("Kick.serverCloseSoon", "&7Der Server schließt in &c%minutes% &7Minuten!"),
+	KICK_TOO_MANY_STRIKES("Kick.tooManyStrikes", "&7Du hast zu viele Strikes bekommen und wurdest daher aus dem Projekt %projectname% &7entfernt."),
 
 	// SORT
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
@@ -87,9 +96,6 @@ public enum ConfigMessages {
 	TEAMREQUEST_TEAM_FULL("Teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),
 	TEAMREQUEST_PLAYER_NOT_ONLINE("Teamrequest.playerNotOnline", "%colorcode%%invitor% ist nicht mehr online!"),
 	TEAMREQUEST_REVOKED("Teamrequest.invationRevoked", "Einladung erfolgreich zurückgezogen!"),
-
-	// SCOREBOARD
-	SCOREBOARD_HEADER("Scoreboard.header", "%projectname%"),
 
 	// WORLD
 	WORLD_SPAWN_NUMBER("World.spawnNameTag.number", "&7Spawn &b%number%"),
@@ -133,7 +139,9 @@ public enum ConfigMessages {
 	COMMAND_PING("Commands.ping", "&7Dein %colorcode%Ping &7beträgt: %colorcode%%ping%&7ms"),
 	COMMAND_KICKED("Commands.kick", "%colorcode%%player% &7wurde gekickt!"),
 	COMMAND_SPAWN("Commands.spawn", "%colorcode%Koordinaten&7 vom Spawn: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
+	COMMAND_SPAWN_NETHER("Commands.spawnNether", "%colorcode%Koordinaten&7 vom Portal zur Oberwelt: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
 	COMMAND_SPAWN_DISTANCE("Commands.spawnDistance", "&7Du bist %colorcode%%distance% &7Blöcke vom Spawn entfernt!"),
+	COMMAND_SPAWN_DISTANCE_NETHER("Commands.spawnDistanceNether", "&7Du bist %colorcode%%distance% &7Blöcke vom Portal zur Oberwelt entfernt!"),
 	COMMAND_NO_TEAMNAME("Commands.noteamname", "&7Du hast noch &7keinen &7Teamnamen!"),
 	COMMAND_TEAM_REQUEST_RECIEVED("Commands.teamRequestRecieved", "%colorcode%%invitor% &7hat dich in ein Team eingeladen (/varo tr)!"),
 	COMMAND_INVITED_TEAM("Commands.invitedInTeam", "&7Du hast %colorcode%%invited% &7in das Team %colorcode%%team% &7eingeladen!"),
@@ -149,7 +157,7 @@ public enum ConfigMessages {
 
 	// OTHER
 	OTHER_SORTED("Other.sorted", "&7Du wurdest in das Loch %colorcode%%zahl% &7teleportiert!"),
-	OTHER_NO_PERMISSION("Other.noPermission", "&7Dir fehlt die Berechtigung %colorcode%%permission%&7!"),
+	OTHER_NO_PERMISSION("Other.noPermission", "%colorcode%Dazu bist du nicht berechtigt!"),
 	OTHER_NOT_ALLOWED_CRAFT("Other.notAllowedCraft", "&7Das darfst du nicht craften, benutzen oder brauen!"),
 
 	// ALERTS
@@ -160,15 +168,18 @@ public enum ConfigMessages {
 	ALERT_BORDER_DECREASED_DEATH("Alert.borderDecrease.death", "Die Border wurde um %size% aufgrund eines Todes verringert!"),
 	ALERT_BORDER_DECREASED_TIME_DAYS("Alert.borderDecrease.days", "Die Border wurde um %size% verkleinert. Nächste Verkleinerung in %days% Tagen!"),
 
-	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Aufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
-	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Aufgrund dessen wurde das Inventar geleert!"),
-	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Damit ist %player% aus %projectname% ausgeschieden!"),
+	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nAufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
+	ALERT_FIRST_STRIKE_NEVER_ONLINE("Alert.firstStrikeNeverOnline", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nDer Spieler war noch nicht online und wird an den Spawn-Koordinaten spawnen: %pos%!"),
+	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nAufgrund dessen wurde das Inventar geleert!"),
+	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nDamit ist %player% aus %projectname% ausgeschieden!"),
+	ALERT_GENERAL_STRIKE("Alert.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%"),
 	ALERT_KICKED_PLAYER("Alert.kickedPlayer", "%player% wurde gekickt!"),
 	ALERT_DISCONNECT_TOO_OFTEN("Alert.disconnectTooOften", "%player% hat das Spiel zu oft verlassen, weswegen seine Session entfernt wurde!"),
 	ALERT_TELEPORTED_TO_MIDDLE("Alert.teleportedToMiddle", "%player% wurde zur Mitte teleportiert!"),
 	ALERT_PLAYER_JOIN_NORMAL("Alert.playerJoinNormal", "%player% hat das Spiel betreten!"),
 	ALERT_PLAYER_JOINED("Alert.playerJoined", "%player% hat den Server betreten und spielt nun die %episodesPlayedPlus1%te Folge!"),
 	ALERT_PLAYER_JOIN_MASSREC("Alert.playerJoinMassrec", "%player% hat den Server in der Massenaufnahme betreten und spielt nun die %episodesPlayedPlus1%te Folge"),
+	ALERT_JOIN_FINALE("Alert.finale", "%player% &7hat den Server zum Finale betreten."),
 	ALERT_PLAYER_QUIT("Alert.playerQuit", "%player% hat das Spiel verlassen!"),
 	ALERT_PLAYER_DC_TO_EARLY("Alert.playerQuitToEarly", "%player% hat das Spiel vorzeitig verlassen! %player% hat noch %seconds% Sekunden Spielzeit über!"),
 	ALERT_PLAYER_RECONNECT("Alert.playerReconnect", "%player% hatte das Spiel vorzeitig verlassen und ist rejoint! %player% hat noch %seconds% Sekunden verbleibend!"),
@@ -202,11 +213,11 @@ public enum ConfigMessages {
 	}
 
 	public String getValue() {
-		return new DefaultReplace(value).getReplaced();
+		return getValue(value);
 	}
 
 	public String getValue(VaroPlayer vp) {
-		return new DefaultReplace(value).getReplaced(vp);
+		return getValue(value, vp);
 	}
 
 	public Object getDefaultValue() {
@@ -251,5 +262,51 @@ public enum ConfigMessages {
 		}
 
 		return null;
+	}
+
+	public static String getValue(String value) {
+		String replaced = value;
+		replaced = replaced.contains("%projectname%") ? replaced.replace("%projectname%", Main.getProjectName()) : replaced;
+		replaced = replaced.contains("%remaining%") ? replaced.replace("%remaining%", String.valueOf(VaroPlayer.getAlivePlayer().size())) : replaced;
+		replaced = replaced.contains("%players%") ? replaced.replace("%players%", String.valueOf(VaroPlayer.getVaroPlayer().size())) : replaced;
+		replaced = replaced.contains("%online%") ? replaced.replace("%online%", String.valueOf(VersionUtils.getOnlinePlayer().size())) : replaced;
+		replaced = replaced.contains("%currHour%") ? replaced.replace("%currHour%", new SimpleDateFormat("HH").format(new Date())) : replaced;
+		replaced = replaced.contains("%currMin%") ? replaced.replace("%currMin%", new SimpleDateFormat("mm").format(new Date())) : replaced;
+		replaced = replaced.contains("%currSec%") ? replaced.replace("%currSec%", new SimpleDateFormat("ss").format(new Date())) : replaced;
+		replaced = replaced.contains("%bordersize%") ? replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) VaroBorder.getInstance().getBorderSize(null))) : replaced;
+		replaced = replaced.contains("%colorcode%") ? replaced.replace("%colorcode%", Main.getColorCode()) : replaced;
+		replaced = replaced.contains("%discordLink%") ? replaced.replace("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
+		replaced = replaced.contains("%protectionTime%") ? replaced.replace("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString()) : replaced;
+
+		replaced = replaced.contains("&") ? replaced.replace("&", "§") : replaced;
+		replaced = replaced.contains("%heart%") ? replaced.replace("%heart%", "♥") : replaced;
+		replaced = replaced.contains("%nextLine%") ? replaced.replace("%nextLine%", "\n") : replaced;
+		replaced = replaced.contains("%null%") ? replaced.replace("%null%", "") : replaced;
+
+		return replaced;
+	}
+
+	public static String getValue(String value, VaroPlayer vp) {
+		String replaced = getValue(value);
+		replaced = replaced.contains("%distanceToBorder%") ? replaced.replace("%distanceToBorder%", String.valueOf((int) VaroBorder.getInstance().getBorderDistanceTo(vp.getPlayer()))) : replaced;
+		replaced = replaced.contains("%min%") ? replaced.replace("%min%", vp.getStats().getCountdownMin(vp.getStats().getCountdown())) : replaced;
+		replaced = replaced.contains("%sec%") ? replaced.replace("%sec%", vp.getStats().getCountdownSec(vp.getStats().getCountdown())) : replaced;
+		replaced = replaced.contains("%kills%") ? replaced.replace("%kills%", String.valueOf(vp.getStats().getKills())) : replaced;
+		replaced = replaced.contains("%strikes%") ? replaced.replace("%strikes%", String.valueOf(vp.getStats().getStrikes().size())) : replaced;
+		replaced = replaced.contains("%teamKills%") ? replaced.replace("%teamKills%", String.valueOf(vp.getTeam() != null ? vp.getTeam().getKills() : 0)) : replaced;
+		replaced = replaced.contains("%teamLifes%") ? replaced.replace("%teamLifes%", String.valueOf((vp.getTeam() != null ? vp.getTeam().getLifes() : 0))) : replaced;
+		replaced = replaced.contains("%player%") ? replaced.replace("%player%", vp.getName()) : replaced;
+		replaced = replaced.contains("%prefix%") ? replaced.replace("%prefix%", vp.getPrefix()) : replaced;
+		replaced = replaced.contains("%team%") ? replaced.replace("%team%", vp.getTeam() != null ? vp.getTeam().getDisplay() : "-") : replaced;
+		replaced = replaced.contains("%rank%") ? replaced.replace("%rank%", vp.getRank() != null ? vp.getRank().getDisplay() : "-") : replaced;
+		replaced = replaced.contains("%episodesPlayedPlus1%") ? replaced.replace("%episodesPlayedPlus1%", String.valueOf(vp.getStats().getSessionsPlayed() + 1)) : replaced;
+		replaced = replaced.contains("%sessions%") ? replaced.replace("%sessions%", String.valueOf(vp.getStats().getSessions())) : replaced;
+		replaced = replaced.contains("%seconds%") ? replaced.replace("%seconds%", String.valueOf(vp.getStats().getCountdown())) : replaced;
+		replaced = replaced.contains("%remainingDisconnects%") ? replaced.replace("%remainingDisconnects%", String.valueOf(Disconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - Disconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())) : replaced;
+		replaced = replaced.contains("%ping%") ? replaced.replace("%ping%", String.valueOf(vp.getNetworkManager().getPing())) : replaced;
+		replaced = replaced.contains("%pexPrefix%") ? replaced.replace("%pexPrefix%", PermissionUtils.getPermissionsExPrefix(vp)) : replaced;
+		replaced = replaced.contains("%lpPrefix%") ? replaced.replace("%lpPrefix%", PermissionUtils.getLuckPermsPrefix(vp)) : replaced;
+
+		return replaced;
 	}
 }

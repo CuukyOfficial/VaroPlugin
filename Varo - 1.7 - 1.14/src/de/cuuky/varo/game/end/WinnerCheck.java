@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 
 public class WinnerCheck {
@@ -18,7 +18,7 @@ public class WinnerCheck {
 	private HashMap<Integer, ArrayList<VaroPlayer>> places;
 
 	public WinnerCheck() {
-		if(Main.getGame().getGameState() != GameState.STARTED)
+		if(Game.getInstance().getGameState() != GameState.STARTED)
 			return;
 
 		places = new HashMap<Integer, ArrayList<VaroPlayer>>();
@@ -72,7 +72,7 @@ public class WinnerCheck {
 			i++;
 		}
 
-		Main.getGame().end(this);
+		Game.getInstance().end(this);
 	}
 
 	private boolean isSorted(VaroPlayer vp) {

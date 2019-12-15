@@ -13,7 +13,7 @@ public class UsageCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		if(!sender.hasPermission("varo.usage")) {
-			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue().replace("%permission%", "varo.usage"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

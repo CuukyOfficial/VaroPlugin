@@ -8,16 +8,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.bot.discord.VaroDiscordBot;
-import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.logger.LoggerMaster;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
-import de.cuuky.varo.spigot.checker.UpdateChecker;
-import de.cuuky.varo.spigot.checker.UpdateChecker.UpdateResult;
 import de.cuuky.varo.threads.DailyTimer;
 import de.cuuky.varo.utils.Utils;
 import de.cuuky.varo.version.VersionUtils;
@@ -31,13 +25,8 @@ public class Main extends JavaPlugin {
 	private static final String CONSOLE_PREFIX = "[Varo] ";
 	private static Main instance;
 
-	private static LoggerMaster logger;
 	private static DataManager dataManager;
-	private static VaroDiscordBot discordBot;
-	private static VaroTelegramBot telegramBot;
 	private static BotLauncher botLauncher;
-	private static UpdateChecker updateChecker;
-	private static Game game;
 
 	private boolean failed;
 
@@ -75,21 +64,19 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
-			dataManager = new DataManager();
+			dataManager = DataManager.getInstance(); //Initialisierung
 
-			try {
-				updateChecker = new UpdateChecker(this);
-				updateChecker.postResults();
-				if(updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE)
-					new Alert(AlertType.UPDATE_AVAILABLE, "§cEin neues Update des Plugins ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord.");
-			} catch(NumberFormatException e) {}
+			Object[] updater2 = Utils.checkForUpdates();
+			Utils.UpdateResult result = (Utils.UpdateResult) updater2[0];
+			String updateVersion = (String) updater2[1];
+			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
+			if(result == Utils.UpdateResult.UPDATE_AVAILABLE)
+				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
+			DailyTimer.startTimer();
 
-			new DailyTimer();
-
-			botLauncher = new BotLauncher();
-			discordBot = botLauncher.getDiscordbot();
-			telegramBot = botLauncher.getTelegrambot();
-			new BukkitRegisterer();
+			botLauncher = BotLauncher.getInstance(); //Initialisierung
+			BukkitRegisterer.registerEvents();
+			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {
 			e.printStackTrace();
 			failed = true;
@@ -135,44 +122,8 @@ public class Main extends JavaPlugin {
 		return getFile();
 	}
 
-	public static DataManager getDataManager() {
-		return dataManager;
-	}
-
-	public static VaroTelegramBot getTelegramBot() {
-		return telegramBot;
-	}
-
-	public static void setTelegramBot(VaroTelegramBot telegramBot) {
-		Main.telegramBot = telegramBot;
-	}
-
-	public static VaroDiscordBot getDiscordBot() {
-		return discordBot;
-	}
-
-	public static LoggerMaster getLoggerMaster() {
-		return logger;
-	}
-
-	public static void setLogger(LoggerMaster logger) {
-		Main.logger = logger;
-	}
-
-	public static Game getGame() {
-		return game;
-	}
-
-	public static void setGame(Game game) {
-		Main.game = game;
-	}
-
 	public static String getConsolePrefix() {
 		return CONSOLE_PREFIX;
-	}
-
-	public static UpdateChecker getUpdater() {
-		return updateChecker;
 	}
 
 	public static Main getInstance() {

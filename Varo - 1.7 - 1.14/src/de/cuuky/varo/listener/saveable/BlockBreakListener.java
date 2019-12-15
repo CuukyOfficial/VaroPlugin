@@ -15,13 +15,14 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.version.types.Sounds;
 
 public class BlockBreakListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(!Main.getGame().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if(!Game.getInstance().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			event.setCancelled(true);
 			return;
 		}
@@ -33,7 +34,7 @@ public class BlockBreakListener implements Listener {
 		if(!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
 			return;
 
-		if(!Main.getGame().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			if(varoPlayer.getStats().isSpectator() || !player.hasPermission("varo.setup"))
 				return;
 

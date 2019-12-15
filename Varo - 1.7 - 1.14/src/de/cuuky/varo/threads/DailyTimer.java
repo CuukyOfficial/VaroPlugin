@@ -3,24 +3,26 @@ package de.cuuky.varo.threads;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.backup.Backup;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.threads.dailycheck.Checker;
-import de.cuuky.varo.world.TimeTimer;
+import de.cuuky.varo.utils.Utils;
 
-public class DailyTimer {
+public final class DailyTimer {
 
-	public DailyTimer() {
-		new TimeTimer();
-		if(Main.getGame().getGameState() == GameState.STARTED && Main.getGame().getLastDayTimer() != null) {
-			Date date = Main.getGame().getLastDayTimer();
+	public static void startTimer() {
+		Utils.setWorldToTime();
+		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
+			Date date = Game.getInstance().getLastDayTimer();
 			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
 				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RE");
@@ -28,7 +30,7 @@ public class DailyTimer {
 				doDailyStuff();
 			}
 
-			Main.getGame().setLastDayTimer(new Date());
+			Game.getInstance().setLastDayTimer(new Date());
 		}
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -38,9 +40,9 @@ public class DailyTimer {
 			public void run() {
 				try {
 					new Backup();
-					Main.getGame().setLastDayTimer(new Date());
+					Game.getInstance().setLastDayTimer(new Date());
 
-					if(Main.getGame().getGameState() == GameState.STARTED) {
+					if(Game.getInstance().getGameState() == GameState.STARTED) {
 						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 
@@ -51,7 +53,7 @@ public class DailyTimer {
 
 						@Override
 						public void run() {
-							new DailyTimer();
+							startTimer();
 						}
 					}, 100);
 				} catch(Exception e) {
@@ -59,7 +61,7 @@ public class DailyTimer {
 
 						@Override
 						public void run() {
-							new DailyTimer();
+							startTimer();
 						}
 					}, 100);
 				}
@@ -67,7 +69,7 @@ public class DailyTimer {
 		}, getNextReset() * 20);
 	}
 
-	private void doDailyStuff() {
+	private static void doDailyStuff() {
 		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
 
@@ -79,7 +81,7 @@ public class DailyTimer {
 	}
 
 	@SuppressWarnings("deprecation")
-	private long getNextReset() {
+	private static long getNextReset() {
 		Date reset = new Date();
 		reset.setMinutes(0);
 		reset.setSeconds(0);
@@ -90,7 +92,7 @@ public class DailyTimer {
 		return (reset.getTime() - current.getTime()) / 1000;
 	}
 
-	private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 		long diffInMillies = date2.getTime() - date1.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}

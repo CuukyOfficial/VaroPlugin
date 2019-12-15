@@ -1,13 +1,14 @@
 package de.cuuky.varo.bot.discord.listener;
 
-import java.awt.Color;
+import java.awt.*;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import de.cuuky.varo.config.config.ConfigEntry;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
+
+import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.bot.discord.DiscordBotCommand;
+import de.cuuky.varo.config.config.ConfigEntry;
 
 public class DiscordBotEventListener implements EventListener {
 
@@ -22,7 +23,7 @@ public class DiscordBotEventListener implements EventListener {
 
 		MessageReceivedEvent messageEvent = (MessageReceivedEvent) event;
 		try {
-			if(messageEvent.getAuthor().equals(Main.getDiscordBot().getJda().getSelfUser()))
+			if(messageEvent.getAuthor().equals(BotLauncher.getDiscordBot().getJda().getSelfUser()))
 				return;
 		} catch(NullPointerException e) {
 			return;
@@ -49,7 +50,7 @@ public class DiscordBotEventListener implements EventListener {
 			return;
 		}
 
-		Main.getDiscordBot().sendMessage("Command '" + command + "' not found!", "ERROR", Color.RED, messageEvent.getTextChannel());
+		BotLauncher.getDiscordBot().sendMessage("Command '" + command + "' not found!", "ERROR", Color.RED, messageEvent.getTextChannel());
 	}
 
 	public boolean isAliases(String command, String[] aliases) {

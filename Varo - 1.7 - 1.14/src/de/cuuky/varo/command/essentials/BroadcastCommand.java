@@ -6,14 +6,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
 
 public class BroadcastCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.broadcast")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.broadcast"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 

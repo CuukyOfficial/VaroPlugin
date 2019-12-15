@@ -3,9 +3,9 @@ package de.cuuky.varo.listener.helper.cancelable;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class VaroCancelAble {
 
@@ -15,11 +15,11 @@ public class VaroCancelAble {
 		cancelables = new ArrayList<>();
 	}
 
-	protected Player player;
+	protected VaroPlayer player;
 	protected CancelAbleType type;
 	protected Runnable timerHook;
 
-	public VaroCancelAble(CancelAbleType type, Player player) {
+	public VaroCancelAble(CancelAbleType type, VaroPlayer player) {
 		this.player = player;
 		this.type = type;
 
@@ -28,7 +28,7 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
-	public VaroCancelAble(CancelAbleType type, Player player, int time) {
+	public VaroCancelAble(CancelAbleType type, VaroPlayer player, int time) {
 		this.player = player;
 		this.type = type;
 
@@ -50,11 +50,7 @@ public class VaroCancelAble {
 	}
 
 	private void removeOld() {
-		for(int i = 0; i < cancelables.size(); i++) {
-			VaroCancelAble cancelable = cancelables.get(i);
-			if(cancelable.getType().equals(type) && cancelable.getPlayer().equals(player))
-				cancelable.remove();
-		}
+		removeCancelAble(player, type);
 	}
 
 	public void setTimerHook(Runnable runnable) {
@@ -65,19 +61,30 @@ public class VaroCancelAble {
 		return type;
 	}
 
-	public Player getPlayer() {
+	public VaroPlayer getPlayer() {
 		return player;
 	}
 
-	public void remove() {
+	private void remove() {
 		cancelables.remove(this);
 	}
 
-	public static VaroCancelAble getCancelAble(Player player, CancelAbleType type) {
+	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
 		for(VaroCancelAble able : cancelables)
 			if(able.getPlayer().equals(player) && able.getType().equals(type))
 				return able;
 
 		return null;
+	}
+
+	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
+		for(int i = 0; i < cancelables.size(); i++) {
+			VaroCancelAble able = cancelables.get(i);
+			if(able.getPlayer().equals(player) && able.getType().equals(type)) {
+				able.remove();
+				i--;
+			}
+		}
+
 	}
 }

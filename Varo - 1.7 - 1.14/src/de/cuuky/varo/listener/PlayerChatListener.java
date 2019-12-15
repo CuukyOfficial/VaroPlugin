@@ -11,11 +11,13 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.Game;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.listener.helper.TeamChat;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.logger.logger.ChatLogger;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PlayerChatListener implements Listener {
@@ -60,14 +62,29 @@ public class PlayerChatListener implements Listener {
 			message = message.replaceFirst("\\" + tc, "");
 		}
 
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null) {
+		if (ConfigEntry.BLOCK_CHAT_ADS.getValueAsBoolean() && !player.isOp()) {
+			if (message.matches("(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v)).*")) {
+				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Links.");
+				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
+				event.setCancelled(true);
+				return;
+			}
+			if (message.matches("(?iu).*(meins?e?m?n?)\\s*(Projekt|Plugin|Server|Netzwerk|Varo).*")) {
+				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Eigenwerbung.");
+				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
+				event.setCancelled(true);
+				return;
+			}
+		}
+
+		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
 			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue());
 			event.setCancelled(true);
 			return;
 		}
 
 		if(!player.isOp()) {
-			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getGame().hasStarted()) || !Main.getGame().hasStarted()) {
+			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Game.getInstance().hasStarted()) || !Game.getInstance().hasStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
@@ -80,7 +97,7 @@ public class PlayerChatListener implements Listener {
 					new ChatMessage(player, message);
 			}
 
-			if(Main.getGame().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if(Game.getInstance().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;
@@ -88,7 +105,7 @@ public class PlayerChatListener implements Listener {
 		} else
 			message = message.replaceAll("&", "§");
 
-		Main.getLoggerMaster().getChatLogger().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
+		ChatLogger.getInstance().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);
 	}
 

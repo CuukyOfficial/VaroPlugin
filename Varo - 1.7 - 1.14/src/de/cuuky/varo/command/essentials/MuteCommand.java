@@ -7,7 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 
@@ -16,7 +17,7 @@ public class MuteCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.mute")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.mute"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
@@ -27,13 +28,10 @@ public class MuteCommand implements CommandExecutor {
 		}
 
 		if(args[0].equalsIgnoreCase("@a")) {
-			for(Player player : Bukkit.getOnlinePlayers()) {
-				if(player.isOp()) {
+			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+				if(player.getPlayer().isOp()) {
 					continue;
 				}
-
-				if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
-					VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();
 				new VaroCancelAble(CancelAbleType.MUTE, player);
 			}
 
@@ -51,10 +49,10 @@ public class MuteCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gemutet werden!");
 			return false;
 		}
-
-		if(VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE) != null)
-			VaroCancelAble.getCancelAble(player, CancelAbleType.MUTE).remove();
-		new VaroCancelAble(CancelAbleType.MUTE, player);
+		
+		VaroPlayer vp = VaroPlayer.getPlayer(player);
+		new VaroCancelAble(CancelAbleType.MUTE, vp);
+		
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gemuted!");
 		return false;

@@ -30,6 +30,7 @@ Strike:
   banAtPost: true
 Teams:
   friendlyFire: true
+  teamPlaceSpawn: -1
   triggerForGlobal: false
   chatTrigger: '#'
   teamRequests: true
@@ -56,6 +57,10 @@ Death:
   teamLifes: 1
   respawnProtection: 120
   addTeamLifesOnKill: -1
+Finale:
+  playerSpectateInFinale: true
+  borderSizeInFinale: 300
+  finaleProtectionTime: 30
 World:
   blockDestroyLogger: true
   setAlwaysTime: 1000
@@ -69,7 +74,7 @@ World:
 Start:
   startCountdown: 30
   canMoveBeforeStart: false
-  doRandomTeamAtStart: true
+  doRandomTeamAtStart: 2
   doSortAtStart: true
   removePlayersArentAtStart: true
   spawnTeleportAtLobbyPhase: true
@@ -123,7 +128,7 @@ YouTube:
   setOwnLink: true
   videoIdentifier: ODV
 Discord:
-  discordBotEnabled: true
+  discordBotEnabled: false
   botToken: ENTER TOKEN HERE
   eventChannelID: -1
   eventChannel:

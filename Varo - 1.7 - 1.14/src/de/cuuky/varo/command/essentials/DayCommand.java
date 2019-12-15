@@ -7,18 +7,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.utils.Utils;
 
 public class DayCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.day")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.day"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getDataManager().getWorldHandler().getWorld();
+		World world = sender instanceof Player ? ((Player) sender).getWorld() : Utils.getMainWorld();
 		world.setTime(1000);
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Tag§7!");
 		return false;

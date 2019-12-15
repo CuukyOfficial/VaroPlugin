@@ -7,20 +7,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.messages.ConfigMessages;
 
 public class HealCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.heal")) {
-			sender.sendMessage(VaroCommand.getNoPermission("varo.heal"));
+			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "§7/heal [Player]");
+				sender.sendMessage(Main.getPrefix() + "§7/heal [Player/@a]");
 				return false;
 			}
 
@@ -35,7 +35,7 @@ public class HealCommand implements CommandExecutor {
 				return false;
 			}
 
-			if(args[0].equals("@a")) {
+			if(args[0].equalsIgnoreCase("@a")) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					p.setHealth(20);
 					p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));

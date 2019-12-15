@@ -12,27 +12,27 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 
-public class UnmuteCommand implements CommandExecutor {
-
+public class UnprotectCommand implements CommandExecutor {
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.unmute")) {
+		if(!sender.hasPermission("varo.unprotect")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/mute <Player/@a>");
-			sender.sendMessage(Main.getPrefix() + "§7/unmute <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/protect <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "§7/unprotect <Player/@a>");
 			return false;
 		}
 
 		if(args[0].equalsIgnoreCase("@a")) {
 			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				VaroCancelAble.removeCancelAble(player, CancelAbleType.MUTE);
+				VaroCancelAble.removeCancelAble(player, CancelAbleType.PROTECTION);
 			}
 
-			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler entmuted!");
+			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler unprotected!");
 			return false;
 		}
 
@@ -43,9 +43,9 @@ public class UnmuteCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);
+		VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
 
-		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich entmuted!");
+		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich unprotected!");
 		return false;
 	}
 }

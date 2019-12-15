@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 
+import net.labymod.serverapi.LabyModAPI;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommandListener;
 import de.cuuky.varo.command.essentials.AntiXrayCommand;
@@ -31,7 +33,10 @@ import de.cuuky.varo.command.essentials.SpawnCommand;
 import de.cuuky.varo.command.essentials.SpeedCommand;
 import de.cuuky.varo.command.essentials.SunCommand;
 import de.cuuky.varo.command.essentials.ThunderCommand;
+import de.cuuky.varo.command.essentials.UnflyCommand;
+import de.cuuky.varo.command.essentials.UnfreezeCommand;
 import de.cuuky.varo.command.essentials.UnmuteCommand;
+import de.cuuky.varo.command.essentials.UnprotectCommand;
 import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.config.config.ConfigEntry;
@@ -67,16 +72,10 @@ import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import net.labymod.serverapi.LabyModAPI;
 
-public class BukkitRegisterer {
+public final class BukkitRegisterer {
 
-	public BukkitRegisterer() {
-		registerEvents();
-		registerCommands();
-	}
-
-	private void registerEvents() {
+	public static void registerEvents() {
 		registerEvent(new PlayerJoinListener());
 		registerEvent(new PlayerQuitListener());
 		registerEvent(new PlayerMoveListener());
@@ -106,7 +105,7 @@ public class BukkitRegisterer {
 		registerEvent(new PlayerRespawnListener());
 		registerEvent(new VaroEventListener());
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_10__ONE_11))
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
 
 		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
@@ -118,7 +117,7 @@ public class BukkitRegisterer {
 			}
 	}
 
-	private void registerCommands() {
+	public static void registerCommands() {
 		registerCommand("varo", new VaroCommandListener());
 		registerCommand("antixray", new AntiXrayCommand());
 		registerCommand("broadcast", new BroadcastCommand());
@@ -138,7 +137,10 @@ public class BukkitRegisterer {
 		registerCommand("speed", new SpeedCommand());
 		registerCommand("vanish", new VanishCommand());
 		registerCommand("report", new ReportCommand());
+		registerCommand("unfly", new UnflyCommand());
+		registerCommand("unfreeze", new UnfreezeCommand());
 		registerCommand("unmute", new UnmuteCommand());
+		registerCommand("unprotect", new UnprotectCommand());
 		registerCommand("usage", new UsageCommand());
 		registerCommand("border", new BorderCommand());
 		registerCommand("setworldspawn", new SetWorldspawnCommand());
@@ -150,11 +152,11 @@ public class BukkitRegisterer {
 		registerCommand("countdown", new CountdownCommand());
 	}
 
-	private void registerCommand(String name, CommandExecutor cm) {
+	private static void registerCommand(String name, CommandExecutor cm) {
 		Main.getInstance().getCommand(name).setExecutor(cm);
 	}
 
-	private void registerEvent(Listener listener) {
+	private static void registerEvent(Listener listener) {
 		Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
 	}
 }

@@ -6,10 +6,19 @@ import de.cuuky.varo.config.config.ConfigEntry;
 
 public class OutSideTimeChecker {
 
+	private static OutSideTimeChecker instance;
+
 	private GregorianCalendar date1;
 	private GregorianCalendar date2;
 
-	public OutSideTimeChecker() {
+	public static OutSideTimeChecker getInstance() {
+		if (instance == null) {
+			instance = new OutSideTimeChecker();
+		}
+		return instance;
+	}
+
+	private OutSideTimeChecker() {
 		refreshDates();
 	}
 
