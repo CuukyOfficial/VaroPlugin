@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class JavaUtils {
+public final class JavaUtils {
 	
 	public static ArrayList<Object> getAsList(String[] lis) {
 		ArrayList<Object> list = new ArrayList<>();

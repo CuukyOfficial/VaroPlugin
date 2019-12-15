@@ -1,6 +1,8 @@
 package de.cuuky.varo.command.varo;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -56,6 +58,12 @@ public class UpdateCommand extends VaroCommand {
 		this.pluginNameChanged = false;
 
 		this.oldFileName = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
+
+		try {
+			oldFileName = URLDecoder.decode(oldFileName, "UTF-8");
+		} catch (Exception e) {
+			oldFileName = oldFileName.replace("%20", " ");
+		}
 
 		if(!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar")) {
 			this.pluginNameChanged = true;
