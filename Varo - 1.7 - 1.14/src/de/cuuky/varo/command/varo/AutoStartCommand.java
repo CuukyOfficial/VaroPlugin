@@ -48,7 +48,7 @@ public class AutoStartCommand extends VaroCommand {
 			}
 
 			if(args.length != 6) {
-				sender.sendMessage(Main.getPrefix() + "§b/autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
 				return;
 			}
 

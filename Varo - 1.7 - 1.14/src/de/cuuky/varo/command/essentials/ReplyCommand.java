@@ -14,7 +14,7 @@ public class ReplyCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§b/r §7<Message>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/r §7<Message>");
 			return false;
 		}
 
