@@ -22,7 +22,7 @@ public class TeamChooseGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = 1;
-		for(TeamGUIType type : TeamGUIType.values()) {
+		for (TeamGUIType type : TeamGUIType.values()) {
 			linkItemTo(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), new Runnable() {
 
 				@Override
@@ -37,14 +37,16 @@ public class TeamChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
-		if(opener.hasPermission("varo.admin")) {
+		if (opener.hasPermission("varo.admin")) {
 			new AdminMainMenu(opener);
 			return true;
 		}
@@ -53,5 +55,6 @@ public class TeamChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

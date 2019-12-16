@@ -32,19 +32,19 @@ public class StrikeListGUI extends SuperInventory {
 		ArrayList<Strike> list = VaroPlayer.getPlayer(target).getStats().getStrikes();
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			Strike strike;
 			try {
 				strike = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname("§c" + strike.getStrikeNumber()).itemstack(new ItemStack(Material.PAPER)).lore(new String[] { "§7Reason: §c" + strike.getReason(), "§7Striker: §c" + strike.getStriker(), "§7Date: §c" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(strike.getAcquiredDate()) }).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§c" + strike.getStrikeNumber()).itemstack(new ItemStack(Material.PAPER)).lore(new String[]{"§7Reason: §c" + strike.getReason(), "§7Striker: §c" + strike.getStriker(), "§7Date: §c" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(strike.getAcquiredDate())}).build(), new Runnable() {
 
 				@Override
 				public void run() {
-					if(!opener.hasPermission("varo.admin"))
+					if (!opener.hasPermission("varo.admin"))
 						return;
 
 					// TODO: DO OPTION STUFF
@@ -57,10 +57,12 @@ public class StrikeListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -68,5 +70,6 @@ public class StrikeListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

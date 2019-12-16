@@ -4,9 +4,10 @@ import java.awt.Color;
 
 import org.bukkit.Bukkit;
 
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.game.Game;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class ServerCommand extends DiscordBotCommand {
 
@@ -15,7 +16,7 @@ public class ServerCommand extends DiscordBotCommand {
 	 */
 
 	public ServerCommand() {
-		super("server", new String[] { "status", "whitelist" }, "Zeigt Infos und Status des Servers");
+		super("server", new String[]{"status", "whitelist"}, "Zeigt Infos und Status des Servers");
 	}
 
 	@Override

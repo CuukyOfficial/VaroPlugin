@@ -15,20 +15,20 @@ public class GameHandler extends VaroSerializeObject {
 		registerClass(BorderDecreaseDayTimer.class);
 	}
 
-	public static void initialise() {
-		if(instance == null) {
-			instance = new GameHandler();
-		}
-	}
-
 	private GameHandler() {
 		super(Game.class, "/stats/game.yml");
 
 		load();
 
-		if(Game.getInstance() == null) {
+		if (Game.getInstance() == null) {
 			Game.initialise(); // Wird beim ersten Mal ausgeführt, wenn noch
-								// keine Dateien existieren
+			// keine Dateien existieren
+		}
+	}
+
+	public static void initialise() {
+		if (instance == null) {
+			instance = new GameHandler();
 		}
 	}
 

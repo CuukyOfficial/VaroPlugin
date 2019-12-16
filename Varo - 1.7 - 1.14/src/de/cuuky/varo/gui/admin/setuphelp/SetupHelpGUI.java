@@ -15,6 +15,48 @@ import de.cuuky.varo.version.types.Materials;
 
 public class SetupHelpGUI extends SuperInventory {
 
+	public SetupHelpGUI(Player opener) {
+		super("§eSetup Assistant", opener, 9, false);
+
+		open();
+	}
+
+	@Override
+	public boolean onOpen() {
+		for (int i = 0; i < SetupCheckList.values().length; i++) {
+			SetupCheckList check = SetupCheckList.values()[i];
+
+			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + check.getName()).itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon())).lore(check.getDescription()).build(), new Runnable() {
+
+				@Override
+				public void run() {
+					check.setChecked(!check.isChecked());
+				}
+			});
+		}
+
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {
+		updateInventory();
+	}
+
+	@Override
+	public void onInventoryAction(PageAction action) {
+	}
+
+	@Override
+	public boolean onBackClick() {
+		new AdminMainMenu(opener);
+		return true;
+	}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {
+	}
+
 	public enum SetupCheckList {
 		CONFIG_SETUP("Config Setup", "Haben sie die Config augesetzt? (GUI)", Materials.SIGN.parseMaterial()),
 		TEAM_SETUP("Team Setup", "Haben sie alle Teams oder Spieler eingetragen? /varo team", Material.DIAMOND_HELMET),
@@ -58,44 +100,4 @@ public class SetupHelpGUI extends SuperInventory {
 			this.checked = checked;
 		}
 	}
-
-	public SetupHelpGUI(Player opener) {
-		super("§eSetup Assistant", opener, 9, false);
-
-		open();
-	}
-
-	@Override
-	public boolean onOpen() {
-		for(int i = 0; i < SetupCheckList.values().length; i++) {
-			SetupCheckList check = SetupCheckList.values()[i];
-
-			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + check.getName()).itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon())).lore(check.getDescription()).build(), new Runnable() {
-
-				@Override
-				public void run() {
-					check.setChecked(!check.isChecked());
-				}
-			});
-		}
-
-		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		updateInventory();
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {}
-
-	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
 }

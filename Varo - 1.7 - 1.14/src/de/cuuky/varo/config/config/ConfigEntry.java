@@ -239,6 +239,16 @@ public enum ConfigEntry {
 		this.description = description;
 	}
 
+	public static ConfigEntry getEntryByPath(String path) {
+		for (ConfigEntry entry : ConfigEntry.values()) {
+			if (!entry.getFullPath().equals(path))
+				continue;
+
+			return entry;
+		}
+		return null;
+	}
+
 	private void sendFalseCast() {
 		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + defaultValue.getClass() + " for entry " + getFullPath());
 	}
@@ -246,7 +256,7 @@ public enum ConfigEntry {
 	public void setValue(Object value, boolean save) {
 		this.value = value;
 
-		if(save)
+		if (save)
 			save();
 	}
 
@@ -262,7 +272,7 @@ public enum ConfigEntry {
 	public String getValueAsString() {
 		try {
 			return String.valueOf(this.value).replaceAll("&", "§");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -272,7 +282,7 @@ public enum ConfigEntry {
 	public int getValueAsInt() {
 		try {
 			return (int) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -282,7 +292,7 @@ public enum ConfigEntry {
 	public double getValueAsDouble() {
 		try {
 			return (double) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -292,7 +302,7 @@ public enum ConfigEntry {
 	public boolean getValueAsBoolean() {
 		try {
 			return (boolean) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -302,7 +312,7 @@ public enum ConfigEntry {
 	public long getValueAsLong() {
 		try {
 			return (long) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -335,15 +345,5 @@ public enum ConfigEntry {
 
 	public String getName() {
 		return path;
-	}
-
-	public static ConfigEntry getEntryByPath(String path) {
-		for(ConfigEntry entry : ConfigEntry.values()) {
-			if(!entry.getFullPath().equals(path))
-				continue;
-
-			return entry;
-		}
-		return null;
 	}
 }

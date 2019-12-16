@@ -15,14 +15,14 @@ public class BlockLogger extends Logger {
 	}
 
 	public static BlockLogger getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new BlockLogger("blocklogs");
 		}
 		return instance;
 	}
 
 	public void println(Block block, Player player) {
-		if(!ListHandler.getInstance().getDestroyedBlocks().shallLog(block))
+		if (!ListHandler.getInstance().getDestroyedBlocks().shallLog(block))
 			return;
 
 		String log = "[" + getCurrentDate() + "] " + player.getName() + " mined " + block.getType().toString() + " at x:" + block.getLocation().getBlockX() + " y:" + block.getLocation().getBlockY() + " z:" + block.getLocation().getBlockZ() + " in the world '" + block.getWorld().getName() + "'!";

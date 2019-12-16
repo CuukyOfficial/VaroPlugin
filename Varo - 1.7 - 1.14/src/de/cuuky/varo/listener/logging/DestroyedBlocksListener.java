@@ -12,10 +12,10 @@ public class DestroyedBlocksListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onOreBreak(BlockBreakEvent event) {
-		if(!ConfigEntry.BLOCK_DESTROY_LOGGER.getValueAsBoolean())
+		if (!ConfigEntry.BLOCK_DESTROY_LOGGER.getValueAsBoolean())
 			return;
 
-		if(event.isCancelled())
+		if (event.isCancelled())
 			return;
 
 		BlockLogger.getInstance().println(event.getBlock(), event.getPlayer());

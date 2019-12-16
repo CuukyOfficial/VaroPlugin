@@ -25,7 +25,7 @@ public class PlayerListChooseGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = 0;
-		for(PlayerGUIType type : PlayerGUIType.values()) {
+		for (PlayerGUIType type : PlayerGUIType.values()) {
 			linkItemTo(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), new Runnable() {
 
 				@Override
@@ -40,17 +40,20 @@ public class PlayerListChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
-		if(opener.hasPermission("varo.admin")) {
+		if (opener.hasPermission("varo.admin")) {
 			new AdminMainMenu(opener);
 			return true;
 		}

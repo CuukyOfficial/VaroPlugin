@@ -21,6 +21,17 @@ public class ChatMessage {
 		messages.add(this);
 	}
 
+	public static ChatMessage getMessage(Player player) {
+		for (ChatMessage cmessage : messages) {
+			if (cmessage.getPlayer().equals(player))
+				continue;
+
+			return cmessage;
+		}
+
+		return null;
+	}
+
 	public Date getWritten() {
 		return written;
 	}
@@ -31,16 +42,5 @@ public class ChatMessage {
 
 	public Player getPlayer() {
 		return player;
-	}
-
-	public static ChatMessage getMessage(Player player) {
-		for(ChatMessage cmessage : messages) {
-			if(cmessage.getPlayer().equals(player))
-				continue;
-
-			return cmessage;
-		}
-
-		return null;
 	}
 }

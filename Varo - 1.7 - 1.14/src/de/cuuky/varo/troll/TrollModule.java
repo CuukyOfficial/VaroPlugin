@@ -29,8 +29,21 @@ public class TrollModule {
 		modules.add(this);
 	}
 
+	public static ArrayList<TrollModule> getModules() {
+		return modules;
+	}
+
+	public static ArrayList<TrollModule> getEnabledModules(Player player) {
+		ArrayList<TrollModule> enabledEvents = new ArrayList<>();
+		for (TrollModule module : modules)
+			if (module.getEnabledFor().contains(player))
+				enabledEvents.add(module);
+
+		return enabledEvents;
+	}
+
 	public void setEnabledFor(Player player, boolean enable) {
-		if(enable) {
+		if (enable) {
 			enabledFor.add(player);
 			onEnable(player);
 		} else {
@@ -55,24 +68,15 @@ public class TrollModule {
 		return description;
 	}
 
-	protected void onEnable(Player player) {}
-
-	protected void onDisable(Player player) {}
-
-	protected void onInteract(PlayerInteractEvent event) {}
-
-	protected void onMove(PlayerMoveEvent event) {}
-
-	public static ArrayList<TrollModule> getModules() {
-		return modules;
+	protected void onEnable(Player player) {
 	}
 
-	public static ArrayList<TrollModule> getEnabledModules(Player player) {
-		ArrayList<TrollModule> enabledEvents = new ArrayList<>();
-		for(TrollModule module : modules)
-			if(module.getEnabledFor().contains(player))
-				enabledEvents.add(module);
+	protected void onDisable(Player player) {
+	}
 
-		return enabledEvents;
+	protected void onInteract(PlayerInteractEvent event) {
+	}
+
+	protected void onMove(PlayerMoveEvent event) {
 	}
 }

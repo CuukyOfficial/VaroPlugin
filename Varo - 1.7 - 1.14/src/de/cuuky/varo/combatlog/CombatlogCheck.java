@@ -31,12 +31,12 @@ public class CombatlogCheck {
 	}
 
 	private void check(PlayerQuitEvent event) {
-		if(Game.getInstance().getGameState() == GameState.END) {
+		if (Game.getInstance().getGameState() == GameState.END) {
 			this.combatLog = false;
 			return;
 		}
 
-		if(PlayerHit.getHit(event.getPlayer()) == null) {
+		if (PlayerHit.getHit(event.getPlayer()) == null) {
 			this.combatLog = false;
 			return;
 		}
@@ -44,15 +44,15 @@ public class CombatlogCheck {
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer().getName());
 		PlayerHit hit = PlayerHit.getHit(event.getPlayer());
 
-		if(hit.getOpponent() != null && hit.getOpponent().isOnline())
+		if (hit.getOpponent() != null && hit.getOpponent().isOnline())
 			PlayerHit.getHit(hit.getOpponent()).over();
 
-		if(!vp.getStats().isAlive()) {
+		if (!vp.getStats().isAlive()) {
 			this.combatLog = false;
 			return;
 		}
 
-		if(ConfigEntry.KILL_ON_COMBATLOG.getValueAsBoolean()) {
+		if (ConfigEntry.KILL_ON_COMBATLOG.getValueAsBoolean()) {
 			event.getPlayer().setHealth(0);
 			vp.getStats().setState(PlayerState.DEAD);
 		}
@@ -63,7 +63,7 @@ public class CombatlogCheck {
 	private void punish(VaroPlayer player) {
 		player.onEvent(BukkitEventType.KICKED);
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");
-		if(ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
+		if (ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
 			player.getStats().addStrike(new Strike("CombatLog", player, "CONSOLE"));
 			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
 		} else

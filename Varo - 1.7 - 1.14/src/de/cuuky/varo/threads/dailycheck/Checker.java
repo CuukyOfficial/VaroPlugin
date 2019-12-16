@@ -22,18 +22,11 @@ public abstract class Checker {
 		checker.add(this);
 	}
 
-	protected long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-		long diffInMillies = date2.getTime() - date1.getTime();
-		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
-	}
-
-	public abstract void check();
-
 	public static void checkAll() {
-		for(Checker checkers : checker) {
+		for (Checker checkers : checker) {
 			try {
 				checkers.check();
-			} catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				continue;
 			}
@@ -43,4 +36,11 @@ public abstract class Checker {
 	public static ArrayList<Checker> getChecker() {
 		return checker;
 	}
+
+	protected long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+		long diffInMillies = date2.getTime() - date1.getTime();
+		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
+
+	public abstract void check();
 }

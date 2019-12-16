@@ -38,10 +38,10 @@ public class BorderDecrease {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
-				if(running)
+				if (running)
 					return;
 
-				for(int i = 0; i < decreases.size(); i++) {
+				for (int i = 0; i < decreases.size(); i++) {
 					running = true;
 					decreases.get(i).shrink();
 				}
@@ -54,7 +54,7 @@ public class BorderDecrease {
 	private void waitForBorder(double d) {
 		try {
 			Thread.sleep((long) (d * 1000) + 1000);
-		} catch(InterruptedException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,15 +64,15 @@ public class BorderDecrease {
 
 		int minsize = ConfigEntry.MIN_BORDER_SIZE.getValueAsInt();
 		double size = border.getBorderSize(null);
-		if(size <= minsize) {
+		if (size <= minsize) {
 			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());
 			remove();
 			return;
 		}
 
 		startHook.run();
-		if(minsize > 0)
-			if((int) (size - amount) < minsize) {
+		if (minsize > 0)
+			if ((int) (size - amount) < minsize) {
 				border.setBorderSize(minsize, (long) ((size - minsize) / bps), null);
 				waitForBorder((size - minsize) / bps);
 			} else {

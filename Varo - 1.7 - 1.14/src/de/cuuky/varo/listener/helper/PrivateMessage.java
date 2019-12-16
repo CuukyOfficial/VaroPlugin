@@ -28,6 +28,17 @@ public class PrivateMessage {
 		messages.add(this);
 	}
 
+	public static PrivateMessage getMessage(Player player) {
+		for (PrivateMessage pmessage : messages) {
+			if (pmessage.getReciever().equals(player))
+				continue;
+
+			return pmessage;
+		}
+
+		return null;
+	}
+
 	public Date getWritten() {
 		return written;
 	}
@@ -42,16 +53,5 @@ public class PrivateMessage {
 
 	public Player getSender() {
 		return sender;
-	}
-
-	public static PrivateMessage getMessage(Player player) {
-		for(PrivateMessage pmessage : messages) {
-			if(pmessage.getReciever().equals(player))
-				continue;
-
-			return pmessage;
-		}
-
-		return null;
 	}
 }

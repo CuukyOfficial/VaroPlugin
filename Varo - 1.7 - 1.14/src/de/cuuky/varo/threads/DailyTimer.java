@@ -3,9 +3,10 @@ package de.cuuky.varo.threads;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.backup.Backup;
@@ -20,10 +21,10 @@ public final class DailyTimer {
 
 	public static void startTimer() {
 		VaroUtils.setWorldToTime();
-		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
+		if (Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
 			Date date = Game.getInstance().getLastDayTimer();
-			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
-				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+			for (int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
+				if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RE");
 
 				doDailyStuff();
@@ -41,8 +42,8 @@ public final class DailyTimer {
 					new Backup();
 					Game.getInstance().setLastDayTimer(new Date());
 
-					if(Game.getInstance().getGameState() == GameState.STARTED) {
-						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+					if (Game.getInstance().getGameState() == GameState.STARTED) {
+						if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 
 						doDailyStuff();
@@ -55,7 +56,7 @@ public final class DailyTimer {
 							startTimer();
 						}
 					}, 100);
-				} catch(Exception e) {
+				} catch (Exception e) {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 
 						@Override
@@ -69,10 +70,10 @@ public final class DailyTimer {
 	}
 
 	private static void doDailyStuff() {
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
 
-			if(vp.isOnline())
+			if (vp.isOnline())
 				vp.getPlayer().kickPlayer("RESET");
 		}
 
@@ -86,7 +87,7 @@ public final class DailyTimer {
 		reset.setSeconds(0);
 		Date current = new Date();
 		reset.setHours(ConfigEntry.RESET_SESSION_HOUR.getValueAsInt());
-		if(reset.before(current))
+		if (reset.before(current))
 			reset = DateUtils.addDays(reset, 1);
 		return (reset.getTime() - current.getTime()) / 1000;
 	}

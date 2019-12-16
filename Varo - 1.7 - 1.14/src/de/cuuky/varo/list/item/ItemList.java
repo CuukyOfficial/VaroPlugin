@@ -15,51 +15,84 @@ public class ItemList extends VaroList {
 		super(location);
 	}
 
+	public static ArrayList<ItemList> getItemLists() {
+		ArrayList<ItemList> iList = new ArrayList<>();
+
+		for (VaroList vlist : VaroList.getLists())
+			if (vlist instanceof ItemList)
+				iList.add((ItemList) vlist);
+
+		return iList;
+	}
+
+	// TODO Dauerhafte Lösung finden
+	public static ArrayList<ItemList> getItemListsMultipleAdd() {
+		ArrayList<ItemList> itemLists = getItemLists();
+		ArrayList<ItemList> multipleAdd = new ArrayList<>();
+		for (ItemList list : itemLists) {
+			switch (list.getLocation()) {
+				case "ChestItems":
+				case "StartItems":
+				case "DeathItems":
+					multipleAdd.add(list);
+			}
+		}
+		return multipleAdd;
+	}
+
+	public static ItemList getItemList(String list) {
+		for (ItemList iList : getItemLists())
+			if (iList.getLocation().equalsIgnoreCase(list))
+				return iList;
+
+		return null;
+	}
+
 	protected ItemStack fixItem(ItemStack item) {
 		item = item.clone();
 		item.setAmount(1);
-		if(isDamageable(item))
+		if (isDamageable(item))
 			item.setDurability((short) 0);
 		return item;
 	}
 
 	protected boolean isDamageable(ItemStack item) {
-		if(item == null)
+		if (item == null)
 			return false;
 
 		String[] split = item.getType().toString().split("_");
 		int length = split.length;
-		switch(split[length - 1]) {
-		case "HELMET":
-			return true;
-		case "CHESTPLATE":
-			return true;
-		case "LEGGINGS":
-			return true;
-		case "BOOTS":
-			return true;
-		case "SWORD":
-			return true;
-		case "AXE":
-			return true;
-		case "PICKAXE":
-			return true;
-		case "SHOVEL":
-			return true;
-		case "HOE":
-			return true;
-		case "ELYTRA":
-			return true;
-		case "TURTLE_HELMET":
-			return true;
-		case "TRIDENT":
-			return true;
-		case "HORSE_ARMOR":
-			return true;
-		case "SHEARS":
-			return true;
-		default:
-			return false;
+		switch (split[length - 1]) {
+			case "HELMET":
+				return true;
+			case "CHESTPLATE":
+				return true;
+			case "LEGGINGS":
+				return true;
+			case "BOOTS":
+				return true;
+			case "SWORD":
+				return true;
+			case "AXE":
+				return true;
+			case "PICKAXE":
+				return true;
+			case "SHOVEL":
+				return true;
+			case "HOE":
+				return true;
+			case "ELYTRA":
+				return true;
+			case "TURTLE_HELMET":
+				return true;
+			case "TRIDENT":
+				return true;
+			case "HORSE_ARMOR":
+				return true;
+			case "SHEARS":
+				return true;
+			default:
+				return false;
 		}
 	}
 
@@ -83,11 +116,11 @@ public class ItemList extends VaroList {
 	public void onLoad(List<?> list) {
 		items = new ArrayList<ItemStack>();
 
-		for(Object id : list) {
+		for (Object id : list) {
 			try {
 				ItemStack c = (ItemStack) id;
 				items.add(c);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				continue;
 			}
 		}
@@ -100,38 +133,5 @@ public class ItemList extends VaroList {
 
 	public ArrayList<ItemStack> getItems() {
 		return items;
-	}
-
-	public static ArrayList<ItemList> getItemLists() {
-		ArrayList<ItemList> iList = new ArrayList<>();
-
-		for(VaroList vlist : VaroList.getLists())
-			if(vlist instanceof ItemList)
-				iList.add((ItemList) vlist);
-
-		return iList;
-	}
-
-	// TODO Dauerhafte Lösung finden
-	public static ArrayList<ItemList> getItemListsMultipleAdd() {
-		ArrayList<ItemList> itemLists = getItemLists();
-		ArrayList<ItemList> multipleAdd = new ArrayList<>();
-		for(ItemList list : itemLists) {
-			switch(list.getLocation()) {
-			case "ChestItems":
-			case "StartItems":
-			case "DeathItems":
-				multipleAdd.add(list);
-			}
-		}
-		return multipleAdd;
-	}
-
-	public static ItemList getItemList(String list) {
-		for(ItemList iList : getItemLists())
-			if(iList.getLocation().equalsIgnoreCase(list))
-				return iList;
-
-		return null;
 	}
 }

@@ -20,13 +20,6 @@ public class ListHandler {
 	private StartItems startItems;
 	private DeathItems deathItems;
 
-	public static ListHandler getInstance() {
-		if(instance == null) {
-			instance = new ListHandler();
-		}
-		return instance;
-	}
-
 	private ListHandler() {
 		this.blockedEnchantments = new BlockedEnchantments();
 		this.blockedItems = new BlockedItems();
@@ -37,6 +30,13 @@ public class ListHandler {
 		this.deathItems = new DeathItems();
 
 		VaroList.saveLists();
+	}
+
+	public static ListHandler getInstance() {
+		if (instance == null) {
+			instance = new ListHandler();
+		}
+		return instance;
 	}
 
 	public BlockedRecipes getBlockedRecipes() {

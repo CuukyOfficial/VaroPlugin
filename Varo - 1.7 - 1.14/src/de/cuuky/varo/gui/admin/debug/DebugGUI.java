@@ -30,7 +30,7 @@ public class DebugGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Führt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen" }).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[]{"§7Führt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen"}).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -48,7 +48,7 @@ public class DebugGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[] { "§7Führt die Dinge aus, die sonst immer", "§7Nachts ausgeführt werden, wie Sessionreset" }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[]{"§7Führt die Dinge aus, die sonst immer", "§7Nachts ausgeführt werden, wie Sessionreset"}).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -62,7 +62,7 @@ public class DebugGUI extends SuperInventory {
 			@Override
 			public void run() {
 				String post = "";
-				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
+				for (VaroPlayer vp : VaroPlayer.getAlivePlayer())
 					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? VaroUtils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
 
 				EventLogger.getInstance().println(LogType.ALERT, post);
@@ -73,10 +73,12 @@ public class DebugGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -85,5 +87,6 @@ public class DebugGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

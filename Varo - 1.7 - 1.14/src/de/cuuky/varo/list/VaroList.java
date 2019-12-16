@@ -24,29 +24,12 @@ public abstract class VaroList {
 		config.options().copyDefaults(true);
 
 		List<?> loadList = config.getList(location);
-		if(loadList == null)
+		if (loadList == null)
 			loadList = new ArrayList<>();
 
 		onLoad(loadList);
 
 		lists.add(this);
-	}
-
-	public abstract ArrayList<?> getAsList();
-
-	public abstract void onLoad(List<?> list);
-
-	public void saveList() {
-		config.set(location, null);
-		config.set(location, getAsList());
-
-		try {
-			config.save(file);
-		} catch(IOException e) {}
-	}
-
-	public String getLocation() {
-		return location;
 	}
 
 	private static void reloadConfig() {
@@ -59,24 +42,42 @@ public abstract class VaroList {
 		saveLists();
 		reloadConfig();
 
-		for(VaroList list : lists)
+		for (VaroList list : lists)
 			list.onLoad(config.getStringList(list.getLocation()));
 	}
 
 	public static void saveLists() {
-		for(VaroList list : lists) {
+		for (VaroList list : lists) {
 			config.set(list.getLocation(), null);
 			config.set(list.getLocation(), list.getAsList());
 		}
 
 		try {
 			config.save(file);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static ArrayList<VaroList> getLists() {
 		return lists;
+	}
+
+	public abstract ArrayList<?> getAsList();
+
+	public abstract void onLoad(List<?> list);
+
+	public void saveList() {
+		config.set(location, null);
+		config.set(location, getAsList());
+
+		try {
+			config.save(file);
+		} catch (IOException e) {
+		}
+	}
+
+	public String getLocation() {
+		return location;
 	}
 }

@@ -2,9 +2,10 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class OnlineCommand extends DiscordBotCommand {
 
@@ -13,19 +14,19 @@ public class OnlineCommand extends DiscordBotCommand {
 	 */
 
 	public OnlineCommand() {
-		super("online", new String[] { "onlineplayers" }, "Zeigt alle Spieler an, die online sind");
+		super("online", new String[]{"onlineplayers"}, "Zeigt alle Spieler an, die online sind");
 	}
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if(VaroPlayer.getOnlinePlayer().size() == 0) {
+		if (VaroPlayer.getOnlinePlayer().size() == 0) {
 			getDiscordBot().sendMessage("Es sind keine Spieler online!", "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 
 		String players = "";
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			if(players.equals(""))
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			if (players.equals(""))
 				players = vp.getName();
 			else
 				players = players + ", " + vp.getName();

@@ -37,69 +37,69 @@ public class PlayerJoinListener implements Listener {
 		vplayer.setPlayer(player);
 		vplayer.onEvent(BukkitEventType.JOINED);
 
-		if(Game.getInstance().getGameState() == GameState.LOBBY) {
+		if (Game.getInstance().getGameState() == GameState.LOBBY) {
 			Spawn spawn = Spawn.getSpawn(vplayer);
-			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
+			if (spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
 				player.teleport(VaroUtils.getTeleportLocation());
 
 			player.getInventory().clear();
-			player.getInventory().setArmorContents(new ItemStack[] {});
+			player.getInventory().setArmorContents(new ItemStack[]{});
 			player.updateInventory();
 			LobbyItem.giveItems(player);
 
-			if(ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
-				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
+			if (ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
+				if (VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
 					Game.getInstance().start();
 				else
 					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
 			}
 
-			if(player.isOp()) {
+			if (player.isOp()) {
 				Object[] updater = VaroUtils.checkForUpdates();
 				VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater[0];
 				String updateVersion = (String) updater[1];
 
-				if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
-					if(Team.getTeams().isEmpty()) {
+				if (result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
+					if (Team.getTeams().isEmpty()) {
 						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 					}
 					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
 				}
 			}
 		} else {
-			if(vplayer.getStats().getSessionsPlayed() == 0) {
+			if (vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
-				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+				if (countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					player.teleport(VaroUtils.getMainWorld().getSpawnLocation());
 				}
 			}
-			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
+			if (isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				player.teleport(player.getWorld().getSpawnLocation());
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
 			}
 
-			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
+			if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
-			} else if(Game.getInstance().getFinaleJoinStart()) {
+			} else if (Game.getInstance().getFinaleJoinStart()) {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
-				if(!player.isOp()) {
+				if (!player.isOp()) {
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 				}
-			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
+			} else if (!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
-			} else if(VaroEvent.getMassRecEvent().isEnabled()) {
-				if(VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+			} else if (VaroEvent.getMassRecEvent().isEnabled()) {
+				if (VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getTimer());
 				} else {
 					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getCountdown(vplayer) + VaroEvent.getMassRecEvent().getTimer());
 				}
 
-				if(!vplayer.getalreadyHadMassProtectionTime()) {
+				if (!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
 					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
 					EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
@@ -116,7 +116,7 @@ public class PlayerJoinListener implements Listener {
 					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
 					EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
 				}
-			} else if(!vplayer.getStats().hasTimeLeft()) {
+			} else if (!vplayer.getStats().hasTimeLeft()) {
 				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(vplayer));
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
 			} else {
@@ -130,7 +130,7 @@ public class PlayerJoinListener implements Listener {
 	}
 
 	private boolean isOutsideOfBorder(Player p) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if (VersionUtils.getVersion() == BukkitVersion.ONE_7)
 			return false;
 
 		try {
@@ -139,8 +139,8 @@ public class PlayerJoinListener implements Listener {
 			double size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
 			Location center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
 			double x = loc.getX() - center.getX(), z = loc.getZ() - center.getZ();
-			return((x > size || (-x) > size) || (z > size || (-z) > size));
-		} catch(Exception e) {
+			return ((x > size || (-x) > size) || (z > size || (-z) > size));
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}

@@ -21,12 +21,24 @@ public class ChatHook {
 		this.player = player;
 		this.listener = chatHookListener;
 
-		if(getChatHook(player) != null)
+		if (getChatHook(player) != null)
 			getChatHook(player).remove();
 
 		player.sendMessage(Main.getPrefix() + message);
 
 		chathooks.add(this);
+	}
+
+	public static ChatHook getChatHook(Player player) {
+		for (ChatHook hook : chathooks)
+			if (hook.getPlayer().equals(player))
+				return hook;
+
+		return null;
+	}
+
+	public static ArrayList<ChatHook> getChathooks() {
+		return chathooks;
 	}
 
 	public Player getPlayer() {
@@ -41,17 +53,5 @@ public class ChatHook {
 
 	public void remove() {
 		chathooks.remove(this);
-	}
-
-	public static ChatHook getChatHook(Player player) {
-		for(ChatHook hook : chathooks)
-			if(hook.getPlayer().equals(player))
-				return hook;
-
-		return null;
-	}
-
-	public static ArrayList<ChatHook> getChathooks() {
-		return chathooks;
 	}
 }

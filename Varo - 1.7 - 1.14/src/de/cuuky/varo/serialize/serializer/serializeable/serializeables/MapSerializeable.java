@@ -17,7 +17,7 @@ public class MapSerializeable extends VaroSerialize {
 
 	@Override
 	public Object deserialize(Field field, Object obj, MemorySection section, String path, VaroSerializeObject object) {
-		if(!Map.class.isAssignableFrom(field.getType()))
+		if (!Map.class.isAssignableFrom(field.getType()))
 			return null;
 
 		return section.getConfigurationSection(path).getValues(false);

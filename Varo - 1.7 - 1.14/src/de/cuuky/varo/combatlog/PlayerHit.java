@@ -35,7 +35,7 @@ public class PlayerHit {
 
 	@SuppressWarnings("deprecation")
 	public PlayerHit(Player player, Player opponent) {
-		if(!hasOld(player))
+		if (!hasOld(player))
 			player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_IN_FIGHT.getValue());
 
 		this.player = player;
@@ -52,6 +52,17 @@ public class PlayerHit {
 		hits.add(this);
 	}
 
+	public static PlayerHit getHit(Player p) {
+		for (PlayerHit hit : hits) {
+			if (!hit.getPlayer().equals(p))
+				continue;
+
+			return hit;
+		}
+
+		return null;
+	}
+
 	public void over() {
 		player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_NOT_IN_FIGHT.getValue());
 		remove();
@@ -63,8 +74,8 @@ public class PlayerHit {
 	}
 
 	public boolean hasOld(Player p) {
-		for(PlayerHit hit : hits) {
-			if(!hit.getPlayer().equals(p))
+		for (PlayerHit hit : hits) {
+			if (!hit.getPlayer().equals(p))
 				continue;
 
 			hit.remove();
@@ -82,38 +93,27 @@ public class PlayerHit {
 		return this.player;
 	}
 
-	public static PlayerHit getHit(Player p) {
-		for(PlayerHit hit : hits) {
-			if(!hit.getPlayer().equals(p))
-				continue;
-
-			return hit;
-		}
-
-		return null;
-	}
-
 	private static class HitListener implements Listener {
 
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onHit(EntityDamageByEntityEvent event) {
-			if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
+			if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 				return;
 
-			if(!Game.getInstance().isRunning() || event.isCancelled())
+			if (!Game.getInstance().isRunning() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());
 			VaroPlayer vp1 = VaroPlayer.getPlayer(((Player) event.getDamager()).getName());
 
-			if(vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
+			if (vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
 				return;
 
 			Date current = new Date();
 			vp.getStats().setLastEnemyContact(current);
 			vp1.getStats().setLastEnemyContact(current);
 
-			if(!ConfigEntry.COMBATLOG_TIME.isIntActivated())
+			if (!ConfigEntry.COMBATLOG_TIME.isIntActivated())
 				return;
 
 			Player player1 = (Player) event.getDamager();

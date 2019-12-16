@@ -14,32 +14,32 @@ public class PresetLoader {
 	}
 
 	public void copyCurrentSettingsTo() {
-		if(!file.exists())
+		if (!file.exists())
 			file.mkdirs();
 
-		for(File config : new File("plugins/Varo/").listFiles()) {
-			if(!config.isFile())
+		for (File config : new File("plugins/Varo/").listFiles()) {
+			if (!config.isFile())
 				continue;
 
 			try {
 				Files.copy(config, new File(file.getPath() + "/" + config.getName()));
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
 	public void loadSettings() {
-		if(!file.exists())
+		if (!file.exists())
 			file.mkdirs();
 
-		for(File config : file.listFiles()) {
-			if(!config.isFile())
+		for (File config : file.listFiles()) {
+			if (!config.isFile())
 				continue;
 
 			try {
 				Files.copy(config, new File("plugins/Varo/" + config.getName()));
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

@@ -17,7 +17,7 @@ public class VersionUtils {
 
 	public static ArrayList<Player> getOnlinePlayer() {
 		ArrayList<Player> list = new ArrayList<Player>();
-		for(Player p : Bukkit.getOnlinePlayers())
+		for (Player p : Bukkit.getOnlinePlayers())
 			list.add(p);
 
 		return list;
@@ -26,10 +26,11 @@ public class VersionUtils {
 	public static Class<?> getChatSerializer() {
 		try {
 			return Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent$ChatSerializer");
-		} catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			try {
 				return Class.forName(VersionUtils.getNmsClass() + ".ChatSerializer");
-			} catch(ClassNotFoundException e1) {}
+			} catch (ClassNotFoundException e1) {
+			}
 		}
 
 		return null;

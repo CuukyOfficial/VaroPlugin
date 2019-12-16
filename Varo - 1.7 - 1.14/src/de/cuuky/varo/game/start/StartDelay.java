@@ -30,32 +30,12 @@ public enum StartDelay {
 		this.used = false;
 	}
 
-	public String getFormated(String insert) {
-		return article + " " + insert + unit;
-	}
-
-	public double getDelay() {
-		return delay;
-	}
-
-	public void setUsed(boolean used) {
-		this.used = used;
-	}
-
-	public boolean isUsed() {
-		return used;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
 	public static StartDelay getStartDelay(long delay) {
-		for(StartDelay sd : values()) {
-			if(!(delay >= sd.getDelay()))
+		for (StartDelay sd : values()) {
+			if (!(delay >= sd.getDelay()))
 				continue;
 
-			if(sd.isUsed())
+			if (sd.isUsed())
 				continue;
 
 			sd.setUsed(true);
@@ -66,7 +46,27 @@ public enum StartDelay {
 	}
 
 	public static void reset() {
-		for(StartDelay sd : values())
+		for (StartDelay sd : values())
 			sd.setUsed(false);
+	}
+
+	public String getFormated(String insert) {
+		return article + " " + insert + unit;
+	}
+
+	public double getDelay() {
+		return delay;
+	}
+
+	public boolean isUsed() {
+		return used;
+	}
+
+	public void setUsed(boolean used) {
+		this.used = used;
+	}
+
+	public String getUnit() {
+		return unit;
 	}
 }

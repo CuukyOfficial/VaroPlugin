@@ -66,6 +66,17 @@ public enum ConfigSection {
 		this.description = description;
 	}
 
+	public static ConfigSection getSection(String name) {
+		for (ConfigSection section : ConfigSection.values()) {
+			if (!section.getName().equalsIgnoreCase(name))
+				continue;
+
+			return section;
+		}
+
+		return null;
+	}
+
 	public String getPath() {
 		return name + ".";
 	}
@@ -84,24 +95,13 @@ public enum ConfigSection {
 
 	public ArrayList<ConfigEntry> getEntries() {
 		ArrayList<ConfigEntry> temp = new ArrayList<>();
-		for(ConfigEntry entry : ConfigEntry.values()) {
-			if(!entry.getSection().equals(this))
+		for (ConfigEntry entry : ConfigEntry.values()) {
+			if (!entry.getSection().equals(this))
 				continue;
 
 			temp.add(entry);
 		}
 
 		return temp;
-	}
-
-	public static ConfigSection getSection(String name) {
-		for(ConfigSection section : ConfigSection.values()) {
-			if(!section.getName().equalsIgnoreCase(name))
-				continue;
-
-			return section;
-		}
-
-		return null;
 	}
 }

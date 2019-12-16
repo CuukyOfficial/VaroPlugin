@@ -23,7 +23,7 @@ public class ConfigSectionGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ConfigSection section : ConfigSection.values()) {
+		for (ConfigSection section : ConfigSection.values()) {
 			i++;
 
 			linkItemTo(i, new ItemBuilder().displayname("§7" + section.getName()).itemstack(new ItemStack(section.getMaterial())).lore((Main.getColorCode() + section.getDescription()).split("\n")).build(), new Runnable() {
@@ -39,13 +39,16 @@ public class ConfigSectionGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {

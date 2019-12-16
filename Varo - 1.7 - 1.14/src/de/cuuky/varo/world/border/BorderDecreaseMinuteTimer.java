@@ -12,14 +12,14 @@ public class BorderDecreaseMinuteTimer {
 
 	public BorderDecreaseMinuteTimer() {
 		sched = -1;
-		if(!DecreaseReason.TIME_MINUTES.isEnabled())
+		if (!DecreaseReason.TIME_MINUTES.isEnabled())
 			return;
 
 		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
-				if(Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
+				if (Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
 					remove();
 					return;
 				}

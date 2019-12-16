@@ -19,21 +19,21 @@ public enum BukkitVersion {
 		this.identifier = identifier;
 	}
 
-	public boolean isHigherThan(BukkitVersion ver) {
-		return identifier > ver.identifier;
-	}
-
 	public static BukkitVersion getVersion(String v) {
 		int versionNumber = Integer.valueOf(v.split("1_")[1].split("_")[0]);
-		for(BukkitVersion version : values())
-			if(versionNumber == version.identifier)
+		for (BukkitVersion version : values())
+			if (versionNumber == version.identifier)
 				return version;
 
-		if(versionNumber < values()[1].identifier)
+		if (versionNumber < values()[1].identifier)
 			return values()[0];
-		else if(versionNumber > values()[values().length - 2].identifier)
+		else if (versionNumber > values()[values().length - 2].identifier)
 			return values()[values().length - 1];
 
 		return null;
+	}
+
+	public boolean isHigherThan(BukkitVersion ver) {
+		return identifier > ver.identifier;
 	}
 }

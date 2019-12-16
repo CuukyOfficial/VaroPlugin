@@ -38,14 +38,23 @@ public class Rank implements VaroSerializeable {
 		Nametag.refreshAll();
 	}
 
+	public static ArrayList<Rank> getRanks() {
+		return ranks;
+	}
+
+	public static int getHighestLocation() {
+		return highestLocation;
+	}
+
 	@Override
 	public void onDeserializeEnd() {
-		if(tablistLocation > highestLocation)
+		if (tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	public void remove() {
 		ranks.remove(this);
@@ -55,34 +64,26 @@ public class Rank implements VaroSerializeable {
 		return name;
 	}
 
-	public void setColorcode(int colorcode) {
-		this.colorcode = colorcode;
-	}
-
 	public int getColorcode() {
 		return colorcode;
 	}
 
-	public void setTablistLocation(int tablistLocation) {
-		this.tablistLocation = tablistLocation;
-
-		if(tablistLocation > highestLocation)
-			highestLocation = tablistLocation;
+	public void setColorcode(int colorcode) {
+		this.colorcode = colorcode;
 	}
 
 	public int getTablistLocation() {
 		return tablistLocation;
 	}
 
+	public void setTablistLocation(int tablistLocation) {
+		this.tablistLocation = tablistLocation;
+
+		if (tablistLocation > highestLocation)
+			highestLocation = tablistLocation;
+	}
+
 	public String getDisplay() {
 		return name;
-	}
-
-	public static ArrayList<Rank> getRanks() {
-		return ranks;
-	}
-
-	public static int getHighestLocation() {
-		return highestLocation;
 	}
 }

@@ -21,40 +21,40 @@ public class ExportCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- §l" + Main.getColorCode() + "Export" + "§7 -----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players | Exportiert alle Spieler");
 		}
 
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players | Exportiert alle Spieler");
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("players")) {
+		if (args[0].equalsIgnoreCase("players")) {
 			File file = new File("plugins/Varo/exports/players.yml");
-			if(file.exists())
+			if (file.exists())
 				file.delete();
 
 			YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 			ArrayList<VaroPlayer> finished = new ArrayList<>();
 
-			for(VaroPlayer player : VaroPlayer.getVaroPlayer()) {
-				if(finished.contains(player))
+			for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+				if (finished.contains(player))
 					continue;
 
-				if(player.getTeam() == null) {
+				if (player.getTeam() == null) {
 					yaml.set(player.getName() + ".name", player.getName());
 					yaml.set(player.getName() + ".youtubeLink", player.getStats().getYoutubeLink() == null ? "/" : player.getStats().getYoutubeLink());
 					finished.add(player);
 				}
 			}
 
-			for(Team team : Team.getTeams()) {
+			for (Team team : Team.getTeams()) {
 				String pref = "#" + team.getName();
 				yaml.set(pref + ".id", team.getId());
-				for(VaroPlayer teamPl : team.getMember()) {
-					if(finished.contains(teamPl))
+				for (VaroPlayer teamPl : team.getMember()) {
+					if (finished.contains(teamPl))
 						continue;
 
 					yaml.set(pref + ".member." + teamPl.getName() + ".name", teamPl.getName());
@@ -64,7 +64,7 @@ public class ExportCommand extends VaroCommand {
 
 			try {
 				yaml.save(file);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 

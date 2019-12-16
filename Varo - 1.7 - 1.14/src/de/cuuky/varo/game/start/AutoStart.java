@@ -5,8 +5,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
@@ -37,7 +38,7 @@ public class AutoStart implements VaroSerializeable {
 
 	@SuppressWarnings("deprecation")
 	private void start() {
-		if(new Date().after(start)) {
+		if (new Date().after(start)) {
 			stop();
 			return;
 		}
@@ -53,10 +54,11 @@ public class AutoStart implements VaroSerializeable {
 			public void run() {
 				try {
 					Thread.sleep(1000);
-				} catch(InterruptedException e) {}
+				} catch (InterruptedException e) {
+				}
 
 				Bukkit.getScheduler().cancelTask(sched);
-				if(startDelay == StartDelay.GO) {
+				if (startDelay == StartDelay.GO) {
 					stop();
 					Game.getInstance().start();
 					Bukkit.broadcastMessage(Main.getProjectName() + " §7wird gestartet...");
@@ -76,7 +78,7 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private void postMessage(String message) {
-		if(BotLauncher.getDiscordBot() != null && BotLauncher.getDiscordBot().isEnabled() && BotLauncher.getDiscordBot().getAnnouncementChannel() != null)
+		if (BotLauncher.getDiscordBot() != null && BotLauncher.getDiscordBot().isEnabled() && BotLauncher.getDiscordBot().getAnnouncementChannel() != null)
 			BotLauncher.getDiscordBot().sendRawMessage(JavaUtils.replaceAllColors(message) + " " + BotLauncher.getDiscordBot().getMentionRole(), BotLauncher.getDiscordBot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
@@ -104,26 +106,27 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	private String getDayByInt(int i) {
-		switch(i) {
-		case 1:
-			return "Sonntag";
-		case 2:
-			return "Montag";
-		case 3:
-			return "Dienstag";
-		case 4:
-			return "Mittwoch";
-		case 5:
-			return "Donnerstag";
-		case 6:
-			return "Freitag";
-		case 7:
-			return "Samstag";
-		default:
-			break;
+		switch (i) {
+			case 1:
+				return "Sonntag";
+			case 2:
+				return "Montag";
+			case 3:
+				return "Dienstag";
+			case 4:
+				return "Mittwoch";
+			case 5:
+				return "Donnerstag";
+			case 6:
+				return "Freitag";
+			case 7:
+				return "Samstag";
+			default:
+				break;
 		}
 		return null;
 	}

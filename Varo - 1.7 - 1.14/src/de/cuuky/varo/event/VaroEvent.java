@@ -29,10 +29,10 @@ public class VaroEvent {
 		new ExposedVaroEvent();
 	}
 
+	protected boolean enabled;
 	private String name;
 	private Material icon;
 	private String description;
-	protected boolean enabled;
 
 	public VaroEvent(String name, Material icon, String description) {
 		this.name = name;
@@ -41,6 +41,31 @@ public class VaroEvent {
 		this.enabled = false;
 
 		events.add(this);
+	}
+
+	public static ArrayList<VaroEvent> getEvents() {
+		return events;
+	}
+
+	public static MassRecordingVaroEvent getMassRecEvent() {
+		return massRecEvent;
+	}
+
+	public static VaroEvent getEvent(String name) {
+		for (VaroEvent event : events)
+			if (event.getName().equals(name))
+				return event;
+
+		return null;
+	}
+
+	public static ArrayList<VaroEvent> getEnabledEvents() {
+		ArrayList<VaroEvent> enabledEvents = new ArrayList<>();
+		for (VaroEvent event : events)
+			if (event.isEnabled())
+				enabledEvents.add(event);
+
+		return enabledEvents;
 	}
 
 	public String getName() {
@@ -52,10 +77,10 @@ public class VaroEvent {
 	}
 
 	public void setEnabled(boolean enabled) {
-		if(Game.getInstance().getGameState() != GameState.STARTED && enabled)
+		if (Game.getInstance().getGameState() != GameState.STARTED && enabled)
 			return;
 
-		if(enabled)
+		if (enabled)
 			onEnable();
 		else
 			onDisable();
@@ -71,36 +96,15 @@ public class VaroEvent {
 		return description;
 	}
 
-	public void onEnable() {}
-
-	public void onDisable() {}
-
-	public void onInteract(PlayerInteractEvent event) {}
-
-	public void onMove(PlayerMoveEvent event) {}
-
-	public static ArrayList<VaroEvent> getEvents() {
-		return events;
+	public void onEnable() {
 	}
 
-	public static MassRecordingVaroEvent getMassRecEvent() {
-		return massRecEvent;
+	public void onDisable() {
 	}
 
-	public static VaroEvent getEvent(String name) {
-		for(VaroEvent event : events)
-			if(event.getName().equals(name))
-				return event;
-
-		return null;
+	public void onInteract(PlayerInteractEvent event) {
 	}
 
-	public static ArrayList<VaroEvent> getEnabledEvents() {
-		ArrayList<VaroEvent> enabledEvents = new ArrayList<>();
-		for(VaroEvent event : events)
-			if(event.isEnabled())
-				enabledEvents.add(event);
-
-		return enabledEvents;
+	public void onMove(PlayerMoveEvent event) {
 	}
 }

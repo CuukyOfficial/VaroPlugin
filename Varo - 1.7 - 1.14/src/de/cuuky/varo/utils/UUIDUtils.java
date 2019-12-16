@@ -11,7 +11,8 @@ import org.json.simple.JSONValue;
 
 public final class UUIDUtils {
 
-	private UUIDUtils() {}
+	private UUIDUtils() {
+	}
 
 	public static UUID getUUID(String name) throws Exception {
 		return getUUIDTime(name, -1);
@@ -37,7 +38,7 @@ public final class UUIDUtils {
 
 	private static UUID getUUIDTime(String name, long time) throws Exception {
 		Scanner scanner;
-		if(time == -1) {
+		if (time == -1) {
 			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream());
 		} else {
 			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name + "?at=" + String.valueOf(time)).openStream());

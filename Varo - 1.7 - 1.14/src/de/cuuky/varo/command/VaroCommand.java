@@ -94,6 +94,27 @@ public abstract class VaroCommand {
 		varoCommands.add(this);
 	}
 
+	/**
+	 * @param command The ingame command
+	 * @return Returns the VaroCommand Object
+	 */
+	public static VaroCommand getCommand(String command) {
+		for (VaroCommand chunkCommand : varoCommands) {
+			if (!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
+				continue;
+
+			return chunkCommand;
+		}
+		return null;
+	}
+
+	/**
+	 * @return Returns all VaroCommand Objects
+	 */
+	public static ArrayList<VaroCommand> getVaroCommand() {
+		return varoCommands;
+	}
+
 	public abstract void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args);
 
 	public String getName() {
@@ -112,44 +133,21 @@ public abstract class VaroCommand {
 		return description;
 	}
 
-	public boolean isAlias(String s) {
-		if(this.aliases == null)
-			return false;
-
-		for(String alias : aliases)
-			if(alias.equalsIgnoreCase(s))
-				return true;
-
-		return false;
-	}
-
 	/**
-	 * @param description
-	 *            The description in the plugin.yml file
+	 * @param description The description in the plugin.yml file
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * @param command
-	 *            The ingame command
-	 * @return Returns the VaroCommand Object
-	 */
-	public static VaroCommand getCommand(String command) {
-		for(VaroCommand chunkCommand : varoCommands) {
-			if(!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
-				continue;
+	public boolean isAlias(String s) {
+		if (this.aliases == null)
+			return false;
 
-			return chunkCommand;
-		}
-		return null;
-	}
+		for (String alias : aliases)
+			if (alias.equalsIgnoreCase(s))
+				return true;
 
-	/**
-	 * @return Returns all VaroCommand Objects
-	 */
-	public static ArrayList<VaroCommand> getVaroCommand() {
-		return varoCommands;
+		return false;
 	}
 }

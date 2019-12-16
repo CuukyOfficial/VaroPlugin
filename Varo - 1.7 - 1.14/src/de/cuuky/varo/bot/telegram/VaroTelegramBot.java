@@ -20,18 +20,18 @@ public class VaroTelegramBot implements VaroBot {
 	private long eventChannelId;
 	private long youtubeChannelId;
 
-	public static VaroTelegramBot getInstance() {
-		if(instance == null) {
-			instance = new VaroTelegramBot();
-		}
-		return instance;
-	}
-
 	private VaroTelegramBot() {
 		eventChannelId = -1;
 		youtubeChannelId = -1;
 
 		telegrambot = new TelegramBot(ConfigEntry.TELEGRAM_BOT_TOKEN.getValueAsString());
+	}
+
+	public static VaroTelegramBot getInstance() {
+		if (instance == null) {
+			instance = new VaroTelegramBot();
+		}
+		return instance;
 	}
 
 	@Override
@@ -40,13 +40,13 @@ public class VaroTelegramBot implements VaroBot {
 
 		try {
 			eventChannelId = ConfigEntry.TELEGRAM_EVENT_CHAT_ID.getValueAsLong();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of chat id");
 		}
 
 		try {
 			youtubeChannelId = ConfigEntry.TELEGRAM_VIDEOS_CHAT_ID.getValueAsLong();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of videochat id");
 		}
 
@@ -58,11 +58,11 @@ public class VaroTelegramBot implements VaroBot {
 
 			@Override
 			public int process(List<Update> args) {
-				for(Update update : args) {
-					if(update.message() == null)
+				for (Update update : args) {
+					if (update.message() == null)
 						continue;
 
-					if(!update.message().text().contains("/getId"))
+					if (!update.message().text().contains("/getId"))
 						continue;
 
 					telegrambot.execute(new SendMessage(update.message().chat().id(), "Chat ID von diesem Chat: " + update.message().chat().id()));
@@ -76,7 +76,7 @@ public class VaroTelegramBot implements VaroBot {
 	public void sendEvent(String message) {
 		try {
 			telegrambot.execute(new SendMessage(eventChannelId, message));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not send events");
 		}
 	}
@@ -84,7 +84,7 @@ public class VaroTelegramBot implements VaroBot {
 	public void sendVideo(String message) {
 		try {
 			telegrambot.execute(new SendMessage(youtubeChannelId, message));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not send videos");
 		}
 	}

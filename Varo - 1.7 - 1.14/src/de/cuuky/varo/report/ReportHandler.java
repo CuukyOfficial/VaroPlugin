@@ -10,23 +10,23 @@ public class ReportHandler extends VaroSerializeObject {
 		registerEnum(ReportReason.class);
 	}
 
-	public static void initialise() {
-		if(instance == null) {
-			instance = new ReportHandler();
-		}
-	}
-
 	private ReportHandler() {
 		super(Report.class, "/stats/reports.yml");
 
 		load();
 	}
 
+	public static void initialise() {
+		if (instance == null) {
+			instance = new ReportHandler();
+		}
+	}
+
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for(Report report : Report.getReports())
+		for (Report report : Report.getReports())
 			save(String.valueOf(report.getId()), report, getConfiguration());
 
 		saveFile();

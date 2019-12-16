@@ -1,28 +1,29 @@
 package de.cuuky.varo.version.types;
 
-/** The MIT License (MIT)
-*
-* Copyright (c) 2018 Hex_27
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"),
-* to deal in the Software without restriction, including without limitation
-* the rights to use, copy, modify, merge, publish, distribute, sublicense,
-* and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included
-* 
-* in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-* OF * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-* DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-* ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-**/
+/**
+ * The MIT License (MIT)
+ * <p>
+ * Copyright (c) 2018 Hex_27
+ * <p>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ * <p>
+ * The above copyright notice and this permission notice shall be included
+ * <p>
+ * in all copies or substantial portions of the Software.
+ * <p>
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ **/
 
 import java.util.HashMap;
 
@@ -908,13 +909,53 @@ public enum Materials {
 		this.data = data;
 	}
 
+	public static boolean isNewVersion() {
+		Material mat = Material.getMaterial("RED_WOOL");
+		if (mat != null)
+			return true;
+
+		return false;
+	}
+
+	public static Materials requestMaterial(String name, byte data) {
+		if (cachedSearch.containsKey(name.toUpperCase() + "," + data))
+			return cachedSearch.get(name.toUpperCase() + "," + data);
+
+		for (Materials mat : Materials.values()) {
+			if (mat.getName().equals(name) && data == 0) {
+				cachedSearch.put(mat.getName() + "," + 0, mat);
+				return mat;
+			}
+
+			for (String test : mat.matches) {
+				if (name.toUpperCase().equals(test) && ((byte) mat.data) == data) {
+					cachedSearch.put(test + "," + data, mat);
+					return mat;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public static Materials fromString(String key) {
+		Materials xmat = null;
+		String[] split = key.split(":");
+		if (split.length == 1) {
+			xmat = requestMaterial(key, (byte) 0);
+		} else {
+			xmat = requestMaterial(split[0], (byte) Integer.parseInt(split[1]));
+		}
+		return xmat;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public ItemStack parseItem() {
 		Material mat = parseMaterial();
-		if(isNewVersion())
+		if (isNewVersion())
 			return new ItemStack(mat);
 
 		return new ItemStack(mat, 1, (byte) data);
@@ -922,15 +963,15 @@ public enum Materials {
 
 	@SuppressWarnings("deprecation")
 	public boolean isSameMaterial(ItemStack comp) {
-		if(isNewVersion())
+		if (isNewVersion())
 			return comp.getType() == this.parseMaterial();
 
-		if(comp.getType() == this.parseMaterial() && (int) comp.getData().getData() == (int) this.data)
+		if (comp.getType() == this.parseMaterial() && (int) comp.getData().getData() == (int) this.data)
 			return true;
 
 		Materials xmat = fromMaterial(comp.getType());
-		if(isDamageable(xmat)) {
-			if(this.parseMaterial() == comp.getType()) {
+		if (isDamageable(xmat)) {
+			if (this.parseMaterial() == comp.getType()) {
 				return true;
 			}
 		}
@@ -940,10 +981,10 @@ public enum Materials {
 	public Materials fromMaterial(Material mat) {
 		try {
 			return Materials.valueOf(mat.toString());
-		} catch(IllegalArgumentException e) {
-			for(Materials xmat : Materials.values()) {
-				for(String test : xmat.matches) {
-					if(test.equalsIgnoreCase(mat.toString())) {
+		} catch (IllegalArgumentException e) {
+			for (Materials xmat : Materials.values()) {
+				for (String test : xmat.matches) {
+					if (test.equalsIgnoreCase(mat.toString())) {
 						return xmat;
 					}
 				}
@@ -957,16 +998,16 @@ public enum Materials {
 	}
 
 	public Material parseMaterial() {
-		if(parsed != null)
+		if (parsed != null)
 			return parsed;
 
 		Material mat = Material.matchMaterial(getName());
-		if(mat != null && isNewVersion())
+		if (mat != null && isNewVersion())
 			return parsed = mat;
 
-		for(String m : this.matches) {
+		for (String m : this.matches) {
 			Material found = Material.matchMaterial(m);
-			if(found == null)
+			if (found == null)
 				continue;
 
 			return parsed = found;
@@ -976,81 +1017,41 @@ public enum Materials {
 	}
 
 	public boolean isDamageable(Materials type) {
-		if(type == null)
+		if (type == null)
 			return false;
 		String[] split = type.toString().split("_");
 		int length = split.length;
-		switch(split[length - 1]) {
-		case "HELMET":
-			return true;
-		case "CHESTPLATE":
-			return true;
-		case "LEGGINGS":
-			return true;
-		case "BOOTS":
-			return true;
-		case "SWORD":
-			return true;
-		case "AXE":
-			return true;
-		case "PICKAXE":
-			return true;
-		case "SHOVEL":
-			return true;
-		case "HOE":
-			return true;
-		case "ELYTRA":
-			return true;
-		case "TURTLE_HELMET":
-			return true;
-		case "TRIDENT":
-			return true;
-		case "HORSE_ARMOR":
-			return true;
-		case "SHEARS":
-			return true;
-		default:
-			return false;
+		switch (split[length - 1]) {
+			case "HELMET":
+				return true;
+			case "CHESTPLATE":
+				return true;
+			case "LEGGINGS":
+				return true;
+			case "BOOTS":
+				return true;
+			case "SWORD":
+				return true;
+			case "AXE":
+				return true;
+			case "PICKAXE":
+				return true;
+			case "SHOVEL":
+				return true;
+			case "HOE":
+				return true;
+			case "ELYTRA":
+				return true;
+			case "TURTLE_HELMET":
+				return true;
+			case "TRIDENT":
+				return true;
+			case "HORSE_ARMOR":
+				return true;
+			case "SHEARS":
+				return true;
+			default:
+				return false;
 		}
-	}
-
-	public static boolean isNewVersion() {
-		Material mat = Material.getMaterial("RED_WOOL");
-		if(mat != null)
-			return true;
-
-		return false;
-	}
-
-	public static Materials requestMaterial(String name, byte data) {
-		if(cachedSearch.containsKey(name.toUpperCase() + "," + data))
-			return cachedSearch.get(name.toUpperCase() + "," + data);
-
-		for(Materials mat : Materials.values()) {
-			if(mat.getName().equals(name) && data == 0) {
-				cachedSearch.put(mat.getName() + "," + 0, mat);
-				return mat;
-			}
-
-			for(String test : mat.matches) {
-				if(name.toUpperCase().equals(test) && ((byte) mat.data) == data) {
-					cachedSearch.put(test + "," + data, mat);
-					return mat;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public static Materials fromString(String key) {
-		Materials xmat = null;
-		String[] split = key.split(":");
-		if(split.length == 1) {
-			xmat = requestMaterial(key, (byte) 0);
-		} else {
-			xmat = requestMaterial(split[0], (byte) Integer.parseInt(split[1]));
-		}
-		return xmat;
 	}
 }

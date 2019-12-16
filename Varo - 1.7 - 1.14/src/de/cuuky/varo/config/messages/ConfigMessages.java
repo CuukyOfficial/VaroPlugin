@@ -208,34 +208,10 @@ public enum ConfigMessages {
 		this.defaultValue = value;
 	}
 
-	public String getPath() {
-		return path;
-	}
-
-	public String getValue() {
-		return getValue(value);
-	}
-
-	public String getValue(VaroPlayer vp) {
-		return getValue(value, vp);
-	}
-
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public String getSection() {
-		return this.path.split("\\.")[0];
-	}
-
 	public static ArrayList<String> getSections() {
 		ArrayList<String> list = new ArrayList<>();
-		for(ConfigMessages entry : values())
-			if(!list.contains(entry.getSection()))
+		for (ConfigMessages entry : values())
+			if (!list.contains(entry.getSection()))
 				list.add(entry.getSection());
 
 		return list;
@@ -243,8 +219,8 @@ public enum ConfigMessages {
 
 	public static ArrayList<ConfigMessages> getBySection(String section) {
 		ArrayList<ConfigMessages> list = new ArrayList<>();
-		for(ConfigMessages entry : ConfigMessages.values()) {
-			if(!entry.getSection().equals(section))
+		for (ConfigMessages entry : ConfigMessages.values()) {
+			if (!entry.getSection().equals(section))
 				continue;
 
 			list.add(entry);
@@ -254,8 +230,8 @@ public enum ConfigMessages {
 	}
 
 	public static ConfigMessages getEntryByPath(String path) {
-		for(ConfigMessages entry : ConfigMessages.values()) {
-			if(!entry.getPath().equals(path) && !entry.getPath().contains(path))
+		for (ConfigMessages entry : ConfigMessages.values()) {
+			if (!entry.getPath().equals(path) && !entry.getPath().contains(path))
 				continue;
 
 			return entry;
@@ -308,5 +284,29 @@ public enum ConfigMessages {
 		replaced = replaced.contains("%lpPrefix%") ? replaced.replace("%lpPrefix%", PermissionUtils.getLuckPermsPrefix(vp)) : replaced;
 
 		return replaced;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public String getValue() {
+		return getValue(value);
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getValue(VaroPlayer vp) {
+		return getValue(value, vp);
+	}
+
+	public Object getDefaultValue() {
+		return defaultValue;
+	}
+
+	public String getSection() {
+		return this.path.split("\\.")[0];
 	}
 }

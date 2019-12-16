@@ -12,7 +12,7 @@ public class InventoryClickUtil {
 	}
 
 	public Inventory getInventory() {
-		if(event.getWhoClicked().getOpenInventory() == null)
+		if (event.getWhoClicked().getOpenInventory() == null)
 			return null;
 
 		return event.getWhoClicked().getOpenInventory().getTopInventory();

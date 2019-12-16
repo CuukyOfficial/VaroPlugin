@@ -45,7 +45,7 @@ public enum DecreaseReason {
 	public double getDecreaseSpeed() {
 		try {
 			return speed.getValueAsInt();
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return speed.getValueAsDouble();
 		}
 	}

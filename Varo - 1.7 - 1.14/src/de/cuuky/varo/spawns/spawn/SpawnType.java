@@ -11,9 +11,11 @@ public enum SpawnType implements VaroSerializeable {
 	PLAYER;
 
 	@Override
-	public void onDeserializeEnd() {}
+	public void onDeserializeEnd() {
+	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 }
