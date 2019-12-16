@@ -2,7 +2,6 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
