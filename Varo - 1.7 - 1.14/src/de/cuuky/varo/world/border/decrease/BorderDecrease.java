@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.border;
+package de.cuuky.varo.world.border.decrease;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class BorderDecrease {
 
@@ -20,16 +21,22 @@ public class BorderDecrease {
 		startShrinking();
 	}
 
-	private double amount;
-	private double bps;
-	private Runnable startHook;
-	private Runnable finishHook;
+	private double amount, bps;
+	private Runnable startHook, finishHook;
 
 	public BorderDecrease(double amount, double bps) {
 		this.amount = amount;
 		this.bps = bps;
 
 		decreases.add(this);
+	}
+	
+	private void waitForBorder(double d) {
+		try {
+			Thread.sleep((long) (d * 1000) + 1000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void startShrinking() {
@@ -49,14 +56,6 @@ public class BorderDecrease {
 				running = false;
 			}
 		}, 1, 20);
-	}
-
-	private void waitForBorder(double d) {
-		try {
-			Thread.sleep((long) (d * 1000) + 1000);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void shrink() {

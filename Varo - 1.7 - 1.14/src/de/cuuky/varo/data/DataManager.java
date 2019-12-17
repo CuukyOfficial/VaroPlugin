@@ -40,7 +40,7 @@ public class DataManager {
 
 	private static DataManager instance;
 
-	private static int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
+	private static final int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
 	private boolean doSave;
 

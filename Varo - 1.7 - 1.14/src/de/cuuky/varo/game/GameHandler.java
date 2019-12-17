@@ -3,7 +3,7 @@ package de.cuuky.varo.game;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.serialize.VaroSerializeObject;
-import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
+import de.cuuky.varo.world.border.decrease.BorderDecreaseDayTimer;
 
 public class GameHandler extends VaroSerializeObject {
 

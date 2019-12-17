@@ -26,12 +26,10 @@ public abstract class SuperInventory {
 	// AUTHOR: "Cuuky",
 	// VERSION: "0.3.1";
 
-	private static boolean fill_inventory;
-	private static boolean animations;
+	private static boolean fill_inventory, animations;
 
 	private static ArrayList<SuperInventory> guis;
-	private static ItemStack forward;
-	private static ItemStack backwards;
+	private static ItemStack forward, backwards;
 
 	static {
 		guis = new ArrayList<>();

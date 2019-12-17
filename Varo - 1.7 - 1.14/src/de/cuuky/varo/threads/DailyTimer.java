@@ -24,7 +24,7 @@ public final class DailyTimer {
 			Date date = Game.getInstance().getLastDayTimer();
 			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
 				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
-					System.out.println("DAILY RE");
+					System.out.println("DAILY RECTIFY");
 
 				doDailyStuff();
 			}

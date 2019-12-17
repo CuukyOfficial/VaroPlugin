@@ -16,7 +16,7 @@ import de.cuuky.varo.world.border.VaroBorder;
 public class BorderCommand implements CommandExecutor {
 
 	/*
-	 * OLD CODE
+	 * PARTLY OLD CODE
 	 */
 
 	@Override
@@ -38,8 +38,7 @@ public class BorderCommand implements CommandExecutor {
 			return false;
 		} else if(args.length >= 1 && sender.hasPermission("varo.setup")) {
 			Player p = sender instanceof Player ? (Player) sender : null;
-			int borderSize;
-			int inSeconds = -1;
+			int borderSize, inSeconds = -1;
 
 			try {
 				borderSize = Integer.parseInt(args[0]);

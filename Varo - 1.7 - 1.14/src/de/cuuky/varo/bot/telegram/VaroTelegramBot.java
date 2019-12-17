@@ -17,8 +17,7 @@ public class VaroTelegramBot implements VaroBot {
 
 	private TelegramBot telegrambot;
 
-	private long eventChannelId;
-	private long youtubeChannelId;
+	private long eventChannelId, youtubeChannelId;
 
 	public static VaroTelegramBot getInstance() {
 		if(instance == null) {

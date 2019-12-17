@@ -23,14 +23,15 @@ public class PlayerHit {
 	 * OLD CODE
 	 */
 
-	private static ArrayList<PlayerHit> hits = new ArrayList<>();
+	private static ArrayList<PlayerHit> hits;
 
 	static {
+		hits = new ArrayList<>();
+		
 		Bukkit.getPluginManager().registerEvents(new HitListener(), Main.getInstance());
 	}
 
-	private Player player;
-	private Player opponent;
+	private Player player, opponent;
 	private int task;
 
 	@SuppressWarnings("deprecation")
@@ -40,7 +41,13 @@ public class PlayerHit {
 
 		this.player = player;
 		this.opponent = opponent;
+		
+		scheduleOvertime();
 
+		hits.add(this);
+	}
+	
+	private void scheduleOvertime() {
 		task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 
 			@Override
@@ -48,8 +55,6 @@ public class PlayerHit {
 				over();
 			}
 		}, ConfigEntry.COMBATLOG_TIME.getValueAsInt() * 20);
-
-		hits.add(this);
 	}
 
 	public void over() {

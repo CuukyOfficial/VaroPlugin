@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.border;
+package de.cuuky.varo.world.border.decrease;
 
 import java.util.Date;
 
@@ -11,6 +11,7 @@ import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class BorderDecreaseDayTimer implements VaroSerializeable {
 

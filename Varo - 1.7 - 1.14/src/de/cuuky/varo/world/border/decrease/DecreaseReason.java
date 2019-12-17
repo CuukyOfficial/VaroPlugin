@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.border;
+package de.cuuky.varo.world.border.decrease;
 
 import org.bukkit.Bukkit;
 
@@ -13,13 +13,8 @@ public enum DecreaseReason {
 	TIME_MINUTES(ConfigEntry.BORDER_TIME_MINUTE_DECREASE, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_SIZE, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_SPEED, ConfigEntry.BORDER_TIME_MINUTE_DECREASE_MINUTES, ConfigMessages.BORDER_DECREASE_MINUTES, ConfigMessages.ALERT_BORDER_DECREASED_TIME_MINUTE),
 	DEATH(ConfigEntry.BORDER_DEATH_DECREASE, ConfigEntry.BORDER_DEATH_DECREASE_SIZE, ConfigEntry.BORDER_DEATH_DECREASE_SPEED, null, ConfigMessages.BORDER_DECREASE_DEATH, ConfigMessages.ALERT_BORDER_DECREASED_DEATH);
 
-	private ConfigEntry enabled;
-	private ConfigEntry size;
-	private ConfigEntry speed;
-	private ConfigEntry time;
-
-	private ConfigMessages broadcast;
-	private ConfigMessages alert;
+	private ConfigEntry enabled, size, speed, time;
+	private ConfigMessages broadcast, alert;
 
 	private DecreaseReason(ConfigEntry enabled, ConfigEntry size, ConfigEntry speed, ConfigEntry time, ConfigMessages broadcast, ConfigMessages alert) {
 		this.enabled = enabled;

@@ -13,8 +13,8 @@ import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.world.border.DecreaseReason;
 import de.cuuky.varo.world.border.VaroBorder;
+import de.cuuky.varo.world.border.decrease.DecreaseReason;
 
 public class DeadEvent extends BukkitEvent {
 
