@@ -188,11 +188,9 @@ public class DataManager {
 	private void copyDefaultPresets() {
 		try {
 			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
-			while(true) {
-				ZipEntry e = zip.getNextEntry();
-				if(e == null)
-					break;
-
+			
+			ZipEntry e = null;
+			while((e = zip.getNextEntry()) != null) {
 				String name = e.getName();
 				e.isDirectory();
 				if(name.startsWith("presets")) {
