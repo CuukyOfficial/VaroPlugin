@@ -13,10 +13,12 @@ OfflineVillager:
   enableOfflineVillager: true
   noSatiationRegenerate: true
 Backpacks:
-  allowBackpacks: false
-  backpackSize: 54
-  allowTeamAccess: true
-  dropContentOnDeath: true
+  backpackPlayerEnabled: false
+  backpackPlayerSize: 54
+  backpackPlayerDropOnDeath: true
+  backpackTeamEnabled: false
+  backpackTeamSize: 54
+  backpackTeamDropOnDeath: true
 Protections:
   joinProtectionTime: -1
   canWalkOnJoinProtection: false
