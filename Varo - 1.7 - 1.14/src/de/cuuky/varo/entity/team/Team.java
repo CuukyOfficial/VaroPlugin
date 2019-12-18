@@ -6,6 +6,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.logger.logger.EventLogger;
@@ -33,6 +34,8 @@ public class Team extends VaroEntity {
 	private double lifes;
 	@VaroSerializeField(path = "memberid")
 	private ArrayList<Integer> memberid = new ArrayList<Integer>();
+	@VaroSerializeField(path = "teamBackPack")
+	private VaroInventory teamBackPack = new VaroInventory(ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt());
 
 	private ArrayList<VaroPlayer> member = new ArrayList<>();
 
@@ -232,6 +235,10 @@ public class Team extends VaroEntity {
 
 	public double getLifes() {
 		return lifes;
+	}
+
+	public VaroInventory getTeamBackPack() {
+		return teamBackPack;
 	}
 
 	public void setLifes(double lifes) {

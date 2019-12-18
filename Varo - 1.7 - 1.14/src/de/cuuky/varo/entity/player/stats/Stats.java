@@ -84,8 +84,9 @@ public class Stats implements VaroSerializeable {
 	private ArrayList<InventoryBackup> inventoryBackups;
 	@VaroSerializeField(path = "restoreBackup")
 	private InventoryBackup restoreBackup;
-	@VaroSerializeField(path = "backpack")
-	private VaroInventory backpack;
+	@VaroSerializeField(path = "playerBackpack")
+	private VaroInventory playerBackpack;
+
 	@VaroSerializeField(path = "state")
 	private PlayerState state;
 
@@ -136,7 +137,7 @@ public class Stats implements VaroSerializeable {
 		strikes = new ArrayList<Strike>();
 		saveables = new ArrayList<VaroSaveable>();
 		inventoryBackups = new ArrayList<InventoryBackup>();
-		backpack = new VaroInventory(ConfigEntry.BACKPACK_SIZE.getValueAsInt());
+		playerBackpack = new VaroInventory(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt());
 
 		willClear = false;
 		showScoreboard = true;
@@ -326,8 +327,8 @@ public class Stats implements VaroSerializeable {
 		this.countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 
-	public VaroInventory getBackpack() {
-		return backpack;
+	public VaroInventory getPlayerBackpack() {
+		return playerBackpack;
 	}
 
 	public int getKills() {

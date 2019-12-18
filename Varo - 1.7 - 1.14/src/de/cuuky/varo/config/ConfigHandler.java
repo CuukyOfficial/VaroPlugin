@@ -111,8 +111,8 @@ public class ConfigHandler {
 			Bukkit.getServer().shutdown();
 		}
 
-		if (ConfigEntry.BACKPACK_SIZE.getValueAsInt() > 54) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Backpacks darf nicht mehr als 54 betragen.");
+		if (ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Rucksackes darf nicht mehr als 54 betragen.");
 			shutdown = true;
 		}
 
