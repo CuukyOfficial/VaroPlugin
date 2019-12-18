@@ -11,7 +11,8 @@ public enum BukkitVersion {
 	ONE_12(12),
 	ONE_13(13),
 	ONE_14(14),
-	NEWER_THAN_14(15);
+	ONE_15(15),
+	NEWER_THAN_15(16);
 
 	private int identifier;
 
