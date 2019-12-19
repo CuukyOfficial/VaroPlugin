@@ -19,7 +19,7 @@ public class BackpackCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (!Game.getInstance().hasStarted()) {
-			sender.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestaret!");
+			sender.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
 			return;
 		}
 
