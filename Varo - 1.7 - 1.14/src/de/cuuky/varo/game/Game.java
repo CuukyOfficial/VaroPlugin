@@ -168,7 +168,7 @@ public class Game implements VaroSerializeable {
 					}
 
 					ScoreboardHandler.getInstance().update(vp);
-					vp.getNetworkManager().sendTablist();
+					vp.update();
 				}
 
 				if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
