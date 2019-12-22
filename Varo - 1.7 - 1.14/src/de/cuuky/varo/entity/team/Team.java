@@ -237,12 +237,12 @@ public class Team extends VaroEntity {
 		return lifes;
 	}
 
-	public VaroInventory getTeamBackPack() {
-		return teamBackPack;
-	}
-
 	public void setLifes(double lifes) {
 		this.lifes = lifes;
+	}
+
+	public VaroInventory getTeamBackPack() {
+		return teamBackPack;
 	}
 
 	@Override

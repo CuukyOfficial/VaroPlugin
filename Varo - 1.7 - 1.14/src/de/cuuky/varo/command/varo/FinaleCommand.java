@@ -24,6 +24,7 @@ public class FinaleCommand extends VaroCommand {
 	private FinaleState Status = FinaleState.NO;
 	private int startScheduler;
 	private int Countdown;
+
 	public FinaleCommand() {
 		super("finale", "Hauptcommand für das Managen des Finales", "varo.finale");
 	}

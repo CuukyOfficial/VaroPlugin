@@ -27,6 +27,7 @@ public class PlayerChooseInventory {
 	private Listener listener;
 	private Player[] players;
 	private PlayerInventoryHandler invHandler;
+
 	public PlayerChooseInventory(Player player, Player[] players, PlayerChooseHandler handler) {
 		this.player = player;
 		this.chooseHandler = handler;
@@ -38,6 +39,7 @@ public class PlayerChooseInventory {
 
 		open();
 	}
+
 	public PlayerChooseInventory(Player player, Player[] players, PlayerChooseHandler handler, PlayerInventoryHandler invHandler) {
 		this.player = player;
 		this.chooseHandler = handler;

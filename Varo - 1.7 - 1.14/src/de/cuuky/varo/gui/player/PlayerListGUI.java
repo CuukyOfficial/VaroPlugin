@@ -17,6 +17,7 @@ public class PlayerListGUI extends SuperInventory {
 
 	private boolean showStats;
 	private PlayerGUIType type;
+
 	public PlayerListGUI(Player opener, boolean showstats, PlayerGUIType type) {
 		super("§cPlayer", opener, 45, false);
 
