@@ -75,7 +75,6 @@ public class PlayerDeathListener implements Listener {
 				} else {
 					deadP.setSpectacting();
 					deadP.getStats().setState(PlayerState.SPECTATOR);
-					;
 					deadP.update();
 				}
 			} else {

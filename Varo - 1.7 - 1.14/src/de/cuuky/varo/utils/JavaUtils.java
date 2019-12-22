@@ -75,7 +75,7 @@ public final class JavaUtils {
 				continue;
 			}
 
-			if (c == '�' || c == '&') {
+			if (c == '§' || c == '&') {
 				lastPara = true;
 				continue;
 			}
