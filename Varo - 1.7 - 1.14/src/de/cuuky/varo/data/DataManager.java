@@ -34,7 +34,6 @@ import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;
-import net.labymod.serverapi.LabyModAPI;
 
 public class DataManager {
 
