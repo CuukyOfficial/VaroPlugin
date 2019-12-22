@@ -41,16 +41,16 @@ public class EventLogger extends Logger {
 	}
 
 	private void sendToTelegram(LogType type, String message) {
-		if (VaroTelegramBot.getInstance() == null)
+		if (BotLauncher.getTelegramBot() == null)
 			return;
 
 		try {
 			if (!type.equals(LogType.YOUTUBE))
-				VaroTelegramBot.getInstance().sendEvent(message);
+				BotLauncher.getTelegramBot().sendEvent(message);
 			else
-				VaroTelegramBot.getInstance().sendVideo(message);
+				BotLauncher.getTelegramBot().sendVideo(message);
 		} catch (ArrayIndexOutOfBoundsException e) {
-			VaroTelegramBot.getInstance().sendEvent(message);
+			BotLauncher.getTelegramBot().sendEvent(message);
 		}
 	}
 
