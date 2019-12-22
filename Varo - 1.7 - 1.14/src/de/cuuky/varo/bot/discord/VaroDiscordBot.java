@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.io.File;
 import java.util.Random;
 
-import javax.security.auth.login.LoginException;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
 import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
@@ -34,6 +32,10 @@ public class VaroDiscordBot implements VaroBot {
 		}
 		return instance;
 	}
+	
+	public static String getClassName() {
+		return JDABuilder.class.getName();
+	}
 
 	private VaroDiscordBot() {}
 
@@ -50,7 +52,8 @@ public class VaroDiscordBot implements VaroBot {
 		try {
 			jda = builder.build();
 			jda.addEventListener(new DiscordBotEventListener());
-		} catch(LoginException | IllegalArgumentException e) {
+		} catch(Exception | Error e) {
+			e.printStackTrace();
 			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
 			return;
 		}

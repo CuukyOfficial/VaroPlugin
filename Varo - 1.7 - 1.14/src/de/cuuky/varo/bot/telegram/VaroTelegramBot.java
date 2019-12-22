@@ -25,6 +25,10 @@ public class VaroTelegramBot implements VaroBot {
 		}
 		return instance;
 	}
+	
+	public static String getClassName() {
+		return TelegramBot.class.getName();
+	}
 
 	private VaroTelegramBot() {
 		eventChannelId = -1;

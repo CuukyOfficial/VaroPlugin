@@ -88,9 +88,12 @@ public class DataManager {
 		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			VaroDiscordBot discordbot;
 			try {
+				VaroDiscordBot.getClassName(); 
+				
 				discordbot = VaroDiscordBot.getInstance();
 				discordbot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
+				discordbot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
 				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
 			}
@@ -100,6 +103,8 @@ public class DataManager {
 		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			VaroTelegramBot telegrambot;
 			try {
+				VaroTelegramBot.getClassName();
+				
 				telegrambot = VaroTelegramBot.getInstance();
 				telegrambot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
@@ -112,7 +117,8 @@ public class DataManager {
 		boolean labymodNewDownload = false;
 		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
 			try {
-				LabyModAPI.class.getName();
+				PermissionSendListener.getClassName();
+				
 				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
 			} catch(NoClassDefFoundError e) {
 				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
