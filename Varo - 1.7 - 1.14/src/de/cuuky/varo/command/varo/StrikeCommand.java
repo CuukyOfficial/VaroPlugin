@@ -107,6 +107,5 @@ public class StrikeCommand extends VaroCommand {
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7Nicht gefunden! " + Main.getColorCode() + "/strike §7für Hilfe.");
 		return;
-
 	}
 }
