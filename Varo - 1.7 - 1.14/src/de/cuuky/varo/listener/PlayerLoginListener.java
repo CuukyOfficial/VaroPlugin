@@ -78,7 +78,7 @@ public class PlayerLoginListener implements Listener {
 				break;
 			case NOT_IN_TIME:
 				Date date = new Date();
-				event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replaceAll("%minHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replaceAll("%maxHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replaceAll("%hours%", new SimpleDateFormat("HH").format(date)).replaceAll("%minutes%", new SimpleDateFormat("mm").format(date)).replaceAll("%seconds%", new SimpleDateFormat("ss").format(date)));
+				event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%hours%", new SimpleDateFormat("HH").format(date)).replace("%minutes%", new SimpleDateFormat("mm").format(date)).replace("%seconds%", new SimpleDateFormat("ss").format(date)));
 				break;
 			case SERVER_FULL:
 				event.disallow(Result.KICK_FULL, ConfigMessages.JOIN_KICK_SERVER_FULL.getValue(vp));
@@ -111,7 +111,7 @@ public class PlayerLoginListener implements Listener {
 				else
 					hours = "" + hr;
 
-				event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replaceAll("%timeHours%", ConfigEntry.JOIN_AFTER_HOURS.getValueAsString()).replaceAll("%stunden%", hours).replaceAll("%minuten%", minutes).replaceAll("%sekunden%", seconds));
+				event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replace("%timeHours%", ConfigEntry.JOIN_AFTER_HOURS.getValueAsString()).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
 				break;
 			case SERVER_NOT_PUBLISHED:
 				event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));

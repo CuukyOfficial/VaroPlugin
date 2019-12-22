@@ -51,7 +51,7 @@ public class ReportListGUI extends SuperInventory {
 	@Override
 	public void onClick(InventoryClickEvent event) {
 		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
-		int id = Integer.parseInt(lore.get(0).replaceAll("§c", ""));
+		int id = Integer.parseInt(lore.get(0).replace("§c", ""));
 		Report report = Report.getReport(id);
 		this.close(true);
 

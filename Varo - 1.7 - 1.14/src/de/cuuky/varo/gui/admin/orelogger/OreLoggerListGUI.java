@@ -43,7 +43,7 @@ public class OreLoggerListGUI extends SuperInventory {
 			String name = str.split("\\] ")[1].split(" ")[0];
 			ArrayList<String> lore = new ArrayList<>();
 
-			String minedAt = str.split("at ")[1].replaceAll("!", "");
+			String minedAt = str.split("at ")[1].replace("!", "");
 
 			Material blocktype = Material.matchMaterial(str.split("mined ")[1].split(" ")[0]);
 			Location loc = new Location(Bukkit.getWorld(minedAt.split("\\'")[1]), Integer.valueOf(minedAt.split("x:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("y:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("z:")[1].split(" ")[0]));

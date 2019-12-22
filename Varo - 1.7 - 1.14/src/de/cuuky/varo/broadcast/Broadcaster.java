@@ -53,7 +53,7 @@ public class Broadcaster {
 					return;
 
 				for (String m : getRandomAd())
-					Bukkit.broadcastMessage(m.replaceAll("&", "§"));
+					Bukkit.broadcastMessage(m.replace("&", "§"));
 			}
 		}, delay, delay);
 	}

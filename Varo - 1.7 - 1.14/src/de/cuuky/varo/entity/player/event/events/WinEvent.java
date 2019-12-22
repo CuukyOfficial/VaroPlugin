@@ -33,7 +33,7 @@ public class WinEvent extends BukkitEvent {
 		String name = member.getNickname() == null ? member.getUser().getName() : member.getNickname();
 
 		if (name.contains("|")) {
-			wins = Integer.valueOf(name.split("\\|")[1].replace("ð", "").replaceAll(" ", ""));
+			wins = Integer.valueOf(name.split("\\|")[1].replace("ð", "").replace(" ", ""));
 			wins++;
 		}
 

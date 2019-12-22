@@ -112,7 +112,7 @@ public class PlayerDeathListener implements Listener {
 				}
 
 				EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
-				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replaceAll("%death%", deadPlayer.getName()).replaceAll("%killer%", killerPlayer.getName()));
+				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 
 				killer.onEvent(BukkitEventType.KILL);
 				checkHealth(killerPlayer);

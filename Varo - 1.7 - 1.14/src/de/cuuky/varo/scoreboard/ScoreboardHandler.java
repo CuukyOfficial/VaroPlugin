@@ -74,7 +74,7 @@ public class ScoreboardHandler {
 		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
 		Collections.reverse(scoreboardLines);
 
-		this.header = Main.getProjectName().replaceAll("&", "§");
+		this.header = Main.getProjectName().replace("&", "§");
 		this.topScores = new TopScoreList();
 
 		String space = "";

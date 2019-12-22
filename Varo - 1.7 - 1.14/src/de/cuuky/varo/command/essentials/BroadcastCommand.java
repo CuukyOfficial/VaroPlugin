@@ -29,7 +29,7 @@ public class BroadcastCommand implements CommandExecutor {
 			else
 				msg = arg;
 
-		Bukkit.broadcastMessage("§7[§cBroadcast§7] §c" + msg.replaceAll("&", "§"));
+		Bukkit.broadcastMessage("§7[§cBroadcast§7] §c" + msg.replace("&", "§"));
 		return false;
 	}
 

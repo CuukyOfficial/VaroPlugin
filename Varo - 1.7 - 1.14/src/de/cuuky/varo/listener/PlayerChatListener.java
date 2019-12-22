@@ -38,7 +38,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if (message.contains("%"))
-			message = message.replaceAll("%", "");
+			message = message.replace("%", "");
 
 		boolean mentionsHack = false;
 		String[] hackMentions = {"hack", "cheat", "x-ray", "xray", "unlegit"};
@@ -103,7 +103,7 @@ public class PlayerChatListener implements Listener {
 				return;
 			}
 		} else
-			message = message.replaceAll("&", "§");
+			message = message.replace("&", "§");
 
 		ChatLogger.getInstance().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);

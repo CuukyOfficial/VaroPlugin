@@ -26,7 +26,7 @@ public class EventLogger extends Logger {
 	public void println(LogType type, String message) {
 		message = JavaUtils.replaceAllColors(message);
 
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replaceAll("%noBot%", "");
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noBot%", "");
 
 		pw.println(log);
 		logs.add(log);

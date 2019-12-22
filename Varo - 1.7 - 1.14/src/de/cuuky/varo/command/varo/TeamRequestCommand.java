@@ -76,7 +76,7 @@ public class TeamRequestCommand extends VaroCommand {
 						continue;
 					}
 
-				invite.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_TEAM_REQUEST_RECIEVED.getValue(player).replaceAll("%invitor%", player.getName()));
+				invite.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_TEAM_REQUEST_RECIEVED.getValue(player).replace("%invitor%", player.getName()));
 				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " §7gesendet");
 				new TeamRequest(player, invite);
 			}

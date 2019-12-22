@@ -30,10 +30,10 @@ public class DiscordBotEventListener implements EventListener {
 		}
 
 		String message = messageEvent.getMessage().getContentDisplay();
-		if (!message.toLowerCase().startsWith(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().toLowerCase().replaceAll(" ", "")))
+		if (!message.toLowerCase().startsWith(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().toLowerCase().replace(" ", "")))
 			return;
 
-		if (message.replaceAll(" ", "").equalsIgnoreCase(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().replaceAll(" ", ""))) {
+		if (message.replace(" ", "").equalsIgnoreCase(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().replace(" ", ""))) {
 			messageEvent.getTextChannel().sendMessage("Type '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "help' for help.").queue();
 			return;
 		}

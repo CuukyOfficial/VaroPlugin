@@ -273,7 +273,7 @@ public enum ConfigEntry {
 
 	public String getValueAsString() {
 		try {
-			return String.valueOf(this.value).replaceAll("&", "§");
+			return String.valueOf(this.value).replace("&", "§");
 		} catch (Exception e) {
 			sendFalseCast();
 		}

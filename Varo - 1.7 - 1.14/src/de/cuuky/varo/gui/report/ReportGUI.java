@@ -52,7 +52,7 @@ public class ReportGUI extends SuperInventory {
 	public void onClick(InventoryClickEvent event) {
 		this.close(true);
 
-		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§7", "");
+		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replace("§7", "");
 		ReportReason reason = ReportReason.getByName(reportName);
 		new Report(reporter, reported, reason);
 		reporter.sendMessage(Main.getPrefix() + Main.getColorCode() + reported.getName() + " §7wurde erfolgreich reportet!");

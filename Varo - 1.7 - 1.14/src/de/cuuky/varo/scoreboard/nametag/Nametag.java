@@ -154,14 +154,14 @@ public class Nametag {
 		if (prefix.length() > 16)
 			prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(player).replaceAll("%hearts%", String.valueOf((int) player.getPlayer().getHealth())).replaceAll("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(player).replace("%hearts%", String.valueOf((int) player.getPlayer().getHealth())).replace("%heart%", "♥"));
 	}
 
 	public void heartsChanged() {
 		if (!init || !hearts)
 			return;
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(p)).replaceAll("%hearts%", String.valueOf((int) p.getHealth())).replaceAll("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(p)).replace("%hearts%", String.valueOf((int) p.getHealth())).replace("%heart%", "♥"));
 		setToAll();
 	}
 

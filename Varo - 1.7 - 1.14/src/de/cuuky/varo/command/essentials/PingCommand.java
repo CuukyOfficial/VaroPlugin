@@ -20,7 +20,7 @@ public class PingCommand implements CommandExecutor {
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_PING.getValue().replaceAll("%ping%", String.valueOf(VaroPlayer.getPlayer((Player) sender).getNetworkManager().getPing())));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_PING.getValue().replace("%ping%", String.valueOf(VaroPlayer.getPlayer((Player) sender).getNetworkManager().getPing())));
 		} else if (args.length == 1) {
 			if (!sender.hasPermission("varo.ping")) {
 				sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());

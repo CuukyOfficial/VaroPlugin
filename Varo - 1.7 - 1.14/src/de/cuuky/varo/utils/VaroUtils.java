@@ -119,7 +119,7 @@ public final class VaroUtils {
 	}
 
 	public static String formatLocation(Location location, String unformatted) {
-		return unformatted.replaceAll("x", String.valueOf(location.getBlockX())).replaceAll("y", String.valueOf(location.getBlockY())).replaceAll("z", String.valueOf(location.getBlockZ())).replaceAll("world", location.getWorld().getName());
+		return unformatted.replace("x", String.valueOf(location.getBlockX())).replace("y", String.valueOf(location.getBlockY())).replace("z", String.valueOf(location.getBlockZ())).replace("world", location.getWorld().getName());
 	}
 
 	public static Object[] checkForUpdates() {

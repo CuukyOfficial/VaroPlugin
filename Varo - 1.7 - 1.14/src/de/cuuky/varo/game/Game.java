@@ -151,7 +151,7 @@ public class Game implements VaroSerializeable {
 											countdown += 1;
 										}
 
-									Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue().replaceAll("%player%", vp.getName()).replaceAll("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
+									Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
 								}
 							}
 
@@ -215,7 +215,7 @@ public class Game implements VaroSerializeable {
 					((Player) VersionUtils.getOnlinePlayer().toArray()[0]).getWorld().setTime(1000);
 
 				if (startCountdown != 0)
-					Bukkit.broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN.getValue().replaceAll("%countdown%", startCountdown == 1 ? "einer" : String.valueOf(startCountdown)));
+					Bukkit.broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN.getValue().replace("%countdown%", startCountdown == 1 ? "einer" : String.valueOf(startCountdown)));
 
 				if (startCountdown == ConfigEntry.STARTCOUNTDOWN.getValueAsInt() || startCountdown == 1) {
 					for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
