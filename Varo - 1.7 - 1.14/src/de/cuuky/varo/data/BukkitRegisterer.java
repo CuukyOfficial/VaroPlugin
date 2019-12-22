@@ -39,14 +39,12 @@ import de.cuuky.varo.command.essentials.UnmuteCommand;
 import de.cuuky.varo.command.essentials.UnprotectCommand;
 import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
-import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.event.VaroEventListener;
 import de.cuuky.varo.gui.utils.InventoryListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
 import de.cuuky.varo.listener.HealtLoseListener;
 import de.cuuky.varo.listener.NoPortalListener;
-import de.cuuky.varo.listener.PermissionSendListener;
 import de.cuuky.varo.listener.PlayerAchievementListener;
 import de.cuuky.varo.listener.PlayerChatListener;
 import de.cuuky.varo.listener.PlayerCommandPreprocessListener;
@@ -107,14 +105,6 @@ public final class BukkitRegisterer {
 
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
-
-		if (ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
-			try {
-				LabyModAPI.class.getName();
-				registerEvent(new PermissionSendListener());
-			} catch (NoClassDefFoundError e) {
-				System.out.println(Main.getConsolePrefix() + "Plugin LabyModAPI could not be found. You won't be able to use the LabyMod features.");
-			}
 	}
 
 	public static void registerCommands() {

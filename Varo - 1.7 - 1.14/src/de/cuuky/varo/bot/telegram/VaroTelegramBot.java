@@ -17,8 +17,7 @@ public class VaroTelegramBot implements VaroBot {
 
 	private TelegramBot telegrambot;
 
-	private long eventChannelId;
-	private long youtubeChannelId;
+	private long eventChannelId, youtubeChannelId;
 
 	private VaroTelegramBot() {
 		eventChannelId = -1;
@@ -32,6 +31,10 @@ public class VaroTelegramBot implements VaroBot {
 			instance = new VaroTelegramBot();
 		}
 		return instance;
+	}
+
+	public static String getClassName() {
+		return TelegramBot.class.getName();
 	}
 
 	@Override

@@ -25,39 +25,9 @@ public class CombatlogCheck {
 	private boolean combatLog;
 
 	public CombatlogCheck(PlayerQuitEvent event) {
-		combatLog = true;
+		this.combatLog = false;
 
 		check(event);
-	}
-
-	private void check(PlayerQuitEvent event) {
-		if (Game.getInstance().getGameState() == GameState.END) {
-			this.combatLog = false;
-			return;
-		}
-
-		if (PlayerHit.getHit(event.getPlayer()) == null) {
-			this.combatLog = false;
-			return;
-		}
-
-		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer().getName());
-		PlayerHit hit = PlayerHit.getHit(event.getPlayer());
-
-		if (hit.getOpponent() != null && hit.getOpponent().isOnline())
-			PlayerHit.getHit(hit.getOpponent()).over();
-
-		if (!vp.getStats().isAlive()) {
-			this.combatLog = false;
-			return;
-		}
-
-		if (ConfigEntry.KILL_ON_COMBATLOG.getValueAsBoolean()) {
-			event.getPlayer().setHealth(0);
-			vp.getStats().setState(PlayerState.DEAD);
-		}
-
-		punish(vp);
 	}
 
 	private void punish(VaroPlayer player) {
@@ -70,6 +40,30 @@ public class CombatlogCheck {
 			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(player));
 
 		Bukkit.broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT.getValue(player));
+	}
+
+	private void check(PlayerQuitEvent event) {
+		if(Game.getInstance().getGameState() == GameState.END || PlayerHit.getHit(event.getPlayer()) == null) {
+			return;
+		}
+
+		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer().getName());
+		PlayerHit hit = PlayerHit.getHit(event.getPlayer());
+
+		if (hit.getOpponent() != null && hit.getOpponent().isOnline())
+			PlayerHit.getHit(hit.getOpponent()).over();
+
+		if(!vp.getStats().isAlive()) {
+			return;
+		}
+
+		if (ConfigEntry.KILL_ON_COMBATLOG.getValueAsBoolean()) {
+			event.getPlayer().setHealth(0);
+			vp.getStats().setState(PlayerState.DEAD);
+		}
+
+		this.combatLog = true;
+		punish(vp);
 	}
 
 	public boolean isCombatLog() {

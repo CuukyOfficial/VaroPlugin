@@ -63,12 +63,13 @@ public class ScoreboardHandler {
 		sb.add("&7Players: &3%players%");
 		sb.add("%space%");
 
-		if (!cfg.contains("Scoreboard"))
+		if (!cfg.contains("Scoreboard")) {
 			cfg.set("Scoreboard", sb);
-		try {
-			cfg.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				cfg.save(file);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
@@ -199,7 +200,7 @@ public class ScoreboardHandler {
 	}
 
 	public String getHeader() {
-		return "Die Liste aller Placeholder steht auf der Seite des Plugins!";
+		return "Die Liste aller Placeholder steht auf der Seite des Plugins!\nhttps://www.spigotmc.org/resources/71075/";
 	}
 
 	public TopScoreList getTopPlayers() {

@@ -333,8 +333,11 @@ public class VaroPlayer extends VaroEntity {
 		else
 			nametag.refresh();
 
-		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			getNetworkManager().sendTablist();
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
+				getNetworkManager().sendTablist();
+			}
+
 			String listname = "";
 			if (getTeam() != null) {
 				if (getRank() == null) {

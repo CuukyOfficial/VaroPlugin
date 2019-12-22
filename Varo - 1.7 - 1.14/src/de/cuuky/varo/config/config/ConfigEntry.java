@@ -11,6 +11,7 @@ public enum ConfigEntry {
 	SUPPORT_PLUGIN_ADS(ConfigSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 	SCOREBOARD(ConfigSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten."),
 	NAMETAGS(ConfigSection.MAIN, "nametags", true, "Ob das Plugin die Nametags über\nden Köpfen der Spieler verändern soll.\nHinweis: du kannst diese in der messages.yml einstellen."),
+	TABLIST(ConfigSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll"),
 	PLAY_TIME(ConfigSection.MAIN, "playTime", 15, "Zeit in Minuten, wie lange die Spieler\npro Session auf dem Server spielen können.\nUnlimited = -1"),
 	DO_DAILY_BACKUPS(ConfigSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),
 	UNREGISTERED_PLAYER_JOIN(ConfigSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen dürfen."),

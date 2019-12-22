@@ -44,9 +44,9 @@ import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
-import de.cuuky.varo.world.border.BorderDecreaseDayTimer;
-import de.cuuky.varo.world.border.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.world.border.VaroBorder;
+import de.cuuky.varo.world.border.decrease.BorderDecreaseDayTimer;
+import de.cuuky.varo.world.border.decrease.BorderDecreaseMinuteTimer;
 
 public class Game implements VaroSerializeable {
 
@@ -168,7 +168,7 @@ public class Game implements VaroSerializeable {
 					}
 
 					ScoreboardHandler.getInstance().update(vp);
-					vp.getNetworkManager().sendTablist();
+					vp.update();
 				}
 
 				if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {

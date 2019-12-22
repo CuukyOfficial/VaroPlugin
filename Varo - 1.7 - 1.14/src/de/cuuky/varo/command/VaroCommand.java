@@ -42,9 +42,11 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 
 public abstract class VaroCommand {
 
-	private static ArrayList<VaroCommand> varoCommands = new ArrayList<>();
+	private static ArrayList<VaroCommand> varoCommands;
 
 	static {
+		varoCommands = new ArrayList<>();
+				
 		new StartCommand();
 		new DiscordCommand();
 		new TeamCommand();

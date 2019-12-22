@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
+import de.cuuky.varo.world.border.decrease.BorderDecrease;
+import de.cuuky.varo.world.border.decrease.DecreaseReason;
 
 public class VaroBorder {
 

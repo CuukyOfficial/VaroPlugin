@@ -1,10 +1,11 @@
-package de.cuuky.varo.world.border;
+package de.cuuky.varo.world.border.decrease;
 
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.world.border.VaroBorder;
 
 public class BorderDecreaseMinuteTimer {
 
@@ -15,6 +16,10 @@ public class BorderDecreaseMinuteTimer {
 		if (!DecreaseReason.TIME_MINUTES.isEnabled())
 			return;
 
+		startScheduling();
+	}
+
+	private void startScheduling() {
 		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@Override

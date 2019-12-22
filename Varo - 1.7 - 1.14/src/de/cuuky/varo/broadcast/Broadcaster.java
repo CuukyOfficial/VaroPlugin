@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
-import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Broadcaster {
@@ -20,9 +19,8 @@ public class Broadcaster {
 	 * Partly old code
 	 */
 
-	public static Broadcaster instance;
-
-	private ArrayList<String> messages = new ArrayList<>();
+	private static Broadcaster instance;
+	private ArrayList<String> messages;
 
 	private Broadcaster() {
 		if (ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
@@ -52,13 +50,15 @@ public class Broadcaster {
 				if (VersionUtils.getOnlinePlayer().size() == 0)
 					return;
 
-				for (String m : getRandomAd())
-					Bukkit.broadcastMessage(m.replace("&", "§"));
+				for(String m : getAdMessage())
+					Bukkit.broadcastMessage(m.replaceAll("&", "§"));
 			}
 		}, delay, delay);
 	}
 
 	private void loadMessages() {
+		this.messages = new ArrayList<>();
+
 		File file = new File("plugins/Varo", "broadcasts.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
@@ -93,21 +93,11 @@ public class Broadcaster {
 		}, interval, interval);
 	}
 
-	private String[] getRandomAd() {
-		int random = JavaUtils.randomInt(0, 1);
-		String[] messages = null;
-		if (random == 0) {
-			messages = new String[]{"", "", ""};
-			messages[0] = "&7-----------------------------------------";
-			messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
-			messages[2] = "&7-----------------------------------------";
-		} else {
-			messages = new String[]{"", "", "", ""};
-			messages[0] = "&7-----------------------------------------";
-			messages[1] = "&7Du hast Lust auf OneDayVaros? &7Link: https://discord.gg/UPCZ9eX";
-			messages[2] = "&cLink zum normalen VaroPlugin-Discord: &7https://discord.gg/CnDSVVx";
-			messages[3] = "&7-----------------------------------------";
-		}
+	private static String[] getAdMessage() {
+		String[] messages = new String[] { "", "", "" };
+		messages[0] = "&7-----------------------------------------";
+		messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
+		messages[2] = "&7-----------------------------------------";
 		return messages;
 	}
 }
