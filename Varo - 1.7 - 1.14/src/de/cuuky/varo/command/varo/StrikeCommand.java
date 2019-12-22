@@ -109,5 +109,4 @@ public class StrikeCommand extends VaroCommand {
 		return;
 
 	}
-
 }
