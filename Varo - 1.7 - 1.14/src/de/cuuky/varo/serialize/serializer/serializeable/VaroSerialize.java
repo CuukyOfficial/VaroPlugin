@@ -17,8 +17,6 @@ public class VaroSerialize extends VaroSerializeHandler {
 
 	private static ArrayList<VaroSerialize> serializes;
 
-	private VaroSerializeLoopType loopType;
-
 	static {
 		serializes = new ArrayList<>();
 
@@ -29,10 +27,16 @@ public class VaroSerialize extends VaroSerializeHandler {
 		new LongSerializeable();
 	}
 
+	private VaroSerializeLoopType loopType;
+
 	public VaroSerialize(VaroSerializeLoopType loopType) {
 		this.loopType = loopType;
 
 		serializes.add(this);
+	}
+
+	public static ArrayList<VaroSerialize> getSerializes() {
+		return serializes;
 	}
 
 	public Object deserialize(Field field, Object obj) {
@@ -45,9 +49,5 @@ public class VaroSerialize extends VaroSerializeHandler {
 
 	public VaroSerializeLoopType getLoopType() {
 		return loopType;
-	}
-
-	public static ArrayList<VaroSerialize> getSerializes() {
-		return serializes;
 	}
 }

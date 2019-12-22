@@ -22,7 +22,7 @@ public class AlertTypeChooseGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = 2;
-		for(AlertGUIType type : AlertGUIType.values()) {
+		for (AlertGUIType type : AlertGUIType.values()) {
 			linkItemTo(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), new Runnable() {
 
 				@Override
@@ -36,10 +36,12 @@ public class AlertTypeChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -48,5 +50,6 @@ public class AlertTypeChooseGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

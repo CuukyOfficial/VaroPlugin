@@ -20,26 +20,25 @@ public class Broadcaster {
 	 */
 
 	private static Broadcaster instance;
-
-	public static Broadcaster getInstance() {
-		if(instance == null) {
-			instance = new Broadcaster();
-		}
-		return instance;
-	}
-
 	private ArrayList<String> messages;
 
 	private Broadcaster() {
-		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+		if (ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			startPluginAd();
 
 		loadMessages();
 
-		if(!ConfigEntry.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
+		if (!ConfigEntry.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
 			return;
 
 		starteSchedule();
+	}
+
+	public static Broadcaster getInstance() {
+		if (instance == null) {
+			instance = new Broadcaster();
+		}
+		return instance;
 	}
 
 	private void startPluginAd() {
@@ -48,11 +47,11 @@ public class Broadcaster {
 
 			@Override
 			public void run() {
-				if(VersionUtils.getOnlinePlayer().size() == 0)
+				if (VersionUtils.getOnlinePlayer().size() == 0)
 					return;
 
-				for(String m : getAdMessage())
-					Bukkit.broadcastMessage(m.replaceAll("&", "�"));
+				for (String m : getAdMessage())
+					Bukkit.broadcastMessage(m.replaceAll("&", "§"));
 			}
 		}, delay, delay);
 	}
@@ -63,18 +62,18 @@ public class Broadcaster {
 		File file = new File("plugins/Varo", "broadcasts.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
-		if(!file.exists()) {
+		if (!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
 			sb.add("&7Du kannst hier unendlich viele Nachrichten einfügen, die dann Random ausgewählt werden.");
 
-			if(!cfg.contains("messages"))
+			if (!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
 			cfg.options().copyDefaults(true);
 
 			try {
 				cfg.save(file);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -95,10 +94,10 @@ public class Broadcaster {
 	}
 
 	private static String[] getAdMessage() {
-		String[] messages = new String[] { "", "", "" };
-		messages[0] = "�7-----------------------------------------";
+		String[] messages = new String[]{"", "", ""};
+		messages[0] = "&7-----------------------------------------";
 		messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
-		messages[2] = "�7-----------------------------------------";
+		messages[2] = "&7-----------------------------------------";
 		return messages;
 	}
 }

@@ -11,15 +11,15 @@ public class OutSideTimeChecker {
 	private GregorianCalendar date1;
 	private GregorianCalendar date2;
 
+	private OutSideTimeChecker() {
+		refreshDates();
+	}
+
 	public static OutSideTimeChecker getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new OutSideTimeChecker();
 		}
 		return instance;
-	}
-
-	private OutSideTimeChecker() {
-		refreshDates();
 	}
 
 	private void refreshDates() {
@@ -31,17 +31,17 @@ public class OutSideTimeChecker {
 		date1.set(GregorianCalendar.HOUR_OF_DAY, ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt());
 		date2.set(GregorianCalendar.HOUR_OF_DAY, ConfigEntry.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt());
 
-		if(date2.before(date1))
+		if (date2.before(date1))
 			date2.add(GregorianCalendar.DAY_OF_MONTH, 1);
 	}
 
 	public boolean canJoin() {
-		if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean())
+		if (!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean())
 			return true;
 
 		GregorianCalendar current = new GregorianCalendar();
 		refreshDates();
-		if(current.after(date1) && current.before(date2))
+		if (current.after(date1) && current.before(date2))
 			return true;
 
 		return false;

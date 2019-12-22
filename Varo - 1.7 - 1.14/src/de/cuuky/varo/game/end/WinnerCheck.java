@@ -18,26 +18,26 @@ public class WinnerCheck {
 	private HashMap<Integer, ArrayList<VaroPlayer>> places;
 
 	public WinnerCheck() {
-		if(Game.getInstance().getGameState() != GameState.STARTED)
+		if (Game.getInstance().getGameState() != GameState.STARTED)
 			return;
 
 		places = new HashMap<Integer, ArrayList<VaroPlayer>>();
 		ArrayList<VaroPlayer> alive = VaroPlayer.getAlivePlayer();
-		if(!(alive.size() <= ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)
+		if (!(alive.size() <= ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)
 			return;
 
 		VaroPlayer lastAlive = null;
-		for(VaroPlayer vp : alive) {
-			if(lastAlive == null) {
+		for (VaroPlayer vp : alive) {
+			if (lastAlive == null) {
 				lastAlive = vp;
 				continue;
 			}
 
-			if(lastAlive.getTeam() == null || vp.getTeam() == null || !vp.getTeam().equals(lastAlive.getTeam()))
+			if (lastAlive.getTeam() == null || vp.getTeam() == null || !vp.getTeam().equals(lastAlive.getTeam()))
 				return;
 		}
 
-		if(lastAlive.getTeam() == null) {
+		if (lastAlive.getTeam() == null) {
 			lastAlive.onEvent(BukkitEventType.WIN);
 			ArrayList<VaroPlayer> first = new ArrayList<VaroPlayer>();
 			first.add(lastAlive);
@@ -54,15 +54,15 @@ public class WinnerCheck {
 			}
 		});
 
-		for(VaroPlayer vp : VaroPlayer.getDeadPlayer())
+		for (VaroPlayer vp : VaroPlayer.getDeadPlayer())
 			sorted.put(vp.getStats().getDiedAt(), vp);
 
 		int i = 2;
-		for(VaroPlayer vp : sorted.values()) {
-			if(isSorted(vp))
+		for (VaroPlayer vp : sorted.values()) {
+			if (isSorted(vp))
 				continue;
 
-			if(vp.getTeam() == null) {
+			if (vp.getTeam() == null) {
 				ArrayList<VaroPlayer> first = new ArrayList<VaroPlayer>();
 				first.add(vp);
 				places.put(i, first);
@@ -76,8 +76,8 @@ public class WinnerCheck {
 	}
 
 	private boolean isSorted(VaroPlayer vp) {
-		for(ArrayList<VaroPlayer> list : places.values())
-			if(list.contains(vp))
+		for (ArrayList<VaroPlayer> list : places.values())
+			if (list.contains(vp))
 				return true;
 
 		return false;

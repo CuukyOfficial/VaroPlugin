@@ -18,26 +18,28 @@ public enum PlayerState implements VaroSerializeable {
 		this.name = name;
 	}
 
+	public static PlayerState getByName(String name) {
+		for (PlayerState state : values())
+			if (state.getName().equalsIgnoreCase(name))
+				return state;
+
+		return null;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	@Override
-	public void onDeserializeEnd() {}
+	public void onDeserializeEnd() {
+	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public static PlayerState getByName(String name) {
-		for(PlayerState state : values())
-			if(state.getName().equalsIgnoreCase(name))
-				return state;
-
-		return null;
 	}
 }

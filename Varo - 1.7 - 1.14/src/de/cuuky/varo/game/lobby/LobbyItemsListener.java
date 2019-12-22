@@ -14,11 +14,11 @@ public class LobbyItemsListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(event.getItem() == null || Game.getInstance().getGameState() != GameState.LOBBY)
+		if (event.getItem() == null || Game.getInstance().getGameState() != GameState.LOBBY)
 			return;
 
 		LobbyItem item = LobbyItem.getLobbyItem(event.getItem());
-		if(item == null)
+		if (item == null)
 			return;
 
 		event.setCancelled(true);
@@ -27,11 +27,11 @@ public class LobbyItemsListener implements Listener {
 
 	@EventHandler
 	public void onInteractEntity(PlayerInteractEntityEvent event) {
-		if(event.getPlayer().getItemInHand() == null || event.getRightClicked() == null || Game.getInstance().getGameState() != GameState.LOBBY)
+		if (event.getPlayer().getItemInHand() == null || event.getRightClicked() == null || Game.getInstance().getGameState() != GameState.LOBBY)
 			return;
 
 		LobbyItem item = LobbyItem.getLobbyItem(event.getPlayer().getItemInHand());
-		if(item == null)
+		if (item == null)
 			return;
 
 		event.setCancelled(true);
@@ -40,12 +40,12 @@ public class LobbyItemsListener implements Listener {
 
 	@EventHandler
 	public void onEntityHit(EntityDamageByEntityEvent event) {
-		if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player) || ((Player) event.getDamager()).getItemInHand() == null || Game.getInstance().getGameState() != GameState.LOBBY)
+		if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player) || ((Player) event.getDamager()).getItemInHand() == null || Game.getInstance().getGameState() != GameState.LOBBY)
 			return;
 
 		Player damager = (Player) event.getDamager();
 		LobbyItem item = LobbyItem.getLobbyItem(damager.getItemInHand());
-		if(item == null)
+		if (item == null)
 			return;
 
 		event.setCancelled(true);

@@ -17,7 +17,7 @@ public class TeamCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Befehle:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Teamname> <Spieler 1, 2, 3...>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player/@a>");
@@ -27,28 +27,28 @@ public class TeamCommand extends VaroCommand {
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("create")) {
-			if(!(args.length >= 2)) {
+		if (args[0].equalsIgnoreCase("create")) {
+			if (!(args.length >= 2)) {
 				sender.sendMessage(Main.getPrefix() + "/varo team create <Teamname> [Spieler 1, Spieler 2, Spieler 3...]");
 				return;
 			}
 
-			if(args[1].contains("#")) {
+			if (args[1].contains("#")) {
 				sender.sendMessage(Main.getPrefix() + "Der Name darf kein '#' enthalten. (Wird automatisch hinzugefügt)");
 				return;
 			}
 
 			Team team = Team.getTeam(args[1]);
 
-			if(team != null) {
+			if (team != null) {
 				boolean teamIdentical = true;
-				for(int i = 2; i < args.length; i++) {
+				for (int i = 2; i < args.length; i++) {
 					VaroPlayer player = VaroPlayer.getPlayer(args[i]);
-					if(!team.getMember().contains(player) || player == null) {
+					if (!team.getMember().contains(player) || player == null) {
 						teamIdentical = false;
 					}
 				}
-				if(teamIdentical) {
+				if (teamIdentical) {
 					sender.sendMessage(Main.getPrefix() + "Dieses Team ist bereits registriert.");
 				} else {
 					sender.sendMessage(Main.getPrefix() + "§cDas Team konnte nicht registriert werden, der Teamname ist bereits belegt.");
@@ -59,22 +59,22 @@ public class TeamCommand extends VaroCommand {
 			team = new Team(args[1]);
 			sender.sendMessage(Main.getPrefix() + "Team " + Main.getColorCode() + team.getName() + " §7mit der ID " + Main.getColorCode() + team.getId() + " §7erfolgreich erstellt!");
 
-			for(int i = 2; i < args.length; i++) {
+			for (int i = 2; i < args.length; i++) {
 				String arg = args[i];
 
 				VaroPlayer varoplayer = VaroPlayer.getPlayer(arg);
-				if(varoplayer == null) {
+				if (varoplayer == null) {
 					String uuid;
 					try {
 						uuid = UUIDUtils.getUUID(arg).toString();
-					} catch(Exception e) {
+					} catch (Exception e) {
 						sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
 						String newName;
 						try {
 							newName = UUIDUtils.getNamesChanged(arg);
 							sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieß, hat sich in §7" + newName + " §cumbenannt.");
 							sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufügen.");
-						} catch(Exception f) {
+						} catch (Exception f) {
 							sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 						}
 						continue;
@@ -87,8 +87,8 @@ public class TeamCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich hinzugefügt!");
 			}
 			return;
-		} else if(args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
-			if(args.length != 2) {
+		} else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
+			if (args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + "/varo team remove <Team/TeamID/Player>");
 				return;
 			}
@@ -96,22 +96,22 @@ public class TeamCommand extends VaroCommand {
 			Team team = Team.getTeam(args[1]);
 			VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
 
-			if(team != null) {
+			if (team != null) {
 				team.delete();
 				sender.sendMessage(Main.getPrefix() + "Team erfolgreich gelöscht!");
-			} else if(varoplayer != null) {
+			} else if (varoplayer != null) {
 				varoplayer.getTeam().removeMember(varoplayer);
 				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich aus seinem Team entfernt!");
-			} else if(args[1].equalsIgnoreCase("@a")) {
-				while(Team.getTeams().size() > 0) {
+			} else if (args[1].equalsIgnoreCase("@a")) {
+				while (Team.getTeams().size() > 0) {
 					Team.getTeams().get(0).delete();
 				}
 				sender.sendMessage(Main.getPrefix() + "Alle Teams erfolgreich gelöscht!");
 			} else
 				sender.sendMessage(Main.getPrefix() + "Team, TeamID oder Spieler nicht gefunden!");
 			return;
-		} else if(args[0].equalsIgnoreCase("list")) {
-			if(Team.getTeams().isEmpty()) {
+		} else if (args[0].equalsIgnoreCase("list")) {
+			if (Team.getTeams().isEmpty()) {
 				sender.sendMessage(Main.getPrefix() + "Keine Teams gefunden!");
 				return;
 			}
@@ -122,72 +122,72 @@ public class TeamCommand extends VaroCommand {
 			int lastTeamOnPage = 30;
 			int page = 1;
 
-			if(args.length != 1) {
+			if (args.length != 1) {
 				try {
 					page = Integer.parseInt(args[1]);
-				} catch(NumberFormatException e) {
+				} catch (NumberFormatException e) {
 					page = 1;
 				}
 
 				lastTeamOnPage = page * 30;
 			}
 
-			if(page == teamPages) {
+			if (page == teamPages) {
 				lastTeamOnPage = teamNumber;
 			}
 
-			if(page > teamPages) {
+			if (page > teamPages) {
 				sender.sendMessage(Main.getPrefix() + "Keine Seite " + page + " der Teams gefunden!");
 				return;
 			}
 
-			if(teamPages == 1) {
+			if (teamPages == 1) {
 				sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lTeams§7§l:");
 			} else {
 				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lTeams§7§l " + ((page - 1) * 30 + 1) + " bis " + lastTeamOnPage + ":");
 			}
 
-			for(int i = (page - 1) * 30; i < lastTeamOnPage; i++) {
+			for (int i = (page - 1) * 30; i < lastTeamOnPage; i++) {
 				Team team = Team.getTeams().get(i);
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " §l" + team.getId() + "§7; " + Main.getColorCode() + team.getName());
 				String list = "";
-				for(VaroPlayer member : team.getMember())
+				for (VaroPlayer member : team.getMember())
 					list = (list.isEmpty() ? Main.getColorCode() + member.getName() : list + "§7, " + Main.getColorCode() + member.getName());
 				sender.sendMessage(Main.getPrefix() + "  " + list);
 				sender.sendMessage(Main.getPrefix());
 			}
 
 			int lastTeamNextSeite = 0;
-			if(page + 1 < teamPages)
+			if (page + 1 < teamPages)
 				lastTeamNextSeite = (page + 1) * 30;
-			else if(page + 1 == teamPages)
+			else if (page + 1 == teamPages)
 				lastTeamNextSeite = teamNumber;
 
-			if(page < teamPages)
+			if (page < teamPages)
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (page + 1) + " §7für " + Main.getColorCode() + "Teams §7 " + (page * 30 + 1) + " bis " + lastTeamNextSeite);
 			return;
-		} else if(args[0].equalsIgnoreCase("rename")) {
-			if(args.length != 3) {
+		} else if (args[0].equalsIgnoreCase("rename")) {
+			if (args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team/TeamID> <Team>");
 				return;
 			}
 
-			if(args[1].startsWith("#") || args[2].startsWith("#")) {
+			if (args[1].startsWith("#") || args[2].startsWith("#")) {
 				sender.sendMessage(Main.getPrefix() + "Deine Teamnamen dürfen nicht mit " + Main.getColorCode() + "# §7anfangen!");
 				return;
 			}
 
 			Team team = Team.getTeam(args[1]);
 
-			if(team == null) {
+			if (team == null) {
 				sender.sendMessage(Main.getPrefix() + "Team nicht gefunden!");
 				return;
 			}
 
 			team.setName(args[2]);
 			sender.sendMessage(Main.getPrefix() + "Das Team " + Main.getColorCode() + args[1] + " §7wurde erfolgreich in " + Main.getColorCode() + team.getName() + " §7umbenannt!");
-		} else if(args[0].equalsIgnoreCase("add")) {
-			if(args.length != 3) {
+		} else if (args[0].equalsIgnoreCase("add")) {
+			if (args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + "/varo team add <Player> <Team/TeamID>");
 				return;
 			}
@@ -195,16 +195,16 @@ public class TeamCommand extends VaroCommand {
 			VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
 			Team team = Team.getTeam(args[2]);
 
-			if(team == null) {
+			if (team == null) {
 				sender.sendMessage(Main.getPrefix() + "Team nicht gefunden!");
 				return;
 			}
 
-			if(varoplayer == null) {
+			if (varoplayer == null) {
 				String uuid = null;
 				try {
 					uuid = UUIDUtils.getUUID(args[1]).toString();
-				} catch(Exception e) {
+				} catch (Exception e) {
 					sender.sendMessage(Main.getPrefix() + args[1] + " besitzt keinen Minecraft-Account!");
 					return;
 				}
@@ -212,8 +212,8 @@ public class TeamCommand extends VaroCommand {
 				varoplayer = new VaroPlayer(args[1], uuid);
 			}
 
-			if(varoplayer.getTeam() != null) {
-				if(varoplayer.getTeam().equals(team)) {
+			if (varoplayer.getTeam() != null) {
+				if (varoplayer.getTeam().equals(team)) {
 					sender.sendMessage(Main.getPrefix() + "Dieser Spieler ist bereits in diesem Team!");
 					return;
 				}

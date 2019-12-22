@@ -43,19 +43,19 @@ public class DataManager {
 
 	private boolean doSave;
 
-	public static DataManager getInstance() {
-		if(instance == null) {
-			instance = new DataManager();
-		}
-		return instance;
-	}
-
 	private DataManager() {
 		load();
 		loadPlugins();
 
 		startAutoSave();
 		doSave = true;
+	}
+
+	public static DataManager getInstance() {
+		if (instance == null) {
+			instance = new DataManager();
+		}
+		return instance;
 	}
 
 	private void load() {
@@ -84,14 +84,14 @@ public class DataManager {
 
 	private void loadPlugins() {
 		boolean discordNewDownload = false;
-		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
+		if (ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			VaroDiscordBot discordbot;
 			try {
-				VaroDiscordBot.getClassName(); 
-				
+				VaroDiscordBot.getClassName();
+
 				discordbot = VaroDiscordBot.getInstance();
 				discordbot.connect();
-			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
+			} catch (NoClassDefFoundError | BootstrapMethodError ef) {
 				discordbot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
 				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
@@ -99,14 +99,14 @@ public class DataManager {
 		}
 
 		boolean telegramNewDownload = false;
-		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
+		if (ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			VaroTelegramBot telegrambot;
 			try {
 				VaroTelegramBot.getClassName();
-				
+
 				telegrambot = VaroTelegramBot.getInstance();
 				telegrambot.connect();
-			} catch(NoClassDefFoundError | BootstrapMethodError e) {
+			} catch (NoClassDefFoundError | BootstrapMethodError e) {
 				telegrambot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
 				telegramNewDownload = loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
@@ -114,18 +114,18 @@ public class DataManager {
 		}
 
 		boolean labymodNewDownload = false;
-		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
+		if (ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
 			try {
 				PermissionSendListener.getClassName();
-				
+
 				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
-			} catch(NoClassDefFoundError e) {
+			} catch (NoClassDefFoundError e) {
 				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
 				labymodNewDownload = loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
 			}
 		}
 
-		if(discordNewDownload || telegramNewDownload || labymodNewDownload) {
+		if (discordNewDownload || telegramNewDownload || labymodNewDownload) {
 			System.out.println(Main.getConsolePrefix() + "Der Server wird heruntergefahren, damit das Heruntergeladene angewandt werden kann.");
 			System.out.println(Main.getConsolePrefix() + "Bitte fahre den Server wieder hoch.");
 			Bukkit.getServer().shutdown();
@@ -143,7 +143,7 @@ public class DataManager {
 
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
 			return true;
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
 			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
 			e.printStackTrace();
@@ -156,7 +156,7 @@ public class DataManager {
 	}
 
 	public void save() {
-		if(!doSave)
+		if (!doSave)
 			return;
 
 		VaroSerializeHandler.saveAll();
@@ -164,7 +164,8 @@ public class DataManager {
 
 		try {
 			BotRegister.saveAll();
-		} catch(NoClassDefFoundError e) {}
+		} catch (NoClassDefFoundError e) {
+		}
 	}
 
 	public void reloadConfig() {
@@ -172,7 +173,7 @@ public class DataManager {
 		ConfigHandler.getInstance().reload();
 		ScoreboardHandler.getInstance().loadScores();
 
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			ScoreboardHandler.getInstance().sendScoreBoard(vp);
 			vp.getNametag().giveAll();
@@ -193,19 +194,19 @@ public class DataManager {
 	private void copyDefaultPresets() {
 		try {
 			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
-			
+
 			ZipEntry e = null;
-			while((e = zip.getNextEntry()) != null) {
+			while ((e = zip.getNextEntry()) != null) {
 				String name = e.getName();
 				e.isDirectory();
-				if(name.startsWith("presets")) {
+				if (name.startsWith("presets")) {
 					File file = new File("plugins/Varo/" + name);
-					if(e.isDirectory()) {
+					if (e.isDirectory()) {
 						file.mkdir();
 						continue;
 					}
 
-					if(!file.exists()) {
+					if (!file.exists()) {
 						new File(file.getParent()).mkdirs();
 						file.createNewFile();
 					} else
@@ -215,7 +216,7 @@ public class DataManager {
 
 					byte[] byteBuff = new byte[1024];
 					int bytesRead = 0;
-					while((bytesRead = zip.read(byteBuff)) != -1) {
+					while ((bytesRead = zip.read(byteBuff)) != -1) {
 						out.write(byteBuff, 0, bytesRead);
 					}
 
@@ -225,7 +226,7 @@ public class DataManager {
 			}
 
 			zip.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

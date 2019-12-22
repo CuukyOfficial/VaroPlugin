@@ -12,7 +12,7 @@ public class KickEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
-		if(!player.isMassRecordingKick()) {
+		if (!player.isMassRecordingKick()) {
 			player.getStats().addSessionPlayed();
 			player.getStats().setBan();
 		} else {

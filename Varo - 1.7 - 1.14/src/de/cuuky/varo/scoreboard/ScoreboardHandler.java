@@ -29,15 +29,15 @@ public class ScoreboardHandler {
 	private String header;
 	private TopScoreList topScores;
 
+	private ScoreboardHandler() {
+		loadScores();
+	}
+
 	public static ScoreboardHandler getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new ScoreboardHandler();
 		}
 		return instance;
-	}
-
-	private ScoreboardHandler() {
-		loadScores();
 	}
 
 	public void loadScores() {
@@ -63,11 +63,11 @@ public class ScoreboardHandler {
 		sb.add("&7Players: &3%players%");
 		sb.add("%space%");
 
-		if(!cfg.contains("Scoreboard")) {
+		if (!cfg.contains("Scoreboard")) {
 			cfg.set("Scoreboard", sb);
 			try {
 				cfg.save(file);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -75,13 +75,13 @@ public class ScoreboardHandler {
 		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
 		Collections.reverse(scoreboardLines);
 
-		this.header = Main.getProjectName().replaceAll("&", "§");
+		this.header = Main.getProjectName().replace("&", "§");
 		this.topScores = new TopScoreList();
 
 		String space = "";
-		for(int i = 0; i < scoreboardLines.size(); i++) {
+		for (int i = 0; i < scoreboardLines.size(); i++) {
 			String line = scoreboardLines.get(i);
-			if(line.equals("%space%")) {
+			if (line.equals("%space%")) {
 				space += " ";
 				scoreboardLines.set(i, space);
 			}
@@ -89,33 +89,33 @@ public class ScoreboardHandler {
 	}
 
 	private String getConvString(String line, VaroPlayer vp) {
-		if(line.contains("%min%") || line.contains("%sec%"))
-			if(ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
+		if (line.contains("%min%") || line.contains("%sec%"))
+			if (ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
 				return "§cUnlimited";
 
-		for(int rank : getConvNumbers(line, "%topplayer-")) {
+		for (int rank : getConvNumbers(line, "%topplayer-")) {
 			VaroPlayer player = topScores.getPlayer(rank);
 			line = line.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
 		}
 
-		for(int rank : getConvNumbers(line, "%topplayerkills-")) {
+		for (int rank : getConvNumbers(line, "%topplayerkills-")) {
 			VaroPlayer player = topScores.getPlayer(rank);
 			line = line.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
 		}
 
-		for(int rank : getConvNumbers(line, "%topteam-")) {
+		for (int rank : getConvNumbers(line, "%topteam-")) {
 			Team team = topScores.getTeam(rank);
 			line = line.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
 		}
 
-		for(int rank : getConvNumbers(line, "%topteamkills-")) {
+		for (int rank : getConvNumbers(line, "%topteamkills-")) {
 			Team team = topScores.getTeam(rank);
 			line = line.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
 		}
 
 		line = ConfigMessages.getValue(line, vp);
 
-		if(line.length() > 16)
+		if (line.length() > 16)
 			line = line.substring(0, 16);
 
 		return line;
@@ -125,19 +125,19 @@ public class ScoreboardHandler {
 		ArrayList<Integer> list = new ArrayList<>();
 
 		boolean first = true;
-		for(String split0 : line.split(key)) {
-			if(first) {
+		for (String split0 : line.split(key)) {
+			if (first) {
 				first = false;
-				if(!line.startsWith(key))
+				if (!line.startsWith(key))
 					continue;
 			}
 
 			String[] split1 = split0.split("%", 2);
 
-			if(split1.length == 2) {
+			if (split1.length == 2) {
 				try {
 					list.add(Integer.parseInt(split1[0]));
-				} catch(NumberFormatException e) {
+				} catch (NumberFormatException e) {
 					continue;
 				}
 			}
@@ -147,11 +147,11 @@ public class ScoreboardHandler {
 	}
 
 	public void sendScoreBoard(VaroPlayer vp) {
-		if(!ConfigEntry.SCOREBOARD.getValueAsBoolean() || !vp.getStats().isShowScoreboard())
+		if (!ConfigEntry.SCOREBOARD.getValueAsBoolean() || !vp.getStats().isShowScoreboard())
 			return;
 
 		Player player = vp.getPlayer();
-		if(player.getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null)
+		if (player.getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null)
 			return;
 
 		Scoreboard sb = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
@@ -166,24 +166,24 @@ public class ScoreboardHandler {
 
 	public void update(VaroPlayer player) {
 		ArrayList<String> replacesLst = replaces.get(player.getPlayer());
-		if(replacesLst == null)
+		if (replacesLst == null)
 			replaces.put(player.getPlayer(), replacesLst = new ArrayList<>());
 
 		Scoreboard board = player.getPlayer().getScoreboard();
 		Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
 
-		if(obj == null) {
+		if (obj == null) {
 			sendScoreBoard(player);
 			return;
 		}
 
-		for(int index = 0; index < scoreboardLines.size(); index++) {
+		for (int index = 0; index < scoreboardLines.size(); index++) {
 			String line = getConvString(scoreboardLines.get(index), player);
 
-			if(replacesLst.size() < scoreboardLines.size()) {
+			if (replacesLst.size() < scoreboardLines.size()) {
 				obj.getScore(line).setScore(index);
 				replacesLst.add(line);
-			} else if(!replacesLst.get(index).equals(line)) {
+			} else if (!replacesLst.get(index).equals(line)) {
 				board.resetScores(replacesLst.get(index));
 				obj.getScore(line).setScore(index);
 				replacesLst.set(index, line);

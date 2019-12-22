@@ -31,6 +31,42 @@ public class Main extends JavaPlugin {
 
 	private boolean failed;
 
+	public static String getConsolePrefix() {
+		return CONSOLE_PREFIX;
+	}
+
+	public static Main getInstance() {
+		return instance;
+	}
+
+	public static String getPrefix() {
+		return ConfigEntry.PREFIX.getValueAsString();
+	}
+
+	public static String getColorCode() {
+		return ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString();
+	}
+
+	public static String getProjectName() {
+		return getColorCode() + ConfigEntry.PROJECT_NAME.getValueAsString();
+	}
+
+	public static void broadcastMessage(String message) {
+		Bukkit.broadcastMessage(getPrefix() + message);
+	}
+
+	public static boolean isBootedUp() {
+		return dataManager != null;
+	}
+
+	public static String getContributors() {
+		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
+	}
+
+	public static String getPluginName() {
+		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
+	}
+
 	@Override
 	public void onLoad() {
 		failed = false;
@@ -71,20 +107,20 @@ public class Main extends JavaPlugin {
 			VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater2[0];
 			String updateVersion = (String) updater2[1];
 			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
-			if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
+			if (result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
 				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 			DailyTimer.startTimer();
 
 			botLauncher = BotLauncher.getInstance(); // Initialisierung
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			failed = true;
 			Bukkit.getPluginManager().disablePlugin(Main.this);
 		}
 
-		if(failed)
+		if (failed)
 			return;
 
 		System.out.println(CONSOLE_PREFIX + "Enabled!");
@@ -99,17 +135,17 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
 
-		if(dataManager != null && !failed) {
+		if (dataManager != null && !failed) {
 			System.out.println(CONSOLE_PREFIX + "Saving files...");
 			dataManager.save();
 		}
 
-		if(botLauncher != null) {
+		if (botLauncher != null) {
 			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
 			botLauncher.disconnect();
 		}
 
-		if(!failed)
+		if (!failed)
 			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
 		Bukkit.getScheduler().cancelTasks(this);
 
@@ -121,41 +157,5 @@ public class Main extends JavaPlugin {
 
 	public File getThisFile() {
 		return getFile();
-	}
-
-	public static String getConsolePrefix() {
-		return CONSOLE_PREFIX;
-	}
-
-	public static Main getInstance() {
-		return instance;
-	}
-
-	public static String getPrefix() {
-		return ConfigEntry.PREFIX.getValueAsString();
-	}
-
-	public static String getColorCode() {
-		return ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString();
-	}
-
-	public static String getProjectName() {
-		return getColorCode() + ConfigEntry.PROJECT_NAME.getValueAsString();
-	}
-
-	public static void broadcastMessage(String message) {
-		Bukkit.broadcastMessage(getPrefix() + message);
-	}
-
-	public static boolean isBootedUp() {
-		return dataManager != null;
-	}
-
-	public static String getContributors() {
-		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
-	}
-
-	public static String getPluginName() {
-		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
 	}
 }

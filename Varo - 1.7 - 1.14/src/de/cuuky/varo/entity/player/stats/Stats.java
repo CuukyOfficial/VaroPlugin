@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -83,14 +84,16 @@ public class Stats implements VaroSerializeable {
 	private ArrayList<InventoryBackup> inventoryBackups;
 	@VaroSerializeField(path = "restoreBackup")
 	private InventoryBackup restoreBackup;
-	@VaroSerializeField(path = "backpack")
-	private VaroInventory backpack;
+	@VaroSerializeField(path = "playerBackpack")
+	private VaroInventory playerBackpack;
+
 	@VaroSerializeField(path = "state")
 	private PlayerState state;
 
 	private VaroPlayer owner;
 
-	public Stats() {} // Für Serialise
+	public Stats() {
+	} // Für Serialise
 
 	public Stats(VaroPlayer vp) {
 		this.owner = vp;
@@ -105,7 +108,7 @@ public class Stats implements VaroSerializeable {
 
 		removeTeamAndRank();
 
-		if(owner.isOnline()) {
+		if (owner.isOnline()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 				@Override
@@ -119,22 +122,22 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeTeamAndRank() {
-		if(owner.getTeam() != null)
+		if (owner.getTeam() != null)
 			owner.getTeam().removeMember(owner);
 
-		if(owner.getRank() != null)
+		if (owner.getRank() != null)
 			owner.setRank(null);
 	}
 
 	public void loadStartDefaults() {
-		if(owner.getTeam() != null)
+		if (owner.getTeam() != null)
 			owner.getTeam().loadDefaults();
 
 		videos = new ArrayList<YouTubeVideo>();
 		strikes = new ArrayList<Strike>();
 		saveables = new ArrayList<VaroSaveable>();
 		inventoryBackups = new ArrayList<InventoryBackup>();
-		backpack = new VaroInventory(ConfigEntry.BACKPACK_SIZE.getValueAsInt());
+		playerBackpack = new VaroInventory(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt());
 
 		willClear = false;
 		showScoreboard = true;
@@ -144,12 +147,12 @@ public class Stats implements VaroSerializeable {
 		firstTimeJoined = new Date();
 		lastJoined = new Date();
 		lastEnemyContact = new Date();
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
 			sessions = ConfigEntry.SESSIONS_PER_DAY.getValueAsInt();
 		} else {
 			sessions = 1;
 		}
-		if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+		if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 			sessions += ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt();
 		}
 		sessionsPlayed = 0;
@@ -157,7 +160,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void addStrike(Strike strike) {
-		if(VaroAPI.getEventManager().executeEvent(new PlayerStrikeReceiveEvent(strike)))
+		if (VaroAPI.getEventManager().executeEvent(new PlayerStrikeReceiveEvent(strike)))
 			return;
 
 		this.strikes.add(strike);
@@ -167,9 +170,9 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void clearInventory() {
-		if(owner.isOnline()) {
+		if (owner.isOnline()) {
 			owner.getPlayer().getInventory().clear();
-			for(ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
+			for (ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
 				stack.setType(Material.AIR);
 		} else
 			setWillClear(true);
@@ -178,19 +181,21 @@ public class Stats implements VaroSerializeable {
 	}
 
 	@Override
-	public void onDeserializeEnd() {}
+	public void onDeserializeEnd() {
+	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	public void remove() {
-		if(videos != null)
+		if (videos != null)
 			videos.forEach(video -> video.remove());
 
-		if(saveables != null)
+		if (saveables != null)
 			saveables.forEach(saveable -> saveable.remove());
 
-		if(inventoryBackups != null)
+		if (inventoryBackups != null)
 			inventoryBackups.forEach(b -> b.remove());
 
 		setState(PlayerState.DEAD);
@@ -199,7 +204,7 @@ public class Stats implements VaroSerializeable {
 	public String getCountdownMin(int sec) {
 		int min = sec / 60;
 
-		if(min < 10)
+		if (min < 10)
 			return "0" + min;
 		else
 			return min + "";
@@ -208,7 +213,7 @@ public class Stats implements VaroSerializeable {
 	public String getCountdownSec(int sec) {
 		sec = sec % 60;
 
-		if(sec < 10)
+		if (sec < 10)
 			return "0" + sec;
 		else
 			return sec + "";
@@ -217,39 +222,39 @@ public class Stats implements VaroSerializeable {
 	public void setBan() {
 		sessions--;
 
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+		if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
 			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt());
 		}
 	}
 
 	public KickResult getKickResult(Player player) {
 		KickResult result = KickResult.ALLOW;
-		if(Game.getInstance().hasStarted()) {
-			if(owner.isRegistered())
+		if (Game.getInstance().hasStarted()) {
+			if (owner.isRegistered())
 				result = getVaroKickResult();
 			else
 				result = KickResult.NO_PROJECTUSER;
 		} else {
-			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
+			if (!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
-			if(Game.getInstance().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
+			if (Game.getInstance().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
 				result = KickResult.NO_PROJECTUSER;
 		}
 
-		if(Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
+		if (Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
 			result = KickResult.SERVER_NOT_PUBLISHED;
 
-		if(player.isBanned())
+		if (player.isBanned())
 			result = KickResult.BANNED;
 
-		if(VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
+		if (VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
 			result = KickResult.SERVER_FULL;
 
-		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Game.getInstance().hasStarted() && player.isOp()) {
-				if(Game.getInstance().hasStarted())
-					if(result == KickResult.DEAD || !owner.isRegistered())
+		if (result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
+			if (player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Game.getInstance().hasStarted() && player.isOp()) {
+				if (Game.getInstance().hasStarted())
+					if (result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
 					else
 						owner.setAdminIgnore(true);
@@ -263,11 +268,11 @@ public class Stats implements VaroSerializeable {
 	public KickResult getVaroKickResult() {
 		GregorianCalendar curr = new GregorianCalendar();
 		KickResult result = KickResult.ALLOW;
-		if(this.sessions > 0) {
+		if (this.sessions > 0) {
 			result = KickResult.ALLOW;
 		} else {
-			if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
-				if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+			if (ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+				if (ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 					result = KickResult.NO_PREPRODUCES_LEFT;
 				} else {
 					result = KickResult.NO_SESSIONS_LEFT;
@@ -277,26 +282,26 @@ public class Stats implements VaroSerializeable {
 			}
 		}
 
-		if(VaroEvent.getMassRecEvent().isEnabled())
+		if (VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 
-		if(Game.getInstance().getFinaleJoinStart()) {
+		if (Game.getInstance().getFinaleJoinStart()) {
 			result = KickResult.FINALE_JOIN;
 		}
 
-		if(Main.isBootedUp())
-			if(!OutSideTimeChecker.getInstance().canJoin())
+		if (Main.isBootedUp())
+			if (!OutSideTimeChecker.getInstance().canJoin())
 				result = KickResult.NOT_IN_TIME;
 
-		for(Strike strike : strikes)
-			if(strike.getBanUntil() != null)
-				if(curr.before(strike.getBanUntil()))
+		for (Strike strike : strikes)
+			if (strike.getBanUntil() != null)
+				if (curr.before(strike.getBanUntil()))
 					result = KickResult.STRIKE_BAN;
 
-		if(!this.isAlive())
+		if (!this.isAlive())
 			result = KickResult.DEAD;
 
-		if(isSpectator())
+		if (isSpectator())
 			result = KickResult.SPECTATOR;
 
 		return result;
@@ -307,7 +312,7 @@ public class Stats implements VaroSerializeable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
-		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? VaroUtils.formatLocation(lastLocation, colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? 0 : videos.size()), "§7StrikeAmount§8: " + colorcode + (strikes == null ? 0 : strikes.size()), "§7State§8: " + colorcode + state.getName() };
+		return new String[]{"§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUuid(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? VaroUtils.formatLocation(lastLocation, colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? 0 : videos.size()), "§7StrikeAmount§8: " + colorcode + (strikes == null ? 0 : strikes.size()), "§7State§8: " + colorcode + state.getName()};
 	}
 
 	public boolean hasTimeLeft() {
@@ -318,16 +323,12 @@ public class Stats implements VaroSerializeable {
 		return countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 
-	public void setCountdown(int time) {
-		this.countdown = time;
-	}
-
 	public void removeCountdown() {
 		this.countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
 	}
 
-	public VaroInventory getBackpack() {
-		return backpack;
+	public VaroInventory getPlayerBackpack() {
+		return playerBackpack;
 	}
 
 	public int getKills() {
@@ -347,7 +348,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public ArrayList<VaroSaveable> getSaveables() {
-		if(owner.getTeam() != null)
+		if (owner.getTeam() != null)
 			return owner.getTeam().getSaveables();
 		else
 			return saveables;
@@ -380,8 +381,8 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public boolean hasVideo(String videoId) {
-		for(YouTubeVideo video : videos)
-			if(video.getVideoId().equals(videoId))
+		for (YouTubeVideo video : videos)
+			if (video.getVideoId().equals(videoId))
 				return true;
 
 		return false;
@@ -389,6 +390,10 @@ public class Stats implements VaroSerializeable {
 
 	public Location getLastLocation() {
 		return lastLocation;
+	}
+
+	public void setLastLocation(Location lastLocation) {
+		this.lastLocation = lastLocation;
 	}
 
 	public Date getTimeUntilAddSession() {
@@ -415,12 +420,12 @@ public class Stats implements VaroSerializeable {
 		wins++;
 	}
 
-	public void setRestoreBackup(InventoryBackup restoreBackup) {
-		this.restoreBackup = restoreBackup;
-	}
-
 	public InventoryBackup getRestoreBackup() {
 		return restoreBackup;
+	}
+
+	public void setRestoreBackup(InventoryBackup restoreBackup) {
+		this.restoreBackup = restoreBackup;
 	}
 
 	public void setOwner(VaroPlayer owner) {
@@ -431,12 +436,12 @@ public class Stats implements VaroSerializeable {
 		return owner.getName();
 	}
 
-	public void setLastLocation(Location lastLocation) {
-		this.lastLocation = lastLocation;
-	}
-
 	public Date getLastJoined() {
 		return lastJoined;
+	}
+
+	public void setLastJoined(Date lastJoined) {
+		this.lastJoined = lastJoined;
 	}
 
 	public ArrayList<InventoryBackup> getInventoryBackups() {
@@ -460,20 +465,12 @@ public class Stats implements VaroSerializeable {
 		this.showScoreboard = showScoreboard;
 	}
 
-	public void setLastJoined(Date lastJoined) {
-		this.lastJoined = lastJoined;
-	}
-
 	public Date getLastEnemyContact() {
 		return lastEnemyContact;
 	}
 
 	public void setLastEnemyContact(Date lastEnemyContact) {
 		this.lastEnemyContact = lastEnemyContact;
-	}
-
-	public void setFirstTimeJoined(Date firstTimeJoined) {
-		this.firstTimeJoined = firstTimeJoined;
 	}
 
 	public int getSessions() {
@@ -496,6 +493,10 @@ public class Stats implements VaroSerializeable {
 		return firstTimeJoined;
 	}
 
+	public void setFirstTimeJoined(Date firstTimeJoined) {
+		this.firstTimeJoined = firstTimeJoined;
+	}
+
 	public Date getDiedAt() {
 		return diedAt;
 	}
@@ -505,14 +506,14 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeStrike(Strike strike) {
-		if(VaroAPI.getEventManager().executeEvent(new PlayerStrikeRemoveEvent(strike)))
+		if (VaroAPI.getEventManager().executeEvent(new PlayerStrikeRemoveEvent(strike)))
 			return;
 
 		int strikeNumber = strike.getStrikeNumber();
 		this.strikes.remove(strike);
 
-		for(Strike aStrike : this.strikes) {
-			if(aStrike.getStrikeNumber() > strikeNumber) {
+		for (Strike aStrike : this.strikes) {
+			if (aStrike.getStrikeNumber() > strikeNumber) {
 				aStrike.decreaseStrikeNumber();
 			}
 		}
@@ -530,35 +531,35 @@ public class Stats implements VaroSerializeable {
 		return sessionsPlayed;
 	}
 
-	public void addSessionPlayed() {
-		sessionsPlayed++;
-	}
-
 	public void setSessionsPlayed(int sessionsPlayed) {
 		this.sessionsPlayed = sessionsPlayed;
+	}
+
+	public void addSessionPlayed() {
+		sessionsPlayed++;
 	}
 
 	public PlayerState getState() {
 		return state;
 	}
 
-	public boolean isSpectator() {
-		return state == PlayerState.SPECTATOR;
-	}
-
 	public void setState(PlayerState state) {
-		if(VaroAPI.getEventManager().executeEvent(new PlayerStateChangeEvent(owner, state)))
+		if (VaroAPI.getEventManager().executeEvent(new PlayerStateChangeEvent(owner, state)))
 			return;
 
 		this.state = state;
-		if(state == PlayerState.DEAD)
+		if (state == PlayerState.DEAD)
 			this.diedAt = new Date();
 
 		new WinnerCheck();
 	}
 
+	public boolean isSpectator() {
+		return state == PlayerState.SPECTATOR;
+	}
+
 	public boolean isAlive() {
-		if(this.state == PlayerState.ALIVE)
+		if (this.state == PlayerState.ALIVE)
 			return true;
 
 		return false;
@@ -568,15 +569,19 @@ public class Stats implements VaroSerializeable {
 		return strikes;
 	}
 
-	public void setShowActionbarTime(boolean showActionbarTime) {
-		this.showActionbarTime = showActionbarTime;
-	}
-
 	public boolean isShowActionbarTime() {
 		return showActionbarTime;
 	}
 
+	public void setShowActionbarTime(boolean showActionbarTime) {
+		this.showActionbarTime = showActionbarTime;
+	}
+
 	public int getCountdown() {
 		return this.countdown;
+	}
+
+	public void setCountdown(int time) {
+		this.countdown = time;
 	}
 }

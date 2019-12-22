@@ -37,7 +37,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	public VaroSerializeObject(Class<? extends VaroSerializeable> clazz, String fileName) {
 		this(clazz);
 
-		if(files.get(fileName) != null) {
+		if (files.get(fileName) != null) {
 			this.file = files.get(fileName);
 			this.configuration = configs.get(fileName);
 		} else {
@@ -49,10 +49,10 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	}
 
 	protected void load() {
-		for(String string : configuration.getKeys(true)) {
+		for (String string : configuration.getKeys(true)) {
 			Object obj = configuration.get(string);
-			if(obj instanceof MemorySection) {
-				if(string.contains("."))
+			if (obj instanceof MemorySection) {
+				if (string.contains("."))
 					continue;
 
 				new VaroDeserializer((MemorySection) obj, this).deserialize();
@@ -66,14 +66,14 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 
 	protected void clearOld() {
 		Map<String, Object> configValues = configuration.getValues(false);
-		for(Map.Entry<String, Object> entry : configValues.entrySet())
+		for (Map.Entry<String, Object> entry : configValues.entrySet())
 			configuration.set(entry.getKey(), null);
 	}
 
 	protected void saveFile() {
 		try {
 			configuration.save(file);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -90,5 +90,6 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 		return fieldLoader;
 	}
 
-	public void onSave() {}
+	public void onSave() {
+	}
 }

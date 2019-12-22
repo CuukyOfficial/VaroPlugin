@@ -16,7 +16,7 @@ public class AbortCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Game.getInstance().isStarting()) {
+		if (!Game.getInstance().isStarting()) {
 			sender.sendMessage(Main.getPrefix() + "Der Startcountdown ist nicht aktiv!");
 			return;
 		}

@@ -3,7 +3,6 @@ package de.cuuky.varo.logger.logger;
 import java.awt.Color;
 
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.logger.Logger;
 import de.cuuky.varo.utils.JavaUtils;
@@ -17,7 +16,7 @@ public class EventLogger extends Logger {
 	}
 
 	public static EventLogger getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new EventLogger("logs");
 		}
 		return instance;
@@ -26,14 +25,14 @@ public class EventLogger extends Logger {
 	public void println(LogType type, String message) {
 		message = JavaUtils.replaceAllColors(message);
 
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replaceAll("%noBot%", "");
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noBot%", "");
 
 		pw.println(log);
 		logs.add(log);
 
 		pw.flush();
 
-		if(type.getPostChannel() == -1 || message.contains("%noBot%"))
+		if (type.getPostChannel() == -1 || message.contains("%noBot%"))
 			return;
 
 		sendToDiscord(type, message);
@@ -41,28 +40,28 @@ public class EventLogger extends Logger {
 	}
 
 	private void sendToTelegram(LogType type, String message) {
-		if(VaroTelegramBot.getInstance() == null)
+		if (BotLauncher.getTelegramBot() == null)
 			return;
 
 		try {
-			if(!type.equals(LogType.YOUTUBE))
-				VaroTelegramBot.getInstance().sendEvent(message);
+			if (!type.equals(LogType.YOUTUBE))
+				BotLauncher.getTelegramBot().sendEvent(message);
 			else
-				VaroTelegramBot.getInstance().sendVideo(message);
-		} catch(ArrayIndexOutOfBoundsException e) {
-			VaroTelegramBot.getInstance().sendEvent(message);
+				BotLauncher.getTelegramBot().sendVideo(message);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			BotLauncher.getTelegramBot().sendEvent(message);
 		}
 	}
 
 	private void sendToDiscord(LogType type, String msg) {
-		if(type.getPostChannel() == -1 || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
+		if (type.getPostChannel() == -1 || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
 			return;
 
 		try {
 			BotLauncher.getDiscordBot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
-		} catch(NoClassDefFoundError | BootstrapMethodError e) {
+		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
@@ -90,13 +89,21 @@ public class EventLogger extends Logger {
 			this.idEntry = idEntry;
 		}
 
+		public static LogType getType(String s) {
+			for (LogType type : values())
+				if (type.getName().equalsIgnoreCase(s))
+					return type;
+
+			return null;
+		}
+
 		public long getPostChannel() {
-			if(idEntry == null || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
+			if (idEntry == null || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
 				return -1;
 
 			try {
 				idEntry.getValueAsLong();
-			} catch(IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				return ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
 			}
 
@@ -109,14 +116,6 @@ public class EventLogger extends Logger {
 
 		public Color getColor() {
 			return color;
-		}
-
-		public static LogType getType(String s) {
-			for(LogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
-					return type;
-
-			return null;
 		}
 	}
 }

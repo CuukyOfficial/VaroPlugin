@@ -15,6 +15,30 @@ public class VaroAPIPlayer {
 		this.vp = vp;
 	}
 
+	public static List<VaroAPIPlayer> getVaroPlayers() {
+		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
+			alive.add(new VaroAPIPlayer(vp));
+
+		return alive;
+	}
+
+	public static List<VaroAPIPlayer> getOnlinePlayers() {
+		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
+			alive.add(new VaroAPIPlayer(vp));
+
+		return alive;
+	}
+
+	public static List<VaroAPIPlayer> getAlivePlayers() {
+		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
+		for (VaroPlayer vp : VaroPlayer.getAlivePlayer())
+			alive.add(new VaroAPIPlayer(vp));
+
+		return alive;
+	}
+
 	public VaroAPIStats getStats() {
 		return new VaroAPIStats(vp.getStats());
 	}
@@ -33,29 +57,5 @@ public class VaroAPIPlayer {
 
 	public VaroAPITeam getTeam() {
 		return vp.getTeam() == null ? null : new VaroAPITeam(vp.getTeam());
-	}
-
-	public static List<VaroAPIPlayer> getVaroPlayers() {
-		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
-			alive.add(new VaroAPIPlayer(vp));
-
-		return alive;
-	}
-
-	public static List<VaroAPIPlayer> getOnlinePlayers() {
-		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-			alive.add(new VaroAPIPlayer(vp));
-
-		return alive;
-	}
-
-	public static List<VaroAPIPlayer> getAlivePlayers() {
-		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
-			alive.add(new VaroAPIPlayer(vp));
-
-		return alive;
 	}
 }

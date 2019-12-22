@@ -22,10 +22,12 @@ public enum ConfigEntry {
 	NO_SATIATION_REGENERATE(ConfigSection.OFFLINEVILLAGER, "noSatiationRegenerate", false, "Ob Spieler nicht durch Sättigung regenerieren\nkönnen sondern nur durch Gapple etc."),
 
 	// BACKPACKS
-	BACKPACK_ALLOW(ConfigSection.BACKPACKS, "allowBackpacks", false, "Erlaubt den Spielern den Zugriff\nauf ihr Backpack mit /varo bp"),
-	BACKPACK_SIZE(ConfigSection.BACKPACKS, "backpackSize", 54, "Größe der Backpacks (Max = 54)"),
-	BACKPACK_ALLOW_TEAMACCESS(ConfigSection.BACKPACKS, "allowTeamAccess", true, "Ob Teampartner mit /varo vp auf den\nRucksackes Mitspielers zugreifen dürfen"),
-	BACKPACK_DROP_CONTENT_DEATH(ConfigSection.BACKPACKS, "dropContentOnDeath", true, "Ob der Inhalt des Rucksacks bei\nTod gedropptwerden soll."),
+	BACKPACK_PLAYER_ENABLED(ConfigSection.BACKPACKS, "backpackPlayerEnabled", false, "Wenn dies aktiviert ist, haben Spieler einen eigenen Rucksack,\nauf den sie mit /varo bp zugreifen können.\nDieser wird pro Spieler und nicht pro Team gespeichert."),
+	BACKPACK_PLAYER_SIZE(ConfigSection.BACKPACKS, "backpackPlayerSize", 54, "Größe des Spieler-Rucksacks (Max = 54)"),
+	BACKPACK_PLAYER_DROP_ON_DEATH(ConfigSection.BACKPACKS, "backpackPlayerDropOnDeath", true, "Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll."),
+	BACKPACK_TEAM_ENABLED(ConfigSection.BACKPACKS, "backpackTeamEnabled", false, "Wenn dies aktiviert ist, haben Teams einen eigenen Rucksack,\nauf den sie mit /varo bp zugreifen können.\nDieser wird pro Team und nicht pro Spieler gespeichert."),
+	BACKPACK_TEAM_SIZE(ConfigSection.BACKPACKS, "backpackTeamSize", 54, "Größe des Team-Rucksacks (Max = 54)"),
+	BACKPACK_TEAM_DROP_ON_DEATH(ConfigSection.BACKPACKS, "backpackTeamDropOnDeath", true, "Ob der Inhalt des Team-Rucksacks beim Tod des letzten Teammitglieds gedroppt werden soll."), //TODO Drop on Death noch nicht gemacht
 
 	// PROTECTIONS
 	JOIN_PROTECTIONTIME(ConfigSection.PROTECTIONS, "joinProtectionTime", 10, "Länge der Schutzzeit in Sekunden beim Betreten des Servers.\nOff = -1"),
@@ -240,6 +242,16 @@ public enum ConfigEntry {
 		this.description = description;
 	}
 
+	public static ConfigEntry getEntryByPath(String path) {
+		for (ConfigEntry entry : ConfigEntry.values()) {
+			if (!entry.getFullPath().equals(path))
+				continue;
+
+			return entry;
+		}
+		return null;
+	}
+
 	private void sendFalseCast() {
 		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + defaultValue.getClass() + " for entry " + getFullPath());
 	}
@@ -247,7 +259,7 @@ public enum ConfigEntry {
 	public void setValue(Object value, boolean save) {
 		this.value = value;
 
-		if(save)
+		if (save)
 			save();
 	}
 
@@ -262,8 +274,8 @@ public enum ConfigEntry {
 
 	public String getValueAsString() {
 		try {
-			return String.valueOf(this.value).replaceAll("&", "§");
-		} catch(Exception e) {
+			return String.valueOf(this.value).replace("&", "§");
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -273,7 +285,7 @@ public enum ConfigEntry {
 	public int getValueAsInt() {
 		try {
 			return (int) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -283,7 +295,7 @@ public enum ConfigEntry {
 	public double getValueAsDouble() {
 		try {
 			return (double) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -293,7 +305,7 @@ public enum ConfigEntry {
 	public boolean getValueAsBoolean() {
 		try {
 			return (boolean) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -303,7 +315,7 @@ public enum ConfigEntry {
 	public long getValueAsLong() {
 		try {
 			return (long) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast();
 		}
 
@@ -336,15 +348,5 @@ public enum ConfigEntry {
 
 	public String getName() {
 		return path;
-	}
-
-	public static ConfigEntry getEntryByPath(String path) {
-		for(ConfigEntry entry : ConfigEntry.values()) {
-			if(!entry.getFullPath().equals(path))
-				continue;
-
-			return entry;
-		}
-		return null;
 	}
 }

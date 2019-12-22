@@ -26,13 +26,13 @@ public class Nametag {
 	static {
 		nametags = new ArrayList<>();
 
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			try {
 				Class<?> visibilityClass = Class.forName("org.bukkit.scoreboard.NameTagVisibility");
 
 				visibility = !ConfigEntry.NAMETAGS.getValueAsBoolean() ? visibilityClass.getDeclaredField("NEVER").get(null) : visibilityClass.getDeclaredField("ALWAYS").get(null);
 				teamClass = Class.forName("org.bukkit.scoreboard.Team");
-			} catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -46,7 +46,7 @@ public class Nametag {
 	private boolean init, hearts;
 
 	public Nametag(UUID uniqueID, Player p) {
-		if(!ConfigEntry.NAMETAGS.getValueAsBoolean())
+		if (!ConfigEntry.NAMETAGS.getValueAsBoolean())
 			return;
 
 		this.hearts = ConfigMessages.NAMETAG_SUFFIX.getValue().contains("%hearts%");
@@ -67,13 +67,56 @@ public class Nametag {
 		nametags.add(this);
 	}
 
+	public static void refreshGroups(Rank rank) {
+		for (Nametag nametag : nametags) {
+			if (!nametag.isOnline())
+				continue;
+
+			if (!nametag.getRank().equals(rank))
+				continue;
+
+			nametag.refresh();
+		}
+	}
+
+	public static void refreshUser(String user) {
+		for (Nametag nametag : nametags) {
+			if (!nametag.isOnline())
+				continue;
+
+			if (!nametag.getPlayer().getName().equalsIgnoreCase(user))
+				continue;
+
+			nametag.refresh();
+		}
+	}
+
+	public static void refreshAll() {
+		for (Nametag nametag : nametags) {
+			if (!nametag.isOnline())
+				continue;
+
+			nametag.refresh();
+		}
+	}
+
+	public static void resendAll() {
+		for (Nametag nametag : nametags) {
+			if (!nametag.isOnline())
+				continue;
+
+			nametag.setToAll();
+			nametag.giveAll();
+		}
+	}
+
 	private void setVisibility(Team team) {
-		if(visibility == null)
+		if (visibility == null)
 			return;
 
 		try {
 			teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass()).invoke(team, visibility);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -84,17 +127,17 @@ public class Nametag {
 		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
-		if(team != null)
+		if (team != null)
 			name = team.getId() + name;
 		else
 			name = teamsize + name;
 
-		if(rank != null)
+		if (rank != null)
 			name = rank.getTablistLocation() + name;
 		else
 			name = ranks + name;
 
-		if(name.length() > 16)
+		if (name.length() > 16)
 			name = name.substring(0, 16);
 		return name;
 	}
@@ -108,40 +151,41 @@ public class Nametag {
 
 		this.prefix = (team == null ? ConfigMessages.NAMETAG_NORMAL.getValue(player) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(player));
 
-		if(prefix.length() > 16)
+		if (prefix.length() > 16)
 			prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(player).replaceAll("%hearts%", String.valueOf((int) player.getPlayer().getHealth())).replaceAll("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(player).replace("%hearts%", String.valueOf((int) player.getPlayer().getHealth())).replace("%heart%", "♥"));
 	}
 
 	public void heartsChanged() {
-		if(!init || !hearts)
+		if (!init || !hearts)
 			return;
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(p)).replaceAll("%hearts%", String.valueOf((int) p.getHealth())).replaceAll("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(p)).replace("%hearts%", String.valueOf((int) p.getHealth())).replace("%heart%", "♥"));
 		setToAll();
 	}
 
 	public void setToAll() {
-		if(!init)
+		if (!init)
 			return;
 
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
+		for (Player toSet : Bukkit.getOnlinePlayers()) {
 			Scoreboard board = toSet.getScoreboard();
 			Team team = board.getTeam(this.name);
 
 			try {
 				board.getTeam(this.name).unregister();
-			} catch(NullPointerException e) {}
+			} catch (NullPointerException e) {
+			}
 
 			team = board.registerNewTeam(this.name);
 			team.addPlayer(this.p.getPlayer());
 
 			setVisibility(team);
-			if(this.prefix != null)
+			if (this.prefix != null)
 				team.setPrefix(this.prefix);
 
-			if(this.suffix != null)
+			if (this.suffix != null)
 				team.setSuffix(this.suffix);
 
 			toSet.setScoreboard(board);
@@ -149,29 +193,30 @@ public class Nametag {
 	}
 
 	public void giveAll() {
-		if(!init)
+		if (!init)
 			return;
 
 		Player toSet = this.p;
 		Scoreboard board = toSet.getScoreboard();
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
+		for (Nametag nametag : nametags) {
+			if (!nametag.isOnline())
 				continue;
 
 			Team team = board.getTeam(nametag.getName());
 
 			try {
 				board.getTeam(nametag.getName()).unregister();
-			} catch(NullPointerException e) {}
+			} catch (NullPointerException e) {
+			}
 
 			team = board.registerNewTeam(nametag.getName());
 			team.addPlayer(nametag.getPlayer());
 
 			setVisibility(team);
-			if(nametag.getPrefix() != null)
+			if (nametag.getPrefix() != null)
 				team.setPrefix(nametag.getPrefix());
 
-			if(nametag.getSuffix() != null)
+			if (nametag.getSuffix() != null)
 				team.setSuffix(nametag.getSuffix());
 		}
 
@@ -179,10 +224,10 @@ public class Nametag {
 	}
 
 	public void prefixReset() {
-		if(!init)
+		if (!init)
 			return;
 
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
+		for (Player toSet : Bukkit.getOnlinePlayers()) {
 			Scoreboard board = toSet.getScoreboard();
 			Team team = getTeam(board);
 
@@ -192,10 +237,10 @@ public class Nametag {
 	}
 
 	public void suffixReset() {
-		if(!init)
+		if (!init)
 			return;
 
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
+		for (Player toSet : Bukkit.getOnlinePlayers()) {
 			Scoreboard board = toSet.getScoreboard();
 			Team team = getTeam(board);
 
@@ -205,10 +250,10 @@ public class Nametag {
 	}
 
 	public void nameTagVisibilityReset() {
-		if(!init)
+		if (!init)
 			return;
 
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
+		for (Player toSet : Bukkit.getOnlinePlayers()) {
 			Scoreboard board = toSet.getScoreboard();
 			Team team = getTeam(board);
 
@@ -220,7 +265,7 @@ public class Nametag {
 	private Team getTeam(Scoreboard board) {
 		Team team = board.getTeam(this.name);
 
-		if(team == null) {
+		if (team == null) {
 			team = board.registerNewTeam(this.name);
 			team.addPlayer(this.p);
 		}
@@ -264,48 +309,5 @@ public class Nametag {
 
 	public boolean isOnline() {
 		return p != null;
-	}
-
-	public static void refreshGroups(Rank rank) {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			if(!nametag.getRank().equals(rank))
-				continue;
-
-			nametag.refresh();
-		}
-	}
-
-	public static void refreshUser(String user) {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			if(!nametag.getPlayer().getName().equalsIgnoreCase(user))
-				continue;
-
-			nametag.refresh();
-		}
-	}
-
-	public static void refreshAll() {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			nametag.refresh();
-		}
-	}
-
-	public static void resendAll() {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			nametag.setToAll();
-			nametag.giveAll();
-		}
 	}
 }

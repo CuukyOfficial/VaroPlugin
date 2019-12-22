@@ -39,7 +39,7 @@ public class InventoryBackupGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(!backup.getVaroPlayer().isOnline()) {
+				if (!backup.getVaroPlayer().isOnline()) {
 					backup.getVaroPlayer().getStats().setRestoreBackup(backup);
 					opener.sendMessage(Main.getPrefix() + "Inventar wird beim nächsten Betreten wiederhergestellt!");
 					return;
@@ -63,10 +63,12 @@ public class InventoryBackupGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -75,5 +77,6 @@ public class InventoryBackupGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }

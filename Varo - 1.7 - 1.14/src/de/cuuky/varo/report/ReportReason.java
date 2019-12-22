@@ -29,6 +29,15 @@ public enum ReportReason implements VaroSerializeable {
 		this.description = desc;
 	}
 
+	public static ReportReason getByName(String name) {
+		for (ReportReason reasons : values()) {
+			if (reasons.getName().equals(name)) {
+				return reasons;
+			}
+		}
+		return null;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -41,18 +50,11 @@ public enum ReportReason implements VaroSerializeable {
 		return description;
 	}
 
-	public static ReportReason getByName(String name) {
-		for(ReportReason reasons : values()) {
-			if(reasons.getName().equals(name)) {
-				return reasons;
-			}
-		}
-		return null;
+	@Override
+	public void onDeserializeEnd() {
 	}
 
 	@Override
-	public void onDeserializeEnd() {}
-
-	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 }

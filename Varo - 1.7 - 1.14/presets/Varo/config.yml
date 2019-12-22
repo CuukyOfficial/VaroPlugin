@@ -5,6 +5,7 @@ Main:
   supportPluginAds: false
   scoreboard: true
   nametags: true
+  tablist: true
   playTime: 15
   dailyBackups: true
   unregisteredPlayerJoin: false
@@ -13,10 +14,12 @@ OfflineVillager:
   enableOfflineVillager: false
   noSatiationRegenerate: false
 Backpacks:
-  allowBackpacks: false
-  backpackSize: 54
-  allowTeamAccess: true
-  dropContentOnDeath: true
+  backpackPlayerEnabled: false
+  backpackPlayerSize: 54
+  backpackPlayerDropOnDeath: true
+  backpackTeamEnabled: false
+  backpackTeamSize: 54
+  backpackTeamDropOnDeath: true
 Protections:
   joinProtectionTime: 10
   canWalkOnJoinProtection: false

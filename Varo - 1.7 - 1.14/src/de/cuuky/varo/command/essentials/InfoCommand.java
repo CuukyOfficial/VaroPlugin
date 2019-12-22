@@ -13,18 +13,18 @@ public class InfoCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.info")) {
+		if (!sender.hasPermission("varo.info")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/info §7<Spieler>");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if(player == null) {
+		if (player == null) {
 			sender.sendMessage(Main.getPrefix() + "Spieler nicht gefunden!");
 			return false;
 		}

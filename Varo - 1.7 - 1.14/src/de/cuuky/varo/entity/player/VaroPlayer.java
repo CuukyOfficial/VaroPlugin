@@ -9,6 +9,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.managers.GuildController;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -38,9 +42,6 @@ import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.vanish.Vanish;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.managers.GuildController;
 
 public class VaroPlayer extends VaroEntity {
 
@@ -104,16 +105,136 @@ public class VaroPlayer extends VaroEntity {
 		stats.loadDefaults();
 	}
 
+	public static VaroPlayer getPlayer(int id) {
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getId() != id)
+				continue;
+
+			return vp;
+		}
+
+		return null;
+	}
+
+	/**
+	 * @return Returns the varoplayer and sets the name right if the player
+	 * changed it before
+	 */
+	public static VaroPlayer getPlayer(Player player) {
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getUuid() != null)
+				if (!vp.getUuid().equals(player.getUniqueId().toString()))
+					continue;
+
+			if (vp.getUuid() == null && player.getName().equalsIgnoreCase(vp.getName()))
+				vp.setUuid(player.getUniqueId().toString());
+			else if (vp.getUuid() == null)
+				continue;
+
+			if (!vp.getName().equalsIgnoreCase(player.getName())) {
+				EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
+				new Alert(AlertType.NAME_SWITCH, player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
+				vp.setName(player.getName());
+			}
+
+			return vp;
+		}
+
+		return null;
+	}
+
+	public static VaroPlayer getPlayer(String name) {
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getName().equalsIgnoreCase(name))
+				continue;
+
+			return vp;
+		}
+
+		return null;
+	}
+
+	/**
+	 * @return Returns all alive Players regardless if they are online
+	 */
+	public static ArrayList<VaroPlayer> getAlivePlayer() {
+		ArrayList<VaroPlayer> alive = new ArrayList<>();
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getStats().isAlive())
+				continue;
+
+			alive.add(vp);
+		}
+
+		return alive;
+	}
+
+	/**
+	 * @return Returns all online VaroPlayers regardless if they are alive
+	 */
+	public static ArrayList<VaroPlayer> getOnlinePlayer() {
+		ArrayList<VaroPlayer> online = new ArrayList<>();
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.isOnline())
+				continue;
+
+			online.add(vp);
+		}
+
+		return online;
+	}
+
+	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
+		ArrayList<VaroPlayer> online = new ArrayList<>();
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.isOnline() || !vp.getStats().isAlive())
+				continue;
+
+			online.add(vp);
+		}
+
+		return online;
+	}
+
+	public static ArrayList<VaroPlayer> getSpectator() {
+		ArrayList<VaroPlayer> spectator = new ArrayList<>();
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getStats().isSpectator())
+				continue;
+
+			spectator.add(vp);
+		}
+
+		return spectator;
+	}
+
+	public static ArrayList<VaroPlayer> getDeadPlayer() {
+		ArrayList<VaroPlayer> dead = new ArrayList<>();
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getStats().getState() != PlayerState.DEAD)
+				continue;
+
+			dead.add(vp);
+		}
+
+		return dead;
+	}
+
+	public static ArrayList<VaroPlayer> getVaroPlayer() {
+		return varoplayer;
+	}
+
 	private int generateId() {
 		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getPlayer(id) != null)
+		while (getPlayer(id) != null)
 			generateId();
 
 		return id;
 	}
 
 	public void register() {
-		if(this.stats == null)
+		if (this.stats == null)
 			this.stats = new Stats(this);
 
 		stats.loadDefaults();
@@ -125,7 +246,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public boolean isInProtection() {
-		if(VaroEvent.getMassRecEvent().isEnabled()) {
+		if (VaroEvent.getMassRecEvent().isEnabled()) {
 			return inMassProtectionTime;
 		} else {
 			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
@@ -135,24 +256,25 @@ public class VaroPlayer extends VaroEntity {
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
-		if(isOnline()) {
+		if (isOnline()) {
 			update();
 
-			if(getStats().isSpectator() || isAdminIgnore())
+			if (getStats().isSpectator() || isAdminIgnore())
 				setSpectacting();
 
 			setNormalAttackSpeed();
 
-			if(Game.getInstance().getGameState() == GameState.LOBBY)
+			if (Game.getInstance().getGameState() == GameState.LOBBY)
 				LobbyItem.giveItems(player);
-		} else if(isAdminIgnore())
+		} else if (isAdminIgnore())
 			adminIgnore = false;
 
 		this.stats.setOwner(this);
 	}
 
 	@Override
-	public void onSerializeStart() {}
+	public void onSerializeStart() {
+	}
 
 	public void setSpectacting() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -166,25 +288,25 @@ public class VaroPlayer extends VaroEntity {
 				player.getPlayer().setHealth(20);
 				player.getPlayer().setFoodLevel(20);
 
-				if(!adminIgnore) {
+				if (!adminIgnore) {
 					player.getInventory().clear();
-					player.getInventory().setArmorContents(new ItemStack[] {});
+					player.getInventory().setArmorContents(new ItemStack[]{});
 				}
 			}
 		}, 1);
 	}
 
 	public void delete() {
-		if(team != null)
+		if (team != null)
 			team.removeMember(this);
 
-		if(rank != null)
+		if (rank != null)
 			rank.remove();
 
-		if(isOnline())
+		if (isOnline())
 			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this));
 
-		if(villager != null)
+		if (villager != null)
 			villager.remove();
 
 		stats.remove();
@@ -194,66 +316,37 @@ public class VaroPlayer extends VaroEntity {
 
 	public String getPrefix() {
 		String pr = "";
-		if(team != null)
+		if (team != null)
 			pr = team.getDisplay() + " ";
 
-		if(rank != null)
+		if (rank != null)
 			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
 		return pr;
 	}
 
-	public void setTeam(Team team) {
-		this.team = team;
-
-		if(!Main.isBootedUp())
-			return;
-
-		VaroDiscordBot db = BotLauncher.getDiscordBot();
-		if(db != null && db.isEnabled()) {
-			GuildController controller = db.getController();
-			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
-				Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
-				if(this.team != null)
-					if(controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
-						Role role = controller.getGuild().getRolesByName(this.team.getName(), true).get(0);
-						controller.removeSingleRoleFromMember(member, role).complete();
-					}
-
-				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0 ? controller.getGuild().getRolesByName(team.getName(), true).get(0) : null;
-				if(role == null)
-					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true).setName(team.getName()).complete();
-
-				controller.addRolesToMember(member, role).complete();
-			}
-		}
-
-		update();
-		ScoreboardHandler.getInstance().updateTopScores();
-	}
-
 	public void update() {
-		if(!isOnline())
+		if (!isOnline())
 			return;
 
-		if(nametag == null)
+		if (nametag == null)
 			nametag = new Nametag(player.getUniqueId(), player);
 		else
 			nametag.refresh();
 
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
+		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			if (ConfigEntry.TABLIST.getValueAsBoolean()) {
 				getNetworkManager().sendTablist();
 			}
-			
+
 			String listname = "";
-			if(getTeam() != null) {
-				if(getRank() == null) {
+			if (getTeam() != null) {
+				if (getRank() == null) {
 					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
 				} else {
 					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
 				}
 			} else {
-				if(getRank() == null) {
+				if (getRank() == null) {
 					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
 				} else {
 					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
@@ -268,7 +361,7 @@ public class VaroPlayer extends VaroEntity {
 		player.setHealth(20);
 		player.setFoodLevel(20);
 		player.getInventory().clear();
-		player.getInventory().setArmorContents(new ItemStack[] {});
+		player.getInventory().setArmorContents(new ItemStack[]{});
 		player.setExp(0);
 		player.setLevel(0);
 	}
@@ -281,22 +374,22 @@ public class VaroPlayer extends VaroEntity {
 	 * @return Returns if a player is nearby
 	 */
 	public boolean canBeKicked(int noKickDistance) {
-		if(noKickDistance < 1)
+		if (noKickDistance < 1)
 			return true;
 
-		for(Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
-			if(!(entity instanceof Player))
+		for (Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
+			if (!(entity instanceof Player))
 				continue;
 
 			VaroPlayer vp = getPlayer((Player) entity);
-			if(vp.equals(this))
+			if (vp.equals(this))
 				continue;
 
-			if(vp.getTeam() != null)
-				if(vp.getTeam().equals(team))
+			if (vp.getTeam() != null)
+				if (vp.getTeam().equals(team))
 					continue;
 
-			if(vp.getStats().isSpectator() || vp.isAdminIgnore())
+			if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 				continue;
 
 			return false;
@@ -342,8 +435,41 @@ public class VaroPlayer extends VaroEntity {
 		return nametag;
 	}
 
+	public void setNametag(Nametag nametag) {
+		this.nametag = nametag;
+	}
+
 	public Team getTeam() {
 		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+
+		if (!Main.isBootedUp())
+			return;
+
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
+		if (db != null && db.isEnabled()) {
+			GuildController controller = db.getController();
+			if (ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
+				Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
+				if (this.team != null)
+					if (controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
+						Role role = controller.getGuild().getRolesByName(this.team.getName(), true).get(0);
+						controller.removeSingleRoleFromMember(member, role).complete();
+					}
+
+				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0 ? controller.getGuild().getRolesByName(team.getName(), true).get(0) : null;
+				if (role == null)
+					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true).setName(team.getName()).complete();
+
+				controller.addRolesToMember(member, role).complete();
+			}
+		}
+
+		update();
+		ScoreboardHandler.getInstance().updateTopScores();
 	}
 
 	public String getUuid() {
@@ -378,12 +504,12 @@ public class VaroPlayer extends VaroEntity {
 		this.massRecordingKick = massRecordingKick;
 	}
 
-	public void setVillager(OfflineVillager villager) {
-		this.villager = villager;
-	}
-
 	public OfflineVillager getVillager() {
 		return villager;
+	}
+
+	public void setVillager(OfflineVillager villager) {
+		this.villager = villager;
 	}
 
 	public boolean isRegistered() {
@@ -410,10 +536,6 @@ public class VaroPlayer extends VaroEntity {
 		return id;
 	}
 
-	public void setNametag(Nametag nametag) {
-		this.nametag = nametag;
-	}
-
 	/**
 	 * @return Returns if the Player is online
 	 */
@@ -423,125 +545,5 @@ public class VaroPlayer extends VaroEntity {
 
 	public void sendMessage(String message) {
 		player.sendMessage(message);
-	}
-
-	public static VaroPlayer getPlayer(int id) {
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getId() != id)
-				continue;
-
-			return vp;
-		}
-
-		return null;
-	}
-
-	/**
-	 * @return Returns the varoplayer and sets the name right if the player
-	 *         changed it before
-	 */
-	public static VaroPlayer getPlayer(Player player) {
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getUuid() != null)
-				if(!vp.getUuid().equals(player.getUniqueId().toString()))
-					continue;
-
-			if(vp.getUuid() == null && player.getName().equalsIgnoreCase(vp.getName()))
-				vp.setUuid(player.getUniqueId().toString());
-			else if(vp.getUuid() == null)
-				continue;
-
-			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
-				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
-				new Alert(AlertType.NAME_SWITCH, player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
-				vp.setName(player.getName());
-			}
-
-			return vp;
-		}
-
-		return null;
-	}
-
-	public static VaroPlayer getPlayer(String name) {
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getName().equalsIgnoreCase(name))
-				continue;
-
-			return vp;
-		}
-
-		return null;
-	}
-
-	/**
-	 * @return Returns all alive Players regardless if they are online
-	 */
-	public static ArrayList<VaroPlayer> getAlivePlayer() {
-		ArrayList<VaroPlayer> alive = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isAlive())
-				continue;
-
-			alive.add(vp);
-		}
-
-		return alive;
-	}
-
-	/**
-	 * @return Returns all online VaroPlayers regardless if they are alive
-	 */
-	public static ArrayList<VaroPlayer> getOnlinePlayer() {
-		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline())
-				continue;
-
-			online.add(vp);
-		}
-
-		return online;
-	}
-
-	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
-		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline() || !vp.getStats().isAlive())
-				continue;
-
-			online.add(vp);
-		}
-
-		return online;
-	}
-
-	public static ArrayList<VaroPlayer> getSpectator() {
-		ArrayList<VaroPlayer> spectator = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isSpectator())
-				continue;
-
-			spectator.add(vp);
-		}
-
-		return spectator;
-	}
-
-	public static ArrayList<VaroPlayer> getDeadPlayer() {
-		ArrayList<VaroPlayer> dead = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getStats().getState() != PlayerState.DEAD)
-				continue;
-
-			dead.add(vp);
-		}
-
-		return dead;
-	}
-
-	public static ArrayList<VaroPlayer> getVaroPlayer() {
-		return varoplayer;
 	}
 }

@@ -12,8 +12,8 @@ public class BorderDecreaseMinuteTimer {
 	private int sched;
 
 	public BorderDecreaseMinuteTimer() {
-		this.sched = -1;
-		if(!DecreaseReason.TIME_MINUTES.isEnabled())
+		sched = -1;
+		if (!DecreaseReason.TIME_MINUTES.isEnabled())
 			return;
 
 		startScheduling();
@@ -24,7 +24,7 @@ public class BorderDecreaseMinuteTimer {
 
 			@Override
 			public void run() {
-				if(Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
+				if (Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
 					remove();
 					return;
 				}

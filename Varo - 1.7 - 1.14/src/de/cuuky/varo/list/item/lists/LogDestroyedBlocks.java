@@ -12,7 +12,7 @@ public class LogDestroyedBlocks extends ItemList {
 	public LogDestroyedBlocks() {
 		super("BlockLogger");
 
-		if(!items.isEmpty())
+		if (!items.isEmpty())
 			return;
 
 		items.add(Materials.DIAMOND_ORE.parseItem());
@@ -21,8 +21,8 @@ public class LogDestroyedBlocks extends ItemList {
 	}
 
 	public boolean shallLog(Block block) {
-		for(ItemStack item : items)
-			if(block.getType() == item.getType() && block.getData() == item.getData().getData())
+		for (ItemStack item : items)
+			if (block.getType() == item.getType() && block.getData() == item.getData().getData())
 				return true;
 
 		return false;

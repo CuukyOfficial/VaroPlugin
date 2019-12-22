@@ -33,25 +33,25 @@ public class PlayerDeathListener implements Listener {
 		VaroPlayer killer = killerPlayer == null ? null : VaroPlayer.getPlayer(killerPlayer);
 		event.setDeathMessage(null);
 
-		if(Game.getInstance().hasStarted()) {
+		if (Game.getInstance().hasStarted()) {
 			PlayerHit hit = PlayerHit.getHit(deadPlayer);
-			if(hit != null)
+			if (hit != null)
 				hit.over();
 
 			deadPlayer.getWorld().strikeLightningEffect(deadPlayer.getLocation());
-			for(ItemStack stack : ListHandler.getInstance().getDeathItems().getItems())
-				if(stack.getType() != Material.AIR)
+			for (ItemStack stack : ListHandler.getInstance().getDeathItems().getItems())
+				if (stack.getType() != Material.AIR)
 					deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
 
 			deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 			deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 			deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 
-			if(deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
+			if (deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
 				deadP.onEvent(BukkitEventType.KILLED);
 
-				if(!ConfigEntry.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
-					if(ConfigEntry.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
+				if (!ConfigEntry.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
+					if (ConfigEntry.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
 						Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue(deadP).replace("%countdown%", String.valueOf(ConfigEntry.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
 						deadP.getStats().setState(PlayerState.SPECTATOR);
 						deadP.setSpectacting();
@@ -63,7 +63,7 @@ public class PlayerDeathListener implements Listener {
 
 								try {
 									kickDeadPlayer(deadP, killer);
-								} catch(NullPointerException e) {
+								} catch (NullPointerException e) {
 									return;
 								}
 
@@ -74,11 +74,11 @@ public class PlayerDeathListener implements Listener {
 						kickDeadPlayer(deadP, killer);
 				} else {
 					deadP.setSpectacting();
-					deadP.getStats().setState(PlayerState.SPECTATOR);;
+					deadP.getStats().setState(PlayerState.SPECTATOR);
 					deadP.update();
 				}
 			} else {
-				if(ConfigEntry.RESPAWN_PROTECTION.isIntActivated()) {
+				if (ConfigEntry.RESPAWN_PROTECTION.isIntActivated()) {
 					VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadP, ConfigEntry.RESPAWN_PROTECTION.getValueAsInt());
 					Bukkit.broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION.getValue(deadP).replace("%seconds%", String.valueOf(ConfigEntry.RESPAWN_PROTECTION.getValueAsInt())));
 					prot.setTimerHook(new Runnable() {
@@ -94,25 +94,25 @@ public class PlayerDeathListener implements Listener {
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_LIFE_LOST.getValue(deadP));
 			}
 
-			if(killerPlayer == null) {
+			if (killerPlayer == null) {
 				EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()));
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(deadP).replace("%death%", deadPlayer.getName()));
 			} else {
 				PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
-				if(hit1 != null)
+				if (hit1 != null)
 					hit1.over();
 
-				if(killer.getTeam() != null && ConfigEntry.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
+				if (killer.getTeam() != null && ConfigEntry.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
 					try {
 						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigEntry.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble());
-					} catch(Exception e) {
+					} catch (Exception e) {
 						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigEntry.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
 					}
 					killer.sendMessage(ConfigMessages.KILL_LIFE_ADD.getValue());
 				}
 
 				EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
-				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replaceAll("%death%", deadPlayer.getName()).replaceAll("%killer%", killerPlayer.getName()));
+				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 
 				killer.onEvent(BukkitEventType.KILL);
 				checkHealth(killerPlayer);
@@ -125,7 +125,7 @@ public class PlayerDeathListener implements Listener {
 
 			@Override
 			public void run() {
-				if(killerPlayer == null)
+				if (killerPlayer == null)
 					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer));
 				else
 					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_KILLED.getValue(deadPlayer).replace("%killer%", killerPlayer.getName()));
@@ -135,9 +135,9 @@ public class PlayerDeathListener implements Listener {
 
 	private void checkHealth(Player killer) {
 		int healthAdd = ConfigEntry.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
-		if(healthAdd > 0) {
+		if (healthAdd > 0) {
 			double hearts = killer.getHealth() + healthAdd;
-			if(hearts > 20.0)
+			if (hearts > 20.0)
 				killer.setHealth(20.0);
 			else
 				killer.setHealth(hearts);

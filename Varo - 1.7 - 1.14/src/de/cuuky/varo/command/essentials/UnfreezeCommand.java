@@ -16,19 +16,19 @@ public class UnfreezeCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.unfreeze")) {
+		if (!sender.hasPermission("varo.unfreeze")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/freeze <Player/@a>");
 			sender.sendMessage(Main.getPrefix() + "§7/unfreeze <Player/@a>");
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("@a")) {
-			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+		if (args[0].equalsIgnoreCase("@a")) {
+			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 				VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
 			}
 
@@ -36,7 +36,7 @@ public class UnfreezeCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(Bukkit.getPlayerExact(args[0]) == null) {
+		if (Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}

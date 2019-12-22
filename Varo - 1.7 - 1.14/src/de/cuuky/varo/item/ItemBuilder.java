@@ -59,7 +59,7 @@ public class ItemBuilder {
 	}
 
 	public ItemBuilder lore(String lore) {
-		this.lore = JavaUtils.collectionToArray(new String[] { lore });
+		this.lore = JavaUtils.collectionToArray(new String[]{lore});
 		return this;
 	}
 
@@ -70,8 +70,8 @@ public class ItemBuilder {
 
 	public void deleteDamageAnnotation() {
 		ItemMeta Meta = stack.getItemMeta();
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			for(Enchantment key : Meta.getEnchants().keySet()) {
+		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			for (Enchantment key : Meta.getEnchants().keySet()) {
 				Meta.removeEnchant(key);
 			}
 			// TODO Hide other attributes?
@@ -88,10 +88,10 @@ public class ItemBuilder {
 
 	public ItemStack build() {
 		ItemMeta stackMeta = stack.getItemMeta();
-		if(displayName != null && stack.getType() != Material.AIR)
+		if (displayName != null && stack.getType() != Material.AIR)
 			stackMeta.setDisplayName(displayName);
 
-		if(lore != null)
+		if (lore != null)
 			stackMeta.setLore(lore);
 		stack.setItemMeta(stackMeta);
 		this.deleteDamageAnnotation();
@@ -108,7 +108,7 @@ public class ItemBuilder {
 		skullMeta.setDisplayName(displayName != null ? Main.getColorCode() + displayName : Main.getColorCode() + playerName);
 		skullMeta.setOwner(playerName != null ? playerName : displayName);
 
-		if(lore != null)
+		if (lore != null)
 			skullMeta.setLore(lore);
 
 		stack.setItemMeta(skullMeta);

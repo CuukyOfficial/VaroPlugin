@@ -36,13 +36,13 @@ public class ConfigGUI extends SuperInventory {
 
 			@Override
 			public void onChat(String message) {
-				if(message.equalsIgnoreCase("cancel")) {
+				if (message.equalsIgnoreCase("cancel")) {
 					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
 				} else {
 					try {
 						entry.setValue(JavaUtils.getStringObject(message), true);
 
-					} catch(Exception e) {
+					} catch (Exception e) {
 						opener.sendMessage(Main.getPrefix() + e.getMessage());
 						hookChat(entry);
 						return;
@@ -61,10 +61,10 @@ public class ConfigGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ConfigEntry entry : section.getEntries()) {
+		for (ConfigEntry entry : section.getEntries()) {
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
-			for(String strin : entry.getDescription())
+			for (String strin : entry.getDescription())
 				lore.add(Main.getColorCode() + strin);
 
 			lore.add(" ");
@@ -84,13 +84,16 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {

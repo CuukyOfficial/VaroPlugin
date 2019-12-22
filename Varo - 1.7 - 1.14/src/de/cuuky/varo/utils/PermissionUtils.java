@@ -4,7 +4,8 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 
 public final class PermissionUtils {
 
-	private PermissionUtils() {}
+	private PermissionUtils() {
+	}
 
 	@SuppressWarnings("unchecked")
 	public static String getPermissionsExPrefix(VaroPlayer player) {
@@ -13,7 +14,8 @@ public final class PermissionUtils {
 			Object group = ((Object[]) permissionUser.getClass().getDeclaredMethod("getGroups").invoke(permissionUser))[0];
 
 			return (String) group.getClass().getMethod("getPrefix").invoke(group);
-		} catch(Throwable e) {}
+		} catch (Throwable e) {
+		}
 
 		return "";
 	}
@@ -32,7 +34,8 @@ public final class PermissionUtils {
 
 			Object metadata = cachedData.getClass().getMethod("getMetaData", contexts.getClass()).invoke(cachedData, contexts);
 			return (String) metadata.getClass().getMethod("getPrefix").invoke(metadata);
-		} catch(Throwable e) {}
+		} catch (Throwable e) {
+		}
 
 		return "";
 	}

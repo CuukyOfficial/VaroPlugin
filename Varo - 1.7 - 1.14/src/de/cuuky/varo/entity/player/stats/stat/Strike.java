@@ -2,8 +2,9 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Location;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.config.config.ConfigEntry;
 import de.cuuky.varo.config.messages.ConfigMessages;
@@ -33,15 +34,8 @@ public class Strike implements VaroSerializeable {
 
 	private VaroPlayer striked;
 
-	public Strike() {}
-
-	@Override
-	public void onDeserializeEnd() {
-		this.striked = VaroPlayer.getPlayer(strikedId);
+	public Strike() {
 	}
-
-	@Override
-	public void onSerializeStart() {}
 
 	public Strike(String reason, VaroPlayer striked, String striker) {
 		this.reason = reason;
@@ -52,53 +46,62 @@ public class Strike implements VaroSerializeable {
 		this.posted = false;
 	}
 
+	@Override
+	public void onDeserializeEnd() {
+		this.striked = VaroPlayer.getPlayer(strikedId);
+	}
+
+	@Override
+	public void onSerializeStart() {
+	}
+
 	public void activate(int number) {
 		this.number = number;
 
-		if(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
+		if (ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
 			banUntil = DateUtils.addHours(new Date(), ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
-		switch(number) {
-		case 1:
-			break;
-		case 2:
-			striked.getStats().clearInventory();
-			break;
-		case 3:
-		default:
-			striked.getStats().setState(PlayerState.DEAD);
-			if(striked.isOnline())
-				striked.getPlayer().kickPlayer(ConfigMessages.KICK_TOO_MANY_STRIKES.getValue());
-			break;
+		switch (number) {
+			case 1:
+				break;
+			case 2:
+				striked.getStats().clearInventory();
+				break;
+			case 3:
+			default:
+				striked.getStats().setState(PlayerState.DEAD);
+				if (striked.isOnline())
+					striked.getPlayer().kickPlayer(ConfigMessages.KICK_TOO_MANY_STRIKES.getValue());
+				break;
 		}
 
-		if(!ConfigEntry.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
+		if (!ConfigEntry.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
 			post();
 	}
 
 	public void post() {
-		if(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
+		if (ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
 			banUntil = DateUtils.addHours(new Date(), ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
-		switch(number) {
-		case 1:
-			if(striked.getStats().getLastLocation() == null) {
-				Location loc = VaroUtils.getMainWorld().getSpawnLocation();
-				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
-			} else {
-				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
-			}
-			break;
-		case 2:
-			EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
-			break;
-		case 3:
-			EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
-			break;
-		default:
-			EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeNumber%", String.valueOf(number)).replace("%strikeBegründung%", reason).replace("%striker%", striker));
-			break;
+		switch (number) {
+			case 1:
+				if (striked.getStats().getLastLocation() == null) {
+					Location loc = VaroUtils.getMainWorld().getSpawnLocation();
+					EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				} else {
+					Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
+					EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				}
+				break;
+			case 2:
+				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				break;
+			case 3:
+				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				break;
+			default:
+				EventLogger.getInstance().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeNumber%", String.valueOf(number)).replace("%strikeBegründung%", reason).replace("%striker%", striker));
+				break;
 		}
 
 		posted = true;

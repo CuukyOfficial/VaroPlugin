@@ -33,7 +33,7 @@ public class ReportPickGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(report.getReported().isOnline()) {
+				if (report.getReported().isOnline()) {
 					varoPlayer.getPlayer().teleport(report.getReported().getPlayer());
 					varoPlayer.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
 					return;
@@ -57,13 +57,16 @@ public class ReportPickGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {

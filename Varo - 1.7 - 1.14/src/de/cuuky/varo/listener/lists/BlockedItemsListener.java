@@ -14,10 +14,10 @@ public class BlockedItemsListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(event.getItem() == null)
+		if (event.getItem() == null)
 			return;
 
-		if(!ListHandler.getInstance().getBlockedItems().isBlocked(event.getItem()))
+		if (!ListHandler.getInstance().getBlockedItems().isBlocked(event.getItem()))
 			return;
 
 		event.setCancelled(true);
@@ -26,10 +26,10 @@ public class BlockedItemsListener implements Listener {
 
 	@EventHandler
 	public void onCraft(CraftItemEvent event) {
-		if(event.getCurrentItem() == null)
+		if (event.getCurrentItem() == null)
 			return;
 
-		if(!ListHandler.getInstance().getBlockedItems().isBlocked(event.getCurrentItem()) && !ListHandler.getInstance().getBlockedRecipes().isBlocked(event.getCurrentItem()))
+		if (!ListHandler.getInstance().getBlockedItems().isBlocked(event.getCurrentItem()) && !ListHandler.getInstance().getBlockedRecipes().isBlocked(event.getCurrentItem()))
 			return;
 
 		event.setCancelled(true);

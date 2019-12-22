@@ -18,7 +18,7 @@ public class ConfigCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer player, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Config §7-----");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config reload");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config set §7<key> <value>");
@@ -27,17 +27,17 @@ public class ConfigCommand extends VaroCommand {
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
+		if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
 			DataManager.getInstance().reloadConfig();
 			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich " + Main.getColorCode() + "alle Listen§7, die " + Main.getColorCode() + "Messages §7und die " + Main.getColorCode() + "Config §7neu geladen!");
-		} else if(args[0].equalsIgnoreCase("set")) {
-			if(args.length != 3) {
+		} else if (args[0].equalsIgnoreCase("set")) {
+			if (args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + "§b/config §7set <key> <value>");
 				return;
 			}
 
-			for(ConfigEntry entry : ConfigEntry.values()) {
-				if(!entry.getPath().equalsIgnoreCase(args[1]))
+			for (ConfigEntry entry : ConfigEntry.values()) {
+				if (!entry.getPath().equalsIgnoreCase(args[1]))
 					continue;
 
 				Object arg = JavaUtils.getStringObject(args[2]);
@@ -48,14 +48,14 @@ public class ConfigCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "§7Den Eintrag §7" + args[1] + "§7 gibt es nicht in der Config!");
-		} else if(args[0].equalsIgnoreCase("reset")) {
-			for(ConfigEntry entry : ConfigEntry.values()) {
+		} else if (args[0].equalsIgnoreCase("reset")) {
+			for (ConfigEntry entry : ConfigEntry.values()) {
 				entry.setValue(entry.getDefaultValue(), true);
 			}
 			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Einträge zurückgesetzt!");
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Command '" + args[0] + "' not found! §7Type /config for help.");
 		} // TODO Nach set, reload und Änderung in GUI ein automatisches
-			// Plugin-Reload
+		// Plugin-Reload
 	}
 }

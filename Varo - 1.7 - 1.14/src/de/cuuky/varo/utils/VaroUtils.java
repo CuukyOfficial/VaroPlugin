@@ -9,6 +9,7 @@ import java.util.Scanner;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -23,12 +24,7 @@ public final class VaroUtils {
 
 	private static int worldToTimeID = 0;
 
-	private VaroUtils() {}
-
-	public enum sortResult {
-		SORTED_WELL,
-		NO_SPAWN_WITH_TEAM,
-		NO_SPAWN;
+	private VaroUtils() {
 	}
 
 	public static sortResult sortPlayers() {
@@ -37,20 +33,20 @@ public final class VaroUtils {
 		ArrayList<Spawn> spawns = Spawn.getSpawnsClone();
 		ArrayList<Spawn> spawnsForIterator = Spawn.getSpawns();
 
-		for(VaroPlayer vp : playersForIterator) {
-			if(!vp.getStats().isSpectator()) {
+		for (VaroPlayer vp : playersForIterator) {
+			if (!vp.getStats().isSpectator()) {
 				continue;
 			}
-			
+
 			vp.getPlayer().teleport(vp.getPlayer().getWorld().getSpawnLocation());
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_SPECTATOR_TELEPORT.getValue());
 			players.remove(vp);
 		}
 
-		for(Spawn spawn : spawnsForIterator) {
-			if(spawn.getPlayer() == null) {
+		for (Spawn spawn : spawnsForIterator) {
+			if (spawn.getPlayer() == null) {
 				continue;
-			} else if(!spawn.getPlayer().isOnline()) {
+			} else if (!spawn.getPlayer().isOnline()) {
 				continue;
 			} else {
 				spawn.getPlayer().cleanUpPlayer();
@@ -63,8 +59,8 @@ public final class VaroUtils {
 
 		sortResult result = sortResult.SORTED_WELL;
 
-		while(spawns.size() > 0) {
-			if(players.size() <= 0) {
+		while (spawns.size() > 0) {
+			if (players.size() <= 0) {
 				break;
 			}
 
@@ -76,25 +72,25 @@ public final class VaroUtils {
 			players.remove(0);
 			spawns.remove(0);
 
-			if(player.getTeam() == null) {
+			if (player.getTeam() == null) {
 				continue;
 			}
 
 			int playerTeamRegistered = 1;
-			for(VaroPlayer teamPlayer : player.getTeam().getMember()) {
-				if(spawns.size() <= 0) {
+			for (VaroPlayer teamPlayer : player.getTeam().getMember()) {
+				if (spawns.size() <= 0) {
 					break;
 				}
 
-				if(ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
-					if(playerTeamRegistered < ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt()) {
-						if(players.contains(teamPlayer)) {
+				if (ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
+					if (playerTeamRegistered < ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt()) {
+						if (players.contains(teamPlayer)) {
 							teamPlayer.cleanUpPlayer();
 							teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());
 							teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawns.get(0).getNumber())));
 							players.remove(teamPlayer);
 						}
-						
+
 						spawns.remove(0);
 						playerTeamRegistered++;
 					} else {
@@ -102,7 +98,7 @@ public final class VaroUtils {
 						players.remove(teamPlayer);
 						teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND_TEAM.getValue());
 					}
-				} else if(players.contains(teamPlayer)) {
+				} else if (players.contains(teamPlayer)) {
 					teamPlayer.cleanUpPlayer();
 					teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());
 					teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawns.get(0).getNumber())));
@@ -112,9 +108,9 @@ public final class VaroUtils {
 			}
 		}
 
-		for(VaroPlayer vp : players) {
+		for (VaroPlayer vp : players) {
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue());
-			if(result == sortResult.SORTED_WELL) {
+			if (result == sortResult.SORTED_WELL) {
 				result = sortResult.NO_SPAWN;
 			}
 		}
@@ -123,7 +119,120 @@ public final class VaroUtils {
 	}
 
 	public static String formatLocation(Location location, String unformatted) {
-		return unformatted.replaceAll("x", String.valueOf(location.getBlockX())).replaceAll("y", String.valueOf(location.getBlockY())).replaceAll("z", String.valueOf(location.getBlockZ())).replaceAll("world", location.getWorld().getName());
+		return unformatted.replace("x", String.valueOf(location.getBlockX())).replace("y", String.valueOf(location.getBlockY())).replace("z", String.valueOf(location.getBlockZ())).replace("world", location.getWorld().getName());
+	}
+
+	public static Object[] checkForUpdates() {
+		UpdateResult result = UpdateResult.NO_UPDATE;
+		String version;
+
+		try {
+			Scanner scanner = new Scanner(new URL("https://api.spiget.org/v2/resources/71075/versions/latest").openStream());
+			String all = "";
+			while (scanner.hasNextLine()) {
+				all += scanner.nextLine();
+			}
+			scanner.close();
+
+			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
+			version = scannerJSON.get("name").toString();
+			switch (compareVersions(version, Main.getInstance().getDescription().getVersion())) {
+				case VERSION1GREATER:
+					result = UpdateResult.UPDATE_AVAILABLE;
+					break;
+				case VERSIONS_EQUAL:
+					result = UpdateResult.NO_UPDATE;
+					break;
+				case VERSION2GREATER:
+					result = UpdateResult.TEST_BUILD;
+					break;
+			}
+		} catch (Exception e) {
+			result = UpdateResult.FAIL_SPIGOT;
+			version = "";
+		}
+		return new Object[]{result, version};
+	}
+
+	public static VersionCompareResult compareVersions(String version1, String version2) {
+		if (!version1.matches("[0-9]+(\\.[0-9]+)*") || !version2.matches("[0-9]+(\\.[0-9]+)*")) {
+			throw new IllegalArgumentException("Invalid version format");
+		}
+
+		String[] version1Parts = version1.split("\\.");
+		String[] version2Parts = version2.split("\\.");
+
+		for (int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
+			int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
+			int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
+			if (version1Part < version2Part)
+				return VersionCompareResult.VERSION2GREATER;
+			if (version1Part > version2Part)
+				return VersionCompareResult.VERSION1GREATER;
+		}
+
+		return VersionCompareResult.VERSIONS_EQUAL;
+	}
+
+	public static void setWorldToTime() {
+		if (!ConfigEntry.ALWAYS_TIME.isIntActivated())
+			return;
+
+		if (worldToTimeID != 0) {
+			Bukkit.getScheduler().cancelTask(worldToTimeID);
+		}
+
+		worldToTimeID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			int time = ConfigEntry.ALWAYS_TIME.getValueAsInt();
+
+			@Override
+			public void run() {
+				if (Game.getInstance().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
+					Bukkit.getScheduler().cancelTask(worldToTimeID);
+					return;
+				}
+
+				for (World world : Bukkit.getWorlds()) {
+					world.setTime(time);
+					world.setThundering(false);
+					world.setStorm(false);
+				}
+			}
+		}, 0, 40);
+	}
+
+	public static World getMainWorld() {
+		return Bukkit.getWorld((String) VaroUtils.readServerProperties("level-name"));
+	}
+
+	public static Location getTeleportLocation() {
+		return Game.getInstance().getLobby() != null ? Game.getInstance().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
+	}
+
+	public static Object readServerProperties(String key) {
+		try {
+			Scanner scanner = new Scanner(new File("server.properties"));
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				if (!line.split("=")[0].equals(key))
+					continue;
+
+				scanner.close();
+				return line.split("=")[1];
+			}
+
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public enum sortResult {
+		SORTED_WELL,
+		NO_SPAWN_WITH_TEAM,
+		NO_SPAWN;
 	}
 
 	public enum UpdateResult {
@@ -144,116 +253,9 @@ public final class VaroUtils {
 		}
 	}
 
-	public static Object[] checkForUpdates() {
-		UpdateResult result = UpdateResult.NO_UPDATE;
-		String version;
-
-		try {
-			Scanner scanner = new Scanner(new URL("https://api.spiget.org/v2/resources/71075/versions/latest").openStream());
-			String all = "";
-			while(scanner.hasNextLine()) {
-				all += scanner.nextLine();
-			}
-			scanner.close();
-
-			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
-			version = scannerJSON.get("name").toString();
-			switch(compareVersions(version, Main.getInstance().getDescription().getVersion())) {
-			case VERSION1GREATER:
-				result = UpdateResult.UPDATE_AVAILABLE;
-				break;
-			case VERSIONS_EQUAL:
-				result = UpdateResult.NO_UPDATE;
-				break;
-			case VERSION2GREATER:
-				result = UpdateResult.TEST_BUILD;
-				break;
-			}
-		} catch(Exception e) {
-			result = UpdateResult.FAIL_SPIGOT;
-			version = "";
-		}
-		return new Object[] { result, version };
-	}
-
 	public enum VersionCompareResult {
 		VERSION1GREATER,
 		VERSIONS_EQUAL,
 		VERSION2GREATER;
-	}
-
-	public static VersionCompareResult compareVersions(String version1, String version2) {
-		if(!version1.matches("[0-9]+(\\.[0-9]+)*") || !version2.matches("[0-9]+(\\.[0-9]+)*")) {
-			throw new IllegalArgumentException("Invalid version format");
-		}
-
-		String[] version1Parts = version1.split("\\.");
-		String[] version2Parts = version2.split("\\.");
-
-		for(int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
-			int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
-			int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
-			if(version1Part < version2Part)
-				return VersionCompareResult.VERSION2GREATER;
-			if(version1Part > version2Part)
-				return VersionCompareResult.VERSION1GREATER;
-		}
-
-		return VersionCompareResult.VERSIONS_EQUAL;
-	}
-
-	public static void setWorldToTime() {
-		if(!ConfigEntry.ALWAYS_TIME.isIntActivated())
-			return;
-
-		if(worldToTimeID != 0) {
-			Bukkit.getScheduler().cancelTask(worldToTimeID);
-		}
-
-		worldToTimeID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
-			int time = ConfigEntry.ALWAYS_TIME.getValueAsInt();
-
-			@Override
-			public void run() {
-				if(Game.getInstance().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
-					Bukkit.getScheduler().cancelTask(worldToTimeID);
-					return;
-				}
-
-				for(World world : Bukkit.getWorlds()) {
-					world.setTime(time);
-					world.setThundering(false);
-					world.setStorm(false);
-				}
-			}
-		}, 0, 40);
-	}
-
-	public static World getMainWorld() {
-		return Bukkit.getWorld((String) VaroUtils.readServerProperties("level-name"));
-	}
-
-	public static Location getTeleportLocation() {
-		return Game.getInstance().getLobby() != null ? Game.getInstance().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
-	}
-
-	public static Object readServerProperties(String key) {
-		try {
-			Scanner scanner = new Scanner(new File("server.properties"));
-			while(scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				if(!line.split("=")[0].equals(key))
-					continue;
-
-				scanner.close();
-				return line.split("=")[1];
-			}
-
-			scanner.close();
-		} catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

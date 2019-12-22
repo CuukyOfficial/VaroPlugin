@@ -18,15 +18,15 @@ public class AutoSetupCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length >= 1) {
-			if(args[0].equalsIgnoreCase("run")) {
-				if(!ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean()) {
+		if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("run")) {
+				if (!ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean()) {
 					sender.sendMessage(Main.getPrefix() + "Der AutoSetup wurde noch nicht in der Config eingerichtet!");
 					return;
 				}
 
 				new AutoSetup();
-				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 					player.getPlayer().teleport(VaroUtils.getTeleportLocation());
 				}
 				sender.sendMessage(Main.getPrefix() + "Der AutoSetup ist fertig.");

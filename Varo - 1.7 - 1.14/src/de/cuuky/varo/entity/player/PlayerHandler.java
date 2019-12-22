@@ -30,27 +30,27 @@ public class PlayerHandler extends VaroSerializeObject {
 		registerEnum(PlayerState.class);
 	}
 
-	public static void initialise() {
-		if(instance == null) {
-			instance = new PlayerHandler();
-		}
-	}
-
 	private PlayerHandler() {
 		super(VaroPlayer.class, "/stats/players.yml");
 
 		load();
 
-		for(Player player : VersionUtils.getOnlinePlayer())
-			if(VaroPlayer.getPlayer(player) == null)
+		for (Player player : VersionUtils.getOnlinePlayer())
+			if (VaroPlayer.getPlayer(player) == null)
 				new VaroPlayer(player).register();
+	}
+
+	public static void initialise() {
+		if (instance == null) {
+			instance = new PlayerHandler();
+		}
 	}
 
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
 			save(String.valueOf(vp.getId()), vp, getConfiguration());
 
 		saveFile();

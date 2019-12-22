@@ -33,19 +33,19 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		countdowns.clear();
 		timerEnd = false;
 
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			Integer[] save = { vp.getId(), vp.getStats().getCountdown() };
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+			Integer[] save = {vp.getId(), vp.getStats().getCountdown()};
 			countdowns.add(save);
 			vp.getStats().setCountdown(vp.getStats().getCountdown() + 60 * ConfigEntry.MASS_RECORDING_TIME.getValueAsInt());
 
 			vp.setalreadyHadMassProtectionTime(false);
 		}
 
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.setalreadyHadMassProtectionTime(true);
 		}
 
-		for(VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			vp.getStats().addSessionPlayed();
 			EventLogger.getInstance().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
 		}
@@ -53,14 +53,14 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		timer = ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() * 60;
 
 		EventLogger.getInstance().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle können für eine Minute joinen." : "Alle können für" + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 		}
 
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 			@Override
 			public void run() {
-				if(timer < 1) {
+				if (timer < 1) {
 					timerEnd = true;
 					setEnabled(false);
 				}
@@ -74,11 +74,11 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	public void onDisable() {
 		Bukkit.getScheduler().cancelTask(scheduler);
 
-		for(Integer[] Speicher : countdowns) {
+		for (Integer[] Speicher : countdowns) {
 			VaroPlayer vp = VaroPlayer.getPlayer(Speicher[0]);
 			vp.getStats().setCountdown(Speicher[1]);
-			if(Speicher[1] == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-				if(vp.isOnline()) {
+			if (Speicher[1] == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+				if (vp.isOnline()) {
 					vp.setMassRecordingKick(true);
 
 					Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
@@ -88,14 +88,14 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			}
 		}
 
-		if(!timerEnd) {
-			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		if (!timerEnd) {
+			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme wurde beendet.");
 
 				EventLogger.getInstance().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
 			}
 		} else {
-			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
 
 				EventLogger.getInstance().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
@@ -112,8 +112,8 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	}
 
 	public int getCountdown(VaroPlayer vp) {
-		for(Integer[] Countdown : countdowns) {
-			if(vp.getId() == Countdown[0]) {
+		for (Integer[] Countdown : countdowns) {
+			if (vp.getId() == Countdown[0]) {
 				return Countdown[1];
 			}
 		}

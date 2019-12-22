@@ -9,14 +9,15 @@ public class VaroAPIEvent {
 		this.cancelAble = cancelAble;
 	}
 
-	public VaroAPIEvent() {}
-
-	public void setCancelled(boolean cancelled) {
-		if(this.cancelAble)
-			this.cancelled = cancelled;
+	public VaroAPIEvent() {
 	}
 
 	public boolean isCancelled() {
 		return cancelled;
+	}
+
+	public void setCancelled(boolean cancelled) {
+		if (this.cancelAble)
+			this.cancelled = cancelled;
 	}
 }

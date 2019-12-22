@@ -38,6 +38,25 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
+	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
+		for (VaroCancelAble able : cancelables)
+			if (able.getPlayer().equals(player) && able.getType().equals(type))
+				return able;
+
+		return null;
+	}
+
+	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
+		for (int i = 0; i < cancelables.size(); i++) {
+			VaroCancelAble able = cancelables.get(i);
+			if (able.getPlayer().equals(player) && able.getType().equals(type)) {
+				able.remove();
+				i--;
+			}
+		}
+
+	}
+
 	private void schedule(int time) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -67,24 +86,5 @@ public class VaroCancelAble {
 
 	private void remove() {
 		cancelables.remove(this);
-	}
-
-	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
-		for(VaroCancelAble able : cancelables)
-			if(able.getPlayer().equals(player) && able.getType().equals(type))
-				return able;
-
-		return null;
-	}
-
-	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
-		for(int i = 0; i < cancelables.size(); i++) {
-			VaroCancelAble able = cancelables.get(i);
-			if(able.getPlayer().equals(player) && able.getType().equals(type)) {
-				able.remove();
-				i--;
-			}
-		}
-
 	}
 }

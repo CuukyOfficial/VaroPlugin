@@ -24,14 +24,14 @@ public class FileDownloader {
 
 		final byte data[] = new byte[1024];
 		int count;
-		while((count = in.read(data, 0, 1024)) != -1) {
+		while ((count = in.read(data, 0, 1024)) != -1) {
 			fout.write(data, 0, count);
 		}
 
-		if(in != null) {
+		if (in != null) {
 			in.close();
 		}
-		if(fout != null) {
+		if (fout != null) {
 			fout.close();
 		}
 	}

@@ -16,26 +16,26 @@ public class ProtectCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!sender.hasPermission("varo.protect")) {
+		if (!sender.hasPermission("varo.protect")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/protect <Player/@a>");
 			sender.sendMessage(Main.getPrefix() + "§7/unprotect <Player/@a>");
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("@a")) {
-			for(VaroPlayer player : VaroPlayer.getOnlinePlayer())
+		if (args[0].equalsIgnoreCase("@a")) {
+			for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
 				new VaroCancelAble(CancelAbleType.PROTECTION, player);
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler protected!");
 			return false;
 		}
 
-		if(Bukkit.getPlayerExact(args[0]) == null) {
+		if (Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}

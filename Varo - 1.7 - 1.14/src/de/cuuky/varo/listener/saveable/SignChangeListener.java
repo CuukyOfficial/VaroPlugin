@@ -29,26 +29,26 @@ public class SignChangeListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onSignChange(SignChangeEvent e) {
 		Sign sign = (Sign) e.getBlock().getState().getData();
-		if(e.getPlayer().isOp())
-			for(int i = 0; i < e.getLines().length; i++)
+		if (e.getPlayer().isOp())
+			for (int i = 0; i < e.getLines().length; i++)
 				e.setLine(i, e.getLines()[i].replace("&", "§"));
 
-		if(e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
+		if (e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
 			return;
 
-		if(!Game.getInstance().hasStarted())
+		if (!Game.getInstance().hasStarted())
 			return;
 
 		Block attached = e.getBlock().getRelative(sign.getAttachedFace());
 
-		if(attached.getState() instanceof Chest) {
+		if (attached.getState() instanceof Chest) {
 			Chest chest = (Chest) attached.getState();
 			InventoryHolder ih = ((InventoryHolder) chest).getInventory().getHolder();
 			Chest secChest = (ih instanceof DoubleChest ? (Chest) ((DoubleChest) ih).getLeftSide() : null);
-			if(chest.equals(secChest) && secChest != null)
+			if (chest.equals(secChest) && secChest != null)
 				secChest = (Chest) ((DoubleChest) ih).getRightSide();
 
-			if(ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() == 0) {
+			if (ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() == 0) {
 				e.getPlayer().sendMessage(Main.getPrefix() + "§7Die Chestsicherung wurde in der Config §7deaktiviert!");
 				return;
 			}
@@ -58,25 +58,25 @@ public class SignChangeListener implements Listener {
 			ArrayList<VaroSaveable> teamSaves = VaroSaveable.getSaveable(player);
 			ArrayList<VaroSaveable> sorted = new ArrayList<>();
 
-			for(VaroSaveable saves : teamSaves) {
-				if(saves.getType() == SaveableType.CHEST)
+			for (VaroSaveable saves : teamSaves) {
+				if (saves.getType() == SaveableType.CHEST)
 					sorted.add(saves);
 				continue;
 			}
 
-			if(sorted.size() >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt()) {
+			if (sorted.size() >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt()) {
 				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten für das Team " + Main.getColorCode() + player.getTeam().getName() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 				e.setCancelled(true);
 				return;
 			}
 
-			if(VaroSaveable.getByLocation(chest.getLocation()) != null || secChest != null && VaroSaveable.getByLocation(secChest.getLocation()) != null) {
+			if (VaroSaveable.getByLocation(chest.getLocation()) != null || secChest != null && VaroSaveable.getByLocation(secChest.getLocation()) != null) {
 				p.sendMessage(Main.getPrefix() + "§7Diese " + Main.getColorCode() + " Kiste §7ist bereits gesichert!");
 				e.setCancelled(true);
 				return;
 			}
 
-			if(secChest != null)
+			if (secChest != null)
 				new VaroSaveable(SaveableType.CHEST, secChest.getLocation(), player);
 
 			e.setLine(0, "§8--------------");
@@ -93,10 +93,10 @@ public class SignChangeListener implements Listener {
 
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
 			p.sendMessage(Main.getPrefix() + "Kiste erfolgreich gesichert!");
-		} else if(attached.getState() instanceof Furnace) {
+		} else if (attached.getState() instanceof Furnace) {
 			Furnace furnace = (Furnace) attached.getState();
 
-			if(ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() == 0) {
+			if (ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() == 0) {
 				e.getPlayer().sendMessage(Main.getPrefix() + "§7Die Furnacesicherung wurde in der Config §7deaktiviert!");
 				return;
 			}
@@ -107,20 +107,20 @@ public class SignChangeListener implements Listener {
 			ArrayList<VaroSaveable> teamSaves = VaroSaveable.getSaveable(player);
 			ArrayList<VaroSaveable> sorted = new ArrayList<>();
 
-			for(VaroSaveable saves : teamSaves) {
-				if(saves.getType() == SaveableType.FURNANCE)
+			for (VaroSaveable saves : teamSaves) {
+				if (saves.getType() == SaveableType.FURNANCE)
 					sorted.add(saves);
 				continue;
 			}
 
-			if(VaroSaveable.getByLocation(furnace.getLocation()) != null) {
+			if (VaroSaveable.getByLocation(furnace.getLocation()) != null) {
 				p.sendMessage(Main.getPrefix() + "§7Diese " + Main.getColorCode() + " Furnace §7ist bereits gesichert!");
 				e.setCancelled(true);
 				return;
 			}
 
-			if(ConfigEntry.PLAYER_FURNACE_LIMIT.isIntActivated())
-				if(sorted.size() >= ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
+			if (ConfigEntry.PLAYER_FURNACE_LIMIT.isIntActivated())
+				if (sorted.size() >= ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
 					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces für das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
 					e.setCancelled(true);
 					return;

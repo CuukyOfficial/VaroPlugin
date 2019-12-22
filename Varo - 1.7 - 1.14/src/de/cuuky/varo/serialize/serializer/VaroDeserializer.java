@@ -27,17 +27,18 @@ public class VaroDeserializer extends VaroSerializeHandler {
 	public VaroSerializeable deserialize() {
 		VaroSerializeable instance = null;
 		ArrayList<String> handled = new ArrayList<String>();
-		sectionLoop: for(String s : section.getKeys(true)) {
-			for(String handl : handled)
-				if(s.contains(handl))
+		sectionLoop:
+		for (String s : section.getKeys(true)) {
+			for (String handl : handled)
+				if (s.contains(handl))
 					continue sectionLoop;
 
 			Field field = object.getFieldLoader().getFields().get(s);
-			if(field != null) {
-				if(instance == null)
+			if (field != null) {
+				if (instance == null)
 					try {
 						instance = object.getClazz().newInstance();
-					} catch(InstantiationException | IllegalAccessException e1) {
+					} catch (InstantiationException | IllegalAccessException e1) {
 						e1.printStackTrace();
 						continue;
 					}
@@ -47,41 +48,41 @@ public class VaroDeserializer extends VaroSerializeHandler {
 
 					// CHECK FOR OTHER SERIALIZABLE OBJ
 					Object obj = section.get(s);
-					if(obj instanceof String)
-						if(((String) obj).equals(NULL_REPLACE))
+					if (obj instanceof String)
+						if (((String) obj).equals(NULL_REPLACE))
 							obj = null;
 
 					VaroSerializeObject handl = getHandler((Class<?>) field.getType());
-					if(handl != null && obj != null) {
+					if (handl != null && obj != null) {
 						handled.add(s);
 						field.set(instance, new VaroDeserializer((MemorySection) obj, handl).deserialize());
 						continue;
 					}
 
-					if(Map.class.isAssignableFrom(field.getType())) {
+					if (Map.class.isAssignableFrom(field.getType())) {
 						obj = section.getConfigurationSection(s).getValues(false);
 						handled.add(s);
 					}
 
-					if(field.getType() == Location.class) {
-						if(obj != null)
+					if (field.getType() == Location.class) {
+						if (obj != null)
 							obj = new Location(Bukkit.getWorld(section.getString(s + ".world")), (double) section.get(s + ".x"), (double) section.get(s + ".y"), (double) section.get(s + ".z"));
 
 						handled.add(s);
 					}
 
-					if(Collection.class.isAssignableFrom(field.getType())) {
+					if (Collection.class.isAssignableFrom(field.getType())) {
 						Class<?> clazz = object.getFieldLoader().getArrayTypes().get(field);
-						if(clazz != null) {
+						if (clazz != null) {
 							handl = getHandler(object.getFieldLoader().getArrayTypes().get(field));
-							if(handl != null) {
+							if (handl != null) {
 								handled.add(s);
 								ArrayList<VaroSerializeable> newList = new ArrayList<VaroSerializeable>();
-								if(obj instanceof MemorySection) {
+								if (obj instanceof MemorySection) {
 									MemorySection listSection = ((MemorySection) obj);
-									for(String listStr : listSection.getKeys(true)) {
+									for (String listStr : listSection.getKeys(true)) {
 										Object listEntry = listSection.get(listStr);
-										if(!(listEntry instanceof MemorySection) || listStr.contains("."))
+										if (!(listEntry instanceof MemorySection) || listStr.contains("."))
 											continue;
 
 										newList.add(new VaroDeserializer((MemorySection) listEntry, handl).deserialize());
@@ -95,17 +96,17 @@ public class VaroDeserializer extends VaroSerializeHandler {
 						}
 					}
 
-					if(field.getType().isEnum() && obj instanceof String) {
+					if (field.getType().isEnum() && obj instanceof String) {
 						VaroSerializeable ser = getEnumByString((String) obj);
-						if(ser != null)
+						if (ser != null)
 							obj = ser;
 					}
 
-					if(field.getType().isPrimitive() && obj instanceof String)
+					if (field.getType().isPrimitive() && obj instanceof String)
 						obj = Long.valueOf((String) obj);
 
 					field.set(instance, obj);
-				} catch(IllegalArgumentException | IllegalAccessException | ExceptionInInitializerError | NullPointerException e) {
+				} catch (IllegalArgumentException | IllegalAccessException | ExceptionInInitializerError | NullPointerException e) {
 					e.printStackTrace();
 					continue;
 				}

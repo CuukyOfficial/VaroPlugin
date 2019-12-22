@@ -24,27 +24,27 @@ public class PlayerMoveListener implements Listener {
 		Player player = event.getPlayer();
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 
-		if(from.getX() == to.getX() && from.getZ() == to.getZ())
+		if (from.getX() == to.getX() && from.getZ() == to.getZ())
 			return;
 
-		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null || Game.getInstance().isStarting() && !vp.getStats().isSpectator()) {
+		if (VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null || Game.getInstance().isStarting() && !vp.getStats().isSpectator()) {
 			event.setTo(from);
 			return;
 		}
 
-		if(Game.getInstance().getGameState() == GameState.LOBBY) {
-			if(ConfigEntry.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
+		if (Game.getInstance().getGameState() == GameState.LOBBY) {
+			if (ConfigEntry.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
 				return;
 
 			event.setTo(from);
 			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue());
 			return;
-		} else if(Game.getInstance().getGameState() == GameState.STARTED) {
-			if(Game.getInstance().isStarting() || vp.getStats().isSpectator() || ConfigEntry.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Game.getInstance().isFirstTime() || vp.isAdminIgnore()) {
+		} else if (Game.getInstance().getGameState() == GameState.STARTED) {
+			if (Game.getInstance().isStarting() || vp.getStats().isSpectator() || ConfigEntry.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Game.getInstance().isFirstTime() || vp.isAdminIgnore()) {
 				return;
 			}
 
-			if(vp.isInProtection()) {
+			if (vp.isInProtection()) {
 				event.setTo(from);
 				player.sendMessage(ConfigMessages.JOIN_NO_MOVE_IN_PROTECTION.getValue());
 				return;

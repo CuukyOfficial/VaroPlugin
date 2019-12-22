@@ -22,7 +22,7 @@ public class LobbyItem {
 		Bukkit.getPluginManager().registerEvents(new LobbyItemsListener(), Main.getInstance());
 		lobbyItems = new ArrayList<>();
 
-		if(ConfigEntry.TEAMREQUESTS.getValueAsBoolean()) {
+		if (ConfigEntry.TEAMREQUESTS.getValueAsBoolean()) {
 			new TeamRequestItem();
 			new LeaveTeamItem();
 		}
@@ -38,6 +38,21 @@ public class LobbyItem {
 		lobbyItems.add(this);
 	}
 
+	public static LobbyItem getLobbyItem(ItemStack item) {
+		for (LobbyItem lItem : lobbyItems)
+			if (lItem.getItem().equals(item))
+				return lItem;
+
+		return null;
+	}
+
+	public static void giveItems(Player player) {
+		for (LobbyItem item : lobbyItems)
+			player.getInventory().setItem(item.getSlot(), item.getItem());
+
+		player.updateInventory();
+	}
+
 	public ItemStack getItem() {
 		return item;
 	}
@@ -46,24 +61,12 @@ public class LobbyItem {
 		return slot;
 	}
 
-	public void onEntityHit(EntityDamageByEntityEvent event) {}
-
-	public void onInteract(PlayerInteractEvent event) {}
-
-	public void onInteractEntity(PlayerInteractEntityEvent event) {}
-
-	public static LobbyItem getLobbyItem(ItemStack item) {
-		for(LobbyItem lItem : lobbyItems)
-			if(lItem.getItem().equals(item))
-				return lItem;
-
-		return null;
+	public void onEntityHit(EntityDamageByEntityEvent event) {
 	}
 
-	public static void giveItems(Player player) {
-		for(LobbyItem item : lobbyItems)
-			player.getInventory().setItem(item.getSlot(), item.getItem());
+	public void onInteract(PlayerInteractEvent event) {
+	}
 
-		player.updateInventory();
+	public void onInteractEntity(PlayerInteractEntityEvent event) {
 	}
 }

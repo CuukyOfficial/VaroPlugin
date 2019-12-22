@@ -101,7 +101,7 @@ public final class BukkitRegisterer {
 		registerEvent(new PlayerRespawnListener());
 		registerEvent(new VaroEventListener());
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
+		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
 	}
 

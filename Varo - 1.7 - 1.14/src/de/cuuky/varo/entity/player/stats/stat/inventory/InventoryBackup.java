@@ -43,10 +43,14 @@ public class InventoryBackup implements VaroSerializeable {
 		this.inventory = new VaroInventory(45);
 		this.armor = new ArrayList<>();
 
-		if(vp.isOnline())
+		if (vp.isOnline())
 			addUpdate(vp.getPlayer());
 
 		allBackups.add(this);
+	}
+
+	public static ArrayList<InventoryBackup> getAllBackups() {
+		return allBackups;
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class InventoryBackup implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {
-		if(varoplayer != null)
+		if (varoplayer != null)
 			this.vpId = varoplayer.getId();
 	}
 
@@ -64,7 +68,7 @@ public class InventoryBackup implements VaroSerializeable {
 		this.inventory.getInventory().setContents(player.getInventory().getContents());
 		this.armor = new ArrayList<>();
 
-		for(ItemStack l : player.getInventory().getArmorContents())
+		for (ItemStack l : player.getInventory().getArmorContents())
 			armor.add(l);
 	}
 
@@ -72,12 +76,13 @@ public class InventoryBackup implements VaroSerializeable {
 		player.getInventory().clear();
 
 		try {
-			for(int i = 0; i < inventory.getInventory().getContents().length; i++)
+			for (int i = 0; i < inventory.getInventory().getContents().length; i++)
 				player.getInventory().setItem(i, inventory.getInventory().getContents()[i]);
-		} catch(ArrayIndexOutOfBoundsException e) {}
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
 
 		ItemStack[] armorc = new ItemStack[4];
-		for(int i = 0; i < armor.size(); i++)
+		for (int i = 0; i < armor.size(); i++)
 			armorc[i] = armor.get(i);
 		player.getInventory().setArmorContents(armorc);
 
@@ -102,9 +107,5 @@ public class InventoryBackup implements VaroSerializeable {
 
 	public VaroPlayer getVaroPlayer() {
 		return varoplayer;
-	}
-
-	public static ArrayList<InventoryBackup> getAllBackups() {
-		return allBackups;
 	}
 }

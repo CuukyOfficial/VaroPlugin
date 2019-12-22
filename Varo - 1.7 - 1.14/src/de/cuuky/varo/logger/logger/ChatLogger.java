@@ -12,10 +12,21 @@ public class ChatLogger extends Logger {
 	}
 
 	public static ChatLogger getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new ChatLogger("chatlogs");
 		}
 		return instance;
+	}
+
+	public void println(ChatLogType type, String message) {
+		message = JavaUtils.replaceAllColors(message);
+
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
+
+		pw.println(log);
+		logs.add(log);
+
+		pw.flush();
 	}
 
 	public enum ChatLogType {
@@ -29,27 +40,16 @@ public class ChatLogger extends Logger {
 			this.name = name;
 		}
 
-		public String getName() {
-			return name;
-		}
-
 		public static ChatLogType getType(String s) {
-			for(ChatLogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
+			for (ChatLogType type : values())
+				if (type.getName().equalsIgnoreCase(s))
 					return type;
 
 			return null;
 		}
-	}
 
-	public void println(ChatLogType type, String message) {
-		message = JavaUtils.replaceAllColors(message);
-
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message;
-
-		pw.println(log);
-		logs.add(log);
-
-		pw.flush();
+		public String getName() {
+			return name;
+		}
 	}
 }

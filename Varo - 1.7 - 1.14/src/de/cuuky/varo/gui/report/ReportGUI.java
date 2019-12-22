@@ -32,10 +32,10 @@ public class ReportGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ReportReason reasons : ReportReason.values()) {
+		for (ReportReason reasons : ReportReason.values()) {
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
-			for(String strin : reasons.getDescription().split("\n"))
+			for (String strin : reasons.getDescription().split("\n"))
 				lore.add("§c" + strin);
 
 			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());
@@ -45,20 +45,22 @@ public class ReportGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 
 	@Override
 	public void onClick(InventoryClickEvent event) {
 		this.close(true);
 
-		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§7", "");
+		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replace("§7", "");
 		ReportReason reason = ReportReason.getByName(reportName);
 		new Report(reporter, reported, reason);
 		reporter.sendMessage(Main.getPrefix() + Main.getColorCode() + reported.getName() + " §7wurde erfolgreich reportet!");
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {

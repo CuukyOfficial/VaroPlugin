@@ -10,23 +10,23 @@ public class AlertHandler extends VaroSerializeObject {
 		VaroSerializeObject.registerEnum(AlertType.class);
 	}
 
-	public static void initialise() {
-		if(instance == null) {
-			instance = new AlertHandler();
-		}
-	}
-
 	private AlertHandler() {
 		super(Alert.class, "/stats/alerts.yml");
 
 		load();
 	}
 
+	public static void initialise() {
+		if (instance == null) {
+			instance = new AlertHandler();
+		}
+	}
+
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for(Alert alert : Alert.getAlerts())
+		for (Alert alert : Alert.getAlerts())
 			save(String.valueOf(alert.getId()), alert, getConfiguration());
 
 		saveFile();

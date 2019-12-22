@@ -2,9 +2,10 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class InfoCommand extends DiscordBotCommand {
 
@@ -13,7 +14,7 @@ public class InfoCommand extends DiscordBotCommand {
 	 */
 
 	public InfoCommand() {
-		super("info", new String[] { "plugin", "author" }, "Zeigt Infos über das Plugin");
+		super("info", new String[]{"plugin", "author"}, "Zeigt Infos über das Plugin");
 	}
 
 	@Override

@@ -2,8 +2,9 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
-import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import de.cuuky.varo.bot.discord.DiscordBotCommand;
 
 public class CommandCommand extends DiscordBotCommand {
 
@@ -12,7 +13,7 @@ public class CommandCommand extends DiscordBotCommand {
 	 */
 
 	public CommandCommand() {
-		super("command", new String[] { "consolecommand", "executecommand" }, "Führt einen Command in der Konsole aus.");
+		super("command", new String[]{"consolecommand", "executecommand"}, "Führt einen Command in der Konsole aus.");
 	}
 
 	// private OfflinePlayer player = null;

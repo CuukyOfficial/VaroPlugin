@@ -30,14 +30,14 @@ public class BackupListGUI extends SuperInventory {
 	public boolean onOpen() {
 		ArrayList<String> list = Backup.getBackups();
 		int start = getSize() * (getPage() - 1);
-		if(start != 0)
+		if (start != 0)
 			start -= 2;
 
-		for(int i = 0; i != getSize() - 2; i++) {
+		for (int i = 0; i != getSize() - 2; i++) {
 			String filename;
 			try {
 				filename = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -60,7 +60,7 @@ public class BackupListGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(Backup.isBackup(getCurrentDate())) {
+				if (Backup.isBackup(getCurrentDate())) {
 					opener.sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
 					return;
 				}
@@ -81,10 +81,12 @@ public class BackupListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClick(InventoryClickEvent event) {}
+	public void onClick(InventoryClickEvent event) {
+	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {}
+	public void onInventoryAction(PageAction action) {
+	}
 
 	@Override
 	public boolean onBackClick() {
@@ -93,5 +95,6 @@ public class BackupListGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {}
+	public void onClose(InventoryCloseEvent event) {
+	}
 }
