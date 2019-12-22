@@ -42,7 +42,7 @@ public class PermissionSendListener implements Listener {
 			for (Entry<Permission, Boolean> permissionEntry : event.getPermissions().entrySet())
 				permissionEntry.setValue(false);
 	}
-	
+
 	public static String getClassName() {
 		return LabyModAPI.class.getName();
 	}

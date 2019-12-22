@@ -50,7 +50,7 @@ public class Broadcaster {
 				if (VersionUtils.getOnlinePlayer().size() == 0)
 					return;
 
-				for(String m : getAdMessage())
+				for (String m : getAdMessage())
 					Bukkit.broadcastMessage(m.replaceAll("&", "§"));
 			}
 		}, delay, delay);
@@ -94,7 +94,7 @@ public class Broadcaster {
 	}
 
 	private static String[] getAdMessage() {
-		String[] messages = new String[] { "", "", "" };
+		String[] messages = new String[]{"", "", ""};
 		messages[0] = "&7-----------------------------------------";
 		messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
 		messages[2] = "&7-----------------------------------------";

@@ -46,7 +46,7 @@ public abstract class VaroCommand {
 
 	static {
 		varoCommands = new ArrayList<>();
-				
+
 		new StartCommand();
 		new DiscordCommand();
 		new TeamCommand();

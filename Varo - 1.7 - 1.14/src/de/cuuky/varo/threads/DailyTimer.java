@@ -23,8 +23,8 @@ public final class DailyTimer {
 		VaroUtils.setWorldToTime();
 		if (Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
 			Date date = Game.getInstance().getLastDayTimer();
-			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
-				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+			for (int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
+				if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RECTIFY");
 
 				doDailyStuff();

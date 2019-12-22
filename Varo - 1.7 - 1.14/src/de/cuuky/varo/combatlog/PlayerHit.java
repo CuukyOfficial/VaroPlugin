@@ -27,7 +27,7 @@ public class PlayerHit {
 
 	static {
 		hits = new ArrayList<>();
-		
+
 		Bukkit.getPluginManager().registerEvents(new HitListener(), Main.getInstance());
 	}
 
@@ -41,12 +41,12 @@ public class PlayerHit {
 
 		this.player = player;
 		this.opponent = opponent;
-		
+
 		scheduleOvertime();
 
 		hits.add(this);
 	}
-	
+
 	private void scheduleOvertime() {
 		task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 

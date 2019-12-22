@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 
-import net.labymod.serverapi.LabyModAPI;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommandListener;
 import de.cuuky.varo.command.essentials.AntiXrayCommand;

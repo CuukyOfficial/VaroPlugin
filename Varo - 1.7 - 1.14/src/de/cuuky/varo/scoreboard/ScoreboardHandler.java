@@ -67,7 +67,7 @@ public class ScoreboardHandler {
 			cfg.set("Scoreboard", sb);
 			try {
 				cfg.save(file);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

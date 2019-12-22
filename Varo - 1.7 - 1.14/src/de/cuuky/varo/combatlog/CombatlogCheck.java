@@ -43,7 +43,7 @@ public class CombatlogCheck {
 	}
 
 	private void check(PlayerQuitEvent event) {
-		if(Game.getInstance().getGameState() == GameState.END || PlayerHit.getHit(event.getPlayer()) == null) {
+		if (Game.getInstance().getGameState() == GameState.END || PlayerHit.getHit(event.getPlayer()) == null) {
 			return;
 		}
 
@@ -53,7 +53,7 @@ public class CombatlogCheck {
 		if (hit.getOpponent() != null && hit.getOpponent().isOnline())
 			PlayerHit.getHit(hit.getOpponent()).over();
 
-		if(!vp.getStats().isAlive()) {
+		if (!vp.getStats().isAlive()) {
 			return;
 		}
 
