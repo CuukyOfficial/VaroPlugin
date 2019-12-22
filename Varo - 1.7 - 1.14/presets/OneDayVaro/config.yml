@@ -5,6 +5,7 @@ Main:
   supportPluginAds: false
   scoreboard: true
   nametags: true
+  tablist: true
   playTime: -1
   dailyBackups: false
   unregisteredPlayerJoin: true
