@@ -46,9 +46,6 @@ public class Nametag {
 	private boolean init, hearts;
 
 	public Nametag(UUID uniqueID, Player p) {
-		if (!ConfigEntry.NAMETAGS.getValueAsBoolean())
-			return;
-
 		this.hearts = ConfigMessages.NAMETAG_SUFFIX.getValue().contains("%hearts%");
 
 		this.p = p;
