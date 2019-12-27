@@ -74,7 +74,7 @@ public class UpdateCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
 			update(sender);
 		} else {
-			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem fneuesten Stand!");
+			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 
 		}
 
