@@ -31,10 +31,6 @@ public class Main extends JavaPlugin {
 
 	private boolean failed;
 
-	public File getThisFile() {
-		return getFile();
-	}
-
 	@Override
 	public void onDisable() {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
@@ -121,6 +117,10 @@ public class Main extends JavaPlugin {
 
 		new ConsoleLogger();
 		super.onLoad();
+	}
+	
+	public File getThisFile() {
+		return getFile();
 	}
 
 	public static void broadcastMessage(String message) {
