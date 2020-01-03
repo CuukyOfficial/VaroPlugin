@@ -15,10 +15,9 @@ public class TrollModule {
 		modules = new ArrayList<>();
 	}
 
-	protected String description;
+	protected String name, description;
 	protected ArrayList<Player> enabledFor;
 	protected Material icon;
-	protected String name;
 
 	public TrollModule(String name, Material icon, String description) {
 		this.name = name;

@@ -51,31 +51,32 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer = new ArrayList<>();
 	}
 
+	@VaroSerializeField(path = "name")
+	private String name;
+	
+	@VaroSerializeField(path = "stats")
+	private Stats stats;
+	
+	@VaroSerializeField(path = "uuid")
+	private String uuid;
+	
+	@VaroSerializeField(path = "rank")
+	private Rank rank;
+	
+	@VaroSerializeField(path = "villager")
+	private OfflineVillager villager;
+	
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
 
-	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
-
 	@VaroSerializeField(path = "id")
 	private int id;
-
-	@VaroSerializeField(path = "name")
-	private String name;
-
+	
+	private Player player;
+	private Team team;
 	private Nametag nametag;
 	private NetworkMananager networkManager;
-	private Player player;
-
-	@VaroSerializeField(path = "rank")
-	private Rank rank;
-	@VaroSerializeField(path = "stats")
-	private Stats stats;
-	private Team team;
-	@VaroSerializeField(path = "uuid")
-	private String uuid;
-
-	@VaroSerializeField(path = "villager")
-	private OfflineVillager villager;
+	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 
 	public VaroPlayer() {
 		varoplayer.add(this);

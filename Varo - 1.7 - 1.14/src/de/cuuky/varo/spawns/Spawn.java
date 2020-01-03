@@ -18,9 +18,11 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class Spawn implements VaroSerializeable {
 
-	private static ArrayList<Spawn> spawns = new ArrayList<>();
-
-	private Entity armorStand;
+	private static ArrayList<Spawn> spawns;
+	
+	static {
+		spawns = new ArrayList<>();
+	}
 
 	@VaroSerializeField(path = "location")
 	private Location location;
@@ -35,6 +37,7 @@ public class Spawn implements VaroSerializeable {
 	private int number;
 
 	private VaroPlayer player;
+	private Entity armorStand;
 
 	@VaroSerializeField(path = "playerId")
 	private int playerId;

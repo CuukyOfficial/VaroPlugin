@@ -8,8 +8,7 @@ public class OutSideTimeChecker {
 
 	private static OutSideTimeChecker instance;
 
-	private GregorianCalendar date1;
-	private GregorianCalendar date2;
+	private GregorianCalendar date1, date2;
 
 	private OutSideTimeChecker() {
 		refreshDates();

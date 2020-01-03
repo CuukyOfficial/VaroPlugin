@@ -26,29 +26,37 @@ public class Team extends VaroEntity {
 
 	@VaroSerializeField(path = "colorCode")
 	private String colorCode;
+
 	@VaroSerializeField(path = "id")
 	private int id;
+
 	@VaroSerializeField(path = "lifes")
 	private double lifes;
-	private ArrayList<VaroPlayer> member = new ArrayList<>();
+
 	@VaroSerializeField(path = "memberid")
-	private ArrayList<Integer> memberid = new ArrayList<Integer>();
+	private ArrayList<Integer> memberid;
+
 	@VaroSerializeField(path = "name")
 	private String name;
 
 	@VaroSerializeField(path = "teamBackPack")
-	private VaroInventory teamBackPack = new VaroInventory(ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt());
+	private VaroInventory teamBackPack;
+
+	private ArrayList<VaroPlayer> member;
 
 	public Team() {
 		teams.add(this);
+		member = new ArrayList<>();
+		teamBackPack = new VaroInventory(ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt());
+		memberid = new ArrayList<Integer>();
 	}
 
 	public Team(String name) {
+		this();
+
 		this.name = name;
 		this.id = generateId();
 		loadDefaults();
-
-		teams.add(this);
 
 		Nametag.refreshAll();
 		if(this.id > highestNumber)

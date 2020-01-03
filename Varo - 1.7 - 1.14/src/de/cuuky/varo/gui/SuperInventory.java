@@ -41,16 +41,15 @@ public abstract class SuperInventory {
 	}
 
 	protected String firstTitle, title;
-	protected boolean hasMorePages, isLastPage, homePage, ignoreNextClose;
-	protected Inventory inv;
 	protected ArrayList<Integer> modifier;
 	protected Player opener;
+	protected Inventory inv;
 	protected int page, size;
+	protected boolean hasMorePages, isLastPage, homePage, ignoreNextClose;
 
 	private HashMap<ItemMeta, Runnable> itemlinks;
 
 	public SuperInventory(String title, Player opener, int size, boolean homePage) {
-
 		this.firstTitle = title;
 		this.opener = opener;
 		this.page = 1;

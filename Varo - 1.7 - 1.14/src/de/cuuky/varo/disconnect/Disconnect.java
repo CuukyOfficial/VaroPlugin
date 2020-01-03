@@ -25,8 +25,13 @@ public class Disconnect {
 	 * OLD CODE
 	 */
 
-	private static ArrayList<Disconnect> disconnects = new ArrayList<>();
-	private static HashMap<String, Integer> scheds = new HashMap<>();
+	private static ArrayList<Disconnect> disconnects;
+	private static HashMap<String, Integer> scheds;
+	
+	static {
+		disconnects = new ArrayList<>();
+		scheds = new HashMap<>();
+	}
 
 	private int amount = 0;
 	private String name;

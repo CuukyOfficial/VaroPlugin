@@ -24,14 +24,13 @@ public class Report implements VaroSerializeable {
 	@VaroSerializeField(path = "reason")
 	private ReportReason reason;
 
-	private VaroPlayer reported;
-
 	@VaroSerializeField(path = "reportedId")
 	private int reportedId;
 
-	private VaroPlayer reporter;
 	@VaroSerializeField(path = "reporterId")
 	private int reporterId;
+	
+	private VaroPlayer reporter, reported;
 
 	public Report() {
 		reports.add(this);

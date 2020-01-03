@@ -16,11 +16,13 @@ public class VaroBorder {
 
 	private static VaroBorder instance;
 
-	private Object borders[] = new Object[2];
+	private Object borders[];
 
 	private VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
+		
+		this.borders = new Object[2];
 
 		for(World world : Bukkit.getWorlds()) {
 			switch(world.getEnvironment()) {
