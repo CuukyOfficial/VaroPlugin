@@ -25,6 +25,20 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		return false;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		linkItemTo(1, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), new Runnable() {
 
@@ -45,22 +59,5 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 		});
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		return false;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

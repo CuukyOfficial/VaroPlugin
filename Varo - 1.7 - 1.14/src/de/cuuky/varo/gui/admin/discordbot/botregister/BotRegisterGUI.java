@@ -23,6 +23,21 @@ public class BotRegisterGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new BotRegisterListGUI(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		linkItemTo(1, new ItemBuilder().displayname("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
 
@@ -48,23 +63,5 @@ public class BotRegisterGUI extends SuperInventory {
 			}
 		});
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new BotRegisterListGUI(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

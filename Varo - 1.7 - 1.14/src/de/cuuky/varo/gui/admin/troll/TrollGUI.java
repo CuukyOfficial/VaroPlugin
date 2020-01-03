@@ -19,10 +19,24 @@ public class TrollGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		return false;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		int i = 1;
-		for (TrollModule mod : TrollModule.getModules()) {
-			linkItemTo(i, new ItemBuilder().displayname(mod.getName()).itemstack(new ItemStack(mod.getIcon())).lore(new String[]{"§7Enabled for: {2DO}", "", "§7" + mod.getDescription()}).build(), new Runnable() {
+		for(TrollModule mod : TrollModule.getModules()) {
+			linkItemTo(i, new ItemBuilder().displayname(mod.getName()).itemstack(new ItemStack(mod.getIcon())).lore(new String[] { "§7Enabled for: {2DO}", "", "§7" + mod.getDescription() }).build(), new Runnable() {
 
 				@Override
 				public void run() {
@@ -33,22 +47,5 @@ public class TrollGUI extends SuperInventory {
 			i += 2;
 		}
 		return false;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		return false;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

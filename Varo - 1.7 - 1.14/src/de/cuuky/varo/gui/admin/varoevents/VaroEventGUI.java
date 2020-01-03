@@ -23,14 +23,32 @@ public class VaroEventGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		return false;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {
+		updateInventory();
+	}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {
+
+	}
+
+	@Override
 	public boolean onOpen() {
 		int i = 0;
-		for (VaroEvent event : VaroEvent.getEvents()) {
-			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[]{"§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), ""}, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
+		for(VaroEvent event : VaroEvent.getEvents()) {
+			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
 
 				@Override
 				public void run() {
-					if (Game.getInstance().getGameState() != GameState.STARTED) {
+					if(Game.getInstance().getGameState() != GameState.STARTED) {
 						opener.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
 						return;
 					}
@@ -43,24 +61,5 @@ public class VaroEventGUI extends SuperInventory {
 		}
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		updateInventory();
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-
-	}
-
-	@Override
-	public boolean onBackClick() {
-		return false;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

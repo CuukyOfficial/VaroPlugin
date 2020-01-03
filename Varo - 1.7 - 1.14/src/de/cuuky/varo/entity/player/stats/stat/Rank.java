@@ -8,22 +8,22 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class Rank implements VaroSerializeable {
 
-	private static ArrayList<Rank> ranks;
 	private static int highestLocation;
+	private static ArrayList<Rank> ranks;
 
 	static {
 		ranks = new ArrayList<Rank>();
 		highestLocation = 1;
 	}
 
+	@VaroSerializeField(path = "colorcode")
+	private int colorcode;
+
 	@VaroSerializeField(path = "name")
 	private String name;
 
 	@VaroSerializeField(path = "tablistLocation")
 	private int tablistLocation;
-
-	@VaroSerializeField(path = "colorcode")
-	private int colorcode;
 
 	public Rank() {
 		ranks.add(this);
@@ -38,52 +38,51 @@ public class Rank implements VaroSerializeable {
 		Nametag.refreshAll();
 	}
 
-	public static ArrayList<Rank> getRanks() {
-		return ranks;
+	public int getColorcode() {
+		return colorcode;
 	}
 
-	public static int getHighestLocation() {
-		return highestLocation;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		if (tablistLocation > highestLocation)
-			highestLocation = tablistLocation;
-	}
-
-	@Override
-	public void onSerializeStart() {
-	}
-
-	public void remove() {
-		ranks.remove(this);
+	public String getDisplay() {
+		return name;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public int getColorcode() {
-		return colorcode;
+	public int getTablistLocation() {
+		return tablistLocation;
+	}
+
+	@Override
+	public void onDeserializeEnd() {
+		if(tablistLocation > highestLocation)
+			highestLocation = tablistLocation;
+	}
+
+	@Override
+	public void onSerializeStart() {}
+
+	public void remove() {
+		ranks.remove(this);
 	}
 
 	public void setColorcode(int colorcode) {
 		this.colorcode = colorcode;
 	}
 
-	public int getTablistLocation() {
-		return tablistLocation;
-	}
-
 	public void setTablistLocation(int tablistLocation) {
 		this.tablistLocation = tablistLocation;
 
-		if (tablistLocation > highestLocation)
+		if(tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
-	public String getDisplay() {
-		return name;
+	public static int getHighestLocation() {
+		return highestLocation;
+	}
+
+	public static ArrayList<Rank> getRanks() {
+		return ranks;
 	}
 }

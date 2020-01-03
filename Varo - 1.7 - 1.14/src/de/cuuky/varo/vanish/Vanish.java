@@ -14,6 +14,25 @@ import de.cuuky.varo.Main;
 @SuppressWarnings("deprecation")
 public class Vanish {
 
+	private static class VanishListener implements Listener {
+
+		@EventHandler
+		public void onPlayerJoin(PlayerJoinEvent event) {
+			for(Vanish vanish : vanishes)
+				vanish.hideFor(event.getPlayer());
+		}
+
+		@EventHandler
+		public void onPlayerLeave(PlayerQuitEvent event) {
+			Vanish v = Vanish.getVanish(event.getPlayer());
+			if(v != null)
+				v.remove();
+
+			for(Vanish vanish : vanishes)
+				vanish.unHideFor(event.getPlayer());
+		}
+	}
+
 	private static ArrayList<Vanish> vanishes;
 
 	static {
@@ -31,34 +50,12 @@ public class Vanish {
 		vanishes.add(this);
 	}
 
-	public static Vanish getVanish(Player player) {
-		for (Vanish vanish : vanishes)
-			if (vanish.getPlayer().equals(player))
-				return vanish;
-
-		return null;
-	}
-
-	public static ArrayList<Vanish> getVanishes() {
-		return vanishes;
-	}
-
-	private void hide() {
-		for (Player allplayer : Bukkit.getOnlinePlayers())
-			allplayer.hidePlayer(player);
-	}
-
-	private void unhide() {
-		for (Player allplayer : Bukkit.getOnlinePlayers())
-			allplayer.showPlayer(player);
+	public Player getPlayer() {
+		return player;
 	}
 
 	public void hideFor(Player player) {
 		player.hidePlayer(this.player);
-	}
-
-	public void unHideFor(Player player) {
-		player.showPlayer(this.player);
 	}
 
 	public void remove() {
@@ -66,26 +63,29 @@ public class Vanish {
 		vanishes.remove(this);
 	}
 
-	public Player getPlayer() {
-		return player;
+	public void unHideFor(Player player) {
+		player.showPlayer(this.player);
 	}
 
-	private static class VanishListener implements Listener {
+	private void hide() {
+		for(Player allplayer : Bukkit.getOnlinePlayers())
+			allplayer.hidePlayer(player);
+	}
 
-		@EventHandler
-		public void onPlayerJoin(PlayerJoinEvent event) {
-			for (Vanish vanish : vanishes)
-				vanish.hideFor(event.getPlayer());
-		}
+	private void unhide() {
+		for(Player allplayer : Bukkit.getOnlinePlayers())
+			allplayer.showPlayer(player);
+	}
 
-		@EventHandler
-		public void onPlayerLeave(PlayerQuitEvent event) {
-			Vanish v = Vanish.getVanish(event.getPlayer());
-			if (v != null)
-				v.remove();
+	public static Vanish getVanish(Player player) {
+		for(Vanish vanish : vanishes)
+			if(vanish.getPlayer().equals(player))
+				return vanish;
 
-			for (Vanish vanish : vanishes)
-				vanish.unHideFor(event.getPlayer());
-		}
+		return null;
+	}
+
+	public static ArrayList<Vanish> getVanishes() {
+		return vanishes;
 	}
 }

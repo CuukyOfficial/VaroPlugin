@@ -30,18 +30,33 @@ public class InventoryBackupListGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new PlayerGUI(opener, target, null);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		ArrayList<InventoryBackup> backups = target.getStats().getInventoryBackups();
 
 		int start = getSize() * (getPage() - 1);
-		if (start != 0)
+		if(start != 0)
 			start -= 2;
 
-		for (int i = 0; i != getSize() - 2; i++) {
+		for(int i = 0; i != getSize() - 2; i++) {
 			InventoryBackup backup;
 			try {
 				backup = backups.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -59,7 +74,7 @@ public class InventoryBackupListGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if (!target.isOnline()) {
+				if(!target.isOnline()) {
 					opener.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
 					return;
 				}
@@ -70,23 +85,5 @@ public class InventoryBackupListGUI extends SuperInventory {
 		});
 
 		return calculatePages(backups.size(), getSize() - 2) == getPage();
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new PlayerGUI(opener, target, null);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

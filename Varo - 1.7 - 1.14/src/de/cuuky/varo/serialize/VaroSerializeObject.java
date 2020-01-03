@@ -22,10 +22,10 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	 */
 
 	private Class<? extends VaroSerializeable> clazz;
-	private FieldLoader fieldLoader;
-
-	private File file;
 	private YamlConfiguration configuration;
+
+	private FieldLoader fieldLoader;
+	private File file;
 
 	public VaroSerializeObject(Class<? extends VaroSerializeable> clazz) {
 		this.clazz = clazz;
@@ -37,7 +37,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	public VaroSerializeObject(Class<? extends VaroSerializeable> clazz, String fileName) {
 		this(clazz);
 
-		if (files.get(fileName) != null) {
+		if(files.get(fileName) != null) {
 			this.file = files.get(fileName);
 			this.configuration = configs.get(fileName);
 		} else {
@@ -45,36 +45,6 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 			files.put(fileName, file);
 			this.configuration = YamlConfiguration.loadConfiguration(file);
 			configs.put(fileName, configuration);
-		}
-	}
-
-	protected void load() {
-		for (String string : configuration.getKeys(true)) {
-			Object obj = configuration.get(string);
-			if (obj instanceof MemorySection) {
-				if (string.contains("."))
-					continue;
-
-				new VaroDeserializer((MemorySection) obj, this).deserialize();
-			}
-		}
-	}
-
-	protected void save(String saveUnder, VaroSerializeable instance, YamlConfiguration saveTo) {
-		new VaroSerializer(saveUnder, instance, saveTo);
-	}
-
-	protected void clearOld() {
-		Map<String, Object> configValues = configuration.getValues(false);
-		for (Map.Entry<String, Object> entry : configValues.entrySet())
-			configuration.set(entry.getKey(), null);
-	}
-
-	protected void saveFile() {
-		try {
-			configuration.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -90,6 +60,35 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 		return fieldLoader;
 	}
 
-	public void onSave() {
+	public void onSave() {}
+
+	protected void clearOld() {
+		Map<String, Object> configValues = configuration.getValues(false);
+		for(Map.Entry<String, Object> entry : configValues.entrySet())
+			configuration.set(entry.getKey(), null);
+	}
+
+	protected void load() {
+		for(String string : configuration.getKeys(true)) {
+			Object obj = configuration.get(string);
+			if(obj instanceof MemorySection) {
+				if(string.contains("."))
+					continue;
+
+				new VaroDeserializer((MemorySection) obj, this).deserialize();
+			}
+		}
+	}
+
+	protected void save(String saveUnder, VaroSerializeable instance, YamlConfiguration saveTo) {
+		new VaroSerializer(saveUnder, instance, saveTo);
+	}
+
+	protected void saveFile() {
+		try {
+			configuration.save(file);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -18,21 +18,21 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 	}
 
 	@Override
+	public void onDisable() {
+		Bukkit.getScheduler().cancelTask(sched);
+	}
+
+	@Override
 	public void onEnable() {
 		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
-				for (Player p : VersionUtils.getOnlinePlayer()) {
-					if (p.getLocation().getBlock().getType().toString().contains("WATER"))
+				for(Player p : VersionUtils.getOnlinePlayer()) {
+					if(p.getLocation().getBlock().getType().toString().contains("WATER"))
 						p.damage(0.75);
 				}
 			}
 		}, 1, 20);
-	}
-
-	@Override
-	public void onDisable() {
-		Bukkit.getScheduler().cancelTask(sched);
 	}
 }

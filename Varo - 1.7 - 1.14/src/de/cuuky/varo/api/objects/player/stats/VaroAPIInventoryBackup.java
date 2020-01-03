@@ -15,15 +15,15 @@ public class VaroAPIInventoryBackup {
 		this.backup = backup;
 	}
 
-	public void restore(Player player) {
-		backup.restoreUpdate(player);
-	}
-
 	public Date getDateCreated() {
 		return backup.getDate();
 	}
 
 	public Inventory getInventory() {
 		return backup.getInventory().getInventory();
+	}
+
+	public void restore(Player player) {
+		backup.restoreUpdate(player);
 	}
 }

@@ -15,6 +15,50 @@ import de.cuuky.varo.version.types.Materials;
 
 public class SetupHelpGUI extends SuperInventory {
 
+	public enum SetupCheckList {
+		BORDER_SETUP("Border Setup", "Haben sie die Border entsprechend gesetzt?", Material.STICK),
+		CONFIG_SETUP("Config Setup", "Haben sie die Config augesetzt? (GUI)", Materials.SIGN.parseMaterial()),
+		DISCORD_SETUP("Discord Setup", "Haben sie den DiscordBot aufgesetzt?", Material.ANVIL),
+		LOBBY_SETUP("Lobby Setup", "Haben sie die Lobby gesetzt? (GUI) (/Lobby)", Material.DIAMOND),
+		PORTAL_SETUP("Portal Setup", "Haben sie das Portal gesetzt?", Material.OBSIDIAN),
+		SCOREBOARD_SETUP("Scoreboard Setup", "Haben sie das Scoreboard aufgesetzt?", Material.REDSTONE),
+		SPAWN_SETUP("Spawn Setup", "Haben sie die Spawns gesetzt? /varo spawns", Materials.OAK_SLAB.parseMaterial()),
+		TEAM_SETUP("Team Setup", "Haben sie alle Teams oder Spieler eingetragen? /varo team", Material.DIAMOND_HELMET),
+		WORLDSPAWN_SETUP("Worlspawn Setup", "Haben sie den Worldspawn in der Mitte\ngesetzt? /setworldspawn", Material.BEACON);
+
+		private boolean checked;
+		private String[] description;
+		private Material icon;
+		private String name;
+
+		private SetupCheckList(String name, String description, Material icon) {
+			this.name = name;
+			this.description = description.split("\n");
+			this.icon = icon;
+			this.checked = false;
+		}
+
+		public String[] getDescription() {
+			return description;
+		}
+
+		public Material getIcon() {
+			return icon;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public boolean isChecked() {
+			return checked;
+		}
+
+		public void setChecked(boolean checked) {
+			this.checked = checked;
+		}
+	}
+
 	public SetupHelpGUI(Player opener) {
 		super("§eSetup Assistant", opener, 9, false);
 
@@ -22,8 +66,25 @@ public class SetupHelpGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new AdminMainMenu(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {
+		updateInventory();
+	}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
-		for (int i = 0; i < SetupCheckList.values().length; i++) {
+		for(int i = 0; i < SetupCheckList.values().length; i++) {
 			SetupCheckList check = SetupCheckList.values()[i];
 
 			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + check.getName()).itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon())).lore(check.getDescription()).build(), new Runnable() {
@@ -36,68 +97,5 @@ public class SetupHelpGUI extends SuperInventory {
 		}
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		updateInventory();
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
-
-	public enum SetupCheckList {
-		CONFIG_SETUP("Config Setup", "Haben sie die Config augesetzt? (GUI)", Materials.SIGN.parseMaterial()),
-		TEAM_SETUP("Team Setup", "Haben sie alle Teams oder Spieler eingetragen? /varo team", Material.DIAMOND_HELMET),
-		SPAWN_SETUP("Spawn Setup", "Haben sie die Spawns gesetzt? /varo spawns", Materials.OAK_SLAB.parseMaterial()),
-		WORLDSPAWN_SETUP("Worlspawn Setup", "Haben sie den Worldspawn in der Mitte\ngesetzt? /setworldspawn", Material.BEACON),
-		LOBBY_SETUP("Lobby Setup", "Haben sie die Lobby gesetzt? (GUI) (/Lobby)", Material.DIAMOND),
-		PORTAL_SETUP("Portal Setup", "Haben sie das Portal gesetzt?", Material.OBSIDIAN),
-		SCOREBOARD_SETUP("Scoreboard Setup", "Haben sie das Scoreboard aufgesetzt?", Material.REDSTONE),
-		BORDER_SETUP("Border Setup", "Haben sie die Border entsprechend gesetzt?", Material.STICK),
-		DISCORD_SETUP("Discord Setup", "Haben sie den DiscordBot aufgesetzt?", Material.ANVIL);
-
-		private String name;
-		private String[] description;
-		private Material icon;
-		private boolean checked;
-
-		private SetupCheckList(String name, String description, Material icon) {
-			this.name = name;
-			this.description = description.split("\n");
-			this.icon = icon;
-			this.checked = false;
-		}
-
-		public Material getIcon() {
-			return icon;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public String[] getDescription() {
-			return description;
-		}
-
-		public boolean isChecked() {
-			return checked;
-		}
-
-		public void setChecked(boolean checked) {
-			this.checked = checked;
-		}
 	}
 }

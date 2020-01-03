@@ -20,30 +20,30 @@ public class JoinEvent extends BukkitEvent {
 	@Override
 	public void onExec(VaroPlayer player) {
 		player.setNormalAttackSpeed();
-		if (player.getStats().getFirstTimeJoined() == null)
+		if(player.getStats().getFirstTimeJoined() == null)
 			player.getStats().setFirstTimeJoined(new Date());
 
 		player.getStats().setLastJoined(new Date());
 		player.getStats().setLastLocation(player.getPlayer().getLocation());
 
-		if (player.getVillager() != null) {
+		if(player.getVillager() != null) {
 			player.getVillager().remove();
 			player.setVillager(null);
 		}
 
-		if (player.getStats().isWillClear()) {
+		if(player.getStats().isWillClear()) {
 			player.getStats().clearInventory();
 			player.sendMessage(Main.getPrefix() + "Dein Inventar wurde geleert!");
 			player.getStats().setWillClear(false);
 		}
 
-		if (player.getStats().getRestoreBackup() != null) {
+		if(player.getStats().getRestoreBackup() != null) {
 			player.getStats().getRestoreBackup().restoreUpdate(player.getPlayer());
 			player.sendMessage(Main.getPrefix() + "Dein Inventar wurde wiederhergestellt!");
 			player.getStats().setRestoreBackup(null);
 		}
 
-		if (player.getStats().isSpectator() || player.isAdminIgnore())
+		if(player.getStats().isSpectator() || player.isAdminIgnore())
 			player.setSpectacting();
 		else
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);

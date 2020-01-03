@@ -15,20 +15,20 @@ public class SpawnGenerator {
 	@SuppressWarnings("deprecation")
 	public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {
 
-		for (Spawn spawn : Spawn.getSpawnsClone()) {
+		for(Spawn spawn : Spawn.getSpawnsClone()) {
 			spawn.delete();
 		}
 
 		int i = 0;
-		for (Location loc : generateSpawns(location, radius, amount)) {
+		for(Location loc : generateSpawns(location, radius, amount)) {
 			i++;
 			Location newLoc = loc.clone();
 
-			if (BlockUtils.isAir(newLoc.getBlock()))
-				while (BlockUtils.isAir(newLoc.clone().add(0, -1, 0).getBlock()))
+			if(BlockUtils.isAir(newLoc.getBlock()))
+				while(BlockUtils.isAir(newLoc.clone().add(0, -1, 0).getBlock()))
 					newLoc = newLoc.add(0, -1, 0);
 			else
-				while (!BlockUtils.isAir(newLoc.getBlock()))
+				while(!BlockUtils.isAir(newLoc.getBlock()))
 					newLoc = newLoc.add(0, +1, 0);
 
 			newLoc.getBlock().setType(Material.AIR);
@@ -56,7 +56,7 @@ public class SpawnGenerator {
 
 		List<Location> locs = new ArrayList<>();
 
-		for (int count = 0; count != amount; count++) {
+		for(int count = 0; count != amount; count++) {
 			double beta = alpha * count;
 
 			double x = radius * Math.sin(Math.toRadians(beta));

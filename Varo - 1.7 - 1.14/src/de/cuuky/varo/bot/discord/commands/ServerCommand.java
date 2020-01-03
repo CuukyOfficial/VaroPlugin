@@ -16,7 +16,7 @@ public class ServerCommand extends DiscordBotCommand {
 	 */
 
 	public ServerCommand() {
-		super("server", new String[]{"status", "whitelist"}, "Zeigt Infos und Status des Servers");
+		super("server", new String[] { "status", "whitelist" }, "Zeigt Infos und Status des Servers");
 	}
 
 	@Override

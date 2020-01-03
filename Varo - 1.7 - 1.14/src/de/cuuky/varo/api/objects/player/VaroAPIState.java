@@ -14,15 +14,15 @@ public enum VaroAPIState {
 		this.origin = origin;
 	}
 
+	public PlayerState getOrigin() {
+		return origin;
+	}
+
 	public static VaroAPIState getState(PlayerState state) {
-		for (VaroAPIState apistate : values())
-			if (apistate.getOrigin() == state)
+		for(VaroAPIState apistate : values())
+			if(apistate.getOrigin() == state)
 				return apistate;
 
 		return null;
-	}
-
-	public PlayerState getOrigin() {
-		return origin;
 	}
 }

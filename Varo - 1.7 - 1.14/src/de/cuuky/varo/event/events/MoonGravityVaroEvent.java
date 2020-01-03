@@ -22,8 +22,19 @@ public class MoonGravityVaroEvent extends VaroEvent {
 	}
 
 	@Override
+	public void onDisable() {
+		if(type == null)
+			return;
+
+		Bukkit.getScheduler().cancelTask(sched);
+
+		for(Player p : VersionUtils.getOnlinePlayer())
+			p.removePotionEffect(PotionEffectType.getByName("SLOW_FALLING"));
+	}
+
+	@Override
 	public void onEnable() {
-		if (type == null) {
+		if(type == null) {
 			enabled = false;
 			return;
 		}
@@ -32,21 +43,10 @@ public class MoonGravityVaroEvent extends VaroEvent {
 
 			@Override
 			public void run() {
-				for (Player p : VersionUtils.getOnlinePlayer())
+				for(Player p : VersionUtils.getOnlinePlayer())
 					p.addPotionEffect(new PotionEffect(PotionEffectType.getByName("SLOW_FALLING"), 9999, 1));
 			}
 		}, 1, 100);
-	}
-
-	@Override
-	public void onDisable() {
-		if (type == null)
-			return;
-
-		Bukkit.getScheduler().cancelTask(sched);
-
-		for (Player p : VersionUtils.getOnlinePlayer())
-			p.removePotionEffect(PotionEffectType.getByName("SLOW_FALLING"));
 	}
 
 }

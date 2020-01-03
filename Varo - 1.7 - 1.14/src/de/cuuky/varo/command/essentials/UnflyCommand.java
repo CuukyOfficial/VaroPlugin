@@ -14,13 +14,13 @@ public class UnflyCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.unfly")) {
+		if(!sender.hasPermission("varo.unfly")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if (args.length == 0) {
-			if (!(sender instanceof Player)) {
+		if(args.length == 0) {
+			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "§7Entweder /unfly [Player/@a] oder Spieler sein!");
 				return false;
 			}
@@ -29,10 +29,10 @@ public class UnflyCommand implements CommandExecutor {
 			p.setAllowFlight(false);
 			p.setFlying(false);
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst jetzt nicht mehr fliegen!");
-		} else if (args.length == 1) {
+		} else if(args.length == 1) {
 
-			if (args[0].equalsIgnoreCase("@a")) {
-				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+			if(args[0].equalsIgnoreCase("@a")) {
+				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 					player.getPlayer().setAllowFlight(false);
 					player.getPlayer().setFlying(false);
 				}
@@ -42,7 +42,7 @@ public class UnflyCommand implements CommandExecutor {
 			}
 
 			Player to = Bukkit.getPlayerExact(args[0]);
-			if (to == null) {
+			if(to == null) {
 				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + "§7 nicht gefunden!");
 				return false;
 			}

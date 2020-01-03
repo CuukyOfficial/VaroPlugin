@@ -16,8 +16,8 @@ public class TeamRequest {
 
 	private static ArrayList<TeamRequest> requests = new ArrayList<>();
 
-	private VaroPlayer invitor;
 	private VaroPlayer invited;
+	private VaroPlayer invitor;
 	private int sched;
 
 	public TeamRequest(VaroPlayer invitor, VaroPlayer invited) {
@@ -29,32 +29,55 @@ public class TeamRequest {
 		startSched();
 	}
 
-	public static ArrayList<TeamRequest> getAllRequests() {
-		return requests;
-	}
-
-	public static TeamRequest getByInvitor(VaroPlayer invitor) {
-		for (TeamRequest req : requests) {
-			if (req.getInvitor().equals(invitor))
-				return req;
+	public void accept() {
+		if(!invitor.isOnline()) {
+			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
+			remove();
+			return;
 		}
-		return null;
+
+		if(invitor.getTeam() == null)
+			sendChatHook();
+		else
+			addToTeam(invitor.getTeam());
+		remove();
 	}
 
-	public static TeamRequest getByInvited(VaroPlayer invited) {
-		for (TeamRequest req : requests)
-			if (req.getInvitor().equals(invited))
-				return req;
-
-		return null;
+	public void decline() {
+		remove();
 	}
 
-	public static TeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {
-		for (TeamRequest req : requests)
-			if (req.getInvitor().equals(inviter) && req.getInvited().equals(invited))
-				return req;
+	public VaroPlayer getInvited() {
+		return invited;
+	}
 
-		return null;
+	public VaroPlayer getInvitor() {
+		return invitor;
+	}
+
+	public void remove() {
+		Bukkit.getScheduler().cancelTask(sched);
+		requests.remove(this);
+	}
+
+	public void revoke() {
+		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue());
+		remove();
+	}
+
+	private void addToTeam(Team team) {
+		if(!team.isMember(invitor))
+			team.addMember(invitor);
+
+		if(invited.getTeam() != null)
+			invited.getTeam().removeMember(invited);
+
+		if(ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
+			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue().replace("%invited%", invited.getName()));
+			return;
+		}
+
+		team.addMember(invited);
 	}
 
 	private void sendChatHook() {
@@ -62,20 +85,20 @@ public class TeamRequest {
 
 			@Override
 			public void onChat(String message) {
-				if (message.contains("#")) {
+				if(message.contains("#")) {
 					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_HASHTAG.getValue());
 					sendChatHook();
 					return;
 				}
 
-				if (message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
+				if(message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
 					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_COLORCODE.getValue());
 					sendChatHook();
 					return;
 				}
 
 				int maxLength = ConfigEntry.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
-				if (message.length() > (maxLength) - 1) {
+				if(message.length() > (maxLength) - 1) {
 					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH.getValue().replace("%maxLength%", String.valueOf(maxLength)));
 					sendChatHook();
 					return;
@@ -86,34 +109,19 @@ public class TeamRequest {
 		});
 	}
 
-	private void addToTeam(Team team) {
-		if (!team.isMember(invitor))
-			team.addMember(invitor);
-
-		if (invited.getTeam() != null)
-			invited.getTeam().removeMember(invited);
-
-		if (ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
-			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue().replace("%invited%", invited.getName()));
-			return;
-		}
-
-		team.addMember(invited);
-	}
-
 	@SuppressWarnings("deprecation")
 	private void startSched() {
-		if (!ConfigEntry.TEAMREQUEST_EXPIRETIME.isIntActivated())
+		if(!ConfigEntry.TEAMREQUEST_EXPIRETIME.isIntActivated())
 			return;
 
 		this.sched = Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
-				if (VaroPlayer.getPlayer(invitor.getPlayer()) != null)
+				if(VaroPlayer.getPlayer(invitor.getPlayer()) != null)
 					invitor.sendMessage(Main.getPrefix() + "§7Deine Einladung an " + Main.getColorCode() + invited.getName() + " §7ist abgelaufen!");
 
-				if (VaroPlayer.getPlayer(invited.getPlayer()) != null)
+				if(VaroPlayer.getPlayer(invited.getPlayer()) != null)
 					invited.sendMessage(Main.getPrefix() + "§7Die Einladung von " + Main.getColorCode() + invitor.getName() + " §7ist abgelaufen!");
 
 				remove();
@@ -122,39 +130,31 @@ public class TeamRequest {
 		}, 20 * ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt());
 	}
 
-	public void accept() {
-		if (!invitor.isOnline()) {
-			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
-			remove();
-			return;
+	public static ArrayList<TeamRequest> getAllRequests() {
+		return requests;
+	}
+
+	public static TeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {
+		for(TeamRequest req : requests)
+			if(req.getInvitor().equals(inviter) && req.getInvited().equals(invited))
+				return req;
+
+		return null;
+	}
+
+	public static TeamRequest getByInvited(VaroPlayer invited) {
+		for(TeamRequest req : requests)
+			if(req.getInvitor().equals(invited))
+				return req;
+
+		return null;
+	}
+
+	public static TeamRequest getByInvitor(VaroPlayer invitor) {
+		for(TeamRequest req : requests) {
+			if(req.getInvitor().equals(invitor))
+				return req;
 		}
-
-		if (invitor.getTeam() == null)
-			sendChatHook();
-		else
-			addToTeam(invitor.getTeam());
-		remove();
-	}
-
-	public void revoke() {
-		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue());
-		remove();
-	}
-
-	public void decline() {
-		remove();
-	}
-
-	public void remove() {
-		Bukkit.getScheduler().cancelTask(sched);
-		requests.remove(this);
-	}
-
-	public VaroPlayer getInvited() {
-		return invited;
-	}
-
-	public VaroPlayer getInvitor() {
-		return invitor;
+		return null;
 	}
 }

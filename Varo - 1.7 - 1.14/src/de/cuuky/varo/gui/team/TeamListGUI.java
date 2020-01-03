@@ -15,6 +15,44 @@ import de.cuuky.varo.version.types.Materials;
 
 public class TeamListGUI extends SuperInventory {
 
+	public enum TeamGUIType {
+		ALIVE("§aALIVE", Material.POTION),
+		DEAD("§4DEAD", Materials.REDSTONE.parseMaterial()),
+		ONLINE("§eONLINE", Material.EMERALD),
+		REGISTERED("§bREGISTERED", Material.BOOK);
+
+		private Material icon;
+		private String typeName;
+
+		private TeamGUIType(String typeName, Material icon) {
+			this.typeName = typeName;
+			this.icon = icon;
+		}
+
+		public Material getIcon() {
+			return icon;
+		}
+
+		public ArrayList<Team> getList() {
+			switch(this) {
+			case DEAD:
+				return Team.getDeadTeams();
+			case REGISTERED:
+				return Team.getTeams();
+			case ALIVE:
+				return Team.getAliveTeams();
+			case ONLINE:
+				return Team.getOnlineTeams();
+			}
+
+			return null;
+		}
+
+		public String getTypeName() {
+			return typeName;
+		}
+	}
+
 	private TeamGUIType type;
 
 	public TeamListGUI(Player opener, TeamGUIType type) {
@@ -25,15 +63,32 @@ public class TeamListGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new TeamChooseGUI(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {
+
+	}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		ArrayList<Team> list = type.getList();
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			Team team;
 			try {
 				team = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -48,62 +103,5 @@ public class TeamListGUI extends SuperInventory {
 		}
 
 		return calculatePages(list.size(), getSize()) == page;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new TeamChooseGUI(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
-
-	}
-
-	public enum TeamGUIType {
-		DEAD("§4DEAD", Materials.REDSTONE.parseMaterial()),
-		REGISTERED("§bREGISTERED", Material.BOOK),
-		ALIVE("§aALIVE", Material.POTION),
-		ONLINE("§eONLINE", Material.EMERALD);
-
-		private String typeName;
-		private Material icon;
-
-		private TeamGUIType(String typeName, Material icon) {
-			this.typeName = typeName;
-			this.icon = icon;
-		}
-
-		public Material getIcon() {
-			return icon;
-		}
-
-		public String getTypeName() {
-			return typeName;
-		}
-
-		public ArrayList<Team> getList() {
-			switch (this) {
-				case DEAD:
-					return Team.getDeadTeams();
-				case REGISTERED:
-					return Team.getTeams();
-				case ALIVE:
-					return Team.getAliveTeams();
-				case ONLINE:
-					return Team.getOnlineTeams();
-			}
-
-			return null;
-		}
 	}
 }

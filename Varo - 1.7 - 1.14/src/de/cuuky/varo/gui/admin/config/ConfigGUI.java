@@ -31,40 +31,28 @@ public class ConfigGUI extends SuperInventory {
 		open();
 	}
 
-	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "§7Gebe einen Wert ein für " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
-
-			@Override
-			public void onChat(String message) {
-				if (message.equalsIgnoreCase("cancel")) {
-					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
-				} else {
-					try {
-						entry.setValue(JavaUtils.getStringObject(message), true);
-
-					} catch (Exception e) {
-						opener.sendMessage(Main.getPrefix() + e.getMessage());
-						hookChat(entry);
-						return;
-					}
-
-					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
-				}
-
-				reopenSoon();
-			}
-		});
-		opener.sendMessage(Main.getPrefix() + "§7Gebe zum Abbruch §ccancel§7 ein.");
+	@Override
+	public boolean onBackClick() {
+		new ConfigSectionGUI(getOpener());
+		return true;
 	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for (ConfigEntry entry : section.getEntries()) {
+		for(ConfigEntry entry : section.getEntries()) {
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
-			for (String strin : entry.getDescription())
+			for(String strin : entry.getDescription())
 				lore.add(Main.getColorCode() + strin);
 
 			lore.add(" ");
@@ -83,22 +71,31 @@ public class ConfigGUI extends SuperInventory {
 		return true;
 	}
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
+	private void hookChat(ConfigEntry entry) {
+		new ChatHook(opener, "§7Gebe einen Wert ein für " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
 
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
+			@Override
+			public void onChat(String message) {
+				if(message.equalsIgnoreCase("cancel")) {
+					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
+				} else {
+					try {
+						entry.setValue(JavaUtils.getStringObject(message), true);
 
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+					} catch(Exception e) {
+						opener.sendMessage(Main.getPrefix() + e.getMessage());
+						hookChat(entry);
+						return;
+					}
 
-	@Override
-	public boolean onBackClick() {
-		new ConfigSectionGUI(getOpener());
-		return true;
+					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
+					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
+				}
+
+				reopenSoon();
+			}
+		});
+		opener.sendMessage(Main.getPrefix() + "§7Gebe zum Abbruch §ccancel§7 ein.");
 	}
 
 }

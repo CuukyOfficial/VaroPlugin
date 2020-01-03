@@ -15,23 +15,23 @@ public class Report implements VaroSerializeable {
 		reports = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "open")
-	private boolean open;
-
 	@VaroSerializeField(path = "id")
 	private int id;
+
+	@VaroSerializeField(path = "open")
+	private boolean open;
 
 	@VaroSerializeField(path = "reason")
 	private ReportReason reason;
 
-	@VaroSerializeField(path = "reporterId")
-	private int reporterId;
+	private VaroPlayer reported;
 
 	@VaroSerializeField(path = "reportedId")
 	private int reportedId;
 
 	private VaroPlayer reporter;
-	private VaroPlayer reported;
+	@VaroSerializeField(path = "reporterId")
+	private int reporterId;
 
 	public Report() {
 		reports.add(this);
@@ -47,41 +47,17 @@ public class Report implements VaroSerializeable {
 		reports.add(this);
 	}
 
-	public static ArrayList<Report> getReports() {
-		return reports;
-	}
-
-	public static Report getReport(int id) {
-		for (Report r : reports)
-			if (r.getId() == id)
-				return r;
-
-		return null;
-	}
-
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while (getReport(id) != null)
-			generateId();
-
-		return id;
-	}
-
-	public boolean isOpen() {
-		return open;
-	}
-
 	public void close() {
 		this.open = false;
 		reports.remove(this);
 	}
 
-	public ReportReason getReason() {
-		return reason;
-	}
-
 	public int getId() {
 		return id;
+	}
+
+	public ReportReason getReason() {
+		return reason;
 	}
 
 	public VaroPlayer getReported() {
@@ -92,6 +68,10 @@ public class Report implements VaroSerializeable {
 		return reporter;
 	}
 
+	public boolean isOpen() {
+		return open;
+	}
+
 	@Override
 	public void onDeserializeEnd() {
 		this.reported = VaroPlayer.getPlayer(reportedId);
@@ -100,9 +80,29 @@ public class Report implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {
-		if (reporter != null)
+		if(reporter != null)
 			this.reporterId = reporter.getId();
-		if (reported != null)
+		if(reported != null)
 			this.reportedId = reported.getId();
+	}
+
+	private int generateId() {
+		int id = JavaUtils.randomInt(1000, 9999999);
+		while(getReport(id) != null)
+			generateId();
+
+		return id;
+	}
+
+	public static Report getReport(int id) {
+		for(Report r : reports)
+			if(r.getId() == id)
+				return r;
+
+		return null;
+	}
+
+	public static ArrayList<Report> getReports() {
+		return reports;
 	}
 }

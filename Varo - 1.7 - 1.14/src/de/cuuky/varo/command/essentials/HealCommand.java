@@ -13,13 +13,13 @@ public class HealCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.heal")) {
+		if(!sender.hasPermission("varo.heal")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if (args.length == 0) {
-			if (!(sender instanceof Player)) {
+		if(args.length == 0) {
+			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "§7/heal [Player/@a]");
 				return false;
 			}
@@ -29,14 +29,14 @@ public class HealCommand implements CommandExecutor {
 			p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
 			p.setFoodLevel(20);
 			sender.sendMessage(Main.getPrefix() + "Du wurdest erfolgreich §ageheilt§7!");
-		} else if (args.length == 1) {
-			if (Bukkit.getPlayerExact(args[0]) == null) {
+		} else if(args.length == 1) {
+			if(Bukkit.getPlayerExact(args[0]) == null) {
 				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 				return false;
 			}
 
-			if (args[0].equalsIgnoreCase("@a")) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
+			if(args[0].equalsIgnoreCase("@a")) {
+				for(Player p : Bukkit.getOnlinePlayers()) {
 					p.setHealth(20);
 					p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
 					p.setFoodLevel(20);

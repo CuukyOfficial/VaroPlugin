@@ -23,8 +23,8 @@ import de.cuuky.varo.version.types.Materials;
 
 public class PlayerOptionsGUI extends SuperInventory {
 
-	private VaroPlayer target;
 	private Stats stats;
+	private VaroPlayer target;
 	private PlayerGUIType type;
 
 	public PlayerOptionsGUI(Player opener, VaroPlayer target, PlayerGUIType type) {
@@ -37,95 +37,59 @@ public class PlayerOptionsGUI extends SuperInventory {
 		open();
 	}
 
-	@Override
-	public boolean onOpen() {
-		if (getPage() == 1) {
-			inv.setItem(8, new ItemBuilder().displayname("§aAdd Kill").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(0, new ItemBuilder().displayname("§cRemove Kill").itemstack(Materials.REDSTONE.parseItem()).build());
-
-			inv.setItem(17, new ItemBuilder().displayname("§aSet Rank").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(9, new ItemBuilder().displayname("§cRemove Rank").itemstack(Materials.REDSTONE.parseItem()).build());
-
-			inv.setItem(26, new ItemBuilder().displayname("§aSet Link").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(18, new ItemBuilder().displayname("§cRemove Link").itemstack(Materials.REDSTONE.parseItem()).build());
-
-			inv.setItem(35, new ItemBuilder().displayname("§aAdd Session").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(27, new ItemBuilder().displayname("§cRemove Session").itemstack(Materials.REDSTONE.parseItem()).build());
-		} else if (getPage() == 2) {
-			inv.setItem(8, new ItemBuilder().displayname("§aAdd EpisodesPlayed").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(0, new ItemBuilder().displayname("§cRemove EpisodesPlayed").itemstack(Materials.REDSTONE.parseItem()).build());
-
-			inv.setItem(17, new ItemBuilder().displayname("§aReset Countdown").itemstack(new ItemStack(Material.APPLE)).build());
-			inv.setItem(9, new ItemBuilder().displayname("§cRemove Countdown").itemstack(Materials.REDSTONE.parseItem()).build());
-		}
-
-		updateStats();
-		return getPage() == 2;
-	}
-
-	private void updateStats() {
-		if (getPage() == 1) {
-			inv.setItem(4, new ItemBuilder().displayname("§cKills").itemstack(new ItemStack(Material.DIAMOND_SWORD)).lore(new String[]{"§7Current: " + stats.getKills()}).build());
-			inv.setItem(13, new ItemBuilder().displayname("§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[]{"§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay())}).build());
-			inv.setItem(22, new ItemBuilder().displayname("§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[]{"§7Current: " + stats.getYoutubeLink()}).build());
-			inv.setItem(31, new ItemBuilder().displayname("§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[]{"§7Current: " + stats.getSessions()}).build());
-		} else if (getPage() == 2) {
-			inv.setItem(4, new ItemBuilder().displayname("§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[]{"§7Current: " + stats.getSessionsPlayed()}).build());
-			inv.setItem(13, new ItemBuilder().displayname("§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[]{"§7Current: " + stats.getCountdown()}).build());
-
-			inv.setItem(36, new ItemBuilder().displayname("§7Change §cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[]{"§7Current: " + stats.isWillClear()}).build());
-			inv.setItem(37, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[]{"§7Current: " + stats.getState().getName()}).build());
-			inv.setItem(38, new ItemBuilder().displayname("§7Remove §cTimeUntilAddSession").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[]{"§7Current: " + (stats.getTimeUntilAddSession())}).build());
-		}
+	public VaroPlayer getTarget() {
+		return target;
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
+	public boolean onBackClick() {
+		new PlayerGUI(opener, target, type);
+		return true;
 	}
 
 	@Override
 	public void onClick(InventoryClickEvent event) {
 		String itemname = event.getCurrentItem().getItemMeta().getDisplayName();
 
-		if (itemname.contains("EpisodesPlayed")) {
-			if (itemname.contains("Add"))
+		if(itemname.contains("EpisodesPlayed")) {
+			if(itemname.contains("Add"))
 				stats.addSessionPlayed();
-			else if (itemname.contains("Remove"))
+			else if(itemname.contains("Remove"))
 				stats.setSessionsPlayed(stats.getSessionsPlayed() - 1);
 		}
 
-		if (itemname.contains("Countdown")) {
-			if (itemname.contains("Reset"))
+		if(itemname.contains("Countdown")) {
+			if(itemname.contains("Reset"))
 				stats.removeCountdown();
-			else if (itemname.contains("Remove"))
+			else if(itemname.contains("Remove"))
 				stats.setCountdown(1);
 		}
 
-		if (itemname.contains("Will InventoryClear"))
+		if(itemname.contains("Will InventoryClear"))
 			stats.setWillClear(!stats.isWillClear());
 
-		if (itemname.contains("Kill")) {
-			if (itemname.contains("Add"))
+		if(itemname.contains("Kill")) {
+			if(itemname.contains("Add"))
 				stats.addKill();
-			else if (itemname.contains("Remove"))
+			else if(itemname.contains("Remove"))
 				stats.setKills(stats.getKills() - 1);
 		}
 
-		if (itemname.contains("Session")) {
-			if (itemname.contains("Add"))
+		if(itemname.contains("Session")) {
+			if(itemname.contains("Add"))
 				stats.setSessions(stats.getSessions() + 1);
-			else if (itemname.contains("Remove"))
+			else if(itemname.contains("Remove"))
 				stats.setSessions(stats.getSessions() - 1);
 		}
 
-		if (itemname.contains("Link")) {
-			if (itemname.contains("Set")) {
+		if(itemname.contains("Link")) {
+			if(itemname.contains("Set")) {
 				close(false);
 
 				new ChatHook(opener, "Enter Youtube-Link:", new ChatHookListener() {
 
 					public void onChat(String input) {
-						if (!isURl(input)) {
+						if(!isURl(input)) {
 							opener.sendMessage(Main.getPrefix() + "Das ist kein Link!");
 							reopenSoon();
 							return;
@@ -136,12 +100,12 @@ public class PlayerOptionsGUI extends SuperInventory {
 						reopenSoon();
 					}
 				});
-			} else if (itemname.contains("Remove"))
+			} else if(itemname.contains("Remove"))
 				stats.setYoutubeLink(null);
 		}
 
-		if (itemname.contains("Rank")) {
-			if (itemname.contains("Set")) {
+		if(itemname.contains("Rank")) {
+			if(itemname.contains("Set")) {
 				close(false);
 
 				new ChatHook(opener, "§7Enter Rank", new ChatHookListener() {
@@ -153,28 +117,28 @@ public class PlayerOptionsGUI extends SuperInventory {
 						reopenSoon();
 					}
 				});
-			} else if (itemname.contains("Remove"))
+			} else if(itemname.contains("Remove"))
 				target.setRank(null);
 		}
 
-		if (itemname.contains("State")) {
+		if(itemname.contains("State")) {
 			PlayerState state = null;
-			switch (target.getStats().getState()) {
-				case DEAD:
-					state = PlayerState.SPECTATOR;
-					break;
-				case ALIVE:
-					state = PlayerState.DEAD;
-					break;
-				case SPECTATOR:
-					state = PlayerState.ALIVE;
-					break;
+			switch(target.getStats().getState()) {
+			case DEAD:
+				state = PlayerState.SPECTATOR;
+				break;
+			case ALIVE:
+				state = PlayerState.DEAD;
+				break;
+			case SPECTATOR:
+				state = PlayerState.ALIVE;
+				break;
 			}
 
 			stats.setState(state);
 		}
 
-		if (itemname.contains("TimeUntilAddSession")) {
+		if(itemname.contains("TimeUntilAddSession")) {
 			stats.setTimeUntilAddSession(null);
 			stats.setSessions(stats.getSessions() + 1);
 		}
@@ -183,25 +147,59 @@ public class PlayerOptionsGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 
 	@Override
-	public boolean onBackClick() {
-		new PlayerGUI(opener, target, type);
-		return true;
-	}
+	public void onInventoryAction(PageAction action) {}
 
-	public VaroPlayer getTarget() {
-		return target;
+	@Override
+	public boolean onOpen() {
+		if(getPage() == 1) {
+			inv.setItem(8, new ItemBuilder().displayname("§aAdd Kill").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(0, new ItemBuilder().displayname("§cRemove Kill").itemstack(Materials.REDSTONE.parseItem()).build());
+
+			inv.setItem(17, new ItemBuilder().displayname("§aSet Rank").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(9, new ItemBuilder().displayname("§cRemove Rank").itemstack(Materials.REDSTONE.parseItem()).build());
+
+			inv.setItem(26, new ItemBuilder().displayname("§aSet Link").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(18, new ItemBuilder().displayname("§cRemove Link").itemstack(Materials.REDSTONE.parseItem()).build());
+
+			inv.setItem(35, new ItemBuilder().displayname("§aAdd Session").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(27, new ItemBuilder().displayname("§cRemove Session").itemstack(Materials.REDSTONE.parseItem()).build());
+		} else if(getPage() == 2) {
+			inv.setItem(8, new ItemBuilder().displayname("§aAdd EpisodesPlayed").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(0, new ItemBuilder().displayname("§cRemove EpisodesPlayed").itemstack(Materials.REDSTONE.parseItem()).build());
+
+			inv.setItem(17, new ItemBuilder().displayname("§aReset Countdown").itemstack(new ItemStack(Material.APPLE)).build());
+			inv.setItem(9, new ItemBuilder().displayname("§cRemove Countdown").itemstack(Materials.REDSTONE.parseItem()).build());
+		}
+
+		updateStats();
+		return getPage() == 2;
 	}
 
 	private boolean isURl(String link) {
 		try {
 			new URL(link).openConnection();
 			return true;
-		} catch (Exception e) {
+		} catch(Exception e) {
 			return false;
+		}
+	}
+
+	private void updateStats() {
+		if(getPage() == 1) {
+			inv.setItem(4, new ItemBuilder().displayname("§cKills").itemstack(new ItemStack(Material.DIAMOND_SWORD)).lore(new String[] { "§7Current: " + stats.getKills() }).build());
+			inv.setItem(13, new ItemBuilder().displayname("§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay()) }).build());
+			inv.setItem(22, new ItemBuilder().displayname("§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + stats.getYoutubeLink() }).build());
+			inv.setItem(31, new ItemBuilder().displayname("§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[] { "§7Current: " + stats.getSessions() }).build());
+		} else if(getPage() == 2) {
+			inv.setItem(4, new ItemBuilder().displayname("§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[] { "§7Current: " + stats.getSessionsPlayed() }).build());
+			inv.setItem(13, new ItemBuilder().displayname("§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + stats.getCountdown() }).build());
+
+			inv.setItem(36, new ItemBuilder().displayname("§7Change §cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[] { "§7Current: " + stats.isWillClear() }).build());
+			inv.setItem(37, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "§7Current: " + stats.getState().getName() }).build());
+			inv.setItem(38, new ItemBuilder().displayname("§7Remove §cTimeUntilAddSession").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + (stats.getTimeUntilAddSession()) }).build());
 		}
 	}
 }

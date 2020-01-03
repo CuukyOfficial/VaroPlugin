@@ -23,57 +23,42 @@ public class Main extends JavaPlugin {
 	 * Plugin by Cuuky @ 2019 All rights reserved! Contributors: Korne127
 	 */
 
+	private static BotLauncher botLauncher;
 	private static final String CONSOLE_PREFIX = "[Varo] ";
-	private static Main instance;
 
 	private static DataManager dataManager;
-	private static BotLauncher botLauncher;
+	private static Main instance;
 
 	private boolean failed;
 
-	public static String getConsolePrefix() {
-		return CONSOLE_PREFIX;
-	}
-
-	public static Main getInstance() {
-		return instance;
-	}
-
-	public static String getPrefix() {
-		return ConfigEntry.PREFIX.getValueAsString();
-	}
-
-	public static String getColorCode() {
-		return ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString();
-	}
-
-	public static String getProjectName() {
-		return getColorCode() + ConfigEntry.PROJECT_NAME.getValueAsString();
-	}
-
-	public static void broadcastMessage(String message) {
-		Bukkit.broadcastMessage(getPrefix() + message);
-	}
-
-	public static boolean isBootedUp() {
-		return dataManager != null;
-	}
-
-	public static String getContributors() {
-		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
-	}
-
-	public static String getPluginName() {
-		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
+	public File getThisFile() {
+		return getFile();
 	}
 
 	@Override
-	public void onLoad() {
-		failed = false;
-		instance = this;
+	public void onDisable() {
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
 
-		new ConsoleLogger();
-		super.onLoad();
+		if(dataManager != null && !failed) {
+			System.out.println(CONSOLE_PREFIX + "Saving files...");
+			dataManager.save();
+		}
+
+		if(botLauncher != null) {
+			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
+			botLauncher.disconnect();
+		}
+
+		if(!failed)
+			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		Bukkit.getScheduler().cancelTasks(this);
+
+		System.out.println(CONSOLE_PREFIX + "Disabled!");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		super.onDisable();
 	}
 
 	@Override
@@ -107,20 +92,20 @@ public class Main extends JavaPlugin {
 			VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater2[0];
 			String updateVersion = (String) updater2[1];
 			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
-			if (result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
+			if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
 				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 			DailyTimer.startTimer();
 
 			botLauncher = BotLauncher.getInstance(); // Initialisierung
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 			failed = true;
 			Bukkit.getPluginManager().disablePlugin(Main.this);
 		}
 
-		if (failed)
+		if(failed)
 			return;
 
 		System.out.println(CONSOLE_PREFIX + "Enabled!");
@@ -130,32 +115,47 @@ public class Main extends JavaPlugin {
 	}
 
 	@Override
-	public void onDisable() {
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
+	public void onLoad() {
+		failed = false;
+		instance = this;
 
-		if (dataManager != null && !failed) {
-			System.out.println(CONSOLE_PREFIX + "Saving files...");
-			dataManager.save();
-		}
-
-		if (botLauncher != null) {
-			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
-			botLauncher.disconnect();
-		}
-
-		if (!failed)
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
-		Bukkit.getScheduler().cancelTasks(this);
-
-		System.out.println(CONSOLE_PREFIX + "Disabled!");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		super.onDisable();
+		new ConsoleLogger();
+		super.onLoad();
 	}
 
-	public File getThisFile() {
-		return getFile();
+	public static void broadcastMessage(String message) {
+		Bukkit.broadcastMessage(getPrefix() + message);
+	}
+
+	public static String getColorCode() {
+		return ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString();
+	}
+
+	public static String getConsolePrefix() {
+		return CONSOLE_PREFIX;
+	}
+
+	public static String getContributors() {
+		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
+	}
+
+	public static Main getInstance() {
+		return instance;
+	}
+
+	public static String getPluginName() {
+		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
+	}
+
+	public static String getPrefix() {
+		return ConfigEntry.PREFIX.getValueAsString();
+	}
+
+	public static String getProjectName() {
+		return getColorCode() + ConfigEntry.PROJECT_NAME.getValueAsString();
+	}
+
+	public static boolean isBootedUp() {
+		return dataManager != null;
 	}
 }

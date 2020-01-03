@@ -13,7 +13,7 @@ public class LongSerializeable extends VaroSerialize {
 
 	@Override
 	public Object deserialize(Field field, Object obj) {
-		if (!field.getType().isPrimitive() || !(obj instanceof String))
+		if(!field.getType().isPrimitive() || !(obj instanceof String))
 			return null;
 
 		return Long.valueOf((String) obj);

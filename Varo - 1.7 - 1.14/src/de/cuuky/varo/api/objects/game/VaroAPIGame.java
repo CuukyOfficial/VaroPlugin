@@ -12,12 +12,12 @@ public class VaroAPIGame {
 		this.game = game;
 	}
 
-	public boolean isStarting() {
-		return game.isStarting();
-	}
-
 	public VaroAPIGameState getState() {
 		return VaroAPIGameState.getState(game.getGameState());
+	}
+
+	public boolean isStarting() {
+		return game.isStarting();
 	}
 
 	public void setLobbyLocation(Location lobby) {

@@ -31,31 +31,20 @@ public class BorderDecrease {
 		decreases.add(this);
 	}
 
-	private void waitForBorder(double d) {
-		try {
-			Thread.sleep((long) (d * 1000) + 1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	public double getBps() {
+		return bps;
 	}
 
-	private static void startShrinking() {
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
+	public void remove() {
+		decreases.remove(this);
+	}
 
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				if (running)
-					return;
+	public void setFinishHook(Runnable finishHook) {
+		this.finishHook = finishHook;
+	}
 
-				for (int i = 0; i < decreases.size(); i++) {
-					running = true;
-					decreases.get(i).shrink();
-				}
-
-				running = false;
-			}
-		}, 1, 20);
+	public void setStartHook(Runnable startHook) {
+		this.startHook = startHook;
 	}
 
 	public void shrink() {
@@ -63,15 +52,15 @@ public class BorderDecrease {
 
 		int minsize = ConfigEntry.MIN_BORDER_SIZE.getValueAsInt();
 		double size = border.getBorderSize(null);
-		if (size <= minsize) {
+		if(size <= minsize) {
 			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());
 			remove();
 			return;
 		}
 
 		startHook.run();
-		if (minsize > 0)
-			if ((int) (size - amount) < minsize) {
+		if(minsize > 0)
+			if((int) (size - amount) < minsize) {
 				border.setBorderSize(minsize, (long) ((size - minsize) / bps), null);
 				waitForBorder((size - minsize) / bps);
 			} else {
@@ -83,19 +72,30 @@ public class BorderDecrease {
 		remove();
 	}
 
-	public void remove() {
-		decreases.remove(this);
+	private void waitForBorder(double d) {
+		try {
+			Thread.sleep((long) (d * 1000) + 1000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public double getBps() {
-		return bps;
-	}
+	private static void startShrinking() {
+		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
 
-	public void setStartHook(Runnable startHook) {
-		this.startHook = startHook;
-	}
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				if(running)
+					return;
 
-	public void setFinishHook(Runnable finishHook) {
-		this.finishHook = finishHook;
+				for(int i = 0; i < decreases.size(); i++) {
+					running = true;
+					decreases.get(i).shrink();
+				}
+
+				running = false;
+			}
+		}, 1, 20);
 	}
 }

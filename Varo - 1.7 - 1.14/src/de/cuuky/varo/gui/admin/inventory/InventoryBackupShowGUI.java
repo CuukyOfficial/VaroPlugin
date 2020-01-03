@@ -21,30 +21,27 @@ public class InventoryBackupShowGUI extends SuperInventory {
 	}
 
 	@Override
-	public boolean onOpen() {
-		for (int i = 0; i < backup.getInventory().getInventory().getContents().length; i++)
-			inv.setItem(i, backup.getInventory().getInventory().getContents()[i]);
-
-		for (int i = 0; i < backup.getArmor().size(); i++)
-			inv.setItem(41 + i, backup.getArmor().get(i));
-		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
 	public boolean onBackClick() {
 		new InventoryBackupGUI(opener, backup);
 		return true;
 	}
 
 	@Override
-	public void onClose(InventoryCloseEvent event) {
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
+	public boolean onOpen() {
+		for(int i = 0; i < backup.getInventory().getInventory().getContents().length; i++)
+			inv.setItem(i, backup.getInventory().getInventory().getContents()[i]);
+
+		for(int i = 0; i < backup.getArmor().size(); i++)
+			inv.setItem(41 + i, backup.getArmor().get(i));
+		return true;
 	}
 }

@@ -12,9 +12,9 @@ public class PrivateMessage {
 
 	private static ArrayList<PrivateMessage> messages = new ArrayList<>();
 
+	private String message;
 	private Player reciever;
 	private Player sender;
-	private String message;
 	private Date written;
 
 	public PrivateMessage(Player reciever, Player sender, String message) {
@@ -28,21 +28,6 @@ public class PrivateMessage {
 		messages.add(this);
 	}
 
-	public static PrivateMessage getMessage(Player player) {
-		for (PrivateMessage pmessage : messages) {
-			if (pmessage.getReciever().equals(player))
-				continue;
-
-			return pmessage;
-		}
-
-		return null;
-	}
-
-	public Date getWritten() {
-		return written;
-	}
-
 	public String getMessage() {
 		return message;
 	}
@@ -53,5 +38,20 @@ public class PrivateMessage {
 
 	public Player getSender() {
 		return sender;
+	}
+
+	public Date getWritten() {
+		return written;
+	}
+
+	public static PrivateMessage getMessage(Player player) {
+		for(PrivateMessage pmessage : messages) {
+			if(pmessage.getReciever().equals(player))
+				continue;
+
+			return pmessage;
+		}
+
+		return null;
 	}
 }

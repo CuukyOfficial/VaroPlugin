@@ -13,7 +13,7 @@ public class CommandCommand extends DiscordBotCommand {
 	 */
 
 	public CommandCommand() {
-		super("command", new String[]{"consolecommand", "executecommand"}, "Führt einen Command in der Konsole aus.");
+		super("command", new String[] { "consolecommand", "executecommand" }, "Führt einen Command in der Konsole aus.");
 	}
 
 	// private OfflinePlayer player = null;

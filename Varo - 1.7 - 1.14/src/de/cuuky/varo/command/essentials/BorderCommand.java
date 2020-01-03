@@ -21,28 +21,28 @@ public class BorderCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
 			return false;
 		}
 
-		if (args.length == 0) {
+		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? VaroBorder.getInstance().getBorderSize(((Player) sender).getWorld()) : VaroBorder.getInstance().getBorderSize(null)) + " §7Blöcke groß!");
-			if (sender instanceof Player)
+			if(sender instanceof Player)
 				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) VaroBorder.getInstance().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
 
-			if (sender.hasPermission("varo.setup")) {
+			if(sender.hasPermission("varo.setup")) {
 				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> §7setzen!");
 				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border bleibt dann der WorldSpawn.");
 			}
 			return false;
-		} else if (args.length >= 1 && sender.hasPermission("varo.setup")) {
+		} else if(args.length >= 1 && sender.hasPermission("varo.setup")) {
 			Player p = sender instanceof Player ? (Player) sender : null;
 			int borderSize, inSeconds = -1;
 
 			try {
 				borderSize = Integer.parseInt(args[0]);
-			} catch (NumberFormatException e) {
+			} catch(NumberFormatException e) {
 				p.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
 				return false;
 			}
@@ -52,12 +52,12 @@ public class BorderCommand implements CommandExecutor {
 			try {
 				inSeconds = Integer.parseInt(args[1]);
 				border.setBorderSize(borderSize, inSeconds, playerWorld);
-			} catch (Exception e) {
+			} catch(Exception e) {
 				border.setBorderSize(borderSize, 0, playerWorld);
 			}
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%zahl%", String.valueOf(borderSize)));
-			if (p != null)
+			if(p != null)
 				p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		} else
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());

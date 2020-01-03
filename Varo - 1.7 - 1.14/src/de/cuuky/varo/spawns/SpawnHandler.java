@@ -17,19 +17,19 @@ public class SpawnHandler extends VaroSerializeObject {
 		load();
 	}
 
-	public static void initialise() {
-		if (instance == null) {
-			instance = new SpawnHandler();
-		}
-	}
-
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for (Spawn spawn : Spawn.getSpawns())
+		for(Spawn spawn : Spawn.getSpawns())
 			save(String.valueOf(spawn.getNumber()), spawn, getConfiguration());
 
 		saveFile();
+	}
+
+	public static void initialise() {
+		if(instance == null) {
+			instance = new SpawnHandler();
+		}
 	}
 }

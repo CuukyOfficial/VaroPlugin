@@ -27,16 +27,31 @@ public class OreLoggerListGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new AdminMainMenu(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		ArrayList<String> list = BlockLogger.getInstance().getLogs();
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			String str;
 			try {
 				str = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -67,23 +82,5 @@ public class OreLoggerListGUI extends SuperInventory {
 		}
 
 		return calculatePages(list.size(), getSize()) == page;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

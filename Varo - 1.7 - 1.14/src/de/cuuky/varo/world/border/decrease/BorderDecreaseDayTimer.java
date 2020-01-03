@@ -19,16 +19,41 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 	@VaroSerializeField(path = "nextDecrease")
 	private Date nextDecrease;
 
-	public BorderDecreaseDayTimer() {
-	}
+	public BorderDecreaseDayTimer() {}
 
 	public BorderDecreaseDayTimer(boolean new1) {
-		if (!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
+		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
 			return;
 
 		generateNextDecrease();
 		startTimer();
 		Game.getInstance().setBorderDecrease(this);
+	}
+
+	@Override
+	public void onDeserializeEnd() {
+		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
+			return;
+
+		if(nextDecrease == null)
+			generateNextDecrease();
+
+		startTimer();
+	}
+
+	@Override
+	public void onSerializeStart() {}
+
+	private void generateNextDecrease() {
+		nextDecrease = new Date();
+		nextDecrease = DateUtils.addDays(nextDecrease, ConfigEntry.BORDER_TIME_DAY_DECREASE_DAYS.getValueAsInt());
+	}
+
+	private long getTime() {
+		if(nextDecrease.before(new Date()))
+			return 20;
+
+		return ((nextDecrease.getTime() - new Date().getTime()) / 1000) * 20;
 	}
 
 	private void startTimer() {
@@ -37,7 +62,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
-				if (Game.getInstance().isRunning())
+				if(Game.getInstance().isRunning())
 					VaroBorder.getInstance().decreaseBorder(DecreaseReason.TIME_MINUTES);
 
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
@@ -49,32 +74,5 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 				}, 20);
 			}
 		}, getTime());
-	}
-
-	private void generateNextDecrease() {
-		nextDecrease = new Date();
-		nextDecrease = DateUtils.addDays(nextDecrease, ConfigEntry.BORDER_TIME_DAY_DECREASE_DAYS.getValueAsInt());
-	}
-
-	private long getTime() {
-		if (nextDecrease.before(new Date()))
-			return 20;
-
-		return ((nextDecrease.getTime() - new Date().getTime()) / 1000) * 20;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		if (!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
-			return;
-
-		if (nextDecrease == null)
-			generateNextDecrease();
-
-		startTimer();
-	}
-
-	@Override
-	public void onSerializeStart() {
 	}
 }

@@ -39,6 +39,20 @@ public class AdminMainMenu extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		return false;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		linkItemTo(0, new ItemBuilder().displayname("§eSetup Assistant").itemstack(new ItemStack(Materials.ENDER_EYE.parseMaterial())).build(), new Runnable() {
 
@@ -90,7 +104,7 @@ public class AdminMainMenu extends SuperInventory {
 
 		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(BotLauncher.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
 			public void run() {
-				if (BotLauncher.getDiscordBot() == null) {
+				if(BotLauncher.getDiscordBot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
 					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
@@ -125,7 +139,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		if (ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+		if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 			linkItemTo(inv.getSize() - 9, new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
 
 				@Override
@@ -146,22 +160,5 @@ public class AdminMainMenu extends SuperInventory {
 		});
 
 		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		return false;
 	}
 }

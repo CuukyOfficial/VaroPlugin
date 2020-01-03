@@ -8,7 +8,7 @@ public class VaroEventListener implements Listener {
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
-		for (VaroEvent event1 : VaroEvent.getEnabledEvents())
+		for(VaroEvent event1 : VaroEvent.getEnabledEvents())
 			event1.onMove(event);
 	}
 }

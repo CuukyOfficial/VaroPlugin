@@ -15,16 +15,16 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		videos = new ArrayList<YouTubeVideo>();
 	}
 
-	@VaroSerializeField(path = "videoId")
-	private String videoId;
-	@VaroSerializeField(path = "title")
-	private String title;
-	@VaroSerializeField(path = "link")
-	private String link;
-	@VaroSerializeField(path = "duration")
-	private String duration;
 	@VaroSerializeField(path = "detectedAt")
 	private Date detectedAt;
+	@VaroSerializeField(path = "duration")
+	private String duration;
+	@VaroSerializeField(path = "link")
+	private String link;
+	@VaroSerializeField(path = "title")
+	private String title;
+	@VaroSerializeField(path = "videoId")
+	private String videoId;
 
 	public YouTubeVideo() {
 		videos.add(this);
@@ -40,9 +40,57 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		videos.add(this);
 	}
 
+	@SuppressWarnings("deprecation")
+	@Override
+	public int compareTo(YouTubeVideo comparison) {
+		return this.getDetectedAt().getDate() - comparison.getDetectedAt().getDate();
+	}
+
+	public Date getDetectedAt() {
+		return detectedAt;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public VaroPlayer getOwner() {
+		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
+			if(vp.getStats().getVideos().contains(this))
+				return vp;
+
+		return null;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getVideoId() {
+		return videoId;
+	}
+
+	@Override
+	public void onDeserializeEnd() {}
+
+	@Override
+	public void onSerializeStart() {}
+
+	public void remove() {
+		VaroPlayer owner = getOwner();
+		if(owner != null)
+			owner.getStats().removeVideo(this);
+
+		videos.remove(this);
+	}
+
 	public static YouTubeVideo getVideo(String videoId) {
-		for (YouTubeVideo video : videos)
-			if (video.getVideoId().equals(videoId))
+		for(YouTubeVideo video : videos)
+			if(video.getVideoId().equals(videoId))
 				return video;
 
 		return null;
@@ -50,55 +98,5 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 
 	public static ArrayList<YouTubeVideo> getVideos() {
 		return videos;
-	}
-
-	public void remove() {
-		VaroPlayer owner = getOwner();
-		if (owner != null)
-			owner.getStats().removeVideo(this);
-
-		videos.remove(this);
-	}
-
-	public String getVideoId() {
-		return videoId;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getLink() {
-		return link;
-	}
-
-	public String getDuration() {
-		return duration;
-	}
-
-	public Date getDetectedAt() {
-		return detectedAt;
-	}
-
-	public VaroPlayer getOwner() {
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
-			if (vp.getStats().getVideos().contains(this))
-				return vp;
-
-		return null;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public int compareTo(YouTubeVideo comparison) {
-		return this.getDetectedAt().getDate() - comparison.getDetectedAt().getDate();
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-	}
-
-	@Override
-	public void onSerializeStart() {
 	}
 }

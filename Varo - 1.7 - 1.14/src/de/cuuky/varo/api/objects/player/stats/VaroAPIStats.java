@@ -22,47 +22,47 @@ public class VaroAPIStats {
 		stats.addKill();
 	}
 
-	public int getKills() {
-		return stats.getKills();
-	}
-
-	public void setWillClearInventory(boolean willClear) {
-		stats.setWillClear(willClear);
-	}
-
 	public int getCountdown() {
 		return stats.getCountdown();
 	}
 
-	public void setCountdown(int time) {
-		stats.setCountdown(time);
-	}
-
 	public ArrayList<VaroAPIInventoryBackup> getInventoryBackups() {
 		ArrayList<VaroAPIInventoryBackup> backups = new ArrayList<>();
-		for (InventoryBackup invB : stats.getInventoryBackups())
+		for(InventoryBackup invB : stats.getInventoryBackups())
 			backups.add(new VaroAPIInventoryBackup(invB));
 
 		return backups;
 	}
 
-	public VaroAPIState getState() {
-		return VaroAPIState.getState(stats.getState());
-	}
-
-	public void setState(VaroAPIState state) {
-		stats.setState(state.getOrigin());
+	public int getKills() {
+		return stats.getKills();
 	}
 
 	public Location getLastLocation() {
 		return stats.getLastLocation();
 	}
 
+	public VaroAPIState getState() {
+		return VaroAPIState.getState(stats.getState());
+	}
+
 	public List<VaroAPIStrike> getStrikes() {
 		List<VaroAPIStrike> strikes = new ArrayList<VaroAPIStrike>();
-		for (Strike strike : stats.getStrikes())
+		for(Strike strike : stats.getStrikes())
 			strikes.add(new VaroAPIStrike(strike));
 
 		return strikes;
+	}
+
+	public void setCountdown(int time) {
+		stats.setCountdown(time);
+	}
+
+	public void setState(VaroAPIState state) {
+		stats.setState(state.getOrigin());
+	}
+
+	public void setWillClearInventory(boolean willClear) {
+		stats.setWillClear(willClear);
 	}
 }

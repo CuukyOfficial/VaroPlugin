@@ -30,22 +30,8 @@ public class ReportGUI extends SuperInventory {
 	}
 
 	@Override
-	public boolean onOpen() {
-		int i = -1;
-		for (ReportReason reasons : ReportReason.values()) {
-			i++;
-			ArrayList<String> lore = new ArrayList<>();
-			for (String strin : reasons.getDescription().split("\n"))
-				lore.add("§c" + strin);
-
-			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());
-		}
-
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
+	public boolean onBackClick() {
+		return false;
 	}
 
 	@Override
@@ -59,12 +45,24 @@ public class ReportGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 
 	@Override
-	public boolean onBackClick() {
-		return false;
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
+	public boolean onOpen() {
+		int i = -1;
+		for(ReportReason reasons : ReportReason.values()) {
+			i++;
+			ArrayList<String> lore = new ArrayList<>();
+			for(String strin : reasons.getDescription().split("\n"))
+				lore.add("§c" + strin);
+
+			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());
+		}
+
+		return true;
 	}
 
 }

@@ -64,9 +64,9 @@ public enum Materials {
 	BEDROCK("BEDROCK", 0, "BEDROCK"),
 	BEEF("BEEF", 0, "RAW_BEEF"),
 	BEETROOT("BEETROOT", 0, "BEETROOT"),
-	BEETROOTS("BEETROOTS", 0, "BEETROOT", "BEETROOT_BLOCK"),
 	BEETROOT_SEEDS("BEETROOT_SEEDS", 0, "BEETROOT_SEEDS"),
 	BEETROOT_SOUP("BEETROOT_SOUP", 0, "BEETROOT_SOUP"),
+	BEETROOTS("BEETROOTS", 0, "BEETROOT", "BEETROOT_BLOCK"),
 	BIRCH_BOAT("BIRCH_BOAT", 0, "BOAT_BIRCH"),
 	BIRCH_BUTTON("BIRCH_BUTTON", 0, "WOOD_BUTTON"),
 	BIRCH_DOOR("BIRCH_DOOR", 0, "BIRCH_DOOR", "BIRCH_DOOR_ITEM"),
@@ -123,9 +123,9 @@ public enum Materials {
 	BREAD("BREAD", 0, "BREAD"),
 	BREWING_STAND("BREWING_STAND", 0, "BREWING_STAND", "BREWING_STAND_ITEM"),
 	BRICK("BRICK", 0, "CLAY_BRICK"),
-	BRICKS("BRICKS", 0, "BRICK"),
 	BRICK_SLAB("BRICK_SLAB", 4, "STEP"),
 	BRICK_STAIRS("BRICK_STAIRS", 0, "BRICK_STAIRS"),
+	BRICKS("BRICKS", 0, "BRICK"),
 	BROWN_BANNER("BROWN_BANNER", 3, "BANNER", "STANDING_BANNER"),
 	BROWN_BED("BROWN_BED", 12, "BED", "BED_BLOCK"),
 	BROWN_CARPET("BROWN_CARPET", 12, "CARPET"),
@@ -149,26 +149,26 @@ public enum Materials {
 	CACTUS_GREEN("CACTUS_GREEN", 2, "INK_SACK"),
 	CAKE("CAKE", 0, "CAKE", "CAKE_BLOCK"),
 	CARROT("CARROT", 0, "CARROT_ITEM"),
-	CARROTS("CARROTS", 0, "CARROT"),
 	CARROT_ON_A_STICK("CARROT_ON_A_STICK", 0, "CARROT_STICK"),
+	CARROTS("CARROTS", 0, "CARROT"),
 	CARVED_PUMPKIN("CARVED_PUMPKIN", 0, "PUMPKIN"),
 	CAULDRON("CAULDRON", 0, "CAULDRON", "CAULDRON_ITEM"),
 	CAVE_AIR("CAVE_AIR", 0, "AIR"),
 	CAVE_SPIDER_SPAWN_EGG("CAVE_SPIDER_SPAWN_EGG", 0, "MONSTER_EGG"),
+	CHAIN_COMMAND_BLOCK("CHAIN_COMMAND_BLOCK", 0, "COMMAND_CHAIN"),
 	CHAINMAIL_BOOTS("CHAINMAIL_BOOTS", 0, "CHAINMAIL_BOOTS"),
 	CHAINMAIL_CHESTPLATE("CHAINMAIL_CHESTPLATE", 0, "CHAINMAIL_CHESTPLATE"),
 	CHAINMAIL_HELMET("CHAINMAIL_HELMET", 0, "CHAINMAIL_HELMET"),
 	CHAINMAIL_LEGGINGS("CHAINMAIL_LEGGINGS", 0, "CHAINMAIL_LEGGINGS"),
-	CHAIN_COMMAND_BLOCK("CHAIN_COMMAND_BLOCK", 0, "COMMAND_CHAIN"),
 	CHARCOAL("CHARCOAL", 1, "COAL"),
 	CHEST("CHEST", 0, "CHEST", "LOCKED_CHEST"),
-	CHEST_N("CHEST", 1, "CHEST", "LOCKED_CHEST"),
-	CHEST_S("CHEST", 2, "CHEST", "LOCKED_CHEST"),
-	CHEST_W("CHEST", 3, "CHEST", "LOCKED_CHEST"),
-	CHEST_O("CHEST", 4, "CHEST", "LOCKED_CHEST"),
-	CHEST_U("CHEST", 5, "CHEST", "LOCKED_CHEST"),
 	CHEST_D("CHEST", 6, "CHEST", "LOCKED_CHEST"),
 	CHEST_MINECART("CHEST_MINECART", 0, "STORAGE_MINECART"),
+	CHEST_N("CHEST", 1, "CHEST", "LOCKED_CHEST"),
+	CHEST_O("CHEST", 4, "CHEST", "LOCKED_CHEST"),
+	CHEST_S("CHEST", 2, "CHEST", "LOCKED_CHEST"),
+	CHEST_U("CHEST", 5, "CHEST", "LOCKED_CHEST"),
+	CHEST_W("CHEST", 3, "CHEST", "LOCKED_CHEST"),
 	CHICKEN("CHICKEN", 0, "RAW_CHICKEN"),
 	CHICKEN_SPAWN_EGG("CHICKEN_SPAWN_EGG", 0, "MONSTER_EGG"),
 	CHIPPED_ANVIL("CHIPPED_ANVIL", 1, "ANVIL"),
@@ -294,11 +294,6 @@ public enum Materials {
 	ENCHANTED_BOOK("ENCHANTED_BOOK", 0, "ENCHANTED_BOOK"),
 	ENCHANTED_GOLDEN_APPLE("ENCHANTED_GOLDEN_APPLE", 1, "GOLDEN_APPLE"),
 	ENCHANTING_TABLE("ENCHANTING_TABLE", 0, "ENCHANTMENT_TABLE"),
-	ENDERMAN_SPAWN_EGG("ENDERMAN_SPAWN_EGG", 0, "MONSTER_EGG"),
-	ENDERMITE_SPAWN_EGG("ENDERMITE_SPAWN_EGG", 0, "MONSTER_EGG"),
-	ENDER_CHEST("ENDER_CHEST", 0, "ENDER_CHEST"),
-	ENDER_EYE("ENDER_EYE", 0, "EYE_OF_ENDER"),
-	ENDER_PEARL("ENDER_PEARL", 0, "ENDER_PEARL"),
 	END_CRYSTAL("END_CRYSTAL", 0, "END_CRYSTAL"),
 	END_GATEWAY("END_GATEWAY", 0, "END_GATEWAY"),
 	END_PORTAL("END_PORTAL", 0, "ENDER_PORTAL"),
@@ -306,6 +301,11 @@ public enum Materials {
 	END_ROD("END_ROD", 0, "END_ROD"),
 	END_STONE("END_STONE", 0, "ENDER_STONE"),
 	END_STONE_BRICKS("END_STONE_BRICKS", 0, "END_BRICKS"),
+	ENDER_CHEST("ENDER_CHEST", 0, "ENDER_CHEST"),
+	ENDER_EYE("ENDER_EYE", 0, "EYE_OF_ENDER"),
+	ENDER_PEARL("ENDER_PEARL", 0, "ENDER_PEARL"),
+	ENDERMAN_SPAWN_EGG("ENDERMAN_SPAWN_EGG", 0, "MONSTER_EGG"),
+	ENDERMITE_SPAWN_EGG("ENDERMITE_SPAWN_EGG", 0, "MONSTER_EGG"),
 	EVOKER_SPAWN_EGG("EVOKER_SPAWN_EGG", 0, "MONSTER_EGG"),
 	EXPERIENCE_BOTTLE("EXPERIENCE_BOTTLE", 0, "EXP_BOTTLE"),
 	FARMLAND("FARMLAND", 0, "SOIL"),
@@ -315,12 +315,12 @@ public enum Materials {
 	FERN_1("FERN", 1, "LONG_GRASS"),
 	FILLED_MAP("FILLED_MAP", 0, "MAP"),
 	FIRE("FIRE", 0, "FIRE"),
-	FIREWORK_ROCKET("FIREWORK_ROCKET", 0, "FIREWORK"),
-	FIREWORK_STAR("FIREWORK_STAR", 0, "FIREWORK_CHARGE"),
 	FIRE_CHARGE("FIRE_CHARGE", 0, "FIREBALL"),
 	FIRE_CORAL("FIRE_CORAL", 0, "STONE"),
 	FIRE_CORAL_BLOCK("FIRE_CORAL_BLOCK", 0, "STONE"),
 	FIRE_CORAL_FAN("FIRE_CORAL_FAN", 0, "STONE"),
+	FIREWORK_ROCKET("FIREWORK_ROCKET", 0, "FIREWORK"),
+	FIREWORK_STAR("FIREWORK_STAR", 0, "FIREWORK_CHARGE"),
 	FISHING_ROD("FISHING_ROD", 0, "FISHING_ROD"),
 	FLINT("FLINT", 0, "FLINT"),
 	FLINT_AND_STEEL("FLINT_AND_STEEL", 0, "FLINT_AND_STEEL"),
@@ -336,6 +336,10 @@ public enum Materials {
 	GLISTERING_MELON_SLICE("GLISTERING_MELON_SLICE", 0, "SPECKLED_MELON"),
 	GLOWSTONE("GLOWSTONE", 0, "GLOWSTONE"),
 	GLOWSTONE_DUST("GLOWSTONE_DUST", 0, "GLOWSTONE_DUST"),
+	GOLD_BLOCK("GOLD_BLOCK", 0, "GOLD_BLOCK"),
+	GOLD_INGOT("GOLD_INGOT", 0, "GOLD_INGOT"),
+	GOLD_NUGGET("GOLD_NUGGET", 0, "GOLD_NUGGET"),
+	GOLD_ORE("GOLD_ORE", 0, "GOLD_ORE"),
 	GOLDEN_APPLE("GOLDEN_APPLE", 0, "GOLDEN_APPLE"),
 	GOLDEN_AXE("GOLDEN_AXE", 0, "GOLD_AXE"),
 	GOLDEN_BOOTS("GOLDEN_BOOTS", 0, "GOLD_BOOTS"),
@@ -348,10 +352,6 @@ public enum Materials {
 	GOLDEN_PICKAXE("GOLDEN_PICKAXE", 0, "GOLD_PICKAXE"),
 	GOLDEN_SHOVEL("GOLDEN_SHOVEL", 0, "GOLD_SPADE"),
 	GOLDEN_SWORD("GOLDEN_SWORD", 0, "GOLD_SWORD"),
-	GOLD_BLOCK("GOLD_BLOCK", 0, "GOLD_BLOCK"),
-	GOLD_INGOT("GOLD_INGOT", 0, "GOLD_INGOT"),
-	GOLD_NUGGET("GOLD_NUGGET", 0, "GOLD_NUGGET"),
-	GOLD_ORE("GOLD_ORE", 0, "GOLD_ORE"),
 	GRANITE("GRANITE", 1, "STONE"),
 	GRASS("GRASS", 0, "GRASS"),
 	GRASS_BLOCK("GRASS_BLOCK", 0, "GRASS"),
@@ -545,17 +545,17 @@ public enum Materials {
 	MYCELIUM("MYCELIUM", 0, "MYCEL"),
 	NAME_TAG("NAME_TAG", 0, "NAME_TAG"),
 	NAUTILUS_SHELL("NAUTILUS_SHELL", 0, "STONE"),
-	NETHERRACK("NETHERRACK", 0, "NETHERRACK"),
 	NETHER_BRICK("NETHER_BRICK", 0, "NETHER_BRICK"),
-	NETHER_BRICKS("NETHER_BRICKS", 0, "NETHER_BRICK"),
 	NETHER_BRICK_FENCE("NETHER_BRICK_FENCE", 0, "NETHER_FENCE"),
 	NETHER_BRICK_SLAB("NETHER_BRICK_SLAB", 6, "STEP"),
 	NETHER_BRICK_STAIRS("NETHER_BRICK_STAIRS", 0, "NETHER_BRICK_STAIRS"),
+	NETHER_BRICKS("NETHER_BRICKS", 0, "NETHER_BRICK"),
 	NETHER_PORTAL("NETHER_PORTAL", 0, "PORTAL"),
 	NETHER_QUARTZ_ORE("NETHER_QUARTZ_ORE", 0, "QUARTZ_ORE"),
 	NETHER_STAR("NETHER_STAR", 0, "NETHER_STAR"),
 	NETHER_WART("NETHER_WART", 0, "NETHER_STALK"),
 	NETHER_WART_BLOCK("NETHER_WART_BLOCK", 0, "NETHER_WART_BLOCK", "NETHER_WARTS"),
+	NETHERRACK("NETHERRACK", 0, "NETHERRACK"),
 	NOTE_BLOCK("NOTE_BLOCK", 0, "NOTE_BLOCK"),
 	OAK_BOAT("OAK_BOAT", 0, "BOAT"),
 	OAK_BUTTON("OAK_BUTTON", 0, "WOOD_BUTTON"),
@@ -651,9 +651,9 @@ public enum Materials {
 	POTTED_WHITE_TULIP("POTTED_WHITE_TULIP", 0, "FLOWER_POT"),
 	POWERED_RAIL("POWERED_RAIL", 0, "POWERED_RAIL"),
 	PRISMARINE("PRISMARINE", 0, "PRISMARINE"),
-	PRISMARINE_BRICKS("PRISMARINE_BRICKS", 1, "PRISMARINE"),
 	PRISMARINE_BRICK_SLAB("PRISMARINE_BRICK_SLAB", 0, "STONE"),
 	PRISMARINE_BRICK_STAIRS("PRISMARINE_BRICK_STAIRS", 0, "STONE"),
+	PRISMARINE_BRICKS("PRISMARINE_BRICKS", 1, "PRISMARINE"),
 	PRISMARINE_CRYSTALS("PRISMARINE_CRYSTALS", 0, "PRISMARINE_CRYSTALS"),
 	PRISMARINE_SHARD("PRISMARINE_SHARD", 0, "PRISMARINE_SHARD"),
 	PRISMARINE_SLAB("PRISMARINE_SLAB", 0, "STONE"),
@@ -693,13 +693,6 @@ public enum Materials {
 	RABBIT_SPAWN_EGG("RABBIT_SPAWN_EGG", 0, "MONSTER_EGG"),
 	RABBIT_STEW("RABBIT_STEW", 0, "RABBIT_STEW"),
 	RAIL("RAIL", 0, "RAILS"),
-	REDSTONE("REDSTONE", 0, "REDSTONE"),
-	REDSTONE_BLOCK("REDSTONE_BLOCK", 0, "REDSTONE_BLOCK"),
-	REDSTONE_LAMP("REDSTONE_LAMP", 0, "REDSTONE_LAMP_ON", "REDSTONE_LAMP_OFF"),
-	REDSTONE_ORE("REDSTONE_ORE", 0, "REDSTONE_ORE", "GLOWING_REDSTONE_ORE"),
-	REDSTONE_TORCH("REDSTONE_TORCH", 0, "REDSTONE_TORCH_ON", "REDSTONE_TORCH_OFF"),
-	REDSTONE_WALL_TORCH("REDSTONE_WALL_TORCH", 1, "REDSTONE_TORCH_ON", "REDSTONE_TORCH_OFF"),
-	REDSTONE_WIRE("REDSTONE_WIRE", 0, "REDSTONE_WIRE"),
 	RED_BANNER("RED_BANNER", 1, "BANNER", "STANDING_BANNER"),
 	RED_BED("RED_BED", 14, "BED", "BED_BLOCK"),
 	RED_CARPET("RED_CARPET", 14, "CARPET"),
@@ -720,6 +713,13 @@ public enum Materials {
 	RED_TULIP("RED_TULIP", 4, "RED_ROSE"),
 	RED_WALL_BANNER("RED_WALL_BANNER", 0, "WALL_BANNER"),
 	RED_WOOL("RED_WOOL", 14, "WOOL"),
+	REDSTONE("REDSTONE", 0, "REDSTONE"),
+	REDSTONE_BLOCK("REDSTONE_BLOCK", 0, "REDSTONE_BLOCK"),
+	REDSTONE_LAMP("REDSTONE_LAMP", 0, "REDSTONE_LAMP_ON", "REDSTONE_LAMP_OFF"),
+	REDSTONE_ORE("REDSTONE_ORE", 0, "REDSTONE_ORE", "GLOWING_REDSTONE_ORE"),
+	REDSTONE_TORCH("REDSTONE_TORCH", 0, "REDSTONE_TORCH_ON", "REDSTONE_TORCH_OFF"),
+	REDSTONE_WALL_TORCH("REDSTONE_WALL_TORCH", 1, "REDSTONE_TORCH_ON", "REDSTONE_TORCH_OFF"),
+	REDSTONE_WIRE("REDSTONE_WIRE", 0, "REDSTONE_WIRE"),
 	REPEATER("REPEATER", 0, "DIODE", "DIODE_BLOCK_ON", "DIODE_BLOCK_OFF"),
 	REPEATING_COMMAND_BLOCK("REPEATING_COMMAND_BLOCK", 0, "COMMAND_REPEATING"),
 	ROSE_BUSH("ROSE_BUSH", 4, "DOUBLE_PLANT"),
@@ -734,9 +734,9 @@ public enum Materials {
 	SANDSTONE_SLAB("SANDSTONE_SLAB", 1, "STONE_SLAB", "STEP", "DOUBLE_STEP"),
 	SANDSTONE_STAIRS("SANDSTONE_STAIRS", 0, "SANDSTONE_STAIRS"),
 	SCUTE("SCUTE", 0, "STONE"),
-	SEAGRASS("SEAGRASS", 0, "STONE"),
 	SEA_LANTERN("SEA_LANTERN", 0, "SEA_LANTERN"),
 	SEA_PICKLE("SEA_PICKLE", 0, "STONE"),
+	SEAGRASS("SEAGRASS", 0, "STONE"),
 	SHEARS("SHEARS", 0, "SHEARS"),
 	SHEEP_SPAWN_EGG("SHEEP_SPAWN_EGG", 0, "MONSTER_EGG"),
 	SHIELD("SHIELD", 0, "SHIELD"),
@@ -758,8 +758,8 @@ public enum Materials {
 	SMOOTH_SANDSTONE("SMOOTH_SANDSTONE", 2, "SANDSTONE"),
 	SMOOTH_STONE("SMOOTH_STONE", 0, "STEP"),
 	SNOW("SNOW", 0, "SNOW"),
-	SNOWBALL("SNOWBALL", 0, "SNOW_BALL"),
 	SNOW_BLOCK("SNOW_BLOCK", 0, "SNOW_BLOCK"),
+	SNOWBALL("SNOWBALL", 0, "SNOW_BALL"),
 	SOUL_SAND("SOUL_SAND", 0, "SOUL_SAND"),
 	SPAWNER("SPAWNER", 0, "MOB_SPAWNER"),
 	SPECTRAL_ARROW("SPECTRAL_ARROW", 0, "SPECTRAL_ARROW"),
@@ -786,9 +786,9 @@ public enum Materials {
 	STICKY_PISTON("STICKY_PISTON", 0, "PISTON_STICKY_BASE"),
 	STONE("STONE", 0, "STONE"),
 	STONE_AXE("STONE_AXE", 0, "STONE_AXE"),
-	STONE_BRICKS("STONE_BRICKS", 0, "SMOOTH_BRICK"),
 	STONE_BRICK_SLAB("STONE_BRICK_SLAB", 5, "STONE_SLAB", "STEP", "DOUBLE_STEP"),
 	STONE_BRICK_STAIRS("STONE_BRICK_STAIRS", 0, "SMOOTH_STAIRS"),
+	STONE_BRICKS("STONE_BRICKS", 0, "SMOOTH_BRICK"),
 	STONE_BUTTON("STONE_BUTTON", 0, "STONE_BUTTON"),
 	STONE_HOE("STONE_HOE", 0, "STONE_HOE"),
 	STONE_PICKAXE("STONE_PICKAXE", 0, "STONE_PICKAXE"),
@@ -843,9 +843,9 @@ public enum Materials {
 	VOID_AIR("VOID_AIR", 0, "AIR"),
 	WALL_SIGN("WALL_SIGN", 0, "WALL_SIGN", "SIGN_POST"),
 	WALL_SIGN_N("WALL_SIGN", 1, "WALL_SIGN", "SIGN_POST"),
-	WALL_SIGN_W("WALL_SIGN", 2, "WALL_SIGN", "SIGN_POST"),
-	WALL_SIGN_S("WALL_SIGN", 3, "WALL_SIGN", "SIGN_POST"),
 	WALL_SIGN_O("WALL_SIGN", 4, "WALL_SIGN", "SIGN_POST"),
+	WALL_SIGN_S("WALL_SIGN", 3, "WALL_SIGN", "SIGN_POST"),
+	WALL_SIGN_W("WALL_SIGN", 2, "WALL_SIGN", "SIGN_POST"),
 	WALL_TORCH("WALL_TORCH", 1, "TORCH"),
 	WATER("WATER", 0, "WATER", "STATIONARY_WATER"),
 	WATER_BUCKET("WATER_BUCKET", 0, "WATER_BUCKET"),
@@ -898,10 +898,10 @@ public enum Materials {
 
 	private static HashMap<String, Materials> cachedSearch = new HashMap<>();
 
-	private Material parsed;
-	private String name;
-	private String[] matches;
 	private int data;
+	private String[] matches;
+	private String name;
+	private Material parsed;
 
 	private Materials(String name, int data, String... m) {
 		this.name = name;
@@ -909,82 +909,13 @@ public enum Materials {
 		this.data = data;
 	}
 
-	public static boolean isNewVersion() {
-		Material mat = Material.getMaterial("RED_WOOL");
-		if (mat != null)
-			return true;
-
-		return false;
-	}
-
-	public static Materials requestMaterial(String name, byte data) {
-		if (cachedSearch.containsKey(name.toUpperCase() + "," + data))
-			return cachedSearch.get(name.toUpperCase() + "," + data);
-
-		for (Materials mat : Materials.values()) {
-			if (mat.getName().equals(name) && data == 0) {
-				cachedSearch.put(mat.getName() + "," + 0, mat);
-				return mat;
-			}
-
-			for (String test : mat.matches) {
-				if (name.toUpperCase().equals(test) && ((byte) mat.data) == data) {
-					cachedSearch.put(test + "," + data, mat);
-					return mat;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public static Materials fromString(String key) {
-		Materials xmat = null;
-		String[] split = key.split(":");
-		if (split.length == 1) {
-			xmat = requestMaterial(key, (byte) 0);
-		} else {
-			xmat = requestMaterial(split[0], (byte) Integer.parseInt(split[1]));
-		}
-		return xmat;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public ItemStack parseItem() {
-		Material mat = parseMaterial();
-		if (isNewVersion())
-			return new ItemStack(mat);
-
-		return new ItemStack(mat, 1, (byte) data);
-	}
-
-	@SuppressWarnings("deprecation")
-	public boolean isSameMaterial(ItemStack comp) {
-		if (isNewVersion())
-			return comp.getType() == this.parseMaterial();
-
-		if (comp.getType() == this.parseMaterial() && (int) comp.getData().getData() == (int) this.data)
-			return true;
-
-		Materials xmat = fromMaterial(comp.getType());
-		if (isDamageable(xmat)) {
-			if (this.parseMaterial() == comp.getType()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public Materials fromMaterial(Material mat) {
 		try {
 			return Materials.valueOf(mat.toString());
-		} catch (IllegalArgumentException e) {
-			for (Materials xmat : Materials.values()) {
-				for (String test : xmat.matches) {
-					if (test.equalsIgnoreCase(mat.toString())) {
+		} catch(IllegalArgumentException e) {
+			for(Materials xmat : Materials.values()) {
+				for(String test : xmat.matches) {
+					if(test.equalsIgnoreCase(mat.toString())) {
 						return xmat;
 					}
 				}
@@ -997,17 +928,85 @@ public enum Materials {
 		return data;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public boolean isDamageable(Materials type) {
+		if(type == null)
+			return false;
+		String[] split = type.toString().split("_");
+		int length = split.length;
+		switch(split[length - 1]) {
+		case "HELMET":
+			return true;
+		case "CHESTPLATE":
+			return true;
+		case "LEGGINGS":
+			return true;
+		case "BOOTS":
+			return true;
+		case "SWORD":
+			return true;
+		case "AXE":
+			return true;
+		case "PICKAXE":
+			return true;
+		case "SHOVEL":
+			return true;
+		case "HOE":
+			return true;
+		case "ELYTRA":
+			return true;
+		case "TURTLE_HELMET":
+			return true;
+		case "TRIDENT":
+			return true;
+		case "HORSE_ARMOR":
+			return true;
+		case "SHEARS":
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean isSameMaterial(ItemStack comp) {
+		if(isNewVersion())
+			return comp.getType() == this.parseMaterial();
+
+		if(comp.getType() == this.parseMaterial() && (int) comp.getData().getData() == (int) this.data)
+			return true;
+
+		Materials xmat = fromMaterial(comp.getType());
+		if(isDamageable(xmat)) {
+			if(this.parseMaterial() == comp.getType()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ItemStack parseItem() {
+		Material mat = parseMaterial();
+		if(isNewVersion())
+			return new ItemStack(mat);
+
+		return new ItemStack(mat, 1, (byte) data);
+	}
+
 	public Material parseMaterial() {
-		if (parsed != null)
+		if(parsed != null)
 			return parsed;
 
 		Material mat = Material.matchMaterial(getName());
-		if (mat != null && isNewVersion())
+		if(mat != null && isNewVersion())
 			return parsed = mat;
 
-		for (String m : this.matches) {
+		for(String m : this.matches) {
 			Material found = Material.matchMaterial(m);
-			if (found == null)
+			if(found == null)
 				continue;
 
 			return parsed = found;
@@ -1016,42 +1015,43 @@ public enum Materials {
 		return null;
 	}
 
-	public boolean isDamageable(Materials type) {
-		if (type == null)
-			return false;
-		String[] split = type.toString().split("_");
-		int length = split.length;
-		switch (split[length - 1]) {
-			case "HELMET":
-				return true;
-			case "CHESTPLATE":
-				return true;
-			case "LEGGINGS":
-				return true;
-			case "BOOTS":
-				return true;
-			case "SWORD":
-				return true;
-			case "AXE":
-				return true;
-			case "PICKAXE":
-				return true;
-			case "SHOVEL":
-				return true;
-			case "HOE":
-				return true;
-			case "ELYTRA":
-				return true;
-			case "TURTLE_HELMET":
-				return true;
-			case "TRIDENT":
-				return true;
-			case "HORSE_ARMOR":
-				return true;
-			case "SHEARS":
-				return true;
-			default:
-				return false;
+	public static Materials fromString(String key) {
+		Materials xmat = null;
+		String[] split = key.split(":");
+		if(split.length == 1) {
+			xmat = requestMaterial(key, (byte) 0);
+		} else {
+			xmat = requestMaterial(split[0], (byte) Integer.parseInt(split[1]));
 		}
+		return xmat;
+	}
+
+	public static boolean isNewVersion() {
+		Material mat = Material.getMaterial("RED_WOOL");
+		if(mat != null)
+			return true;
+
+		return false;
+	}
+
+	public static Materials requestMaterial(String name, byte data) {
+		if(cachedSearch.containsKey(name.toUpperCase() + "," + data))
+			return cachedSearch.get(name.toUpperCase() + "," + data);
+
+		for(Materials mat : Materials.values()) {
+			if(mat.getName().equals(name) && data == 0) {
+				cachedSearch.put(mat.getName() + "," + 0, mat);
+				return mat;
+			}
+
+			for(String test : mat.matches) {
+				if(name.toUpperCase().equals(test) && ((byte) mat.data) == data) {
+					cachedSearch.put(test + "," + data, mat);
+					return mat;
+				}
+			}
+		}
+
+		return null;
 	}
 }

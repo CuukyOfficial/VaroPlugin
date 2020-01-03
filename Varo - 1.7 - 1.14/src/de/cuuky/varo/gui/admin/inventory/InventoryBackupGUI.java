@@ -26,6 +26,21 @@ public class InventoryBackupGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new InventoryBackupListGUI(opener, backup.getVaroPlayer());
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		linkItemTo(1, new ItemBuilder().displayname("§aShow").itemstack(new ItemStack(Material.CHEST)).build(), new Runnable() {
 
@@ -39,7 +54,7 @@ public class InventoryBackupGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if (!backup.getVaroPlayer().isOnline()) {
+				if(!backup.getVaroPlayer().isOnline()) {
 					backup.getVaroPlayer().getStats().setRestoreBackup(backup);
 					opener.sendMessage(Main.getPrefix() + "Inventar wird beim nächsten Betreten wiederhergestellt!");
 					return;
@@ -60,23 +75,5 @@ public class InventoryBackupGUI extends SuperInventory {
 		});
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new InventoryBackupListGUI(opener, backup.getVaroPlayer());
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

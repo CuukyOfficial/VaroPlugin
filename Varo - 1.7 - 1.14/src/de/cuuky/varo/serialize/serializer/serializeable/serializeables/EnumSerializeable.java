@@ -14,11 +14,11 @@ public class EnumSerializeable extends VaroSerialize {
 
 	@Override
 	public Object deserialize(Field field, Object obj) {
-		if (!field.getType().isEnum() || !(obj instanceof String))
+		if(!field.getType().isEnum() || !(obj instanceof String))
 			return null;
 
 		VaroSerializeable ser = getEnumByString((String) obj);
-		if (ser == null)
+		if(ser == null)
 			return null;
 
 		return ser;

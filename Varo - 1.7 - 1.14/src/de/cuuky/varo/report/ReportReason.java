@@ -8,20 +8,20 @@ import de.cuuky.varo.version.types.Materials;
 
 public enum ReportReason implements VaroSerializeable {
 
+	@VaroSerializeField(enumValue = "CHAT")
+	CHAT("Chat", Materials.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhält."),
 	@VaroSerializeField(enumValue = "HACKING")
 	HACKING("Hacking", Materials.TNT.parseMaterial(), "Benutze dies, falls jemand hackt oder exploited."),
 	@VaroSerializeField(enumValue = "TEAMING")
 	TEAMING("Teaming", Materials.DIRT.parseMaterial(), "Benutze dies, falls Personen aus unterschiedlichen Teams teamen."),
-	@VaroSerializeField(enumValue = "CHAT")
-	CHAT("Chat", Materials.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhält."),
-	@VaroSerializeField(enumValue = "XRAY")
-	XRAY("Xray", Materials.STONE.parseMaterial(), "Benutze dies, falls jemand Xray benutzt."),
 	@VaroSerializeField(enumValue = "TROLLING")
-	TROLLING("Trolling", Materials.BLACK_WOOL.parseMaterial(), "Benutze dies, falls jemand trollt.");
+	TROLLING("Trolling", Materials.BLACK_WOOL.parseMaterial(), "Benutze dies, falls jemand trollt."),
+	@VaroSerializeField(enumValue = "XRAY")
+	XRAY("Xray", Materials.STONE.parseMaterial(), "Benutze dies, falls jemand Xray benutzt.");
 
-	private String name;
-	private Material material;
 	private String description;
+	private Material material;
+	private String name;
 
 	ReportReason(String s, Material mat, String desc) {
 		this.name = s;
@@ -29,32 +29,30 @@ public enum ReportReason implements VaroSerializeable {
 		this.description = desc;
 	}
 
-	public static ReportReason getByName(String name) {
-		for (ReportReason reasons : values()) {
-			if (reasons.getName().equals(name)) {
-				return reasons;
-			}
-		}
-		return null;
-	}
-
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 
 	public Material getMaterial() {
 		return material;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
 	@Override
-	public void onDeserializeEnd() {
-	}
+	public void onDeserializeEnd() {}
 
 	@Override
-	public void onSerializeStart() {
+	public void onSerializeStart() {}
+
+	public static ReportReason getByName(String name) {
+		for(ReportReason reasons : values()) {
+			if(reasons.getName().equals(name)) {
+				return reasons;
+			}
+		}
+		return null;
 	}
 }

@@ -14,16 +14,16 @@ public abstract class Logger {
 
 	protected File file;
 	protected FileWriter fw;
+	protected ArrayList<String> logs;
 	protected PrintWriter pw;
 	protected Scanner scanner;
-	protected ArrayList<String> logs;
 
 	public Logger(String name, boolean loadPrevious) {
 		this.file = new File("plugins/Varo/logs/", name + ".yml");
 		this.logs = new ArrayList<String>();
 
 		try {
-			if (!file.exists()) {
+			if(!file.exists()) {
 				new File(file.getParent()).mkdirs();
 				file.createNewFile();
 			}
@@ -32,12 +32,20 @@ public abstract class Logger {
 			pw = new PrintWriter(fw);
 			scanner = new Scanner(file);
 
-			if (loadPrevious)
-				while (scanner.hasNextLine())
+			if(loadPrevious)
+				while(scanner.hasNextLine())
 					logs.add(scanner.nextLine());
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public ArrayList<String> getLogs() {
+		return logs;
 	}
 
 	protected String getCurrentDate() {
@@ -45,13 +53,5 @@ public abstract class Logger {
 		Date date = new Date();
 
 		return dateFormat.format(date);
-	}
-
-	public ArrayList<String> getLogs() {
-		return logs;
-	}
-
-	public File getFile() {
-		return file;
 	}
 }

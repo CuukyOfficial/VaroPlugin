@@ -16,9 +16,9 @@ public class ListHandler {
 	private BlockedItems blockedItems;
 	private BlockedRecipes blockedRecipes;
 	private ChestItems chestItems;
+	private DeathItems deathItems;
 	private LogDestroyedBlocks destroyedBlocks;
 	private StartItems startItems;
-	private DeathItems deathItems;
 
 	private ListHandler() {
 		this.blockedEnchantments = new BlockedEnchantments();
@@ -32,21 +32,6 @@ public class ListHandler {
 		VaroList.saveLists();
 	}
 
-	public static ListHandler getInstance() {
-		if (instance == null) {
-			instance = new ListHandler();
-		}
-		return instance;
-	}
-
-	public BlockedRecipes getBlockedRecipes() {
-		return blockedRecipes;
-	}
-
-	public DeathItems getDeathItems() {
-		return deathItems;
-	}
-
 	public BlockedEnchantments getBlockedEnchantments() {
 		return blockedEnchantments;
 	}
@@ -55,8 +40,16 @@ public class ListHandler {
 		return blockedItems;
 	}
 
+	public BlockedRecipes getBlockedRecipes() {
+		return blockedRecipes;
+	}
+
 	public ChestItems getChestItems() {
 		return chestItems;
+	}
+
+	public DeathItems getDeathItems() {
+		return deathItems;
 	}
 
 	public LogDestroyedBlocks getDestroyedBlocks() {
@@ -65,5 +58,12 @@ public class ListHandler {
 
 	public StartItems getStartItems() {
 		return startItems;
+	}
+
+	public static ListHandler getInstance() {
+		if(instance == null) {
+			instance = new ListHandler();
+		}
+		return instance;
 	}
 }

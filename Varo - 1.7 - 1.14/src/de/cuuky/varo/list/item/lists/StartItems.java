@@ -13,15 +13,15 @@ public class StartItems extends ItemList {
 	public StartItems() {
 		super("StartItems");
 
-		if (!items.isEmpty())
+		if(!items.isEmpty())
 			return;
 
 		items.add(Materials.AIR.parseItem());
 	}
 
 	public void giveToAll() {
-		for (Player player : Bukkit.getOnlinePlayers())
-			for (ItemStack item : items)
+		for(Player player : Bukkit.getOnlinePlayers())
+			for(ItemStack item : items)
 				player.getInventory().addItem(item);
 	}
 }

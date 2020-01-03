@@ -14,7 +14,7 @@ public class InfoCommand extends DiscordBotCommand {
 	 */
 
 	public InfoCommand() {
-		super("info", new String[]{"plugin", "author"}, "Zeigt Infos über das Plugin");
+		super("info", new String[] { "plugin", "author" }, "Zeigt Infos über das Plugin");
 	}
 
 	@Override

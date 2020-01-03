@@ -12,12 +12,12 @@ public class ChatClearCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.chatclear")) {
+		if(!sender.hasPermission("varo.chatclear")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		for (int i = 0; i < 100; i++) {
+		for(int i = 0; i < 100; i++) {
 			Bukkit.broadcastMessage("");
 		}
 

@@ -24,26 +24,26 @@ public class WinEvent extends BukkitEvent {
 		player.getStats().addWin();
 		VaroDiscordBot db = BotLauncher.getDiscordBot();
 
-		if (db != null)
-			if (db.isEnabled() || !ConfigEntry.DISCORDBOT_ADD_POKAL_ON_WIN.getValueAsBoolean())
+		if(db != null)
+			if(db.isEnabled() || !ConfigEntry.DISCORDBOT_ADD_POKAL_ON_WIN.getValueAsBoolean())
 				return;
 
 		Member member = BotRegister.getBotRegisterByPlayerName(player.getName()).getMember();
 		int wins = 1;
 		String name = member.getNickname() == null ? member.getUser().getName() : member.getNickname();
 
-		if (name.contains("|")) {
+		if(name.contains("|")) {
 			wins = Integer.valueOf(name.split("\\|")[1].replace("ð", "").replace(" ", ""));
 			wins++;
 		}
 
 		try {
 			db.getController().setNickname(member, member.getUser().getName() + " | " + wins + " ð").complete();
-		} catch (PermissionException e) {
+		} catch(PermissionException e) {
 			System.out.println("[Varo] Konnte den Pokal für '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
 		}
 
-		if (ConfigEntry.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
+		if(ConfigEntry.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
 			Bukkit.getServer().shutdown();
 		}
 	}

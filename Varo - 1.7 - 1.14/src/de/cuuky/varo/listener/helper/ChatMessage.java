@@ -9,8 +9,8 @@ public class ChatMessage {
 
 	private static ArrayList<ChatMessage> messages = new ArrayList<>();
 
-	private Player player;
 	private String message;
+	private Player player;
 	private Date written;
 
 	public ChatMessage(Player player, String message) {
@@ -21,26 +21,26 @@ public class ChatMessage {
 		messages.add(this);
 	}
 
-	public static ChatMessage getMessage(Player player) {
-		for (ChatMessage cmessage : messages) {
-			if (cmessage.getPlayer().equals(player))
-				continue;
-
-			return cmessage;
-		}
-
-		return null;
-	}
-
-	public Date getWritten() {
-		return written;
-	}
-
 	public String getMessage() {
 		return message;
 	}
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public Date getWritten() {
+		return written;
+	}
+
+	public static ChatMessage getMessage(Player player) {
+		for(ChatMessage cmessage : messages) {
+			if(cmessage.getPlayer().equals(player))
+				continue;
+
+			return cmessage;
+		}
+
+		return null;
 	}
 }

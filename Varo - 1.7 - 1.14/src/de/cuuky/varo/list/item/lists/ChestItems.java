@@ -9,7 +9,7 @@ public class ChestItems extends ItemList {
 	public ChestItems() {
 		super("ChestItems");
 
-		if (!items.isEmpty())
+		if(!items.isEmpty())
 			return;
 
 		items.add(Materials.WOODEN_AXE.parseItem());

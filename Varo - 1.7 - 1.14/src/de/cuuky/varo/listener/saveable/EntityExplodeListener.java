@@ -18,29 +18,29 @@ public class EntityExplodeListener implements Listener {
 
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if (!Game.getInstance().hasStarted()) {
+		if(!Game.getInstance().hasStarted()) {
 			event.setCancelled(true);
 			return;
 		}
 
 		final Iterator<Block> iter = event.blockList().iterator();
-		while (iter.hasNext()) {
+		while(iter.hasNext()) {
 			Block block = iter.next();
-			if (block.getState() instanceof Chest || block.getState() instanceof Furnace) {
-				if (VaroSaveable.getByLocation(block.getLocation()) != null)
+			if(block.getState() instanceof Chest || block.getState() instanceof Furnace) {
+				if(VaroSaveable.getByLocation(block.getLocation()) != null)
 					iter.remove();
-			} else if (block.getState() instanceof Sign)
-				if (chestNearby(block.getLocation()))
+			} else if(block.getState() instanceof Sign)
+				if(chestNearby(block.getLocation()))
 					iter.remove();
 		}
 	}
 
 	private boolean chestNearby(Location location) {
-		for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
-			for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
-				for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
+		for(int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
+			for(int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
+				for(int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
 					Location loc = new Location(location.getWorld(), x, y, z);
-					if (VaroSaveable.getByLocation(loc) != null)
+					if(VaroSaveable.getByLocation(loc) != null)
 						return true;
 				}
 			}

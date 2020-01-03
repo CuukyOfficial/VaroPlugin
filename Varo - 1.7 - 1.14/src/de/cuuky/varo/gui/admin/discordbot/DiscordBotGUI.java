@@ -23,6 +23,23 @@ public class DiscordBotGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new AdminMainMenu(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {
+		updateInventory();
+	}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 
 		linkItemTo(1, new ItemBuilder().displayname(BotLauncher.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(BotLauncher.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
@@ -30,12 +47,12 @@ public class DiscordBotGUI extends SuperInventory {
 			@Override
 			public void run() {
 				boolean enabled = BotLauncher.getDiscordBot().isEnabled();
-				if (enabled)
+				if(enabled)
 					BotLauncher.getDiscordBot().disconnect();
 				else
 					BotLauncher.getDiscordBot().connect();
 
-				if (BotLauncher.getDiscordBot().isEnabled() == enabled)
+				if(BotLauncher.getDiscordBot().isEnabled() == enabled)
 					opener.sendMessage(Main.getPrefix() + "§7Could not start DiscordBot.");
 				else
 					opener.sendMessage(Main.getPrefix() + "§7Erfolg!");
@@ -46,7 +63,7 @@ public class DiscordBotGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if (BotLauncher.getDiscordBot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+				if(BotLauncher.getDiscordBot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 					opener.sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
 					return;
 				}
@@ -54,24 +71,5 @@ public class DiscordBotGUI extends SuperInventory {
 		});
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		updateInventory();
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

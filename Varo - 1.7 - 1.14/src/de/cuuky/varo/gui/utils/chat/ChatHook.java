@@ -14,14 +14,14 @@ public class ChatHook {
 		chathooks = new ArrayList<ChatHook>();
 	}
 
-	private Player player;
 	private ChatHookListener listener;
+	private Player player;
 
 	public ChatHook(Player player, String message, ChatHookListener chatHookListener) {
 		this.player = player;
 		this.listener = chatHookListener;
 
-		if (getChatHook(player) != null)
+		if(getChatHook(player) != null)
 			getChatHook(player).remove();
 
 		player.sendMessage(Main.getPrefix() + message);
@@ -29,20 +29,12 @@ public class ChatHook {
 		chathooks.add(this);
 	}
 
-	public static ChatHook getChatHook(Player player) {
-		for (ChatHook hook : chathooks)
-			if (hook.getPlayer().equals(player))
-				return hook;
-
-		return null;
-	}
-
-	public static ArrayList<ChatHook> getChathooks() {
-		return chathooks;
-	}
-
 	public Player getPlayer() {
 		return player;
+	}
+
+	public void remove() {
+		chathooks.remove(this);
 	}
 
 	public void run(String input) {
@@ -51,7 +43,15 @@ public class ChatHook {
 		remove();
 	}
 
-	public void remove() {
-		chathooks.remove(this);
+	public static ChatHook getChatHook(Player player) {
+		for(ChatHook hook : chathooks)
+			if(hook.getPlayer().equals(player))
+				return hook;
+
+		return null;
+	}
+
+	public static ArrayList<ChatHook> getChathooks() {
+		return chathooks;
 	}
 }

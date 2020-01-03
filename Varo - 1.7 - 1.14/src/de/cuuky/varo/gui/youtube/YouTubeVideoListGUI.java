@@ -21,25 +21,39 @@ public class YouTubeVideoListGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		return false;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		ArrayList<YouTubeVideo> list = YouTubeVideo.getVideos();
 
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
+		for(int i = 0; i != getSize(); i++) {
 			YouTubeVideo video;
 			try {
 				video = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
 			;
 
-			linkItemTo(i, new ItemBuilder().displayname("§5" + video.getTitle()).lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm").format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ? video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink()}).playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§5" + video.getTitle()).lore(new String[] { "§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm").format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ? video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink() }).playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build(), new Runnable() {
 
 				@Override
 				public void run() {
-					if (!opener.hasPermission("varo.player")) {
+					if(!opener.hasPermission("varo.player")) {
 						opener.sendMessage("§7Video: " + video.getLink());
 						return;
 					}
@@ -50,22 +64,5 @@ public class YouTubeVideoListGUI extends SuperInventory {
 			start++;
 		}
 		return calculatePages(YouTubeVideo.getVideos().size(), getSize()) == getPage();
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		return false;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

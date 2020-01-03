@@ -16,20 +16,20 @@ public class MuteCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.mute")) {
+		if(!sender.hasPermission("varo.mute")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if (args.length != 1) {
+		if(args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/mute <Player/@a>");
 			sender.sendMessage(Main.getPrefix() + "§7/unmute <Player/@a>");
 			return false;
 		}
 
-		if (args[0].equalsIgnoreCase("@a")) {
-			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				if (player.getPlayer().isOp()) {
+		if(args[0].equalsIgnoreCase("@a")) {
+			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+				if(player.getPlayer().isOp()) {
 					continue;
 				}
 				new VaroCancelAble(CancelAbleType.MUTE, player);
@@ -39,13 +39,13 @@ public class MuteCommand implements CommandExecutor {
 			return false;
 		}
 
-		if (Bukkit.getPlayerExact(args[0]) == null) {
+		if(Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		if (player.isOp()) {
+		if(player.isOp()) {
 			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gemutet werden!");
 			return false;
 		}

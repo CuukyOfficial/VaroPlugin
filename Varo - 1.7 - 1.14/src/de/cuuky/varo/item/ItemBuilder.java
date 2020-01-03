@@ -18,24 +18,14 @@ import de.cuuky.varo.version.types.Materials;
 
 public class ItemBuilder {
 
+	private int amount;
 	private String displayName;
+	private ArrayList<String> lore;
 	private String playerName;
 	private ItemStack stack;
-	private ArrayList<String> lore;
-	private int amount;
 
 	public ItemBuilder() {
 		amount = 1;
-	}
-
-	public ItemBuilder displayname(String displayname) {
-		this.displayName = displayname;
-		return this;
-	}
-
-	public ItemBuilder player(Player player) {
-		this.playerName = player.getName();
-		return this;
 	}
 
 	public ItemBuilder amount(int amount) {
@@ -43,55 +33,12 @@ public class ItemBuilder {
 		return this;
 	}
 
-	public ItemBuilder itemstack(ItemStack stack) {
-		this.stack = stack;
-		return this;
-	}
-
-	public ItemBuilder lore(ArrayList<String> lore) {
-		this.lore = lore;
-		return this;
-	}
-
-	public ItemBuilder lore(String[] lore) {
-		this.lore = JavaUtils.collectionToArray(lore);
-		return this;
-	}
-
-	public ItemBuilder lore(String lore) {
-		this.lore = JavaUtils.collectionToArray(new String[]{lore});
-		return this;
-	}
-
-	public ItemBuilder playername(String playername) {
-		this.playerName = playername;
-		return this;
-	}
-
-	public void deleteDamageAnnotation() {
-		ItemMeta Meta = stack.getItemMeta();
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			for (Enchantment key : Meta.getEnchants().keySet()) {
-				Meta.removeEnchant(key);
-			}
-			// TODO Hide other attributes?
-		} else {
-			Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-			Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-			Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-			Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-			Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-		}
-		stack.setItemMeta(Meta);
-	}
-
 	public ItemStack build() {
 		ItemMeta stackMeta = stack.getItemMeta();
-		if (displayName != null && stack.getType() != Material.AIR)
+		if(displayName != null && stack.getType() != Material.AIR)
 			stackMeta.setDisplayName(displayName);
 
-		if (lore != null)
+		if(lore != null)
 			stackMeta.setLore(lore);
 		stack.setItemMeta(stackMeta);
 		this.deleteDamageAnnotation();
@@ -108,12 +55,65 @@ public class ItemBuilder {
 		skullMeta.setDisplayName(displayName != null ? Main.getColorCode() + displayName : Main.getColorCode() + playerName);
 		skullMeta.setOwner(playerName != null ? playerName : displayName);
 
-		if (lore != null)
+		if(lore != null)
 			skullMeta.setLore(lore);
 
 		stack.setItemMeta(skullMeta);
 		stack.setAmount(amount);
 
 		return stack;
+	}
+
+	public void deleteDamageAnnotation() {
+		ItemMeta Meta = stack.getItemMeta();
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			for(Enchantment key : Meta.getEnchants().keySet()) {
+				Meta.removeEnchant(key);
+			}
+			// TODO Hide other attributes?
+		} else {
+			Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+			Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+			Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+			Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+			Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+			Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		}
+		stack.setItemMeta(Meta);
+	}
+
+	public ItemBuilder displayname(String displayname) {
+		this.displayName = displayname;
+		return this;
+	}
+
+	public ItemBuilder itemstack(ItemStack stack) {
+		this.stack = stack;
+		return this;
+	}
+
+	public ItemBuilder lore(ArrayList<String> lore) {
+		this.lore = lore;
+		return this;
+	}
+
+	public ItemBuilder lore(String lore) {
+		this.lore = JavaUtils.collectionToArray(new String[] { lore });
+		return this;
+	}
+
+	public ItemBuilder lore(String[] lore) {
+		this.lore = JavaUtils.collectionToArray(lore);
+		return this;
+	}
+
+	public ItemBuilder player(Player player) {
+		this.playerName = player.getName();
+		return this;
+	}
+
+	public ItemBuilder playername(String playername) {
+		this.playerName = playername;
+		return this;
 	}
 }

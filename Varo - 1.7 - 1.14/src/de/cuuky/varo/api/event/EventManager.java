@@ -15,26 +15,9 @@ public class EventManager {
 		this.handlerList = new ArrayList<>();
 	}
 
-	@SuppressWarnings("unchecked")
-	public void registerEvent(VaroListener listener) {
-		for (Method method : listener.getClass().getDeclaredMethods()) {
-			if (method.getAnnotation(VaroEventMethod.class) == null)
-				continue;
-
-			Class<?>[] clazzes = method.getParameterTypes();
-
-			if (clazzes.length != 1 || !VaroAPIEvent.class.isAssignableFrom(clazzes[0])) {
-				System.out.println(Main.getConsolePrefix() + "Failed to register listener " + listener.getClass().getName() + " caused by wrong parameters given.");
-				continue;
-			}
-
-			handlerList.add(new EventHandler(listener, method, (Class<? extends VaroAPIEvent>) clazzes[0]));
-		}
-	}
-
 	public boolean executeEvent(VaroAPIEvent event) {
-		for (EventHandler handler : this.handlerList) {
-			if (!handler.getEvent().equals(event.getClass()))
+		for(EventHandler handler : this.handlerList) {
+			if(!handler.getEvent().equals(event.getClass()))
 				continue;
 
 			handler.execute(event);
@@ -46,5 +29,22 @@ public class EventManager {
 
 	public ArrayList<EventHandler> getHandler() {
 		return handlerList;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void registerEvent(VaroListener listener) {
+		for(Method method : listener.getClass().getDeclaredMethods()) {
+			if(method.getAnnotation(VaroEventMethod.class) == null)
+				continue;
+
+			Class<?>[] clazzes = method.getParameterTypes();
+
+			if(clazzes.length != 1 || !VaroAPIEvent.class.isAssignableFrom(clazzes[0])) {
+				System.out.println(Main.getConsolePrefix() + "Failed to register listener " + listener.getClass().getName() + " caused by wrong parameters given.");
+				continue;
+			}
+
+			handlerList.add(new EventHandler(listener, method, (Class<? extends VaroAPIEvent>) clazzes[0]));
+		}
 	}
 }

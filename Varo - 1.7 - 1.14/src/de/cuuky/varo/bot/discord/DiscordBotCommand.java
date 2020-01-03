@@ -39,9 +39,9 @@ public abstract class DiscordBotCommand {
 		new GetLinkCommand();
 	}
 
-	private String name;
-	private String desc;
 	private String[] aliases;
+	private String desc;
+	private String name;
 
 	public DiscordBotCommand(String name, String[] aliases, String description) {
 		this.name = name;
@@ -51,25 +51,25 @@ public abstract class DiscordBotCommand {
 		commands.add(this);
 	}
 
-	public static ArrayList<DiscordBotCommand> getCommands() {
-		return commands;
+	public String[] getAliases() {
+		return this.aliases;
 	}
 
 	public String getDescription() {
 		return this.desc;
 	}
 
-	public String[] getAliases() {
-		return this.aliases;
+	public VaroDiscordBot getDiscordBot() {
+		return BotLauncher.getDiscordBot();
 	}
 
 	public String getName() {
 		return this.name;
 	}
 
-	public VaroDiscordBot getDiscordBot() {
-		return BotLauncher.getDiscordBot();
-	}
-
 	public abstract void onEnable(String[] args, MessageReceivedEvent event);
+
+	public static ArrayList<DiscordBotCommand> getCommands() {
+		return commands;
+	}
 }

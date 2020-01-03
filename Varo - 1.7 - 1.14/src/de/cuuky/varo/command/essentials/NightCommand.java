@@ -13,12 +13,12 @@ public class NightCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("varo.night")) {
+		if(!sender.hasPermission("varo.night")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if (sender instanceof Player)
+		if(sender instanceof Player)
 			((Player) sender).getWorld().setTime(13000);
 		else
 			VaroUtils.getMainWorld().setTime(13000);

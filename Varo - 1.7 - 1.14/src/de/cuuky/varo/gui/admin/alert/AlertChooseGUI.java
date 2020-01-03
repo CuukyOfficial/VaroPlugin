@@ -18,6 +18,49 @@ import de.cuuky.varo.version.types.Materials;
 
 public class AlertChooseGUI extends SuperInventory {
 
+	public enum AlertGUIType {
+		ALL("§fALL", Material.BOOK),
+		CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()),
+		OPEN("§eOPENED", Material.EMERALD);
+
+		private Material icon;
+		private String typeName;
+
+		private AlertGUIType(String typeName, Material icon) {
+			this.typeName = typeName;
+			this.icon = icon;
+		}
+
+		public Material getIcon() {
+			return icon;
+		}
+
+		public ArrayList<Alert> getList() {
+			switch(this) {
+			case ALL:
+				return Alert.getAlerts();
+			case CLOSED:
+				return Alert.getClosedAlerts();
+			case OPEN:
+				return Alert.getOpenAlerts();
+			}
+
+			return null;
+		}
+
+		public String getTypeName() {
+			return typeName;
+		}
+
+		public static AlertGUIType getType(String name) {
+			for(AlertGUIType type : values())
+				if(type.getTypeName().equals(name))
+					return type;
+
+			return null;
+		}
+	}
+
 	private AlertGUIType type;
 
 	public AlertChooseGUI(Player opener, AlertGUIType type) {
@@ -29,23 +72,38 @@ public class AlertChooseGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new AlertTypeChooseGUI(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		ArrayList<Alert> alerts = type.getList();
 		Collections.reverse(alerts);
 
 		int start = getSize() * (getPage() - 1);
-		if (start != 0)
+		if(start != 0)
 			start -= 2;
 
-		for (int i = 0; i != getSize() - 2; i++) {
+		for(int i = 0; i != getSize() - 2; i++) {
 			Alert alert;
 			try {
 				alert = alerts.get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId()).itemstack(new ItemStack(Material.BOOK)).lore(new String[]{"§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()), "§7Open: §f" + alert.isOpen()}).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId()).itemstack(new ItemStack(Material.BOOK)).lore(new String[] { "§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()), "§7Open: §f" + alert.isOpen() }).build(), new Runnable() {
 
 				@Override
 				public void run() {
@@ -59,7 +117,7 @@ public class AlertChooseGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				for (Alert alert : alerts)
+				for(Alert alert : alerts)
 					alert.setOpen(false);
 
 				updateInventory();
@@ -67,66 +125,5 @@ public class AlertChooseGUI extends SuperInventory {
 		});
 
 		return calculatePages(alerts.size(), getSize()) == getPage();
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new AlertTypeChooseGUI(opener);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
-
-	public enum AlertGUIType {
-		CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()),
-		ALL("§fALL", Material.BOOK),
-		OPEN("§eOPENED", Material.EMERALD);
-
-		private String typeName;
-		private Material icon;
-
-		private AlertGUIType(String typeName, Material icon) {
-			this.typeName = typeName;
-			this.icon = icon;
-		}
-
-		public static AlertGUIType getType(String name) {
-			for (AlertGUIType type : values())
-				if (type.getTypeName().equals(name))
-					return type;
-
-			return null;
-		}
-
-		public Material getIcon() {
-			return icon;
-		}
-
-		public String getTypeName() {
-			return typeName;
-		}
-
-		public ArrayList<Alert> getList() {
-			switch (this) {
-				case ALL:
-					return Alert.getAlerts();
-				case CLOSED:
-					return Alert.getClosedAlerts();
-				case OPEN:
-					return Alert.getOpenAlerts();
-			}
-
-			return null;
-		}
 	}
 }

@@ -12,19 +12,19 @@ public class TeamHandler extends VaroSerializeObject {
 		load();
 	}
 
-	public static void initialise() {
-		if (instance == null) {
-			instance = new TeamHandler();
-		}
-	}
-
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for (Team team : Team.getTeams())
+		for(Team team : Team.getTeams())
 			save(String.valueOf(team.getId()), team, getConfiguration());
 
 		saveFile();
+	}
+
+	public static void initialise() {
+		if(instance == null) {
+			instance = new TeamHandler();
+		}
 	}
 }

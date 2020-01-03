@@ -4,9 +4,9 @@ import de.cuuky.varo.game.state.GameState;
 
 public enum VaroAPIGameState {
 
-	RUNNING(GameState.STARTED),
 	END(GameState.END),
-	LOBBY(GameState.LOBBY);
+	LOBBY(GameState.LOBBY),
+	RUNNING(GameState.STARTED);
 
 	private GameState origin;
 
@@ -14,16 +14,16 @@ public enum VaroAPIGameState {
 		this.origin = origin;
 	}
 
+	public GameState getOrigin() {
+		return origin;
+	}
+
 	public static VaroAPIGameState getState(GameState state) {
-		for (VaroAPIGameState apistate : values())
-			if (apistate.getOrigin() == state)
+		for(VaroAPIGameState apistate : values())
+			if(apistate.getOrigin() == state)
 				return apistate;
 
 		return null;
-	}
-
-	public GameState getOrigin() {
-		return origin;
 	}
 
 }

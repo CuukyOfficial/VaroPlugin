@@ -20,15 +20,9 @@ public class GameHandler extends VaroSerializeObject {
 
 		load();
 
-		if (Game.getInstance() == null) {
+		if(Game.getInstance() == null) {
 			Game.initialise(); // Wird beim ersten Mal ausgeführt, wenn noch
 			// keine Dateien existieren
-		}
-	}
-
-	public static void initialise() {
-		if (instance == null) {
-			instance = new GameHandler();
 		}
 	}
 
@@ -39,5 +33,11 @@ public class GameHandler extends VaroSerializeObject {
 		save("current", Game.getInstance(), getConfiguration());
 
 		saveFile();
+	}
+
+	public static void initialise() {
+		if(instance == null) {
+			instance = new GameHandler();
+		}
 	}
 }

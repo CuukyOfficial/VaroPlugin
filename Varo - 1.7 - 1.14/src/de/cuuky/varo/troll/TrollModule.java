@@ -15,10 +15,10 @@ public class TrollModule {
 		modules = new ArrayList<>();
 	}
 
-	protected String name;
 	protected String description;
-	protected Material icon;
 	protected ArrayList<Player> enabledFor;
+	protected Material icon;
+	protected String name;
 
 	public TrollModule(String name, Material icon, String description) {
 		this.name = name;
@@ -29,31 +29,8 @@ public class TrollModule {
 		modules.add(this);
 	}
 
-	public static ArrayList<TrollModule> getModules() {
-		return modules;
-	}
-
-	public static ArrayList<TrollModule> getEnabledModules(Player player) {
-		ArrayList<TrollModule> enabledEvents = new ArrayList<>();
-		for (TrollModule module : modules)
-			if (module.getEnabledFor().contains(player))
-				enabledEvents.add(module);
-
-		return enabledEvents;
-	}
-
-	public void setEnabledFor(Player player, boolean enable) {
-		if (enable) {
-			enabledFor.add(player);
-			onEnable(player);
-		} else {
-			enabledFor.remove(player);
-			onDisable(player);
-		}
-	}
-
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 
 	public ArrayList<Player> getEnabledFor() {
@@ -64,19 +41,38 @@ public class TrollModule {
 		return icon;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
-	protected void onEnable(Player player) {
+	public void setEnabledFor(Player player, boolean enable) {
+		if(enable) {
+			enabledFor.add(player);
+			onEnable(player);
+		} else {
+			enabledFor.remove(player);
+			onDisable(player);
+		}
 	}
 
-	protected void onDisable(Player player) {
+	protected void onDisable(Player player) {}
+
+	protected void onEnable(Player player) {}
+
+	protected void onInteract(PlayerInteractEvent event) {}
+
+	protected void onMove(PlayerMoveEvent event) {}
+
+	public static ArrayList<TrollModule> getEnabledModules(Player player) {
+		ArrayList<TrollModule> enabledEvents = new ArrayList<>();
+		for(TrollModule module : modules)
+			if(module.getEnabledFor().contains(player))
+				enabledEvents.add(module);
+
+		return enabledEvents;
 	}
 
-	protected void onInteract(PlayerInteractEvent event) {
-	}
-
-	protected void onMove(PlayerMoveEvent event) {
+	public static ArrayList<TrollModule> getModules() {
+		return modules;
 	}
 }

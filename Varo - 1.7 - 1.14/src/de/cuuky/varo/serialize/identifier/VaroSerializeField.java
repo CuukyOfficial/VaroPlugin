@@ -9,10 +9,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface VaroSerializeField {
 
-	String path() default "PATH";
+	Class<? extends VaroSerializeable> arrayClass() default NullClass.class;
 
 	String enumValue() default "ENUM";
 
-	Class<? extends VaroSerializeable> arrayClass() default NullClass.class;
+	String path() default "PATH";
 
 }

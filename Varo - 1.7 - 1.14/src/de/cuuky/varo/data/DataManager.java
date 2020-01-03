@@ -51,11 +51,94 @@ public class DataManager {
 		doSave = true;
 	}
 
-	public static DataManager getInstance() {
-		if (instance == null) {
-			instance = new DataManager();
+	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
+		try {
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
+
+			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
+
+			fd.startDownload();
+
+			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
+			return true;
+		} catch(IOException e) {
+			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
+			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
+			e.printStackTrace();
+			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
+			return false;
 		}
-		return instance;
+
+		// True: Plugin wurde neu heruntergeladen -> Neustart
+		// False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
+	}
+
+	public void reloadConfig() {
+		VaroList.reloadLists();
+		ConfigHandler.getInstance().reload();
+		ScoreboardHandler.getInstance().loadScores();
+
+		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+			ScoreboardHandler.getInstance().sendScoreBoard(vp);
+			vp.getNametag().giveAll();
+		}
+	}
+
+	public void save() {
+		if(!doSave)
+			return;
+
+		VaroSerializeHandler.saveAll();
+		VaroList.saveLists();
+
+		try {
+			BotRegister.saveAll();
+		} catch(NoClassDefFoundError e) {}
+	}
+
+	public void setDoSave(boolean doSave) {
+		this.doSave = doSave;
+	}
+
+	private void copyDefaultPresets() {
+		try {
+			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
+
+			ZipEntry e = null;
+			while((e = zip.getNextEntry()) != null) {
+				String name = e.getName();
+				e.isDirectory();
+				if(name.startsWith("presets")) {
+					File file = new File("plugins/Varo/" + name);
+					if(e.isDirectory()) {
+						file.mkdir();
+						continue;
+					}
+
+					if(!file.exists()) {
+						new File(file.getParent()).mkdirs();
+						file.createNewFile();
+					} else
+						continue;
+
+					FileOutputStream out = new FileOutputStream(file);
+
+					byte[] byteBuff = new byte[1024];
+					int bytesRead = 0;
+					while((bytesRead = zip.read(byteBuff)) != -1) {
+						out.write(byteBuff, 0, bytesRead);
+					}
+
+					out.flush();
+					out.close();
+				}
+			}
+
+			zip.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void load() {
@@ -84,14 +167,14 @@ public class DataManager {
 
 	private void loadPlugins() {
 		boolean discordNewDownload = false;
-		if (ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
+		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			VaroDiscordBot discordbot;
 			try {
 				VaroDiscordBot.getClassName();
 
 				discordbot = VaroDiscordBot.getInstance();
 				discordbot.connect();
-			} catch (NoClassDefFoundError | BootstrapMethodError ef) {
+			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
 				discordbot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
 				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
@@ -99,14 +182,14 @@ public class DataManager {
 		}
 
 		boolean telegramNewDownload = false;
-		if (ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
+		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			VaroTelegramBot telegrambot;
 			try {
 				VaroTelegramBot.getClassName();
 
 				telegrambot = VaroTelegramBot.getInstance();
 				telegrambot.connect();
-			} catch (NoClassDefFoundError | BootstrapMethodError e) {
+			} catch(NoClassDefFoundError | BootstrapMethodError e) {
 				telegrambot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
 				telegramNewDownload = loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
@@ -114,70 +197,23 @@ public class DataManager {
 		}
 
 		boolean labymodNewDownload = false;
-		if (ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
+		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
 			try {
 				PermissionSendListener.getClassName();
 
 				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
-			} catch (NoClassDefFoundError e) {
+			} catch(NoClassDefFoundError e) {
 				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
 				labymodNewDownload = loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
 			}
 		}
 
-		if (discordNewDownload || telegramNewDownload || labymodNewDownload) {
+		if(discordNewDownload || telegramNewDownload || labymodNewDownload) {
 			System.out.println(Main.getConsolePrefix() + "Der Server wird heruntergefahren, damit das Heruntergeladene angewandt werden kann.");
 			System.out.println(Main.getConsolePrefix() + "Bitte fahre den Server wieder hoch.");
 			Bukkit.getServer().shutdown();
 		}
 
-	}
-
-	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
-		try {
-			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
-
-			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
-
-			fd.startDownload();
-
-			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
-			return true;
-		} catch (IOException e) {
-			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
-			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
-			e.printStackTrace();
-			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
-			return false;
-		}
-
-		// True: Plugin wurde neu heruntergeladen -> Neustart
-		// False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
-	}
-
-	public void save() {
-		if (!doSave)
-			return;
-
-		VaroSerializeHandler.saveAll();
-		VaroList.saveLists();
-
-		try {
-			BotRegister.saveAll();
-		} catch (NoClassDefFoundError e) {
-		}
-	}
-
-	public void reloadConfig() {
-		VaroList.reloadLists();
-		ConfigHandler.getInstance().reload();
-		ScoreboardHandler.getInstance().loadScores();
-
-		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			ScoreboardHandler.getInstance().sendScoreBoard(vp);
-			vp.getNametag().giveAll();
-		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -191,47 +227,10 @@ public class DataManager {
 		}, 12000, 12000);
 	}
 
-	private void copyDefaultPresets() {
-		try {
-			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
-
-			ZipEntry e = null;
-			while ((e = zip.getNextEntry()) != null) {
-				String name = e.getName();
-				e.isDirectory();
-				if (name.startsWith("presets")) {
-					File file = new File("plugins/Varo/" + name);
-					if (e.isDirectory()) {
-						file.mkdir();
-						continue;
-					}
-
-					if (!file.exists()) {
-						new File(file.getParent()).mkdirs();
-						file.createNewFile();
-					} else
-						continue;
-
-					FileOutputStream out = new FileOutputStream(file);
-
-					byte[] byteBuff = new byte[1024];
-					int bytesRead = 0;
-					while ((bytesRead = zip.read(byteBuff)) != -1) {
-						out.write(byteBuff, 0, bytesRead);
-					}
-
-					out.flush();
-					out.close();
-				}
-			}
-
-			zip.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static DataManager getInstance() {
+		if(instance == null) {
+			instance = new DataManager();
 		}
-	}
-
-	public void setDoSave(boolean doSave) {
-		this.doSave = doSave;
+		return instance;
 	}
 }

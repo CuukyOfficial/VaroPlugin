@@ -16,22 +16,22 @@ public class SortCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (args.length != 0) {
+		if(args.length != 0) {
 			sender.sendMessage(Main.getPrefix() + "§7/sort");
 			return;
 		}
 
 		VaroUtils.sortResult result = VaroUtils.sortPlayers();
-		switch (result) {
-			case SORTED_WELL:
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");
-				break;
-			case NO_SPAWN_WITH_TEAM:
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loche bei den Teampartnern gefunden werden!");
-				break;
-			case NO_SPAWN:
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loch gefunden werden!");
-				break;
+		switch(result) {
+		case SORTED_WELL:
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");
+			break;
+		case NO_SPAWN_WITH_TEAM:
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loche bei den Teampartnern gefunden werden!");
+			break;
+		case NO_SPAWN:
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loch gefunden werden!");
+			break;
 		}
 	}
 }

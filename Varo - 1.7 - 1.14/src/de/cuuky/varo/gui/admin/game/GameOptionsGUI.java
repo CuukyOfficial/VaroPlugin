@@ -24,41 +24,8 @@ public class GameOptionsGUI extends SuperInventory {
 	}
 
 	@Override
-	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[]{"§7Current: §c" + Game.getInstance().getGameState().getName()}).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				switch (Game.getInstance().getGameState()) {
-					case STARTED:
-						Game.getInstance().setGamestate(GameState.END);
-						break;
-					case END:
-						Game.getInstance().setGamestate(GameState.LOBBY);
-						break;
-					case LOBBY:
-						Game.getInstance().setGamestate(GameState.STARTED);
-						break;
-				}
-			}
-		});
-
-		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[]{"§7Current: " + (Game.getInstance().getLobby() != null ? VaroUtils.formatLocation(Game.getInstance().getLobby(), "x, y, z in world") : "§c-")}).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				Game.getInstance().setLobby(opener.getLocation());
-			}
-		});
-
-		linkItemTo(4, new ItemBuilder().displayname("§2Set World Spawn").itemstack(new ItemStack(Material.BEACON)).lore(new String[]{"§7Current: " + (opener.getWorld().getSpawnLocation() != null ? VaroUtils.formatLocation(opener.getWorld().getSpawnLocation(), "x, y, z in world") : "§c-")}).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				opener.getWorld().setSpawnLocation(opener.getLocation().getBlockX(), opener.getLocation().getBlockY(), opener.getLocation().getBlockZ());
-				VaroBorder.getInstance().setBorderCenter(opener.getLocation());
-			}
-		});
+	public boolean onBackClick() {
+		new AdminMainMenu(opener);
 		return true;
 	}
 
@@ -68,16 +35,47 @@ public class GameOptionsGUI extends SuperInventory {
 	}
 
 	@Override
-	public void onInventoryAction(PageAction action) {
-	}
+	public void onClose(InventoryCloseEvent event) {}
 
 	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
+	public boolean onOpen() {
+		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + Game.getInstance().getGameState().getName() }).build(), new Runnable() {
+
+			@Override
+			public void run() {
+				switch(Game.getInstance().getGameState()) {
+				case STARTED:
+					Game.getInstance().setGamestate(GameState.END);
+					break;
+				case END:
+					Game.getInstance().setGamestate(GameState.LOBBY);
+					break;
+				case LOBBY:
+					Game.getInstance().setGamestate(GameState.STARTED);
+					break;
+				}
+			}
+		});
+
+		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Game.getInstance().getLobby() != null ? VaroUtils.formatLocation(Game.getInstance().getLobby(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
+
+			@Override
+			public void run() {
+				Game.getInstance().setLobby(opener.getLocation());
+			}
+		});
+
+		linkItemTo(4, new ItemBuilder().displayname("§2Set World Spawn").itemstack(new ItemStack(Material.BEACON)).lore(new String[] { "§7Current: " + (opener.getWorld().getSpawnLocation() != null ? VaroUtils.formatLocation(opener.getWorld().getSpawnLocation(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
+
+			@Override
+			public void run() {
+				opener.getWorld().setSpawnLocation(opener.getLocation().getBlockX(), opener.getLocation().getBlockY(), opener.getLocation().getBlockZ());
+				VaroBorder.getInstance().setBorderCenter(opener.getLocation());
+			}
+		});
 		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

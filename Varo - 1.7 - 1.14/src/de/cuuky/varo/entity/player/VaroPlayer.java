@@ -51,33 +51,31 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer = new ArrayList<>();
 	}
 
+	@VaroSerializeField(path = "adminIgnore")
+	private boolean adminIgnore;
+
+	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
+
 	@VaroSerializeField(path = "id")
 	private int id;
 
 	@VaroSerializeField(path = "name")
 	private String name;
 
-	@VaroSerializeField(path = "uuid")
-	private String uuid;
+	private Nametag nametag;
+	private NetworkMananager networkManager;
+	private Player player;
 
 	@VaroSerializeField(path = "rank")
 	private Rank rank;
-
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
+	private Team team;
+	@VaroSerializeField(path = "uuid")
+	private String uuid;
 
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
-
-	@VaroSerializeField(path = "adminIgnore")
-	private boolean adminIgnore;
-
-	private Team team;
-	private Player player;
-	private Nametag nametag;
-	private NetworkMananager networkManager;
-
-	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -103,6 +101,383 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer.add(this);
 		this.stats = new Stats(this);
 		stats.loadDefaults();
+	}
+
+	/**
+	 * @return Returns if a player is nearby
+	 */
+	public boolean canBeKicked(int noKickDistance) {
+		if(noKickDistance < 1)
+			return true;
+
+		for(Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
+			if(!(entity instanceof Player))
+				continue;
+
+			VaroPlayer vp = getPlayer((Player) entity);
+			if(vp.equals(this))
+				continue;
+
+			if(vp.getTeam() != null)
+				if(vp.getTeam().equals(team))
+					continue;
+
+			if(vp.getStats().isSpectator() || vp.isAdminIgnore())
+				continue;
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public void cleanUpPlayer() {
+		player.setHealth(20);
+		player.setFoodLevel(20);
+		player.getInventory().clear();
+		player.getInventory().setArmorContents(new ItemStack[] {});
+		player.setExp(0);
+		player.setLevel(0);
+	}
+
+	public void delete() {
+		if(team != null)
+			team.removeMember(this);
+
+		if(rank != null)
+			rank.remove();
+
+		if(isOnline())
+			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this));
+
+		if(villager != null)
+			villager.remove();
+
+		stats.remove();
+		varoplayer.remove(this);
+		ScoreboardHandler.getInstance().updateTopScores();
+	}
+
+	public boolean getalreadyHadMassProtectionTime() {
+		return alreadyHadMassProtectionTime;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public boolean getinMassProtectionTime() {
+		return inMassProtectionTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Nametag getNametag() {
+		return nametag;
+	}
+
+	public NetworkMananager getNetworkManager() {
+		return networkManager == null ? new NetworkMananager(player) : networkManager;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public String getPrefix() {
+		String pr = "";
+		if(team != null)
+			pr = team.getDisplay() + " ";
+
+		if(rank != null)
+			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
+		return pr;
+	}
+
+	public Rank getRank() {
+		return rank;
+	}
+
+	public UUID getRealUUID() {
+		return UUID.fromString(uuid);
+	}
+
+	public Stats getStats() {
+		return stats;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public OfflineVillager getVillager() {
+		return villager;
+	}
+
+	public boolean isAdminIgnore() {
+		return adminIgnore;
+	}
+
+	public boolean isInProtection() {
+		if(VaroEvent.getMassRecEvent().isEnabled()) {
+			return inMassProtectionTime;
+		} else {
+			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
+		}
+	}
+
+	public boolean isMassRecordingKick() {
+		return massRecordingKick;
+	}
+
+	/**
+	 * @return Returns if the Player is online
+	 */
+	public boolean isOnline() {
+		return player != null;
+	}
+
+	public boolean isRegistered() {
+		return varoplayer.contains(this);
+	}
+
+	@Override
+	public void onDeserializeEnd() {
+		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
+		if(isOnline()) {
+			update();
+
+			if(getStats().isSpectator() || isAdminIgnore())
+				setSpectacting();
+
+			setNormalAttackSpeed();
+
+			if(Game.getInstance().getGameState() == GameState.LOBBY)
+				LobbyItem.giveItems(player);
+		} else if(isAdminIgnore())
+			adminIgnore = false;
+
+		this.stats.setOwner(this);
+	}
+
+	public void onEvent(BukkitEventType type) {
+		new BukkitEvent(this, type);
+	}
+
+	@Override
+	public void onSerializeStart() {}
+
+	public void register() {
+		if(this.stats == null)
+			this.stats = new Stats(this);
+
+		stats.loadDefaults();
+		varoplayer.add(this);
+	}
+
+	public void sendMessage(String message) {
+		player.sendMessage(message);
+	}
+
+	public void setAdminIgnore(boolean adminIgnore) {
+		this.adminIgnore = adminIgnore;
+	}
+
+	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
+		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
+	}
+
+	public void setinMassProtectionTime(boolean inMassProtectionTime) {
+		this.inMassProtectionTime = inMassProtectionTime;
+	}
+
+	public void setMassRecordingKick(boolean massRecordingKick) {
+		this.massRecordingKick = massRecordingKick;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNametag(Nametag nametag) {
+		this.nametag = nametag;
+	}
+
+	public void setNetworkManager(NetworkMananager networkManager) {
+		this.networkManager = networkManager;
+	}
+
+	public void setNormalAttackSpeed() {
+		getNetworkManager().setAttributeSpeed(!ConfigEntry.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
+		update();
+	}
+
+	public void setSpectacting() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				new Vanish(player.getPlayer());
+				player.getPlayer().setGameMode(GameMode.ADVENTURE);
+				player.getPlayer().setAllowFlight(true);
+				player.getPlayer().setFlying(true);
+				player.getPlayer().setHealth(20);
+				player.getPlayer().setFoodLevel(20);
+
+				if(!adminIgnore) {
+					player.getInventory().clear();
+					player.getInventory().setArmorContents(new ItemStack[] {});
+				}
+			}
+		}, 1);
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+
+		if(!Main.isBootedUp())
+			return;
+
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
+		if(db != null && db.isEnabled()) {
+			GuildController controller = db.getController();
+			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
+				Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
+				if(this.team != null)
+					if(controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
+						Role role = controller.getGuild().getRolesByName(this.team.getName(), true).get(0);
+						controller.removeSingleRoleFromMember(member, role).complete();
+					}
+
+				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0 ? controller.getGuild().getRolesByName(team.getName(), true).get(0) : null;
+				if(role == null)
+					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true).setName(team.getName()).complete();
+
+				controller.addRolesToMember(member, role).complete();
+			}
+		}
+
+		update();
+		ScoreboardHandler.getInstance().updateTopScores();
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setVillager(OfflineVillager villager) {
+		this.villager = villager;
+	}
+
+	public void update() {
+		if(!isOnline())
+			return;
+
+		if(ConfigEntry.NAMETAGS.getValueAsBoolean()) {
+			if(nametag == null)
+				nametag = new Nametag(player.getUniqueId(), player);
+			else
+				nametag.refresh();
+		}
+
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
+				getNetworkManager().sendTablist();
+			}
+
+			String listname = "";
+			if(getTeam() != null) {
+				if(getRank() == null) {
+					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
+				} else {
+					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
+				}
+			} else {
+				if(getRank() == null) {
+					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
+				} else {
+					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+				}
+			}
+
+			player.setPlayerListName(listname);
+		}
+	}
+
+	private int generateId() {
+		int id = JavaUtils.randomInt(1000, 9999999);
+		while(getPlayer(id) != null)
+			generateId();
+
+		return id;
+	}
+
+	/**
+	 * @return Returns all alive Players regardless if they are online
+	 */
+	public static ArrayList<VaroPlayer> getAlivePlayer() {
+		ArrayList<VaroPlayer> alive = new ArrayList<>();
+		for(VaroPlayer vp : varoplayer) {
+			if(!vp.getStats().isAlive())
+				continue;
+
+			alive.add(vp);
+		}
+
+		return alive;
+	}
+
+	public static ArrayList<VaroPlayer> getDeadPlayer() {
+		ArrayList<VaroPlayer> dead = new ArrayList<>();
+		for(VaroPlayer vp : varoplayer) {
+			if(vp.getStats().getState() != PlayerState.DEAD)
+				continue;
+
+			dead.add(vp);
+		}
+
+		return dead;
+	}
+
+	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
+		ArrayList<VaroPlayer> online = new ArrayList<>();
+		for(VaroPlayer vp : varoplayer) {
+			if(!vp.isOnline() || !vp.getStats().isAlive())
+				continue;
+
+			online.add(vp);
+		}
+
+		return online;
+	}
+
+	/**
+	 * @return Returns all online VaroPlayers regardless if they are alive
+	 */
+	public static ArrayList<VaroPlayer> getOnlinePlayer() {
+		ArrayList<VaroPlayer> online = new ArrayList<>();
+		for(VaroPlayer vp : varoplayer) {
+			if(!vp.isOnline())
+				continue;
+
+			online.add(vp);
+		}
+
+		return online;
 	}
 
 	public static VaroPlayer getPlayer(int id) {
@@ -155,48 +530,6 @@ public class VaroPlayer extends VaroEntity {
 		return null;
 	}
 
-	/**
-	 * @return Returns all alive Players regardless if they are online
-	 */
-	public static ArrayList<VaroPlayer> getAlivePlayer() {
-		ArrayList<VaroPlayer> alive = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isAlive())
-				continue;
-
-			alive.add(vp);
-		}
-
-		return alive;
-	}
-
-	/**
-	 * @return Returns all online VaroPlayers regardless if they are alive
-	 */
-	public static ArrayList<VaroPlayer> getOnlinePlayer() {
-		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline())
-				continue;
-
-			online.add(vp);
-		}
-
-		return online;
-	}
-
-	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
-		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline() || !vp.getStats().isAlive())
-				continue;
-
-			online.add(vp);
-		}
-
-		return online;
-	}
-
 	public static ArrayList<VaroPlayer> getSpectator() {
 		ArrayList<VaroPlayer> spectator = new ArrayList<>();
 		for(VaroPlayer vp : varoplayer) {
@@ -209,342 +542,7 @@ public class VaroPlayer extends VaroEntity {
 		return spectator;
 	}
 
-	public static ArrayList<VaroPlayer> getDeadPlayer() {
-		ArrayList<VaroPlayer> dead = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getStats().getState() != PlayerState.DEAD)
-				continue;
-
-			dead.add(vp);
-		}
-
-		return dead;
-	}
-
 	public static ArrayList<VaroPlayer> getVaroPlayer() {
 		return varoplayer;
-	}
-
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getPlayer(id) != null)
-			generateId();
-
-		return id;
-	}
-
-	public void register() {
-		if(this.stats == null)
-			this.stats = new Stats(this);
-
-		stats.loadDefaults();
-		varoplayer.add(this);
-	}
-
-	public void setNormalAttackSpeed() {
-		getNetworkManager().setAttributeSpeed(!ConfigEntry.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
-	}
-
-	public boolean isInProtection() {
-		if(VaroEvent.getMassRecEvent().isEnabled()) {
-			return inMassProtectionTime;
-		} else {
-			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
-		}
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
-		if(isOnline()) {
-			update();
-
-			if(getStats().isSpectator() || isAdminIgnore())
-				setSpectacting();
-
-			setNormalAttackSpeed();
-
-			if(Game.getInstance().getGameState() == GameState.LOBBY)
-				LobbyItem.giveItems(player);
-		} else if(isAdminIgnore())
-			adminIgnore = false;
-
-		this.stats.setOwner(this);
-	}
-
-	@Override
-	public void onSerializeStart() {}
-
-	public void setSpectacting() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				new Vanish(player.getPlayer());
-				player.getPlayer().setGameMode(GameMode.ADVENTURE);
-				player.getPlayer().setAllowFlight(true);
-				player.getPlayer().setFlying(true);
-				player.getPlayer().setHealth(20);
-				player.getPlayer().setFoodLevel(20);
-
-				if(!adminIgnore) {
-					player.getInventory().clear();
-					player.getInventory().setArmorContents(new ItemStack[] {});
-				}
-			}
-		}, 1);
-	}
-
-	public void delete() {
-		if(team != null)
-			team.removeMember(this);
-
-		if(rank != null)
-			rank.remove();
-
-		if(isOnline())
-			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this));
-
-		if(villager != null)
-			villager.remove();
-
-		stats.remove();
-		varoplayer.remove(this);
-		ScoreboardHandler.getInstance().updateTopScores();
-	}
-
-	public String getPrefix() {
-		String pr = "";
-		if(team != null)
-			pr = team.getDisplay() + " ";
-
-		if(rank != null)
-			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
-		return pr;
-	}
-
-	public void update() {
-		if(!isOnline())
-			return;
-
-		if(ConfigEntry.NAMETAGS.getValueAsBoolean()) {
-			if(nametag == null)
-				nametag = new Nametag(player.getUniqueId(), player);
-			else
-				nametag.refresh();
-		}
-
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
-				getNetworkManager().sendTablist();
-			}
-
-			String listname = "";
-			if(getTeam() != null) {
-				if(getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
-				}
-			} else {
-				if(getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
-				}
-			}
-
-			player.setPlayerListName(listname);
-		}
-	}
-
-	public void cleanUpPlayer() {
-		player.setHealth(20);
-		player.setFoodLevel(20);
-		player.getInventory().clear();
-		player.getInventory().setArmorContents(new ItemStack[] {});
-		player.setExp(0);
-		player.setLevel(0);
-	}
-
-	public void onEvent(BukkitEventType type) {
-		new BukkitEvent(this, type);
-	}
-
-	/**
-	 * @return Returns if a player is nearby
-	 */
-	public boolean canBeKicked(int noKickDistance) {
-		if(noKickDistance < 1)
-			return true;
-
-		for(Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
-			if(!(entity instanceof Player))
-				continue;
-
-			VaroPlayer vp = getPlayer((Player) entity);
-			if(vp.equals(this))
-				continue;
-
-			if(vp.getTeam() != null)
-				if(vp.getTeam().equals(team))
-					continue;
-
-			if(vp.getStats().isSpectator() || vp.isAdminIgnore())
-				continue;
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public UUID getRealUUID() {
-		return UUID.fromString(uuid);
-	}
-
-	public NetworkMananager getNetworkManager() {
-		return networkManager == null ? new NetworkMananager(player) : networkManager;
-	}
-
-	public void setNetworkManager(NetworkMananager networkManager) {
-		this.networkManager = networkManager;
-	}
-
-	public boolean isAdminIgnore() {
-		return adminIgnore;
-	}
-
-	public void setAdminIgnore(boolean adminIgnore) {
-		this.adminIgnore = adminIgnore;
-	}
-
-	public Rank getRank() {
-		return rank;
-	}
-
-	public void setRank(Rank rank) {
-		this.rank = rank;
-		update();
-	}
-
-	public Stats getStats() {
-		return stats;
-	}
-
-	public Nametag getNametag() {
-		return nametag;
-	}
-
-	public void setNametag(Nametag nametag) {
-		this.nametag = nametag;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
-
-		if(!Main.isBootedUp())
-			return;
-
-		VaroDiscordBot db = BotLauncher.getDiscordBot();
-		if(db != null && db.isEnabled()) {
-			GuildController controller = db.getController();
-			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
-				Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
-				if(this.team != null)
-					if(controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
-						Role role = controller.getGuild().getRolesByName(this.team.getName(), true).get(0);
-						controller.removeSingleRoleFromMember(member, role).complete();
-					}
-
-				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0 ? controller.getGuild().getRolesByName(team.getName(), true).get(0) : null;
-				if(role == null)
-					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true).setName(team.getName()).complete();
-
-				controller.addRolesToMember(member, role).complete();
-			}
-		}
-
-		update();
-		ScoreboardHandler.getInstance().updateTopScores();
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public boolean getinMassProtectionTime() {
-		return inMassProtectionTime;
-	}
-
-	public void setinMassProtectionTime(boolean inMassProtectionTime) {
-		this.inMassProtectionTime = inMassProtectionTime;
-	}
-
-	public boolean getalreadyHadMassProtectionTime() {
-		return alreadyHadMassProtectionTime;
-	}
-
-	public void setalreadyHadMassProtectionTime(boolean alreadyHadMassProtectionTime) {
-		this.alreadyHadMassProtectionTime = alreadyHadMassProtectionTime;
-	}
-
-	public boolean isMassRecordingKick() {
-		return massRecordingKick;
-	}
-
-	public void setMassRecordingKick(boolean massRecordingKick) {
-		this.massRecordingKick = massRecordingKick;
-	}
-
-	public OfflineVillager getVillager() {
-		return villager;
-	}
-
-	public void setVillager(OfflineVillager villager) {
-		this.villager = villager;
-	}
-
-	public boolean isRegistered() {
-		return varoplayer.contains(this);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @return Returns if the Player is online
-	 */
-	public boolean isOnline() {
-		return player != null;
-	}
-
-	public void sendMessage(String message) {
-		player.sendMessage(message);
 	}
 }

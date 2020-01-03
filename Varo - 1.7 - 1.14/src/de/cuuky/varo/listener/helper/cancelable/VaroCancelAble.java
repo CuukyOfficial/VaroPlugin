@@ -16,8 +16,8 @@ public class VaroCancelAble {
 	}
 
 	protected VaroPlayer player;
-	protected CancelAbleType type;
 	protected Runnable timerHook;
+	protected CancelAbleType type;
 
 	public VaroCancelAble(CancelAbleType type, VaroPlayer player) {
 		this.player = player;
@@ -38,23 +38,24 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
-	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
-		for (VaroCancelAble able : cancelables)
-			if (able.getPlayer().equals(player) && able.getType().equals(type))
-				return able;
-
-		return null;
+	public VaroPlayer getPlayer() {
+		return player;
 	}
 
-	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
-		for (int i = 0; i < cancelables.size(); i++) {
-			VaroCancelAble able = cancelables.get(i);
-			if (able.getPlayer().equals(player) && able.getType().equals(type)) {
-				able.remove();
-				i--;
-			}
-		}
+	public CancelAbleType getType() {
+		return type;
+	}
 
+	public void setTimerHook(Runnable runnable) {
+		this.timerHook = runnable;
+	}
+
+	private void remove() {
+		cancelables.remove(this);
+	}
+
+	private void removeOld() {
+		removeCancelAble(player, type);
 	}
 
 	private void schedule(int time) {
@@ -68,23 +69,22 @@ public class VaroCancelAble {
 		}, time * 20);
 	}
 
-	private void removeOld() {
-		removeCancelAble(player, type);
+	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
+		for(VaroCancelAble able : cancelables)
+			if(able.getPlayer().equals(player) && able.getType().equals(type))
+				return able;
+
+		return null;
 	}
 
-	public void setTimerHook(Runnable runnable) {
-		this.timerHook = runnable;
-	}
+	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
+		for(int i = 0; i < cancelables.size(); i++) {
+			VaroCancelAble able = cancelables.get(i);
+			if(able.getPlayer().equals(player) && able.getType().equals(type)) {
+				able.remove();
+				i--;
+			}
+		}
 
-	public CancelAbleType getType() {
-		return type;
-	}
-
-	public VaroPlayer getPlayer() {
-		return player;
-	}
-
-	private void remove() {
-		cancelables.remove(this);
 	}
 }

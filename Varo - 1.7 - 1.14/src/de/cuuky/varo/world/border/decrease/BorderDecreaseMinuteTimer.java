@@ -13,10 +13,14 @@ public class BorderDecreaseMinuteTimer {
 
 	public BorderDecreaseMinuteTimer() {
 		sched = -1;
-		if (!DecreaseReason.TIME_MINUTES.isEnabled())
+		if(!DecreaseReason.TIME_MINUTES.isEnabled())
 			return;
 
 		startScheduling();
+	}
+
+	public void remove() {
+		Bukkit.getScheduler().cancelTask(sched);
 	}
 
 	private void startScheduling() {
@@ -24,16 +28,12 @@ public class BorderDecreaseMinuteTimer {
 
 			@Override
 			public void run() {
-				if (Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
+				if(Game.getInstance().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
 					remove();
 					return;
 				}
 				VaroBorder.getInstance().decreaseBorder(DecreaseReason.TIME_MINUTES);
 			}
 		}, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20);
-	}
-
-	public void remove() {
-		Bukkit.getScheduler().cancelTask(sched);
 	}
 }

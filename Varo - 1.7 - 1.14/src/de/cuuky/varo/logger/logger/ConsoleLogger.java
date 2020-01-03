@@ -13,45 +13,6 @@ public class ConsoleLogger extends Logger {
 		startListening();
 	}
 
-	private void startListening() {
-		System.setOut(new PrintStream(System.out) {
-
-			@Override
-			public void println(String x) {
-				super.println(x);
-
-				ConsoleLogger.this.println(x);
-			}
-
-			@Override
-			public void println(Object x) {
-				super.println(x);
-
-				if (x == null)
-					ConsoleLogger.this.println("null");
-				else
-					ConsoleLogger.this.println(x.toString());
-			}
-		});
-
-		System.setErr(new PrintStream(System.err) {
-
-			@Override
-			public void println(String x) {
-				super.println(x);
-
-				ConsoleLogger.this.println(x);
-			}
-
-			@Override
-			public void println(Object x) {
-				super.println(x);
-
-				ConsoleLogger.this.println(x.toString());
-			}
-		});
-	}
-
 	public void println(String line) {
 		line = "[" + getCurrentDate() + "] " + JavaUtils.replaceAllColors(line);
 
@@ -59,5 +20,44 @@ public class ConsoleLogger extends Logger {
 		logs.add(line);
 
 		pw.flush();
+	}
+
+	private void startListening() {
+		System.setOut(new PrintStream(System.out) {
+
+			@Override
+			public void println(Object x) {
+				super.println(x);
+
+				if(x == null)
+					ConsoleLogger.this.println("null");
+				else
+					ConsoleLogger.this.println(x.toString());
+			}
+
+			@Override
+			public void println(String x) {
+				super.println(x);
+
+				ConsoleLogger.this.println(x);
+			}
+		});
+
+		System.setErr(new PrintStream(System.err) {
+
+			@Override
+			public void println(Object x) {
+				super.println(x);
+
+				ConsoleLogger.this.println(x.toString());
+			}
+
+			@Override
+			public void println(String x) {
+				super.println(x);
+
+				ConsoleLogger.this.println(x);
+			}
+		});
 	}
 }

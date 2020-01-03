@@ -16,19 +16,19 @@ public class AlertHandler extends VaroSerializeObject {
 		load();
 	}
 
-	public static void initialise() {
-		if (instance == null) {
-			instance = new AlertHandler();
-		}
-	}
-
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for (Alert alert : Alert.getAlerts())
+		for(Alert alert : Alert.getAlerts())
 			save(String.valueOf(alert.getId()), alert, getConfiguration());
 
 		saveFile();
+	}
+
+	public static void initialise() {
+		if(instance == null) {
+			instance = new AlertHandler();
+		}
 	}
 }

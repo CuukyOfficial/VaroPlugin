@@ -28,8 +28,8 @@ public abstract class SuperInventory {
 
 	private static boolean fill_inventory, animations;
 
-	private static ArrayList<SuperInventory> guis;
 	private static ItemStack forward, backwards;
+	private static ArrayList<SuperInventory> guis;
 
 	static {
 		guis = new ArrayList<>();
@@ -41,11 +41,11 @@ public abstract class SuperInventory {
 	}
 
 	protected String firstTitle, title;
-	protected Player opener;
-	protected Inventory inv;
-	protected int page, size;
 	protected boolean hasMorePages, isLastPage, homePage, ignoreNextClose;
+	protected Inventory inv;
 	protected ArrayList<Integer> modifier;
+	protected Player opener;
+	protected int page, size;
 
 	private HashMap<ItemMeta, Runnable> itemlinks;
 
@@ -63,130 +63,127 @@ public abstract class SuperInventory {
 		this.modifier = new ArrayList<Integer>(Arrays.asList(inv.getSize() - 1, inv.getSize() - 9, inv.getSize() - 5));
 
 		SuperInventory inv = getInventory(opener);
-		if (inv != null)
+		if(inv != null)
 			inv.close(true);
 
 		guis.add(this);
 	}
 
+	public void back() {
+		close(true);
+
+		if(!onBackClick())
+			new MainMenu(opener);
+	}
+
+	public void clear() {
+		for(int i = 0; i < inv.getContents().length; i++) {
+			if(modifier.contains(i))
+				continue;
+
+			inv.setItem(i, new ItemStack(Material.AIR));
+		}
+	}
+
+	public void closeInventory() {
+		if(ignoreNextClose) {
+			ignoreNextClose = false;
+			return;
+		}
+
+		guis.remove(this);
+		this.opener.closeInventory();
+	}
+
 	/*
-	 * Calculates based on the list size you enter, how many pages you need
+	 * Executes itemlinks
 	 */
-	protected static int calculatePages(int amount, int pageSize) {
-		int res = (int) Math.ceil((double) amount / pageSize);
-		if (res == 0)
-			res = 1;
-		return res;
+	public void executeLink(ItemStack item) {
+		for(ItemMeta stack : itemlinks.keySet())
+			if(stack.getDisplayName().equals(item.getItemMeta().getDisplayName())) {
+				itemlinks.get(stack).run();
+				break;
+			}
 	}
 
-	public static SuperInventory getInventory(Player player) {
-		for (SuperInventory inventory : guis)
-			if (inventory.getOpener().equals(player))
-				return inventory;
-
-		return null;
+	public int getFixedSize(int size) {
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8))
+			return(size < 1 ? 1 : (size > 64 ? 64 : size));
+		else
+			return size;
 	}
 
-	public static ArrayList<SuperInventory> getGUIS() {
-		return guis;
+	public Inventory getInventory() {
+		return this.inv;
 	}
+
+	public Player getOpener() {
+		return this.opener;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public boolean isHomePage() {
+		return homePage;
+	}
+
+	public boolean isOpen() {
+		return guis.contains(this);
+	}
+
+	public abstract boolean onBackClick();
+
+	@Deprecated
+	/*
+	 * @deprecated: Please use linkItemTo() instead
+	 */
+	public abstract void onClick(InventoryClickEvent event);
+
+	public abstract void onClose(InventoryCloseEvent event);
+
+	public abstract void onInventoryAction(PageAction action);
+
+	/*
+	 * @return Return if this is the last page
+	 */
+	public abstract boolean onOpen();
 
 	/*
 	 * String for page title
 	 */
-	private String getPageUpdate() {
-		String suff = (hasMorePages ? " §7" + page : "");
-		return firstTitle + (firstTitle.length() + suff.length() > 32 ? "" : suff);
+	public void open() {
+		isLastPage = this.onOpen();
+		if(!isLastPage)
+			hasMorePages = true;
+
+		setSwitcher();
+		fillSpace();
+		this.opener.openInventory(inv);
+		doAnimation();
 	}
 
-	/*
-	 * Getter for the back button
-	 */
-	private String getBack() {
-		if (!homePage)
-			return "§4Zurück";
-		else
-			return "§4Schließen";
+	public void pageActionChanged(PageAction action) {
+		onInventoryAction(action);
 	}
 
-	/*
-	 * Set Back and Forwards
-	 */
-	private void setSwitcher() {
-		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("§4Zurück") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
-		if (!hasMorePages)
-			return;
-
-		if (!isLastPage)
-			inv.setItem(modifier.get(0), forward);
-
-		if (page != 1)
-			inv.setItem(modifier.get(1), backwards);
+	public void pageBackwards() {
+		page--;
+		updateInventory();
 	}
 
-	private void fillSpace() {
-		if (!fill_inventory)
-			return;
-
-		for (int i = 0; i < inv.getSize(); i++)
-			if (inv.getItem(i) == null)
-				inv.setItem(i, new ItemBuilder().displayname("§c").itemstack(new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15)).build());
-	}
-
-	@SuppressWarnings("deprecation")
-	private void doAnimation() {
-		if (!animations)
-			return;
-
-		HashMap<Integer, ItemStack> itemlist = new HashMap<Integer, ItemStack>();
-		for (int i = 0; i < (inv.getSize() - 9); i++)
-			itemlist.put(i, inv.getItem(i));
-
-		for (int i = 0; i < (inv.getSize() - 9); i++)
-			inv.setItem(i, null);
-		opener.updateInventory();
-
-		int delay = (int) (600) / (getSize());
-
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				int middle = (int) Math.ceil(itemlist.size() / 2);
-				for (int radius = 0; middle + radius != itemlist.size(); radius++) {
-					if (!isOpen())
-						break;
-
-					try {
-						Thread.sleep(delay);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-
-					inv.setItem(middle + radius, itemlist.get(middle + radius));
-					opener.updateInventory();
-
-					try {
-						Thread.sleep(delay);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-
-					inv.setItem(middle - radius, itemlist.get(middle - radius));
-					opener.updateInventory();
-				}
-
-				if ((inv.getSize() - 9) % 2 == 0 && isOpen()) {
-					try {
-						Thread.sleep(delay);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					inv.setItem(0, itemlist.get(0));
-					opener.updateInventory();
-				}
-			}
-		}, 0);
+	public void pageForwards() {
+		page++;
+		updateInventory();
 	}
 
 	/*
@@ -206,7 +203,7 @@ public abstract class SuperInventory {
 	 * Updating inventory items
 	 */
 	public void updateInventory() {
-		if (opener.getOpenInventory() != null) {
+		if(opener.getOpenInventory() != null) {
 			ignoreNextClose = true;
 			opener.closeInventory();
 		}
@@ -219,89 +216,13 @@ public abstract class SuperInventory {
 		open();
 	}
 
-	/*
-	 * String for page title
-	 */
-	public void open() {
-		isLastPage = this.onOpen();
-		if (!isLastPage)
-			hasMorePages = true;
-
-		setSwitcher();
-		fillSpace();
-		this.opener.openInventory(inv);
-		doAnimation();
-	}
-
-	public int getFixedSize(int size) {
-		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8))
-			return (size < 1 ? 1 : (size > 64 ? 64 : size));
-		else
-			return size;
-	}
-
-	public void pageForwards() {
-		page++;
-		updateInventory();
-	}
-
-	public void pageBackwards() {
-		page--;
-		updateInventory();
-	}
-
-	public void back() {
-		close(true);
-
-		if (!onBackClick())
-			new MainMenu(opener);
-	}
-
-	public boolean isOpen() {
-		return guis.contains(this);
-	}
-
 	protected void close(boolean unregister) {
-		if (!unregister)
+		if(!unregister)
 			ignoreNextClose = true;
 		else
 			guis.remove(this);
 
 		this.opener.closeInventory();
-	}
-
-	public void closeInventory() {
-		if (ignoreNextClose) {
-			ignoreNextClose = false;
-			return;
-		}
-
-		guis.remove(this);
-		this.opener.closeInventory();
-	}
-
-	public void clear() {
-		for (int i = 0; i < inv.getContents().length; i++) {
-			if (modifier.contains(i))
-				continue;
-
-			inv.setItem(i, new ItemStack(Material.AIR));
-		}
-	}
-
-	public void pageActionChanged(PageAction action) {
-		onInventoryAction(action);
-	}
-
-	/*
-	 * Executes itemlinks
-	 */
-	public void executeLink(ItemStack item) {
-		for (ItemMeta stack : itemlinks.keySet())
-			if (stack.getDisplayName().equals(item.getItemMeta().getDisplayName())) {
-				itemlinks.get(stack).run();
-				break;
-			}
 	}
 
 	/*
@@ -312,44 +233,123 @@ public abstract class SuperInventory {
 		itemlinks.put(stack.getItemMeta(), runnable);
 	}
 
-	public Player getOpener() {
-		return this.opener;
+	@SuppressWarnings("deprecation")
+	private void doAnimation() {
+		if(!animations)
+			return;
+
+		HashMap<Integer, ItemStack> itemlist = new HashMap<Integer, ItemStack>();
+		for(int i = 0; i < (inv.getSize() - 9); i++)
+			itemlist.put(i, inv.getItem(i));
+
+		for(int i = 0; i < (inv.getSize() - 9); i++)
+			inv.setItem(i, null);
+		opener.updateInventory();
+
+		int delay = (int) (600) / (getSize());
+
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				int middle = (int) Math.ceil(itemlist.size() / 2);
+				for(int radius = 0; middle + radius != itemlist.size(); radius++) {
+					if(!isOpen())
+						break;
+
+					try {
+						Thread.sleep(delay);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+
+					inv.setItem(middle + radius, itemlist.get(middle + radius));
+					opener.updateInventory();
+
+					try {
+						Thread.sleep(delay);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+
+					inv.setItem(middle - radius, itemlist.get(middle - radius));
+					opener.updateInventory();
+				}
+
+				if((inv.getSize() - 9) % 2 == 0 && isOpen()) {
+					try {
+						Thread.sleep(delay);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					inv.setItem(0, itemlist.get(0));
+					opener.updateInventory();
+				}
+			}
+		}, 0);
 	}
 
-	public Inventory getInventory() {
-		return this.inv;
-	}
+	private void fillSpace() {
+		if(!fill_inventory)
+			return;
 
-	public int getPage() {
-		return page;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public boolean isHomePage() {
-		return homePage;
+		for(int i = 0; i < inv.getSize(); i++)
+			if(inv.getItem(i) == null)
+				inv.setItem(i, new ItemBuilder().displayname("§c").itemstack(new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15)).build());
 	}
 
 	/*
-	 * @return Return if this is the last page
+	 * Getter for the back button
 	 */
-	public abstract boolean onOpen();
+	private String getBack() {
+		if(!homePage)
+			return "§4Zurück";
+		else
+			return "§4Schließen";
+	}
 
-	@Deprecated
 	/*
-	 * @deprecated: Please use linkItemTo() instead
+	 * String for page title
 	 */
-	public abstract void onClick(InventoryClickEvent event);
+	private String getPageUpdate() {
+		String suff = (hasMorePages ? " §7" + page : "");
+		return firstTitle + (firstTitle.length() + suff.length() > 32 ? "" : suff);
+	}
 
-	public abstract void onInventoryAction(PageAction action);
+	/*
+	 * Set Back and Forwards
+	 */
+	private void setSwitcher() {
+		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("§4Zurück") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
+		if(!hasMorePages)
+			return;
 
-	public abstract boolean onBackClick();
+		if(!isLastPage)
+			inv.setItem(modifier.get(0), forward);
 
-	public abstract void onClose(InventoryCloseEvent event);
+		if(page != 1)
+			inv.setItem(modifier.get(1), backwards);
+	}
+
+	public static ArrayList<SuperInventory> getGUIS() {
+		return guis;
+	}
+
+	public static SuperInventory getInventory(Player player) {
+		for(SuperInventory inventory : guis)
+			if(inventory.getOpener().equals(player))
+				return inventory;
+
+		return null;
+	}
+
+	/*
+	 * Calculates based on the list size you enter, how many pages you need
+	 */
+	protected static int calculatePages(int amount, int pageSize) {
+		int res = (int) Math.ceil((double) amount / pageSize);
+		if(res == 0)
+			res = 1;
+		return res;
+	}
 }

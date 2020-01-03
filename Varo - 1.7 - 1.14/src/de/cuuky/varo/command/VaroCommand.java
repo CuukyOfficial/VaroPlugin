@@ -82,9 +82,9 @@ public abstract class VaroCommand {
 		new FinaleCommand();
 	}
 
-	private String name;
 	private String[] aliases;
 	private String description;
+	private String name;
 	private String permission;
 
 	public VaroCommand(String name, String description, String permission, String... aliases) {
@@ -96,13 +96,51 @@ public abstract class VaroCommand {
 		varoCommands.add(this);
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getPermission() {
+		return permission;
+	}
+
+	public boolean isAlias(String s) {
+		if(this.aliases == null)
+			return false;
+
+		for(String alias : aliases)
+			if(alias.equalsIgnoreCase(s))
+				return true;
+
+		return false;
+	}
+
+	public abstract void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args);
+
 	/**
-	 * @param command The ingame command
+	 * @param description
+	 *            The description in the plugin.yml file
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param command
+	 *            The ingame command
 	 * @return Returns the VaroCommand Object
 	 */
 	public static VaroCommand getCommand(String command) {
-		for (VaroCommand chunkCommand : varoCommands) {
-			if (!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
+		for(VaroCommand chunkCommand : varoCommands) {
+			if(!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
 				continue;
 
 			return chunkCommand;
@@ -115,41 +153,5 @@ public abstract class VaroCommand {
 	 */
 	public static ArrayList<VaroCommand> getVaroCommand() {
 		return varoCommands;
-	}
-
-	public abstract void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args);
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPermission() {
-		return permission;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * @param description The description in the plugin.yml file
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public boolean isAlias(String s) {
-		if (this.aliases == null)
-			return false;
-
-		for (String alias : aliases)
-			if (alias.equalsIgnoreCase(s))
-				return true;
-
-		return false;
 	}
 }

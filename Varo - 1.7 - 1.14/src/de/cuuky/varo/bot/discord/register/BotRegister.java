@@ -36,189 +36,78 @@ public class BotRegister {
 		loadAll();
 	}
 
-	private String uuid, name;
-	private long userId;
-	private int code;
 	private boolean bypass;
+	private int code;
+	private long userId;
+	private String uuid, name;
 
 	public BotRegister(String uuid, boolean start) {
 		this.uuid = uuid;
 		this.userId = -1;
 		this.code = -1;
 
-		if (start)
-			if (code == -1)
+		if(start)
+			if(code == -1)
 				this.code = generateCode();
 
 		register.add(this);
 	}
 
-	public static ArrayList<BotRegister> getBotRegister() {
-		return register;
-	}
+	public void delete() {
+		if(getPlayer() != null)
+			getPlayer().kickPlayer("§cBotRegister §7unregistered");
 
-	public static BotRegister getRegister(String uuid) {
-		for (BotRegister br : register)
-			if (br.getUUID().equals(uuid))
-				return br;
-
-		return null;
-	}
-
-	public static BotRegister getBotRegisterByPlayerName(String name) {
-		for (BotRegister br : register)
-			if (br.getPlayerName() != null)
-				if (br.getPlayerName().equals(name))
-					return br;
-		return null;
-	}
-
-	public static BotRegister getRegister(User user) {
-		for (BotRegister br : register)
-			if (br.getUserId() == user.getIdLong())
-				return br;
-		return null;
-	}
-
-	public static void saveAll() {
-		if (!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
-			return;
-
-		if (ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if (!MySQL.getInstance().isConnected())
-				return;
-
-			MySQL.getInstance().update("TRUNCATE TABLE verify;");
-
-			for (final BotRegister reg : register) {
-				MySQL.getInstance().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
-			}
-		} else {
-			File file = new File("plugins/Varo", "registrations.yml");
-			YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-
-			for (String s : cfg.getKeys(true))
-				cfg.set(s, null);
-
-			for (final BotRegister reg : register) {
-				cfg.set(reg.getUUID() + ".userId", reg.getUserId() != -1 ? reg.getUserId() : "null");
-				cfg.set(reg.getUUID() + ".code", reg.getCode());
-				cfg.set(reg.getUUID() + ".bypass", reg.isBypass());
-				cfg.set(reg.getUUID() + ".name", reg.getPlayerName() == null ? "null" : reg.getPlayerName());
-			}
-
-			try {
-				cfg.save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private static void loadAll() {
-		if (!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
-			return;
-
-		if (ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if (!MySQL.getInstance().isConnected()) {
-				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
-				return;
-			}
-
-			ResultSet rs = MySQL.getInstance().getQuery("SELECT * FROM verify");
-
-			try {
-				while (rs.next()) {
-					String uuid = rs.getString("uuid");
-					BotRegister reg = new BotRegister(uuid, false);
-
-					try {
-						reg.setUserId(rs.getLong("userid"));
-					} catch (Exception e) {
-						reg.setUserId(-1);
-					}
-
-					reg.setCode(rs.getInt("code"));
-					reg.setBypass(rs.getBoolean("bypass"));
-					reg.setPlayerName(rs.getString("name"));
-
-					if (Bukkit.getPlayer(UUID.fromString(uuid)) != null && !reg.isActive())
-						Bukkit.getPlayer(UUID.fromString(uuid)).kickPlayer(reg.getKickMessage());
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		} else {
-			File file = new File("plugins/Varo", "registrations.yml");
-			YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-
-			for (String key : cfg.getKeys(true)) {
-				if (!key.contains(".userId"))
-					continue;
-
-				String uuid = key.replace(".userId", "");
-				BotRegister reg = new BotRegister(uuid, false);
-
-				try {
-					reg.setUserId(cfg.getLong(uuid + ".userId"));
-				} catch (Exception e) {
-					reg.setUserId(-1);
-				}
-
-				reg.setBypass(cfg.getBoolean(uuid + ".bypass"));
-				reg.setCode(cfg.getInt(uuid + ".code"));
-				reg.setPlayerName(cfg.getString(uuid + ".name"));
-
-				if (Bukkit.getPlayer(UUID.fromString(uuid)) != null && !reg.isActive())
-					Bukkit.getPlayer(UUID.fromString(uuid)).kickPlayer(reg.getKickMessage());
-			}
-		}
+		register.remove(this);
 	}
 
 	public int generateCode() {
 		int code = new Random().nextInt(1000000) + 1;
-		for (BotRegister br : register)
-			if (!br.equals(this))
-				if (br.getCode() == code)
+		for(BotRegister br : register)
+			if(!br.equals(this))
+				if(br.getCode() == code)
 					return generateCode();
 
 		return code;
-	}
-
-	public void delete() {
-		if (getPlayer() != null)
-			getPlayer().kickPlayer("§cBotRegister §7unregistered");
-
-		register.remove(this);
 	}
 
 	public int getCode() {
 		return this.code;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public String getKickMessage() {
+		return ConfigMessages.DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
 	}
 
 	public Member getMember() {
 		try {
 			JDA jda = BotLauncher.getDiscordBot().getJda();
 			return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong()).getMemberById(this.userId);
-		} catch (Exception e) {
+		} catch(Exception e) {
 			return null;
 		}
 	}
 
+	public Player getPlayer() {
+		return Bukkit.getPlayer(UUID.fromString(uuid));
+	}
+
+	public String getPlayerName() {
+		return this.name;
+	}
+
+	public long getUserId() {
+		return this.userId;
+	}
+
+	public String getUUID() {
+		return this.uuid;
+	}
+
 	public boolean isActive() {
-		if (bypass)
+		if(bypass)
 			return true;
 
 		return userId > 0;
-	}
-
-	public String getKickMessage() {
-		return ConfigMessages.DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
 	}
 
 	public boolean isBypass() {
@@ -229,27 +118,138 @@ public class BotRegister {
 		this.bypass = bypass;
 	}
 
-	public long getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(long user) {
-		this.userId = user;
-	}
-
-	public String getPlayerName() {
-		return this.name;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
 	public void setPlayerName(String name) {
 		this.name = name;
 	}
 
-	public String getUUID() {
-		return this.uuid;
+	public void setUserId(long user) {
+		this.userId = user;
 	}
 
-	public Player getPlayer() {
-		return Bukkit.getPlayer(UUID.fromString(uuid));
+	public static ArrayList<BotRegister> getBotRegister() {
+		return register;
+	}
+
+	public static BotRegister getBotRegisterByPlayerName(String name) {
+		for(BotRegister br : register)
+			if(br.getPlayerName() != null)
+				if(br.getPlayerName().equals(name))
+					return br;
+		return null;
+	}
+
+	public static BotRegister getRegister(String uuid) {
+		for(BotRegister br : register)
+			if(br.getUUID().equals(uuid))
+				return br;
+
+		return null;
+	}
+
+	public static BotRegister getRegister(User user) {
+		for(BotRegister br : register)
+			if(br.getUserId() == user.getIdLong())
+				return br;
+		return null;
+	}
+
+	public static void saveAll() {
+		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+			return;
+
+		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
+			if(!MySQL.getInstance().isConnected())
+				return;
+
+			MySQL.getInstance().update("TRUNCATE TABLE verify;");
+
+			for(final BotRegister reg : register) {
+				MySQL.getInstance().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
+			}
+		} else {
+			File file = new File("plugins/Varo", "registrations.yml");
+			YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+			for(String s : cfg.getKeys(true))
+				cfg.set(s, null);
+
+			for(final BotRegister reg : register) {
+				cfg.set(reg.getUUID() + ".userId", reg.getUserId() != -1 ? reg.getUserId() : "null");
+				cfg.set(reg.getUUID() + ".code", reg.getCode());
+				cfg.set(reg.getUUID() + ".bypass", reg.isBypass());
+				cfg.set(reg.getUUID() + ".name", reg.getPlayerName() == null ? "null" : reg.getPlayerName());
+			}
+
+			try {
+				cfg.save(file);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void loadAll() {
+		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+			return;
+
+		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
+			if(!MySQL.getInstance().isConnected()) {
+				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
+				return;
+			}
+
+			ResultSet rs = MySQL.getInstance().getQuery("SELECT * FROM verify");
+
+			try {
+				while(rs.next()) {
+					String uuid = rs.getString("uuid");
+					BotRegister reg = new BotRegister(uuid, false);
+
+					try {
+						reg.setUserId(rs.getLong("userid"));
+					} catch(Exception e) {
+						reg.setUserId(-1);
+					}
+
+					reg.setCode(rs.getInt("code"));
+					reg.setBypass(rs.getBoolean("bypass"));
+					reg.setPlayerName(rs.getString("name"));
+
+					if(Bukkit.getPlayer(UUID.fromString(uuid)) != null && !reg.isActive())
+						Bukkit.getPlayer(UUID.fromString(uuid)).kickPlayer(reg.getKickMessage());
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			File file = new File("plugins/Varo", "registrations.yml");
+			YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+			for(String key : cfg.getKeys(true)) {
+				if(!key.contains(".userId"))
+					continue;
+
+				String uuid = key.replace(".userId", "");
+				BotRegister reg = new BotRegister(uuid, false);
+
+				try {
+					reg.setUserId(cfg.getLong(uuid + ".userId"));
+				} catch(Exception e) {
+					reg.setUserId(-1);
+				}
+
+				reg.setBypass(cfg.getBoolean(uuid + ".bypass"));
+				reg.setCode(cfg.getInt(uuid + ".code"));
+				reg.setPlayerName(cfg.getString(uuid + ".name"));
+
+				if(Bukkit.getPlayer(UUID.fromString(uuid)) != null && !reg.isActive())
+					Bukkit.getPlayer(UUID.fromString(uuid)).kickPlayer(reg.getKickMessage());
+			}
+		}
 	}
 }

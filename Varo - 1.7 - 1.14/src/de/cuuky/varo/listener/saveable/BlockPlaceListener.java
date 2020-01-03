@@ -23,33 +23,33 @@ public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(final BlockPlaceEvent e) {
-		if (!Game.getInstance().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			return;
 
 		Block placed = e.getBlock();
 
-		if (!(placed.getState() instanceof Chest))
+		if(!(placed.getState() instanceof Chest))
 			return;
 
 		Chest chest = (Chest) placed.getState();
 		InventoryHolder ih = ((InventoryHolder) chest).getInventory().getHolder();
 
-		if (!(ih instanceof DoubleChest))
+		if(!(ih instanceof DoubleChest))
 			return;
 
 		Chest secChest = (Chest) ((DoubleChest) ih).getLeftSide();
 
-		if (chest.equals(secChest) && secChest != null)
+		if(chest.equals(secChest) && secChest != null)
 			secChest = (Chest) ((DoubleChest) ih).getRightSide();
 
 		VaroSaveable saveable = VaroSaveable.getByLocation(secChest.getLocation());
-		if (saveable == null || saveable.holderDead())
+		if(saveable == null || saveable.holderDead())
 			return;
 
 		Player p = e.getPlayer();
 		VaroPlayer player = VaroPlayer.getPlayer(p);
 
-		if (saveable.canModify(player)) {
+		if(saveable.canModify(player)) {
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
 			player.sendMessage(Main.getPrefix() + ConfigMessages.SAVEABLE_NEW_CHEST.getValue(player));
 			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);

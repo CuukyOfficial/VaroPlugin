@@ -15,28 +15,31 @@ public class EnchantmentList extends VaroList {
 		super(location);
 	}
 
-	public static ArrayList<EnchantmentList> getEnchantmentLists() {
-		ArrayList<EnchantmentList> eList = new ArrayList<>();
-
-		for (VaroList vlist : VaroList.getLists())
-			if (vlist instanceof EnchantmentList)
-				eList.add((EnchantmentList) vlist);
-
-		return eList;
-	}
-
-	public static EnchantmentList getEnchantmentList(String list) {
-		for (EnchantmentList eList : getEnchantmentLists())
-			if (eList.getLocation().equalsIgnoreCase(list))
-				return eList;
-
-		return null;
-	}
-
 	public void addEnchantment(Enchantment enc, int amplifier) {
 		enchantments.add(enc.getName() + ":" + amplifier);
 
 		saveList();
+	}
+
+	@Override
+	public ArrayList<String> getAsList() {
+		return enchantments;
+	}
+
+	public ArrayList<String> getEnchantments() {
+		return enchantments;
+	}
+
+	public boolean hasEnchantment(Enchantment enc, int amplifier) {
+		return enchantments.contains(enc.getName() + ":" + amplifier);
+	}
+
+	@Override
+	public void onLoad(List<?> list) {
+		enchantments = new ArrayList<String>();
+
+		for(Object id : list)
+			enchantments.add((String) id);
 	}
 
 	public void removeEnchantment(Enchantment enc, int amplifier) {
@@ -45,24 +48,21 @@ public class EnchantmentList extends VaroList {
 		saveList();
 	}
 
-	public boolean hasEnchantment(Enchantment enc, int amplifier) {
-		return enchantments.contains(enc.getName() + ":" + amplifier);
+	public static EnchantmentList getEnchantmentList(String list) {
+		for(EnchantmentList eList : getEnchantmentLists())
+			if(eList.getLocation().equalsIgnoreCase(list))
+				return eList;
+
+		return null;
 	}
 
-	public ArrayList<String> getEnchantments() {
-		return enchantments;
-	}
+	public static ArrayList<EnchantmentList> getEnchantmentLists() {
+		ArrayList<EnchantmentList> eList = new ArrayList<>();
 
-	@Override
-	public void onLoad(List<?> list) {
-		enchantments = new ArrayList<String>();
+		for(VaroList vlist : VaroList.getLists())
+			if(vlist instanceof EnchantmentList)
+				eList.add((EnchantmentList) vlist);
 
-		for (Object id : list)
-			enchantments.add((String) id);
-	}
-
-	@Override
-	public ArrayList<String> getAsList() {
-		return enchantments;
+		return eList;
 	}
 }

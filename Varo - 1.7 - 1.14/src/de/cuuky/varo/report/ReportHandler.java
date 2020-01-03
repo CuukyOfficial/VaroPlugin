@@ -16,19 +16,19 @@ public class ReportHandler extends VaroSerializeObject {
 		load();
 	}
 
-	public static void initialise() {
-		if (instance == null) {
-			instance = new ReportHandler();
-		}
-	}
-
 	@Override
 	public void onSave() {
 		clearOld();
 
-		for (Report report : Report.getReports())
+		for(Report report : Report.getReports())
 			save(String.valueOf(report.getId()), report, getConfiguration());
 
 		saveFile();
+	}
+
+	public static void initialise() {
+		if(instance == null) {
+			instance = new ReportHandler();
+		}
 	}
 }

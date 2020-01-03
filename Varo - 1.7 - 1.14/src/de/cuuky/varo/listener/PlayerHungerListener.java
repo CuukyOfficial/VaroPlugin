@@ -10,7 +10,7 @@ public class PlayerHungerListener implements Listener {
 
 	@EventHandler
 	public void on(FoodLevelChangeEvent e) {
-		if (!Game.getInstance().hasStarted())
+		if(!Game.getInstance().hasStarted())
 			e.setFoodLevel(40);
 	}
 }

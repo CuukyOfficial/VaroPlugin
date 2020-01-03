@@ -13,19 +13,19 @@ public class VaroAPIStrike {
 		this.strike = strike;
 	}
 
-	public String getReason() {
-		return strike.getReason();
-	}
-
 	public Date getAcquiredDate() {
 		return strike.getAcquiredDate();
 	}
 
-	public String getStriker() {
-		return strike.getStriker();
+	public String getReason() {
+		return strike.getReason();
 	}
 
 	public VaroPlayer getStrikeOwner() {
 		return strike.getStriked();
+	}
+
+	public String getStriker() {
+		return strike.getStriker();
 	}
 }

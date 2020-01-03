@@ -2,11 +2,11 @@ package de.cuuky.varo.entity.player.event;
 
 public enum BukkitEventType {
 
-	KILLED,
-	KICKED,
 	JOINED,
+	KICKED,
+	KILL,
+	KILLED,
 	QUIT,
-	WIN,
-	KILL;
+	WIN;
 
 }

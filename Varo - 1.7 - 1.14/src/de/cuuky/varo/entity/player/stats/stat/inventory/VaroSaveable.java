@@ -14,14 +14,26 @@ import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroSaveable implements VaroSerializeable {
 
+	public enum SaveableType implements VaroSerializeable {
+		@VaroSerializeField(enumValue = "CHEST")
+		CHEST,
+		@VaroSerializeField(enumValue = "FURNACE")
+		FURNANCE;
+
+		@Override
+		public void onDeserializeEnd() {}
+
+		@Override
+		public void onSerializeStart() {}
+	}
+
 	private static ArrayList<VaroSaveable> saveables;
 
 	static {
 		saveables = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "type")
-	private SaveableType type;
+	private Block block;
 
 	@VaroSerializeField(path = "blockLocation")
 	private Location blockLocation;
@@ -29,11 +41,12 @@ public class VaroSaveable implements VaroSerializeable {
 	@VaroSerializeField(path = "id")
 	private int id;
 
+	private VaroPlayer player;
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
 
-	private Block block;
-	private VaroPlayer player;
+	@VaroSerializeField(path = "type")
+	private SaveableType type;
 
 	public VaroSaveable() {
 		saveables.add(this);
@@ -49,41 +62,40 @@ public class VaroSaveable implements VaroSerializeable {
 		saveables.add(this);
 	}
 
-	public static VaroSaveable getSaveable(int id) {
-		for (VaroSaveable save : saveables) {
-			if (save.getId() != id)
-				continue;
+	public boolean canModify(VaroPlayer player) {
+		if(this.player.getTeam() == null && !player.equals(this.player))
+			return false;
 
-			return save;
-		}
+		if(this.player.getTeam() != null && !this.player.getTeam().isMember(player))
+			return false;
 
-		return null;
+		return true;
 	}
 
-	public static ArrayList<VaroSaveable> getSaveable(VaroPlayer player) {
-		return player.getStats().getSaveables();
+	public Block getBlock() {
+		return block;
 	}
 
-	public static VaroSaveable getByLocation(Location loc) {
-		for (VaroSaveable save : VaroSaveable.getSaveables()) {
-			Location loc1 = save.getBlock().getLocation();
-			if (loc1.getBlockX() == loc.getBlockX() && loc1.getBlockY() == loc.getBlockY() && loc.getBlockZ() == loc1.getBlockZ() && loc1.getWorld().equals(loc.getWorld()))
-				return save;
-		}
-
-		return null;
-	}
-
-	public static ArrayList<VaroSaveable> getSaveables() {
-		return saveables;
-	}
-
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while (getSaveable(id) != null)
-			generateId();
-
+	public int getId() {
 		return id;
+	}
+
+	public VaroPlayer getPlayer() {
+		return player;
+	}
+
+	public SaveableType getType() {
+		return type;
+	}
+
+	public boolean holderDead() {
+		if(this.player.getTeam() == null && this.player.getStats().isAlive())
+			return false;
+
+		if(this.player.getTeam() != null && !this.player.getTeam().isDead())
+			return false;
+
+		return true;
 	}
 
 	@Override
@@ -104,59 +116,45 @@ public class VaroSaveable implements VaroSerializeable {
 		this.blockLocation = block.getLocation();
 	}
 
-	public boolean holderDead() {
-		if (this.player.getTeam() == null && this.player.getStats().isAlive())
-			return false;
-
-		if (this.player.getTeam() != null && !this.player.getTeam().isDead())
-			return false;
-
-		return true;
-	}
-
-	public boolean canModify(VaroPlayer player) {
-		if (this.player.getTeam() == null && !player.equals(this.player))
-			return false;
-
-		if (this.player.getTeam() != null && !this.player.getTeam().isMember(player))
-			return false;
-
-		return true;
-	}
-
 	public void remove() {
 		player.getStats().removeSaveable(this);
 		saveables.remove(this);
 	}
 
-	public Block getBlock() {
-		return block;
-	}
+	private int generateId() {
+		int id = JavaUtils.randomInt(1000, 9999999);
+		while(getSaveable(id) != null)
+			generateId();
 
-	public SaveableType getType() {
-		return type;
-	}
-
-	public int getId() {
 		return id;
 	}
 
-	public VaroPlayer getPlayer() {
-		return player;
+	public static VaroSaveable getByLocation(Location loc) {
+		for(VaroSaveable save : VaroSaveable.getSaveables()) {
+			Location loc1 = save.getBlock().getLocation();
+			if(loc1.getBlockX() == loc.getBlockX() && loc1.getBlockY() == loc.getBlockY() && loc.getBlockZ() == loc1.getBlockZ() && loc1.getWorld().equals(loc.getWorld()))
+				return save;
+		}
+
+		return null;
 	}
 
-	public enum SaveableType implements VaroSerializeable {
-		@VaroSerializeField(enumValue = "CHEST")
-		CHEST,
-		@VaroSerializeField(enumValue = "FURNACE")
-		FURNANCE;
+	public static VaroSaveable getSaveable(int id) {
+		for(VaroSaveable save : saveables) {
+			if(save.getId() != id)
+				continue;
 
-		@Override
-		public void onDeserializeEnd() {
+			return save;
 		}
 
-		@Override
-		public void onSerializeStart() {
-		}
+		return null;
+	}
+
+	public static ArrayList<VaroSaveable> getSaveable(VaroPlayer player) {
+		return player.getStats().getSaveables();
+	}
+
+	public static ArrayList<VaroSaveable> getSaveables() {
+		return saveables;
 	}
 }

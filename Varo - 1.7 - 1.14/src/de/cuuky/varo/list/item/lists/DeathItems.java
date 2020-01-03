@@ -8,7 +8,7 @@ public class DeathItems extends ItemList {
 	public DeathItems() {
 		super("DeathItems");
 
-		if (!items.isEmpty())
+		if(!items.isEmpty())
 			return;
 
 		items.add(Materials.AIR.parseItem());

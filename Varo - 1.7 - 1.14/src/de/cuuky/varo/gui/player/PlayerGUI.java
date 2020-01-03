@@ -31,6 +31,24 @@ public class PlayerGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		if(type != null)
+			new PlayerListGUI(opener, true, type);
+		else
+			new PlayerListChooseGUI(opener, true);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		// TODO: Strikes
 
@@ -42,11 +60,11 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[]{"§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? VaroUtils.formatLocation(target.getStats().getLastLocation(), "x, y, z in world") : "/")}).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? VaroUtils.formatLocation(target.getStats().getLastLocation(), "x, y, z in world") : "/") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				if (target.getStats().getLastLocation() == null)
+				if(target.getStats().getLastLocation() == null)
 					return;
 
 				opener.teleport(target.getStats().getLastLocation());
@@ -66,7 +84,7 @@ public class PlayerGUI extends SuperInventory {
 			@Override
 			public void run() {
 				target.delete();
-				if (type != null)
+				if(type != null)
 					new PlayerListGUI(opener, true, type);
 				else
 					new PlayerListChooseGUI(opener, true);
@@ -77,7 +95,7 @@ public class PlayerGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if (target.isOnline())
+				if(target.isOnline())
 					target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 
 				target.getStats().loadDefaults();
@@ -94,26 +112,5 @@ public class PlayerGUI extends SuperInventory {
 		});
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		if (type != null)
-			new PlayerListGUI(opener, true, type);
-		else
-			new PlayerListChooseGUI(opener, true);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

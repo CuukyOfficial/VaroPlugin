@@ -9,9 +9,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public abstract class VaroList {
 
-	private static ArrayList<VaroList> lists;
-	private static File file;
 	private static YamlConfiguration config;
+	private static File file;
+	private static ArrayList<VaroList> lists;
 
 	static {
 		reloadConfig();
@@ -24,7 +24,7 @@ public abstract class VaroList {
 		config.options().copyDefaults(true);
 
 		List<?> loadList = config.getList(location);
-		if (loadList == null)
+		if(loadList == null)
 			loadList = new ArrayList<>();
 
 		onLoad(loadList);
@@ -32,38 +32,11 @@ public abstract class VaroList {
 		lists.add(this);
 	}
 
-	private static void reloadConfig() {
-		file = new File("plugins/Varo", "lists.yml");
-		config = YamlConfiguration.loadConfiguration(file);
-		lists = new ArrayList<VaroList>();
-	}
-
-	public static void reloadLists() {
-		saveLists();
-		reloadConfig();
-
-		for (VaroList list : lists)
-			list.onLoad(config.getStringList(list.getLocation()));
-	}
-
-	public static void saveLists() {
-		for (VaroList list : lists) {
-			config.set(list.getLocation(), null);
-			config.set(list.getLocation(), list.getAsList());
-		}
-
-		try {
-			config.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static ArrayList<VaroList> getLists() {
-		return lists;
-	}
-
 	public abstract ArrayList<?> getAsList();
+
+	public String getLocation() {
+		return location;
+	}
 
 	public abstract void onLoad(List<?> list);
 
@@ -73,11 +46,37 @@ public abstract class VaroList {
 
 		try {
 			config.save(file);
-		} catch (IOException e) {
+		} catch(IOException e) {}
+	}
+
+	public static ArrayList<VaroList> getLists() {
+		return lists;
+	}
+
+	public static void reloadLists() {
+		saveLists();
+		reloadConfig();
+
+		for(VaroList list : lists)
+			list.onLoad(config.getStringList(list.getLocation()));
+	}
+
+	public static void saveLists() {
+		for(VaroList list : lists) {
+			config.set(list.getLocation(), null);
+			config.set(list.getLocation(), list.getAsList());
+		}
+
+		try {
+			config.save(file);
+		} catch(IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public String getLocation() {
-		return location;
+	private static void reloadConfig() {
+		file = new File("plugins/Varo", "lists.yml");
+		config = YamlConfiguration.loadConfiguration(file);
+		lists = new ArrayList<VaroList>();
 	}
 }

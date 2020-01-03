@@ -20,39 +20,39 @@ public class EntityDamageByEntityListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
-		if (!(event.getEntity() instanceof Player))
+		if(!(event.getEntity() instanceof Player))
 			return;
 
-		if (Game.getInstance().getGameState() == GameState.END)
+		if(Game.getInstance().getGameState() == GameState.END)
 			return;
 
 		Player p = (Player) event.getEntity();
-		if (Game.getInstance().getProtection() != null) {
+		if(Game.getInstance().getProtection() != null) {
 			p.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
 			event.setCancelled(true);
 			return;
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(p);
-		if (Game.getInstance().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
+		if(Game.getInstance().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if (ConfigEntry.FRIENDLYFIRE.getValueAsBoolean())
+		if(ConfigEntry.FRIENDLYFIRE.getValueAsBoolean())
 			return;
 
 		Player damager = new EntityDamageByEntityUtil(event).getDamager();
-		if (damager == null)
+		if(damager == null)
 			return;
 
 		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
-		if (VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Game.getInstance().isFirstTime()) {
+		if(VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Game.getInstance().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if (damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null || !vp.getTeam().equals(vdamager.getTeam()))
+		if(damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null || !vp.getTeam().equals(vdamager.getTeam()))
 			return;
 
 		event.setCancelled(true);

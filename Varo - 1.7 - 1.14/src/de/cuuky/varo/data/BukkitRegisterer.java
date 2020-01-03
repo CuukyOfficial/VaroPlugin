@@ -71,40 +71,6 @@ import de.cuuky.varo.version.VersionUtils;
 
 public final class BukkitRegisterer {
 
-	public static void registerEvents() {
-		registerEvent(new PlayerJoinListener());
-		registerEvent(new PlayerQuitListener());
-		registerEvent(new PlayerMoveListener());
-		registerEvent(new DestroyedBlocksListener());
-		registerEvent(new PlayerLoginListener());
-		registerEvent(new BlockBreakListener());
-		registerEvent(new EntityExplodeListener());
-		registerEvent(new PlayerInteractListener());
-		registerEvent(new SignChangeListener());
-		registerEvent(new PlayerChatListener());
-		registerEvent(new BlockPlaceListener());
-		registerEvent(new InventoryMoveListener());
-		registerEvent(new InventoryListener());
-		registerEvent(new ServerListPingListener());
-		registerEvent(new PlayerDeathListener());
-		registerEvent(new BlockedEnchantmentsListener());
-		registerEvent(new BlockedItemsListener());
-		registerEvent(new EntityDamageListener());
-		registerEvent(new EntityDamageByEntityListener());
-		registerEvent(new PlayerTeleportListener());
-		registerEvent(new PlayerRegenerateListener());
-		registerEvent(new PlayerHungerListener());
-		registerEvent(new NoPortalListener());
-		registerEvent(new PlayerCommandPreprocessListener());
-		registerEvent(new HealtLoseListener());
-		registerEvent(new SpectatorListener());
-		registerEvent(new PlayerRespawnListener());
-		registerEvent(new VaroEventListener());
-
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
-			registerEvent(new PlayerAchievementListener());
-	}
-
 	public static void registerCommands() {
 		registerCommand("varo", new VaroCommandListener());
 		registerCommand("antixray", new AntiXrayCommand());
@@ -138,6 +104,40 @@ public final class BukkitRegisterer {
 		registerCommand("thunder", new ThunderCommand());
 		registerCommand("protect", new ProtectCommand());
 		registerCommand("countdown", new CountdownCommand());
+	}
+
+	public static void registerEvents() {
+		registerEvent(new PlayerJoinListener());
+		registerEvent(new PlayerQuitListener());
+		registerEvent(new PlayerMoveListener());
+		registerEvent(new DestroyedBlocksListener());
+		registerEvent(new PlayerLoginListener());
+		registerEvent(new BlockBreakListener());
+		registerEvent(new EntityExplodeListener());
+		registerEvent(new PlayerInteractListener());
+		registerEvent(new SignChangeListener());
+		registerEvent(new PlayerChatListener());
+		registerEvent(new BlockPlaceListener());
+		registerEvent(new InventoryMoveListener());
+		registerEvent(new InventoryListener());
+		registerEvent(new ServerListPingListener());
+		registerEvent(new PlayerDeathListener());
+		registerEvent(new BlockedEnchantmentsListener());
+		registerEvent(new BlockedItemsListener());
+		registerEvent(new EntityDamageListener());
+		registerEvent(new EntityDamageByEntityListener());
+		registerEvent(new PlayerTeleportListener());
+		registerEvent(new PlayerRegenerateListener());
+		registerEvent(new PlayerHungerListener());
+		registerEvent(new NoPortalListener());
+		registerEvent(new PlayerCommandPreprocessListener());
+		registerEvent(new HealtLoseListener());
+		registerEvent(new SpectatorListener());
+		registerEvent(new PlayerRespawnListener());
+		registerEvent(new VaroEventListener());
+
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
+			registerEvent(new PlayerAchievementListener());
 	}
 
 	private static void registerCommand(String name, CommandExecutor cm) {

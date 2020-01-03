@@ -5,17 +5,34 @@ import de.cuuky.varo.utils.JavaUtils;
 
 public class ChatLogger extends Logger {
 
+	public enum ChatLogType {
+		CHAT("CHAT"),
+		PRIVATE_CHAT("PRIVATECHAT"),
+		TEAMCHAT("TEAMCHAT");
+
+		private String name;
+
+		ChatLogType(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public static ChatLogType getType(String s) {
+			for(ChatLogType type : values())
+				if(type.getName().equalsIgnoreCase(s))
+					return type;
+
+			return null;
+		}
+	}
+
 	private static ChatLogger instance;
 
 	private ChatLogger(String name) {
 		super(name, false);
-	}
-
-	public static ChatLogger getInstance() {
-		if (instance == null) {
-			instance = new ChatLogger("chatlogs");
-		}
-		return instance;
 	}
 
 	public void println(ChatLogType type, String message) {
@@ -29,27 +46,10 @@ public class ChatLogger extends Logger {
 		pw.flush();
 	}
 
-	public enum ChatLogType {
-		CHAT("CHAT"),
-		PRIVATE_CHAT("PRIVATECHAT"),
-		TEAMCHAT("TEAMCHAT");
-
-		private String name;
-
-		ChatLogType(String name) {
-			this.name = name;
+	public static ChatLogger getInstance() {
+		if(instance == null) {
+			instance = new ChatLogger("chatlogs");
 		}
-
-		public static ChatLogType getType(String s) {
-			for (ChatLogType type : values())
-				if (type.getName().equalsIgnoreCase(s))
-					return type;
-
-			return null;
-		}
-
-		public String getName() {
-			return name;
-		}
+		return instance;
 	}
 }

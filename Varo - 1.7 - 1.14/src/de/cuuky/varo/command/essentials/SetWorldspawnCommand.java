@@ -14,18 +14,18 @@ public class SetWorldspawnCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-		if (!(sender instanceof Player)) {
+		if(!(sender instanceof Player)) {
 			System.out.println("Nicht für die Konsole");
 			return false;
 		}
 
 		Player p = (Player) sender;
-		if (!p.hasPermission("Varo.setup")) {
+		if(!p.hasPermission("Varo.setup")) {
 			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
 			return false;
 		}
 
-		if (args.length != 0) {
+		if(args.length != 0) {
 			p.sendMessage(Main.getPrefix() + "§7/setworldspawn");
 			return false;
 		}

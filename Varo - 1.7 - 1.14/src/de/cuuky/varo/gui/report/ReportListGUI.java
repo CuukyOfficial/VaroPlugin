@@ -24,13 +24,42 @@ public class ReportListGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new AdminMainMenu(opener);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {
+		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
+		int id = Integer.parseInt(lore.get(0).replace("§c", ""));
+		Report report = Report.getReport(id);
+		this.close(true);
+
+		if(report == null) {
+			update();
+			return;
+		}
+
+		VaroPlayer vp = VaroPlayer.getPlayer(getOpener());
+
+		new ReportPickGUI(vp, report);
+	}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i < getSize(); i++) {
+		for(int i = 0; i < getSize(); i++) {
 			Report reports;
 			try {
 				reports = Report.getReports().get(start);
-			} catch (IndexOutOfBoundsException e) {
+			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -44,38 +73,7 @@ public class ReportListGUI extends SuperInventory {
 		return calculatePages(Report.getReports().size(), getSize()) == page;
 	}
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
-		int id = Integer.parseInt(lore.get(0).replace("§c", ""));
-		Report report = Report.getReport(id);
-		this.close(true);
-
-		if (report == null) {
-			update();
-			return;
-		}
-
-		VaroPlayer vp = VaroPlayer.getPlayer(getOpener());
-
-		new ReportPickGUI(vp, report);
-	}
-
 	private void update() {
 		new ReportListGUI(getOpener());
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
-		return true;
 	}
 }

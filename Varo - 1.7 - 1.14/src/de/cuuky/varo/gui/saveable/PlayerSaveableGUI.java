@@ -23,6 +23,21 @@ public class PlayerSaveableGUI extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		new PlayerSaveableChooseGUI(opener, saveable.getPlayer());
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		linkItemTo(1, new ItemBuilder().displayname("§cDelete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
@@ -33,23 +48,5 @@ public class PlayerSaveableGUI extends SuperInventory {
 			}
 		});
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new PlayerSaveableChooseGUI(opener, saveable.getPlayer());
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

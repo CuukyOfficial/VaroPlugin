@@ -33,6 +33,20 @@ public class MainMenu extends SuperInventory {
 	}
 
 	@Override
+	public boolean onBackClick() {
+		return false;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
+
+	@Override
 	public boolean onOpen() {
 		linkItemTo(4, new ItemBuilder().displayname("§5Events").itemstack(new ItemStack(Material.APPLE)).build(), new Runnable() {
 
@@ -42,11 +56,11 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[]{VaroUtils.formatLocation(opener.getWorld().getSpawnLocation(), Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z")}).build(), new Runnable() {
+		linkItemTo(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { VaroUtils.formatLocation(opener.getWorld().getSpawnLocation(), Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				if (!opener.hasPermission("varo.teleportSpawn"))
+				if(!opener.hasPermission("varo.teleportSpawn"))
 					return;
 
 				opener.teleport(opener.getWorld().getSpawnLocation());
@@ -93,7 +107,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		if (opener.hasPermission("varo.admin")) {
+		if(opener.hasPermission("varo.admin")) {
 			linkItemTo(36, new ItemBuilder().displayname("§cAdmin-Section").itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), new Runnable() {
 
 				@Override
@@ -103,7 +117,7 @@ public class MainMenu extends SuperInventory {
 			});
 		}
 
-		if (ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
 
 				@Override
@@ -116,22 +130,5 @@ public class MainMenu extends SuperInventory {
 			});
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		return false;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

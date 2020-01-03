@@ -20,11 +20,7 @@ public class Spawn implements VaroSerializeable {
 
 	private static ArrayList<Spawn> spawns = new ArrayList<>();
 
-	@VaroSerializeField(path = "number")
-	private int number;
-
-	@VaroSerializeField(path = "type")
-	private SpawnType type;
+	private Entity armorStand;
 
 	@VaroSerializeField(path = "location")
 	private Location location;
@@ -35,18 +31,22 @@ public class Spawn implements VaroSerializeable {
 	@VaroSerializeField(path = "nameTagName")
 	private String nameTagName;
 
-	@VaroSerializeField(path = "playerId")
-	private int playerId;
+	@VaroSerializeField(path = "number")
+	private int number;
 
 	private VaroPlayer player;
-	private Entity armorStand;
+
+	@VaroSerializeField(path = "playerId")
+	private int playerId;
+	@VaroSerializeField(path = "type")
+	private SpawnType type;
 
 	public Spawn() {
 		spawns.add(this);
 	}
 
 	public Spawn(SpawnType type, int number, Location location) {
-		if (getSpawn(number) != null)
+		if(getSpawn(number) != null)
 			getSpawn(number).remove();
 
 		this.type = type;
@@ -79,101 +79,6 @@ public class Spawn implements VaroSerializeable {
 		spawns.add(this);
 	}
 
-	public static Spawn getSpawn(int number) {
-		for (Spawn spawn : spawns) {
-			if (spawn.getNumber() != number)
-				continue;
-
-			return spawn;
-		}
-
-		return null;
-	}
-
-	public static Spawn getSpawn(Location location) {
-		for (Spawn spawn : spawns) {
-			if (spawn.getLocation().distance(location) < 1)
-				continue;
-
-			return spawn;
-		}
-
-		return null;
-	}
-
-	public static Spawn getSpawn(VaroPlayer player) {
-		for (Spawn spawn : spawns) {
-			if (spawn.getPlayer() == null || !spawn.getPlayer().equals(player))
-				continue;
-
-			return spawn;
-		}
-
-		return null;
-	}
-
-	public static ArrayList<Spawn> getSpawns(SpawnType type) {
-		ArrayList<Spawn> spawns = new ArrayList<>();
-		for (Spawn spawn : spawns) {
-			if (spawn.getType() != type)
-				continue;
-
-			spawns.add(spawn);
-		}
-
-		return null;
-	}
-
-	public static ArrayList<Spawn> getSpawns() {
-		return spawns;
-	}
-
-	public static ArrayList<Spawn> getSpawnsClone() {
-		ArrayList<Spawn> returnSpawns = new ArrayList<>();
-		for (Spawn spawn : spawns) {
-			returnSpawns.add(spawn);
-		}
-		return returnSpawns;
-	}
-
-	private void setNameTag() {
-		if (!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			return;
-
-		nameTagLocation = location.clone().add(0, ConfigEntry.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
-		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.valueOf("ARMOR_STAND"));
-
-		try {
-			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
-			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
-			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
-			nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
-			armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void removeNameTag() {
-		if (armorStand == null)
-			return;
-
-		armorStand.remove();
-	}
-
-	private int generateId() {
-		int i = spawns.size() + 1;
-		while (getSpawn(i) != null)
-			i++;
-
-		return i;
-	}
-
-	private void remove() {
-		removeNameTag();
-		spawns.remove(this);
-	}
-
 	public void delete() {
 		location.getBlock().setType(Material.GRASS);
 		location.add(0, 1, 0);
@@ -185,42 +90,38 @@ public class Spawn implements VaroSerializeable {
 		remove();
 	}
 
-	public Location getNameTagLocation() {
-		return nameTagLocation;
-	}
-
 	public Location getLocation() {
 		return location;
+	}
+
+	public Location getNameTagLocation() {
+		return nameTagLocation;
 	}
 
 	public int getNumber() {
 		return number;
 	}
 
-	public SpawnType getType() {
-		return type;
-	}
-
 	public VaroPlayer getPlayer() {
 		return player;
 	}
 
-	public void setPlayer(VaroPlayer player) {
-		this.player = player;
+	public SpawnType getType() {
+		return type;
 	}
 
 	@Override
 	public void onDeserializeEnd() {
-		if (playerId != 0)
+		if(playerId != 0)
 			this.player = VaroPlayer.getPlayer(playerId);
 
-		if (nameTagLocation != null && nameTagName != null)
-			for (Entity ent : nameTagLocation.getWorld().getEntities())
-				if (ent.getType().toString().contains("ARMOR_STAND"))
+		if(nameTagLocation != null && nameTagName != null)
+			for(Entity ent : nameTagLocation.getWorld().getEntities())
+				if(ent.getType().toString().contains("ARMOR_STAND"))
 					try {
-						if (ent.getLocation().distance(nameTagLocation) < 1 && ((String) ent.getClass().getMethod("getCustomName").invoke(ent)).equals(nameTagName))
+						if(ent.getLocation().distance(nameTagLocation) < 1 && ((String) ent.getClass().getMethod("getCustomName").invoke(ent)).equals(nameTagName))
 							this.armorStand = ent;
-					} catch (Exception e) {
+					} catch(Exception e) {
 						e.printStackTrace();
 					}
 	}
@@ -228,5 +129,104 @@ public class Spawn implements VaroSerializeable {
 	@Override
 	public void onSerializeStart() {
 		this.playerId = player != null ? player.getId() : 0;
+	}
+
+	public void setPlayer(VaroPlayer player) {
+		this.player = player;
+	}
+
+	private int generateId() {
+		int i = spawns.size() + 1;
+		while(getSpawn(i) != null)
+			i++;
+
+		return i;
+	}
+
+	private void remove() {
+		removeNameTag();
+		spawns.remove(this);
+	}
+
+	private void removeNameTag() {
+		if(armorStand == null)
+			return;
+
+		armorStand.remove();
+	}
+
+	private void setNameTag() {
+		if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			return;
+
+		nameTagLocation = location.clone().add(0, ConfigEntry.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
+		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.valueOf("ARMOR_STAND"));
+
+		try {
+			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
+			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
+			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
+			nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
+			armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static Spawn getSpawn(int number) {
+		for(Spawn spawn : spawns) {
+			if(spawn.getNumber() != number)
+				continue;
+
+			return spawn;
+		}
+
+		return null;
+	}
+
+	public static Spawn getSpawn(Location location) {
+		for(Spawn spawn : spawns) {
+			if(spawn.getLocation().distance(location) < 1)
+				continue;
+
+			return spawn;
+		}
+
+		return null;
+	}
+
+	public static Spawn getSpawn(VaroPlayer player) {
+		for(Spawn spawn : spawns) {
+			if(spawn.getPlayer() == null || !spawn.getPlayer().equals(player))
+				continue;
+
+			return spawn;
+		}
+
+		return null;
+	}
+
+	public static ArrayList<Spawn> getSpawns() {
+		return spawns;
+	}
+
+	public static ArrayList<Spawn> getSpawns(SpawnType type) {
+		ArrayList<Spawn> spawns = new ArrayList<>();
+		for(Spawn spawn : spawns) {
+			if(spawn.getType() != type)
+				continue;
+
+			spawns.add(spawn);
+		}
+
+		return null;
+	}
+
+	public static ArrayList<Spawn> getSpawnsClone() {
+		ArrayList<Spawn> returnSpawns = new ArrayList<>();
+		for(Spawn spawn : spawns) {
+			returnSpawns.add(spawn);
+		}
+		return returnSpawns;
 	}
 }

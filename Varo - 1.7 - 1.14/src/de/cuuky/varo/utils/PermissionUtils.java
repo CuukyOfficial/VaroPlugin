@@ -4,21 +4,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 
 public final class PermissionUtils {
 
-	private PermissionUtils() {
-	}
-
-	@SuppressWarnings("unchecked")
-	public static String getPermissionsExPrefix(VaroPlayer player) {
-		try {
-			Object permissionUser = Class.forName("ru.tehkode.permissions.bukkit.PermissionsEx").getDeclaredMethod("getUser", String.class).invoke(null, player.getName());
-			Object group = ((Object[]) permissionUser.getClass().getDeclaredMethod("getGroups").invoke(permissionUser))[0];
-
-			return (String) group.getClass().getMethod("getPrefix").invoke(group);
-		} catch (Throwable e) {
-		}
-
-		return "";
-	}
+	private PermissionUtils() {}
 
 	public static String getLuckPermsPrefix(VaroPlayer player) {
 		try {
@@ -34,8 +20,19 @@ public final class PermissionUtils {
 
 			Object metadata = cachedData.getClass().getMethod("getMetaData", contexts.getClass()).invoke(cachedData, contexts);
 			return (String) metadata.getClass().getMethod("getPrefix").invoke(metadata);
-		} catch (Throwable e) {
-		}
+		} catch(Throwable e) {}
+
+		return "";
+	}
+
+	@SuppressWarnings("unchecked")
+	public static String getPermissionsExPrefix(VaroPlayer player) {
+		try {
+			Object permissionUser = Class.forName("ru.tehkode.permissions.bukkit.PermissionsEx").getDeclaredMethod("getUser", String.class).invoke(null, player.getName());
+			Object group = ((Object[]) permissionUser.getClass().getDeclaredMethod("getGroups").invoke(permissionUser))[0];
+
+			return (String) group.getClass().getMethod("getPrefix").invoke(group);
+		} catch(Throwable e) {}
 
 		return "";
 	}

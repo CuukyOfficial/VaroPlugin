@@ -15,8 +15,8 @@ import de.cuuky.varo.version.types.Materials;
 
 public class AlertOptionGUI extends SuperInventory {
 
-	private AlertGUIType type;
 	private Alert alert;
+	private AlertGUIType type;
 
 	public AlertOptionGUI(Player opener, Alert alert, AlertGUIType type) {
 		super("§7Alert §c" + alert.getId(), opener, 9, false);
@@ -25,6 +25,23 @@ public class AlertOptionGUI extends SuperInventory {
 		this.alert = alert;
 		open();
 	}
+
+	@Override
+	public boolean onBackClick() {
+		new AlertChooseGUI(opener, type);
+		return true;
+	}
+
+	@Override
+	public void onClick(InventoryClickEvent event) {
+		updateInventory();
+	}
+
+	@Override
+	public void onClose(InventoryCloseEvent event) {}
+
+	@Override
+	public void onInventoryAction(PageAction action) {}
 
 	@Override
 	public boolean onOpen() {
@@ -37,24 +54,5 @@ public class AlertOptionGUI extends SuperInventory {
 		});
 
 		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		updateInventory();
-	}
-
-	@Override
-	public void onInventoryAction(PageAction action) {
-	}
-
-	@Override
-	public boolean onBackClick() {
-		new AlertChooseGUI(opener, type);
-		return true;
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {
 	}
 }

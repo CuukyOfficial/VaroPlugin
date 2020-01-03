@@ -26,22 +26,21 @@ public class BukkitEvent {
 
 	protected BukkitEventType eventType;
 
+	public BukkitEvent(VaroPlayer player, BukkitEventType eventType) {
+		for(BukkitEvent event : events)
+			if(event.getEventType().equals(eventType))
+				event.onExec(player);
+	}
+
 	protected BukkitEvent(BukkitEventType eventType) {
 		this.eventType = eventType;
 
 		events.add(this);
 	}
 
-	public BukkitEvent(VaroPlayer player, BukkitEventType eventType) {
-		for (BukkitEvent event : events)
-			if (event.getEventType().equals(eventType))
-				event.onExec(player);
-	}
-
 	public BukkitEventType getEventType() {
 		return eventType;
 	}
 
-	public void onExec(VaroPlayer player) {
-	}
+	public void onExec(VaroPlayer player) {}
 }
