@@ -71,7 +71,7 @@ public class PlayerJoinListener implements Listener {
 		} else {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
-				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
 					player.teleport(VaroUtils.getMainWorld().getSpawnLocation());
 				}
 			}
