@@ -7,6 +7,7 @@ import java.util.Map;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.serialize.field.FieldLoader;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.serialize.serializer.VaroDeserializer;
@@ -81,7 +82,11 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	}
 
 	protected void save(String saveUnder, VaroSerializeable instance, YamlConfiguration saveTo) {
-		new VaroSerializer(saveUnder, instance, saveTo);
+		try {
+			new VaroSerializer(saveUnder, instance, saveTo);
+		} catch(NoClassDefFoundError e) {
+			System.out.println(Main.getConsolePrefix() + "Failed to save files - did you change the version while the server was running?");
+		}
 	}
 
 	protected void saveFile() {
