@@ -41,13 +41,13 @@ public class ItemCommand extends VaroCommand {
 
 		if(args.length == 1 && args[0].equalsIgnoreCase("list")) {
 			sender.sendMessage(Main.getPrefix() + "Liste aller " + Main.getColorCode() + "Itemlisten§7:");
-			for(VaroList list : ItemList.getLists())
+			for(VaroList list : ItemList.getItemLists())
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + list.getLocation());
 			return;
 		}
 
 		if(args.length < 2) {
-			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! " + Main.getColorCode() + label + " item");
+			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! " + Main.getColorCode() + label + " item <liste> <Add/Remove> [Anzahl]");
 			return;
 		}
 

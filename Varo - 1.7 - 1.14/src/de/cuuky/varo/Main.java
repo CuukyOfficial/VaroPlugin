@@ -32,32 +32,6 @@ public class Main extends JavaPlugin {
 	private boolean failed;
 
 	@Override
-	public void onDisable() {
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
-
-		if(dataManager != null && !failed) {
-			System.out.println(CONSOLE_PREFIX + "Saving files...");
-			dataManager.save();
-		}
-
-		if(botLauncher != null) {
-			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
-			botLauncher.disconnect();
-		}
-
-		if(!failed)
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
-		Bukkit.getScheduler().cancelTasks(this);
-
-		System.out.println(CONSOLE_PREFIX + "Disabled!");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		super.onDisable();
-	}
-
-	@Override
 	public void onEnable() {
 		System.out.println("############################################################################");
 		System.out.println("#                                                                          #");
@@ -108,6 +82,32 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onEnable();
+	}
+	
+	@Override
+	public void onDisable() {
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
+
+		if(dataManager != null && !failed) {
+			System.out.println(CONSOLE_PREFIX + "Saving files...");
+			dataManager.save();
+		}
+
+		if(botLauncher != null) {
+			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
+			botLauncher.disconnect();
+		}
+
+		if(!failed)
+			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		Bukkit.getScheduler().cancelTasks(this);
+
+		System.out.println(CONSOLE_PREFIX + "Disabled!");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		super.onDisable();
 	}
 
 	@Override
