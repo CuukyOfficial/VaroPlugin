@@ -81,7 +81,8 @@ public class DataManager {
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			ScoreboardHandler.getInstance().sendScoreBoard(vp);
-			vp.getNametag().giveAll();
+			if(vp.getNametag() != null)
+				vp.getNametag().giveAll();
 		}
 	}
 
