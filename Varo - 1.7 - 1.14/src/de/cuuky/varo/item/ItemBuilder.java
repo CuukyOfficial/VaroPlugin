@@ -1,5 +1,6 @@
 package de.cuuky.varo.item;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class ItemBuilder {
 	private static Class<?> itemFlagClass;
 	private static String[] attributes;
 	private static Object[] itemFlags;
+	private static Method addFlagMethod;
 
 	static {
 		try {
@@ -37,8 +39,17 @@ public class ItemBuilder {
 						e.printStackTrace();
 					}
 				}
+				
+				try {
+					addFlagMethod = Class.forName("org.bukkit.inventory.meta.ItemMeta").getDeclaredMethod("addItemFlags", Array.newInstance(itemFlagClass, 1).getClass());
+					addFlagMethod.setAccessible(true);
+				} catch(NoSuchMethodException | SecurityException | NegativeArraySizeException e) {
+					e.printStackTrace();
+				}
 			}
-		} catch(ClassNotFoundException e) {}
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private int amount;
@@ -97,11 +108,15 @@ public class ItemBuilder {
 		} else {
 			// Reflections for errorless display of the menu for 1.7
 			try {
-				Method m = meta.getClass().getDeclaredMethod("addItemFlag", itemFlagClass);
 				for(Object obj : itemFlags) {
-					m.invoke(meta, obj);
+					Object[] s = (Object[]) Array.newInstance(itemFlagClass, 1);
+					Array.set(s, 0, obj);
+
+					addFlagMethod.invoke(meta, new Object[] { s });
 				}
-			} catch(Exception e) {}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		stack.setItemMeta(meta);
