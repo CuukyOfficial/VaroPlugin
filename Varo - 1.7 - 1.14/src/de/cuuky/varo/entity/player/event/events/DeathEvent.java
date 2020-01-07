@@ -16,9 +16,9 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.world.border.VaroBorder;
 import de.cuuky.varo.world.border.decrease.DecreaseReason;
 
-public class DeadEvent extends BukkitEvent {
+public class DeathEvent extends BukkitEvent {
 
-	public DeadEvent() {
+	public DeathEvent() {
 		super(BukkitEventType.KILLED);
 	}
 

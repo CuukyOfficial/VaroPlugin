@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.event.events.DeadEvent;
+import de.cuuky.varo.entity.player.event.events.DeathEvent;
 import de.cuuky.varo.entity.player.event.events.JoinEvent;
 import de.cuuky.varo.entity.player.event.events.KickEvent;
 import de.cuuky.varo.entity.player.event.events.KillEvent;
@@ -17,7 +17,7 @@ public class BukkitEvent {
 	static {
 		events = new ArrayList<BukkitEvent>();
 
-		new DeadEvent();
+		new DeathEvent();
 		new KickEvent();
 		new JoinEvent();
 		new QuitEvent();
