@@ -39,7 +39,7 @@ public class ItemBuilder {
 						e.printStackTrace();
 					}
 				}
-				
+
 				try {
 					addFlagMethod = Class.forName("org.bukkit.inventory.meta.ItemMeta").getDeclaredMethod("addItemFlags", Array.newInstance(itemFlagClass, 1).getClass());
 					addFlagMethod.setAccessible(true);
@@ -104,6 +104,21 @@ public class ItemBuilder {
 			for(Enchantment key : meta.getEnchants().keySet()) {
 				meta.removeEnchant(key);
 			}
+
+//			ItemStack item = stack.clone();
+//			net.minecraft.server.v1_7_R4.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+//			NBTTagCompound tag;
+//			if(!nmsStack.hasTag()) {
+//				tag = new NBTTagCompound();
+//				nmsStack.setTag(tag);
+//			} else {
+//				tag = nmsStack.getTag();
+//			}
+//			NBTTagList am = new NBTTagList();
+//			tag.set("AttributeModifiers", (NBTBase) am);
+//			nmsStack.setTag(tag);
+//			
+//			this.stack = (ItemStack)CraftItemStack.asCraftMirror(nmsStack);
 			// TODO Hide other attributes?
 		} else {
 			// Reflections for errorless display of the menu for 1.7
