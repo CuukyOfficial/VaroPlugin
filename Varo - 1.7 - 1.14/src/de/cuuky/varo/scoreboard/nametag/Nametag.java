@@ -39,7 +39,7 @@ public class Nametag {
 	}
 
 	private boolean init, hearts;
-	private Player p;
+	private Player player;
 	private String prefix, suffix, name;
 	private Rank rank;
 	private de.cuuky.varo.entity.team.Team team;
@@ -48,7 +48,7 @@ public class Nametag {
 	public Nametag(UUID uniqueID, Player p) {
 		this.hearts = ConfigMessages.NAMETAG_SUFFIX.getValue().contains("%hearts%");
 
-		this.p = p;
+		this.player = p;
 		p.getScoreboard().getTeams().forEach(team -> team.unregister());
 		this.uniqueID = uniqueID;
 
@@ -69,7 +69,7 @@ public class Nametag {
 	}
 
 	public Player getPlayer() {
-		return p;
+		return player;
 	}
 
 	public String getPrefix() {
@@ -92,7 +92,7 @@ public class Nametag {
 		if(!init)
 			return;
 
-		Player toSet = this.p;
+		Player toSet = this.player;
 		Scoreboard board = toSet.getScoreboard();
 		for(Nametag nametag : nametags) {
 			if(!nametag.isOnline())
@@ -122,12 +122,12 @@ public class Nametag {
 		if(!init || !hearts)
 			return;
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(p)).replace("%hearts%", String.valueOf((int) p.getHealth())).replace("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(player)).replace("%hearts%", String.valueOf((int) VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
 		setToAll();
 	}
 
 	public boolean isOnline() {
-		return p != null;
+		return player != null;
 	}
 
 	public void nameTagVisibilityReset() {
@@ -163,18 +163,18 @@ public class Nametag {
 	}
 
 	public void refreshPrefix() {
-		VaroPlayer player = VaroPlayer.getPlayer(p);
+		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
 
-		this.rank = player.getRank();
-		this.team = player.getTeam();
+		this.rank = varoPlayer.getRank();
+		this.team = varoPlayer.getTeam();
 		this.name = checkName();
 
-		this.prefix = (team == null ? ConfigMessages.NAMETAG_NORMAL.getValue(player) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(player));
+		this.prefix = (team == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
 
 		if(prefix.length() > 16)
 			prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(player).replace("%hearts%", String.valueOf((int) player.getPlayer().getHealth())).replace("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
 	}
 
 	public void remove() {
@@ -194,7 +194,7 @@ public class Nametag {
 			} catch(NullPointerException e) {}
 
 			team = board.registerNewTeam(this.name);
-			team.addPlayer(this.p.getPlayer());
+			team.addPlayer(this.player.getPlayer());
 
 			setVisibility(team);
 			if(this.prefix != null)
@@ -246,7 +246,7 @@ public class Nametag {
 
 		if(team == null) {
 			team = board.registerNewTeam(this.name);
-			team.addPlayer(this.p);
+			team.addPlayer(this.player);
 		}
 
 		return team;

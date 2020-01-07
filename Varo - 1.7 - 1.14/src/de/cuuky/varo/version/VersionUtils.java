@@ -3,6 +3,7 @@ package de.cuuky.varo.version;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 
 public class VersionUtils {
@@ -37,6 +38,10 @@ public class VersionUtils {
 			list.add(p);
 
 		return list;
+	}
+	
+	public static double getHearts(Player player) {
+		return ((Damageable) player).getHealth();
 	}
 
 	public static BukkitVersion getVersion() {

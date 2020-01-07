@@ -18,6 +18,7 @@ import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.version.VersionUtils;
 
 public class Disconnect {
 
@@ -27,7 +28,7 @@ public class Disconnect {
 
 	private static ArrayList<Disconnect> disconnects;
 	private static HashMap<String, Integer> scheds;
-	
+
 	static {
 		disconnects = new ArrayList<>();
 		scheds = new HashMap<>();
@@ -77,9 +78,9 @@ public class Disconnect {
 	}
 
 	public boolean playerIsDead() {
-		Player p = Bukkit.getPlayerExact(name);
-		if(p != null)
-			if(!p.isDead() && p.getHealth() != 0)
+		Player player = Bukkit.getPlayerExact(name);
+		if(player != null)
+			if(!player.isDead() && VersionUtils.getHearts(player) != 0)
 				return false;
 
 		return true;

@@ -22,6 +22,7 @@ import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.version.VersionUtils;
 
 public class PlayerDeathListener implements Listener {
 
@@ -123,7 +124,7 @@ public class PlayerDeathListener implements Listener {
 	private void checkHealth(Player killer) {
 		int healthAdd = ConfigEntry.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
 		if(healthAdd > 0) {
-			double hearts = killer.getHealth() + healthAdd;
+			double hearts = VersionUtils.getHearts(killer) + healthAdd;
 			if(hearts > 20.0)
 				killer.setHealth(20.0);
 			else
