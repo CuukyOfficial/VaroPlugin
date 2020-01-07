@@ -24,7 +24,7 @@ public enum ConfigMessages {
 
 	ALERT_COMBAT_LOG_STRIKE("Alert.combatlogStrike", "%player% hat sich im Kampf ausgeloggt und hat somit einen Strike erhalten!"),
 	ALERT_DISCONNECT_TOO_OFTEN("Alert.disconnectTooOften", "%player% hat das Spiel zu oft verlassen, weswegen seine Session entfernt wurde!"),
-	ALERT_DISCORD_DEATH("Alert.death", "%player% ist gestorben!"),
+	ALERT_DISCORD_DEATH("Alert.death", "%player% ist gestorben! Grund: %reason%"),
 
 	ALERT_DISCORD_KILL("Alert.kill", "%player% wurde von %killer% getötet!"),
 	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nAufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
@@ -85,7 +85,7 @@ public enum ConfigMessages {
 	COMMAND_SPAWN_NETHER("Commands.spawnNether", "%colorcode%Koordinaten&7 vom Portal zur Oberwelt: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
 	COMMAND_TEAM_REQUEST_RECIEVED("Commands.teamRequestRecieved", "%colorcode%%invitor% &7hat dich in ein Team eingeladen (/varo tr)!"),
 
-	DEATH_DEAD("Death.killMessage", "&c%player% &7ist gestorben."),
+	DEATH_DEAD("Death.killMessage", "&c%player% &7ist gestorben. &7Grund: &c%reason%"),
 	DEATH_KICK_DEAD("Death.kickedKilled", "&cDu bist gestorben! %nextLine% &7Damit bist du aus %projectname% &7ausgeschieden"),
 	DEATH_KICK_KILLED("Death.killedKick", "&7Du wurdest von &c%killer% &7getötet! %nextLine% &7Damit bist du aus %projectname% &7ausgeschieden!"),
 	// DEATH
