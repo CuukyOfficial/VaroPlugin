@@ -399,7 +399,6 @@ public class Game implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
-
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			int seconds = 0;
