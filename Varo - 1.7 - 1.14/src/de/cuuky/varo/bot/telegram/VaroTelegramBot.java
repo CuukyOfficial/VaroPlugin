@@ -9,7 +9,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class VaroTelegramBot implements VaroBot {
 

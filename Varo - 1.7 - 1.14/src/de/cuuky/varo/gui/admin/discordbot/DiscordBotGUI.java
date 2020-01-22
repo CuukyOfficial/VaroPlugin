@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;

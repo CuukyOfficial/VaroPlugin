@@ -8,7 +8,7 @@ import net.dv8tion.jda.core.hooks.EventListener;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class DiscordBotEventListener implements EventListener {
 

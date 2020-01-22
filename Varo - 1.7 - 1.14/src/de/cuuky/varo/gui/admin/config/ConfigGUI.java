@@ -8,8 +8,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.config.ConfigSection;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigSection;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.utils.chat.ChatHook;

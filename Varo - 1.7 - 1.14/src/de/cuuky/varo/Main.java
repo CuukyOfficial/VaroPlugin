@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.logger.ConsoleLogger;

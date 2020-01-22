@@ -16,7 +16,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.material.Sign;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;

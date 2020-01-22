@@ -14,8 +14,8 @@ import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
 import net.labymod.serverapi.bukkit.event.PermissionsSendEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 
 public class PermissionSendListener implements Listener {
 

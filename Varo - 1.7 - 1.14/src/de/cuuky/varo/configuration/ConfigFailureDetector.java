@@ -1,4 +1,4 @@
-package de.cuuky.varo.config;
+package de.cuuky.varo.configuration;
 
 import java.io.File;
 import java.io.FileNotFoundException;

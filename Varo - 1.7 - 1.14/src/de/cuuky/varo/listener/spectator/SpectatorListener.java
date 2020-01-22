@@ -20,8 +20,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;

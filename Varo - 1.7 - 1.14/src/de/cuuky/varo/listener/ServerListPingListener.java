@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 

@@ -3,7 +3,7 @@ package de.cuuky.varo.logger.logger;
 import java.awt.Color;
 
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.logger.Logger;
 import de.cuuky.varo.utils.JavaUtils;
 

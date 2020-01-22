@@ -3,7 +3,7 @@ package de.cuuky.varo.entity.team;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.VaroInventory;

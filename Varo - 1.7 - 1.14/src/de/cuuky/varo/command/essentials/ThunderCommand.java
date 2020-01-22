@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 
 public class ThunderCommand implements CommandExecutor {
 

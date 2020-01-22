@@ -13,7 +13,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.list.ListHandler;
 
 public class BlockedEnchantmentsListener implements Listener {

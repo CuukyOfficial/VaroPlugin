@@ -20,7 +20,7 @@ import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.player.PlayerStateChangeEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeRemoveEvent;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;

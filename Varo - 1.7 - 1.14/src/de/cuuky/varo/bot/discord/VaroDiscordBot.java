@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.managers.GuildController;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
 import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class VaroDiscordBot implements VaroBot {
 

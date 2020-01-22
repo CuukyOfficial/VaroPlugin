@@ -5,7 +5,7 @@ import java.util.Date;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;

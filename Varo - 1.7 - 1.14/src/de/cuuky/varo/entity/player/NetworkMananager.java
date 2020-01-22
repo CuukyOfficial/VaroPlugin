@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 

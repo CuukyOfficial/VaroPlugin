@@ -2,7 +2,7 @@ package de.cuuky.varo.threads;
 
 import java.util.GregorianCalendar;
 
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class OutSideTimeChecker {
 

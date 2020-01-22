@@ -1,4 +1,4 @@
-package de.cuuky.varo.config;
+package de.cuuky.varo.configuration;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.config.ConfigSection;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigSection;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {

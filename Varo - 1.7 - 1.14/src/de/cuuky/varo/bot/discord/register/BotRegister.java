@@ -18,8 +18,8 @@ import net.dv8tion.jda.core.entities.User;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.config.config.ConfigEntry;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.mysql.MySQL;
 
 public class BotRegister {

@@ -3,7 +3,7 @@ package de.cuuky.varo.bot;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
-import de.cuuky.varo.config.config.ConfigEntry;
+import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class BotLauncher {
 

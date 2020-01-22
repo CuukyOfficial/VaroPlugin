@@ -1,4 +1,4 @@
-package de.cuuky.varo.config.config;
+package de.cuuky.varo.configuration.config;
 
 import java.util.ArrayList;
 

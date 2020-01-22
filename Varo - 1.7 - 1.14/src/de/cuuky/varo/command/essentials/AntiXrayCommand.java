@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.messages.ConfigMessages;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;

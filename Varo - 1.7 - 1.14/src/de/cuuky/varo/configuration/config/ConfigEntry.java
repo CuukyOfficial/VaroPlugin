@@ -1,6 +1,6 @@
-package de.cuuky.varo.config.config;
+package de.cuuky.varo.configuration.config;
 
-import de.cuuky.varo.config.ConfigHandler;
+import de.cuuky.varo.configuration.ConfigHandler;
 
 public enum ConfigEntry {
 
