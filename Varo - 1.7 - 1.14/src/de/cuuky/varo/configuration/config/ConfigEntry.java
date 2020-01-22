@@ -248,12 +248,21 @@ public enum ConfigEntry {
 	private ConfigSection section;
 	private Object value;
 
-	ConfigEntry(ConfigSection section, String path, Object value, String description) {
+	private ConfigEntry(ConfigSection section, String path, Object value, String description) {
 		this.section = section;
 		this.path = path;
 		this.value = value;
 		this.defaultValue = value;
 		this.description = description;
+	}
+	
+	private void save() {
+		ConfigHandler.getInstance().getConfigCfg().set(section.getPath() + path, value);
+		ConfigHandler.getInstance().saveConfig();
+	}
+
+	private void sendFalseCast() {
+		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + defaultValue.getClass() + " for entry " + getFullPath());
 	}
 
 	public Object getDefaultValue() {
@@ -343,15 +352,6 @@ public enum ConfigEntry {
 
 		if(save)
 			save();
-	}
-
-	private void save() {
-		ConfigHandler.getInstance().getConfigCfg().set(section.getPath() + path, value);
-		ConfigHandler.getInstance().saveConfig();
-	}
-
-	private void sendFalseCast() {
-		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + defaultValue.getClass() + " for entry " + getFullPath());
 	}
 
 	public static ConfigEntry getEntryByPath(String path) {
