@@ -49,20 +49,6 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 		}
 	}
 
-	public Class<? extends VaroSerializeable> getClazz() {
-		return clazz;
-	}
-
-	public YamlConfiguration getConfiguration() {
-		return configuration;
-	}
-
-	public FieldLoader getFieldLoader() {
-		return fieldLoader;
-	}
-
-	public void onSave() {}
-
 	protected void clearOld() {
 		Map<String, Object> configValues = configuration.getValues(false);
 		for(Map.Entry<String, Object> entry : configValues.entrySet())
@@ -96,4 +82,18 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 			e.printStackTrace();
 		}
 	}
+
+	public Class<? extends VaroSerializeable> getClazz() {
+		return clazz;
+	}
+
+	public YamlConfiguration getConfiguration() {
+		return configuration;
+	}
+
+	public FieldLoader getFieldLoader() {
+		return fieldLoader;
+	}
+
+	public void onSave() {}
 }

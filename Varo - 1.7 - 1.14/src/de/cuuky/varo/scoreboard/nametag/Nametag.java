@@ -64,6 +64,49 @@ public class Nametag {
 		nametags.add(this);
 	}
 
+	private String checkName() {
+		String name = this.getPlayer().getName();
+
+		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
+		int ranks = Rank.getHighestLocation() + 1;
+
+		if(team != null)
+			name = team.getId() + name;
+		else
+			name = teamsize + name;
+
+		if(rank != null)
+			name = rank.getTablistLocation() + name;
+		else
+			name = ranks + name;
+
+		if(name.length() > 16)
+			name = name.substring(0, 16);
+		return name;
+	}
+
+	private Team getTeam(Scoreboard board) {
+		Team team = board.getTeam(this.name);
+
+		if(team == null) {
+			team = board.registerNewTeam(this.name);
+			team.addPlayer(this.player);
+		}
+
+		return team;
+	}
+
+	private void setVisibility(Team team) {
+		if(visibility == null)
+			return;
+
+		try {
+			teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass()).invoke(team, visibility);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -217,49 +260,6 @@ public class Nametag {
 
 			team.setSuffix(this.suffix);
 			toSet.setScoreboard(board);
-		}
-	}
-
-	private String checkName() {
-		String name = this.getPlayer().getName();
-
-		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
-		int ranks = Rank.getHighestLocation() + 1;
-
-		if(team != null)
-			name = team.getId() + name;
-		else
-			name = teamsize + name;
-
-		if(rank != null)
-			name = rank.getTablistLocation() + name;
-		else
-			name = ranks + name;
-
-		if(name.length() > 16)
-			name = name.substring(0, 16);
-		return name;
-	}
-
-	private Team getTeam(Scoreboard board) {
-		Team team = board.getTeam(this.name);
-
-		if(team == null) {
-			team = board.registerNewTeam(this.name);
-			team.addPlayer(this.player);
-		}
-
-		return team;
-	}
-
-	private void setVisibility(Team team) {
-		if(visibility == null)
-			return;
-
-		try {
-			teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass()).invoke(team, visibility);
-		} catch(Exception e) {
-			e.printStackTrace();
 		}
 	}
 

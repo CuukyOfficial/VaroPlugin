@@ -14,18 +14,6 @@ public class OutSideTimeChecker {
 		refreshDates();
 	}
 
-	public boolean canJoin() {
-		if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean())
-			return true;
-
-		GregorianCalendar current = new GregorianCalendar();
-		refreshDates();
-		if(current.after(date1) && current.before(date2))
-			return true;
-
-		return false;
-	}
-	
 	private void refreshDates() {
 		this.date1 = new GregorianCalendar();
 		date1.set(GregorianCalendar.MINUTE, 0);
@@ -37,6 +25,18 @@ public class OutSideTimeChecker {
 
 		if(date2.before(date1))
 			date2.add(GregorianCalendar.DAY_OF_MONTH, 1);
+	}
+	
+	public boolean canJoin() {
+		if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean())
+			return true;
+
+		GregorianCalendar current = new GregorianCalendar();
+		refreshDates();
+		if(current.after(date1) && current.before(date2))
+			return true;
+
+		return false;
 	}
 
 	public GregorianCalendar getDate1() {

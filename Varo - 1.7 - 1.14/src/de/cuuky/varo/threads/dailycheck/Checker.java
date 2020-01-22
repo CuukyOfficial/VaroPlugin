@@ -22,12 +22,12 @@ public abstract class Checker {
 		checker.add(this);
 	}
 
-	public abstract void check();
-
 	protected long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 		long diffInMillies = date2.getTime() - date1.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
+
+	public abstract void check();
 
 	public static void checkAll() {
 		for(Checker checkers : checker) {

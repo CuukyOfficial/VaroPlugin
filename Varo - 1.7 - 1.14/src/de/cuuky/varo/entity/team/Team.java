@@ -33,6 +33,8 @@ public class Team extends VaroEntity {
 	@VaroSerializeField(path = "lifes")
 	private double lifes;
 
+	private ArrayList<VaroPlayer> member;
+
 	@VaroSerializeField(path = "memberid")
 	private ArrayList<Integer> memberid;
 
@@ -41,8 +43,6 @@ public class Team extends VaroEntity {
 
 	@VaroSerializeField(path = "teamBackPack")
 	private VaroInventory teamBackPack;
-
-	private ArrayList<VaroPlayer> member;
 
 	public Team() {
 		teams.add(this);
@@ -61,6 +61,14 @@ public class Team extends VaroEntity {
 		Nametag.refreshAll();
 		if(this.id > highestNumber)
 			highestNumber = id;
+	}
+
+	private int generateId() {
+		int i = teams.size() + 1;
+		while(getTeam(i) != null)
+			i++;
+
+		return i;
 	}
 
 	public void addMember(VaroPlayer vp) {
@@ -209,14 +217,6 @@ public class Team extends VaroEntity {
 
 	public void statChanged() {
 		this.member.forEach(member -> member.update());
-	}
-
-	private int generateId() {
-		int i = teams.size() + 1;
-		while(getTeam(i) != null)
-			i++;
-
-		return i;
 	}
 
 	public static ArrayList<Team> getAliveTeams() {

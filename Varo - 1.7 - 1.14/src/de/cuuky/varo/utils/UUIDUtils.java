@@ -13,6 +13,24 @@ public final class UUIDUtils {
 
 	private UUIDUtils() {}
 
+	private static UUID getUUIDTime(String name, long time) throws Exception {
+		Scanner scanner;
+		if(time == -1) {
+			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream());
+		} else {
+			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name + "?at=" + String.valueOf(time)).openStream());
+		}
+
+		String input = scanner.nextLine();
+		scanner.close();
+
+		JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(input);
+		String uuidString = UUIDObject.get("id").toString();
+		String uuidSeperation = uuidString.replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5");
+		UUID uuid = UUID.fromString(uuidSeperation);
+		return uuid;
+	}
+
 	public static String getNamesChanged(String name) throws Exception {
 		Date Date = new Date();
 		long Time = Date.getTime() / 1000;
@@ -33,23 +51,5 @@ public final class UUIDUtils {
 
 	public static UUID getUUID(String name) throws Exception {
 		return getUUIDTime(name, -1);
-	}
-
-	private static UUID getUUIDTime(String name, long time) throws Exception {
-		Scanner scanner;
-		if(time == -1) {
-			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream());
-		} else {
-			scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name + "?at=" + String.valueOf(time)).openStream());
-		}
-
-		String input = scanner.nextLine();
-		scanner.close();
-
-		JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(input);
-		String uuidString = UUIDObject.get("id").toString();
-		String uuidSeperation = uuidString.replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5");
-		UUID uuid = UUID.fromString(uuidSeperation);
-		return uuid;
 	}
 }

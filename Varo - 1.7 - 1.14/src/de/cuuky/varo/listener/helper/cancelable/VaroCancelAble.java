@@ -38,18 +38,6 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
-	public VaroPlayer getPlayer() {
-		return player;
-	}
-
-	public CancelAbleType getType() {
-		return type;
-	}
-
-	public void setTimerHook(Runnable runnable) {
-		this.timerHook = runnable;
-	}
-
 	private void remove() {
 		cancelables.remove(this);
 	}
@@ -67,6 +55,18 @@ public class VaroCancelAble {
 				remove();
 			}
 		}, time * 20);
+	}
+
+	public VaroPlayer getPlayer() {
+		return player;
+	}
+
+	public CancelAbleType getType() {
+		return type;
+	}
+
+	public void setTimerHook(Runnable runnable) {
+		this.timerHook = runnable;
 	}
 
 	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {

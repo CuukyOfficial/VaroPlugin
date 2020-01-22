@@ -78,6 +78,170 @@ public class Game implements VaroSerializeable {
 		instance = this;
 	}
 
+	private void fillChests() {
+		if(!ConfigEntry.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
+			return;
+
+		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
+		Location loc = VaroUtils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = VaroUtils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+
+		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
+		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();
+		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
+			if(!(block.getState() instanceof Chest))
+				continue;
+
+			Chest chest = (Chest) block.getState();
+			chest.getBlockInventory().clear();
+			for(int i = 0; i < itemsPerChest; i++) {
+				int random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
+				while(chest.getBlockInventory().getContents().length != chest.getBlockInventory().getSize())
+					random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
+
+				chest.getBlockInventory().setItem(random, chestItems.get(JavaUtils.randomInt(0, chestItems.size() - 1)));
+			}
+		}
+
+		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefüllt§7!");
+	}
+
+	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {
+		List<Block> blocks = new ArrayList<>();
+		int topBlockX = (Math.max(l1.getBlockX(), l2.getBlockX()));
+		int bottomBlockX = (Math.min(l1.getBlockX(), l2.getBlockX()));
+		int topBlockY = (Math.max(l1.getBlockY(), l2.getBlockY()));
+		int bottomBlockY = (Math.min(l1.getBlockY(), l2.getBlockY()));
+		int topBlockZ = (Math.max(l1.getBlockZ(), l2.getBlockZ()));
+		int bottomBlockZ = (Math.min(l1.getBlockZ(), l2.getBlockZ()));
+
+		for(int x = bottomBlockX; x <= topBlockX; x++) {
+			for(int y = bottomBlockY; y <= topBlockY; y++) {
+				for(int z = bottomBlockZ; z <= topBlockZ; z++) {
+					blocks.add(l1.getWorld().getBlockAt(x, y, z));
+				}
+			}
+		}
+		return blocks;
+	}
+
+	private void loadVariables() {
+		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
+		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
+		protectionTime = ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
+		noKickDistance = ConfigEntry.NO_KICK_DISTANCE.getValueAsInt();
+		playTime = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void removeArentAtStart() {
+		if(!ConfigEntry.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
+			return;
+
+		for(VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
+			if(!varoplayer.isOnline())
+				varoplayer.delete();
+	}
+
+	private void startRefreshTimer() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			int seconds = 0;
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				seconds++;
+				if(gamestate == GameState.STARTED) {
+					if(seconds == 60) {
+						seconds = 0;
+						if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
+							double minutesToClose = (int) (((OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+
+							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
+								Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
+
+							if(!OutSideTimeChecker.getInstance().canJoin())
+								for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+									vp.getStats().setCountdown(0);
+									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+								}
+						}
+					}
+
+					if(ConfigEntry.PLAY_TIME.isIntActivated()) {
+						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+							if(vp.getStats().isSpectator() || vp.isAdminIgnore())
+								continue;
+
+							int countdown = vp.getStats().getCountdown() - 1;
+							Player p = vp.getPlayer();
+
+							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
+								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
+							else if(showDistanceToBorder) {
+								int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
+								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
+									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
+							}
+
+							if(countdown == playTime - protectionTime - 1 && !firstTime && !VaroEvent.getMassRecEvent().isEnabled())
+								Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
+
+							if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
+								if(countdown == 0 && !VaroEvent.getMassRecEvent().isEnabled()) {
+									Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
+									vp.onEvent(BukkitEventType.KICKED);
+									p.kickPlayer(ConfigMessages.KICK_MESSAGE.getValue(vp));
+									continue;
+								} else {
+									if(countdown == 1)
+										if(!vp.canBeKicked(noKickDistance)) {
+											vp.sendMessage(ConfigMessages.KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigEntry.NO_KICK_DISTANCE.getValueAsInt())));
+											countdown += 1;
+										}
+
+									Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
+								}
+							}
+
+							vp.getStats().setCountdown(countdown);
+						}
+					}
+				}
+
+				for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+					if(gamestate == GameState.LOBBY) {
+						vp.getStats().setCountdown(playTime);
+						if(vp.getStats().getState() == PlayerState.DEAD)
+							vp.getStats().setState(PlayerState.ALIVE);
+					}
+
+					ScoreboardHandler.getInstance().update(vp);
+					vp.update();
+				}
+
+				if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+					for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+						if(vp.getStats().getTimeUntilAddSession() == null) {
+							continue;
+						}
+						if(new Date().after(vp.getStats().getTimeUntilAddSession())) {
+							vp.getStats().setSessions(vp.getStats().getSessions() + 1);
+							if(vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
+								vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt()));
+							} else {
+								vp.getStats().setTimeUntilAddSession(null);
+							}
+						}
+					}
+				}
+
+			}
+		}, 0, 20);
+	}
+
 	public void abort() {
 		Bukkit.getScheduler().cancelTask(startScheduler);
 		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
@@ -328,170 +492,6 @@ public class Game implements VaroSerializeable {
 				}
 
 				startCountdown--;
-			}
-		}, 0, 20);
-	}
-
-	private void fillChests() {
-		if(!ConfigEntry.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
-			return;
-
-		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = VaroUtils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = VaroUtils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
-
-		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
-		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();
-		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
-			if(!(block.getState() instanceof Chest))
-				continue;
-
-			Chest chest = (Chest) block.getState();
-			chest.getBlockInventory().clear();
-			for(int i = 0; i < itemsPerChest; i++) {
-				int random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
-				while(chest.getBlockInventory().getContents().length != chest.getBlockInventory().getSize())
-					random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
-
-				chest.getBlockInventory().setItem(random, chestItems.get(JavaUtils.randomInt(0, chestItems.size() - 1)));
-			}
-		}
-
-		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefüllt§7!");
-	}
-
-	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {
-		List<Block> blocks = new ArrayList<>();
-		int topBlockX = (Math.max(l1.getBlockX(), l2.getBlockX()));
-		int bottomBlockX = (Math.min(l1.getBlockX(), l2.getBlockX()));
-		int topBlockY = (Math.max(l1.getBlockY(), l2.getBlockY()));
-		int bottomBlockY = (Math.min(l1.getBlockY(), l2.getBlockY()));
-		int topBlockZ = (Math.max(l1.getBlockZ(), l2.getBlockZ()));
-		int bottomBlockZ = (Math.min(l1.getBlockZ(), l2.getBlockZ()));
-
-		for(int x = bottomBlockX; x <= topBlockX; x++) {
-			for(int y = bottomBlockY; y <= topBlockY; y++) {
-				for(int z = bottomBlockZ; z <= topBlockZ; z++) {
-					blocks.add(l1.getWorld().getBlockAt(x, y, z));
-				}
-			}
-		}
-		return blocks;
-	}
-
-	private void loadVariables() {
-		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
-		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
-		protectionTime = ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
-		noKickDistance = ConfigEntry.NO_KICK_DISTANCE.getValueAsInt();
-		playTime = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
-		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void removeArentAtStart() {
-		if(!ConfigEntry.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
-			return;
-
-		for(VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
-			if(!varoplayer.isOnline())
-				varoplayer.delete();
-	}
-
-	private void startRefreshTimer() {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
-			int seconds = 0;
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				seconds++;
-				if(gamestate == GameState.STARTED) {
-					if(seconds == 60) {
-						seconds = 0;
-						if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-							double minutesToClose = (int) (((OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
-
-							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
-								Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
-
-							if(!OutSideTimeChecker.getInstance().canJoin())
-								for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
-									vp.getStats().setCountdown(0);
-									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
-								}
-						}
-					}
-
-					if(ConfigEntry.PLAY_TIME.isIntActivated()) {
-						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
-							if(vp.getStats().isSpectator() || vp.isAdminIgnore())
-								continue;
-
-							int countdown = vp.getStats().getCountdown() - 1;
-							Player p = vp.getPlayer();
-
-							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
-								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
-							else if(showDistanceToBorder) {
-								int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
-								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
-									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
-							}
-
-							if(countdown == playTime - protectionTime - 1 && !firstTime && !VaroEvent.getMassRecEvent().isEnabled())
-								Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
-
-							if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
-								if(countdown == 0 && !VaroEvent.getMassRecEvent().isEnabled()) {
-									Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
-									vp.onEvent(BukkitEventType.KICKED);
-									p.kickPlayer(ConfigMessages.KICK_MESSAGE.getValue(vp));
-									continue;
-								} else {
-									if(countdown == 1)
-										if(!vp.canBeKicked(noKickDistance)) {
-											vp.sendMessage(ConfigMessages.KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigEntry.NO_KICK_DISTANCE.getValueAsInt())));
-											countdown += 1;
-										}
-
-									Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
-								}
-							}
-
-							vp.getStats().setCountdown(countdown);
-						}
-					}
-				}
-
-				for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-					if(gamestate == GameState.LOBBY) {
-						vp.getStats().setCountdown(playTime);
-						if(vp.getStats().getState() == PlayerState.DEAD)
-							vp.getStats().setState(PlayerState.ALIVE);
-					}
-
-					ScoreboardHandler.getInstance().update(vp);
-					vp.update();
-				}
-
-				if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
-					for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-						if(vp.getStats().getTimeUntilAddSession() == null) {
-							continue;
-						}
-						if(new Date().after(vp.getStats().getTimeUntilAddSession())) {
-							vp.getStats().setSessions(vp.getStats().getSessions() + 1);
-							if(vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
-								vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt()));
-							} else {
-								vp.getStats().setTimeUntilAddSession(null);
-							}
-						}
-					}
-				}
-
 			}
 		}, 0, 20);
 	}

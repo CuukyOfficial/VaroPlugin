@@ -13,6 +13,16 @@ public final class BlockUtils {
 
 	private BlockUtils() {}
 
+	private static boolean isGrass(Material type) {
+		if(!type.toString().contains("GRASS"))
+			return false;
+
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
+			return !type.toString().equals("GRASS");
+		else
+			return !type.toString().contains("BLOCK");
+	}
+
 	public static boolean isAir(Block block) {
 		Material type = block.getType();
 
@@ -36,15 +46,5 @@ public final class BlockUtils {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private static boolean isGrass(Material type) {
-		if(!type.toString().contains("GRASS"))
-			return false;
-
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
-			return !type.toString().equals("GRASS");
-		else
-			return !type.toString().contains("BLOCK");
 	}
 }

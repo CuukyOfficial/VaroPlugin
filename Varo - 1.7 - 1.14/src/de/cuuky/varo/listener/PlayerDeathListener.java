@@ -26,6 +26,31 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class PlayerDeathListener implements Listener {
 
+	private void checkHealth(Player killer) {
+		int healthAdd = ConfigEntry.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
+		if(healthAdd > 0) {
+			double hearts = VersionUtils.getHearts(killer) + healthAdd;
+			if(hearts > 20.0)
+				killer.setHealth(20.0);
+			else
+				killer.setHealth(hearts);
+			killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
+		}
+	}
+
+	private void kickDeadPlayer(VaroPlayer deadPlayer, VaroPlayer killerPlayer) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				if(killerPlayer == null)
+					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer));
+				else
+					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_KILLED.getValue(deadPlayer).replace("%killer%", killerPlayer.getName()));
+			}
+		}, 1);
+	}
+
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player deadPlayer = event.getEntity();
@@ -119,30 +144,5 @@ public class PlayerDeathListener implements Listener {
 				checkHealth(killerPlayer);
 			}
 		}
-	}
-
-	private void checkHealth(Player killer) {
-		int healthAdd = ConfigEntry.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
-		if(healthAdd > 0) {
-			double hearts = VersionUtils.getHearts(killer) + healthAdd;
-			if(hearts > 20.0)
-				killer.setHealth(20.0);
-			else
-				killer.setHealth(hearts);
-			killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
-		}
-	}
-
-	private void kickDeadPlayer(VaroPlayer deadPlayer, VaroPlayer killerPlayer) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				if(killerPlayer == null)
-					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer));
-				else
-					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_KILLED.getValue(deadPlayer).replace("%killer%", killerPlayer.getName()));
-			}
-		}, 1);
 	}
 }

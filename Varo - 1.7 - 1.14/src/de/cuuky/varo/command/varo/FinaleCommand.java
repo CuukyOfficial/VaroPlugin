@@ -37,6 +37,40 @@ public class FinaleCommand extends VaroCommand {
 		super("finale", "Hauptcommand für das Managen des Finales", "varo.finale");
 	}
 
+	private void finaleStart() {
+		Status = FinaleState.STARTED;
+
+		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
+		if(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
+			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
+			Game.getInstance().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
+		} else {
+			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
+		}
+
+		for(VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
+			if(player.getPlayer() != null) {
+				if(player.getPlayer().isOnline()) {
+					player.getPlayer().teleport(VaroUtils.getMainWorld().getSpawnLocation());
+					continue;
+				}
+			}
+			if(ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
+				player.getStats().setState(PlayerState.SPECTATOR);
+			} else {
+				player.getStats().setState(PlayerState.DEAD);
+			}
+		}
+
+		VaroBorder.getInstance().setBorderSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
+
+		Game.getInstance().setFinaleJoinStart(false);
+
+		int playerNumber = VaroPlayer.getOnlinePlayer().size();
+		EventLogger.getInstance().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
+	}
+
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart") && !args[0].equalsIgnoreCase("abort") && !args[0].equalsIgnoreCase("abbruch") && !!args[0].equalsIgnoreCase("abbrechen") && !!args[0].equalsIgnoreCase("stop"))) {
@@ -134,39 +168,5 @@ public class FinaleCommand extends VaroCommand {
 			Status = FinaleState.JOIN_PHASE;
 			Bukkit.broadcastMessage("§7Der Finale-Start wurde §cabgebrochen§7!");
 		}
-	}
-
-	private void finaleStart() {
-		Status = FinaleState.STARTED;
-
-		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
-		if(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
-			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
-			Game.getInstance().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
-		} else {
-			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
-		}
-
-		for(VaroPlayer player : VaroPlayer.getVaroPlayer()) {
-			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
-			if(player.getPlayer() != null) {
-				if(player.getPlayer().isOnline()) {
-					player.getPlayer().teleport(VaroUtils.getMainWorld().getSpawnLocation());
-					continue;
-				}
-			}
-			if(ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
-				player.getStats().setState(PlayerState.SPECTATOR);
-			} else {
-				player.getStats().setState(PlayerState.DEAD);
-			}
-		}
-
-		VaroBorder.getInstance().setBorderSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
-
-		Game.getInstance().setFinaleJoinStart(false);
-
-		int playerNumber = VaroPlayer.getOnlinePlayer().size();
-		EventLogger.getInstance().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
 	}
 }

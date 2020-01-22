@@ -50,6 +50,16 @@ public class Vanish {
 		vanishes.add(this);
 	}
 
+	private void hide() {
+		for(Player allplayer : Bukkit.getOnlinePlayers())
+			allplayer.hidePlayer(player);
+	}
+
+	private void unhide() {
+		for(Player allplayer : Bukkit.getOnlinePlayers())
+			allplayer.showPlayer(player);
+	}
+
 	public Player getPlayer() {
 		return player;
 	}
@@ -65,16 +75,6 @@ public class Vanish {
 
 	public void unHideFor(Player player) {
 		player.showPlayer(this.player);
-	}
-
-	private void hide() {
-		for(Player allplayer : Bukkit.getOnlinePlayers())
-			allplayer.hidePlayer(player);
-	}
-
-	private void unhide() {
-		for(Player allplayer : Bukkit.getOnlinePlayers())
-			allplayer.showPlayer(player);
 	}
 
 	public static Vanish getVanish(Player player) {

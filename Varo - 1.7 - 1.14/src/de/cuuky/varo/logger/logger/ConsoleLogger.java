@@ -13,15 +13,6 @@ public class ConsoleLogger extends Logger {
 		startListening();
 	}
 
-	public void println(String line) {
-		line = "[" + getCurrentDate() + "] " + JavaUtils.replaceAllColors(line);
-
-		pw.println(line);
-		logs.add(line);
-
-		pw.flush();
-	}
-
 	private void startListening() {
 		System.setOut(new PrintStream(System.out) {
 
@@ -59,5 +50,14 @@ public class ConsoleLogger extends Logger {
 				ConsoleLogger.this.println(x);
 			}
 		});
+	}
+
+	public void println(String line) {
+		line = "[" + getCurrentDate() + "] " + JavaUtils.replaceAllColors(line);
+
+		pw.println(line);
+		logs.add(line);
+
+		pw.flush();
 	}
 }

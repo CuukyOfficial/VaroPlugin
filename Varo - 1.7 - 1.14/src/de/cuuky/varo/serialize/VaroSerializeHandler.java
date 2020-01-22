@@ -29,12 +29,6 @@ public class VaroSerializeHandler {
 		files = new HashMap<String, File>();
 	}
 
-	public static void saveAll() {
-		for(VaroSerializeObject handl : handler)
-			if(handl.getConfiguration() != null)
-				handl.onSave();
-	}
-
 	protected static VaroSerializeable getEnumByString(String en) {
 		for(VaroSerializeable var : enumsRepl.keySet())
 			if(en.equals(enumsRepl.get(var)))
@@ -77,5 +71,11 @@ public class VaroSerializeHandler {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static void saveAll() {
+		for(VaroSerializeObject handl : handler)
+			if(handl.getConfiguration() != null)
+				handl.onSave();
 	}
 }

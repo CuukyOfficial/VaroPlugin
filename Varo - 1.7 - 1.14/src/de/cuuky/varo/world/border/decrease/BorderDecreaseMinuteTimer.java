@@ -19,10 +19,6 @@ public class BorderDecreaseMinuteTimer {
 		startScheduling();
 	}
 
-	public void remove() {
-		Bukkit.getScheduler().cancelTask(sched);
-	}
-
 	private void startScheduling() {
 		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
@@ -35,5 +31,9 @@ public class BorderDecreaseMinuteTimer {
 				VaroBorder.getInstance().decreaseBorder(DecreaseReason.TIME_MINUTES);
 			}
 		}, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20);
+	}
+
+	public void remove() {
+		Bukkit.getScheduler().cancelTask(sched);
 	}
 }

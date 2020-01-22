@@ -30,10 +30,6 @@ public class CombatlogCheck {
 		check(event);
 	}
 
-	public boolean isCombatLog() {
-		return combatLog;
-	}
-
 	private void check(PlayerQuitEvent event) {
 		if(Game.getInstance().getGameState() == GameState.END || PlayerHit.getHit(event.getPlayer()) == null) {
 			return;
@@ -68,5 +64,9 @@ public class CombatlogCheck {
 			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(player));
 
 		Bukkit.broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT.getValue(player));
+	}
+
+	public boolean isCombatLog() {
+		return combatLog;
 	}
 }

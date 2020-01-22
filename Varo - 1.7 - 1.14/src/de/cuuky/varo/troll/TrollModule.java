@@ -15,9 +15,9 @@ public class TrollModule {
 		modules = new ArrayList<>();
 	}
 
-	protected String name, description;
 	protected ArrayList<Player> enabledFor;
 	protected Material icon;
+	protected String name, description;
 
 	public TrollModule(String name, Material icon, String description) {
 		this.name = name;
@@ -27,6 +27,14 @@ public class TrollModule {
 
 		modules.add(this);
 	}
+
+	protected void onDisable(Player player) {}
+
+	protected void onEnable(Player player) {}
+
+	protected void onInteract(PlayerInteractEvent event) {}
+
+	protected void onMove(PlayerMoveEvent event) {}
 
 	public String getDescription() {
 		return description;
@@ -53,14 +61,6 @@ public class TrollModule {
 			onDisable(player);
 		}
 	}
-
-	protected void onDisable(Player player) {}
-
-	protected void onEnable(Player player) {}
-
-	protected void onInteract(PlayerInteractEvent event) {}
-
-	protected void onMove(PlayerMoveEvent event) {}
 
 	public static ArrayList<TrollModule> getEnabledModules(Player player) {
 		ArrayList<TrollModule> enabledEvents = new ArrayList<>();

@@ -23,6 +23,10 @@ public class ReportListGUI extends SuperInventory {
 		open();
 	}
 
+	private void update() {
+		new ReportListGUI(getOpener());
+	}
+
 	@Override
 	public boolean onBackClick() {
 		new AdminMainMenu(opener);
@@ -71,9 +75,5 @@ public class ReportListGUI extends SuperInventory {
 		}
 
 		return calculatePages(Report.getReports().size(), getSize()) == page;
-	}
-
-	private void update() {
-		new ReportListGUI(getOpener());
 	}
 }

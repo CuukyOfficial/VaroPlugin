@@ -31,6 +31,36 @@ public class Main extends JavaPlugin {
 
 	private boolean failed;
 
+	public File getThisFile() {
+		return getFile();
+	}
+	
+	@Override
+	public void onDisable() {
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
+
+		if(dataManager != null && !failed) {
+			System.out.println(CONSOLE_PREFIX + "Saving files...");
+			dataManager.save();
+		}
+
+		if(botLauncher != null) {
+			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
+			botLauncher.disconnect();
+		}
+
+		if(!failed)
+			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		Bukkit.getScheduler().cancelTasks(this);
+
+		System.out.println(CONSOLE_PREFIX + "Disabled!");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		super.onDisable();
+	}
+
 	@Override
 	public void onEnable() {
 		System.out.println("############################################################################");
@@ -85,42 +115,12 @@ public class Main extends JavaPlugin {
 	}
 	
 	@Override
-	public void onDisable() {
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
-
-		if(dataManager != null && !failed) {
-			System.out.println(CONSOLE_PREFIX + "Saving files...");
-			dataManager.save();
-		}
-
-		if(botLauncher != null) {
-			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
-			botLauncher.disconnect();
-		}
-
-		if(!failed)
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
-		Bukkit.getScheduler().cancelTasks(this);
-
-		System.out.println(CONSOLE_PREFIX + "Disabled!");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		super.onDisable();
-	}
-
-	@Override
 	public void onLoad() {
 		failed = false;
 		instance = this;
 
 		new ConsoleLogger();
 		super.onLoad();
-	}
-	
-	public File getThisFile() {
-		return getFile();
 	}
 
 	public static void broadcastMessage(String message) {

@@ -19,10 +19,10 @@ import de.cuuky.varo.version.types.Materials;
 
 public class ItemBuilder {
 
-	private static Class<?> itemFlagClass;
-	private static String[] attributes;
-	private static Object[] itemFlags;
 	private static Method addFlagMethod;
+	private static String[] attributes;
+	private static Class<?> itemFlagClass;
+	private static Object[] itemFlags;
 
 	static {
 		try {

@@ -29,6 +29,46 @@ public class VaroDiscordBot implements VaroBot {
 
 	private VaroDiscordBot() {}
 
+	private Color getRandomColor() {
+		Random random = new Random();
+		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
+	}
+
+	private void loadChannel() {
+		try {
+			announcementChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
+		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+			System.out.println(Main.getConsolePrefix() + "Could not load announcement-channel");
+		}
+
+		try {
+			eventChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
+		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+			System.out.println(Main.getConsolePrefix() + "Could not load event-channel");
+		}
+
+		try {
+			resultChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
+		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+			System.out.println(Main.getConsolePrefix() + "Could not load result-channel");
+		}
+
+		try {
+			if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+				registerChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_REGISTERCHANNELID.getValueAsLong()).getIdLong();
+		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+			System.out.println(Main.getConsolePrefix() + "Could not load register-channel");
+		}
+
+		try {
+			pingRole = jda.getRoleById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
+		} catch(ClassCastException | IllegalArgumentException e) {
+			pingRole = -1;
+		} catch(NullPointerException e) {
+			System.out.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
+		}
+	}
+
 	@Override
 	public void connect() {
 		System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors maybe will appear - don't mind them)");
@@ -157,46 +197,6 @@ public class VaroDiscordBot implements VaroBot {
 			channel.sendMessage(message.replace("_", "\\_")).queue();
 		} catch(PermissionException e) {
 			System.err.println("Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
-		}
-	}
-
-	private Color getRandomColor() {
-		Random random = new Random();
-		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
-	}
-
-	private void loadChannel() {
-		try {
-			announcementChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load announcement-channel");
-		}
-
-		try {
-			eventChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load event-channel");
-		}
-
-		try {
-			resultChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load result-channel");
-		}
-
-		try {
-			if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
-				registerChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_REGISTERCHANNELID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load register-channel");
-		}
-
-		try {
-			pingRole = jda.getRoleById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException e) {
-			pingRole = -1;
-		} catch(NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		}
 	}
 

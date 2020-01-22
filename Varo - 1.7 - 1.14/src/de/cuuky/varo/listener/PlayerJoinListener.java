@@ -29,6 +29,23 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class PlayerJoinListener implements Listener {
 
+	private boolean isOutsideOfBorder(Player p) {
+		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
+			return false;
+
+		try {
+			Location loc = p.getLocation();
+			Object border = p.getWorld().getClass().getDeclaredMethod("getWorldBorder").invoke(p.getWorld());
+			double size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
+			Location center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
+			double x = loc.getX() - center.getX(), z = loc.getZ() - center.getZ();
+			return((x > size || (-x) > size) || (z > size || (-z) > size));
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
@@ -127,22 +144,5 @@ public class PlayerJoinListener implements Listener {
 		}
 
 		event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
-	}
-
-	private boolean isOutsideOfBorder(Player p) {
-		if(VersionUtils.getVersion() == BukkitVersion.ONE_7)
-			return false;
-
-		try {
-			Location loc = p.getLocation();
-			Object border = p.getWorld().getClass().getDeclaredMethod("getWorldBorder").invoke(p.getWorld());
-			double size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
-			Location center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
-			double x = loc.getX() - center.getX(), z = loc.getZ() - center.getZ();
-			return((x > size || (-x) > size) || (z > size || (-z) > size));
-		} catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 }

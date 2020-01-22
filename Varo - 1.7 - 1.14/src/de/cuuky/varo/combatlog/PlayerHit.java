@@ -77,6 +77,16 @@ public class PlayerHit {
 		hits.add(this);
 	}
 
+	private void scheduleOvertime() {
+		task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				over();
+			}
+		}, ConfigEntry.COMBATLOG_TIME.getValueAsInt() * 20);
+	}
+
 	public Player getOpponent() {
 		return this.opponent;
 	}
@@ -105,16 +115,6 @@ public class PlayerHit {
 	public void remove() {
 		Bukkit.getScheduler().cancelTask(task);
 		hits.remove(this);
-	}
-
-	private void scheduleOvertime() {
-		task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
-
-			@Override
-			public void run() {
-				over();
-			}
-		}, ConfigEntry.COMBATLOG_TIME.getValueAsInt() * 20);
 	}
 
 	public static PlayerHit getHit(Player p) {

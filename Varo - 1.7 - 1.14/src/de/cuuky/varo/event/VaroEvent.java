@@ -29,10 +29,10 @@ public class VaroEvent {
 		new ExposedVaroEvent();
 	}
 
-	protected boolean enabled;
 	private String description;
 	private Material icon;
 	private String name;
+	protected boolean enabled;
 
 	public VaroEvent(String name, Material icon, String description) {
 		this.name = name;

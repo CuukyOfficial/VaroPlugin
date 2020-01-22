@@ -67,23 +67,6 @@ public class EventLogger extends Logger {
 		super(name, true);
 	}
 
-	public void println(LogType type, String message) {
-		message = JavaUtils.replaceAllColors(message);
-
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noBot%", "");
-
-		pw.println(log);
-		logs.add(log);
-
-		pw.flush();
-
-		if(type.getPostChannel() == -1 || message.contains("%noBot%"))
-			return;
-
-		sendToDiscord(type, message);
-		sendToTelegram(type, message);
-	}
-
 	private void sendToDiscord(LogType type, String msg) {
 		if(type.getPostChannel() == -1 || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
 			return;
@@ -110,6 +93,23 @@ public class EventLogger extends Logger {
 		} catch(ArrayIndexOutOfBoundsException e) {
 			BotLauncher.getTelegramBot().sendEvent(message);
 		}
+	}
+
+	public void println(LogType type, String message) {
+		message = JavaUtils.replaceAllColors(message);
+
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noBot%", "");
+
+		pw.println(log);
+		logs.add(log);
+
+		pw.flush();
+
+		if(type.getPostChannel() == -1 || message.contains("%noBot%"))
+			return;
+
+		sendToDiscord(type, message);
+		sendToTelegram(type, message);
 	}
 
 	public static EventLogger getInstance() {

@@ -16,6 +16,41 @@ public class BackpackCommand extends VaroCommand {
 		super("backpack", "Öffnet das Backpack von dir oder einem Spieler", null, "bp");
 	}
 
+	private void playerBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
+		if(vp.getPlayer().isOp() && args.length > number) {
+			VaroPlayer p = VaroPlayer.getPlayer(args[number]);
+			if(p != null) {
+				vp.getPlayer().openInventory(p.getStats().getPlayerBackpack().getInventory());
+			} else {
+				sender.sendMessage("Der Spieler " + args[number] + " existiert nicht.");
+				sender.sendMessage("Daher kann dessen Rucksack dir nicht angezeigt werden.");
+			}
+			return;
+		}
+
+		vp.getPlayer().openInventory(vp.getStats().getPlayerBackpack().getInventory());
+		return;
+	}
+
+	private void teamBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
+		if(vp.getPlayer().isOp() && args.length > number) {
+			Team t = Team.getTeam(args[number]);
+			if(t != null) {
+				vp.getPlayer().openInventory(t.getTeamBackPack().getInventory());
+			} else {
+				sender.sendMessage("Das Team " + args[number] + " existiert nicht.");
+				sender.sendMessage("Daher kann dessen Teamrucksack dir nicht angezeigt werden.");
+			}
+			return;
+		}
+		if(vp.getTeam() == null) {
+			sender.sendMessage("Du bist in keinem Team. Daher hast du kein Team-Backpack.");
+		} else {
+			vp.getPlayer().openInventory(vp.getTeam().getTeamBackPack().getInventory());
+		}
+		return;
+	}
+
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(!Game.getInstance().hasStarted()) {
@@ -50,40 +85,5 @@ public class BackpackCommand extends VaroCommand {
 		} else {
 			sender.sendMessage(Main.getPrefix() + "Rucksäcke sind nicht aktiviert!");
 		}
-	}
-
-	private void playerBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
-		if(vp.getPlayer().isOp() && args.length > number) {
-			VaroPlayer p = VaroPlayer.getPlayer(args[number]);
-			if(p != null) {
-				vp.getPlayer().openInventory(p.getStats().getPlayerBackpack().getInventory());
-			} else {
-				sender.sendMessage("Der Spieler " + args[number] + " existiert nicht.");
-				sender.sendMessage("Daher kann dessen Rucksack dir nicht angezeigt werden.");
-			}
-			return;
-		}
-
-		vp.getPlayer().openInventory(vp.getStats().getPlayerBackpack().getInventory());
-		return;
-	}
-
-	private void teamBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
-		if(vp.getPlayer().isOp() && args.length > number) {
-			Team t = Team.getTeam(args[number]);
-			if(t != null) {
-				vp.getPlayer().openInventory(t.getTeamBackPack().getInventory());
-			} else {
-				sender.sendMessage("Das Team " + args[number] + " existiert nicht.");
-				sender.sendMessage("Daher kann dessen Teamrucksack dir nicht angezeigt werden.");
-			}
-			return;
-		}
-		if(vp.getTeam() == null) {
-			sender.sendMessage("Du bist in keinem Team. Daher hast du kein Team-Backpack.");
-		} else {
-			vp.getPlayer().openInventory(vp.getTeam().getTeamBackPack().getInventory());
-		}
-		return;
 	}
 }

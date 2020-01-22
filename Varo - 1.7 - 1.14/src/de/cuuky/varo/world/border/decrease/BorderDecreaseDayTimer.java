@@ -30,20 +30,6 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 		Game.getInstance().setBorderDecrease(this);
 	}
 
-	@Override
-	public void onDeserializeEnd() {
-		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
-			return;
-
-		if(nextDecrease == null)
-			generateNextDecrease();
-
-		startTimer();
-	}
-
-	@Override
-	public void onSerializeStart() {}
-
 	private void generateNextDecrease() {
 		nextDecrease = new Date();
 		nextDecrease = DateUtils.addDays(nextDecrease, ConfigEntry.BORDER_TIME_DAY_DECREASE_DAYS.getValueAsInt());
@@ -75,4 +61,18 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 			}
 		}, getTime());
 	}
+
+	@Override
+	public void onDeserializeEnd() {
+		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Game.getInstance().isRunning())
+			return;
+
+		if(nextDecrease == null)
+			generateNextDecrease();
+
+		startTimer();
+	}
+
+	@Override
+	public void onSerializeStart() {}
 }

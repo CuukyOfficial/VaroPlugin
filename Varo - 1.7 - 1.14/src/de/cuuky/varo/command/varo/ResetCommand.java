@@ -23,6 +23,17 @@ public class ResetCommand extends VaroCommand {
 		super("reset", "Setzt ausgewählte Teile des Servers zurück", "varo.reset");
 	}
 
+	private void deleteDirectory(File file) {
+		for(File listFile : file.listFiles()) {
+			if(listFile.isDirectory())
+				deleteDirectory(listFile);
+
+			listFile.delete();
+		}
+
+		file.delete();
+	}
+
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
@@ -88,16 +99,5 @@ public class ResetCommand extends VaroCommand {
 
 		if(!success.isEmpty())
 			Bukkit.getServer().shutdown();
-	}
-
-	private void deleteDirectory(File file) {
-		for(File listFile : file.listFiles()) {
-			if(listFile.isDirectory())
-				deleteDirectory(listFile);
-
-			listFile.delete();
-		}
-
-		file.delete();
 	}
 }

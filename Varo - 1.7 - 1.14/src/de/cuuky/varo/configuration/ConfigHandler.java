@@ -29,84 +29,6 @@ public class ConfigHandler {
 		reload();
 	}
 
-	public YamlConfiguration getConfigCfg() {
-		return configCfg;
-	}
-
-	/**
-	 * Main method to load the configs
-	 */
-	public void load() {
-		loadConfig(configCfg, configFile, true, configExisted);
-		loadConfig(messagesCfg, messagesFile, false, messagesExisted);
-	}
-
-	public void reload() {
-		loadConfigurations();
-
-		load();
-
-		testConfig();
-	}
-
-	public void saveConfig() {
-		try {
-			configCfg.save(configFile);
-		} catch(IOException e) {
-			System.out.println(Main.getConsolePrefix() + "Failed saving file " + configFile.getName());
-		}
-	}
-
-	/**
-	 * Method to test whether the entries in the Main Config are correct
-	 */
-	public void testConfig() {
-		boolean shutdown = false;
-		for(ConfigEntry entry : ConfigEntry.values()) {
-
-			Class<?> dataTypeWanted = entry.getDefaultValue().getClass();
-			Class<?> dataTypeInConfig = configCfg.get(entry.getFullPath()).getClass();
-
-			if(dataTypeInConfig.equals(MemorySection.class)) {
-				continue;
-			}
-
-			if(dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
-				continue;
-			}
-
-			if(!dataTypeWanted.equals(dataTypeInConfig)) {
-				System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Der Eintrag " + entry.getName() + " muss vom Datentyp \"" + dataTypeWanted.getSimpleName() + "\" sein, ist aber vom Datentyp \"" + dataTypeInConfig.getSimpleName() + "\".");
-				shutdown = true;
-			}
-		}
-
-		if(shutdown) {
-			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
-			Bukkit.getServer().shutdown();
-		}
-
-		if(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Rucksackes darf nicht mehr als 54 betragen.");
-			shutdown = true;
-		}
-
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() <= 0 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Wenn die Spielzeit nicht unendlich ist, muss ein JoinSystem aktiviert sein.");
-			shutdown = true;
-		}
-
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es dürfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
-			shutdown = true;
-		}
-
-		if(shutdown) {
-			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
-			Bukkit.getServer().shutdown();
-		}
-	}
-
 	/**
 	 * @return Every description of every ConfigEntry combined
 	 */
@@ -193,6 +115,84 @@ public class ConfigHandler {
 			cfg.save(file);
 		} catch(IOException e) {
 			System.out.println(Main.getConsolePrefix() + "Failed saving file " + file.getName());
+		}
+	}
+
+	public YamlConfiguration getConfigCfg() {
+		return configCfg;
+	}
+
+	/**
+	 * Main method to load the configs
+	 */
+	public void load() {
+		loadConfig(configCfg, configFile, true, configExisted);
+		loadConfig(messagesCfg, messagesFile, false, messagesExisted);
+	}
+
+	public void reload() {
+		loadConfigurations();
+
+		load();
+
+		testConfig();
+	}
+
+	public void saveConfig() {
+		try {
+			configCfg.save(configFile);
+		} catch(IOException e) {
+			System.out.println(Main.getConsolePrefix() + "Failed saving file " + configFile.getName());
+		}
+	}
+
+	/**
+	 * Method to test whether the entries in the Main Config are correct
+	 */
+	public void testConfig() {
+		boolean shutdown = false;
+		for(ConfigEntry entry : ConfigEntry.values()) {
+
+			Class<?> dataTypeWanted = entry.getDefaultValue().getClass();
+			Class<?> dataTypeInConfig = configCfg.get(entry.getFullPath()).getClass();
+
+			if(dataTypeInConfig.equals(MemorySection.class)) {
+				continue;
+			}
+
+			if(dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
+				continue;
+			}
+
+			if(!dataTypeWanted.equals(dataTypeInConfig)) {
+				System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Der Eintrag " + entry.getName() + " muss vom Datentyp \"" + dataTypeWanted.getSimpleName() + "\" sein, ist aber vom Datentyp \"" + dataTypeInConfig.getSimpleName() + "\".");
+				shutdown = true;
+			}
+		}
+
+		if(shutdown) {
+			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
+			Bukkit.getServer().shutdown();
+		}
+
+		if(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Rucksackes darf nicht mehr als 54 betragen.");
+			shutdown = true;
+		}
+
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() <= 0 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Wenn die Spielzeit nicht unendlich ist, muss ein JoinSystem aktiviert sein.");
+			shutdown = true;
+		}
+
+		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es dürfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
+			shutdown = true;
+		}
+
+		if(shutdown) {
+			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
+			Bukkit.getServer().shutdown();
 		}
 	}
 

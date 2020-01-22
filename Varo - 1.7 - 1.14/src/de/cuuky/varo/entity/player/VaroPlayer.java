@@ -51,32 +51,32 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "name")
-	private String name;
-	
-	@VaroSerializeField(path = "stats")
-	private Stats stats;
-	
-	@VaroSerializeField(path = "uuid")
-	private String uuid;
-	
-	@VaroSerializeField(path = "rank")
-	private Rank rank;
-	
-	@VaroSerializeField(path = "villager")
-	private OfflineVillager villager;
-	
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
-
+	
+	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
+	
 	@VaroSerializeField(path = "id")
 	private int id;
 	
-	private Player player;
-	private Team team;
+	@VaroSerializeField(path = "name")
+	private String name;
+	
 	private Nametag nametag;
+	
 	private NetworkMananager networkManager;
-	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
+
+	private Player player;
+	
+	@VaroSerializeField(path = "rank")
+	private Rank rank;
+	@VaroSerializeField(path = "stats")
+	private Stats stats;
+	private Team team;
+	@VaroSerializeField(path = "uuid")
+	private String uuid;
+	@VaroSerializeField(path = "villager")
+	private OfflineVillager villager;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -102,6 +102,14 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer.add(this);
 		this.stats = new Stats(this);
 		stats.loadDefaults();
+	}
+
+	private int generateId() {
+		int id = JavaUtils.randomInt(1000, 9999999);
+		while(getPlayer(id) != null)
+			generateId();
+
+		return id;
 	}
 
 	/**
@@ -417,14 +425,6 @@ public class VaroPlayer extends VaroEntity {
 
 			player.setPlayerListName(listname);
 		}
-	}
-
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getPlayer(id) != null)
-			generateId();
-
-		return id;
 	}
 
 	/**

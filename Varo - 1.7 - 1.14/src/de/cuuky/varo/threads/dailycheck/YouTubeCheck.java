@@ -14,24 +14,6 @@ import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 
 public class YouTubeCheck extends Checker {
 
-	@Override
-	public void check() {
-		for(VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
-			if(vp.getStats().getYoutubeLink() == null)
-				continue;
-
-			ArrayList<YouTubeVideo> videos = loadVideos(vp.getStats().getYoutubeLink(), vp);
-			if(videos == null)
-				new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Die Videos von " + vp.getName() + " konnten nicht geladen werden!");
-
-			if(videos.size() == 0)
-				new Alert(AlertType.NO_YOUTUBE_UPLOAD, vp.getName() + " hat kein Varo Video hochgeladen!");
-
-			for(YouTubeVideo video : videos)
-				vp.getStats().addVideo(video);
-		}
-	}
-
 	private ArrayList<YouTubeVideo> loadVideos(String url, VaroPlayer player) {
 		ArrayList<String> lines = new ArrayList<String>();
 		ArrayList<YouTubeVideo> videos = new ArrayList<YouTubeVideo>();
@@ -77,5 +59,23 @@ public class YouTubeCheck extends Checker {
 		}
 
 		return videos;
+	}
+
+	@Override
+	public void check() {
+		for(VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
+			if(vp.getStats().getYoutubeLink() == null)
+				continue;
+
+			ArrayList<YouTubeVideo> videos = loadVideos(vp.getStats().getYoutubeLink(), vp);
+			if(videos == null)
+				new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Die Videos von " + vp.getName() + " konnten nicht geladen werden!");
+
+			if(videos.size() == 0)
+				new Alert(AlertType.NO_YOUTUBE_UPLOAD, vp.getName() + " hat kein Varo Video hochgeladen!");
+
+			for(YouTubeVideo video : videos)
+				vp.getStats().addVideo(video);
+		}
 	}
 }

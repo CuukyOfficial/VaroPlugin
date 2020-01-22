@@ -75,15 +75,15 @@ public class WinnerCheck {
 		Game.getInstance().end(this);
 	}
 
-	public HashMap<Integer, ArrayList<VaroPlayer>> getPlaces() {
-		return places;
-	}
-
 	private boolean isSorted(VaroPlayer vp) {
 		for(ArrayList<VaroPlayer> list : places.values())
 			if(list.contains(vp))
 				return true;
 
 		return false;
+	}
+
+	public HashMap<Integer, ArrayList<VaroPlayer>> getPlaces() {
+		return places;
 	}
 }

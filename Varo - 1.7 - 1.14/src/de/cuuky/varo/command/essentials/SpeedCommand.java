@@ -11,6 +11,18 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 
 public class SpeedCommand implements CommandExecutor {
 
+	private float getRealMoveSpeed(final float userSpeed, final boolean isFly) {
+		float defaultSpeed = isFly ? 0.1f : 0.2f;
+		float maxSpeed = 1f;
+
+		if(userSpeed < 1f) {
+			return defaultSpeed * userSpeed;
+		} else {
+			float ratio = ((userSpeed - 1) / 9) * (maxSpeed - defaultSpeed);
+			return ratio + defaultSpeed;
+		}
+	}
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.speed")) {
@@ -98,17 +110,5 @@ public class SpeedCommand implements CommandExecutor {
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed §7<Speed> [Player]");
 		return false;
-	}
-
-	private float getRealMoveSpeed(final float userSpeed, final boolean isFly) {
-		float defaultSpeed = isFly ? 0.1f : 0.2f;
-		float maxSpeed = 1f;
-
-		if(userSpeed < 1f) {
-			return defaultSpeed * userSpeed;
-		} else {
-			float ratio = ((userSpeed - 1) / 9) * (maxSpeed - defaultSpeed);
-			return ratio + defaultSpeed;
-		}
 	}
 }

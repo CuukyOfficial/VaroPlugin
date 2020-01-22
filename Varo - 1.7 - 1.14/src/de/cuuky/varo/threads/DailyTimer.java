@@ -19,6 +19,34 @@ import de.cuuky.varo.utils.VaroUtils;
 
 public final class DailyTimer {
 
+	private static void doDailyStuff() {
+		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
+
+			if(vp.isOnline())
+				vp.getPlayer().kickPlayer("RESET");
+		}
+
+		Checker.checkAll();
+	}
+
+	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+		long diffInMillies = date2.getTime() - date1.getTime();
+		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
+
+	@SuppressWarnings("deprecation")
+	private static long getNextReset() {
+		Date reset = new Date();
+		reset.setMinutes(0);
+		reset.setSeconds(0);
+		Date current = new Date();
+		reset.setHours(ConfigEntry.RESET_SESSION_HOUR.getValueAsInt());
+		if(reset.before(current))
+			reset = DateUtils.addDays(reset, 1);
+		return (reset.getTime() - current.getTime()) / 1000;
+	}
+
 	public static void startTimer() {
 		VaroUtils.setWorldToTime();
 		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
@@ -67,33 +95,5 @@ public final class DailyTimer {
 				}
 			}
 		}, getNextReset() * 20);
-	}
-
-	private static void doDailyStuff() {
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
-
-			if(vp.isOnline())
-				vp.getPlayer().kickPlayer("RESET");
-		}
-
-		Checker.checkAll();
-	}
-
-	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-		long diffInMillies = date2.getTime() - date1.getTime();
-		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
-	}
-
-	@SuppressWarnings("deprecation")
-	private static long getNextReset() {
-		Date reset = new Date();
-		reset.setMinutes(0);
-		reset.setSeconds(0);
-		Date current = new Date();
-		reset.setHours(ConfigEntry.RESET_SESSION_HOUR.getValueAsInt());
-		if(reset.before(current))
-			reset = DateUtils.addDays(reset, 1);
-		return (reset.getTime() - current.getTime()) / 1000;
 	}
 }

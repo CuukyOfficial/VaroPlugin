@@ -26,6 +26,26 @@ public class VaroTelegramBot implements VaroBot {
 		telegrambot = new TelegramBot(ConfigEntry.TELEGRAM_BOT_TOKEN.getValueAsString());
 	}
 
+	private void startListening() {
+		telegrambot.setUpdatesListener(new UpdatesListener() {
+
+			@Override
+			public int process(List<Update> args) {
+				for(Update update : args) {
+					if(update.message() == null)
+						continue;
+
+					if(!update.message().text().contains("/getId"))
+						continue;
+
+					telegrambot.execute(new SendMessage(update.message().chat().id(), "Chat ID von diesem Chat: " + update.message().chat().id()));
+				}
+
+				return UpdatesListener.CONFIRMED_UPDATES_ALL;
+			}
+		});
+	}
+
 	@Override
 	public void connect() {
 		startListening();
@@ -64,26 +84,6 @@ public class VaroTelegramBot implements VaroBot {
 		} catch(Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not send videos");
 		}
-	}
-
-	private void startListening() {
-		telegrambot.setUpdatesListener(new UpdatesListener() {
-
-			@Override
-			public int process(List<Update> args) {
-				for(Update update : args) {
-					if(update.message() == null)
-						continue;
-
-					if(!update.message().text().contains("/getId"))
-						continue;
-
-					telegrambot.execute(new SendMessage(update.message().chat().id(), "Chat ID von diesem Chat: " + update.message().chat().id()));
-				}
-
-				return UpdatesListener.CONFIRMED_UPDATES_ALL;
-			}
-		});
 	}
 
 	public static String getClassName() {

@@ -40,18 +40,18 @@ public abstract class Logger {
 		}
 	}
 
+	protected String getCurrentDate() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+
+		return dateFormat.format(date);
+	}
+
 	public File getFile() {
 		return file;
 	}
 
 	public ArrayList<String> getLogs() {
 		return logs;
-	}
-
-	protected String getCurrentDate() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-
-		return dateFormat.format(date);
 	}
 }

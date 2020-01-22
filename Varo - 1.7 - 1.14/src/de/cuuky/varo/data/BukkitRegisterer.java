@@ -71,6 +71,14 @@ import de.cuuky.varo.version.VersionUtils;
 
 public final class BukkitRegisterer {
 
+	private static void registerCommand(String name, CommandExecutor cm) {
+		Main.getInstance().getCommand(name).setExecutor(cm);
+	}
+
+	private static void registerEvent(Listener listener) {
+		Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
+	}
+
 	public static void registerCommands() {
 		registerCommand("varo", new VaroCommandListener());
 		registerCommand("antixray", new AntiXrayCommand());
@@ -138,13 +146,5 @@ public final class BukkitRegisterer {
 
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
-	}
-
-	private static void registerCommand(String name, CommandExecutor cm) {
-		Main.getInstance().getCommand(name).setExecutor(cm);
-	}
-
-	private static void registerEvent(Listener listener) {
-		Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
 	}
 }

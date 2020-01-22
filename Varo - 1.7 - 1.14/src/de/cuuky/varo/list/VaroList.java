@@ -49,6 +49,12 @@ public abstract class VaroList {
 		} catch(IOException e) {}
 	}
 
+	private static void reloadConfig() {
+		file = new File("plugins/Varo", "lists.yml");
+		config = YamlConfiguration.loadConfiguration(file);
+		lists = new ArrayList<VaroList>();
+	}
+
 	public static ArrayList<VaroList> getLists() {
 		return lists;
 	}
@@ -72,11 +78,5 @@ public abstract class VaroList {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private static void reloadConfig() {
-		file = new File("plugins/Varo", "lists.yml");
-		config = YamlConfiguration.loadConfiguration(file);
-		lists = new ArrayList<VaroList>();
 	}
 }

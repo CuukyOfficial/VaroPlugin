@@ -27,10 +27,10 @@ public class Report implements VaroSerializeable {
 	@VaroSerializeField(path = "reportedId")
 	private int reportedId;
 
+	private VaroPlayer reporter, reported;
+	
 	@VaroSerializeField(path = "reporterId")
 	private int reporterId;
-	
-	private VaroPlayer reporter, reported;
 
 	public Report() {
 		reports.add(this);
@@ -44,6 +44,14 @@ public class Report implements VaroSerializeable {
 		this.id = generateId();
 
 		reports.add(this);
+	}
+
+	private int generateId() {
+		int id = JavaUtils.randomInt(1000, 9999999);
+		while(getReport(id) != null)
+			generateId();
+
+		return id;
 	}
 
 	public void close() {
@@ -83,14 +91,6 @@ public class Report implements VaroSerializeable {
 			this.reporterId = reporter.getId();
 		if(reported != null)
 			this.reportedId = reported.getId();
-	}
-
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getReport(id) != null)
-			generateId();
-
-		return id;
 	}
 
 	public static Report getReport(int id) {

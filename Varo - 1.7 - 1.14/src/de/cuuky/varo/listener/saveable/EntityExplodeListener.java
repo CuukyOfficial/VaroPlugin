@@ -16,6 +16,19 @@ import de.cuuky.varo.game.Game;
 
 public class EntityExplodeListener implements Listener {
 
+	private boolean chestNearby(Location location) {
+		for(int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
+			for(int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
+				for(int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
+					Location loc = new Location(location.getWorld(), x, y, z);
+					if(VaroSaveable.getByLocation(loc) != null)
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
 		if(!Game.getInstance().hasStarted()) {
@@ -33,18 +46,5 @@ public class EntityExplodeListener implements Listener {
 				if(chestNearby(block.getLocation()))
 					iter.remove();
 		}
-	}
-
-	private boolean chestNearby(Location location) {
-		for(int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
-			for(int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
-				for(int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
-					Location loc = new Location(location.getWorld(), x, y, z);
-					if(VaroSaveable.getByLocation(loc) != null)
-						return true;
-				}
-			}
-		}
-		return false;
 	}
 }

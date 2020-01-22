@@ -86,18 +86,18 @@ public class Broadcaster {
 		}, delay, delay);
 	}
 
-	public static Broadcaster getInstance() {
-		if(instance == null) {
-			instance = new Broadcaster();
-		}
-		return instance;
-	}
-
 	private static String[] getAdMessage() {
 		String[] messages = new String[] { "", "", "" };
 		messages[0] = "&7-----------------------------------------";
 		messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
 		messages[2] = "&7-----------------------------------------";
 		return messages;
+	}
+
+	public static Broadcaster getInstance() {
+		if(instance == null) {
+			instance = new Broadcaster();
+		}
+		return instance;
 	}
 }

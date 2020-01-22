@@ -67,6 +67,27 @@ public class OfflineVillager implements VaroSerializeable {
 		villagers.add(this);
 	}
 
+	private void freezeVillager() {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+				@Override
+				public void run() {
+					zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 255));
+				}
+			}, 0, 1000000 * 20);
+		} else
+			try {
+				Object nmsEn = zombie.getClass().getMethod("getHandle").invoke(zombie);
+				Object compound = nbttagClass.newInstance();
+				nmsEn.getClass().getMethod("c", compound.getClass()).invoke(nmsEn, compound);
+				compound.getClass().getDeclaredMethod("setByte", String.class, byte.class).invoke(compound, "NoAI", (byte) 1);
+				nmsEn.getClass().getMethod("f", nbttagClass).invoke(nmsEn, compound);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+	}
+
 	public void create() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -149,27 +170,6 @@ public class OfflineVillager implements VaroSerializeable {
 			zombie.remove();
 
 		villagers.remove(this);
-	}
-
-	private void freezeVillager() {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
-				@Override
-				public void run() {
-					zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 255));
-				}
-			}, 0, 1000000 * 20);
-		} else
-			try {
-				Object nmsEn = zombie.getClass().getMethod("getHandle").invoke(zombie);
-				Object compound = nbttagClass.newInstance();
-				nmsEn.getClass().getMethod("c", compound.getClass()).invoke(nmsEn, compound);
-				compound.getClass().getDeclaredMethod("setByte", String.class, byte.class).invoke(compound, "NoAI", (byte) 1);
-				nmsEn.getClass().getMethod("f", nbttagClass).invoke(nmsEn, compound);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
 	}
 
 	public static OfflineVillager getVillager(Entity entity) {

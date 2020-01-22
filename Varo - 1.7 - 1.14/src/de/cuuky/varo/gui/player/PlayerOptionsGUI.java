@@ -37,6 +37,31 @@ public class PlayerOptionsGUI extends SuperInventory {
 		open();
 	}
 
+	private boolean isURl(String link) {
+		try {
+			new URL(link).openConnection();
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
+	}
+
+	private void updateStats() {
+		if(getPage() == 1) {
+			inv.setItem(4, new ItemBuilder().displayname("§cKills").itemstack(new ItemStack(Material.DIAMOND_SWORD)).lore(new String[] { "§7Current: " + stats.getKills() }).build());
+			inv.setItem(13, new ItemBuilder().displayname("§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay()) }).build());
+			inv.setItem(22, new ItemBuilder().displayname("§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + stats.getYoutubeLink() }).build());
+			inv.setItem(31, new ItemBuilder().displayname("§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[] { "§7Current: " + stats.getSessions() }).build());
+		} else if(getPage() == 2) {
+			inv.setItem(4, new ItemBuilder().displayname("§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[] { "§7Current: " + stats.getSessionsPlayed() }).build());
+			inv.setItem(13, new ItemBuilder().displayname("§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + stats.getCountdown() }).build());
+
+			inv.setItem(36, new ItemBuilder().displayname("§7Change §cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[] { "§7Current: " + stats.isWillClear() }).build());
+			inv.setItem(37, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "§7Current: " + stats.getState().getName() }).build());
+			inv.setItem(38, new ItemBuilder().displayname("§7Remove §cTimeUntilAddSession").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + (stats.getTimeUntilAddSession()) }).build());
+		}
+	}
+
 	public VaroPlayer getTarget() {
 		return target;
 	}
@@ -176,30 +201,5 @@ public class PlayerOptionsGUI extends SuperInventory {
 
 		updateStats();
 		return getPage() == 2;
-	}
-
-	private boolean isURl(String link) {
-		try {
-			new URL(link).openConnection();
-			return true;
-		} catch(Exception e) {
-			return false;
-		}
-	}
-
-	private void updateStats() {
-		if(getPage() == 1) {
-			inv.setItem(4, new ItemBuilder().displayname("§cKills").itemstack(new ItemStack(Material.DIAMOND_SWORD)).lore(new String[] { "§7Current: " + stats.getKills() }).build());
-			inv.setItem(13, new ItemBuilder().displayname("§6Rank").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + (target.getRank() == null ? "/" : target.getRank().getDisplay()) }).build());
-			inv.setItem(22, new ItemBuilder().displayname("§5YouTube-Link").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + stats.getYoutubeLink() }).build());
-			inv.setItem(31, new ItemBuilder().displayname("§bSessions").itemstack(new ItemStack(Material.DIAMOND)).lore(new String[] { "§7Current: " + stats.getSessions() }).build());
-		} else if(getPage() == 2) {
-			inv.setItem(4, new ItemBuilder().displayname("§5EpisodesPlayed").itemstack(new ItemStack(Material.BLAZE_POWDER)).lore(new String[] { "§7Current: " + stats.getSessionsPlayed() }).build());
-			inv.setItem(13, new ItemBuilder().displayname("§6Countdown").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Current: " + stats.getCountdown() }).build());
-
-			inv.setItem(36, new ItemBuilder().displayname("§7Change §cWill InventoryClear").itemstack(new ItemStack(Material.ARROW)).lore(new String[] { "§7Current: " + stats.isWillClear() }).build());
-			inv.setItem(37, new ItemBuilder().displayname("§7Change §6State").itemstack(new ItemStack(Material.GOLDEN_APPLE)).lore(new String[] { "§7Current: " + stats.getState().getName() }).build());
-			inv.setItem(38, new ItemBuilder().displayname("§7Remove §cTimeUntilAddSession").itemstack(new ItemStack(Materials.PAPER.parseMaterial())).lore(new String[] { "§7Current: " + (stats.getTimeUntilAddSession()) }).build());
-		}
 	}
 }

@@ -41,6 +41,14 @@ public class Alert implements VaroSerializeable {
 		alerts.add(this);
 	}
 
+	private int generateId() {
+		int i = alerts.size() + 1;
+		while(getAlert(i) != null)
+			i++;
+
+		return i;
+	}
+
 	public Date getCreated() {
 		return created;
 	}
@@ -73,14 +81,6 @@ public class Alert implements VaroSerializeable {
 
 	public void switchOpenState() {
 		this.open = !this.open;
-	}
-
-	private int generateId() {
-		int i = alerts.size() + 1;
-		while(getAlert(i) != null)
-			i++;
-
-		return i;
 	}
 
 	public static Alert getAlert(int id) {

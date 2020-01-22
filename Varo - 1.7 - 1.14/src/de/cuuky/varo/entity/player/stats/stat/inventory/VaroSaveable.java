@@ -62,6 +62,14 @@ public class VaroSaveable implements VaroSerializeable {
 		saveables.add(this);
 	}
 
+	private int generateId() {
+		int id = JavaUtils.randomInt(1000, 9999999);
+		while(getSaveable(id) != null)
+			generateId();
+
+		return id;
+	}
+
 	public boolean canModify(VaroPlayer player) {
 		if(this.player.getTeam() == null && !player.equals(this.player))
 			return false;
@@ -119,14 +127,6 @@ public class VaroSaveable implements VaroSerializeable {
 	public void remove() {
 		player.getStats().removeSaveable(this);
 		saveables.remove(this);
-	}
-
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getSaveable(id) != null)
-			generateId();
-
-		return id;
 	}
 
 	public static VaroSaveable getByLocation(Location loc) {

@@ -22,6 +22,18 @@ import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PlayerChatListener implements Listener {
 
+	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
+		if(vp.getStats().getYoutubeLink() == null) {
+			event.setCancelled(false);
+			event.setFormat(msg);
+			return;
+		}
+
+		for(VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
+			vpo.getNetworkManager().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
+		event.setCancelled(true);
+	}
+
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		if(event.isCancelled())
@@ -107,17 +119,5 @@ public class PlayerChatListener implements Listener {
 
 		ChatLogger.getInstance().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);
-	}
-
-	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
-		if(vp.getStats().getYoutubeLink() == null) {
-			event.setCancelled(false);
-			event.setFormat(msg);
-			return;
-		}
-
-		for(VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
-			vpo.getNetworkManager().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
-		event.setCancelled(true);
 	}
 }

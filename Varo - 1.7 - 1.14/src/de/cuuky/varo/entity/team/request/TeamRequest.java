@@ -29,42 +29,6 @@ public class TeamRequest {
 		startSched();
 	}
 
-	public void accept() {
-		if(!invitor.isOnline()) {
-			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
-			remove();
-			return;
-		}
-
-		if(invitor.getTeam() == null)
-			sendChatHook();
-		else
-			addToTeam(invitor.getTeam());
-		remove();
-	}
-
-	public void decline() {
-		remove();
-	}
-
-	public VaroPlayer getInvited() {
-		return invited;
-	}
-
-	public VaroPlayer getInvitor() {
-		return invitor;
-	}
-
-	public void remove() {
-		Bukkit.getScheduler().cancelTask(sched);
-		requests.remove(this);
-	}
-
-	public void revoke() {
-		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue());
-		remove();
-	}
-
 	private void addToTeam(Team team) {
 		if(!team.isMember(invitor))
 			team.addMember(invitor);
@@ -128,6 +92,42 @@ public class TeamRequest {
 			}
 
 		}, 20 * ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt());
+	}
+
+	public void accept() {
+		if(!invitor.isOnline()) {
+			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
+			remove();
+			return;
+		}
+
+		if(invitor.getTeam() == null)
+			sendChatHook();
+		else
+			addToTeam(invitor.getTeam());
+		remove();
+	}
+
+	public void decline() {
+		remove();
+	}
+
+	public VaroPlayer getInvited() {
+		return invited;
+	}
+
+	public VaroPlayer getInvitor() {
+		return invitor;
+	}
+
+	public void remove() {
+		Bukkit.getScheduler().cancelTask(sched);
+		requests.remove(this);
+	}
+
+	public void revoke() {
+		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue());
+		remove();
 	}
 
 	public static ArrayList<TeamRequest> getAllRequests() {

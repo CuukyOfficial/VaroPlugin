@@ -22,20 +22,6 @@ public final class ConfigFailureDetector {
 		scan.add("stats");
 	}
 
-	public static void detectConfig() {
-		File newFile = new File("plugins/Varo");
-		if(newFile.listFiles() == null)
-			newFile.mkdir();
-
-		if(scanDirectory(newFile)) {
-			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
-			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
-			Bukkit.getPluginManager().disablePlugin(Main.getInstance());
-		} else {
-			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes successfully!");
-		}
-	}
-
 	private static boolean scanDirectory(File newFile) {
 		for(File file : newFile.listFiles()) {
 			if(file.isDirectory()) {
@@ -64,5 +50,19 @@ public final class ConfigFailureDetector {
 
 		}
 		return false;
+	}
+
+	public static void detectConfig() {
+		File newFile = new File("plugins/Varo");
+		if(newFile.listFiles() == null)
+			newFile.mkdir();
+
+		if(scanDirectory(newFile)) {
+			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
+			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
+			Bukkit.getPluginManager().disablePlugin(Main.getInstance());
+		} else {
+			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes successfully!");
+		}
 	}
 }

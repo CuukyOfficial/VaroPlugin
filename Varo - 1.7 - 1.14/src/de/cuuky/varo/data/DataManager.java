@@ -51,57 +51,6 @@ public class DataManager {
 		doSave = true;
 	}
 
-	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
-		try {
-			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
-
-			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
-
-			fd.startDownload();
-
-			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
-			return true;
-		} catch(IOException e) {
-			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
-			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
-			e.printStackTrace();
-			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
-			return false;
-		}
-
-		// True: Plugin wurde neu heruntergeladen -> Neustart
-		// False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
-	}
-
-	public void reloadConfig() {
-		VaroList.reloadLists();
-		ConfigHandler.getInstance().reload();
-		ScoreboardHandler.getInstance().loadScores();
-
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			ScoreboardHandler.getInstance().sendScoreBoard(vp);
-			if(vp.getNametag() != null)
-				vp.getNametag().giveAll();
-		}
-	}
-
-	public void save() {
-		if(!doSave)
-			return;
-
-		VaroSerializeHandler.saveAll();
-		VaroList.saveLists();
-
-		try {
-			BotRegister.saveAll();
-		} catch(NoClassDefFoundError e) {}
-	}
-
-	public void setDoSave(boolean doSave) {
-		this.doSave = doSave;
-	}
-
 	private void copyDefaultPresets() {
 		try {
 			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
@@ -226,6 +175,57 @@ public class DataManager {
 				save();
 			}
 		}, 12000, 12000);
+	}
+
+	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
+		try {
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
+
+			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
+
+			fd.startDownload();
+
+			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
+			return true;
+		} catch(IOException e) {
+			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
+			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
+			e.printStackTrace();
+			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
+			return false;
+		}
+
+		// True: Plugin wurde neu heruntergeladen -> Neustart
+		// False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
+	}
+
+	public void reloadConfig() {
+		VaroList.reloadLists();
+		ConfigHandler.getInstance().reload();
+		ScoreboardHandler.getInstance().loadScores();
+
+		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+			ScoreboardHandler.getInstance().sendScoreBoard(vp);
+			if(vp.getNametag() != null)
+				vp.getNametag().giveAll();
+		}
+	}
+
+	public void save() {
+		if(!doSave)
+			return;
+
+		VaroSerializeHandler.saveAll();
+		VaroList.saveLists();
+
+		try {
+			BotRegister.saveAll();
+		} catch(NoClassDefFoundError e) {}
+	}
+
+	public void setDoSave(boolean doSave) {
+		this.doSave = doSave;
 	}
 
 	public static DataManager getInstance() {

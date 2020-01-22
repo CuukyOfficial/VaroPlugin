@@ -28,20 +28,20 @@ public class VersionUtils {
 		return null;
 	}
 
+	public static double getHearts(Player player) {
+		return ((Damageable) player).getHealth();
+	}
+
 	public static String getNmsClass() {
 		return nmsClass;
 	}
-
+	
 	public static ArrayList<Player> getOnlinePlayer() {
 		ArrayList<Player> list = new ArrayList<Player>();
 		for(Player p : Bukkit.getOnlinePlayers())
 			list.add(p);
 
 		return list;
-	}
-	
-	public static double getHearts(Player player) {
-		return ((Damageable) player).getHealth();
 	}
 
 	public static BukkitVersion getVersion() {

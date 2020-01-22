@@ -73,6 +73,13 @@ public class BackupListGUI extends SuperInventory {
 
 		linkItemTo(44, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
+			private String getCurrentDate() {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+				Date date = new Date();
+
+				return dateFormat.format(date);
+			}
+
 			@Override
 			public void run() {
 				if(Backup.isBackup(getCurrentDate())) {
@@ -82,13 +89,6 @@ public class BackupListGUI extends SuperInventory {
 
 				new Backup();
 				updateInventory();
-			}
-
-			private String getCurrentDate() {
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-				Date date = new Date();
-
-				return dateFormat.format(date);
 			}
 		});
 

@@ -31,6 +31,14 @@ public class BorderDecrease {
 		decreases.add(this);
 	}
 
+	private void waitForBorder(double d) {
+		try {
+			Thread.sleep((long) (d * 1000) + 1000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public double getBps() {
 		return bps;
 	}
@@ -70,14 +78,6 @@ public class BorderDecrease {
 
 		finishHook.run();
 		remove();
-	}
-
-	private void waitForBorder(double d) {
-		try {
-			Thread.sleep((long) (d * 1000) + 1000);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static void startShrinking() {

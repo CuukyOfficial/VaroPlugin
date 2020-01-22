@@ -36,31 +36,6 @@ public class AutoStart implements VaroSerializeable {
 		postMessage(Main.getProjectName() + " §7wird am " + Main.getColorCode() + getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " §7den " + Main.getColorCode() + getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "§7." + Main.getColorCode() + getWithZero(start.get(Calendar.MONTH) + 1) + "§7." + Main.getColorCode() + start.get(Calendar.YEAR) + " §7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "§7:" + Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " §7starten!");
 	}
 
-	public void delay(int seconds) {
-		Bukkit.getScheduler().cancelTask(sched);
-		this.start = DateUtils.addMinutes(this.start, seconds);
-		StartDelay.reset();
-		start();
-	}
-
-	public Date getStart() {
-		return start;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		start();
-	}
-
-	@Override
-	public void onSerializeStart() {}
-
-	public void stop() {
-		Bukkit.getScheduler().cancelTask(sched);
-		Game.getInstance().setAutoStart(null);
-		StartDelay.reset();
-	}
-
 	private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 		long diffInMillies = date2.getTime() - date1.getTime();
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -131,6 +106,31 @@ public class AutoStart implements VaroSerializeable {
 				start();
 			}
 		}, (seconds / 1000) * 20);
+	}
+
+	public void delay(int seconds) {
+		Bukkit.getScheduler().cancelTask(sched);
+		this.start = DateUtils.addMinutes(this.start, seconds);
+		StartDelay.reset();
+		start();
+	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	@Override
+	public void onDeserializeEnd() {
+		start();
+	}
+
+	@Override
+	public void onSerializeStart() {}
+
+	public void stop() {
+		Bukkit.getScheduler().cancelTask(sched);
+		Game.getInstance().setAutoStart(null);
+		StartDelay.reset();
 	}
 
 }
