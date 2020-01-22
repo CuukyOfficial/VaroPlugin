@@ -25,15 +25,7 @@ public class OutSideTimeChecker {
 
 		return false;
 	}
-
-	public GregorianCalendar getDate1() {
-		return this.date1;
-	}
-
-	public GregorianCalendar getDate2() {
-		return this.date2;
-	}
-
+	
 	private void refreshDates() {
 		this.date1 = new GregorianCalendar();
 		date1.set(GregorianCalendar.MINUTE, 0);
@@ -47,10 +39,19 @@ public class OutSideTimeChecker {
 			date2.add(GregorianCalendar.DAY_OF_MONTH, 1);
 	}
 
+	public GregorianCalendar getDate1() {
+		return this.date1;
+	}
+
+	public GregorianCalendar getDate2() {
+		return this.date2;
+	}
+
 	public static OutSideTimeChecker getInstance() {
 		if(instance == null) {
 			instance = new OutSideTimeChecker();
 		}
+		
 		return instance;
 	}
 }
