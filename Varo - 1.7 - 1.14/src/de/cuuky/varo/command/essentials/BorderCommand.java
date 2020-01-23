@@ -32,8 +32,8 @@ public class BorderCommand implements CommandExecutor {
 				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) VaroBorder.getInstance().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
 
 			if(sender.hasPermission("varo.setup")) {
-				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> §7setzen!");
-				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border bleibt dann der WorldSpawn.");
+				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> [Sekunden] §7setzen!");
+				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt");
 			}
 			return false;
 		} else if(args.length >= 1 && sender.hasPermission("varo.setup")) {
