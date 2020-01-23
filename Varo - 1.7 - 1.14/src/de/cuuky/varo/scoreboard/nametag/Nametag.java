@@ -101,13 +101,37 @@ public class Nametag {
 	}
 
 	private void setVisibility(Team team) {
-		if(visibility == null || ConfigEntry.NAMETAGS.getValueAsBoolean())
+		if(visibility == null || team.getNameTagVisibility().equals(visibility))
 			return;
 
 		try {
 			setVisibilityMethod.invoke(team, visibility);
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void updateFor(Scoreboard board, Nametag nametag) {
+		Team team = board.getTeam(nametag.getName());
+
+		if(team == null) {
+			team = board.registerNewTeam(nametag.getName());
+			team.addPlayer(nametag.getPlayer());
+		}
+
+		setVisibility(team);
+		if(nametag.getPrefix() != null) {
+			if(team.getPrefix() == null)
+				team.setPrefix(nametag.getPrefix());
+			else if(!team.getPrefix().equals(nametag.getPrefix()))
+				team.setPrefix(nametag.getPrefix());
+		}
+
+		if(nametag.getSuffix() != null) {
+			if(team.getSuffix() == null)
+				team.setSuffix(nametag.getSuffix());
+			else if(!team.getSuffix().equals(nametag.getSuffix()))
+				team.setSuffix(nametag.getSuffix());
 		}
 	}
 
@@ -145,24 +169,17 @@ public class Nametag {
 			if(!nametag.isOnline() || nametag.getName() == null)
 				continue;
 
-			Team team = board.getTeam(nametag.getName());
-
-			try {
-				board.getTeam(nametag.getName()).unregister();
-			} catch(NullPointerException e) {}
-
-			team = board.registerNewTeam(nametag.getName());
-			team.addPlayer(nametag.getPlayer());
-
-			setVisibility(team);
-			if(nametag.getPrefix() != null)
-				team.setPrefix(nametag.getPrefix());
-
-			if(nametag.getSuffix() != null)
-				team.setSuffix(nametag.getSuffix());
+			updateFor(board, nametag);
 		}
+	}
+	
+	public void setToAll() {
+		if(!init)
+			return;
 
-		toSet.setScoreboard(board);
+		for(Player toSet : Bukkit.getOnlinePlayers()) {
+			updateFor(toSet.getScoreboard(), this);
+		}
 	}
 
 	public void heartsChanged() {
@@ -205,7 +222,7 @@ public class Nametag {
 
 	public void refresh() {
 		refreshPrefix();
-//		setToAll();
+		setToAll();
 		giveAll();
 	}
 
@@ -226,32 +243,6 @@ public class Nametag {
 
 	public void remove() {
 		nametags.remove(this);
-	}
-
-	public void setToAll() {
-		if(!init)
-			return;
-
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
-			Scoreboard board = toSet.getScoreboard();
-			Team team = board.getTeam(this.name);
-
-			try {
-				board.getTeam(this.name).unregister();
-			} catch(NullPointerException e) {}
-
-			team = board.registerNewTeam(this.name);
-			team.addPlayer(this.player.getPlayer());
-
-			setVisibility(team);
-			if(this.prefix != null)
-				team.setPrefix(this.prefix);
-
-			if(this.suffix != null)
-				team.setSuffix(this.suffix);
-
-			toSet.setScoreboard(board);
-		}
 	}
 
 	public void suffixReset() {
