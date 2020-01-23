@@ -49,11 +49,16 @@ public class BorderCommand implements CommandExecutor {
 
 			VaroBorder border = VaroBorder.getInstance();
 			World playerWorld = (p != null ? p.getWorld() : null);
+			if(p != null)
+				border.setBorderCenter(p.getLocation());
 			try {
 				inSeconds = Integer.parseInt(args[1]);
 				border.setBorderSize(borderSize, inSeconds, playerWorld);
-			} catch(Exception e) {
+			} catch(ArrayIndexOutOfBoundsException e) {
 				border.setBorderSize(borderSize, 0, playerWorld);
+			} catch(NumberFormatException e) {
+				sender.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
+				return false;
 			}
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%zahl%", String.valueOf(borderSize)));

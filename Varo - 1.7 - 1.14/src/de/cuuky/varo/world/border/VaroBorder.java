@@ -1,8 +1,8 @@
 package de.cuuky.varo.world.border;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,14 +19,14 @@ public class VaroBorder {
 	private static VaroBorder instance;
 
 	private Object borders[];
-	private HashedMap<Player, Double> distances;
+	private HashMap<Player, Double> distances;
 
 	private VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 		
 		this.borders = new Object[2];
-		this.distances = new HashedMap<>();
+		this.distances = new HashMap<>();
 
 		for(World world : Bukkit.getWorlds()) {
 			switch(world.getEnvironment()) {
