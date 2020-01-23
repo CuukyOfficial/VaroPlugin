@@ -276,7 +276,7 @@ public enum ConfigMessages {
 		replaced = replaced.contains("%bordersize%") ? replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) VaroBorder.getInstance().getBorderSize(null))) : replaced;
 		replaced = replaced.contains("%colorcode%") ? replaced.replace("%colorcode%", Main.getColorCode()) : replaced;
 		replaced = replaced.contains("%discordLink%") ? replaced.replace("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
-		replaced = replaced.contains("%protectionTime%") ? replaced.replace("%protectionTime%", ConfigEntry.JOIN_PROTECTIONTIME.getValueAsString()) : replaced;
+		replaced = replaced.contains("%protectionTime%") ? replaced.replace("%protectionTime%", String.valueOf(ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt())) : replaced;
 
 		replaced = replaced.contains("&") ? replaced.replace("&", "§") : replaced;
 		replaced = replaced.contains("%heart%") ? replaced.replace("%heart%", "♥") : replaced;

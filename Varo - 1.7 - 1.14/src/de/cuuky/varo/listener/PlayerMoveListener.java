@@ -21,11 +21,12 @@ public class PlayerMoveListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Location from = event.getFrom();
 		Location to = event.getTo();
-		Player player = event.getPlayer();
-		VaroPlayer vp = VaroPlayer.getPlayer(player);
 
 		if(from.getX() == to.getX() && from.getZ() == to.getZ())
 			return;
+		
+		Player player = event.getPlayer();
+		VaroPlayer vp = VaroPlayer.getPlayer(player);
 
 		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null || Game.getInstance().isStarting() && !vp.getStats().isSpectator()) {
 			event.setTo(from);

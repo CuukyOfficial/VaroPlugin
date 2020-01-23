@@ -295,7 +295,7 @@ public enum ConfigEntry {
 
 	public boolean getValueAsBoolean() {
 		try {
-			return (boolean) this.value;
+			return (boolean) (this.value = (boolean) this.value);
 		} catch(Exception e) {
 			sendFalseCast();
 		}
@@ -305,7 +305,7 @@ public enum ConfigEntry {
 
 	public double getValueAsDouble() {
 		try {
-			return (double) this.value;
+			return (double) (this.value = (double) this.value);
 		} catch(Exception e) {
 			sendFalseCast();
 		}
@@ -315,7 +315,7 @@ public enum ConfigEntry {
 
 	public int getValueAsInt() {
 		try {
-			return (int) this.value;
+			return (int) (this.value = (int) this.value);
 		} catch(Exception e) {
 			sendFalseCast();
 		}
@@ -325,7 +325,7 @@ public enum ConfigEntry {
 
 	public long getValueAsLong() {
 		try {
-			return (long) this.value;
+			return (long) (this.value = (long) this.value);
 		} catch(Exception e) {
 			sendFalseCast();
 		}
@@ -334,8 +334,11 @@ public enum ConfigEntry {
 	}
 
 	public String getValueAsString() {
+		if(this.value instanceof String) 
+			return ((String) (this.value)).replace("&", "§");
+		
 		try {
-			return String.valueOf(this.value).replace("&", "§");
+			return (String) (this.value = String.valueOf(this.value).replace("&", "§"));
 		} catch(Exception e) {
 			sendFalseCast();
 		}

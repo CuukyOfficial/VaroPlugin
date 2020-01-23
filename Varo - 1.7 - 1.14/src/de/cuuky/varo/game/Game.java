@@ -177,14 +177,19 @@ public class Game implements VaroSerializeable {
 
 							int countdown = vp.getStats().getCountdown() - 1;
 							Player p = vp.getPlayer();
+							String[] actionbar = new String[2];
 
 							if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
-								vp.getNetworkManager().sendActionbar(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
+								actionbar[0] = Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown);
 							else if(showDistanceToBorder) {
 								int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
+								System.out.println(distance + "f");
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
-									vp.getNetworkManager().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
+									actionbar[1] = "§7Distanz zur Border: " + Main.getColorCode() + distance;
 							}
+							
+							if(actionbar.length != 0)
+								vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
 							if(countdown == playTime - protectionTime - 1 && !firstTime && !VaroEvent.getMassRecEvent().isEnabled())
 								Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));

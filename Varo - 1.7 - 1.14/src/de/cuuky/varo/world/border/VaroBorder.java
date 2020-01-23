@@ -2,11 +2,13 @@ package de.cuuky.varo.world.border;
 
 import java.util.ArrayList;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.world.border.decrease.BorderDecrease;
@@ -17,12 +19,14 @@ public class VaroBorder {
 	private static VaroBorder instance;
 
 	private Object borders[];
+	private HashedMap<Player, Double> distances;
 
 	private VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 		
 		this.borders = new Object[2];
+		this.distances = new HashedMap<>();
 
 		for(World world : Bukkit.getWorlds()) {
 			switch(world.getEnvironment()) {
@@ -45,6 +49,59 @@ public class VaroBorder {
 				break;
 			}
 		}
+		
+		startCalculating();
+	}
+	
+	private void startCalculating() {
+		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
+			
+			@Override
+			public void run() {
+				for(Player player : VersionUtils.getOnlinePlayer()) {
+					Location playerLoc = player.getLocation();
+					World playerWorld = player.getLocation().getWorld();
+
+					Location center;
+					double size = 0;
+
+					Object border;
+
+					switch(playerWorld.getEnvironment()) {
+					case NORMAL:
+						border = borders[0];
+						break;
+					case NETHER:
+						border = borders[1];
+						break;
+					default:
+						continue;
+					}
+
+					try {
+						center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
+						size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
+					} catch(Exception e) {
+						e.printStackTrace();
+						continue;
+					}
+
+					ArrayList<Double> distanceArray = new ArrayList<>();
+					double playerDifferenceX = playerLoc.getX() - center.getX();
+					double playerDifferenceZ = playerLoc.getZ() - center.getZ();
+					distanceArray.add(Math.abs(playerDifferenceX + size));
+					distanceArray.add(Math.abs(playerDifferenceX - size));
+					distanceArray.add(Math.abs(playerDifferenceZ + size));
+					distanceArray.add(Math.abs(playerDifferenceZ - size));
+					double nearest = Double.MAX_VALUE;
+					for(double distance : distanceArray)
+						if(distance < nearest)
+							nearest = distance;
+
+					distances.put(player, (double) Math.round(nearest));
+				}
+			}
+		}, 20, 20 * 3);
 	}
 
 	public void decreaseBorder(DecreaseReason reason) {
@@ -70,49 +127,10 @@ public class VaroBorder {
 	}
 
 	public double getBorderDistanceTo(Player p) {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || p == null)
+		if(p == null || distances == null || !distances.containsKey(p))
 			return 0;
 
-		Location playerLoc = p.getLocation();
-		World playerWorld = p.getLocation().getWorld();
-
-		Location center;
-		double size = 0;
-
-		Object border;
-
-		switch(playerWorld.getEnvironment()) {
-		case NORMAL:
-			border = borders[0];
-			break;
-		case NETHER:
-			border = borders[1];
-			break;
-		default:
-			return 0;
-		}
-
-		try {
-			center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
-			size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
-		} catch(Exception e) {
-			e.printStackTrace();
-			return 0;
-		}
-
-		ArrayList<Double> distanceArray = new ArrayList<>();
-		double playerDifferenceX = playerLoc.getX() - center.getX();
-		double playerDifferenceZ = playerLoc.getZ() - center.getZ();
-		distanceArray.add(Math.abs(playerDifferenceX + size));
-		distanceArray.add(Math.abs(playerDifferenceX - size));
-		distanceArray.add(Math.abs(playerDifferenceZ + size));
-		distanceArray.add(Math.abs(playerDifferenceZ - size));
-		double nearest = Double.MAX_VALUE;
-		for(double distance : distanceArray)
-			if(distance < nearest)
-				nearest = distance;
-
-		return Math.round(nearest);
+		return distances.get(p);
 	}
 
 	public double getBorderSize(World world) {
