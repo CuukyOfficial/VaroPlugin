@@ -28,7 +28,7 @@ import de.cuuky.varo.entity.player.stats.Stats;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.lobby.LobbyItem;
@@ -53,30 +53,29 @@ public class VaroPlayer extends VaroEntity {
 
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
-	
+
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
-	
+
 	@VaroSerializeField(path = "id")
 	private int id;
-	
+
 	@VaroSerializeField(path = "name")
 	private String name;
-	
-	private Nametag nametag;
-	
-	private NetworkMananager networkManager;
 
-	private Player player;
-	
 	@VaroSerializeField(path = "rank")
 	private Rank rank;
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
-	private Team team;
+	private VaroTeam team;
 	@VaroSerializeField(path = "uuid")
 	private String uuid;
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
+
+	private Nametag nametag;
+	private NetworkMananager networkManager;
+	private Player player;
+	private String tabName;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -217,7 +216,7 @@ public class VaroPlayer extends VaroEntity {
 		return stats;
 	}
 
-	public Team getTeam() {
+	public VaroTeam getTeam() {
 		return team;
 	}
 
@@ -355,7 +354,7 @@ public class VaroPlayer extends VaroEntity {
 		}, 1);
 	}
 
-	public void setTeam(Team team) {
+	public void setTeam(VaroTeam team) {
 		this.team = team;
 
 		if(!Main.isBootedUp())
@@ -423,7 +422,8 @@ public class VaroPlayer extends VaroEntity {
 				}
 			}
 
-			player.setPlayerListName(listname);
+			if(this.tabName == null || !this.tabName.equals(listname))
+				player.setPlayerListName(this.tabName = listname);
 		}
 	}
 

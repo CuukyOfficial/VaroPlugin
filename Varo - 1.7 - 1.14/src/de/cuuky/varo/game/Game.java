@@ -183,7 +183,6 @@ public class Game implements VaroSerializeable {
 								actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 							if(showDistanceToBorder) {
 								int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
-								System.out.println(distance + "f");
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 									actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}

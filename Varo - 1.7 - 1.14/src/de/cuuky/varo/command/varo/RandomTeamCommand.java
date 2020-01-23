@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public class RandomTeamCommand extends VaroCommand {
 
@@ -47,7 +47,7 @@ public class RandomTeamCommand extends VaroCommand {
 				for(VaroPlayer teamPl : teamMember)
 					teamName = teamName + teamPl.getName().substring(0, teamPl.getName().length() / teamSize);
 
-				Team team = new Team(teamName);
+				VaroTeam team = new VaroTeam(teamName);
 				for(VaroPlayer teamPl : teamMember)
 					team.addMember(teamPl);
 			}
@@ -56,7 +56,7 @@ public class RandomTeamCommand extends VaroCommand {
 				if(pl.getTeam() != null || pl.getStats().isSpectator())
 					continue;
 
-				new Team(pl.getName().length() == 16 ? pl.getName().substring(0, 15) : pl.getName()).addMember(pl);
+				new VaroTeam(pl.getName().length() == 16 ? pl.getName().substring(0, 15) : pl.getName()).addMember(pl);
 			}
 		}
 	}

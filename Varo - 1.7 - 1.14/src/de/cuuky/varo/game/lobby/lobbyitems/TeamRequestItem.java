@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.request.TeamRequest;
+import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.item.ItemBuilder;
 
@@ -22,7 +22,7 @@ public class TeamRequestItem extends LobbyItem {
 		Player hitted = (Player) event.getEntity();
 		Player player = (Player) event.getDamager();
 
-		if(TeamRequest.getByAll(VaroPlayer.getPlayer(hitted), VaroPlayer.getPlayer(player)) != null)
+		if(VaroTeamRequest.getByAll(VaroPlayer.getPlayer(hitted), VaroPlayer.getPlayer(player)) != null)
 			player.performCommand("varo tr accept " + hitted.getName());
 		else
 			player.performCommand("varo tr invite " + hitted.getName());

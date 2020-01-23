@@ -10,7 +10,7 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.request.TeamRequest;
+import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 import de.cuuky.varo.game.Game;
 
 public class TeamRequestCommand extends VaroCommand {
@@ -65,7 +65,7 @@ public class TeamRequestCommand extends VaroCommand {
 					continue;
 				}
 
-				if(TeamRequest.getByAll(player, invite) != null) {
+				if(VaroTeamRequest.getByAll(player, invite) != null) {
 					sender.sendMessage(Main.getPrefix() + "§7Du hast bereits eine Anfrage an §7" + arg + " §7verschickt! Versuche es in " + ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt() + " Sekunden erneut!");
 					return;
 				}
@@ -78,7 +78,7 @@ public class TeamRequestCommand extends VaroCommand {
 
 				invite.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_TEAM_REQUEST_RECIEVED.getValue(player).replace("%invitor%", player.getName()));
 				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " §7gesendet");
-				new TeamRequest(player, invite);
+				new VaroTeamRequest(player, invite);
 			}
 		} else if(args[0].equalsIgnoreCase("accept") || args[0].equalsIgnoreCase("decline")) {
 			if(args.length != 2) {
@@ -92,7 +92,7 @@ public class TeamRequestCommand extends VaroCommand {
 			}
 
 			VaroPlayer varoPlayer = VaroPlayer.getPlayer(Bukkit.getPlayerExact(args[1]));
-			TeamRequest tr = TeamRequest.getByAll(varoPlayer, player);
+			VaroTeamRequest tr = VaroTeamRequest.getByAll(varoPlayer, player);
 
 			if(tr == null) {
 				sender.sendMessage(Main.getPrefix() + "§7Einladung von " + Main.getColorCode() + "" + args[1] + " §7nicht gefunden!");
@@ -119,8 +119,8 @@ public class TeamRequestCommand extends VaroCommand {
 				return;
 			}
 
-			TeamRequest.getByAll(player, VaroPlayer.getPlayer(args[1]));
-			TeamRequest tr = TeamRequest.getByInvitor(VaroPlayer.getPlayer(args[1]));
+			VaroTeamRequest.getByAll(player, VaroPlayer.getPlayer(args[1]));
+			VaroTeamRequest tr = VaroTeamRequest.getByInvitor(VaroPlayer.getPlayer(args[1]));
 
 			if(tr == null) {
 				sender.sendMessage(Main.getPrefix() + "§7Du hast keine Einladung an " + Main.getColorCode() + "" + args[1] + " §7verschickt!");

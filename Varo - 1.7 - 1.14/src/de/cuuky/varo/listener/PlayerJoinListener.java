@@ -13,7 +13,7 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.lobby.LobbyItem;
@@ -79,7 +79,7 @@ public class PlayerJoinListener implements Listener {
 				String updateVersion = (String) updater[1];
 
 				if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
-					if(Team.getTeams().isEmpty()) {
+					if(VaroTeam.getTeams().isEmpty()) {
 						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 					}
 					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");

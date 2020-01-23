@@ -1,5 +1,6 @@
 package de.cuuky.varo.scoreboard.nametag;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +15,7 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -22,6 +24,7 @@ public class Nametag {
 	private static List<Nametag> nametags = new ArrayList<>();
 	private static Class<?> teamClass;
 	private static Object visibility;
+	private static Method setVisibilityMethod;
 
 	static {
 		nametags = new ArrayList<>();
@@ -32,6 +35,7 @@ public class Nametag {
 
 				visibility = !ConfigEntry.NAMETAGS.getValueAsBoolean() ? visibilityClass.getDeclaredField("NEVER").get(null) : visibilityClass.getDeclaredField("ALWAYS").get(null);
 				teamClass = Class.forName("org.bukkit.scoreboard.Team");
+				setVisibilityMethod = teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass());
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -42,7 +46,7 @@ public class Nametag {
 	private Player player;
 	private String prefix, suffix, name;
 	private Rank rank;
-	private de.cuuky.varo.entity.team.Team team;
+	private VaroTeam team;
 	private UUID uniqueID;
 
 	public Nametag(UUID uniqueID, Player p) {
@@ -67,7 +71,7 @@ public class Nametag {
 	private String checkName() {
 		String name = this.getPlayer().getName();
 
-		int teamsize = de.cuuky.varo.entity.team.Team.getHighestNumber() + 1;
+		int teamsize = de.cuuky.varo.entity.team.VaroTeam.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
 		if(team != null)
@@ -97,11 +101,11 @@ public class Nametag {
 	}
 
 	private void setVisibility(Team team) {
-		if(visibility == null)
+		if(visibility == null || ConfigEntry.NAMETAGS.getValueAsBoolean())
 			return;
 
 		try {
-			teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass()).invoke(team, visibility);
+			setVisibilityMethod.invoke(team, visibility);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -138,7 +142,7 @@ public class Nametag {
 		Player toSet = this.player;
 		Scoreboard board = toSet.getScoreboard();
 		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
+			if(!nametag.isOnline() || nametag.getName() == null)
 				continue;
 
 			Team team = board.getTeam(nametag.getName());
@@ -201,7 +205,7 @@ public class Nametag {
 
 	public void refresh() {
 		refreshPrefix();
-		setToAll();
+//		setToAll();
 		giveAll();
 	}
 

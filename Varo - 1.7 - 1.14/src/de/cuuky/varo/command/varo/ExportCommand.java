@@ -11,7 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public class ExportCommand extends VaroCommand {
 
@@ -50,7 +50,7 @@ public class ExportCommand extends VaroCommand {
 				}
 			}
 
-			for(Team team : Team.getTeams()) {
+			for(VaroTeam team : VaroTeam.getTeams()) {
 				String pref = "#" + team.getName();
 				yaml.set(pref + ".id", team.getId());
 				for(VaroPlayer teamPl : team.getMember()) {

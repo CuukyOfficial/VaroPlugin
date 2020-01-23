@@ -11,7 +11,7 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.events.EventListGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
@@ -91,7 +91,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(26, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(Team.getTeams().size())).build(), new Runnable() {
+		linkItemTo(26, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(VaroTeam.getTeams().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {

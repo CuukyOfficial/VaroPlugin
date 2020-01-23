@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.utils.UUIDUtils;
 
 public class TeamCommand extends VaroCommand {
@@ -39,7 +39,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			Team team = Team.getTeam(args[1]);
+			VaroTeam team = VaroTeam.getTeam(args[1]);
 
 			if(team != null) {
 				boolean teamIdentical = true;
@@ -57,7 +57,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			team = new Team(args[1]);
+			team = new VaroTeam(args[1]);
 			sender.sendMessage(Main.getPrefix() + "Team " + Main.getColorCode() + team.getName() + " §7mit der ID " + Main.getColorCode() + team.getId() + " §7erfolgreich erstellt!");
 
 			for(int i = 2; i < args.length; i++) {
@@ -94,7 +94,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			Team team = Team.getTeam(args[1]);
+			VaroTeam team = VaroTeam.getTeam(args[1]);
 			VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
 
 			if(team != null) {
@@ -104,20 +104,20 @@ public class TeamCommand extends VaroCommand {
 				varoplayer.getTeam().removeMember(varoplayer);
 				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich aus seinem Team entfernt!");
 			} else if(args[1].equalsIgnoreCase("@a")) {
-				while(Team.getTeams().size() > 0) {
-					Team.getTeams().get(0).delete();
+				while(VaroTeam.getTeams().size() > 0) {
+					VaroTeam.getTeams().get(0).delete();
 				}
 				sender.sendMessage(Main.getPrefix() + "Alle Teams erfolgreich gelöscht!");
 			} else
 				sender.sendMessage(Main.getPrefix() + "Team, TeamID oder Spieler nicht gefunden!");
 			return;
 		} else if(args[0].equalsIgnoreCase("list")) {
-			if(Team.getTeams().isEmpty()) {
+			if(VaroTeam.getTeams().isEmpty()) {
 				sender.sendMessage(Main.getPrefix() + "Keine Teams gefunden!");
 				return;
 			}
 
-			int teamNumber = Team.getTeams().size();
+			int teamNumber = VaroTeam.getTeams().size();
 			int teamPages = 1 + (teamNumber / 30);
 
 			int lastTeamOnPage = 30;
@@ -149,7 +149,7 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			for(int i = (page - 1) * 30; i < lastTeamOnPage; i++) {
-				Team team = Team.getTeams().get(i);
+				VaroTeam team = VaroTeam.getTeams().get(i);
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " §l" + team.getId() + "§7; " + Main.getColorCode() + team.getName());
 				String list = "";
 				for(VaroPlayer member : team.getMember())
@@ -178,7 +178,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			Team team = Team.getTeam(args[1]);
+			VaroTeam team = VaroTeam.getTeam(args[1]);
 
 			if(team == null) {
 				sender.sendMessage(Main.getPrefix() + "Team nicht gefunden!");
@@ -194,7 +194,7 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
-			Team team = Team.getTeam(args[2]);
+			VaroTeam team = VaroTeam.getTeam(args[2]);
 
 			if(team == null) {
 				sender.sendMessage(Main.getPrefix() + "Team nicht gefunden!");
@@ -232,7 +232,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			Team team = Team.getTeam(args[1]);
+			VaroTeam team = VaroTeam.getTeam(args[1]);
 			if(team == null) {
 				sender.sendMessage(Main.getPrefix() + "Team nicht gefunden!");
 				return;

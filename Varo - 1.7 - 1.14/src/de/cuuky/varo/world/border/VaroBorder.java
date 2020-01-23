@@ -101,7 +101,7 @@ public class VaroBorder {
 					distances.put(player, (double) Math.round(nearest));
 				}
 			}
-		}, 20, 20 * 3);
+		}, 20, 20 * 1);
 	}
 
 	public void decreaseBorder(DecreaseReason reason) {

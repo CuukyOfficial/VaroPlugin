@@ -119,7 +119,7 @@ public enum ConfigMessages {
 	JOIN_MASS_RECORDING("Join.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
 
 	JOIN_NO_MOVE_IN_PROTECTION("Join.notMoveinProtection", "&7Du kannst dich nicht bewegen, solange du noch in der %colorcode%Schutzzeit &7bist!"),
-	JOIN_PROTECTION_OVER("Join.joinProtectionTimeOver", "%prefix%&a%player% &7ist nun angreifbar!"),
+	JOIN_PROTECTION_OVER("Join.joinProtectionOver", "%prefix%&a%player% &7ist nun angreifbar!"),
 	JOIN_PROTECTION_TIME("Join.joinProtectionTime", "%prefix%&a%player% &7hat den Server betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
 
 	JOIN_SPECTATOR("Join.spectator", "&a%player% &7hat den Server als Spectator betreten!"),

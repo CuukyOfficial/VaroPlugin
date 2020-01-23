@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
@@ -33,16 +33,16 @@ public class TeamListGUI extends SuperInventory {
 			return icon;
 		}
 
-		public ArrayList<Team> getList() {
+		public ArrayList<VaroTeam> getList() {
 			switch(this) {
 			case DEAD:
-				return Team.getDeadTeams();
+				return VaroTeam.getDeadTeams();
 			case REGISTERED:
-				return Team.getTeams();
+				return VaroTeam.getTeams();
 			case ALIVE:
-				return Team.getAliveTeams();
+				return VaroTeam.getAliveTeams();
 			case ONLINE:
-				return Team.getOnlineTeams();
+				return VaroTeam.getOnlineTeams();
 			}
 
 			return null;
@@ -81,11 +81,11 @@ public class TeamListGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		ArrayList<Team> list = type.getList();
+		ArrayList<VaroTeam> list = type.getList();
 
 		int start = getSize() * (getPage() - 1);
 		for(int i = 0; i != getSize(); i++) {
-			Team team;
+			VaroTeam team;
 			try {
 				team = list.get(start);
 			} catch(IndexOutOfBoundsException e) {

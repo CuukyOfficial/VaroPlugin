@@ -21,7 +21,7 @@ import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.PlayerHandler;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.TeamHandler;
+import de.cuuky.varo.entity.team.VaroTeamHandler;
 import de.cuuky.varo.game.GameHandler;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.list.VaroList;
@@ -99,7 +99,7 @@ public class DataManager {
 
 		GameHandler.initialise(); // Initialisierung GameHandler
 		PlayerHandler.initialise(); // Initialisierung PlayerHandler
-		TeamHandler.initialise(); // Initialisierung TeamHandler
+		VaroTeamHandler.initialise(); // Initialisierung TeamHandler
 		SpawnHandler.initialise(); // Initialisierung SpawnHandler
 		ScoreboardHandler.getInstance(); // Initialisierung ScoreboardHandler
 		ReportHandler.initialise(); // Initialisierung ReportHandler

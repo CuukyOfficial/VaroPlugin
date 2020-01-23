@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import de.cuuky.varo.api.objects.player.VaroAPIPlayer;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public class VaroAPITeam {
 
-	private Team team;
+	private VaroTeam team;
 
-	public VaroAPITeam(Team team) {
+	public VaroAPITeam(VaroTeam team) {
 		this.team = team;
 	}
 
@@ -48,7 +48,7 @@ public class VaroAPITeam {
 
 	public static ArrayList<VaroAPITeam> getTeams() {
 		ArrayList<VaroAPITeam> teams = new ArrayList<>();
-		for(Team team : Team.getTeams())
+		for(VaroTeam team : VaroTeam.getTeams())
 			teams.add(new VaroAPITeam(team));
 
 		return teams;

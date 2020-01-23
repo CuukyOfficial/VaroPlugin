@@ -2,12 +2,12 @@ package de.cuuky.varo.entity.team;
 
 import de.cuuky.varo.serialize.VaroSerializeObject;
 
-public class TeamHandler extends VaroSerializeObject {
+public class VaroTeamHandler extends VaroSerializeObject {
 
-	private static TeamHandler instance;
+	private static VaroTeamHandler instance;
 
-	private TeamHandler() {
-		super(Team.class, "/stats/teams.yml");
+	private VaroTeamHandler() {
+		super(VaroTeam.class, "/stats/teams.yml");
 
 		load();
 	}
@@ -16,7 +16,7 @@ public class TeamHandler extends VaroSerializeObject {
 	public void onSave() {
 		clearOld();
 
-		for(Team team : Team.getTeams())
+		for(VaroTeam team : VaroTeam.getTeams())
 			save(String.valueOf(team.getId()), team, getConfiguration());
 
 		saveFile();
@@ -24,7 +24,7 @@ public class TeamHandler extends VaroSerializeObject {
 
 	public static void initialise() {
 		if(instance == null) {
-			instance = new TeamHandler();
+			instance = new VaroTeamHandler();
 		}
 	}
 }

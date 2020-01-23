@@ -8,19 +8,19 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 
-public class TeamRequest {
+public class VaroTeamRequest {
 
-	private static ArrayList<TeamRequest> requests = new ArrayList<>();
+	private static ArrayList<VaroTeamRequest> requests = new ArrayList<>();
 
 	private VaroPlayer invited;
 	private VaroPlayer invitor;
 	private int sched;
 
-	public TeamRequest(VaroPlayer invitor, VaroPlayer invited) {
+	public VaroTeamRequest(VaroPlayer invitor, VaroPlayer invited) {
 		this.invitor = invitor;
 		this.invited = invited;
 
@@ -29,7 +29,7 @@ public class TeamRequest {
 		startSched();
 	}
 
-	private void addToTeam(Team team) {
+	private void addToTeam(VaroTeam team) {
 		if(!team.isMember(invitor))
 			team.addMember(invitor);
 
@@ -68,7 +68,7 @@ public class TeamRequest {
 					return;
 				}
 
-				addToTeam(invitor.getTeam() == null ? new Team(message) : invitor.getTeam());
+				addToTeam(invitor.getTeam() == null ? new VaroTeam(message) : invitor.getTeam());
 			}
 		});
 	}
@@ -130,28 +130,28 @@ public class TeamRequest {
 		remove();
 	}
 
-	public static ArrayList<TeamRequest> getAllRequests() {
+	public static ArrayList<VaroTeamRequest> getAllRequests() {
 		return requests;
 	}
 
-	public static TeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {
-		for(TeamRequest req : requests)
+	public static VaroTeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {
+		for(VaroTeamRequest req : requests)
 			if(req.getInvitor().equals(inviter) && req.getInvited().equals(invited))
 				return req;
 
 		return null;
 	}
 
-	public static TeamRequest getByInvited(VaroPlayer invited) {
-		for(TeamRequest req : requests)
+	public static VaroTeamRequest getByInvited(VaroPlayer invited) {
+		for(VaroTeamRequest req : requests)
 			if(req.getInvitor().equals(invited))
 				return req;
 
 		return null;
 	}
 
-	public static TeamRequest getByInvitor(VaroPlayer invitor) {
-		for(TeamRequest req : requests) {
+	public static VaroTeamRequest getByInvitor(VaroPlayer invitor) {
+		for(VaroTeamRequest req : requests) {
 			if(req.getInvitor().equals(invitor))
 				return req;
 		}

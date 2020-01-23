@@ -17,7 +17,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public class ScoreboardHandler {
 
@@ -74,12 +74,12 @@ public class ScoreboardHandler {
 		}
 
 		for(int rank : getConvNumbers(line, "%topteam-")) {
-			Team team = topScores.getTeam(rank);
+			VaroTeam team = topScores.getTeam(rank);
 			line = line.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
 		}
 
 		for(int rank : getConvNumbers(line, "%topteamkills-")) {
-			Team team = topScores.getTeam(rank);
+			VaroTeam team = topScores.getTeam(rank);
 			line = line.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
 		}
 

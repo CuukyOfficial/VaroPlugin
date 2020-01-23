@@ -7,7 +7,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.game.Game;
 
 public class BackpackCommand extends VaroCommand {
@@ -34,7 +34,7 @@ public class BackpackCommand extends VaroCommand {
 
 	private void teamBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
 		if(vp.getPlayer().isOp() && args.length > number) {
-			Team t = Team.getTeam(args[number]);
+			VaroTeam t = VaroTeam.getTeam(args[number]);
 			if(t != null) {
 				vp.getPlayer().openInventory(t.getTeamBackPack().getInventory());
 			} else {

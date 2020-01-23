@@ -6,16 +6,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
 
 public class TeamGUI extends SuperInventory {
 
-	private Team team;
+	private VaroTeam team;
 
-	public TeamGUI(Player opener, Team team) {
+	public TeamGUI(Player opener, VaroTeam team) {
 		super("§7Team §2" + team.getId(), opener, 9, false);
 
 		this.team = team;

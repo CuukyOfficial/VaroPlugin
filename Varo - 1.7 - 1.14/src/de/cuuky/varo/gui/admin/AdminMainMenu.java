@@ -11,7 +11,7 @@ import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.alert.AlertTypeChooseGUI;
 import de.cuuky.varo.gui.admin.backup.BackupListGUI;
@@ -123,7 +123,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(Team.getTeams().size())).build(), new Runnable() {
+		linkItemTo(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(VaroTeam.getTeams().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -14,10 +14,10 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 
-public class Team extends VaroEntity {
+public class VaroTeam extends VaroEntity {
 
 	private static int highestNumber;
-	private static ArrayList<Team> teams;
+	private static ArrayList<VaroTeam> teams;
 
 	static {
 		teams = new ArrayList<>();
@@ -44,14 +44,14 @@ public class Team extends VaroEntity {
 	@VaroSerializeField(path = "teamBackPack")
 	private VaroInventory teamBackPack;
 
-	public Team() {
+	public VaroTeam() {
 		teams.add(this);
 		member = new ArrayList<>();
 		teamBackPack = new VaroInventory(ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt());
 		memberid = new ArrayList<Integer>();
 	}
 
-	public Team(String name) {
+	public VaroTeam(String name) {
 		this();
 
 		this.name = name;
@@ -82,9 +82,9 @@ public class Team extends VaroEntity {
 	public void delete() {
 		this.member.forEach(member -> member.setTeam(null));
 		int id = this.getId();
-		int number = Team.getTeams().size();
+		int number = VaroTeam.getTeams().size();
 		for(int i = id; i < number; i++) {
-			Team.getTeams().get(i).setId(i);
+			VaroTeam.getTeams().get(i).setId(i);
 		}
 		teams.remove(this);
 	}
@@ -219,18 +219,18 @@ public class Team extends VaroEntity {
 		this.member.forEach(member -> member.update());
 	}
 
-	public static ArrayList<Team> getAliveTeams() {
-		ArrayList<Team> alive = new ArrayList<Team>();
-		for(Team team : teams)
+	public static ArrayList<VaroTeam> getAliveTeams() {
+		ArrayList<VaroTeam> alive = new ArrayList<VaroTeam>();
+		for(VaroTeam team : teams)
 			if(!team.isDead())
 				alive.add(team);
 
 		return alive;
 	}
 
-	public static ArrayList<Team> getDeadTeams() {
-		ArrayList<Team> dead = new ArrayList<Team>();
-		for(Team team : teams)
+	public static ArrayList<VaroTeam> getDeadTeams() {
+		ArrayList<VaroTeam> dead = new ArrayList<VaroTeam>();
+		for(VaroTeam team : teams)
 			if(team.isDead())
 				dead.add(team);
 
@@ -241,17 +241,17 @@ public class Team extends VaroEntity {
 		return highestNumber;
 	}
 
-	public static ArrayList<Team> getOnlineTeams() {
-		ArrayList<Team> online = new ArrayList<Team>();
-		for(Team team : teams)
+	public static ArrayList<VaroTeam> getOnlineTeams() {
+		ArrayList<VaroTeam> online = new ArrayList<VaroTeam>();
+		for(VaroTeam team : teams)
 			if(team.isOnline())
 				online.add(team);
 
 		return online;
 	}
 
-	public static Team getTeam(int id) {
-		for(Team team : teams) {
+	public static VaroTeam getTeam(int id) {
+		for(VaroTeam team : teams) {
 			if(team.getId() != id)
 				continue;
 
@@ -261,8 +261,8 @@ public class Team extends VaroEntity {
 		return null;
 	}
 
-	public static Team getTeam(String name) {
-		for(Team team : teams) {
+	public static VaroTeam getTeam(String name) {
+		for(VaroTeam team : teams) {
 			if(!team.getName().equals(name) && !String.valueOf(team.getId()).equals(name))
 				continue;
 
@@ -272,7 +272,7 @@ public class Team extends VaroEntity {
 		return null;
 	}
 
-	public static ArrayList<Team> getTeams() {
+	public static ArrayList<VaroTeam> getTeams() {
 		return teams;
 	}
 }

@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.Team;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public class TopScoreList {
 
 	private Comparator<VaroPlayer> playerSort;
-	private Comparator<Team> teamSort;
+	private Comparator<VaroTeam> teamSort;
 
 	private ArrayList<VaroPlayer> topPlayer;
-	private ArrayList<Team> topTeams;
+	private ArrayList<VaroTeam> topTeams;
 
 	public TopScoreList() {
 		this.topPlayer = new ArrayList<>();
@@ -30,10 +30,10 @@ public class TopScoreList {
 			}
 		};
 
-		teamSort = new Comparator<Team>() {
+		teamSort = new Comparator<VaroTeam>() {
 
 			@Override
-			public int compare(Team o1, Team o2) {
+			public int compare(VaroTeam o1, VaroTeam o2) {
 				if(o1.getKills() == o2.getKills())
 					return 0;
 
@@ -51,9 +51,9 @@ public class TopScoreList {
 			return null;
 	}
 
-	public Team getTeam(int rank) {
+	public VaroTeam getTeam(int rank) {
 		if(rank - 1 < topTeams.size())
-			return (Team) topTeams.toArray()[rank - 1];
+			return (VaroTeam) topTeams.toArray()[rank - 1];
 		else
 			return null;
 	}
@@ -69,7 +69,7 @@ public class TopScoreList {
 				topPlayer.add(player);
 		}
 
-		for(Team team : Team.getTeams()) {
+		for(VaroTeam team : VaroTeam.getTeams()) {
 			int kills = team.getKills();
 
 			if(kills > 0)
