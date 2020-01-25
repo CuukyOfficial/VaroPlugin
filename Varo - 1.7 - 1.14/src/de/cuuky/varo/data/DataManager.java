@@ -118,14 +118,9 @@ public class DataManager {
 	private void loadPlugins() {
 		boolean discordNewDownload = false;
 		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
-			VaroDiscordBot discordbot;
 			try {
 				VaroDiscordBot.getClassName();
-
-				discordbot = VaroDiscordBot.getInstance();
-				discordbot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
-				discordbot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
 				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
 			}
@@ -133,14 +128,9 @@ public class DataManager {
 
 		boolean telegramNewDownload = false;
 		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
-			VaroTelegramBot telegrambot;
 			try {
 				VaroTelegramBot.getClassName();
-
-				telegrambot = VaroTelegramBot.getInstance();
-				telegrambot.connect();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
-				telegrambot = null;
 				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
 				telegramNewDownload = loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
 			}
