@@ -32,7 +32,7 @@ public final class VaroUtils {
 
 		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
 		NO_UPDATE("Das Plugin ist auf dem neuesten Stand!"),
-		TEST_BUILD("Du nutzt einen TestBuild des Plugins - bitte Fehler umgehend melden!"),
+		TEST_BUILD("Das Plugin ist auf dem neuesten Stand! (Test-Build)"),
 		UPDATE_AVAILABLE("Es ist ein Update verfügbar! Benutze /varo update oder lade es manuell unter https://www.spigotmc.org/resources/71075/ herunter");
 
 		private String message;
