@@ -33,6 +33,36 @@ public class VaroDiscordBot implements VaroBot {
 		Random random = new Random();
 		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
 	}
+	
+	@Override
+	public void connect() {
+		System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors maybe will appear - don't mind them)");
+		JDABuilder builder = new JDABuilder(AccountType.BOT);
+		builder.setGame(Game.playing(ConfigEntry.DISCORDBOT_GAMESTATE.getValueAsString()));
+		builder.setToken(ConfigEntry.DISCORDBOT_TOKEN.getValueAsString());
+		builder.setAutoReconnect(true);
+		builder.setRequestTimeoutRetry(true);
+		builder.setStatus(OnlineStatus.ONLINE);
+
+		try {
+			jda = builder.build();
+			jda.addEventListener(new DiscordBotEventListener());
+		} catch(Exception | Error e) {
+			e.printStackTrace();
+			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
+			return;
+		}
+
+		try {
+			System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
+			jda.awaitReady();
+		} catch(Exception e) {
+			return;
+		}
+
+		loadChannel();
+		System.out.println(Main.getConsolePrefix() + "DiscordBot enabled successfully!");
+	}
 
 	private void loadChannel() {
 		try {
@@ -67,36 +97,6 @@ public class VaroDiscordBot implements VaroBot {
 		} catch(NullPointerException e) {
 			System.out.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		}
-	}
-
-	@Override
-	public void connect() {
-		System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors maybe will appear - don't mind them)");
-		JDABuilder builder = new JDABuilder(AccountType.BOT);
-		builder.setGame(Game.playing(ConfigEntry.DISCORDBOT_GAMESTATE.getValueAsString()));
-		builder.setToken(ConfigEntry.DISCORDBOT_TOKEN.getValueAsString());
-		builder.setAutoReconnect(true);
-		builder.setRequestTimeoutRetry(true);
-		builder.setStatus(OnlineStatus.ONLINE);
-
-		try {
-			jda = builder.build();
-			jda.addEventListener(new DiscordBotEventListener());
-		} catch(Exception | Error e) {
-			e.printStackTrace();
-			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
-			return;
-		}
-
-		try {
-			System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
-			jda.awaitReady();
-		} catch(Exception e) {
-			return;
-		}
-
-		loadChannel();
-		System.out.println(Main.getConsolePrefix() + "DiscordBot enabled successfully!");
 	}
 
 	@Override

@@ -34,32 +34,6 @@ public class Main extends JavaPlugin {
 	public File getThisFile() {
 		return getFile();
 	}
-	
-	@Override
-	public void onDisable() {
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
-
-		if(dataManager != null && !failed) {
-			System.out.println(CONSOLE_PREFIX + "Saving files...");
-			dataManager.save();
-		}
-
-		if(botLauncher != null) {
-			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
-			botLauncher.disconnect();
-		}
-
-		if(!failed)
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
-		Bukkit.getScheduler().cancelTasks(this);
-
-		System.out.println(CONSOLE_PREFIX + "Disabled!");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		super.onDisable();
-	}
 
 	@Override
 	public void onEnable() {
@@ -94,9 +68,11 @@ public class Main extends JavaPlugin {
 			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
 			if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
 				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
+			
 			DailyTimer.startTimer();
 
 			botLauncher = BotLauncher.getInstance(); // Initialisierung
+			
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {
@@ -121,6 +97,32 @@ public class Main extends JavaPlugin {
 
 		new ConsoleLogger();
 		super.onLoad();
+	}
+	
+	@Override
+	public void onDisable() {
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
+
+		if(dataManager != null && !failed) {
+			System.out.println(CONSOLE_PREFIX + "Saving files...");
+			dataManager.save();
+		}
+
+		if(botLauncher != null) {
+			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
+			botLauncher.disconnect();
+		}
+
+		if(!failed)
+			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		Bukkit.getScheduler().cancelTasks(this);
+
+		System.out.println(CONSOLE_PREFIX + "Disabled!");
+		System.out.println(CONSOLE_PREFIX + " ");
+		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		super.onDisable();
 	}
 
 	public static void broadcastMessage(String message) {
