@@ -9,10 +9,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.managers.GuildController;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -42,6 +38,8 @@ import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.vanish.Vanish;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
 
 public class VaroPlayer extends VaroEntity {
 
@@ -54,8 +52,6 @@ public class VaroPlayer extends VaroEntity {
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
 
-	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
-
 	@VaroSerializeField(path = "id")
 	private int id;
 
@@ -64,18 +60,22 @@ public class VaroPlayer extends VaroEntity {
 
 	@VaroSerializeField(path = "rank")
 	private Rank rank;
+
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
-	private VaroTeam team;
+
 	@VaroSerializeField(path = "uuid")
 	private String uuid;
+
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
 
 	private Nametag nametag;
 	private NetworkMananager networkManager;
-	private Player player;
 	private String tabName;
+	private VaroTeam team;
+	private Player player;
+	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -109,6 +109,29 @@ public class VaroPlayer extends VaroEntity {
 			generateId();
 
 		return id;
+	}
+
+	private void updateDiscordTeam(VaroTeam oldTeam) {
+		VaroDiscordBot db = BotLauncher.getDiscordBot();
+		if(db == null || !db.isEnabled())
+			return;
+
+		Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
+		if(oldTeam != null) {
+			if(db.getController().getGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
+				Role role = db.getController().getGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
+				db.getController().removeSingleRoleFromMember(member, role).complete();
+			}
+		}
+
+		if(this.team != null) {
+			Role role = db.getController().getGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getController().getGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
+			if(role == null)
+				role = db.getController().createCopyOfRole(db.getController().getGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
+
+			db.getController().addRolesToMember(member, role).complete();
+		}
+
 	}
 
 	/**
@@ -355,28 +378,17 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public void setTeam(VaroTeam team) {
+		VaroTeam oldTeam = this.team;
 		this.team = team;
 
 		if(!Main.isBootedUp())
 			return;
 
-		VaroDiscordBot db = BotLauncher.getDiscordBot();
-		if(db != null && db.isEnabled()) {
-			GuildController controller = db.getController();
-			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean() && db.isEnabled()) {
-				Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
-				if(this.team != null)
-					if(controller.getGuild().getRolesByName(this.team.getName(), true).size() > 0) {
-						Role role = controller.getGuild().getRolesByName(this.team.getName(), true).get(0);
-						controller.removeSingleRoleFromMember(member, role).complete();
-					}
-
-				Role role = controller.getGuild().getRolesByName(team.getName(), true).size() > 0 ? controller.getGuild().getRolesByName(team.getName(), true).get(0) : null;
-				if(role == null)
-					role = controller.createCopyOfRole(controller.getGuild().getPublicRole()).setHoisted(true).setName(team.getName()).complete();
-
-				controller.addRolesToMember(member, role).complete();
-			}
+		try {
+			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean())
+				updateDiscordTeam(oldTeam);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 
 		update();
