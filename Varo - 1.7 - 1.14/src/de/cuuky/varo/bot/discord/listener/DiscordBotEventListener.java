@@ -16,6 +16,8 @@ public class DiscordBotEventListener implements EventListener {
 	 * OLD CODE
 	 */
 
+	private MessageReceivedEvent lastEvent;
+
 	public boolean isAliases(String command, String[] aliases) {
 		for(String s : aliases)
 			if(command.toLowerCase().equals(s.toLowerCase()))
@@ -37,6 +39,11 @@ public class DiscordBotEventListener implements EventListener {
 			return;
 		}
 
+		if(this.lastEvent != null)
+			if(lastEvent.getMessageId().equals(messageEvent.getMessageId()))
+				return;
+
+		this.lastEvent = messageEvent;
 		String message = messageEvent.getMessage().getContentDisplay();
 		if(!message.toLowerCase().startsWith(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().toLowerCase().replace(" ", "")))
 			return;
