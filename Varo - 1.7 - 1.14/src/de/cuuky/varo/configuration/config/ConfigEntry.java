@@ -266,8 +266,8 @@ public enum ConfigEntry {
 		ConfigHandler.getInstance().saveConfig();
 	}
 
-	private void sendFalseCast() {
-		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + defaultValue.getClass() + " for entry " + getFullPath());
+	private void sendFalseCast(Class<?> failedToCast) {
+		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
 	}
 
 	public Object getDefaultValue() {
@@ -302,7 +302,7 @@ public enum ConfigEntry {
 		try {
 			return (boolean) (this.value = (boolean) this.value);
 		} catch(Exception e) {
-			sendFalseCast();
+			sendFalseCast(Boolean.class);
 		}
 
 		return (boolean) defaultValue;
@@ -312,7 +312,7 @@ public enum ConfigEntry {
 		try {
 			return (double) (this.value = (double) this.value);
 		} catch(Exception e) {
-			sendFalseCast();
+			sendFalseCast(Double.class);
 		}
 
 		return (double) defaultValue;
@@ -322,7 +322,7 @@ public enum ConfigEntry {
 		try {
 			return (int) (this.value = (int) this.value);
 		} catch(Exception e) {
-			sendFalseCast();
+			sendFalseCast(Integer.class);
 		}
 
 		return (int) defaultValue;
@@ -332,7 +332,7 @@ public enum ConfigEntry {
 		try {
 			return (long) (this.value = (long) this.value);
 		} catch(Exception e) {
-			sendFalseCast();
+			sendFalseCast(Long.class);
 		}
 
 		return (long) defaultValue;
@@ -345,7 +345,7 @@ public enum ConfigEntry {
 		try {
 			return (String) (this.value = String.valueOf(this.value).replace("&", "§"));
 		} catch(Exception e) {
-			sendFalseCast();
+			sendFalseCast(String.class);
 		}
 
 		return (String) defaultValue;
