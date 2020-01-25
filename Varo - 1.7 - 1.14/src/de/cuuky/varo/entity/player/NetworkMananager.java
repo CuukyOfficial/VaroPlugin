@@ -37,6 +37,7 @@ public class NetworkMananager {
 		try {
 			if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 				ioBaseChat = VersionUtils.getChatSerializer();
+
 				ioBase = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent");
 				titleClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutTitle");
 
@@ -56,7 +57,7 @@ public class NetworkMananager {
 
 				packetChatClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutChat");
 				try {
-					Class.forName(VersionUtils.getNmsClass() + ".ChatMessageType");
+					chatMessageTypeClass = Class.forName(VersionUtils.getNmsClass() + ".ChatMessageType");
 					chatEnumMethod = packetChatClass.getConstructor(ioBase, chatMessageTypeClass);
 				} catch(Exception e) {
 					chatByteMethod = packetChatClass.getConstructor(ioBase, byte.class);
