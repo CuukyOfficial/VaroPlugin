@@ -54,8 +54,6 @@ public final class VaroUtils {
 
 	private static int worldToTimeID = 0;
 
-	private VaroUtils() {}
-
 	public static Object[] checkForUpdates() {
 		UpdateResult result = UpdateResult.NO_UPDATE;
 		String version;

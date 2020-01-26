@@ -25,8 +25,6 @@ public class Spawn implements VaroSerializeable {
 		spawns = new ArrayList<>();
 	}
 
-	private Entity armorStand;
-
 	@VaroSerializeField(path = "location")
 	private Location location;
 
@@ -38,13 +36,16 @@ public class Spawn implements VaroSerializeable {
 
 	@VaroSerializeField(path = "number")
 	private int number;
-	private VaroPlayer player;
 
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
+	
 	@VaroSerializeField(path = "type")
 	private SpawnType type;
-
+	
+	private Entity armorStand;
+	private VaroPlayer player;
+	
 	public Spawn() {
 		spawns.add(this);
 	}
