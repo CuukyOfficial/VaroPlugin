@@ -1,4 +1,4 @@
-package de.cuuky.varo.spawns.spawn;
+package de.cuuky.varo.world.generators;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.spawns.spawn.SpawnType;
 import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.version.types.Materials;
 

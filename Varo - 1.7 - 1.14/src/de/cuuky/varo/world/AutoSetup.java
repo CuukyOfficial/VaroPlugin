@@ -13,11 +13,11 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
-import de.cuuky.varo.spawns.spawn.SpawnGenerator;
 import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.world.generators.LobbyGenerator;
 import de.cuuky.varo.world.generators.PortalGenerator;
+import de.cuuky.varo.world.generators.SpawnGenerator;
 
 public class AutoSetup {
 
