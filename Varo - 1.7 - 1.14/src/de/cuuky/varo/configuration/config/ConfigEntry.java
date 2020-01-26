@@ -203,7 +203,7 @@ public enum ConfigEntry {
 	SCOREBOARD(ConfigSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten."),
 	SESSIONS_PER_DAY(ConfigSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulär betreten dürfen."),
 
-	SET_NAMETAGS_OVER_SPAWN(ConfigSection.WORLD, "setNameTagOverSpawn", false, "Ob Nametags über den\nSpawns erscheinen sollen"),
+	SET_NAMETAGS_OVER_SPAWN(ConfigSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags über den\nSpawns erscheinen sollen"),
 	SHOW_DISTANCE_TO_BORDER(ConfigSection.BORDER, "showDistanceToBorder", false, "Ob die Distanz zur Border in der\nActionBar angezeigt werden soll."),
 	SHOW_TIME_IN_ACTIONBAR(ConfigSection.OTHER, "showTimeInActionbar", false, "Ob die verbleibende Sessionzeit in\nder Actionbar angezeigt werden soll."),
 	SPAWN_PROTECTION_RADIUS(ConfigSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen können."),

@@ -15,6 +15,7 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.spawn.SpawnType;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
+import de.cuuky.varo.version.types.Materials;
 
 public class Spawn implements VaroSerializeable {
 
@@ -121,7 +122,7 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	public void delete() {
-		location.getBlock().setType(Material.GRASS);
+		location.getBlock().setType(Materials.GRASS_BLOCK.parseMaterial());
 		location.add(0, 1, 0);
 		location.clone().add(1, 0, 0).getBlock().setType(Material.AIR);
 		location.clone().add(-1, 0, 0).getBlock().setType(Material.AIR);
@@ -209,10 +210,6 @@ public class Spawn implements VaroSerializeable {
 		return null;
 	}
 
-	public static ArrayList<Spawn> getSpawns() {
-		return spawns;
-	}
-
 	public static ArrayList<Spawn> getSpawns(SpawnType type) {
 		ArrayList<Spawn> spawns = new ArrayList<>();
 		for(Spawn spawn : spawns) {
@@ -231,5 +228,9 @@ public class Spawn implements VaroSerializeable {
 			returnSpawns.add(spawn);
 		}
 		return returnSpawns;
+	}
+	
+	public static ArrayList<Spawn> getSpawns() {
+		return spawns;
 	}
 }
