@@ -57,19 +57,19 @@ public class Game implements VaroSerializeable {
 
 	@VaroSerializeField(path = "autostart")
 	private AutoStart autostart;
-	
+
 	@VaroSerializeField(path = "borderDecrease")
 	private BorderDecreaseDayTimer borderDecrease;
-	
+
 	@VaroSerializeField(path = "gamestate")
 	private GameState gamestate;
-	
+
 	@VaroSerializeField(path = "lastCoordsPost")
 	private Date lastCoordsPost;
-	
+
 	@VaroSerializeField(path = "lastDayTimer")
 	private Date lastDayTimer;
-	
+
 	@VaroSerializeField(path = "lobby")
 	private Location lobby;
 
@@ -408,14 +408,20 @@ public class Game implements VaroSerializeable {
 		if(hasStarted() || isStarting())
 			return;
 
-		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0)
+		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
 			VaroUtils.doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufälligen Teampartner erhalten!");
+		}
 
-		if(ConfigEntry.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean())
+		if(ConfigEntry.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
+			Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
 			new SpawnGenerator(VaroUtils.getMainWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
+		}
 
-		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
+		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean()) {
+			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
 			VaroUtils.sortPlayers();
+		}
 
 		removeArentAtStart();
 		if(minuteTimer != null)
