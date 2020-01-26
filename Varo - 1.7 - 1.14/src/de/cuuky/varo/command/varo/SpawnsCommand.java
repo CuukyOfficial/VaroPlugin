@@ -21,12 +21,15 @@ public class SpawnsCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, final VaroPlayer vp, final Command cmd, final String label, final String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Commands§7§l:");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Command§7§l:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set [Zahl/Spieler]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete [Zahl/Spieler] - (Löscht den Spawneintrag und den Spawn in der Welt)");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 list");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius> <amount> [Half-Step-Materiall] [Side-Block-Material]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo spawns generate 30 40 STONE_SLAB");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
+			sender.sendMessage(Main.getPrefix() + "-");
+			sender.sendMessage(Main.getPrefix() + "/varo spawns generate kann dir deine Spawns entweder nach Anzahl oder den eingetragenen Teams oder Spielern generieren.\n" + "Der Unterschied zwischen 'player' und 'team' ist, dass bei 'team' auch die Teams bei der Sortierung berücksichtigt werden.");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for number: §7/varo spawns generate 30 40 STONE_SLAB");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for number: §7/varo spawns generate 30 team STONE_SLAB");
 			return;
 		}
 
@@ -37,7 +40,7 @@ public class SpawnsCommand extends VaroCommand {
 			}
 
 			if(args.length < 3) {
-				sender.sendMessage(Main.getPrefix() + "/varo spawns§7 generate <radius> <amount> [Half-Step-Materiall] [Side-Block-Material]");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius> <amount>/player/teams [Half-Step-Materiall] [Side-Block-Material]");
 				return;
 			}
 
@@ -50,9 +53,29 @@ public class SpawnsCommand extends VaroCommand {
 				sideBlockMaterial = String.valueOf(args[4]);
 
 			try {
-				new SpawnGenerator(((Player) sender).getLocation(), Integer.valueOf(args[1]), Integer.valueOf(args[2]), material, sideBlockMaterial);
+				Integer.valueOf(args[1]);
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "Beim erstellen der Spawns ist ein Fehler aufgetreten!");
+				try {
+					if(args[1].equalsIgnoreCase("auto") || args[1].equalsIgnoreCase("automatic")) {
+						if(args[2].equalsIgnoreCase("player") || args[2].equalsIgnoreCase("team"))
+							args[1] = String.valueOf((int) (VaroPlayer.getAlivePlayer().size() * 0.85));
+						else
+							args[1] = String.valueOf((int) (Integer.valueOf(args[2]) * 0.85));
+					}
+				} catch(Exception e1) {
+					sender.sendMessage(Main.getPrefix() + "Beim erstellen der Spawns ist ein Fehler aufgetreten! Richtige Werte angegeben?");
+					e1.printStackTrace();
+					return;
+				}
+			}
+
+			try {
+				if(args[2].equalsIgnoreCase("player") || args[2].equalsIgnoreCase("team"))
+					new SpawnGenerator(((Player) sender).getLocation(), Integer.valueOf(args[1]), args[2].equalsIgnoreCase("team"), material, sideBlockMaterial);
+				else
+					new SpawnGenerator(((Player) sender).getLocation(), Integer.valueOf(args[1]), Integer.valueOf(args[2]), material, sideBlockMaterial);
+			} catch(Exception e) {
+				sender.sendMessage(Main.getPrefix() + "Beim erstellen der Spawns ist ein Fehler aufgetreten! Richtige Werte angegeben?");
 				e.printStackTrace();
 				return;
 			}
@@ -180,6 +203,6 @@ public class SpawnsCommand extends VaroCommand {
 			}
 			return;
 		} else
-			sender.sendMessage(Main.getPrefix() + "Not found!");
+			sender.sendMessage(Main.getPrefix() + "Not found! /varo spawns");
 	}
 }
