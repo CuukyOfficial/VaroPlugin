@@ -50,7 +50,7 @@ public class NetworkMananager {
 
 				try {
 					title = enumTitleClass.getDeclaredField("TITLE").get(null);
-					title = enumTitleClass.getDeclaredField("SUBTITLE").get(null);
+					subtitle = enumTitleClass.getDeclaredField("SUBTITLE").get(null);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
