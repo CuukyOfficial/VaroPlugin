@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -15,14 +16,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import org.apache.commons.lang.time.DateUtils;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
-import de.cuuky.varo.command.varo.RandomTeamCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -47,6 +45,7 @@ import de.cuuky.varo.version.types.Sounds;
 import de.cuuky.varo.world.border.VaroBorder;
 import de.cuuky.varo.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.world.border.decrease.BorderDecreaseMinuteTimer;
+import de.cuuky.varo.world.generators.SpawnGenerator;
 
 public class Game implements VaroSerializeable {
 
@@ -58,14 +57,19 @@ public class Game implements VaroSerializeable {
 
 	@VaroSerializeField(path = "autostart")
 	private AutoStart autostart;
+	
 	@VaroSerializeField(path = "borderDecrease")
 	private BorderDecreaseDayTimer borderDecrease;
+	
 	@VaroSerializeField(path = "gamestate")
 	private GameState gamestate;
+	
 	@VaroSerializeField(path = "lastCoordsPost")
 	private Date lastCoordsPost;
+	
 	@VaroSerializeField(path = "lastDayTimer")
 	private Date lastDayTimer;
+	
 	@VaroSerializeField(path = "lobby")
 	private Location lobby;
 
@@ -186,7 +190,7 @@ public class Game implements VaroSerializeable {
 								if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 									actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 							}
-							
+
 							if(!actionbar.isEmpty())
 								vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
@@ -404,9 +408,11 @@ public class Game implements VaroSerializeable {
 		if(hasStarted() || isStarting())
 			return;
 
-		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
-			new RandomTeamCommand().doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
-		}
+		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0)
+			VaroUtils.doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+
+		if(ConfigEntry.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean())
+			new SpawnGenerator(VaroUtils.getMainWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean())
 			VaroUtils.sortPlayers();

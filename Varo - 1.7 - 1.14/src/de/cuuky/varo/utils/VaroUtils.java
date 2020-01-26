@@ -17,6 +17,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.spawns.Spawn;
 
@@ -254,5 +255,50 @@ public final class VaroUtils {
 		}
 
 		return result;
+	}
+	
+	public static void doRandomTeam(int teamSize) {
+		if(teamSize >= 2) {
+			ArrayList<VaroPlayer> finished = new ArrayList<>();
+			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+				if(finished.contains(vp) || vp.getStats().isSpectator() || vp.getTeam() != null)
+					continue;
+
+				ArrayList<VaroPlayer> teamMember = new ArrayList<>();
+				teamMember.add(vp);
+				finished.add(vp);
+
+				int missingMember = teamSize - 1;
+				for(VaroPlayer othervp : VaroPlayer.getOnlinePlayer()) {
+					if(missingMember == 0)
+						break;
+
+					if(finished.contains(othervp) || othervp.getStats().isSpectator() || othervp.getTeam() != null)
+						continue;
+
+					teamMember.add(othervp);
+					finished.add(othervp);
+					missingMember--;
+				}
+
+				if(teamMember.size() != teamSize)
+					vp.getPlayer().sendMessage(Main.getPrefix() + "§7Für dich wurden nicht genug" + Main.getColorCode() + " Teampartner §7gefunden!");
+
+				String teamName = "";
+				for(VaroPlayer teamPl : teamMember)
+					teamName = teamName + teamPl.getName().substring(0, teamPl.getName().length() / teamSize);
+
+				VaroTeam team = new VaroTeam(teamName);
+				for(VaroPlayer teamPl : teamMember)
+					team.addMember(teamPl);
+			}
+		} else if(teamSize == 1) {
+			for(VaroPlayer pl : VaroPlayer.getOnlinePlayer()) {
+				if(pl.getTeam() != null || pl.getStats().isSpectator())
+					continue;
+
+				new VaroTeam(pl.getName().length() == 16 ? pl.getName().substring(0, 15) : pl.getName()).addMember(pl);
+			}
+		}
 	}
 }

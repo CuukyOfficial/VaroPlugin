@@ -1,64 +1,17 @@
 package de.cuuky.varo.command.varo;
 
-import java.util.ArrayList;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class RandomTeamCommand extends VaroCommand {
 
 	public RandomTeamCommand() {
 		super("randomteam", "Gibt allen Spielern, die noch kein Team haben, einen zufälligen Teampartner mit Größe", "varo.randomteam", "rt");
-	}
-
-	public void doRandomTeam(int teamSize) {
-		if(teamSize >= 2) {
-			ArrayList<VaroPlayer> finished = new ArrayList<>();
-			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-				if(finished.contains(vp) || vp.getStats().isSpectator() || vp.getTeam() != null)
-					continue;
-
-				ArrayList<VaroPlayer> teamMember = new ArrayList<>();
-				teamMember.add(vp);
-				finished.add(vp);
-
-				int missingMember = teamSize - 1;
-				for(VaroPlayer othervp : VaroPlayer.getOnlinePlayer()) {
-					if(missingMember == 0)
-						break;
-
-					if(finished.contains(othervp) || othervp.getStats().isSpectator() || othervp.getTeam() != null)
-						continue;
-
-					teamMember.add(othervp);
-					finished.add(othervp);
-					missingMember--;
-				}
-
-				if(teamMember.size() != teamSize)
-					vp.getPlayer().sendMessage(Main.getPrefix() + "§7Für dich wurden nicht genug" + Main.getColorCode() + " Teampartner §7gefunden!");
-
-				String teamName = "";
-				for(VaroPlayer teamPl : teamMember)
-					teamName = teamName + teamPl.getName().substring(0, teamPl.getName().length() / teamSize);
-
-				VaroTeam team = new VaroTeam(teamName);
-				for(VaroPlayer teamPl : teamMember)
-					team.addMember(teamPl);
-			}
-		} else if(teamSize == 1) {
-			for(VaroPlayer pl : VaroPlayer.getOnlinePlayer()) {
-				if(pl.getTeam() != null || pl.getStats().isSpectator())
-					continue;
-
-				new VaroTeam(pl.getName().length() == 16 ? pl.getName().substring(0, 15) : pl.getName()).addMember(pl);
-			}
-		}
 	}
 
 	@Override
@@ -80,7 +33,7 @@ public class RandomTeamCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7Die Teamgröße muss mindestens 1 betragen.");
 			return;
 		} else {
-			doRandomTeam(teamsize);
+			VaroUtils.doRandomTeam(teamsize);
 		}
 
 		sender.sendMessage(Main.getPrefix() + "§7Alle Spieler, die ohne Teams waren, sind nun in " + Main.getColorCode() + teamsize + "§7er Teams!");
