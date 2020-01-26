@@ -15,7 +15,6 @@ public class SpawnGenerator {
 
 	@SuppressWarnings("deprecation")
 	public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {
-
 		for(Spawn spawn : Spawn.getSpawnsClone()) {
 			spawn.delete();
 		}
@@ -52,16 +51,16 @@ public class SpawnGenerator {
 		}
 	}
 
-	private List<Location> generateSpawns(Location middle, float radius, int amount) {
-		double alpha = 360 / amount;
+	private List<Location> generateSpawns(Location middle, double radius, int amount) {
+		double alpha = (2 * Math.PI) / amount;
 
 		List<Location> locs = new ArrayList<>();
 
 		for(int count = 0; count != amount; count++) {
 			double beta = alpha * count;
 
-			double x = radius * Math.sin(Math.toRadians(beta));
-			double z = radius * Math.cos(Math.toRadians(beta));
+			double x = radius * Math.cos(beta);
+			double z = radius * Math.sin(beta);
 
 			Location loc = middle.clone().add(x, 0, z);
 			locs.add(loc);
