@@ -80,6 +80,7 @@ public abstract class VaroCommand {
 		new StatsCommand();
 		new UpdateCommand();
 		new FinaleCommand();
+//		new TestCommand();
 	}
 
 	private String[] aliases;
