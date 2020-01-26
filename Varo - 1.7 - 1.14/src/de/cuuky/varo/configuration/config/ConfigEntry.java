@@ -127,6 +127,7 @@ public enum ConfigEntry {
 
 	DO_RANDOMTEAM_AT_START(ConfigSection.START, "doRandomTeamAtStart", -1, "Größe der Teams, in die die Teamlosen beim Start eingeordnet werden.\nAusgeschaltet = -1"),
 	DO_SORT_AT_START(ConfigSection.START, "doSortAtStart", true, "Ob beim Start /sort ausgeführt werden soll."),
+	DO_SPAWN_GENERATE_AT_START(ConfigSection.START, "doSpawnGenerateAtStart", true, "Ob die Spawnlöcher am Start basierend auf den\nderzeitigen Spielern generiert werden sollen"),
 	FAKE_MAX_SLOTS(ConfigSection.SERVER_LIST, "fakeMaxSlots", -1, "Setzt die maximalen Slots des Servers gefaked.\nOff = -1"),
 	FINALE_PROTECTION_TIME(ConfigSection.FINALE, "finaleProtectionTime", 30, "Länge der Schutzzeit nachdem alle Spieler in die Mitte teleportiert werden."),
 
