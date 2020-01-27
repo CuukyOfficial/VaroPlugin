@@ -25,5 +25,4 @@ public enum VaroAPIGameState {
 
 		return null;
 	}
-
 }

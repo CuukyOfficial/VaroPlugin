@@ -2,10 +2,12 @@ package de.cuuky.varo.api.event;
 
 public class VaroAPIEvent {
 
-	private boolean cancelAble = true;
-	private boolean cancelled = false;
+	private boolean cancelAble;
+	private boolean cancelled;
 
-	public VaroAPIEvent() {}
+	public VaroAPIEvent() {
+		this.cancelAble = true;
+	}
 
 	public VaroAPIEvent(boolean cancelAble) {
 		this.cancelAble = cancelAble;

@@ -30,20 +30,20 @@ public class VaroAPITeam {
 		return team.getKills();
 	}
 
-	public ArrayList<VaroAPIPlayer> getMember() {
-		ArrayList<VaroAPIPlayer> teams = new ArrayList<>();
-		for(VaroPlayer player : team.getMember())
-			teams.add(new VaroAPIPlayer(player));
-
-		return teams;
-	}
-
 	public String getName() {
 		return team.getName();
 	}
 
 	public void setColorcode(String code) {
 		team.setColorCode(code);
+	}
+	
+	public ArrayList<VaroAPIPlayer> getMember() {
+		ArrayList<VaroAPIPlayer> teams = new ArrayList<>();
+		for(VaroPlayer player : team.getMember())
+			teams.add(new VaroAPIPlayer(player));
+
+		return teams;
 	}
 
 	public static ArrayList<VaroAPITeam> getTeams() {
