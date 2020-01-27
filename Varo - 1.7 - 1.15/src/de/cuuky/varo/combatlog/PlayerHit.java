@@ -60,9 +60,9 @@ public class PlayerHit {
 
 		Bukkit.getPluginManager().registerEvents(new HitListener(), Main.getInstance());
 	}
-	private Player player, opponent;
-
+	
 	private int task;
+	private Player player, opponent;
 
 	@SuppressWarnings("deprecation")
 	public PlayerHit(Player player, Player opponent) {
