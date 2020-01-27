@@ -14,8 +14,34 @@ Richtilinien zum Programmieren:
 - Comments, Variablen, Methoden, System-outs, ... (Alles, was nicht an die user gerichtet ist) auf **Englisch**
 - Camel Case-Notation
 - Keine Fehler im Code nach Wechseln der Bukkit oder Spigot API (Reflections)
+- Variablen nutzen, keine Config-Zugriffe während des Spielens
+- Leerzeilen möglichst vermeiden -> Sinngemäß anordnen
+- Keine Initialisierung der Variablen (außer ggf. final) in der Deklarierung
+- Die unten vorgegebene Sortierung nutzen
+- Methoden sinngemäß und nach Größe sortieren 
 
-Richtlinien für GitHub:
+*Sortierung nach Sichtbarkeit*
+<ol style="list-style-type:square;">
+  <li>Private</li>
+  <li>Protected</li>
+  <li>Package</li>
+  <li>Public</li>
+</ol>
+
+*Sortierung der Methoden:*
+<ol style="list-style-type:square;">
+  <li>Types</li>
+  <li>Static Fields</li>
+  <li>Static Intializers</li>
+  <li>Fields</li>
+  <li>Initializers</li>
+  <li>Constructors</li>
+  <li>Methods</li>
+  <li>Static Methods</li>
+</ol>
+
+
+**Richtlinien für GitHub:**
 - Commits auf Englisch
 - **Niemals** auf den master pushen
 - Commit-Nachrichten kurz, sinngemäß und effizient beschreiben
