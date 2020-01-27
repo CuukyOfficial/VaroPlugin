@@ -8,6 +8,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
+import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
@@ -116,27 +119,27 @@ public class DataManager {
 	}
 
 	private void loadPlugins() {
-		boolean discordNewDownload = false;
+		boolean discordNewDownloadFailed = false;
 		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			try {
 				VaroDiscordBot.getClassName();
 			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
 				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
-				discordNewDownload = loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
+				discordNewDownloadFailed = !loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
 			}
 		}
 
-		boolean telegramNewDownload = false;
+		boolean telegramNewDownloadFailed = false;
 		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			try {
 				VaroTelegramBot.getClassName();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
 				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
-				telegramNewDownload = loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
+				telegramNewDownloadFailed = !loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
 			}
 		}
 
-		boolean labymodNewDownload = false;
+		boolean labymodNewDownloadFailed = false;
 		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
 			try {
 				PermissionSendListener.getClassName();
@@ -144,16 +147,15 @@ public class DataManager {
 				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
 			} catch(NoClassDefFoundError e) {
 				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
-				labymodNewDownload = loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
+				labymodNewDownloadFailed = !loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
 			}
 		}
 
-		if(discordNewDownload || telegramNewDownload || labymodNewDownload) {
-			System.out.println(Main.getConsolePrefix() + "Der Server wird heruntergefahren, damit das Heruntergeladene angewandt werden kann.");
-			System.out.println(Main.getConsolePrefix() + "Bitte fahre den Server wieder hoch.");
+		if(discordNewDownloadFailed || telegramNewDownloadFailed || labymodNewDownloadFailed) {
+			System.out.println(Main.getConsolePrefix() + "Beim Herunterladen / Initialisieren der Plugins ist ein Fehler aufgetreten.");
+			System.out.println(Main.getConsolePrefix() + "Der Server wird nun heruntergefahren. Bitte danach fahre den Server wieder hoch.");
 			Bukkit.getServer().shutdown();
 		}
-
 	}
 
 	@SuppressWarnings("deprecation")
@@ -176,8 +178,12 @@ public class DataManager {
 			fd.startDownload();
 
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
+			
+			System.out.println(Main.getConsolePrefix() + dataName + " wird nun geladen...");
+			Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName));
+			System.out.println(Main.getConsolePrefix() + dataName + " wurde erfolgreich geladen!");
 			return true;
-		} catch(IOException e) {
+		} catch(IOException | UnknownDependencyException | InvalidPluginException | InvalidDescriptionException e) {
 			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
 			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
 			e.printStackTrace();

@@ -2,16 +2,12 @@ package de.cuuky.varo.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
@@ -29,83 +25,7 @@ public final class VaroUtils {
 		SORTED_WELL;
 	}
 
-	public enum UpdateResult {
-
-		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
-		NO_UPDATE("Das Plugin ist auf dem neuesten Stand!"),
-		TEST_BUILD("Das Plugin ist auf dem neuesten Stand! (Test-Build)"),
-		UPDATE_AVAILABLE("Es ist ein Update verfügbar! Benutze /varo update oder lade es manuell unter https://www.spigotmc.org/resources/71075/ herunter");
-
-		private String message;
-
-		UpdateResult(String message) {
-			this.message = message;
-		}
-
-		public String getMessage() {
-			return message;
-		}
-	}
-
-	public enum VersionCompareResult {
-		VERSION1GREATER,
-		VERSION2GREATER,
-		VERSIONS_EQUAL;
-	}
-
 	private static int worldToTimeID = 0;
-
-	public static Object[] checkForUpdates() {
-		UpdateResult result = UpdateResult.NO_UPDATE;
-		String version;
-
-		try {
-			Scanner scanner = new Scanner(new URL("https://api.spiget.org/v2/resources/71075/versions/latest").openStream());
-			String all = "";
-			while(scanner.hasNextLine()) {
-				all += scanner.nextLine();
-			}
-			scanner.close();
-
-			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
-			version = scannerJSON.get("name").toString();
-			switch(compareVersions(version, Main.getInstance().getDescription().getVersion())) {
-			case VERSION1GREATER:
-				result = UpdateResult.UPDATE_AVAILABLE;
-				break;
-			case VERSIONS_EQUAL:
-				result = UpdateResult.NO_UPDATE;
-				break;
-			case VERSION2GREATER:
-				result = UpdateResult.TEST_BUILD;
-				break;
-			}
-		} catch(Exception e) {
-			result = UpdateResult.FAIL_SPIGOT;
-			version = "";
-		}
-		return new Object[] { result, version };
-	}
-
-	public static VersionCompareResult compareVersions(String version1, String version2) {
-		if(!version1.matches("[0-9]+(\\.[0-9]+)*") || !version2.matches("[0-9]+(\\.[0-9]+)*")) {
-			throw new IllegalArgumentException("Invalid version format");
-		}
-
-		String[] version1Parts = version1.split("\\.");
-		String[] version2Parts = version2.split("\\.");
-
-		for(int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
-			int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
-			int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
-			if(version1Part < version2Part)
-				return VersionCompareResult.VERSION2GREATER;
-			if(version1Part > version2Part)
-				return VersionCompareResult.VERSION1GREATER;
-		}
-
-		return VersionCompareResult.VERSIONS_EQUAL;
-	}
 
 	public static String formatLocation(Location location, String unformatted) {
 		return unformatted.replace("x", String.valueOf(location.getBlockX())).replace("y", String.valueOf(location.getBlockY())).replace("z", String.valueOf(location.getBlockZ())).replace("world", location.getWorld().getName());

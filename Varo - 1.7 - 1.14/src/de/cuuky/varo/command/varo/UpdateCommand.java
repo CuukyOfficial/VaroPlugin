@@ -12,79 +12,27 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spigot.FileDownloader;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
+import de.cuuky.varo.spigot.updater.VaroUpdater;
 
 public class UpdateCommand extends VaroCommand {
 
 	private String oldFileName;
-	private boolean pluginNameChanged;
-	private boolean resetOldDirectory;
+	private boolean pluginNameChanged, resetOldDirectory;
 
 	public UpdateCommand() {
 		super("update", "Installiert automatisch die neueste Version.", "varo.update");
 	}
 
-	private void deleteDirectory(File file) {
-		for(File listFile : file.listFiles()) {
-			if(listFile.isDirectory())
-				deleteDirectory(listFile);
-
-			listFile.delete();
-		}
-
-		file.delete();
-	}
-
-	private void update(CommandSender sender) {
-		// Step 1: Download new Version
-		try {
-			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/71075/download", "plugins/Varo.jar");
-
-			sender.sendMessage(Main.getPrefix() + "Starte Download...");
-
-			fd.startDownload();
-		} catch(Exception e) {
-			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
-			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
-			System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
-			System.out.println("---------- Stack Trace ----------");
-			e.printStackTrace();
-			System.out.println("---------- Stack Trace ----------");
-			return;
-		}
-
-		sender.sendMessage(Main.getPrefix() + "Update erfolgreich installiert");
-
-		// Step 2: Deleting old directory if wanted
-		if(resetOldDirectory) {
-			System.out.println("Das Verzeichnis der alten Pluginversion wird gelöscht.");
-			File directory = new File("plugins/Varo/");
-			deleteDirectory(directory);
-		}
-
-		// Step 3: Deleting old Version if existing
-		if(this.pluginNameChanged) {
-			System.out.println("Da sich der Pluginname verändert hat, wird die alte Pluginversion gelöscht.");
-			File oldPlugin = new File("plugins/" + this.oldFileName);
-			oldPlugin.delete();
-		}
-
-		Bukkit.getServer().shutdown();
-	}
-
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-
-		VaroUtils.UpdateResult result;
-		String updateVersion;
-
-		Object[] updater = VaroUtils.checkForUpdates();
-		result = (VaroUtils.UpdateResult) updater[0];
-		updateVersion = (String) updater[1];
+		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
+		UpdateResult result = resultSet.getUpdateResult();
+		String updateVersion = resultSet.getVersionName();
 
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
-
-			if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
+			if(result == UpdateResult.UPDATE_AVAILABLE) {
 				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
@@ -118,13 +66,61 @@ public class UpdateCommand extends VaroCommand {
 
 		DataManager.getInstance().setDoSave(false);
 
-		if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
+		if(result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
-			update(sender);
+			update(sender, resultSet);
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 
 		}
 
+	}
+	
+	private void deleteDirectory(File file) {
+		for(File listFile : file.listFiles()) {
+			if(listFile.isDirectory())
+				deleteDirectory(listFile);
+
+			listFile.delete();
+		}
+
+		file.delete();
+	}
+
+	private void update(CommandSender sender, VaroUpdateResultSet resultSet) {
+		// Step 1: Download new Version
+		try {
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + VaroUpdater.getRescourceId() + "/download", "plugins/Varo.jar");
+
+			sender.sendMessage(Main.getPrefix() + "Starte Download...");
+
+			fd.startDownload();
+		} catch(Exception e) {
+			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
+			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
+			System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
+			System.out.println("---------- Stack Trace ----------");
+			e.printStackTrace();
+			System.out.println("---------- Stack Trace ----------");
+			return;
+		}
+
+		sender.sendMessage(Main.getPrefix() + "Update erfolgreich installiert");
+
+		// Step 2: Deleting old directory if wanted
+		if(resetOldDirectory) {
+			System.out.println("Das Verzeichnis der alten Pluginversion wird gelöscht.");
+			File directory = new File("plugins/Varo/");
+			deleteDirectory(directory);
+		}
+
+		// Step 3: Deleting old Version if existing
+		if(this.pluginNameChanged) {
+			System.out.println("Da sich der Pluginname verändert hat, wird die alte Pluginversion gelöscht.");
+			File oldPlugin = new File("plugins/" + this.oldFileName);
+			oldPlugin.delete();
+		}
+
+		Bukkit.getServer().shutdown();
 	}
 }

@@ -13,7 +13,6 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
-import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.lobby.LobbyItem;
@@ -23,6 +22,8 @@ import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
@@ -74,14 +75,14 @@ public class PlayerJoinListener implements Listener {
 			}
 
 			if(player.isOp()) {
-				Object[] updater = VaroUtils.checkForUpdates();
-				VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater[0];
-				String updateVersion = (String) updater[1];
+				VaroUpdateResultSet updater = Main.getVaroUpdater().getLastResult();
+				UpdateResult result = updater.getUpdateResult();
+				String updateVersion = updater.getVersionName();
 
-				if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE) {
-					if(VaroTeam.getTeams().isEmpty()) {
+				if(result == UpdateResult.UPDATE_AVAILABLE) {
+					if(Game.getInstance().getGameState() == GameState.LOBBY)
 						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
-					}
+
 					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
 				}
 			}

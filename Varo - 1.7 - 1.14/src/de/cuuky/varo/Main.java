@@ -5,16 +5,14 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
+import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.DailyTimer;
 import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Main extends JavaPlugin {
@@ -27,6 +25,7 @@ public class Main extends JavaPlugin {
 	private static final String CONSOLE_PREFIX = "[Varo] ";
 
 	private static DataManager dataManager;
+	private static VaroUpdater varoUpdater;
 	private static Main instance;
 
 	private boolean failed;
@@ -62,17 +61,14 @@ public class Main extends JavaPlugin {
 		try {
 			dataManager = DataManager.getInstance(); // Initialisierung
 
-			Object[] updater2 = VaroUtils.checkForUpdates();
-			VaroUtils.UpdateResult result = (VaroUtils.UpdateResult) updater2[0];
-			String updateVersion = (String) updater2[1];
-			System.out.println(Main.getConsolePrefix() + "Updater: " + result.getMessage());
-			if(result == VaroUtils.UpdateResult.UPDATE_AVAILABLE)
-				new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + updateVersion + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
-			
+			varoUpdater = new VaroUpdater();
+			varoUpdater.checkForUpdates();
+			varoUpdater.printResults();
+
 			DailyTimer.startTimer();
 
 			botLauncher = BotLauncher.getInstance(); // Initialisierung
-			
+
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {
@@ -89,7 +85,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onEnable();
 	}
-	
+
 	@Override
 	public void onLoad() {
 		failed = false;
@@ -98,7 +94,7 @@ public class Main extends JavaPlugin {
 		new ConsoleLogger();
 		super.onLoad();
 	}
-	
+
 	@Override
 	public void onDisable() {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
@@ -143,6 +139,10 @@ public class Main extends JavaPlugin {
 
 	public static Main getInstance() {
 		return instance;
+	}
+
+	public static VaroUpdater getVaroUpdater() {
+		return varoUpdater;
 	}
 
 	public static String getPluginName() {
