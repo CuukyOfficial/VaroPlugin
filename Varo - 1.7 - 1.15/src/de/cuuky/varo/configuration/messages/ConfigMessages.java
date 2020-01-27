@@ -53,8 +53,8 @@ public enum ConfigMessages {
 	ALERT_SWITCHED_NAME("Alert.switchedName", "%player% hat den Namen gewechselt und ist nun unter %newName% bekannt!"),
 	ALERT_TELEPORTED_TO_MIDDLE("Alert.teleportedToMiddle", "%player% wurde zur Mitte teleportiert!"),
 	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nDamit ist %player% aus %projectname% ausgeschieden!"),
-	ALERT_WINNER_DISCORD("Alert.win.player", "%player% hat %projectname% gewonnen!"),
-	ALERT_WINNER_TEAM_DISCORD("Alert.win.team", "%winnerPlayers% aus dem Team %team% haben %projectname% gewonnen!"),
+	ALERT_WINNER("Alert.win.player", "%player% hat %projectname% gewonnen! Gratulation!"),
+	ALERT_WINNER_TEAM("Alert.win.team", "%winnerPlayers% haben %projectname% gewonnen! Gratulation!"),
 
 	BORDER_DECREASE_DAYS("Border.decreaseDays", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s verkleinert. &7Nächste Verkleinerung in &c%days% &7Tagen!"),
 	BORDER_DECREASE_DEATH("Border.decreaseDeath", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s aufgrund eines Todes verkleinert."),
@@ -103,6 +103,9 @@ public enum ConfigMessages {
 	GAME_START_COUNTDOWN("Game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunde(n)!"),
 	GAME_VARO_START("Game.start.varoStart", "%projectname% &7wurde gestartet! &5Viel Erfolg!"),
 	GAME_VARO_START_TITLE("Game.start.startTitle", "%colorcode%%countdown%\n&7Viel Glück!"),
+	GAME_WIN("Game.win.single", "&5%player% &7hat %projectname% &7gewonnen! &5Gratulation!"),
+	GAME_WIN_TEAM("Game.win.team", "&5%winnerPlayers% &7haben %projectname% &7gewonnen! &5Gratulation!"),
+	
 	// JOIN
 	JOIN("Join.join", "%prefix%&a%player% &7hat den Server betreten!"),
 
