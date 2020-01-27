@@ -25,58 +25,6 @@ public class UpdateCommand extends VaroCommand {
 		super("update", "Installiert automatisch die neueste Version", "varo.update");
 	}
 
-	@Override
-	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
-		UpdateResult result = resultSet.getUpdateResult();
-		String updateVersion = resultSet.getVersionName();
-
-		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
-			if(result == UpdateResult.UPDATE_AVAILABLE) {
-				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
-				sender.sendMessage("");
-				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
-			} else {
-				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
-			}
-			return;
-		}
-
-		if(args[0].equalsIgnoreCase("normal")) {
-			resetOldDirectory = false;
-		} else if(args[0].equalsIgnoreCase("reset")) {
-			resetOldDirectory = true;
-		}
-
-		this.pluginNameChanged = false;
-
-		this.oldFileName = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
-
-		try {
-			oldFileName = URLDecoder.decode(oldFileName, "UTF-8");
-		} catch(Exception e) {
-			oldFileName = oldFileName.replace("%20", " ");
-		}
-
-		if(!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar")) {
-			this.pluginNameChanged = true;
-		}
-
-		DataManager.getInstance().setDoSave(false);
-
-		if(result == UpdateResult.UPDATE_AVAILABLE) {
-			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
-			sender.sendMessage(Main.getPrefix() + "§7Unter Umständen wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
-			update(sender, resultSet);
-		} else {
-			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
-
-		}
-
-	}
-
 	private void deleteDirectory(File file) {
 		for(File listFile : file.listFiles()) {
 			if(listFile.isDirectory())
@@ -123,5 +71,53 @@ public class UpdateCommand extends VaroCommand {
 		}
 
 		Bukkit.getServer().shutdown();
+	}
+	
+	@Override
+	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
+		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
+		UpdateResult result = resultSet.getUpdateResult();
+		String updateVersion = resultSet.getVersionName();
+
+		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
+			if(result == UpdateResult.UPDATE_AVAILABLE) {
+				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
+				sender.sendMessage("");
+				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+			} else {
+				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
+			}
+			return;
+		}
+
+		if(args[0].equalsIgnoreCase("normal")) {
+			resetOldDirectory = false;
+		} else if(args[0].equalsIgnoreCase("reset")) {
+			resetOldDirectory = true;
+		}
+
+		this.pluginNameChanged = false;
+		this.oldFileName = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
+
+		try {
+			oldFileName = URLDecoder.decode(oldFileName, "UTF-8");
+		} catch(Exception e) {
+			oldFileName = oldFileName.replace("%20", " ");
+		}
+
+		if(!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar")) 
+			this.pluginNameChanged = true;
+
+		DataManager.getInstance().setDoSave(false);
+
+		if(result == UpdateResult.UPDATE_AVAILABLE) {
+			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
+			sender.sendMessage(Main.getPrefix() + "§7Unter Umständen wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
+			update(sender, resultSet);
+		} else {
+			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
+		}
 	}
 }
