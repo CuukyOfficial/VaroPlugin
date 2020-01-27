@@ -34,11 +34,11 @@ public class VaroPlayerDisconnect {
 		scheds = new HashMap<>();
 	}
 
-	private int amount = 0;
+	private int amount;
 	private String name;
 
-	public VaroPlayerDisconnect(Player p) {
-		this.name = p.getName();
+	public VaroPlayerDisconnect(Player player) {
+		this.name = player.getName();
 
 		disconnects.add(this);
 	}

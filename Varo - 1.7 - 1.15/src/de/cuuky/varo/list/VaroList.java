@@ -33,12 +33,11 @@ public abstract class VaroList {
 	}
 
 	public abstract ArrayList<?> getAsList();
+	public abstract void onLoad(List<?> list);
 
 	public String getLocation() {
 		return location;
 	}
-
-	public abstract void onLoad(List<?> list);
 
 	public void saveList() {
 		config.set(location, null);

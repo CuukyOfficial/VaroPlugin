@@ -59,11 +59,7 @@ public class Vanish {
 		for(Player allplayer : Bukkit.getOnlinePlayers())
 			allplayer.showPlayer(player);
 	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
+	
 	public void hideFor(Player player) {
 		player.hidePlayer(this.player);
 	}
@@ -75,6 +71,10 @@ public class Vanish {
 
 	public void unHideFor(Player player) {
 		player.showPlayer(this.player);
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	public static Vanish getVanish(Player player) {

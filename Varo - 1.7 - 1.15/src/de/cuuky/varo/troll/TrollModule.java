@@ -29,12 +29,19 @@ public class TrollModule {
 	}
 
 	protected void onDisable(Player player) {}
-
 	protected void onEnable(Player player) {}
-
 	protected void onInteract(PlayerInteractEvent event) {}
-
 	protected void onMove(PlayerMoveEvent event) {}
+	
+	public void setEnabledFor(Player player, boolean enable) {
+		if(enable) {
+			enabledFor.add(player);
+			onEnable(player);
+		} else {
+			enabledFor.remove(player);
+			onDisable(player);
+		}
+	}
 
 	public String getDescription() {
 		return description;
@@ -50,16 +57,6 @@ public class TrollModule {
 
 	public String getName() {
 		return name;
-	}
-
-	public void setEnabledFor(Player player, boolean enable) {
-		if(enable) {
-			enabledFor.add(player);
-			onEnable(player);
-		} else {
-			enabledFor.remove(player);
-			onDisable(player);
-		}
 	}
 
 	public static ArrayList<TrollModule> getEnabledModules(Player player) {

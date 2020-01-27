@@ -27,7 +27,7 @@ public class Backup {
 
 	private static final int BUFFER_SIZE = 4096;
 
-	private String date = null;
+	private String date;
 
 	public Backup() {
 		zip();
@@ -87,29 +87,6 @@ public class Backup {
 		bos.close();
 	}
 
-	public static ArrayList<String> getBackups() {
-		File file = new File("plugins/Varo/backups/");
-		ArrayList<String> temp = new ArrayList<>();
-		if(!file.isDirectory())
-			return temp;
-
-		for(File listFile : file.listFiles())
-			if(listFile.getName().endsWith(".zip"))
-				temp.add(listFile.getName());
-		return temp;
-	}
-
-	public static String getCurrentDate() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		Date date = new Date();
-
-		return dateFormat.format(date);
-	}
-
-	public static boolean isBackup(String filename) {
-		return new File("plugins/Varo/backups/" + filename + ".zip").exists();
-	}
-
 	public static boolean unzip(String zipFilePath, String destDirectory) {
 		try {
 			File destDir = new File(destDirectory);
@@ -134,5 +111,28 @@ public class Backup {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static String getCurrentDate() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		Date date = new Date();
+
+		return dateFormat.format(date);
+	}
+
+	public static boolean isBackup(String filename) {
+		return new File("plugins/Varo/backups/" + filename + ".zip").exists();
+	}
+	
+	public static ArrayList<String> getBackups() {
+		File file = new File("plugins/Varo/backups/");
+		ArrayList<String> temp = new ArrayList<>();
+		if(!file.isDirectory())
+			return temp;
+
+		for(File listFile : file.listFiles())
+			if(listFile.getName().endsWith(".zip"))
+				temp.add(listFile.getName());
+		return temp;
 	}
 }

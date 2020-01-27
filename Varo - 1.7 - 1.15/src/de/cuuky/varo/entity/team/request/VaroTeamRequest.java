@@ -14,10 +14,13 @@ import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 
 public class VaroTeamRequest {
 
-	private static ArrayList<VaroTeamRequest> requests = new ArrayList<>();
+	private static ArrayList<VaroTeamRequest> requests;
+	
+	static {
+		requests = new ArrayList<>();
+	}
 
-	private VaroPlayer invited;
-	private VaroPlayer invitor;
+	private VaroPlayer invited, invitor;
 	private int sched;
 
 	public VaroTeamRequest(VaroPlayer invitor, VaroPlayer invited) {
@@ -112,14 +115,6 @@ public class VaroTeamRequest {
 		remove();
 	}
 
-	public VaroPlayer getInvited() {
-		return invited;
-	}
-
-	public VaroPlayer getInvitor() {
-		return invitor;
-	}
-
 	public void remove() {
 		Bukkit.getScheduler().cancelTask(sched);
 		requests.remove(this);
@@ -128,6 +123,14 @@ public class VaroTeamRequest {
 	public void revoke() {
 		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue());
 		remove();
+	}
+	
+	public VaroPlayer getInvited() {
+		return invited;
+	}
+
+	public VaroPlayer getInvitor() {
+		return invitor;
 	}
 
 	public static ArrayList<VaroTeamRequest> getAllRequests() {

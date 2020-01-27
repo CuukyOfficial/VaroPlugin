@@ -20,20 +20,7 @@ public class EnchantmentList extends VaroList {
 
 		saveList();
 	}
-
-	@Override
-	public ArrayList<String> getAsList() {
-		return enchantments;
-	}
-
-	public ArrayList<String> getEnchantments() {
-		return enchantments;
-	}
-
-	public boolean hasEnchantment(Enchantment enc, int amplifier) {
-		return enchantments.contains(enc.getName() + ":" + amplifier);
-	}
-
+	
 	@Override
 	public void onLoad(List<?> list) {
 		enchantments = new ArrayList<String>();
@@ -46,6 +33,19 @@ public class EnchantmentList extends VaroList {
 		enchantments.remove(enc.getName() + ":" + amplifier);
 
 		saveList();
+	}
+
+	@Override
+	public ArrayList<String> getAsList() {
+		return enchantments;
+	}
+
+	public ArrayList<String> getEnchantments() {
+		return enchantments;
+	}
+
+	public boolean hasEnchantment(Enchantment enc, int amplifier) {
+		return enchantments.contains(enc.getName() + ":" + amplifier);
 	}
 
 	public static EnchantmentList getEnchantmentList(String list) {

@@ -70,10 +70,6 @@ public class MySQL {
 		return rs;
 	}
 
-	public boolean isConnected() {
-		return connected;
-	}
-
 	public void update(String qry) {
 		try {
 			Statement st = connection.createStatement();
@@ -84,6 +80,10 @@ public class MySQL {
 			System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
 			connect();
 		}
+	}
+	
+	public boolean isConnected() {
+		return connected;
 	}
 
 	public static MySQL getInstance() {

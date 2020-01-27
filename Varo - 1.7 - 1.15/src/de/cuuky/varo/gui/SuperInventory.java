@@ -227,51 +227,6 @@ public abstract class SuperInventory {
 			return size;
 	}
 
-	public Inventory getInventory() {
-		return this.inv;
-	}
-
-	public Player getOpener() {
-		return this.opener;
-	}
-
-	public int getPage() {
-		return page;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public boolean isHomePage() {
-		return homePage;
-	}
-
-	public boolean isOpen() {
-		return guis.contains(this);
-	}
-
-	public abstract boolean onBackClick();
-
-	@Deprecated
-	/*
-	 * @deprecated: Please use linkItemTo() instead
-	 */
-	public abstract void onClick(InventoryClickEvent event);
-
-	public abstract void onClose(InventoryCloseEvent event);
-
-	public abstract void onInventoryAction(PageAction action);
-
-	/*
-	 * @return Return if this is the last page
-	 */
-	public abstract boolean onOpen();
-
 	/*
 	 * String for page title
 	 */
@@ -330,6 +285,51 @@ public abstract class SuperInventory {
 		open();
 	}
 
+	public abstract boolean onBackClick();
+
+	@Deprecated
+	/*
+	 * @deprecated: Please use linkItemTo() instead
+	 */
+	public abstract void onClick(InventoryClickEvent event);
+
+	public abstract void onClose(InventoryCloseEvent event);
+
+	public abstract void onInventoryAction(PageAction action);
+
+	/*
+	 * @return Return if this is the last page
+	 */
+	public abstract boolean onOpen();
+
+	public Inventory getInventory() {
+		return this.inv;
+	}
+
+	public Player getOpener() {
+		return this.opener;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public boolean isHomePage() {
+		return homePage;
+	}
+
+	public boolean isOpen() {
+		return guis.contains(this);
+	}
+
 	/*
 	 * Calculates based on the list size you enter, how many pages you need
 	 */
@@ -340,15 +340,15 @@ public abstract class SuperInventory {
 		return res;
 	}
 
-	public static ArrayList<SuperInventory> getGUIS() {
-		return guis;
-	}
-
 	public static SuperInventory getInventory(Player player) {
 		for(SuperInventory inventory : guis)
 			if(inventory.getOpener().equals(player))
 				return inventory;
 
 		return null;
+	}
+	
+	public static ArrayList<SuperInventory> getGUIS() {
+		return guis;
 	}
 }

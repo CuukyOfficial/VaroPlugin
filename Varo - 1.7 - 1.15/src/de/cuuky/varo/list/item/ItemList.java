@@ -69,15 +69,6 @@ public class ItemList extends VaroList {
 		saveList();
 	}
 
-	@Override
-	public ArrayList<?> getAsList() {
-		return items;
-	}
-
-	public ArrayList<ItemStack> getItems() {
-		return items;
-	}
-
 	public boolean hasItem(ItemStack item) {
 		return items.contains(fixItem(item));
 	}
@@ -100,6 +91,15 @@ public class ItemList extends VaroList {
 		items.remove(fixItem(item));
 
 		saveList();
+	}
+	
+	@Override
+	public ArrayList<?> getAsList() {
+		return items;
+	}
+
+	public ArrayList<ItemStack> getItems() {
+		return items;
 	}
 
 	public static ItemList getItemList(String list) {

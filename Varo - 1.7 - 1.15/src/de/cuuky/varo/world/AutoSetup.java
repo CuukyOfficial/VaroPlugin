@@ -25,6 +25,10 @@ public class AutoSetup {
 		if(Game.getInstance().hasStarted())
 			return;
 
+		setupPlugin();
+	}
+	
+	private void setupPlugin() {
 		World world = VaroUtils.getMainWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");

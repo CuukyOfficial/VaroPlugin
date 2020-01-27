@@ -88,51 +88,7 @@ public class VaroTeam extends VaroEntity {
 		}
 		teams.remove(this);
 	}
-
-	public String getColorCode() {
-		return colorCode == null ? Main.getColorCode() : colorCode;
-	}
-
-	public String getDisplay() {
-		return getColorCode() + "#" + name;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public int getKills() {
-		int kills = 0;
-		for(VaroPlayer player : member)
-			kills += player.getStats().getKills();
-
-		return kills;
-	}
-
-	public double getLifes() {
-		return lifes;
-	}
-
-	public ArrayList<VaroPlayer> getMember() {
-		return member;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public ArrayList<VaroSaveable> getSaveables() {
-		ArrayList<VaroSaveable> save = new ArrayList<VaroSaveable>();
-		for(VaroPlayer vp : member)
-			save.addAll(vp.getStats().getSaveablesRaw());
-
-		return save;
-	}
-
-	public VaroInventory getTeamBackPack() {
-		return teamBackPack;
-	}
-
+	
 	public boolean isDead() {
 		for(VaroPlayer player : member) {
 			if(player.getStats().getState() != PlayerState.ALIVE)
@@ -142,10 +98,6 @@ public class VaroTeam extends VaroEntity {
 		}
 
 		return true;
-	}
-
-	public boolean isMember(VaroPlayer vp) {
-		return this.member.contains(vp);
 	}
 
 	public boolean isOnline() {
@@ -196,11 +148,60 @@ public class VaroTeam extends VaroEntity {
 			if(vp.getStats().getSaveables().contains(saveable))
 				vp.getStats().removeSaveable(saveable);
 	}
+	
+	public boolean isMember(VaroPlayer vp) {
+		return this.member.contains(vp);
+	}
 
 	public void setColorCode(String colorCode) {
 		this.colorCode = colorCode;
 		statChanged();
 	}
+	
+	public String getColorCode() {
+		return colorCode == null ? Main.getColorCode() : colorCode;
+	}
+
+	public String getDisplay() {
+		return getColorCode() + "#" + name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getKills() {
+		int kills = 0;
+		for(VaroPlayer player : member)
+			kills += player.getStats().getKills();
+
+		return kills;
+	}
+
+	public double getLifes() {
+		return lifes;
+	}
+
+	public ArrayList<VaroPlayer> getMember() {
+		return member;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ArrayList<VaroSaveable> getSaveables() {
+		ArrayList<VaroSaveable> save = new ArrayList<VaroSaveable>();
+		for(VaroPlayer vp : member)
+			save.addAll(vp.getStats().getSaveablesRaw());
+
+		return save;
+	}
+
+	public VaroInventory getTeamBackPack() {
+		return teamBackPack;
+	}
+
 
 	public void setId(int id) {
 		this.id = id;

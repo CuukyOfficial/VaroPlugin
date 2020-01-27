@@ -29,9 +29,8 @@ public class VaroEvent {
 		new ExposedVaroEvent();
 	}
 
-	private String description;
+	private String name, description;
 	private Material icon;
-	private String name;
 	protected boolean enabled;
 
 	public VaroEvent(String name, Material icon, String description) {
@@ -58,15 +57,7 @@ public class VaroEvent {
 	public boolean isEnabled() {
 		return enabled;
 	}
-
-	public void onDisable() {}
-
-	public void onEnable() {}
-
-	public void onInteract(PlayerInteractEvent event) {}
-
-	public void onMove(PlayerMoveEvent event) {}
-
+	
 	public void setEnabled(boolean enabled) {
 		if(Game.getInstance().getGameState() != GameState.STARTED && enabled)
 			return;
@@ -78,6 +69,11 @@ public class VaroEvent {
 
 		this.enabled = enabled;
 	}
+
+	public void onDisable() {}
+	public void onEnable() {}
+	public void onInteract(PlayerInteractEvent event) {}
+	public void onMove(PlayerMoveEvent event) {}
 
 	public static ArrayList<VaroEvent> getEnabledEvents() {
 		ArrayList<VaroEvent> enabledEvents = new ArrayList<>();

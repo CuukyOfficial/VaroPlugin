@@ -17,22 +17,28 @@ import de.cuuky.varo.utils.VaroUtils;
 
 public class Strike implements VaroSerializeable {
 
-	@VaroSerializeField(path = "acquired")
-	private Date acquired;
-	@VaroSerializeField(path = "banUntil")
-	private Date banUntil;
-	@VaroSerializeField(path = "number")
-	private int number;
-	@VaroSerializeField(path = "posted")
-	private boolean posted;
-	@VaroSerializeField(path = "reason")
-	private String reason;
-	private VaroPlayer striked;
 	@VaroSerializeField(path = "strikedId")
 	private int strikedId;
-
+	
 	@VaroSerializeField(path = "striker")
 	private String striker;
+	
+	@VaroSerializeField(path = "acquired")
+	private Date acquired;
+	
+	@VaroSerializeField(path = "banUntil")
+	private Date banUntil;
+	
+	@VaroSerializeField(path = "number")
+	private int number;
+	
+	@VaroSerializeField(path = "posted")
+	private boolean posted;
+	
+	@VaroSerializeField(path = "reason")
+	private String reason;
+	
+	private VaroPlayer striked;
 
 	public Strike() {}
 

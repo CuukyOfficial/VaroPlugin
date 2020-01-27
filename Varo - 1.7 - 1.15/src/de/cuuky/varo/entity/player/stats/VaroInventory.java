@@ -13,15 +13,15 @@ import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroInventory implements VaroSerializeable {
 
-	private Inventory inventory;
-
 	@VaroSerializeField(path = "inventory")
 	private HashMap<String, ItemStack> inventoryList;
 
 	@VaroSerializeField(path = "size")
 	private int size;
+	
+	private Inventory inventory;
 
-	public VaroInventory() {}
+	public VaroInventory() {} // Serialization
 
 	public VaroInventory(int size) {
 		inventoryList = new HashMap<>();
@@ -39,10 +39,6 @@ public class VaroInventory implements VaroSerializeable {
 		inventory.clear();
 	}
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
 	@Override
 	public void onDeserializeEnd() {
 		createInventory();
@@ -58,5 +54,9 @@ public class VaroInventory implements VaroSerializeable {
 			if(stack != null && stack.getType() != Material.AIR)
 				inventoryList.put(String.valueOf(i), stack);
 		}
+	}
+	
+	public Inventory getInventory() {
+		return inventory;
 	}
 }

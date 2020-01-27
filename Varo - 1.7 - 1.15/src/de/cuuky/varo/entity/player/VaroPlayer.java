@@ -188,7 +188,108 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer.remove(this);
 		ScoreboardHandler.getInstance().updateTopScores();
 	}
+	
+	@Override
+	public void onDeserializeEnd() {
+		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
+		if(isOnline()) {
+			update();
 
+			if(getStats().isSpectator() || isAdminIgnore())
+				setSpectacting();
+
+			setNormalAttackSpeed();
+
+			if(Game.getInstance().getGameState() == GameState.LOBBY)
+				LobbyItem.giveItems(player);
+		} else if(isAdminIgnore())
+			adminIgnore = false;
+
+		this.stats.setOwner(this);
+	}
+
+	public void onEvent(BukkitEventType type) {
+		new BukkitEvent(this, type);
+	}
+
+	@Override
+	public void onSerializeStart() {}
+
+	public void register() {
+		if(this.stats == null)
+			this.stats = new Stats(this);
+
+		stats.loadDefaults();
+		varoplayer.add(this);
+	}
+
+	public String getPrefix() {
+		String pr = "";
+		if(team != null)
+			pr = team.getDisplay() + " ";
+
+		if(rank != null)
+			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
+		
+		return pr;
+	}
+	
+	public void setSpectacting() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				new Vanish(player.getPlayer());
+				player.getPlayer().setGameMode(GameMode.ADVENTURE);
+				player.getPlayer().setAllowFlight(true);
+				player.getPlayer().setFlying(true);
+				player.getPlayer().setHealth(20);
+				player.getPlayer().setFoodLevel(20);
+
+				if(!adminIgnore) {
+					player.getInventory().clear();
+					player.getInventory().setArmorContents(new ItemStack[] {});
+				}
+			}
+		}, 1);
+	}
+
+	public void update() {
+		if(!isOnline())
+			return;
+
+		if(ConfigEntry.NAMETAGS.getValueAsBoolean()) {
+			if(nametag == null)
+				nametag = new Nametag(player.getUniqueId(), player);
+			else
+				nametag.refresh();
+		}
+
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
+				getNetworkManager().sendTablist();
+			}
+
+			String listname = "";
+			if(getTeam() != null) {
+				if(getRank() == null) {
+					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
+				} else {
+					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
+				}
+			} else {
+				if(getRank() == null) {
+					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
+				} else {
+					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+				}
+			}
+
+			if(this.tabName == null || !this.tabName.equals(listname))
+				player.setPlayerListName(this.tabName = listname);
+		}
+	}
+	
 	public boolean getalreadyHadMassProtectionTime() {
 		return alreadyHadMassProtectionTime;
 	}
@@ -215,16 +316,6 @@ public class VaroPlayer extends VaroEntity {
 
 	public Player getPlayer() {
 		return player;
-	}
-
-	public String getPrefix() {
-		String pr = "";
-		if(team != null)
-			pr = team.getDisplay() + " ";
-
-		if(rank != null)
-			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
-		return pr;
 	}
 
 	public Rank getRank() {
@@ -278,40 +369,6 @@ public class VaroPlayer extends VaroEntity {
 		return varoplayer.contains(this);
 	}
 
-	@Override
-	public void onDeserializeEnd() {
-		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
-		if(isOnline()) {
-			update();
-
-			if(getStats().isSpectator() || isAdminIgnore())
-				setSpectacting();
-
-			setNormalAttackSpeed();
-
-			if(Game.getInstance().getGameState() == GameState.LOBBY)
-				LobbyItem.giveItems(player);
-		} else if(isAdminIgnore())
-			adminIgnore = false;
-
-		this.stats.setOwner(this);
-	}
-
-	public void onEvent(BukkitEventType type) {
-		new BukkitEvent(this, type);
-	}
-
-	@Override
-	public void onSerializeStart() {}
-
-	public void register() {
-		if(this.stats == null)
-			this.stats = new Stats(this);
-
-		stats.loadDefaults();
-		varoplayer.add(this);
-	}
-
 	public void sendMessage(String message) {
 		player.sendMessage(message);
 	}
@@ -356,27 +413,15 @@ public class VaroPlayer extends VaroEntity {
 		this.rank = rank;
 		update();
 	}
-
-	public void setSpectacting() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				new Vanish(player.getPlayer());
-				player.getPlayer().setGameMode(GameMode.ADVENTURE);
-				player.getPlayer().setAllowFlight(true);
-				player.getPlayer().setFlying(true);
-				player.getPlayer().setHealth(20);
-				player.getPlayer().setFoodLevel(20);
-
-				if(!adminIgnore) {
-					player.getInventory().clear();
-					player.getInventory().setArmorContents(new ItemStack[] {});
-				}
-			}
-		}, 1);
+	
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
+	public void setVillager(OfflineVillager villager) {
+		this.villager = villager;
+	}
+	
 	public void setTeam(VaroTeam team) {
 		VaroTeam oldTeam = this.team;
 		this.team = team;
@@ -393,50 +438,6 @@ public class VaroPlayer extends VaroEntity {
 
 		update();
 		ScoreboardHandler.getInstance().updateTopScores();
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public void setVillager(OfflineVillager villager) {
-		this.villager = villager;
-	}
-
-	public void update() {
-		if(!isOnline())
-			return;
-
-		if(ConfigEntry.NAMETAGS.getValueAsBoolean()) {
-			if(nametag == null)
-				nametag = new Nametag(player.getUniqueId(), player);
-			else
-				nametag.refresh();
-		}
-
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
-				getNetworkManager().sendTablist();
-			}
-
-			String listname = "";
-			if(getTeam() != null) {
-				if(getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
-				}
-			} else {
-				if(getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
-				}
-			}
-
-			if(this.tabName == null || !this.tabName.equals(listname))
-				player.setPlayerListName(this.tabName = listname);
-		}
 	}
 
 	/**

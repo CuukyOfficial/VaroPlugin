@@ -32,6 +32,14 @@ public enum DecreaseReason {
 			return speed.getValueAsDouble();
 		}
 	}
+	
+	public void postAlert() {
+		EventLogger.getInstance().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+	}
+
+	public void postBroadcast() {
+		Bukkit.broadcastMessage(broadcast.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+	}
 
 	public int getSize() {
 		return size.getValueAsInt();
@@ -43,13 +51,5 @@ public enum DecreaseReason {
 
 	public boolean isEnabled() {
 		return enabled.getValueAsBoolean();
-	}
-
-	public void postAlert() {
-		EventLogger.getInstance().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
-	}
-
-	public void postBroadcast() {
-		Bukkit.broadcastMessage(broadcast.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
 	}
 }

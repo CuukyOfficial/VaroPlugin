@@ -87,14 +87,6 @@ public class PlayerHit {
 		}, ConfigEntry.COMBATLOG_TIME.getValueAsInt() * 20);
 	}
 
-	public Player getOpponent() {
-		return this.opponent;
-	}
-
-	public Player getPlayer() {
-		return this.player;
-	}
-
 	public boolean hasOld(Player p) {
 		for(PlayerHit hit : hits) {
 			if(!hit.getPlayer().equals(p))
@@ -115,6 +107,14 @@ public class PlayerHit {
 	public void remove() {
 		Bukkit.getScheduler().cancelTask(task);
 		hits.remove(this);
+	}
+	
+	public Player getOpponent() {
+		return this.opponent;
+	}
+
+	public Player getPlayer() {
+		return this.player;
 	}
 
 	public static PlayerHit getHit(Player p) {

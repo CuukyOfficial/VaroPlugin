@@ -9,10 +9,9 @@ import de.cuuky.varo.world.border.VaroBorder;
 
 public class BorderDecreaseMinuteTimer {
 
-	private int sched;
+	private int decreaseScheduler;
 
 	public BorderDecreaseMinuteTimer() {
-		sched = -1;
 		if(!DecreaseReason.TIME_MINUTES.isEnabled())
 			return;
 
@@ -20,7 +19,7 @@ public class BorderDecreaseMinuteTimer {
 	}
 
 	private void startScheduling() {
-		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		decreaseScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -28,12 +27,13 @@ public class BorderDecreaseMinuteTimer {
 					remove();
 					return;
 				}
+				
 				VaroBorder.getInstance().decreaseBorder(DecreaseReason.TIME_MINUTES);
 			}
 		}, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20);
 	}
 
 	public void remove() {
-		Bukkit.getScheduler().cancelTask(sched);
+		Bukkit.getScheduler().cancelTask(decreaseScheduler);
 	}
 }

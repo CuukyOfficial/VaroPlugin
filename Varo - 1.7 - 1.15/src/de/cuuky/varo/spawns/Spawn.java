@@ -132,6 +132,29 @@ public class Spawn implements VaroSerializeable {
 
 		remove();
 	}
+	
+	@Override
+	public void onDeserializeEnd() {
+		if(playerId != 0)
+			this.player = VaroPlayer.getPlayer(playerId);
+
+		if(nameTagLocation != null && nameTagName != null) {
+			for(Entity ent : nameTagLocation.getWorld().getEntities()) {
+				if(ent.getType().toString().contains("ARMOR_STAND"))
+					try {
+						if(ent.getLocation().distance(nameTagLocation) < 1 && ((String) ent.getClass().getMethod("getCustomName").invoke(ent)).equals(nameTagName))
+							this.armorStand = ent;
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+			}
+		}
+	}
+
+	@Override
+	public void onSerializeStart() {
+		this.playerId = player != null ? player.getId() : 0;
+	}
 
 	public Location getLocation() {
 		return location;
@@ -151,27 +174,6 @@ public class Spawn implements VaroSerializeable {
 
 	public SpawnType getType() {
 		return type;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		if(playerId != 0)
-			this.player = VaroPlayer.getPlayer(playerId);
-
-		if(nameTagLocation != null && nameTagName != null)
-			for(Entity ent : nameTagLocation.getWorld().getEntities())
-				if(ent.getType().toString().contains("ARMOR_STAND"))
-					try {
-						if(ent.getLocation().distance(nameTagLocation) < 1 && ((String) ent.getClass().getMethod("getCustomName").invoke(ent)).equals(nameTagName))
-							this.armorStand = ent;
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-	}
-
-	@Override
-	public void onSerializeStart() {
-		this.playerId = player != null ? player.getId() : 0;
 	}
 
 	public void setPlayer(VaroPlayer player) {

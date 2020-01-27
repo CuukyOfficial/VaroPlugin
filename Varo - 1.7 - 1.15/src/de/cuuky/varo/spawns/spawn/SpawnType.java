@@ -7,6 +7,7 @@ public enum SpawnType implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "NUMBERS")
 	NUMBERS,
+	
 	@VaroSerializeField(enumValue = "PLAYER")
 	PLAYER;
 

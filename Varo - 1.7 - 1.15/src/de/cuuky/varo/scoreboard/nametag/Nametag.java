@@ -51,10 +51,10 @@ public class Nametag {
 
 	public Nametag(UUID uniqueID, Player p) {
 		this.hearts = ConfigMessages.NAMETAG_SUFFIX.getValue().contains("%hearts%");
-
 		this.player = p;
-		p.getScoreboard().getTeams().forEach(team -> team.unregister());
 		this.uniqueID = uniqueID;
+		
+		p.getScoreboard().getTeams().forEach(team -> team.unregister());
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -134,31 +134,7 @@ public class Nametag {
 				team.setSuffix(nametag.getSuffix());
 		}
 	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public Rank getRank() {
-		return rank;
-	}
-
-	public String getSuffix() {
-		return suffix;
-	}
-
-	public UUID getUniqueId() {
-		return this.uniqueID;
-	}
-
+	
 	public void giveAll() {
 		if(!init)
 			return;
@@ -189,11 +165,7 @@ public class Nametag {
 		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(player)).replace("%hearts%", String.valueOf((int) VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
 		setToAll();
 	}
-
-	public boolean isOnline() {
-		return player != null;
-	}
-
+	
 	public void nameTagVisibilityReset() {
 		if(!init)
 			return;
@@ -256,6 +228,34 @@ public class Nametag {
 			team.setSuffix(this.suffix);
 			toSet.setScoreboard(board);
 		}
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public Rank getRank() {
+		return rank;
+	}
+
+	public String getSuffix() {
+		return suffix;
+	}
+
+	public UUID getUniqueId() {
+		return this.uniqueID;
+	}
+
+	public boolean isOnline() {
+		return player != null;
 	}
 
 	public static void refreshAll() {

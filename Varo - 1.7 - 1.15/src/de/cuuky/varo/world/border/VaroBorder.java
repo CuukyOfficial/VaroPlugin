@@ -24,10 +24,15 @@ public class VaroBorder {
 	private VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
-		
+
 		this.borders = new Object[2];
 		this.distances = new HashMap<>();
 
+		loadBorders();
+		startCalculating();
+	}
+
+	private void loadBorders() {
 		for(World world : Bukkit.getWorlds()) {
 			switch(world.getEnvironment()) {
 			case NORMAL:
@@ -49,57 +54,58 @@ public class VaroBorder {
 				break;
 			}
 		}
-		
-		startCalculating();
 	}
-	
+
+	private double getDistanceToBorder(Player player) {
+		Location playerLoc = player.getLocation();
+		World playerWorld = player.getLocation().getWorld();
+
+		Location center;
+		double size = 0;
+
+		Object border;
+
+		switch(playerWorld.getEnvironment()) {
+		case NORMAL:
+			border = borders[0];
+			break;
+		case NETHER:
+			border = borders[1];
+			break;
+		default:
+			return -1;
+		}
+
+		try {
+			center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
+			size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+
+		ArrayList<Double> distanceArray = new ArrayList<>();
+		double playerDifferenceX = playerLoc.getX() - center.getX();
+		double playerDifferenceZ = playerLoc.getZ() - center.getZ();
+		distanceArray.add(Math.abs(playerDifferenceX + size));
+		distanceArray.add(Math.abs(playerDifferenceX - size));
+		distanceArray.add(Math.abs(playerDifferenceZ + size));
+		distanceArray.add(Math.abs(playerDifferenceZ - size));
+		double nearest = Double.MAX_VALUE;
+		for(double distance : distanceArray)
+			if(distance < nearest)
+				nearest = distance;
+
+		return Math.round(nearest);
+	}
+
 	private void startCalculating() {
 		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
-			
+
 			@Override
 			public void run() {
-				for(Player player : VersionUtils.getOnlinePlayer()) {
-					Location playerLoc = player.getLocation();
-					World playerWorld = player.getLocation().getWorld();
-
-					Location center;
-					double size = 0;
-
-					Object border;
-
-					switch(playerWorld.getEnvironment()) {
-					case NORMAL:
-						border = borders[0];
-						break;
-					case NETHER:
-						border = borders[1];
-						break;
-					default:
-						continue;
-					}
-
-					try {
-						center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
-						size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
-					} catch(Exception e) {
-						e.printStackTrace();
-						continue;
-					}
-
-					ArrayList<Double> distanceArray = new ArrayList<>();
-					double playerDifferenceX = playerLoc.getX() - center.getX();
-					double playerDifferenceZ = playerLoc.getZ() - center.getZ();
-					distanceArray.add(Math.abs(playerDifferenceX + size));
-					distanceArray.add(Math.abs(playerDifferenceX - size));
-					distanceArray.add(Math.abs(playerDifferenceZ + size));
-					distanceArray.add(Math.abs(playerDifferenceZ - size));
-					double nearest = Double.MAX_VALUE;
-					for(double distance : distanceArray)
-						if(distance < nearest)
-							nearest = distance;
-
-					distances.put(player, (double) Math.round(nearest));
-				}
+				for(Player player : VersionUtils.getOnlinePlayer())
+					distances.put(player, getDistanceToBorder(player));
 			}
 		}, 20, 20 * 1);
 	}
@@ -216,9 +222,9 @@ public class VaroBorder {
 	}
 
 	public static VaroBorder getInstance() {
-		if(instance == null) {
+		if(instance == null) 
 			instance = new VaroBorder();
-		}
+		
 		return instance;
 	}
 }

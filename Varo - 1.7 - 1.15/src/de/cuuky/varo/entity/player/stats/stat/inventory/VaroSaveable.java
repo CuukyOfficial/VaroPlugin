@@ -17,6 +17,7 @@ public class VaroSaveable implements VaroSerializeable {
 	public enum SaveableType implements VaroSerializeable {
 		@VaroSerializeField(enumValue = "CHEST")
 		CHEST,
+		
 		@VaroSerializeField(enumValue = "FURNACE")
 		FURNANCE;
 
@@ -33,20 +34,20 @@ public class VaroSaveable implements VaroSerializeable {
 		saveables = new ArrayList<>();
 	}
 
-	private Block block;
-
-	@VaroSerializeField(path = "blockLocation")
-	private Location blockLocation;
-
 	@VaroSerializeField(path = "id")
 	private int id;
-
-	private VaroPlayer player;
+	
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
-
+	
 	@VaroSerializeField(path = "type")
 	private SaveableType type;
+	
+	@VaroSerializeField(path = "blockLocation")
+	private Location blockLocation;
+	
+	private VaroPlayer player;
+	private Block block;
 
 	public VaroSaveable() {
 		saveables.add(this);
@@ -78,22 +79,6 @@ public class VaroSaveable implements VaroSerializeable {
 			return false;
 
 		return true;
-	}
-
-	public Block getBlock() {
-		return block;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public VaroPlayer getPlayer() {
-		return player;
-	}
-
-	public SaveableType getType() {
-		return type;
 	}
 
 	public boolean holderDead() {
@@ -148,6 +133,22 @@ public class VaroSaveable implements VaroSerializeable {
 		}
 
 		return null;
+	}
+	
+	public Block getBlock() {
+		return block;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public VaroPlayer getPlayer() {
+		return player;
+	}
+
+	public SaveableType getType() {
+		return type;
 	}
 
 	public static ArrayList<VaroSaveable> getSaveable(VaroPlayer player) {

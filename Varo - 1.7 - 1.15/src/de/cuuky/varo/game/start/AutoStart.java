@@ -114,11 +114,13 @@ public class AutoStart implements VaroSerializeable {
 		StartDelay.reset();
 		start();
 	}
-
-	public Date getStart() {
-		return start;
+	
+	public void stop() {
+		Bukkit.getScheduler().cancelTask(sched);
+		Game.getInstance().setAutoStart(null);
+		StartDelay.reset();
 	}
-
+	
 	@Override
 	public void onDeserializeEnd() {
 		start();
@@ -127,10 +129,7 @@ public class AutoStart implements VaroSerializeable {
 	@Override
 	public void onSerializeStart() {}
 
-	public void stop() {
-		Bukkit.getScheduler().cancelTask(sched);
-		Game.getInstance().setAutoStart(null);
-		StartDelay.reset();
+	public Date getStart() {
+		return start;
 	}
-
 }

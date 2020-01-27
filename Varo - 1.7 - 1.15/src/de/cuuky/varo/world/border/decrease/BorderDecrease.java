@@ -38,23 +38,7 @@ public class BorderDecrease {
 			e.printStackTrace();
 		}
 	}
-
-	public double getBps() {
-		return bps;
-	}
-
-	public void remove() {
-		decreases.remove(this);
-	}
-
-	public void setFinishHook(Runnable finishHook) {
-		this.finishHook = finishHook;
-	}
-
-	public void setStartHook(Runnable startHook) {
-		this.startHook = startHook;
-	}
-
+	
 	public void shrink() {
 		VaroBorder border = VaroBorder.getInstance();
 
@@ -78,6 +62,22 @@ public class BorderDecrease {
 
 		finishHook.run();
 		remove();
+	}
+	
+	public void remove() {
+		decreases.remove(this);
+	}
+
+	public double getBps() {
+		return bps;
+	}
+
+	public void setFinishHook(Runnable finishHook) {
+		this.finishHook = finishHook;
+	}
+
+	public void setStartHook(Runnable startHook) {
+		this.startHook = startHook;
 	}
 
 	private static void startShrinking() {

@@ -41,58 +41,59 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class Stats implements VaroSerializeable {
 
-	@VaroSerializeField(path = "countdown")
-	private int countdown;
-	@VaroSerializeField(path = "diedAt")
-	private Date diedAt;
-	@VaroSerializeField(path = "firstTimeJoined")
-	private Date firstTimeJoined;
-	@VaroSerializeField(path = "inventoryBackups", arrayClass = InventoryBackup.class)
-	private ArrayList<InventoryBackup> inventoryBackups;
-	@VaroSerializeField(path = "kills")
-	private int kills;
-
-	@VaroSerializeField(path = "lastEnemyContact")
-	private Date lastEnemyContact;
-	@VaroSerializeField(path = "lastJoined")
-	private Date lastJoined;
+	@VaroSerializeField(path = "state")
+	private PlayerState state;
 	@VaroSerializeField(path = "lastLocation")
 	private Location lastLocation;
-
-	private VaroPlayer owner;
-	@VaroSerializeField(path = "playerBackpack")
-	private VaroInventory playerBackpack;
-	@VaroSerializeField(path = "restoreBackup")
-	private InventoryBackup restoreBackup;
-	@VaroSerializeField(path = "saveables", arrayClass = VaroSaveable.class)
-	private ArrayList<VaroSaveable> saveables;
+	
+	@VaroSerializeField(path = "countdown")
+	private int countdown;
+	@VaroSerializeField(path = "kills")
+	private int kills;
 	@VaroSerializeField(path = "sessions")
 	private int sessions;
 	@VaroSerializeField(path = "sessionsPlayed")
 	private int sessionsPlayed;
-	@VaroSerializeField(path = "showActionbarTime")
-	private boolean showActionbarTime;
-
-	@VaroSerializeField(path = "showScoreboard")
-	private boolean showScoreboard;
-	@VaroSerializeField(path = "state")
-	private PlayerState state;
-	@VaroSerializeField(path = "strikes", arrayClass = Strike.class)
-	private ArrayList<Strike> strikes;
-	@VaroSerializeField(path = "timeUntilAddSession")
-	private Date timeUntilAddSession;
-	@VaroSerializeField(path = "videos", arrayClass = YouTubeVideo.class)
-	private ArrayList<YouTubeVideo> videos;
-	@VaroSerializeField(path = "willClear")
-	private boolean willClear;
-
 	@VaroSerializeField(path = "wins")
 	private int wins;
-
+	
+	@VaroSerializeField(path = "showActionbarTime")
+	private boolean showActionbarTime;
+	@VaroSerializeField(path = "showScoreboard")
+	private boolean showScoreboard;
+	@VaroSerializeField(path = "willClear")
+	private boolean willClear;
+	
+	@VaroSerializeField(path = "firstTimeJoined")
+	private Date firstTimeJoined;
+	@VaroSerializeField(path = "lastJoined")
+	private Date lastJoined;
+	@VaroSerializeField(path = "lastEnemyContact")
+	private Date lastEnemyContact;
+	@VaroSerializeField(path = "diedAt")
+	private Date diedAt;
+	@VaroSerializeField(path = "timeUntilAddSession")
+	private Date timeUntilAddSession;
+	
+	@VaroSerializeField(path = "playerBackpack")
+	private VaroInventory playerBackpack;
+	@VaroSerializeField(path = "restoreBackup")
+	private InventoryBackup restoreBackup;
 	@VaroSerializeField(path = "youtubeLink")
 	private String youtubeLink;
+	
+	@VaroSerializeField(path = "inventoryBackups", arrayClass = InventoryBackup.class)
+	private ArrayList<InventoryBackup> inventoryBackups;
+	@VaroSerializeField(path = "saveables", arrayClass = VaroSaveable.class)
+	private ArrayList<VaroSaveable> saveables;
+	@VaroSerializeField(path = "strikes", arrayClass = Strike.class)
+	private ArrayList<Strike> strikes;
+	@VaroSerializeField(path = "videos", arrayClass = YouTubeVideo.class)
+	private ArrayList<YouTubeVideo> videos;
+	
+	private VaroPlayer owner;
 
-	public Stats() {} // Für Serialise
+	public Stats() {} // Serialization
 
 	public Stats(VaroPlayer vp) {
 		this.owner = vp;
