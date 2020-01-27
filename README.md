@@ -18,6 +18,7 @@ Richtilinien zum Programmieren:
 - Leerzeilen möglichst vermeiden -> Zeilen sinngemäß anordnen
 - Keine Initialisierung der Variablen (außer ggf. final) in der Deklarierung
 - Fields mit Annotations vor allen anderen mit Leerzeile
+- Getter-Setter unten und nacheinander - Methoden sinngemäß und nach reihenfolge sortieren
 - Sortierung nach Sichtbarkeit
   <ol style="list-style-type:square;">
     <li>Private</li>
