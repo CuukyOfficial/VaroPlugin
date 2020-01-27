@@ -15,9 +15,9 @@ Richtilinien zum Programmieren:
 - Camel Case-Notation
 - Keine Fehler im Code nach Wechseln der Bukkit oder Spigot API (Reflections)
 - Variablen nutzen, keine Config-Zugriffe während des Spielens
-- Leerzeilen möglichst vermeiden -> Sinngemäß anordnen
+- Leerzeilen möglichst vermeiden -> Zeilen sinngemäß anordnen
 - Keine Initialisierung der Variablen (außer ggf. final) in der Deklarierung
-- Die unten vorgegebene Sortierung nutzen
+- Fields mit Annotations vor allen anderen mit Leerzeile
 - Sortierung nach Sichtbarkeit
   <ol style="list-style-type:square;">
     <li>Private</li>
