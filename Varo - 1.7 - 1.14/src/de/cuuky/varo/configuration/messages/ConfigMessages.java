@@ -6,8 +6,8 @@ import java.util.Date;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.disconnect.Disconnect;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.utils.PermissionUtils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.world.border.VaroBorder;
@@ -302,7 +302,7 @@ public enum ConfigMessages {
 		replaced = replaced.contains("%episodesPlayedPlus1%") ? replaced.replace("%episodesPlayedPlus1%", String.valueOf(vp.getStats().getSessionsPlayed() + 1)) : replaced;
 		replaced = replaced.contains("%sessions%") ? replaced.replace("%sessions%", String.valueOf(vp.getStats().getSessions())) : replaced;
 		replaced = replaced.contains("%seconds%") ? replaced.replace("%seconds%", String.valueOf(vp.getStats().getCountdown())) : replaced;
-		replaced = replaced.contains("%remainingDisconnects%") ? replaced.replace("%remainingDisconnects%", String.valueOf(Disconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - Disconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())) : replaced;
+		replaced = replaced.contains("%remainingDisconnects%") ? replaced.replace("%remainingDisconnects%", String.valueOf(VaroPlayerDisconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())) : replaced;
 		replaced = replaced.contains("%ping%") ? replaced.replace("%ping%", String.valueOf(vp.getNetworkManager().getPing())) : replaced;
 		replaced = replaced.contains("%pexPrefix%") ? replaced.replace("%pexPrefix%", PermissionUtils.getPermissionsExPrefix(vp)) : replaced;
 		replaced = replaced.contains("%lpPrefix%") ? replaced.replace("%lpPrefix%", PermissionUtils.getLuckPermsPrefix(vp)) : replaced;

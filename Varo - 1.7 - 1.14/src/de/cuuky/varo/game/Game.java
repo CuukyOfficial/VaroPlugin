@@ -284,7 +284,7 @@ public class Game implements VaroSerializeable {
 		return instance;
 	}
 
-	public static void initialise() {
+	public static void initialize() {
 		instance = new Game();
 
 		instance.startRefreshTimer();

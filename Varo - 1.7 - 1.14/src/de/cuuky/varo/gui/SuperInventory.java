@@ -36,17 +36,17 @@ public abstract class SuperInventory {
 
 		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
 		backwards = new ItemBuilder().displayname("§cSeite rückwärts").itemstack(new ItemStack(Material.ARROW)).build();
+		
 		fill_inventory = ConfigEntry.GUI_FILL_INVENTORY.getValueAsBoolean();
 		animations = ConfigEntry.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();
 	}
 
-	private HashMap<ItemMeta, Runnable> itemlinks;
 	protected String firstTitle, title;
+	private HashMap<ItemMeta, Runnable> itemlinks;
+	protected ArrayList<Integer> modifier;
 	protected boolean hasMorePages, isLastPage, homePage, ignoreNextClose;
 	protected Inventory inv;
-	protected ArrayList<Integer> modifier;
 	protected Player opener;
-
 	protected int page, size;
 
 	public SuperInventory(String title, Player opener, int size, boolean homePage) {

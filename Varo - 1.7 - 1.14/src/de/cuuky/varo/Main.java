@@ -18,20 +18,25 @@ import de.cuuky.varo.version.VersionUtils;
 public class Main extends JavaPlugin {
 
 	/*
-	 * Plugin by Cuuky @ 2019 All rights reserved! Contributors: Korne127
+	 * Plugin by Cuuky @ 2019-2020 - All rights reserved! Contributors: Korne127
 	 */
-
-	private static BotLauncher botLauncher;
+	
 	private static final String CONSOLE_PREFIX = "[Varo] ";
-
+	
+	private static BotLauncher botLauncher;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
 	private static Main instance;
 
 	private boolean failed;
+	
+	@Override
+	public void onLoad() {
+		failed = false;
+		instance = this;
 
-	public File getThisFile() {
-		return getFile();
+		new ConsoleLogger();
+		super.onLoad();
 	}
 
 	@Override
@@ -87,15 +92,6 @@ public class Main extends JavaPlugin {
 	}
 
 	@Override
-	public void onLoad() {
-		failed = false;
-		instance = this;
-
-		new ConsoleLogger();
-		super.onLoad();
-	}
-
-	@Override
 	public void onDisable() {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		System.out.println(CONSOLE_PREFIX + " ");
@@ -119,6 +115,10 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
+	}
+	
+	public File getThisFile() {
+		return getFile();
 	}
 
 	public static void broadcastMessage(String message) {

@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.cuuky.varo.combatlog.CombatlogCheck;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.disconnect.Disconnect;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.Game;
@@ -53,9 +53,9 @@ public class PlayerQuitListener implements Listener {
 			// CHECK DISCONNECTS
 			if(vplayer.getStats().hasTimeLeft()) {
 				if(ConfigEntry.DISCONNECT_PER_SESSION.isIntActivated()) {
-					Disconnect dc = Disconnect.getDisconnect(player);
+					VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
 					if(dc == null)
-						dc = new Disconnect(player);
+						dc = new VaroPlayerDisconnect(player);
 					dc.addDisconnect();
 
 					if(dc.check()) {
@@ -64,7 +64,7 @@ public class PlayerQuitListener implements Listener {
 					}
 				}
 
-				Disconnect.disconnected(vplayer.getName());
+				VaroPlayerDisconnect.disconnected(vplayer.getName());
 				Bukkit.broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME.getValue(vplayer));
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);

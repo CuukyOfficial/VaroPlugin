@@ -21,6 +21,10 @@ public class WinnerCheck {
 		if(Game.getInstance().getGameState() != GameState.STARTED)
 			return;
 
+		check();
+	}
+	
+	private void check() {
 		places = new HashMap<Integer, ArrayList<VaroPlayer>>();
 		ArrayList<VaroPlayer> alive = VaroPlayer.getAlivePlayer();
 		if(!(alive.size() <= ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)

@@ -22,7 +22,7 @@ public class UpdateCommand extends VaroCommand {
 	private boolean pluginNameChanged, resetOldDirectory;
 
 	public UpdateCommand() {
-		super("update", "Installiert automatisch die neueste Version.", "varo.update");
+		super("update", "Installiert automatisch die neueste Version", "varo.update");
 	}
 
 	@Override
@@ -68,6 +68,7 @@ public class UpdateCommand extends VaroCommand {
 
 		if(result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
+			sender.sendMessage(Main.getPrefix() + "§7Unter Umständen wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
 			update(sender, resultSet);
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
@@ -75,7 +76,7 @@ public class UpdateCommand extends VaroCommand {
 		}
 
 	}
-	
+
 	private void deleteDirectory(File file) {
 		for(File listFile : file.listFiles()) {
 			if(listFile.isDirectory())

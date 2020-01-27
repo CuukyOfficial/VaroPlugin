@@ -5,16 +5,18 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public enum GameState implements VaroSerializeable {
 
-	@VaroSerializeField(enumValue = "END")
-	END("END"),
 	@VaroSerializeField(enumValue = "LOBBY")
 	LOBBY("LOBBY"),
+	
 	@VaroSerializeField(enumValue = "STARTED")
-	STARTED("STARTED");
+	STARTED("STARTED"),
+	
+	@VaroSerializeField(enumValue = "END")
+	END("END");
 
 	private String name;
 
-	GameState(String name) {
+	private GameState(String name) {
 		this.name = name;
 	}
 

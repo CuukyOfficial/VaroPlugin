@@ -1,4 +1,4 @@
-package de.cuuky.varo.disconnect;
+package de.cuuky.varo.entity.player.disconnect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,13 +20,13 @@ import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.version.VersionUtils;
 
-public class Disconnect {
+public class VaroPlayerDisconnect {
 
 	/*
 	 * OLD CODE
 	 */
 
-	private static ArrayList<Disconnect> disconnects;
+	private static ArrayList<VaroPlayerDisconnect> disconnects;
 	private static HashMap<String, Integer> scheds;
 
 	static {
@@ -37,7 +37,7 @@ public class Disconnect {
 	private int amount = 0;
 	private String name;
 
-	public Disconnect(Player p) {
+	public VaroPlayerDisconnect(Player p) {
 		this.name = p.getName();
 
 		disconnects.add(this);
@@ -118,8 +118,8 @@ public class Disconnect {
 		}, (ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
 	}
 
-	public static Disconnect getDisconnect(Player p) {
-		for(Disconnect disconnect : disconnects)
+	public static VaroPlayerDisconnect getDisconnect(Player p) {
+		for(VaroPlayerDisconnect disconnect : disconnects)
 			if(disconnect.getPlayer().equals(p.getName()))
 				return disconnect;
 
