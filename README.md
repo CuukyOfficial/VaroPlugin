@@ -18,28 +18,26 @@ Richtilinien zum Programmieren:
 - Leerzeilen möglichst vermeiden -> Sinngemäß anordnen
 - Keine Initialisierung der Variablen (außer ggf. final) in der Deklarierung
 - Die unten vorgegebene Sortierung nutzen
-- Methoden sinngemäß und nach Größe sortieren 
+- Sortierung nach Sichtbarkeit
+  <ol style="list-style-type:square;">
+    <li>Private</li>
+    <li>Protected</li>
+    <li>Package</li>
+    <li>Public</li>
+  </ol>
+- Sortierung der Methoden:
+  <ol style="list-style-type:square;">
+    <li>Types</li>
+    <li>Static Fields</li>
+    <li>Static Intializers</li>
+    <li>Fields</li>
+    <li>Initializers</li>
+    <li>Constructors</li>
+    <li>Methods</li>
+    <li>Static Methods</li>
+  </ol>
 
-*Sortierung nach Sichtbarkeit*
-<ol style="list-style-type:square;">
-  <li>Private</li>
-  <li>Protected</li>
-  <li>Package</li>
-  <li>Public</li>
-</ol>
-
-*Sortierung der Methoden:*
-<ol style="list-style-type:square;">
-  <li>Types</li>
-  <li>Static Fields</li>
-  <li>Static Intializers</li>
-  <li>Fields</li>
-  <li>Initializers</li>
-  <li>Constructors</li>
-  <li>Methods</li>
-  <li>Static Methods</li>
-</ol>
-
+<br>
 
 **Richtlinien für GitHub:**
 - Commits auf Englisch
