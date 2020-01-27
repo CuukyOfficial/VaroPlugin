@@ -98,19 +98,19 @@ public class DataManager {
 		ConfigFailureDetector.detectConfig();
 
 		copyDefaultPresets();
-		ConfigHandler.getInstance(); // Initialisierung
+		ConfigHandler.getInstance(); // Initialization
 
-		GameHandler.initialise(); // Initialisierung GameHandler
-		PlayerHandler.initialise(); // Initialisierung PlayerHandler
-		VaroTeamHandler.initialise(); // Initialisierung TeamHandler
-		SpawnHandler.initialise(); // Initialisierung SpawnHandler
-		ScoreboardHandler.getInstance(); // Initialisierung ScoreboardHandler
-		ReportHandler.initialise(); // Initialisierung ReportHandler
-		AlertHandler.initialise(); // Initialisierung AlertHandler
-		OutSideTimeChecker.getInstance(); // Initialisierung TimeChecker
-		MySQL.getInstance(); // Initialisierung MySQL
-		ListHandler.getInstance(); // Initialisierung ListHandler
-		Broadcaster.getInstance(); // Initialisierung Broadcaster
+		GameHandler.initialize(); // Initialization GameHandler
+		PlayerHandler.initialize(); // Initialization PlayerHandler
+		VaroTeamHandler.initialize(); // Initialization TeamHandler
+		SpawnHandler.initialize(); // Initialization SpawnHandler
+		ScoreboardHandler.getInstance(); // Initialization ScoreboardHandler
+		ReportHandler.initialize(); // Initialization ReportHandler
+		AlertHandler.initialize(); // Initialization AlertHandler
+		OutSideTimeChecker.getInstance(); // Initialization TimeChecker
+		MySQL.getInstance(); // Initialization MySQL
+		ListHandler.getInstance(); // Initialization ListHandler
+		Broadcaster.getInstance(); // Initialization Broadcaster
 
 		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
@@ -190,9 +190,6 @@ public class DataManager {
 			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
 			return false;
 		}
-
-		// True: Plugin wurde neu heruntergeladen -> Neustart
-		// False: Plugin konnte nicht heruntergeladen werden -> Kein Neustart
 	}
 
 	public void reloadConfig() {

@@ -151,30 +151,6 @@ public class ConfigHandler {
 	 */
 	public void testConfig() {
 		boolean shutdown = false;
-		for(ConfigEntry entry : ConfigEntry.values()) {
-
-			Class<?> dataTypeWanted = entry.getDefaultValue().getClass();
-			Class<?> dataTypeInConfig = configCfg.get(entry.getFullPath()).getClass();
-
-			if(dataTypeInConfig.equals(MemorySection.class)) {
-				continue;
-			}
-
-			if(dataTypeInConfig.equals(Long.class) && dataTypeWanted.equals(Integer.class)) {
-				continue;
-			}
-
-			if(!dataTypeWanted.equals(dataTypeInConfig)) {
-				System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Der Eintrag " + entry.getName() + " muss vom Datentyp \"" + dataTypeWanted.getSimpleName() + "\" sein, ist aber vom Datentyp \"" + dataTypeInConfig.getSimpleName() + "\".");
-				shutdown = true;
-			}
-		}
-
-		if(shutdown) {
-			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
-			Bukkit.getServer().shutdown();
-		}
-
 		if(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
 			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Rucksackes darf nicht mehr als 54 betragen.");
 			shutdown = true;

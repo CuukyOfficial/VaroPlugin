@@ -50,7 +50,7 @@ public class PlayerHandler extends VaroSerializeObject {
 		saveFile();
 	}
 
-	public static void initialise() {
+	public static void initialize() {
 		if(instance == null) {
 			instance = new PlayerHandler();
 		}

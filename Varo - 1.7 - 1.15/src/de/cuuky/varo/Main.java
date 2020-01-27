@@ -64,7 +64,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
-			dataManager = DataManager.getInstance(); // Initialisierung
+			dataManager = DataManager.getInstance(); // Initialization
 
 			varoUpdater = new VaroUpdater();
 			varoUpdater.checkForUpdates();
@@ -72,7 +72,7 @@ public class Main extends JavaPlugin {
 
 			DailyTimer.startTimer();
 
-			botLauncher = BotLauncher.getInstance(); // Initialisierung
+			botLauncher = BotLauncher.getInstance(); // Initialization
 
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
