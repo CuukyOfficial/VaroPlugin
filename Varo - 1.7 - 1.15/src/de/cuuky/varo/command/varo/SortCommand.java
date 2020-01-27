@@ -21,7 +21,7 @@ public class SortCommand extends VaroCommand {
 			return;
 		}
 
-		VaroUtils.sortResult result = VaroUtils.sortPlayers();
+		VaroUtils.SortResult result = VaroUtils.sortPlayers();
 		switch(result) {
 		case SORTED_WELL:
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");

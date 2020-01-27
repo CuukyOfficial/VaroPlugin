@@ -19,7 +19,7 @@ import de.cuuky.varo.spawns.Spawn;
 
 public final class VaroUtils {
 
-	public enum sortResult {
+	public enum SortResult {
 		NO_SPAWN,
 		NO_SPAWN_WITH_TEAM,
 		SORTED_WELL;
@@ -86,7 +86,7 @@ public final class VaroUtils {
 		}, 0, 40);
 	}
 
-	public static sortResult sortPlayers() {
+	public static SortResult sortPlayers() {
 		ArrayList<VaroPlayer> players = VaroPlayer.getOnlinePlayer();
 		ArrayList<VaroPlayer> playersForIterator = VaroPlayer.getOnlinePlayer();
 		ArrayList<Spawn> spawns = Spawn.getSpawnsClone();
@@ -116,7 +116,7 @@ public final class VaroUtils {
 			}
 		}
 
-		sortResult result = sortResult.SORTED_WELL;
+		SortResult result = SortResult.SORTED_WELL;
 
 		while(spawns.size() > 0) {
 			if(players.size() <= 0) {
@@ -153,7 +153,7 @@ public final class VaroUtils {
 						spawns.remove(0);
 						playerTeamRegistered++;
 					} else {
-						result = sortResult.NO_SPAWN_WITH_TEAM;
+						result = SortResult.NO_SPAWN_WITH_TEAM;
 						players.remove(teamPlayer);
 						teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND_TEAM.getValue());
 					}
@@ -169,8 +169,8 @@ public final class VaroUtils {
 
 		for(VaroPlayer vp : players) {
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue());
-			if(result == sortResult.SORTED_WELL) {
-				result = sortResult.NO_SPAWN;
+			if(result == SortResult.SORTED_WELL) {
+				result = SortResult.NO_SPAWN;
 			}
 		}
 
