@@ -22,8 +22,10 @@ public class Alert implements VaroSerializeable {
 
 	@VaroSerializeField(path = "message")
 	private String message;
+	
 	@VaroSerializeField(path = "open")
 	private boolean open;
+	
 	@VaroSerializeField(path = "type")
 	private AlertType type;
 
