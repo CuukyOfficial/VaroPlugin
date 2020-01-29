@@ -35,6 +35,7 @@ public class VaroStartThread implements Runnable {
 	
 	public VaroStartThread() {
 		this.game = Game.getInstance();
+		this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
 	
 	private void fillChests() {
@@ -135,13 +136,15 @@ public class VaroStartThread implements Runnable {
 				return;
 			}
 
-			game.setGamestate(GameState.STARTED);
+			this.game.setGamestate(GameState.STARTED);
+			this.game.setFirstTime(true);
+			this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+			
 			fillChests();
 			VaroUtils.getMainWorld().strikeLightningEffect(VaroUtils.getMainWorld().getSpawnLocation());
-			game.setFirstTime(true);
+			
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
-			startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
