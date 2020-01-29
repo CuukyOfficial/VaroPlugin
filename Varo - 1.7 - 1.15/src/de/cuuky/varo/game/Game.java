@@ -273,7 +273,6 @@ public class Game implements VaroSerializeable {
 	@Override
 	public void onDeserializeEnd() {
 		startRefreshTimer();
-
 		loadVariables();
 
 		if(gamestate == GameState.STARTED)
