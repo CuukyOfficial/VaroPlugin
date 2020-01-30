@@ -72,7 +72,7 @@ public enum ConfigMessages {
 	COMMAND_NO_TEAMNAME("Commands.noteamname", "&7Du hast noch &7keinen &7Teamnamen!"),
 	COMMAND_PING("Commands.ping", "&7Dein %colorcode%Ping &7beträgt: %colorcode%%ping%&7ms"),
 	// COMMANDS
-	COMMAND_SET_BORDER("Commands.borderSet", "&7Die Border wurde auf %colorcode%%zahl% &7gesetzt!"),
+	COMMAND_SET_BORDER("Commands.borderSet", "&7Die Border wurde auf %colorcode%%size% &7gesetzt!"),
 	COMMAND_SPAWN("Commands.spawn", "%colorcode%Koordinaten&7 vom Spawn: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
 	COMMAND_SPAWN_DISTANCE("Commands.spawnDistance", "&7Du bist %colorcode%%distance% &7Blöcke vom Spawn entfernt!"),
 	COMMAND_SPAWN_DISTANCE_NETHER("Commands.spawnDistanceNether", "&7Du bist %colorcode%%distance% &7Blöcke vom Portal zur Oberwelt entfernt!"),
