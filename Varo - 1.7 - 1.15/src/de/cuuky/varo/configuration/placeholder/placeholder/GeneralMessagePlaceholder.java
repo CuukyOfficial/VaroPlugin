@@ -9,14 +9,10 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	private static ArrayList<GeneralMessagePlaceholder> generalPlaceholder;
 
 	private String value;
+	protected long lastRefresh;
 
 	public GeneralMessagePlaceholder(String identifier, int refreshDelay) {
-		super(identifier, refreshDelay);
-		
-		if(generalPlaceholder == null)
-			generalPlaceholder = new ArrayList<>();
-
-		generalPlaceholder.add(this);
+		this(identifier, refreshDelay, false);
 	}
 
 	public GeneralMessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier) {
@@ -24,19 +20,34 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 		
 		if(generalPlaceholder == null)
 			generalPlaceholder = new ArrayList<>();
+		
+		this.lastRefresh = 0;
 
 		generalPlaceholder.add(this);
 	}
-
-	@Override
-	protected void refreshValues() {
+	
+	private void checkRefresh() {
+		if(!shallRefresh()) 
+			return;
+		
+		refreshValues();
+	}
+	
+	private boolean shallRefresh() {
+		return this.refreshDelay < 1 && this.value != null ? false : this.lastRefresh + (this.refreshDelay) <= System.currentTimeMillis();
+	}
+	
+	private void refreshValues() {
 		this.value = getValue();
+		this.lastRefresh = System.currentTimeMillis();
 	}
 
 	protected abstract String getValue();
 	
 	public String replacePlaceholder(String message) {
-		return message.replace(this.identifier, this.value == null ? this.value = getValue() : this.value);
+		checkRefresh();
+		
+		return message.replace(this.identifier, this.value);
 	}
 	
 	public static ArrayList<GeneralMessagePlaceholder> getGeneralPlaceholder() {
