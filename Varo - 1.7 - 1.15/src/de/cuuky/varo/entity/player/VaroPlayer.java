@@ -49,26 +49,26 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer = new ArrayList<>();
 	}
 
+	@VaroSerializeField(path = "id")
+	private int id;
+	
+	@VaroSerializeField(path = "name")
+	private String name;
+	
+	@VaroSerializeField(path = "uuid")
+	private String uuid;
+	
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
 
-	@VaroSerializeField(path = "id")
-	private int id;
-
-	@VaroSerializeField(path = "name")
-	private String name;
-
-	@VaroSerializeField(path = "rank")
-	private Rank rank;
-
-	@VaroSerializeField(path = "stats")
-	private Stats stats;
-
-	@VaroSerializeField(path = "uuid")
-	private String uuid;
-
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
+	
+	@VaroSerializeField(path = "rank")
+	private Rank rank;
+	
+	@VaroSerializeField(path = "stats")
+	private Stats stats;
 
 	private Nametag nametag;
 	private NetworkMananager networkManager;

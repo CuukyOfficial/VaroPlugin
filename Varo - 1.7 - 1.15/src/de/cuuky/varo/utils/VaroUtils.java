@@ -93,9 +93,8 @@ public final class VaroUtils {
 		ArrayList<Spawn> spawnsForIterator = Spawn.getSpawns();
 
 		for(VaroPlayer vp : playersForIterator) {
-			if(!vp.getStats().isSpectator()) {
+			if(!vp.getStats().isSpectator()) 
 				continue;
-			}
 
 			vp.getPlayer().teleport(vp.getPlayer().getWorld().getSpawnLocation());
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_SPECTATOR_TELEPORT.getValue());
@@ -176,7 +175,7 @@ public final class VaroUtils {
 
 		return result;
 	}
-	
+
 	public static void doRandomTeam(int teamSize) {
 		if(teamSize >= 2) {
 			ArrayList<VaroPlayer> finished = new ArrayList<>();

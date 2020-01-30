@@ -20,6 +20,8 @@ public class VaroBorder {
 
 	private Object borders[];
 	private HashMap<Player, Double> distances;
+	
+	// TODO: Save Reflections
 
 	private VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))

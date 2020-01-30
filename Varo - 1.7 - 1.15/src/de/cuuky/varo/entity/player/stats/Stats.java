@@ -193,7 +193,7 @@ public class Stats implements VaroSerializeable {
 			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
-			if(Game.getInstance().getStartCountdown() != ConfigEntry.STARTCOUNTDOWN.getValueAsInt())
+			if(Game.getInstance().isStarting())
 				result = KickResult.NO_PROJECTUSER;
 		}
 
