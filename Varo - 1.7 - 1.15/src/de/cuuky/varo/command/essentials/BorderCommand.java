@@ -15,10 +15,6 @@ import de.cuuky.varo.world.border.VaroBorder;
 
 public class BorderCommand implements CommandExecutor {
 
-	/*
-	 * PARTLY OLD CODE
-	 */
-
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
@@ -61,7 +57,7 @@ public class BorderCommand implements CommandExecutor {
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%zahl%", String.valueOf(borderSize)));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%size%", String.valueOf(borderSize)));
 			if(p != null)
 				p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		} else
