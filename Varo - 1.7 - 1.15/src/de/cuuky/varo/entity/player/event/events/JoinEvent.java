@@ -43,13 +43,14 @@ public class JoinEvent extends BukkitEvent {
 			player.getStats().setRestoreBackup(null);
 		}
 
-		if(player.getStats().isSpectator() || player.isAdminIgnore())
+		if(player.getStats().isSpectator() || player.isAdminIgnore()) {
 			player.setSpectacting();
-		else
+			player.sendMessage(Main.getPrefix() + "Da Du §c" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "du Spectator bist") + " §7wurdest du in den Zuschauer-Modus gesetzt!");
+		} else
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
 
-		ScoreboardHandler.getInstance().sendScoreBoard(player);
 		VaroPlayerDisconnect.joinedAgain(player.getName());
+		ScoreboardHandler.getInstance().sendScoreBoard(player);
 		player.update();
 	}
 }
