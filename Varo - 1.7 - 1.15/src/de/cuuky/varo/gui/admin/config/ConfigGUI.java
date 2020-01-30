@@ -32,7 +32,7 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "§7Gebe einen Wert ein für " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
+		new ChatHook(opener, "§7Gib einen Wert ein für " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
 
 			@Override
 			public void onChat(String message) {
