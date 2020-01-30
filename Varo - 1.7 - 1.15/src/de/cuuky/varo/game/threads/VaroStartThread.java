@@ -35,7 +35,8 @@ public class VaroStartThread implements Runnable {
 	
 	public VaroStartThread() {
 		this.game = Game.getInstance();
-		this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+		
+		loadVaraibles();
 	}
 	
 	private void fillChests() {
@@ -83,6 +84,10 @@ public class VaroStartThread implements Runnable {
 			}
 		}
 		return blocks;
+	}
+	
+	public void loadVaraibles() {
+		this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
 	}
 	
 	@Override
@@ -161,6 +166,7 @@ public class VaroStartThread implements Runnable {
 				game.setProtection(new ProtectionTime());
 			}
 
+			game.setStartThread(null);
 			return;
 		}
 
