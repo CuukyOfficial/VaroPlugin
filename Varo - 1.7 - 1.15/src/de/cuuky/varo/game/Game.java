@@ -55,17 +55,19 @@ public class Game implements VaroSerializeable {
 
 	private BorderDecreaseMinuteTimer minuteTimer;
 	private ProtectionTime protection;
-	private int startCountdown, startScheduler;
+	private int startScheduler;
 	private boolean finaleJoinStart, firstTime;
 	private VaroMainHeartbeatThread mainThread;
+	private VaroStartThread startThread;
 
 	public Game() { // Für Deserializer
 		instance = this;
 	}
 
 	private void loadVariables() {
-		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
-
+		if(startThread != null)
+			startThread.loadVaraibles();
+		
 		if(mainThread != null)
 			mainThread.loadVariables();
 	}
@@ -94,13 +96,14 @@ public class Game implements VaroSerializeable {
 			minuteTimer.remove();
 
 		minuteTimer = new BorderDecreaseMinuteTimer();
-		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new VaroStartThread(), 0, 20);
+		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
 	}
 
 	public void abort() {
 		Bukkit.getScheduler().cancelTask(startScheduler);
 		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
-		startCountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+		
+		startThread = null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -185,6 +188,10 @@ public class Game implements VaroSerializeable {
 	public AutoStart getAutoStart() {
 		return autostart;
 	}
+	
+	public void setStartThread(VaroStartThread startThread) {
+		this.startThread = startThread;
+	}
 
 	public boolean getFinaleJoinStart() {
 		return finaleJoinStart;
@@ -210,10 +217,6 @@ public class Game implements VaroSerializeable {
 		return protection;
 	}
 
-	public int getStartCountdown() {
-		return startCountdown;
-	}
-
 	public boolean hasStarted() {
 		return gamestate != GameState.LOBBY;
 	}
@@ -227,7 +230,7 @@ public class Game implements VaroSerializeable {
 	}
 
 	public boolean isStarting() {
-		return startCountdown != ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+		return startThread != null;
 	}
 
 	public void setAutoStart(AutoStart autoStart) {
