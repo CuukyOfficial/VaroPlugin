@@ -111,6 +111,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			if(game.getGameState() == GameState.LOBBY) {
 				vp.getStats().setCountdown(playTime);
+				vp.setAdminIgnore(false);
 				if(vp.getStats().getState() == PlayerState.DEAD)
 					vp.getStats().setState(PlayerState.ALIVE);
 			}
