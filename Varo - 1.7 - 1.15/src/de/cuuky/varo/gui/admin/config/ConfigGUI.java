@@ -55,7 +55,7 @@ public class ConfigGUI extends SuperInventory {
 				reopenSoon();
 			}
 		});
-		opener.sendMessage(Main.getPrefix() + "§7Gebe zum Abbruch §ccancel§7 ein.");
+		opener.sendMessage(Main.getPrefix() + "§7Gib zum Abbruch §ccancel§7 ein.");
 	}
 
 	@Override
