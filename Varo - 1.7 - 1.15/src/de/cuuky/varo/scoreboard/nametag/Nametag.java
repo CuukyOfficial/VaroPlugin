@@ -2,7 +2,6 @@ package de.cuuky.varo.scoreboard.nametag;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -21,7 +20,8 @@ import de.cuuky.varo.version.VersionUtils;
 
 public class Nametag {
 
-	private static List<Nametag> nametags = new ArrayList<>();
+	private static ArrayList<Nametag> nametags;
+	
 	private static Class<?> teamClass;
 	private static Object visibility;
 	private static Method setVisibilityMethod;
@@ -53,7 +53,7 @@ public class Nametag {
 		this.hearts = ConfigMessages.NAMETAG_SUFFIX.getValue().contains("%hearts%");
 		this.player = p;
 		this.uniqueID = uniqueID;
-		
+
 		p.getScoreboard().getTeams().forEach(team -> team.unregister());
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -71,7 +71,7 @@ public class Nametag {
 	private String checkName() {
 		String name = this.getPlayer().getName();
 
-		int teamsize = de.cuuky.varo.entity.team.VaroTeam.getHighestNumber() + 1;
+		int teamsize = VaroTeam.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
 		if(team != null)
@@ -134,7 +134,7 @@ public class Nametag {
 				team.setSuffix(nametag.getSuffix());
 		}
 	}
-	
+
 	public void giveAll() {
 		if(!init)
 			return;
@@ -148,7 +148,7 @@ public class Nametag {
 			updateFor(board, nametag);
 		}
 	}
-	
+
 	public void setToAll() {
 		if(!init)
 			return;
@@ -164,32 +164,6 @@ public class Nametag {
 
 		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(player)).replace("%hearts%", String.valueOf((int) VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
 		setToAll();
-	}
-	
-	public void nameTagVisibilityReset() {
-		if(!init)
-			return;
-
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
-			Scoreboard board = toSet.getScoreboard();
-			Team team = getTeam(board);
-
-			setVisibility(team);
-			toSet.setScoreboard(board);
-		}
-	}
-
-	public void prefixReset() {
-		if(!init)
-			return;
-
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
-			Scoreboard board = toSet.getScoreboard();
-			Team team = getTeam(board);
-
-			team.setPrefix(this.prefix);
-			toSet.setScoreboard(board);
-		}
 	}
 
 	public void refresh() {
@@ -207,10 +181,13 @@ public class Nametag {
 
 		this.prefix = (team == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
 
-		if(prefix.length() > 16)
-			prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
+		if(this.prefix.length() > 16)
+			this.prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
 
 		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
+
+		if(this.suffix.length() > 16)
+			this.suffix = "";
 	}
 
 	public void remove() {
