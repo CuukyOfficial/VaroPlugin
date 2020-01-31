@@ -136,7 +136,7 @@ public enum ConfigMessages {
 	LABYMOD_DISABLED("General.labyModDisabled", "&7Alle deine LabyMod Funktionen wurden deaktiviert!"),
 	// Nametag
 	NAMETAG_NORMAL("NameTag.normalNametagPrefix", "&7"),
-	NAMETAG_SUFFIX("NameTag.nameTag.normalSuffix", " &c%kills%"),
+	NAMETAG_SUFFIX("NameTag.nameTag.normalSuffix", "&c%kills%"),
 
 	NAMETAG_TEAM_PREFIX("NameTag.nametagWithTeam", "%colorcode%%team% &7"),
 	// SAVEABLE
