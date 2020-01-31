@@ -93,7 +93,7 @@ public class PlayerJoinListener implements Listener {
 					player.teleport(VaroUtils.getMainWorld().getSpawnLocation());
 				}
 			}
-			
+
 			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				player.teleport(player.getWorld().getSpawnLocation());
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
