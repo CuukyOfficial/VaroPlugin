@@ -8,6 +8,8 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.game.Game;
 
 public class ProtectionTime {
+	
+	private int scheduler;
 
 	public ProtectionTime() {
 		startGeneralTimer(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
@@ -18,13 +20,21 @@ public class ProtectionTime {
 	}
 
 	private void startGeneralTimer(int timer) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			private int protectionTimer = timer;
 
 			@Override
 			public void run() {
-				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
-				Game.getInstance().setProtection(null);
+				if(protectionTimer == 0) {
+					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
+					Game.getInstance().setProtection(null);
+					Bukkit.getScheduler().cancelTask(scheduler);
+				} else if(protectionTimer % 60 == 0 && protectionTimer != timer)
+					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE.getValue().replace("%seconds%", String.valueOf(protectionTimer / 60)));
+
+				protectionTimer--;
 			}
-		}, timer * 20 + 1);
+		}, 20, 20);
 	}
 }

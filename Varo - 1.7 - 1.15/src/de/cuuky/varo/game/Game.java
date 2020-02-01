@@ -67,7 +67,7 @@ public class Game implements VaroSerializeable {
 	private void loadVariables() {
 		if(startThread != null)
 			startThread.loadVaraibles();
-		
+
 		if(mainThread != null)
 			mainThread.loadVariables();
 	}
@@ -91,7 +91,9 @@ public class Game implements VaroSerializeable {
 			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
 		}
 
-		removeArentAtStart();
+		if(ConfigEntry.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
+			removeArentAtStart();
+		
 		if(minuteTimer != null)
 			minuteTimer.remove();
 
@@ -102,15 +104,12 @@ public class Game implements VaroSerializeable {
 	public void abort() {
 		Bukkit.getScheduler().cancelTask(startScheduler);
 		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
-		
+
 		startThread = null;
 	}
 
 	@SuppressWarnings("unchecked")
 	private void removeArentAtStart() {
-		if(!ConfigEntry.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
-			return;
-
 		for(VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
 			if(!varoplayer.isOnline())
 				varoplayer.delete();
@@ -188,7 +187,7 @@ public class Game implements VaroSerializeable {
 	public AutoStart getAutoStart() {
 		return autostart;
 	}
-	
+
 	public void setStartThread(VaroStartThread startThread) {
 		this.startThread = startThread;
 	}
