@@ -10,7 +10,7 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
-public class NetworkMananager {
+public class NetworkManager {
 
 	// CHAT TITLE
 	private static Class<?> chatMessageTypeClass;
@@ -83,7 +83,7 @@ public class NetworkMananager {
 	private Object tablist;
 	private Field pingField;
 
-	public NetworkMananager(Player player) {
+	public NetworkManager(Player player) {
 		this.player = player;
 
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))

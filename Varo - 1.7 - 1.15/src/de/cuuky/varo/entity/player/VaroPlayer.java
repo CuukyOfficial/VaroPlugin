@@ -71,7 +71,7 @@ public class VaroPlayer extends VaroEntity {
 	private Stats stats;
 
 	private Nametag nametag;
-	private NetworkMananager networkManager;
+	private NetworkManager networkManager;
 	private String tabName;
 	private VaroTeam team;
 	private Player player;
@@ -310,8 +310,8 @@ public class VaroPlayer extends VaroEntity {
 		return nametag;
 	}
 
-	public NetworkMananager getNetworkManager() {
-		return networkManager == null ? new NetworkMananager(player) : networkManager;
+	public NetworkManager getNetworkManager() {
+		return networkManager == null ? new NetworkManager(player) : networkManager;
 	}
 
 	public Player getPlayer() {
@@ -397,7 +397,7 @@ public class VaroPlayer extends VaroEntity {
 		this.nametag = nametag;
 	}
 
-	public void setNetworkManager(NetworkMananager networkManager) {
+	public void setNetworkManager(NetworkManager networkManager) {
 		this.networkManager = networkManager;
 	}
 
