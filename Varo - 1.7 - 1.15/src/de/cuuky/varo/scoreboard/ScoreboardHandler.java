@@ -117,9 +117,9 @@ public class ScoreboardHandler {
 		sb.add("&7Zeit&8:");
 		sb.add("&3%min%&8:&3%sec%");
 		sb.add("%space%");
-		sb.add("&7Online&8: &3%online%");
-		sb.add("&7Remaining&8: &3%remaining%");
-		sb.add("&7Players&8: &3%players%");
+		sb.add("&7Online: &3%online%");
+		sb.add("&7Remaining: &3%remaining%");
+		sb.add("&7Players: &3%players%");
 		sb.add("%space%");
 
 		if(!cfg.contains("Scoreboard")) {
