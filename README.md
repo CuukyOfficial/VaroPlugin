@@ -8,9 +8,7 @@ Das Plugin läuft universal auf den Versionen 1.7 - 1.15.
 - http://www.mediafire.com/file/e6xl995rgt5zvmr/varo_lib.zip/file
 - https://getbukkit.org/download/spigot
 
-Bitte <href>https://github.com/CuukyOfficial/VaroPlugin/blob/master/contributing.md</href>
-
-##
+Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/contributing.md'>Richtlinien zum Programmieren</a> beachten 
 
 Spigot-Seite mit Docs etc.: https://www.spigotmc.org/resources/71075/
 
