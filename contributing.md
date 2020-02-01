@@ -34,3 +34,5 @@ Richtilinien zum Programmieren:
 - Commits auf Englisch
 - **Niemals** auf den master pushen
 - Commit-Nachrichten kurz, sinngemäß und effizient beschreiben
+
+**Bei Missachtung der Richtlinien werden pushes verweigert und Rechte entzogen**
