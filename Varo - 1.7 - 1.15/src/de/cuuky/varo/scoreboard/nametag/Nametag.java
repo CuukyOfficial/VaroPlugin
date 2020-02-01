@@ -46,7 +46,7 @@ public class Nametag {
 	private Player player;
 	private String prefix, suffix, name;
 	private Rank rank;
-	private VaroTeam team;
+	private VaroTeam varoTeam;
 	private UUID uniqueID;
 
 	public Nametag(UUID uniqueID, Player p) {
@@ -67,6 +67,24 @@ public class Nametag {
 
 		nametags.add(this);
 	}
+	
+	private void refreshPrefix() {
+		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
+
+		this.rank = varoPlayer.getRank();
+		this.varoTeam = varoPlayer.getTeam();
+		this.name = checkName();
+
+		this.prefix = (varoTeam == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
+
+		if(this.prefix.length() > 16)
+			this.prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
+
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
+
+		if(this.suffix.length() > 16)
+			this.suffix = "";
+	}
 
 	private String checkName() {
 		String name = this.getPlayer().getName();
@@ -74,8 +92,8 @@ public class Nametag {
 		int teamsize = VaroTeam.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
-		if(team != null)
-			name = team.getId() + name;
+		if(varoTeam != null)
+			name = varoTeam.getId() + name;
 		else
 			name = teamsize + name;
 
@@ -87,17 +105,6 @@ public class Nametag {
 		if(name.length() > 16)
 			name = name.substring(0, 16);
 		return name;
-	}
-
-	private Team getTeam(Scoreboard board) {
-		Team team = board.getTeam(this.name);
-
-		if(team == null) {
-			team = board.registerNewTeam(this.name);
-			team.addPlayer(this.player);
-		}
-
-		return team;
 	}
 
 	private void setVisibility(Team team) {
@@ -172,39 +179,8 @@ public class Nametag {
 		giveAll();
 	}
 
-	public void refreshPrefix() {
-		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
-
-		this.rank = varoPlayer.getRank();
-		this.team = varoPlayer.getTeam();
-		this.name = checkName();
-
-		this.prefix = (team == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
-
-		if(this.prefix.length() > 16)
-			this.prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
-
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
-
-		if(this.suffix.length() > 16)
-			this.suffix = "";
-	}
-
 	public void remove() {
 		nametags.remove(this);
-	}
-
-	public void suffixReset() {
-		if(!init)
-			return;
-
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
-			Scoreboard board = toSet.getScoreboard();
-			Team team = getTeam(board);
-
-			team.setSuffix(this.suffix);
-			toSet.setScoreboard(board);
-		}
 	}
 
 	public String getName() {
