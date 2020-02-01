@@ -26,6 +26,7 @@ public class NetworkManager {
 	private static Class<?> packetChatClass;
 
 	// TAB
+	private static Class<?> tablistClass;
 	private static Method ioBaseChatMethod;
 
 	// ACTIONBAR
@@ -65,6 +66,7 @@ public class NetworkManager {
 
 				titleConstructor = titleClass.getConstructor(enumTitleClass, ioBase, int.class, int.class, int.class);
 
+				tablistClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutPlayerListHeaderFooter");
 				ioBaseChatMethod = ioBaseChat.getDeclaredMethod("a", String.class);
 			}
 		} catch(ClassNotFoundException | NoSuchMethodException | SecurityException e) {
@@ -188,7 +190,7 @@ public class NetworkManager {
 			Object tabfooter = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + ConfigMessages.TABLIST_FOOTER.getValue() + "\"}");
 
 			if(tablist == null) {
-				tablist = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutPlayerListHeaderFooter").newInstance();
+				tablist = tablistClass.newInstance();
 
 				headerField = getField(tablist.getClass(), "a", "header");
 				headerField.setAccessible(true);
