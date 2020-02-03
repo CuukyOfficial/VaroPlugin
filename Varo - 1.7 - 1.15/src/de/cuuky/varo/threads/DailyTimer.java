@@ -19,7 +19,7 @@ import de.cuuky.varo.utils.VaroUtils;
 
 public final class DailyTimer {
 
-	private static void doDailyStuff() {
+	public static void doDailyStuff() {
 		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
 

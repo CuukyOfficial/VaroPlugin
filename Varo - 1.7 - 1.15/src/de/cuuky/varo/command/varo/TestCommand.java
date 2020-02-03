@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.threads.DailyTimer;
 
 public class TestCommand extends VaroCommand {
 
@@ -14,6 +15,6 @@ public class TestCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-//		vp.getNetworkManager().sendTitle("hey", "hey");
+		DailyTimer.doDailyStuff();
 	}
 }

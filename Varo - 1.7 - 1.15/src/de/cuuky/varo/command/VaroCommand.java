@@ -84,9 +84,7 @@ public abstract class VaroCommand {
 	}
 
 	private String[] aliases;
-	private String description;
-	private String name;
-	private String permission;
+	private String name, permission, description;
 
 	public VaroCommand(String name, String description, String permission, String... aliases) {
 		this.name = name;
