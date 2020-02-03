@@ -111,7 +111,7 @@ public class PlayerLoginListener implements Listener {
 			else
 				hours = "" + hr;
 
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replace("%timeHours%", ConfigEntry.JOIN_AFTER_HOURS.getValueAsString()).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replace("%timeHours%", String.valueOf(ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt())).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
 			break;
 		case SERVER_NOT_PUBLISHED:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));

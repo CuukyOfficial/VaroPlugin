@@ -301,7 +301,7 @@ public enum ConfigEntry {
 
 	public boolean getValueAsBoolean() {
 		try {
-			return (boolean) (this.value = (boolean) this.value);
+			return (boolean) this.value;
 		} catch(Exception e) {
 			sendFalseCast(Boolean.class);
 		}
@@ -311,7 +311,7 @@ public enum ConfigEntry {
 
 	public double getValueAsDouble() {
 		try {
-			return (double) (this.value = (double) this.value);
+			return (double) this.value;
 		} catch(Exception e) {
 			sendFalseCast(Double.class);
 		}
@@ -321,7 +321,7 @@ public enum ConfigEntry {
 
 	public int getValueAsInt() {
 		try {
-			return (int) (this.value = (int) this.value);
+			return (int) this.value;
 		} catch(Exception e) {
 			sendFalseCast(Integer.class);
 		}
@@ -331,7 +331,7 @@ public enum ConfigEntry {
 
 	public long getValueAsLong() {
 		try {
-			return (long) (this.value = (long) this.value);
+			return (long) this.value;
 		} catch(Exception e) {
 			sendFalseCast(Long.class);
 		}

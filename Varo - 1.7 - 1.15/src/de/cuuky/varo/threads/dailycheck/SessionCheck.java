@@ -31,10 +31,9 @@ public class SessionCheck extends Checker {
 			}
 		}
 
-		if(ConfigEntry.CATCH_UP_SESSIONS.getValueAsBoolean()) {
-			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS_FOR_ALL.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
-		} else {
-			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS.getValue().replace("%newSessions%", ConfigEntry.SESSIONS_PER_DAY.getValueAsString()));
-		}
+		if(ConfigEntry.CATCH_UP_SESSIONS.getValueAsBoolean())
+			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS_FOR_ALL.getValue().replace("%newSessions%", String.valueOf(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt())));
+		else
+			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS.getValue().replace("%newSessions%", String.valueOf(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt())));
 	}
 }

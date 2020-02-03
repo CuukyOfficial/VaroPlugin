@@ -40,9 +40,9 @@ import de.cuuky.varo.utils.VaroUtils;
 
 public class DataManager {
 
-	private static DataManager instance;
-
 	private static final int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
+	
+	private static DataManager instance;
 
 	private boolean doSave;
 
