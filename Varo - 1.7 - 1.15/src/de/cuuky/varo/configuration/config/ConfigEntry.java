@@ -26,7 +26,7 @@ public enum ConfigEntry {
 	AUTOSETUP_SPAWNS_RADIUS(ConfigSection.AUTOSETUP, "spawns.radius", 30, "In welchem Radius die Löcher\ngeneriert werden sollen"),
 	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSection.AUTOSETUP, "spawns.sideblock.material", "GRASS", "Welche Block-ID der Block,\nden man abbaut haben soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
-	AUTOSETUP_TIME_MINUTE(ConfigSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"), // TODO
+	AUTOSETUP_TIME_MINUTE(ConfigSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"), 
 
 	BACKPACK_PLAYER_DROP_ON_DEATH(ConfigSection.BACKPACKS, "backpackPlayerDropOnDeath", true, "Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll."),
 	
@@ -215,6 +215,7 @@ public enum ConfigEntry {
 	// START
 	STARTCOUNTDOWN(ConfigSection.START, "startCountdown", 30, "Wie lange der Startcountdown\nbei Start in Sekunden ist."),
 	STARTPERIOD_PROTECTIONTIME(ConfigSection.PROTECTIONS, "startperiodProtectiontime", -1, "Länge der Schutzzeit nach dem Start.\nOff = -1"),
+	STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL(ConfigSection.PROTECTIONS, "startperiodProtectiontimeBcInterval", 60, "In welchen Sekundenabständen die restliche Schutzzeit\ngebroacastet werden soll"),
 	STOP_SERVER_ON_WIN(ConfigSection.DEATH, "stopServerOnWin", -1, "Zeit in Sekunden, nachdem der Server nach\nWin eines Teams heruntergefahren wird."),
 	STRIKE_BAN_AFTER_STRIKE_HOURS(ConfigSection.STRIKE, "banOnPostHours", -1, "Für wie viele Stunden die Spieler\nnach einem Strike gestriket werden"),
 	STRIKE_BAN_AT_POST(ConfigSection.STRIKE, "banAtPost", true, "Ob der Spieler beim Posten des Strikes\num die oben genannte Zahl gebannt werden soll.\nSonst wird dieser beim Erhalten gebannt"),

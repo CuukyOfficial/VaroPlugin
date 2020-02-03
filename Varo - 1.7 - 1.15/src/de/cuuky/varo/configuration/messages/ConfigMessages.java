@@ -153,7 +153,7 @@ public enum ConfigMessages {
 	PROTECTION_START("Protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
 
 	PROTECTION_TIME_OVER("Protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorrüber!"),
-	PROTECTION_TIME_UPDATE("Protection.protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes% &7Minuten vorrüber!!"),
+	PROTECTION_TIME_UPDATE("Protection.protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes%&7:&c%seconds% &7vorrüber!"),
 	PROTECTION_TIME_RUNNING("Protection.timeRunning", "&7Die %colorcode%Schutzzeit &7läuft noch!"),
 
 	// QUIT

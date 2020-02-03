@@ -20,21 +20,39 @@ public class ProtectionTime {
 	}
 
 	private void startGeneralTimer(int timer) {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		this.scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			private int protectionTimer = timer;
 
 			@Override
 			public void run() {
-				if(protectionTimer == 0) {
+				if(this.protectionTimer == 0) {
 					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
 					Game.getInstance().setProtection(null);
 					Bukkit.getScheduler().cancelTask(scheduler);
-				} else if(protectionTimer % 60 == 0 && protectionTimer != timer)
-					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE.getValue().replace("%seconds%", String.valueOf(protectionTimer / 60)));
+				} else if(protectionTimer % ConfigEntry.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
+					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE.getValue().replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer)));
 
-				protectionTimer--;
+				this.protectionTimer--;
 			}
-		}, 20, 20);
+		}, 1, 20);
+	}
+	
+	private String getCountdownMin(int sec) {
+		int min = sec / 60;
+
+		if(min < 10)
+			return "0" + min;
+		else
+			return min + "";
+	}
+
+	private String getCountdownSec(int sec) {
+		sec = sec % 60;
+
+		if(sec < 10)
+			return "0" + sec;
+		else
+			return sec + "";
 	}
 }
