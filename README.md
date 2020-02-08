@@ -4,6 +4,11 @@
 Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
 Das Plugin läuft universal auf den Versionen 1.7 - 1.15.
 
+**Codezeilen:**
+Zeilen: 26.943
+Stand: 08.02.2020
+Version: 2.2.6
+
 **Libraries:** 
 - http://www.mediafire.com/file/e6xl995rgt5zvmr/varo_lib.zip/file
 - https://getbukkit.org/download/spigot
