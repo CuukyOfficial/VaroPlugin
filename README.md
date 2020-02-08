@@ -4,9 +4,9 @@
 Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
 Das Plugin läuft universal auf den Versionen 1.7 - 1.15.
 
-**Codezeilen:**
-Zeilen: 26.943
-Stand: 08.02.2020
+**Codezeilen:** <br>
+Zeilen: 26.943 <br>
+Stand: 08.02.2020 <br>
 Version: 2.2.6
 
 **Libraries:** 
