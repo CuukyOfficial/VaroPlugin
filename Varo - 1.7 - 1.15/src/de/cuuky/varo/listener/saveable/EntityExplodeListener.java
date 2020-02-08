@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 
 public class EntityExplodeListener implements Listener {
 
@@ -31,7 +31,7 @@ public class EntityExplodeListener implements Listener {
 
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if(!Game.getInstance().hasStarted()) {
+		if(!VaroGame.getInstance().hasStarted()) {
 			event.setCancelled(true);
 			return;
 		}

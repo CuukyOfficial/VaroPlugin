@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 
 public class AbortCommand extends VaroCommand {
 
@@ -16,12 +16,12 @@ public class AbortCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Game.getInstance().isStarting()) {
+		if(!VaroGame.getInstance().isStarting()) {
 			sender.sendMessage(Main.getPrefix() + "Der Startcountdown ist nicht aktiv!");
 			return;
 		}
 
-		Game.getInstance().abort();
+		VaroGame.getInstance().abort();
 		sender.sendMessage(Main.getPrefix() + "Startcountdown erfolgreich gestoppt!");
 	}
 }

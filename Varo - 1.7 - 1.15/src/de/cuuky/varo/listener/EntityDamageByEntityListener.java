@@ -10,7 +10,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
@@ -23,18 +23,18 @@ public class EntityDamageByEntityListener implements Listener {
 		if(!(event.getEntity() instanceof Player))
 			return;
 
-		if(Game.getInstance().getGameState() == GameState.END)
+		if(VaroGame.getInstance().getGameState() == GameState.END)
 			return;
 
 		Player p = (Player) event.getEntity();
-		if(Game.getInstance().getProtection() != null) {
+		if(VaroGame.getInstance().getProtection() != null) {
 			p.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
 			event.setCancelled(true);
 			return;
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(p);
-		if(Game.getInstance().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
+		if(VaroGame.getInstance().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}
@@ -47,7 +47,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 
 		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
-		if(VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Game.getInstance().isFirstTime()) {
+		if(VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !VaroGame.getInstance().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}

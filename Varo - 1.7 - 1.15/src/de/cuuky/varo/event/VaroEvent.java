@@ -11,7 +11,7 @@ import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.event.events.MoonGravityVaroEvent;
 import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 
 public class VaroEvent {
@@ -59,7 +59,7 @@ public class VaroEvent {
 	}
 	
 	public void setEnabled(boolean enabled) {
-		if(Game.getInstance().getGameState() != GameState.STARTED && enabled)
+		if(VaroGame.getInstance().getGameState() != GameState.STARTED && enabled)
 			return;
 
 		if(enabled)

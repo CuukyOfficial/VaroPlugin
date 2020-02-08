@@ -26,7 +26,7 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger;
@@ -200,7 +200,7 @@ public class VaroPlayer extends VaroEntity {
 
 			setNormalAttackSpeed();
 
-			if(Game.getInstance().getGameState() == GameState.LOBBY)
+			if(VaroGame.getInstance().getGameState() == GameState.LOBBY)
 				LobbyItem.giveItems(player);
 		} else if(isAdminIgnore())
 			adminIgnore = false;

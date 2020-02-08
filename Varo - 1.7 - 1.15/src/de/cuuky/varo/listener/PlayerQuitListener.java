@@ -13,7 +13,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -33,7 +33,7 @@ public class PlayerQuitListener implements Listener {
 			return;
 		}
 
-		if(Game.getInstance().getGameState() == GameState.STARTED) {
+		if(VaroGame.getInstance().getGameState() == GameState.STARTED) {
 			// IF THEY WERE KICKED OR DEAD
 			if(ConfigEntry.PLAY_TIME.isIntActivated())
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {

@@ -11,7 +11,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.listener.helper.TeamChat;
@@ -96,7 +96,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(!player.isOp()) {
-			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Game.getInstance().hasStarted()) || !Game.getInstance().hasStarted()) {
+			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && VaroGame.getInstance().hasStarted()) || !VaroGame.getInstance().hasStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
@@ -109,7 +109,7 @@ public class PlayerChatListener implements Listener {
 					new ChatMessage(player, message);
 			}
 
-			if(Game.getInstance().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if(VaroGame.getInstance().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;

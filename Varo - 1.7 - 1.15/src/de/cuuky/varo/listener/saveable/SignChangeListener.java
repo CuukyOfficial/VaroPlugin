@@ -20,7 +20,7 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.version.types.Materials;
 import de.cuuky.varo.version.types.Sounds;
 
@@ -36,7 +36,7 @@ public class SignChangeListener implements Listener {
 		if(e.getBlock().getType() != Materials.SIGN.parseMaterial() && e.getBlock().getType() != Materials.WALL_SIGN.parseMaterial())
 			return;
 
-		if(!Game.getInstance().hasStarted())
+		if(!VaroGame.getInstance().hasStarted())
 			return;
 
 		Block attached = e.getBlock().getRelative(sign.getAttachedFace());

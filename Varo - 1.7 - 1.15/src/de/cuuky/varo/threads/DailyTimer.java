@@ -12,7 +12,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.backup.Backup;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.threads.dailycheck.Checker;
 import de.cuuky.varo.utils.VaroUtils;
@@ -49,8 +49,8 @@ public final class DailyTimer {
 
 	public static void startTimer() {
 		VaroUtils.setWorldToTime();
-		if(Game.getInstance().getGameState() == GameState.STARTED && Game.getInstance().getLastDayTimer() != null) {
-			Date date = Game.getInstance().getLastDayTimer();
+		if(VaroGame.getInstance().getGameState() == GameState.STARTED && VaroGame.getInstance().getLastDayTimer() != null) {
+			Date date = VaroGame.getInstance().getLastDayTimer();
 			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
 				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RECTIFY");
@@ -58,7 +58,7 @@ public final class DailyTimer {
 				doDailyStuff();
 			}
 
-			Game.getInstance().setLastDayTimer(new Date());
+			VaroGame.getInstance().setLastDayTimer(new Date());
 		}
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -68,9 +68,9 @@ public final class DailyTimer {
 			public void run() {
 				try {
 					new Backup();
-					Game.getInstance().setLastDayTimer(new Date());
+					VaroGame.getInstance().setLastDayTimer(new Date());
 
-					if(Game.getInstance().getGameState() == GameState.STARTED) {
+					if(VaroGame.getInstance().getGameState() == GameState.STARTED) {
 						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 

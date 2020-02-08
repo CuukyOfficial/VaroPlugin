@@ -16,7 +16,7 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
@@ -59,7 +59,7 @@ public class PlayerDeathListener implements Listener {
 		VaroPlayer killer = killerPlayer == null ? null : VaroPlayer.getPlayer(killerPlayer);
 		event.setDeathMessage(null);
 
-		if(Game.getInstance().hasStarted()) {
+		if(VaroGame.getInstance().hasStarted()) {
 			PlayerHit hit = PlayerHit.getHit(deadPlayer);
 			if(hit != null)
 				hit.over();

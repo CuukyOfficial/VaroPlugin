@@ -14,7 +14,7 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -94,7 +94,7 @@ public class VaroPlayerDisconnect {
 		if(!ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
-		if(Game.getInstance().getGameState() != GameState.STARTED)
+		if(VaroGame.getInstance().getGameState() != GameState.STARTED)
 			return;
 
 		if(!VaroPlayer.getPlayer(playerName).getStats().isAlive())
@@ -107,7 +107,7 @@ public class VaroPlayerDisconnect {
 				if(Bukkit.getPlayerExact(playerName) != null)
 					return;
 
-				if(Game.getInstance().getGameState() != GameState.STARTED)
+				if(VaroGame.getInstance().getGameState() != GameState.STARTED)
 					return;
 
 				VaroPlayer vp = VaroPlayer.getPlayer(playerName);

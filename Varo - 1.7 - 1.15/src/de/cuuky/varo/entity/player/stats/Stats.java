@@ -28,7 +28,7 @@ import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -184,7 +184,7 @@ public class Stats implements VaroSerializeable {
 
 	public KickResult getKickResult(Player player) {
 		KickResult result = KickResult.ALLOW;
-		if(Game.getInstance().hasStarted()) {
+		if(VaroGame.getInstance().hasStarted()) {
 			if(owner.isRegistered())
 				result = getVaroKickResult();
 			else
@@ -193,7 +193,7 @@ public class Stats implements VaroSerializeable {
 			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
-			if(Game.getInstance().isStarting())
+			if(VaroGame.getInstance().isStarting())
 				result = KickResult.NO_PROJECTUSER;
 		}
 
@@ -207,8 +207,8 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.SERVER_FULL;
 
 		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Game.getInstance().hasStarted() && player.isOp()) {
-				if(Game.getInstance().hasStarted())
+			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !VaroGame.getInstance().hasStarted() && player.isOp()) {
+				if(VaroGame.getInstance().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
 					else
@@ -307,7 +307,7 @@ public class Stats implements VaroSerializeable {
 		if(VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 
-		if(Game.getInstance().getFinaleJoinStart()) {
+		if(VaroGame.getInstance().getFinaleJoinStart()) {
 			result = KickResult.FINALE_JOIN;
 		}
 

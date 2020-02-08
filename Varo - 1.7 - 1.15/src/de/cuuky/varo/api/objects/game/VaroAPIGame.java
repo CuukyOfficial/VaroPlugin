@@ -2,13 +2,13 @@ package de.cuuky.varo.api.objects.game;
 
 import org.bukkit.Location;
 
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 
 public class VaroAPIGame {
 
-	private Game game;
+	private VaroGame game;
 
-	public VaroAPIGame(Game game) {
+	public VaroAPIGame(VaroGame game) {
 		this.game = game;
 	}
 

@@ -6,7 +6,7 @@ import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.utils.VaroUtils;
@@ -18,18 +18,18 @@ public class CoordsCheck extends Checker {
 		if(!ConfigEntry.POST_COORDS_DAYS.isIntActivated())
 			return;
 
-		if(Game.getInstance().getLastCoordsPost() == null) {
-			Game.getInstance().setLastCoordsPost(new Date());
+		if(VaroGame.getInstance().getLastCoordsPost() == null) {
+			VaroGame.getInstance().setLastCoordsPost(new Date());
 			return;
 		}
 
-		if(new Date().after(DateUtils.addDays(Game.getInstance().getLastCoordsPost(), ConfigEntry.POST_COORDS_DAYS.getValueAsInt()))) {
+		if(new Date().after(DateUtils.addDays(VaroGame.getInstance().getLastCoordsPost(), ConfigEntry.POST_COORDS_DAYS.getValueAsInt()))) {
 			String post = "";
 			for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
 				post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? VaroUtils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
 
 			EventLogger.getInstance().println(LogType.ALERT, post);
-			Game.getInstance().setLastCoordsPost(new Date());
+			VaroGame.getInstance().setLastCoordsPost(new Date());
 		}
 	}
 }

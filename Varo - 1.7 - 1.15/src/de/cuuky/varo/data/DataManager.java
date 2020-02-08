@@ -25,7 +25,7 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.PlayerHandler;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
-import de.cuuky.varo.game.GameHandler;
+import de.cuuky.varo.game.VaroGameHandler;
 import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.listener.PermissionSendListener;
@@ -100,7 +100,7 @@ public class DataManager {
 		copyDefaultPresets();
 		ConfigHandler.getInstance(); // Initialization
 
-		GameHandler.initialize(); // Initialization GameHandler
+		VaroGameHandler.initialize(); // Initialization GameHandler
 		PlayerHandler.initialize(); // Initialization PlayerHandler
 		VaroTeamHandler.initialize(); // Initialization TeamHandler
 		SpawnHandler.initialize(); // Initialization SpawnHandler

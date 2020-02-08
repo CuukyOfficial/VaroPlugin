@@ -14,7 +14,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.threads.OutSideTimeChecker;
@@ -25,11 +25,11 @@ public class VaroMainHeartbeatThread implements Runnable {
 	
 	private int seconds, protectionTime, noKickDistance, playTime;
 	private boolean showDistanceToBorder, showTimeInActionBar;
-	private Game game;
+	private VaroGame game;
 	
 	public VaroMainHeartbeatThread() {
 		this.seconds = 0;
-		this.game = Game.getInstance();
+		this.game = VaroGame.getInstance();
 				
 		loadVariables();
 	}

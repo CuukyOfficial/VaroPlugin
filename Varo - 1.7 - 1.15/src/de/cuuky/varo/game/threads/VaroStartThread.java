@@ -17,7 +17,7 @@ import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.list.ListHandler;
@@ -30,11 +30,11 @@ import de.cuuky.varo.version.types.Sounds;
 
 public class VaroStartThread implements Runnable {
 
-	private Game game;
+	private VaroGame game;
 	private int startcountdown;
 	
 	public VaroStartThread() {
-		this.game = Game.getInstance();
+		this.game = VaroGame.getInstance();
 		
 		loadVaraibles();
 	}

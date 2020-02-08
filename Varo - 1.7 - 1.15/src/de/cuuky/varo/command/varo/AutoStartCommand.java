@@ -11,7 +11,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.AutoStart;
 
 public class AutoStartCommand extends VaroCommand {
@@ -26,7 +26,7 @@ public class AutoStartCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(Game.getInstance().hasStarted()) {
+		if(VaroGame.getInstance().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7wurde bereits gestartet!");
 			return;
 		}
@@ -42,7 +42,7 @@ public class AutoStartCommand extends VaroCommand {
 		}
 
 		if(args[0].equalsIgnoreCase("set")) {
-			if(Game.getInstance().getAutoStart() != null) {
+			if(VaroGame.getInstance().getAutoStart() != null) {
 				sender.sendMessage(Main.getPrefix() + "§7Entferne erst den AutoStart, bevor du einen neuen setzt!");
 				return;
 			}
@@ -73,18 +73,18 @@ public class AutoStartCommand extends VaroCommand {
 				return;
 			}
 
-			Game.getInstance().setAutoStart(new AutoStart(start));
+			VaroGame.getInstance().setAutoStart(new AutoStart(start));
 			return;
 		} else if(args[0].equalsIgnoreCase("remove")) {
-			if(Game.getInstance().getAutoStart() == null) {
+			if(VaroGame.getInstance().getAutoStart() == null) {
 				sender.sendMessage(Main.getPrefix() + "§7Es wurde noch kein " + Main.getColorCode() + "Autostart §7festegelegt!");
 				return;
 			}
 
-			Game.getInstance().getAutoStart().stop();
+			VaroGame.getInstance().getAutoStart().stop();
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoStart §7erfolgreich entfernt!");
 		} else if(args[0].equalsIgnoreCase("delay")) {
-			if(Game.getInstance().getAutoStart() == null) {
+			if(VaroGame.getInstance().getAutoStart() == null) {
 				sender.sendMessage(Main.getPrefix() + "§7Es wurde noch kein " + Main.getColorCode() + "Autostart §7festegelegt!");
 				return;
 			}
@@ -107,14 +107,14 @@ public class AutoStartCommand extends VaroCommand {
 				return;
 			}
 
-			Game.getInstance().getAutoStart().delay(delay);
+			VaroGame.getInstance().getAutoStart().delay(delay);
 			sender.sendMessage(Main.getPrefix() + "§7Der Start wurde um " + Main.getColorCode() + delay + " §7Minuten verzögert!");
 		} else if(args[0].equalsIgnoreCase("info")) {
-			if(Game.getInstance().getAutoStart() == null)
+			if(VaroGame.getInstance().getAutoStart() == null)
 				sender.sendMessage(Main.getPrefix() + "AutoStart nicht aktiv");
 			else {
 				sender.sendMessage(Main.getPrefix() + "AutoStart §aaktiv§7:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: §7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Game.getInstance().getAutoStart().getStart()));
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: §7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(VaroGame.getInstance().getAutoStart().getStart()));
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: §7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgröße: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			}

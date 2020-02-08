@@ -10,7 +10,7 @@ import org.bukkit.World;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.utils.BlockUtils;
@@ -24,7 +24,7 @@ import de.cuuky.varo.world.generators.SpawnGenerator;
 public class AutoSetup {
 
 	public AutoSetup() {
-		if(Game.getInstance().hasStarted())
+		if(VaroGame.getInstance().hasStarted())
 			return;
 
 		setupPlugin();
@@ -65,7 +65,7 @@ public class AutoSetup {
 			else
 				new LobbyGenerator(lobby, file);
 
-			Game.getInstance().setLobby(lobby);
+			VaroGame.getInstance().setLobby(lobby);
 		}
 
 		if(ConfigEntry.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {

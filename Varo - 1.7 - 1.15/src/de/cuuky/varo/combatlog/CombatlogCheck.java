@@ -11,7 +11,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -31,7 +31,7 @@ public class CombatlogCheck {
 	}
 
 	private void check(PlayerQuitEvent event) {
-		if(Game.getInstance().getGameState() == GameState.END || PlayerHit.getHit(event.getPlayer()) == null) {
+		if(VaroGame.getInstance().getGameState() == GameState.END || PlayerHit.getHit(event.getPlayer()) == null) {
 			return;
 		}
 

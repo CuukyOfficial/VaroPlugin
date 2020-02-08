@@ -8,7 +8,7 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 
 public class BackpackCommand extends VaroCommand {
 
@@ -53,7 +53,7 @@ public class BackpackCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Game.getInstance().hasStarted()) {
+		if(!VaroGame.getInstance().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
 			return;
 		}

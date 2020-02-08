@@ -22,7 +22,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 
@@ -67,7 +67,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onEntityTarget(EntityTargetLivingEntityEvent event) {
-		if(Game.getInstance().getGameState() == GameState.LOBBY)
+		if(VaroGame.getInstance().getGameState() == GameState.LOBBY)
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getTarget()))
@@ -88,7 +88,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(Game.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(VaroGame.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))
@@ -103,7 +103,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onItemDrop(PlayerPickupItemEvent event) {
-		if(Game.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(VaroGame.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))
@@ -112,7 +112,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onItemPickup(PlayerDropItemEvent event) {
-		if(Game.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(VaroGame.getInstance().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))

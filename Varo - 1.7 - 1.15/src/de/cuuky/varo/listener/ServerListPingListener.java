@@ -7,7 +7,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.threads.OutSideTimeChecker;
 
 public class ServerListPingListener implements Listener {
@@ -19,7 +19,7 @@ public class ServerListPingListener implements Listener {
 			event.setMaxPlayers(slots);
 
 		if(ConfigEntry.CHANGE_MOTD.getValueAsBoolean()) {
-			if(!Game.getInstance().hasStarted()) {
+			if(!VaroGame.getInstance().hasStarted()) {
 				if(Bukkit.getServer().hasWhitelist())
 					event.setMotd(ConfigMessages.SERVER_MODT_NOT_OPENED.getValue());
 				else
@@ -27,7 +27,7 @@ public class ServerListPingListener implements Listener {
 				return;
 			}
 
-			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || OutSideTimeChecker.getInstance().canJoin() || !Game.getInstance().hasStarted()) {
+			if(!ConfigEntry.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || OutSideTimeChecker.getInstance().canJoin() || !VaroGame.getInstance().hasStarted()) {
 				event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}

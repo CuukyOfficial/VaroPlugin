@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
@@ -42,29 +42,29 @@ public class GameOptionsGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + Game.getInstance().getGameState().getName() }).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + VaroGame.getInstance().getGameState().getName() }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				switch(Game.getInstance().getGameState()) {
+				switch(VaroGame.getInstance().getGameState()) {
 				case STARTED:
-					Game.getInstance().setGamestate(GameState.END);
+					VaroGame.getInstance().setGamestate(GameState.END);
 					break;
 				case END:
-					Game.getInstance().setGamestate(GameState.LOBBY);
+					VaroGame.getInstance().setGamestate(GameState.LOBBY);
 					break;
 				case LOBBY:
-					Game.getInstance().setGamestate(GameState.STARTED);
+					VaroGame.getInstance().setGamestate(GameState.STARTED);
 					break;
 				}
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Game.getInstance().getLobby() != null ? VaroUtils.formatLocation(Game.getInstance().getLobby(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (VaroGame.getInstance().getLobby() != null ? VaroUtils.formatLocation(VaroGame.getInstance().getLobby(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				Game.getInstance().setLobby(opener.getLocation());
+				VaroGame.getInstance().setLobby(opener.getLocation());
 			}
 		});
 

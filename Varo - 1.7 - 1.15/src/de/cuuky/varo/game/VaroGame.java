@@ -31,9 +31,9 @@ import de.cuuky.varo.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.world.generators.SpawnGenerator;
 
-public class Game implements VaroSerializeable {
+public class VaroGame implements VaroSerializeable {
 
-	private static Game instance;
+	private static VaroGame instance;
 
 	@VaroSerializeField(path = "autostart")
 	private AutoStart autostart;
@@ -60,7 +60,7 @@ public class Game implements VaroSerializeable {
 	private VaroMainHeartbeatThread mainThread;
 	private VaroStartThread startThread;
 
-	public Game() { // Für Deserializer
+	public VaroGame() { // Für Deserializer
 		instance = this;
 	}
 
@@ -284,12 +284,12 @@ public class Game implements VaroSerializeable {
 	@Override
 	public void onSerializeStart() {}
 
-	public static Game getInstance() {
+	public static VaroGame getInstance() {
 		return instance;
 	}
 
 	public static void initialize() {
-		instance = new Game();
+		instance = new VaroGame();
 
 		instance.startRefreshTimer();
 		instance.loadVariables();

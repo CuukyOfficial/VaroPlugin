@@ -14,7 +14,7 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -55,7 +55,7 @@ public class PlayerJoinListener implements Listener {
 		vplayer.setPlayer(player);
 		vplayer.onEvent(BukkitEventType.JOINED);
 
-		if(Game.getInstance().getGameState() == GameState.LOBBY) {
+		if(VaroGame.getInstance().getGameState() == GameState.LOBBY) {
 			Spawn spawn = Spawn.getSpawn(vplayer);
 			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
@@ -69,7 +69,7 @@ public class PlayerJoinListener implements Listener {
 
 			if(ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
 				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
-					Game.getInstance().start();
+					VaroGame.getInstance().start();
 				else
 					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benötigt!");
 			}
@@ -80,7 +80,7 @@ public class PlayerJoinListener implements Listener {
 				String updateVersion = updater.getVersionName();
 
 				if(result == UpdateResult.UPDATE_AVAILABLE) {
-					if(Game.getInstance().getGameState() == GameState.LOBBY)
+					if(VaroGame.getInstance().getGameState() == GameState.LOBBY)
 						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 
 					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
@@ -101,7 +101,7 @@ public class PlayerJoinListener implements Listener {
 
 			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
-			} else if(Game.getInstance().getFinaleJoinStart()) {
+			} else if(VaroGame.getInstance().getFinaleJoinStart()) {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
 				EventLogger.getInstance().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
