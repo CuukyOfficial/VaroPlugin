@@ -53,6 +53,30 @@ public class DataManager {
 		startAutoSave();
 		doSave = true;
 	}
+	
+	private void load() {
+		ConfigFailureDetector.detectConfig();
+
+		copyDefaultPresets();
+		ConfigHandler.getInstance(); // Initialization
+
+		VaroGameHandler.initialize(); // Initialization GameHandler
+		PlayerHandler.initialize(); // Initialization PlayerHandler
+		VaroTeamHandler.initialize(); // Initialization TeamHandler
+		SpawnHandler.initialize(); // Initialization SpawnHandler
+		ScoreboardHandler.getInstance(); // Initialization ScoreboardHandler
+		ReportHandler.initialize(); // Initialization ReportHandler
+		AlertHandler.initialize(); // Initialization AlertHandler
+		OutSideTimeChecker.getInstance(); // Initialization TimeChecker
+		MySQL.getInstance(); // Initialization MySQL
+		ListHandler.getInstance(); // Initialization ListHandler
+		Broadcaster.getInstance(); // Initialization Broadcaster
+
+		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
+		VaroUtils.setWorldToTime();
+
+		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
+	}
 
 	private void copyDefaultPresets() {
 		try {
@@ -92,30 +116,6 @@ public class DataManager {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void load() {
-		ConfigFailureDetector.detectConfig();
-
-		copyDefaultPresets();
-		ConfigHandler.getInstance(); // Initialization
-
-		VaroGameHandler.initialize(); // Initialization GameHandler
-		PlayerHandler.initialize(); // Initialization PlayerHandler
-		VaroTeamHandler.initialize(); // Initialization TeamHandler
-		SpawnHandler.initialize(); // Initialization SpawnHandler
-		ScoreboardHandler.getInstance(); // Initialization ScoreboardHandler
-		ReportHandler.initialize(); // Initialization ReportHandler
-		AlertHandler.initialize(); // Initialization AlertHandler
-		OutSideTimeChecker.getInstance(); // Initialization TimeChecker
-		MySQL.getInstance(); // Initialization MySQL
-		ListHandler.getInstance(); // Initialization ListHandler
-		Broadcaster.getInstance(); // Initialization Broadcaster
-
-		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
-		VaroUtils.setWorldToTime();
-
-		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}
 
 	private void loadPlugins() {
@@ -180,7 +180,7 @@ public class DataManager {
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
 			
 			System.out.println(Main.getConsolePrefix() + dataName + " wird nun geladen...");
-			Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName));
+			Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName)));
 			System.out.println(Main.getConsolePrefix() + dataName + " wurde erfolgreich geladen!");
 			return true;
 		} catch(IOException | UnknownDependencyException | InvalidPluginException | InvalidDescriptionException e) {

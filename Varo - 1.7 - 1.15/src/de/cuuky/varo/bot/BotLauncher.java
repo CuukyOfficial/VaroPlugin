@@ -37,11 +37,10 @@ public class BotLauncher {
 		try {
 			discordbot = VaroDiscordBot.getInstance();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
-			e.printStackTrace();
 			discordbot = null;
 			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
 			System.out.println(Main.getConsolePrefix() + "If you want to use the DiscordBot please install this plugin:");
-			System.out.println(Main.getConsolePrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+			System.out.println(Main.getConsolePrefix() + "https://www.spigotmc.org/resources/66778/");
 			return;
 		}
 
