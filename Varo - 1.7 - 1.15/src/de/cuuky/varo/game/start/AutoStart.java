@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-import org.bukkit.Bukkit;
-
 import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;

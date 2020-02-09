@@ -36,12 +36,19 @@ public class BotLauncher {
 
 		try {
 			discordbot = VaroDiscordBot.getInstance();
-			discordbot.connect();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
+			e.printStackTrace();
 			discordbot = null;
 			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
-			System.out.println(Main.getConsolePrefix() + "If you want to use the discordbot please install this plugin:");
+			System.out.println(Main.getConsolePrefix() + "If you want to use the DiscordBot please install this plugin:");
 			System.out.println(Main.getConsolePrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+			return;
+		}
+
+		try {
+			discordbot.connect();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -56,12 +63,18 @@ public class BotLauncher {
 
 		try {
 			telegrambot = VaroTelegramBot.getInstance();
-			telegrambot.connect();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
 			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin.");
-			System.out.println(Main.getConsolePrefix() + "If you want to use the Telegrambot please install this plugin:");
+			System.out.println(Main.getConsolePrefix() + "If you want to use the TelegramBot please install this plugin:");
 			System.out.println(Main.getConsolePrefix() + "https://www.spigotmc.org/resources/66823/");
+			return;
+		}
+
+		try {
+			telegrambot.connect();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 

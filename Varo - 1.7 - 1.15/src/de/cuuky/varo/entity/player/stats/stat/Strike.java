@@ -2,9 +2,8 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.Date;
 
-import org.bukkit.Location;
-
 import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.Location;
 
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;

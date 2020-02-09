@@ -2,10 +2,9 @@ package de.cuuky.varo.world.border.decrease;
 
 import java.util.Date;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;

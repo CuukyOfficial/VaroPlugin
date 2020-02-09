@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;

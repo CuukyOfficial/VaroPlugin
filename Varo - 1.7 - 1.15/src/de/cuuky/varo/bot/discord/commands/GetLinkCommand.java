@@ -2,13 +2,12 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.config.ConfigEntry;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class GetLinkCommand extends DiscordBotCommand {
 

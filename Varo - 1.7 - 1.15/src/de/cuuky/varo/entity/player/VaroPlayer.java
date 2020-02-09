@@ -38,8 +38,8 @@ import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.vanish.Vanish;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 public class VaroPlayer extends VaroEntity {
 
@@ -118,18 +118,18 @@ public class VaroPlayer extends VaroEntity {
 
 		Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
 		if(oldTeam != null) {
-			if(db.getController().getGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
-				Role role = db.getController().getGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
-				db.getController().removeSingleRoleFromMember(member, role).complete();
+			if(db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
+				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
+				db.getMainGuild().removeRoleFromMember(member, role).complete();
 			}
 		}
 
 		if(this.team != null) {
-			Role role = db.getController().getGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getController().getGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
+			Role role = db.getMainGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getMainGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
 			if(role == null)
-				role = db.getController().createCopyOfRole(db.getController().getGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
+				role = db.getMainGuild().createCopyOfRole(db.getMainGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
 
-			db.getController().addRolesToMember(member, role).complete();
+			db.getMainGuild().addRoleToMember(member, role).complete();
 		}
 
 	}

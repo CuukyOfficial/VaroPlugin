@@ -4,10 +4,9 @@ import java.awt.Color;
 
 import org.bukkit.Bukkit;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.game.VaroGame;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ServerCommand extends DiscordBotCommand {
 
