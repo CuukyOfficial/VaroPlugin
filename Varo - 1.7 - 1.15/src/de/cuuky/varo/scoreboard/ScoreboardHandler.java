@@ -7,11 +7,13 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
@@ -31,6 +33,49 @@ public class ScoreboardHandler {
 
 	private ScoreboardHandler() {
 		loadScores();
+	}
+
+	private String prepareScoreboardStatement(Scoreboard board, int index, String line) {
+		Team team = board.getTeam("team-" + getAsTeam(index));
+		if(team == null)
+			team = board.registerNewTeam("team-" + getAsTeam(index));
+
+		String playerName = getAsTeam(index);
+		String[] pas = getPrefixAndSuffix(line);
+		team.setPrefix(pas[0]);
+		team.setSuffix(pas[1]);
+
+		if(!team.getEntries().contains(playerName))
+			team.addEntry(playerName);
+
+		return playerName;
+	}
+
+	private String[] getPrefixAndSuffix(String value) {
+		String prefix = getPrefix(value);
+		String suffix = "";
+
+		if(prefix.substring(prefix.length() - 1, prefix.length()).equals("§")) {
+			prefix = prefix.substring(0, prefix.length() - 1);
+			suffix = getPrefix("§" + getSuffix(value));
+		} else
+			suffix = getPrefix(ChatColor.getLastColors(prefix) + getSuffix(value));
+
+		return new String[] { prefix, suffix };
+	}
+
+	private String getPrefix(String value) {
+		return value.length() > 16 ? value.substring(0, 16) : value;
+	}
+
+	private String getSuffix(String value) {
+		value = value.length() > 32 ? value.substring(0, 32) : value;
+
+		return value.length() > 16 ? value.substring(16) : "";
+	}
+
+	private String getAsTeam(int index) {
+		return ChatColor.values()[index].toString();
 	}
 
 	private ArrayList<Integer> getConvNumbers(String line, String key) {
@@ -84,9 +129,6 @@ public class ScoreboardHandler {
 		}
 
 		line = ConfigMessages.getValue(line, vp);
-
-		if(line.length() > 16)
-			line = line.substring(0, 16);
 
 		return line;
 	}
@@ -156,7 +198,8 @@ public class ScoreboardHandler {
 			return;
 
 		Scoreboard sb = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
-		Objective obj = sb.registerNewObjective(getConvString(header, vp), "dummy");
+		Objective obj = sb.registerNewObjective("silent", "dummy");
+		obj.setDisplayName(getConvString(header, vp));
 
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		player.setScoreboard(sb);
@@ -178,15 +221,27 @@ public class ScoreboardHandler {
 			return;
 		}
 
+		if(board.getEntries().size() > scoreboardLines.size()) {
+			for(Team team : board.getTeams())
+				if(team.getName().startsWith("team-"))
+					team.unregister();
+
+			for(String s : board.getEntries())
+				board.resetScores(s);
+
+			replacesLst.clear();
+		}
+
 		for(int index = 0; index < scoreboardLines.size(); index++) {
 			String line = getConvString(scoreboardLines.get(index), player);
 
 			if(replacesLst.size() < scoreboardLines.size()) {
-				obj.getScore(line).setScore(index);
+				obj.getScore(prepareScoreboardStatement(board, index, line)).setScore(index + 1);
 				replacesLst.add(line);
 			} else if(!replacesLst.get(index).equals(line)) {
-				board.resetScores(replacesLst.get(index));
-				obj.getScore(line).setScore(index);
+				String sbs = prepareScoreboardStatement(board, index, line);
+				board.resetScores(sbs);
+				obj.getScore(sbs).setScore(index + 1);
 				replacesLst.set(index, line);
 			}
 		}
