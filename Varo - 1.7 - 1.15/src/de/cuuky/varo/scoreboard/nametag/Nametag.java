@@ -54,7 +54,9 @@ public class Nametag {
 		this.player = p;
 		this.uniqueID = uniqueID;
 
-		p.getScoreboard().getTeams().forEach(team -> team.unregister());
+		for(Team t : p.getScoreboard().getTeams())
+			if(!t.getName().startsWith("team-"))
+				t.unregister();
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
