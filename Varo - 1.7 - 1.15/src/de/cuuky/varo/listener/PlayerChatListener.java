@@ -39,9 +39,8 @@ public class PlayerChatListener implements Listener {
 		if(event.isCancelled())
 			return;
 
-		Player player = event.getPlayer();
-
 		String message = event.getMessage();
+		Player player = event.getPlayer();
 		ChatHook hook = ChatHook.getChatHook(player);
 		if(hook != null) {
 			hook.run(message);
