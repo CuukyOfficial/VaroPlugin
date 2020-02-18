@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.JavaUtils;
@@ -22,7 +21,7 @@ public class AutoStart implements VaroSerializeable {
 	private Date start;
 
 	public AutoStart() {
-		VaroGame.getInstance().setAutoStart(this);
+		Main.getVaroGame().setAutoStart(this);
 	}
 
 	public AutoStart(Calendar start) {
@@ -30,7 +29,7 @@ public class AutoStart implements VaroSerializeable {
 		this.start.setSeconds(0);
 
 		start();
-		VaroGame.getInstance().setAutoStart(this);
+		Main.getVaroGame().setAutoStart(this);
 
 		postMessage(Main.getProjectName() + " §7wird am " + Main.getColorCode() + getDayByInt(start.get(Calendar.DAY_OF_WEEK)) + " §7den " + Main.getColorCode() + getWithZero(start.get(Calendar.DAY_OF_MONTH)) + "§7." + Main.getColorCode() + getWithZero(start.get(Calendar.MONTH) + 1) + "§7." + Main.getColorCode() + start.get(Calendar.YEAR) + " §7um " + Main.getColorCode() + getWithZero(start.get(Calendar.HOUR_OF_DAY)) + "§7:" + Main.getColorCode() + getWithZero(start.get(Calendar.MINUTE)) + " §7starten!");
 	}
@@ -95,7 +94,7 @@ public class AutoStart implements VaroSerializeable {
 				Bukkit.getScheduler().cancelTask(sched);
 				if(startDelay == StartDelay.GO) {
 					stop();
-					VaroGame.getInstance().start();
+					Main.getVaroGame().start();
 					Bukkit.broadcastMessage(Main.getProjectName() + " §7wird gestartet...");
 					return;
 				}
@@ -116,7 +115,7 @@ public class AutoStart implements VaroSerializeable {
 	
 	public void stop() {
 		Bukkit.getScheduler().cancelTask(sched);
-		VaroGame.getInstance().setAutoStart(null);
+		Main.getVaroGame().setAutoStart(null);
 		StartDelay.reset();
 	}
 	

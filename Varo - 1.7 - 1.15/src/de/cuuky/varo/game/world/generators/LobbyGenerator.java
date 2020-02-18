@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.generators;
+package de.cuuky.varo.game.world.generators;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.game.world.schematic.SchematicLoader;
 import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.types.Materials;
-import de.cuuky.varo.world.schematic.SchematicLoader;
 
 @SuppressWarnings("deprecation")
 public class LobbyGenerator {

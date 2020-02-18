@@ -14,7 +14,6 @@ import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.threads.dailycheck.Checker;
 import de.cuuky.varo.utils.VaroUtils;
@@ -55,7 +54,7 @@ public class DebugGUI extends SuperInventory {
 
 					@Override
 					public void onChat(String message) {
-						EventLogger.getInstance().println(LogType.ALERT, message);
+						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, message);
 						opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
 
 					}
@@ -80,7 +79,7 @@ public class DebugGUI extends SuperInventory {
 				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
 					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? VaroUtils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
 
-				EventLogger.getInstance().println(LogType.ALERT, post);
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, post);
 			}
 		});
 

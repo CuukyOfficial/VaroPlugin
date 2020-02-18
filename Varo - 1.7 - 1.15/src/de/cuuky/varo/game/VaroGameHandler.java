@@ -1,13 +1,12 @@
 package de.cuuky.varo.game;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.serialize.VaroSerializeObject;
-import de.cuuky.varo.world.border.decrease.BorderDecreaseDayTimer;
 
 public class VaroGameHandler extends VaroSerializeObject {
-
-	private static VaroGameHandler instance;
 
 	static {
 		registerEnum(GameState.class);
@@ -15,28 +14,21 @@ public class VaroGameHandler extends VaroSerializeObject {
 		registerClass(BorderDecreaseDayTimer.class);
 	}
 
-	private VaroGameHandler() {
+	public VaroGameHandler() {
 		super(VaroGame.class, "/stats/game.yml");
 
 		load();
 
-		if(VaroGame.getInstance() == null) {
-			VaroGame.initialize(); // When nothing got deserialized -> new game
-		}
+		if(Main.getVaroGame() == null) 
+			new VaroGame().init(); // When nothing got deserialized -> new game
 	}
 
 	@Override
 	public void onSave() {
 		clearOld();
 
-		save("current", VaroGame.getInstance(), getConfiguration());
+		save("current", Main.getVaroGame(), getConfiguration());
 
 		saveFile();
-	}
-
-	public static void initialize() {
-		if(instance == null) {
-			instance = new VaroGameHandler();
-		}
 	}
 }

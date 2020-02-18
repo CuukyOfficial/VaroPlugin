@@ -19,12 +19,8 @@ import net.dv8tion.jda.api.exceptions.PermissionException;
 
 public class VaroDiscordBot implements VaroBot {
 
-	private static VaroDiscordBot instance;
-
 	private JDA jda;	
 	private long registerChannel, eventChannel, announcementChannel, resultChannel, pingRole;
-
-	private VaroDiscordBot() {}
 
 	private Color getRandomColor() {
 		Random random = new Random();
@@ -198,12 +194,5 @@ public class VaroDiscordBot implements VaroBot {
 
 	public static String getClassName() {
 		return JDABuilder.class.getName();
-	}
-
-	public static VaroDiscordBot getInstance() {
-		if(instance == null) {
-			instance = new VaroDiscordBot();
-		}
-		return instance;
 	}
 }

@@ -14,7 +14,6 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.spawns.Spawn;
 
 public final class VaroUtils {
@@ -36,7 +35,7 @@ public final class VaroUtils {
 	}
 
 	public static Location getTeleportLocation() {
-		return VaroGame.getInstance().getLobby() != null ? VaroGame.getInstance().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
+		return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
 	}
 
 	public static Object readServerProperties(String key) {
@@ -72,7 +71,7 @@ public final class VaroUtils {
 
 			@Override
 			public void run() {
-				if(VaroGame.getInstance().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
+				if(Main.getVaroGame().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
 					Bukkit.getScheduler().cancelTask(worldToTimeID);
 					return;
 				}

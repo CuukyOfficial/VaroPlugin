@@ -8,9 +8,7 @@ import de.cuuky.varo.list.item.lists.DeathItems;
 import de.cuuky.varo.list.item.lists.LogDestroyedBlocks;
 import de.cuuky.varo.list.item.lists.StartItems;
 
-public class ListHandler {
-
-	public static ListHandler instance;
+public class VaroListManager {
 
 	private BlockedEnchantments blockedEnchantments;
 	private BlockedItems blockedItems;
@@ -20,7 +18,7 @@ public class ListHandler {
 	private LogDestroyedBlocks destroyedBlocks;
 	private StartItems startItems;
 
-	private ListHandler() {
+	public VaroListManager() {
 		this.blockedEnchantments = new BlockedEnchantments();
 		this.blockedItems = new BlockedItems();
 		this.blockedRecipes = new BlockedRecipes();
@@ -58,12 +56,5 @@ public class ListHandler {
 
 	public StartItems getStartItems() {
 		return startItems;
-	}
-
-	public static ListHandler getInstance() {
-		if(instance == null) {
-			instance = new ListHandler();
-		}
-		return instance;
 	}
 }

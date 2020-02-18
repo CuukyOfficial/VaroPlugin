@@ -22,18 +22,16 @@ import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.threads.VaroMainHeartbeatThread;
 import de.cuuky.varo.game.threads.VaroStartThread;
-import de.cuuky.varo.logger.logger.EventLogger;
+import de.cuuky.varo.game.world.VaroWorld;
+import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
+import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
+import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.VaroUtils;
-import de.cuuky.varo.world.border.decrease.BorderDecreaseDayTimer;
-import de.cuuky.varo.world.border.decrease.BorderDecreaseMinuteTimer;
-import de.cuuky.varo.world.generators.SpawnGenerator;
 
 public class VaroGame implements VaroSerializeable {
-
-	private static VaroGame instance;
 
 	@VaroSerializeField(path = "autostart")
 	private AutoStart autostart;
@@ -53,15 +51,16 @@ public class VaroGame implements VaroSerializeable {
 	@VaroSerializeField(path = "lobby")
 	private Location lobby;
 
-	private BorderDecreaseMinuteTimer minuteTimer;
-	private ProtectionTime protection;
 	private int startScheduler;
 	private boolean finaleJoinStart, firstTime;
 	private VaroMainHeartbeatThread mainThread;
 	private VaroStartThread startThread;
+	private BorderDecreaseMinuteTimer minuteTimer;
+	private ProtectionTime protection;
+	private VaroWorld varoWorld;
 
-	public VaroGame() { // Für Deserializer
-		instance = this;
+	public VaroGame() {
+		Main.setVaroGame(this);
 	}
 
 	private void loadVariables() {
@@ -70,6 +69,16 @@ public class VaroGame implements VaroSerializeable {
 
 		if(mainThread != null)
 			mainThread.loadVariables();
+	}
+	
+	public void init() {
+		startRefreshTimer();
+		loadVariables();
+
+		this.varoWorld = new VaroWorld();
+		
+		this.gamestate = GameState.LOBBY;
+		this.borderDecrease = new BorderDecreaseDayTimer(true);
 	}
 
 	public void start() {
@@ -93,7 +102,7 @@ public class VaroGame implements VaroSerializeable {
 
 		if(ConfigEntry.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
 			removeArentAtStart();
-		
+
 		if(minuteTimer != null)
 			minuteTimer.remove();
 
@@ -158,10 +167,10 @@ public class VaroGame implements VaroSerializeable {
 		}
 
 		if(first.contains("&")) {
-			EventLogger.getInstance().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
 			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN_TEAM.getValue().replace("%winnerPlayers%", first));
 		} else {
-			EventLogger.getInstance().println(LogType.WIN, ConfigMessages.ALERT_WINNER.getValue().replace("%player%", first));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER.getValue().replace("%player%", first));
 			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN.getValue().replace("%player%", first));
 		}
 
@@ -231,6 +240,10 @@ public class VaroGame implements VaroSerializeable {
 	public boolean isStarting() {
 		return startThread != null;
 	}
+	
+	public VaroWorld getVaroWorld() {
+		return this.varoWorld;
+	}
 
 	public void setAutoStart(AutoStart autoStart) {
 		this.autostart = autoStart;
@@ -274,27 +287,15 @@ public class VaroGame implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
+		if(gamestate == GameState.STARTED)
+			minuteTimer = new BorderDecreaseMinuteTimer();
+		
 		startRefreshTimer();
 		loadVariables();
 
-		if(gamestate == GameState.STARTED)
-			minuteTimer = new BorderDecreaseMinuteTimer();
+		this.varoWorld = new VaroWorld();
 	}
 
 	@Override
 	public void onSerializeStart() {}
-
-	public static VaroGame getInstance() {
-		return instance;
-	}
-
-	public static void initialize() {
-		instance = new VaroGame();
-
-		instance.startRefreshTimer();
-		instance.loadVariables();
-
-		instance.gamestate = GameState.LOBBY;
-		instance.borderDecrease = new BorderDecreaseDayTimer(true);
-	}
 }

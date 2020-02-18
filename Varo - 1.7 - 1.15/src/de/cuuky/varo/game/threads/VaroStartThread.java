@@ -20,8 +20,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.list.ListHandler;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.utils.VaroUtils;
@@ -34,7 +32,7 @@ public class VaroStartThread implements Runnable {
 	private int startcountdown;
 	
 	public VaroStartThread() {
-		this.game = VaroGame.getInstance();
+		this.game = Main.getVaroGame();
 		
 		loadVaraibles();
 	}
@@ -48,7 +46,7 @@ public class VaroStartThread implements Runnable {
 		Location loc2 = VaroUtils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
-		ArrayList<ItemStack> chestItems = ListHandler.getInstance().getChestItems().getItems();
+		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
 		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
 			if(!(block.getState() instanceof Chest))
 				continue;
@@ -149,7 +147,7 @@ public class VaroStartThread implements Runnable {
 			VaroUtils.getMainWorld().strikeLightningEffect(VaroUtils.getMainWorld().getSpawnLocation());
 			
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
-			EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -160,7 +158,7 @@ public class VaroStartThread implements Runnable {
 				}
 			}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
 
-			ListHandler.getInstance().getStartItems().giveToAll();
+			Main.getDataManager().getListManager().getStartItems().giveToAll();
 			if(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
 				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 				game.setProtection(new ProtectionTime());

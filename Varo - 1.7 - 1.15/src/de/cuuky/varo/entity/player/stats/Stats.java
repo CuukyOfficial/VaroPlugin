@@ -27,14 +27,10 @@ import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.end.WinnerCheck;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -105,7 +101,7 @@ public class Stats implements VaroSerializeable {
 	public void addKill() {
 		this.kills++;
 		owner.update();
-		ScoreboardHandler.getInstance().updateTopScores();
+		Main.getDataManager().getScoreboardHandler().updateTopScores();
 	}
 
 	public void addSaveable(VaroSaveable saveable) {
@@ -129,7 +125,7 @@ public class Stats implements VaroSerializeable {
 	public void addVideo(YouTubeVideo video) {
 		videos.add(video);
 
-		EventLogger.getInstance().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
 	}
 
 	public void addWin() {
@@ -183,7 +179,7 @@ public class Stats implements VaroSerializeable {
 
 	public KickResult getKickResult(Player player) {
 		KickResult result = KickResult.ALLOW;
-		if(VaroGame.getInstance().hasStarted()) {
+		if(Main.getVaroGame().hasStarted()) {
 			if(owner.isRegistered())
 				result = getVaroKickResult();
 			else
@@ -192,7 +188,7 @@ public class Stats implements VaroSerializeable {
 			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
-			if(VaroGame.getInstance().isStarting())
+			if(Main.getVaroGame().isStarting())
 				result = KickResult.NO_PROJECTUSER;
 		}
 
@@ -206,8 +202,8 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.SERVER_FULL;
 
 		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !VaroGame.getInstance().hasStarted() && player.isOp()) {
-				if(VaroGame.getInstance().hasStarted())
+			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getVaroGame().hasStarted() && player.isOp()) {
+				if(Main.getVaroGame().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
 					else
@@ -306,12 +302,12 @@ public class Stats implements VaroSerializeable {
 		if(VaroEvent.getMassRecEvent().isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 
-		if(VaroGame.getInstance().getFinaleJoinStart()) {
+		if(Main.getVaroGame().getFinaleJoinStart()) {
 			result = KickResult.FINALE_JOIN;
 		}
 
 		if(Main.isBootedUp())
-			if(!OutSideTimeChecker.getInstance().canJoin())
+			if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
 				result = KickResult.NOT_IN_TIME;
 
 		for(Strike strike : strikes)
@@ -516,7 +512,7 @@ public class Stats implements VaroSerializeable {
 	public void setKills(int kills) {
 		this.kills = kills;
 		owner.update();
-		ScoreboardHandler.getInstance().updateTopScores();
+		Main.getDataManager().getScoreboardHandler().updateTopScores();
 	}
 
 	public void setLastEnemyContact(Date lastEnemyContact) {

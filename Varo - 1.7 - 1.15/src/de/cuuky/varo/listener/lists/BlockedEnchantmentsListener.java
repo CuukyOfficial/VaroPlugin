@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.list.ListHandler;
 
 public class BlockedEnchantmentsListener implements Listener {
 
@@ -24,7 +23,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			return;
 
 		for(Enchantment enc : event.getEnchantsToAdd().keySet())
-			if(ListHandler.getInstance().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
+			if(Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
 				event.setCancelled(true);
 				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
 				return;
@@ -52,7 +51,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			return;
 
 		for(Enchantment enc : item.getEnchantments().keySet())
-			if(ListHandler.getInstance().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
+			if(Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
 				event.setCancelled(true);
 				((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
 				return;

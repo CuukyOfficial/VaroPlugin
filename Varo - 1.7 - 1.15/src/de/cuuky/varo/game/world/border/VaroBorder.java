@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.border;
+package de.cuuky.varo.game.world.border;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,21 +9,19 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
+import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.world.border.decrease.BorderDecrease;
-import de.cuuky.varo.world.border.decrease.DecreaseReason;
 
 public class VaroBorder {
-
-	private static VaroBorder instance;
 
 	private Object borders[];
 	private HashMap<Player, Double> distances;
 	
 	// TODO: Save Reflections
 
-	private VaroBorder() {
+	public VaroBorder() {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
@@ -39,7 +37,6 @@ public class VaroBorder {
 			switch(world.getEnvironment()) {
 			case NORMAL:
 				try {
-					// Invoke, damit kein Fehler in einer IDE kommt mit 1.7 jar
 					borders[0] = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -221,12 +218,5 @@ public class VaroBorder {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static VaroBorder getInstance() {
-		if(instance == null) 
-			instance = new VaroBorder();
-		
-		return instance;
 	}
 }

@@ -13,13 +13,11 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class VaroTelegramBot implements VaroBot {
 
-	private static VaroTelegramBot instance;
-
 	private long eventChannelId, youtubeChannelId;
 
 	private TelegramBot telegrambot;
 
-	private VaroTelegramBot() {
+	public VaroTelegramBot() {
 		eventChannelId = -1;
 		youtubeChannelId = -1;
 
@@ -88,12 +86,5 @@ public class VaroTelegramBot implements VaroBot {
 
 	public static String getClassName() {
 		return TelegramBot.class.getName();
-	}
-
-	public static VaroTelegramBot getInstance() {
-		if(instance == null) {
-			instance = new VaroTelegramBot();
-		}
-		return instance;
 	}
 }

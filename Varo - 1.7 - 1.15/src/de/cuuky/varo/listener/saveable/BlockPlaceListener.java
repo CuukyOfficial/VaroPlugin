@@ -16,14 +16,13 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.version.types.Sounds;
 
 public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(final BlockPlaceEvent e) {
-		if(!VaroGame.getInstance().hasStarted())
+		if(!Main.getVaroGame().hasStarted())
 			return;
 
 		Block placed = e.getBlock();

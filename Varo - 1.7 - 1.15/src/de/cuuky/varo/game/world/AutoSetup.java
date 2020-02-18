@@ -1,4 +1,4 @@
-package de.cuuky.varo.world;
+package de.cuuky.varo.game.world;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -10,21 +10,20 @@ import org.bukkit.World;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.AutoStart;
+import de.cuuky.varo.game.world.generators.LobbyGenerator;
+import de.cuuky.varo.game.world.generators.PortalGenerator;
+import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.utils.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.world.generators.LobbyGenerator;
-import de.cuuky.varo.world.generators.PortalGenerator;
-import de.cuuky.varo.world.generators.SpawnGenerator;
 
 public class AutoSetup {
 
 	public AutoSetup() {
-		if(VaroGame.getInstance().hasStarted())
+		if(Main.getVaroGame().hasStarted())
 			return;
 
 		setupPlugin();
@@ -65,7 +64,7 @@ public class AutoSetup {
 			else
 				new LobbyGenerator(lobby, file);
 
-			VaroGame.getInstance().setLobby(lobby);
+			Main.getVaroGame().setLobby(lobby);
 		}
 
 		if(ConfigEntry.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {

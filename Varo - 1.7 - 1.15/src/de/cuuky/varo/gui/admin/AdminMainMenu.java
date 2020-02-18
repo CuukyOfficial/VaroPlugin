@@ -26,7 +26,6 @@ import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.logger.logger.BlockLogger;
 import de.cuuky.varo.report.Report;
 import de.cuuky.varo.version.types.Materials;
 
@@ -131,7 +130,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(BlockLogger.getInstance().getLogs().size())).build(), new Runnable() {
+		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs().size())).build(), new Runnable() {
 
 			@Override
 			public void run() {

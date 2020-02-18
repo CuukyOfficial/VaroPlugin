@@ -5,13 +5,11 @@ import de.cuuky.varo.spawns.spawn.SpawnType;
 
 public class SpawnHandler extends VaroSerializeObject {
 
-	private static SpawnHandler instance;
-
 	static {
 		registerEnum(SpawnType.class);
 	}
 
-	private SpawnHandler() {
+	public SpawnHandler() {
 		super(Spawn.class, "/stats/spawns.yml");
 
 		load();
@@ -25,11 +23,5 @@ public class SpawnHandler extends VaroSerializeObject {
 			save(String.valueOf(spawn.getNumber()), spawn, getConfiguration());
 
 		saveFile();
-	}
-
-	public static void initialize() {
-		if(instance == null) {
-			instance = new SpawnHandler();
-		}
 	}
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public abstract class Logger {
+public abstract class VaroLogger {
 
 	protected File file;
 	protected FileWriter fw;
@@ -18,7 +18,7 @@ public abstract class Logger {
 	protected PrintWriter pw;
 	protected Scanner scanner;
 
-	public Logger(String name, boolean loadPrevious) {
+	public VaroLogger(String name, boolean loadPrevious) {
 		this.file = new File("plugins/Varo/logs/", name + ".yml");
 		this.logs = new ArrayList<String>();
 

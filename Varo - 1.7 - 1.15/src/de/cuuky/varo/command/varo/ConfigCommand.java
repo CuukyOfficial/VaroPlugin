@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -28,7 +27,7 @@ public class ConfigCommand extends VaroCommand {
 		}
 
 		if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
-			DataManager.getInstance().reloadConfig();
+			Main.getDataManager().reloadConfig();
 			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich " + Main.getColorCode() + "alle Listen§7, die " + Main.getColorCode() + "Messages §7und die " + Main.getColorCode() + "Config §7neu geladen!");
 		} else if(args[0].equalsIgnoreCase("set")) {
 			if(args.length != 3) {

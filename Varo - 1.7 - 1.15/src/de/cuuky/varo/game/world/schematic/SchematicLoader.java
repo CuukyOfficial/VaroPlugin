@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.schematic;
+package de.cuuky.varo.game.world.schematic;
 
 import java.io.File;
 import java.io.FileInputStream;

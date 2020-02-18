@@ -4,10 +4,10 @@ import java.awt.Color;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.logger.Logger;
+import de.cuuky.varo.logger.VaroLogger;
 import de.cuuky.varo.utils.JavaUtils;
 
-public class EventLogger extends Logger {
+public class EventLogger extends VaroLogger {
 
 	public enum LogType {
 
@@ -61,9 +61,7 @@ public class EventLogger extends Logger {
 		}
 	}
 
-	private static EventLogger instance;
-
-	private EventLogger(String name) {
+	public EventLogger(String name) {
 		super(name, true);
 	}
 
@@ -110,12 +108,5 @@ public class EventLogger extends Logger {
 
 		sendToDiscord(type, message);
 		sendToTelegram(type, message);
-	}
-
-	public static EventLogger getInstance() {
-		if(instance == null) {
-			instance = new EventLogger("logs");
-		}
-		return instance;
 	}
 }

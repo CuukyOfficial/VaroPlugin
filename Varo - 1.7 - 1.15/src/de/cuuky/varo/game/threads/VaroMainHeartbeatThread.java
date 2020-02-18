@@ -16,10 +16,7 @@ import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
-import de.cuuky.varo.threads.OutSideTimeChecker;
 import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.world.border.VaroBorder;
 
 public class VaroMainHeartbeatThread implements Runnable {
 	
@@ -29,7 +26,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 	
 	public VaroMainHeartbeatThread() {
 		this.seconds = 0;
-		this.game = VaroGame.getInstance();
+		this.game = Main.getVaroGame();
 				
 		loadVariables();
 	}
@@ -50,12 +47,12 @@ public class VaroMainHeartbeatThread implements Runnable {
 			if(seconds == 60) {
 				seconds = 0;
 				if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-					double minutesToClose = (int) (((OutSideTimeChecker.getInstance().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+					double minutesToClose = (int) (((Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 					if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
 						Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
-					if(!OutSideTimeChecker.getInstance().canJoin())
+					if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
 						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 							vp.getStats().setCountdown(0);
 							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
@@ -75,7 +72,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
 						actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 					if(showDistanceToBorder) {
-						int distance = (int) VaroBorder.getInstance().getBorderDistanceTo(p);
+						int distance = (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo(p);
 						if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 							actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 					}
@@ -116,7 +113,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					vp.getStats().setState(PlayerState.ALIVE);
 			}
 
-			ScoreboardHandler.getInstance().update(vp);
+			Main.getDataManager().getScoreboardHandler().update(vp);
 			vp.update();
 		}
 

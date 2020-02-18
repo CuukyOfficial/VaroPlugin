@@ -11,7 +11,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.utils.PermissionUtils;
 import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.world.border.VaroBorder;
 
 public class MessagePlaceholderLoader {
 
@@ -89,7 +88,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue() {
-				return !Main.isBootedUp() ? "0" : String.valueOf((int) VaroBorder.getInstance().getBorderSize(null));
+				return !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null));
 			}
 		};
 
@@ -146,7 +145,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return String.valueOf((int) VaroBorder.getInstance().getBorderDistanceTo(player.getPlayer()));
+				return String.valueOf((int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo(player.getPlayer()));
 			}
 		};
 

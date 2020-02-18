@@ -26,12 +26,9 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.utils.JavaUtils;
@@ -186,7 +183,7 @@ public class VaroPlayer extends VaroEntity {
 
 		stats.remove();
 		varoplayer.remove(this);
-		ScoreboardHandler.getInstance().updateTopScores();
+		Main.getDataManager().getScoreboardHandler().updateTopScores();
 	}
 	
 	@Override
@@ -200,7 +197,7 @@ public class VaroPlayer extends VaroEntity {
 
 			setNormalAttackSpeed();
 
-			if(VaroGame.getInstance().getGameState() == GameState.LOBBY)
+			if(Main.getVaroGame().getGameState() == GameState.LOBBY)
 				LobbyItem.giveItems(player);
 		} else if(isAdminIgnore())
 			adminIgnore = false;
@@ -437,7 +434,7 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		update();
-		ScoreboardHandler.getInstance().updateTopScores();
+		Main.getDataManager().getScoreboardHandler().updateTopScores();
 	}
 
 	/**
@@ -521,7 +518,7 @@ public class VaroPlayer extends VaroEntity {
 				continue;
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
 				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				vp.setName(player.getName());

@@ -2,13 +2,13 @@ package de.cuuky.varo.logger.logger;
 
 import java.io.PrintStream;
 
-import de.cuuky.varo.logger.Logger;
+import de.cuuky.varo.logger.VaroLogger;
 import de.cuuky.varo.utils.JavaUtils;
 
-public class ConsoleLogger extends Logger {
+public class ConsoleLogger extends VaroLogger {
 
-	public ConsoleLogger() {
-		super("consolelogs", false);
+	public ConsoleLogger(String name) {
+		super(name, false);
 
 		startListening();
 	}

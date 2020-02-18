@@ -14,9 +14,7 @@ import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.serialize.VaroSerializeObject;
 import de.cuuky.varo.version.VersionUtils;
 
-public class PlayerHandler extends VaroSerializeObject {
-
-	private static PlayerHandler instance;
+public class VaroPlayerHandler extends VaroSerializeObject {
 
 	static {
 		registerClass(Rank.class);
@@ -30,7 +28,7 @@ public class PlayerHandler extends VaroSerializeObject {
 		registerEnum(PlayerState.class);
 	}
 
-	private PlayerHandler() {
+	public VaroPlayerHandler() {
 		super(VaroPlayer.class, "/stats/players.yml");
 
 		load();
@@ -48,11 +46,5 @@ public class PlayerHandler extends VaroSerializeObject {
 			save(String.valueOf(vp.getId()), vp, getConfiguration());
 
 		saveFile();
-	}
-
-	public static void initialize() {
-		if(instance == null) {
-			instance = new PlayerHandler();
-		}
 	}
 }

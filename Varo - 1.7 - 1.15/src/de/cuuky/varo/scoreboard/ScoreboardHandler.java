@@ -23,15 +23,13 @@ import de.cuuky.varo.entity.team.VaroTeam;
 
 public class ScoreboardHandler {
 
-	private static ScoreboardHandler instance;
-
 	private String header;
 	private HashMap<Player, ArrayList<String>> replaces;
 
 	private ArrayList<String> scoreboardLines;
 	private TopScoreList topScores;
 
-	private ScoreboardHandler() {
+	public ScoreboardHandler() {
 		loadScores();
 	}
 
@@ -253,12 +251,5 @@ public class ScoreboardHandler {
 
 	public void updateTopScores() {
 		topScores.update();
-	}
-
-	public static ScoreboardHandler getInstance() {
-		if(instance == null) {
-			instance = new ScoreboardHandler();
-		}
-		return instance;
 	}
 }

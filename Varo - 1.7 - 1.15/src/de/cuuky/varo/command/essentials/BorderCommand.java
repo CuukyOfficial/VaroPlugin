@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.game.world.border.VaroBorder;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
-import de.cuuky.varo.world.border.VaroBorder;
 
 public class BorderCommand implements CommandExecutor {
 
@@ -23,9 +23,9 @@ public class BorderCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? VaroBorder.getInstance().getBorderSize(((Player) sender).getWorld()) : VaroBorder.getInstance().getBorderSize(null)) + " §7Blöcke groß!");
+			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(((Player) sender).getWorld()) : Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null)) + " §7Blöcke groß!");
 			if(sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) VaroBorder.getInstance().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
+				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
 
 			if(sender.hasPermission("varo.setup")) {
 				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> [Sekunden] §7setzen!");
@@ -43,7 +43,7 @@ public class BorderCommand implements CommandExecutor {
 				return false;
 			}
 
-			VaroBorder border = VaroBorder.getInstance();
+			VaroBorder border = Main.getVaroGame().getVaroWorld().getVaroBorder();
 			World playerWorld = (p != null ? p.getWorld() : null);
 			if(p != null)
 				border.setBorderCenter(p.getLocation());

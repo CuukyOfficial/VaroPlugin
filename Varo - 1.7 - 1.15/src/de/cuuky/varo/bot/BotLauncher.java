@@ -8,11 +8,9 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 public class BotLauncher {
 
 	private static VaroDiscordBot discordbot;
-
-	private static BotLauncher instance;
 	private static VaroTelegramBot telegrambot;
 
-	private BotLauncher() {
+	public BotLauncher() {
 		startupDiscord();
 		startupTelegram();
 	}
@@ -35,7 +33,7 @@ public class BotLauncher {
 		}
 
 		try {
-			discordbot = VaroDiscordBot.getInstance();
+			discordbot = new VaroDiscordBot();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
 			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
@@ -61,7 +59,7 @@ public class BotLauncher {
 		}
 
 		try {
-			telegrambot = VaroTelegramBot.getInstance();
+			telegrambot = new VaroTelegramBot();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
 			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin.");
@@ -79,13 +77,6 @@ public class BotLauncher {
 
 	public static VaroDiscordBot getDiscordBot() {
 		return discordbot;
-	}
-
-	public static BotLauncher getInstance() {
-		if(instance == null) {
-			instance = new BotLauncher();
-		}
-		return instance;
 	}
 
 	public static VaroTelegramBot getTelegramBot() {

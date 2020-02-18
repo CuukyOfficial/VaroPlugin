@@ -18,7 +18,6 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -123,7 +122,7 @@ public class OfflineVillager implements VaroSerializeable {
 			if(it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
 
-		EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
 		Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
 
 		killer.onEvent(BukkitEventType.KILL);

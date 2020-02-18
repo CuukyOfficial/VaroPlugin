@@ -9,7 +9,6 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
@@ -111,7 +110,7 @@ public class UpdateCommand extends VaroCommand {
 		if(!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar")) 
 			this.pluginNameChanged = true;
 
-		DataManager.getInstance().setDoSave(false);
+		Main.getDataManager().setDoSave(false);
 
 		if(result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");

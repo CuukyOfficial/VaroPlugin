@@ -9,15 +9,13 @@ import java.sql.Statement;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 
-public class MySQL {
-
-	private static MySQL instance;
+public class MySQLClient {
 
 	private boolean connected;
 	private Connection connection;
 	private String host, database, user, password;
 
-	private MySQL() {
+	public MySQLClient() {
 		if(!ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean())
 			return;
 
@@ -84,12 +82,5 @@ public class MySQL {
 	
 	public boolean isConnected() {
 		return connected;
-	}
-
-	public static MySQL getInstance() {
-		if(instance == null) {
-			instance = new MySQL();
-		}
-		return instance;
 	}
 }

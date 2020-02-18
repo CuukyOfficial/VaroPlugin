@@ -1,10 +1,10 @@
-package de.cuuky.varo.world.border.decrease;
+package de.cuuky.varo.game.world.border.decrease;
 
 import org.bukkit.Bukkit;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public enum DecreaseReason {
@@ -34,7 +34,7 @@ public enum DecreaseReason {
 	}
 	
 	public void postAlert() {
-		EventLogger.getInstance().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
 	}
 
 	public void postBroadcast() {

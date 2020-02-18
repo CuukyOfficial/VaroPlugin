@@ -1,4 +1,4 @@
-package de.cuuky.varo.world.generators;
+package de.cuuky.varo.game.world.generators;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

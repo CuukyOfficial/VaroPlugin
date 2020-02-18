@@ -8,10 +8,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.version.types.Materials;
 
 public class EventListGUI extends SuperInventory {
@@ -38,7 +38,7 @@ public class EventListGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		ArrayList<String> list = EventLogger.getInstance().getLogs();
+		ArrayList<String> list = Main.getDataManager().getVaroLoggerManager().getEventLogger().getLogs();
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);

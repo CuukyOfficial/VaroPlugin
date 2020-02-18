@@ -8,14 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.game.VaroGame;
 
 public class InventoryMoveListener implements Listener {
 
 	@EventHandler
 	public void onInventoryMove(InventoryMoveItemEvent e) {
-		if(!VaroGame.getInstance().hasStarted())
+		if(!Main.getVaroGame().hasStarted())
 			return;
 
 		if(!(e.getInitiator().getHolder() instanceof Hopper))

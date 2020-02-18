@@ -1,6 +1,6 @@
 package de.cuuky.varo.configuration.config;
 
-import de.cuuky.varo.configuration.ConfigHandler;
+import de.cuuky.varo.Main;
 
 public enum ConfigEntry {
 
@@ -264,8 +264,8 @@ public enum ConfigEntry {
 	}
 	
 	private void save() {
-		ConfigHandler.getInstance().getConfigCfg().set(section.getPath() + path, value);
-		ConfigHandler.getInstance().saveConfig();
+		Main.getDataManager().getConfigHandler().getConfigCfg().set(section.getPath() + path, value);
+		Main.getDataManager().getConfigHandler().saveConfig();
 	}
 
 	private void sendFalseCast(Class<?> failedToCast) {

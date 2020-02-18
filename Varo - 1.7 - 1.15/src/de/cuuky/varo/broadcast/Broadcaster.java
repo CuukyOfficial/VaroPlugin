@@ -19,10 +19,9 @@ public class Broadcaster {
 	 * Partly old code
 	 */
 
-	private static Broadcaster instance;
 	private ArrayList<String> messages;
 
-	private Broadcaster() {
+	public Broadcaster() {
 		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			startPluginAd();
 
@@ -92,12 +91,5 @@ public class Broadcaster {
 		messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
 		messages[2] = "&7-----------------------------------------";
 		return messages;
-	}
-
-	public static Broadcaster getInstance() {
-		if(instance == null) {
-			instance = new Broadcaster();
-		}
-		return instance;
 	}
 }

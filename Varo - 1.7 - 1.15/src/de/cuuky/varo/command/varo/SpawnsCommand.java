@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spawns.spawn.SpawnType;
-import de.cuuky.varo.world.generators.SpawnGenerator;
 
 public class SpawnsCommand extends VaroCommand {
 

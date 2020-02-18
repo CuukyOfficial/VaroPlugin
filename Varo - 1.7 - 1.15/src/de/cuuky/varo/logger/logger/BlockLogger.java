@@ -3,19 +3,17 @@ package de.cuuky.varo.logger.logger;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.list.ListHandler;
-import de.cuuky.varo.logger.Logger;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.logger.VaroLogger;
 
-public class BlockLogger extends Logger {
+public class BlockLogger extends VaroLogger {
 
-	private static BlockLogger instance;
-
-	private BlockLogger(String name) {
+	public BlockLogger(String name) {
 		super(name, true);
 	}
 
 	public void println(Block block, Player player) {
-		if(!ListHandler.getInstance().getDestroyedBlocks().shallLog(block))
+		if(!Main.getDataManager().getListManager().getDestroyedBlocks().shallLog(block))
 			return;
 
 		String log = "[" + getCurrentDate() + "] " + player.getName() + " mined " + block.getType().toString() + " at x:" + block.getLocation().getBlockX() + " y:" + block.getLocation().getBlockY() + " z:" + block.getLocation().getBlockZ() + " in the world '" + block.getWorld().getName() + "'!";
@@ -24,12 +22,5 @@ public class BlockLogger extends Logger {
 		logs.add(log);
 
 		pw.flush();
-	}
-
-	public static BlockLogger getInstance() {
-		if(instance == null) {
-			instance = new BlockLogger("blocklogs");
-		}
-		return instance;
 	}
 }

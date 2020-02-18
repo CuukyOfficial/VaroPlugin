@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 
 public class RestartCommand extends VaroCommand {
@@ -17,12 +16,12 @@ public class RestartCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(VaroGame.getInstance().getGameState() == GameState.LOBBY) {
+		if(Main.getVaroGame().getGameState() == GameState.LOBBY) {
 			sender.sendMessage(Main.getPrefix() + "Varo wurde bereits neu gestartet!");
 			return;
 		}
 
-		VaroGame.getInstance().setGamestate(GameState.LOBBY);
+		Main.getVaroGame().setGamestate(GameState.LOBBY);
 		sender.sendMessage(Main.getPrefix() + "Varo wurde neu gestartet!");
 	}
 
