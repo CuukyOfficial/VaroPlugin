@@ -15,7 +15,7 @@ Version: 2.2.6
 
 Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/CONTRIBUTING.md'>Richtlinien zum Programmieren</a> beachten 
 
-Spigot-Seite mit Docs etc.: https://www.spigotmc.org/resources/71075/
+Spigot-Seite mit Docs etc.: https://www.spigotmc.org/resources/71075/ <br>
 Donation: https://www.tipeeestream.com/cuuky/donation
 
 Vielen Dank & happy coding!
