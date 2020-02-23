@@ -151,6 +151,10 @@ public class Main extends JavaPlugin {
 		return varoUpdater;
 	}
 	
+	public static void setDataManager(DataManager dataManager) {
+		Main.dataManager = dataManager;
+	}
+	
 	public static DataManager getDataManager() {
 		return dataManager;
 	}

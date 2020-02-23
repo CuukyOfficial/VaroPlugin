@@ -62,6 +62,8 @@ public class DataManager {
 	private DailyTimer dailyTimer;
 
 	public DataManager() {
+		Main.setDataManager(this);
+		
 		load();
 		loadPlugins();
 
@@ -74,12 +76,11 @@ public class DataManager {
 
 		copyDefaultPresets();
 		this.configHandler = new ConfigHandler();
-
+		this.scoreboardHandler = new ScoreboardHandler();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.spawnHandler = new SpawnHandler();
-		this.scoreboardHandler = new ScoreboardHandler();
 		this.reportHandler = new ReportHandler();
 		this.alertHandler = new AlertHandler();
 		this.outsideTimeChecker = new OutSideTimeChecker();

@@ -11,7 +11,6 @@ import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.types.Materials;
 
-@SuppressWarnings("deprecation")
 public class LobbyGenerator {
 
 	private static ArrayList<Materials> glassTypes;
