@@ -25,7 +25,7 @@ public class EventLogger extends VaroLogger {
 		private ConfigEntry idEntry;
 		private String name;
 
-		LogType(String name, Color color, ConfigEntry idEntry) {
+		private LogType(String name, Color color, ConfigEntry idEntry) {
 			this.color = color;
 			this.name = name;
 			this.idEntry = idEntry;

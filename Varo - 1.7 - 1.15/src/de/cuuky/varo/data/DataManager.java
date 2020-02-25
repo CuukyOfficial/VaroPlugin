@@ -75,6 +75,7 @@ public class DataManager {
 		ConfigFailureDetector.detectConfig();
 
 		copyDefaultPresets();
+		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
 		this.scoreboardHandler = new ScoreboardHandler();
 		this.varoGameHandler = new VaroGameHandler();
@@ -85,7 +86,6 @@ public class DataManager {
 		this.alertHandler = new AlertHandler();
 		this.outsideTimeChecker = new OutSideTimeChecker();
 		this.mysqlClient = new MySQLClient();
-		this.varoLoggerManager = new VaroLoggerManager();
 		this.listManager = new VaroListManager();
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
