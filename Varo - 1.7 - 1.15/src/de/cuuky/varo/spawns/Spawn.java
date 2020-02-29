@@ -146,21 +146,26 @@ public class Spawn implements VaroSerializeable {
 				try {
 					String entName = ((String) ent.getClass().getMethod("getCustomName").invoke(ent));
 					if(ent.getLocation().distance(nameTagLocation) < 1 && entName.equals(nameTagName)) {
-						String nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
 						this.armorStand = ent;
 
-						if(!nameTagName.equals(entName))
-							armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
-
-						if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand == null) {
+						if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand != null) {
 							this.armorStand.remove();
 							this.armorStand = null;
+						} else {
+							String nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
+							if(!nameTagName.equals(entName)) {
+								this.nameTagName = nameTagName;
+								armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
+							}
 						}
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
+			
+			if(this.armorStand == null)
+				setNameTag();
 		}
 	}
 
