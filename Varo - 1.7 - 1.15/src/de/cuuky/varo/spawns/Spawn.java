@@ -151,6 +151,11 @@ public class Spawn implements VaroSerializeable {
 
 						if(!nameTagName.equals(entName))
 							armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
+
+						if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand == null) {
+							this.armorStand.remove();
+							this.armorStand = null;
+						}
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
