@@ -21,7 +21,7 @@ public class MetricsLoader {
 	
 	private void loadMetrics(JavaPlugin instance) {
 		metrics = new Metrics(instance, BSTATS_ID);
-		metrics.addCustomChart(new Metrics.SimpleBarChart("functions_used", new Callable<Map<String, Integer>>() {
+		metrics.addCustomChart(new Metrics.SimpleBarChart("functionsUsed", new Callable<Map<String, Integer>>() {
 
 			@Override
 			public Map<String, Integer> call() throws Exception {
@@ -36,7 +36,7 @@ public class MetricsLoader {
 			}
 		}));
 
-		metrics.addCustomChart(new Metrics.MultiLineChart("functions_values", new Callable<Map<String, Integer>>() {
+		metrics.addCustomChart(new Metrics.MultiLineChart("functionsValues", new Callable<Map<String, Integer>>() {
 			@Override
 			public Map<String, Integer> call() throws Exception {
 				Map<String, Integer> valueMap = new HashMap<>();
@@ -50,7 +50,7 @@ public class MetricsLoader {
 			}
 		}));
 
-		metrics.addCustomChart(new Metrics.SingleLineChart("server_tps", new Callable<Integer>() {
+		metrics.addCustomChart(new Metrics.SingleLineChart("serverTps", new Callable<Integer>() {
 			@Override
 			public Integer call() throws Exception {
 				return (int) Math.round(LagCounter.getTPS());
