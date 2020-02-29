@@ -44,7 +44,8 @@ public class SmartLagDetector implements Runnable {
 		if(tpsUsage <= 14)
 			warnAdmins("§4The CPU-Performance of the server is running low! §cLags could appear!");
 
-		double ramUsage = (double) ((double) Runtime.getRuntime().totalMemory() / (double) Runtime.getRuntime().maxMemory());
+		Runtime r = Runtime.getRuntime();
+		double ramUsage = (double) (((double) r.totalMemory() - (double) r.freeMemory()) / (double) r.maxMemory());
 		if(ramUsage >= 0.95) {
 			if(ramCleared)
 				warnAdmins("§4the RAM of the server is fully used and the plugin couldn't manage to clear it!");
