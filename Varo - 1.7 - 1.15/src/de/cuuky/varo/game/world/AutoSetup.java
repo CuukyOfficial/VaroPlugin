@@ -16,7 +16,7 @@ import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 

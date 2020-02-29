@@ -21,6 +21,7 @@ import de.cuuky.varo.command.essentials.InvSeeCommand;
 import de.cuuky.varo.command.essentials.MessageCommand;
 import de.cuuky.varo.command.essentials.MuteCommand;
 import de.cuuky.varo.command.essentials.NightCommand;
+import de.cuuky.varo.command.essentials.PerformanceCommand;
 import de.cuuky.varo.command.essentials.PingCommand;
 import de.cuuky.varo.command.essentials.ProtectCommand;
 import de.cuuky.varo.command.essentials.RainCommand;
@@ -112,6 +113,7 @@ public final class BukkitRegisterer {
 		registerCommand("thunder", new ThunderCommand());
 		registerCommand("protect", new ProtectCommand());
 		registerCommand("countdown", new CountdownCommand());
+		registerCommand("performance", new PerformanceCommand());
 	}
 
 	public static void registerEvents() {

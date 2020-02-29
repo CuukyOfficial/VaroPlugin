@@ -31,7 +31,7 @@ import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Stats implements VaroSerializeable {

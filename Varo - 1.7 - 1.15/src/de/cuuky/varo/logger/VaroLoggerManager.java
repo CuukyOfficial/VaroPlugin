@@ -15,7 +15,6 @@ public class VaroLoggerManager {
 	public VaroLoggerManager() {
 		this.blockLogger = new BlockLogger("blocklogs");
 		this.chatLogger = new ChatLogger("chatlogs");
-		this.consoleLogger = new ConsoleLogger("consolelogs");
 		this.eventLogger = new EventLogger("logs");
 	}
 	

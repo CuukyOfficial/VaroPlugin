@@ -22,7 +22,7 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -74,14 +74,16 @@ public class PlayerJoinListener implements Listener {
 
 			if(player.isOp()) {
 				VaroUpdateResultSet updater = Main.getVaroUpdater().getLastResult();
-				UpdateResult result = updater.getUpdateResult();
-				String updateVersion = updater.getVersionName();
+				if(updater != null) {
+					UpdateResult result = updater.getUpdateResult();
+					String updateVersion = updater.getVersionName();
 
-				if(result == UpdateResult.UPDATE_AVAILABLE) {
-					if(Main.getVaroGame().getGameState() == GameState.LOBBY)
-						vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
+					if(result == UpdateResult.UPDATE_AVAILABLE) {
+						if(Main.getVaroGame().getGameState() == GameState.LOBBY)
+							vplayer.getNetworkManager().sendTitle("§cUpdate verfügbar", "Deine Pluginversion ist nicht aktuell!");
 
-					player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+						player.sendMessage("§cUpdate auf Version " + updateVersion + " verfügbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+					}
 				}
 			}
 		} else {

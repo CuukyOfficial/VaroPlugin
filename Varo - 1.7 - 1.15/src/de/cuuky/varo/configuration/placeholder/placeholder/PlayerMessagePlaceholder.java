@@ -13,8 +13,8 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 	private HashMap<VaroPlayer, String> placeholderValues;
 	private HashMap<VaroPlayer, Long> placeholderRefreshes;
 
-	public PlayerMessagePlaceholder(String identifier, int refreshDelay) {
-		super(identifier, refreshDelay);
+	public PlayerMessagePlaceholder(String identifier, int refreshDelay, String description) {
+		super(identifier, refreshDelay, description);
 
 		this.placeholderValues = new HashMap<>();
 		this.placeholderRefreshes = new HashMap<>();

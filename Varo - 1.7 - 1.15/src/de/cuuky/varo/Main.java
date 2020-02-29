@@ -8,12 +8,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
+import de.cuuky.varo.threads.SmartLagDetector;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -22,18 +24,18 @@ public class Main extends JavaPlugin {
 	/*
 	 * Plugin by Cuuky @ 2019-2020 - All rights reserved! Contributors: Korne127
 	 */
-	
+
 	private static final String CONSOLE_PREFIX = "[Varo] ";
-	
+
 	private static Main instance;
-	
+
 	private static BotLauncher botLauncher;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
 	private static VaroGame varoGame;
 
 	private boolean failed;
-	
+
 	@Override
 	public void onLoad() {
 		failed = false;
@@ -69,13 +71,11 @@ public class Main extends JavaPlugin {
 
 		try {
 			dataManager = new DataManager();
-
 			varoUpdater = new VaroUpdater();
-			varoUpdater.checkForUpdates();
-			varoUpdater.printResults();
-
 			botLauncher = new BotLauncher();
-
+			new MetricsLoader(this);
+			new SmartLagDetector();
+			
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {
@@ -118,7 +118,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
 	}
-	
+
 	public File getThisFile() {
 		return getFile();
 	}
@@ -138,11 +138,11 @@ public class Main extends JavaPlugin {
 	public static String getContributors() {
 		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
 	}
-	
+
 	public static void setVaroGame(VaroGame varoGame) {
 		Main.varoGame = varoGame;
 	}
-	
+
 	public static VaroGame getVaroGame() {
 		return varoGame;
 	}
@@ -150,11 +150,11 @@ public class Main extends JavaPlugin {
 	public static VaroUpdater getVaroUpdater() {
 		return varoUpdater;
 	}
-	
+
 	public static void setDataManager(DataManager dataManager) {
 		Main.dataManager = dataManager;
 	}
-	
+
 	public static DataManager getDataManager() {
 		return dataManager;
 	}
@@ -174,11 +174,11 @@ public class Main extends JavaPlugin {
 	public static boolean isBootedUp() {
 		return dataManager != null;
 	}
-	
+
 	public static void main(String[] args) {
 		JOptionPane.showMessageDialog(null, "No don't do it");
 	}
-	
+
 	public static Main getInstance() {
 		return instance;
 	}

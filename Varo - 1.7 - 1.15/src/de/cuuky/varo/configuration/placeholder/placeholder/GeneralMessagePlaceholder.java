@@ -1,22 +1,27 @@
 package de.cuuky.varo.configuration.placeholder.placeholder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
 
 public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 
 	private static ArrayList<GeneralMessagePlaceholder> generalPlaceholder;
+	
+	private static long lastDateRefreshTime;
+	private static String[] lastDateRefresh;
 
 	private String value;
 	protected long lastRefresh;
 
-	public GeneralMessagePlaceholder(String identifier, int refreshDelay) {
-		this(identifier, refreshDelay, false);
+	public GeneralMessagePlaceholder(String identifier, int refreshDelay, String description) {
+		this(identifier, refreshDelay, false, description);
 	}
 
-	public GeneralMessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier) {
-		super(identifier, refreshDelay, rawIdentifier);
+	public GeneralMessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier, String description) {
+		super(identifier, refreshDelay, rawIdentifier, description);
 		
 		if(generalPlaceholder == null)
 			generalPlaceholder = new ArrayList<>();
@@ -48,6 +53,15 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 		checkRefresh();
 		
 		return message.replace(this.identifier, this.value);
+	}
+	
+	protected static String getLastDateRefresh(int index) {
+		if(lastDateRefresh == null || lastDateRefreshTime + 1000 <= System.currentTimeMillis()) {
+			lastDateRefreshTime = System.currentTimeMillis();
+			lastDateRefresh = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss").format(new Date()).split(",");
+		}
+		
+		return lastDateRefresh[index];
 	}
 	
 	public static ArrayList<GeneralMessagePlaceholder> getGeneralPlaceholder() {

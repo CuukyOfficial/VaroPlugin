@@ -1,12 +1,13 @@
 package de.cuuky.varo.configuration.config;
 
+import org.bukkit.Bukkit;
+
 import de.cuuky.varo.Main;
 
 public enum ConfigEntry {
 
 	ADD_TEAM_LIFE_ON_KILL(ConfigSection.DEATH, "addTeamLifesOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler tötet."),
-	ALLOW_TROLL(ConfigSection.OTHER, "allowTrolling", false, "Ob die Troll Module erlaubt\nsein sollen (/varo troll)"),
-	ALWAYS_TIME(ConfigSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000"),
+	ALWAYS_TIME(ConfigSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000", true),
 	ALWAYS_TIME_USE_AFTER_START(ConfigSection.WORLD, "alwaysTimeUseAfterStart", false, "Ob die Zeit auch stehen bleiben soll,\nwenn das Projekt gestartet wurde."),
 	AUTOSETUP_BORDER(ConfigSection.AUTOSETUP, "border", 2000, "Wie groß die Border beim\nAutoSetup gesetzt werden soll"),
 	
@@ -44,7 +45,7 @@ public enum ConfigEntry {
 	BLOCK_CHAT_ADS(ConfigSection.CHAT, "blockChatAds", true, "Wenn aktiviert, können keine Links in den öffentlichen Chat gepostet werden."),
 
 	// WORLD
-	BLOCK_DESTROY_LOGGER(ConfigSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Blöcke, die ihr\nunten eintragt unter 'oreLogger.yml'."),
+	BLOCK_DESTROY_LOGGER(ConfigSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Blöcke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
 	BLOCK_USER_PORTALS(ConfigSection.WORLD, "blockUserPortals", true, "Ob Spieler nicht ihre eigenen\nPortale bauen können"),
 	
 	// ACTIVITY
@@ -82,7 +83,7 @@ public enum ConfigEntry {
 	COMBATLOG_TIME(ConfigSection.COMBATLOG, "combatlogTime", 30, "Zeit, nachdem sich ein Spieler\nnach dem Kampf wieder ausloggen kann.\nOff = -1"),
 
 	// DEATH
-	DEATH_SOUND(ConfigSection.DEATH, "deathSound", false, "Ob ein Withersound für alle abgespielt werden soll,\nsobald ein Spieler stirbt."),
+	DEATH_SOUND(ConfigSection.DEATH, "deathSound", false, "Ob ein Withersound für alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
 	DEBUG_OPTIONS(ConfigSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfügbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	DISABLE_LABYMOD_FUNCTIONS(ConfigSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
 
@@ -94,7 +95,7 @@ public enum ConfigEntry {
 	DISCORDBOT_COMMANDTRIGGER(ConfigSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
 	
 	// DISCORDBOT
-	DISCORDBOT_ENABLED(ConfigSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot für Events aktiviert werden soll.\nHinweis: bitte für diesen Informationen unten ausfüllen."),
+	DISCORDBOT_ENABLED(ConfigSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot für Events aktiviert werden soll.\nHinweis: bitte für diesen Informationen unten ausfüllen"),
 	DISCORDBOT_EVENT_ALERT(ConfigSection.DISCORD, "eventChannel.alert", -1, "ID's des Channels, wo die Benachrichtigungen gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_DEATH(ConfigSection.DISCORD, "eventChannel.death", -1, "ID's des Channels, wo die Tode gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_JOIN_LEAVE(ConfigSection.DISCORD, "eventChannel.joinLeave", -1, "ID's des Channels, wo die Joins/Leaves gepostet werden.\n-1= EventChannelID wird genutzt"),
@@ -156,7 +157,7 @@ public enum ConfigEntry {
 
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen können.\nOff = 0"),
 	NAMETAG_SPAWN_HEIGHT(ConfigSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch über den Spawns\ndie Nametags sein sollen"),
-	NAMETAGS(ConfigSection.MAIN, "nametags", true, "Ob das Plugin die Nametags über\nden Köpfen der Spieler verändern soll.\nHinweis: du kannst diese in der messages.yml einstellen."),
+	NAMETAGS(ConfigSection.MAIN, "nametags", true, "Ob das Plugin die Nametags über\nden Köpfen der Spieler verändern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
 	NO_ACTIVITY_DAYS(ConfigSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviät auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 
 	NO_DISCONNECT_PING(ConfigSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zählt."),
@@ -201,7 +202,7 @@ public enum ConfigEntry {
 	REPORTSYSTEM_ENABLED(ConfigSection.REPORT, "enabled", true, "Ob das Report-System angeschaltet sein soll."),
 	RESET_SESSION_HOUR(ConfigSection.MAIN, "resetSessionHour", 1, "Um welche Uhrzeit (24h) der Server den\nSpieler neue Sessions etc. gibt"),
 	RESPAWN_PROTECTION(ConfigSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschützt sind"),
-	SCOREBOARD(ConfigSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten."),
+	SCOREBOARD(ConfigSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),
 	SESSIONS_PER_DAY(ConfigSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulär betreten dürfen."),
 
 	SET_NAMETAGS_OVER_SPAWN(ConfigSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags über den\nSpawns erscheinen sollen"),
@@ -227,7 +228,7 @@ public enum ConfigEntry {
 	// STRIKE
 	STRIKE_POST_RESET_HOUR(ConfigSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostet werden sollen"),
 	SUPPORT_PLUGIN_ADS(ConfigSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
-	TABLIST(ConfigSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll"),
+	TABLIST(ConfigSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
 	TEAM_LIFES(ConfigSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
 
 	TEAM_PLACE_SPAWN(ConfigSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplätzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Lücke für fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen großen Kreis gibt."),
@@ -250,10 +251,10 @@ public enum ConfigEntry {
 	YOUTUBE_SET_OWN_LINK(ConfigSection.YOUTUBE, "setOwnLink", true, "Ob die Spieler sich selbst den\nYouTube-Link per /yt setzen dürfen"),
 	YOUTUBE_VIDEO_IDENTIFIER(ConfigSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmüssen, um als Varovideo zu gelten.");
 
-	private Object defaultValue;
+	private Object defaultValue, value;
 	private String path, description;
 	private ConfigSection section;
-	private Object value;
+	private boolean reducesPerformance;
 
 	private ConfigEntry(ConfigSection section, String path, Object value, String description) {
 		this.section = section;
@@ -263,13 +264,26 @@ public enum ConfigEntry {
 		this.description = description;
 	}
 	
+	private ConfigEntry(ConfigSection section, String path, Object value, String description, boolean reducesPerformance) {
+		this(section, path, value, description);
+		
+		this.reducesPerformance = reducesPerformance;
+	}
+	
 	private void save() {
 		Main.getDataManager().getConfigHandler().getConfigCfg().set(section.getPath() + path, value);
 		Main.getDataManager().getConfigHandler().saveConfig();
 	}
 
 	private void sendFalseCast(Class<?> failedToCast) {
-		throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
+		try {
+			System.err.println("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
+			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			Bukkit.getServer().shutdown();
+		}
 	}
 
 	public Object getDefaultValue() {
@@ -362,6 +376,10 @@ public enum ConfigEntry {
 
 		if(save)
 			save();
+	}
+	
+	public boolean isReducingPerformance() {
+		return this.reducesPerformance;
 	}
 
 	public static ConfigEntry getEntryByPath(String path) {

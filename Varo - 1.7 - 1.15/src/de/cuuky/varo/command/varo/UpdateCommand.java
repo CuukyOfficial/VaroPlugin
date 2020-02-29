@@ -74,7 +74,7 @@ public class UpdateCommand extends VaroCommand {
 	
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
+		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates(false);
 		UpdateResult result = resultSet.getUpdateResult();
 		String updateVersion = resultSet.getVersionName();
 

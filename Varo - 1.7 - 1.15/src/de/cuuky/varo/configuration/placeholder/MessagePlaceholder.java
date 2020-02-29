@@ -12,19 +12,21 @@ public abstract class MessagePlaceholder {
 		new MessagePlaceholderLoader();
 	}
 
-	protected String identifier;
-	protected int refreshDelay;
+	protected String identifier, description;
+	protected int defaultRefresh, refreshDelay;
 
-	public MessagePlaceholder(String identifier, int refreshDelay) {
-		this(identifier, refreshDelay, false);
+	public MessagePlaceholder(String identifier, int refreshDelay, String description) {
+		this(identifier, refreshDelay, false, description);
 	}
 
-	public MessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier) {
+	public MessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier, String description) {
 		if(rawIdentifier)
 			this.identifier = identifier;
 		else
 			this.identifier = "%" + identifier + "%";
 		
+		this.description = description;
+		this.defaultRefresh = refreshDelay;
 		this.refreshDelay = refreshDelay * 1000 - 100;
 
 		placeholder.add(this);
@@ -33,9 +35,17 @@ public abstract class MessagePlaceholder {
 	public boolean containsPlaceholder(String message) {
 		return message.contains(identifier);
 	}
-
-	public int getRefreshDelay() {
-		return this.refreshDelay;
+	
+	public String getIdentifier() {
+		return this.identifier;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public int getDefaultRefresh() {
+		return this.defaultRefresh;
 	}
 
 	public static ArrayList<MessagePlaceholder> getPlaceholder() {

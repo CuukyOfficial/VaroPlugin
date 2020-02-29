@@ -59,6 +59,11 @@ public class ItemCommand extends VaroCommand {
 		}
 
 		if(args[1].equalsIgnoreCase("list")) {
+			if(list.getItems().size() < 1) {
+				sender.sendMessage(Main.getPrefix() + "Keine Items gefunden!");
+				return;
+			}
+			
 			sender.sendMessage(Main.getPrefix() + "Liste aller Items von " + Main.getColorCode() + list.getLocation() + "§7:");
 			for(ItemStack stack : list.getItems())
 				sender.sendMessage(Main.getPrefix() + stack.toString());

@@ -96,6 +96,16 @@ public class Alert implements VaroSerializeable {
 	public static ArrayList<Alert> getAlerts() {
 		return alerts;
 	}
+	
+	public static ArrayList<Alert> getAlerts(AlertType type) {
+		ArrayList<Alert> typed = new ArrayList<Alert>();
+		for(Alert alert : alerts)
+			if(alert.getType() == type)
+				typed.add(alert);
+
+		return typed;
+	}
+
 
 	public static ArrayList<Alert> getClosedAlerts() {
 		ArrayList<Alert> closed = new ArrayList<Alert>();

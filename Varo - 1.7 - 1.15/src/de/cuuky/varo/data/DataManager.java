@@ -36,9 +36,9 @@ import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.spigot.FileDownloader;
-import de.cuuky.varo.threads.DailyTimer;
-import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.threads.daily.DailyTimer;
+import de.cuuky.varo.utils.varo.OutSideTimeChecker;
+import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class DataManager {
 

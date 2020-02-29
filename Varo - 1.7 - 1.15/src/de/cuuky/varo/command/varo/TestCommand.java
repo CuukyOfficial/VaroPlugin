@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.threads.DailyTimer;
+import de.cuuky.varo.threads.daily.DailyTimer;
 
 public class TestCommand extends VaroCommand {
 

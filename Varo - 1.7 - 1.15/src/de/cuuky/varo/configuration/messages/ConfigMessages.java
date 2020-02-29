@@ -175,7 +175,7 @@ public enum ConfigMessages {
 	SORT_OWN_HOLE("Sort.ownHoleTeleport", "Du wurdest in dein Loch einsortiert!"),
 	// SORT
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
-	TABLIST_FOOTER("Tablist.tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
+	TABLIST_FOOTER("Tablist.tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currDay%§7.&c%currMonth%§7.§c%currYear%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
 	// TABLIST
 	TABLIST_HEADER("Tablist.tablistHeader", "%nextLine%&c%projectname%%nextLine%"),
 	TABLIST_PLAYER_WITH_TEAM("Tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
@@ -193,7 +193,7 @@ public enum ConfigMessages {
 	TEAMREQUEST_TEAM_FULL("Teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),
 	WORLD_NO_LOWER_FLIGHT("World.noLowerFlight", "&7Niedriger darfst du nicht fliegen!"),
 	// WORLD
-	WORLD_SPAWN_NUMBER("World.spawnNameTag.number", "&7Spawn &b%number%"),
+	WORLD_SPAWN_NUMBER("World.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	WORLD_SPAWN_PLAYER("World.spawnNameTag.player", "&7Spawn von %colorcode%%player%");
 
 	private String defaultValue;

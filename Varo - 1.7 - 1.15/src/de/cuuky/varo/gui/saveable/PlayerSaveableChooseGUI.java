@@ -15,7 +15,7 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableTyp
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class PlayerSaveableChooseGUI extends SuperInventory {
 
