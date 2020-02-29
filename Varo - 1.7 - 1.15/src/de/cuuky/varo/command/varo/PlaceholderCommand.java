@@ -85,6 +85,14 @@ public class PlaceholderCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + "- Placeholder -");
 		for(MessagePlaceholder mp : placeholders)
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §8- §7" + mp.getDescription());
+
+		if(args[0].equalsIgnoreCase("general")) {
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayer-<RANK>% §8- §7Ersetzt durch den Spieler, der an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% §8- §7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% §8- §7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% §8- §7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
+		}
+
 		sender.sendMessage(Main.getPrefix() + "----------------");
 	}
 }
