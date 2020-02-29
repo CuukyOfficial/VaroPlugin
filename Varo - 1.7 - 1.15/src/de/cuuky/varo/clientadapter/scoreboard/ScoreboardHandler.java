@@ -1,4 +1,4 @@
-package de.cuuky.varo.scoreboard.scoreboard;
+package de.cuuky.varo.clientadapter.scoreboard;
 
 import java.io.File;
 import java.io.IOException;

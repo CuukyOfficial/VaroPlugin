@@ -1,4 +1,4 @@
-package de.cuuky.varo.scoreboard.nametag;
+package de.cuuky.varo.clientadapter.nametag;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

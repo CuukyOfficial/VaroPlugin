@@ -3,6 +3,7 @@ package de.cuuky.varo.entity.team;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -10,7 +11,6 @@ import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 
 public class VaroTeam extends VaroEntity {

@@ -1,4 +1,4 @@
-package de.cuuky.varo.scoreboard.tablist;
+package de.cuuky.varo.clientadapter.tablist;
 
 public class TablistHandler {
 	
