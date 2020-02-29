@@ -36,7 +36,7 @@ public class ScoreboardCommand extends VaroCommand {
 			Main.getDataManager().getScoreboardHandler().sendScoreBoard(vp);
 			vp.sendMessage(Main.getPrefix() + "Du siehst nun das Scoreboard!");
 			if(vp.getNametag() != null)
-			vp.getNametag().giveAll();
+				vp.getNametag().giveAll();
 		}
 
 		vp.update();
