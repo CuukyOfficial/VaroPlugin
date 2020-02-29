@@ -183,7 +183,7 @@ public class VaroPlayer extends VaroEntity {
 
 		stats.remove();
 		varoplayer.remove(this);
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		Main.getVaroGame().getTopScores().update();
 	}
 	
 	@Override
@@ -434,7 +434,7 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		update();
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		Main.getVaroGame().getTopScores().update();
 	}
 
 	/**

@@ -27,6 +27,7 @@ import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.scoreboard.TopScoreList;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.varo.VaroUtils;
@@ -58,6 +59,7 @@ public class VaroGame implements VaroSerializeable {
 	private BorderDecreaseMinuteTimer minuteTimer;
 	private ProtectionTime protection;
 	private VaroWorld varoWorld;
+	private TopScoreList topScores;
 
 	public VaroGame() {
 		Main.setVaroGame(this);
@@ -69,6 +71,8 @@ public class VaroGame implements VaroSerializeable {
 
 		if(mainThread != null)
 			mainThread.loadVariables();
+		
+		this.topScores = new TopScoreList();
 	}
 	
 	public void init() {
@@ -186,6 +190,10 @@ public class VaroGame implements VaroSerializeable {
 
 	private void startRefreshTimer() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), mainThread = new VaroMainHeartbeatThread(), 0, 20);
+	}
+	
+	public TopScoreList getTopScores() {
+		return this.topScores;
 	}
 
 	public VaroMainHeartbeatThread getMainThread() {

@@ -2,9 +2,11 @@ package de.cuuky.varo.configuration.messages;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public enum ConfigMessages {
 
@@ -231,6 +233,31 @@ public enum ConfigMessages {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	private static ArrayList<Integer> getConvNumbers(String line, String key) {
+		ArrayList<Integer> list = new ArrayList<>();
+
+		boolean first = true;
+		for(String split0 : line.split(key)) {
+			if(first) {
+				first = false;
+				if(!line.startsWith(key))
+					continue;
+			}
+
+			String[] split1 = split0.split("%", 2);
+
+			if(split1.length == 2) {
+				try {
+					list.add(Integer.parseInt(split1[0]));
+				} catch(NumberFormatException e) {
+					continue;
+				}
+			}
+		}
+
+		return list;
+	}
 
 	public static ArrayList<ConfigMessages> getBySection(String section) {
 		ArrayList<ConfigMessages> list = new ArrayList<>();
@@ -266,9 +293,31 @@ public enum ConfigMessages {
 
 	public static String getValue(String value) {
 		String replaced = value;
-		for(GeneralMessagePlaceholder gmp : GeneralMessagePlaceholder.getGeneralPlaceholder()) 
+		
+		for(int rank : getConvNumbers(replaced, "%topplayer-")) {
+			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+			replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topplayerkills-")) {
+			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+			replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topteam-")) {
+			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+			replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topteamkills-")) {
+			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
+		}
+		
+		for(GeneralMessagePlaceholder gmp : GeneralMessagePlaceholder.getGeneralPlaceholder()) {
 			if(gmp.containsPlaceholder(value))
 				replaced = gmp.replacePlaceholder(replaced);
+		}
 
 		return replaced;
 	}

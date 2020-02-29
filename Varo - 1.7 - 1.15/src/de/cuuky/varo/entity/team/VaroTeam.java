@@ -87,7 +87,7 @@ public class VaroTeam extends VaroEntity {
 		}
 		teams.remove(this);
 	}
-	
+
 	public boolean isDead() {
 		for(VaroPlayer player : member) {
 			if(player.getStats().getState() != PlayerState.ALIVE)
@@ -147,16 +147,19 @@ public class VaroTeam extends VaroEntity {
 			if(vp.getStats().getSaveables().contains(saveable))
 				vp.getStats().removeSaveable(saveable);
 	}
-	
+
 	public boolean isMember(VaroPlayer vp) {
 		return this.member.contains(vp);
 	}
 
 	public void setColorCode(String colorCode) {
 		this.colorCode = colorCode;
+		if(colorCode != null)
+			this.colorCode = colorCode.replace("&", "§");
+		
 		statChanged();
 	}
-	
+
 	public String getColorCode() {
 		return colorCode == null ? Main.getColorCode() : colorCode;
 	}
@@ -200,7 +203,6 @@ public class VaroTeam extends VaroEntity {
 	public VaroInventory getTeamBackPack() {
 		return teamBackPack;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;

@@ -101,7 +101,7 @@ public class Stats implements VaroSerializeable {
 	public void addKill() {
 		this.kills++;
 		owner.update();
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		Main.getVaroGame().getTopScores().update();
 	}
 
 	public void addSaveable(VaroSaveable saveable) {
@@ -512,7 +512,7 @@ public class Stats implements VaroSerializeable {
 	public void setKills(int kills) {
 		this.kills = kills;
 		owner.update();
-		Main.getDataManager().getScoreboardHandler().updateTopScores();
+		Main.getVaroGame().getTopScores().update();
 	}
 
 	public void setLastEnemyContact(Date lastEnemyContact) {

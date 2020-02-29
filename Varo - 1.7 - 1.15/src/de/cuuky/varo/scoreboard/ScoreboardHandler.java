@@ -19,7 +19,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
 
 public class ScoreboardHandler {
 
@@ -27,7 +26,6 @@ public class ScoreboardHandler {
 	private HashMap<Player, ArrayList<String>> replaces;
 
 	private ArrayList<String> scoreboardLines;
-	private TopScoreList topScores;
 
 	public ScoreboardHandler() {
 		loadScores();
@@ -76,55 +74,12 @@ public class ScoreboardHandler {
 		return ChatColor.values()[index].toString();
 	}
 
-	private ArrayList<Integer> getConvNumbers(String line, String key) {
-		ArrayList<Integer> list = new ArrayList<>();
 
-		boolean first = true;
-		for(String split0 : line.split(key)) {
-			if(first) {
-				first = false;
-				if(!line.startsWith(key))
-					continue;
-			}
-
-			String[] split1 = split0.split("%", 2);
-
-			if(split1.length == 2) {
-				try {
-					list.add(Integer.parseInt(split1[0]));
-				} catch(NumberFormatException e) {
-					continue;
-				}
-			}
-		}
-
-		return list;
-	}
 
 	private String getConvString(String line, VaroPlayer vp) {
 		if(line.contains("%min%") || line.contains("%sec%"))
 			if(ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
 				return "§cUnlimited";
-
-		for(int rank : getConvNumbers(line, "%topplayer-")) {
-			VaroPlayer player = topScores.getPlayer(rank);
-			line = line.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
-		}
-
-		for(int rank : getConvNumbers(line, "%topplayerkills-")) {
-			VaroPlayer player = topScores.getPlayer(rank);
-			line = line.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
-		}
-
-		for(int rank : getConvNumbers(line, "%topteam-")) {
-			VaroTeam team = topScores.getTeam(rank);
-			line = line.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
-		}
-
-		for(int rank : getConvNumbers(line, "%topteamkills-")) {
-			VaroTeam team = topScores.getTeam(rank);
-			line = line.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
-		}
 
 		line = ConfigMessages.getValue(line, vp);
 
@@ -132,11 +87,7 @@ public class ScoreboardHandler {
 	}
 
 	public String getHeader() {
-		return "Die Liste aller Placeholder steht auf der Seite des Plugins!\nhttps://www.spigotmc.org/resources/71075/";
-	}
-
-	public TopScoreList getTopPlayers() {
-		return topScores;
+		return "Die Liste aller Placeholder kannst du mit /varo ph aufrufen!";
 	}
 
 	public void loadScores() {
@@ -175,7 +126,6 @@ public class ScoreboardHandler {
 		Collections.reverse(scoreboardLines);
 
 		this.header = Main.getProjectName().replace("&", "§");
-		this.topScores = new TopScoreList();
 
 		String space = "";
 		for(int i = 0; i < scoreboardLines.size(); i++) {
@@ -247,9 +197,5 @@ public class ScoreboardHandler {
 
 	public void updateList() {
 		loadScores();
-	}
-
-	public void updateTopScores() {
-		topScores.update();
 	}
 }
