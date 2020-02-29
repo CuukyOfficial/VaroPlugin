@@ -32,7 +32,7 @@ import de.cuuky.varo.listener.PermissionSendListener;
 import de.cuuky.varo.logger.VaroLoggerManager;
 import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.report.ReportHandler;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
+import de.cuuky.varo.scoreboard.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.spigot.FileDownloader;

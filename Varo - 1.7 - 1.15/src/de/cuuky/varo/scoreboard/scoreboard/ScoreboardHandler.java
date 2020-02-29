@@ -1,4 +1,4 @@
-package de.cuuky.varo.scoreboard;
+package de.cuuky.varo.scoreboard.scoreboard;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,8 +73,6 @@ public class ScoreboardHandler {
 	private String getAsTeam(int index) {
 		return ChatColor.values()[index].toString();
 	}
-
-
 
 	private String getConvString(String line, VaroPlayer vp) {
 		if(line.contains("%min%") || line.contains("%sec%"))
