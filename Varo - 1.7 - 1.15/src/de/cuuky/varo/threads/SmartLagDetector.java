@@ -19,7 +19,7 @@ public class SmartLagDetector implements Runnable {
 		this.lastTps = new ArrayList<>();
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new LagCounter(), 100L, 1L);
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, this, 20 * 60, 20);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, this, 20 * 60, 30);
 	}
 
 	private void checkPerformance() {
@@ -42,12 +42,12 @@ public class SmartLagDetector implements Runnable {
 
 		double tpsUsage = (double) (summ / size);
 		if(tpsUsage <= 14)
-			warnAdmins("§4Your CPU-Performance is running low! §cLags could appear!");
+			warnAdmins("§4The CPU-Performance of the server is running low! §cLags could appear!");
 
 		double ramUsage = (double) ((double) Runtime.getRuntime().totalMemory() / (double) Runtime.getRuntime().maxMemory());
 		if(ramUsage >= 0.95) {
 			if(ramCleared)
-				warnAdmins("§4Your RAM is fully used and the plugin couldn't manage to clear it!");
+				warnAdmins("§4the RAM of the server is fully used and the plugin couldn't manage to clear it!");
 
 			System.gc();
 			ramCleared = true;
