@@ -20,6 +20,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.utils.varo.VaroUtils;
@@ -142,6 +143,7 @@ public class VaroStartThread implements Runnable {
 			this.game.setGamestate(GameState.STARTED);
 			this.game.setFirstTime(true);
 			this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
 			
 			fillChests();
 			VaroUtils.getMainWorld().strikeLightningEffect(VaroUtils.getMainWorld().getSpawnLocation());

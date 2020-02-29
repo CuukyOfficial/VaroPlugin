@@ -106,7 +106,6 @@ public class VaroGame implements VaroSerializeable {
 		if(minuteTimer != null)
 			minuteTimer.remove();
 
-		minuteTimer = new BorderDecreaseMinuteTimer();
 		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
 	}
 
@@ -251,6 +250,10 @@ public class VaroGame implements VaroSerializeable {
 
 	public void setBorderDecrease(BorderDecreaseDayTimer borderDecrease) {
 		this.borderDecrease = borderDecrease;
+	}
+	
+	public void setMinuteTimer(BorderDecreaseMinuteTimer minuteTimer) {
+		this.minuteTimer = minuteTimer;
 	}
 
 	public void setFinaleJoinStart(boolean finaleJoinStart) {

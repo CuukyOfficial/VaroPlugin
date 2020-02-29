@@ -52,7 +52,9 @@ public enum ConfigMessages {
 
 	BORDER_DECREASE_DAYS("Border.decreaseDays", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s verkleinert. &7Nächste Verkleinerung in &c%days% &7Tagen!"),
 	BORDER_DECREASE_DEATH("Border.decreaseDeath", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s aufgrund eines Todes verkleinert."),
+	BORDER_MINUTE_TIME_UPDATE("Border.minuteTimeUpdate", "&7Die Border wird in &c%minutes%&7:&c%seconds% &7verkleinert!"),
 	BORDER_DECREASE_MINUTES("Border.decreaseMinutes", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s verkleinert. &7Nächste Verkleinerung in &c%days% &7Minuten!"),
+	
 	// BORDER
 	BORDER_MINIMUM_REACHED("Border.minimumReached", "&cDie Border hat ihr Minimum erreicht!"),
 	// CHAT

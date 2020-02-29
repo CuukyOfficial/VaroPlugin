@@ -3,16 +3,20 @@ package de.cuuky.varo.game.world.border.decrease;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.game.state.GameState;
 
 public class BorderDecreaseMinuteTimer {
 
-	private int decreaseScheduler;
+	private int decreaseScheduler, secondsPassed, timer;
 
 	public BorderDecreaseMinuteTimer() {
 		if(!DecreaseReason.TIME_MINUTES.isEnabled())
 			return;
 
+		this.timer = DecreaseReason.TIME_MINUTES.getTime() * 60;
+		this.secondsPassed = timer;
 		startScheduling();
 	}
 
@@ -21,16 +25,40 @@ public class BorderDecreaseMinuteTimer {
 
 			@Override
 			public void run() {
-				if(Main.getVaroGame().getGameState() != GameState.STARTED || !DecreaseReason.TIME_MINUTES.isEnabled()) {
+				if(Main.getVaroGame().getGameState() != GameState.STARTED && !Main.getVaroGame().isStarting() || !DecreaseReason.TIME_MINUTES.isEnabled()) {
 					remove();
 					return;
 				}
-				
-				Main.getVaroGame().getVaroWorld().getVaroBorder().decreaseBorder(DecreaseReason.TIME_MINUTES);
+
+				if(secondsPassed == 0) {
+					Main.getVaroGame().getVaroWorld().getVaroBorder().decreaseBorder(DecreaseReason.TIME_MINUTES);
+					secondsPassed = timer;
+				} else if(secondsPassed % ConfigEntry.BORDER_TIME_MINUTE_BC_INTERVAL.getValueAsInt() == 0 && secondsPassed != timer)
+					Bukkit.broadcastMessage(ConfigMessages.BORDER_MINUTE_TIME_UPDATE.getValue().replace("%minutes%", getCountdownMin(secondsPassed)).replace("%seconds%", getCountdownSec(secondsPassed)));
+
+				secondsPassed--;
 			}
-		}, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20, (DecreaseReason.TIME_MINUTES.getTime() * 60) * 20);
+		}, 20, 20);
+	}
+	
+	private String getCountdownMin(int sec) {
+		int min = sec / 60;
+
+		if(min < 10)
+			return "0" + min;
+		else
+			return min + "";
 	}
 
+	private String getCountdownSec(int sec) {
+		sec = sec % 60;
+
+		if(sec < 10)
+			return "0" + sec;
+		else
+			return sec + "";
+	}
+	
 	public void remove() {
 		Bukkit.getScheduler().cancelTask(decreaseScheduler);
 	}
