@@ -31,7 +31,7 @@ public class ConfigCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich " + Main.getColorCode() + "alle Listen§7, die " + Main.getColorCode() + "Messages §7und die " + Main.getColorCode() + "Config §7neu geladen!");
 		} else if(args[0].equalsIgnoreCase("set")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + "§b/config §7set <key> <value>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config §7set <key> <value>");
 				return;
 			}
 
@@ -46,7 +46,7 @@ public class ConfigCommand extends VaroCommand {
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Den Eintrag §7" + args[1] + "§7 gibt es nicht in der Config!");
+			sender.sendMessage(Main.getPrefix() + "§7Den Eintrag " + Main.getColorCode() + args[1] + "§7 gibt es nicht in der Config!");
 		} else if(args[0].equalsIgnoreCase("reset")) {
 			for(ConfigEntry entry : ConfigEntry.values()) {
 				entry.setValue(entry.getDefaultValue(), true);
