@@ -1,4 +1,4 @@
-package de.cuuky.varo.scoreboard;
+package de.cuuky.varo.game.leaderboard;
 
 import java.util.ArrayList;
 import java.util.Collections;
