@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.version.VersionUtils;
@@ -14,11 +15,11 @@ public class SmartLagDetector implements Runnable {
 	private long lastPost;
 	private boolean ramCleared;
 
-	public SmartLagDetector() {
+	public SmartLagDetector(JavaPlugin instance) {
 		this.lastTps = new ArrayList<>();
 
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new LagCounter(), 100L, 1L);
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), this, 20 * 60, 20);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new LagCounter(), 100L, 1L);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, this, 20 * 60, 20);
 	}
 
 	private void checkPerformance() {
