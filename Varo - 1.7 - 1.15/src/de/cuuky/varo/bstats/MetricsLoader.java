@@ -11,7 +11,7 @@ import de.cuuky.varo.threads.LagCounter;
 
 public class MetricsLoader {
 	
-	private static final int BSTATS_ID = 6638;
+	private static final int BSTATS_ID = 6639;
 	
 	private Metrics metrics;	
 	
