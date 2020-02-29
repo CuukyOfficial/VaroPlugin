@@ -74,7 +74,7 @@ public class Main extends JavaPlugin {
 			varoUpdater = new VaroUpdater();
 			botLauncher = new BotLauncher();
 			new MetricsLoader(this);
-			new SmartLagDetector();
+			new SmartLagDetector(this);
 			
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
