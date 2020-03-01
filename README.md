@@ -10,7 +10,7 @@ Stand: 08.02.2020 <br>
 Version: 2.2.6
 
 **Libraries:** 
-- http://www.mediafire.com/file/e6xl995rgt5zvmr/varo_lib.zip/file
+- https://www.mediafire.com/file/5p7c1e706szh64i/VaroPlugin.rar/file
 - https://getbukkit.org/download/spigot
 
 Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/CONTRIBUTING.md'>Richtlinien zum Programmieren</a> beachten 
