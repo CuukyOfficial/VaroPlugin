@@ -2,11 +2,10 @@
 <img src="https://i.imgur.com/AnIMIbN.png">
 
 
-
-<img src="https://bstats.org/signatures/bukkit/Varo.svg">
 Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
 Das Plugin läuft universal auf den Versionen 1.7 - 1.15.</br>
 
+<img src="https://bstats.org/signatures/bukkit/Varo.svg">
 
 **Codezeilen:**</br>
 Zeilen: 26.943</br>
