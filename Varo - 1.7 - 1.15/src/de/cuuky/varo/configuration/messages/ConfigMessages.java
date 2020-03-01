@@ -186,7 +186,7 @@ public enum ConfigMessages {
 	TABLIST_PLAYER_WITH_TEAM_RANK("Tablist.player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM("Tablist.player.withoutTeam", "&7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM_RANK("Tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
-	TEAMCHAT_FORMAT("General.teamchatFormat", "&7[%colorcode%%team%&7] %player% &8» &f%message%"),
+	TEAMCHAT_FORMAT("General.teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
 	// TEAMREQUEST
 	TEAMREQUEST_ENTER_TEAMNAME("Teamrequest.enterTeamName", "%colorcode%&lGib jetzt den Teamnamen für dich und %invited% ein:"),
 	TEAMREQUEST_MAX_TEAMNAME_LENGTH("Teamrequest.maxTeamnameLength", "Dein Teamname darf maximal %colorcode%%maxLength% &7Zeichen enthalten!"),

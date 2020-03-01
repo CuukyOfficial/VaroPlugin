@@ -29,7 +29,7 @@ public class ScoreboardHandler implements BoardHandler {
 	private ArrayList<String> scoreboardLines;
 
 	public ScoreboardHandler() {
-		loadScores();
+		updateList();
 	}
 
 	private String prepareScoreboardStatement(Scoreboard board, int index, String line) {
@@ -89,31 +89,32 @@ public class ScoreboardHandler implements BoardHandler {
 		return "Die Liste aller Placeholder kannst du mit /varo ph aufrufen!";
 	}
 
-	public void loadScores() {
+	@Override
+	public void updateList() {
 		scoreboardLines = new ArrayList<>();
 		replaces = new HashMap<>();
 		File file = new File("plugins/Varo", "scoreboard.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
-		ArrayList<String> sb = new ArrayList<>();
+		ArrayList<String> scoreboard = new ArrayList<>();
 		cfg.options().header(getHeader());
-		sb.add("%space%");
-		sb.add("&7Team&8:");
-		sb.add("&3%team%");
-		sb.add("%space%");
-		sb.add("&7Kills&8:");
-		sb.add("&3%kills%");
-		sb.add("%space%");
-		sb.add("&7Zeit&8:");
-		sb.add("&3%min%&8:&3%sec%");
-		sb.add("%space%");
-		sb.add("&7Online: &3%online%");
-		sb.add("&7Remaining: &3%remaining%");
-		sb.add("&7Players: &3%players%");
-		sb.add("%space%");
+		scoreboard.add("%space%");
+		scoreboard.add("&7Team&8:");
+		scoreboard.add("&3%team%");
+		scoreboard.add("%space%");
+		scoreboard.add("&7Kills&8:");
+		scoreboard.add("&3%kills%");
+		scoreboard.add("%space%");
+		scoreboard.add("&7Zeit&8:");
+		scoreboard.add("&3%min%&8:&3%sec%");
+		scoreboard.add("%space%");
+		scoreboard.add("&7Online: &3%online%");
+		scoreboard.add("&7Remaining: &3%remaining%");
+		scoreboard.add("&7Players: &3%players%");
+		scoreboard.add("%space%");
 
 		if(!cfg.contains("Scoreboard")) {
-			cfg.set("Scoreboard", sb);
+			cfg.set("Scoreboard", scoreboard);
 			try {
 				cfg.save(file);
 			} catch(IOException e) {
@@ -193,10 +194,5 @@ public class ScoreboardHandler implements BoardHandler {
 				replacesLst.set(index, line);
 			}
 		}
-	}
-
-	@Override
-	public void updateList() {
-		loadScores();
 	}
 }

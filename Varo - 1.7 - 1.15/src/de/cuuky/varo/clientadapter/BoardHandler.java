@@ -1,5 +1,11 @@
 package de.cuuky.varo.clientadapter;
 
-public class BoardHandler {
+import de.cuuky.varo.entity.player.VaroPlayer;
 
+public interface BoardHandler {
+
+	public void updateList();
+	
+	public void updatePlayer(VaroPlayer player);
+	
 }

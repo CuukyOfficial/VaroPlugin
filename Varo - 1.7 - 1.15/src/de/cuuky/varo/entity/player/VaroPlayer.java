@@ -48,22 +48,22 @@ public class VaroPlayer extends VaroEntity {
 
 	@VaroSerializeField(path = "id")
 	private int id;
-	
+
 	@VaroSerializeField(path = "name")
 	private String name;
-	
+
 	@VaroSerializeField(path = "uuid")
 	private String uuid;
-	
+
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
 
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
-	
+
 	@VaroSerializeField(path = "rank")
 	private Rank rank;
-	
+
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
 
@@ -185,7 +185,7 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer.remove(this);
 		Main.getVaroGame().getTopScores().update();
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
@@ -227,10 +227,10 @@ public class VaroPlayer extends VaroEntity {
 
 		if(rank != null)
 			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
-		
+
 		return pr;
 	}
-	
+
 	public void setSpectacting() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -263,9 +263,8 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
-				getNetworkManager().sendTablist();
-			}
+			if(ConfigEntry.TABLIST.getValueAsBoolean())
+				Main.getDataManager().getTablistHandler().updatePlayer(this);
 
 			String listname = "";
 			if(getTeam() != null) {
@@ -286,7 +285,7 @@ public class VaroPlayer extends VaroEntity {
 				player.setPlayerListName(this.tabName = listname);
 		}
 	}
-	
+
 	public boolean getalreadyHadMassProtectionTime() {
 		return alreadyHadMassProtectionTime;
 	}
@@ -410,7 +409,7 @@ public class VaroPlayer extends VaroEntity {
 		this.rank = rank;
 		update();
 	}
-	
+
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
@@ -418,7 +417,7 @@ public class VaroPlayer extends VaroEntity {
 	public void setVillager(OfflineVillager villager) {
 		this.villager = villager;
 	}
-	
+
 	public void setTeam(VaroTeam team) {
 		VaroTeam oldTeam = this.team;
 		this.team = team;

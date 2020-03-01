@@ -20,6 +20,7 @@ import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
+import de.cuuky.varo.clientadapter.tablist.TablistHandler;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
@@ -52,6 +53,7 @@ public class DataManager {
 	private VaroTeamHandler varoTeamHandler;
 	private SpawnHandler spawnHandler;
 	private ScoreboardHandler scoreboardHandler;
+	private TablistHandler tablistHandler;
 	private ReportHandler reportHandler;
 	private AlertHandler alertHandler;
 	private OutSideTimeChecker outsideTimeChecker;
@@ -78,6 +80,7 @@ public class DataManager {
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
 		this.scoreboardHandler = new ScoreboardHandler();
+		this.tablistHandler = new TablistHandler();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
@@ -213,7 +216,8 @@ public class DataManager {
 	public void reloadConfig() {
 		VaroList.reloadLists();
 		configHandler.reload();
-		scoreboardHandler.loadScores();
+		scoreboardHandler.updateList();
+		tablistHandler.updateList();
 
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
@@ -237,6 +241,10 @@ public class DataManager {
 
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
+	}
+	
+	public TablistHandler getTablistHandler() {
+		return this.tablistHandler;
 	}
 
 	public AlertHandler getAlertHandler() {

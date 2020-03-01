@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -181,13 +180,13 @@ public class NetworkManager {
 		}
 	}
 
-	public void sendTablist() {
+	public void sendTablist(String header, String footer) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		try {
-			Object tabheader = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + ConfigMessages.TABLIST_HEADER.getValue() + "\"}");
-			Object tabfooter = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + ConfigMessages.TABLIST_FOOTER.getValue() + "\"}");
+			Object tabheader = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + header + "\"}");
+			Object tabfooter = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + footer + "\"}");
 
 			if(tablist == null) {
 				tablist = tablistClass.newInstance();
