@@ -1,5 +1,5 @@
 ## Varo Plugin by Cuuky 
-<img src="https://i.imgur.com/AnIMIbN.png">
+<img src="https://i.imgur.com/AnIMIbN.png" align="center">
 
 
 </br>Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
