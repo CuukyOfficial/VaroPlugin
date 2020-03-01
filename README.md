@@ -7,18 +7,18 @@ Das Plugin läuft universal auf den Versionen 1.7 - 1.15.</br>
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg">
 
-**Codezeilen:**</br>
+**Codezeilen:**<br>
 Zeilen: 26.943
 Stand: 08.02.2020
 Version: 2.2.6
 
-**Libraries:**</br>
+**Libraries:**<br>
 - <a href='https://www.mediafire.com/file/5p7c1e706szh64i/VaroPlugin.rar/file'>DiscordBot, TelegramBot, LabyModAPI und WorldEdit</a>
 - <a href='https://getbukkit.org/download/spigot'>Spigot/Bukkit</a>
 
 Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/CONTRIBUTING.md'>Richtlinien zum Programmieren</a> beachten!
 
-**Sonstige Links:**</br>
+**Sonstige Links:**<br>
 - <a href='https://www.spigotmc.org/resources/71075/'>Spigot-Seite mit Docs etc.:</a>
 - <a href='https://www.tipeeestream.com/cuuky/donation'>Donations (TipeeeStream</a>
 
