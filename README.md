@@ -7,12 +7,12 @@ Das Plugin läuft universal auf den Versionen 1.7 - 1.15.</br>
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg">
 
-**Codezeilen:**</br>
-Zeilen: 26.943</br>
-Stand: 08.02.2020</br>
-Version: 2.2.6</br>
+**Codezeilen:**
+Zeilen: 26.943
+Stand: 08.02.2020
+Version: 2.2.6
 
-**Libraries:**</br>
+**Libraries:**
 - <a href='https://www.mediafire.com/file/5p7c1e706szh64i/VaroPlugin.rar/file'>DiscordBot, TelegramBot, LabyModAPI und WorldEdit</a>
 - <a href='https://getbukkit.org/download/spigot'>Spigot/Bukkit</a>
 
