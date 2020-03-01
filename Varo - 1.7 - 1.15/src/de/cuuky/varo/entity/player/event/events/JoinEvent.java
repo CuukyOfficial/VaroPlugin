@@ -9,7 +9,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
 
 public class JoinEvent extends BukkitEvent {
 
@@ -43,13 +42,14 @@ public class JoinEvent extends BukkitEvent {
 			player.getStats().setRestoreBackup(null);
 		}
 
-		if(player.getStats().isSpectator() || player.isAdminIgnore())
+		if(player.getStats().isSpectator() || player.isAdminIgnore()) {
 			player.setSpectacting();
-		else
+			player.sendMessage(Main.getPrefix() + "Da Du §c" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "du Spectator bist") + " §7wurdest du in den Zuschauer-Modus gesetzt!");
+		} else
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
 
-		ScoreboardHandler.getInstance().sendScoreBoard(player);
 		VaroPlayerDisconnect.joinedAgain(player.getName());
+		Main.getDataManager().getScoreboardHandler().sendScoreBoard(player);
 		player.update();
 	}
 }

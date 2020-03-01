@@ -1,16 +1,12 @@
 package de.cuuky.varo.configuration.messages;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
+import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
-import de.cuuky.varo.utils.PermissionUtils;
-import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.world.border.VaroBorder;
+import de.cuuky.varo.entity.team.VaroTeam;
 
 public enum ConfigMessages {
 
@@ -58,7 +54,9 @@ public enum ConfigMessages {
 
 	BORDER_DECREASE_DAYS("Border.decreaseDays", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s verkleinert. &7Nächste Verkleinerung in &c%days% &7Tagen!"),
 	BORDER_DECREASE_DEATH("Border.decreaseDeath", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s aufgrund eines Todes verkleinert."),
+	BORDER_MINUTE_TIME_UPDATE("Border.minuteTimeUpdate", "&7Die Border wird in &c%minutes%&7:&c%seconds% &7verkleinert!"),
 	BORDER_DECREASE_MINUTES("Border.decreaseMinutes", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s verkleinert. &7Nächste Verkleinerung in &c%days% &7Minuten!"),
+	
 	// BORDER
 	BORDER_MINIMUM_REACHED("Border.minimumReached", "&cDie Border hat ihr Minimum erreicht!"),
 	// CHAT
@@ -78,7 +76,7 @@ public enum ConfigMessages {
 	COMMAND_NO_TEAMNAME("Commands.noteamname", "&7Du hast noch &7keinen &7Teamnamen!"),
 	COMMAND_PING("Commands.ping", "&7Dein %colorcode%Ping &7beträgt: %colorcode%%ping%&7ms"),
 	// COMMANDS
-	COMMAND_SET_BORDER("Commands.borderSet", "&7Die Border wurde auf %colorcode%%zahl% &7gesetzt!"),
+	COMMAND_SET_BORDER("Commands.borderSet", "&7Die Border wurde auf %colorcode%%size% &7gesetzt!"),
 	COMMAND_SPAWN("Commands.spawn", "%colorcode%Koordinaten&7 vom Spawn: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
 	COMMAND_SPAWN_DISTANCE("Commands.spawnDistance", "&7Du bist %colorcode%%distance% &7Blöcke vom Spawn entfernt!"),
 	COMMAND_SPAWN_DISTANCE_NETHER("Commands.spawnDistanceNether", "&7Du bist %colorcode%%distance% &7Blöcke vom Portal zur Oberwelt entfernt!"),
@@ -142,7 +140,7 @@ public enum ConfigMessages {
 	LABYMOD_DISABLED("General.labyModDisabled", "&7Alle deine LabyMod Funktionen wurden deaktiviert!"),
 	// Nametag
 	NAMETAG_NORMAL("NameTag.normalNametagPrefix", "&7"),
-	NAMETAG_SUFFIX("NameTag.nameTag.normalSuffix", " &c%kills%"),
+	NAMETAG_SUFFIX("NameTag.nameTag.normalSuffix", "&c %kills%"),
 
 	NAMETAG_TEAM_PREFIX("NameTag.nametagWithTeam", "%colorcode%%team% &7"),
 	// SAVEABLE
@@ -159,6 +157,7 @@ public enum ConfigMessages {
 	PROTECTION_START("Protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
 
 	PROTECTION_TIME_OVER("Protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorrüber!"),
+	PROTECTION_TIME_UPDATE("Protection.protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes%&7:&c%seconds% &7vorrüber!"),
 	PROTECTION_TIME_RUNNING("Protection.timeRunning", "&7Die %colorcode%Schutzzeit &7läuft noch!"),
 
 	// QUIT
@@ -180,14 +179,14 @@ public enum ConfigMessages {
 	SORT_OWN_HOLE("Sort.ownHoleTeleport", "Du wurdest in dein Loch einsortiert!"),
 	// SORT
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
-	TABLIST_FOOTER("Tablist.tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
+	TABLIST_FOOTER("Tablist.tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currDay%§7.&c%currMonth%§7.§c%currYear%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
 	// TABLIST
 	TABLIST_HEADER("Tablist.tablistHeader", "%nextLine%&c%projectname%%nextLine%"),
 	TABLIST_PLAYER_WITH_TEAM("Tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITH_TEAM_RANK("Tablist.player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM("Tablist.player.withoutTeam", "&7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM_RANK("Tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
-	TEAMCHAT_FORMAT("General.teamchatFormat", "&7[%colorcode%%team%&7] %player% &8» &f%message%"),
+	TEAMCHAT_FORMAT("General.teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
 	// TEAMREQUEST
 	TEAMREQUEST_ENTER_TEAMNAME("Teamrequest.enterTeamName", "%colorcode%&lGib jetzt den Teamnamen für dich und %invited% ein:"),
 	TEAMREQUEST_MAX_TEAMNAME_LENGTH("Teamrequest.maxTeamnameLength", "Dein Teamname darf maximal %colorcode%%maxLength% &7Zeichen enthalten!"),
@@ -198,7 +197,7 @@ public enum ConfigMessages {
 	TEAMREQUEST_TEAM_FULL("Teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),
 	WORLD_NO_LOWER_FLIGHT("World.noLowerFlight", "&7Niedriger darfst du nicht fliegen!"),
 	// WORLD
-	WORLD_SPAWN_NUMBER("World.spawnNameTag.number", "&7Spawn &b%number%"),
+	WORLD_SPAWN_NUMBER("World.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	WORLD_SPAWN_PLAYER("World.spawnNameTag.player", "&7Spawn von %colorcode%%player%");
 
 	private String defaultValue;
@@ -233,6 +232,31 @@ public enum ConfigMessages {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	private static ArrayList<Integer> getConvNumbers(String line, String key) {
+		ArrayList<Integer> list = new ArrayList<>();
+
+		boolean first = true;
+		for(String split0 : line.split(key)) {
+			if(first) {
+				first = false;
+				if(!line.startsWith(key))
+					continue;
+			}
+
+			String[] split1 = split0.split("%", 2);
+
+			if(split1.length == 2) {
+				try {
+					list.add(Integer.parseInt(split1[0]));
+				} catch(NumberFormatException e) {
+					continue;
+				}
+			}
+		}
+
+		return list;
 	}
 
 	public static ArrayList<ConfigMessages> getBySection(String section) {
@@ -269,46 +293,40 @@ public enum ConfigMessages {
 
 	public static String getValue(String value) {
 		String replaced = value;
-		replaced = replaced.contains("%projectname%") ? replaced.replace("%projectname%", Main.getProjectName()) : replaced;
-		replaced = replaced.contains("%remaining%") ? replaced.replace("%remaining%", String.valueOf(VaroPlayer.getAlivePlayer().size())) : replaced;
-		replaced = replaced.contains("%players%") ? replaced.replace("%players%", String.valueOf(VaroPlayer.getVaroPlayer().size())) : replaced;
-		replaced = replaced.contains("%online%") ? replaced.replace("%online%", String.valueOf(VersionUtils.getOnlinePlayer().size())) : replaced;
-		replaced = replaced.contains("%currHour%") ? replaced.replace("%currHour%", new SimpleDateFormat("HH").format(new Date())) : replaced;
-		replaced = replaced.contains("%currMin%") ? replaced.replace("%currMin%", new SimpleDateFormat("mm").format(new Date())) : replaced;
-		replaced = replaced.contains("%currSec%") ? replaced.replace("%currSec%", new SimpleDateFormat("ss").format(new Date())) : replaced;
-		replaced = replaced.contains("%bordersize%") ? replaced.replace("%bordersize%", !Main.isBootedUp() ? "0" : String.valueOf((int) VaroBorder.getInstance().getBorderSize(null))) : replaced;
-		replaced = replaced.contains("%colorcode%") ? replaced.replace("%colorcode%", Main.getColorCode()) : replaced;
-		replaced = replaced.contains("%discordLink%") ? replaced.replace("%discordLink%", ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString()) : replaced;
-		replaced = replaced.contains("%protectionTime%") ? replaced.replace("%protectionTime%", String.valueOf(ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt())) : replaced;
+		
+		for(int rank : getConvNumbers(replaced, "%topplayer-")) {
+			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+			replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
+		}
 
-		replaced = replaced.contains("&") ? replaced.replace("&", "§") : replaced;
-		replaced = replaced.contains("%heart%") ? replaced.replace("%heart%", "♥") : replaced;
-		replaced = replaced.contains("%nextLine%") ? replaced.replace("%nextLine%", "\n") : replaced;
-		replaced = replaced.contains("%null%") ? replaced.replace("%null%", "") : replaced;
+		for(int rank : getConvNumbers(replaced, "%topplayerkills-")) {
+			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+			replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topteam-")) {
+			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+			replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topteamkills-")) {
+			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
+		}
+		
+		for(GeneralMessagePlaceholder gmp : GeneralMessagePlaceholder.getGeneralPlaceholder()) {
+			if(gmp.containsPlaceholder(value))
+				replaced = gmp.replacePlaceholder(replaced);
+		}
 
 		return replaced;
 	}
 
 	public static String getValue(String value, VaroPlayer vp) {
 		String replaced = getValue(value);
-		replaced = replaced.contains("%distanceToBorder%") ? replaced.replace("%distanceToBorder%", String.valueOf((int) VaroBorder.getInstance().getBorderDistanceTo(vp.getPlayer()))) : replaced;
-		replaced = replaced.contains("%min%") ? replaced.replace("%min%", vp.getStats().getCountdownMin(vp.getStats().getCountdown())) : replaced;
-		replaced = replaced.contains("%sec%") ? replaced.replace("%sec%", vp.getStats().getCountdownSec(vp.getStats().getCountdown())) : replaced;
-		replaced = replaced.contains("%kills%") ? replaced.replace("%kills%", String.valueOf(vp.getStats().getKills())) : replaced;
-		replaced = replaced.contains("%strikes%") ? replaced.replace("%strikes%", String.valueOf(vp.getStats().getStrikes().size())) : replaced;
-		replaced = replaced.contains("%teamKills%") ? replaced.replace("%teamKills%", String.valueOf(vp.getTeam() != null ? vp.getTeam().getKills() : 0)) : replaced;
-		replaced = replaced.contains("%teamLifes%") ? replaced.replace("%teamLifes%", String.valueOf((vp.getTeam() != null ? vp.getTeam().getLifes() : 0))) : replaced;
-		replaced = replaced.contains("%player%") ? replaced.replace("%player%", vp.getName()) : replaced;
-		replaced = replaced.contains("%prefix%") ? replaced.replace("%prefix%", vp.getPrefix()) : replaced;
-		replaced = replaced.contains("%team%") ? replaced.replace("%team%", vp.getTeam() != null ? vp.getTeam().getDisplay() : "-") : replaced;
-		replaced = replaced.contains("%rank%") ? replaced.replace("%rank%", vp.getRank() != null ? vp.getRank().getDisplay() : "-") : replaced;
-		replaced = replaced.contains("%episodesPlayedPlus1%") ? replaced.replace("%episodesPlayedPlus1%", String.valueOf(vp.getStats().getSessionsPlayed() + 1)) : replaced;
-		replaced = replaced.contains("%sessions%") ? replaced.replace("%sessions%", String.valueOf(vp.getStats().getSessions())) : replaced;
-		replaced = replaced.contains("%seconds%") ? replaced.replace("%seconds%", String.valueOf(vp.getStats().getCountdown())) : replaced;
-		replaced = replaced.contains("%remainingDisconnects%") ? replaced.replace("%remainingDisconnects%", String.valueOf(VaroPlayerDisconnect.getDisconnect(vp.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(vp.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())) : replaced;
-		replaced = replaced.contains("%ping%") ? replaced.replace("%ping%", String.valueOf(vp.getNetworkManager().getPing())) : replaced;
-		replaced = replaced.contains("%pexPrefix%") ? replaced.replace("%pexPrefix%", PermissionUtils.getPermissionsExPrefix(vp)) : replaced;
-		replaced = replaced.contains("%lpPrefix%") ? replaced.replace("%lpPrefix%", PermissionUtils.getLuckPermsPrefix(vp)) : replaced;
+		for(PlayerMessagePlaceholder pmp : PlayerMessagePlaceholder.getPlayerPlaceholder()) 
+			if(pmp.containsPlaceholder(value))
+				replaced = pmp.replacePlaceholder(replaced, vp);
 
 		return replaced;
 	}

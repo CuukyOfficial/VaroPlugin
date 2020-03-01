@@ -12,21 +12,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.mysql.MySQL;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 public class BotRegister {
 
 	/*
 	 * OLD CODE
 	 */
+	
+	private static final String TABLE = "verify";
 
 	private static ArrayList<BotRegister> register;
 
@@ -133,14 +133,14 @@ public class BotRegister {
 	private static void loadAll() {
 		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
 			return;
-
+		
 		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if(!MySQL.getInstance().isConnected()) {
+			if(!Main.getDataManager().getMysqlClient().isConnected()) {
 				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
 				return;
 			}
 
-			ResultSet rs = MySQL.getInstance().getQuery("SELECT * FROM verify");
+			ResultSet rs = Main.getDataManager().getMysqlClient().getQuery("SELECT * FROM " + TABLE);
 
 			try {
 				while(rs.next()) {
@@ -223,13 +223,13 @@ public class BotRegister {
 			return;
 
 		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
-			if(!MySQL.getInstance().isConnected())
+			if(!Main.getDataManager().getMysqlClient().isConnected())
 				return;
 
-			MySQL.getInstance().update("TRUNCATE TABLE verify;");
+			Main.getDataManager().getMysqlClient().update("TRUNCATE TABLE " + TABLE + ";");
 
 			for(final BotRegister reg : register) {
-				MySQL.getInstance().update("INSERT INTO verify (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
+				Main.getDataManager().getMysqlClient().update("INSERT INTO " + TABLE  + " (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
 			}
 		} else {
 			File file = new File("plugins/Varo", "registrations.yml");

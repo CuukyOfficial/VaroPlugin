@@ -5,16 +5,15 @@ import java.util.Date;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.world.border.VaroBorder;
-import de.cuuky.varo.world.border.decrease.DecreaseReason;
+import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 
 public class DeathEvent extends BukkitEvent {
 
@@ -50,7 +49,7 @@ public class DeathEvent extends BukkitEvent {
 			}
 		}
 
-		if(Game.getInstance().getGameState() == GameState.STARTED)
-			VaroBorder.getInstance().decreaseBorder(DecreaseReason.DEATH);
+		if(Main.getVaroGame().getGameState() == GameState.STARTED)
+			Main.getVaroGame().getVaroWorld().getVaroBorder().decreaseBorder(DecreaseReason.DEATH);
 	}
 }

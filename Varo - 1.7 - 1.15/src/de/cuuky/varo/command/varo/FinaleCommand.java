@@ -10,14 +10,11 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.utils.VaroUtils;
-import de.cuuky.varo.world.border.VaroBorder;
+import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class FinaleCommand extends VaroCommand {
 
@@ -43,7 +40,7 @@ public class FinaleCommand extends VaroCommand {
 		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
 		if(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
-			Game.getInstance().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
+			Main.getVaroGame().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
 		} else {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
 		}
@@ -63,12 +60,12 @@ public class FinaleCommand extends VaroCommand {
 			}
 		}
 
-		VaroBorder.getInstance().setBorderSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
+		Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
 
-		Game.getInstance().setFinaleJoinStart(false);
+		Main.getVaroGame().setFinaleJoinStart(false);
 
 		int playerNumber = VaroPlayer.getOnlinePlayer().size();
-		EventLogger.getInstance().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
 	}
 
 	@Override
@@ -105,7 +102,7 @@ public class FinaleCommand extends VaroCommand {
 					player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 			}
 
-			Game.getInstance().setFinaleJoinStart(true);
+			Main.getVaroGame().setFinaleJoinStart(true);
 			Status = FinaleState.JOIN_PHASE;
 			ConfigEntry.PLAY_TIME.setValue(-1, true);
 
@@ -113,7 +110,7 @@ public class FinaleCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
 			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getötet.");
 
-			EventLogger.getInstance().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
 
 			return;
 		} else if(args[0].equalsIgnoreCase("hauptstart") || args[0].equalsIgnoreCase("mainstart")) {

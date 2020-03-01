@@ -11,13 +11,11 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.listener.helper.TeamChat;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
-import de.cuuky.varo.logger.logger.ChatLogger;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PlayerChatListener implements Listener {
@@ -39,9 +37,8 @@ public class PlayerChatListener implements Listener {
 		if(event.isCancelled())
 			return;
 
-		Player player = event.getPlayer();
-
 		String message = event.getMessage();
+		Player player = event.getPlayer();
 		ChatHook hook = ChatHook.getChatHook(player);
 		if(hook != null) {
 			hook.run(message);
@@ -96,7 +93,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(!player.isOp()) {
-			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Game.getInstance().hasStarted()) || !Game.getInstance().hasStarted()) {
+			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getVaroGame().hasStarted()) || !Main.getVaroGame().hasStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
@@ -105,11 +102,11 @@ public class PlayerChatListener implements Listener {
 						event.setCancelled(true);
 						return;
 					}
-				} else if(!player.isOp())
+				} else if(!player.isOp())	
 					new ChatMessage(player, message);
 			}
 
-			if(Game.getInstance().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if(Main.getVaroGame().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;
@@ -117,7 +114,7 @@ public class PlayerChatListener implements Listener {
 		} else
 			message = message.replace("&", "§");
 
-		ChatLogger.getInstance().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
+		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);
 	}
 }

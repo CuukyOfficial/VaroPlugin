@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.suro.SuroStart;
 
 public class IntroCommand extends VaroCommand {
@@ -24,7 +23,7 @@ public class IntroCommand extends VaroCommand {
 			return;
 		}
 
-		if(Game.getInstance().hasStarted()) {
+		if(Main.getVaroGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "Das Spiel wurde bereits gestartet!");
 			return;
 		}

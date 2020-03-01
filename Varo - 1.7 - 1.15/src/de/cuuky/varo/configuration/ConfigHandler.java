@@ -15,8 +15,6 @@ import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {
 
-	private static ConfigHandler instance;
-
 	private YamlConfiguration configCfg;
 	private boolean configExisted;
 	private File configFile;
@@ -25,7 +23,7 @@ public class ConfigHandler {
 	private boolean messagesExisted;
 	private File messagesFile;
 
-	private ConfigHandler() {
+	public ConfigHandler() {
 		reload();
 	}
 
@@ -170,12 +168,5 @@ public class ConfigHandler {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
 		}
-	}
-
-	public static ConfigHandler getInstance() {
-		if(instance == null) {
-			instance = new ConfigHandler();
-		}
-		return instance;
 	}
 }

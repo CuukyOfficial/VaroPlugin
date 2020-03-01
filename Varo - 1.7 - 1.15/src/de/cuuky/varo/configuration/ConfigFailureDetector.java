@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import org.yaml.snakeyaml.scanner.ScannerException;
 
 import de.cuuky.varo.Main;

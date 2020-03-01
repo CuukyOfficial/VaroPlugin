@@ -21,7 +21,7 @@ import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public class MainMenu extends SuperInventory {

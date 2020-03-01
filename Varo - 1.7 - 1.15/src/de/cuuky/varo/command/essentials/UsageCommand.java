@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.threads.LagCounter;
 
 public class UsageCommand implements CommandExecutor {
 
@@ -24,9 +25,9 @@ public class UsageCommand implements CommandExecutor {
 		sender.sendMessage(Main.getPrefix() + "§7Java Version: §c" + System.getProperty("java.version"));
 		sender.sendMessage(Main.getPrefix() + "§7Bukkit/Spigot Version: §c" + Bukkit.getVersion());
 		sender.sendMessage(Main.getPrefix() + "§7Plugin Version: §c" + Main.getInstance().getDescription().getVersion());
-		sender.sendMessage(Main.getPrefix() + "§7Total memory usage of every plugin: §c" + (r.totalMemory() - r.freeMemory()) / 1048576 + "MB§7!");
-		sender.sendMessage(Main.getPrefix() + "§7Total memory usage of the server: §c" + r.totalMemory() / 1048576 + "MB§7!");
-		sender.sendMessage(Main.getPrefix() + "§7Memory available: §c" + r.maxMemory() / 1048576 + "MB§7!");
+		sender.sendMessage(Main.getPrefix() + "§7Total memory usage: §c" + (r.totalMemory() - r.freeMemory()) / 1048576 + "MB§7!");
+		sender.sendMessage(Main.getPrefix() + "§7Total memory available: §c" + r.maxMemory() / 1048576 + "MB§7!");
+		sender.sendMessage(Main.getPrefix() + "§7TPS: §c" + (double) Math.round(LagCounter.getTPS() * 100) / 100);
 		return false;
 	}
 

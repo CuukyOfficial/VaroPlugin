@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class NightCommand implements CommandExecutor {
 

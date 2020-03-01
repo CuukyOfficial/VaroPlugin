@@ -13,7 +13,7 @@ import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.types.Materials;
 
 public class PlayerGUI extends SuperInventory {

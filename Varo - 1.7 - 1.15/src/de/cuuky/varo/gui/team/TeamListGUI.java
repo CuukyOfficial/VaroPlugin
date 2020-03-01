@@ -96,6 +96,10 @@ public class TeamListGUI extends SuperInventory {
 
 				@Override
 				public void run() {
+					if(!opener.hasPermission("varo.admin")) {
+						return;
+					}
+
 					new TeamGUI(opener, team);
 				}
 			});

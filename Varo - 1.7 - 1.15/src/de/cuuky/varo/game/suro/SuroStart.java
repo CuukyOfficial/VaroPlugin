@@ -8,7 +8,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
@@ -61,7 +60,7 @@ public class SuroStart {
 
 				if(i >= titles.size()) {
 					Bukkit.getScheduler().cancelTask(sched);
-					Game.getInstance().setGamestate(GameState.STARTED);
+					Main.getVaroGame().setGamestate(GameState.STARTED);
 					for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);

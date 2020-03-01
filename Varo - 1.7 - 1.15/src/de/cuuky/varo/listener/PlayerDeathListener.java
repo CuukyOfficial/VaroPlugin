@@ -16,11 +16,8 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.list.ListHandler;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -59,13 +56,13 @@ public class PlayerDeathListener implements Listener {
 		VaroPlayer killer = killerPlayer == null ? null : VaroPlayer.getPlayer(killerPlayer);
 		event.setDeathMessage(null);
 
-		if(Game.getInstance().hasStarted()) {
+		if(Main.getVaroGame().hasStarted()) {
 			PlayerHit hit = PlayerHit.getHit(deadPlayer);
 			if(hit != null)
 				hit.over();
 
 			deadPlayer.getWorld().strikeLightningEffect(deadPlayer.getLocation());
-			for(ItemStack stack : ListHandler.getInstance().getDeathItems().getItems())
+			for(ItemStack stack : Main.getDataManager().getListManager().getDeathItems().getItems())
 				if(stack.getType() != Material.AIR)
 					deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
 
@@ -121,7 +118,7 @@ public class PlayerDeathListener implements Listener {
 			}
 
 			if(killerPlayer == null) {
-				EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
 			} else {
 				PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
@@ -137,7 +134,7 @@ public class PlayerDeathListener implements Listener {
 					killer.sendMessage(ConfigMessages.KILL_LIFE_ADD.getValue());
 				}
 
-				EventLogger.getInstance().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 
 				killer.onEvent(BukkitEventType.KILL);

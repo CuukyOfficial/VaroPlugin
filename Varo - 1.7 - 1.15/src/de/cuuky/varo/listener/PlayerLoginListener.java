@@ -12,8 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import net.dv8tion.jda.core.entities.User;
-
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -21,6 +19,7 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
+import net.dv8tion.jda.api.entities.User;
 
 public class PlayerLoginListener implements Listener {
 
@@ -111,7 +110,7 @@ public class PlayerLoginListener implements Listener {
 			else
 				hours = "" + hr;
 
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replace("%timeHours%", ConfigEntry.JOIN_AFTER_HOURS.getValueAsString()).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue().replace("%timeHours%", String.valueOf(ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt())).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
 			break;
 		case SERVER_NOT_PUBLISHED:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp));

@@ -4,9 +4,7 @@ import de.cuuky.varo.serialize.VaroSerializeObject;
 
 public class VaroTeamHandler extends VaroSerializeObject {
 
-	private static VaroTeamHandler instance;
-
-	private VaroTeamHandler() {
+	public VaroTeamHandler() {
 		super(VaroTeam.class, "/stats/teams.yml");
 
 		load();
@@ -20,11 +18,5 @@ public class VaroTeamHandler extends VaroSerializeObject {
 			save(String.valueOf(team.getId()), team, getConfiguration());
 
 		saveFile();
-	}
-
-	public static void initialize() {
-		if(instance == null) {
-			instance = new VaroTeamHandler();
-		}
 	}
 }

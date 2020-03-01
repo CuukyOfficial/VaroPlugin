@@ -10,8 +10,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
-import de.cuuky.varo.world.generators.LobbyGenerator;
+import de.cuuky.varo.game.world.generators.LobbyGenerator;
 
 public class LobbyCommand extends VaroCommand {
 
@@ -65,14 +64,14 @@ public class LobbyCommand extends VaroCommand {
 			}
 
 			uuid.remove(p.getUniqueId());
-			Game.getInstance().setLobby(p.getLocation());
+			Main.getVaroGame().setLobby(p.getLocation());
 			new LobbyGenerator(p.getLocation(), height, size);
 		} else if(args[0].equalsIgnoreCase("setSpawn") || args[0].equalsIgnoreCase("set")) {
-			Game.getInstance().setLobby(((Player) sender).getLocation());
+			Main.getVaroGame().setLobby(((Player) sender).getLocation());
 			sender.sendMessage(Main.getPrefix() + "§7Location für die " + Main.getColorCode() + "Lobby §7erfolgreich gesetzt!");
 			return;
 		} else if(args[0].equalsIgnoreCase("removeSpawn") || args[0].equalsIgnoreCase("remove")) {
-			Game.getInstance().setLobby(null);
+			Main.getVaroGame().setLobby(null);
 			sender.sendMessage(Main.getPrefix() + "§7Location für die " + Main.getColorCode() + "Lobby §7erfolgreich entfernt!");
 			return;
 		} else

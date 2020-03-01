@@ -22,6 +22,7 @@ import de.cuuky.varo.command.varo.IntroCommand;
 import de.cuuky.varo.command.varo.ItemCommand;
 import de.cuuky.varo.command.varo.LobbyCommand;
 import de.cuuky.varo.command.varo.MenuCommand;
+import de.cuuky.varo.command.varo.PlaceholderCommand;
 import de.cuuky.varo.command.varo.PlayerCommand;
 import de.cuuky.varo.command.varo.PresetCommand;
 import de.cuuky.varo.command.varo.RandomTeamCommand;
@@ -80,13 +81,12 @@ public abstract class VaroCommand {
 		new StatsCommand();
 		new UpdateCommand();
 		new FinaleCommand();
+		new PlaceholderCommand();
 //		new TestCommand();
 	}
 
 	private String[] aliases;
-	private String description;
-	private String name;
-	private String permission;
+	private String name, permission, description;
 
 	public VaroCommand(String name, String description, String permission, String... aliases) {
 		this.name = name;

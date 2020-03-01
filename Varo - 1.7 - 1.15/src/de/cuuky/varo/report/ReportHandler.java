@@ -4,13 +4,11 @@ import de.cuuky.varo.serialize.VaroSerializeObject;
 
 public class ReportHandler extends VaroSerializeObject {
 
-	private static ReportHandler instance;
-
 	static {
 		registerEnum(ReportReason.class);
 	}
 
-	private ReportHandler() {
+	public ReportHandler() {
 		super(Report.class, "/stats/reports.yml");
 
 		load();
@@ -24,11 +22,5 @@ public class ReportHandler extends VaroSerializeObject {
 			save(String.valueOf(report.getId()), report, getConfiguration());
 
 		saveFile();
-	}
-
-	public static void initialize() {
-		if(instance == null) {
-			instance = new ReportHandler();
-		}
 	}
 }

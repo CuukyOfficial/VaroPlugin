@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
@@ -34,6 +35,7 @@ public class EnchantmentCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo item Befehl blockt alle Items.");
 			sender.sendMessage(Main.getPrefix());
 			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fügt alle Verzauberungungen des Items, das du in der Hand hältst, der Liste hinzu.");
+			sender.sendMessage(Main.getPrefix() + "§7Alternativ sind auch Bücher möglich");
 			sender.sendMessage(Main.getPrefix() + "§7--------------------");
 			return;
 		}
@@ -57,6 +59,11 @@ public class EnchantmentCommand extends VaroCommand {
 		}
 
 		if(args[1].equalsIgnoreCase("list")) {
+			if(list.getEnchantments().size() < 1) {
+				sender.sendMessage(Main.getPrefix() + "Keine Verzauberungen gefunden!");
+				return;
+			}
+
 			sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "§7:");
 			for(String enc1 : list.getEnchantments())
 				sender.sendMessage(Main.getPrefix() + enc1);
@@ -70,7 +77,18 @@ public class EnchantmentCommand extends VaroCommand {
 		}
 
 		ItemStack item = player.getItemInHand();
-		Map<Enchantment, Integer> encs = item.getEnchantments();
+		Map<Enchantment, Integer> encs = null;
+		if(item.getItemMeta() instanceof EnchantmentStorageMeta) {
+			EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+			encs = meta.getStoredEnchants();
+		} else 
+			encs = item.getItemMeta().getEnchants();
+
+		if(encs.size() == 0) {
+			sender.sendMessage(Main.getPrefix() + "Es wurden keine Enchantments auf deinem Item/Buch gefunden!");
+			return;
+		}
+
 		for(Enchantment enc : encs.keySet()) {
 			if(args[1].contains("add")) {
 				if(list.hasEnchantment(enc, encs.get(enc))) {

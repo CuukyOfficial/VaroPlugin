@@ -3,6 +3,7 @@ package de.cuuky.varo.spigot.updater;
 import java.net.URL;
 import java.util.Scanner;
 
+import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -20,12 +21,12 @@ public class VaroUpdater {
 	}
 
 	private static final int RESCOURCE_ID = 71075;
-	private static final String UPDATE_LINK = "https://api.spiget.org/v2/resources/" + RESCOURCE_ID + "/versions/latest"; 
-	
+	private static final String UPDATE_LINK = "https://api.spiget.org/v2/resources/" + RESCOURCE_ID + "/versions/latest";
+
 	private VaroUpdateResultSet lastResult;
-	
+
 	public VaroUpdater() {
-		checkForUpdates();
+		checkUpdate();
 	}
 
 	private VersionCompareResult compareVersions(String version1, String version2) {
@@ -48,16 +49,32 @@ public class VaroUpdater {
 		return VersionCompareResult.VERSIONS_EQUAL;
 	}
 	
+	private void checkUpdate() {
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
+			
+			@Override
+			public void run() {
+				checkForUpdates(true);
+			}
+		}, 20);
+	}
+
 	public void printResults() {
 		if(this.lastResult == null)
 			return;
-		
+
 		System.out.println(Main.getConsolePrefix() + "Updater: " + lastResult.getUpdateResult().getMessage());
+
+		for(Alert upAlert : Alert.getAlerts(AlertType.UPDATE_AVAILABLE)) {
+			if(upAlert.isOpen() && upAlert.getMessage().contains(lastResult.getVersionName()))
+				return;
+		}
+
 		if(lastResult.getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
 			new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + lastResult.getVersionName() + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 	}
 
-	public VaroUpdateResultSet checkForUpdates() {
+	public VaroUpdateResultSet checkForUpdates(boolean print) {
 		UpdateResult result = UpdateResult.NO_UPDATE;
 		String version, id;
 
@@ -88,14 +105,19 @@ public class VaroUpdater {
 			version = "";
 			id = "";
 		}
+
+		this.lastResult = new VaroUpdateResultSet(result, version, id);
 		
-		return this.lastResult = new VaroUpdateResultSet(result, version, id);
+		if(print)
+			printResults();
+		
+		return lastResult;
 	}
-	
+
 	public VaroUpdateResultSet getLastResult() {
 		return this.lastResult;
 	}
-	
+
 	public static int getRescourceId() {
 		return RESCOURCE_ID;
 	}

@@ -2,7 +2,7 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.scoreboard.nametag.Nametag;
+import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 

@@ -2,10 +2,9 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class OnlineCommand extends DiscordBotCommand {
 

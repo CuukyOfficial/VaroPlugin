@@ -9,7 +9,6 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
@@ -75,7 +74,7 @@ public class UpdateCommand extends VaroCommand {
 	
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
+		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates(false);
 		UpdateResult result = resultSet.getUpdateResult();
 		String updateVersion = resultSet.getVersionName();
 
@@ -86,6 +85,7 @@ public class UpdateCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geändert haben sollte, musst du manuell updaten.");
 			} else {
 				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
 			}
@@ -110,7 +110,7 @@ public class UpdateCommand extends VaroCommand {
 		if(!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar")) 
 			this.pluginNameChanged = true;
 
-		DataManager.getInstance().setDoSave(false);
+		Main.getDataManager().setDoSave(false);
 
 		if(result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");

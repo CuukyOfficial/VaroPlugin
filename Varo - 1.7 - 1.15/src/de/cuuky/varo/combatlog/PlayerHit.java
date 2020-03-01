@@ -15,7 +15,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
 
 public class PlayerHit {
 
@@ -30,7 +29,7 @@ public class PlayerHit {
 			if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 				return;
 
-			if(!Game.getInstance().isRunning() || event.isCancelled())
+			if(!Main.getVaroGame().isRunning() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());

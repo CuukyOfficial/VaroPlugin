@@ -2,13 +2,12 @@ package de.cuuky.varo.bot.discord.listener;
 
 import java.awt.Color;
 
-import net.dv8tion.jda.core.events.Event;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.EventListener;
-
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.EventListener;
 
 public class DiscordBotEventListener implements EventListener {
 
@@ -27,7 +26,7 @@ public class DiscordBotEventListener implements EventListener {
 	}
 
 	@Override
-	public void onEvent(Event event) {
+	public void onEvent(GenericEvent event) {
 		if(!(event instanceof MessageReceivedEvent))
 			return;
 

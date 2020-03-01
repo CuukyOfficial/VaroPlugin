@@ -8,14 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.messages.ConfigMessages;
 import net.labymod.serverapi.LabyModAPI;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
 import net.labymod.serverapi.bukkit.event.PermissionsSendEvent;
-
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
 
 public class PermissionSendListener implements Listener {
 

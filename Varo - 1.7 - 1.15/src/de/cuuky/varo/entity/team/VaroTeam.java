@@ -3,15 +3,14 @@ package de.cuuky.varo.entity.team;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 
 public class VaroTeam extends VaroEntity {
@@ -88,7 +87,7 @@ public class VaroTeam extends VaroEntity {
 		}
 		teams.remove(this);
 	}
-	
+
 	public boolean isDead() {
 		for(VaroPlayer player : member) {
 			if(player.getStats().getState() != PlayerState.ALIVE)
@@ -117,7 +116,7 @@ public class VaroTeam extends VaroEntity {
 		for(int id : memberid) {
 			VaroPlayer vp = VaroPlayer.getPlayer(id);
 			if(vp == null) {
-				EventLogger.getInstance().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.LOG, id + " has been removed without reason - please report this to the creator of this plugin");
 				continue;
 			}
 
@@ -148,16 +147,19 @@ public class VaroTeam extends VaroEntity {
 			if(vp.getStats().getSaveables().contains(saveable))
 				vp.getStats().removeSaveable(saveable);
 	}
-	
+
 	public boolean isMember(VaroPlayer vp) {
 		return this.member.contains(vp);
 	}
 
 	public void setColorCode(String colorCode) {
 		this.colorCode = colorCode;
+		if(colorCode != null)
+			this.colorCode = colorCode.replace("&", "§");
+		
 		statChanged();
 	}
-	
+
 	public String getColorCode() {
 		return colorCode == null ? Main.getColorCode() : colorCode;
 	}
@@ -201,7 +203,6 @@ public class VaroTeam extends VaroEntity {
 	public VaroInventory getTeamBackPack() {
 		return teamBackPack;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;

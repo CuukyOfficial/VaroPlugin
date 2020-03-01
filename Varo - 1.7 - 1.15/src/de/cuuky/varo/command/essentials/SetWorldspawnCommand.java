@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.version.types.Sounds;
-import de.cuuky.varo.world.border.VaroBorder;
 
 public class SetWorldspawnCommand implements CommandExecutor {
 
@@ -31,7 +30,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
-		VaroBorder.getInstance().setBorderCenter(p.getLocation());
+		Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderCenter(p.getLocation());
 		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn §7erfolgreich gesetzt!");
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;

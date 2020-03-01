@@ -6,14 +6,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.game.Game;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.VaroUtils;
-import de.cuuky.varo.world.border.VaroBorder;
+import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class GameOptionsGUI extends SuperInventory {
 
@@ -42,29 +41,29 @@ public class GameOptionsGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + Game.getInstance().getGameState().getName() }).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aChange GameState").itemstack(new ItemStack(Material.EMERALD)).lore(new String[] { "§7Current: §c" + Main.getVaroGame().getGameState().getName() }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				switch(Game.getInstance().getGameState()) {
+				switch(Main.getVaroGame().getGameState()) {
 				case STARTED:
-					Game.getInstance().setGamestate(GameState.END);
+					Main.getVaroGame().setGamestate(GameState.END);
 					break;
 				case END:
-					Game.getInstance().setGamestate(GameState.LOBBY);
+					Main.getVaroGame().setGamestate(GameState.LOBBY);
 					break;
 				case LOBBY:
-					Game.getInstance().setGamestate(GameState.STARTED);
+					Main.getVaroGame().setGamestate(GameState.STARTED);
 					break;
 				}
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Game.getInstance().getLobby() != null ? VaroUtils.formatLocation(Game.getInstance().getLobby(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Main.getVaroGame().getLobby() != null ? VaroUtils.formatLocation(Main.getVaroGame().getLobby(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				Game.getInstance().setLobby(opener.getLocation());
+				Main.getVaroGame().setLobby(opener.getLocation());
 			}
 		});
 
@@ -73,7 +72,7 @@ public class GameOptionsGUI extends SuperInventory {
 			@Override
 			public void run() {
 				opener.getWorld().setSpawnLocation(opener.getLocation().getBlockX(), opener.getLocation().getBlockY(), opener.getLocation().getBlockZ());
-				VaroBorder.getInstance().setBorderCenter(opener.getLocation());
+				Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderCenter(opener.getLocation());
 			}
 		});
 		return true;

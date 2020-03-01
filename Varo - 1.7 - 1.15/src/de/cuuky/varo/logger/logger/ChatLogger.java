@@ -1,9 +1,9 @@
 package de.cuuky.varo.logger.logger;
 
-import de.cuuky.varo.logger.Logger;
+import de.cuuky.varo.logger.VaroLogger;
 import de.cuuky.varo.utils.JavaUtils;
 
-public class ChatLogger extends Logger {
+public class ChatLogger extends VaroLogger {
 
 	public enum ChatLogType {
 		CHAT("CHAT"),
@@ -29,9 +29,7 @@ public class ChatLogger extends Logger {
 		}
 	}
 
-	private static ChatLogger instance;
-
-	private ChatLogger(String name) {
+	public ChatLogger(String name) {
 		super(name, false);
 	}
 
@@ -44,12 +42,5 @@ public class ChatLogger extends Logger {
 		logs.add(log);
 
 		pw.flush();
-	}
-
-	public static ChatLogger getInstance() {
-		if(instance == null) {
-			instance = new ChatLogger("chatlogs");
-		}
-		return instance;
 	}
 }

@@ -11,7 +11,6 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class MassRecordingVaroEvent extends VaroEvent {
@@ -22,7 +21,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private boolean timerEnd = false;
 
 	public MassRecordingVaroEvent() {
-		super("§aMassrecording", Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Lässt alle Spieler für eine Minute zusätzlich zu den normalen Folgen auf den Server" : "Lässt alle Spieler für " + ConfigEntry.MASS_RECORDING_TIME.getValueAsString() + " Minuten zusätzlich zu den normalen Folgen auf den Server");
+		super("§aMassrecording", Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Lässt alle Spieler für eine Minute zusätzlich zu den normalen Folgen auf den Server" : "Lässt alle Spieler für " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusätzlich zu den normalen Folgen auf den Server");
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<Integer[]>();
@@ -63,15 +62,14 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme wurde beendet.");
 
-				EventLogger.getInstance().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
 			}
 		} else {
 			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
 
-				EventLogger.getInstance().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
 			}
-
 		}
 
 		countdowns.clear();
@@ -97,12 +95,12 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 		for(VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			vp.getStats().addSessionPlayed();
-			EventLogger.getInstance().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
 		}
 
 		timer = ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() * 60;
 
-		EventLogger.getInstance().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle können für eine Minute joinen." : "Alle können für" + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 		}
@@ -114,10 +112,9 @@ public class MassRecordingVaroEvent extends VaroEvent {
 					timerEnd = true;
 					setEnabled(false);
 				}
+				
 				timer -= 1;
 			}
 		}, 0, 20);
-
 	}
-
 }

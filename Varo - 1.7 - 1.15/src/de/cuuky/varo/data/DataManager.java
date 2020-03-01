@@ -19,39 +19,84 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.broadcast.Broadcaster;
+import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
+import de.cuuky.varo.clientadapter.tablist.TablistHandler;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.entity.player.PlayerHandler;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
-import de.cuuky.varo.game.GameHandler;
-import de.cuuky.varo.list.ListHandler;
+import de.cuuky.varo.game.VaroGameHandler;
 import de.cuuky.varo.list.VaroList;
+import de.cuuky.varo.list.VaroListManager;
 import de.cuuky.varo.listener.PermissionSendListener;
-import de.cuuky.varo.mysql.MySQL;
+import de.cuuky.varo.logger.VaroLoggerManager;
+import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.report.ReportHandler;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.spigot.FileDownloader;
-import de.cuuky.varo.threads.OutSideTimeChecker;
-import de.cuuky.varo.utils.VaroUtils;
+import de.cuuky.varo.threads.daily.DailyTimer;
+import de.cuuky.varo.utils.varo.OutSideTimeChecker;
+import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class DataManager {
-
-	private static DataManager instance;
 
 	private static final int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
 
 	private boolean doSave;
 
-	private DataManager() {
+	private ConfigHandler configHandler;
+	private VaroGameHandler varoGameHandler;
+	private VaroPlayerHandler varoPlayerHandler;
+	private VaroTeamHandler varoTeamHandler;
+	private SpawnHandler spawnHandler;
+	private ScoreboardHandler scoreboardHandler;
+	private TablistHandler tablistHandler;
+	private ReportHandler reportHandler;
+	private AlertHandler alertHandler;
+	private OutSideTimeChecker outsideTimeChecker;
+	private MySQLClient mysqlClient;
+	private VaroListManager listManager;
+	private VaroLoggerManager varoLoggerManager;
+	private Broadcaster broadcaster;
+	private DailyTimer dailyTimer;
+
+	public DataManager() {
+		Main.setDataManager(this);
+		
 		load();
 		loadPlugins();
 
 		startAutoSave();
 		doSave = true;
+	}
+
+	private void load() {
+		ConfigFailureDetector.detectConfig();
+
+		copyDefaultPresets();
+		this.varoLoggerManager = new VaroLoggerManager();
+		this.configHandler = new ConfigHandler();
+		this.scoreboardHandler = new ScoreboardHandler();
+		this.tablistHandler = new TablistHandler();
+		this.varoGameHandler = new VaroGameHandler();
+		this.varoPlayerHandler = new VaroPlayerHandler();
+		this.varoTeamHandler = new VaroTeamHandler();
+		this.spawnHandler = new SpawnHandler();
+		this.reportHandler = new ReportHandler();
+		this.alertHandler = new AlertHandler();
+		this.outsideTimeChecker = new OutSideTimeChecker();
+		this.mysqlClient = new MySQLClient();
+		this.listManager = new VaroListManager();
+		this.broadcaster = new Broadcaster();
+		this.dailyTimer = new DailyTimer();
+
+		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
+		VaroUtils.setWorldToTime();
+
+		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}
 
 	private void copyDefaultPresets() {
@@ -92,30 +137,6 @@ public class DataManager {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void load() {
-		ConfigFailureDetector.detectConfig();
-
-		copyDefaultPresets();
-		ConfigHandler.getInstance(); // Initialization
-
-		GameHandler.initialize(); // Initialization GameHandler
-		PlayerHandler.initialize(); // Initialization PlayerHandler
-		VaroTeamHandler.initialize(); // Initialization TeamHandler
-		SpawnHandler.initialize(); // Initialization SpawnHandler
-		ScoreboardHandler.getInstance(); // Initialization ScoreboardHandler
-		ReportHandler.initialize(); // Initialization ReportHandler
-		AlertHandler.initialize(); // Initialization AlertHandler
-		OutSideTimeChecker.getInstance(); // Initialization TimeChecker
-		MySQL.getInstance(); // Initialization MySQL
-		ListHandler.getInstance(); // Initialization ListHandler
-		Broadcaster.getInstance(); // Initialization Broadcaster
-
-		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
-		VaroUtils.setWorldToTime();
-
-		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 	}
 
 	private void loadPlugins() {
@@ -178,9 +199,9 @@ public class DataManager {
 			fd.startDownload();
 
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
-			
+
 			System.out.println(Main.getConsolePrefix() + dataName + " wird nun geladen...");
-			Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName));
+			Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName)));
 			System.out.println(Main.getConsolePrefix() + dataName + " wurde erfolgreich geladen!");
 			return true;
 		} catch(IOException | UnknownDependencyException | InvalidPluginException | InvalidDescriptionException e) {
@@ -194,12 +215,13 @@ public class DataManager {
 
 	public void reloadConfig() {
 		VaroList.reloadLists();
-		ConfigHandler.getInstance().reload();
-		ScoreboardHandler.getInstance().loadScores();
+		configHandler.reload();
+		scoreboardHandler.updateList();
+		tablistHandler.updateList();
 
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			ScoreboardHandler.getInstance().sendScoreBoard(vp);
+			scoreboardHandler.sendScoreBoard(vp);
 			if(vp.getNametag() != null)
 				vp.getNametag().giveAll();
 		}
@@ -220,11 +242,64 @@ public class DataManager {
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
 	}
+	
+	public TablistHandler getTablistHandler() {
+		return this.tablistHandler;
+	}
 
-	public static DataManager getInstance() {
-		if(instance == null) {
-			instance = new DataManager();
-		}
-		return instance;
+	public AlertHandler getAlertHandler() {
+		return this.alertHandler;
+	}
+
+	public Broadcaster getBroadcaster() {
+		return this.broadcaster;
+	}
+
+	public ConfigHandler getConfigHandler() {
+		return this.configHandler;
+	}
+
+	public VaroListManager getListManager() {
+		return this.listManager;
+	}
+	
+	public VaroLoggerManager getVaroLoggerManager() {
+		return this.varoLoggerManager;
+	}
+
+	public MySQLClient getMysqlClient() {
+		return this.mysqlClient;
+	}
+
+	public OutSideTimeChecker getOutsideTimeChecker() {
+		return this.outsideTimeChecker;
+	}
+
+	public ReportHandler getReportHandler() {
+		return this.reportHandler;
+	}
+
+	public ScoreboardHandler getScoreboardHandler() {
+		return this.scoreboardHandler;
+	}
+
+	public SpawnHandler getSpawnHandler() {
+		return this.spawnHandler;
+	}
+
+	public VaroGameHandler getVaroGameHandler() {
+		return this.varoGameHandler;
+	}
+
+	public VaroPlayerHandler getVaroPlayerHandler() {
+		return this.varoPlayerHandler;
+	}
+
+	public VaroTeamHandler getVaroTeamHandler() {
+		return this.varoTeamHandler;
+	}
+	
+	public DailyTimer getDailyTimer() {
+		return this.dailyTimer;
 	}
 }

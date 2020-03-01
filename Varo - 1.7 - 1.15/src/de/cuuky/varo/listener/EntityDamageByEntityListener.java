@@ -10,7 +10,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
@@ -23,31 +22,31 @@ public class EntityDamageByEntityListener implements Listener {
 		if(!(event.getEntity() instanceof Player))
 			return;
 
-		if(Game.getInstance().getGameState() == GameState.END)
+		if(Main.getVaroGame().getGameState() == GameState.END)
 			return;
 
 		Player p = (Player) event.getEntity();
-		if(Game.getInstance().getProtection() != null) {
-			p.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
+		Player damager = new EntityDamageByEntityUtil(event).getDamager();
+		if(Main.getVaroGame().getProtection() != null) {
+			if(damager == null)
+				p.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
+			else
+				damager.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
 			event.setCancelled(true);
 			return;
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(p);
-		if(Game.getInstance().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
+		if(Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if(ConfigEntry.FRIENDLYFIRE.getValueAsBoolean())
-			return;
-
-		Player damager = new EntityDamageByEntityUtil(event).getDamager();
-		if(damager == null)
+		if(ConfigEntry.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
 			return;
 
 		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
-		if(VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Game.getInstance().isFirstTime()) {
+		if(VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}

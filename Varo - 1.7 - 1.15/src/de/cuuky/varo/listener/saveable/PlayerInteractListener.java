@@ -15,16 +15,15 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
-import de.cuuky.varo.game.Game;
 
 public class PlayerInteractListener implements Listener {
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if(!Game.getInstance().hasStarted())
+		if(!Main.getVaroGame().hasStarted())
 			return;
 
-		if(!Game.getInstance().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if(!Main.getVaroGame().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			e.setCancelled(true);
 			return;
 		}

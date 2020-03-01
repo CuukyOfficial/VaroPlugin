@@ -1,5 +1,6 @@
 package de.cuuky.varo.entity.player.event.events;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
@@ -7,7 +8,6 @@ import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
-import de.cuuky.varo.game.Game;
 
 public class QuitEvent extends BukkitEvent {
 
@@ -17,7 +17,7 @@ public class QuitEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
-		if(Game.getInstance().isRunning() && player.getStats().getState() == PlayerState.ALIVE) {
+		if(Main.getVaroGame().isRunning() && player.getStats().getState() == PlayerState.ALIVE) {
 			player.getStats().addInventoryBackup(new InventoryBackup(player));
 
 			if(ConfigEntry.OFFLINEVILLAGER.getValueAsBoolean())

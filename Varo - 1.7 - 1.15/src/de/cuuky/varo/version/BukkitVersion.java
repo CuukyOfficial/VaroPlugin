@@ -2,8 +2,6 @@ package de.cuuky.varo.version;
 
 public enum BukkitVersion {
 
-	NEWER_THAN_15(16),
-	OLDER_THAN_7(6),
 	ONE_10(10),
 	ONE_11(11),
 	ONE_12(12),

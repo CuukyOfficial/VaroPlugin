@@ -8,11 +8,9 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 public class BotLauncher {
 
 	private static VaroDiscordBot discordbot;
-
-	private static BotLauncher instance;
 	private static VaroTelegramBot telegrambot;
 
-	private BotLauncher() {
+	public BotLauncher() {
 		startupDiscord();
 		startupTelegram();
 	}
@@ -35,13 +33,19 @@ public class BotLauncher {
 		}
 
 		try {
-			discordbot = VaroDiscordBot.getInstance();
-			discordbot.connect();
+			discordbot = new VaroDiscordBot();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
 			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
-			System.out.println(Main.getConsolePrefix() + "If you want to use the discordbot please install this plugin:");
-			System.out.println(Main.getConsolePrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+			System.out.println(Main.getConsolePrefix() + "If you want to use the DiscordBot please install this plugin:");
+			System.out.println(Main.getConsolePrefix() + "https://www.spigotmc.org/resources/66778/");
+			return;
+		}
+
+		try {
+			discordbot.connect();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -55,25 +59,24 @@ public class BotLauncher {
 		}
 
 		try {
-			telegrambot = VaroTelegramBot.getInstance();
-			telegrambot.connect();
+			telegrambot = new VaroTelegramBot();
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
 			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin.");
-			System.out.println(Main.getConsolePrefix() + "If you want to use the Telegrambot please install this plugin:");
+			System.out.println(Main.getConsolePrefix() + "If you want to use the TelegramBot please install this plugin:");
 			System.out.println(Main.getConsolePrefix() + "https://www.spigotmc.org/resources/66823/");
+			return;
+		}
+
+		try {
+			telegrambot.connect();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public static VaroDiscordBot getDiscordBot() {
 		return discordbot;
-	}
-
-	public static BotLauncher getInstance() {
-		if(instance == null) {
-			instance = new BotLauncher();
-		}
-		return instance;
 	}
 
 	public static VaroTelegramBot getTelegramBot() {

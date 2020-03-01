@@ -4,30 +4,23 @@ import java.awt.Color;
 import java.io.File;
 import java.util.Random;
 
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.exceptions.PermissionException;
-import net.dv8tion.jda.core.managers.GuildController;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
 import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
 import de.cuuky.varo.configuration.config.ConfigEntry;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.exceptions.PermissionException;
 
 public class VaroDiscordBot implements VaroBot {
 
-	private static VaroDiscordBot instance;
-
-	private JDA jda;
+	private JDA jda;	
 	private long registerChannel, eventChannel, announcementChannel, resultChannel, pingRole;
-
-	private VaroDiscordBot() {}
 
 	private Color getRandomColor() {
 		Random random = new Random();
@@ -37,9 +30,8 @@ public class VaroDiscordBot implements VaroBot {
 	@Override
 	public void connect() {
 		System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors maybe will appear - don't mind them)");
-		JDABuilder builder = new JDABuilder(AccountType.BOT);
-		builder.setGame(Game.playing(ConfigEntry.DISCORDBOT_GAMESTATE.getValueAsString()));
-		builder.setToken(ConfigEntry.DISCORDBOT_TOKEN.getValueAsString());
+		JDABuilder builder = new JDABuilder(ConfigEntry.DISCORDBOT_TOKEN.getValueAsString());
+		builder.setActivity(Activity.playing(ConfigEntry.DISCORDBOT_GAMESTATE.getValueAsString()));
 		builder.setAutoReconnect(true);
 		builder.setRequestTimeoutRetry(true);
 		builder.setStatus(OnlineStatus.ONLINE);
@@ -120,12 +112,12 @@ public class VaroDiscordBot implements VaroBot {
 		return jda.getTextChannelById(announcementChannel);
 	}
 
-	public GuildController getController() {
-		return new GuildController(jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong()));
-	}
-
 	public TextChannel getEventChannel() {
 		return jda.getTextChannelById(eventChannel);
+	}
+	
+	public Guild getMainGuild() {
+		return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong());
 	}
 
 	public JDA getJda() {
@@ -152,7 +144,7 @@ public class VaroDiscordBot implements VaroBot {
 	}
 
 	public void sendFile(String message, File file, TextChannel channel) {
-		channel.sendFile(file, new MessageBuilder().append(message.replace("_", "\\_")).build()).queue();
+		channel.sendFile(file, message.replace("_", "\\_")).queue();
 	}
 
 	public void sendMessage(String message, String title, Color color, long channelid) {
@@ -202,12 +194,5 @@ public class VaroDiscordBot implements VaroBot {
 
 	public static String getClassName() {
 		return JDABuilder.class.getName();
-	}
-
-	public static VaroDiscordBot getInstance() {
-		if(instance == null) {
-			instance = new VaroDiscordBot();
-		}
-		return instance;
 	}
 }

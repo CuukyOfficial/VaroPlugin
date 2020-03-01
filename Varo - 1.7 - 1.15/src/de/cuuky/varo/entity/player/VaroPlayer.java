@@ -15,6 +15,7 @@ import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
+import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.VaroEntity;
@@ -26,20 +27,16 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.Game;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.logger.logger.EventLogger;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.scoreboard.ScoreboardHandler;
-import de.cuuky.varo.scoreboard.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.vanish.Vanish;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 public class VaroPlayer extends VaroEntity {
 
@@ -49,14 +46,20 @@ public class VaroPlayer extends VaroEntity {
 		varoplayer = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "adminIgnore")
-	private boolean adminIgnore;
-
 	@VaroSerializeField(path = "id")
 	private int id;
 
 	@VaroSerializeField(path = "name")
 	private String name;
+
+	@VaroSerializeField(path = "uuid")
+	private String uuid;
+
+	@VaroSerializeField(path = "adminIgnore")
+	private boolean adminIgnore;
+
+	@VaroSerializeField(path = "villager")
+	private OfflineVillager villager;
 
 	@VaroSerializeField(path = "rank")
 	private Rank rank;
@@ -64,14 +67,8 @@ public class VaroPlayer extends VaroEntity {
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
 
-	@VaroSerializeField(path = "uuid")
-	private String uuid;
-
-	@VaroSerializeField(path = "villager")
-	private OfflineVillager villager;
-
 	private Nametag nametag;
-	private NetworkMananager networkManager;
+	private NetworkManager networkManager;
 	private String tabName;
 	private VaroTeam team;
 	private Player player;
@@ -118,18 +115,18 @@ public class VaroPlayer extends VaroEntity {
 
 		Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
 		if(oldTeam != null) {
-			if(db.getController().getGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
-				Role role = db.getController().getGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
-				db.getController().removeSingleRoleFromMember(member, role).complete();
+			if(db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
+				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
+				db.getMainGuild().removeRoleFromMember(member, role).complete();
 			}
 		}
 
 		if(this.team != null) {
-			Role role = db.getController().getGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getController().getGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
+			Role role = db.getMainGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getMainGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
 			if(role == null)
-				role = db.getController().createCopyOfRole(db.getController().getGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
+				role = db.getMainGuild().createCopyOfRole(db.getMainGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
 
-			db.getController().addRolesToMember(member, role).complete();
+			db.getMainGuild().addRoleToMember(member, role).complete();
 		}
 
 	}
@@ -186,9 +183,9 @@ public class VaroPlayer extends VaroEntity {
 
 		stats.remove();
 		varoplayer.remove(this);
-		ScoreboardHandler.getInstance().updateTopScores();
+		Main.getVaroGame().getTopScores().update();
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
@@ -200,7 +197,7 @@ public class VaroPlayer extends VaroEntity {
 
 			setNormalAttackSpeed();
 
-			if(Game.getInstance().getGameState() == GameState.LOBBY)
+			if(Main.getVaroGame().getGameState() == GameState.LOBBY)
 				LobbyItem.giveItems(player);
 		} else if(isAdminIgnore())
 			adminIgnore = false;
@@ -230,10 +227,10 @@ public class VaroPlayer extends VaroEntity {
 
 		if(rank != null)
 			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
-		
+
 		return pr;
 	}
-	
+
 	public void setSpectacting() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -266,9 +263,8 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			if(ConfigEntry.TABLIST.getValueAsBoolean()) {
-				getNetworkManager().sendTablist();
-			}
+			if(ConfigEntry.TABLIST.getValueAsBoolean())
+				Main.getDataManager().getTablistHandler().updatePlayer(this);
 
 			String listname = "";
 			if(getTeam() != null) {
@@ -289,7 +285,7 @@ public class VaroPlayer extends VaroEntity {
 				player.setPlayerListName(this.tabName = listname);
 		}
 	}
-	
+
 	public boolean getalreadyHadMassProtectionTime() {
 		return alreadyHadMassProtectionTime;
 	}
@@ -310,8 +306,8 @@ public class VaroPlayer extends VaroEntity {
 		return nametag;
 	}
 
-	public NetworkMananager getNetworkManager() {
-		return networkManager == null ? new NetworkMananager(player) : networkManager;
+	public NetworkManager getNetworkManager() {
+		return networkManager == null ? new NetworkManager(player) : networkManager;
 	}
 
 	public Player getPlayer() {
@@ -397,7 +393,7 @@ public class VaroPlayer extends VaroEntity {
 		this.nametag = nametag;
 	}
 
-	public void setNetworkManager(NetworkMananager networkManager) {
+	public void setNetworkManager(NetworkManager networkManager) {
 		this.networkManager = networkManager;
 	}
 
@@ -413,7 +409,7 @@ public class VaroPlayer extends VaroEntity {
 		this.rank = rank;
 		update();
 	}
-	
+
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
@@ -421,7 +417,7 @@ public class VaroPlayer extends VaroEntity {
 	public void setVillager(OfflineVillager villager) {
 		this.villager = villager;
 	}
-	
+
 	public void setTeam(VaroTeam team) {
 		VaroTeam oldTeam = this.team;
 		this.team = team;
@@ -437,7 +433,7 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		update();
-		ScoreboardHandler.getInstance().updateTopScores();
+		Main.getVaroGame().getTopScores().update();
 	}
 
 	/**
@@ -521,9 +517,9 @@ public class VaroPlayer extends VaroEntity {
 				continue;
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				EventLogger.getInstance().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
-				Bukkit.broadcastMessage("§c" + player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
-				new Alert(AlertType.NAME_SWITCH, player.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + vp.getName() + " §7bekannt!");
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
+				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				vp.setName(player.getName());
 			}
 

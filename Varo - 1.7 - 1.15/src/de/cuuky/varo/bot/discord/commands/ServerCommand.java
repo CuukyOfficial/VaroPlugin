@@ -4,10 +4,9 @@ import java.awt.Color;
 
 import org.bukkit.Bukkit;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import de.cuuky.varo.game.Game;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ServerCommand extends DiscordBotCommand {
 
@@ -21,6 +20,6 @@ public class ServerCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Game.getInstance().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
+		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Main.getVaroGame().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
 	}
 }
