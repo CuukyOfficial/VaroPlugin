@@ -1,4 +1,4 @@
-package de.cuuky.varo.threads.daily.dailycheck;
+package de.cuuky.varo.threads.daily.dailycheck.checker;
 
 import java.util.Date;
 
@@ -12,6 +12,7 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.threads.daily.dailycheck.Checker;
 
 public class BloodLustCheck extends Checker {
 

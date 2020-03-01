@@ -1,4 +1,4 @@
-package de.cuuky.varo.threads.daily.dailycheck;
+package de.cuuky.varo.threads.daily.dailycheck.checker;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -11,6 +11,7 @@ import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
+import de.cuuky.varo.threads.daily.dailycheck.Checker;
 
 public class YouTubeCheck extends Checker {
 

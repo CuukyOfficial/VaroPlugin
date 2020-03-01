@@ -15,7 +15,6 @@ import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.threads.daily.dailycheck.Checker;
 import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.types.Materials;
 
@@ -66,7 +65,7 @@ public class DebugGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				Checker.checkAll();
+				Main.getDataManager().getDailyTimer().doDailyChecks();
 				opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
 			}
 		});

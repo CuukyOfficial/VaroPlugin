@@ -1,10 +1,11 @@
-package de.cuuky.varo.threads.daily.dailycheck;
+package de.cuuky.varo.threads.daily.dailycheck.checker;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.threads.daily.dailycheck.Checker;
 
 public class SessionCheck extends Checker {
 

@@ -1,4 +1,4 @@
-package de.cuuky.varo.threads.daily.dailycheck;
+package de.cuuky.varo.threads.daily.dailycheck.checker;
 
 import java.util.Date;
 
@@ -8,6 +8,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.threads.daily.dailycheck.Checker;
 import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class CoordsCheck extends Checker {

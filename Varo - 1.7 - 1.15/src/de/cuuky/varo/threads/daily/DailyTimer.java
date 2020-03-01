@@ -1,5 +1,6 @@
 package de.cuuky.varo.threads.daily;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -13,19 +14,29 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.threads.daily.dailycheck.Checker;
+import de.cuuky.varo.threads.daily.dailycheck.checker.BloodLustCheck;
+import de.cuuky.varo.threads.daily.dailycheck.checker.CoordsCheck;
+import de.cuuky.varo.threads.daily.dailycheck.checker.NoJoinCheck;
+import de.cuuky.varo.threads.daily.dailycheck.checker.SessionCheck;
+import de.cuuky.varo.threads.daily.dailycheck.checker.StrikePostCheck;
+import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
 import de.cuuky.varo.utils.varo.VaroUtils;
 
 public final class DailyTimer {
 
-	public static void doDailyStuff() {
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
+	private ArrayList<Checker> checker;
 
-			if(vp.isOnline())
-				vp.getPlayer().kickPlayer("RESET");
-		}
+	public DailyTimer() {
+		checker = new ArrayList<Checker>();
 
-		Checker.checkAll();
+		checker.add(new NoJoinCheck());
+		checker.add(new BloodLustCheck());
+		checker.add(new SessionCheck());
+		checker.add(new YouTubeCheck());
+		checker.add(new CoordsCheck());
+		checker.add(new StrikePostCheck());
+		
+		startTimer();
 	}
 
 	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
@@ -45,7 +56,7 @@ public final class DailyTimer {
 		return (reset.getTime() - current.getTime()) / 1000;
 	}
 
-	public static void startTimer() {
+	private void startTimer() {
 		VaroUtils.setWorldToTime();
 		if(Main.getVaroGame().getGameState() == GameState.STARTED && Main.getVaroGame().getLastDayTimer() != null) {
 			Date date = Main.getVaroGame().getLastDayTimer();
@@ -53,7 +64,7 @@ public final class DailyTimer {
 				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RECTIFY");
 
-				doDailyStuff();
+				doDailyChecks();
 			}
 
 			Main.getVaroGame().setLastDayTimer(new Date());
@@ -72,7 +83,7 @@ public final class DailyTimer {
 						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 
-						doDailyStuff();
+						doDailyChecks();
 					}
 
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
@@ -93,5 +104,23 @@ public final class DailyTimer {
 				}
 			}
 		}, getNextReset() * 20);
+	}
+
+	public void doDailyChecks() {
+		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
+
+			if(vp.isOnline())
+				vp.getPlayer().kickPlayer("RESET");
+		}
+
+		for(Checker checkers : checker) {
+			try {
+				checkers.check();
+			} catch(Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
 	}
 }
