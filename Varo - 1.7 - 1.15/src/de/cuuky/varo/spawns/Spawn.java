@@ -115,7 +115,7 @@ public class Spawn implements VaroSerializeable {
 			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
 			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
 			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
-			nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue().replace("%number%", String.valueOf(number)).replace("%player%", player.getName());
+			nameTagName = type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue(player).replace("%number%", String.valueOf(number));
 			armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
 		} catch(Exception e) {
 			e.printStackTrace();
