@@ -16,11 +16,12 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.clientadapter.BoardHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
-public class ScoreboardHandler {
+public class ScoreboardHandler implements BoardHandler {
 
 	private String header;
 	private HashMap<Player, ArrayList<String>> replaces;
@@ -151,10 +152,11 @@ public class ScoreboardHandler {
 		player.setScoreboard(sb);
 
 		replaces.remove(player);
-		update(vp);
+		updatePlayer(vp);
 	}
 
-	public void update(VaroPlayer player) {
+	@Override
+	public void updatePlayer(VaroPlayer player) {
 		ArrayList<String> replacesLst = replaces.get(player.getPlayer());
 		if(replacesLst == null)
 			replaces.put(player.getPlayer(), replacesLst = new ArrayList<>());
@@ -193,6 +195,7 @@ public class ScoreboardHandler {
 		}
 	}
 
+	@Override
 	public void updateList() {
 		loadScores();
 	}
