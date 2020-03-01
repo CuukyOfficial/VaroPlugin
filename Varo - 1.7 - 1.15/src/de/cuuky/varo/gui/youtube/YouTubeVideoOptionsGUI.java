@@ -17,7 +17,7 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 	private YouTubeVideo video;
 
 	public YouTubeVideoOptionsGUI(Player opener, YouTubeVideo video) {
-		super("Â§5" + video.getVideoId(), opener, 9, false);
+		super("§5" + video.getVideoId(), opener, 9, false);
 
 		this.video = video;
 
@@ -40,7 +40,7 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("Â§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -49,7 +49,7 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(8, new ItemBuilder().displayname("Â§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
+		linkItemTo(8, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
 
 			@Override
 			public void run() {

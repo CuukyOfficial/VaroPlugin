@@ -66,8 +66,8 @@ public class BackpackCommand extends VaroCommand {
 			if(args.length == 0 || (!args[0].equalsIgnoreCase("player") && !args[0].equalsIgnoreCase("team"))) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wurden sowohl Spieler als auch Team-Backpacks aktiviert");
 				if(vp.getPlayer().isOp()) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player ยง7[Player]");
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team ยง7[Team]");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player ง7[Player]");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team ง7[Team]");
 				} else {
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player");
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team");

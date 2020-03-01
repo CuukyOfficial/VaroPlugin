@@ -30,7 +30,7 @@ public class Rank implements VaroSerializeable {
 	}
 
 	public Rank(String name) {
-		this.name = name.replace("&", "ยง");
+		this.name = name.replace("&", "ง");
 		this.tablistLocation = 1;
 
 		ranks.add(this);

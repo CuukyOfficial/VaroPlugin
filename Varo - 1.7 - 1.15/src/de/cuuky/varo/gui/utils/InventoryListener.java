@@ -30,22 +30,22 @@ public class InventoryListener implements Listener {
 
 			player.playSound(player.getLocation(), Sounds.CLICK.bukkitSound(), 1, 1);
 			event.setCancelled(true);
-			if(itemName.equals("§c"))
+			if(itemName.equals("�c"))
 				return;
 
 			switch(itemName) {
-			case "§aSeite vorwärts":
+			case "�aSeite vorwärts":
 				inv.pageForwards();
 				inv.pageActionChanged(PageAction.PAGE_SWITCH_FORWARDS);
 				return;
-			case "§cSeite rückwärts":
+			case "�cSeite rückwärts":
 				inv.pageBackwards();
 				inv.pageActionChanged(PageAction.PAGE_SWITCH_FORWARDS);
 				return;
-			case "§4Schließen":
+			case "�4Schließen":
 				inv.closeInventory();
 				return;
-			case "§4Zurück":
+			case "�4Zurück":
 				inv.closeInventory();
 				inv.back();
 				return;

@@ -23,10 +23,10 @@ public class PerformanceCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/performance clear Â§8- Â§7FÃ¼hrt einen RAM-Cleaner aus");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/performance help Â§8- Â§7Zeigt Methoden zur Performanceverbesserung");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/performance entityclear Â§8- Â§7Entfernt Items auf dem Boden, Tiere etc. (alles auÃŸer Spielern)");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "TIPP: Â§7/usage zeigt die Ausnutzung deines Servers");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/performance clear §8- §7FÃ¼hrt einen RAM-Cleaner aus");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/performance help §8- §7Zeigt Methoden zur Performanceverbesserung");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/performance entityclear §8- §7Entfernt Items auf dem Boden, Tiere etc. (alles auÃŸer Spielern)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "TIPP: §7/usage zeigt die Ausnutzung deines Servers");
 			return false;
 		}
 
@@ -34,20 +34,20 @@ public class PerformanceCommand implements CommandExecutor {
 			System.gc();
 			sender.sendMessage(Main.getPrefix() + "RAM weitesgehend entleert!");
 		} else if(args[0].equalsIgnoreCase("help")) {
-			sender.sendMessage(Main.getPrefix() + "Derzeitige TPS: Â§c" + Math.round(LagCounter.getTPS()) + "Â§7 - Normalwert Â§c18-20 Â§7TPS");
+			sender.sendMessage(Main.getPrefix() + "Derzeitige TPS: §c" + Math.round(LagCounter.getTPS()) + "§7 - Normalwert §c18-20 §7TPS");
 			
 			sender.sendMessage(Main.getPrefix() + "Folgende Einstellungen kÃ¶nnten die Performance vermindern - das Ausschalten erhoeht eventuell die Performance:");
 			sender.sendMessage(Main.getPrefix());
 			for(ConfigEntry ce : ConfigEntry.values())
 				if(ce.isReducingPerformance() && (ce.getValue() instanceof Boolean && ce.getValueAsBoolean()))
-					sender.sendMessage(Main.getPrefix() + "- Â§7Die Einstellung Â§c" + ce.getName() + " Â§7vermindert die Performance");
+					sender.sendMessage(Main.getPrefix() + "- §7Die Einstellung §c" + ce.getName() + " §7vermindert die Performance");
 
 			int entities = 0;
 			for(World world : Bukkit.getWorlds())
 				entities += world.getEntities().size();
 
-			sender.sendMessage(Main.getPrefix() + "Es sind Â§c" + entities + " Â§7Entities (inklusive Spieler, ArmorStands, Tiere etc.) geladen - alle nicht-Spieler zu entfernen kÃ¶nnte die Performance erhÃ¶hen");
-			sender.sendMessage(Main.getPrefix() + "Es sind Â§c" + Bukkit.getPluginManager().getPlugins().length + " Â§7Plugins aktiviert - bitte alle nicht nÃ¶tigen entfernen");
+			sender.sendMessage(Main.getPrefix() + "Es sind §c" + entities + " §7Entities (inklusive Spieler, ArmorStands, Tiere etc.) geladen - alle nicht-Spieler zu entfernen kÃ¶nnte die Performance erhÃ¶hen");
+			sender.sendMessage(Main.getPrefix() + "Es sind §c" + Bukkit.getPluginManager().getPlugins().length + " §7Plugins aktiviert - bitte alle nicht nÃ¶tigen entfernen");
 		} else if(args[0].equalsIgnoreCase("entityclear")) {
 			for(World world : Bukkit.getWorlds())
 				for(Entity entity : world.getEntities())

@@ -169,7 +169,7 @@ public final class JavaUtils {
 				continue;
 			}
 
-			if(c == 'ยง' || c == '&') {
+			if(c == 'ง' || c == '&') {
 				lastPara = true;
 				continue;
 			}

@@ -17,7 +17,7 @@ public class RandomTeamCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vpsender, Command cmd, String label, String[] args) {
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/varo randomTeam <Teamgröße>");
+			sender.sendMessage(Main.getPrefix() + "�7/varo randomTeam <Teamgröße>");
 			return;
 		}
 
@@ -25,17 +25,17 @@ public class RandomTeamCommand extends VaroCommand {
 		try {
 			teamsize = Integer.parseInt(args[0]);
 		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7ist keine Zahl!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " �7ist keine Zahl!");
 			return;
 		}
 
 		if(teamsize < 1) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Teamgröße muss mindestens 1 betragen.");
+			sender.sendMessage(Main.getPrefix() + "�7Die Teamgröße muss mindestens 1 betragen.");
 			return;
 		} else {
 			VaroUtils.doRandomTeam(teamsize);
 		}
 
-		sender.sendMessage(Main.getPrefix() + "§7Alle Spieler, die ohne Teams waren, sind nun in " + Main.getColorCode() + teamsize + "§7er Teams!");
+		sender.sendMessage(Main.getPrefix() + "�7Alle Spieler, die ohne Teams waren, sind nun in " + Main.getColorCode() + teamsize + "�7er Teams!");
 	}
 }

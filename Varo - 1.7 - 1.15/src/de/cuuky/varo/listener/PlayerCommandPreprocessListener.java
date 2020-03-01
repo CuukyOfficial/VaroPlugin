@@ -21,7 +21,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 					return;
 
 			event.setCancelled(true);
-			event.getPlayer().sendMessage(Main.getPrefix() + "ยง7Nein.");
+			event.getPlayer().sendMessage(Main.getPrefix() + "ง7Nein.");
 		}
 	}
 }

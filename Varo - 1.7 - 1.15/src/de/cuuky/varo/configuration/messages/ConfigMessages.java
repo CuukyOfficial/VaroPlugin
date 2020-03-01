@@ -60,15 +60,15 @@ public enum ConfigMessages {
 	// BORDER
 	BORDER_MINIMUM_REACHED("Border.minimumReached", "&cDie Border hat ihr Minimum erreicht!"),
 	// CHAT
-	CHAT_FORMAT("Chat.format", "Â§7%player% Â§8Â» Â§f"),
+	CHAT_FORMAT("Chat.format", "§7%player% §8Â» §f"),
 	CHAT_MUTED("Chat.muted", "&7Du wurdest gemutet!"),
 	CHAT_WHEN_START("Chat.chatOnStart", "&7Du kannst erst ab dem Start wieder schreiben!"),
 	// COMBAT
-	COMBAT_FRIENDLY_FIRE("Combat.friendlyfire", "Â§7Dieser Spieler ist in deinem Team!"),
+	COMBAT_FRIENDLY_FIRE("Combat.friendlyfire", "§7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT("Combat.inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),
 
 	COMBAT_LOGGED_OUT("Combat.loggedOut", "&c%player% &7hat den Server wÃ¤hrend eines Kampfes verlassen!"),
-	COMBAT_NOT_IN_FIGHT("Combat.notInFight", "Â§7Du bist nun nicht mehr im &cKampf&7!"),
+	COMBAT_NOT_IN_FIGHT("Combat.notInFight", "§7Du bist nun nicht mehr im &cKampf&7!"),
 	COMMAND_CONFIG_RELOAD("Commands.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
 	COMMAND_INVITED_TEAM("Commands.invitedInTeam", "&7Du hast %colorcode%%invited% &7in das Team %colorcode%%team% &7eingeladen!"),
 	COMMAND_KICKED("Commands.kick", "%colorcode%%player% &7wurde gekickt!"),
@@ -153,7 +153,7 @@ public enum ConfigMessages {
 	// OTHER
 	OTHER_SORTED("Other.sorted", "&7Du wurdest in das Loch %colorcode%%zahl% &7teleportiert!"),
 	// PROTECTION
-	PROTECTION_NO_MOVE_START("Protection.noMoveStart", "Â§7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
+	PROTECTION_NO_MOVE_START("Protection.noMoveStart", "§7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
 	PROTECTION_START("Protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
 
 	PROTECTION_TIME_OVER("Protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorrÃ¼ber!"),
@@ -179,7 +179,7 @@ public enum ConfigMessages {
 	SORT_OWN_HOLE("Sort.ownHoleTeleport", "Du wurdest in dein Loch einsortiert!"),
 	// SORT
 	SORT_SPECTATOR_TELEPORT("Sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
-	TABLIST_FOOTER("Tablist.tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currDay%Â§7.&c%currMonth%Â§7.Â§c%currYear%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
+	TABLIST_FOOTER("Tablist.tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currDay%§7.&c%currMonth%§7.§c%currYear%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
 	// TABLIST
 	TABLIST_HEADER("Tablist.tablistHeader", "%nextLine%&c%projectname%%nextLine%"),
 	TABLIST_PLAYER_WITH_TEAM("Tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),

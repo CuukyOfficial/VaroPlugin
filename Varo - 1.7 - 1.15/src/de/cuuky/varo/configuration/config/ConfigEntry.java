@@ -359,10 +359,10 @@ public enum ConfigEntry {
 
 	public String getValueAsString() {
 		if(this.value instanceof String)
-			return ((String) (this.value)).replace("&", "ยง");
+			return ((String) (this.value)).replace("&", "ง");
 
 		try {
-			return (String) (this.value = String.valueOf(this.value).replace("&", "ยง"));
+			return (String) (this.value = String.valueOf(this.value).replace("&", "ง"));
 		} catch(Exception e) {
 			sendFalseCast(String.class);
 		}

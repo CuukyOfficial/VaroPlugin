@@ -18,20 +18,20 @@ public class ConfigCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer player, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "Â§7----- " + Main.getColorCode() + "Config Â§7-----");
+			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Config §7-----");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config reload");
-			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config set Â§7<key> <value>");
+			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config set §7<key> <value>");
 			sender.sendMessage(Main.getPrefix() + "" + Main.getColorCode() + "/config reset");
-			sender.sendMessage(Main.getPrefix() + "Â§7----------------------");
+			sender.sendMessage(Main.getPrefix() + "§7----------------------");
 			return;
 		}
 
 		if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
 			Main.getDataManager().reloadConfig();
-			sender.sendMessage(Main.getPrefix() + "Â§7Erfolgreich " + Main.getColorCode() + "alle ListenÂ§7, die " + Main.getColorCode() + "Messages Â§7und die " + Main.getColorCode() + "Config Â§7neu geladen!");
+			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich " + Main.getColorCode() + "alle Listen§7, die " + Main.getColorCode() + "Messages §7und die " + Main.getColorCode() + "Config §7neu geladen!");
 		} else if(args[0].equalsIgnoreCase("set")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config Â§7set <key> <value>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config §7set <key> <value>");
 				return;
 			}
 
@@ -42,18 +42,18 @@ public class ConfigCommand extends VaroCommand {
 				Object arg = JavaUtils.getStringObject(args[2]);
 				entry.setValue(arg, true);
 
-				sender.sendMessage(Main.getPrefix() + "Â§7Erfolgreich den Eintrag 'Â§a" + entry.getPath() + "Â§7' auf 'Â§a" + entry.getValue() + "Â§7' gesetzt!");
+				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich den Eintrag '§a" + entry.getPath() + "§7' auf '§a" + entry.getValue() + "§7' gesetzt!");
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "Â§7Den Eintrag " + Main.getColorCode() + args[1] + "Â§7 gibt es nicht in der Config!");
+			sender.sendMessage(Main.getPrefix() + "§7Den Eintrag " + Main.getColorCode() + args[1] + "§7 gibt es nicht in der Config!");
 		} else if(args[0].equalsIgnoreCase("reset")) {
 			for(ConfigEntry entry : ConfigEntry.values()) {
 				entry.setValue(entry.getDefaultValue(), true);
 			}
-			sender.sendMessage(Main.getPrefix() + "Â§7Erfolgreich alle EintrÃ¤ge zurÃ¼ckgesetzt!");
+			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle EintrÃ¤ge zurÃ¼ckgesetzt!");
 		} else {
-			sender.sendMessage(Main.getPrefix() + "Â§7Command '" + args[0] + "' not found! Â§7Type /config for help.");
+			sender.sendMessage(Main.getPrefix() + "§7Command '" + args[0] + "' not found! §7Type /config for help.");
 		} // TODO Nach set, reload und Ã„nderung in GUI ein automatisches
 			// Plugin-Reload
 	}

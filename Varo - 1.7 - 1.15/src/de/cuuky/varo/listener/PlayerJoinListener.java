@@ -80,9 +80,9 @@ public class PlayerJoinListener implements Listener {
 
 					if(result == UpdateResult.UPDATE_AVAILABLE) {
 						if(Main.getVaroGame().getGameState() == GameState.LOBBY)
-							vplayer.getNetworkManager().sendTitle("Â§cUpdate verfÃ¼gbar", "Deine Pluginversion ist nicht aktuell!");
+							vplayer.getNetworkManager().sendTitle("§cUpdate verfÃ¼gbar", "Deine Pluginversion ist nicht aktuell!");
 
-						player.sendMessage("Â§cUpdate auf Version " + updateVersion + " verfÃ¼gbar!Â§7 Mit Â§l/varo updateÂ§7 kannst du das Update installieren.");
+						player.sendMessage("§cUpdate auf Version " + updateVersion + " verfÃ¼gbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
 					}
 				}
 			}

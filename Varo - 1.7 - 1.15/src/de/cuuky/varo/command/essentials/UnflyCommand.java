@@ -21,14 +21,14 @@ public class UnflyCommand implements CommandExecutor {
 
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "ยง7Entweder /unfly [Player/@a] oder Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + "ง7Entweder /unfly [Player/@a] oder Spieler sein!");
 				return false;
 			}
 
 			Player p = (Player) sender;
 			p.setAllowFlight(false);
 			p.setFlying(false);
-			sender.sendMessage(Main.getPrefix() + "ยง7Du kannst jetzt nicht mehr fliegen!");
+			sender.sendMessage(Main.getPrefix() + "ง7Du kannst jetzt nicht mehr fliegen!");
 		} else if(args.length == 1) {
 
 			if(args[0].equalsIgnoreCase("@a")) {
@@ -43,16 +43,16 @@ public class UnflyCommand implements CommandExecutor {
 
 			Player to = Bukkit.getPlayerExact(args[0]);
 			if(to == null) {
-				sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + "ยง7 nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + "ง7 nicht gefunden!");
 				return false;
 			}
 
 			to.setAllowFlight(false);
 			to.setFlying(false);
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to.getName() + " ยง7kann jetzt nicht mehr fliegen!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to.getName() + " ง7kann jetzt nicht mehr fliegen!");
 		} else {
-			sender.sendMessage(Main.getPrefix() + "ยง7/fly [Player/@a]");
-			sender.sendMessage(Main.getPrefix() + "ยง7/unfly [Player/@a]");
+			sender.sendMessage(Main.getPrefix() + "ง7/fly [Player/@a]");
+			sender.sendMessage(Main.getPrefix() + "ง7/unfly [Player/@a]");
 		}
 
 		return false;

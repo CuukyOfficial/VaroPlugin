@@ -44,7 +44,7 @@ public class JoinEvent extends BukkitEvent {
 
 		if(player.getStats().isSpectator() || player.isAdminIgnore()) {
 			player.setSpectacting();
-			player.sendMessage(Main.getPrefix() + "Da Du ยงc" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "du Spectator bist") + " ยง7wurdest du in den Zuschauer-Modus gesetzt!");
+			player.sendMessage(Main.getPrefix() + "Da Du งc" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "du Spectator bist") + " ง7wurdest du in den Zuschauer-Modus gesetzt!");
 		} else
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
 

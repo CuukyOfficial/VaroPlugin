@@ -47,6 +47,6 @@ public class PlayerInteractListener implements Listener {
 			player.sendMessage(Main.getPrefix() + (saveable.getType() == SaveableType.CHEST ? ConfigMessages.NOT_TEAM_CHEST.getValue().replace("%player%", saveable.getPlayer().getName()) : ConfigMessages.NOT_TEAM_FURNACE.getValue().replace("%player%", saveable.getPlayer().getName())));
 			e.setCancelled(true);
 		} else
-			player.sendMessage(Main.getPrefix() + "§7Diese Kiste gehört " + Main.getColorCode() + saveable.getPlayer().getName() + "§7, doch durch deine Rechte konntest du sie trotzdem öffnen!");
+			player.sendMessage(Main.getPrefix() + "�7Diese Kiste gehört " + Main.getColorCode() + saveable.getPlayer().getName() + "�7, doch durch deine Rechte konntest du sie trotzdem öffnen!");
 	}
 }

@@ -16,7 +16,7 @@ public class BotRegisterGUI extends SuperInventory {
 	private BotRegister register;
 
 	public BotRegisterGUI(Player opener, BotRegister register) {
-		super("Â§7BotRegister: Â§a" + register.getPlayerName(), opener, 9, false);
+		super("§7BotRegister: §a" + register.getPlayerName(), opener, 9, false);
 
 		this.register = register;
 		open();
@@ -39,7 +39,7 @@ public class BotRegisterGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("Â§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -47,7 +47,7 @@ public class BotRegisterGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("Â§cUnregister").itemstack(new ItemStack(Material.COAL)).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§cUnregister").itemstack(new ItemStack(Material.COAL)).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -55,7 +55,7 @@ public class BotRegisterGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname((register.isBypass() ? "Â§cRemove" : "Â§aAllow") + " Â§7Bypass").itemstack(new ItemStack(register.isBypass() ? Material.ANVIL : Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass").itemstack(new ItemStack(register.isBypass() ? Material.ANVIL : Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -24,7 +24,7 @@ public class ConfigGUI extends SuperInventory {
 	private ConfigSection section;
 
 	public ConfigGUI(Player opener, ConfigSection section) {
-		super("Â§a" + section.getName(), opener, 18, false);
+		super("§a" + section.getName(), opener, 18, false);
 
 		this.section = section;
 
@@ -32,12 +32,12 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "Â§7Gib einen Wert ein fÃ¼r " + Main.getColorCode() + entry.getName() + " Â§8(Â§7Aktuell: Â§a" + entry.getValue() + "Â§8):", new ChatHookListener() {
+		new ChatHook(opener, "§7Gib einen Wert ein fÃ¼r " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
 
 			@Override
 			public void onChat(String message) {
 				if(message.equalsIgnoreCase("cancel")) {
-					opener.sendMessage(Main.getPrefix() + "Â§7Aktion erfolgreich abgebrochen!");
+					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
 				} else {
 					try {
 						entry.setValue(JavaUtils.getStringObject(message), true);
@@ -49,13 +49,13 @@ public class ConfigGUI extends SuperInventory {
 					}
 
 					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-					opener.sendMessage(Main.getPrefix() + "Â§7'Â§a" + entry.getName() + "Â§7' erfolgreich auf 'Â§a" + message + "Â§7' gesetzt!");
+					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
 				}
 
 				reopenSoon();
 			}
 		});
-		opener.sendMessage(Main.getPrefix() + "Â§7Gib zum Abbruch Â§ccancelÂ§7 ein.");
+		opener.sendMessage(Main.getPrefix() + "§7Gib zum Abbruch §ccancel§7 ein.");
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ConfigGUI extends SuperInventory {
 			lore.add(" ");
 			lore.add("Value: " + entry.getValue());
 
-			linkItemTo(i, new ItemBuilder().displayname("Â§7" + entry.getPath()).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§7" + entry.getPath()).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build(), new Runnable() {
 
 				@Override
 				public void run() {

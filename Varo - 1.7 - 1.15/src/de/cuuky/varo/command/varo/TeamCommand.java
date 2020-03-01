@@ -18,12 +18,12 @@ public class TeamCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " Â§7Team setup Befehle:");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create Â§7<Teamname> <Spieler 1, 2, 3...>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove Â§7<Team/TeamID/Player/@a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add Â§7<Player> <Team/TeamID>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename Â§7<Team-Name> <Neuer Team-Name>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode Â§7<Team-Name> remove/<Farbcode>");
+			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Befehle:");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Teamname> <Spieler 1, 2, 3...>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player/@a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add §7<Player> <Team/TeamID>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team-Name> <Neuer Team-Name>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode §7<Team-Name> remove/<Farbcode>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list");
 			return;
 		}
@@ -52,13 +52,13 @@ public class TeamCommand extends VaroCommand {
 				if(teamIdentical) {
 					sender.sendMessage(Main.getPrefix() + "Dieses Team ist bereits registriert.");
 				} else {
-					sender.sendMessage(Main.getPrefix() + "Â§cDas Team konnte nicht registriert werden, der Teamname ist bereits belegt.");
+					sender.sendMessage(Main.getPrefix() + "§cDas Team konnte nicht registriert werden, der Teamname ist bereits belegt.");
 				}
 				return;
 			}
 
 			team = new VaroTeam(args[1]);
-			sender.sendMessage(Main.getPrefix() + "Team " + Main.getColorCode() + team.getName() + " Â§7mit der ID " + Main.getColorCode() + team.getId() + " Â§7erfolgreich erstellt!");
+			sender.sendMessage(Main.getPrefix() + "Team " + Main.getColorCode() + team.getName() + " §7mit der ID " + Main.getColorCode() + team.getId() + " §7erfolgreich erstellt!");
 
 			for(int i = 2; i < args.length; i++) {
 				String arg = args[i];
@@ -69,14 +69,14 @@ public class TeamCommand extends VaroCommand {
 					try {
 						uuid = UUIDUtils.getUUID(arg).toString();
 					} catch(Exception e) {
-						sender.sendMessage(Main.getPrefix() + "Â§c" + arg + " wurde nicht gefunden.");
+						sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
 						String newName;
 						try {
 							newName = UUIDUtils.getNamesChanged(arg);
-							sender.sendMessage(Main.getPrefix() + "Â§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieÃŸ, hat sich in Â§7" + newName + " Â§cumbenannt.");
+							sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieÃŸ, hat sich in §7" + newName + " §cumbenannt.");
 							sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufÃ¼gen.");
 						} catch(Exception f) {
-							sender.sendMessage(Main.getPrefix() + "Â§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
+							sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 						}
 						continue;
 					}
@@ -85,7 +85,7 @@ public class TeamCommand extends VaroCommand {
 				}
 
 				team.addMember(varoplayer);
-				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " Â§7erfolgreich hinzugefÃ¼gt!");
+				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich hinzugefÃ¼gt!");
 			}
 			return;
 		} else if(args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
@@ -102,7 +102,7 @@ public class TeamCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "Team erfolgreich gelÃ¶scht!");
 			} else if(varoplayer != null) {
 				varoplayer.getTeam().removeMember(varoplayer);
-				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " Â§7erfolgreich aus seinem Team entfernt!");
+				sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich aus seinem Team entfernt!");
 			} else if(args[1].equalsIgnoreCase("@a")) {
 				while(VaroTeam.getTeams().size() > 0) {
 					VaroTeam.getTeams().get(0).delete();
@@ -143,17 +143,17 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			if(teamPages == 1) {
-				sender.sendMessage(Main.getPrefix() + "Â§lListe aller " + Main.getColorCode() + " Â§lTeamsÂ§7Â§l:");
+				sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lTeams§7§l:");
 			} else {
-				sender.sendMessage(Main.getPrefix() + "Â§lListe der " + Main.getColorCode() + " Â§lTeamsÂ§7Â§l " + ((page - 1) * 30 + 1) + " bis " + lastTeamOnPage + ":");
+				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lTeams§7§l " + ((page - 1) * 30 + 1) + " bis " + lastTeamOnPage + ":");
 			}
 
 			for(int i = (page - 1) * 30; i < lastTeamOnPage; i++) {
 				VaroTeam team = VaroTeam.getTeams().get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " Â§l" + team.getId() + "Â§7; " + Main.getColorCode() + team.getName());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " §l" + team.getId() + "§7; " + Main.getColorCode() + team.getName());
 				String list = "";
 				for(VaroPlayer member : team.getMember())
-					list = (list.isEmpty() ? Main.getColorCode() + member.getName() : list + "Â§7, " + Main.getColorCode() + member.getName());
+					list = (list.isEmpty() ? Main.getColorCode() + member.getName() : list + "§7, " + Main.getColorCode() + member.getName());
 				sender.sendMessage(Main.getPrefix() + "  " + list);
 				sender.sendMessage(Main.getPrefix());
 			}
@@ -165,16 +165,16 @@ public class TeamCommand extends VaroCommand {
 				lastTeamNextSeite = teamNumber;
 
 			if(page < teamPages)
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (page + 1) + " Â§7fÃ¼r " + Main.getColorCode() + "Teams Â§7 " + (page * 30 + 1) + " bis " + lastTeamNextSeite);
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list " + (page + 1) + " §7fÃ¼r " + Main.getColorCode() + "Teams §7 " + (page * 30 + 1) + " bis " + lastTeamNextSeite);
 			return;
 		} else if(args[0].equalsIgnoreCase("rename")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename Â§7<Team/TeamID> <Team>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team/TeamID> <Team>");
 				return;
 			}
 
 			if(args[1].startsWith("#") || args[2].startsWith("#")) {
-				sender.sendMessage(Main.getPrefix() + "Deine Teamnamen dÃ¼rfen nicht mit " + Main.getColorCode() + "# Â§7anfangen!");
+				sender.sendMessage(Main.getPrefix() + "Deine Teamnamen dÃ¼rfen nicht mit " + Main.getColorCode() + "# §7anfangen!");
 				return;
 			}
 
@@ -186,7 +186,7 @@ public class TeamCommand extends VaroCommand {
 			}
 
 			team.setName(args[2]);
-			sender.sendMessage(Main.getPrefix() + "Das Team " + Main.getColorCode() + args[1] + " Â§7wurde erfolgreich in " + Main.getColorCode() + team.getName() + " Â§7umbenannt!");
+			sender.sendMessage(Main.getPrefix() + "Das Team " + Main.getColorCode() + args[1] + " §7wurde erfolgreich in " + Main.getColorCode() + team.getName() + " §7umbenannt!");
 		} else if(args[0].equalsIgnoreCase("add")) {
 			if(args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + "/varo team add <Player> <Team/TeamID>");
@@ -220,15 +220,15 @@ public class TeamCommand extends VaroCommand {
 				}
 
 				varoplayer.getTeam().removeMember(varoplayer);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoplayer.getName() + " Â§7wurde aus seinem jetzigen Team entfernt!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoplayer.getName() + " §7wurde aus seinem jetzigen Team entfernt!");
 			}
 
 			team.addMember(varoplayer);
-			sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " Â§7erfolgreich in das Team " + Main.getColorCode() + team.getName() + " Â§7gesetzt!");
+			sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + varoplayer.getName() + " §7erfolgreich in das Team " + Main.getColorCode() + team.getName() + " §7gesetzt!");
 			return;
 		} else if(args[0].equalsIgnoreCase("colorcode")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode Â§7<Team/TeamID> remove/<Farbcode>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode §7<Team/TeamID> remove/<Farbcode>");
 				return;
 			}
 
@@ -240,14 +240,14 @@ public class TeamCommand extends VaroCommand {
 
 			if(args[2].equalsIgnoreCase("remove")) {
 				team.setColorCode(null);
-				sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplay() + " Â§7erfolgreich entfernt");
+				sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplay() + " §7erfolgreich entfernt");
 				return;
 			}
 
 			team.setColorCode(args[2]);
-			sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplay() + " Â§7erfolgreich geÃ¤ndert!");
+			sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplay() + " §7erfolgreich geÃ¤ndert!");
 		} else
-			sender.sendMessage(Main.getPrefix() + "Â§7Befehl nicht gefunden! " + Main.getColorCode() + "/team");
+			sender.sendMessage(Main.getPrefix() + "§7Befehl nicht gefunden! " + Main.getColorCode() + "/team");
 		return;
 	}
 }

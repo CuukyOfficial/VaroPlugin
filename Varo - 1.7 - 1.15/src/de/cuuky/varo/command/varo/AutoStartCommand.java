@@ -26,28 +26,28 @@ public class AutoStartCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(Main.getVaroGame().hasStarted()) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " Â§7wurde bereits gestartet!");
+			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7wurde bereits gestartet!");
 			return;
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "Â§7-------- " + Main.getColorCode() + "AutoStart Â§7-------");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7info");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7set <Hour> <Minute> <Day> <Month> <Year>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7remove");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart Â§7delay <Minutes>");
-			sender.sendMessage(Main.getPrefix() + "Â§7------------------------");
+			sender.sendMessage(Main.getPrefix() + "§7-------- " + Main.getColorCode() + "AutoStart §7-------");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7info");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7remove");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7delay <Minutes>");
+			sender.sendMessage(Main.getPrefix() + "§7------------------------");
 			return;
 		}
 
 		if(args[0].equalsIgnoreCase("set")) {
 			if(Main.getVaroGame().getAutoStart() != null) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Entferne erst den AutoStart, bevor du einen neuen setzt!");
+				sender.sendMessage(Main.getPrefix() + "§7Entferne erst den AutoStart, bevor du einen neuen setzt!");
 				return;
 			}
 
 			if(args.length != 6) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart Â§7set <Hour> <Minute> <Day> <Month> <Year>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
 				return;
 			}
 
@@ -62,13 +62,13 @@ public class AutoStartCommand extends VaroCommand {
 				month = Integer.parseInt(args[4]) - 1;
 				year = Integer.parseInt(args[5]);
 			} catch(NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + "Eines der Argumente war Â§ckeine Â§7Zahl!");
+				sender.sendMessage(Main.getPrefix() + "Eines der Argumente war §ckeine §7Zahl!");
 				return;
 			}
 
 			Calendar start = new GregorianCalendar(year, month, day, hour, min, 0);
 			if(new GregorianCalendar().after(start)) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Das " + Main.getColorCode() + "Datum Â§7darf nicht in der Vergangenheit sein!");
+				sender.sendMessage(Main.getPrefix() + "§7Das " + Main.getColorCode() + "Datum §7darf nicht in der Vergangenheit sein!");
 				return;
 			}
 
@@ -76,20 +76,20 @@ public class AutoStartCommand extends VaroCommand {
 			return;
 		} else if(args[0].equalsIgnoreCase("remove")) {
 			if(Main.getVaroGame().getAutoStart() == null) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Es wurde noch kein " + Main.getColorCode() + "Autostart Â§7festegelegt!");
+				sender.sendMessage(Main.getPrefix() + "§7Es wurde noch kein " + Main.getColorCode() + "Autostart §7festegelegt!");
 				return;
 			}
 
 			Main.getVaroGame().getAutoStart().stop();
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoStart Â§7erfolgreich entfernt!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoStart §7erfolgreich entfernt!");
 		} else if(args[0].equalsIgnoreCase("delay")) {
 			if(Main.getVaroGame().getAutoStart() == null) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Es wurde noch kein " + Main.getColorCode() + "Autostart Â§7festegelegt!");
+				sender.sendMessage(Main.getPrefix() + "§7Es wurde noch kein " + Main.getColorCode() + "Autostart §7festegelegt!");
 				return;
 			}
 
 			if(args.length < 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart delay Â§7<Delay in Minutes>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/autostart delay §7<Delay in Minutes>");
 				return;
 			}
 
@@ -97,7 +97,7 @@ public class AutoStartCommand extends VaroCommand {
 			try {
 				delay = Integer.parseInt(args[1]);
 			} catch(NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " Â§7ist keine Zahl!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " §7ist keine Zahl!");
 				return;
 			}
 
@@ -107,18 +107,18 @@ public class AutoStartCommand extends VaroCommand {
 			}
 
 			Main.getVaroGame().getAutoStart().delay(delay);
-			sender.sendMessage(Main.getPrefix() + "Â§7Der Start wurde um " + Main.getColorCode() + delay + " Â§7Minuten verzÃ¶gert!");
+			sender.sendMessage(Main.getPrefix() + "§7Der Start wurde um " + Main.getColorCode() + delay + " §7Minuten verzÃ¶gert!");
 		} else if(args[0].equalsIgnoreCase("info")) {
 			if(Main.getVaroGame().getAutoStart() == null)
 				sender.sendMessage(Main.getPrefix() + "AutoStart nicht aktiv");
 			else {
-				sender.sendMessage(Main.getPrefix() + "AutoStart Â§aaktivÂ§7:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: Â§7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart()));
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: Â§7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgrÃ¶ÃŸe: Â§7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+				sender.sendMessage(Main.getPrefix() + "AutoStart §aaktiv§7:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: §7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart()));
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: §7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgrÃ¶ÃŸe: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			}
 		} else
-			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart Â§7for help!");
+			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart §7for help!");
 		return;
 
 	}

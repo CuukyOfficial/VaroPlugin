@@ -17,7 +17,7 @@ public class ReportCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
-			sender.sendMessage(Main.getPrefix() + "Â§cReports Â§7wurden in der Config deaktiviert!");
+			sender.sendMessage(Main.getPrefix() + "§cReports §7wurden in der Config deaktiviert!");
 			return false;
 		}
 
@@ -29,11 +29,11 @@ public class ReportCommand implements CommandExecutor {
 		Player player = Bukkit.getPlayerExact(sender.getName());
 
 		if(args.length == 0 || args.length > 1) {
-			sender.sendMessage(Main.getPrefix() + "Â§7------ Â§cReport Â§7------");
-			sender.sendMessage(Main.getPrefix() + "Â§c/report Â§7<Player>");
+			sender.sendMessage(Main.getPrefix() + "§7------ §cReport §7------");
+			sender.sendMessage(Main.getPrefix() + "§c/report §7<Player>");
 			if(sender.hasPermission("varo.reports"))
-				sender.sendMessage(Main.getPrefix() + "Â§c/report list");
-			sender.sendMessage(Main.getPrefix() + "Â§7-------------------");
+				sender.sendMessage(Main.getPrefix() + "§c/report list");
+			sender.sendMessage(Main.getPrefix() + "§7-------------------");
 			return false;
 		}
 

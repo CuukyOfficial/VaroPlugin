@@ -226,7 +226,7 @@ public class VaroPlayer extends VaroEntity {
 			pr = team.getDisplay() + " ";
 
 		if(rank != null)
-			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " ยง8| ") + pr;
+			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " ง8| ") + pr;
 
 		return pr;
 	}
@@ -518,8 +518,8 @@ public class VaroPlayer extends VaroEntity {
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
-				Bukkit.broadcastMessage("ยงc" + vp.getName() + " ยง7hat seinen Namen gewechselt und ist nun unter ยงc" + player.getName() + " ยง7bekannt!");
-				new Alert(AlertType.NAME_SWITCH, vp.getName() + " ยง7hat seinen Namen gewechselt und ist nun unter ยงc" + player.getName() + " ยง7bekannt!");
+				Bukkit.broadcastMessage("งc" + vp.getName() + " ง7hat seinen Namen gewechselt und ist nun unter งc" + player.getName() + " ง7bekannt!");
+				new Alert(AlertType.NAME_SWITCH, vp.getName() + " ง7hat seinen Namen gewechselt und ist nun unter งc" + player.getName() + " ง7bekannt!");
 				vp.setName(player.getName());
 			}
 

@@ -42,13 +42,13 @@ public class SmartLagDetector implements Runnable {
 
 		double tpsUsage = (double) (summ / size);
 		if(tpsUsage <= 14)
-			warnAdmins("Â§4The CPU-Performance of the server is running low! Â§cLags could appear!");
+			warnAdmins("§4The CPU-Performance of the server is running low! §cLags could appear!");
 
 		Runtime r = Runtime.getRuntime();
 		double ramUsage = (double) (((double) r.totalMemory() - (double) r.freeMemory()) / (double) r.maxMemory());
 		if(ramUsage >= 0.95) {
 			if(ramCleared)
-				warnAdmins("Â§4the RAM of the server is fully used and the plugin couldn't manage to clear it!");
+				warnAdmins("§4the RAM of the server is fully used and the plugin couldn't manage to clear it!");
 
 			System.gc();
 			ramCleared = true;
@@ -62,7 +62,7 @@ public class SmartLagDetector implements Runnable {
 				continue;
 
 			player.sendMessage(Main.getPrefix() + message);
-			player.sendMessage(Main.getPrefix() + "Â§cType /performance for more info and help");
+			player.sendMessage(Main.getPrefix() + "§cType /performance for more info and help");
 		}
 	}
 

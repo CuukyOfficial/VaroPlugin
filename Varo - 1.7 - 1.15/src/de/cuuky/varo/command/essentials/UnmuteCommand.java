@@ -22,8 +22,8 @@ public class UnmuteCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/mute <Player/@a>");
-			sender.sendMessage(Main.getPrefix() + "ยง7/unmute <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "ง7/mute <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "ง7/unmute <Player/@a>");
 			return false;
 		}
 
@@ -37,7 +37,7 @@ public class UnmuteCommand implements CommandExecutor {
 		}
 
 		if(Bukkit.getPlayerExact(args[0]) == null) {
-			sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7nicht gefunden!");
+			sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7nicht gefunden!");
 			return false;
 		}
 
@@ -45,7 +45,7 @@ public class UnmuteCommand implements CommandExecutor {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);
 
-		sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7erfolgreich entmuted!");
+		sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7erfolgreich entmuted!");
 		return false;
 	}
 }

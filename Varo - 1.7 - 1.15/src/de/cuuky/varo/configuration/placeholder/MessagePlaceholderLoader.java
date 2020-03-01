@@ -130,11 +130,11 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("&", -1, true, "Ersetzt durch ยง") {
+		new GeneralMessagePlaceholder("&", -1, true, "Ersetzt durch ง") {
 
 			@Override
 			protected String getValue() {
-				return "ยง";
+				return "ง";
 			}
 		};
 

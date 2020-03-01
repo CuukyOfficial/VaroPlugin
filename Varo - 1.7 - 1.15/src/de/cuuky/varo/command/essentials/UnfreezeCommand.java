@@ -22,8 +22,8 @@ public class UnfreezeCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/freeze <Player/@a>");
-			sender.sendMessage(Main.getPrefix() + "ยง7/unfreeze <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "ง7/freeze <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "ง7/unfreeze <Player/@a>");
 			return false;
 		}
 
@@ -37,14 +37,14 @@ public class UnfreezeCommand implements CommandExecutor {
 		}
 
 		if(Bukkit.getPlayerExact(args[0]) == null) {
-			sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7nicht gefunden!");
+			sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7nicht gefunden!");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		VaroCancelAble.removeCancelAble(vp, CancelAbleType.FREEZE);
-		sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7erfolgreich entfreezed!");
+		sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7erfolgreich entfreezed!");
 		return false;
 	}
 }

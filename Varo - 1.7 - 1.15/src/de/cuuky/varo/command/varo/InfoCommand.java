@@ -22,19 +22,19 @@ public class InfoCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		PluginDescriptionFile pdf = Main.getInstance().getDescription();
 
-		sender.sendMessage(Main.getPrefix() + "Â§7----------------------");
+		sender.sendMessage(Main.getPrefix() + "§7----------------------");
 		sender.sendMessage(Main.getPrefix());
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Â§lVaro PluginÂ§7:");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AuthorÂ§7: " + pdf.getAuthors().get(0));
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AuthorsÂ§7: " + Main.getContributors());
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "VersionÂ§7: " + pdf.getVersion());
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "CommandsÂ§7: " + pdf.getCommands().size());
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Server-VersionÂ§7: " + Bukkit.getServer().getVersion());
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "System OSÂ§7: " + System.getProperty("os.name"));
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "System VersionÂ§7: " + System.getProperty("os.version"));
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Java VersionÂ§7: " + System.getProperty("java.version"));
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "DateÂ§7: " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin§7:");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Author§7: " + pdf.getAuthors().get(0));
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Authors§7: " + Main.getContributors());
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Version§7: " + pdf.getVersion());
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Commands§7: " + pdf.getCommands().size());
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Server-Version§7: " + Bukkit.getServer().getVersion());
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "System OS§7: " + System.getProperty("os.name"));
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "System Version§7: " + System.getProperty("os.version"));
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Java Version§7: " + System.getProperty("java.version"));
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Date§7: " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
 		sender.sendMessage(Main.getPrefix());
-		sender.sendMessage(Main.getPrefix() + "Â§7----------------------");
+		sender.sendMessage(Main.getPrefix() + "§7----------------------");
 	}
 }

@@ -19,7 +19,7 @@ public class InvSeeCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/Invsee <Player>");
+			sender.sendMessage(Main.getPrefix() + "ง7/Invsee <Player>");
 			return false;
 		}
 
@@ -29,7 +29,7 @@ public class InvSeeCommand implements CommandExecutor {
 		}
 
 		if(Bukkit.getPlayerExact(args[0]) == null) {
-			sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7nicht gefunden!");
+			sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7nicht gefunden!");
 			return false;
 		}
 

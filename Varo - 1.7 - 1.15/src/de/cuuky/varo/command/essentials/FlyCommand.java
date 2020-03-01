@@ -21,14 +21,14 @@ public class FlyCommand implements CommandExecutor {
 
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "Â§7Entweder /fly [Player/@a] oder Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + "§7Entweder /fly [Player/@a] oder Spieler sein!");
 				return false;
 			}
 
 			Player p = (Player) sender;
 			p.setAllowFlight(true);
 			p.setFlying(true);
-			sender.sendMessage(Main.getPrefix() + "Â§7Du kannst jetzt Â§afliegenÂ§7!");
+			sender.sendMessage(Main.getPrefix() + "§7Du kannst jetzt §afliegen§7!");
 		} else if(args.length == 1) {
 			if(args[0].equalsIgnoreCase("@a")) {
 				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
@@ -42,16 +42,16 @@ public class FlyCommand implements CommandExecutor {
 
 			Player to = Bukkit.getPlayerExact(args[0]);
 			if(to == null) {
-				sender.sendMessage(Main.getPrefix() + "Â§7" + args[0] + "Â§7 nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + "§7 nicht gefunden!");
 				return false;
 			}
 
 			to.setAllowFlight(true);
 			to.setFlying(true);
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to.getName() + " Â§7kann jetzt Â§afliegenÂ§7!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to.getName() + " §7kann jetzt §afliegen§7!");
 		} else {
-			sender.sendMessage(Main.getPrefix() + "Â§7/fly [Player/@a]");
-			sender.sendMessage(Main.getPrefix() + "Â§7/unfly [Player/@a]");
+			sender.sendMessage(Main.getPrefix() + "§7/fly [Player/@a]");
+			sender.sendMessage(Main.getPrefix() + "§7/unfly [Player/@a]");
 		}
 		return false;
 	}

@@ -18,13 +18,13 @@ public class SpawnCommand implements CommandExecutor {
 		Location loc = VaroUtils.getMainWorld().getSpawnLocation();
 		if(!(sender instanceof Player)) {
 			if(loc == null)
-				sender.sendMessage(Main.getPrefix() + "ยง7Main World not found!");
+				sender.sendMessage(Main.getPrefix() + "ง7Main World not found!");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
 			return false;
 		}
 
 		if(args.length != 0) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/spawn");
+			sender.sendMessage(Main.getPrefix() + "ง7/spawn");
 			return false;
 		}
 
@@ -32,7 +32,7 @@ public class SpawnCommand implements CommandExecutor {
 		loc = player.getWorld().getSpawnLocation();
 
 		if(player.getWorld().getEnvironment() == World.Environment.THE_END) {
-			sender.sendMessage(Main.getPrefix() + "ยง7Im Ende kann dir der Spawn nicht angegeben werden.");
+			sender.sendMessage(Main.getPrefix() + "ง7Im Ende kann dir der Spawn nicht angegeben werden.");
 			return false;
 		} else if(player.getWorld().getEnvironment() == World.Environment.NETHER) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_NETHER.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));

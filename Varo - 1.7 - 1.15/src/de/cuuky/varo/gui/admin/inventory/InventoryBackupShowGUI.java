@@ -13,7 +13,7 @@ public class InventoryBackupShowGUI extends SuperInventory {
 	private InventoryBackup backup;
 
 	public InventoryBackupShowGUI(Player opener, InventoryBackup backup) {
-		super("ยง7Inventory: ยงc" + backup.getVaroPlayer().getName(), opener, 45, false);
+		super("ง7Inventory: งc" + backup.getVaroPlayer().getName(), opener, 45, false);
 
 		this.backup = backup;
 

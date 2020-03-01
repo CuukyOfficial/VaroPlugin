@@ -19,9 +19,9 @@ import de.cuuky.varo.version.types.Materials;
 public class AlertChooseGUI extends SuperInventory {
 
 	public enum AlertGUIType {
-		ALL("Â§fALL", Material.BOOK),
-		CLOSED("Â§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()),
-		OPEN("Â§eOPENED", Material.EMERALD);
+		ALL("§fALL", Material.BOOK),
+		CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()),
+		OPEN("§eOPENED", Material.EMERALD);
 
 		private Material icon;
 		private String typeName;
@@ -64,7 +64,7 @@ public class AlertChooseGUI extends SuperInventory {
 	private AlertGUIType type;
 
 	public AlertChooseGUI(Player opener, AlertGUIType type) {
-		super("Â§4Alerts", opener, 45, false);
+		super("§4Alerts", opener, 45, false);
 
 		this.type = type;
 
@@ -103,7 +103,7 @@ public class AlertChooseGUI extends SuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname("Â§c" + alert.getType() + " Â§8| Â§7" + alert.getId()).itemstack(new ItemStack(Material.BOOK)).lore(new String[] { "Â§7Message: Â§f" + alert.getMessage(), "Â§7Date: Â§f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()), "Â§7Open: Â§f" + alert.isOpen() }).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId()).itemstack(new ItemStack(Material.BOOK)).lore(new String[] { "§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()), "§7Open: §f" + alert.isOpen() }).build(), new Runnable() {
 
 				@Override
 				public void run() {
@@ -113,7 +113,7 @@ public class AlertChooseGUI extends SuperInventory {
 			start++;
 		}
 
-		linkItemTo(getSize() - 1, new ItemBuilder().displayname("Â§cClose all").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(), new Runnable() {
+		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§cClose all").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(), new Runnable() {
 
 			@Override
 			public void run() {

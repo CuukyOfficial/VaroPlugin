@@ -25,7 +25,6 @@ public final class PermissionUtils {
 		return "";
 	}
 
-	@SuppressWarnings("unchecked")
 	public static String getPermissionsExPrefix(VaroPlayer player) {
 		try {
 			Object permissionUser = Class.forName("ru.tehkode.permissions.bukkit.PermissionsEx").getDeclaredMethod("getUser", String.class).invoke(null, player.getName());

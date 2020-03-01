@@ -17,7 +17,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class DiscordBotGUI extends SuperInventory {
 
 	public DiscordBotGUI(Player opener) {
-		super("Â§2DiscordBot", opener, 9, false);
+		super("§2DiscordBot", opener, 9, false);
 
 		open();
 	}
@@ -42,7 +42,7 @@ public class DiscordBotGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 
-		linkItemTo(1, new ItemBuilder().displayname(BotLauncher.getDiscordBot().isEnabled() ? "Â§cShutdown" : "Â§aStart").itemstack(new ItemStack(BotLauncher.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname(BotLauncher.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(BotLauncher.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -53,13 +53,13 @@ public class DiscordBotGUI extends SuperInventory {
 					BotLauncher.getDiscordBot().connect();
 
 				if(BotLauncher.getDiscordBot().isEnabled() == enabled)
-					opener.sendMessage(Main.getPrefix() + "Â§7Could not start DiscordBot.");
+					opener.sendMessage(Main.getPrefix() + "§7Could not start DiscordBot.");
 				else
-					opener.sendMessage(Main.getPrefix() + "Â§7Erfolg!");
+					opener.sendMessage(Main.getPrefix() + "§7Erfolg!");
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("Â§eBotRegister").itemstack(new ItemStack(Material.BOOK)).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§eBotRegister").itemstack(new ItemStack(Material.BOOK)).build(), new Runnable() {
 
 			@Override
 			public void run() {

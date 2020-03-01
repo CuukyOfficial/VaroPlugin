@@ -14,7 +14,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class AlertTypeChooseGUI extends SuperInventory {
 
 	public AlertTypeChooseGUI(Player opener) {
-		super("Â§eChoose Alert", opener, 9, false);
+		super("§eChoose Alert", opener, 9, false);
 
 		open();
 	}

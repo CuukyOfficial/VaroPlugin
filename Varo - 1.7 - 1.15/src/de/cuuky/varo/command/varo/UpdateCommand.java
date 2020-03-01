@@ -44,8 +44,8 @@ public class UpdateCommand extends VaroCommand {
 
 			fd.startDownload();
 		} catch(Exception e) {
-			sender.sendMessage(Main.getPrefix() + "Â§cEs bgab einen kritischen Fehler beim Download des Plugins.");
-			sender.sendMessage(Main.getPrefix() + "Â§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
+			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
+			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
 			System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
 			System.out.println("---------- Stack Trace ----------");
 			e.printStackTrace();
@@ -80,12 +80,12 @@ public class UpdateCommand extends VaroCommand {
 
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
 			if(result == UpdateResult.UPDATE_AVAILABLE) {
-				sender.sendMessage(Main.getPrefix() + "Â§c Es existiert eine neuere Version: " + updateVersion);
+				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
-				sender.sendMessage(Main.getPrefix() + "Â§7Â§lUpdate Befehle:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal Â§7- Updated die Version, aber behÃ¤lt alle Daten");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset Â§7- Updated die Version und lÃ¶scht alle Daten");
-				sender.sendMessage(Main.getPrefix() + "Â§cWichtig: Â§7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geÃ¤ndert haben sollte, musst du manuell updaten.");
+				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behÃ¤lt alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und lÃ¶scht alle Daten");
+				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geÃ¤ndert haben sollte, musst du manuell updaten.");
 			} else {
 				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
 			}
@@ -113,11 +113,11 @@ public class UpdateCommand extends VaroCommand {
 		Main.getDataManager().setDoSave(false);
 
 		if(result == UpdateResult.UPDATE_AVAILABLE) {
-			sender.sendMessage(Main.getPrefix() + "Â§7Update wird installiert...");
-			sender.sendMessage(Main.getPrefix() + "Â§7Unter UmstÃ¤nden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
+			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
+			sender.sendMessage(Main.getPrefix() + "§7Unter UmstÃ¤nden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
 			update(sender, resultSet);
 		} else {
-			sender.sendMessage(Main.getPrefix() + "Â§7Das Plugin ist bereits auf dem neuesten Stand!");
+			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 		}
 	}
 }

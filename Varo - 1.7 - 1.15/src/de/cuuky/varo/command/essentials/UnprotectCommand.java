@@ -22,8 +22,8 @@ public class UnprotectCommand implements CommandExecutor {
 		}
 
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "ยง7/protect <Player/@a>");
-			sender.sendMessage(Main.getPrefix() + "ยง7/unprotect <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "ง7/protect <Player/@a>");
+			sender.sendMessage(Main.getPrefix() + "ง7/unprotect <Player/@a>");
 			return false;
 		}
 
@@ -37,7 +37,7 @@ public class UnprotectCommand implements CommandExecutor {
 		}
 
 		if(Bukkit.getPlayerExact(args[0]) == null) {
-			sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7nicht gefunden!");
+			sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7nicht gefunden!");
 			return false;
 		}
 
@@ -45,7 +45,7 @@ public class UnprotectCommand implements CommandExecutor {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
 
-		sender.sendMessage(Main.getPrefix() + "ยง7" + args[0] + " ยง7erfolgreich unprotected!");
+		sender.sendMessage(Main.getPrefix() + "ง7" + args[0] + " ง7erfolgreich unprotected!");
 		return false;
 	}
 }

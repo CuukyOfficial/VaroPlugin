@@ -34,7 +34,7 @@ public class AutoSetupCommand extends VaroCommand {
 			}
 		}
 
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autosetup run Â§7startet den Autosetup");
-		sender.sendMessage(Main.getPrefix() + "Â§cVorsicht: Â§7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und Â§loptionalÂ§7 einen Autostart.");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autosetup run §7startet den Autosetup");
+		sender.sendMessage(Main.getPrefix() + "§cVorsicht: §7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und §loptional§7 einen Autostart.");
 	}
 }

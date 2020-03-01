@@ -86,10 +86,10 @@ public class VaroTeamRequest {
 			@Override
 			public void run() {
 				if(VaroPlayer.getPlayer(invitor.getPlayer()) != null)
-					invitor.sendMessage(Main.getPrefix() + "ยง7Deine Einladung an " + Main.getColorCode() + invited.getName() + " ยง7ist abgelaufen!");
+					invitor.sendMessage(Main.getPrefix() + "ง7Deine Einladung an " + Main.getColorCode() + invited.getName() + " ง7ist abgelaufen!");
 
 				if(VaroPlayer.getPlayer(invited.getPlayer()) != null)
-					invited.sendMessage(Main.getPrefix() + "ยง7Die Einladung von " + Main.getColorCode() + invitor.getName() + " ยง7ist abgelaufen!");
+					invited.sendMessage(Main.getPrefix() + "ง7Die Einladung von " + Main.getColorCode() + invitor.getName() + " ง7ist abgelaufen!");
 
 				remove();
 			}

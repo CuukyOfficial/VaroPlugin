@@ -21,7 +21,7 @@ public class DayCommand implements CommandExecutor {
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : VaroUtils.getMainWorld();
 		world.setTime(1000);
-		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "TagÂ§7!");
+		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Tag§7!");
 		return false;
 	}
 

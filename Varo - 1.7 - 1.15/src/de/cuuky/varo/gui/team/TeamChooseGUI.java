@@ -14,7 +14,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class TeamChooseGUI extends SuperInventory {
 
 	public TeamChooseGUI(Player opener) {
-		super("ยง3Choose Category", opener, 9, false);
+		super("ง3Choose Category", opener, 9, false);
 
 		open();
 	}

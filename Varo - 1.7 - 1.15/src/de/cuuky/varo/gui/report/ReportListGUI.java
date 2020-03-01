@@ -19,7 +19,7 @@ import de.cuuky.varo.report.Report;
 public class ReportListGUI extends SuperInventory {
 
 	public ReportListGUI(Player player) {
-		super("Â§cReport List", player, 27, false);
+		super("§cReport List", player, 27, false);
 		open();
 	}
 
@@ -36,7 +36,7 @@ public class ReportListGUI extends SuperInventory {
 	@Override
 	public void onClick(InventoryClickEvent event) {
 		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
-		int id = Integer.parseInt(lore.get(0).replace("Â§c", ""));
+		int id = Integer.parseInt(lore.get(0).replace("§c", ""));
 		Report report = Report.getReport(id);
 		this.close(true);
 
@@ -68,9 +68,9 @@ public class ReportListGUI extends SuperInventory {
 			}
 
 			ArrayList<String> lore = new ArrayList<>();
-			lore.add("Â§c" + reports.getId());
+			lore.add("§c" + reports.getId());
 
-			getInventory().setItem(i, new ItemBuilder().displayname("Â§7" + reports.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build());
+			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reports.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build());
 			start++;
 		}
 

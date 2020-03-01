@@ -155,7 +155,7 @@ public class VaroTeam extends VaroEntity {
 	public void setColorCode(String colorCode) {
 		this.colorCode = colorCode;
 		if(colorCode != null)
-			this.colorCode = colorCode.replace("&", "ยง");
+			this.colorCode = colorCode.replace("&", "ง");
 		
 		statChanged();
 	}

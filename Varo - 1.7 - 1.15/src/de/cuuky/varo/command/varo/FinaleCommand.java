@@ -37,12 +37,12 @@ public class FinaleCommand extends VaroCommand {
 	private void finaleStart() {
 		Status = FinaleState.STARTED;
 
-		Bukkit.broadcastMessage(Main.getPrefix() + "Â§cDAS FINALE STARTET!");
+		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
 		if(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
-			Bukkit.broadcastMessage(Main.getPrefix() + "Â§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
+			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
 			Main.getVaroGame().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
 		} else {
-			Bukkit.broadcastMessage(Main.getPrefix() + "Â§7Es gibt keine Schutzzeit");
+			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
 		}
 
 		for(VaroPlayer player : VaroPlayer.getVaroPlayer()) {
@@ -71,7 +71,7 @@ public class FinaleCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart") && !args[0].equalsIgnoreCase("abort") && !args[0].equalsIgnoreCase("abbruch") && !!args[0].equalsIgnoreCase("abbrechen") && !!args[0].equalsIgnoreCase("stop"))) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " Â§7Finale Befehle:");
+			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Finale Befehle:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale joinStart");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale hauptStart [Countdown]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale abort");
@@ -108,7 +108,7 @@ public class FinaleCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es kÃ¶nnen nun alle zum Finale joinen.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
-			sender.sendMessage(Main.getPrefix() + "Â§cÂ§lWARNUNG: Â§cBeim Starten mit Â§7Â§l/varo finale hauptStartÂ§7 werden alle Spieler, die nicht online sind, getÃ¶tet.");
+			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getÃ¶tet.");
 
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
 
@@ -163,7 +163,7 @@ public class FinaleCommand extends VaroCommand {
 
 			Bukkit.getScheduler().cancelTask(startScheduler);
 			Status = FinaleState.JOIN_PHASE;
-			Bukkit.broadcastMessage("Â§7Der Finale-Start wurde Â§cabgebrochenÂ§7!");
+			Bukkit.broadcastMessage("§7Der Finale-Start wurde §cabgebrochen§7!");
 		}
 	}
 }

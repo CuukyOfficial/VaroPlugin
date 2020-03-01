@@ -16,7 +16,7 @@ import de.cuuky.varo.utils.JavaUtils;
 public class ConfigSectionGUI extends SuperInventory {
 
 	public ConfigSectionGUI(Player opener) {
-		super("Â§aConfig-Section", opener, 27, false);
+		super("§aConfig-Section", opener, 27, false);
 
 		open();
 	}
@@ -42,7 +42,7 @@ public class ConfigSectionGUI extends SuperInventory {
 		for(ConfigSection section : ConfigSection.values()) {
 			i++;
 
-			linkItemTo(i, new ItemBuilder().displayname("Â§7" + section.getName()).itemstack(new ItemStack(section.getMaterial())).lore((JavaUtils.getArgsToString(JavaUtils.addIntoEvery(section.getDescription().split("\n"), Main.getColorCode(), true), "\n")).split("\n")).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§7" + section.getName()).itemstack(new ItemStack(section.getMaterial())).lore((JavaUtils.getArgsToString(JavaUtils.addIntoEvery(section.getDescription().split("\n"), Main.getColorCode(), true), "\n")).split("\n")).build(), new Runnable() {
 
 				@Override
 				public void run() {

@@ -16,7 +16,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class BotRegisterListGUI extends SuperInventory {
 
 	public BotRegisterListGUI(Player opener) {
-		super("Â§cBotVerify", opener, 45, false);
+		super("§cBotVerify", opener, 45, false);
 
 		open();
 	}
@@ -49,7 +49,7 @@ public class BotRegisterListGUI extends SuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().playername(register.getPlayerName()).lore(new String[] { "Â§7Player Name: " + Main.getColorCode() + register.getUUID(), "Â§7Player Name: " + Main.getColorCode() + register.getPlayerName(), "Â§7Is Bypassing: " + Main.getColorCode() + register.isBypass(), "Â§7Discord User: " + Main.getColorCode() + register.getMember().getAsMention() }).amount(getFixedSize(list.size())).buildSkull(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().playername(register.getPlayerName()).lore(new String[] { "§7Player Name: " + Main.getColorCode() + register.getUUID(), "§7Player Name: " + Main.getColorCode() + register.getPlayerName(), "§7Is Bypassing: " + Main.getColorCode() + register.isBypass(), "§7Discord User: " + Main.getColorCode() + register.getMember().getAsMention() }).amount(getFixedSize(list.size())).buildSkull(), new Runnable() {
 
 				@Override
 				public void run() {

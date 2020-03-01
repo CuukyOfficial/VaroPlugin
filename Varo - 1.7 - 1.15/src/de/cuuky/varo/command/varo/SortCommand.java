@@ -17,14 +17,14 @@ public class SortCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length != 0) {
-			sender.sendMessage(Main.getPrefix() + "Â§7/sort");
+			sender.sendMessage(Main.getPrefix() + "§7/sort");
 			return;
 		}
 
 		VaroUtils.SortResult result = VaroUtils.sortPlayers();
 		switch(result) {
 		case SORTED_WELL:
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler Â§7wurden sortiert!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");
 			break;
 		case NO_SPAWN_WITH_TEAM:
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht fÃ¼r jeden Spieler ein Loche bei den Teampartnern gefunden werden!");

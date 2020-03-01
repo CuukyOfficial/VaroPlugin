@@ -23,13 +23,13 @@ public class BorderCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(((Player) sender).getWorld()) : Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null)) + " §7Blöcke groß!");
+			sender.sendMessage(Main.getPrefix() + "�7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(((Player) sender).getWorld()) : Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null)) + " �7Blöcke groß!");
 			if(sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
+				sender.sendMessage(Main.getPrefix() + "�7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo((Player) sender) + "�7 Blöcke von der Border entfernt!");
 
 			if(sender.hasPermission("varo.setup")) {
-				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> [Sekunden] §7setzen!");
-				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt");
+				sender.sendMessage(Main.getPrefix() + "�7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> [Sekunden] �7setzen!");
+				sender.sendMessage(Main.getPrefix() + "�7Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt");
 			}
 			return false;
 		} else if(args.length >= 1 && sender.hasPermission("varo.setup")) {
@@ -39,7 +39,7 @@ public class BorderCommand implements CommandExecutor {
 			try {
 				borderSize = Integer.parseInt(args[0]);
 			} catch(NumberFormatException e) {
-				p.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
+				p.sendMessage(Main.getPrefix() + "�7Das ist keine Zahl!");
 				return false;
 			}
 
@@ -53,7 +53,7 @@ public class BorderCommand implements CommandExecutor {
 			} catch(ArrayIndexOutOfBoundsException e) {
 				border.setBorderSize(borderSize, 0, playerWorld);
 			} catch(NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
+				sender.sendMessage(Main.getPrefix() + "�7Das ist keine Zahl!");
 				return false;
 			}
 

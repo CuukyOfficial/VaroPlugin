@@ -57,7 +57,7 @@ public class PlayerChatListener implements Listener {
 			}
 		}
 		if(mentionsHack == true && ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
-			player.sendMessage(Main.getPrefix() + "Â§7Erinnerung: Reporte Hacks, Cheats und Ã¤hnliches mit Â§l/report");
+			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Cheats und Ã¤hnliches mit §l/report");
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
@@ -98,7 +98,7 @@ public class PlayerChatListener implements Listener {
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
 					if(seconds < ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt()) {
-						player.sendMessage(Main.getPrefix() + "Â§7Du kannst nur alle Â§7" + ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " Â§7Sekunden schreiben!");
+						player.sendMessage(Main.getPrefix() + "§7Du kannst nur alle §7" + ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " §7Sekunden schreiben!");
 						event.setCancelled(true);
 						return;
 					}
@@ -112,7 +112,7 @@ public class PlayerChatListener implements Listener {
 				return;
 			}
 		} else
-			message = message.replace("&", "Â§");
+			message = message.replace("&", "§");
 
 		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player.getName() + "Â» '" + message + "'");
 		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);

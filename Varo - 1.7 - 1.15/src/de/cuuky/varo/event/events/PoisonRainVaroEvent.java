@@ -14,7 +14,7 @@ public class PoisonRainVaroEvent extends VaroEvent {
 	private int sched;
 
 	public PoisonRainVaroEvent() {
-		super("ยง4Poisened Rain", Material.ARROW, "Regen macht Schaden");
+		super("ง4Poisened Rain", Material.ARROW, "Regen macht Schaden");
 	}
 
 	@Override

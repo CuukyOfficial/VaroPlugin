@@ -22,7 +22,7 @@ public class InventoryBackupListGUI extends SuperInventory {
 	private VaroPlayer target;
 
 	public InventoryBackupListGUI(Player opener, VaroPlayer target) {
-		super("Â§7Backups: Â§b" + target.getName(), opener, 45, false);
+		super("§7Backups: §b" + target.getName(), opener, 45, false);
 
 		this.target = target;
 
@@ -70,7 +70,7 @@ public class InventoryBackupListGUI extends SuperInventory {
 			start++;
 		}
 
-		linkItemTo(getSize() - 1, new ItemBuilder().displayname("Â§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {

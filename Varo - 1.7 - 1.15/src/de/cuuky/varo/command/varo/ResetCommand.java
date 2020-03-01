@@ -36,17 +36,17 @@ public class ResetCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo reset Â§7<Modifier1> <Modifier2> ...");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 1: Â§7Resettet den kompletten Plugin Ordner");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 2: Â§7Resettet logs + stats (keine configs)");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 3: Â§7LÃ¶scht alle Welten");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: Â§7/varo reset 2 3 - LÃ¶scht alle Stats und Welten");
-			sender.sendMessage(Main.getPrefix() + "Â§cWarnung: Â§7Der Server wird nach dem Vorgang gestoppt");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo reset §7<Modifier1> <Modifier2> ...");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 1: §7Resettet den kompletten Plugin Ordner");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 2: §7Resettet logs + stats (keine configs)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 3: §7LÃ¶scht alle Welten");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo reset 2 3 - LÃ¶scht alle Stats und Welten");
+			sender.sendMessage(Main.getPrefix() + "§cWarnung: §7Der Server wird nach dem Vorgang gestoppt");
 			return;
 		}
 
 		for(Player pl : VersionUtils.getOnlinePlayer())
-			pl.kickPlayer("Â§cRESET");
+			pl.kickPlayer("§cRESET");
 
 		Main.getDataManager().save();
 		List<Integer> success = new ArrayList<Integer>();
@@ -79,7 +79,7 @@ public class ResetCommand extends VaroCommand {
 				}
 				break;
 			default:
-				sender.sendMessage(Main.getPrefix() + "Modifier Â§c" + arg + " Â§7nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
 				break;
 			}
 

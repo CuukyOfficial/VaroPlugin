@@ -18,18 +18,18 @@ public class MessageCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/msg ยง7<Player> <Message>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/msg ง7<Player> <Message>");
 			return false;
 		}
 
 		if(!Main.getVaroGame().hasStarted() && !sender.hasPermission("varo.setup")) {
-			sender.sendMessage(Main.getPrefix() + "Du kannst nicht als nicht-Admin vor dem " + Main.getProjectName() + "-Start ยง7privat schreiben.");
+			sender.sendMessage(Main.getPrefix() + "Du kannst nicht als nicht-Admin vor dem " + Main.getProjectName() + "-Start ง7privat schreiben.");
 			return false;
 		}
 
 		Player to = Bukkit.getPlayerExact(args[0]);
 		if(to == null) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " ยง7nicht gefunden!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " ง7nicht gefunden!");
 			return false;
 		}
 
@@ -39,8 +39,8 @@ public class MessageCommand implements CommandExecutor {
 		}
 
 		String message = JavaUtils.getArgsToString(JavaUtils.removeString(args, 0), " ");
-		to.sendMessage(Main.getColorCode() + sender.getName() + " ยง8-> ยง7Dirยง8: ยงf" + message);
-		sender.sendMessage("ยง7Du ยง8-> " + Main.getColorCode() + to.getName() + "ยง8: ยงf" + message);
+		to.sendMessage(Main.getColorCode() + sender.getName() + " ง8-> ง7Dirง8: งf" + message);
+		sender.sendMessage("ง7Du ง8-> " + Main.getColorCode() + to.getName() + "ง8: งf" + message);
 		if(MessageCommand.lastChat.containsKey(to.getName()))
 			MessageCommand.lastChat.remove(to.getName());
 

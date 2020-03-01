@@ -16,7 +16,7 @@ import de.cuuky.varo.utils.JavaUtils;
 public class VaroEventGUI extends SuperInventory {
 
 	public VaroEventGUI(Player opener) {
-		super("ยง5VaroEvents", opener, 9, false);
+		super("ง5VaroEvents", opener, 9, false);
 
 		open();
 	}
@@ -43,7 +43,7 @@ public class VaroEventGUI extends SuperInventory {
 	public boolean onOpen() {
 		int i = 0;
 		for(VaroEvent event : VaroEvent.getEvents()) {
-			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[] { "ยง7Enabled: " + (event.isEnabled() ? "ยงa" : "ยงc") + event.isEnabled(), "" }, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "ยง7", true))).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[] { "ง7Enabled: " + (event.isEnabled() ? "งa" : "งc") + event.isEnabled(), "" }, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "ง7", true))).build(), new Runnable() {
 
 				@Override
 				public void run() {

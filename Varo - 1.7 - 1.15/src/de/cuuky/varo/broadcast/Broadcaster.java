@@ -80,7 +80,7 @@ public class Broadcaster {
 					return;
 
 				for(String m : getAdMessage())
-					Bukkit.broadcastMessage(m.replaceAll("&", "ยง"));
+					Bukkit.broadcastMessage(m.replaceAll("&", "ง"));
 			}
 		}, delay, delay);
 	}

@@ -21,11 +21,11 @@ public class PlaceholderCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " ยง7Placeholder Befehle:");
+			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " ง7Placeholder Befehle:");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ยง7info <name> ยง8- ยง7Zeigt Wert und Info vom gegebenen Placeholder");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ยง7general ยง8- ยง7Zeigt alle ueberall anwendbaren Placeholder");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ยง7player ยง8- ยง7Zeigt alle im Spielerkontext anwendbaren Placeholder");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ง7info <name> ง8- ง7Zeigt Wert und Info vom gegebenen Placeholder");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ง7general ง8- ง7Zeigt alle ueberall anwendbaren Placeholder");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ง7player ง8- ง7Zeigt alle im Spielerkontext anwendbaren Placeholder");
 			sender.sendMessage(Main.getPrefix());
 			sender.sendMessage(Main.getPrefix() + "Player-Beispiele: Killmessage, Scoreboard, Kickmessage, Tab");
 			return;
@@ -33,7 +33,7 @@ public class PlaceholderCommand extends VaroCommand {
 
 		if(args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("get")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ยง7get <name> ยง8- ยง7Zeigt Wert vom gegebenen Placeholder");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder ง7get <name> ง8- ง7Zeigt Wert vom gegebenen Placeholder");
 				return;
 			}
 
@@ -60,9 +60,9 @@ public class PlaceholderCommand extends VaroCommand {
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " ยง7Infoยง8:");
-			sender.sendMessage(Main.getPrefix() + "ยง7Wertยง8: " + Main.getColorCode() + value);
-			sender.sendMessage(Main.getPrefix() + "ยง7Refresh-Delayยง8: " + Main.getColorCode() + mp.getDefaultRefresh() + "s");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " ง7Infoง8:");
+			sender.sendMessage(Main.getPrefix() + "ง7Wertง8: " + Main.getColorCode() + value);
+			sender.sendMessage(Main.getPrefix() + "ง7Refresh-Delayง8: " + Main.getColorCode() + mp.getDefaultRefresh() + "s");
 			return;
 		}
 
@@ -78,19 +78,19 @@ public class PlaceholderCommand extends VaroCommand {
 		}
 
 		if(placeholders.isEmpty()) {
-			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! ยงc/varo ph");
+			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! งc/varo ph");
 			return;
 		}
 
 		sender.sendMessage(Main.getPrefix() + "- Placeholder -");
 		for(MessagePlaceholder mp : placeholders)
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " ยง8- ยง7" + mp.getDescription());
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " ง8- ง7" + mp.getDescription());
 
 		if(args[0].equalsIgnoreCase("general")) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayer-<RANK>% ยง8- ยง7Ersetzt durch den Spieler, der an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% ยง8- ยง7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% ยง8- ยง7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% ยง8- ยง7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayer-<RANK>% ง8- ง7Ersetzt durch den Spieler, der an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% ง8- ง7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% ง8- ง7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% ง8- ง7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
 		}
 
 		sender.sendMessage(Main.getPrefix() + "----------------");

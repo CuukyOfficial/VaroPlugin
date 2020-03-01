@@ -55,7 +55,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
 						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 							vp.getStats().setCountdown(0);
-							vp.getPlayer().kickPlayer("Â§cDie Spielzeit ist nun vorÃ¼ber!\nÂ§7Versuche es morgen erneut");
+							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorÃ¼ber!\n§7Versuche es morgen erneut");
 						}
 				}
 			}
@@ -70,15 +70,15 @@ public class VaroMainHeartbeatThread implements Runnable {
 					ArrayList<String> actionbar = new ArrayList<>();
 
 					if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
-						actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "Â§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
+						actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 					if(showDistanceToBorder) {
 						int distance = (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo(p);
 						if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
-							actionbar.add("Â§7Distanz zur Border: " + Main.getColorCode() + distance);
+							actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 					}
 
 					if(!actionbar.isEmpty())
-						vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "Â§7 | "));
+						vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
 					if(countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getMassRecEvent().isEnabled())
 						Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));

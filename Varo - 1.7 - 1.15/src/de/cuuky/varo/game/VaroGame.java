@@ -115,7 +115,7 @@ public class VaroGame implements VaroSerializeable {
 
 	public void abort() {
 		Bukkit.getScheduler().cancelTask(startScheduler);
-		Bukkit.broadcastMessage("Â§7Der Start wurde Â§cabgebrochenÂ§7!");
+		Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
 
 		startThread = null;
 	}

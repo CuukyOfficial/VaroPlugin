@@ -23,7 +23,7 @@ public class NightCommand implements CommandExecutor {
 		else
 			VaroUtils.getMainWorld().setTime(13000);
 
-		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "NachtÂ§7!");
+		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Nacht§7!");
 		return false;
 	}
 }

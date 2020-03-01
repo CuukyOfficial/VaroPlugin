@@ -52,9 +52,9 @@ public class ScoreboardHandler implements BoardHandler {
 		String prefix = getPrefix(value);
 		String suffix = "";
 
-		if(prefix.substring(prefix.length() - 1, prefix.length()).equals("Â§")) {
+		if(prefix.substring(prefix.length() - 1, prefix.length()).equals("§")) {
 			prefix = prefix.substring(0, prefix.length() - 1);
-			suffix = getPrefix("Â§" + getSuffix(value));
+			suffix = getPrefix("§" + getSuffix(value));
 		} else
 			suffix = getPrefix(ChatColor.getLastColors(prefix) + getSuffix(value));
 
@@ -78,7 +78,7 @@ public class ScoreboardHandler implements BoardHandler {
 	private String getConvString(String line, VaroPlayer vp) {
 		if(line.contains("%min%") || line.contains("%sec%"))
 			if(ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
-				return "Â§cUnlimited";
+				return "§cUnlimited";
 
 		line = ConfigMessages.getValue(line, vp);
 
@@ -125,7 +125,7 @@ public class ScoreboardHandler implements BoardHandler {
 		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
 		Collections.reverse(scoreboardLines);
 
-		this.header = Main.getProjectName().replace("&", "Â§");
+		this.header = Main.getProjectName().replace("&", "§");
 
 		String space = "";
 		for(int i = 0; i < scoreboardLines.size(); i++) {

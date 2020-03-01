@@ -15,7 +15,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class YouTubeVideoListGUI extends SuperInventory {
 
 	public YouTubeVideoListGUI(Player opener) {
-		super("ยง5Videos", opener, 45, false);
+		super("ง5Videos", opener, 45, false);
 
 		open();
 	}
@@ -49,12 +49,12 @@ public class YouTubeVideoListGUI extends SuperInventory {
 
 			;
 
-			linkItemTo(i, new ItemBuilder().displayname("ยง5" + video.getTitle()).lore(new String[] { "ยง7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm").format(video.getDetectedAt()), "ยง7User: " + (video.getOwner() != null ? video.getOwner().getName() : "/"), "ยง7" + video.getDuration(), "ยง7Link: " + video.getLink() }).playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("ง5" + video.getTitle()).lore(new String[] { "ง7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm").format(video.getDetectedAt()), "ง7User: " + (video.getOwner() != null ? video.getOwner().getName() : "/"), "ง7" + video.getDuration(), "ง7Link: " + video.getLink() }).playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build(), new Runnable() {
 
 				@Override
 				public void run() {
 					if(!opener.hasPermission("varo.player")) {
-						opener.sendMessage("ยง7Video: " + video.getLink());
+						opener.sendMessage("ง7Video: " + video.getLink());
 						return;
 					}
 
