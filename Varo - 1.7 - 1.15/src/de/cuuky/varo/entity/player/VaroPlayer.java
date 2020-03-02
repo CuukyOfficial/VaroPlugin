@@ -27,6 +27,7 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -343,7 +344,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public boolean isInProtection() {
-		if(VaroEvent.getMassRecEvent().isEnabled()) {
+		if(VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;
 		} else {
 			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();

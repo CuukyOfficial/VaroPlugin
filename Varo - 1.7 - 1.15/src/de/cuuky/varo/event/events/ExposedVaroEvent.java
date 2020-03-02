@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.version.VersionUtils;
 
 public class ExposedVaroEvent extends VaroEvent {
@@ -22,7 +23,7 @@ public class ExposedVaroEvent extends VaroEvent {
 	private PotionEffectType type;
 
 	public ExposedVaroEvent() {
-		super("§cExposed", Material.REDSTONE, "Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete");
+		super(VaroEventType.EXPOSED, Material.REDSTONE, "Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete");
 
 		type = PotionEffectType.getByName("GLOWING");
 	}

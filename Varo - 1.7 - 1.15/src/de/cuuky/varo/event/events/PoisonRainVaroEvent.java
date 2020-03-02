@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -14,7 +15,7 @@ public class PoisonRainVaroEvent extends VaroEvent {
 	private int sched;
 
 	public PoisonRainVaroEvent() {
-		super("§4Poisened Rain", Material.ARROW, "Regen macht Schaden");
+		super(VaroEventType.POISON_RAIN, Material.ARROW, "Regen macht Schaden");
 	}
 
 	@Override

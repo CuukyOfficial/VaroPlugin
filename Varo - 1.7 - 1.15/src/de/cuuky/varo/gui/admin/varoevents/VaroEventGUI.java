@@ -43,7 +43,7 @@ public class VaroEventGUI extends SuperInventory {
 	public boolean onOpen() {
 		int i = 0;
 		for(VaroEvent event : VaroEvent.getEvents()) {
-			linkItemTo(i, new ItemBuilder().displayname(event.getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(event.getEventType().getName()).itemstack(new ItemStack(event.getIcon())).lore(JavaUtils.combineArrays(new String[] { "§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), "" }, JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build(), new Runnable() {
 
 				@Override
 				public void run() {

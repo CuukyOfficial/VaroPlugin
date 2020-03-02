@@ -17,24 +17,24 @@ import de.cuuky.varo.game.state.GameState;
 public class VaroEvent {
 
 	private static ArrayList<VaroEvent> events;
-	private static MassRecordingVaroEvent massRecEvent;
 
 	static {
 		events = new ArrayList<>();
 
-		massRecEvent = new MassRecordingVaroEvent();
+		new MassRecordingVaroEvent();
 		new PoisonWaterVaroEvent();
 		new PoisonRainVaroEvent();
 		new MoonGravityVaroEvent();
 		new ExposedVaroEvent();
 	}
 
-	private String name, description;
+	private VaroEventType eventType;
+	private String description;
 	private Material icon;
 	protected boolean enabled;
 
-	public VaroEvent(String name, Material icon, String description) {
-		this.name = name;
+	public VaroEvent(VaroEventType eventType, Material icon, String description) {
+		this.eventType = eventType;
 		this.icon = icon;
 		this.description = description;
 		this.enabled = false;
@@ -50,8 +50,8 @@ public class VaroEvent {
 		return icon;
 	}
 
-	public String getName() {
-		return name;
+	public VaroEventType getEventType() {
+		return this.eventType;
 	}
 
 	public boolean isEnabled() {
@@ -84,9 +84,9 @@ public class VaroEvent {
 		return enabledEvents;
 	}
 
-	public static VaroEvent getEvent(String name) {
+	public static VaroEvent getEvent(VaroEventType eventType) {
 		for(VaroEvent event : events)
-			if(event.getName().equals(name))
+			if(event.getEventType() == eventType)
 				return event;
 
 		return null;
@@ -94,9 +94,5 @@ public class VaroEvent {
 
 	public static ArrayList<VaroEvent> getEvents() {
 		return events;
-	}
-
-	public static MassRecordingVaroEvent getMassRecEvent() {
-		return massRecEvent;
 	}
 }

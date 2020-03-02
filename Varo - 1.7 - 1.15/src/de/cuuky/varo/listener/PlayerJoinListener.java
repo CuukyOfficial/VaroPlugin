@@ -14,6 +14,8 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
+import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -87,8 +89,9 @@ public class PlayerJoinListener implements Listener {
 				}
 			}
 		} else {
+			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
-				int countdown = VaroEvent.getMassRecEvent().isEnabled() ? VaroEvent.getMassRecEvent().getCountdown(vplayer) : vplayer.getStats().getCountdown();
+				int countdown =  massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
 					player.teleport(VaroUtils.getMainWorld().getSpawnLocation());
 				}
@@ -111,11 +114,11 @@ public class PlayerJoinListener implements Listener {
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
-			} else if(VaroEvent.getMassRecEvent().isEnabled()) {
-				if(VaroEvent.getMassRecEvent().getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
-					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getTimer());
+			} else if( massRecording.isEnabled()) {
+				if( massRecording.getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+					vplayer.getStats().setCountdown(massRecording.getTimer());
 				} else {
-					vplayer.getStats().setCountdown(VaroEvent.getMassRecEvent().getCountdown(vplayer) + VaroEvent.getMassRecEvent().getTimer());
+					vplayer.getStats().setCountdown(massRecording.getCountdown(vplayer) + massRecording.getTimer());
 				}
 
 				if(!vplayer.getalreadyHadMassProtectionTime()) {

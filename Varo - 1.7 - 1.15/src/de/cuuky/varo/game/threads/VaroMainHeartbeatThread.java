@@ -14,6 +14,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.utils.JavaUtils;
@@ -80,11 +81,11 @@ public class VaroMainHeartbeatThread implements Runnable {
 					if(!actionbar.isEmpty())
 						vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
-					if(countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getMassRecEvent().isEnabled())
+					if(countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
 						Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
 
 					if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
-						if(countdown == 0 && !VaroEvent.getMassRecEvent().isEnabled()) {
+						if(countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 							Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
 							vp.onEvent(BukkitEventType.KICKED);
 							p.kickPlayer(ConfigMessages.KICK_MESSAGE.getValue(vp));

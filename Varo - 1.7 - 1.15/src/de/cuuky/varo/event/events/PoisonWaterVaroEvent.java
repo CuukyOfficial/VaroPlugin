@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.version.VersionUtils;
 
 public class PoisonWaterVaroEvent extends VaroEvent {
@@ -13,7 +14,7 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 	private int sched;
 
 	public PoisonWaterVaroEvent() {
-		super("§bPoisoned Water", Material.WATER_BUCKET, "Bei Kontakt mit Wasser erhält man Schaden");
+		super(VaroEventType.POISON_WATER, Material.WATER_BUCKET, "Bei Kontakt mit Wasser erhält man Schaden");
 
 	}
 

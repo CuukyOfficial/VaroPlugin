@@ -27,6 +27,7 @@ import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -299,7 +300,7 @@ public class Stats implements VaroSerializeable {
 			}
 		}
 
-		if(VaroEvent.getMassRecEvent().isEnabled())
+		if(VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 
 		if(Main.getVaroGame().getFinaleJoinStart()) {

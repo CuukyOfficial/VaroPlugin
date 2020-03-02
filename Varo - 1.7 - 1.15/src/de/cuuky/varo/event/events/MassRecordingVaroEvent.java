@@ -11,6 +11,7 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class MassRecordingVaroEvent extends VaroEvent {
@@ -21,7 +22,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private boolean timerEnd = false;
 
 	public MassRecordingVaroEvent() {
-		super("§aMassrecording", Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Lässt alle Spieler für eine Minute zusätzlich zu den normalen Folgen auf den Server" : "Lässt alle Spieler für " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusätzlich zu den normalen Folgen auf den Server");
+		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Lässt alle Spieler für eine Minute zusätzlich zu den normalen Folgen auf den Server" : "Lässt alle Spieler für " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusätzlich zu den normalen Folgen auf den Server");
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<Integer[]>();
