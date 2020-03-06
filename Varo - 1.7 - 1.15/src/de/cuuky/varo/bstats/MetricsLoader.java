@@ -58,9 +58,9 @@ public class MetricsLoader {
 					return (int) Math.round(LagCounter.getTPS());
 				}
 			}));
-		} catch(Exception e) {
+		} catch(Throwable e) {
 			e.printStackTrace();
-			System.err.println(Main.getPrefix() + "Failed to send data to bStats!");
+			System.err.println(Main.getPrefix() + "Failed to send data to bStats! (Wrong server version?)");
 		}
 	}
 }
