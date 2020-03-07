@@ -235,7 +235,7 @@ public class BotRegister {
 			for(String s : cfg.getKeys(true))
 				cfg.set(s, null);
 
-			for(final BotRegister reg : register) {
+			for(BotRegister reg : register) {
 				cfg.set(reg.getUUID() + ".userId", reg.getUserId() != -1 ? reg.getUserId() : "null");
 				cfg.set(reg.getUUID() + ".code", reg.getCode());
 				cfg.set(reg.getUUID() + ".bypass", reg.isBypass());
