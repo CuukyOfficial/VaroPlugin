@@ -86,10 +86,6 @@ public class AutoStart implements VaroSerializeable {
 
 			@Override
 			public void run() {
-				try {
-					Thread.sleep(1000);
-				} catch(InterruptedException e) {}
-
 				Bukkit.getScheduler().cancelTask(sched);
 				if(startDelay == StartDelay.GO) {
 					stop();
@@ -102,7 +98,7 @@ public class AutoStart implements VaroSerializeable {
 
 				start();
 			}
-		}, (seconds / 1000) * 20);
+		}, (seconds / 1000) * 20 + 20);
 	}
 
 	public void delay(int seconds) {
@@ -111,13 +107,13 @@ public class AutoStart implements VaroSerializeable {
 		StartDelay.reset();
 		start();
 	}
-	
+
 	public void stop() {
 		Bukkit.getScheduler().cancelTask(sched);
 		Main.getVaroGame().setAutoStart(null);
 		StartDelay.reset();
 	}
-	
+
 	@Override
 	public void onDeserializeEnd() {
 		start();

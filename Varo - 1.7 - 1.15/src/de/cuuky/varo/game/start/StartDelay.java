@@ -1,31 +1,29 @@
 package de.cuuky.varo.game.start;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 public enum StartDelay {
 
+	WEEK(604800, "Woche", "einer"),
 	DAY(86400, "Tag", "einem"),
+	HOUR(3600, "Stunde", "einer"),
+	HALF_HOUR(1800, "Stunde", "einer halben"),
+	TEN_MINTUES(60 * 10, "Minuten", "zehn"),
 	FIVE_MINTUES(60 * 5, "Minuten", "fünf"),
 	FOUR_MINTUES(60 * 4, "Minuten", "vier"),
-	GO(0, null, null),
-	HALF_HOUR(1800, "Stunde", "einer halben"),
-	HOUR(3600, "Stunde", "einer"),
-	MINTUE(60, "Minute", "einer"),
-	MONTH(new GregorianCalendar().getActualMaximum(Calendar.DAY_OF_MONTH) * 86400, "Monat", "einem"),
-	TEN_MINTUES(60 * 10, "Minuten", "zehn"),
 	THREE_MINTUES(60 * 3, "Minuten", "drei"),
 	TWO_MINTUES(60 * 2, "Minuten", "zwei"),
-	WEEK(604800, "Woche", "einer");
+	MINTUE(60, "Minute", "einer"),
+	GO(0, null, null);
 
 	private String article, unit;
-	private double delay;
+	private long delay;
 	private boolean used;
 
-	private StartDelay(double delay, String unit, String article) {
+	private StartDelay(long delay, String unit, String article) {
 		this.delay = delay * 1000;
 		this.unit = unit;
 		this.article = article;
+		
+		System.out.println(this.unit + ", " + delay);
 	}
 
 	public double getDelay() {
@@ -49,18 +47,17 @@ public enum StartDelay {
 	}
 
 	public static StartDelay getStartDelay(long delay) {
+		StartDelay lastDelay = null;
 		for(StartDelay sd : values()) {
-			if(!(delay >= sd.getDelay()))
+			if(!(delay >= sd.getDelay()) || sd.isUsed())
 				continue;
 
-			if(sd.isUsed())
-				continue;
-
-			sd.setUsed(true);
-			return sd;
+			if(lastDelay == null || lastDelay.getDelay() < sd.getDelay())
+				lastDelay = sd;
 		}
 
-		return null;
+		lastDelay.setUsed(true);
+		return lastDelay;
 	}
 
 	public static void reset() {

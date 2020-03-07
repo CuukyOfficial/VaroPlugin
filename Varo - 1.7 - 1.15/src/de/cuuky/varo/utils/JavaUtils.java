@@ -1,10 +1,17 @@
 package de.cuuky.varo.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public final class JavaUtils {
+	
+	public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+		long diffInMillies = date2.getTime() - date1.getTime();
+		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
 
 	public static ArrayList<String> addIntoEvery(ArrayList<String> input, String into, boolean start) {
 		for(int i = 0; i < input.size(); i++)
