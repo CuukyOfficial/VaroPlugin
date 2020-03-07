@@ -18,16 +18,14 @@ public enum StartDelay {
 	TWO_MINTUES(60 * 2, "Minuten", "zwei"),
 	WEEK(604800, "Woche", "einer");
 
-	private String article;
+	private String article, unit;
 	private double delay;
-	private String unit;
 	private boolean used;
 
 	private StartDelay(double delay, String unit, String article) {
 		this.delay = delay * 1000;
 		this.unit = unit;
 		this.article = article;
-		this.used = false;
 	}
 
 	public double getDelay() {
