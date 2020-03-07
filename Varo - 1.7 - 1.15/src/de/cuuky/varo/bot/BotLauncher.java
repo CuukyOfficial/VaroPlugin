@@ -7,8 +7,8 @@ import de.cuuky.varo.configuration.config.ConfigEntry;
 
 public class BotLauncher {
 
-	private static VaroDiscordBot discordbot;
-	private static VaroTelegramBot telegrambot;
+	private VaroDiscordBot discordbot;
+	private VaroTelegramBot telegrambot;
 
 	public BotLauncher() {
 		startupDiscord();
@@ -27,8 +27,8 @@ public class BotLauncher {
 		if(!ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean())
 			return;
 
-		if(ConfigEntry.DISCORDBOT_TOKEN.getValue().equals("ENTER TOKEN HERE") || ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong() == -1 || ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong() == -1) {
-			System.err.println(Main.getConsolePrefix() + "DiscordBot deactivated because of missing information in the config");
+		if(ConfigEntry.DISCORDBOT_TOKEN.getValue().equals("ENTER TOKEN HERE") || ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong() == -1) {
+			System.err.println(Main.getConsolePrefix() + "DiscordBot deactivated because of missing information in the config (DiscordToken or ServerID missing)");
 			return;
 		}
 
@@ -74,12 +74,12 @@ public class BotLauncher {
 			e.printStackTrace();
 		}
 	}
-
-	public static VaroDiscordBot getDiscordBot() {
-		return discordbot;
+	
+	public VaroDiscordBot getDiscordbot() {
+		return this.discordbot;
 	}
-
-	public static VaroTelegramBot getTelegramBot() {
-		return telegrambot;
+	
+	public VaroTelegramBot getTelegrambot() {
+		return this.telegrambot;
 	}
 }

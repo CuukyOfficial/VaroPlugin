@@ -19,14 +19,14 @@ import net.dv8tion.jda.api.exceptions.PermissionException;
 
 public class VaroDiscordBot implements VaroBot {
 
-	private JDA jda;	
+	private JDA jda;
 	private long registerChannel, eventChannel, announcementChannel, resultChannel, pingRole;
 
 	private Color getRandomColor() {
 		Random random = new Random();
 		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
 	}
-	
+
 	@Override
 	public void connect() {
 		System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors maybe will appear - don't mind them)");
@@ -59,35 +59,45 @@ public class VaroDiscordBot implements VaroBot {
 	private void loadChannel() {
 		try {
 			announcementChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
+			
+			if(announcementChannel == -1)
+				System.err.println(Main.getConsolePrefix() + "Could not load announcement-channel");
 		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load announcement-channel");
+			System.err.println(Main.getConsolePrefix() + "Could not load announcement-channel");
 		}
 
 		try {
 			eventChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
 		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load event-channel");
+			System.err.println(Main.getConsolePrefix() + "Could not load event-channel");
 		}
 
 		try {
 			resultChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
+
+			if(resultChannel == -1)
+				System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
 		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load result-channel");
+			System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
 		}
 
 		try {
 			if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
 				registerChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_REGISTERCHANNELID.getValueAsLong()).getIdLong();
+
+			if(registerChannel == -1)
+				System.err.println(Main.getConsolePrefix() + "Could not load register-channel");
 		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not load register-channel");
+			System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
 		}
 
 		try {
 			pingRole = jda.getRoleById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException e) {
-			pingRole = -1;
+
+			if(pingRole == -1)
+				System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		} catch(NullPointerException e) {
-			System.out.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
+			System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		}
 	}
 
@@ -107,42 +117,7 @@ public class VaroDiscordBot implements VaroBot {
 
 		jda = null;
 	}
-
-	public TextChannel getAnnouncementChannel() {
-		return jda.getTextChannelById(announcementChannel);
-	}
-
-	public TextChannel getEventChannel() {
-		return jda.getTextChannelById(eventChannel);
-	}
 	
-	public Guild getMainGuild() {
-		return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong());
-	}
-
-	public JDA getJda() {
-		return jda;
-	}
-
-	public String getMentionRole() {
-		if(pingRole == -1)
-			return "@everyone";
-
-		return jda.getRoleById(pingRole).getAsMention();
-	}
-
-	public TextChannel getRegisterChannel() {
-		return jda.getTextChannelById(registerChannel);
-	}
-
-	public TextChannel getResultChannel() {
-		return jda.getTextChannelById(resultChannel);
-	}
-
-	public boolean isEnabled() {
-		return jda != null;
-	}
-
 	public void sendFile(String message, File file, TextChannel channel) {
 		channel.sendFile(file, message.replace("_", "\\_")).queue();
 	}
@@ -190,6 +165,41 @@ public class VaroDiscordBot implements VaroBot {
 		} catch(PermissionException e) {
 			System.err.println("Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 		}
+	}
+
+	public TextChannel getAnnouncementChannel() {
+		return jda.getTextChannelById(announcementChannel);
+	}
+
+	public TextChannel getEventChannel() {
+		return jda.getTextChannelById(eventChannel);
+	}
+	
+	public TextChannel getRegisterChannel() {
+		return jda.getTextChannelById(registerChannel);
+	}
+
+	public TextChannel getResultChannel() {
+		return jda.getTextChannelById(resultChannel);
+	}
+
+	public Guild getMainGuild() {
+		return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong());
+	}
+
+	public JDA getJda() {
+		return jda;
+	}
+
+	public String getMentionRole() {
+		if(pingRole == -1)
+			return "@everyone";
+
+		return jda.getRoleById(pingRole).getAsMention();
+	}
+
+	public boolean isEnabled() {
+		return jda != null;
 	}
 
 	public static String getClassName() {
