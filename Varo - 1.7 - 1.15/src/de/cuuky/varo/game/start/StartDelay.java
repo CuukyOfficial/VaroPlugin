@@ -22,8 +22,6 @@ public enum StartDelay {
 		this.delay = delay * 1000;
 		this.unit = unit;
 		this.article = article;
-		
-		System.out.println(this.unit + ", " + delay);
 	}
 
 	public double getDelay() {
