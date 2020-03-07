@@ -166,6 +166,13 @@ public class VaroDiscordBot implements VaroBot {
 			System.err.println("Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 		}
 	}
+	
+	public String getMentionRole() {
+		if(pingRole == -1)
+			return "@everyone";
+
+		return jda.getRoleById(pingRole).getAsMention();
+	}
 
 	public TextChannel getAnnouncementChannel() {
 		return jda.getTextChannelById(announcementChannel);
@@ -189,13 +196,6 @@ public class VaroDiscordBot implements VaroBot {
 
 	public JDA getJda() {
 		return jda;
-	}
-
-	public String getMentionRole() {
-		if(pingRole == -1)
-			return "@everyone";
-
-		return jda.getRoleById(pingRole).getAsMention();
 	}
 
 	public boolean isEnabled() {
