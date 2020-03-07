@@ -15,7 +15,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.clientadapter.BoardHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
@@ -24,6 +23,8 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 public class ScoreboardHandler implements BoardHandler {
 
 	private String header;
+	private HashMap<Player, String> headers;
+
 	private HashMap<Player, ArrayList<String>> replaces;
 
 	private ArrayList<String> scoreboardLines;
@@ -85,19 +86,31 @@ public class ScoreboardHandler implements BoardHandler {
 		return line;
 	}
 
+	private void saveFile(YamlConfiguration config, File file) {
+		try {
+			config.save(file);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String getHeader() {
 		return "Die Liste aller Placeholder kannst du mit /varo ph aufrufen!";
 	}
 
 	@Override
 	public void updateList() {
-		scoreboardLines = new ArrayList<>();
-		replaces = new HashMap<>();
+		this.scoreboardLines = new ArrayList<>();
+		this.replaces = new HashMap<>();
+		this.headers = new HashMap<>();
+
 		File file = new File("plugins/Varo", "scoreboard.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 		ArrayList<String> scoreboard = new ArrayList<>();
 		cfg.options().header(getHeader());
+		cfg.options().copyDefaults(true);
+
 		scoreboard.add("%space%");
 		scoreboard.add("&7Team&8:");
 		scoreboard.add("&3%team%");
@@ -113,19 +126,23 @@ public class ScoreboardHandler implements BoardHandler {
 		scoreboard.add("&7Players: &3%players%");
 		scoreboard.add("%space%");
 
-		if(!cfg.contains("Scoreboard")) {
-			cfg.set("Scoreboard", scoreboard);
-			try {
-				cfg.save(file);
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
+		cfg.addDefault("header", "%projectname%");
+		cfg.addDefault("scoreboard", scoreboard);
 
-		scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
+		if(!file.exists())
+			saveFile(cfg, file);
+
+		if(cfg.contains("Scoreboard")) {
+			scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
+
+			cfg.set("Scoreboard", null);
+			saveFile(cfg, file);
+		} else
+			scoreboardLines.addAll(cfg.getStringList("scoreboard"));
+
+		this.header = cfg.getString("header");
+
 		Collections.reverse(scoreboardLines);
-
-		this.header = Main.getProjectName().replace("&", "§");
 
 		String space = "";
 		for(int i = 0; i < scoreboardLines.size(); i++) {
@@ -147,9 +164,11 @@ public class ScoreboardHandler implements BoardHandler {
 
 		Scoreboard sb = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 		Objective obj = sb.registerNewObjective("silent", "dummy");
-		obj.setDisplayName(getConvString(header, vp));
-
+		
+		headers.put(vp.getPlayer(), getConvString(header, vp));
+		obj.setDisplayName(headers.get(vp.getPlayer()));
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+		
 		player.setScoreboard(sb);
 
 		replaces.remove(player);
@@ -165,10 +184,14 @@ public class ScoreboardHandler implements BoardHandler {
 		Scoreboard board = player.getPlayer().getScoreboard();
 		Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
 
-		if(obj == null) {
+		if(obj == null || !headers.containsKey(player.getPlayer())) {
 			sendScoreBoard(player);
 			return;
 		}
+
+		String header = getConvString(this.header, player);
+		if(!headers.get(player.getPlayer()).equals(header))
+			obj.setDisplayName(header);
 
 		if(board.getEntries().size() > scoreboardLines.size()) {
 			for(Team team : board.getTeams())
