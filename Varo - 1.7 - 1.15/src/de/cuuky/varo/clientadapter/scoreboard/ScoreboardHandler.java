@@ -129,18 +129,19 @@ public class ScoreboardHandler implements BoardHandler {
 		cfg.addDefault("header", "%projectname%");
 		cfg.addDefault("scoreboard", scoreboard);
 
-		if(!file.exists())
-			saveFile(cfg, file);
-
 		if(cfg.contains("Scoreboard")) {
 			scoreboardLines.addAll(cfg.getStringList("Scoreboard"));
 
 			cfg.set("Scoreboard", null);
+			cfg.set("scoreboard", scoreboardLines);
 			saveFile(cfg, file);
 		} else
 			scoreboardLines.addAll(cfg.getStringList("scoreboard"));
 
 		this.header = cfg.getString("header");
+		
+		if(!file.exists())
+			saveFile(cfg, file);
 
 		Collections.reverse(scoreboardLines);
 
