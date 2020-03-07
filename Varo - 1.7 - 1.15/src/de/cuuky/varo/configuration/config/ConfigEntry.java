@@ -331,7 +331,11 @@ public enum ConfigEntry {
 		try {
 			return (double) this.value;
 		} catch(Exception e) {
-			sendFalseCast(Double.class);
+			try {
+				return Double.valueOf(getValueAsInt());
+			} catch(Exception e2) {
+				sendFalseCast(Double.class);
+			}
 		}
 
 		return (double) defaultValue;
@@ -351,9 +355,13 @@ public enum ConfigEntry {
 		try {
 			return (long) this.value;
 		} catch(Exception e) {
-			sendFalseCast(Long.class);
+			try {
+				return Long.valueOf(getValueAsInt());
+			} catch(Exception e2) {
+				sendFalseCast(Long.class);
+			}
 		}
-
+		
 		return (long) defaultValue;
 	}
 

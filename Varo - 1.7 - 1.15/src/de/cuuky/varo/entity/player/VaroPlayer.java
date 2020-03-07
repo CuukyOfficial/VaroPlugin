@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.clientadapter.nametag.Nametag;
@@ -110,7 +109,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	private void updateDiscordTeam(VaroTeam oldTeam) {
-		VaroDiscordBot db = BotLauncher.getDiscordBot();
+		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
 		if(db == null || !db.isEnabled())
 			return;
 

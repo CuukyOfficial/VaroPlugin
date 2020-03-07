@@ -13,10 +13,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
@@ -80,8 +78,7 @@ public class BotRegister {
 
 	public Member getMember() {
 		try {
-			JDA jda = BotLauncher.getDiscordBot().getJda();
-			return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong()).getMemberById(this.userId);
+			return Main.getBotLauncher().getDiscordbot().getMainGuild().getMemberById(this.userId);
 		} catch(Exception e) {
 			return null;
 		}

@@ -9,7 +9,6 @@ import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.utils.JavaUtils;
@@ -66,8 +65,8 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private void postMessage(String message) {
-		if(BotLauncher.getDiscordBot() != null && BotLauncher.getDiscordBot().isEnabled() && BotLauncher.getDiscordBot().getAnnouncementChannel() != null)
-			BotLauncher.getDiscordBot().sendRawMessage(JavaUtils.replaceAllColors(message) + " " + BotLauncher.getDiscordBot().getMentionRole(), BotLauncher.getDiscordBot().getAnnouncementChannel());
+		if(Main.getBotLauncher().getDiscordbot() != null && Main.getBotLauncher().getDiscordbot().isEnabled() && Main.getBotLauncher().getDiscordbot().getAnnouncementChannel() != null)
+			Main.getBotLauncher().getDiscordbot().sendRawMessage(JavaUtils.replaceAllColors(message) + " " + Main.getBotLauncher().getDiscordbot().getMentionRole(), Main.getBotLauncher().getDiscordbot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
 

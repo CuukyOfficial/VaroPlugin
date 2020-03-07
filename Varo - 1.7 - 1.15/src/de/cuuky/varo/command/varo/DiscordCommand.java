@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.config.ConfigEntry;
@@ -42,7 +41,7 @@ public class DiscordCommand extends VaroCommand {
 			reg = BotRegister.getBotRegisterByPlayerName(args[1]);
 		} catch(Exception e) {}
 
-		if(BotLauncher.getDiscordBot() == null) {
+		if(Main.getBotLauncher().getDiscordbot() == null) {
 			sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde beim Start nicht aufgesetzt, bitte reloade!");
 			return;
 		}
@@ -53,7 +52,7 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			if(BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled()) {
+			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
@@ -63,7 +62,7 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			User user = BotLauncher.getDiscordBot().getJda().getUserById(reg.getUserId());
+			User user = Main.getBotLauncher().getDiscordbot().getJda().getUserById(reg.getUserId());
 			if(user == null) {
 				sender.sendMessage(Main.getPrefix() + "§7User für diesen Spieler nicht gefunden!");
 				return;
@@ -76,7 +75,7 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			if(BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled()) {
+			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
@@ -96,7 +95,7 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			if(BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled()) {
+			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
 				return;
 			}
@@ -117,8 +116,8 @@ public class DiscordCommand extends VaroCommand {
 			} else
 				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <add/remove> <Spielername>");
 		} else if(args[0].equalsIgnoreCase("reload")) {
-			BotLauncher.getDiscordBot().disconnect();
-			BotLauncher.getDiscordBot().connect();
+			Main.getBotLauncher().getDiscordbot().disconnect();
+			Main.getBotLauncher().getDiscordbot().connect();
 			for(Player pl : Bukkit.getOnlinePlayers())
 				if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
 					pl.kickPlayer("§7Das Discord Verify System wurde aktiviert!");
@@ -131,16 +130,21 @@ public class DiscordCommand extends VaroCommand {
 
 			new DiscordBotGUI((Player) sender);
 		} else if(args[0].equalsIgnoreCase("shutdown")) {
-			if(BotLauncher.getDiscordBot().getJda() == null) {
+			if(Main.getBotLauncher().getDiscordbot().getJda() == null) {
 				sender.sendMessage(Main.getPrefix() + "Der §bDiscordBot §7ist nicht online!");
 				return;
 			}
 
 			sender.sendMessage(Main.getPrefix() + "§bDiscordBot §7erfolgreich heruntergefahren!");
-			BotLauncher.getDiscordBot().disconnect();
+			Main.getBotLauncher().getDiscordbot().disconnect();
 		} else if(args[0].equalsIgnoreCase("sendMessage")) {
-			if(BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled()) {
+			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde nicht aktiviert!");
+				return;
+			}
+
+			if(Main.getBotLauncher().getDiscordbot().getEventChannel() == null) {
+				sender.sendMessage(Main.getPrefix() + "§7Dem Bot wurde kein eventChannel gegeben!");
 				return;
 			}
 
@@ -154,7 +158,7 @@ public class DiscordCommand extends VaroCommand {
 					message = message + " " + ar;
 			}
 
-			BotLauncher.getDiscordBot().sendMessage(message, "MESSAGE", Color.YELLOW, BotLauncher.getDiscordBot().getEventChannel());
+			Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, Main.getBotLauncher().getDiscordbot().getEventChannel());
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7/varo discord " + args[0] + " not found! §7Type /discord for help.");
 		return;

@@ -23,13 +23,16 @@ public class RegisterCommand extends DiscordBotCommand {
 		if(event.getAuthor().isBot() || event.getAuthor().equals(super.getDiscordBot().getJda().getSelfUser()))
 			return;
 
-		if(super.getDiscordBot().getRegisterChannel() == null)
-			return;
-
-		if(super.getDiscordBot().getRegisterChannel().getIdLong() != event.getTextChannel().getIdLong()) {
-			getDiscordBot().sendMessage("Bitte nutze den " + super.getDiscordBot().getRegisterChannel().getAsMention() + " Channel zum verifizieren, " + event.getAuthor().getAsMention() + "!", "ERROR", Color.RED, event.getTextChannel());
+		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			getDiscordBot().sendMessage("Das Verify-System ist nicht aktiviert!", "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
+
+		if(super.getDiscordBot().getRegisterChannel() != null)
+			if(super.getDiscordBot().getRegisterChannel().getIdLong() != event.getTextChannel().getIdLong()) {
+				getDiscordBot().sendMessage("Bitte nutze den " + super.getDiscordBot().getRegisterChannel().getAsMention() + " Channel zum verifizieren, " + event.getAuthor().getAsMention() + "!", "ERROR", Color.RED, event.getTextChannel());
+				return;
+			}
 
 		TextChannel channel = event.getTextChannel();
 

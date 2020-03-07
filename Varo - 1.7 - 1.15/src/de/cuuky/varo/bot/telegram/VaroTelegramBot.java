@@ -48,17 +48,15 @@ public class VaroTelegramBot implements VaroBot {
 	public void connect() {
 		startListening();
 
-		try {
-			eventChannelId = ConfigEntry.TELEGRAM_EVENT_CHAT_ID.getValueAsLong();
-		} catch(Exception e) {
-			System.out.println(Main.getConsolePrefix() + "Could not get chat of chat id");
-		}
+		eventChannelId = ConfigEntry.TELEGRAM_EVENT_CHAT_ID.getValueAsLong();
 
-		try {
-			youtubeChannelId = ConfigEntry.TELEGRAM_VIDEOS_CHAT_ID.getValueAsLong();
-		} catch(Exception e) {
+		if(eventChannelId == -1)
+			System.out.println(Main.getConsolePrefix() + "Could not get chat of chat id");
+
+		youtubeChannelId = ConfigEntry.TELEGRAM_VIDEOS_CHAT_ID.getValueAsLong();
+
+		if(youtubeChannelId == -1)
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of videochat id");
-		}
 
 		System.out.println(Main.getConsolePrefix() + "Telegram Bot connected!");
 	}

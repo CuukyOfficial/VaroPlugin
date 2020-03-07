@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.config.ConfigEntry;
@@ -28,7 +28,7 @@ public class PlayerLoginListener implements Listener {
 		Player player = event.getPlayer();
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 
-		VaroDiscordBot discordBot = BotLauncher.getDiscordBot();
+		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
 		if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
 			if(reg == null) {

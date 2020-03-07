@@ -158,6 +158,10 @@ public class Main extends JavaPlugin {
 	public static DataManager getDataManager() {
 		return dataManager;
 	}
+	
+	public static BotLauncher getBotLauncher() {
+		return botLauncher;
+	}
 
 	public static String getPluginName() {
 		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();

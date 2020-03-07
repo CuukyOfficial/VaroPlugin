@@ -2,7 +2,8 @@ package de.cuuky.varo.logger.logger;
 
 import java.awt.Color;
 
-import de.cuuky.varo.bot.BotLauncher;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.logger.VaroLogger;
 import de.cuuky.varo.utils.JavaUtils;
@@ -40,7 +41,7 @@ public class EventLogger extends VaroLogger {
 		}
 
 		public long getPostChannel() {
-			if(idEntry == null || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
+			if(idEntry == null || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
 				return -1;
 
 			try {
@@ -66,11 +67,11 @@ public class EventLogger extends VaroLogger {
 	}
 
 	private void sendToDiscord(LogType type, String msg) {
-		if(type.getPostChannel() == -1 || BotLauncher.getDiscordBot() == null || !BotLauncher.getDiscordBot().isEnabled())
+		if(type.getPostChannel() == -1 || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
 			return;
 
 		try {
-			BotLauncher.getDiscordBot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
+			Main.getBotLauncher().getDiscordbot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			return;
 		} catch(Exception e) {
@@ -80,16 +81,17 @@ public class EventLogger extends VaroLogger {
 	}
 
 	private void sendToTelegram(LogType type, String message) {
-		if(BotLauncher.getTelegramBot() == null)
+		VaroTelegramBot telegramBot = Main.getBotLauncher().getTelegrambot();
+		if(telegramBot == null)
 			return;
 
 		try {
 			if(!type.equals(LogType.YOUTUBE))
-				BotLauncher.getTelegramBot().sendEvent(message);
+				telegramBot.sendEvent(message);
 			else
-				BotLauncher.getTelegramBot().sendVideo(message);
+				telegramBot.sendVideo(message);
 		} catch(ArrayIndexOutOfBoundsException e) {
-			BotLauncher.getTelegramBot().sendEvent(message);
+			telegramBot.sendEvent(message);
 		}
 	}
 

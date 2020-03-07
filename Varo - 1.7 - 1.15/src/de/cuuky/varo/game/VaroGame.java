@@ -11,7 +11,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
@@ -177,14 +176,14 @@ public class VaroGame implements VaroSerializeable {
 			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN.getValue().replace("%player%", first));
 		}
 
-		VaroDiscordBot db = BotLauncher.getDiscordBot();
+		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
 		if(db != null && db.isEnabled()) {
 			if(db.getResultChannel() != null && db.isEnabled())
-				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, BotLauncher.getDiscordBot().getResultChannel());
+				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getBotLauncher().getDiscordbot().getResultChannel());
 
 			File file = new File("plugins/Varo/logs", "logs.yml");
 			if(file.exists())
-				db.sendFile("Die Logs des Projektes", file, BotLauncher.getDiscordBot().getResultChannel());
+				db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
 		}
 	}
 

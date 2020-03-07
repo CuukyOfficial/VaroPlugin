@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -101,9 +100,9 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(BotLauncher.getDiscordBot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
+		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(Main.getBotLauncher().getDiscordbot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
 			public void run() {
-				if(BotLauncher.getDiscordBot() == null) {
+				if(Main.getBotLauncher().getDiscordbot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und überprüfe, ob du den DiscordBot aktiviert hast.");
 					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");

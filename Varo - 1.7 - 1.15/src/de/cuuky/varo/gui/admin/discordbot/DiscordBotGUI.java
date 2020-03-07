@@ -7,7 +7,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
@@ -42,17 +41,17 @@ public class DiscordBotGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 
-		linkItemTo(1, new ItemBuilder().displayname(BotLauncher.getDiscordBot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(BotLauncher.getDiscordBot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname(Main.getBotLauncher().getDiscordbot().isEnabled() ? "§cShutdown" : "§aStart").itemstack(new ItemStack(Main.getBotLauncher().getDiscordbot().isEnabled() ? Material.REDSTONE : Material.EMERALD)).build(), new Runnable() {
 
 			@Override
 			public void run() {
-				boolean enabled = BotLauncher.getDiscordBot().isEnabled();
+				boolean enabled = Main.getBotLauncher().getDiscordbot().isEnabled();
 				if(enabled)
-					BotLauncher.getDiscordBot().disconnect();
+					Main.getBotLauncher().getDiscordbot().disconnect();
 				else
-					BotLauncher.getDiscordBot().connect();
+					Main.getBotLauncher().getDiscordbot().connect();
 
-				if(BotLauncher.getDiscordBot().isEnabled() == enabled)
+				if(Main.getBotLauncher().getDiscordbot().isEnabled() == enabled)
 					opener.sendMessage(Main.getPrefix() + "§7Could not start DiscordBot.");
 				else
 					opener.sendMessage(Main.getPrefix() + "§7Erfolg!");
@@ -63,7 +62,7 @@ public class DiscordBotGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(BotLauncher.getDiscordBot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+				if(Main.getBotLauncher().getDiscordbot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 					opener.sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
 					return;
 				}
