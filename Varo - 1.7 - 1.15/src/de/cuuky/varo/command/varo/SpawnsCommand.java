@@ -9,7 +9,7 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.spawns.spawn.SpawnType;
+import de.cuuky.varo.utils.varo.LocationFormat;
 
 public class SpawnsCommand extends VaroCommand {
 
@@ -19,17 +19,19 @@ public class SpawnsCommand extends VaroCommand {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onCommand(CommandSender sender, final VaroPlayer vp, final Command cmd, final String label, final String[] args) {
+	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Command§7§l:");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set [Zahl/Spieler]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete [Zahl/Spieler] - (Löscht den Spawneintrag und den Spawn in der Welt)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set <Zahl/Spieler>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete <Zahl/Spieler> - (Löscht den Spawneintrag und den Spawn in der Welt)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> <set/remove> [Spieler]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
-			sender.sendMessage(Main.getPrefix() + "-");
+			sender.sendMessage(Main.getPrefix() + "------");
 			sender.sendMessage(Main.getPrefix() + "/varo spawns generate kann dir deine Spawns entweder nach Anzahl oder den eingetragenen Teams oder Spielern generieren.\n" + "Der Unterschied zwischen 'player' und 'team' ist, dass bei 'team' auch die Teams bei der Sortierung berücksichtigt werden.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for number: §7/varo spawns generate 30 40 STONE_SLAB");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for number: §7/varo spawns generate 30 team STONE_SLAB");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for players: §7/varo spawns generate auto team");
+			sender.sendMessage(Main.getPrefix() + "------");
 			return;
 		}
 
@@ -90,7 +92,7 @@ public class SpawnsCommand extends VaroCommand {
 
 			Player player = (Player) sender;
 			if(args.length == 1) {
-				final Spawn spawn = new Spawn(SpawnType.NUMBERS, player.getLocation());
+				Spawn spawn = new Spawn(player.getLocation());
 				player.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getNumber() + " §7erfolgreich erstellt!");
 			} else if(args.length == 2) {
 				int spawnNumber = -1;
@@ -103,13 +105,13 @@ public class SpawnsCommand extends VaroCommand {
 				} catch(NumberFormatException e) {}
 
 				if(spawnNumber != -1) {
-					final Spawn oldSpawn = Spawn.getSpawn(spawnNumber);
+					Spawn oldSpawn = Spawn.getSpawn(spawnNumber);
 					if(oldSpawn != null) {
 						oldSpawn.delete();
 						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + spawnNumber + " §7wurde entfernt, um für den neuen Platz zu machen.");
 					}
 
-					final Spawn spawn = new Spawn(SpawnType.NUMBERS, spawnNumber, player.getLocation());
+					Spawn spawn = new Spawn(spawnNumber, player.getLocation());
 					sender.sendMessage(Main.getPrefix() + "Spawn " + Main.getColorCode() + spawn.getNumber() + " §7gesetzt!");
 				} else {
 					VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
@@ -121,10 +123,10 @@ public class SpawnsCommand extends VaroCommand {
 					Spawn oldSpawn = Spawn.getSpawn(varoplayer);
 					if(oldSpawn != null) {
 						oldSpawn.delete();
-						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + spawnNumber + " §7wurde entfernt, um für den neuen Platz zu machen.");
+						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + oldSpawn.getNumber() + " §7wurde entfernt, um für den neuen Platz zu machen.");
 					}
 
-					Spawn spawn = new Spawn(SpawnType.PLAYER, varoplayer, player.getLocation());
+					Spawn spawn = new Spawn(varoplayer, player.getLocation());
 					sender.sendMessage(Main.getPrefix() + "Spielerspawn " + Main.getColorCode() + spawn.getNumber() + " §7für den Spieler " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
 				}
 			} else
@@ -142,9 +144,8 @@ public class SpawnsCommand extends VaroCommand {
 			}
 
 			if(args[1].equalsIgnoreCase("@a")) {
-				for(Spawn spawn : Spawn.getSpawnsClone()) {
+				for(Spawn spawn : Spawn.getSpawnsClone())
 					spawn.delete();
-				}
 
 				sender.sendMessage(Main.getPrefix() + "Alle Spawns erfolgreich entfernt!");
 				return;
@@ -187,6 +188,47 @@ public class SpawnsCommand extends VaroCommand {
 			}
 			spawn.delete();
 			return;
+		} else if(args[0].equalsIgnoreCase("player")) {
+			if(args.length < 3) {
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> <set/remove> [Spieler]");
+				return;
+			}
+
+			int spawnNumber = -1;
+			try {
+				spawnNumber = Integer.valueOf(args[1]);
+				if(!(spawnNumber > 0)) {
+					sender.sendMessage(Main.getPrefix() + "Spawn Zahl muss positiv sein!");
+					return;
+				}
+			} catch(NumberFormatException e) {}
+
+			Spawn spawn = Spawn.getSpawn(spawnNumber);
+			if(spawn == null) {
+				sender.sendMessage(Main.getPrefix() + "Spawn konnte nicht gefunden werden!");
+				return;
+			}
+
+			if(args[2].equalsIgnoreCase("set")) {
+				if(args.length < 4) {
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> set [Spieler]");
+					return;
+				}
+
+				VaroPlayer varoplayer = VaroPlayer.getPlayer(args[3]);
+				if(varoplayer == null) {
+					sender.sendMessage(Main.getPrefix() + "Spieler oder Zahl nicht gültig!");
+					return;
+				}
+
+				spawn.setPlayer(varoplayer);
+				sender.sendMessage(Main.getPrefix() + "Spieler von Spawn " + Main.getColorCode() + spawn.getNumber() + " §7erfolgreich auf " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
+			} else if(args[2].equalsIgnoreCase("remove")) {
+				spawn.setPlayer(null);
+
+				sender.sendMessage(Main.getPrefix() + "Spieler von Spawn " + Main.getColorCode() + spawn.getNumber() + " §7erfolgreich entfernt!");
+			}
+
 		} else if(args[0].equalsIgnoreCase("list")) {
 			if(Spawn.getSpawns().isEmpty()) {
 				sender.sendMessage(Main.getPrefix() + "Keine Spawns gefunden!");
@@ -196,8 +238,7 @@ public class SpawnsCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§lEine Liste aller " + Main.getColorCode() + "§lSpawns§7§l:");
 			for(Spawn spawn : Spawn.getSpawns()) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getNumber() + "§7: ");
-				sender.sendMessage(Main.getPrefix() + "§7Typ: " + Main.getColorCode() + spawn.getType().toString());
-				sender.sendMessage(Main.getPrefix() + "§7Location: X:" + Main.getColorCode() + spawn.getLocation().getBlockX() + " §7Y: " + Main.getColorCode() + spawn.getLocation().getBlockY() + " §7Z: " + Main.getColorCode() + spawn.getLocation().getBlockZ());
+				sender.sendMessage(Main.getPrefix() + "§7Location: " + new LocationFormat(spawn.getLocation()).format("§7X§8: " + Main.getColorCode() + "x §7Y§8: " + Main.getColorCode() + "y §7Z§8: " + Main.getColorCode() + "z §7in " + Main.getColorCode() + "world"));
 				sender.sendMessage(Main.getPrefix() + "§7Spieler: " + Main.getColorCode() + (spawn.getPlayer() != null ? spawn.getPlayer().getName() : "Keinen"));
 				sender.sendMessage(Main.getPrefix());
 			}

@@ -12,7 +12,6 @@ import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.spawns.spawn.SpawnType;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Materials;
@@ -40,9 +39,6 @@ public class Spawn implements VaroSerializeable {
 	@VaroSerializeField(path = "playerId")
 	private int playerId;
 
-	@VaroSerializeField(path = "type")
-	private SpawnType type;
-
 	private Entity armorStand;
 	private VaroPlayer player;
 
@@ -50,21 +46,7 @@ public class Spawn implements VaroSerializeable {
 		spawns.add(this);
 	}
 
-	public Spawn(SpawnType type, int number, Location location) {
-		if(getSpawn(number) != null)
-			getSpawn(number).remove();
-
-		this.type = type;
-		this.number = number;
-		this.location = location;
-
-		setNameTag();
-
-		spawns.add(this);
-	}
-
-	public Spawn(SpawnType type, Location location) {
-		this.type = type;
+	public Spawn(Location location) {
 		this.number = generateId();
 		this.location = location;
 
@@ -73,11 +55,22 @@ public class Spawn implements VaroSerializeable {
 		spawns.add(this);
 	}
 
-	public Spawn(SpawnType type, VaroPlayer player, Location location) {
-		this.type = type;
+	public Spawn(VaroPlayer player, Location location) {
 		this.number = generateId();
 		this.location = location;
 		this.player = player;
+
+		setNameTag();
+
+		spawns.add(this);
+	}
+
+	public Spawn(int number, Location location) {
+		if(getSpawn(number) != null)
+			getSpawn(number).remove();
+
+		this.number = number;
+		this.location = location;
 
 		setNameTag();
 
@@ -91,9 +84,9 @@ public class Spawn implements VaroSerializeable {
 
 		return i;
 	}
-	
+
 	private String getNametagName() {
-		return this.type == SpawnType.NUMBERS ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue(player).replace("%number%", String.valueOf(number));
+		return this.player == null ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue(player).replace("%number%", String.valueOf(number));
 	}
 
 	private void remove() {
@@ -119,8 +112,25 @@ public class Spawn implements VaroSerializeable {
 			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
 			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
 			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
-			nameTagName = getNametagName();
-			armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
+			
+			updateNametag();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateNametag() {
+		if(this.armorStand == null)
+			return;
+
+		try {
+			String nameTagName = getNametagName();
+			String entName = ((String) armorStand.getClass().getMethod("getCustomName").invoke(armorStand));
+
+			if(entName == null || !nameTagName.equals(entName)) {
+				this.nameTagName = nameTagName;
+				armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -139,7 +149,7 @@ public class Spawn implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(playerId != 0)
+		if(playerId != -1)
 			this.player = VaroPlayer.getPlayer(playerId);
 
 		if(nameTagLocation != null && nameTagName != null) {
@@ -156,19 +166,14 @@ public class Spawn implements VaroSerializeable {
 							this.armorStand.remove();
 							this.armorStand = null;
 						} else {
-							String nameTagName = getNametagName();
-							// Check if placeholder has changed
-							if(!nameTagName.equals(entName)) {
-								this.nameTagName = nameTagName;
-								armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
-							}
+							updateNametag();
 						}
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if(this.armorStand == null)
 				setNameTag();
 		}
@@ -176,7 +181,7 @@ public class Spawn implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {
-		this.playerId = player != null ? player.getId() : 0;
+		this.playerId = player != null ? player.getId() : -1;
 	}
 
 	public Location getLocation() {
@@ -195,12 +200,10 @@ public class Spawn implements VaroSerializeable {
 		return player;
 	}
 
-	public SpawnType getType() {
-		return type;
-	}
-
 	public void setPlayer(VaroPlayer player) {
 		this.player = player;
+		
+		updateNametag();
 	}
 
 	public static Spawn getSpawn(int number) {

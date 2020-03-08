@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.spawns.spawn.SpawnType;
 import de.cuuky.varo.utils.BlockUtils;
 import de.cuuky.varo.version.types.Materials;
 
@@ -33,7 +32,7 @@ public class SpawnGenerator {
 			i++;
 			Location newLoc = loc.clone();
 
-			new Spawn(SpawnType.NUMBERS, i, setSpawnAt(newLoc));
+			new Spawn(i, setSpawnAt(newLoc));
 		}
 	}
 
@@ -49,7 +48,7 @@ public class SpawnGenerator {
 					if(!player.getStats().isAlive())
 						continue;
 
-					new Spawn(SpawnType.PLAYER, player, setSpawnAt(locations.get(i)));
+					new Spawn(player, setSpawnAt(locations.get(i)));
 					i++;
 				}
 			}
@@ -59,7 +58,7 @@ public class SpawnGenerator {
 			if(Spawn.getSpawn(player) != null)
 				continue;
 
-			new Spawn(SpawnType.PLAYER, player, setSpawnAt(locations.get(i)));
+			new Spawn(player, setSpawnAt(locations.get(i)));
 			i++;
 		}
 	}

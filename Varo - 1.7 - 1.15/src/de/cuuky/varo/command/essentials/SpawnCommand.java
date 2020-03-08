@@ -9,13 +9,12 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class SpawnCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-		Location loc = VaroUtils.getMainWorld().getSpawnLocation();
+		Location loc = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation();
 		if(!(sender instanceof Player)) {
 			if(loc == null)
 				sender.sendMessage(Main.getPrefix() + "§7Main World not found!");
