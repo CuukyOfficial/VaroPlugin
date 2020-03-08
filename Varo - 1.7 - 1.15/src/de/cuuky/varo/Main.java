@@ -137,10 +137,6 @@ public class Main extends JavaPlugin {
 		return CONSOLE_PREFIX;
 	}
 
-	public static String getContributors() {
-		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
-	}
-
 	public static void setVaroGame(VaroGame varoGame) {
 		Main.varoGame = varoGame;
 	}
@@ -167,6 +163,10 @@ public class Main extends JavaPlugin {
 
 	public static String getPluginName() {
 		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
+	}
+	
+	public static String getContributors() {
+		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
 	}
 
 	public static String getPrefix() {
