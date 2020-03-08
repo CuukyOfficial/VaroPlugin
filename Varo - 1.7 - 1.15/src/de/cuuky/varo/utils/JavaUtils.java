@@ -176,7 +176,7 @@ public final class JavaUtils {
 				continue;
 			}
 
-			if(c == '§' || c == '&') {
+			if(c == "§".toCharArray()[0] || c == "&".toCharArray()[0]) {
 				lastPara = true;
 				continue;
 			}
