@@ -47,6 +47,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		long timestamp = System.currentTimeMillis();
+		
 		System.out.println("############################################################################");
 		System.out.println("#                                                                          #");
 		System.out.println("#  #     #                         ######                                  #");
@@ -87,7 +89,7 @@ public class Main extends JavaPlugin {
 		if(failed)
 			return;
 
-		System.out.println(CONSOLE_PREFIX + "Enabled!");
+		System.out.println(CONSOLE_PREFIX + "Enabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onEnable();
