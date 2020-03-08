@@ -113,17 +113,17 @@ public class ScoreboardHandler implements BoardHandler {
 
 		scoreboard.add("%space%");
 		scoreboard.add("&7Team&8:");
-		scoreboard.add("&3%team%");
+		scoreboard.add("%colorcode%%team%");
 		scoreboard.add("%space%");
 		scoreboard.add("&7Kills&8:");
-		scoreboard.add("&3%kills%");
+		scoreboard.add("%colorcode%%kills%");
 		scoreboard.add("%space%");
 		scoreboard.add("&7Zeit&8:");
-		scoreboard.add("&3%min%&8:&3%sec%");
+		scoreboard.add("%colorcode%%min%&8:%colorcode%%sec%");
 		scoreboard.add("%space%");
-		scoreboard.add("&7Online: &3%online%");
-		scoreboard.add("&7Remaining: &3%remaining%");
-		scoreboard.add("&7Players: &3%players%");
+		scoreboard.add("&7Online: %colorcode%%online%");
+		scoreboard.add("&7Remaining: %colorcode%%remaining%");
+		scoreboard.add("&7Players: %colorcode%%players%");
 		scoreboard.add("%space%");
 
 		cfg.addDefault("header", "%projectname%");

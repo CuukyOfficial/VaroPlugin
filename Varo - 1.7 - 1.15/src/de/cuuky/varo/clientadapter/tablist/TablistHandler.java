@@ -75,10 +75,11 @@ public class TablistHandler implements BoardHandler {
 		footer.add("&7Registriert: %colorcode%%players%");
 		footer.add("&7Lebend: %colorcode%%remaining%");
 		footer.add("&7Online: %colorcode%%online%");
+		footer.add(" ");
 		footer.add("&7Plugin by %colorcode%Cuuky");
 		footer.add(" ");
-		footer.add("&c%currDay%&7.&c%currMonth%&7.&c%currYear%");
-		footer.add("&c%currHour%&7:&c%currMin%&7:&c%currSec%");
+		footer.add("%colorcode%%currDay%&7.%colorcode%%currMonth%&7.%colorcode%%currYear%");
+		footer.add("%colorcode%%currHour%&7:%colorcode%%currMin%&7:%colorcode%%currSec%");
 		footer.add(" ");
 		footer.add("&7------------------------");
 
