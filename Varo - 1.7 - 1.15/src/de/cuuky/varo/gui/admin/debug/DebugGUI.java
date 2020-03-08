@@ -15,7 +15,7 @@ import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.gui.utils.chat.ChatHookListener;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.utils.varo.LocationFormat;
 import de.cuuky.varo.version.types.Materials;
 
 public class DebugGUI extends SuperInventory {
@@ -76,7 +76,7 @@ public class DebugGUI extends SuperInventory {
 			public void run() {
 				String post = "";
 				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
-					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? VaroUtils.formatLocation(vp.getStats().getLastLocation(), "X:x Y:y Z:z in world") : "/");
+					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? new LocationFormat(vp.getStats().getLastLocation()).format("X:x Y:y Z:z in world") : "/");
 
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, post);
 			}

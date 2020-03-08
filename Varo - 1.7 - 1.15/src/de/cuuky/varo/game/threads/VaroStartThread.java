@@ -23,7 +23,6 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
 
@@ -43,8 +42,8 @@ public class VaroStartThread implements Runnable {
 			return;
 
 		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = VaroUtils.getMainWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = VaroUtils.getMainWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
@@ -146,7 +145,7 @@ public class VaroStartThread implements Runnable {
 			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
 			
 			fillChests();
-			VaroUtils.getMainWorld().strikeLightningEffect(VaroUtils.getMainWorld().getSpawnLocation());
+			Main.getVaroGame().getVaroWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation());
 			
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());

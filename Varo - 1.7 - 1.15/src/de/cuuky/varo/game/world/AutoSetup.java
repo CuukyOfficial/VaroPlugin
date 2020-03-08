@@ -16,7 +16,6 @@ import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -30,7 +29,7 @@ public class AutoSetup {
 	}
 	
 	private void setupPlugin() {
-		World world = VaroUtils.getMainWorld();
+		World world = Main.getVaroGame().getVaroWorld().getWorld();
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 

@@ -1,51 +1,36 @@
 package de.cuuky.varo.data;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.InvalidDescriptionException;
-import org.bukkit.plugin.InvalidPluginException;
-import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
-import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.clientadapter.tablist.TablistHandler;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.data.plugin.PluginLoader;
+import de.cuuky.varo.data.presets.PresetLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
 import de.cuuky.varo.game.VaroGameHandler;
 import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.list.VaroListManager;
-import de.cuuky.varo.listener.PermissionSendListener;
 import de.cuuky.varo.logger.VaroLoggerManager;
 import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
-import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.threads.daily.DailyTimer;
 import de.cuuky.varo.utils.varo.OutSideTimeChecker;
+import de.cuuky.varo.utils.varo.ServerPropertiesReader;
 import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class DataManager {
-
-	private static final int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
-
-	private boolean doSave;
 
 	private ConfigHandler configHandler;
 	private VaroGameHandler varoGameHandler;
@@ -62,23 +47,27 @@ public class DataManager {
 	private VaroLoggerManager varoLoggerManager;
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
+	private ServerPropertiesReader propertiesReader;
+	private PluginLoader pluginLoader;
+	
+	private boolean doSave;
 
 	public DataManager() {
 		Main.setDataManager(this);
 		
 		load();
-		loadPlugins();
-
 		startAutoSave();
+		
 		doSave = true;
 	}
 
 	private void load() {
 		ConfigFailureDetector.detectConfig();
 
-		copyDefaultPresets();
+		new PresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
+		this.propertiesReader = new ServerPropertiesReader();
 		this.scoreboardHandler = new ScoreboardHandler();
 		this.tablistHandler = new TablistHandler();
 		this.varoGameHandler = new VaroGameHandler();
@@ -97,86 +86,8 @@ public class DataManager {
 		VaroUtils.setWorldToTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
-	}
-
-	private void copyDefaultPresets() {
-		try {
-			ZipInputStream zip = new ZipInputStream(new FileInputStream(Main.getInstance().getThisFile()));
-
-			ZipEntry e = null;
-			while((e = zip.getNextEntry()) != null) {
-				String name = e.getName();
-				e.isDirectory();
-				if(name.startsWith("presets")) {
-					File file = new File("plugins/Varo/" + name);
-					if(e.isDirectory()) {
-						file.mkdir();
-						continue;
-					}
-
-					if(!file.exists()) {
-						new File(file.getParent()).mkdirs();
-						file.createNewFile();
-					} else
-						continue;
-
-					FileOutputStream out = new FileOutputStream(file);
-
-					byte[] byteBuff = new byte[1024];
-					int bytesRead = 0;
-					while((bytesRead = zip.read(byteBuff)) != -1) {
-						out.write(byteBuff, 0, bytesRead);
-					}
-
-					out.flush();
-					out.close();
-				}
-			}
-
-			zip.close();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void loadPlugins() {
-		boolean discordNewDownloadFailed = false;
-		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
-			try {
-				VaroDiscordBot.getClassName();
-			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
-				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
-				discordNewDownloadFailed = !loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
-			}
-		}
-
-		boolean telegramNewDownloadFailed = false;
-		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
-			try {
-				VaroTelegramBot.getClassName();
-			} catch(NoClassDefFoundError | BootstrapMethodError e) {
-				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
-				telegramNewDownloadFailed = !loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
-			}
-		}
-
-		boolean labymodNewDownloadFailed = false;
-		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
-			try {
-				PermissionSendListener.getClassName();
-
-				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
-			} catch(NoClassDefFoundError e) {
-				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
-				labymodNewDownloadFailed = !loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
-			}
-		}
-
-		if(discordNewDownloadFailed || telegramNewDownloadFailed || labymodNewDownloadFailed) {
-			System.out.println(Main.getConsolePrefix() + "Beim Herunterladen / Initialisieren der Plugins ist ein Fehler aufgetreten.");
-			System.out.println(Main.getConsolePrefix() + "Der Server wird nun heruntergefahren. Bitte danach fahre den Server wieder hoch.");
-			Bukkit.getServer().shutdown();
-		}
+		
+		this.pluginLoader = new PluginLoader();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -188,29 +99,6 @@ public class DataManager {
 				save();
 			}
 		}, 12000, 12000);
-	}
-
-	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
-		try {
-			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);
-
-			System.out.println(Main.getConsolePrefix() + "Downloade plugin " + dataName + "...");
-
-			fd.startDownload();
-
-			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
-
-			System.out.println(Main.getConsolePrefix() + dataName + " wird nun geladen...");
-			Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName)));
-			System.out.println(Main.getConsolePrefix() + dataName + " wurde erfolgreich geladen!");
-			return true;
-		} catch(IOException | UnknownDependencyException | InvalidPluginException | InvalidDescriptionException e) {
-			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
-			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
-			e.printStackTrace();
-			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
-			return false;
-		}
 	}
 
 	public void reloadConfig() {
@@ -239,8 +127,16 @@ public class DataManager {
 		} catch(NoClassDefFoundError e) {}
 	}
 
+	public PluginLoader getPluginLoader() {
+		return this.pluginLoader;
+	}
+	
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
+	}
+	
+	public ServerPropertiesReader getPropertiesReader() {
+		return this.propertiesReader;
 	}
 	
 	public TablistHandler getTablistHandler() {

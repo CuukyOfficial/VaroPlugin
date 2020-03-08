@@ -12,7 +12,7 @@ import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.utils.varo.LocationFormat;
 
 public class GameOptionsGUI extends SuperInventory {
 
@@ -59,7 +59,7 @@ public class GameOptionsGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Main.getVaroGame().getLobby() != null ? VaroUtils.formatLocation(Main.getVaroGame().getLobby(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
+		linkItemTo(7, new ItemBuilder().displayname("§bSet Lobby Location").itemstack(new ItemStack(Material.DIAMOND_BLOCK)).lore(new String[] { "§7Current: " + (Main.getVaroGame().getLobby() != null ? new LocationFormat(Main.getVaroGame().getLobby()).format("x, y, z in world") : "§c-") }).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -67,7 +67,7 @@ public class GameOptionsGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Set World Spawn").itemstack(new ItemStack(Material.BEACON)).lore(new String[] { "§7Current: " + (opener.getWorld().getSpawnLocation() != null ? VaroUtils.formatLocation(opener.getWorld().getSpawnLocation(), "x, y, z in world") : "§c-") }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§2Set World Spawn").itemstack(new ItemStack(Material.BEACON)).lore(new String[] { "§7Current: " + (opener.getWorld().getSpawnLocation() != null ? new LocationFormat(opener.getWorld().getSpawnLocation()).format("x, y, z in world") : "§c-") }).build(), new Runnable() {
 
 			@Override
 			public void run() {

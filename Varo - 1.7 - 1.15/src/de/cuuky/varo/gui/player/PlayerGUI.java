@@ -13,7 +13,7 @@ import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.utils.varo.LocationFormat;
 import de.cuuky.varo.version.types.Materials;
 
 public class PlayerGUI extends SuperInventory {
@@ -60,7 +60,7 @@ public class PlayerGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? VaroUtils.formatLocation(target.getStats().getLastLocation(), "x, y, z in world") : "/") }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormat(target.getStats().getLastLocation()).format("x, y, z in world") : "/") }).build(), new Runnable() {
 
 			@Override
 			public void run() {

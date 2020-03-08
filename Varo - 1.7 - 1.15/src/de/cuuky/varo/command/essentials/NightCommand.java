@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
-import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class NightCommand implements CommandExecutor {
 
@@ -18,11 +18,8 @@ public class NightCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(sender instanceof Player)
-			((Player) sender).getWorld().setTime(13000);
-		else
-			VaroUtils.getMainWorld().setTime(13000);
-
+		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getVaroGame().getVaroWorld().getWorld();
+		world.setTime(13000);
 		sender.sendMessage(Main.getPrefix() + "Es ist jetzt " + Main.getColorCode() + "Nacht§7!");
 		return false;
 	}

@@ -1,12 +1,8 @@
 package de.cuuky.varo.utils.varo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.World;
 
 import de.cuuky.varo.Main;
@@ -25,37 +21,6 @@ public final class VaroUtils {
 	}
 
 	private static int worldToTimeID = 0;
-
-	public static String formatLocation(Location location, String unformatted) {
-		return unformatted.replace("x", String.valueOf(location.getBlockX())).replace("y", String.valueOf(location.getBlockY())).replace("z", String.valueOf(location.getBlockZ())).replace("world", location.getWorld().getName());
-	}
-
-	public static World getMainWorld() {
-		return Bukkit.getWorld((String) VaroUtils.readServerProperties("level-name"));
-	}
-
-	public static Location getTeleportLocation() {
-		return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : getMainWorld().getSpawnLocation().add(0, 5, 0);
-	}
-
-	public static Object readServerProperties(String key) {
-		try {
-			Scanner scanner = new Scanner(new File("server.properties"));
-			while(scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				if(!line.split("=")[0].equals(key))
-					continue;
-
-				scanner.close();
-				return line.split("=")[1];
-			}
-
-			scanner.close();
-		} catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	public static void setWorldToTime() {
 		if(!ConfigEntry.ALWAYS_TIME.isIntActivated())

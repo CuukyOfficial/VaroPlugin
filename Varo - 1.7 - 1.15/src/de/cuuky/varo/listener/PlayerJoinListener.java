@@ -24,7 +24,6 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
-import de.cuuky.varo.utils.varo.VaroUtils;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -60,7 +59,7 @@ public class PlayerJoinListener implements Listener {
 			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
-				player.teleport(VaroUtils.getTeleportLocation());
+				player.teleport(Main.getVaroGame().getVaroWorld().getTeleportLocation());
 
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {});
@@ -93,7 +92,7 @@ public class PlayerJoinListener implements Listener {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown =  massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
-					player.teleport(VaroUtils.getMainWorld().getSpawnLocation());
+					player.teleport(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation());
 				}
 			}
 

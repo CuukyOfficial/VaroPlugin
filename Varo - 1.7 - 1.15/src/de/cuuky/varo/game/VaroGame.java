@@ -94,7 +94,7 @@ public class VaroGame implements VaroSerializeable {
 		}
 
 		if(ConfigEntry.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-			new SpawnGenerator(VaroUtils.getMainWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
+			new SpawnGenerator(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
 			Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
 		}
 
