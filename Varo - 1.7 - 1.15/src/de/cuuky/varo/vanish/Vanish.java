@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
 
-@SuppressWarnings("deprecation")
 public class Vanish {
 
 	private static class VanishListener implements Listener {

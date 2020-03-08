@@ -14,7 +14,7 @@ public enum BukkitVersion {
 
 	private int identifier;
 
-	BukkitVersion(int identifier) {
+	private BukkitVersion(int identifier) {
 		this.identifier = identifier;
 	}
 
