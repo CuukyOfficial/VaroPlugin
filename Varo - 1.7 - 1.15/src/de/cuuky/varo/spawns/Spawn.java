@@ -214,35 +214,12 @@ public class Spawn implements VaroSerializeable {
 		return null;
 	}
 
-	public static Spawn getSpawn(Location location) {
-		for(Spawn spawn : spawns) {
-			if(spawn.getLocation().distance(location) < 1)
-				continue;
-
-			return spawn;
-		}
-
-		return null;
-	}
-
 	public static Spawn getSpawn(VaroPlayer player) {
 		for(Spawn spawn : spawns) {
 			if(spawn.getPlayer() == null || !spawn.getPlayer().equals(player))
 				continue;
 
 			return spawn;
-		}
-
-		return null;
-	}
-
-	public static ArrayList<Spawn> getSpawns(SpawnType type) {
-		ArrayList<Spawn> spawns = new ArrayList<>();
-		for(Spawn spawn : spawns) {
-			if(spawn.getType() != type)
-				continue;
-
-			spawns.add(spawn);
 		}
 
 		return null;
