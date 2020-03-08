@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.threads.LagCounter;
 
 public class MetricsLoader {
 	
@@ -49,13 +48,6 @@ public class MetricsLoader {
 					}
 
 					return valueMap;
-				}
-			}));
-
-			metrics.addCustomChart(new Metrics.SingleLineChart("serverTps", new Callable<Integer>() {
-				@Override
-				public Integer call() throws Exception {
-					return (int) Math.round(LagCounter.getTPS());
 				}
 			}));
 		} catch(Throwable e) {
