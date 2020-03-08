@@ -23,12 +23,12 @@ public enum ConfigMessages {
 	ALERT_DISCORD_DEATH("Alert.death", "%player% ist gestorben! Grund: %reason%"),
 
 	ALERT_DISCORD_KILL("Alert.kill", "%player% wurde von %killer% getötet!"),
-	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nAufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
-	ALERT_FIRST_STRIKE_NEVER_ONLINE("Alert.firstStrikeNeverOnline", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nDer Spieler war noch nicht online und wird an den Spawn-Koordinaten spawnen: %pos%!"),
+	ALERT_FIRST_STRIKE("Alert.firstStrike", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %reason%\nAufgrund dessen sind hier die derzeiten Koordinaten: %pos%!"),
+	ALERT_FIRST_STRIKE_NEVER_ONLINE("Alert.firstStrikeNeverOnline", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %reason%\nDer Spieler war noch nicht online und wird an den Spawn-Koordinaten spawnen: %pos%!"),
 	// ALERTS
 	ALERT_GAME_STARTED("Alert.gameStarted", "%projectname% wurde gestartet!"),
 
-	ALERT_GENERAL_STRIKE("Alert.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%"),
+	ALERT_GENERAL_STRIKE("Alert.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Der Strike wurde von %striker% gegeben. Begründung: %reason%"),
 	ALERT_JOIN_FINALE("Alert.finale", "%player% &7hat den Server zum Finale betreten."),
 	ALERT_KICKED_PLAYER("Alert.kickedPlayer", "%player% wurde gekickt!"),
 	ALERT_NEW_SESSIONS("Alert.newSessions", "Es wurden %newSessions% neue Folgen an die Spieler gegeben!"),
@@ -45,10 +45,10 @@ public enum ConfigMessages {
 
 	ALERT_PLAYER_QUIT("Alert.playerQuit", "%player% hat das Spiel verlassen!"),
 	ALERT_PLAYER_RECONNECT("Alert.playerReconnect", "%player% hatte das Spiel vorzeitig verlassen und ist rejoint! %player% hat noch %seconds% Sekunden verbleibend!"),
-	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nAufgrund dessen wurde das Inventar geleert!"),
+	ALERT_SECOND_STRIKE("Alert.secondStrike", "%player% hat nun zwei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %reason%\nAufgrund dessen wurde das Inventar geleert!"),
 	ALERT_SWITCHED_NAME("Alert.switchedName", "%player% hat den Namen gewechselt und ist nun unter %newName% bekannt!"),
 	ALERT_TELEPORTED_TO_MIDDLE("Alert.teleportedToMiddle", "%player% wurde zur Mitte teleportiert!"),
-	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %strikeBegründung%\nDamit ist %player% aus %projectname% ausgeschieden!"),
+	ALERT_THRID_STRIKE("Alert.thirdStrike", "%player% hat nun drei Strikes. Der Strike wurde von %striker% gegeben. Begründung: %reason%\nDamit ist %player% aus %projectname% ausgeschieden!"),
 	ALERT_WINNER("Alert.win.player", "%player% hat %projectname% gewonnen! Gratulation!"),
 	ALERT_WINNER_TEAM("Alert.win.team", "%winnerPlayers% haben %projectname% gewonnen! Gratulation!"),
 
