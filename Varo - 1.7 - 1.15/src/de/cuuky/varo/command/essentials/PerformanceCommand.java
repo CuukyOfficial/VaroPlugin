@@ -25,7 +25,7 @@ public class PerformanceCommand implements CommandExecutor {
 
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§c§lPerformance Command§7§l:");
-			sender.sendMessage(Main.getPrefix() + "§c/performance clear §8- §7Führt einen RAM-Cleaner aus");
+			sender.sendMessage(Main.getPrefix() + "§c/performance clear §8- §7Fuehrt einen RAM-Cleaner aus");
 			sender.sendMessage(Main.getPrefix() + "§c/performance help §8- §7Zeigt Methoden zur Performanceverbesserung");
 			sender.sendMessage(Main.getPrefix() + "§c/performance entityclear §8- §7Entfernt Items auf dem Boden etc. (ausgenommen Spieler, ArmorStands, Tiere)");
 			sender.sendMessage(Main.getPrefix() + "§cTIPP: §7/usage zeigt die Ausnutzung deines Servers");
@@ -41,7 +41,7 @@ public class PerformanceCommand implements CommandExecutor {
 		} else if(args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(Main.getPrefix() + "Derzeitige TPS: §c" + Math.round(LagCounter.getTPS()) + "§7 - Normalwert §c18-20 §7TPS");
 
-			sender.sendMessage(Main.getPrefix() + "Folgende Einstellungen könnten die Performance vermindern - das Ausschalten erhoeht eventuell die Performance:");
+			sender.sendMessage(Main.getPrefix() + "Folgende Einstellungen koennten die Performance vermindern - das Ausschalten erhoeht eventuell die Performance:");
 			sender.sendMessage(Main.getPrefix());
 			for(ConfigEntry ce : ConfigEntry.values())
 				if(ce.isReducingPerformance() && (ce.getValue() instanceof Boolean && ce.getValueAsBoolean()))
@@ -53,8 +53,8 @@ public class PerformanceCommand implements CommandExecutor {
 					if(!(entity instanceof ArmorStand) && !(entity instanceof LivingEntity))
 						entities++;
 
-			sender.sendMessage(Main.getPrefix() + "Es sind §c" + entities + " §7Entities (ausgenommen Spieler, ArmorStands, Tiere) geladen - alle nicht-Spieler zu entfernen könnte die Performance erhöhen");
-			sender.sendMessage(Main.getPrefix() + "Es sind §c" + Bukkit.getPluginManager().getPlugins().length + " §7Plugins aktiviert - bitte alle nicht nötigen entfernen");
+			sender.sendMessage(Main.getPrefix() + "Es sind §c" + entities + " §7Entities (ausgenommen Spieler, ArmorStands, Tiere) geladen - alle nicht-Spieler zu entfernen koennte die Performance erhoehen");
+			sender.sendMessage(Main.getPrefix() + "Es sind §c" + Bukkit.getPluginManager().getPlugins().length + " §7Plugins aktiviert - bitte alle nicht noetigen entfernen");
 		} else if(args[0].equalsIgnoreCase("entityclear")) {
 			for(World world : Bukkit.getWorlds())
 				for(Entity entity : world.getEntities())

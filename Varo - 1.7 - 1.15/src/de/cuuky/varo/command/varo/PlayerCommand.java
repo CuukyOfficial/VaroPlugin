@@ -35,7 +35,7 @@ public class PlayerCommand extends VaroCommand {
 
 		if(args.length == 1 && VaroPlayer.getPlayer(args[0]) != null) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "§7Du musst Spieler sein, um diesen Command nutzen zu können!");
+				sender.sendMessage(Main.getPrefix() + "§7Du musst Spieler sein, um diesen Command nutzen zu koennen!");
 				return;
 			}
 
@@ -105,7 +105,7 @@ public class PlayerCommand extends VaroCommand {
 			else
 				vps.getStats().setState(PlayerState.DEAD);
 
-			sender.sendMessage(Main.getPrefix() + "§7" + vps.getName() + " §7erfolgreich getötet!");
+			sender.sendMessage(Main.getPrefix() + "§7" + vps.getName() + " §7erfolgreich getoetet!");
 			return;
 		} else if(args[0].equalsIgnoreCase("remove")) {
 			if(args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
@@ -152,8 +152,8 @@ public class PlayerCommand extends VaroCommand {
 					String newName;
 					try {
 						newName = UUIDUtils.getNamesChanged(arg);
-						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hieß, hat sich in §7" + newName + " §cumbenannt.");
-						sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufügen.");
+						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hiess, hat sich in §7" + newName + " §cumbenannt.");
+						sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufuegen.");
 					} catch(Exception f) {
 						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 					}
@@ -161,7 +161,7 @@ public class PlayerCommand extends VaroCommand {
 				}
 
 				new VaroPlayer(arg, uuid);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " §7wurde erfolgreich zu " + Main.getColorCode() + Main.getProjectName() + " §7hinzugefügt!");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " §7wurde erfolgreich zu " + Main.getColorCode() + Main.getProjectName() + " §7hinzugefuegt!");
 			}
 		} else if(args[0].equalsIgnoreCase("respawn")) {
 			if(args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
@@ -233,7 +233,7 @@ public class PlayerCommand extends VaroCommand {
 				lastPlayerNextSite = playerPages;
 
 			if(page < playerPages)
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player list " + (page + 1) + " §7für " + Main.getColorCode() + "Spieler §7 " + (page * 50 + 1) + " bis " + lastPlayerNextSite);
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player list " + (page + 1) + " §7fuer " + Main.getColorCode() + "Spieler §7 " + (page * 50 + 1) + " bis " + lastPlayerNextSite);
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7Player/Command not found! §7Type /player for more.");
 		return;

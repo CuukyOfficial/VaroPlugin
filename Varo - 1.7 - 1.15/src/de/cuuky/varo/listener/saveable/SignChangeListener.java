@@ -64,7 +64,7 @@ public class SignChangeListener implements Listener {
 			}
 
 			if(sorted.size() >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt()) {
-				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten für das Team " + Main.getColorCode() + player.getTeam().getName() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
+				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten fuer das Team " + Main.getColorCode() + player.getTeam().getName() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 				e.setCancelled(true);
 				return;
 			}
@@ -120,7 +120,7 @@ public class SignChangeListener implements Listener {
 
 			if(ConfigEntry.PLAYER_FURNACE_LIMIT.isIntActivated())
 				if(sorted.size() >= ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
-					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces für das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
+					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces fuer das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
 					e.setCancelled(true);
 					return;
 				}

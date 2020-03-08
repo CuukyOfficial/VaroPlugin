@@ -56,7 +56,7 @@ public class InventoryBackupGUI extends SuperInventory {
 			public void run() {
 				if(!backup.getVaroPlayer().isOnline()) {
 					backup.getVaroPlayer().getStats().setRestoreBackup(backup);
-					opener.sendMessage(Main.getPrefix() + "Inventar wird beim nächsten Betreten wiederhergestellt!");
+					opener.sendMessage(Main.getPrefix() + "Inventar wird beim naechsten Betreten wiederhergestellt!");
 					return;
 				}
 

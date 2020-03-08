@@ -11,7 +11,7 @@ import de.cuuky.varo.gui.admin.varoevents.VaroEventGUI;
 public class EventsCommand extends VaroCommand {
 
 	public EventsCommand() {
-		super("events", "Öffnet das Event Menü", "varo.events", "event", "scenario", "scenarios");
+		super("events", "Öffnet das Event Menue", "varo.events", "event", "scenario", "scenarios");
 	}
 
 	@Override

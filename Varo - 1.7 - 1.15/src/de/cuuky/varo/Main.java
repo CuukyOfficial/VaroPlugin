@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
+import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
@@ -72,7 +73,16 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
+			if(new ConfigFailureDetector().hasFailed()) {
+				failed = true;
+				Bukkit.getPluginManager().disablePlugin(Main.getInstance());
+				return;
+			}
+			
 			dataManager = new DataManager();
+			if(failed)
+				return;
+			
 			varoUpdater = new VaroUpdater();
 			botLauncher = new BotLauncher();
 			new MetricsLoader(this);
@@ -119,6 +129,14 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
+	}
+	
+	public void setFailed(boolean failed) {
+		this.failed = failed;
+	}
+	
+	public boolean isFailed() {
+		return this.failed;
 	}
 
 	public File getThisFile() {

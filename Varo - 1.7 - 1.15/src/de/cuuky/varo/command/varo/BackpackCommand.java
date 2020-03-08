@@ -82,7 +82,7 @@ public class BackpackCommand extends VaroCommand {
 		} else if(!ConfigEntry.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigEntry.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			teamBackPack(sender, vp, args, 0);
 		} else {
-			sender.sendMessage(Main.getPrefix() + "Rucksäcke sind nicht aktiviert!");
+			sender.sendMessage(Main.getPrefix() + "Rucksaecke sind nicht aktiviert!");
 		}
 	}
 }

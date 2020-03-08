@@ -71,7 +71,7 @@ public class VaroUpdater {
 		}
 
 		if(lastResult.getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
-			new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + lastResult.getVersionName() + ") ist verfügbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
+			new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + lastResult.getVersionName() + ") ist verfuegbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
 	}
 
 	public VaroUpdateResultSet checkForUpdates(boolean print) {

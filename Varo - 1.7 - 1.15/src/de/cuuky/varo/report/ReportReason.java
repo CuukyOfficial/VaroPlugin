@@ -9,7 +9,7 @@ import de.cuuky.varo.version.types.Materials;
 public enum ReportReason implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "CHAT")
-	CHAT("Chat", Materials.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhält."),
+	CHAT("Chat", Materials.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhaelt."),
 	
 	@VaroSerializeField(enumValue = "HACKING")
 	HACKING("Hacking", Materials.TNT.parseMaterial(), "Benutze dies, falls jemand hackt oder exploited."),

@@ -9,7 +9,6 @@ import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.clientadapter.tablist.TablistHandler;
-import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.data.plugin.PluginLoader;
@@ -62,8 +61,6 @@ public class DataManager {
 	}
 
 	private void load() {
-		ConfigFailureDetector.detectConfig();
-
 		new PresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();

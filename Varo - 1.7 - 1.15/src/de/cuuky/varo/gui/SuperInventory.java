@@ -34,8 +34,8 @@ public abstract class SuperInventory {
 	static {
 		guis = new ArrayList<>();
 
-		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
-		backwards = new ItemBuilder().displayname("§cSeite rückwärts").itemstack(new ItemStack(Material.ARROW)).build();
+		forward = new ItemBuilder().displayname("§aSeite vorwaerts").itemstack(new ItemStack(Material.ARROW)).build();
+		backwards = new ItemBuilder().displayname("§cSeite rueckwaerts").itemstack(new ItemStack(Material.ARROW)).build();
 		
 		fill_inventory = ConfigEntry.GUI_FILL_INVENTORY.getValueAsBoolean();
 		animations = ConfigEntry.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();
@@ -138,9 +138,9 @@ public abstract class SuperInventory {
 	 */
 	private String getBack() {
 		if(!homePage)
-			return "§4Zurück";
+			return "§4Zurueck";
 		else
-			return "§4Schließen";
+			return "§4Schliessen";
 	}
 
 	/*
@@ -155,7 +155,7 @@ public abstract class SuperInventory {
 	 * Set Back and Forwards
 	 */
 	private void setSwitcher() {
-		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("§4Zurück") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
+		inv.setItem(modifier.get(2), new ItemBuilder().displayname(getBack()).itemstack(getBack().equals("§4Zurueck") ? new ItemStack(Materials.STONE_BUTTON.parseMaterial()) : Materials.REDSTONE.parseItem()).build());
 		if(!hasMorePages)
 			return;
 

@@ -18,17 +18,17 @@ public class BorderCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
+			sender.sendMessage(Main.getPrefix() + "Nicht verfuegbar vor der 1.8!");
 			return false;
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(((Player) sender).getWorld()) : Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null)) + " §7Blöcke groß!");
+			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(((Player) sender).getWorld()) : Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null)) + " §7Bloecke gross!");
 			if(sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Blöcke von der Border entfernt!");
+				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Bloecke von der Border entfernt!");
 
 			if(sender.hasPermission("varo.setup")) {
-				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Größe der Border mit " + Main.getColorCode() + "/border <Größe> [Sekunden] §7setzen!");
+				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Groesse der Border mit " + Main.getColorCode() + "/border <Groesse> [Sekunden] §7setzen!");
 				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt");
 			}
 			return false;

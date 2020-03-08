@@ -12,7 +12,7 @@ import de.cuuky.varo.utils.JavaUtils;
 public class ConfigCommand extends VaroCommand {
 
 	public ConfigCommand() {
-		super("config", "Hauptbefehl für die Config", "varo.config", "configuration");
+		super("config", "Hauptbefehl fuer die Config", "varo.config", "configuration");
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class ConfigCommand extends VaroCommand {
 			for(ConfigEntry entry : ConfigEntry.values()) {
 				entry.setValue(entry.getDefaultValue(), true);
 			}
-			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Einträge zurückgesetzt!");
+			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Eintraege zurueckgesetzt!");
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Command '" + args[0] + "' not found! §7Type /config for help.");
 		} // TODO Nach set, reload und Änderung in GUI ein automatisches

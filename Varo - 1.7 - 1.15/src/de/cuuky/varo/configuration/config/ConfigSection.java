@@ -8,21 +8,21 @@ import de.cuuky.varo.version.types.Materials;
 
 public enum ConfigSection {
 
-	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivität eines Spielers vornehmen."),
+	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen."),
 
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
 
-	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksäcken"),
+	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksaecken"),
 
 	BORDER("Border", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
 
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
 
-	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich während des Kampfes ausloggt."),
+	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
 
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
 
-	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu früh disconnected."),
+	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
 
 	DISCORD("Discord", Material.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
 
@@ -30,7 +30,7 @@ public enum ConfigSection {
 
 	GUI("Gui", Materials.COMPASS.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
 
-	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen dürfen."),
+	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen."),
 
 	MAIN("Main", Material.LEVER, "Hier kannst du alle Haupteinstellungen vornehmen."),
 

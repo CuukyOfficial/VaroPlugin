@@ -90,12 +90,12 @@ public class VaroGame implements VaroSerializeable {
 
 		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
 			VaroUtils.doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
-			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufälligen Teampartner erhalten!");
+			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
 		}
 
 		if(ConfigEntry.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
 			new SpawnGenerator(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
-			Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
+			Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
 		}
 
 		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean()) {
@@ -179,7 +179,7 @@ public class VaroGame implements VaroSerializeable {
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
 		if(db != null && db.isEnabled()) {
 			if(db.getResultChannel() != null && db.isEnabled())
-				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getBotLauncher().getDiscordbot().getResultChannel());
+				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glueckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getBotLauncher().getDiscordbot().getResultChannel());
 
 			File file = new File("plugins/Varo/logs", "logs.yml");
 			if(file.exists())

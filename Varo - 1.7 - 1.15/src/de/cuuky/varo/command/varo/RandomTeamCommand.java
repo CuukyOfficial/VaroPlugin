@@ -11,13 +11,13 @@ import de.cuuky.varo.utils.varo.VaroUtils;
 public class RandomTeamCommand extends VaroCommand {
 
 	public RandomTeamCommand() {
-		super("randomteam", "Gibt allen Spielern, die noch kein Team haben, einen zufälligen Teampartner mit Größe", "varo.randomteam", "rt");
+		super("randomteam", "Gibt allen Spielern, die noch kein Team haben, einen zufaelligen Teampartner mit Groesse", "varo.randomteam", "rt");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vpsender, Command cmd, String label, String[] args) {
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/varo randomTeam <Teamgröße>");
+			sender.sendMessage(Main.getPrefix() + "§7/varo randomTeam <Teamgroesse>");
 			return;
 		}
 
@@ -30,7 +30,7 @@ public class RandomTeamCommand extends VaroCommand {
 		}
 
 		if(teamsize < 1) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Teamgröße muss mindestens 1 betragen.");
+			sender.sendMessage(Main.getPrefix() + "§7Die Teamgroesse muss mindestens 1 betragen.");
 			return;
 		} else {
 			VaroUtils.doRandomTeam(teamsize);

@@ -62,7 +62,7 @@ public class VaroStartThread implements Runnable {
 			}
 		}
 
-		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefüllt§7!");
+		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
 	}
 
 	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {

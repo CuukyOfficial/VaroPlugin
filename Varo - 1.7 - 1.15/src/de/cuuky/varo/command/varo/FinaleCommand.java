@@ -29,7 +29,7 @@ public class FinaleCommand extends VaroCommand {
 	private FinalState status;
 
 	public FinaleCommand() {
-		super("finale", "Hauptcommand für das Managen des Finales", "varo.finale");
+		super("finale", "Hauptcommand fuer das Managen des Finales", "varo.finale");
 		
 		this.status = FinalState.NONE;
 	}
@@ -106,9 +106,9 @@ public class FinaleCommand extends VaroCommand {
 			status = FinalState.JOIN_PHASE;
 			ConfigEntry.PLAY_TIME.setValue(-1, true);
 
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es können nun alle zum Finale joinen.");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es koennen nun alle zum Finale joinen.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
-			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getötet.");
+			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getoetet.");
 
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
 
@@ -118,7 +118,7 @@ public class FinaleCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "Der Join-Start wurde noch nicht aktiviert. Dies muss vor dem Hauptstart geschehen.");
 				return;
 			} else if(status == FinalState.COUNTDOWN_PHASE) {
-				sender.sendMessage(Main.getPrefix() + "Der Finale-Countdown läuft bereits.");
+				sender.sendMessage(Main.getPrefix() + "Der Finale-Countdown laeuft bereits.");
 				return;
 			} else if(status == FinalState.STARTED) {
 				sender.sendMessage(Main.getPrefix() + "Das Finale wurde bereits gestartet.");

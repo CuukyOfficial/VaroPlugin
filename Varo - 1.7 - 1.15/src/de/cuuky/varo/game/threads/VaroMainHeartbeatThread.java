@@ -56,7 +56,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
 						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 							vp.getStats().setCountdown(0);
-							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorueber!\n§7Versuche es morgen erneut");
 						}
 				}
 			}

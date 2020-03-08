@@ -11,7 +11,7 @@ import de.cuuky.varo.utils.varo.VaroUtils;
 public class SortCommand extends VaroCommand {
 
 	public SortCommand() {
-		super("sort", "Sortiert die Spieler in ihre Löcher", "varo.sort");
+		super("sort", "Sortiert die Spieler in ihre Loecher", "varo.sort");
 	}
 
 	@Override
@@ -27,10 +27,10 @@ public class SortCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");
 			break;
 		case NO_SPAWN_WITH_TEAM:
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loche bei den Teampartnern gefunden werden!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht fuer jeden Spieler ein Loche bei den Teampartnern gefunden werden!");
 			break;
 		case NO_SPAWN:
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht für jeden Spieler ein Loch gefunden werden!");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es konnte nicht fuer jeden Spieler ein Loch gefunden werden!");
 			break;
 		}
 	}

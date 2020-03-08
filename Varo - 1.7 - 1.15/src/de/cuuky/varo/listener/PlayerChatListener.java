@@ -57,7 +57,7 @@ public class PlayerChatListener implements Listener {
 			}
 		}
 		if(mentionsHack == true && ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
-			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Cheats und ähnliches mit §l/report");
+			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Cheats und aehnliches mit §l/report");
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);

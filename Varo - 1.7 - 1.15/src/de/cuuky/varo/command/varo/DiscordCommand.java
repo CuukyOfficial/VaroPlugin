@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.entities.User;
 public class DiscordCommand extends VaroCommand {
 
 	public DiscordCommand() {
-		super("discord", "Der Hauptbefehl für den DiscordBot", "varo.discord");
+		super("discord", "Der Hauptbefehl fuer den DiscordBot", "varo.discord");
 	}
 
 	@Override
@@ -64,11 +64,11 @@ public class DiscordCommand extends VaroCommand {
 
 			User user = Main.getBotLauncher().getDiscordbot().getJda().getUserById(reg.getUserId());
 			if(user == null) {
-				sender.sendMessage(Main.getPrefix() + "§7User für diesen Spieler nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "§7User fuer diesen Spieler nicht gefunden!");
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heißt: " + Main.getColorCode() + user.getName() + "§7 und die ID lautet " + Main.getColorCode() + user.getId() + "§7!");
+			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heisst: " + Main.getColorCode() + user.getName() + "§7 und die ID lautet " + Main.getColorCode() + user.getId() + "§7!");
 		} else if(args[0].equalsIgnoreCase("unlink")) {
 			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");

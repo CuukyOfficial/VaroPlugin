@@ -34,7 +34,7 @@ public class ItemCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fügt die Sachen der Listen hinzu, die du in der Hand hältst.");
+			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fuegt die Sachen der Listen hinzu, die du in der Hand haeltst.");
 			sender.sendMessage(Main.getPrefix() + "§7-----------------");
 			return;
 		}
@@ -91,13 +91,13 @@ public class ItemCommand extends VaroCommand {
 				for(int i = 0; i < Anzahl; i++) {
 					list.addItem(item);
 				}
-				sender.sendMessage(Main.getPrefix() + "Item erfolgreich " + String.valueOf(Anzahl) + " mal zu " + list.getLocation() + " hinzugefügt!");
+				sender.sendMessage(Main.getPrefix() + "Item erfolgreich " + String.valueOf(Anzahl) + " mal zu " + list.getLocation() + " hinzugefuegt!");
 			} else {
 				if(list.hasItem(item)) {
 					sender.sendMessage(Main.getPrefix() + "Auf dieser Liste kann ein item nicht mehrmals stehen.\n" + Main.getPrefix() + "Das item steht bereits auf dieser Liste.");
 					return;
 				} else {
-					sender.sendMessage(Main.getPrefix() + "Item erfolgreich zu " + list.getLocation() + " hinzugefügt!");
+					sender.sendMessage(Main.getPrefix() + "Item erfolgreich zu " + list.getLocation() + " hinzugefuegt!");
 					list.addItem(item);
 				}
 			}

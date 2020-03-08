@@ -28,7 +28,7 @@ public class SuroStart {
 		titles.add("§c%players% weitere Spieler auch!");
 		titles.add("§6Bist du bereit, §a%name%§6?");
 		titles.add("§aJa?");
-		titles.add("§6dann viel Glück bei...");
+		titles.add("§6dann viel Glueck bei...");
 		titles.add("§cMINECRAFT SURO!");
 		titles.add("§cWach auf!");
 		titles.add("§c10!");

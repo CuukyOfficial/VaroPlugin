@@ -34,18 +34,18 @@ public class InventoryListener implements Listener {
 				return;
 
 			switch(itemName) {
-			case "§aSeite vorwärts":
+			case "§aSeite vorwaerts":
 				inv.pageForwards();
 				inv.pageActionChanged(PageAction.PAGE_SWITCH_FORWARDS);
 				return;
-			case "§cSeite rückwärts":
+			case "§cSeite rueckwaerts":
 				inv.pageBackwards();
 				inv.pageActionChanged(PageAction.PAGE_SWITCH_FORWARDS);
 				return;
-			case "§4Schließen":
+			case "§4Schliessen":
 				inv.closeInventory();
 				return;
-			case "§4Zurück":
+			case "§4Zurueck":
 				inv.closeInventory();
 				inv.back();
 				return;

@@ -44,7 +44,7 @@ public class GamemodeCommand implements CommandExecutor {
 			try {
 				mode = Integer.valueOf(args[0]);
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Du hast keinen gültigen Gamemode angegeben!");
+				sender.sendMessage(Main.getPrefix() + "§7Du hast keinen gueltigen Gamemode angegeben!");
 				return false;
 			}
 
@@ -61,7 +61,7 @@ public class GamemodeCommand implements CommandExecutor {
 				break;
 			case 3:
 				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-					sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
+					sender.sendMessage(Main.getPrefix() + "Nicht verfuegbar vor der 1.8!");
 					return false;
 				}
 

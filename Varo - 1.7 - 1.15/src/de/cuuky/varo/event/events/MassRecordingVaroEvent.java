@@ -22,7 +22,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private boolean timerEnd = false;
 
 	public MassRecordingVaroEvent() {
-		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Lässt alle Spieler für eine Minute zusätzlich zu den normalen Folgen auf den Server" : "Lässt alle Spieler für " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusätzlich zu den normalen Folgen auf den Server");
+		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Laesst alle Spieler fuer eine Minute zusaetzlich zu den normalen Folgen auf den Server" : "Laesst alle Spieler fuer " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusaetzlich zu den normalen Folgen auf den Server");
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<Integer[]>();
@@ -103,7 +103,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle können für eine Minute joinen." : "Alle können für" + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
+			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 		}
 
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {

@@ -12,7 +12,7 @@ import de.cuuky.varo.gui.MainMenu;
 public class MenuCommand extends VaroCommand {
 
 	public MenuCommand() {
-		super("menu", "Öffnet das Menü", null, "gui", "settings");
+		super("menu", "Öffnet das Menue", null, "gui", "settings");
 	}
 
 	@Override

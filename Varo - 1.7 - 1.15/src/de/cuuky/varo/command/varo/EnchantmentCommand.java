@@ -34,8 +34,8 @@ public class EnchantmentCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo item Befehl blockt alle Items.");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fügt alle Verzauberungungen des Items, das du in der Hand hältst, der Liste hinzu.");
-			sender.sendMessage(Main.getPrefix() + "§7Alternativ sind auch Bücher möglich");
+			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fuegt alle Verzauberungungen des Items, das du in der Hand haeltst, der Liste hinzu.");
+			sender.sendMessage(Main.getPrefix() + "§7Alternativ sind auch Buecher moeglich");
 			sender.sendMessage(Main.getPrefix() + "§7--------------------");
 			return;
 		}
@@ -97,7 +97,7 @@ public class EnchantmentCommand extends VaroCommand {
 				}
 
 				list.addEnchantment(enc, encs.get(enc));
-				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich zu " + list.getLocation() + " hinzugefügt!");
+				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich zu " + list.getLocation() + " hinzugefuegt!");
 			} else if(args[1].equalsIgnoreCase("remove")) {
 				if(!list.hasEnchantment(enc, encs.get(enc))) {
 					sender.sendMessage(Main.getPrefix() + "Verzauberung '" + enc.getName() + " (" + encs.get(enc) + ")' steht nicht auf dieser Liste!");

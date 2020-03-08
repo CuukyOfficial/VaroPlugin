@@ -165,7 +165,7 @@ public final class VaroUtils {
 				}
 
 				if(teamMember.size() != teamSize)
-					vp.getPlayer().sendMessage(Main.getPrefix() + "§7Für dich wurden nicht genug" + Main.getColorCode() + " Teampartner §7gefunden!");
+					vp.getPlayer().sendMessage(Main.getPrefix() + "§7Fuer dich wurden nicht genug" + Main.getColorCode() + " Teampartner §7gefunden!");
 
 				String teamName = "";
 				for(VaroPlayer teamPl : teamMember)

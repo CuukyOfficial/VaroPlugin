@@ -107,7 +107,7 @@ public class AutoStartCommand extends VaroCommand {
 			}
 
 			Main.getVaroGame().getAutoStart().delay(delay);
-			sender.sendMessage(Main.getPrefix() + "§7Der Start wurde um " + Main.getColorCode() + delay + " §7Minuten verzögert!");
+			sender.sendMessage(Main.getPrefix() + "§7Der Start wurde um " + Main.getColorCode() + delay + " §7Minuten verzoegert!");
 		} else if(args[0].equalsIgnoreCase("info")) {
 			if(Main.getVaroGame().getAutoStart() == null)
 				sender.sendMessage(Main.getPrefix() + "AutoStart nicht aktiv");
@@ -115,7 +115,7 @@ public class AutoStartCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "AutoStart §aaktiv§7:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: §7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart()));
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: §7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgröße: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgroesse: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			}
 		} else
 			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart §7for help!");

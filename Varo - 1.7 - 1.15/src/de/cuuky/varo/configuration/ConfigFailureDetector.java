@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.yaml.snakeyaml.scanner.ScannerException;
@@ -14,17 +13,40 @@ import de.cuuky.varo.Main;
 
 public final class ConfigFailureDetector {
 
-	private static ArrayList<String> scan;
+	private static ArrayList<String> ignoreScan;
 
 	static {
-		scan = new ArrayList<>();
-		scan.add("stats");
+		ignoreScan = new ArrayList<>();
+		
+		ignoreScan.add("logs");
+		ignoreScan.add("presets");
+	}
+	
+	private boolean failed;
+	
+	public ConfigFailureDetector() {
+		detectConfig();
+	}
+	
+	private void detectConfig() {
+		File newFile = new File("plugins/Varo");
+		if(newFile.listFiles() == null)
+			newFile.mkdir();
+
+		if(scanDirectory(newFile)) {
+			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
+			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
+			
+			this.failed = true;
+		} else {
+			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes successfully!");
+		}
 	}
 
-	private static boolean scanDirectory(File newFile) {
+	private boolean scanDirectory(File newFile) {
 		for(File file : newFile.listFiles()) {
 			if(file.isDirectory()) {
-				if(!scan.contains(file.getName()))
+				if(ignoreScan.contains(file.getName()))
 					continue;
 
 				scanDirectory(file);
@@ -48,20 +70,11 @@ public final class ConfigFailureDetector {
 			}
 
 		}
+		
 		return false;
 	}
-
-	public static void detectConfig() {
-		File newFile = new File("plugins/Varo");
-		if(newFile.listFiles() == null)
-			newFile.mkdir();
-
-		if(scanDirectory(newFile)) {
-			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
-			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
-			Bukkit.getPluginManager().disablePlugin(Main.getInstance());
-		} else {
-			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes successfully!");
-		}
+	
+	public boolean hasFailed() {
+		return this.failed;
 	}
 }

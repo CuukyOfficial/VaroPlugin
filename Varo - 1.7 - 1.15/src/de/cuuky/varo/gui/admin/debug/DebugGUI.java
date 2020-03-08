@@ -43,7 +43,7 @@ public class DebugGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		linkItemTo(1, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Führt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen" }).build(), new Runnable() {
+		linkItemTo(1, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[] { "§7Fuehrt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen" }).build(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -61,7 +61,7 @@ public class DebugGUI extends SuperInventory {
 			}
 		});
 
-		linkItemTo(4, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[] { "§7Führt die Dinge aus, die sonst immer", "§7Nachts ausgeführt werden, wie Sessionreset" }).build(), new Runnable() {
+		linkItemTo(4, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[] { "§7Fuehrt die Dinge aus, die sonst immer", "§7Nachts ausgefuehrt werden, wie Sessionreset" }).build(), new Runnable() {
 
 			@Override
 			public void run() {

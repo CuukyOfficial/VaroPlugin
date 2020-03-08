@@ -14,7 +14,7 @@ import de.cuuky.varo.item.ItemBuilder;
 public class TeamRequestItem extends LobbyItem {
 
 	public TeamRequestItem() {
-		super(new ItemBuilder().lore(new String[] { "§7Mit diesem Item kannst du Spieler schlagen", "§7woraufhin sie in dein Team eingeladen werden!" }).itemstack(new ItemStack(Material.DIAMOND_SWORD)).displayname(Main.getColorCode() + "Schlagen §7für Team").build(), 0);
+		super(new ItemBuilder().lore(new String[] { "§7Mit diesem Item kannst du Spieler schlagen", "§7woraufhin sie in dein Team eingeladen werden!" }).itemstack(new ItemStack(Material.DIAMOND_SWORD)).displayname(Main.getColorCode() + "Schlagen §7fuer Team").build(), 0);
 	}
 
 	@Override

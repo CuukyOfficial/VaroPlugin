@@ -150,7 +150,7 @@ public class ConfigHandler {
 	public void testConfig() {
 		boolean shutdown = false;
 		if(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Rucksackes darf nicht mehr als 54 betragen.");
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Groesse des Rucksackes darf nicht mehr als 54 betragen.");
 			shutdown = true;
 		}
 
@@ -160,7 +160,7 @@ public class ConfigHandler {
 		}
 
 		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es dürfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es duerfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
 			shutdown = true;
 		}
 

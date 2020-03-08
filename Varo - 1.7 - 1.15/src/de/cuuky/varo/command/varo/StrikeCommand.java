@@ -39,7 +39,7 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			if(reason.isEmpty()) {
-				reason = "Ohne Begründung";
+				reason = "Ohne Begruendung";
 			}
 
 			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
@@ -105,7 +105,7 @@ public class StrikeCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: §7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));
 			}
 		} else
-			sender.sendMessage(Main.getPrefix() + "§7Nicht gefunden! " + Main.getColorCode() + "/strike §7für Hilfe.");
+			sender.sendMessage(Main.getPrefix() + "§7Nicht gefunden! " + Main.getColorCode() + "/strike §7fuer Hilfe.");
 		return;
 	}
 }

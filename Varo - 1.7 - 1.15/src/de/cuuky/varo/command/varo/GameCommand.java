@@ -12,7 +12,7 @@ import de.cuuky.varo.gui.admin.game.GameOptionsGUI;
 public class GameCommand extends VaroCommand {
 
 	public GameCommand() {
-		super("game", "Öffnet das Spieloptionen Menü", "varo.game");
+		super("game", "Öffnet das Spieloptionen Menue", "varo.game");
 	}
 
 	@Override

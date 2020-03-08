@@ -17,7 +17,7 @@ public class MoonGravityVaroEvent extends VaroEvent {
 	private PotionEffectType type;
 
 	public MoonGravityVaroEvent() {
-		super(VaroEventType.MOON_GRAVITY, Materials.STONE.parseMaterial(), "Mond-Gravitation\nVorsicht: Ab 1.13 möglich.");
+		super(VaroEventType.MOON_GRAVITY, Materials.STONE.parseMaterial(), "Mond-Gravitation\nVorsicht: Ab 1.13 moeglich.");
 
 		type = PotionEffectType.getByName("SLOW_FALLING");
 	}

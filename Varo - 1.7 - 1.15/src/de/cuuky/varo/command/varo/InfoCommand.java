@@ -15,7 +15,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 public class InfoCommand extends VaroCommand {
 
 	public InfoCommand() {
-		super("info", "Zeigt Info über das Plugin & Server", null, "plugin", "server", "support");
+		super("info", "Zeigt Info ueber das Plugin & Server", null, "plugin", "server", "support");
 	}
 
 	@Override
