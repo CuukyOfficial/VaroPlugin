@@ -1,7 +1,7 @@
 package de.cuuky.varo.configuration.placeholder;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.util.DateInfo;
@@ -118,7 +118,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue() {
-				return ConfigEntry.DISCORDBOT_INVITELINK.getValueAsString();
+				return ConfigSetting.DISCORDBOT_INVITELINK.getValueAsString();
 			}
 		};
 
@@ -126,7 +126,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue() {
-				return String.valueOf(ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt());
+				return String.valueOf(ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt());
 			}
 		};
 
@@ -288,7 +288,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return String.valueOf(VaroPlayerDisconnect.getDisconnect(player.getPlayer()) != null ? ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(player.getPlayer()).getDisconnects() : ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt());
+				return String.valueOf(VaroPlayerDisconnect.getDisconnect(player.getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(player.getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt());
 			}
 		};
 

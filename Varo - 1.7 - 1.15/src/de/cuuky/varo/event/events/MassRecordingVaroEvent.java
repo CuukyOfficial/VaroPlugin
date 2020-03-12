@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
@@ -22,7 +22,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private boolean timerEnd = false;
 
 	public MassRecordingVaroEvent() {
-		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Laesst alle Spieler fuer eine Minute zusaetzlich zu den normalen Folgen auf den Server" : "Laesst alle Spieler fuer " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusaetzlich zu den normalen Folgen auf den Server");
+		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Laesst alle Spieler fuer eine Minute zusaetzlich zu den normalen Folgen auf den Server" : "Laesst alle Spieler fuer " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusaetzlich zu den normalen Folgen auf den Server");
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<Integer[]>();
@@ -48,7 +48,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		for(Integer[] Speicher : countdowns) {
 			VaroPlayer vp = VaroPlayer.getPlayer(Speicher[0]);
 			vp.getStats().setCountdown(Speicher[1]);
-			if(Speicher[1] == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+			if(Speicher[1] == ConfigSetting.PLAY_TIME.getValueAsInt() * 60) {
 				if(vp.isOnline()) {
 					vp.setMassRecordingKick(true);
 
@@ -85,7 +85,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			Integer[] save = { vp.getId(), vp.getStats().getCountdown() };
 			countdowns.add(save);
-			vp.getStats().setCountdown(vp.getStats().getCountdown() + 60 * ConfigEntry.MASS_RECORDING_TIME.getValueAsInt());
+			vp.getStats().setCountdown(vp.getStats().getCountdown() + 60 * ConfigSetting.MASS_RECORDING_TIME.getValueAsInt());
 
 			vp.setalreadyHadMassProtectionTime(false);
 		}
@@ -99,11 +99,11 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
 		}
 
-		timer = ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() * 60;
+		timer = ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() * 60;
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigEntry.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
+			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 		}
 
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {

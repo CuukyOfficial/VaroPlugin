@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.spawns.Spawn;
@@ -23,7 +23,7 @@ public final class VaroUtils {
 	private static int worldToTimeID = 0;
 
 	public static void setWorldToTime() {
-		if(!ConfigEntry.ALWAYS_TIME.isIntActivated())
+		if(!ConfigSetting.ALWAYS_TIME.isIntActivated())
 			return;
 
 		if(worldToTimeID != 0) {
@@ -32,11 +32,11 @@ public final class VaroUtils {
 
 		worldToTimeID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
-			int time = ConfigEntry.ALWAYS_TIME.getValueAsInt();
+			int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
 
 			@Override
 			public void run() {
-				if(Main.getVaroGame().hasStarted() && !ConfigEntry.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
+				if(Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
 					Bukkit.getScheduler().cancelTask(worldToTimeID);
 					return;
 				}
@@ -104,8 +104,8 @@ public final class VaroUtils {
 					break;
 				}
 
-				if(ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
-					if(playerTeamRegistered < ConfigEntry.TEAM_PLACE_SPAWN.getValueAsInt()) {
+				if(ConfigSetting.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
+					if(playerTeamRegistered < ConfigSetting.TEAM_PLACE_SPAWN.getValueAsInt()) {
 						if(players.contains(teamPlayer)) {
 							teamPlayer.cleanUpPlayer();
 							teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());

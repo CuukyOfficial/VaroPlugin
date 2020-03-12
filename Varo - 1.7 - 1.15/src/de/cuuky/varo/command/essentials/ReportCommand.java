@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.report.ReportGUI;
 import de.cuuky.varo.gui.report.ReportListGUI;
@@ -16,7 +16,7 @@ public class ReportCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
+		if(!ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "§cReports §7wurden in der Config deaktiviert!");
 			return false;
 		}

@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class MetricsLoader {
 	
@@ -27,9 +27,9 @@ public class MetricsLoader {
 				@Override
 				public Map<String, Integer> call() throws Exception {
 					Map<String, Integer> map = new HashMap<>();
-					for(ConfigEntry entry : ConfigEntry.values()) {
+					for(ConfigSetting entry : ConfigSetting.values()) {
 						if(entry.getValue() instanceof Boolean) {
-							map.put(entry.getName(), entry.getValueAsBoolean() ? 1 : 0);
+							map.put(entry.getPath(), entry.getValueAsBoolean() ? 1 : 0);
 						}
 					}
 
@@ -41,9 +41,9 @@ public class MetricsLoader {
 				@Override
 				public Map<String, Integer> call() throws Exception {
 					Map<String, Integer> valueMap = new HashMap<>();
-					for(ConfigEntry entry : ConfigEntry.values()) {
+					for(ConfigSetting entry : ConfigSetting.values()) {
 						if(entry.getValue() instanceof Integer) {
-							valueMap.put(entry.getName(), entry.getValueAsInt());
+							valueMap.put(entry.getPath(), entry.getValueAsInt());
 						}
 					}
 

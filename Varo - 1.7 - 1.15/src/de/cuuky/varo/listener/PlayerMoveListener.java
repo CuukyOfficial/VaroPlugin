@@ -8,8 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -34,14 +34,14 @@ public class PlayerMoveListener implements Listener {
 		}
 
 		if(Main.getVaroGame().getGameState() == GameState.LOBBY) {
-			if(ConfigEntry.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
+			if(ConfigSetting.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
 				return;
 
 			event.setTo(from);
 			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue());
 			return;
 		} else if(Main.getVaroGame().getGameState() == GameState.STARTED) {
-			if(Main.getVaroGame().isStarting() || vp.getStats().isSpectator() || ConfigEntry.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Main.getVaroGame().isFirstTime() || vp.isAdminIgnore()) {
+			if(Main.getVaroGame().isStarting() || vp.getStats().isSpectator() || ConfigSetting.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || Main.getVaroGame().isFirstTime() || vp.isAdminIgnore()) {
 				return;
 			}
 

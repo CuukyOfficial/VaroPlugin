@@ -8,8 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
@@ -56,13 +56,13 @@ public class PlayerChatListener implements Listener {
 				mentionsHack = true;
 			}
 		}
-		if(mentionsHack == true && ConfigEntry.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
+		if(mentionsHack == true && ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
 			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Cheats und aehnliches mit §l/report");
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		String tc = ConfigEntry.CHAT_TRIGGER.getValueAsString();
-		boolean globalTrigger = ConfigEntry.TRIGGER_FOR_GLOBAL.getValueAsBoolean();
+		String tc = ConfigSetting.CHAT_TRIGGER.getValueAsString();
+		boolean globalTrigger = ConfigSetting.TRIGGER_FOR_GLOBAL.getValueAsBoolean();
 		if((message.startsWith(tc) && !globalTrigger) || (!message.startsWith(tc) && globalTrigger)) {
 			new TeamChat(vp, message.replaceFirst("\\" + tc, ""));
 			event.setCancelled(true);
@@ -71,7 +71,7 @@ public class PlayerChatListener implements Listener {
 			message = message.replaceFirst("\\" + tc, "");
 		}
 
-		if(ConfigEntry.BLOCK_CHAT_ADS.getValueAsBoolean() && !player.isOp()) {
+		if(ConfigSetting.BLOCK_CHAT_ADS.getValueAsBoolean() && !player.isOp()) {
 			if(message.matches("(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v)).*")) {
 				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Links.");
 				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
@@ -93,12 +93,12 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(!player.isOp()) {
-			if((ConfigEntry.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getVaroGame().hasStarted()) || !Main.getVaroGame().hasStarted()) {
+			if((ConfigSetting.CHAT_COOLDOWN_IF_STARTED.getValueAsBoolean() && Main.getVaroGame().hasStarted()) || !Main.getVaroGame().hasStarted()) {
 				ChatMessage msg = ChatMessage.getMessage(player);
 				if(msg != null) {
 					long seconds = ((msg.getWritten().getTime() - new Date().getTime()) / 1000) * -1;
-					if(seconds < ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt()) {
-						player.sendMessage(Main.getPrefix() + "§7Du kannst nur alle §7" + ConfigEntry.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " §7Sekunden schreiben!");
+					if(seconds < ConfigSetting.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt()) {
+						player.sendMessage(Main.getPrefix() + "§7Du kannst nur alle §7" + ConfigSetting.CHAT_COOLDOWN_IN_SECONDS.getValueAsInt() + " §7Sekunden schreiben!");
 						event.setCancelled(true);
 						return;
 					}
@@ -106,7 +106,7 @@ public class PlayerChatListener implements Listener {
 					new ChatMessage(player, message);
 			}
 
-			if(Main.getVaroGame().hasStarted() == false && ConfigEntry.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
+			if(Main.getVaroGame().hasStarted() == false && ConfigSetting.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
 				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
 				event.setCancelled(true);
 				return;

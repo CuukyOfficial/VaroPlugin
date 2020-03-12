@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -33,11 +33,11 @@ public class VaroMainHeartbeatThread implements Runnable {
 	}
 	
 	public void loadVariables() {
-		showDistanceToBorder = ConfigEntry.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
-		showTimeInActionBar = ConfigEntry.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
-		protectionTime = ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
-		noKickDistance = ConfigEntry.NO_KICK_DISTANCE.getValueAsInt();
-		playTime = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+		showDistanceToBorder = ConfigSetting.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
+		showTimeInActionBar = ConfigSetting.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
+		protectionTime = ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt();
+		noKickDistance = ConfigSetting.NO_KICK_DISTANCE.getValueAsInt();
+		playTime = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -47,7 +47,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 		if(game.getGameState() == GameState.STARTED) {
 			if(seconds == 60) {
 				seconds = 0;
-				if(ConfigEntry.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
+				if(ConfigSetting.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
 					double minutesToClose = (int) (((Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 					if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
@@ -61,7 +61,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 				}
 			}
 
-			if(ConfigEntry.PLAY_TIME.isIntActivated()) {
+			if(ConfigSetting.PLAY_TIME.isIntActivated()) {
 				for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 					if(vp.getStats().isSpectator() || vp.isAdminIgnore())
 						continue;
@@ -74,7 +74,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 						actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 					if(showDistanceToBorder) {
 						int distance = (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo(p);
-						if(!ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigEntry.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
+						if(!ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 							actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 					}
 
@@ -93,7 +93,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 						} else {
 							if(countdown == 1)
 								if(!vp.canBeKicked(noKickDistance)) {
-									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigEntry.NO_KICK_DISTANCE.getValueAsInt())));
+									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
 									countdown += 1;
 								}
 
@@ -118,15 +118,15 @@ public class VaroMainHeartbeatThread implements Runnable {
 			vp.update();
 		}
 
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+		if(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
 			for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 				if(vp.getStats().getTimeUntilAddSession() == null) {
 					continue;
 				}
 				if(new Date().after(vp.getStats().getTimeUntilAddSession())) {
 					vp.getStats().setSessions(vp.getStats().getSessions() + 1);
-					if(vp.getStats().getSessions() < ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
-						vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt()));
+					if(vp.getStats().getSessions() < ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt() + 1) {
+						vp.getStats().setTimeUntilAddSession(DateUtils.addHours(new Date(), ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt()));
 					} else {
 						vp.getStats().setTimeUntilAddSession(null);
 					}

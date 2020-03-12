@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
@@ -117,7 +117,7 @@ public class MainMenu extends SuperInventory {
 			});
 		}
 
-		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+		if(ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
 
 				@Override

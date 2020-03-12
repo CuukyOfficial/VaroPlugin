@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
@@ -50,7 +50,7 @@ public final class DailyTimer {
 		reset.setMinutes(0);
 		reset.setSeconds(0);
 		Date current = new Date();
-		reset.setHours(ConfigEntry.RESET_SESSION_HOUR.getValueAsInt());
+		reset.setHours(ConfigSetting.RESET_SESSION_HOUR.getValueAsInt());
 		if(reset.before(current))
 			reset = DateUtils.addDays(reset, 1);
 		return (reset.getTime() - current.getTime()) / 1000;
@@ -61,7 +61,7 @@ public final class DailyTimer {
 		if(Main.getVaroGame().getGameState() == GameState.STARTED && Main.getVaroGame().getLastDayTimer() != null) {
 			Date date = Main.getVaroGame().getLastDayTimer();
 			for(int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
-				if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+				if(ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
 					System.out.println("DAILY RECTIFY");
 
 				doDailyChecks();
@@ -80,7 +80,7 @@ public final class DailyTimer {
 					Main.getVaroGame().setLastDayTimer(new Date());
 
 					if(Main.getVaroGame().getGameState() == GameState.STARTED) {
-						if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+						if(ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
 							System.out.println("DAILY");
 
 						doDailyChecks();
@@ -108,7 +108,7 @@ public final class DailyTimer {
 
 	public void doDailyChecks() {
 		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
+			vp.getStats().setCountdown(ConfigSetting.PLAY_TIME.getValueAsInt() * 60);
 
 			if(vp.isOnline())
 				vp.getPlayer().kickPlayer("RESET");

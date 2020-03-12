@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PlayerTeleportListener implements Listener {
@@ -24,7 +24,7 @@ public class PlayerTeleportListener implements Listener {
 		if(!vp.getStats().isSpectator() && !vp.isAdminIgnore() || event.getPlayer().isOp())
 			return;
 
-		if(event.getTo().getY() >= ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt())
+		if(event.getTo().getY() >= ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt())
 			return;
 
 		event.setCancelled(true);

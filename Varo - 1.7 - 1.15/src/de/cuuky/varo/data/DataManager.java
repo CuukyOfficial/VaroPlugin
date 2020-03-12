@@ -10,7 +10,7 @@ import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.clientadapter.tablist.TablistHandler;
 import de.cuuky.varo.configuration.ConfigHandler;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.data.plugin.PluginLoader;
 import de.cuuky.varo.data.presets.PresetLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -79,7 +79,7 @@ public class DataManager {
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
 
-		Bukkit.getServer().setSpawnRadius(ConfigEntry.SPAWN_PROTECTION_RADIUS.getValueAsInt());
+		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());

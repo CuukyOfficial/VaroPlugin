@@ -7,8 +7,8 @@ import org.apache.commons.lang.time.DateUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -18,9 +18,9 @@ public class BloodLustCheck extends Checker {
 
 	@Override
 	public void check() {
-		int days = ConfigEntry.BLOODLUST_DAYS.getValueAsInt();
-		boolean strike = ConfigEntry.STRIKE_ON_BLOODLUST.getValueAsBoolean();
-		if(!ConfigEntry.BLOODLUST_DAYS.isIntActivated())
+		int days = ConfigSetting.BLOODLUST_DAYS.getValueAsInt();
+		boolean strike = ConfigSetting.STRIKE_ON_BLOODLUST.getValueAsBoolean();
+		if(!ConfigSetting.BLOODLUST_DAYS.isIntActivated())
 			return;
 
 		for(VaroPlayer player : VaroPlayer.getAlivePlayer()) {

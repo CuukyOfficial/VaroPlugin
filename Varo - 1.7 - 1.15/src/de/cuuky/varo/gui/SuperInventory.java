@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.version.BukkitVersion;
@@ -37,8 +37,8 @@ public abstract class SuperInventory {
 		forward = new ItemBuilder().displayname("§aSeite vorwaerts").itemstack(new ItemStack(Material.ARROW)).build();
 		backwards = new ItemBuilder().displayname("§cSeite rueckwaerts").itemstack(new ItemStack(Material.ARROW)).build();
 		
-		fill_inventory = ConfigEntry.GUI_FILL_INVENTORY.getValueAsBoolean();
-		animations = ConfigEntry.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();
+		fill_inventory = ConfigSetting.GUI_FILL_INVENTORY.getValueAsBoolean();
+		animations = ConfigSetting.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();
 	}
 
 	protected String firstTitle, title;

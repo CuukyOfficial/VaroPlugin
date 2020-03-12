@@ -3,15 +3,15 @@ package de.cuuky.varo.game.start;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 
 public class ProtectionTime {
 	
 	private int scheduler;
 
 	public ProtectionTime() {
-		startGeneralTimer(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
+		startGeneralTimer(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
 	}
 
 	public ProtectionTime(int Timer) {
@@ -29,7 +29,7 @@ public class ProtectionTime {
 					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
 					Main.getVaroGame().setProtection(null);
 					Bukkit.getScheduler().cancelTask(scheduler);
-				} else if(protectionTimer % ConfigEntry.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
+				} else if(protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
 					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE.getValue().replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer)));
 
 				this.protectionTimer--;

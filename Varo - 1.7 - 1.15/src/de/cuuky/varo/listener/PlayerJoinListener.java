@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
@@ -56,7 +56,7 @@ public class PlayerJoinListener implements Listener {
 
 		if(Main.getVaroGame().getGameState() == GameState.LOBBY) {
 			Spawn spawn = Spawn.getSpawn(vplayer);
-			if(spawn != null && ConfigEntry.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
+			if(spawn != null && ConfigSetting.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
 				player.teleport(spawn.getLocation());
 			else
 				player.teleport(Main.getVaroGame().getVaroWorld().getTeleportLocation());
@@ -66,11 +66,11 @@ public class PlayerJoinListener implements Listener {
 			player.updateInventory();
 			LobbyItem.giveItems(player);
 
-			if(ConfigEntry.START_AT_PLAYERS.isIntActivated()) {
-				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigEntry.START_AT_PLAYERS.getValueAsInt())
+			if(ConfigSetting.START_AT_PLAYERS.isIntActivated()) {
+				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigSetting.START_AT_PLAYERS.getValueAsInt())
 					Main.getVaroGame().start();
 				else
-					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigEntry.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benoetigt!");
+					Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigSetting.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benoetigt!");
 			}
 
 			if(player.isOp()) {
@@ -91,12 +91,12 @@ public class PlayerJoinListener implements Listener {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown =  massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
-				if(countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60 && ConfigEntry.PLAY_TIME.getValueAsInt() > 0) {
+				if(countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60 && ConfigSetting.PLAY_TIME.getValueAsInt() > 0) {
 					player.teleport(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation());
 				}
 			}
 
-			if(isOutsideOfBorder(player) && ConfigEntry.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
+			if(isOutsideOfBorder(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				player.teleport(player.getWorld().getSpawnLocation());
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
 			}
@@ -110,11 +110,11 @@ public class PlayerJoinListener implements Listener {
 				if(!player.isOp()) {
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 				}
-			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
+			} else if(!ConfigSetting.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(vplayer));
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
 			} else if( massRecording.isEnabled()) {
-				if( massRecording.getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
+				if( massRecording.getCountdown(vplayer) == ConfigSetting.PLAY_TIME.getValueAsInt() * 60) {
 					vplayer.getStats().setCountdown(massRecording.getTimer());
 				} else {
 					vplayer.getStats().setCountdown(massRecording.getCountdown(vplayer) + massRecording.getTimer());
@@ -132,7 +132,7 @@ public class PlayerJoinListener implements Listener {
 							vplayer.setinMassProtectionTime(false);
 							Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vplayer));
 						}
-					}, ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
+					}, ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
 					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));

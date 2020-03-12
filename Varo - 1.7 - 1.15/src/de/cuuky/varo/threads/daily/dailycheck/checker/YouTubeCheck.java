@@ -8,7 +8,7 @@ import java.util.Scanner;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.threads.daily.dailycheck.Checker;
@@ -39,7 +39,7 @@ public class YouTubeCheck extends Checker {
 			if(line.contains("yt-lockup-title")) {
 				try {
 					videoTitle = line.split("title=\"")[1].split("\"")[0];
-					if(!videoTitle.toLowerCase().contains(ConfigEntry.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase()))
+					if(!videoTitle.toLowerCase().contains(ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase()))
 						continue;
 
 					videoId = line.split("href=\"")[1].split("\"")[0];

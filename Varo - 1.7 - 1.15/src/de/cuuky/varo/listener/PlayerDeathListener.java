@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -24,7 +24,7 @@ import de.cuuky.varo.version.VersionUtils;
 public class PlayerDeathListener implements Listener {
 
 	private void checkHealth(Player killer) {
-		int healthAdd = ConfigEntry.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
+		int healthAdd = ConfigSetting.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
 		if(healthAdd > 0) {
 			double hearts = VersionUtils.getHearts(killer) + healthAdd;
 			if(hearts > 20.0)
@@ -73,9 +73,9 @@ public class PlayerDeathListener implements Listener {
 			if(deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
 				deadP.onEvent(BukkitEventType.KILLED);
 
-				if(!ConfigEntry.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
-					if(ConfigEntry.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
-						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(deadP).replace("%countdown%", String.valueOf(ConfigEntry.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
+				if(!ConfigSetting.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
+					if(ConfigSetting.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
+						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(deadP).replace("%countdown%", String.valueOf(ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
 						deadP.getStats().setState(PlayerState.SPECTATOR);
 						deadP.setSpectacting();
 						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -92,7 +92,7 @@ public class PlayerDeathListener implements Listener {
 
 								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER.getValue(deadP));
 							}
-						}, ConfigEntry.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
+						}, ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
 					} else
 						kickDeadPlayer(deadP, killer);
 				} else {
@@ -101,9 +101,9 @@ public class PlayerDeathListener implements Listener {
 					deadP.update();
 				}
 			} else {
-				if(ConfigEntry.RESPAWN_PROTECTION.isIntActivated()) {
-					VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadP, ConfigEntry.RESPAWN_PROTECTION.getValueAsInt());
-					Bukkit.broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION.getValue(deadP).replace("%seconds%", String.valueOf(ConfigEntry.RESPAWN_PROTECTION.getValueAsInt())));
+				if(ConfigSetting.RESPAWN_PROTECTION.isIntActivated()) {
+					VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadP, ConfigSetting.RESPAWN_PROTECTION.getValueAsInt());
+					Bukkit.broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION.getValue(deadP).replace("%seconds%", String.valueOf(ConfigSetting.RESPAWN_PROTECTION.getValueAsInt())));
 					prot.setTimerHook(new Runnable() {
 
 						@Override
@@ -125,11 +125,11 @@ public class PlayerDeathListener implements Listener {
 				if(hit1 != null)
 					hit1.over();
 
-				if(killer.getTeam() != null && ConfigEntry.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
+				if(killer.getTeam() != null && ConfigSetting.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
 					try {
-						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigEntry.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble());
+						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble());
 					} catch(Exception e) {
-						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigEntry.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
+						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
 					}
 					killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD.getValue());
 				}

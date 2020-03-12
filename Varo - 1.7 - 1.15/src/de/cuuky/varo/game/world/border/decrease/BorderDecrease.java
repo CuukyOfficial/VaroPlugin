@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.game.world.border.VaroBorder;
 
 public class BorderDecrease {
@@ -42,7 +42,7 @@ public class BorderDecrease {
 	public void shrink() {
 		VaroBorder border = Main.getVaroGame().getVaroWorld().getVaroBorder();
 
-		int minsize = ConfigEntry.MIN_BORDER_SIZE.getValueAsInt();
+		int minsize = ConfigSetting.MIN_BORDER_SIZE.getValueAsInt();
 		double size = border.getBorderSize(null);
 		if(size <= minsize) {
 			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());

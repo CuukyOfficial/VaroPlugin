@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
@@ -19,7 +19,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 	public BorderDecreaseDayTimer() {}
 
 	public BorderDecreaseDayTimer(boolean new1) {
-		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getVaroGame().isRunning())
+		if(!ConfigSetting.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getVaroGame().isRunning())
 			return;
 
 		generateNextDecrease();
@@ -29,7 +29,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 
 	private void generateNextDecrease() {
 		nextDecrease = new Date();
-		nextDecrease = DateUtils.addDays(nextDecrease, ConfigEntry.BORDER_TIME_DAY_DECREASE_DAYS.getValueAsInt());
+		nextDecrease = DateUtils.addDays(nextDecrease, ConfigSetting.BORDER_TIME_DAY_DECREASE_DAYS.getValueAsInt());
 	}
 
 	private long getTime() {
@@ -61,7 +61,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(!ConfigEntry.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getVaroGame().isRunning())
+		if(!ConfigSetting.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getVaroGame().isRunning())
 			return;
 
 		if(nextDecrease == null)

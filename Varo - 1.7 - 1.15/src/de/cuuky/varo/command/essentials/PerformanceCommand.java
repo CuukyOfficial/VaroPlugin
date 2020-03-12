@@ -10,8 +10,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.threads.LagCounter;
 
 public class PerformanceCommand implements CommandExecutor {
@@ -43,9 +43,9 @@ public class PerformanceCommand implements CommandExecutor {
 
 			sender.sendMessage(Main.getPrefix() + "Folgende Einstellungen koennten die Performance vermindern - das Ausschalten erhoeht eventuell die Performance:");
 			sender.sendMessage(Main.getPrefix());
-			for(ConfigEntry ce : ConfigEntry.values())
+			for(ConfigSetting ce : ConfigSetting.values())
 				if(ce.isReducingPerformance() && (ce.getValue() instanceof Boolean && ce.getValueAsBoolean()))
-					sender.sendMessage(Main.getPrefix() + "- §7Die Einstellung §c" + ce.getName() + " §7vermindert die Performance");
+					sender.sendMessage(Main.getPrefix() + "- §7Die Einstellung §c" + ce.getPath() + " §7vermindert die Performance");
 
 			int entities = 0;
 			for(World world : Bukkit.getWorlds())

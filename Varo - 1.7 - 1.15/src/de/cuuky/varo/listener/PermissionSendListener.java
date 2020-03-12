@@ -9,8 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import net.labymod.serverapi.LabyModAPI;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
@@ -22,10 +22,10 @@ public class PermissionSendListener implements Listener {
 
 	@EventHandler
 	public void labyModJoin(LabyModPlayerJoinEvent event) {
-		if(ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
+		if(ConfigSetting.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
 			labyJoined.add(event.getPlayer());
 
-		if(ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean())
+		if(ConfigSetting.KICK_LABYMOD_PLAYER.getValueAsBoolean())
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 				@Override
@@ -37,7 +37,7 @@ public class PermissionSendListener implements Listener {
 
 	@EventHandler
 	public void onPermissionSend(PermissionsSendEvent event) {
-		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean())
+		if(ConfigSetting.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean())
 			for(Entry<Permission, Boolean> permissionEntry : event.getPermissions().entrySet())
 				permissionEntry.setValue(false);
 	}

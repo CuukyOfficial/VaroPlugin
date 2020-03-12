@@ -6,8 +6,8 @@ import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Location;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -52,8 +52,8 @@ public class Strike implements VaroSerializeable {
 	public void activate(int number) {
 		this.number = number;
 
-		if(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
-			banUntil = DateUtils.addHours(new Date(), ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
+		if(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
+			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
 		switch(number) {
 		case 1:
@@ -69,7 +69,7 @@ public class Strike implements VaroSerializeable {
 			break;
 		}
 
-		if(!ConfigEntry.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
+		if(!ConfigSetting.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
 			post();
 	}
 
@@ -114,8 +114,8 @@ public class Strike implements VaroSerializeable {
 	public void onSerializeStart() {}
 
 	public void post() {
-		if(ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigEntry.STRIKE_BAN_AT_POST.getValueAsBoolean())
-			banUntil = DateUtils.addHours(new Date(), ConfigEntry.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
+		if(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
+			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
 		switch(number) {
 		case 1:

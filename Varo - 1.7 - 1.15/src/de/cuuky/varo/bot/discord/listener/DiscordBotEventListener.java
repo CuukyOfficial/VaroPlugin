@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -44,15 +44,15 @@ public class DiscordBotEventListener implements EventListener {
 
 		this.lastEvent = messageEvent;
 		String message = messageEvent.getMessage().getContentDisplay();
-		if(!message.toLowerCase().startsWith(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().toLowerCase().replace(" ", "")))
+		if(!message.toLowerCase().startsWith(ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString().toLowerCase().replace(" ", "")))
 			return;
 
-		if(message.replace(" ", "").equalsIgnoreCase(ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString().replace(" ", ""))) {
-			messageEvent.getTextChannel().sendMessage("Type '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "help' for help.").queue();
+		if(message.replace(" ", "").equalsIgnoreCase(ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString().replace(" ", ""))) {
+			messageEvent.getTextChannel().sendMessage("Type '" + ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "help' for help.").queue();
 			return;
 		}
 
-		String replace = ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString();
+		String replace = ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString();
 		String command = message.toUpperCase().replaceFirst("(?i)" + replace.toUpperCase(), "").split(" ")[0];
 		String[] args = message.toUpperCase().replaceFirst(replace.toUpperCase() + command.toUpperCase() + " ", "").split(" ");
 

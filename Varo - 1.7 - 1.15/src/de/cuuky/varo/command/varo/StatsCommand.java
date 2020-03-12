@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
@@ -75,7 +75,7 @@ public class StatsCommand extends VaroCommand {
 				vp.getStats().setKills(0);
 				break;
 			case SESSIONS:
-				vp.getStats().setSessions(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt());
+				vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt());
 				break;
 			case EPISODES_PLAYED:
 				vp.getStats().setSessionsPlayed(0);
@@ -84,7 +84,7 @@ public class StatsCommand extends VaroCommand {
 				vp.setRank(null);
 				break;
 			case COUNTDOWN:
-				vp.getStats().setCountdown(ConfigEntry.PLAY_TIME.getValueAsInt() * 60);
+				vp.getStats().setCountdown(ConfigSetting.PLAY_TIME.getValueAsInt() * 60);
 				break;
 			case PLAYER_STATE:
 				vp.getStats().setState(PlayerState.ALIVE);

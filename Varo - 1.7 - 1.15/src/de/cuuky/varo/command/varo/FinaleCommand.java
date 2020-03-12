@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.start.ProtectionTime;
@@ -38,9 +38,9 @@ public class FinaleCommand extends VaroCommand {
 		status = FinalState.STARTED;
 
 		Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
-		if(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
-			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
-			Main.getVaroGame().setProtection(new ProtectionTime(ConfigEntry.FINALE_PROTECTION_TIME.getValueAsInt()));
+		if(ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
+			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
+			Main.getVaroGame().setProtection(new ProtectionTime(ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt()));
 		} else {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
 		}
@@ -53,14 +53,14 @@ public class FinaleCommand extends VaroCommand {
 					continue;
 				}
 			}
-			if(ConfigEntry.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
+			if(ConfigSetting.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
 				player.getStats().setState(PlayerState.SPECTATOR);
 			} else {
 				player.getStats().setState(PlayerState.DEAD);
 			}
 		}
 
-		Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderSize(ConfigEntry.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
+		Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
 
 		Main.getVaroGame().setFinaleJoinStart(false);
 
@@ -104,7 +104,7 @@ public class FinaleCommand extends VaroCommand {
 
 			Main.getVaroGame().setFinaleJoinStart(true);
 			status = FinalState.JOIN_PHASE;
-			ConfigEntry.PLAY_TIME.setValue(-1, true);
+			ConfigSetting.PLAY_TIME.setValue(-1, true);
 
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es koennen nun alle zum Finale joinen.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");

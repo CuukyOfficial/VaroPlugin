@@ -9,8 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Broadcaster {
@@ -22,12 +22,12 @@ public class Broadcaster {
 	private ArrayList<String> messages;
 
 	public Broadcaster() {
-		if(ConfigEntry.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+		if(ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			startPluginAd();
 
 		loadMessages();
 
-		if(!ConfigEntry.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
+		if(!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
 			return;
 
 		starteSchedule();
@@ -59,7 +59,7 @@ public class Broadcaster {
 	}
 
 	private void starteSchedule() {
-		int interval = ConfigEntry.BROADCAST_INTERVAL_IN_SECONDS.getValueAsInt() * 20;
+		int interval = ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.getValueAsInt() * 20;
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@Override
@@ -71,7 +71,7 @@ public class Broadcaster {
 	}
 
 	private void startPluginAd() {
-		int delay = (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
+		int delay = (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@Override

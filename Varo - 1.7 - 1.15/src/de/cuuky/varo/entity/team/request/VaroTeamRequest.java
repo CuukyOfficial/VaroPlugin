@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
@@ -39,7 +39,7 @@ public class VaroTeamRequest {
 		if(invited.getTeam() != null)
 			invited.getTeam().removeMember(invited);
 
-		if(ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
+		if(ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
 			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue().replace("%invited%", invited.getName()));
 			return;
 		}
@@ -64,7 +64,7 @@ public class VaroTeamRequest {
 					return;
 				}
 
-				int maxLength = ConfigEntry.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
+				int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
 				if(message.length() > (maxLength) - 1) {
 					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH.getValue().replace("%maxLength%", String.valueOf(maxLength)));
 					sendChatHook();
@@ -78,7 +78,7 @@ public class VaroTeamRequest {
 
 	@SuppressWarnings("deprecation")
 	private void startSched() {
-		if(!ConfigEntry.TEAMREQUEST_EXPIRETIME.isIntActivated())
+		if(!ConfigSetting.TEAMREQUEST_EXPIRETIME.isIntActivated())
 			return;
 
 		this.sched = Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -94,7 +94,7 @@ public class VaroTeamRequest {
 				remove();
 			}
 
-		}, 20 * ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt());
+		}, 20 * ConfigSetting.TEAMREQUEST_EXPIRETIME.getValueAsInt());
 	}
 
 	public void accept() {

@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.lobby.lobbyitems.LeaveTeamItem;
 import de.cuuky.varo.game.lobby.lobbyitems.TeamRequestItem;
 
@@ -22,7 +22,7 @@ public class LobbyItem {
 		Bukkit.getPluginManager().registerEvents(new LobbyItemsListener(), Main.getInstance());
 		lobbyItems = new ArrayList<>();
 
-		if(ConfigEntry.TEAMREQUESTS.getValueAsBoolean()) {
+		if(ConfigSetting.TEAMREQUESTS.getValueAsBoolean()) {
 			new TeamRequestItem();
 			new LeaveTeamItem();
 		}

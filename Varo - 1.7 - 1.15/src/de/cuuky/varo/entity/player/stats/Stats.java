@@ -19,7 +19,7 @@ import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.player.PlayerStateChangeEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeRemoveEvent;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
@@ -186,7 +186,7 @@ public class Stats implements VaroSerializeable {
 			else
 				result = KickResult.NO_PROJECTUSER;
 		} else {
-			if(!ConfigEntry.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
+			if(!ConfigSetting.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
 			if(Main.getVaroGame().isStarting())
@@ -203,7 +203,7 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.SERVER_FULL;
 
 		if(result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if(player.hasPermission("varo.alwaysjoin") && ConfigEntry.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getVaroGame().hasStarted() && player.isOp()) {
+			if(player.hasPermission("varo.alwaysjoin") && ConfigSetting.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getVaroGame().hasStarted() && player.isOp()) {
 				if(Main.getVaroGame().hasStarted())
 					if(result == KickResult.DEAD || !owner.isRegistered())
 						setState(PlayerState.SPECTATOR);
@@ -289,8 +289,8 @@ public class Stats implements VaroSerializeable {
 		if(this.sessions > 0) {
 			result = KickResult.ALLOW;
 		} else {
-			if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
-				if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+			if(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+				if(ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 					result = KickResult.NO_PREPRODUCES_LEFT;
 				} else {
 					result = KickResult.NO_SESSIONS_LEFT;
@@ -338,11 +338,11 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public boolean hasFullTime() {
-		return countdown == ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+		return countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
 	public boolean hasTimeLeft() {
-		return (this.countdown >= 1) && this.countdown != ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+		return (this.countdown >= 1) && this.countdown != ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
 	public boolean hasVideo(String videoId) {
@@ -406,7 +406,7 @@ public class Stats implements VaroSerializeable {
 		strikes = new ArrayList<Strike>();
 		saveables = new ArrayList<VaroSaveable>();
 		inventoryBackups = new ArrayList<InventoryBackup>();
-		playerBackpack = new VaroInventory(ConfigEntry.BACKPACK_PLAYER_SIZE.getValueAsInt());
+		playerBackpack = new VaroInventory(ConfigSetting.BACKPACK_PLAYER_SIZE.getValueAsInt());
 
 		willClear = false;
 		showScoreboard = true;
@@ -416,16 +416,16 @@ public class Stats implements VaroSerializeable {
 		firstTimeJoined = new Date();
 		lastJoined = new Date();
 		lastEnemyContact = new Date();
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() > 0) {
-			sessions = ConfigEntry.SESSIONS_PER_DAY.getValueAsInt();
+		if(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() > 0) {
+			sessions = ConfigSetting.SESSIONS_PER_DAY.getValueAsInt();
 		} else {
 			sessions = 1;
 		}
-		if(ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
-			sessions += ConfigEntry.PRE_PRODUCE_SESSIONS.getValueAsInt();
+		if(ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
+			sessions += ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt();
 		}
 		sessionsPlayed = 0;
-		countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+		countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
 	@Override
@@ -448,7 +448,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeCountdown() {
-		this.countdown = ConfigEntry.PLAY_TIME.getValueAsInt() * 60;
+		this.countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
 	public void removeInventoryBackup(InventoryBackup backup) {
@@ -493,8 +493,8 @@ public class Stats implements VaroSerializeable {
 	public void setBan() {
 		sessions--;
 
-		if(ConfigEntry.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
-			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigEntry.JOIN_AFTER_HOURS.getValueAsInt());
+		if(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
+			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt());
 		}
 	}
 
