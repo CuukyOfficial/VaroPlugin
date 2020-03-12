@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
@@ -114,6 +115,8 @@ public class UpdateCommand extends VaroCommand {
 
 		if(result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
+			sender.sendMessage(Main.getPrefix() + "§7Backup wird erstellt...");
+			new VaroBackup();
 			sender.sendMessage(Main.getPrefix() + "§7Unter Umstaenden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
 			update(sender, resultSet);
 		} else {
