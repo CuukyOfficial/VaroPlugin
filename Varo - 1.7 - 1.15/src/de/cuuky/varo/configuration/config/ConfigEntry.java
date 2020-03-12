@@ -272,8 +272,7 @@ public enum ConfigEntry {
 	}
 
 	private void save() {
-		Main.getDataManager().getConfigHandler().getConfigCfg().set(section.getPath() + path, value);
-		Main.getDataManager().getConfigHandler().saveConfig();
+		Main.getDataManager().getConfigHandler().saveValue(this);
 	}
 
 	private void sendFalseCast(Class<?> failedToCast) {
@@ -395,7 +394,7 @@ public enum ConfigEntry {
 
 	public static ConfigEntry getEntryByPath(String path) {
 		for(ConfigEntry entry : ConfigEntry.values()) {
-			if(!entry.getFullPath().equals(path))
+			if(!entry.getPath().equals(path))
 				continue;
 
 			return entry;

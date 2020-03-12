@@ -9,10 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.backup.Backup;
 import de.cuuky.varo.configuration.config.ConfigEntry;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.threads.daily.dailycheck.Checker;
 import de.cuuky.varo.threads.daily.dailycheck.checker.BloodLustCheck;
 import de.cuuky.varo.threads.daily.dailycheck.checker.CoordsCheck;
@@ -76,7 +76,7 @@ public final class DailyTimer {
 			@Override
 			public void run() {
 				try {
-					new Backup();
+					new VaroBackup();
 					Main.getVaroGame().setLastDayTimer(new Date());
 
 					if(Main.getVaroGame().getGameState() == GameState.STARTED) {

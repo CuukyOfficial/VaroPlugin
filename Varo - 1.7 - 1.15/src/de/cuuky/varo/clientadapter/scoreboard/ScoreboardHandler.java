@@ -104,7 +104,7 @@ public class ScoreboardHandler implements BoardHandler {
 		this.replaces = new HashMap<>();
 		this.headers = new HashMap<>();
 
-		File file = new File("plugins/Varo", "scoreboard.yml");
+		File file = new File("plugins/Varo/config", "scoreboard.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 		ArrayList<String> scoreboard = new ArrayList<>();

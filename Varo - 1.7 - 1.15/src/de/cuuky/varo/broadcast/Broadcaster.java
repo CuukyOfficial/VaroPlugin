@@ -36,7 +36,7 @@ public class Broadcaster {
 	private void loadMessages() {
 		this.messages = new ArrayList<>();
 
-		File file = new File("plugins/Varo", "broadcasts.yml");
+		File file = new File("plugins/Varo/config", "broadcasts.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 		if(!file.exists()) {

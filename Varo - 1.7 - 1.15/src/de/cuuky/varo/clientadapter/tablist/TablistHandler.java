@@ -62,7 +62,7 @@ public class TablistHandler implements BoardHandler {
 		this.footerReplaces = new HashMap<>();
 		this.footerLines = new ArrayList<>();
 
-		File file = new File("plugins/Varo", "tablist.yml");
+		File file = new File("plugins/Varo/config", "tablist.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 		ArrayList<String> header = new ArrayList<>();
