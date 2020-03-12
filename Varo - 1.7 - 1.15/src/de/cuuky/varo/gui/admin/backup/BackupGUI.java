@@ -1,7 +1,5 @@
 package de.cuuky.varo.gui.admin.backup;
 
-import java.io.File;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,26 +8,27 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.backup.Backup;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.version.types.Materials;
 
 public class BackupGUI extends SuperInventory {
 
-	private String filename;
+	private VaroBackup backup;
 
-	public BackupGUI(Player opener, String filename) {
-		super("§7Backup §a" + filename.replace(".zip", ""), opener, 0, false);
+	public BackupGUI(Player opener, VaroBackup backup) {
+		super("§7Backup §a" + backup.getZipFile().getName().replace(".zip", ""), opener, 0, false);
 
-		this.filename = filename;
+		this.backup = backup;
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		return false;
+		new BackupListGUI(opener);
+		return true;
 	}
 
 	@Override
@@ -43,8 +42,6 @@ public class BackupGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		File file = new File("plugins/Varo/backups/" + filename);
-
 		int i = -1;
 		do {
 			i += 1;
@@ -56,8 +53,9 @@ public class BackupGUI extends SuperInventory {
 
 						@Override
 						public void run() {
-							if(Backup.unzip(file.getPath(), "plugins/Varo")) {
+							if(backup.unzip("plugins/Varo")) {
 								opener.sendMessage(Main.getPrefix() + "Backup erfolgreich wieder hergestellt!");
+								closeInventory();
 								Main.getDataManager().setDoSave(false);
 								Bukkit.getServer().reload();
 							} else
@@ -70,7 +68,7 @@ public class BackupGUI extends SuperInventory {
 
 						@Override
 						public void run() {
-							file.delete();
+							backup.delete();
 							new BackupListGUI(opener);
 						}
 					});

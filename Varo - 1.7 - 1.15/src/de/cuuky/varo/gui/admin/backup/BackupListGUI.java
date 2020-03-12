@@ -12,11 +12,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.backup.Backup;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
 
 public class BackupListGUI extends SuperInventory {
 
@@ -43,29 +43,29 @@ public class BackupListGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		ArrayList<String> list = Backup.getBackups();
+		ArrayList<VaroBackup> backups = VaroBackup.getBackups();
 		int start = getSize() * (getPage() - 1);
 		if(start != 0)
 			start -= 2;
 
 		for(int i = 0; i != getSize() - 2; i++) {
-			String filename;
+			VaroBackup backup;
 			try {
-				filename = list.get(start);
+				backup = backups.get(start);
 			} catch(IndexOutOfBoundsException e) {
 				break;
 			}
 
 			ArrayList<String> lore = new ArrayList<>();
 			lore.add("Backup made date: ");
-			String[] split1 = filename.split("_");
+			String[] split1 = backup.getZipFile().getName().split("_");
 			lore.add("Year: " + split1[0].split("-")[0] + ", Month: " + split1[0].split("-")[1] + ", Day: " + split1[0].split("-")[2]);
 			lore.add("Hour: " + split1[1].split("-")[0] + ", Minute: " + split1[1].split("-")[1] + ", Second: " + split1[1].split("-")[2].replace(".zip", ""));
-			linkItemTo(i, new ItemBuilder().displayname("§7" + filename).itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname("§7" + backup.getZipFile().getName().replace(".zip", "")).itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build(), new Runnable() {
 
 				@Override
 				public void run() {
-					new BackupGUI(opener, filename);
+					new BackupGUI(opener, backup);
 				}
 			});
 			start++;
@@ -82,16 +82,16 @@ public class BackupListGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(Backup.isBackup(getCurrentDate())) {
+				if(VaroBackup.getBackup(getCurrentDate()) != null) {
 					opener.sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
 					return;
 				}
 
-				new Backup();
+				new VaroBackup();
 				updateInventory();
 			}
 		});
 
-		return calculatePages(list.size(), getSize() - 2) == page;
+		return calculatePages(backups.size(), getSize() - 2) == page;
 	}
 }
