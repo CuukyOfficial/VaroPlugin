@@ -73,7 +73,7 @@ public class BotRegister {
 	}
 
 	public String getKickMessage() {
-		return ConfigMessages.DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
+		return ConfigMessages.BOTS_DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
 	}
 
 	public Member getMember() {

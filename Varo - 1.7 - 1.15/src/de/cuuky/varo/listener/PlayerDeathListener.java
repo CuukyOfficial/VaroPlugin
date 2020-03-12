@@ -75,7 +75,7 @@ public class PlayerDeathListener implements Listener {
 
 				if(!ConfigEntry.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
 					if(ConfigEntry.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
-						Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue(deadP).replace("%countdown%", String.valueOf(ConfigEntry.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
+						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(deadP).replace("%countdown%", String.valueOf(ConfigEntry.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
 						deadP.getStats().setState(PlayerState.SPECTATOR);
 						deadP.setSpectacting();
 						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -90,7 +90,7 @@ public class PlayerDeathListener implements Listener {
 									return;
 								}
 
-								Bukkit.broadcastMessage(ConfigMessages.KICK_DELAY_OVER.getValue(deadP));
+								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER.getValue(deadP));
 							}
 						}, ConfigEntry.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
 					} else
@@ -131,7 +131,7 @@ public class PlayerDeathListener implements Listener {
 					} catch(Exception e) {
 						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigEntry.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
 					}
-					killer.sendMessage(ConfigMessages.KILL_LIFE_ADD.getValue());
+					killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD.getValue());
 				}
 
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));

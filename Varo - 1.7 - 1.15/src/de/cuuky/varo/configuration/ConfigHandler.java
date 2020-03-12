@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.config.ConfigSection;
+import de.cuuky.varo.configuration.config.ConfigEntrySection;
 import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {
@@ -28,7 +28,7 @@ public class ConfigHandler {
 	}
 
 	private void loadConfigurations() {
-		for(ConfigSection section : ConfigSection.values()) {
+		for(ConfigEntrySection section : ConfigEntrySection.values()) {
 			File file = new File(CONFIG_PATH, section.getName().toLowerCase() + ".yml");
 			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
@@ -94,7 +94,7 @@ public class ConfigHandler {
 	/**
 	 * @return Every description of every ConfigEntry combined
 	 */
-	private String getConfigHeader(ConfigSection section) {
+	private String getConfigHeader(ConfigEntrySection section) {
 		String header = "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:";
 		String desc = "\n----------- " + section.getName() + " -----------" + "\nBeschreibung: " + section.getDescription() + "\n";
 

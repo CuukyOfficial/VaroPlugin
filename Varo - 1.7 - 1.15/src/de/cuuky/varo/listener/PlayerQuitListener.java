@@ -72,6 +72,6 @@ public class PlayerQuitListener implements Listener {
 		}
 
 		vplayer.onEvent(BukkitEventType.QUIT);
-		event.setQuitMessage(ConfigMessages.QUIT.getValue(vplayer));
+		event.setQuitMessage(ConfigMessages.QUIT_MESSAGE.getValue(vplayer));
 	}
 }

@@ -30,7 +30,7 @@ public class PermissionSendListener implements Listener {
 
 				@Override
 				public void run() {
-					event.getPlayer().kickPlayer(ConfigMessages.KICK_LABY_MOD.getValue());
+					event.getPlayer().kickPlayer(ConfigMessages.LABYMOD_KICK.getValue());
 				}
 			}, 1);
 	}

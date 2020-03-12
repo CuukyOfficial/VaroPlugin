@@ -71,6 +71,10 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX);
 		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
 		System.out.println(CONSOLE_PREFIX + "Running on " + Bukkit.getVersion());
+		if(Bukkit.getVersion().contains("Bukkit")) {
+			System.out.println(CONSOLE_PREFIX + "It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
+			System.out.println(CONSOLE_PREFIX + "Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
+		}
 		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
