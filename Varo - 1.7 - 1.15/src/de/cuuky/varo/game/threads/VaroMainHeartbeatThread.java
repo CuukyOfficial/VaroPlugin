@@ -51,7 +51,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					double minutesToClose = (int) (((Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 					if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
-						Bukkit.broadcastMessage(ConfigMessages.KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
+						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
 					if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
 						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
@@ -86,18 +86,18 @@ public class VaroMainHeartbeatThread implements Runnable {
 
 					if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
 						if(countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
-							Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
+							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(vp));
 							vp.onEvent(BukkitEventType.KICKED);
-							p.kickPlayer(ConfigMessages.KICK_MESSAGE.getValue(vp));
+							p.kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 							continue;
 						} else {
 							if(countdown == 1)
 								if(!vp.canBeKicked(noKickDistance)) {
-									vp.sendMessage(ConfigMessages.KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigEntry.NO_KICK_DISTANCE.getValueAsInt())));
+									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigEntry.NO_KICK_DISTANCE.getValueAsInt())));
 									countdown += 1;
 								}
 
-							Bukkit.broadcastMessage(ConfigMessages.KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
+							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
 						}
 					}
 

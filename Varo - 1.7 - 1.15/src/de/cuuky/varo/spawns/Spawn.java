@@ -86,7 +86,7 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	private String getNametagName() {
-		return this.player == null ? ConfigMessages.WORLD_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.WORLD_SPAWN_PLAYER.getValue(player).replace("%number%", String.valueOf(number));
+		return this.player == null ? ConfigMessages.SPAWNS_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.SPAWNS_SPAWN_PLAYER.getValue(player).replace("%number%", String.valueOf(number));
 	}
 
 	private void remove() {

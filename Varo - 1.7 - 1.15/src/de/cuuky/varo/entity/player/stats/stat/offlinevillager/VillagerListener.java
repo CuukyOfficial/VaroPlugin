@@ -45,7 +45,6 @@ public class VillagerListener implements Listener {
 		event.setCancelled(true);
 	}
 
-	@SuppressWarnings("unchecked")
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		if(event.getEntity().getKiller() == null || !event.getEntity().getType().toString().contains("ZOMBIE"))

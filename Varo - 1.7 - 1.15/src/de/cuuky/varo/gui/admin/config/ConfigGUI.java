@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.config.ConfigSection;
+import de.cuuky.varo.configuration.config.ConfigEntrySection;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
@@ -21,9 +21,9 @@ import de.cuuky.varo.version.types.Sounds;
 
 public class ConfigGUI extends SuperInventory {
 
-	private ConfigSection section;
+	private ConfigEntrySection section;
 
-	public ConfigGUI(Player opener, ConfigSection section) {
+	public ConfigGUI(Player opener, ConfigEntrySection section) {
 		super("§a" + section.getName(), opener, 18, false);
 
 		this.section = section;

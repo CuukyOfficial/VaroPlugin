@@ -25,7 +25,7 @@ public class BlockedEnchantmentsListener implements Listener {
 		for(Enchantment enc : event.getEnchantsToAdd().keySet())
 			if(Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
 				event.setCancelled(true);
-				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
+				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue());
 				return;
 			}
 	}
@@ -53,7 +53,7 @@ public class BlockedEnchantmentsListener implements Listener {
 		for(Enchantment enc : item.getEnchantments().keySet())
 			if(Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
 				event.setCancelled(true);
-				((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
+				((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue());
 				return;
 			}
 	}

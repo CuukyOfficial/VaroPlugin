@@ -20,7 +20,7 @@ public class BlockedItemsListener implements Listener {
 			return;
 
 		event.setCancelled(true);
-		((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
+		((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue());
 	}
 
 	@EventHandler
@@ -32,6 +32,6 @@ public class BlockedItemsListener implements Listener {
 			return;
 
 		event.setCancelled(true);
-		event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.OTHER_NOT_ALLOWED_CRAFT.getValue());
+		event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue());
 	}
 }

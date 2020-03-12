@@ -126,7 +126,7 @@ public class SpectatorListener implements Listener {
 					Location tp = event.getFrom();
 					tp.setY(ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
 					event.setTo(tp);
-					event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.WORLD_NO_LOWER_FLIGHT.getValue());
+					event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT.getValue());
 				}
 		return;
 

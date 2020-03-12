@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigSection;
+import de.cuuky.varo.configuration.config.ConfigEntrySection;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
@@ -39,7 +39,7 @@ public class ConfigSectionGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ConfigSection section : ConfigSection.values()) {
+		for(ConfigEntrySection section : ConfigEntrySection.values()) {
 			i++;
 
 			linkItemTo(i, new ItemBuilder().displayname("§7" + section.getName()).itemstack(new ItemStack(section.getMaterial())).lore((JavaUtils.getArgsToString(JavaUtils.addIntoEvery(section.getDescription().split("\n"), Main.getColorCode(), true), "\n")).split("\n")).build(), new Runnable() {

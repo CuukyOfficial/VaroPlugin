@@ -57,11 +57,11 @@ public class BorderCommand implements CommandExecutor {
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SET_BORDER.getValue().replace("%size%", String.valueOf(borderSize)));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.BORDER_COMMAND_SET_BORDER.getValue().replace("%size%", String.valueOf(borderSize)));
 			if(p != null)
 				p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		} else
-			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
+			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
 		return false;
 	}
 }

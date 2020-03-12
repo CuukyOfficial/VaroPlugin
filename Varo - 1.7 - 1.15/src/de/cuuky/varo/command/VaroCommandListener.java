@@ -28,7 +28,7 @@ public class VaroCommandListener implements CommandExecutor {
 		}
 
 		if(command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
-			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
+			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
 			return false;
 		}
 
