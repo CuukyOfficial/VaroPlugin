@@ -51,6 +51,12 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 
 		return message.replace(identifier, placeholderValues.get(player));
 	}
+	
+	@Override
+	public void clearValue() {
+		placeholderValues.clear();
+		placeholderRefreshes.clear();
+	}
 
 	public static ArrayList<PlayerMessagePlaceholder> getPlayerPlaceholder() {
 		return playerPlaceholder;

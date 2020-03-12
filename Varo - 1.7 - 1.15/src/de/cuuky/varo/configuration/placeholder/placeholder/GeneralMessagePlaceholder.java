@@ -35,16 +35,16 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 		if(!shallRefresh()) 
 			return;
 		
-		refreshValues();
+		refreshValue();
+	}
+	
+	private void refreshValue() {
+		this.value = getValue();
+		this.lastRefresh = System.currentTimeMillis();
 	}
 	
 	private boolean shallRefresh() {
 		return this.refreshDelay < 1 && this.value != null ? false : this.lastRefresh + (this.refreshDelay) <= System.currentTimeMillis();
-	}
-	
-	private void refreshValues() {
-		this.value = getValue();
-		this.lastRefresh = System.currentTimeMillis();
 	}
 
 	protected abstract String getValue();
@@ -53,6 +53,12 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 		checkRefresh();
 		
 		return message.replace(this.identifier, this.value);
+	}
+	
+	@Override
+	public void clearValue() {
+		this.value = null;
+		this.lastRefresh = 0;
 	}
 	
 	protected static String getLastDateRefresh(int index) {
