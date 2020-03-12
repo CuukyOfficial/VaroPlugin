@@ -13,7 +13,7 @@ public class BroadcastCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(!sender.hasPermission("varo.broadcast")) {
-			sender.sendMessage(ConfigMessages.OTHER_NO_PERMISSION.getValue());
+			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
 			return false;
 		}
 

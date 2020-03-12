@@ -111,7 +111,7 @@ public class PlayerJoinListener implements Listener {
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 				}
 			} else if(!ConfigEntry.PLAY_TIME.isIntActivated()) {
-				event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
+				event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(vplayer));
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
 			} else if( massRecording.isEnabled()) {
 				if( massRecording.getCountdown(vplayer) == ConfigEntry.PLAY_TIME.getValueAsInt() * 60) {
@@ -147,6 +147,6 @@ public class PlayerJoinListener implements Listener {
 			return;
 		}
 
-		event.setJoinMessage(ConfigMessages.JOIN.getValue(vplayer));
+		event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(vplayer));
 	}
 }

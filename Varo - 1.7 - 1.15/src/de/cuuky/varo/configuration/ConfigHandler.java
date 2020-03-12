@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.config.ConfigSection;
+import de.cuuky.varo.configuration.config.ConfigEntrySection;
 import de.cuuky.varo.configuration.messages.ConfigMessages;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -33,7 +33,7 @@ public class ConfigHandler {
 	private String getConfigHeader() {
 		String header = "Config Einstellungen \r\n" + "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:\n\n";
 		String desc = "";
-		for(ConfigSection section : ConfigSection.values()) {
+		for(ConfigEntrySection section : ConfigEntrySection.values()) {
 			desc = desc + "\n----------- " + section.getName() + " -----------";
 
 			for(ConfigEntry entry : section.getEntries()) {

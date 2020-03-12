@@ -21,7 +21,7 @@ public class TeamChat {
 			if(!pl.isOnline())
 				continue;
 
-			pl.sendMessage(ConfigMessages.TEAMCHAT_FORMAT.getValue(player).replace("%message%", message));
+			pl.sendMessage(ConfigMessages.CHAT_TEAMCHAT_FORMAT.getValue(player).replace("%message%", message));
 		}
 	}
 }

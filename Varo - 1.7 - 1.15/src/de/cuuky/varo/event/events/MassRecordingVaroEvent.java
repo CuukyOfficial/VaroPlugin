@@ -52,9 +52,9 @@ public class MassRecordingVaroEvent extends VaroEvent {
 				if(vp.isOnline()) {
 					vp.setMassRecordingKick(true);
 
-					Bukkit.broadcastMessage(ConfigMessages.KICK_BROADCAST.getValue(vp));
+					Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(vp));
 					vp.onEvent(BukkitEventType.KICKED);
-					vp.getPlayer().kickPlayer(ConfigMessages.KICK_MESSAGE_MASS_REC.getValue(vp));
+					vp.getPlayer().kickPlayer(ConfigMessages.KICK_MASS_REC_SESSION_OVER.getValue(vp));
 				}
 			}
 		}

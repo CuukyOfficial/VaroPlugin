@@ -18,7 +18,7 @@ public class SpawnCommand implements CommandExecutor {
 		if(!(sender instanceof Player)) {
 			if(loc == null)
 				sender.sendMessage(Main.getPrefix() + "§7Main World not found!");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_WORLD.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
 			return false;
 		}
 
@@ -34,11 +34,11 @@ public class SpawnCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "§7Im Ende kann dir der Spawn nicht angegeben werden.");
 			return false;
 		} else if(player.getWorld().getEnvironment() == World.Environment.NETHER) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_NETHER.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_DISTANCE_NETHER.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_NETHER.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_DISTANCE_NETHER.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		} else {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMAND_SPAWN_DISTANCE.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_WORLD.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_DISTANCE.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		}
 
 		return false;
