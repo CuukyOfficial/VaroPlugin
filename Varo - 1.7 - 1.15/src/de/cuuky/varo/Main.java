@@ -63,9 +63,9 @@ public class Main extends JavaPlugin {
 		System.out.println("#                                                                          #");
 		System.out.println("#                               by Cuuky                                   #");
 		System.out.println("#                                                                          #");
-		System.out.println("#                             Contributors:                                #");
-		System.out.println("#                               Korne127                                   #");
-		System.out.println("#                                                                          #");
+//		System.out.println("#                             Contributors:                                #");
+//		System.out.println("#                               Korne127                                   #");
+//		System.out.println("#                                                                          #");
 		System.out.println("############################################################################");
 
 		System.out.println(CONSOLE_PREFIX);
