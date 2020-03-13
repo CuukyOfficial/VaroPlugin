@@ -307,7 +307,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public NetworkManager getNetworkManager() {
-		return networkManager == null ? new NetworkManager(player) : networkManager;
+		return networkManager == null ? this.networkManager = new NetworkManager(player) : networkManager;
 	}
 
 	public Player getPlayer() {
