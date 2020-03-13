@@ -94,7 +94,7 @@ public class NetworkManager {
 			this.playerHandle = player.getClass().getMethod("getHandle").invoke(player);
 			this.pingField = playerHandle.getClass().getField("ping");
 			this.connection = playerHandle.getClass().getField("playerConnection").get(playerHandle);
-			this.sendPacketMethod = connection.getClass().getDeclaredMethod("sendPacket", Class.forName(VersionUtils.getNmsClass() + ".Packet"));
+			this.sendPacketMethod = connection.getClass().getMethod("sendPacket", Class.forName(VersionUtils.getNmsClass() + ".Packet"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
