@@ -160,9 +160,6 @@ public class ScoreboardHandler implements BoardHandler {
 			return;
 
 		Player player = vp.getPlayer();
-		if(player.getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null)
-			return;
-
 		Scoreboard sb = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 		Objective obj = sb.registerNewObjective("silent", "dummy");
 		
