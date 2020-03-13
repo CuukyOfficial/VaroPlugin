@@ -161,6 +161,17 @@ public class MessagePlaceholderLoader {
 				return "";
 			}
 		};
+		
+		// MAYBE ?
+//		for(ConfigSetting setting : ConfigSetting.values()) {
+//			new GeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
+//				
+//				@Override
+//				protected String getValue() {
+//					return String.valueOf(setting.getValue());
+//				}
+//			};
+//		}
 	}
 
 	private void loadPlayerPlaceholder() {
