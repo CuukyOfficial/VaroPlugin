@@ -1,5 +1,7 @@
 package de.cuuky.varo.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -185,5 +187,12 @@ public final class JavaUtils {
 		}
 
 		return newMessage;
+	}
+	
+	public static String getCurrentDateAsFileable() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		Date date = new Date();
+
+		return dateFormat.format(date);
 	}
 }

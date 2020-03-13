@@ -1,14 +1,16 @@
-package de.cuuky.varo.configuration.messages;
+package de.cuuky.varo.configuration.configurations.messages;
 
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.SectionConfiguration;
+import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
-public enum ConfigMessages {
+public enum ConfigMessages implements SectionEntry {
 
 	// ALERTS
 	
@@ -191,12 +193,10 @@ public enum ConfigMessages {
 	
 	// TABLIST
 	
-	TABLIST_HEADER(ConfigMessageSection.TABLIST, "tablistHeader", "%nextLine%&c%projectname%%nextLine%"),
 	TABLIST_PLAYER_WITH_TEAM(ConfigMessageSection.TABLIST, "player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITH_TEAM_RANK(ConfigMessageSection.TABLIST, "player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM(ConfigMessageSection.TABLIST, "player.withoutTeam", "&7%player%  &c%kills%"),
-	TABLIST_PLAYER_WITHOUT_TEAM_RANK(ConfigMessageSection.TABLIST, "player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
-	TABLIST_FOOTER(ConfigMessageSection.TABLIST, "tablistFooter", "&7------------------------%nextLine%&7Registriert: %colorcode%%players%%nextLine%&7Lebend: %colorcode%%remaining%%nextLine%&7Online: %colorcode%%online%%nextLine%&7Plugin by %colorcode%Cuuky%nextLine%%nextLine%&c%currDay%§7.&c%currMonth%§7.§c%currYear%%nextLine%&c%currHour%&7:&c%currMin%&7:&c%currSec%%nextLine%&7------------------------%nextLine%"),
+	TABLIST_PLAYER_WITHOUT_TEAM_RANK(ConfigMessageSection.TABLIST, "player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),	
 	
 	// TEAMREQUEST
 	
@@ -231,16 +231,29 @@ public enum ConfigMessages {
 		this.defaultValue = value;
 	}
 
+	@Override
 	public Object getDefaultValue() {
 		return defaultValue;
 	}
 
+	@Override
 	public String getPath() {
 		return path;
 	}
-
-	public String getSection() {
-		return this.path.split("\\.")[0];
+	
+	@Override
+	public String[] getDescription() {
+		return null;
+	}
+	
+	@Override
+	public SectionConfiguration getSection() {
+		return this.section;
+	}
+	
+	@Override
+	public void setValue(Object value) {
+		this.value = String.valueOf(value);
 	}
 
 	public String getValue() {
@@ -249,10 +262,6 @@ public enum ConfigMessages {
 
 	public String getValue(VaroPlayer vp) {
 		return getValue(value, vp);
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 	
 	private static ArrayList<Integer> getConvNumbers(String line, String key) {
@@ -276,38 +285,6 @@ public enum ConfigMessages {
 				}
 			}
 		}
-
-		return list;
-	}
-
-	public static ArrayList<ConfigMessages> getBySection(String section) {
-		ArrayList<ConfigMessages> list = new ArrayList<>();
-		for(ConfigMessages entry : ConfigMessages.values()) {
-			if(!entry.getSection().equals(section))
-				continue;
-
-			list.add(entry);
-		}
-
-		return list;
-	}
-
-	public static ConfigMessages getEntryByPath(String path) {
-		for(ConfigMessages entry : ConfigMessages.values()) {
-			if(!entry.getPath().equals(path) && !entry.getPath().contains(path))
-				continue;
-
-			return entry;
-		}
-
-		return null;
-	}
-
-	public static ArrayList<String> getSections() {
-		ArrayList<String> list = new ArrayList<>();
-		for(ConfigMessages entry : values())
-			if(!list.contains(entry.getSection()))
-				list.add(entry.getSection());
 
 		return list;
 	}

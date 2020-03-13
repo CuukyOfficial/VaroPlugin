@@ -10,6 +10,7 @@ import de.cuuky.varo.command.varo.ActionbarCommand;
 import de.cuuky.varo.command.varo.AutoSetupCommand;
 import de.cuuky.varo.command.varo.AutoStartCommand;
 import de.cuuky.varo.command.varo.BackpackCommand;
+import de.cuuky.varo.command.varo.BugreportCommand;
 import de.cuuky.varo.command.varo.ConfigCommand;
 import de.cuuky.varo.command.varo.DiscordCommand;
 import de.cuuky.varo.command.varo.EnchantmentCommand;
@@ -82,6 +83,7 @@ public abstract class VaroCommand {
 		new UpdateCommand();
 		new FinaleCommand();
 		new PlaceholderCommand();
+		new BugreportCommand();
 //		new TestCommand();
 	}
 

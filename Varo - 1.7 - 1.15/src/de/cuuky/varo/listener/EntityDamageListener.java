@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -33,7 +33,7 @@ public class EntityDamageListener implements Listener {
 			return;
 		}
 
-		if(!ConfigEntry.JOIN_PROTECTIONTIME.isIntActivated() || Main.getVaroGame().isStarting() || Main.getVaroGame().isFirstTime())
+		if(!ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || Main.getVaroGame().isStarting() || Main.getVaroGame().isFirstTime())
 			return;
 
 		if(vp.isInProtection()) {

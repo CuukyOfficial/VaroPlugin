@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.leaderboard.TopScoreList;
@@ -88,22 +88,22 @@ public class VaroGame implements VaroSerializeable {
 		if(hasStarted() || isStarting())
 			return;
 
-		if(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
-			VaroUtils.doRandomTeam(ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+		if(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
+			VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
 		}
 
-		if(ConfigEntry.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
+		if(ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
 			new SpawnGenerator(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
 			Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
 		}
 
-		if(ConfigEntry.DO_SORT_AT_START.getValueAsBoolean()) {
+		if(ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {
 			VaroUtils.sortPlayers();
 			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
 		}
 
-		if(ConfigEntry.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
+		if(ConfigSetting.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
 			removeArentAtStart();
 
 		if(minuteTimer != null)

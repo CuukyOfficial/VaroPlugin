@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.AutoSetup;
 
@@ -19,7 +19,7 @@ public class AutoSetupCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length >= 1) {
 			if(args[0].equalsIgnoreCase("run")) {
-				if(!ConfigEntry.AUTOSETUP_ENABLED.getValueAsBoolean()) {
+				if(!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
 					sender.sendMessage(Main.getPrefix() + "Der AutoSetup wurde noch nicht in der Config eingerichtet!");
 					return;
 				}

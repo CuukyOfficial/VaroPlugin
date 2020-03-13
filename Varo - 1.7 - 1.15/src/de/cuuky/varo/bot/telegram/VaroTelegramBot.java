@@ -9,7 +9,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class VaroTelegramBot implements VaroBot {
 
@@ -21,7 +21,7 @@ public class VaroTelegramBot implements VaroBot {
 		eventChannelId = -1;
 		youtubeChannelId = -1;
 
-		telegrambot = new TelegramBot(ConfigEntry.TELEGRAM_BOT_TOKEN.getValueAsString());
+		telegrambot = new TelegramBot(ConfigSetting.TELEGRAM_BOT_TOKEN.getValueAsString());
 	}
 
 	private void startListening() {
@@ -48,12 +48,12 @@ public class VaroTelegramBot implements VaroBot {
 	public void connect() {
 		startListening();
 
-		eventChannelId = ConfigEntry.TELEGRAM_EVENT_CHAT_ID.getValueAsLong();
+		eventChannelId = ConfigSetting.TELEGRAM_EVENT_CHAT_ID.getValueAsLong();
 
 		if(eventChannelId == -1)
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of chat id");
 
-		youtubeChannelId = ConfigEntry.TELEGRAM_VIDEOS_CHAT_ID.getValueAsLong();
+		youtubeChannelId = ConfigSetting.TELEGRAM_VIDEOS_CHAT_ID.getValueAsLong();
 
 		if(youtubeChannelId == -1)
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of videochat id");

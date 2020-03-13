@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 
 public class BlockedItemsListener implements Listener {
 

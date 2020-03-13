@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
@@ -62,7 +62,7 @@ public class BackpackCommand extends VaroCommand {
 			return;
 		}
 
-		if(ConfigEntry.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigEntry.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
+		if(ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			if(args.length == 0 || (!args[0].equalsIgnoreCase("player") && !args[0].equalsIgnoreCase("team"))) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wurden sowohl Spieler als auch Team-Backpacks aktiviert");
 				if(vp.getPlayer().isOp()) {
@@ -77,9 +77,9 @@ public class BackpackCommand extends VaroCommand {
 			} else {
 				teamBackPack(sender, vp, args, 1);
 			}
-		} else if(ConfigEntry.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && !ConfigEntry.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
+		} else if(ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && !ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			playerBackPack(sender, vp, args, 0);
-		} else if(!ConfigEntry.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigEntry.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
+		} else if(!ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			teamBackPack(sender, vp, args, 0);
 		} else {
 			sender.sendMessage(Main.getPrefix() + "Rucksaecke sind nicht aktiviert!");

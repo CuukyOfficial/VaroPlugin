@@ -10,8 +10,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -33,7 +33,7 @@ public class Nametag {
 			try {
 				Class<?> visibilityClass = Class.forName("org.bukkit.scoreboard.NameTagVisibility");
 
-				visibility = !ConfigEntry.NAMETAGS.getValueAsBoolean() ? visibilityClass.getDeclaredField("NEVER").get(null) : visibilityClass.getDeclaredField("ALWAYS").get(null);
+				visibility = !ConfigSetting.NAMETAGS.getValueAsBoolean() ? visibilityClass.getDeclaredField("NEVER").get(null) : visibilityClass.getDeclaredField("ALWAYS").get(null);
 				teamClass = Class.forName("org.bukkit.scoreboard.Team");
 				setVisibilityMethod = teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass());
 			} catch(Exception e) {

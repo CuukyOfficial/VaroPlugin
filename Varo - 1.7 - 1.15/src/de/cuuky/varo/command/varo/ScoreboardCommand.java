@@ -6,7 +6,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ScoreboardCommand extends VaroCommand {
@@ -22,7 +22,7 @@ public class ScoreboardCommand extends VaroCommand {
 			return;
 		}
 
-		if(!ConfigEntry.SCOREBOARD.getValueAsBoolean()) {
+		if(!ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "Scoreboards wurden deaktiviert!");
 			return;
 		}

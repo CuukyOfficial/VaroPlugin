@@ -16,7 +16,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.material.Sign;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -47,7 +47,7 @@ public class SignChangeListener implements Listener {
 			if(chest.equals(secChest) && secChest != null)
 				secChest = (Chest) ((DoubleChest) ih).getRightSide();
 
-			if(ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() == 0) {
+			if(ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() == 0) {
 				e.getPlayer().sendMessage(Main.getPrefix() + "§7Die Chestsicherung wurde in der Config §7deaktiviert!");
 				return;
 			}
@@ -63,8 +63,8 @@ public class SignChangeListener implements Listener {
 				continue;
 			}
 
-			if(sorted.size() >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt()) {
-				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten fuer das Team " + Main.getColorCode() + player.getTeam().getName() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
+			if(sorted.size() >= ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt()) {
+				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten fuer das Team " + Main.getColorCode() + player.getTeam().getName() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 				e.setCancelled(true);
 				return;
 			}
@@ -95,7 +95,7 @@ public class SignChangeListener implements Listener {
 		} else if(attached.getState() instanceof Furnace) {
 			Furnace furnace = (Furnace) attached.getState();
 
-			if(ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() == 0) {
+			if(ConfigSetting.PLAYER_FURNACE_LIMIT.getValueAsInt() == 0) {
 				e.getPlayer().sendMessage(Main.getPrefix() + "§7Die Furnacesicherung wurde in der Config §7deaktiviert!");
 				return;
 			}
@@ -118,9 +118,9 @@ public class SignChangeListener implements Listener {
 				return;
 			}
 
-			if(ConfigEntry.PLAYER_FURNACE_LIMIT.isIntActivated())
-				if(sorted.size() >= ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
-					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces fuer das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigEntry.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
+			if(ConfigSetting.PLAYER_FURNACE_LIMIT.isIntActivated())
+				if(sorted.size() >= ConfigSetting.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
+					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces fuer das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
 					e.setCancelled(true);
 					return;
 				}

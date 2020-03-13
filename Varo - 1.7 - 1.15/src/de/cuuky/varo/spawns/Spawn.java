@@ -7,8 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -102,10 +102,10 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	private void setNameTag() {
-		if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+		if(!ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
-		nameTagLocation = location.clone().add(0, ConfigEntry.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
+		nameTagLocation = location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
 		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.valueOf("ARMOR_STAND"));
 
 		try {
@@ -162,7 +162,7 @@ public class Spawn implements VaroSerializeable {
 					if(ent.getLocation().distance(nameTagLocation) < 1 && entName.equals(nameTagName)) {
 						this.armorStand = ent;
 
-						if(!ConfigEntry.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand != null) {
+						if(!ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand != null) {
 							this.armorStand.remove();
 							this.armorStand = null;
 						} else {

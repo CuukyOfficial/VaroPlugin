@@ -13,8 +13,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
@@ -128,10 +128,10 @@ public class BotRegister {
 	}
 
 	private static void loadAll() {
-		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+		if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
 			return;
 		
-		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
+		if(ConfigSetting.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
 			if(!Main.getDataManager().getMysqlClient().isConnected()) {
 				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
 				return;
@@ -216,10 +216,10 @@ public class BotRegister {
 	}
 
 	public static void saveAll() {
-		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+		if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
 			return;
 
-		if(ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
+		if(ConfigSetting.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
 			if(!Main.getDataManager().getMysqlClient().isConnected())
 				return;
 

@@ -15,8 +15,8 @@ import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.clientadapter.nametag.Nametag;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
@@ -255,7 +255,7 @@ public class VaroPlayer extends VaroEntity {
 		if(!isOnline())
 			return;
 
-		if(ConfigEntry.NAMETAGS.getValueAsBoolean()) {
+		if(ConfigSetting.NAMETAGS.getValueAsBoolean()) {
 			if(nametag == null)
 				nametag = new Nametag(player.getUniqueId(), player);
 			else
@@ -263,7 +263,7 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			if(ConfigEntry.TABLIST.getValueAsBoolean())
+			if(ConfigSetting.TABLIST.getValueAsBoolean())
 				Main.getDataManager().getTablistHandler().updatePlayer(this);
 
 			String listname = "";
@@ -346,7 +346,7 @@ public class VaroPlayer extends VaroEntity {
 		if(VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;
 		} else {
-			return ConfigEntry.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigEntry.PLAY_TIME.getValueAsInt() * 60) - ConfigEntry.JOIN_PROTECTIONTIME.getValueAsInt();
+			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt();
 		}
 	}
 
@@ -398,7 +398,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public void setNormalAttackSpeed() {
-		getNetworkManager().setAttributeSpeed(!ConfigEntry.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
+		getNetworkManager().setAttributeSpeed(!ConfigSetting.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
 	}
 
 	public void setPlayer(Player player) {
@@ -426,7 +426,7 @@ public class VaroPlayer extends VaroEntity {
 			return;
 
 		try {
-			if(ConfigEntry.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean())
+			if(ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean())
 				updateDiscordTeam(oldTeam);
 		} catch(Exception e) {
 			e.printStackTrace();

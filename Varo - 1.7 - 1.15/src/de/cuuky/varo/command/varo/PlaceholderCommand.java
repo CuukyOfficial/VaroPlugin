@@ -38,7 +38,7 @@ public class PlaceholderCommand extends VaroCommand {
 			}
 
 			MessagePlaceholder mp = null;
-			for(MessagePlaceholder mp1 : MessagePlaceholder.getPlaceholder()) {
+			for(MessagePlaceholder mp1 : MessagePlaceholder.getPlaceholders()) {
 				if(mp1.getIdentifier().replace("%", "").equalsIgnoreCase(args[1].replace("%", ""))) {
 					mp = mp1;
 				}
@@ -68,11 +68,11 @@ public class PlaceholderCommand extends VaroCommand {
 
 		ArrayList<MessagePlaceholder> placeholders = new ArrayList<>();
 		if(args[0].equalsIgnoreCase("general")) {
-			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholder())
+			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
 				if(mp instanceof GeneralMessagePlaceholder)
 					placeholders.add(mp);
 		} else if(args[0].equalsIgnoreCase("player")) {
-			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholder())
+			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
 				if(mp instanceof PlayerMessagePlaceholder)
 					placeholders.add(mp);
 		}

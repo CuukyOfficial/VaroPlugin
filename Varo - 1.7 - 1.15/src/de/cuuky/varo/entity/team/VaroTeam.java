@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.clientadapter.nametag.Nametag;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
@@ -46,7 +46,7 @@ public class VaroTeam extends VaroEntity {
 	public VaroTeam() {
 		teams.add(this);
 		member = new ArrayList<>();
-		teamBackPack = new VaroInventory(ConfigEntry.BACKPACK_TEAM_SIZE.getValueAsInt());
+		teamBackPack = new VaroInventory(ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt());
 		memberid = new ArrayList<Integer>();
 	}
 
@@ -108,7 +108,7 @@ public class VaroTeam extends VaroEntity {
 	}
 
 	public void loadDefaults() {
-		this.lifes = ConfigEntry.TEAM_LIFES.getValueAsInt();
+		this.lifes = ConfigSetting.TEAM_LIFES.getValueAsInt();
 	}
 
 	@Override

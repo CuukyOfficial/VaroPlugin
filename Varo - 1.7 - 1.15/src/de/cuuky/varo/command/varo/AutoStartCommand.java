@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.start.AutoStart;
 
@@ -114,8 +114,8 @@ public class AutoStartCommand extends VaroCommand {
 			else {
 				sender.sendMessage(Main.getPrefix() + "AutoStart §aaktiv§7:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Datum: §7" + new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart()));
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: §7" + ConfigEntry.DO_SORT_AT_START.getValueAsBoolean());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgroesse: §7" + ConfigEntry.DO_RANDOMTEAM_AT_START.getValueAsInt());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoSort: §7" + ConfigSetting.DO_SORT_AT_START.getValueAsBoolean());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "AutoRandomteamgroesse: §7" + ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			}
 		} else
 			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + "/autostart §7for help!");

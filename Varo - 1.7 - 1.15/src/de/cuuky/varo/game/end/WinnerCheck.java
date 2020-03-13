@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.game.state.GameState;
@@ -27,7 +27,7 @@ public class WinnerCheck {
 	private void check() {
 		places = new HashMap<Integer, ArrayList<VaroPlayer>>();
 		ArrayList<VaroPlayer> alive = VaroPlayer.getAlivePlayer();
-		if(!(alive.size() <= ConfigEntry.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)
+		if(!(alive.size() <= ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)
 			return;
 
 		VaroPlayer lastAlive = null;

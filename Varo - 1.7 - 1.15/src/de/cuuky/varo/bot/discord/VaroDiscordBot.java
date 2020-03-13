@@ -7,7 +7,7 @@ import java.util.Random;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
 import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -30,8 +30,8 @@ public class VaroDiscordBot implements VaroBot {
 	@Override
 	public void connect() {
 		System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors maybe will appear - don't mind them)");
-		JDABuilder builder = new JDABuilder(ConfigEntry.DISCORDBOT_TOKEN.getValueAsString());
-		builder.setActivity(Activity.playing(ConfigEntry.DISCORDBOT_GAMESTATE.getValueAsString()));
+		JDABuilder builder = new JDABuilder(ConfigSetting.DISCORDBOT_TOKEN.getValueAsString());
+		builder.setActivity(Activity.playing(ConfigSetting.DISCORDBOT_GAMESTATE.getValueAsString()));
 		builder.setAutoReconnect(true);
 		builder.setRequestTimeoutRetry(true);
 		builder.setStatus(OnlineStatus.ONLINE);
@@ -58,7 +58,7 @@ public class VaroDiscordBot implements VaroBot {
 
 	private void loadChannel() {
 		try {
-			announcementChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
+			announcementChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
 			
 			if(announcementChannel == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not load announcement-channel");
@@ -67,13 +67,13 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		try {
-			eventChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
+			eventChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
 		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
 			System.err.println(Main.getConsolePrefix() + "Could not load event-channel");
 		}
 
 		try {
-			resultChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
+			resultChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
 
 			if(resultChannel == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
@@ -82,8 +82,8 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		try {
-			if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
-				registerChannel = jda.getTextChannelById(ConfigEntry.DISCORDBOT_REGISTERCHANNELID.getValueAsLong()).getIdLong();
+			if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+				registerChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_REGISTERCHANNELID.getValueAsLong()).getIdLong();
 
 			if(registerChannel == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not load register-channel");
@@ -92,12 +92,12 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		try {
-			pingRole = jda.getRoleById(ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
+			pingRole = jda.getRoleById(ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
 
 			if(pingRole == -1)
-				System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
+				System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		} catch(NullPointerException e) {
-			System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigEntry.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
+			System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		}
 	}
 
@@ -131,7 +131,7 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		EmbedBuilder builder = new EmbedBuilder();
-		if(!ConfigEntry.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
+		if(!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
 			builder.setColor(color);
 		else
 			builder.setColor(getRandomColor());
@@ -191,7 +191,7 @@ public class VaroDiscordBot implements VaroBot {
 	}
 
 	public Guild getMainGuild() {
-		return jda.getGuildById(ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong());
+		return jda.getGuildById(ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong());
 	}
 
 	public JDA getJda() {

@@ -10,11 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
+import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
 import de.cuuky.varo.utils.JavaUtils;
@@ -70,11 +71,12 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX);
 		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
 		System.out.println(CONSOLE_PREFIX + "Running on " + Bukkit.getVersion());
+		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
+		
 		if(Bukkit.getVersion().contains("Bukkit")) {
 			System.out.println(CONSOLE_PREFIX + "It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
 			System.out.println(CONSOLE_PREFIX + "Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
 		}
-		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		try {
 			if(new ConfigFailureDetector().hasFailed()) {
@@ -84,9 +86,6 @@ public class Main extends JavaPlugin {
 			}
 			
 			dataManager = new DataManager();
-			if(failed)
-				return;
-			
 			varoUpdater = new VaroUpdater();
 			botLauncher = new BotLauncher();
 			new MetricsLoader(this);
@@ -127,6 +126,10 @@ public class Main extends JavaPlugin {
 
 		if(!failed)
 			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		else {
+			VaroBugreport report = new VaroBugreport();
+			System.out.println(CONSOLE_PREFIX + "Saved Crashreport to " + report.getZipFile().getName());
+		}
 		Bukkit.getScheduler().cancelTasks(this);
 
 		System.out.println(CONSOLE_PREFIX + "Disabled!");
@@ -152,7 +155,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getColorCode() {
-		return ConfigEntry.PROJECTNAME_COLORCODE.getValueAsString();
+		return ConfigSetting.PROJECTNAME_COLORCODE.getValueAsString();
 	}
 
 	public static String getConsolePrefix() {
@@ -192,11 +195,11 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getPrefix() {
-		return ConfigEntry.PREFIX.getValueAsString();
+		return ConfigSetting.PREFIX.getValueAsString();
 	}
 
 	public static String getProjectName() {
-		return getColorCode() + ConfigEntry.PROJECT_NAME.getValueAsString();
+		return getColorCode() + ConfigSetting.PROJECT_NAME.getValueAsString();
 	}
 
 	public static boolean isBootedUp() {

@@ -8,7 +8,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class NoPortalListener implements Listener {
 
@@ -26,7 +26,7 @@ public class NoPortalListener implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if(!ConfigEntry.BLOCK_USER_PORTALS.getValueAsBoolean())
+		if(!ConfigSetting.BLOCK_USER_PORTALS.getValueAsBoolean())
 			return;
 
 		if(event.getPlayer().hasPermission("varo.portals"))
@@ -44,7 +44,7 @@ public class NoPortalListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(!ConfigEntry.BLOCK_USER_PORTALS.getValueAsBoolean())
+		if(!ConfigSetting.BLOCK_USER_PORTALS.getValueAsBoolean())
 			return;
 
 		if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))

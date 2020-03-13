@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PlayerRegenerateListener implements Listener {
@@ -23,7 +23,7 @@ public class PlayerRegenerateListener implements Listener {
 			return;
 
 		if(event.getRegainReason() == RegainReason.SATIATED)
-			if(ConfigEntry.NO_SATIATION_REGENERATE.getValueAsBoolean()) {
+			if(ConfigSetting.NO_SATIATION_REGENERATE.getValueAsBoolean()) {
 				event.setCancelled(true);
 				return;
 			}

@@ -17,17 +17,17 @@ public final class ConfigFailureDetector {
 
 	static {
 		ignoreScan = new ArrayList<>();
-		
+
 		ignoreScan.add("logs");
 		ignoreScan.add("presets");
 	}
-	
+
 	private boolean failed;
-	
+
 	public ConfigFailureDetector() {
 		detectConfig();
 	}
-	
+
 	private void detectConfig() {
 		File newFile = new File("plugins/Varo");
 		if(newFile.listFiles() == null)
@@ -36,7 +36,7 @@ public final class ConfigFailureDetector {
 		if(scanDirectory(newFile)) {
 			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
 			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
-			
+
 			this.failed = true;
 		} else {
 			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes successfully!");
@@ -49,8 +49,10 @@ public final class ConfigFailureDetector {
 				if(ignoreScan.contains(file.getName()))
 					continue;
 
-				scanDirectory(file);
-				continue;
+				if(scanDirectory(file))
+					return true;
+				else
+					continue;
 			}
 
 			if(!file.getName().endsWith(".yml"))
@@ -70,10 +72,10 @@ public final class ConfigFailureDetector {
 			}
 
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean hasFailed() {
 		return this.failed;
 	}

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public abstract class MessagePlaceholder {
 
-	private static ArrayList<MessagePlaceholder> placeholder;
+	private static ArrayList<MessagePlaceholder> placeholders;
 
 	static {
-		placeholder = new ArrayList<>();
+		placeholders = new ArrayList<>();
 
 		new MessagePlaceholderLoader();
 	}
@@ -29,7 +29,7 @@ public abstract class MessagePlaceholder {
 		this.defaultRefresh = refreshDelay;
 		this.refreshDelay = refreshDelay * 1000 - 100;
 
-		placeholder.add(this);
+		placeholders.add(this);
 	}
 
 	public boolean containsPlaceholder(String message) {
@@ -47,8 +47,15 @@ public abstract class MessagePlaceholder {
 	public int getDefaultRefresh() {
 		return this.defaultRefresh;
 	}
+	
+	public abstract void clearValue();
+	
+	public static void clearPlaceholder() {
+		for(MessagePlaceholder placeholder : placeholders)
+			placeholder.clearValue();
+	}
 
-	public static ArrayList<MessagePlaceholder> getPlaceholder() {
-		return placeholder;
+	public static ArrayList<MessagePlaceholder> getPlaceholders() {
+		return placeholders;
 	}
 }

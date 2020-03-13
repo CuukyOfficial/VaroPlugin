@@ -3,7 +3,7 @@ package de.cuuky.varo.bot;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class BotLauncher {
 
@@ -24,10 +24,10 @@ public class BotLauncher {
 	}
 
 	public void startupDiscord() {
-		if(!ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean())
+		if(!ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean())
 			return;
 
-		if(ConfigEntry.DISCORDBOT_TOKEN.getValue().equals("ENTER TOKEN HERE") || ConfigEntry.DISCORDBOT_SERVERID.getValueAsLong() == -1) {
+		if(ConfigSetting.DISCORDBOT_TOKEN.getValue().equals("ENTER TOKEN HERE") || ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong() == -1) {
 			System.err.println(Main.getConsolePrefix() + "DiscordBot deactivated because of missing information in the config (DiscordToken or ServerID missing)");
 			return;
 		}
@@ -50,10 +50,10 @@ public class BotLauncher {
 	}
 
 	public void startupTelegram() {
-		if(!ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean())
+		if(!ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean())
 			return;
 
-		if(ConfigEntry.TELEGRAM_BOT_TOKEN.getValue().equals("ENTER TOKEN HERE")) {
+		if(ConfigSetting.TELEGRAM_BOT_TOKEN.getValue().equals("ENTER TOKEN HERE")) {
 			System.err.println(Main.getConsolePrefix() + "TelegramBot deactivated because of missing information in the config");
 			return;
 		}

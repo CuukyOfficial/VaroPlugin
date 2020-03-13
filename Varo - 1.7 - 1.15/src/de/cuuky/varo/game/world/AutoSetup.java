@@ -9,7 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
@@ -34,16 +34,16 @@ public class AutoSetup {
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
 
 		int x = 0, z = 0;
-		while(!SpawnChecker.checkSpawns(world, x, z, ConfigEntry.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigEntry.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
+		while(!SpawnChecker.checkSpawns(world, x, z, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
 			x += 100;
 			z += 100;
 		}
 
 		Location middle = new Location(world, x, world.getMaxHeight(), z);
 
-		portal: if(ConfigEntry.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
+		portal: if(ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
 			System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up the portal...");
-			int width = ConfigEntry.AUTOSETUP_PORTAL_WIDTH.getValueAsInt(), height = ConfigEntry.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
+			int width = ConfigSetting.AUTOSETUP_PORTAL_WIDTH.getValueAsInt(), height = ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
 
 			if(width < 4 || height < 5) {
 				System.out.println(Main.getConsolePrefix() + "AutoSetup: The size of the portal is too small!");
@@ -53,20 +53,20 @@ public class AutoSetup {
 			new PortalGenerator(world, x, z, width, height);
 		}
 
-		if(ConfigEntry.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
+		if(ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
 			System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
-			File file = new File(ConfigEntry.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
+			File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
 			Location lobby = new Location(world, x, world.getMaxHeight() - 50, z);
 			if(!file.exists())
-				new LobbyGenerator(lobby, ConfigEntry.AUTOSETUP_LOBBY_HEIGHT.getValueAsInt(), ConfigEntry.AUTOSETUP_LOBBY_SIZE.getValueAsInt());
+				new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_SIZE.getValueAsInt());
 			else
 				new LobbyGenerator(lobby, file);
 
 			Main.getVaroGame().setLobby(lobby);
 		}
 
-		if(ConfigEntry.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+		if(ConfigSetting.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			try {
 				Method method = world.getClass().getDeclaredMethod("getWorldBorder");
 
@@ -75,7 +75,7 @@ public class AutoSetup {
 					Object border = method.invoke(world);
 
 					border.getClass().getDeclaredMethod("setCenter", Location.class).invoke(border, middle);
-					border.getClass().getDeclaredMethod("setSize", double.class).invoke(border, ConfigEntry.AUTOSETUP_BORDER.getValueAsInt());
+					border.getClass().getDeclaredMethod("setSize", double.class).invoke(border, ConfigSetting.AUTOSETUP_BORDER.getValueAsInt());
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -88,13 +88,13 @@ public class AutoSetup {
 			yPos--;
 
 		middle.getWorld().setSpawnLocation(x, yPos, z);
-		new SpawnGenerator(middle, ConfigEntry.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigEntry.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigEntry.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigEntry.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+		new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
 
-		if(ConfigEntry.AUTOSETUP_TIME_HOUR.isIntActivated() && ConfigEntry.AUTOSETUP_TIME_MINUTE.isIntActivated()) {
+		if(ConfigSetting.AUTOSETUP_TIME_HOUR.isIntActivated() && ConfigSetting.AUTOSETUP_TIME_MINUTE.isIntActivated()) {
 			System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up AutoStart...");
 			Calendar start = new GregorianCalendar();
-			start.set(Calendar.HOUR_OF_DAY, ConfigEntry.AUTOSETUP_TIME_HOUR.getValueAsInt());
-			start.set(Calendar.MINUTE, ConfigEntry.AUTOSETUP_TIME_MINUTE.getValueAsInt());
+			start.set(Calendar.HOUR_OF_DAY, ConfigSetting.AUTOSETUP_TIME_HOUR.getValueAsInt());
+			start.set(Calendar.MINUTE, ConfigSetting.AUTOSETUP_TIME_MINUTE.getValueAsInt());
 			start.set(Calendar.SECOND, 0);
 			start.set(Calendar.MILLISECOND, 0);
 

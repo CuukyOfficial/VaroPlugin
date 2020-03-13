@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.utils.PageAction;
@@ -62,7 +62,7 @@ public class DiscordBotGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(Main.getBotLauncher().getDiscordbot().isEnabled() || !ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+				if(Main.getBotLauncher().getDiscordbot().isEnabled() || !ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 					opener.sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
 					return;
 				}

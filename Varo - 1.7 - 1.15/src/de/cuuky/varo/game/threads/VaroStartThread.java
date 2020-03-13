@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;
@@ -38,14 +38,14 @@ public class VaroStartThread implements Runnable {
 	}
 	
 	private void fillChests() {
-		if(!ConfigEntry.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
+		if(!ConfigSetting.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
 
-		int radius = ConfigEntry.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
+		int radius = ConfigSetting.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
 		Location loc = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
 		Location loc2 = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
-		int itemsPerChest = ConfigEntry.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
+		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
 		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
 			if(!(block.getState() instanceof Chest))
@@ -85,7 +85,7 @@ public class VaroStartThread implements Runnable {
 	}
 	
 	public void loadVaraibles() {
-		this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+		this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ public class VaroStartThread implements Runnable {
 		if(startcountdown != 0)
 			Bukkit.broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN.getValue().replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown)));
 
-		if(startcountdown == ConfigEntry.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
+		if(startcountdown == ConfigSetting.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
 			for(VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
 				if(pl1.getStats().isSpectator())
 					continue;
@@ -134,14 +134,14 @@ public class VaroStartThread implements Runnable {
 			}
 
 			if(VaroAPI.getEventManager().executeEvent(new VaroStartEvent(game))) {
-				startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+				startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 				Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 				return;
 			}
 
 			this.game.setGamestate(GameState.STARTED);
 			this.game.setFirstTime(true);
-			this.startcountdown = ConfigEntry.STARTCOUNTDOWN.getValueAsInt();
+			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
 			
 			fillChests();
@@ -157,11 +157,11 @@ public class VaroStartThread implements Runnable {
 				public void run() {
 					game.setFirstTime(false);
 				}
-			}, ConfigEntry.PLAY_TIME.getValueAsInt() * 60 * 20);
+			}, ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
 
 			Main.getDataManager().getListManager().getStartItems().giveToAll();
-			if(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigEntry.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
+			if(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 				game.setProtection(new ProtectionTime());
 			}
 

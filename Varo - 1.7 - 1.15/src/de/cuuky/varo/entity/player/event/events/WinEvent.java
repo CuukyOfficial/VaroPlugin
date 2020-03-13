@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
@@ -24,7 +24,7 @@ public class WinEvent extends BukkitEvent {
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
 
 		if(db != null)
-			if(db.isEnabled() || !ConfigEntry.DISCORDBOT_ADD_POKAL_ON_WIN.getValueAsBoolean())
+			if(db.isEnabled() || !ConfigSetting.DISCORDBOT_ADD_POKAL_ON_WIN.getValueAsBoolean())
 				return;
 
 		Member member = BotRegister.getBotRegisterByPlayerName(player.getName()).getMember();
@@ -42,7 +42,7 @@ public class WinEvent extends BukkitEvent {
 			System.out.println("[Varo] Konnte den Pokal fuer '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
 		}
 
-		if(ConfigEntry.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
+		if(ConfigSetting.STOP_SERVER_ON_WIN.getValueAsBoolean()) {
 			Bukkit.getServer().shutdown();
 		}
 	}

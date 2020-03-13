@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.SuperInventory;
@@ -137,7 +137,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		if(ConfigEntry.DEBUG_OPTIONS.getValueAsBoolean())
+		if(ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
 			linkItemTo(inv.getSize() - 9, new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
 
 				@Override

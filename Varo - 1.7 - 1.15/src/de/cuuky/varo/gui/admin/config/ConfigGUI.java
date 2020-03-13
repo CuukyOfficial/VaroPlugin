@@ -8,8 +8,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.config.ConfigEntrySection;
+import de.cuuky.varo.configuration.configurations.SectionEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
@@ -21,9 +22,9 @@ import de.cuuky.varo.version.types.Sounds;
 
 public class ConfigGUI extends SuperInventory {
 
-	private ConfigEntrySection section;
+	private ConfigSettingSection section;
 
-	public ConfigGUI(Player opener, ConfigEntrySection section) {
+	public ConfigGUI(Player opener, ConfigSettingSection section) {
 		super("§a" + section.getName(), opener, 18, false);
 
 		this.section = section;
@@ -31,8 +32,8 @@ public class ConfigGUI extends SuperInventory {
 		open();
 	}
 
-	private void hookChat(ConfigEntry entry) {
-		new ChatHook(opener, "§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getName() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
+	private void hookChat(ConfigSetting entry) {
+		new ChatHook(opener, "§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
 
 			@Override
 			public void onChat(String message) {
@@ -49,7 +50,7 @@ public class ConfigGUI extends SuperInventory {
 					}
 
 					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getName() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
+					opener.sendMessage(Main.getPrefix() + "§7'§a" + entry.getPath() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
 				}
 
 				reopenSoon();
@@ -76,7 +77,8 @@ public class ConfigGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ConfigEntry entry : section.getEntries()) {
+		for(SectionEntry sentry : section.getEntries()) {
+			ConfigSetting entry = (ConfigSetting) sentry;
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
 			for(String strin : entry.getDescription())

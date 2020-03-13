@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 
 public class BroadcastCommand implements CommandExecutor {
 

@@ -8,8 +8,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.CombatlogCheck;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
@@ -34,7 +34,7 @@ public class PlayerQuitListener implements Listener {
 
 		if(Main.getVaroGame().getGameState() == GameState.STARTED) {
 			// IF THEY WERE KICKED OR DEAD
-			if(ConfigEntry.PLAY_TIME.isIntActivated())
+			if(ConfigSetting.PLAY_TIME.isIntActivated())
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
 					if(vplayer.getStats().getState() != PlayerState.DEAD)
@@ -51,7 +51,7 @@ public class PlayerQuitListener implements Listener {
 
 			// CHECK DISCONNECTS
 			if(vplayer.getStats().hasTimeLeft()) {
-				if(ConfigEntry.DISCONNECT_PER_SESSION.isIntActivated()) {
+				if(ConfigSetting.DISCONNECT_PER_SESSION.isIntActivated()) {
 					VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
 					if(dc == null)
 						dc = new VaroPlayerDisconnect(player);

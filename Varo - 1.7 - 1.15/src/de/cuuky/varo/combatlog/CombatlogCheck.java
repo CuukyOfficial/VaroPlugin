@@ -6,8 +6,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -44,7 +44,7 @@ public class CombatlogCheck {
 			return;
 		}
 
-		if(ConfigEntry.KILL_ON_COMBATLOG.getValueAsBoolean()) {
+		if(ConfigSetting.KILL_ON_COMBATLOG.getValueAsBoolean()) {
 			event.getPlayer().setHealth(0);
 			vp.getStats().setState(PlayerState.DEAD);
 		}
@@ -56,7 +56,7 @@ public class CombatlogCheck {
 	private void punish(VaroPlayer player) {
 		player.onEvent(BukkitEventType.KICKED);
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");
-		if(ConfigEntry.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
+		if(ConfigSetting.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
 			player.getStats().addStrike(new Strike("CombatLog", player, "CONSOLE"));
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(player));
 		} else

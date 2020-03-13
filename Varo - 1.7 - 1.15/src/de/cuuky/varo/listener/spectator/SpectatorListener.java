@@ -20,8 +20,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 
@@ -122,9 +122,9 @@ public class SpectatorListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		if(!event.getPlayer().isOp())
 			if(cancelEvent(event.getPlayer()))
-				if(event.getTo().getY() < ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt()) {
+				if(event.getTo().getY() < ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt()) {
 					Location tp = event.getFrom();
-					tp.setY(ConfigEntry.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
+					tp.setY(ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
 					event.setTo(tp);
 					event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT.getValue());
 				}

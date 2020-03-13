@@ -49,7 +49,7 @@ public abstract class VaroList {
 	}
 
 	private static void reloadConfig() {
-		file = new File("plugins/Varo", "lists.yml");
+		file = new File("plugins/Varo/config", "lists.yml");
 		config = YamlConfiguration.loadConfiguration(file);
 		lists = new ArrayList<VaroList>();
 	}

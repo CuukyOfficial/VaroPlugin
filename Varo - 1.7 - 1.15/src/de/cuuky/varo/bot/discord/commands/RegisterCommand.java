@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -23,7 +23,7 @@ public class RegisterCommand extends DiscordBotCommand {
 		if(event.getAuthor().isBot() || event.getAuthor().equals(super.getDiscordBot().getJda().getSelfUser()))
 			return;
 
-		if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+		if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 			getDiscordBot().sendMessage("Das Verify-System ist nicht aktiviert!", "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
@@ -37,7 +37,7 @@ public class RegisterCommand extends DiscordBotCommand {
 		TextChannel channel = event.getTextChannel();
 
 		if(args.length == 0) {
-			getDiscordBot().sendMessage("Usage: '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
+			getDiscordBot().sendMessage("Usage: '" + ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 
@@ -45,7 +45,7 @@ public class RegisterCommand extends DiscordBotCommand {
 		try {
 			code = Integer.valueOf(args[0]);
 		} catch(Exception e) {
-			getDiscordBot().sendMessage("Usage: '" + ConfigEntry.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
+			getDiscordBot().sendMessage("Usage: '" + ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 

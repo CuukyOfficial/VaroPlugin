@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 import net.dv8tion.jda.api.entities.User;
@@ -47,7 +47,7 @@ public class DiscordCommand extends VaroCommand {
 		}
 
 		if(args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
-			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
 				return;
 			}
@@ -70,7 +70,7 @@ public class DiscordCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heisst: " + Main.getColorCode() + user.getName() + "§7 und die ID lautet " + Main.getColorCode() + user.getId() + "§7!");
 		} else if(args[0].equalsIgnoreCase("unlink")) {
-			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
 				return;
 			}
@@ -90,7 +90,7 @@ public class DiscordCommand extends VaroCommand {
 			if(Bukkit.getPlayerExact(reg.getPlayerName()) != null)
 				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(reg.getKickMessage());
 		} else if(args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
-			if(!ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + "§7Das Verifzierungs-System wurde in der Config deaktiviert!");
 				return;
 			}
@@ -119,7 +119,7 @@ public class DiscordCommand extends VaroCommand {
 			Main.getBotLauncher().getDiscordbot().disconnect();
 			Main.getBotLauncher().getDiscordbot().connect();
 			for(Player pl : Bukkit.getOnlinePlayers())
-				if(ConfigEntry.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
+				if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
 					pl.kickPlayer("§7Das Discord Verify System wurde aktiviert!");
 			sender.sendMessage(Main.getPrefix() + "§7DiscordBot §aerfolgreich §7neu geladen!");
 		} else if(args[0].equalsIgnoreCase("settings")) {

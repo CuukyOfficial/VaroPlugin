@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
@@ -42,14 +42,14 @@ public class VaroPlayerDisconnect {
 	}
 
 	public void addDisconnect() {
-		if(VaroPlayer.getPlayer(name).getNetworkManager().getPing() >= ConfigEntry.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
+		if(VaroPlayer.getPlayer(name).getNetworkManager().getPing() >= ConfigSetting.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
 			return;
 
 		amount++;
 	}
 
 	public boolean check() {
-		if(amount <= ConfigEntry.DISCONNECT_PER_SESSION.getValueAsInt())
+		if(amount <= ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt())
 			return false;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(name);
@@ -57,7 +57,7 @@ public class VaroPlayerDisconnect {
 		if(vp.getStats().hasTimeLeft())
 			vp.getStats().removeCountdown();
 
-		if(ConfigEntry.STRIKE_ON_DISCONNECT.getValueAsBoolean())
+		if(ConfigSetting.STRIKE_ON_DISCONNECT.getValueAsBoolean())
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
 		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
@@ -89,7 +89,7 @@ public class VaroPlayerDisconnect {
 	}
 
 	public static void disconnected(String playerName) {
-		if(!ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
+		if(!ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
 		if(Main.getVaroGame().getGameState() != GameState.STARTED)
@@ -111,9 +111,9 @@ public class VaroPlayerDisconnect {
 				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
-				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(vp).replace("%banTime%", String.valueOf(ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
+				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
 			}
-		}, (ConfigEntry.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
+		}, (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
 	}
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {

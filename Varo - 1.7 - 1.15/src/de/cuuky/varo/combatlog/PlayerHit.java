@@ -12,8 +12,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PlayerHit {
@@ -42,7 +42,7 @@ public class PlayerHit {
 			vp.getStats().setLastEnemyContact(current);
 			vp1.getStats().setLastEnemyContact(current);
 
-			if(!ConfigEntry.COMBATLOG_TIME.isIntActivated())
+			if(!ConfigSetting.COMBATLOG_TIME.isIntActivated())
 				return;
 
 			Player player1 = (Player) event.getDamager();
@@ -83,7 +83,7 @@ public class PlayerHit {
 			public void run() {
 				over();
 			}
-		}, ConfigEntry.COMBATLOG_TIME.getValueAsInt() * 20);
+		}, ConfigSetting.COMBATLOG_TIME.getValueAsInt() * 20);
 	}
 
 	public boolean hasOld(Player p) {

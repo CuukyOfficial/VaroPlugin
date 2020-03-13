@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.clientadapter.BoardHandler;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -62,7 +62,7 @@ public class TablistHandler implements BoardHandler {
 		this.footerReplaces = new HashMap<>();
 		this.footerLines = new ArrayList<>();
 
-		File file = new File("plugins/Varo", "tablist.yml");
+		File file = new File("plugins/Varo/config", "tablist.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 		ArrayList<String> header = new ArrayList<>();

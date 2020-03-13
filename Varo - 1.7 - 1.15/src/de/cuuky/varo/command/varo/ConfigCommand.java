@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -35,7 +35,7 @@ public class ConfigCommand extends VaroCommand {
 				return;
 			}
 
-			for(ConfigEntry entry : ConfigEntry.values()) {
+			for(ConfigSetting entry : ConfigSetting.values()) {
 				if(!entry.getPath().equalsIgnoreCase(args[1]))
 					continue;
 
@@ -48,7 +48,7 @@ public class ConfigCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + "§7Den Eintrag " + Main.getColorCode() + args[1] + "§7 gibt es nicht in der Config!");
 		} else if(args[0].equalsIgnoreCase("reset")) {
-			for(ConfigEntry entry : ConfigEntry.values()) {
+			for(ConfigSetting entry : ConfigSetting.values()) {
 				entry.setValue(entry.getDefaultValue(), true);
 			}
 			sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Eintraege zurueckgesetzt!");

@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
@@ -29,7 +29,7 @@ public class DeathEvent extends BukkitEvent {
 		player.getStats().setDiedAt(new Date());
 		player.getStats().setState(PlayerState.DEAD);
 
-		if(ConfigEntry.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean()) {
+		if(ConfigSetting.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean()) {
 			if(player.getStats().getPlayerBackpack() != null) {
 				for(ItemStack item : player.getStats().getPlayerBackpack().getInventory().getContents()) {
 					if(item != null && item.getType() != Material.AIR) {
@@ -39,7 +39,7 @@ public class DeathEvent extends BukkitEvent {
 			}
 		}
 
-		if(ConfigEntry.BACKPACK_TEAM_DROP_ON_DEATH.getValueAsBoolean()) {
+		if(ConfigSetting.BACKPACK_TEAM_DROP_ON_DEATH.getValueAsBoolean()) {
 			if(player.getTeam() != null && player.getTeam().isDead() && player.getTeam().getTeamBackPack() != null) {
 				for(ItemStack item : player.getTeam().getTeamBackPack().getInventory().getContents()) {
 					if(item != null && item.getType() != Material.AIR) {

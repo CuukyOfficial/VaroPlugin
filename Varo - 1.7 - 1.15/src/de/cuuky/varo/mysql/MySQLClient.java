@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class MySQLClient {
 
@@ -16,13 +16,13 @@ public class MySQLClient {
 	private String host, database, user, password;
 
 	public MySQLClient() {
-		if(!ConfigEntry.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean())
+		if(!ConfigSetting.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean())
 			return;
 
-		this.host = ConfigEntry.DISCORDBOT_VERIFY_HOST.getValueAsString();
-		this.database = ConfigEntry.DISCORDBOT_VERIFY_DATABASE.getValueAsString();
-		this.user = ConfigEntry.DISCORDBOT_VERIFY_USER.getValueAsString();
-		this.password = ConfigEntry.DISCORDBOT_VERIFY_PASSWORD.getValueAsString();
+		this.host = ConfigSetting.DISCORDBOT_VERIFY_HOST.getValueAsString();
+		this.database = ConfigSetting.DISCORDBOT_VERIFY_DATABASE.getValueAsString();
+		this.user = ConfigSetting.DISCORDBOT_VERIFY_USER.getValueAsString();
+		this.password = ConfigSetting.DISCORDBOT_VERIFY_PASSWORD.getValueAsString();
 		this.connected = false;
 
 		System.out.println(Main.getConsolePrefix() + "Connecting to MySQL...");

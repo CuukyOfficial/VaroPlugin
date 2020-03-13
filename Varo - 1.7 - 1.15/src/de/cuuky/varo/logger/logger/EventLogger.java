@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.VaroLogger;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -12,21 +12,21 @@ public class EventLogger extends VaroLogger {
 
 	public enum LogType {
 
-		ALERT("ALERT", Color.RED, ConfigEntry.DISCORDBOT_EVENT_ALERT),
-		BORDER("BORDER", Color.GREEN, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE),
-		DEATH("DEATH", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_DEATH),
-		JOIN_LEAVE("JOIN/LEAVE", Color.CYAN, ConfigEntry.DISCORDBOT_EVENT_JOIN_LEAVE),
-		KILL("KILL", Color.BLACK, ConfigEntry.DISCORDBOT_EVENT_KILL),
+		ALERT("ALERT", Color.RED, ConfigSetting.DISCORDBOT_EVENT_ALERT),
+		BORDER("BORDER", Color.GREEN, ConfigSetting.DISCORDBOT_EVENT_YOUTUBE),
+		DEATH("DEATH", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_DEATH),
+		JOIN_LEAVE("JOIN/LEAVE", Color.CYAN, ConfigSetting.DISCORDBOT_EVENT_JOIN_LEAVE),
+		KILL("KILL", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_KILL),
 		LOG("LOG", Color.RED, null),
-		STRIKE("STRIKE", Color.YELLOW, ConfigEntry.DISCORDBOT_EVENT_STRIKE),
-		WIN("WIN", Color.MAGENTA, ConfigEntry.DISCORDBOT_EVENT_WIN),
-		YOUTUBE("YOUTUBE", Color.ORANGE, ConfigEntry.DISCORDBOT_EVENT_YOUTUBE);
+		STRIKE("STRIKE", Color.YELLOW, ConfigSetting.DISCORDBOT_EVENT_STRIKE),
+		WIN("WIN", Color.MAGENTA, ConfigSetting.DISCORDBOT_EVENT_WIN),
+		YOUTUBE("YOUTUBE", Color.ORANGE, ConfigSetting.DISCORDBOT_EVENT_YOUTUBE);
 
 		private Color color;
-		private ConfigEntry idEntry;
+		private ConfigSetting idEntry;
 		private String name;
 
-		private LogType(String name, Color color, ConfigEntry idEntry) {
+		private LogType(String name, Color color, ConfigSetting idEntry) {
 			this.color = color;
 			this.name = name;
 			this.idEntry = idEntry;
@@ -47,7 +47,7 @@ public class EventLogger extends VaroLogger {
 			try {
 				idEntry.getValueAsLong();
 			} catch(IllegalArgumentException e) {
-				return ConfigEntry.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
+				return ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
 			}
 
 			return idEntry.getValueAsLong();

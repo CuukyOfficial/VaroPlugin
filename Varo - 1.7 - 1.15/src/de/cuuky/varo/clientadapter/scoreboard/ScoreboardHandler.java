@@ -16,8 +16,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import de.cuuky.varo.clientadapter.BoardHandler;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ScoreboardHandler implements BoardHandler {
@@ -78,7 +78,7 @@ public class ScoreboardHandler implements BoardHandler {
 
 	private String getConvString(String line, VaroPlayer vp) {
 		if(line.contains("%min%") || line.contains("%sec%"))
-			if(ConfigEntry.PLAY_TIME.getValueAsInt() < 1)
+			if(ConfigSetting.PLAY_TIME.getValueAsInt() < 1)
 				return "§cUnlimited";
 
 		line = ConfigMessages.getValue(line, vp);
@@ -104,7 +104,7 @@ public class ScoreboardHandler implements BoardHandler {
 		this.replaces = new HashMap<>();
 		this.headers = new HashMap<>();
 
-		File file = new File("plugins/Varo", "scoreboard.yml");
+		File file = new File("plugins/Varo/config", "scoreboard.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 		ArrayList<String> scoreboard = new ArrayList<>();
@@ -156,7 +156,7 @@ public class ScoreboardHandler implements BoardHandler {
 	}
 
 	public void sendScoreBoard(VaroPlayer vp) {
-		if(!ConfigEntry.SCOREBOARD.getValueAsBoolean() || !vp.getStats().isShowScoreboard())
+		if(!ConfigSetting.SCOREBOARD.getValueAsBoolean() || !vp.getStats().isShowScoreboard())
 			return;
 
 		Player player = vp.getPlayer();

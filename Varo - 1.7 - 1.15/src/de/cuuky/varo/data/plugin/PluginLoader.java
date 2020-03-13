@@ -11,7 +11,7 @@ import org.bukkit.plugin.UnknownDependencyException;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
-import de.cuuky.varo.configuration.config.ConfigEntry;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.listener.PermissionSendListener;
 import de.cuuky.varo.spigot.FileDownloader;
 
@@ -25,7 +25,7 @@ public class PluginLoader {
 	
 	private void loadPlugins() {
 		boolean discordNewDownloadFailed = false;
-		if(ConfigEntry.DISCORDBOT_ENABLED.getValueAsBoolean()) {
+		if(ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()) {
 			try {
 				VaroDiscordBot.getClassName();
 			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
@@ -35,7 +35,7 @@ public class PluginLoader {
 		}
 
 		boolean telegramNewDownloadFailed = false;
-		if(ConfigEntry.TELEGRAM_ENABLED.getValueAsBoolean()) {
+		if(ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean()) {
 			try {
 				VaroTelegramBot.getClassName();
 			} catch(NoClassDefFoundError | BootstrapMethodError e) {
@@ -45,7 +45,7 @@ public class PluginLoader {
 		}
 
 		boolean labymodNewDownloadFailed = false;
-		if(ConfigEntry.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigEntry.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigEntry.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
+		if(ConfigSetting.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigSetting.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigSetting.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
 			try {
 				PermissionSendListener.getClassName();
 

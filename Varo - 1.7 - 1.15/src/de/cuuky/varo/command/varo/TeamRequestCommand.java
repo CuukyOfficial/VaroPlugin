@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 
@@ -25,7 +25,7 @@ public class TeamRequestCommand extends VaroCommand {
 			return;
 		}
 
-		if(!ConfigEntry.TEAMREQUESTS.getValueAsBoolean()) {
+		if(!ConfigSetting.TEAMREQUESTS.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "§7Das " + Main.getColorCode() + "Teamanfragen-System §7wurde in der Config deaktiviert!");
 			return;
 		}
@@ -65,7 +65,7 @@ public class TeamRequestCommand extends VaroCommand {
 				}
 
 				if(VaroTeamRequest.getByAll(player, invite) != null) {
-					sender.sendMessage(Main.getPrefix() + "§7Du hast bereits eine Anfrage an §7" + arg + " §7verschickt! Versuche es in " + ConfigEntry.TEAMREQUEST_EXPIRETIME.getValueAsInt() + " Sekunden erneut!");
+					sender.sendMessage(Main.getPrefix() + "§7Du hast bereits eine Anfrage an §7" + arg + " §7verschickt! Versuche es in " + ConfigSetting.TEAMREQUEST_EXPIRETIME.getValueAsInt() + " Sekunden erneut!");
 					return;
 				}
 

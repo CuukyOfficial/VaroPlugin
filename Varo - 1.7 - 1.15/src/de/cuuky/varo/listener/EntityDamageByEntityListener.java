@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.config.ConfigEntry;
-import de.cuuky.varo.configuration.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -42,7 +42,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 		}
 
-		if(ConfigEntry.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
+		if(ConfigSetting.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
 			return;
 
 		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
