@@ -14,7 +14,6 @@ public enum ConfigMessageSection implements SectionConfiguration {
 	CHAT("chat", "Nachrichten zum Chat"),
 	CHEST("chest", "Nachrichten zum Sichern von Kisten & Oefen"),
 	COMBAT("combat", "Nachrichten zum Kampf"),
-	COMMANDS("commands", "Nachrichten zu den Befehlen"), 
 	DEATH("death", "Nachrichten zum Tod eines Spielers"),
 	GAME("game", "Nachrichten zum Spielverlauf"),
 	KICK("kick", "Nachrichten zum Kick eines Spielers"),
@@ -31,6 +30,8 @@ public enum ConfigMessageSection implements SectionConfiguration {
 	NOPERMISSION("nopermission", "Nachrichten fuer unzureichende Berechtigungen"), 
 	QUITMESSAGE("quitmessage", "Nachrichten fuer das Verlassen des Servers"), 
 	SPAWN("spawn", "Nachrichten zum Worldspawn"), 
+	VARO_COMMANDS("varocommands", "Nachrichten zu Befehlen"), 
+	ESSENTIAL_COMMANDS("essentialcommands", "Nachrichten zu Befehlen (Essentials)"), 
 	JOINMESSAGE("joinmessage", "Nachrichten zum Betreteten des Servers");
 	
 	private String name, description;

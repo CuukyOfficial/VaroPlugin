@@ -66,17 +66,17 @@ public enum ConfigMessages implements SectionEntry {
 	
 	// CHAT
 	
-	CHAT_FORMAT(ConfigMessageSection.CHAT, "format", "§7%player% §8» §f"),
+	CHAT_FORMAT(ConfigMessageSection.CHAT, "format", "&7%player% &8» &f"),
 	CHAT_TEAMCHAT_FORMAT(ConfigMessageSection.CHAT, "teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
 	CHAT_MUTED(ConfigMessageSection.CHAT, "muted", "&7Du wurdest gemutet!"),
 	CHAT_WHEN_START(ConfigMessageSection.CHAT, "chatOnStart", "&7Du kannst erst ab dem Start wieder schreiben!"),
 	
 	// COMBAT
 	
-	COMBAT_FRIENDLY_FIRE(ConfigMessageSection.COMBAT, "friendlyfire", "§7Dieser Spieler ist in deinem Team!"),
+	COMBAT_FRIENDLY_FIRE(ConfigMessageSection.COMBAT, "friendlyfire", "&7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT(ConfigMessageSection.COMBAT, "inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),
 	COMBAT_LOGGED_OUT(ConfigMessageSection.COMBAT, "loggedOut", "&c%player% &7hat den Server waehrend eines Kampfes verlassen!"),
-	COMBAT_NOT_IN_FIGHT(ConfigMessageSection.COMBAT, "notInFight", "§7Du bist nun nicht mehr im &cKampf&7!"),
+	COMBAT_NOT_IN_FIGHT(ConfigMessageSection.COMBAT, "notInFight", "&7Du bist nun nicht mehr im &cKampf&7!"),
 	
 	// SPAWN
 	
@@ -176,11 +176,64 @@ public enum ConfigMessages implements SectionEntry {
 
 	// PROTECTION
 	
-	PROTECTION_NO_MOVE_START(ConfigMessageSection.PROTECTION, "noMoveStart", "§7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
+	PROTECTION_NO_MOVE_START(ConfigMessageSection.PROTECTION, "noMoveStart", "&7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
 	PROTECTION_START(ConfigMessageSection.PROTECTION, "start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
 	PROTECTION_TIME_OVER(ConfigMessageSection.PROTECTION, "protectionOver", "&7Die &cSchutzzeit &7ist nun vorrueber!"),
 	PROTECTION_TIME_UPDATE(ConfigMessageSection.PROTECTION, "protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes%&7:&c%seconds% &7vorrueber!"),
 	PROTECTION_TIME_RUNNING(ConfigMessageSection.PROTECTION, "timeRunning", "&7Die %colorcode%Schutzzeit &7laeuft noch!"),
+	
+	// VARO COMMANDS
+
+	VARO_COMMANDS_HELP_HEADER(ConfigMessageSection.VARO_COMMANDS, "help.header", "&7-------- %colorcode% %category% &7-------"), 
+	VARO_COMMANDS_HELP_FOOTER(ConfigMessageSection.VARO_COMMANDS, "help.footer", "&7------------------------"), 
+	
+	VARO_COMMANDS_ERROR_NO_CONSOLE(ConfigMessageSection.VARO_COMMANDS, "error.noconsole", "Du musst ein Spieler sein!"), 
+	VARO_COMMANDS_ERROR_NOT_STARTED(ConfigMessageSection.VARO_COMMANDS, "error.notstarted", "Das Spiel wurde noch nicht gestartet!"), 
+	VARO_COMMANDS_ERROR_USAGE(ConfigMessageSection.VARO_COMMANDS, "error.usage", "&cFehler! &7Nutze %colorcode%/varo %command% &7fuer Hilfe."), 
+	
+	VARO_COMMANDS_BUGREPORT_CREATED(ConfigMessageSection.VARO_COMMANDS, "bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"), 
+	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD(ConfigMessageSection.VARO_COMMANDS, "bugreport.sendtodiscord", "Bitte sende diesen auf den Discord in den Support!"), 
+	
+	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "abort.notactive", "Der Startcountdown ist nicht aktiv!"), 
+	VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED(ConfigMessageSection.VARO_COMMANDS, "abort.stopped", "Startcountdown erfolgreich gestoppt!"), 
+	
+	VARO_COMMANDS_ACTIONBAR_ACTIVATED(ConfigMessageSection.VARO_COMMANDS, "actionbar.activated", "Du siehst nun die Zeit in der Actionbar!"), 
+	VARO_COMMANDS_ACTIONBAR_DEACTIVATED(ConfigMessageSection.VARO_COMMANDS, "actionbar.deactivated", "Du siehst nun nicht mehr die Zeit in der Actionbar!"), 
+	
+	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET(ConfigMessageSection.VARO_COMMANDS, "autostart.notsetupyet", "Der AutoSetup wurde noch nicht in der Config eingerichtet!"), 
+	VARO_COMMANDS_AUTOSETUP_FINISHED(ConfigMessageSection.VARO_COMMANDS, "autostart.finished", "Der AutoSetup ist fertig."), 
+	VARO_COMMANDS_AUTOSETUP_HELP(ConfigMessageSection.VARO_COMMANDS, "autostart.help", "%colorcode%/varo autosetup run &7startet den Autosetup"), 
+	VARO_COMMANDS_AUTOSETUP_ATTENTION(ConfigMessageSection.VARO_COMMANDS, "autostart.attention", "&cVorsicht: &7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und &loptional&7 einen Autostart."), 
+
+	VARO_COMMANDS_AUTOSTART_ALREADY_STARTED(ConfigMessageSection.VARO_COMMANDS, "autostart.alreadystarted", "%projectname% &7wurde bereits gestartet!"), 
+	VARO_COMMANDS_AUTOSTART_ALREADY_SETUP(ConfigMessageSection.VARO_COMMANDS, "autostart.alreadysetup", "&7Entferne erst den AutoStart, bevor du einen neuen setzt!"), 
+	VARO_COMMANDS_AUTOSTART_HELP_SET(ConfigMessageSection.VARO_COMMANDS, "autostart.helpset", "%colorcode%/autostart &7set <Hour> <Minute> <Day> <Month> <Year>"), 
+	VARO_COMMANDS_AUTOSTART_NO_NUMBER(ConfigMessageSection.VARO_COMMANDS, "autostart.nonumber", "Eines der Argumente ist &ckeine &7Zahl!"), 
+	VARO_COMMANDS_AUTOSTART_DATE_IN_THE_PAST(ConfigMessageSection.VARO_COMMANDS, "autostart.dateinthepast", "&7Das %colorcode%Datum &7darf nicht in der Vergangenheit sein!"), 
+	VARO_COMMANDS_AUTOSTART_NOT_SETUP_YET(ConfigMessageSection.VARO_COMMANDS, "autostart.notsetupyet", "&7Es wurde noch kein %colorcode%Autostart &7festegelegt!"), 
+	VARO_COMMANDS_AUTOSTART_REMOVED(ConfigMessageSection.VARO_COMMANDS, "autostart.removed", "%colorcode%AutoStart &7erfolgreich entfernt!"), 
+	VARO_COMMANDS_AUTOSTART_DELAY_HELP(ConfigMessageSection.VARO_COMMANDS, "autostart.delayhelp", "%colorcode%/autostart delay &7<Delay in Minutes>"), 
+	VARO_COMMANDS_AUTOSTART_DELAY_NO_NUMBER(ConfigMessageSection.VARO_COMMANDS, "autostart.delaynonumber", "%colorcode%%text% &7ist keine Zahl!"), 
+	VARO_COMMANDS_AUTOSTART_DELAY_TO_SMALL(ConfigMessageSection.VARO_COMMANDS, "autostart.delaytosmall", "Der Delay darf nicht kleiner als 1 sein!"), 
+	VARO_COMMANDS_AUTOSTART_START_DELAYED(ConfigMessageSection.VARO_COMMANDS, "autostart.startdelayed", "&7Der Start wurde um %colorcode%%delay% &7Minuten verzoegert!"), 
+	VARO_COMMANDS_AUTOSTART_INFO_NOT_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "autostart.notactive", "AutoStart nicht aktiv"), 
+	VARO_COMMANDS_AUTOSTART_INFO_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "autostart.active", "AutoStart &aaktiv&7:"), 
+	VARO_COMMANDS_AUTOSTART_INFO_DATE(ConfigMessageSection.VARO_COMMANDS, "autostart.info.date", "%colorcode%Datum: &7%date%"), 
+	VARO_COMMANDS_AUTOSTART_INFO_AUTOSORT(ConfigMessageSection.VARO_COMMANDS, "autostart.info.autosort", "%colorcode%AutoSort: &7%active%"), 
+	VARO_COMMANDS_AUTOSTART_INFO_RANDOM_TEAM_SIZE(ConfigMessageSection.VARO_COMMANDS, "autostart.info.randomteamsize", "%colorcode%AutoRandomteamgroesse: &7%teamsize%"), 
+
+	VARO_COMMANDS_BACKPACK_PLAYER_DOESNT_EXIST(ConfigMessageSection.VARO_COMMANDS, "backpack.playerdoesntexist", "Der Spieler %colorcode%%player% &7existiert nicht."), 
+	VARO_COMMANDS_BACKPACK_TEAM_DOESNT_EXIST(ConfigMessageSection.VARO_COMMANDS, "backpack.teamdoesntexist", "Das Team %colorcode%%team% &7existiert nicht."), 
+	VARO_COMMANDS_BACKPACK_CANT_SHOW_BACKPACK(ConfigMessageSection.VARO_COMMANDS, "backpack.cantshowbackpack", "Der Rucksack kann dir daher nicht angezeigt werden."), 
+	VARO_COMMANDS_BACKPACK_NO_TEAM(ConfigMessageSection.VARO_COMMANDS, "backpack.noteam", "Du befindest dich in keinem Team und hast deshalb keinen Teamrucksack."), 
+	VARO_COMMANDS_BACKPACK_CHOOSE_TYPE(ConfigMessageSection.VARO_COMMANDS, "backpack.choosetype", "Bitte waehle aus, welchen Rucksack du oeffnen willst %colorcode%(Player/Team)&7."), 
+	VARO_COMMANDS_BACKPACK_NOT_ENABLED(ConfigMessageSection.VARO_COMMANDS, "backpack.notenabled", "Die Rucksacke sind nicht aktiviert."), 
+	
+	VARO_COMMANDS_CONFIG_RELOADED(ConfigMessageSection.VARO_COMMANDS, "config.reloaded", "&7Alle %colorcode%Listen&7, %colorcode%Nachrichten &7und die %colorcode%Config &7wurden erfolgreich neu geladen."), 
+	VARO_COMMANDS_CONFIG_HELP_SET(ConfigMessageSection.VARO_COMMANDS, "config.helpset", "%colorcode%/varo config &7set <key> <value>"), 
+	VARO_COMMANDS_CONFIG_ENTRY_SET(ConfigMessageSection.VARO_COMMANDS, "config.entryset", "&7Der Eintrag '%colorcode%%entry%&7' wurde erfolgreich auf '%colorcode%%value%&7'gesetzt."), 
+	VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "config.entrynotfound", "&7Der Eintrag '%colorcode%%entry%&7' wurde nicht gefunden."), 
+	VARO_COMMANDS_CONFIG_RESET(ConfigMessageSection.VARO_COMMANDS, "config.reset", "&7Alle Eintraege wurden erfolgreich zurueckgesetzt."), 
 	
 	// SORT
 	

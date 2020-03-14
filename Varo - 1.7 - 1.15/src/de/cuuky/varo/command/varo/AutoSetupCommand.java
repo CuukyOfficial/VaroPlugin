@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.AutoSetup;
 
@@ -20,7 +21,7 @@ public class AutoSetupCommand extends VaroCommand {
 		if(args.length >= 1) {
 			if(args[0].equalsIgnoreCase("run")) {
 				if(!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
-					sender.sendMessage(Main.getPrefix() + "Der AutoSetup wurde noch nicht in der Config eingerichtet!");
+					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET.getValue());
 					return;
 				}
 
@@ -28,12 +29,12 @@ public class AutoSetupCommand extends VaroCommand {
 				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) 
 					player.getPlayer().teleport(Main.getVaroGame().getVaroWorld().getTeleportLocation());
 				
-				sender.sendMessage(Main.getPrefix() + "Der AutoSetup ist fertig.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_FINISHED.getValue());
 				return;
 			}
 		}
 
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autosetup run §7startet den Autosetup");
-		sender.sendMessage(Main.getPrefix() + "§cVorsicht: §7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und §loptional§7 einen Autostart.");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_HELP.getValue());
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_ATTENTION.getValue());
 	}
 }
