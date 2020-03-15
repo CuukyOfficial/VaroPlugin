@@ -311,20 +311,11 @@ public enum ConfigMessages implements SectionEntry {
 			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
 			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
 		}
-		
-		for(GeneralMessagePlaceholder gmp : GeneralMessagePlaceholder.getGeneralPlaceholder()) {
-			if(gmp.containsPlaceholder(value))
-				replaced = gmp.replacePlaceholder(replaced);
-		}
 
-		return replaced;
+		return GeneralMessagePlaceholder.replacePlaceholders(replaced);
 	}
 
 	public static String getValue(String value, VaroPlayer vp) {
-		for(PlayerMessagePlaceholder pmp : PlayerMessagePlaceholder.getPlayerPlaceholder()) 
-			if(pmp.containsPlaceholder(value))
-				value = pmp.replacePlaceholder(value, vp);
-
-		return getValue(value);
+		return PlayerMessagePlaceholder.replacePlaceholders(getValue(value), vp);
 	}
 }

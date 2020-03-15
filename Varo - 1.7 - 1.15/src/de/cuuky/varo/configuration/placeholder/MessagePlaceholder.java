@@ -2,6 +2,9 @@ package de.cuuky.varo.configuration.placeholder;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
+import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
+
 public abstract class MessagePlaceholder {
 
 	private static ArrayList<MessagePlaceholder> placeholders;
@@ -51,6 +54,9 @@ public abstract class MessagePlaceholder {
 	public abstract void clearValue();
 	
 	public static void clearPlaceholder() {
+		GeneralMessagePlaceholder.clearCache();
+		PlayerMessagePlaceholder.clearCache();
+		
 		for(MessagePlaceholder placeholder : placeholders)
 			placeholder.clearValue();
 	}

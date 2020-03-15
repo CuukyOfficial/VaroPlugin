@@ -7,6 +7,7 @@ import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlacehol
 import de.cuuky.varo.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
+import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.utils.PermissionUtils;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -163,15 +164,15 @@ public class MessagePlaceholderLoader {
 		};
 		
 		// MAYBE ?
-//		for(ConfigSetting setting : ConfigSetting.values()) {
-//			new GeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
-//				
-//				@Override
-//				protected String getValue() {
-//					return String.valueOf(setting.getValue());
-//				}
-//			};
-//		}
+		for(ConfigSetting setting : ConfigSetting.values()) {
+			new GeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
+				
+				@Override
+				protected String getValue() {
+					return String.valueOf(setting.getValue()).replace("&", "§");
+				}
+			};
+		}
 	}
 
 	private void loadPlayerPlaceholder() {

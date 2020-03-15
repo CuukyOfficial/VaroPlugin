@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
@@ -69,7 +70,7 @@ public class PlaceholderCommand extends VaroCommand {
 		ArrayList<MessagePlaceholder> placeholders = new ArrayList<>();
 		if(args[0].equalsIgnoreCase("general")) {
 			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
-				if(mp instanceof GeneralMessagePlaceholder)
+				if(mp instanceof GeneralMessagePlaceholder && ConfigSetting.getEntryByPath(mp.getIdentifier().replace("%", "")) == null)
 					placeholders.add(mp);
 		} else if(args[0].equalsIgnoreCase("player")) {
 			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
@@ -91,6 +92,7 @@ public class PlaceholderCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% §8- §7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% §8- §7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% §8- §7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
+			sender.sendMessage(Main.getPrefix() + "Zusätzlich werden alle Einstellungen mit %<ConfigEintrag>% ersetzt");
 		}
 
 		sender.sendMessage(Main.getPrefix() + "----------------");

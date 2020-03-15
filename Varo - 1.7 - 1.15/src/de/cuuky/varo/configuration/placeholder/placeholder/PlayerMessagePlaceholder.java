@@ -9,6 +9,11 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 
 	private static ArrayList<PlayerMessagePlaceholder> playerPlaceholder;
+	private static HashMap<String, ArrayList<PlayerMessagePlaceholder>> cachedRequests;
+
+	static {
+		cachedRequests = new HashMap<>();
+	}
 
 	private HashMap<VaroPlayer, String> placeholderValues;
 	private HashMap<VaroPlayer, Long> placeholderRefreshes;
@@ -51,11 +56,36 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 
 		return message.replace(identifier, placeholderValues.get(player));
 	}
-	
+
 	@Override
 	public void clearValue() {
 		placeholderValues.clear();
 		placeholderRefreshes.clear();
+	}
+
+	private static Object[] replaceByList(String value, VaroPlayer vp, ArrayList<PlayerMessagePlaceholder> list) {
+		ArrayList<PlayerMessagePlaceholder> cached = new ArrayList<>();
+		for(PlayerMessagePlaceholder pmp : list)
+			if(pmp.containsPlaceholder(value)) {
+				value = pmp.replacePlaceholder(value, vp);
+				cached.add(pmp);
+			}
+
+		return new Object[] { value, cached };
+	}
+
+	public static String replacePlaceholders(String value, VaroPlayer vp) {
+		if(cachedRequests.get(value) != null)
+			return (String) replaceByList(value, vp, cachedRequests.get(value))[0];
+		else {
+			Object[] result = replaceByList(value, vp, playerPlaceholder);
+			cachedRequests.put(value, (ArrayList<PlayerMessagePlaceholder>) result[1]);
+			return (String) result[0];
+		}
+	}
+	
+	public static void clearCache() {
+		cachedRequests.clear();
 	}
 
 	public static ArrayList<PlayerMessagePlaceholder> getPlayerPlaceholder() {
