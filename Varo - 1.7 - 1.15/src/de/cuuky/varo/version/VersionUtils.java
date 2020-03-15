@@ -9,23 +9,24 @@ import org.bukkit.entity.Player;
 public class VersionUtils {
 
 	private static String nmsClass;
+	private static Class<?> chatSerializer;
 	private static BukkitVersion version;
 
 	static {
 		nmsClass = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		version = BukkitVersion.getVersion(nmsClass);
+		
+		try {
+			chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent$ChatSerializer");
+		} catch(ClassNotFoundException e) {
+			try {
+				chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".ChatSerializer");
+			} catch(ClassNotFoundException e1) {}
+		}
 	}
 
 	public static Class<?> getChatSerializer() {
-		try {
-			return Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent$ChatSerializer");
-		} catch(ClassNotFoundException e) {
-			try {
-				return Class.forName(VersionUtils.getNmsClass() + ".ChatSerializer");
-			} catch(ClassNotFoundException e1) {}
-		}
-
-		return null;
+		return chatSerializer;
 	}
 
 	public static double getHearts(Player player) {
@@ -35,7 +36,7 @@ public class VersionUtils {
 	public static String getNmsClass() {
 		return nmsClass;
 	}
-	
+
 	public static ArrayList<Player> getOnlinePlayer() {
 		ArrayList<Player> list = new ArrayList<Player>();
 		for(Player p : Bukkit.getOnlinePlayers())
