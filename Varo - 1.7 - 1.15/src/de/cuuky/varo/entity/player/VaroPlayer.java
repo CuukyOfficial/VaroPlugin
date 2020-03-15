@@ -18,6 +18,7 @@ import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.VaroEntity;
+import de.cuuky.varo.entity.player.connection.NetworkManager;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.Stats;

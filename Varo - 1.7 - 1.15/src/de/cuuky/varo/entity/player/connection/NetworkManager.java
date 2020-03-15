@@ -1,4 +1,4 @@
-package de.cuuky.varo.entity.player;
+package de.cuuky.varo.entity.player.connection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -31,6 +31,9 @@ public class NetworkManager {
 	// ACTIONBAR
 	private static Object title, subtitle;
 	private static Constructor<?> chatByteMethod, chatEnumMethod;
+	
+	// FAKEHEALTH
+	private static Object healthPacket;
 
 	static {
 
@@ -67,8 +70,14 @@ public class NetworkManager {
 
 				tablistClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutPlayerListHeaderFooter");
 				ioBaseChatMethod = ioBaseChat.getDeclaredMethod("a", String.class);
+				
+				healthPacket = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutUpdateHealth").newInstance();
+				for(Field f : healthPacket.getClass().getDeclaredFields()) {
+					f.setAccessible(true);
+					f.set(healthPacket, 0);
+				}
 			}
-		} catch(ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+		} catch(ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
@@ -119,6 +128,10 @@ public class NetworkManager {
 
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public void sendFakeHealthUpdate() {
+		sendPacket(healthPacket);
 	}
 
 	public void respawnPlayer() {

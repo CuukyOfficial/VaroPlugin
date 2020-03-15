@@ -115,6 +115,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 			}
 
 			Main.getDataManager().getScoreboardHandler().updatePlayer(vp);
+//			vp.getNetworkManager().sendFakeHealthUpdate();
 			vp.update();
 		}
 
