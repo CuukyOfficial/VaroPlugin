@@ -110,16 +110,18 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		long timestamp = System.currentTimeMillis();
+		
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
 
 		if(dataManager != null && !failed) {
-			System.out.println(CONSOLE_PREFIX + "Saving files...");
+			System.out.println(CONSOLE_PREFIX + "Saving data...");
 			dataManager.save();
 		}
 
-		if(botLauncher != null) {
+		if(botLauncher != null && (botLauncher.getDiscordbot() != null || botLauncher.getTelegrambot() != null)) {
 			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
 			botLauncher.disconnect();
 		}
@@ -132,7 +134,7 @@ public class Main extends JavaPlugin {
 		}
 		Bukkit.getScheduler().cancelTasks(this);
 
-		System.out.println(CONSOLE_PREFIX + "Disabled!");
+		System.out.println(CONSOLE_PREFIX + "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
@@ -191,7 +193,7 @@ public class Main extends JavaPlugin {
 	}
 	
 	public static String getContributors() {
-		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ",");
+		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ", ");
 	}
 
 	public static String getPrefix() {
