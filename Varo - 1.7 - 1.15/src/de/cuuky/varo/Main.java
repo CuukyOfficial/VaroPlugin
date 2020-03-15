@@ -63,9 +63,6 @@ public class Main extends JavaPlugin {
 		System.out.println("#                                                                          #");
 		System.out.println("#                               by Cuuky                                   #");
 		System.out.println("#                                                                          #");
-//		System.out.println("#                             Contributors:                                #");
-//		System.out.println("#                               Korne127                                   #");
-//		System.out.println("#                                                                          #");
 		System.out.println("############################################################################");
 
 		System.out.println(CONSOLE_PREFIX);
@@ -86,8 +83,11 @@ public class Main extends JavaPlugin {
 			}
 			
 			dataManager = new DataManager();
+			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - timestamp) + "ms)");
+			
 			varoUpdater = new VaroUpdater();
 			botLauncher = new BotLauncher();
+			
 			new MetricsLoader(this);
 			new SmartLagDetector(this);
 			
@@ -189,7 +189,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getPluginName() {
-		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + ", Contributors: " + getContributors();
+		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + " - Contributors: " + getContributors();
 	}
 	
 	public static String getContributors() {
