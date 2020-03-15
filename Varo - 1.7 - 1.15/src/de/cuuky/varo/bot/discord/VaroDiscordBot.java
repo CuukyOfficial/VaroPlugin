@@ -92,6 +92,7 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		try {
+			pingRole = -1;
 			pingRole = jda.getRoleById(ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
 
 			if(pingRole == -1)
