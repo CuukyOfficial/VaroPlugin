@@ -81,8 +81,4 @@ public class VaroTelegramBot implements VaroBot {
 			System.out.println(Main.getConsolePrefix() + "Could not send videos");
 		}
 	}
-
-	public static String getClassName() {
-		return TelegramBot.class.getName();
-	}
 }

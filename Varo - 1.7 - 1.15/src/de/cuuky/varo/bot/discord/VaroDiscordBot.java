@@ -202,8 +202,4 @@ public class VaroDiscordBot implements VaroBot {
 	public boolean isEnabled() {
 		return jda != null;
 	}
-
-	public static String getClassName() {
-		return JDABuilder.class.getName();
-	}
 }

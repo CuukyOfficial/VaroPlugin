@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
-import net.labymod.serverapi.LabyModAPI;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
 import net.labymod.serverapi.bukkit.event.PermissionsSendEvent;
@@ -40,9 +39,5 @@ public class PermissionSendListener implements Listener {
 		if(ConfigSetting.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean())
 			for(Entry<Permission, Boolean> permissionEntry : event.getPermissions().entrySet())
 				permissionEntry.setValue(false);
-	}
-
-	public static String getClassName() {
-		return LabyModAPI.class.getName();
 	}
 }
