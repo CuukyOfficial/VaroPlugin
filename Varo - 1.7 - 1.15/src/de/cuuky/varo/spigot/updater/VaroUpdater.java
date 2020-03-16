@@ -1,11 +1,13 @@
 package de.cuuky.varo.spigot.updater;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -30,9 +32,8 @@ public class VaroUpdater {
 	}
 
 	private VersionCompareResult compareVersions(String version1, String version2) {
-		if(!version1.matches("[0-9]+(\\.[0-9]+)*") || !version2.matches("[0-9]+(\\.[0-9]+)*")) {
+		if(!version1.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") || !version2.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*")) 
 			throw new IllegalArgumentException("Invalid version format");
-		}
 
 		String[] version1Parts = version1.replace("-BETA", "").split("\\.");
 		String[] version2Parts = version2.replace("-BETA", "").split("\\.");
@@ -105,8 +106,14 @@ public class VaroUpdater {
 				result = UpdateResult.TEST_BUILD;
 				break;
 			}
-		} catch(Exception e) {
+		} catch(IOException e) {
 			result = UpdateResult.FAIL_SPIGOT;
+			version = "";
+			id = "";
+		} catch(ParseException | IllegalArgumentException e) {
+			e.getSuppressed();
+			System.out.println(Main.getConsolePrefix() + "Failed to fetch server version!");
+		} finally {
 			version = "";
 			id = "";
 		}
