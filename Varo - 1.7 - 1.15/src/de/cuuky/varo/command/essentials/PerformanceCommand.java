@@ -5,7 +5,6 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
@@ -50,7 +49,7 @@ public class PerformanceCommand implements CommandExecutor {
 			int entities = 0;
 			for(World world : Bukkit.getWorlds())
 				for(Entity entity : world.getEntities())
-					if(!(entity instanceof ArmorStand) && !(entity instanceof LivingEntity))
+					if(!(entity.getType().toString().contains("ARMOR_STAND")) && !(entity instanceof LivingEntity))
 						entities++;
 
 			sender.sendMessage(Main.getPrefix() + "Es sind §c" + entities + " §7Entities (ausgenommen Spieler, ArmorStands, Tiere) geladen - alle nicht-Spieler zu entfernen koennte die Performance erhoehen");
@@ -58,7 +57,7 @@ public class PerformanceCommand implements CommandExecutor {
 		} else if(args[0].equalsIgnoreCase("entityclear")) {
 			for(World world : Bukkit.getWorlds())
 				for(Entity entity : world.getEntities())
-					if(!(entity instanceof ArmorStand) && !(entity instanceof LivingEntity))
+					if(!(entity.getType().toString().contains("ARMOR_STAND")) && !(entity instanceof LivingEntity))
 						entity.remove();
 
 			sender.sendMessage(Main.getPrefix() + "Alle Nicht- Spieler,Tiere oder ArmorStands entfernt!");

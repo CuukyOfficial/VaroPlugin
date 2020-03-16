@@ -34,17 +34,16 @@ public class ScoreboardHandler implements BoardHandler {
 	}
 
 	private String prepareScoreboardStatement(Scoreboard board, int index, String line) {
-		Team team = board.getTeam("team-" + getAsTeam(index));
+		String teamname = "team-" + getAsTeam(index);
+		Team team = board.getTeam(teamname);
 		if(team == null)
-			team = board.registerNewTeam("team-" + getAsTeam(index));
+			team = board.registerNewTeam(teamname);
 
 		String playerName = getAsTeam(index);
 		String[] pas = getPrefixAndSuffix(line);
 		team.setPrefix(pas[0]);
 		team.setSuffix(pas[1]);
-
-		if(!team.getEntries().contains(playerName))
-			team.addEntry(playerName);
+		team.addPlayer(new FakeOfflinePlayer(playerName));
 
 		return playerName;
 	}

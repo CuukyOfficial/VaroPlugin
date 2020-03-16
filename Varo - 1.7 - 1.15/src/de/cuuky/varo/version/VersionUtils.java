@@ -9,13 +9,17 @@ import org.bukkit.entity.Player;
 public class VersionUtils {
 
 	private static String nmsClass;
-	private static Class<?> chatSerializer;
 	private static BukkitVersion version;
+	private static Object spigot;
+	private static Class<?> chatSerializer;
 
 	static {
 		nmsClass = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		version = BukkitVersion.getVersion(nmsClass);
-		
+		try {
+			spigot = Bukkit.getServer().getClass().getDeclaredMethod("spigot").invoke(Bukkit.getServer());
+		} catch(Exception e) {}
+
 		try {
 			chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent$ChatSerializer");
 		} catch(ClassNotFoundException e) {
@@ -35,6 +39,10 @@ public class VersionUtils {
 
 	public static String getNmsClass() {
 		return nmsClass;
+	}
+
+	public static Object getSpigot() {
+		return spigot;
 	}
 
 	public static ArrayList<Player> getOnlinePlayer() {

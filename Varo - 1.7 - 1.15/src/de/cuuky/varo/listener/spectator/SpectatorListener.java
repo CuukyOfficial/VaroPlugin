@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener.spectator;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
@@ -15,6 +14,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -25,12 +25,7 @@ import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 
-@SuppressWarnings("deprecation")
 public class SpectatorListener implements Listener {
-
-	static {
-		Bukkit.getPluginManager().registerEvents(new EntityMountListener(), Main.getInstance());
-	}
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
@@ -82,6 +77,15 @@ public class SpectatorListener implements Listener {
 	@EventHandler
 	public void onHealthLose(EntityDamageEvent event) {
 		if(cancelEvent(event.getEntity()))
+			event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onInteractEntity(PlayerInteractEntityEvent event) {
+		if(Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+			event.setCancelled(true);
+
+		if(cancelEvent(event.getPlayer()))
 			event.setCancelled(true);
 	}
 

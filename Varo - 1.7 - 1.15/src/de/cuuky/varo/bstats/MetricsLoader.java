@@ -52,7 +52,7 @@ public class MetricsLoader {
 			}));
 		} catch(Throwable e) {
 			e.printStackTrace();
-			System.err.println(Main.getPrefix() + "Failed to send data to bStats! (Wrong server version?)");
+			System.err.println(Main.getConsolePrefix() + "Failed to send data to bStats! (Wrong server version?)");
 		}
 	}
 }

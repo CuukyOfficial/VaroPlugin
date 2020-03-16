@@ -1,5 +1,6 @@
 package de.cuuky.varo.clientadapter.nametag;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -21,10 +22,10 @@ import de.cuuky.varo.version.VersionUtils;
 public class Nametag {
 
 	private static ArrayList<Nametag> nametags;
-	
+
 	private static Class<?> teamClass;
-	private static Object visibility;
-	private static Method setVisibilityMethod;
+	private static Object configVisibility;
+	private static Method setVisibilityMethod, getVisibilityMethod;
 
 	static {
 		nametags = new ArrayList<>();
@@ -33,9 +34,10 @@ public class Nametag {
 			try {
 				Class<?> visibilityClass = Class.forName("org.bukkit.scoreboard.NameTagVisibility");
 
-				visibility = !ConfigSetting.NAMETAGS.getValueAsBoolean() ? visibilityClass.getDeclaredField("NEVER").get(null) : visibilityClass.getDeclaredField("ALWAYS").get(null);
+				configVisibility = !ConfigSetting.NAMETAGS.getValueAsBoolean() ? visibilityClass.getDeclaredField("NEVER").get(null) : visibilityClass.getDeclaredField("ALWAYS").get(null);
 				teamClass = Class.forName("org.bukkit.scoreboard.Team");
-				setVisibilityMethod = teamClass.getDeclaredMethod("setNameTagVisibility", visibility.getClass());
+				setVisibilityMethod = teamClass.getDeclaredMethod("setNameTagVisibility", configVisibility.getClass());
+				getVisibilityMethod = teamClass.getDeclaredMethod("getNameTagVisibility");
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -58,6 +60,12 @@ public class Nametag {
 			if(!t.getName().startsWith("team-"))
 				t.unregister();
 
+		startDelayedRefresh();
+
+		nametags.add(this);
+	}
+
+	private void startDelayedRefresh() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
 			@Override
@@ -66,10 +74,8 @@ public class Nametag {
 				refresh();
 			}
 		}, 1);
-
-		nametags.add(this);
 	}
-	
+
 	private void refreshPrefix() {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
 
@@ -109,12 +115,22 @@ public class Nametag {
 		return name;
 	}
 
+	private Object getVisibility(Team team) {
+		try {
+			return getVisibilityMethod.invoke(team);
+		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	private void setVisibility(Team team) {
-		if(visibility == null || team.getNameTagVisibility().equals(visibility))
+		if(configVisibility == null || getVisibility(team).equals(configVisibility))
 			return;
 
 		try {
-			setVisibilityMethod.invoke(team, visibility);
+			setVisibilityMethod.invoke(team, configVisibility);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -128,7 +144,9 @@ public class Nametag {
 			team.addPlayer(nametag.getPlayer());
 		}
 
-		setVisibility(team);
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			setVisibility(team);
+
 		if(nametag.getPrefix() != null) {
 			if(team.getPrefix() == null)
 				team.setPrefix(nametag.getPrefix());
@@ -162,9 +180,8 @@ public class Nametag {
 		if(!init)
 			return;
 
-		for(Player toSet : Bukkit.getOnlinePlayers()) {
+		for(Player toSet : Bukkit.getOnlinePlayers())
 			updateFor(toSet.getScoreboard(), this);
-		}
 	}
 
 	public void heartsChanged() {

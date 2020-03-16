@@ -9,60 +9,41 @@ import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.UnknownDependencyException;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.discord.VaroDiscordBot;
-import de.cuuky.varo.bot.telegram.VaroTelegramBot;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.listener.PermissionSendListener;
 import de.cuuky.varo.spigot.FileDownloader;
 
 public class PluginLoader {
-	
-	private static final int LABYMOD_ID = 52423, DISCORDBOT_ID = 66778, TELEGRAM_ID = 66823;
-	
+
 	public PluginLoader() {
 		loadPlugins();
 	}
-	
+
 	private void loadPlugins() {
-		boolean discordNewDownloadFailed = false;
-		if(ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()) {
+		System.out.println(Main.getConsolePrefix() + "Checking for additional plugins to load...");
+		boolean failed = false;
+		for(DownloadPlugin dp : DownloadPlugin.values()) {
+			if(!dp.shallLoad())
+				continue;
+			
 			try {
-				VaroDiscordBot.getClassName();
-			} catch(NoClassDefFoundError | BootstrapMethodError ef) {
-				System.out.println(Main.getConsolePrefix() + "Das Discordbot-Plugin wird automatisch heruntergeladen...");
-				discordNewDownloadFailed = !loadAdditionalPlugin(DISCORDBOT_ID, "Discordbot.jar");
+				Class.forName(dp.getRequiredClassName());
+			} catch(ClassNotFoundException e) {
+				System.out.println(Main.getConsolePrefix() + "Das " + dp.getName() + "-Plugin wird automatisch heruntergeladen...");
+				if(!loadAdditionalPlugin(dp.getId(), dp.getName() + ".jar")) {
+					failed = true;
+					continue;
+				}
 			}
+			
+			dp.checkedAndLoaded();
 		}
 
-		boolean telegramNewDownloadFailed = false;
-		if(ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean()) {
-			try {
-				VaroTelegramBot.getClassName();
-			} catch(NoClassDefFoundError | BootstrapMethodError e) {
-				System.out.println(Main.getConsolePrefix() + "Das Telegrambot-Plugin wird automatisch heruntergeladen...");
-				telegramNewDownloadFailed = !loadAdditionalPlugin(TELEGRAM_ID, "Telegrambot.jar");
-			}
-		}
-
-		boolean labymodNewDownloadFailed = false;
-		if(ConfigSetting.DISABLE_LABYMOD_FUNCTIONS.getValueAsBoolean() || ConfigSetting.KICK_LABYMOD_PLAYER.getValueAsBoolean() || ConfigSetting.ONLY_LABYMOD_PLAYER.getValueAsBoolean()) {
-			try {
-				PermissionSendListener.getClassName();
-
-				Bukkit.getPluginManager().registerEvents(new PermissionSendListener(), Main.getInstance());
-			} catch(NoClassDefFoundError e) {
-				System.out.println(Main.getConsolePrefix() + "Das Labymod-Plugin wird automatisch heruntergeladen...");
-				labymodNewDownloadFailed = !loadAdditionalPlugin(LABYMOD_ID, "Labymod.jar");
-			}
-		}
-
-		if(discordNewDownloadFailed || telegramNewDownloadFailed || labymodNewDownloadFailed) {
+		if(failed) {
 			System.out.println(Main.getConsolePrefix() + "Beim Herunterladen / Initialisieren der Plugins ist ein Fehler aufgetreten.");
 			System.out.println(Main.getConsolePrefix() + "Der Server wird nun heruntergefahren. Bitte danach fahre den Server wieder hoch.");
 			Bukkit.getServer().shutdown();
 		}
 	}
-	
+
 	public boolean loadAdditionalPlugin(int resourceId, String dataName) {
 		try {
 			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + resourceId + "/download", "plugins/" + dataName);

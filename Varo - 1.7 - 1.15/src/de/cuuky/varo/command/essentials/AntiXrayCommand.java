@@ -36,22 +36,20 @@ public class AntiXrayCommand implements CommandExecutor {
 			xrayAvailable = 2;
 		}
 
-		if(Bukkit.getServer().spigot() == null) {
-			if(xrayAvailable != 1) {
+		if(VersionUtils.getSpigot() == null)
+			if(xrayAvailable != 1)
 				xrayAvailable = 2;
+
+		YamlConfiguration spigotConfig = null;
+		if(xrayAvailable == 0)
+			try {
+				Method m = VersionUtils.getSpigot().getClass().getMethod("getSpigotConfig");
+				m.setAccessible(true);
+				spigotConfig = (YamlConfiguration) m.invoke(VersionUtils.getSpigot());
+				m.setAccessible(false);
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
-		}
-
-		YamlConfiguration spigotConfig;
-
-		try {
-			Method m = Bukkit.getServer().spigot().getClass().getMethod("getSpigotConfig");
-			m.setAccessible(true);
-			spigotConfig = (YamlConfiguration) m.invoke(Bukkit.getServer().spigot());
-			m.setAccessible(false);
-		} catch(Exception e) {
-			spigotConfig = Bukkit.getServer().spigot().getConfig();
-		}
 
 		if(xrayAvailable == 0) {
 			String enabled = spigotConfig.getString("world-settings.default.anti-xray.enabled");
@@ -154,6 +152,5 @@ public class AntiXrayCommand implements CommandExecutor {
 
 		Bukkit.getServer().shutdown();
 		return false;
-
 	}
 }
