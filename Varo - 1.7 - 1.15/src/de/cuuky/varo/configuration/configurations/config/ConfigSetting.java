@@ -289,7 +289,8 @@ public enum ConfigSetting implements SectionEntry {
 		}
 	}
 	
-	private String getFullPath() {
+	@Override
+	public String getFullPath() {
 		return section.getName() + "." + this.path;
 	}
 
@@ -318,15 +319,16 @@ public enum ConfigSetting implements SectionEntry {
 		setValue(value, false);
 	}
 	
+	@Override
+	public Object getValue() {
+		return this.value;
+	}
+	
 	public void setValue(Object value, boolean save) {
 		this.value = value;
 
 		if(save)
 			save();
-	}
-
-	public Object getValue() {
-		return this.value;
 	}
 
 	public boolean getValueAsBoolean() {

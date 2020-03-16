@@ -20,6 +20,7 @@ public final class ConfigFailureDetector {
 
 		ignoreScan.add("logs");
 		ignoreScan.add("presets");
+		ignoreScan.add("legacy");
 	}
 
 	private boolean failed;
@@ -60,6 +61,8 @@ public final class ConfigFailureDetector {
 
 			try {
 				new YamlConfiguration().load(file);
+			} catch(NullPointerException e) {
+				System.out.println(Main.getConsolePrefix() + "Odd config found, ignoring it");
 			} catch(ScannerException e) {} catch(FileNotFoundException e) {} catch(IOException e) {} catch(InvalidConfigurationException e) {
 				if(e.getMessage().contains("deserialize"))
 					continue;
@@ -69,8 +72,7 @@ public final class ConfigFailureDetector {
 				System.err.println(Main.getConsolePrefix() + "Usually the first information of the message gives you the location of the mistake. Just read the error and check the files.");
 				System.err.println(Main.getConsolePrefix() + "Message: \n" + e.getMessage());
 				return true;
-			}
-
+			} 
 		}
 
 		return false;

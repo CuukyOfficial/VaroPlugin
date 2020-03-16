@@ -82,8 +82,9 @@ public class Main extends JavaPlugin {
 				return;
 			}
 			
+			long dataStamp = System.currentTimeMillis();
 			dataManager = new DataManager();
-			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - timestamp) + "ms)");
+			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 			
 			varoUpdater = new VaroUpdater();
 			botLauncher = new BotLauncher();

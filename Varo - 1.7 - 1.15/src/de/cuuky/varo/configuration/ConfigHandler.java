@@ -8,6 +8,8 @@ import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.google.common.io.Files;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
@@ -18,33 +20,40 @@ import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {
 
-	private static final String CONFIG_PATH = "plugins/Varo/config", MESSAGE_PATH = "plugins/Varo/messages";
+	private static final String VARO_DIR = "plugins/Varo/", CONFIG_PATH = VARO_DIR + "config", MESSAGE_PATH = VARO_DIR + "messages";
 
 	private HashMap<String, YamlConfiguration> configurations;
 	private HashMap<String, File> files;
+	private boolean legacyFound;
 
 	public ConfigHandler() {
-		configurations = new HashMap<>();
-		files = new HashMap<>();
-		
+		this.configurations = new HashMap<>();
+		this.files = new HashMap<>();
+		this.legacyFound = false;
+
 		loadConfigurations();
 	}
-	
+
 	private void loadConfigurations() {
 		loadConfiguration(ConfigSettingSection.values(), CONFIG_PATH);
 		loadConfiguration(ConfigMessageSection.values(), MESSAGE_PATH);
 		
+		if(legacyFound)
+			moveLegacyFiles();
+
 		testConfig();
 	}
-	
+
 	private void loadConfiguration(SectionConfiguration[] sections, String filepath) {
+		checkLegacyConfiguration(sections, filepath);
+
 		for(SectionConfiguration section : sections) {
 			File file = new File(filepath, section.getName().toLowerCase() + ".yml");
 			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
 			boolean save = false;
 			config.options().copyDefaults(true);
-			
+
 			String header = getConfigHeader(section);
 			if(!header.equals(config.options().header())) {
 				config.options().header(getConfigHeader(section));
@@ -61,7 +70,7 @@ public class ConfigHandler {
 				entryNames.add(entry.getPath());
 			}
 
-			for(String path : config.getKeys(true)) {		
+			for(String path : config.getKeys(true)) {
 				if(entryNames.contains(path) || config.isConfigurationSection(path))
 					continue;
 
@@ -77,6 +86,56 @@ public class ConfigHandler {
 			configurations.put(section.getName(), config);
 		}
 	}
+	
+	private void moveLegacyFiles() {
+		String legacyDirName = VARO_DIR + "legacy/";
+		File legacyDir = new File(legacyDirName);
+		if(!legacyDir.isDirectory())
+			legacyDir.mkdirs();
+		
+		for(File file : new File(VARO_DIR).listFiles()) {
+			if(!file.isFile())
+				continue;
+			
+			try {
+				Files.copy(file, new File(legacyDirName + "legacy_" + file.getName()));
+				
+				file.delete();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void checkLegacyConfiguration(SectionConfiguration[] sections, String filepath) {
+		File file = new File(filepath + ".yml");
+		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+		if(!file.exists()) 
+			return;
+
+		System.out.println(Main.getConsolePrefix() + "Found legacy configuration! Loading " + file.getName() + "...");
+		for(SectionConfiguration section : sections) {
+			File sectionFile = new File(filepath, section.getName().toLowerCase() + ".yml");
+			YamlConfiguration sectionConfig = YamlConfiguration.loadConfiguration(sectionFile);
+			
+			for(SectionEntry entry : section.getEntries()) {
+				if(!config.contains(entry.getFullPath()))
+					continue;
+				
+				entry.setValue(config.get(entry.getFullPath()));
+				sectionConfig.set(entry.getPath(), entry.getValue());
+			}
+			
+			try {
+				sectionConfig.save(sectionFile);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		this.legacyFound = true;
+	}
 
 	private void saveFile(YamlConfiguration config, File file) {
 		try {
@@ -86,7 +145,7 @@ public class ConfigHandler {
 		}
 	}
 
-	public void saveValue(ConfigSetting entry) {
+	public void saveValue(SectionEntry entry) {
 		YamlConfiguration config = configurations.get(entry.getSection().getName());
 		config.set(entry.getPath(), entry.getValue());
 
@@ -110,7 +169,7 @@ public class ConfigHandler {
 		for(SectionEntry entry : section.getEntries()) {
 			if(entry.getDescription() == null)
 				break;
-			
+
 			String description = JavaUtils.getArgsToString(entry.getDescription(), "\n  ");
 			desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValue() + "\r\n";
 		}

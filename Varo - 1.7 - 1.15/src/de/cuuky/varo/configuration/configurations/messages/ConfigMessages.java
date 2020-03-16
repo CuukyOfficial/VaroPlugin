@@ -237,6 +237,11 @@ public enum ConfigMessages implements SectionEntry {
 	}
 
 	@Override
+	public String getFullPath() {
+		return section.getName() + "." + this.path;
+	}
+	
+	@Override
 	public String getPath() {
 		return path;
 	}
@@ -256,6 +261,7 @@ public enum ConfigMessages implements SectionEntry {
 		this.value = String.valueOf(value);
 	}
 
+	@Override
 	public String getValue() {
 		return getValue(value);
 	}
