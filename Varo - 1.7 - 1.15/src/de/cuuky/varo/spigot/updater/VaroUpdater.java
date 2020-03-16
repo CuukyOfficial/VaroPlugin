@@ -34,8 +34,8 @@ public class VaroUpdater {
 			throw new IllegalArgumentException("Invalid version format");
 		}
 
-		String[] version1Parts = version1.split("\\.");
-		String[] version2Parts = version2.split("\\.");
+		String[] version1Parts = version1.replace("-BETA", "").split("\\.");
+		String[] version2Parts = version2.replace("-BETA", "").split("\\.");
 
 		for(int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
 			int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
@@ -45,6 +45,12 @@ public class VaroUpdater {
 			if(version1Part > version2Part)
 				return VersionCompareResult.VERSION1GREATER;
 		}
+		
+		if(version1.contains("BETA"))
+			return VersionCompareResult.VERSION2GREATER;
+		
+		if(version2.contains("BETA"))
+			return VersionCompareResult.VERSION1GREATER;
 
 		return VersionCompareResult.VERSIONS_EQUAL;
 	}
@@ -65,10 +71,9 @@ public class VaroUpdater {
 
 		System.out.println(Main.getConsolePrefix() + "Updater: " + lastResult.getUpdateResult().getMessage());
 
-		for(Alert upAlert : Alert.getAlerts(AlertType.UPDATE_AVAILABLE)) {
+		for(Alert upAlert : Alert.getAlerts(AlertType.UPDATE_AVAILABLE)) 
 			if(upAlert.isOpen() && upAlert.getMessage().contains(lastResult.getVersionName()))
 				return;
-		}
 
 		if(lastResult.getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
 			new Alert(AlertType.UPDATE_AVAILABLE, "§cEine neue Version des Plugins ( " + lastResult.getVersionName() + ") ist verfuegbar!\n§7Im Regelfall kannst du dies ohne Probleme installieren, bitte\n§7informiere dich dennoch auf dem Discord-Server.");
