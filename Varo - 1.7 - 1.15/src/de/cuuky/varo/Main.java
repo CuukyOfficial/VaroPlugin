@@ -92,6 +92,13 @@ public class Main extends JavaPlugin {
 			new MetricsLoader(this);
 			new SmartLagDetector(this);
 			
+			for(ConfigSetting s : ConfigSetting.values()) {
+				if(s.getValue() instanceof Boolean || s.getValue() instanceof String || s.getValue() instanceof Integer)
+					continue;
+				
+				System.out.println(s.getValue().getClass().getName());
+			}
+			
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
 		} catch(Exception e) {

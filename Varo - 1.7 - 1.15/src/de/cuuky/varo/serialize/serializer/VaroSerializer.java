@@ -74,9 +74,7 @@ public class VaroSerializer extends VaroSerializeHandler {
 						new VaroSerializer(saveUnder + "." + fieldIdent, (VaroSerializeable) field.get(instance), saveTo);
 						continue;
 					}
-				}
-
-				if(obj == null)
+				} else
 					obj = NULL_REPLACE;
 
 				saveTo.set(saveUnder + "." + fieldIdent, (obj instanceof Enum ? getStringByEnum((VaroSerializeable) obj) : obj));

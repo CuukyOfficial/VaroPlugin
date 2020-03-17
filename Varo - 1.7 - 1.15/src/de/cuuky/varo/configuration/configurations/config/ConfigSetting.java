@@ -14,12 +14,12 @@ public enum ConfigSetting implements SectionEntry {
 
 	// AUTOSETUP
 	AUTOSETUP_ENABLED(ConfigSettingSection.AUTOSETUP, "enabled", false, "Wenn Autosetup aktiviert ist, werden beim\nStart des Servers alle Spawns automatisch gesetzt und\noptional ein Autostart eingerichtet."),
-	AUTOSETUP_LOBBY_ENABLED(ConfigSettingSection.AUTOSETUP, "lobby", true, "Ob eine Lobby beim AutoSetup gespawnt werden soll"),
+	AUTOSETUP_LOBBY_ENABLED(ConfigSettingSection.AUTOSETUP, "lobby.enabled", true, "Ob eine Lobby beim AutoSetup gespawnt werden soll"),
 	AUTOSETUP_LOBBY_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.height", 10, "Hoehe der Lobby, die gespawnt werden soll"),
 	AUTOSETUP_LOBBY_SCHEMATIC(ConfigSettingSection.AUTOSETUP, "lobby.schematic", "plugins/Varo/schematics/lobby.schematic", "Schreibe hier den Pfad deiner Lobby-Schematic\nhin, die gepastet werden soll.\nHinweis: WorldEdit benoetigt"),
 	AUTOSETUP_LOBBY_SIZE(ConfigSettingSection.AUTOSETUP, "lobby.size", 25, "Groesse der Lobby, die gespawnt werden soll"),
-	AUTOSETUP_PORTAL_ENABLED(ConfigSettingSection.AUTOSETUP, "portal", true, "Ob ein Portal gespawnt werden soll"),
-
+	
+	AUTOSETUP_PORTAL_ENABLED(ConfigSettingSection.AUTOSETUP, "portal.enabled", true, "Ob ein Portal gespawnt werden soll"),
 	AUTOSETUP_PORTAL_HEIGHT(ConfigSettingSection.AUTOSETUP, "portal.height", 5, "Hoehe des gespawnten Portals"),
 	AUTOSETUP_PORTAL_WIDTH(ConfigSettingSection.AUTOSETUP, "portal.width", 4, "Breite des gespawnten Portals"),
 
