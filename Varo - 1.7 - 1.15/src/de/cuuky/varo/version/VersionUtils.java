@@ -16,6 +16,7 @@ public class VersionUtils {
 	static {
 		nmsClass = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		version = BukkitVersion.getVersion(nmsClass);
+		
 		try {
 			spigot = Bukkit.getServer().getClass().getDeclaredMethod("spigot").invoke(Bukkit.getServer());
 		} catch(Exception e) {}
