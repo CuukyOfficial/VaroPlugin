@@ -85,10 +85,10 @@ public class VaroTeamRequest {
 
 			@Override
 			public void run() {
-				if(VaroPlayer.getPlayer(invitor.getPlayer()) != null)
+				if(!invitor.isOnline())
 					invitor.sendMessage(Main.getPrefix() + "§7Deine Einladung an " + Main.getColorCode() + invited.getName() + " §7ist abgelaufen!");
 
-				if(VaroPlayer.getPlayer(invited.getPlayer()) != null)
+				if(!invited.isOnline())
 					invited.sendMessage(Main.getPrefix() + "§7Die Einladung von " + Main.getColorCode() + invitor.getName() + " §7ist abgelaufen!");
 
 				remove();

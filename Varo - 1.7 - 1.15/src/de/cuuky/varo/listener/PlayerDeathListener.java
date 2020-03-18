@@ -40,6 +40,9 @@ public class PlayerDeathListener implements Listener {
 
 			@Override
 			public void run() {
+				if(!deadPlayer.isOnline())
+					return;
+				
 				if(killerPlayer == null)
 					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer));
 				else
