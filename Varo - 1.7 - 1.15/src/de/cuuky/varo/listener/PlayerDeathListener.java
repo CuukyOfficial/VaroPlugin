@@ -42,7 +42,7 @@ public class PlayerDeathListener implements Listener {
 			public void run() {
 				if(!deadPlayer.isOnline())
 					return;
-				
+
 				if(killerPlayer == null)
 					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer));
 				else
@@ -69,9 +69,8 @@ public class PlayerDeathListener implements Listener {
 				if(stack.getType() != Material.AIR)
 					deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
 
-			deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
-			deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
-			deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
+			for(int i = 0; i < 3; i++)
+				deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 
 			if(deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
 				deadP.onEvent(BukkitEventType.KILLED);
@@ -86,13 +85,7 @@ public class PlayerDeathListener implements Listener {
 							@Override
 							public void run() {
 								deadP.getStats().setState(PlayerState.DEAD);
-
-								try {
-									kickDeadPlayer(deadP, killer);
-								} catch(NullPointerException e) {
-									return;
-								}
-
+								kickDeadPlayer(deadP, killer);
 								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER.getValue(deadP));
 							}
 						}, ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
