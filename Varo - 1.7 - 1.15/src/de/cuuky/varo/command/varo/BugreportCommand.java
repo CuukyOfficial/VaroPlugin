@@ -7,6 +7,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 public class BugreportCommand extends VaroCommand {
 
@@ -16,6 +17,14 @@ public class BugreportCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
+		if(Main.getVaroUpdater().getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE) {
+			sender.sendMessage(Main.getPrefix() + "Du kannst keine Bugreports von einer alten Plugin-Version machen!");
+			sender.sendMessage(Main.getPrefix() + "Derzeitige Version: §c" + Main.getInstance().getDescription().getVersion());
+			sender.sendMessage(Main.getPrefix() + "Neueste Version: §a" + Main.getVaroUpdater().getLastResult().getVersionName());
+			sender.sendMessage(Main.getPrefix() + "§a/varo update");
+			return;
+		}
+		
 		VaroBugreport bugreport = new VaroBugreport();
 		
 		sender.sendMessage(Main.getPrefix() + "Bugreport wurde unter §c" + bugreport.getZipFile().getName() + " §7gespeichert!");
