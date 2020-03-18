@@ -88,7 +88,7 @@ public class Nametag {
 		if(this.prefix.length() > 16)
 			this.prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))));
 
 		if(this.suffix.length() > 16)
 			this.suffix = "";
