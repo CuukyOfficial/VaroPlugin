@@ -44,7 +44,6 @@ public class VaroTeam extends VaroEntity {
 	private VaroInventory teamBackPack;
 
 	public VaroTeam() {
-		teams.add(this);
 		member = new ArrayList<>();
 		teamBackPack = new VaroInventory(ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt());
 		memberid = new ArrayList<Integer>();
@@ -60,6 +59,8 @@ public class VaroTeam extends VaroEntity {
 		Nametag.refreshAll();
 		if(this.id > highestNumber)
 			highestNumber = id;
+		
+		teams.add(this);
 	}
 
 	private int generateId() {
@@ -126,6 +127,7 @@ public class VaroTeam extends VaroEntity {
 		if(id > highestNumber)
 			highestNumber = id;
 		memberid.clear();
+		teams.add(this);
 	}
 
 	@Override
