@@ -264,28 +264,27 @@ public class VaroPlayer extends VaroEntity {
 				nametag.refresh();
 		}
 
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) 
 			if(ConfigSetting.TABLIST.getValueAsBoolean())
 				Main.getDataManager().getTablistHandler().updatePlayer(this);
-
-			String listname = "";
-			if(getTeam() != null) {
-				if(getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
-				}
+		
+		String listname = "";
+		if(getTeam() != null) {
+			if(getRank() == null) {
+				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
 			} else {
-				if(getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
-				}
+				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
 			}
-
-			if(this.tabName == null || !this.tabName.equals(listname))
-				player.setPlayerListName(this.tabName = listname);
+		} else {
+			if(getRank() == null) {
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
+			} else {
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+			}
 		}
+
+		if(this.tabName == null || !this.tabName.equals(listname))
+			player.setPlayerListName(this.tabName = listname);
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
