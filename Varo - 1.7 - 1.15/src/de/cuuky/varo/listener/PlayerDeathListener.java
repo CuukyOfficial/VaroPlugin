@@ -73,6 +73,30 @@ public class PlayerDeathListener implements Listener {
 				deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 
 			if(deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
+				if(killerPlayer == null) {
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
+					Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
+				} else {
+					PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
+					if(hit1 != null)
+						hit1.over();
+
+					if(killer.getTeam() != null && ConfigSetting.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
+						try {
+							killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble());
+						} catch(Exception e) {
+							killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
+						}
+						killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD.getValue());
+					}
+
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
+					Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
+
+					killer.onEvent(BukkitEventType.KILL);
+					checkHealth(killerPlayer);
+				}
+				
 				deadP.onEvent(BukkitEventType.KILLED);
 
 				if(!ConfigSetting.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
@@ -111,30 +135,6 @@ public class PlayerDeathListener implements Listener {
 
 				deadP.getTeam().setLifes(deadP.getTeam().getLifes() - 1);
 				Bukkit.broadcastMessage(ConfigMessages.DEATH_LIFE_LOST.getValue(deadP));
-			}
-
-			if(killerPlayer == null) {
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
-				Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
-			} else {
-				PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
-				if(hit1 != null)
-					hit1.over();
-
-				if(killer.getTeam() != null && ConfigSetting.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
-					try {
-						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble());
-					} catch(Exception e) {
-						killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
-					}
-					killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD.getValue());
-				}
-
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
-				Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
-
-				killer.onEvent(BukkitEventType.KILL);
-				checkHealth(killerPlayer);
 			}
 		}
 	}
