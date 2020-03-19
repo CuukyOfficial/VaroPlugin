@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.entities.User;
 public class DiscordCommand extends VaroCommand {
 
 	public DiscordCommand() {
-		super("discord", "Der Hauptbefehl fuer den DiscordBot", "varo.discord");
+		super("discord", "Der Hauptbefehl fuer den DiscordBot", null);
 	}
 
 	@Override
@@ -52,12 +52,15 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			BotRegister reg = BotRegister.getRegister(vp.getUuid()) == null ? new BotRegister(vp.getUuid(), true) : BotRegister.getRegister(vp.getUuid());
+			reg.setPlayerName(vp.getName());
 			if(args.length == 1) {
 				sender.sendMessage(Main.getPrefix() + "Deine Discord-Verifizierung ist " + (reg.isActive() ? "§aaktiv" : "§cinaktiv"));
 				if(!reg.isActive())
 					sender.sendMessage(reg.getKickMessage());
-				else
-					sender.sendMessage(Main.getPrefix() + "Gib §c/varo verify remove §7um sie zu entfernen!");
+				else {
+					sender.sendMessage(Main.getPrefix() + "Account: " + Main.getColorCode() + reg.getMember().getNickname());
+					sender.sendMessage(Main.getPrefix() + "Gib §c/varo discord verify remove §7um die Verifizierung zu entfernen!");
+				}
 			} else if(args[1].equals("remove")) {
 				if(!reg.isActive()) {
 					sender.sendMessage(Main.getPrefix() + "Du bist noch nicht verifiziert!");
