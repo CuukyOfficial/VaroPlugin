@@ -40,6 +40,7 @@ import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.event.VaroEventListener;
 import de.cuuky.varo.gui.utils.InventoryListener;
+import de.cuuky.varo.item.hook.HookListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
 import de.cuuky.varo.listener.HealtLoseListener;
@@ -145,6 +146,7 @@ public final class BukkitRegisterer {
 		registerEvent(new SpectatorListener());
 		registerEvent(new PlayerRespawnListener());
 		registerEvent(new VaroEventListener());
+		registerEvent(new HookListener());
 
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());

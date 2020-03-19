@@ -29,7 +29,6 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.utils.JavaUtils;
@@ -197,9 +196,7 @@ public class VaroPlayer extends VaroEntity {
 				setSpectacting();
 
 			setNormalAttackSpeed();
-
-			if(Main.getVaroGame().getGameState() == GameState.LOBBY)
-				LobbyItem.giveItems(player);
+			LobbyItem.giveItems(player);
 		} else if(isAdminIgnore())
 			adminIgnore = false;
 
