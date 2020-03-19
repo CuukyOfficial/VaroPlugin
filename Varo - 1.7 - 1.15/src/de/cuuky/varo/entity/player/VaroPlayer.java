@@ -113,7 +113,11 @@ public class VaroPlayer extends VaroEntity {
 		if(db == null || !db.isEnabled())
 			return;
 
-		Member member = BotRegister.getBotRegisterByPlayerName(name).getMember();
+		BotRegister reg = BotRegister.getBotRegisterByPlayerName(name);
+		if(reg == null)
+			return;
+		
+		Member member = reg.getMember();
 		if(oldTeam != null) {
 			if(db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
 				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);

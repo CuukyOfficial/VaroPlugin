@@ -25,14 +25,52 @@ public class DiscordCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Discord-Commands §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord getLink §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord unlink §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord bypassRegister §7<Spieler> <true/false>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord sendMessage §7<Nachricht>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord reload");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord shutdown");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord settings");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord verify");
+
+			if(sender.hasPermission("varo.discord")) {
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord getLink §7<Spieler>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord unlink §7<Spieler>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord bypassRegister §7<Spieler> <true/false>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord sendMessage §7<Nachricht>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord reload");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord shutdown");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord settings");
+			}
 			sender.sendMessage(Main.getPrefix() + "§7--------------------------");
+			return;
+		}
+
+		if(Main.getBotLauncher().getDiscordbot() == null) {
+			sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde beim Start nicht aufgesetzt!");
+			return;
+		}
+
+		if(args[0].equalsIgnoreCase("verify")) {
+			if(!(sender instanceof Player)) {
+				sender.sendMessage(Main.getPrefix() + "Nicht fure die Konsole!");
+				return;
+			}
+
+			BotRegister reg = BotRegister.getRegister(vp.getUuid()) == null ? new BotRegister(vp.getUuid(), true) : BotRegister.getRegister(vp.getUuid());
+			if(args.length == 1) {
+				sender.sendMessage(Main.getPrefix() + "Deine Discord-Verifizierung ist " + (reg.isActive() ? "§aaktiv" : "§cinaktiv"));
+				if(!reg.isActive())
+					sender.sendMessage(reg.getKickMessage());
+				else
+					sender.sendMessage(Main.getPrefix() + "Gib §c/varo verify remove §7um sie zu entfernen!");
+			} else if(args[1].equals("remove")) {
+				if(!reg.isActive()) {
+					sender.sendMessage(Main.getPrefix() + "Du bist noch nicht verifiziert!");
+					return;
+				}
+				
+				reg.delete();
+				sender.sendMessage(Main.getPrefix() + "Verifzierung erfolgreich entfernt!");
+			}
+			
+			return;
+		} else if(sender.hasPermission("varo.discord")) {
+			sender.sendMessage(Main.getPrefix() + "§7/varo discord " + args[0] + " not found! §7Type /discord for help. (Insufficient permissions?)");
 			return;
 		}
 
@@ -40,11 +78,6 @@ public class DiscordCommand extends VaroCommand {
 		try {
 			reg = BotRegister.getBotRegisterByPlayerName(args[1]);
 		} catch(Exception e) {}
-
-		if(Main.getBotLauncher().getDiscordbot() == null) {
-			sender.sendMessage(Main.getPrefix() + "§7Der DiscordBot wurde beim Start nicht aufgesetzt, bitte reloade!");
-			return;
-		}
 
 		if(args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
 			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {

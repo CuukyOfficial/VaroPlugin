@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bukkit.BanEntry;
@@ -31,24 +30,31 @@ public class PlayerLoginListener implements Listener {
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
 		if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
-			if(reg == null) {
-				reg = new BotRegister(event.getPlayer().getUniqueId().toString(), true);
-				reg.setPlayerName(event.getPlayer().getName());
-				event.disallow(Result.KICK_OTHER, reg.getKickMessage());
-				return;
-			} else if(reg.isBypass()) {
-				event.allow();
-			} else if(!reg.isActive()) {
-				event.disallow(Result.KICK_OTHER, reg.getKickMessage());
-				return;
-			} else {
+			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
+				if(reg == null) {
+					reg = new BotRegister(event.getPlayer().getUniqueId().toString(), true);
+					reg.setPlayerName(event.getPlayer().getName());
+					event.disallow(Result.KICK_OTHER, reg.getKickMessage());
+					return;
+				} else if(reg.isBypass()) {
+					event.allow();
+				} else if(!reg.isActive()) {
+					event.disallow(Result.KICK_OTHER, reg.getKickMessage());
+					return;
+				}
+			}
+
+			if(reg != null) {
 				reg.setPlayerName(event.getPlayer().getName());
 				try {
 					User user = discordBot.getJda().getUserById(reg.getUserId());
-					if(user == null || !discordBot.getJda().getGuildById(ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong()).isMember(user)) {
-						event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue());
-						vp.setPlayer(null);
-						return;
+					if(user == null || !discordBot.getMainGuild().isMember(user)) {
+						if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
+							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue());
+							vp.setPlayer(null);
+							return;
+						} else
+							reg.delete();
 					}
 				} catch(Exception e2) {
 					System.err.println("[Varo] Es wurde keine Server ID angegeben oder die ID des Spielers ist falsch!");
@@ -76,8 +82,7 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp).replace("%hours%", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
 			break;
 		case NOT_IN_TIME:
-			Date date = new Date();
-			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%hours%", new SimpleDateFormat("HH").format(date)).replace("%minutes%", new SimpleDateFormat("mm").format(date)).replace("%seconds%", new SimpleDateFormat("ss").format(date)));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
 			break;
 		case SERVER_FULL:
 			event.disallow(Result.KICK_FULL, ConfigMessages.JOIN_KICK_SERVER_FULL.getValue(vp));
