@@ -186,8 +186,16 @@ public class VaroGame implements VaroSerializeable {
 				db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
 		}
 		
-		if(ConfigSetting.STOP_SERVER_ON_WIN.getValueAsBoolean()) 
-			Bukkit.getServer().shutdown();
+		if(ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) { 
+			Bukkit.getServer().broadcastMessage("§7Der Server wird in " + Main.getColorCode() + ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() + " Sekunden §7heruntergefahren...");
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+				
+				@Override
+				public void run() {
+					Bukkit.getServer().shutdown();
+				}
+			}, ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() *20);
+		}
 	}
 
 	private void startRefreshTimer() {
