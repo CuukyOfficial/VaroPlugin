@@ -26,9 +26,8 @@ public final class VaroUtils {
 		if(!ConfigSetting.ALWAYS_TIME.isIntActivated())
 			return;
 
-		if(worldToTimeID != 0) {
+		if(worldToTimeID != 0) 
 			Bukkit.getScheduler().cancelTask(worldToTimeID);
-		}
 
 		worldToTimeID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
@@ -82,21 +81,20 @@ public final class VaroUtils {
 		SortResult result = SortResult.SORTED_WELL;
 
 		while(spawns.size() > 0) {
-			if(players.size() <= 0) {
+			if(players.size() <= 0) 
 				break;
-			}
 
 			VaroPlayer player = players.get(0);
 			Spawn spawn = spawns.get(0);
 			player.cleanUpPlayer();
 			player.getPlayer().teleport(spawn.getLocation());
+			spawn.setPlayer(player);
 			player.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawn.getNumber())));
 			players.remove(0);
 			spawns.remove(0);
 
-			if(player.getTeam() == null) {
+			if(player.getTeam() == null) 
 				continue;
-			}
 
 			int playerTeamRegistered = 1;
 			for(VaroPlayer teamPlayer : player.getTeam().getMember()) {
@@ -109,6 +107,7 @@ public final class VaroUtils {
 						if(players.contains(teamPlayer)) {
 							teamPlayer.cleanUpPlayer();
 							teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());
+							spawns.get(0).setPlayer(teamPlayer);
 							teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawns.get(0).getNumber())));
 							players.remove(teamPlayer);
 						}
@@ -123,6 +122,7 @@ public final class VaroUtils {
 				} else if(players.contains(teamPlayer)) {
 					teamPlayer.cleanUpPlayer();
 					teamPlayer.getPlayer().teleport(spawns.get(0).getLocation());
+					spawns.get(0).setPlayer(teamPlayer);
 					teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue().replace("%number%", String.valueOf(spawns.get(0).getNumber())));
 					players.remove(teamPlayer);
 					spawns.remove(0);

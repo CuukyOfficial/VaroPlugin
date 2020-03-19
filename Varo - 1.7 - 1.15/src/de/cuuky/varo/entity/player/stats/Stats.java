@@ -32,6 +32,7 @@ import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.utils.varo.LocationFormat;
 import de.cuuky.varo.version.VersionUtils;
 
@@ -189,7 +190,7 @@ public class Stats implements VaroSerializeable {
 			if(!ConfigSetting.UNREGISTERED_PLAYER_JOIN.getValueAsBoolean() && !owner.isRegistered())
 				result = KickResult.NO_PROJECTUSER;
 
-			if(Main.getVaroGame().isStarting())
+			if(Main.getVaroGame().isStarting() && Spawn.getSpawn(owner) == null)
 				result = KickResult.NO_PROJECTUSER;
 		}
 

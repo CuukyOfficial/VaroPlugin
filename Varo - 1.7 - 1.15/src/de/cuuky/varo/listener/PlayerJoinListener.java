@@ -55,16 +55,17 @@ public class PlayerJoinListener implements Listener {
 		vplayer.onEvent(BukkitEventType.JOINED);
 
 		if(Main.getVaroGame().getGameState() == GameState.LOBBY) {
-			Spawn spawn = Spawn.getSpawn(vplayer);
-			if(spawn != null && ConfigSetting.SPAWN_TELEPORT_JOIN.getValueAsBoolean())
-				player.teleport(spawn.getLocation());
-			else
-				player.teleport(Main.getVaroGame().getVaroWorld().getTeleportLocation());
-
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {});
 			player.updateInventory();
-			LobbyItem.giveItems(player);
+			
+			Spawn spawn = Spawn.getSpawn(vplayer);
+			if(spawn != null && (ConfigSetting.SPAWN_TELEPORT_JOIN.getValueAsBoolean() || Main.getVaroGame().isStarting()))
+				player.teleport(spawn.getLocation());
+			else {
+				player.teleport(Main.getVaroGame().getVaroWorld().getTeleportLocation());
+				LobbyItem.giveItems(player);
+			}
 
 			if(ConfigSetting.START_AT_PLAYERS.isIntActivated()) {
 				if(VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigSetting.START_AT_PLAYERS.getValueAsInt())
