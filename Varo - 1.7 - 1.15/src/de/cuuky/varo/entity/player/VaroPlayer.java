@@ -268,6 +268,8 @@ public class VaroPlayer extends VaroEntity {
 			if(ConfigSetting.TABLIST.getValueAsBoolean())
 				Main.getDataManager().getTablistHandler().updatePlayer(this);
 		
+		Main.getDataManager().getScoreboardHandler().updatePlayer(this);
+		
 		String listname = "";
 		if(getTeam() != null) {
 			if(getRank() == null) {
