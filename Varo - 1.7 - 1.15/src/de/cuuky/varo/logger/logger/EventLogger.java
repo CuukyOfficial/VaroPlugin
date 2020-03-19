@@ -44,13 +44,7 @@ public class EventLogger extends VaroLogger {
 			if(idEntry == null || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
 				return -1;
 
-			try {
-				idEntry.getValueAsLong();
-			} catch(IllegalArgumentException e) {
-				return ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
-			}
-
-			return idEntry.getValueAsLong();
+			return idEntry.getValueAsLong() != -1 ? idEntry.getValueAsLong() : ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
 		}
 
 		public static LogType getType(String s) {
@@ -67,15 +61,13 @@ public class EventLogger extends VaroLogger {
 	}
 
 	private void sendToDiscord(LogType type, String msg) {
-		if(type.getPostChannel() == -1 || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
-			return;
-
 		try {
 			Main.getBotLauncher().getDiscordbot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
 		} catch(NoClassDefFoundError | BootstrapMethodError e) {
 			return;
 		} catch(Exception e) {
 			e.printStackTrace();
+			System.out.println(Main.getPrefix() + "Failed to broadcast message! Did you enter a wrong channel ID?");
 			return;
 		}
 	}

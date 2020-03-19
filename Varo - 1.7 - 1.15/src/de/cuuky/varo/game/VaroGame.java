@@ -70,16 +70,16 @@ public class VaroGame implements VaroSerializeable {
 
 		if(mainThread != null)
 			mainThread.loadVariables();
-		
+
 		this.topScores = new TopScoreList();
 	}
-	
+
 	public void init() {
 		startRefreshTimer();
 		loadVariables();
 
 		this.varoWorld = new VaroWorld();
-		
+
 		this.gamestate = GameState.LOBBY;
 		this.borderDecrease = new BorderDecreaseDayTimer(true);
 	}
@@ -181,27 +181,29 @@ public class VaroGame implements VaroSerializeable {
 			if(db.getResultChannel() != null && db.isEnabled())
 				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glueckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getBotLauncher().getDiscordbot().getResultChannel());
 
-			File file = new File("plugins/Varo/logs", "logs.yml");
-			if(file.exists())
-				db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
+			if(Main.getBotLauncher().getDiscordbot().getResultChannel() != null) {
+				File file = new File("plugins/Varo/logs", "logs.yml");
+				if(file.exists())
+					db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
+			}
 		}
-		
-		if(ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) { 
+
+		if(ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
 			Bukkit.getServer().broadcastMessage("§7Der Server wird in " + Main.getColorCode() + ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() + " Sekunden §7heruntergefahren...");
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-				
+
 				@Override
 				public void run() {
 					Bukkit.getServer().shutdown();
 				}
-			}, ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() *20);
+			}, ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20);
 		}
 	}
 
 	private void startRefreshTimer() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), mainThread = new VaroMainHeartbeatThread(), 0, 20);
 	}
-	
+
 	public TopScoreList getTopScores() {
 		return this.topScores;
 	}
@@ -257,7 +259,7 @@ public class VaroGame implements VaroSerializeable {
 	public boolean isStarting() {
 		return startThread != null;
 	}
-	
+
 	public VaroWorld getVaroWorld() {
 		return this.varoWorld;
 	}
@@ -269,7 +271,7 @@ public class VaroGame implements VaroSerializeable {
 	public void setBorderDecrease(BorderDecreaseDayTimer borderDecrease) {
 		this.borderDecrease = borderDecrease;
 	}
-	
+
 	public void setMinuteTimer(BorderDecreaseMinuteTimer minuteTimer) {
 		this.minuteTimer = minuteTimer;
 	}
@@ -310,7 +312,7 @@ public class VaroGame implements VaroSerializeable {
 	public void onDeserializeEnd() {
 		if(gamestate == GameState.STARTED)
 			minuteTimer = new BorderDecreaseMinuteTimer();
-		
+
 		startRefreshTimer();
 		loadVariables();
 

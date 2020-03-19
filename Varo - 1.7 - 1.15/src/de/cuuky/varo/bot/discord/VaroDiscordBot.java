@@ -129,6 +129,7 @@ public class VaroDiscordBot implements VaroBot {
 			channel = jda.getTextChannelById(channelid);
 		} catch(Exception e) {
 			System.err.println(Main.getConsolePrefix() + "Failed to print message");
+			return;
 		}
 
 		EmbedBuilder builder = new EmbedBuilder();
