@@ -185,6 +185,9 @@ public class VaroGame implements VaroSerializeable {
 			if(file.exists())
 				db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
 		}
+		
+		if(ConfigSetting.STOP_SERVER_ON_WIN.getValueAsBoolean()) 
+			Bukkit.getServer().shutdown();
 	}
 
 	private void startRefreshTimer() {
