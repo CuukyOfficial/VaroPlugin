@@ -13,6 +13,8 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 public class StatsCommand extends VaroCommand {
 
 	public enum SetArgumentType {
+		
+		ADMIN_IGNORE("adminignore"),
 		COUNTDOWN("countdown"),
 		EPISODES_PLAYED("episodesplayed"),
 		KILLS("kills"),
@@ -31,6 +33,9 @@ public class StatsCommand extends VaroCommand {
 		public boolean execute(String value, VaroPlayer vp, CommandSender sender) {
 			try {
 				switch(this) {
+				case ADMIN_IGNORE:
+					vp.setAdminIgnore(Boolean.valueOf(value));
+					break;
 				case KILLS:
 					vp.getStats().setKills(Integer.valueOf(value));
 					break;
@@ -71,6 +76,9 @@ public class StatsCommand extends VaroCommand {
 
 		public void remove(VaroPlayer vp) {
 			switch(this) {
+			case ADMIN_IGNORE:
+				vp.setAdminIgnore(false);
+				break;
 			case KILLS:
 				vp.getStats().setKills(0);
 				break;
