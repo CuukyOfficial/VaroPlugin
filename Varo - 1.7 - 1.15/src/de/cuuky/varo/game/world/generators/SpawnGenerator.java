@@ -19,9 +19,8 @@ public class SpawnGenerator {
 		this.blockId = blockId;
 		this.sideBlockId = sideBlockId;
 
-		for(Spawn spawn : Spawn.getSpawnsClone()) {
+		for(Spawn spawn : Spawn.getSpawnsClone()) 
 			spawn.delete();
-		}
 	}
 
 	public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {
@@ -68,7 +67,7 @@ public class SpawnGenerator {
 			while(BlockUtils.isAir(newLoc.clone().add(0, -1, 0).getBlock()))
 				newLoc = newLoc.add(0, -1, 0);
 		else
-			while(!BlockUtils.isAir(newLoc.getBlock()))
+			while(!BlockUtils.isAir(newLoc.getBlock())) 
 				newLoc = newLoc.add(0, +1, 0);
 
 		newLoc.getBlock().setType(Material.AIR);
