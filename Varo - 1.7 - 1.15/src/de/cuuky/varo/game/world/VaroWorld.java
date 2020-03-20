@@ -9,6 +9,8 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.world.border.VaroBorder;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.version.BukkitVersion;
+import de.cuuky.varo.version.VersionUtils;
 
 public class VaroWorld {
 
@@ -18,8 +20,9 @@ public class VaroWorld {
 	public VaroWorld() {
 		this.varoBorder = new VaroBorder();
 		this.world = Bukkit.getWorld(Main.getDataManager().getPropertiesReader().getConfiguration().get("level-name"));
-		
-		disableWorldDownloader();
+
+		if(VersionUtils.getVersion() == BukkitVersion.ONE_8)
+			disableWorldDownloader();
 	}
 
 	private void disableWorldDownloader() {
@@ -27,7 +30,7 @@ public class VaroWorld {
 
 			@Override
 			public void onPluginMessageReceived(String channel, Player player, byte[] data) {
-				if(player.hasPermission("varo.worlddownloader")) 
+				if(player.hasPermission("varo.worlddownloader"))
 					return;
 
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, player.getName() + " nutzt einen WorldDownloader!");
