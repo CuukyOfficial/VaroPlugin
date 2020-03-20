@@ -187,16 +187,6 @@ public class ConfigHandler {
 			shutdown = true;
 		}
 
-		if(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0 && ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt() <= 0 && ConfigSetting.PLAY_TIME.getValueAsInt() > 0) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Wenn die Spielzeit nicht unendlich ist, muss ein JoinSystem aktiviert sein.");
-			shutdown = true;
-		}
-
-		if(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() > 0 && ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt() > 0) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Es duerfen nicht beide JoinSysteme gleichzeitig aktiviert sein.");
-			shutdown = true;
-		}
-
 		if(shutdown) {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
