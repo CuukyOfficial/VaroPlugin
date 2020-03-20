@@ -63,9 +63,12 @@ public class VaroDeserializer extends VaroSerializeHandler {
 						handled.add(s);
 					}
 
-					if(field.getType() == Location.class) {	
-						if(obj != null && Bukkit.getWorld(section.getString(s + ".world")) != null)
-							obj = new Location(Bukkit.getWorld(section.getString(s + ".world")), (double) section.get(s + ".x"), (double) section.get(s + ".y"), (double) section.get(s + ".z"));
+					if(field.getType() == Location.class) {
+						if(obj != null)
+							if(Bukkit.getWorld(section.getString(s + ".world")) != null)
+								obj = new Location(Bukkit.getWorld(section.getString(s + ".world")), (double) section.get(s + ".x"), (double) section.get(s + ".y"), (double) section.get(s + ".z"));
+							else
+								obj = null;
 
 						handled.add(s);
 					}
