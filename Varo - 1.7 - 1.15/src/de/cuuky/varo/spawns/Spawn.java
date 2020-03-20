@@ -149,6 +149,9 @@ public class Spawn implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
+		if(this.location == null)
+			remove();
+		
 		if(playerId != -1)
 			this.player = VaroPlayer.getPlayer(playerId);
 
