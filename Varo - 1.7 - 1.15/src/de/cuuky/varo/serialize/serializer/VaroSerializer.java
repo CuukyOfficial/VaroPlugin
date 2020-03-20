@@ -62,6 +62,12 @@ public class VaroSerializer extends VaroSerializeHandler {
 
 					if(field.getType() == Location.class) {
 						Location loc = (Location) obj;
+						if(loc.getWorld() == null) {
+							obj = NULL_REPLACE;
+							saveTo.set(saveUnder + "." + fieldIdent, NULL_REPLACE);
+							continue;
+						}
+						
 						saveTo.set(saveUnder + "." + fieldIdent + ".world", loc.getWorld().getName());
 						saveTo.set(saveUnder + "." + fieldIdent + ".x", loc.getX());
 						saveTo.set(saveUnder + "." + fieldIdent + ".y", loc.getY());

@@ -68,6 +68,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	}
 
 	protected void save(String saveUnder, VaroSerializeable instance, YamlConfiguration saveTo) {
+		System.out.println(saveUnder + ", " + instance.getClass().getName());
 		try {
 			new VaroSerializer(saveUnder, instance, saveTo);
 		} catch(NoClassDefFoundError e) {
