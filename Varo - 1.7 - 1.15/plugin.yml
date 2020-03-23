@@ -1,7 +1,7 @@
 name: Varo
 author: Cuuky
 authors: [Korne127, UeberallGebannt]
-version: 3.0-BETA
+version: 3.0
 api-version: 1.13
 main: de.cuuky.varo.Main
 
