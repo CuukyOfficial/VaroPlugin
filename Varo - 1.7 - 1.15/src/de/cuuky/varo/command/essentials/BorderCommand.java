@@ -47,9 +47,9 @@ public class BorderCommand implements CommandExecutor {
 				worldHandler.getVaroWorld(p.getWorld()).getVaroBorder().setBorderCenter(p.getLocation());
 			try {
 				inSeconds = Integer.parseInt(args[1]);
-				worldHandler.setBorderSize(borderSize, inSeconds);
+				worldHandler.setBorderSize(borderSize, inSeconds, p != null ? p.getWorld() : null);
 			} catch(ArrayIndexOutOfBoundsException e) {
-				worldHandler.setBorderSize(borderSize, 0);
+				worldHandler.setBorderSize(borderSize, 0, p != null ? p.getWorld() : null);
 			} catch(NumberFormatException e) {
 				sender.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
 				return false;

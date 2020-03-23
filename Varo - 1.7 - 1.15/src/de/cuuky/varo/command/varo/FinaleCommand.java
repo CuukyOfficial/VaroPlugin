@@ -60,7 +60,7 @@ public class FinaleCommand extends VaroCommand {
 			}
 		}
 
-		Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0);
+		Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
 		Main.getVaroGame().setFinaleJoinStart(false);
 
 		int playerNumber = VaroPlayer.getOnlinePlayer().size();

@@ -112,7 +112,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue() {
-				return !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderSize());
+				return !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderSize(null));
 			}
 		};
 

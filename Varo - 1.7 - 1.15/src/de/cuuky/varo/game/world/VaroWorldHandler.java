@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
 import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -58,8 +59,8 @@ public class VaroWorldHandler {
 	public void addWorld(World world) {
 		VaroWorld vworld = new VaroWorld(world);
 		this.worlds.add(vworld);
-		
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) 
+
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
 			vworld.getVaroBorder().setBorderSize(this.borderSize, 0);
 	}
 
@@ -86,25 +87,38 @@ public class VaroWorldHandler {
 		});
 	}
 
-	public void setBorderSize(double size, long time) {
+	public void setBorderSize(double size, long time, World world) {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		this.borderSize = size;
-		for(VaroWorld world : worlds)
-			world.getVaroBorder().setBorderSize(size, time);
+		if(ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+			for(VaroWorld vworld : worlds)
+				vworld.getVaroBorder().setBorderSize(size, time);
+		else {
+			VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
+			vworld.getVaroBorder().setBorderSize(size, time);
+		}
 	}
-	
+
 	public VaroWorld getVaroWorld(World world) {
-		for(VaroWorld vworld : worlds) 
+		for(VaroWorld vworld : worlds)
 			if(vworld.getWorld().equals(world))
 				return vworld;
-		
+
 		throw new NullPointerException("Couldn't find VaroWorld for " + world.getName());
 	}
 
-	public double getBorderSize() {
-		return this.borderSize;
+	public double getBorderSize(World world) {
+		if(ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+			return this.borderSize;
+		else {
+			if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+				return 0;
+
+			VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
+			return vworld.getVaroBorder().getBorderSize();
+		}
 	}
 
 	public ArrayList<VaroWorld> getWorlds() {
