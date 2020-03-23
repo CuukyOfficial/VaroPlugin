@@ -56,6 +56,7 @@ public enum ConfigSetting implements SectionEntry {
 	BORDER_DAMAGE(ConfigSettingSection.BORDER, "borderDamage", 1, "Wie viel Schaden die Border\nin halben Herzen macht."),
 
 	// BORDER
+	WORLD_SNCHRONIZE_BORDER(ConfigSettingSection.BORDER, "synchronizeBorders", true, "Ob die Groesse der Border\nfuer alle Welten zaehlen soll"),
 	BORDER_DEATH_DECREASE(ConfigSettingSection.BORDER, "deathBorderDecrease.enabled", true, "Ob sich die Border bei Tod verringern soll"),
 	BORDER_DEATH_DECREASE_SIZE(ConfigSettingSection.BORDER, "deathBorderDecrease.size", 25, "Um wie viele Bloecke sich die\nBorder bei Tod verringern soll."),
 	BORDER_DEATH_DECREASE_SPEED(ConfigSettingSection.BORDER, "deathBorderDecrease.speed", 1, "Mit welcher Geschwindigkeit sich\ndie Border beiTod verringern soll."),
