@@ -256,6 +256,12 @@ public class VaroPlayer extends VaroEntity {
 	public void update() {
 		if(!isOnline())
 			return;
+		else {
+			if(!player.isOnline()) {
+				this.player = null;
+				return;
+			}
+		}
 
 		if(ConfigSetting.NAMETAGS.getValueAsBoolean()) {
 			if(nametag == null)
