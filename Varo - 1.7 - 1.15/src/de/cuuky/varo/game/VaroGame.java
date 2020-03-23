@@ -29,6 +29,7 @@ import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.utils.varo.VaroUtils;
 
 public class VaroGame implements VaroSerializeable {
@@ -99,7 +100,7 @@ public class VaroGame implements VaroSerializeable {
 		}
 
 		if(ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {
-			VaroUtils.sortPlayers();
+			new PlayerSort().sortPlayers();
 			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
 		}
 

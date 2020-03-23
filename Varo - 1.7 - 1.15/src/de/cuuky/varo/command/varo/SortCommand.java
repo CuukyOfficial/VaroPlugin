@@ -6,7 +6,8 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.spawns.sort.PlayerSort;
+import de.cuuky.varo.spawns.sort.PlayerSort.SortResult;
 
 public class SortCommand extends VaroCommand {
 
@@ -21,7 +22,7 @@ public class SortCommand extends VaroCommand {
 			return;
 		}
 
-		VaroUtils.SortResult result = VaroUtils.sortPlayers();
+		SortResult result = new PlayerSort().sortPlayers();
 		switch(result) {
 		case SORTED_WELL:
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Alle Spieler §7wurden sortiert!");
