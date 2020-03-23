@@ -46,7 +46,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 			@Override
 			public void run() {
 				if(Main.getVaroGame().isRunning())
-					Main.getVaroGame().getVaroWorld().getVaroBorder().decreaseBorder(DecreaseReason.TIME_MINUTES);
+					Main.getVaroGame().getVaroWorldHandler().decreaseBorder(DecreaseReason.TIME_MINUTES);
 
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 

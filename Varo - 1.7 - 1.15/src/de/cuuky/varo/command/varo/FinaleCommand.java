@@ -49,7 +49,7 @@ public class FinaleCommand extends VaroCommand {
 			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
 			if(player.getPlayer() != null) {
 				if(player.getPlayer().isOnline()) {
-					player.getPlayer().teleport(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation());
+					player.getPlayer().teleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 					continue;
 				}
 			}
@@ -60,8 +60,7 @@ public class FinaleCommand extends VaroCommand {
 			}
 		}
 
-		Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
-
+		Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0);
 		Main.getVaroGame().setFinaleJoinStart(false);
 
 		int playerNumber = VaroPlayer.getOnlinePlayer().size();

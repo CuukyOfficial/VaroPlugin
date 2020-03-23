@@ -9,6 +9,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.utils.PermissionUtils;
+import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 
 public class MessagePlaceholderLoader {
@@ -111,7 +112,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue() {
-				return !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null));
+				return !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderSize());
 			}
 		};
 
@@ -162,11 +163,11 @@ public class MessagePlaceholderLoader {
 				return "";
 			}
 		};
-		
+
 		// MAYBE ?
 		for(ConfigSetting setting : ConfigSetting.values()) {
 			new GeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
-				
+
 				@Override
 				protected String getValue() {
 					return String.valueOf(setting.getValue()).replace("&", "§");
@@ -180,7 +181,10 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return String.valueOf((int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo(player.getPlayer()));
+				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8))
+					return "0";
+
+				return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));
 			}
 		};
 
@@ -343,7 +347,7 @@ public class MessagePlaceholderLoader {
 				return player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockZ()) : "0";
 			}
 		};
-		
+
 		new PlayerMessagePlaceholder("playerLocX", 1, "Ersetzt durch die X-Koordinate des Spielers") {
 
 			@Override
@@ -351,7 +355,7 @@ public class MessagePlaceholderLoader {
 				return player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockX()) : "0";
 			}
 		};
-		
+
 		new PlayerMessagePlaceholder("playerLocY", 1, "Ersetzt durch die Y-Koordinate des Spielers") {
 
 			@Override
@@ -360,7 +364,6 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		
 		new PlayerMessagePlaceholder("playerLocZ", 1, "Ersetzt durch die Z-Koordinate des Spielers") {
 
 			@Override
@@ -368,7 +371,6 @@ public class MessagePlaceholderLoader {
 				return player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockZ()) : "0";
 			}
 		};
-
 
 		new PlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers") {
 

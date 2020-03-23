@@ -72,7 +72,6 @@ public class GameOptionsGUI extends SuperInventory {
 			@Override
 			public void run() {
 				opener.getWorld().setSpawnLocation(opener.getLocation().getBlockX(), opener.getLocation().getBlockY(), opener.getLocation().getBlockZ());
-				Main.getVaroGame().getVaroWorld().getVaroBorder().setBorderCenter(opener.getLocation());
 			}
 		});
 		return true;

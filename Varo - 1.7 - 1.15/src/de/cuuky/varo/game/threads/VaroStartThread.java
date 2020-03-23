@@ -42,8 +42,8 @@ public class VaroStartThread implements Runnable {
 			return;
 
 		int radius = ConfigSetting.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
-		Location loc = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
-		Location loc2 = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
+		Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().clone().add(radius, radius, radius);
+		Location loc2 = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
@@ -145,7 +145,7 @@ public class VaroStartThread implements Runnable {
 			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
 			
 			fillChests();
-			Main.getVaroGame().getVaroWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation());
+			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 			
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());

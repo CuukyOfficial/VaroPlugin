@@ -63,7 +63,7 @@ public class PlayerJoinListener implements Listener {
 			if(spawn != null && (ConfigSetting.SPAWN_TELEPORT_JOIN.getValueAsBoolean() || Main.getVaroGame().isStarting()))
 				player.teleport(spawn.getLocation());
 			else {
-				player.teleport(Main.getVaroGame().getVaroWorld().getTeleportLocation());
+				player.teleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
 				LobbyItem.giveItems(player);
 			}
 
@@ -93,7 +93,7 @@ public class PlayerJoinListener implements Listener {
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown =  massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60 && ConfigSetting.PLAY_TIME.getValueAsInt() > 0) {
-					player.teleport(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation());
+					player.teleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 				}
 			}
 

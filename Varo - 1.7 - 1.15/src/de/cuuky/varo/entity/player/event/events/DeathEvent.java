@@ -46,6 +46,6 @@ public class DeathEvent extends BukkitEvent {
 				dropInventory(player.getTeam().getTeamBackPack(), player.getPlayer().getLocation());
 
 		if(Main.getVaroGame().getGameState() == GameState.STARTED)
-			Main.getVaroGame().getVaroWorld().getVaroBorder().decreaseBorder(DecreaseReason.DEATH);
+			Main.getVaroGame().getVaroWorldHandler().decreaseBorder(DecreaseReason.DEATH);
 	}
 }

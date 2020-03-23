@@ -1,6 +1,5 @@
 package de.cuuky.varo.command.essentials;
 
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
-import de.cuuky.varo.game.world.border.VaroBorder;
+import de.cuuky.varo.game.world.VaroWorldHandler;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import de.cuuky.varo.version.types.Sounds;
@@ -23,9 +22,9 @@ public class BorderCommand implements CommandExecutor {
 		}
 
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(((Player) sender).getWorld()) : Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderSize(null)) + " §7Bloecke gross!");
+			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderSize() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getVaroBorder().getBorderSize()) + " §7Bloecke gross!");
 			if(sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Bloecke von der Border entfernt!");
+				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Bloecke von der Border entfernt!");
 
 			if(sender.hasPermission("varo.setup")) {
 				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Groesse der Border mit " + Main.getColorCode() + "/border <Groesse> [Sekunden] §7setzen!");
@@ -43,15 +42,14 @@ public class BorderCommand implements CommandExecutor {
 				return false;
 			}
 
-			VaroBorder border = Main.getVaroGame().getVaroWorld().getVaroBorder();
-			World playerWorld = (p != null ? p.getWorld() : null);
+			VaroWorldHandler worldHandler = Main.getVaroGame().getVaroWorldHandler();
 			if(p != null)
-				border.setBorderCenter(p.getLocation());
+				worldHandler.getVaroWorld(p.getWorld()).getVaroBorder().setBorderCenter(p.getLocation());
 			try {
 				inSeconds = Integer.parseInt(args[1]);
-				border.setBorderSize(borderSize, inSeconds, playerWorld);
+				worldHandler.setBorderSize(borderSize, inSeconds);
 			} catch(ArrayIndexOutOfBoundsException e) {
-				border.setBorderSize(borderSize, 0, playerWorld);
+				worldHandler.setBorderSize(borderSize, 0);
 			} catch(NumberFormatException e) {
 				sender.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
 				return false;

@@ -1,16 +1,15 @@
-package de.cuuky.varo.game.world;
+package de.cuuky.varo.game.world.setup;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.bukkit.Location;
-import org.bukkit.World;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.start.AutoStart;
+import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
@@ -29,17 +28,17 @@ public class AutoSetup {
 	}
 	
 	private void setupPlugin() {
-		World world = Main.getVaroGame().getVaroWorld().getWorld();
+		VaroWorld world = Main.getVaroGame().getVaroWorldHandler().getMainWorld();
 
-		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now...");
+		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain now... (" + world.getWorld().getName() + ")");
 
 		int x = 0, z = 0;
-		while(!SpawnChecker.checkSpawns(world, x, z, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
+		while(!SpawnChecker.checkSpawns(world.getWorld(), x, z, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
 			x += 100;
 			z += 100;
 		}
 
-		Location middle = new Location(world, x, world.getMaxHeight(), z);
+		Location middle = new Location(world.getWorld(), x, world.getWorld().getMaxHeight(), z);
 
 		portal: if(ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
 			System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up the portal...");
@@ -50,14 +49,14 @@ public class AutoSetup {
 				break portal;
 			}
 
-			new PortalGenerator(world, x, z, width, height);
+			new PortalGenerator(world.getWorld(), x, z, width, height);
 		}
 
 		if(ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
 			System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
 			File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
-			Location lobby = new Location(world, x, world.getMaxHeight() - 50, z);
+			Location lobby = new Location(world.getWorld(), x, world.getWorld().getMaxHeight() - 50, z);
 			if(!file.exists())
 				new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_SIZE.getValueAsInt());
 			else
@@ -67,24 +66,13 @@ public class AutoSetup {
 		}
 
 		if(ConfigSetting.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			try {
-				Method method = world.getClass().getDeclaredMethod("getWorldBorder");
-
-				if(method != null) {
-					System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the border...");
-					Object border = method.invoke(world);
-
-					border.getClass().getDeclaredMethod("setCenter", Location.class).invoke(border, middle);
-					border.getClass().getDeclaredMethod("setSize", double.class).invoke(border, ConfigSetting.AUTOSETUP_BORDER.getValueAsInt());
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.AUTOSETUP_BORDER.getValueAsInt(), 0);
+			world.getVaroBorder().setBorderCenter(middle);
 		}
 
 		System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
-		int yPos = world.getMaxHeight();
-		while(BlockUtils.isAir(new Location(world, x, yPos, z).getBlock()))
+		int yPos = world.getWorld().getMaxHeight();
+		while(BlockUtils.isAir(new Location(world.getWorld(), x, yPos, z).getBlock()))
 			yPos--;
 
 		middle.getWorld().setSpawnLocation(x, yPos, z);

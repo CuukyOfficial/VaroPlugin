@@ -120,7 +120,7 @@ public class Strike implements VaroSerializeable {
 		switch(number) {
 		case 1:
 			if(striked.getStats().getLastLocation() == null) {
-				Location loc = Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation();
+				Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker));
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();

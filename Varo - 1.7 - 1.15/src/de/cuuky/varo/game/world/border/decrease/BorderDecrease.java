@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
-import de.cuuky.varo.game.world.border.VaroBorder;
+import de.cuuky.varo.game.world.VaroWorldHandler;
 
 public class BorderDecrease {
 
@@ -40,10 +40,10 @@ public class BorderDecrease {
 	}
 	
 	public void shrink() {
-		VaroBorder border = Main.getVaroGame().getVaroWorld().getVaroBorder();
+		VaroWorldHandler worldHandler = Main.getVaroGame().getVaroWorldHandler();
 
 		int minsize = ConfigSetting.MIN_BORDER_SIZE.getValueAsInt();
-		double size = border.getBorderSize(null);
+		double size = worldHandler.getBorderSize();
 		if(size <= minsize) {
 			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());
 			remove();
@@ -53,10 +53,10 @@ public class BorderDecrease {
 		startHook.run();
 		if(minsize > 0)
 			if((int) (size - amount) < minsize) {
-				border.setBorderSize(minsize, (long) ((size - minsize) / bps), null);
+				worldHandler.setBorderSize(minsize, (long) ((size - minsize) / bps));
 				waitForBorder((size - minsize) / bps);
 			} else {
-				border.setBorderSize(size - amount, (long) (amount / bps), null);
+				worldHandler.setBorderSize(size - amount, (long) (amount / bps));
 				waitForBorder(amount / bps);
 			}
 

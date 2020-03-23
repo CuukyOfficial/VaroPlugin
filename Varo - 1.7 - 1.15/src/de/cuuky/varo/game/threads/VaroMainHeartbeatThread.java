@@ -73,7 +73,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					if(showTimeInActionBar || vp.getStats().isShowActionbarTime())
 						actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 					if(showDistanceToBorder) {
-						int distance = (int) Main.getVaroGame().getVaroWorld().getVaroBorder().getBorderDistanceTo(p);
+						int distance = (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().getBorderDistanceTo(p);
 						if(!ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
 							actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 					}

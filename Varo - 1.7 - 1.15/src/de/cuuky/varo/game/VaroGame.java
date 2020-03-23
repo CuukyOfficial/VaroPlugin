@@ -22,7 +22,7 @@ import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.threads.VaroMainHeartbeatThread;
 import de.cuuky.varo.game.threads.VaroStartThread;
-import de.cuuky.varo.game.world.VaroWorld;
+import de.cuuky.varo.game.world.VaroWorldHandler;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
@@ -57,7 +57,7 @@ public class VaroGame implements VaroSerializeable {
 	private VaroStartThread startThread;
 	private BorderDecreaseMinuteTimer minuteTimer;
 	private ProtectionTime protection;
-	private VaroWorld varoWorld;
+	private VaroWorldHandler varoWorldHandler;
 	private TopScoreList topScores;
 
 	public VaroGame() {
@@ -78,7 +78,7 @@ public class VaroGame implements VaroSerializeable {
 		startRefreshTimer();
 		loadVariables();
 
-		this.varoWorld = new VaroWorld();
+		this.varoWorldHandler = new VaroWorldHandler();
 
 		this.gamestate = GameState.LOBBY;
 		this.borderDecrease = new BorderDecreaseDayTimer(true);
@@ -94,7 +94,7 @@ public class VaroGame implements VaroSerializeable {
 		}
 
 		if(ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-			new SpawnGenerator(Main.getVaroGame().getVaroWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
+			new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
 			Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
 		}
 
@@ -260,8 +260,8 @@ public class VaroGame implements VaroSerializeable {
 		return startThread != null;
 	}
 
-	public VaroWorld getVaroWorld() {
-		return this.varoWorld;
+	public VaroWorldHandler getVaroWorldHandler() {
+		return this.varoWorldHandler;
 	}
 
 	public void setAutoStart(AutoStart autoStart) {
@@ -316,7 +316,7 @@ public class VaroGame implements VaroSerializeable {
 		startRefreshTimer();
 		loadVariables();
 
-		this.varoWorld = new VaroWorld();
+		this.varoWorldHandler = new VaroWorldHandler();
 	}
 
 	@Override
