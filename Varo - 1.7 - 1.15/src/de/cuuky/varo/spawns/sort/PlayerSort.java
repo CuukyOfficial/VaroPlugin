@@ -27,6 +27,26 @@ public class PlayerSort {
 		toTeleport = new HashMap<>();
 	}
 	
+	private void startTeleporting() {
+		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+			
+			int index = 0;
+			
+			@Override
+			public void run() {
+				if(index == toTeleport.size()) {
+					toTeleport.clear();
+					Bukkit.getScheduler().cancelTask(scheduler);
+					return;
+				}
+				
+				Player player = (Player) toTeleport.keySet().toArray()[index];
+				player.teleport(toTeleport.get(player));
+				index++;
+			}
+		}, 0, 1);
+	}
+	
 	public SortResult sortPlayers() {
 		ArrayList<VaroPlayer> players = VaroPlayer.getOnlinePlayer();
 		ArrayList<VaroPlayer> playersForIterator = VaroPlayer.getOnlinePlayer();
@@ -114,24 +134,8 @@ public class PlayerSort {
 				result = SortResult.NO_SPAWN;
 			}
 		}
-		
-		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-			
-			int index = 0;
-			
-			@Override
-			public void run() {
-				if(index == toTeleport.size()) {
-					Bukkit.getScheduler().cancelTask(scheduler);
-					return;
-				}
-				
-				Player player = (Player) toTeleport.keySet().toArray()[index];
-				player.teleport(toTeleport.get(player));
-				index++;
-			}
-		}, 0, 1);
-		
+	
+		startTeleporting();
 		return result;
 	}
 }
