@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.recovery.FileZipper;
 import de.cuuky.varo.threads.LagCounter;
 import de.cuuky.varo.utils.JavaUtils;
@@ -21,19 +22,26 @@ public class VaroBugreport extends FileZipper {
 	private static List<String> exeptions;
 
 	static {
-		String[] exc = new String[] { "chatlogs.yml", "blocklogs.yml", "presets", "backups", "discord.yml" };
+		String[] exc = new String[] { "chatlogs.yml", "blocklogs.yml", "presets", "backups" };
 
 		exeptions = Arrays.asList(exc);
 	}
+	
+	private String discordBotToken;
 
 	public VaroBugreport() {
 		super(new File("plugins/Varo/bugreports/bugreport-" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
 		ArrayList<File> files = getFiles("plugins/Varo");
 
+		this.discordBotToken = ConfigSetting.DISCORDBOT_TOKEN.getValueAsString();
+		ConfigSetting.DISCORDBOT_TOKEN.setValue("hidden", true);
+		
 		postInformation();
 		files.add(new File("logs/latest.log"));
 
 		zip(files, Paths.get(""));
+		
+		ConfigSetting.DISCORDBOT_TOKEN.setValue(this.discordBotToken, true);
 	}
 
 	private void postInformation() {
@@ -59,14 +67,14 @@ public class VaroBugreport extends FileZipper {
 	private ArrayList<File> getFiles(String path) {
 		File pathFile = new File(path);
 		ArrayList<File> files = new ArrayList<>();
-
+		
 		for(File file : pathFile.listFiles()) {
 			if(exeptions.contains(file.getName()))
 				continue;
 
 			if(file.isDirectory())
 				files.addAll(getFiles(file.getPath()));
-			else
+			else 				
 				files.add(file);
 		}
 
