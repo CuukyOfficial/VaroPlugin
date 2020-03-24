@@ -1,0 +1,112 @@
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+#  Hier ist die Beschreibung der Config:
+# ----------- Border -----------
+# Beschreibung: Hier kannst du Einstellungen zur Border vornehmen.
+# 
+#  borderDamage:
+#   Wie viel Schaden die Border
+#   in halben Herzen macht.
+#   Default-Value: 1
+# 
+#  synchronizeBorders:
+#   Ob die Groesse der Border
+#   fuer alle Welten zaehlen soll
+#   Default-Value: true
+# 
+#  deathBorderDecrease.enabled:
+#   Ob sich die Border bei Tod verringern soll
+#   Default-Value: true
+# 
+#  deathBorderDecrease.size:
+#   Um wie viele Bloecke sich die
+#   Border bei Tod verringern soll.
+#   Default-Value: 25
+# 
+#  deathBorderDecrease.speed:
+#   Mit welcher Geschwindigkeit sich
+#   die Border beiTod verringern soll.
+#   Default-Value: 1
+# 
+#  dayBorderDecrease.enabled:
+#   Ob sich die Border nach Tagen verringern soll
+#   Default-Value: true
+# 
+#  dayBorderDecrease.days:
+#   Nach wie vielen Tagen sich
+#   die Border verkleinern soll.
+#   Default-Value: 3
+# 
+#  dayBorderDecrease.size:
+#   Um wieviel sich die Bordernach den
+#   oben genannten Tagen verkleinern soll.
+#   Default-Value: 50
+# 
+#  dayBorderDecrease.speed:
+#   Wie viele Bloecke pro Sekunde sich
+#   die Border nach Tagen verkleinern soll.
+#   Default-Value: 5
+# 
+#  minuteBorderDecrease.enabled:
+#   Ob sich die Border nach Minuten verringern soll
+#   Default-Value: false
+# 
+#  minuteBorderDecrease.minutes:
+#   Nach wie vielen Minuten sich
+#   die Border verkleinern soll.
+#   Default-Value: 30
+# 
+#  minuteBorderDecrease.size:
+#   Um wieviel sich die Bordernach den oben
+#   genannten Minuten verkleinern soll.
+#   Default-Value: 50
+# 
+#  minuteBorderDecrease.speed:
+#   Wie viele Bloecke pro Sekunde sichdie
+#   Border nach Minuten verkleinern soll.
+#   Default-Value: 5
+# 
+#  minuteBorderDecrease.bcInterval:
+#   In welchen Sekundenabstaenden die Zeit bis zur Verkleinerung
+#   gebroacastet werden soll
+#   Default-Value: 300
+# 
+#  distanceToBorderRequired:
+#   Die Distanz, die der Spieler haben muss,
+#   damit die Distanz angezeigt wird.
+#   Default-Value: -1
+# 
+#  minBorderSize:
+#   Wie klein die Border maximal werden kann.
+#   Default-Value: 300
+# 
+#  outsideBorderSpawnTeleport:
+#   Ob, wenn ein Spieler ausserhalb der Border joint, er in die Mitte teleportiert werden soll.
+#   Default-Value: true
+# 
+#  showDistanceToBorder:
+#   Ob die Distanz zur Border in der
+#   ActionBar angezeigt werden soll.
+#   Default-Value: false
+# -------------------------
+
+borderDamage: 1
+synchronizeBorders: true
+deathBorderDecrease:
+  enabled: true
+  size: 25
+  speed: 1
+dayBorderDecrease:
+  enabled: false
+  days: 3
+  size: 50
+  speed: 5
+minuteBorderDecrease:
+  enabled: false
+  minutes: 30
+  size: 50
+  speed: 5
+  bcInterval: 300
+distanceToBorderRequired: -1
+minBorderSize: 300
+outsideBorderSpawnTeleport: true
+showDistanceToBorder: false

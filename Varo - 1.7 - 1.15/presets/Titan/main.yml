@@ -1,0 +1,72 @@
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+#  Hier ist die Beschreibung der Config:
+# ----------- Main -----------
+# Beschreibung: Hier kannst du alle Haupteinstellungen vornehmen.
+# 
+#  dailyBackups:
+#   Es werden immer Backups um 'ResetHour' gemacht.
+#   Default-Value: true
+# 
+#  nametags:
+#   Ob das Plugin die Nametags ueber
+#   den Koepfen der Spieler veraendern soll.
+#   Hinweis: du kannst diese in der messages.yml einstellen.
+#   Default-Value: true
+# 
+#  playTime:
+#   Zeit in Minuten, wie lange die Spieler
+#   pro Session auf dem Server spielen koennen.
+#   Unlimited = -1
+#   Default-Value: 15
+# 
+#  prefix:
+#   Prefix, der im Chat bzw. vor
+#   den Nachrichten angezeigt wird.
+#   Default-Value: &7[&3Varo&7] 
+# 
+#  projectname:
+#   Name deines Projektes, der in den
+#   Nachrichten, am Scoreboard, etc. steht.
+#   Default-Value: Varo
+# 
+#  projectnameColorcode:
+#   Dieser Farbcode ist der Massgebende,
+#   der ueberall im Projekt verwendet wird..
+#   Default-Value: &3
+# 
+#  resetSessionHour:
+#   Um welche Uhrzeit (24h) der Server den
+#   Spieler neue Sessions etc. gibt
+#   Default-Value: 1
+# 
+#  scoreboard:
+#   Ob das Scoreboard aktiviert sein soll.
+#   Hinweis: das Scoreboard kannst du in
+#   der scoreboard.yml bearbeiten.
+#   Default-Value: true
+# 
+#  supportPluginAds:
+#   Werbung wird im Plugin mit eingebaut,was das Plugin,
+#   also mich, supportet. Danke an alle, die das aktivieren :3
+#   Default-Value: false
+# 
+#  tablist:
+#   Ob das Plugin die Tablist modfizieren soll
+#   Default-Value: true
+# 
+#  unregisteredPlayerJoin:
+#   Ob unregistrierte Spieler joinen duerfen.
+#   Default-Value: true
+# -------------------------
+
+dailyBackups: true
+nametags: true
+playTime: 15
+prefix: '&7[&5Titan&7] '
+projectname: Titan
+projectnameColorcode: '&5'
+resetSessionHour: 1
+scoreboard: true
+supportPluginAds: false
+tablist: true
+unregisteredPlayerJoin: false

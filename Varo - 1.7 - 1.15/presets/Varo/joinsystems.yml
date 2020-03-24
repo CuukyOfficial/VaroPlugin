@@ -1,0 +1,80 @@
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+#  Hier ist die Beschreibung der Config:
+# ----------- JoinSystems -----------
+# Beschreibung: Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen.
+# 
+#  catchUpSessions:
+#   NUR FÜR ERSTES JOIN SYSTEM
+#   Stellt ein, ob man verpasste Folgen nachholen darf.
+#   Default-Value: false
+# 
+#  ignoreJoinSystemsAsOP:
+#   Ob OP-Spieler die JoinSysteme ignorieren.
+#   Default-Value: true
+# 
+#  joinAfterHours:
+#   ZWEITES JOIN SYSTEM
+#   Stellt ein, nach wie vielen Stunden
+#   Spieler regulaer wieder den Server betreten duerfen
+#   Default-Value: -1
+# 
+#  kickAtServerClose:
+#   Kickt den Spieler, sobald er ausserhalb
+#   dererlaubten Zeit auf dem Server ist.
+#   Default-Value: false
+# 
+#  massRecordingTime:
+#   Die Laenge der Massenaufnahme, in der alle joinen koennen.
+#   Default-Value: 15
+# 
+#  onlyJoinBetweenHours:
+#   FÜR BEIDE JOIN SYSTEME
+#   Stellt ein, ob Spieler nur zwischen
+#   2 unten festgelegten Zeiten joinen duerfen.
+#   Default-Value: false
+# 
+#  onlyJoinBetweenHoursHour1:
+#   Erste Uhrzeit, zwischen welchen
+#   die Spieler joinen duerfen.
+#   Default-Value: 14
+# 
+#  onlyJoinBetweenHoursMinute1:
+#   Erste Minuten-Uhrzeit, zwischen welchen
+#   die Spieler joinen duerfen.
+#   Default-Value: 0
+# 
+#  onlyJoinBetweenHoursHour2:
+#   Zweite Uhrzeit, zwischen welchen
+#   die Spieler joinen duerfen.
+#   Default-Value: 16
+# 
+#  onlyJoinBetweenHoursMinute2:
+#   Zweite Minuten-Uhrzeit, zwischen welchen
+#   die Spieler joinen duerfen.
+#   Default-Value: 0
+# 
+#  preProduceSessions:
+#   FÜR BEIDE JOIN SYSTEME
+#   Stellt ein, wie viele Folgen der Spieler zusaetzlich zu
+#   den Regulaeren vorproduzieren darf.
+#   Default-Value: 3
+# 
+#  sessionsPerDay:
+#   ERSTES JOIN SYSTEM
+#   Stellt ein, wie oft Spieler am Tag
+#   den Server regulaer betreten duerfen.
+#   Default-Value: 1
+# -------------------------
+
+catchUpSessions: false
+ignoreJoinSystemsAsOP: true
+joinAfterHours: -1
+kickAtServerClose: false
+massRecordingTime: 15
+onlyJoinBetweenHours: false
+onlyJoinBetweenHoursHour1: 14
+onlyJoinBetweenHoursMinute1: 0
+onlyJoinBetweenHoursHour2: 16
+onlyJoinBetweenHoursMinute2: 0
+preProduceSessions: 3
+sessionsPerDay: 1

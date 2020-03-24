@@ -1,4 +1,6 @@
-Scoreboard:
+# Die Liste aller Placeholder kannst du mit /varo ph aufrufen!
+header: '%projectname%'
+scoreboard:
 - '%space%'
 - '&7Team&8:'
 - '&3%team%'

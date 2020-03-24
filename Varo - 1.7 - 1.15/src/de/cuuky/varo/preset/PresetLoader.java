@@ -17,7 +17,7 @@ public class PresetLoader {
 		if(!file.exists())
 			file.mkdirs();
 
-		for(File config : new File("plugins/Varo/").listFiles()) {
+		for(File config : new File("plugins/Varo/config/").listFiles()) {
 			if(!config.isFile())
 				continue;
 
@@ -42,7 +42,7 @@ public class PresetLoader {
 				continue;
 
 			try {
-				Files.copy(config, new File("plugins/Varo/" + config.getName()));
+				Files.copy(config, new File("plugins/Varo/config/" + config.getName()));
 			} catch(IOException e) {
 				e.printStackTrace();
 			}

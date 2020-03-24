@@ -13,7 +13,6 @@ import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
 import de.cuuky.varo.data.plugin.PluginLoader;
-import de.cuuky.varo.data.presets.PresetLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
@@ -22,6 +21,7 @@ import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.list.VaroListManager;
 import de.cuuky.varo.logger.VaroLoggerManager;
 import de.cuuky.varo.mysql.MySQLClient;
+import de.cuuky.varo.preset.DefaultPresetLoader;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
@@ -62,7 +62,7 @@ public class DataManager {
 	}
 
 	private void load() {
-		new PresetLoader();
+		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
 		this.propertiesReader = new ServerPropertiesReader();

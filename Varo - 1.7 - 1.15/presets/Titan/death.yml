@@ -1,0 +1,53 @@
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+#  Hier ist die Beschreibung der Config:
+# ----------- Death -----------
+# Beschreibung: Hier kannst du Einstellungen zum Tod eines Spielers vornehmen.
+# 
+#  addTeamLifesOnKill:
+#   Wie viele Leben ein Team bekommen soll,
+#   sobald es einen Spieler toetet.
+#   Default-Value: -1
+# 
+#  deathSound:
+#   Ob ein Withersound fuer alle abgespielt werden soll,
+#   sobald ein Spieler stirbt
+#   Default-Value: false
+# 
+#  kickDelayAfterDeath:
+#   Zeit in Sekunden, nach der ein Spieler
+#   nach Tod gekickt wird.
+#   Off = -1
+#   Default-Value: -1
+# 
+#  killerHealthAddOnKill:
+#   Anzahl halber Herzen, die der Killer nach Kill bekommt.
+#   Off = -1
+#   Default-Value: -1
+# 
+#  playerSpectateAfterDeath:
+#   Ob ein Spieler nach seinem Tod Spectator wird.
+#   Default-Value: false
+# 
+#  respawnProtection:
+#   Wie lange in Sekunden Spieler
+#   nach Respawn geschuetzt sind
+#   Default-Value: 120
+# 
+#  stopServerOnWin:
+#   Zeit in Sekunden, nachdem der Server nach
+#   Win eines Teams heruntergefahren wird.
+#   Default-Value: -1
+# 
+#  teamLifes:
+#   Wie viele Leben ein Team hat
+#   Default-Value: 1
+# -------------------------
+
+addTeamLifesOnKill: -1
+deathSound: false
+kickDelayAfterDeath: -1
+killerHealthAddOnKill: -1
+playerSpectateAfterDeath: false
+respawnProtection: 120
+stopServerOnWin: -1
+teamLifes: 3

@@ -1,4 +1,4 @@
-package de.cuuky.varo.data.presets;
+package de.cuuky.varo.preset;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,9 +8,9 @@ import java.util.zip.ZipInputStream;
 
 import de.cuuky.varo.Main;
 
-public class PresetLoader {
+public class DefaultPresetLoader {
 	
-	public PresetLoader() {
+	public DefaultPresetLoader() {
 		copyDefaultPresets();
 	}
 	
@@ -23,7 +23,7 @@ public class PresetLoader {
 				String name = e.getName();
 				e.isDirectory();
 				if(name.startsWith("presets")) {
-					File file = new File("plugins/Varo/" + name);
+					File file = new File("plugins/Varo/config/" + name);
 					if(e.isDirectory()) {
 						file.mkdir();
 						continue;
