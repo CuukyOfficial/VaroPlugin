@@ -48,6 +48,7 @@ public enum ConfigSetting implements SectionEntry {
 	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds", true, "Wenn aktiviert, koennen keine Links in den oeffentlichen Chat gepostet werden."),
 
 	// WORLD
+	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.WORLD,"spawnGeneratorYTolerance", 4, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
 	BLOCK_DESTROY_LOGGER(ConfigSettingSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Bloecke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
 	BLOCK_USER_PORTALS(ConfigSettingSection.WORLD, "blockUserPortals", true, "Ob Spieler nicht ihre eigenen\nPortale bauen koennen"),
 

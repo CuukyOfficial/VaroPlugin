@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.version.types.Materials;
 
 public class SpawnChecker {
@@ -15,6 +16,8 @@ public class SpawnChecker {
 		if(biome != Biome.PLAINS)
 			return false;
 
+		int tolerance = ConfigSetting.WORLD_SPAWNS_GENERATE_Y_TOLERANCE.getValueAsInt();
+		int firstY = -1;
 		for(int count = 0; count != amount; count++) {
 			double beta = alpha * count;
 
@@ -29,6 +32,11 @@ public class SpawnChecker {
 
 				y--;
 			}
+			
+			if(firstY == -1)
+				firstY = y;
+			else if((firstY > y ? firstY - y : y - firstY) > tolerance) 
+				return false;
 		}
 
 		return true;
