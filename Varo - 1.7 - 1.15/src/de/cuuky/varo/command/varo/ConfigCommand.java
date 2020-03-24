@@ -67,7 +67,7 @@ public class ConfigCommand extends VaroCommand {
 			new ConfigSectionGUI((Player) sender);
 		} else if(args[0].equalsIgnoreCase("search")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config search <Keyword>");
+				sender.sendMessage(Main.getPrefix() + "/config search <Keyword>");
 				return;
 			}
 			
