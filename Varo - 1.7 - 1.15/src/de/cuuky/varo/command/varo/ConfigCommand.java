@@ -88,7 +88,7 @@ public class ConfigCommand extends VaroCommand {
 			
 			sender.sendMessage(Main.getPrefix() + "§lFolgende Einstellungen wurden gefunden:");
 			for(ConfigSetting setting : foundSettings) 
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + setting.getPath() + " §8- §7" + JavaUtils.getArgsToString(setting.getDescription(), " "));
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + setting.getFullPath() + " §8- §7" + JavaUtils.getArgsToString(setting.getDescription(), " "));
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7Command '" + args[0] + "' not found! §7Type /config for help.");
 	}
