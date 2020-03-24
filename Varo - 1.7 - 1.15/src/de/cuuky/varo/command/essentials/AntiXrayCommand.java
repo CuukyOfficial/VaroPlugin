@@ -43,7 +43,7 @@ public class AntiXrayCommand implements CommandExecutor {
 		YamlConfiguration spigotConfig = null;
 		if(xrayAvailable == 0)
 			try {
-				Method m = VersionUtils.getSpigot().getClass().getMethod("getSpigotConfig");
+				Method m = VersionUtils.getSpigot().getClass().getMethod("getConfig");
 				m.setAccessible(true);
 				spigotConfig = (YamlConfiguration) m.invoke(VersionUtils.getSpigot());
 				m.setAccessible(false);
