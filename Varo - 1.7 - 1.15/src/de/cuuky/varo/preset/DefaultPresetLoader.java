@@ -23,7 +23,7 @@ public class DefaultPresetLoader {
 				String name = e.getName();
 				e.isDirectory();
 				if(name.startsWith("presets")) {
-					File file = new File("plugins/Varo/config/" + name);
+					File file = new File("plugins/Varo/" + name);
 					if(e.isDirectory()) {
 						file.mkdir();
 						continue;
