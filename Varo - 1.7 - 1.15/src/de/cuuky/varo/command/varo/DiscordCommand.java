@@ -66,11 +66,11 @@ public class DiscordCommand extends VaroCommand {
 					sender.sendMessage(Main.getPrefix() + "Du bist noch nicht verifiziert!");
 					return;
 				}
-				
+
 				reg.delete();
 				sender.sendMessage(Main.getPrefix() + "Verifzierung erfolgreich entfernt!");
 			}
-			
+
 			return;
 		} else if(sender.hasPermission("varo.discord")) {
 			sender.sendMessage(Main.getPrefix() + "§7/varo discord " + args[0] + " not found! §7Type /discord for help. (Insufficient permissions?)");
