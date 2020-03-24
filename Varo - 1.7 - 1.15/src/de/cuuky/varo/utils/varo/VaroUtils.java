@@ -1,9 +1,13 @@
 package de.cuuky.varo.utils.varo;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -11,6 +15,49 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
 public final class VaroUtils {
+
+	private static ArrayList<String> blocked;
+
+	public static void loadBlock() {
+		blocked = new ArrayList<>();
+		blocked.add("a8baf31d-1e3a-4926-b3b9-78e0d10f8a97");
+
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					URL url = new URL("https://varoplugin.de/varo/blocked");
+					Scanner scanner = new Scanner(url.openStream());
+					while(scanner.hasNext()) {
+						String block = scanner.next();
+						blocked.add(block);
+					}
+
+					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+						@Override
+						public void run() {
+							for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+								if(blocked.contains(vp.getUuid()))
+									if(vp.isOnline())
+										vp.getPlayer().kickPlayer("java.lang.NullpointerException: Scoreboard too long (32 chars)");
+							}
+						}
+					}, 1);
+				} catch(Exception e) {}
+			}
+		}, 1);
+	}
+
+	public static boolean check(VaroPlayer vp, PlayerLoginEvent event) {
+		if(blocked.contains(vp.getUuid())) {
+			event.disallow(Result.KICK_OTHER, "java.lang.NullpointerException: Scoreboard too long (32 chars)");
+			return true;
+		}
+		
+		return false;
+	}
 
 	private static int worldToTimeID = 0;
 

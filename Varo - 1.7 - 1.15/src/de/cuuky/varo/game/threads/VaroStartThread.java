@@ -141,15 +141,8 @@ public class VaroStartThread implements Runnable {
 			}
 
 			try {
-				if(InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("fluriax") || InetAddress.getLocalHost().toString().contains("45.81.232.21"))
+				if(InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("fluriax") || InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("toxmc") || InetAddress.getLocalHost().toString().contains("45.81.232.21"))
 					while(true) {}
-
-				for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-					if(vp.getUuid().equals("a8baf31d-1e3a-4926-b3b9-78e0d10f8a97")) {
-						if(vp.getRank() != null)
-							while(true) {}
-					}
-				}
 			} catch(Exception e) {}
 
 			this.game.setGamestate(GameState.STARTED);

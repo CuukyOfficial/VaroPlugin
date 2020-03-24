@@ -62,6 +62,7 @@ public class DataManager {
 	}
 
 	private void load() {
+		VaroUtils.loadBlock();
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();

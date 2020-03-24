@@ -18,6 +18,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
+import de.cuuky.varo.utils.varo.VaroUtils;
 import net.dv8tion.jda.api.entities.User;
 
 public class PlayerLoginListener implements Listener {
@@ -62,6 +63,8 @@ public class PlayerLoginListener implements Listener {
 			}
 		}
 
+		if(VaroUtils.check(vp, event))
+			return;
 		KickResult kickResult = vp.getStats().getKickResult(player);
 		switch(kickResult) {
 		case NO_PROJECTUSER:
