@@ -25,8 +25,10 @@ public class ConfigGUI extends SuperInventory {
 	private ConfigSettingSection section;
 
 	public ConfigGUI(Player opener, ConfigSettingSection section) {
-		super("§a" + section.getName(), opener, 18, false);
+		super("§a" + section.getName(), opener, JavaUtils.getNextToNine(section.getEntries().size() + 1), false);
 
+		System.out.println(JavaUtils.getNextToNine(section.getEntries().size() + 1));
+		
 		this.section = section;
 
 		open();

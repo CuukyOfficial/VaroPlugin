@@ -95,28 +95,8 @@ public final class JavaUtils {
 	}
 
 	public static int getNextToNine(int to) {
-		int offset = 0;
-		while(true) {
-			int temp = to + offset;
-			if(temp % 9 == 0)
-				return temp;
-			if(temp >= 54)
-				return 54;
-
-			if(temp <= 9)
-				return 9;
-
-			temp = to - offset;
-			if(temp % 9 == 0)
-				return temp;
-			if(temp >= 54)
-				return 54;
-
-			if(temp <= 9)
-				return 9;
-
-			offset++;
-		}
+		int result = (9 - to % 9) + to;
+		return result > 54 ? 54 : result;
 	}
 
 	public static Object getStringObject(String obj) {

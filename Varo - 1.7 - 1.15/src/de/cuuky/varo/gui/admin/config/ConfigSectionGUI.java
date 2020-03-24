@@ -16,7 +16,7 @@ import de.cuuky.varo.utils.JavaUtils;
 public class ConfigSectionGUI extends SuperInventory {
 
 	public ConfigSectionGUI(Player opener) {
-		super("§aConfig-Section", opener, 27, false);
+		super("§aConfig-Section", opener, JavaUtils.getNextToNine(ConfigSettingSection.values().length), false);
 
 		open();
 	}
