@@ -60,16 +60,8 @@ public class VaroWorldBorder {
 	private double getDistanceToBorder(Player player) {
 		Location playerLoc = player.getLocation();
 
-		Location center;
-		double size = 0;
-
-		try {
-			center = getCenter();
-			size = getBorderSize() / 2;
-		} catch(Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
+		Location center = getCenter();
+		double size = getBorderSize() / 2;
 
 		ArrayList<Double> distanceArray = new ArrayList<>();
 		double playerDifferenceX = playerLoc.getX() - center.getX();
