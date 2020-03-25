@@ -20,7 +20,6 @@ public class VaroWorldBorder {
 
 	static {
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-
 			try {
 				Class<?> borderClass = Class.forName("org.bukkit.WorldBorder");
 				
