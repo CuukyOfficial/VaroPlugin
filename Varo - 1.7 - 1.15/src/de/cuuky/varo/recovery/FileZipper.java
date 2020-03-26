@@ -42,7 +42,6 @@ public class FileZipper {
 			return;
 
 		try {
-			System.out.println(file.getPath());
 			Path orgPath = Paths.get(file.getPath());
 			Path zipFilePath = root.relativize(orgPath);
 
