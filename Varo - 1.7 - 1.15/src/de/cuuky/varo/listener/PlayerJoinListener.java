@@ -18,6 +18,7 @@ import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -35,9 +36,9 @@ public class PlayerJoinListener implements Listener {
 
 		try {
 			Location loc = p.getLocation();
-			Object border = p.getWorld().getClass().getDeclaredMethod("getWorldBorder").invoke(p.getWorld());
-			double size = ((double) border.getClass().getDeclaredMethod("getSize").invoke(border)) / 2;
-			Location center = (Location) border.getClass().getDeclaredMethod("getCenter").invoke(border);
+			VaroWorld world = Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld());
+			double size = world.getVaroBorder().getBorderSize() / 2;
+			Location center = world.getVaroBorder().getCenter();
 			double x = loc.getX() - center.getX(), z = loc.getZ() - center.getZ();
 			return((x > size || (-x) > size) || (z > size || (-z) > size));
 		} catch(Exception e) {
