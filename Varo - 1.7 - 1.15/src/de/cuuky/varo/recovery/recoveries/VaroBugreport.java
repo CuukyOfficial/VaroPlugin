@@ -28,20 +28,32 @@ public class VaroBugreport extends FileZipper {
 	}
 	
 	private String discordBotToken;
+	private boolean failed;
 
 	public VaroBugreport() {
 		super(new File("plugins/Varo/bugreports/bugreport-" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
-		ArrayList<File> files = getFiles("plugins/Varo");
 
 		this.discordBotToken = ConfigSetting.DISCORDBOT_TOKEN.getValueAsString();
 		ConfigSetting.DISCORDBOT_TOKEN.setValue("hidden", true);
 		
-		postInformation();
-		files.add(new File("logs/latest.log"));
-
-		zip(files, Paths.get(""));
+		loadFiles();
 		
 		ConfigSetting.DISCORDBOT_TOKEN.setValue(this.discordBotToken, true);
+	}
+	
+	private void loadFiles() {
+		ArrayList<File> files = getFiles("plugins/Varo");
+		
+		try {
+			postInformation();
+			files.add(new File("logs"));
+			files.add(new File("server.properties"));
+
+			zip(files, Paths.get(""));
+		} catch(Exception e) {
+			e.printStackTrace();
+			this.failed = true;
+		}
 	}
 
 	private void postInformation() {
@@ -79,5 +91,9 @@ public class VaroBugreport extends FileZipper {
 		}
 
 		return files;
+	}
+	
+	public boolean hasFailed() {
+		return this.failed;
 	}
 }

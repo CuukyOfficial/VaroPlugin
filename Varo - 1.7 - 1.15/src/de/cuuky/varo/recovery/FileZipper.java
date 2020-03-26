@@ -27,7 +27,7 @@ public class FileZipper {
 		File oldFile = new File(filePath);
 		if(oldFile.exists())
 			oldFile.delete();
-		
+
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
 		byte[] bytesIn = new byte[BUFFER_SIZE];
 		int read = 0;
@@ -35,6 +35,33 @@ public class FileZipper {
 			bos.write(bytesIn, 0, read);
 		}
 		bos.close();
+	}
+
+	private void zipFile(File file, ZipOutputStream outputStream, Path root) {
+		if(file.getName().endsWith(".zip"))
+			return;
+
+		try {
+			System.out.println(file.getPath());
+			Path orgPath = Paths.get(file.getPath());
+			Path zipFilePath = root.relativize(orgPath);
+
+			outputStream.putNextEntry(new ZipEntry(zipFilePath.toString()));
+			byte[] buffer = Files.readAllBytes(orgPath);
+			outputStream.write(buffer, 0, buffer.length);
+			outputStream.closeEntry();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void zipFolder(File file, ZipOutputStream outputStream, Path root) {
+		for(File toZip : file.listFiles()) {
+			if(toZip.isFile())
+				zipFile(toZip, outputStream, root);
+			else
+				zipFolder(toZip, outputStream, root);
+		}
 	}
 
 	public void zip(ArrayList<File> files, Path rootFrom) {
@@ -52,29 +79,18 @@ public class FileZipper {
 		try {
 			ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFileName));
 
-			for(File toZip : files) {
-				if(toZip.getName().endsWith(".zip"))
-					continue;
-				
-				try {
-					Path orgPath = Paths.get(toZip.getPath());
-					Path zipFilePath = rootFrom.relativize(orgPath);
-					
-					outputStream.putNextEntry(new ZipEntry(zipFilePath.toString()));
-					byte[] buffer = Files.readAllBytes(orgPath);
-					outputStream.write(buffer, 0, buffer.length);
-					outputStream.closeEntry();
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
+			for(File toZip : files) 
+				if(toZip.isFile())
+					zipFile(toZip, outputStream, rootFrom);
+				else
+					zipFolder(toZip, outputStream, rootFrom);
 
 			outputStream.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean unzip(String destDirectory) {
 		try {
 			File destDir = new File(destDirectory);
@@ -100,7 +116,7 @@ public class FileZipper {
 			return false;
 		}
 	}
-	
+
 	public File getZipFile() {
 		return this.zipFile;
 	}

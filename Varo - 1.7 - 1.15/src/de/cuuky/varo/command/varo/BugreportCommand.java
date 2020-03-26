@@ -26,8 +26,12 @@ public class BugreportCommand extends VaroCommand {
 		}
 		
 		VaroBugreport bugreport = new VaroBugreport();
+		if(bugreport.hasFailed()) {
+			sender.sendMessage(Main.getPrefix() + "Ein Fehler ist aufgetreten!");
+			return;
+		}
 		
-		sender.sendMessage(Main.getPrefix() + "Bugreport wurde unter §c" + bugreport.getZipFile().getName() + " §7gespeichert!");
+		sender.sendMessage(Main.getPrefix() + "Bugreport wurde unter §c" + bugreport.getZipFile().getPath() + " §7gespeichert!");
 		sender.sendMessage(Main.getPrefix() + "Bitte sende diesen auf den Discord in den Support!");
 	}
 }
