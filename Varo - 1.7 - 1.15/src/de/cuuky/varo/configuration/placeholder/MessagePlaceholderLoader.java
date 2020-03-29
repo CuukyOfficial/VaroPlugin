@@ -227,6 +227,22 @@ public class MessagePlaceholderLoader {
 				return player.getStats().getCountdownSec(player.getStats().getCountdown());
 			}
 		};
+		
+		new PlayerMessagePlaceholder("hearts", 1, "Ersetzt durch die Leben des Spielers") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return player.isOnline() ? String.valueOf(VersionUtils.getHearts(player.getPlayer())) : "0";
+			}
+		};
+		
+		new PlayerMessagePlaceholder("food", 1, "Ersetzt durch das Foodlevel des Spielers") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return player.isOnline() ? String.valueOf(player.getPlayer().getFoodLevel()) : "0";
+			}
+		};
 
 		new PlayerMessagePlaceholder("kills", 1, "Ersetzt durch Kills des Spielers") {
 
