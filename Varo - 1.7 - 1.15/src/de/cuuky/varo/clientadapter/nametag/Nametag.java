@@ -46,9 +46,7 @@ public class Nametag {
 
 	private boolean init, hearts;
 	private Player player;
-	private String prefix, suffix, name;
-	private Rank rank;
-	private VaroTeam varoTeam;
+	private String prefix, suffix, oldname, name;
 	private UUID uniqueID;
 
 	public Nametag(UUID uniqueID, Player p) {
@@ -71,47 +69,56 @@ public class Nametag {
 			@Override
 			public void run() {
 				init = true;
+
 				refresh();
+				giveAll();
 			}
 		}, 1);
 	}
 
-	private void refreshPrefix() {
+	private boolean refreshPrefix() {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
 
-		this.rank = varoPlayer.getRank();
-		this.varoTeam = varoPlayer.getTeam();
-		this.name = checkName();
+		String newName = checkName(varoPlayer);
+		String newPrefix = (varoPlayer.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
+		String newSuffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer));
 
-		this.prefix = (varoTeam == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
+		if(newName.length() > 16)
+			newName = newName.substring(0, 16);
 
-		if(this.prefix.length() > 16)
-			this.prefix = ConfigMessages.NAMETAG_NORMAL.getValue();
+		if(newPrefix.length() > 16)
+			newPrefix = ConfigMessages.NAMETAG_NORMAL.getValue();
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer).replace("%hearts%", String.valueOf(VersionUtils.getHearts(this.player))));
+		if(newSuffix.length() > 16)
+			newSuffix = newSuffix.substring(0, 16);
 
-		if(this.suffix.length() > 16)
-			this.suffix = "";
+		boolean changed = name == null || !newName.equals(name) || !newPrefix.equals(prefix) || !newSuffix.equals(suffix);
+		if(!changed)
+			return false;
+
+		this.oldname = this.name;
+		this.name = newName;
+		this.prefix = newPrefix;
+		this.suffix = newSuffix;
+		return true;
 	}
 
-	private String checkName() {
+	private String checkName(VaroPlayer vplayer) {
 		String name = this.getPlayer().getName();
 
 		int teamsize = VaroTeam.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
-		if(varoTeam != null)
-			name = varoTeam.getId() + name;
+		if(vplayer.getTeam() != null)
+			name = vplayer.getTeam().getId() + name;
 		else
 			name = teamsize + name;
 
-		if(rank != null)
-			name = rank.getTablistLocation() + name;
+		if(vplayer.getRank() != null)
+			name = vplayer.getRank().getTablistLocation() + name;
 		else
 			name = ranks + name;
 
-		if(name.length() > 16)
-			name = name.substring(0, 16);
 		return name;
 	}
 
@@ -137,15 +144,19 @@ public class Nametag {
 	}
 
 	private void updateFor(Scoreboard board, Nametag nametag) {
+		if(nametag.getOldname() != null) {
+			Team oldTeam = board.getTeam(nametag.getOldname());
+
+			if(oldTeam != null)
+				oldTeam.unregister();
+		}
+		
 		Team team = board.getTeam(nametag.getName());
 
 		if(team == null) {
 			team = board.registerNewTeam(nametag.getName());
 			team.addPlayer(nametag.getPlayer());
 		}
-
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			setVisibility(team);
 
 		if(nametag.getPrefix() != null) {
 			if(team.getPrefix() == null)
@@ -160,6 +171,9 @@ public class Nametag {
 			else if(!team.getSuffix().equals(nametag.getSuffix()))
 				team.setSuffix(nametag.getSuffix());
 		}
+		
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			setVisibility(team);
 	}
 
 	public void giveAll() {
@@ -169,7 +183,7 @@ public class Nametag {
 		Player toSet = this.player;
 		Scoreboard board = toSet.getScoreboard();
 		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline() || nametag.getName() == null)
+			if(nametag.getName() == null)
 				continue;
 
 			updateFor(board, nametag);
@@ -188,18 +202,23 @@ public class Nametag {
 		if(!init || !hearts)
 			return;
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(player)).replace("%hearts%", String.valueOf((int) VersionUtils.getHearts(this.player))).replace("%heart%", "♥"));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(player)));
 		setToAll();
 	}
 
 	public void refresh() {
-		refreshPrefix();
+		if(!refreshPrefix())
+			return;
+
 		setToAll();
-		giveAll();
 	}
 
 	public void remove() {
 		nametags.remove(this);
+	}
+
+	public String getOldname() {
+		return this.oldname;
 	}
 
 	public String getName() {
@@ -214,10 +233,6 @@ public class Nametag {
 		return prefix;
 	}
 
-	public Rank getRank() {
-		return rank;
-	}
-
 	public String getSuffix() {
 		return suffix;
 	}
@@ -225,51 +240,9 @@ public class Nametag {
 	public UUID getUniqueId() {
 		return this.uniqueID;
 	}
-
-	public boolean isOnline() {
-		return player != null;
-	}
-
+	
 	public static void refreshAll() {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
+		for(Nametag nametag : nametags) 
 			nametag.refresh();
-		}
-	}
-
-	public static void refreshGroups(Rank rank) {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			if(!nametag.getRank().equals(rank))
-				continue;
-
-			nametag.refresh();
-		}
-	}
-
-	public static void refreshUser(String user) {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			if(!nametag.getPlayer().getName().equalsIgnoreCase(user))
-				continue;
-
-			nametag.refresh();
-		}
-	}
-
-	public static void resendAll() {
-		for(Nametag nametag : nametags) {
-			if(!nametag.isOnline())
-				continue;
-
-			nametag.setToAll();
-			nametag.giveAll();
-		}
 	}
 }
