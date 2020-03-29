@@ -126,12 +126,8 @@ public class SignChangeListener implements Listener {
 			e.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
 			e.setLine(3, "§8--------------");
 			p.playSound(furnace.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
-			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
-			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
-			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
-			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
-			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
-			p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
+			for(int i = 0; i < 6; i++)
+				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNANCE, furnace.getBlock().getLocation(), player);
 			p.sendMessage(Main.getPrefix() + "Ofen erfolgreich gesichert!");
 		}
