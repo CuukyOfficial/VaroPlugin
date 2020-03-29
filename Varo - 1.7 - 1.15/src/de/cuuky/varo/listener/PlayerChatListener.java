@@ -102,7 +102,7 @@ public class PlayerChatListener implements Listener {
 						event.setCancelled(true);
 						return;
 					}
-				} else if(!player.isOp())	
+				} else if(!player.isOp())
 					new ChatMessage(player, message);
 			}
 
@@ -115,6 +115,22 @@ public class PlayerChatListener implements Listener {
 			message = message.replace("&", "§");
 
 		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
-		sendMessageToAll(vp.getPrefix() + ConfigMessages.CHAT_FORMAT.getValue(vp) + message, vp, event);
+
+		String messageFormat = "";
+		if(vp.getTeam() != null) {
+			if(vp.getRank() == null) {
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM.getValue(vp);
+			} else {
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM_RANK.getValue(vp);
+			}
+		} else {
+			if(vp.getRank() == null) {
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM.getValue(vp);
+			} else {
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM_RANK.getValue(vp);
+			}
+		}
+		
+		sendMessageToAll(messageFormat.replace("%message%", message), vp, event);
 	}
 }
