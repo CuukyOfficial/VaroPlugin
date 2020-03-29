@@ -118,7 +118,7 @@ public class ScoreboardHandler implements BoardHandler {
 		scoreboard.add("%colorcode%%kills%");
 		scoreboard.add("%space%");
 		scoreboard.add("&7Zeit&8:");
-		scoreboard.add("%colorcode%%min%&8:%colorcode%%sec%");
+		scoreboard.add("%colorcode%%min%");
 		scoreboard.add("%space%");
 		scoreboard.add("&7Online: %colorcode%%online%");
 		scoreboard.add("&7Remaining: %colorcode%%remaining%");
