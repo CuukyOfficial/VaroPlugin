@@ -22,6 +22,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 
@@ -91,7 +92,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+		if(Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp() || VaroPlayer.getPlayer(event.getPlayer()).isInProtection())
 			event.setCancelled(true);
 
 		if(cancelEvent(event.getPlayer()))
