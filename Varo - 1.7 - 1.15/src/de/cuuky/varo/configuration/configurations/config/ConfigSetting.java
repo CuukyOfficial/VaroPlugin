@@ -51,6 +51,7 @@ public enum ConfigSetting implements SectionEntry {
 	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.WORLD,"spawnGeneratorYTolerance", 4, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
 	BLOCK_DESTROY_LOGGER(ConfigSettingSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Bloecke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
 	BLOCK_USER_PORTALS(ConfigSettingSection.WORLD, "blockUserPortals", true, "Ob Spieler nicht ihre eigenen\nPortale bauen koennen"),
+	WORLD_ENTITY_TRACER(ConfigSettingSection.WORLD, "entityTracer", false, "Ob Wassertropfen Items oder Projektilen\nfolgen sollen"),
 
 	// ACTIVITY
 	BLOODLUST_DAYS(ConfigSettingSection.ACTIVITY, "noBloodlustDays", -1, "Nach wie vielen Tagen ohne Gegnerkontakt\nder Spieler gemeldet werden soll.\nOff = -1"),

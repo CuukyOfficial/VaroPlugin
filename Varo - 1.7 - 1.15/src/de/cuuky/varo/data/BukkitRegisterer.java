@@ -44,6 +44,7 @@ import de.cuuky.varo.gui.utils.InventoryListener;
 import de.cuuky.varo.item.hook.HookListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
+import de.cuuky.varo.listener.FancyEffectListener;
 import de.cuuky.varo.listener.HealtLoseListener;
 import de.cuuky.varo.listener.NoPortalListener;
 import de.cuuky.varo.listener.PlayerAchievementListener;
@@ -149,6 +150,7 @@ public final class BukkitRegisterer {
 		registerEvent(new VaroEventListener());
 		registerEvent(new HookListener());
 		registerEvent(new VaroWorldListener());
+		registerEvent(new FancyEffectListener());
 
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
