@@ -85,8 +85,8 @@ public class FileZipper {
 				else
 					zipFolder(toZip, outputStream, rootFrom);
 
-			fileoutputStream.close();
 			outputStream.close();
+			fileoutputStream.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
