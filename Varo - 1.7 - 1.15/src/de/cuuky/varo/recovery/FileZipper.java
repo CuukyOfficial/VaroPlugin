@@ -76,7 +76,8 @@ public class FileZipper {
 
 		String zipFileName = zipFile.getPath();
 		try {
-			ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFileName));
+			FileOutputStream fileoutputStream = null;
+			ZipOutputStream outputStream = new ZipOutputStream(fileoutputStream = new FileOutputStream(zipFileName));
 
 			for(File toZip : files) 
 				if(toZip.isFile())
@@ -84,6 +85,7 @@ public class FileZipper {
 				else
 					zipFolder(toZip, outputStream, rootFrom);
 
+			fileoutputStream.close();
 			outputStream.close();
 		} catch(IOException e) {
 			e.printStackTrace();
