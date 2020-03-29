@@ -38,7 +38,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	private void checkRefresh() {
-		if(!shallRefresh())
+		if(!shallRefresh(this.lastRefresh))
 			return;
 
 		refreshValue();
@@ -47,13 +47,6 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	private void refreshValue() {
 		this.value = getValue();
 		this.lastRefresh = System.currentTimeMillis();
-	}
-
-	private boolean shallRefresh() {
-		boolean r = shallRefresh(this.lastRefresh);
-		if(r && this.identifier.equals("%currSec%"))
-			System.out.println("SEC REF");
-		return r;
 	}
 
 	protected abstract String getValue();
