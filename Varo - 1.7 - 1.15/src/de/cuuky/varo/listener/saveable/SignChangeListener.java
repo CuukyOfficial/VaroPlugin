@@ -116,7 +116,7 @@ public class SignChangeListener implements Listener {
 
 			if(ConfigSetting.PLAYER_FURNACE_LIMIT.isIntActivated())
 				if(sorted.size() >= ConfigSetting.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
-					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Furnaces fuer das Team " + Main.getProjectName() + " " + player.getTeam().getDisplay() + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_FURNACE_LIMIT.getValueAsInt() + "§7)");
+					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Oefen fuer " + Main.getColorCode() + (player.getTeam() != null ? "das Team " + player.getTeam().getName() : "dich")+ " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 					e.setCancelled(true);
 					return;
 				}
