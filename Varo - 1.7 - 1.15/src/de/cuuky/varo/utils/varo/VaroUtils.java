@@ -20,7 +20,6 @@ public final class VaroUtils {
 
 	public static void loadBlock() {
 		blocked = new ArrayList<>();
-		blocked.add("a8baf31d-1e3a-4926-b3b9-78e0d10f8a97");
 
 		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -41,7 +40,7 @@ public final class VaroUtils {
 							for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 								if(blocked.contains(vp.getUuid()))
 									if(vp.isOnline())
-										vp.getPlayer().kickPlayer("java.lang.NullpointerException: Scoreboard too long (32 chars)");
+										vp.getPlayer().kickPlayer("§cYou have been banned from all Varo Servers!\n§7Unban here: §ahttps://discord.gg/CnDSVVx");
 							}
 						}
 					}, 1);
@@ -52,7 +51,7 @@ public final class VaroUtils {
 
 	public static boolean check(VaroPlayer vp, PlayerLoginEvent event) {
 		if(blocked.contains(vp.getUuid())) {
-			event.disallow(Result.KICK_OTHER, "java.lang.NullpointerException: Scoreboard too long (32 chars)");
+			event.disallow(Result.KICK_OTHER, "§cYou have been banned from all Varo Servers!\n§7Unban here: §ahttps://discord.gg/CnDSVVx");
 			return true;
 		}
 		
