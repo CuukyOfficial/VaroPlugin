@@ -20,18 +20,18 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroMainHeartbeatThread implements Runnable {
-	
+
 	private int seconds, protectionTime, noKickDistance, playTime;
 	private boolean showDistanceToBorder, showTimeInActionBar;
 	private VaroGame game;
-	
+
 	public VaroMainHeartbeatThread() {
 		this.seconds = 0;
 		this.game = Main.getVaroGame();
-				
+
 		loadVariables();
 	}
-	
+
 	public void loadVariables() {
 		showDistanceToBorder = ConfigSetting.SHOW_DISTANCE_TO_BORDER.getValueAsBoolean();
 		showTimeInActionBar = ConfigSetting.SHOW_TIME_IN_ACTIONBAR.getValueAsBoolean();
@@ -95,9 +95,8 @@ public class VaroMainHeartbeatThread implements Runnable {
 								if(!vp.canBeKicked(noKickDistance)) {
 									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
 									countdown += 1;
-								}
-
-							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
+								} else
+									Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
 						}
 					}
 
@@ -114,7 +113,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					vp.getStats().setState(PlayerState.ALIVE);
 			}
 
-//			vp.getNetworkManager().sendFakeHealthUpdate();
+			// vp.getNetworkManager().sendFakeHealthUpdate();
 			vp.update();
 		}
 
