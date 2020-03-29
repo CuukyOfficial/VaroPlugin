@@ -167,7 +167,7 @@ public class VaroTeam extends VaroEntity {
 	}
 
 	public String getDisplay() {
-		return getColorCode() + "#" + name;
+		return "#" + name;
 	}
 
 	public int getId() {
