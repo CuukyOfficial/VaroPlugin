@@ -59,7 +59,7 @@ public class PlayerJoinListener implements Listener {
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[] {});
 			player.updateInventory();
-			
+
 			Spawn spawn = Spawn.getSpawn(vplayer);
 			if(spawn != null && (ConfigSetting.SPAWN_TELEPORT_JOIN.getValueAsBoolean() || Main.getVaroGame().isStarting()))
 				player.teleport(spawn.getLocation());
@@ -92,7 +92,7 @@ public class PlayerJoinListener implements Listener {
 		} else {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
 			if(vplayer.getStats().getSessionsPlayed() == 0) {
-				int countdown =  massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
+				int countdown = massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if(countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60 && ConfigSetting.PLAY_TIME.getValueAsInt() > 0) {
 					player.teleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 				}
@@ -109,18 +109,16 @@ public class PlayerJoinListener implements Listener {
 				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
-				if(!player.isOp()) {
+				if(!player.isOp())
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
-				}
 			} else if(!ConfigSetting.PLAY_TIME.isIntActivated()) {
 				event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(vplayer));
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
-			} else if( massRecording.isEnabled()) {
-				if( massRecording.getCountdown(vplayer) == ConfigSetting.PLAY_TIME.getValueAsInt() * 60) {
+			} else if(massRecording.isEnabled()) {
+				if(massRecording.getCountdown(vplayer) == ConfigSetting.PLAY_TIME.getValueAsInt() * 60)
 					vplayer.getStats().setCountdown(massRecording.getTimer());
-				} else {
+				else
 					vplayer.getStats().setCountdown(massRecording.getCountdown(vplayer) + massRecording.getTimer());
-				}
 
 				if(!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
