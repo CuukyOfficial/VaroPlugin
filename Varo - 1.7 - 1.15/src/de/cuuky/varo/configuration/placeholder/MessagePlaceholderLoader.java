@@ -20,6 +20,30 @@ public class MessagePlaceholderLoader {
 	}
 
 	private void loadMessagePlaceHolder() {
+		new GeneralMessagePlaceholder("pluginName", Integer.MAX_VALUE, "Ersetzt durch den Plugin-Namen") {
+
+			@Override
+			protected String getValue() {
+				return Main.getInstance().getDescription().getName();
+			}
+		};
+		
+		new GeneralMessagePlaceholder("pluginAuthor", Integer.MAX_VALUE, "Ersetzt durch den Plugin-Macher") {
+
+			@Override
+			protected String getValue() {
+				return Main.getInstance().getDescription().getAuthors().get(0);
+			}
+		};
+		
+		new GeneralMessagePlaceholder("pluginVersion", Integer.MAX_VALUE, "Ersetzt durch die Plugin-Version") {
+
+			@Override
+			protected String getValue() {
+				return Main.getInstance().getDescription().getVersion();
+			}
+		};
+		
 		new GeneralMessagePlaceholder("projectname", 10, "Ersetzt durch den Projektnamen") {
 
 			@Override
