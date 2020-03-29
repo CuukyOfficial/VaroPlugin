@@ -355,7 +355,7 @@ public class VaroPlayer extends VaroEntity {
 		if(VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;
 		} else {
-			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt();
+			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() && Main.getVaroGame().isRunning();
 		}
 	}
 
