@@ -50,7 +50,10 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	private boolean shallRefresh() {
-		return shallRefresh(this.lastRefresh);
+		boolean r = shallRefresh(this.lastRefresh);
+		if(r && this.identifier.equals("%currSec%"))
+			System.out.println("SEC REF");
+		return r;
 	}
 
 	protected abstract String getValue();
@@ -68,7 +71,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	protected static String getLastDateRefresh(int index) {
-		if(lastDateRefresh == null || lastDateRefreshTime + 1000 <= System.currentTimeMillis()) {
+		if(lastDateRefresh == null || lastDateRefreshTime + 900 <= System.currentTimeMillis()) {
 			lastDateRefreshTime = System.currentTimeMillis();
 			lastDateRefresh = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss").format(new Date()).split(",");
 		}

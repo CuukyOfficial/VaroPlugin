@@ -202,6 +202,17 @@ public class VaroGame implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
+//		mainThread = new VaroMainHeartbeatThread();
+		
+//		new Timer().schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				System.out.println("REFRESH ");
+//				mainThread.run();
+//			}
+//		}, 0, 1000);
+		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), mainThread = new VaroMainHeartbeatThread(), 0, 20);
 	}
 

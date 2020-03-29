@@ -7,7 +7,7 @@ import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlacehol
 
 public abstract class MessagePlaceholder {
 
-	private static final int TICK_TOLERANCE = 20;
+	private static final int TICK_TOLERANCE = 900;
 
 	private static ArrayList<MessagePlaceholder> placeholders;
 
@@ -41,7 +41,7 @@ public abstract class MessagePlaceholder {
 		if(last < 1)
 			return true;
 
-		return (System.currentTimeMillis() - (last + this.refreshDelay)) - TICK_TOLERANCE < 1 ? true : false;
+		return (last + this.refreshDelay) - TICK_TOLERANCE <= System.currentTimeMillis() ? true : false;
 	}
 
 	public boolean containsPlaceholder(String message) {

@@ -88,7 +88,8 @@ public class VaroMainHeartbeatThread implements Runnable {
 						if(countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(vp));
 							vp.onEvent(BukkitEventType.KICKED);
-							p.kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
+//							p.kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
+							vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 							continue;
 						} else {
 							if(countdown == 1)
