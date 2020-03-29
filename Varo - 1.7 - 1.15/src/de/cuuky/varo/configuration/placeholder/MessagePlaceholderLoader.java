@@ -371,6 +371,14 @@ public class MessagePlaceholderLoader {
 				return player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockZ()) : "0";
 			}
 		};
+		
+		new PlayerMessagePlaceholder("playerWorld", 1, "Ersetzt durch den Weltnamen des Spielers") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return player.isOnline() ? player.getPlayer().getWorld().getName() : "NOWHERE";
+			}
+		};
 
 		new PlayerMessagePlaceholder("playerLocX", 1, "Ersetzt durch die X-Koordinate des Spielers") {
 
