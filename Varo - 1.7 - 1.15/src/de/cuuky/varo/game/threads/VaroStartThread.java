@@ -97,8 +97,10 @@ public class VaroStartThread implements Runnable {
 			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
 
+			long dataStamp = System.currentTimeMillis();
 			for(VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
 				world.fillChests();
+			System.out.println("Took " + (System.currentTimeMillis() - dataStamp));
 			
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());

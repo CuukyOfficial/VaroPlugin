@@ -50,7 +50,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	private boolean shallRefresh() {
-		return this.refreshDelay < 1 && this.value != null ? false : this.lastRefresh + (this.refreshDelay) <= System.currentTimeMillis();
+		return shallRefresh(this.lastRefresh);
 	}
 
 	protected abstract String getValue();

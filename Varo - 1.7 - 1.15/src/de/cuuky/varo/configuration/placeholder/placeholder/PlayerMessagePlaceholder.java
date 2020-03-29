@@ -40,8 +40,8 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 	private boolean shallRefresh(VaroPlayer player) {
 		if(!this.placeholderRefreshes.containsKey(player))
 			return true;
-
-		return this.refreshDelay < 1 ? false : this.placeholderRefreshes.get(player) + this.refreshDelay <= System.currentTimeMillis();
+		
+		return this.shallRefresh(this.placeholderRefreshes.get(player));
 	}
 
 	private void refreshValue(VaroPlayer player) {
