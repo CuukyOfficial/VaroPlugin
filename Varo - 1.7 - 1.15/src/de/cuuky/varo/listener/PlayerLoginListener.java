@@ -28,7 +28,7 @@ public class PlayerLoginListener implements Listener {
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
 		VaroPlayerBan ban = VaroPlayerBan.getBan(player.getUniqueId().toString());
-		if(ban.checkBan(event))
+		if(ban != null && ban.checkBan(player, event))
 			return;
 		
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
