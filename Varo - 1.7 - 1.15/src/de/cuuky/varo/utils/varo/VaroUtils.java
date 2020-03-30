@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
@@ -112,7 +113,7 @@ public final class VaroUtils {
 				}
 
 				if(teamMember.size() != teamSize)
-					vp.getPlayer().sendMessage(Main.getPrefix() + "§7Fuer dich wurden nicht genug" + Main.getColorCode() + " Teampartner §7gefunden!");
+					vp.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER.getValue());
 
 				String teamName = "";
 				for(VaroPlayer teamPl : teamMember)

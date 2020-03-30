@@ -98,7 +98,7 @@ public class AutoStartCommand extends VaroCommand {
 			try {
 				delay = Integer.parseInt(args[1]);
 			} catch(NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_DELAY_NO_NUMBER.getValue().replace("%text%", args[1]));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue().replace("%text%", args[1]));
 				return;
 			}
 

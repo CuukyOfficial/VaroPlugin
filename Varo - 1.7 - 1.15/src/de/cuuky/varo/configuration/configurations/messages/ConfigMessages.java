@@ -225,6 +225,7 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_ERROR_NO_CONSOLE(ConfigMessageSection.VARO_COMMANDS, "error.noconsole", "Du musst ein Spieler sein!"), 
 	VARO_COMMANDS_ERROR_NOT_STARTED(ConfigMessageSection.VARO_COMMANDS, "error.notstarted", "Das Spiel wurde noch nicht gestartet!"), 
 	VARO_COMMANDS_ERROR_USAGE(ConfigMessageSection.VARO_COMMANDS, "error.usage", "&cFehler! &7Nutze %colorcode%/varo %command% &7fuer Hilfe."), 
+	VARO_COMMANDS_ERROR_NO_NUMBER(ConfigMessageSection.VARO_COMMANDS, "error.nonumber", "%colorcode%%text% &7ist keine Zahl!"), 
 	VARO_COMMANDS_ERROR(ConfigMessageSection.VARO_COMMANDS, "error.error", "&7Es ist ein Fehler aufgetreten!"), 
 	
 	VARO_COMMANDS_BUGREPORT_CREATED(ConfigMessageSection.VARO_COMMANDS, "bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"), 
@@ -253,7 +254,6 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_AUTOSTART_NOT_SETUP_YET(ConfigMessageSection.VARO_COMMANDS, "autostart.notsetupyet", "&7Es wurde noch kein %colorcode%Autostart &7festegelegt!"), 
 	VARO_COMMANDS_AUTOSTART_REMOVED(ConfigMessageSection.VARO_COMMANDS, "autostart.removed", "%colorcode%AutoStart &7erfolgreich entfernt!"), 
 	VARO_COMMANDS_AUTOSTART_DELAY_HELP(ConfigMessageSection.VARO_COMMANDS, "autostart.delayhelp", "%colorcode%/autostart delay &7<Delay in Minutes>"), 
-	VARO_COMMANDS_AUTOSTART_DELAY_NO_NUMBER(ConfigMessageSection.VARO_COMMANDS, "autostart.delaynonumber", "%colorcode%%text% &7ist keine Zahl!"), 
 	VARO_COMMANDS_AUTOSTART_DELAY_TO_SMALL(ConfigMessageSection.VARO_COMMANDS, "autostart.delaytosmall", "Der Delay darf nicht kleiner als 1 sein!"), 
 	VARO_COMMANDS_AUTOSTART_START_DELAYED(ConfigMessageSection.VARO_COMMANDS, "autostart.startdelayed", "&7Der Start wurde um %colorcode%%delay% &7Minuten verzoegert!"), 
 	VARO_COMMANDS_AUTOSTART_INFO_NOT_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "autostart.notactive", "AutoStart nicht aktiv"), 
@@ -297,6 +297,23 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_PRESET_LIST(ConfigMessageSection.VARO_COMMANDS, "preset.list", "§lListe aller Presets:"), 
 	VARO_COMMANDS_PRESET_HELP_LOAD(ConfigMessageSection.VARO_COMMANDS, "preset.helploaded", "%colorcode%/varo preset §7load <PresetPath>"), 
 	VARO_COMMANDS_PRESET_HELP_SAVE(ConfigMessageSection.VARO_COMMANDS, "preset.helpsave", "%colorcode%/varo preset §7save <PresetPath>"), 
+
+	VARO_COMMANDS_RANDOMTEAM_HELP(ConfigMessageSection.VARO_COMMANDS, "randomteam.help", "%colorcode%/varo randomTeam <Teamgroesse>"), 
+	VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL(ConfigMessageSection.VARO_COMMANDS, "randomteam.teamsizetoosmall", "&7Die Teamgroesse muss mindestens 1 betragen."), 
+	VARO_COMMANDS_RANDOMTEAM_SORTED(ConfigMessageSection.VARO_COMMANDS, "randomteam.sorted", "&7Alle Spieler ohne Team sind nun in %colorcode%%teamsize%er &7Teams!"), 
+	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER(ConfigMessageSection.VARO_COMMANDS, "randomteam.sorted", "&7Für dich konnten nicht genug Teampartner gefunden werden."),
+
+	VARO_COMMANDS_RESTART_IN_LOBBY(ConfigMessageSection.VARO_COMMANDS, "restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
+	VARO_COMMANDS_RESTART_RESTARTED(ConfigMessageSection.VARO_COMMANDS, "restart.restarted", "&7Das Spiel wurde neugestartet."),
+
+	VARO_COMMANDS_SCOREBOARD_DEACTIVATED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.deactivated", "&7Scorebaords sind deaktiviert."),
+	VARO_COMMANDS_SCOREBOARD_ENABLED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.enabled", "&7Du siehst nun das Scoreboard."),
+	VARO_COMMANDS_SCOREBOARD_DISABLED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.disabled", "&7Du siehst nun das Scoreboard."),
+
+	VARO_COMMANDS_SORT_HELP(ConfigMessageSection.VARO_COMMANDS, "sort.help", "%colorcode%/varo sort"),
+	VARO_COMMANDS_SORT_SORTED_WELL(ConfigMessageSection.VARO_COMMANDS, "sort.sorted", "&7Alle Spieler wurden erfolgreich sortiert."),
+	VARO_COMMANDS_SORT_NO_SPAWN_WITH_TEAM(ConfigMessageSection.VARO_COMMANDS, "sort.nospawnwithteam", "&7Es konnte nicht fuer jeden Spieler ein Loch bei den Teampartnern gefunden werden!"),
+	VARO_COMMANDS_SORT_NO_SPAWN(ConfigMessageSection.VARO_COMMANDS, "sort.nospawn", "&7Es konnte nicht fuer jeden Spieler ein Loch gefunden werden!"),
 	
 	// SPAWNS
 
