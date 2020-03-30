@@ -286,6 +286,17 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_DISCORD_USER_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "discord.usernotfound", "&7User fuer diesen Spieler nicht gefunden!"), 
 	VARO_COMMANDS_DISCORD_GETLINK(ConfigMessageSection.VARO_COMMANDS, "discord.getlink", "&7Der Discord Account von %colorcode%%player% heisst %colorcode%%user%&7 und die ID lautet %colorcode%%id%&7!"), 
 	VARO_COMMANDS_DISCORD_UNVERIFY(ConfigMessageSection.VARO_COMMANDS, "discord.unverify", "&7Der Discord Account wurde erfolgreich von %colorcode%%player% &7entkoppelt!"), 
+
+	VARO_COMMANDS_INTRO_ALREADY_STARTED(ConfigMessageSection.VARO_COMMANDS, "intro.alreadystarted", "&7Das Intro wurde bereits gestartet!"), 
+	VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED(ConfigMessageSection.VARO_COMMANDS, "intro.gamealreadystarted", "&7Das Spiel wurde bereits gestartet!"), 
+	VARO_COMMANDS_INTRO_STARTED(ConfigMessageSection.VARO_COMMANDS, "intro.started", "&7Und los geht's!"), 
+
+	VARO_COMMANDS_PRESET_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "preset.notfound", "Das Preset %colorcode%%preset% &7wurde nicht gefunden."), 
+	VARO_COMMANDS_PRESET_LOADED(ConfigMessageSection.VARO_COMMANDS, "preset.loaded", "Das Preset %colorcode%%preset% &7wurde &aerfolgreich &7geladen."), 
+	VARO_COMMANDS_PRESET_SAVED(ConfigMessageSection.VARO_COMMANDS, "preset.saved", "Die aktuellen Einstellungen wurden &aerfolgreich &7als Preset %colorcode%%preset% &7gespeichert."), 
+	VARO_COMMANDS_PRESET_LIST(ConfigMessageSection.VARO_COMMANDS, "preset.list", "§lListe aller Presets:"), 
+	VARO_COMMANDS_PRESET_HELP_LOAD(ConfigMessageSection.VARO_COMMANDS, "preset.helploaded", "%colorcode%/varo preset §7load <PresetPath>"), 
+	VARO_COMMANDS_PRESET_HELP_SAVE(ConfigMessageSection.VARO_COMMANDS, "preset.helpsave", "%colorcode%/varo preset §7save <PresetPath>"), 
 	
 	// SPAWNS
 
