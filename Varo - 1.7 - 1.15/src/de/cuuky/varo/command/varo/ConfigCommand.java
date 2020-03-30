@@ -89,7 +89,7 @@ public class ConfigCommand extends VaroCommand {
 			
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE.getValue());
 			for(ConfigSetting setting : foundSettings) 
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE.getValue().replace("%entry%", setting.getFullPath().toString()).replace("%description%", JavaUtils.getArgsToString(setting.getDescription(), " ")));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT.getValue().replace("%entry%", setting.getFullPath().toString()).replace("%description%", JavaUtils.getArgsToString(setting.getDescription(), " ")));
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue().replace("%command%", "config"));
 	}
