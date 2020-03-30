@@ -1,7 +1,7 @@
 name: Varo
 author: Cuuky
 authors: [Korne127, UeberallGebannt]
-version: 3.2.2
+version: 3.2.2.1
 api-version: 1.13
 main: de.cuuky.varo.Main
 website: VaroPlugin.de
