@@ -79,7 +79,7 @@ public class TablistHandler implements BoardHandler {
 		footer.add("&7Plugin &8(&7v%colorcode%%pluginVersion%&8) &7by %colorcode%Cuuky");
 		footer.add(" ");
 		footer.add("%colorcode%%currDay%&7.%colorcode%%currMonth%&7.%colorcode%%currYear%");
-		footer.add("%colorcode%%currHour%&7:%colorcode%%currMin%&7:%colorcode%%currSec%&7:%colorcode%%currSec%");
+		footer.add("%colorcode%%currHour%&7:%colorcode%%currMin%&7:%colorcode%%currSec%");
 		footer.add(" ");
 		footer.add("&7------------------------");
 
