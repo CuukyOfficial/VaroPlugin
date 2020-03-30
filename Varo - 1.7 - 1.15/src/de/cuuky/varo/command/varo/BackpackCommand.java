@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
@@ -21,8 +22,8 @@ public class BackpackCommand extends VaroCommand {
 			if(p != null) {
 				vp.getPlayer().openInventory(p.getStats().getPlayerBackpack().getInventory());
 			} else {
-				sender.sendMessage("Der Spieler " + args[number] + " existiert nicht.");
-				sender.sendMessage("Daher kann dessen Rucksack dir nicht angezeigt werden.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_PLAYER_DOESNT_EXIST.getValue().replace("%player%", args[number]));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_CANT_SHOW_BACKPACK.getValue());
 			}
 			return;
 		}
@@ -37,13 +38,13 @@ public class BackpackCommand extends VaroCommand {
 			if(t != null) {
 				vp.getPlayer().openInventory(t.getTeamBackPack().getInventory());
 			} else {
-				sender.sendMessage("Das Team " + args[number] + " existiert nicht.");
-				sender.sendMessage("Daher kann dessen Teamrucksack dir nicht angezeigt werden.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_TEAM_DOESNT_EXIST.getValue().replace("%team%", args[number]));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_CANT_SHOW_BACKPACK.getValue());
 			}
 			return;
 		}
 		if(vp.getTeam() == null) {
-			sender.sendMessage("Du bist in keinem Team. Daher hast du kein Team-Backpack.");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_NO_TEAM.getValue());
 		} else {
 			vp.getPlayer().openInventory(vp.getTeam().getTeamBackPack().getInventory());
 		}
@@ -53,18 +54,18 @@ public class BackpackCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(!Main.getVaroGame().hasStarted()) {
-			sender.sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NOT_STARTED.getValue());
 			return;
 		}
 
 		if(vp == null) {
-			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue());
 			return;
 		}
 
 		if(ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			if(args.length == 0 || (!args[0].equalsIgnoreCase("player") && !args[0].equalsIgnoreCase("team"))) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wurden sowohl Spieler als auch Team-Backpacks aktiviert");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_CHOOSE_TYPE.getValue());
 				if(vp.getPlayer().isOp()) {
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player §7[Player]");
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team §7[Team]");
@@ -82,7 +83,7 @@ public class BackpackCommand extends VaroCommand {
 		} else if(!ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			teamBackPack(sender, vp, args, 0);
 		} else {
-			sender.sendMessage(Main.getPrefix() + "Rucksaecke sind nicht aktiviert!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_NOT_ENABLED.getValue());
 		}
 	}
 }

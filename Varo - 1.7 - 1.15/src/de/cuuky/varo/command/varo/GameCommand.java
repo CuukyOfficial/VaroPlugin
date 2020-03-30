@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.game.GameOptionsGUI;
 
@@ -18,7 +19,7 @@ public class GameCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(!(sender instanceof Player)) {
-			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue());
 			return;
 		}
 

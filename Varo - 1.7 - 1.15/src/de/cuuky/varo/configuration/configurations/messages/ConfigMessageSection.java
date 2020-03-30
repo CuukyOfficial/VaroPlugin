@@ -31,6 +31,7 @@ public enum ConfigMessageSection implements SectionConfiguration {
 	NOPERMISSION("nopermission", "Nachrichten fuer unzureichende Berechtigungen"), 
 	QUITMESSAGE("quitmessage", "Nachrichten fuer das Verlassen des Servers"), 
 	SPAWN("spawn", "Nachrichten zum Worldspawn"), 
+	VARO_COMMANDS("commands", "Nachrichten von Befehlen (/varo)"), 
 	JOINMESSAGE("joinmessage", "Nachrichten zum Betreteten des Servers");
 	
 	private String name, description;

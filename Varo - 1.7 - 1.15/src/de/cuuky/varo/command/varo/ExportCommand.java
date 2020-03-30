@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
@@ -22,16 +23,12 @@ public class ExportCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7----- §l" + Main.getColorCode() + "Export" + "§7 -----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players | Exportiert alle Spieler");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue().replace("%category%", "Export"));
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue());
 		}
 
-		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players | Exportiert alle Spieler");
-			return;
-		}
-
-		if(args[0].equalsIgnoreCase("players")) {
+		else if(args.length==1 && args[0].equalsIgnoreCase("players")) {
 			File file = new File("plugins/Varo/exports/players.yml");
 			if(file.exists())
 				file.delete();
@@ -68,8 +65,8 @@ public class ExportCommand extends VaroCommand {
 				e.printStackTrace();
 			}
 
-			sender.sendMessage(Main.getPrefix() + "Successfully saved to '/plugins/Varo/exports/players.yml'!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_EXPORT_SUCCESSFULL.getValue().replace("%file%", "/plugins/Varo/exports/players.yml"));
 		} else
-			sender.sendMessage(Main.getPrefix() + "Command not found.");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue().replace("%commands%", "export"));
 	}
 }
