@@ -231,8 +231,8 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_BUGREPORT_CREATED(ConfigMessageSection.VARO_COMMANDS, "bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"), 
 	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD(ConfigMessageSection.VARO_COMMANDS, "bugreport.sendtodiscord", "Bitte sende diesen auf den Discord in den Support!"), 
 	VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.outdatedversion", "Du kannst keine Bugreports von einer alten Plugin-Version machen!"), 
-	VARO_COMMANDS_BUGREPORT_CURRENT_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.currentversion", "Derzeitige Version: §c%version%"), 
-	VARO_COMMANDS_BUGREPORT_NEWEST_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.newestversion", "Neueste Version: §a%version%"), 
+	VARO_COMMANDS_BUGREPORT_CURRENT_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.currentversion", "Derzeitige Version: &c%version%"), 
+	VARO_COMMANDS_BUGREPORT_NEWEST_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.newestversion", "Neueste Version: &a%version%"), 
 	VARO_COMMANDS_BUGREPORT_UPDATE(ConfigMessageSection.VARO_COMMANDS, "bugreport.update", "&7Nutze %colorcode%/varo update &7zum updaten."), 
 	
 	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "abort.notactive", "Der Startcountdown ist nicht aktiv!"), 
@@ -275,7 +275,7 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_CONFIG_ENTRY_SET(ConfigMessageSection.VARO_COMMANDS, "config.entryset", "&7Der Eintrag '%colorcode%%entry%&7' wurde erfolgreich auf '%colorcode%%value%&7'gesetzt."), 
 	VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "config.entrynotfound", "&7Der Eintrag '%colorcode%%entry%&7' wurde nicht gefunden."), 
 	VARO_COMMANDS_CONFIG_RESET(ConfigMessageSection.VARO_COMMANDS, "config.reset", "&7Alle Eintraege wurden erfolgreich zurueckgesetzt."), 
-	VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE(ConfigMessageSection.VARO_COMMANDS, "config.searchlisttitle", "§lFolgende Einstellungen wurden gefunden:"), 
+	VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE(ConfigMessageSection.VARO_COMMANDS, "config.searchlisttitle", "&lFolgende Einstellungen wurden gefunden:"), 
 	VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT(ConfigMessageSection.VARO_COMMANDS, "config.searchlistformat", "%colorcode%%entry% &8- &7%description%"), 
 	
 	VARO_COMMANDS_EXPORT_SUCCESSFULL(ConfigMessageSection.VARO_COMMANDS, "export.players", "&7Alle Spieler wurden erfolgreich in '%colorcode%%file%&7' exportiert."), 
@@ -294,9 +294,9 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_PRESET_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "preset.notfound", "Das Preset %colorcode%%preset% &7wurde nicht gefunden."), 
 	VARO_COMMANDS_PRESET_LOADED(ConfigMessageSection.VARO_COMMANDS, "preset.loaded", "Das Preset %colorcode%%preset% &7wurde &aerfolgreich &7geladen."), 
 	VARO_COMMANDS_PRESET_SAVED(ConfigMessageSection.VARO_COMMANDS, "preset.saved", "Die aktuellen Einstellungen wurden &aerfolgreich &7als Preset %colorcode%%preset% &7gespeichert."), 
-	VARO_COMMANDS_PRESET_LIST(ConfigMessageSection.VARO_COMMANDS, "preset.list", "§lListe aller Presets:"), 
-	VARO_COMMANDS_PRESET_HELP_LOAD(ConfigMessageSection.VARO_COMMANDS, "preset.helploaded", "%colorcode%/varo preset §7load <PresetPath>"), 
-	VARO_COMMANDS_PRESET_HELP_SAVE(ConfigMessageSection.VARO_COMMANDS, "preset.helpsave", "%colorcode%/varo preset §7save <PresetPath>"), 
+	VARO_COMMANDS_PRESET_LIST(ConfigMessageSection.VARO_COMMANDS, "preset.list", "&lListe aller Presets:"), 
+	VARO_COMMANDS_PRESET_HELP_LOAD(ConfigMessageSection.VARO_COMMANDS, "preset.helploaded", "%colorcode%/varo preset &7load <PresetPath>"), 
+	VARO_COMMANDS_PRESET_HELP_SAVE(ConfigMessageSection.VARO_COMMANDS, "preset.helpsave", "%colorcode%/varo preset &7save <PresetPath>"), 
 
 	VARO_COMMANDS_RANDOMTEAM_HELP(ConfigMessageSection.VARO_COMMANDS, "randomteam.help", "%colorcode%/varo randomTeam <Teamgroesse>"), 
 	VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL(ConfigMessageSection.VARO_COMMANDS, "randomteam.teamsizetoosmall", "&7Die Teamgroesse muss mindestens 1 betragen."), 
@@ -306,7 +306,7 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_RESTART_IN_LOBBY(ConfigMessageSection.VARO_COMMANDS, "restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED(ConfigMessageSection.VARO_COMMANDS, "restart.restarted", "&7Das Spiel wurde neugestartet."),
 
-	VARO_COMMANDS_SCOREBOARD_DEACTIVATED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.deactivated", "&7Scorebaords sind deaktiviert."),
+	VARO_COMMANDS_SCOREBOARD_DEACTIVATED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.deactivated", "&7Scoreboard sind deaktiviert."),
 	VARO_COMMANDS_SCOREBOARD_ENABLED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.enabled", "&7Du siehst nun das Scoreboard."),
 	VARO_COMMANDS_SCOREBOARD_DISABLED(ConfigMessageSection.VARO_COMMANDS, "scoreboard.disabled", "&7Du siehst nun das Scoreboard."),
 
