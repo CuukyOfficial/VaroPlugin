@@ -171,7 +171,8 @@ public enum ConfigMessages implements SectionEntry {
 	CHEST_NOT_TEAM_CHEST(ConfigMessageSection.CHEST, "notTeamChest", "&7Diese Kiste gehoert %colorcode%%player%&7!"),
 	CHEST_NOT_TEAM_FURNACE(ConfigMessageSection.CHEST, "notTeamFurnace", "&7Dieser Ofen gehoert %colorcode%%player%&7!"),
 	CHEST_REMOVED_SAVEABLE(ConfigMessageSection.CHEST, "removedChest", "&7Du hast diese/n %saveable% %colorcode%erfolgreich &7entfernt!"),
-	CHEST_SAVED_SAVEABLE(ConfigMessageSection.CHEST, "newChestSaved", "&7Eine neue Kiste wurde gesichert!"),
+	CHEST_SAVED_CHEST(ConfigMessageSection.CHEST, "newChestSaved", "&7Eine neue Kiste wurde gesichert!"),
+	CHEST_SAVED_FURNACE(ConfigMessageSection.CHEST, "newFurnaceSaved", "&7Ein neuer Ofen wurde gesichert!"),
 
 	// NO PERMISSION
 

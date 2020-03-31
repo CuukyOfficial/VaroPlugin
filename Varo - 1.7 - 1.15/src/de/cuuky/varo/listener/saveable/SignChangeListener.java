@@ -17,6 +17,7 @@ import org.bukkit.material.Sign;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -87,7 +88,7 @@ public class SignChangeListener implements Listener {
 				p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			p.sendMessage(Main.getPrefix() + "Kiste erfolgreich gesichert!");
+			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue());
 		} else if(attached.getState() instanceof Furnace) {
 			Furnace furnace = (Furnace) attached.getState();
 
@@ -129,7 +130,7 @@ public class SignChangeListener implements Listener {
 			for(int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNANCE, furnace.getBlock().getLocation(), player);
-			p.sendMessage(Main.getPrefix() + "Ofen erfolgreich gesichert!");
+			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_FURNACE.getValue());
 		}
 	}
 }

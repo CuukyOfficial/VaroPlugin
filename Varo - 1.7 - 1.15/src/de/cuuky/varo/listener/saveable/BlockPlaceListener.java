@@ -50,7 +50,7 @@ public class BlockPlaceListener implements Listener {
 
 		if(saveable.canModify(player)) {
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_SAVEABLE.getValue(player));
+			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue());
 			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 			p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 			return;
