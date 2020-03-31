@@ -8,6 +8,10 @@ public interface SectionConfiguration {
 	
 	public String getDescription();
 	
+	public String getFolder();
+	
 	public ArrayList<SectionEntry> getEntries();
+	
+	public SectionEntry getEntry(String name);
 	
 }

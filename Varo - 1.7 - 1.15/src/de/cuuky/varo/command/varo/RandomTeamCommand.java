@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.varo.VaroUtils;
 
@@ -17,7 +18,7 @@ public class RandomTeamCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vpsender, Command cmd, String label, String[] args) {
 		if(args.length != 1) {
-			sender.sendMessage(Main.getPrefix() + "§7/varo randomTeam <Teamgroesse>");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_HELP.getValue());
 			return;
 		}
 
@@ -25,17 +26,17 @@ public class RandomTeamCommand extends VaroCommand {
 		try {
 			teamsize = Integer.parseInt(args[0]);
 		} catch(NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7ist keine Zahl!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue().replace("%text%", args[0]));
 			return;
 		}
 
 		if(teamsize < 1) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Teamgroesse muss mindestens 1 betragen.");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL.getValue());
 			return;
 		} else {
 			VaroUtils.doRandomTeam(teamsize);
 		}
 
-		sender.sendMessage(Main.getPrefix() + "§7Alle Spieler, die ohne Teams waren, sind nun in " + Main.getColorCode() + teamsize + "§7er Teams!");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_SORTED.getValue().replace("%teamsize%", String.valueOf(teamsize)));
 	}
 }

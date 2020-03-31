@@ -19,6 +19,7 @@ import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
 import de.cuuky.varo.utils.JavaUtils;
+import de.cuuky.varo.version.ServerSoftware;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Main extends JavaPlugin {
@@ -50,7 +51,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		long timestamp = System.currentTimeMillis();
-		
+
 		System.out.println("############################################################################");
 		System.out.println("#                                                                          #");
 		System.out.println("#  #     #                         ######                                  #");
@@ -67,12 +68,16 @@ public class Main extends JavaPlugin {
 
 		System.out.println(CONSOLE_PREFIX);
 		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
-		System.out.println(CONSOLE_PREFIX + "Running on " + Bukkit.getVersion());
-		System.out.println(CONSOLE_PREFIX + "Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
+		System.out.println(CONSOLE_PREFIX + "Your server: ");
+		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " (" + Bukkit.getVersion() + ")");
+		System.out.println(CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 		
-		if(Bukkit.getVersion().contains("Bukkit")) {
-			System.out.println(CONSOLE_PREFIX + "It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
-			System.out.println(CONSOLE_PREFIX + "Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
+		if(VersionUtils.getServerSoftware() != ServerSoftware.UNKNOWN)
+			System.out.println(CONSOLE_PREFIX + "	Forge-Support: " + VersionUtils.getServerSoftware().hasModSupport());
+
+		if(VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT) {
+			System.out.println(CONSOLE_PREFIX + "	It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
+			System.out.println(CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
 		}
 
 		try {
@@ -81,17 +86,17 @@ public class Main extends JavaPlugin {
 				Bukkit.getPluginManager().disablePlugin(Main.getInstance());
 				return;
 			}
-			
+
 			long dataStamp = System.currentTimeMillis();
 			dataManager = new DataManager();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
-			
+
 			varoUpdater = new VaroUpdater();
 			botLauncher = new BotLauncher();
-			
+
 			new MetricsLoader(this);
 			new SmartLagDetector(this);
-			
+
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
 		} catch(Throwable e) {
@@ -112,7 +117,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		long timestamp = System.currentTimeMillis();
-		
+
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
@@ -140,11 +145,11 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
 	}
-	
+
 	public void setFailed(boolean failed) {
 		this.failed = failed;
 	}
-	
+
 	public boolean isFailed() {
 		return this.failed;
 	}
@@ -184,7 +189,7 @@ public class Main extends JavaPlugin {
 	public static DataManager getDataManager() {
 		return dataManager;
 	}
-	
+
 	public static BotLauncher getBotLauncher() {
 		return botLauncher;
 	}
@@ -192,7 +197,7 @@ public class Main extends JavaPlugin {
 	public static String getPluginName() {
 		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + " - Contributors: " + getContributors();
 	}
-	
+
 	public static String getContributors() {
 		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ", ");
 	}

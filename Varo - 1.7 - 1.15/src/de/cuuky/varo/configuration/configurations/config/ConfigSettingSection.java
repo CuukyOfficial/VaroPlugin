@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Material;
 
+import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.version.types.Materials;
@@ -35,7 +36,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	TELEGRAM("Telegram", Materials.MAP.parseMaterial(), "Alle Einstellungen zum Telegram-Bot."),
 	WORLD("World", Material.GRASS, "Hier kannst du Einstellungen zur Welt vornehmen."),
 	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");
-
+	
 	private String name, description;
 	private Material material;
 
@@ -60,6 +61,11 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	}
 	
 	@Override
+	public String getFolder() {
+		return ConfigHandler.getConfigPath();
+	}
+	
+	@Override
 	public ArrayList<SectionEntry> getEntries() {
 		ArrayList<SectionEntry> temp = new ArrayList<>();
 		for(ConfigSetting entry : ConfigSetting.values()) {
@@ -70,5 +76,14 @@ public enum ConfigSettingSection implements SectionConfiguration {
 		}
 
 		return temp;
+	}
+	
+	@Override
+	public SectionEntry getEntry(String name) {
+		for(SectionEntry entry : getEntries())
+			if(entry.getPath().equals(name))
+				return entry;
+		
+		return null;
 	}
 }

@@ -2,6 +2,7 @@ package de.cuuky.varo.configuration.configurations.messages;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 
@@ -14,7 +15,7 @@ public enum ConfigMessageSection implements SectionConfiguration {
 	CHAT("chat", "Nachrichten zum Chat"),
 	CHEST("chest", "Nachrichten zum Sichern von Kisten & Oefen"),
 	COMBAT("combat", "Nachrichten zum Kampf"),
-	COMMANDS("commands", "Nachrichten zu den Befehlen"), 
+//	COMMANDS("commands", "Nachrichten zu den Befehlen"), 
 	DEATH("death", "Nachrichten zum Tod eines Spielers"),
 	GAME("game", "Nachrichten zum Spielverlauf"),
 	KICK("kick", "Nachrichten zum Kick eines Spielers"),
@@ -31,6 +32,7 @@ public enum ConfigMessageSection implements SectionConfiguration {
 	NOPERMISSION("nopermission", "Nachrichten fuer unzureichende Berechtigungen"), 
 	QUITMESSAGE("quitmessage", "Nachrichten fuer das Verlassen des Servers"), 
 	SPAWN("spawn", "Nachrichten zum Worldspawn"), 
+	VARO_COMMANDS("varocommands", "Nachrichten von Befehlen (/varo)"), 
 	JOINMESSAGE("joinmessage", "Nachrichten zum Betreteten des Servers");
 	
 	private String name, description;
@@ -50,6 +52,11 @@ public enum ConfigMessageSection implements SectionConfiguration {
 	}
 	
 	@Override
+	public String getFolder() {
+		return ConfigHandler.getMessagePath();
+	}
+	
+	@Override
 	public ArrayList<SectionEntry> getEntries() {
 		ArrayList<SectionEntry> temp = new ArrayList<>();
 		for(ConfigMessages message : ConfigMessages.values()) {
@@ -60,5 +67,14 @@ public enum ConfigMessageSection implements SectionConfiguration {
 		}
 
 		return temp;
+	}
+	
+	@Override
+	public SectionEntry getEntry(String name) {
+		for(SectionEntry entry : getEntries())
+			if(entry.getPath().equals(name))
+				return entry;
+		
+		return null;
 	}
 }

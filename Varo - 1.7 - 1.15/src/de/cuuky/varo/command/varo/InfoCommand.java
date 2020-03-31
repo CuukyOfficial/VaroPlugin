@@ -10,6 +10,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class InfoCommand extends VaroCommand {
@@ -22,7 +23,7 @@ public class InfoCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		PluginDescriptionFile pdf = Main.getInstance().getDescription();
 
-		sender.sendMessage(Main.getPrefix() + "§7----------------------");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue().replace("%category%", "Info"));
 		sender.sendMessage(Main.getPrefix());
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin§7:");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Author§7: " + pdf.getAuthors().get(0));
@@ -35,6 +36,6 @@ public class InfoCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Java Version§7: " + System.getProperty("java.version"));
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Date§7: " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
 		sender.sendMessage(Main.getPrefix());
-		sender.sendMessage(Main.getPrefix() + "§7----------------------");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue());
 	}
 }

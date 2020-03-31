@@ -9,13 +9,16 @@ import org.bukkit.entity.Player;
 public class VersionUtils {
 
 	private static String nmsClass;
-	private static BukkitVersion version;
 	private static Object spigot;
 	private static Class<?> chatSerializer;
+	
+	private static BukkitVersion version;
+	private static ServerSoftware serverSoftware;
 
 	static {
 		nmsClass = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		version = BukkitVersion.getVersion(nmsClass);
+		serverSoftware = ServerSoftware.getServerSoftware(Bukkit.getVersion());
 		
 		try {
 			spigot = Bukkit.getServer().getClass().getDeclaredMethod("spigot").invoke(Bukkit.getServer());
@@ -56,5 +59,9 @@ public class VersionUtils {
 
 	public static BukkitVersion getVersion() {
 		return version;
+	}
+	
+	public static ServerSoftware getServerSoftware() {
+		return serverSoftware;
 	}
 }
