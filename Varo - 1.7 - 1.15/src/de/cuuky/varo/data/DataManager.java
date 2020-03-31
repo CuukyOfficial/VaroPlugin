@@ -5,6 +5,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
+import de.cuuky.varo.ban.VaroPlayerBan;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
@@ -62,7 +63,8 @@ public class DataManager {
 	}
 
 	private void load() {
-		VaroUtils.loadBlock();
+		VaroPlayerBan.loadBans();
+		
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
@@ -95,12 +97,14 @@ public class DataManager {
 
 			@Override
 			public void run() {
+				reloadConfig();
 				save();
 			}
 		}, 12000, 12000);
 	}
 
 	public void reloadConfig() {
+		VaroPlayerBan.loadBans();
 		VaroList.reloadLists();
 		MessagePlaceholder.clearPlaceholder();
 		configHandler.reload();

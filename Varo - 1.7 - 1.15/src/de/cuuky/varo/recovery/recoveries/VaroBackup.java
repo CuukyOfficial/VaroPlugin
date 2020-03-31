@@ -17,6 +17,10 @@ public class VaroBackup extends FileZipper {
 
 		loadBackups();
 	}
+	
+	private VaroBackup(File file) {
+		super(file);
+	}
 
 	public VaroBackup() {
 		super(new File("plugins/Varo/backups/" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
@@ -40,10 +44,6 @@ public class VaroBackup extends FileZipper {
 		}
 
 		return files;
-	}
-
-	public VaroBackup(File file) {
-		super(file);
 	}
 
 	public void delete() {

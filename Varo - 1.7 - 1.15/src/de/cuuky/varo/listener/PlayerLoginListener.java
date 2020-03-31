@@ -7,25 +7,30 @@ import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.ban.VaroPlayerBan;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
-import de.cuuky.varo.utils.varo.VaroUtils;
 import net.dv8tion.jda.api.entities.User;
 
 public class PlayerLoginListener implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
+		VaroPlayerBan ban = VaroPlayerBan.getBan(player.getUniqueId().toString());
+		if(ban != null && ban.checkBan(player, event))
+			return;
+		
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
@@ -63,8 +68,6 @@ public class PlayerLoginListener implements Listener {
 			}
 		}
 
-		if(VaroUtils.check(vp, event))
-			return;
 		KickResult kickResult = vp.getStats().getKickResult(player);
 		switch(kickResult) {
 		case NO_PROJECTUSER:

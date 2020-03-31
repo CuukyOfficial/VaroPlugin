@@ -43,6 +43,13 @@ public enum ConfigSetting implements SectionEntry {
 
 	BACKPACK_TEAM_SIZE(ConfigSettingSection.BACKPACKS, "backpackTeamSize", 54, "Groesse des Team-Rucksacks (Max = 54)"),
 	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
+	
+	// BAN
+	BAN_HACKING_ENABLED(ConfigSettingSection.BAN, "hacking", true, "Ob Spieler, die wegen Hacking von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_SCAMMING_ENABLED(ConfigSettingSection.BAN, "scamming", true, "Ob Spieler, die wegen Scammen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_BAD_BEHAVIOUR_ENABLED(ConfigSettingSection.BAN, "behaviour", true, "Ob Spieler, die aufgrund schlechten Verhaltens von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_IDENTITY_THEFT_ENABLED(ConfigSettingSection.BAN, "identityTheft", true, "Ob Spieler, die wegen Itenditaetsdiebstahls von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_OTHER_ENABLED(ConfigSettingSection.BAN, "other", true, "Ob Spieler, die aus anderen Gruenden von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
 
 	// CHAT
 	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds", true, "Wenn aktiviert, koennen keine Links in den oeffentlichen Chat gepostet werden."),

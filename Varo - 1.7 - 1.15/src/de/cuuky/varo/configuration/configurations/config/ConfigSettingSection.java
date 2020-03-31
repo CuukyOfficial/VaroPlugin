@@ -14,6 +14,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
 	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksaecken"),
 	BORDER("Border", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
+	BAN("Ban", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zu Bans vornehmen.\nDas Bannsystem wird von Cuuky geleitet und von allen Varo-Servern genutzt"),
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
 	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),

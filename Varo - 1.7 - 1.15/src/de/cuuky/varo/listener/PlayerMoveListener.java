@@ -41,7 +41,7 @@ public class PlayerMoveListener implements Listener {
 			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue());
 			return;
 		} else if(Main.getVaroGame().getGameState() == GameState.STARTED) {
-			if(vp.getStats().isSpectator() || ConfigSetting.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || Main.getVaroGame().isFirstTime() || vp.isAdminIgnore())
+			if(vp.getStats().isSpectator() || ConfigSetting.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || vp.isAdminIgnore())
 				return;
 
 			if(vp.isInProtection()) {

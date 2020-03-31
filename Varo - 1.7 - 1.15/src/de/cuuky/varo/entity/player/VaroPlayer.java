@@ -116,7 +116,7 @@ public class VaroPlayer extends VaroEntity {
 		BotRegister reg = BotRegister.getBotRegisterByPlayerName(name);
 		if(reg == null)
 			return;
-		
+
 		Member member = reg.getMember();
 		if(oldTeam != null) {
 			if(db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
@@ -270,12 +270,12 @@ public class VaroPlayer extends VaroEntity {
 				nametag.refresh();
 		}
 
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) 
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			if(ConfigSetting.TABLIST.getValueAsBoolean())
 				Main.getDataManager().getTablistHandler().updatePlayer(this);
-		
+
 		Main.getDataManager().getScoreboardHandler().updatePlayer(this);
-		
+
 		String listname = "";
 		if(getTeam() != null) {
 			if(getRank() == null) {
@@ -355,7 +355,7 @@ public class VaroPlayer extends VaroEntity {
 		if(VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;
 		} else {
-			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() && Main.getVaroGame().isRunning();
+			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() && Main.getVaroGame().isRunning() && !Main.getVaroGame().isFirstTime() && ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() && !isAdminIgnore();
 		}
 	}
 
