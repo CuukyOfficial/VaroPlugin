@@ -229,11 +229,16 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_ERROR(ConfigMessageSection.VARO_COMMANDS, "error.error", "&7Es ist ein Fehler aufgetreten!"), 
 	
 	VARO_COMMANDS_BUGREPORT_CREATED(ConfigMessageSection.VARO_COMMANDS, "bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"), 
-	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD(ConfigMessageSection.VARO_COMMANDS, "bugreport.sendtodiscord", "Bitte sende diesen auf den Discord in den Support!"), 
+	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD(ConfigMessageSection.VARO_COMMANDS, "bugreport.sendtodiscord", "Bitte sende den Bugreport auf den Discord in den Support!"), 
 	VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.outdatedversion", "Du kannst keine Bugreports von einer alten Plugin-Version machen!"), 
 	VARO_COMMANDS_BUGREPORT_CURRENT_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.currentversion", "Derzeitige Version: &c%version%"), 
 	VARO_COMMANDS_BUGREPORT_NEWEST_VERSION(ConfigMessageSection.VARO_COMMANDS, "bugreport.newestversion", "Neueste Version: &a%version%"), 
 	VARO_COMMANDS_BUGREPORT_UPDATE(ConfigMessageSection.VARO_COMMANDS, "bugreport.update", "&7Nutze %colorcode%/varo update &7zum updaten."), 
+	VARO_COMMANDS_BUGREPORT_COLLECTING_DATA(ConfigMessageSection.VARO_COMMANDS, "bugreport.collectingdata", "Daten werden gesammelt..."), 
+	VARO_COMMANDS_BUGREPORT_UPLOADING(ConfigMessageSection.VARO_COMMANDS, "bugreport.uploading", "Lade Bugreport hoch..."), 
+	VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR(ConfigMessageSection.VARO_COMMANDS, "bugreport.uploaderror", "Der Bugreport konnte nicht hochgeladen werden!"), 
+	VARO_COMMANDS_BUGREPORT_UPLOADED(ConfigMessageSection.VARO_COMMANDS, "bugreport.uploaded", "Bugreport wurde auf &c%url% &7hochgeladen!"), 
+	VARO_COMMANDS_BUGREPORT_CLICK_ME(ConfigMessageSection.VARO_COMMANDS, "bugreport.clickme", " §7(§aKlick mich§7)"), 
 	
 	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "abort.notactive", "Der Startcountdown ist nicht aktiv!"), 
 	VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED(ConfigMessageSection.VARO_COMMANDS, "abort.stopped", "Startcountdown erfolgreich gestoppt!"), 
