@@ -9,9 +9,9 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
 public class FileUploader {
-
+	
 	private File file;
-
+	
 	public FileUploader(File file) {
 		this.file = file;
 	}
@@ -19,7 +19,7 @@ public class FileUploader {
 	private JSONObject getJSONObject(JSONObject object, String path) {
 		return (JSONObject) object.get(path);
 	}
-
+	
 	public String uploadFile() {
 		try {
 			Process process = Runtime.getRuntime().exec("curl -F \"file=@" + file.getPath() +"\" https://api.anonfile.com/upload?token=894b0ea821338221");
@@ -32,7 +32,7 @@ public class FileUploader {
 		} catch(IOException | ParseException e) {
 			e.printStackTrace();
 		}
-
+		
 		return null;
 	}
 }
