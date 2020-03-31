@@ -7,7 +7,7 @@ public enum ServerSoftware {
 
 	BUKKIT("Bukkit", false),
 	SPIGOT("Spigot", false),
-	PAPER("Paper", false),
+	PAPER("PaperSpigot", false),
 	TACO("TacoSpigot", false),
 	MAGMA("Magma", true),
 	THERMOS("Thermos", true),
