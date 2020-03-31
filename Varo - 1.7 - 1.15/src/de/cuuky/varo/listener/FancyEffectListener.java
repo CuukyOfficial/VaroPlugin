@@ -22,7 +22,7 @@ public class FancyEffectListener implements Listener {
 	private static final Effect[] ALLOWED_EFFECTS;
 
 	static {
-		ALLOWED_EFFECTS = new Effect[] { Effect.WATERDRIP};
+		ALLOWED_EFFECTS = new Effect[] { Effect.EXTINGUISH };
 	}
 
 	private HashMap<Entity, Effect> effectEntites;
