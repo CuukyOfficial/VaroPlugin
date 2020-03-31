@@ -173,7 +173,7 @@ public class NetworkManager {
 	public void sendLinkedMessage(String message, String link) {
 		try {
 			Constructor<?> constructor = packetChatClass.getConstructor(ioBase);
-			Object text = ioBaseChatMethod.invoke(ioBaseChat, "{text: '" + message + "', color: 'white', clickEvent: {\"action\": \"open_url\" , value: \"" + link + "\"}}");
+			Object text = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + message + "\", \"color\": \"white\", \"clickEvent\": {\"action\": \"open_url\" , \"value\": \"" + link + "\"}}");
 			Object packetFinal = constructor.newInstance(text);
 			Field field = packetFinal.getClass().getDeclaredField("a");
 			field.setAccessible(true);
