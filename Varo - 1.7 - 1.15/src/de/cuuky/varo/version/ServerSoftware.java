@@ -39,8 +39,7 @@ public enum ServerSoftware {
 	public static ServerSoftware getServerSoftware(String version) {
 		version = version.toLowerCase();
 
-		ServerSoftware found = UNKNOWN;
-
+		ServerSoftware found = null;
 		for(ServerSoftware software : values()) {
 			String softwareName = software.getName().toLowerCase();
 
@@ -50,7 +49,9 @@ public enum ServerSoftware {
 			found = software;
 		}
 
-		if(found != UNKNOWN) {
+		if(found == null)
+			found = UNKNOWN;
+		else if(found != UNKNOWN) {
 			int location = version.indexOf(found.getName().toLowerCase());
 
 			if(location - 1 > -1)
@@ -58,7 +59,7 @@ public enum ServerSoftware {
 					found = UNKNOWN;
 
 			if(location + found.getName().length() + 1 < version.length())
-				if(abc.contains(version.charAt(location + found.getName().length() + 1)))
+				if(abc.contains(version.charAt(location + found.getName().length())))
 					found = UNKNOWN;
 		}
 

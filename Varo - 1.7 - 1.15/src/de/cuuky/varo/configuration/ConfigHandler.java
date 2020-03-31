@@ -37,7 +37,7 @@ public class ConfigHandler {
 	private void loadConfigurations() {
 		loadConfiguration(ConfigSettingSection.values(), CONFIG_PATH);
 		loadConfiguration(ConfigMessageSection.values(), MESSAGE_PATH);
-		
+
 		if(legacyFound)
 			moveLegacyFiles();
 
@@ -48,6 +48,11 @@ public class ConfigHandler {
 		checkLegacyConfiguration(sections, filepath);
 
 		for(SectionConfiguration section : sections) {
+			if(configurations.containsKey(section.getFolder() + "/" + section.getName())) {
+				System.out.println(Main.getConsolePrefix() + "PAUL NEIN");
+				Bukkit.getServer().shutdown();
+			}
+			
 			File file = new File(filepath, section.getName().toLowerCase() + ".yml");
 			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
@@ -56,25 +61,23 @@ public class ConfigHandler {
 
 			String header = getConfigHeader(section);
 			if(!header.equals(config.options().header())) {
-				config.options().header(getConfigHeader(section));
+				config.options().header(header);
 				save = true;
 			}
 
-			ArrayList<String> entryNames = new ArrayList<>();
 			for(SectionEntry entry : section.getEntries()) {
 				if(!config.contains(entry.getPath()))
 					save = true;
 
 				config.addDefault(entry.getPath(), entry.getDefaultValue());
 				entry.setValue(config.get(entry.getPath()));
-				entryNames.add(entry.getPath());
 			}
 
 			for(String path : config.getKeys(true)) {
-				if(entryNames.contains(path) || config.isConfigurationSection(path))
+				if(section.getEntry(path) != null || config.isConfigurationSection(path))
 					continue;
 
-				System.out.println(Main.getConsolePrefix() + "Removed " + path + " because it was removed from the plugin");
+				System.out.println(Main.getConsolePrefix() + "Removed " + path + " in " + section.getFolder() + "/" + file.getName() + " because it was removed from the plugin");
 				config.set(path, null);
 				save = true;
 			}
@@ -82,24 +85,24 @@ public class ConfigHandler {
 			if(save)
 				saveFile(config, file);
 
-			files.put(section.getName(), file);
-			configurations.put(section.getName(), config);
+			files.put(section.getFolder() + "/" + section.getName(), file);
+			configurations.put(section.getFolder() + "/" + section.getName(), config);
 		}
 	}
-	
+
 	private void moveLegacyFiles() {
 		String legacyDirName = VARO_DIR + "legacy/";
 		File legacyDir = new File(legacyDirName);
 		if(!legacyDir.isDirectory())
 			legacyDir.mkdirs();
-		
+
 		for(File file : new File(VARO_DIR).listFiles()) {
 			if(!file.isFile())
 				continue;
-			
+
 			try {
 				Files.copy(file, new File(legacyDirName + "legacy_" + file.getName()));
-				
+
 				file.delete();
 			} catch(IOException e) {
 				e.printStackTrace();
@@ -111,22 +114,22 @@ public class ConfigHandler {
 		File file = new File(filepath + ".yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-		if(!file.exists()) 
+		if(!file.exists())
 			return;
 
 		System.out.println(Main.getConsolePrefix() + "Found legacy configuration! Loading " + file.getName() + "...");
 		for(SectionConfiguration section : sections) {
 			File sectionFile = new File(filepath, section.getName().toLowerCase() + ".yml");
 			YamlConfiguration sectionConfig = YamlConfiguration.loadConfiguration(sectionFile);
-			
+
 			for(SectionEntry entry : section.getEntries()) {
 				if(!config.contains(entry.getFullPath()))
 					continue;
-				
+
 				entry.setValue(config.get(entry.getFullPath()));
 				sectionConfig.set(entry.getPath(), entry.getValue());
 			}
-			
+
 			try {
 				sectionConfig.save(sectionFile);
 			} catch(IOException e) {
@@ -146,10 +149,10 @@ public class ConfigHandler {
 	}
 
 	public void saveValue(SectionEntry entry) {
-		YamlConfiguration config = configurations.get(entry.getSection().getName());
+		YamlConfiguration config = configurations.get(entry.getSection().getFolder() + "/" + entry.getSection().getName());
 		config.set(entry.getPath(), entry.getValue());
 
-		saveFile(config, files.get(entry.getSection().getName()));
+		saveFile(config, files.get(entry.getSection().getFolder() + "/" + entry.getSection().getName()));
 	}
 
 	public void reload() {
@@ -163,7 +166,7 @@ public class ConfigHandler {
 	 * @return Every description of every ConfigEntry combined
 	 */
 	private String getConfigHeader(SectionConfiguration section) {
-		String header = "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:";
+		String header = "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRAEGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:";
 		String desc = "\n----------- " + section.getName() + " -----------" + "\nBeschreibung: " + section.getDescription() + "\n";
 
 		for(SectionEntry entry : section.getEntries()) {
@@ -191,5 +194,13 @@ public class ConfigHandler {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
 		}
+	}
+
+	public static String getMessagePath() {
+		return MESSAGE_PATH;
+	}
+
+	public static String getConfigPath() {
+		return CONFIG_PATH;
 	}
 }

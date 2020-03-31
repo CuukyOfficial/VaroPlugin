@@ -239,7 +239,7 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_BUGREPORT_UPLOADING(ConfigMessageSection.VARO_COMMANDS, "bugreport.uploading", "Lade Bugreport hoch..."), 
 	VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR(ConfigMessageSection.VARO_COMMANDS, "bugreport.uploaderror", "Der Bugreport konnte nicht hochgeladen werden!"), 
 	VARO_COMMANDS_BUGREPORT_UPLOADED(ConfigMessageSection.VARO_COMMANDS, "bugreport.uploaded", "Bugreport wurde auf &c%url% &7hochgeladen!"), 
-	VARO_COMMANDS_BUGREPORT_CLICK_ME(ConfigMessageSection.VARO_COMMANDS, "bugreport.clickme", " §7(§aKlick mich§7)"), 
+	VARO_COMMANDS_BUGREPORT_CLICK_ME(ConfigMessageSection.VARO_COMMANDS, "bugreport.clickme", " &7(&aKlick mich&7)"), 
 	
 	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "abort.notactive", "Der Startcountdown ist nicht aktiv!"), 
 	VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED(ConfigMessageSection.VARO_COMMANDS, "abort.stopped", "Startcountdown erfolgreich gestoppt!"), 
@@ -307,7 +307,7 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_RANDOMTEAM_HELP(ConfigMessageSection.VARO_COMMANDS, "randomteam.help", "%colorcode%/varo randomTeam <Teamgroesse>"), 
 	VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL(ConfigMessageSection.VARO_COMMANDS, "randomteam.teamsizetoosmall", "&7Die Teamgroesse muss mindestens 1 betragen."), 
 	VARO_COMMANDS_RANDOMTEAM_SORTED(ConfigMessageSection.VARO_COMMANDS, "randomteam.sorted", "&7Alle Spieler ohne Team sind nun in %colorcode%%teamsize%er &7Teams!"), 
-	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER(ConfigMessageSection.VARO_COMMANDS, "randomteam.sorted", "&7Für dich konnten nicht genug Teampartner gefunden werden."),
+	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER(ConfigMessageSection.VARO_COMMANDS, "randomteam.sorted", "&7Fuer dich konnten nicht genug Teampartner gefunden werden."),
 
 	VARO_COMMANDS_RESTART_IN_LOBBY(ConfigMessageSection.VARO_COMMANDS, "restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED(ConfigMessageSection.VARO_COMMANDS, "restart.restarted", "&7Das Spiel wurde neugestartet."),
