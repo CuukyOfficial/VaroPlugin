@@ -88,16 +88,21 @@ public class VaroMainHeartbeatThread implements Runnable {
 						if(countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(vp));
 							vp.onEvent(BukkitEventType.KICKED);
-//							p.kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
+							// p.kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 							vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 							continue;
 						} else {
-							if(countdown == 1)
+							if(countdown == 1) {
+
 								if(!vp.canBeKicked(noKickDistance)) {
 									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
 									countdown += 1;
-								} else
+								} else {
 									Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
+								}
+							} else {
+								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
+							}
 						}
 					}
 
