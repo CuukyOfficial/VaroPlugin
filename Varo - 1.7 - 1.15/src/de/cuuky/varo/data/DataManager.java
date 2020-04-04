@@ -99,6 +99,14 @@ public class DataManager {
 			public void run() {
 				reloadConfig();
 				save();
+				
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+					
+					@Override
+					public void run() {
+						reloadPlayerClients();
+					}
+				}, 1);
 			}
 		}, 12000, 12000);
 	}
@@ -110,7 +118,9 @@ public class DataManager {
 		configHandler.reload();
 		scoreboardHandler.updateList();
 		tablistHandler.updateList();
-
+	}
+	
+	public void reloadPlayerClients() {
 		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			scoreboardHandler.sendScoreBoard(vp);
