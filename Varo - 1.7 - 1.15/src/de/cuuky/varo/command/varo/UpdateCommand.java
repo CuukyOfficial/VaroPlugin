@@ -14,7 +14,6 @@ import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
-import de.cuuky.varo.spigot.updater.VaroUpdater;
 
 public class UpdateCommand extends VaroCommand {
 
@@ -39,7 +38,7 @@ public class UpdateCommand extends VaroCommand {
 	private void update(CommandSender sender, VaroUpdateResultSet resultSet) {
 		// Step 1: Download new Version
 		try {
-			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + VaroUpdater.getRescourceId() + "/download", "plugins/Varo.jar");
+			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + Main.getRescourceId() + "/download", "plugins/Varo.jar");
 
 			sender.sendMessage(Main.getPrefix() + "Starte Download...");
 
@@ -75,7 +74,7 @@ public class UpdateCommand extends VaroCommand {
 	
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates(false);
+		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
 		UpdateResult result = resultSet.getUpdateResult();
 		String updateVersion = resultSet.getVersionName();
 
