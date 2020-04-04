@@ -26,11 +26,11 @@ public class Report implements VaroSerializeable {
 
 	@VaroSerializeField(path = "reportedId")
 	private int reportedId;
-
-	private VaroPlayer reporter, reported;
 	
 	@VaroSerializeField(path = "reporterId")
 	private int reporterId;
+	
+	private VaroPlayer reporter, reported;
 
 	public Report() {
 		reports.add(this);
