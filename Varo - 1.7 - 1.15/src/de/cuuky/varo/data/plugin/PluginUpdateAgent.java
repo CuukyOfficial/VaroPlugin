@@ -44,7 +44,7 @@ public class PluginUpdateAgent {
 				if(!needUpdate.isEmpty())
 					updatePlugins(needUpdate);
 				else {
-					System.out.println(Main.getConsolePrefix() + "Updater: All libraries up to date!");
+					System.out.println(Main.getConsolePrefix() + "Updater: All libraries are up to date!");
 					Bukkit.getScheduler().cancelTask(scheduler);
 				}
 			}
