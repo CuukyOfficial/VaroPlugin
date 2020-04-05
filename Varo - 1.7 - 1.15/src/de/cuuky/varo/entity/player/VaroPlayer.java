@@ -134,6 +134,34 @@ public class VaroPlayer extends VaroEntity {
 		}
 
 	}
+	
+	private String getTabname() {
+		String listname = "";
+		if(getTeam() != null) {
+			if(getRank() == null) {
+				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
+			} else {
+				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
+			}
+		} else {
+			if(getRank() == null) {
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
+			} else {
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+			}
+		}
+		
+		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
+		if(maxlength > 0) {
+			if(listname.length() > maxlength)
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+			
+			if(listname.length() > maxlength)
+				listname = this.name;
+		}
+		
+		return listname;
+	}
 
 	/**
 	 * @return Returns if a player is nearby
@@ -276,21 +304,7 @@ public class VaroPlayer extends VaroEntity {
 
 		Main.getDataManager().getScoreboardHandler().updatePlayer(this);
 
-		String listname = "";
-		if(getTeam() != null) {
-			if(getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
-			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
-			}
-		} else {
-			if(getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
-			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
-			}
-		}
-
+		String listname = getTabname();
 		if(this.tabName == null || !this.tabName.equals(listname))
 			player.setPlayerListName(this.tabName = listname);
 	}
