@@ -17,6 +17,10 @@ public enum BukkitVersion {
 	private BukkitVersion(int identifier) {
 		this.identifier = identifier;
 	}
+	
+	public int getIdentifier() {
+		return this.identifier;
+	}
 
 	public boolean isHigherThan(BukkitVersion ver) {
 		return identifier > ver.identifier;

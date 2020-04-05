@@ -71,6 +71,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
 		System.out.println(CONSOLE_PREFIX + "Your server: ");
 		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " (" + Bukkit.getVersion() + ")");
+		System.out.println(CONSOLE_PREFIX + "	Version-Type: " + VersionUtils.getVersion().getIdentifier());
 		System.out.println(CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 		
 		if(VersionUtils.getServerSoftware() != ServerSoftware.UNKNOWN)

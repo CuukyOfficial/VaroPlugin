@@ -26,7 +26,7 @@ public class VersionUtils {
 
 		try {
 			chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent$ChatSerializer");
-		} catch(ClassNotFoundException e) {
+		} catch(ClassNotFoundException | NullPointerException e) {
 			try {
 				chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".ChatSerializer");
 			} catch(ClassNotFoundException e1) {}
