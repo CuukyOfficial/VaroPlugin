@@ -29,6 +29,7 @@ public class Main extends JavaPlugin {
 	 */
 
 	private static final String CONSOLE_PREFIX = "[Varo] ";
+	private static final int RESCOURCE_ID = 71075;
 
 	private static Main instance;
 
@@ -91,7 +92,13 @@ public class Main extends JavaPlugin {
 			dataManager = new DataManager();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
-			varoUpdater = new VaroUpdater();
+			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), new Runnable() {
+				
+				@Override
+				public void run() {
+					varoUpdater.printResults();
+				}
+			});
 			botLauncher = new BotLauncher();
 
 			new MetricsLoader(this);
@@ -220,5 +227,9 @@ public class Main extends JavaPlugin {
 
 	public static Main getInstance() {
 		return instance;
+	}
+	
+	public static int getRescourceId() {
+		return RESCOURCE_ID;
 	}
 }

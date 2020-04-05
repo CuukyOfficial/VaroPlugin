@@ -21,17 +21,12 @@ public class VaroWorldHandler {
 	private VaroWorld mainVaroWorld;
 	private ArrayList<VaroWorld> worlds;
 
-	private double borderSize;
-
 	public VaroWorldHandler() {
 		World mainworld = Bukkit.getWorld(Main.getDataManager().getPropertiesReader().getConfiguration().get("level-name"));
 		this.mainVaroWorld = new VaroWorld(mainworld);
 
 		this.worlds = new ArrayList<>();
 		this.worlds.add(mainVaroWorld);
-
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			this.borderSize = this.mainVaroWorld.getVaroBorder().getBorderSize();
 
 		for(World world : Bukkit.getWorlds())
 			if(!world.equals(mainVaroWorld.getWorld()))
@@ -61,7 +56,7 @@ public class VaroWorldHandler {
 		this.worlds.add(vworld);
 
 		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
-			vworld.getVaroBorder().setBorderSize(this.borderSize, 0);
+			vworld.getVaroBorder().setBorderSize(getBorderSize(), 0);
 	}
 
 	public void decreaseBorder(DecreaseReason reason) {
@@ -73,7 +68,6 @@ public class VaroWorldHandler {
 
 			@Override
 			public void run() {
-				borderSize = borderSize - reason.getSize();
 				reason.postBroadcast();
 			}
 		});
@@ -91,7 +85,6 @@ public class VaroWorldHandler {
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
-		this.borderSize = size;
 		if(ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
 			for(VaroWorld vworld : worlds)
 				vworld.getVaroBorder().setBorderSize(size, time);
@@ -111,7 +104,7 @@ public class VaroWorldHandler {
 
 	public double getBorderSize(World world) {
 		if(ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
-			return this.borderSize;
+			return getBorderSize();
 		else {
 			if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 				return 0;
@@ -119,6 +112,13 @@ public class VaroWorldHandler {
 			VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
 			return vworld.getVaroBorder().getBorderSize();
 		}
+	}
+
+	public double getBorderSize() {
+		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			return 0;
+
+		return this.mainVaroWorld.getVaroBorder().getBorderSize();
 	}
 
 	public ArrayList<VaroWorld> getWorlds() {

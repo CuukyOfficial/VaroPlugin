@@ -5,14 +5,14 @@ import java.util.Arrays;
 
 public enum ServerSoftware {
 
-	BUKKIT("Bukkit", false),
-	SPIGOT("Spigot", false),
-	PAPER("PaperSpigot", false),
-	TACO("TacoSpigot", false),
-	MAGMA("Magma", true),
-	THERMOS("Thermos", true),
-	URANIUM("Uranium", true),
-	UNKNOWN("Unknown", false);
+	BUKKIT("Bukkit", false, "Bukkit"),
+	SPIGOT("Spigot", false, "Spigot"),
+	PAPER("PaperSpigot", false,"PaperSpigot", "Paper"),
+	TACO("TacoSpigot", false,"TacoSpigot"),
+	MAGMA("Magma", true, "Magma"),
+	THERMOS("Thermos", true, "Thermos"),
+	URANIUM("Uranium", true, "Uranium"),
+	UNKNOWN("Unknown", true);
 
 	private static ArrayList<Character> abc;
 
@@ -20,16 +20,22 @@ public enum ServerSoftware {
 		abc = new ArrayList<Character>(Arrays.asList(new Character[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' }));
 	}
 
-	private String versionname;
+	private String name;
+	private String[] versionnames;
 	private boolean modsupport;
 
-	private ServerSoftware(String versionname, boolean modsupport) {
-		this.versionname = versionname;
+	private ServerSoftware(String name, boolean modsupport, String... versionnames) {
+		this.name = name;
+		this.versionnames = versionnames;
 		this.modsupport = modsupport;
 	}
-
+	
 	public String getName() {
-		return this.versionname;
+		return this.name;
+	}
+
+	public String[] getVersionNames() {
+		return this.versionnames;
 	}
 
 	public boolean hasModSupport() {
@@ -40,26 +46,30 @@ public enum ServerSoftware {
 		version = version.toLowerCase();
 
 		ServerSoftware found = null;
+		String foundName = null;
 		for(ServerSoftware software : values()) {
-			String softwareName = software.getName().toLowerCase();
+			for(String softwareName : software.getVersionNames()) {
+				softwareName = softwareName.toLowerCase();
 
-			if(!version.contains(softwareName) || found != null && softwareName.length() < found.getName().length())
-				continue;
+				if(!version.contains(softwareName) || found != null && softwareName.length() < foundName.length())
+					continue;
 
-			found = software;
+				found = software;
+				foundName = softwareName;
+			}
 		}
 
 		if(found == null)
 			found = UNKNOWN;
 		else if(found != UNKNOWN) {
-			int location = version.indexOf(found.getName().toLowerCase());
+			int location = version.indexOf(foundName);
 
 			if(location - 1 > -1)
 				if(abc.contains(version.charAt(location - 1)))
 					found = UNKNOWN;
 
-			if(location + found.getName().length() + 1 < version.length())
-				if(abc.contains(version.charAt(location + found.getName().length())))
+			if(location + foundName.length() + 1 < version.length())
+				if(abc.contains(version.charAt(location + foundName.length())))
 					found = UNKNOWN;
 		}
 

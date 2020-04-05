@@ -31,6 +31,7 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_13) ? "GRASS_BLOCK" : "GRASS", "Welche Block-ID der Block,\nden man abbaut haben soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
+	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP,"spawnGeneratorYTolerance", 4, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
 
 	BACKPACK_PLAYER_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackPlayerDropOnDeath", true, "Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll."),
 
@@ -55,7 +56,6 @@ public enum ConfigSetting implements SectionEntry {
 	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds", true, "Wenn aktiviert, koennen keine Links in den oeffentlichen Chat gepostet werden."),
 
 	// WORLD
-	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.WORLD,"spawnGeneratorYTolerance", 4, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
 	BLOCK_DESTROY_LOGGER(ConfigSettingSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Bloecke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
 	BLOCK_USER_PORTALS(ConfigSettingSection.WORLD, "blockUserPortals", true, "Ob Spieler nicht ihre eigenen\nPortale bauen koennen"),
 	WORLD_ENTITY_TRACER(ConfigSettingSection.WORLD, "entityTracer", false, "Ob Wassertropfen Items oder Projektilen\nfolgen sollen"),

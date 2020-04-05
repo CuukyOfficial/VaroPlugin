@@ -42,6 +42,7 @@ public class PresetCommand extends VaroCommand {
 
 			loader.loadSettings();
 			Main.getDataManager().reloadConfig();
+			Main.getDataManager().reloadPlayerClients();
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LOADED.getValue().replace("%preset%", args[1]));
 		} else if(args[0].equalsIgnoreCase("save")) {
 			if(args.length != 2) {

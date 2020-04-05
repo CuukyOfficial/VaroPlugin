@@ -1,6 +1,7 @@
 package de.cuuky.varo.data.plugin;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -13,9 +14,12 @@ public enum DownloadPlugin {
 	TELEGRAM(66823, "Telegrambot", "com.pengrad.telegrambot.TelegramBot", ConfigSetting.TELEGRAM_ENABLED),
 	LABYMOD(52423, "Labymod", "net.labymod.serverapi.LabyModAPI", ConfigSetting.DISABLE_LABYMOD_FUNCTIONS, ConfigSetting.KICK_LABYMOD_PLAYER, ConfigSetting.ONLY_LABYMOD_PLAYER);
 
+	private static final String PLUGIN_DIR = "plugins/";
+	
 	private int id;
 	private String requiredClassName, name;
 	private ConfigSetting[] configSettings;
+	private JavaPlugin plugin;
 
 	private DownloadPlugin(int id, String name, String requiredClassName, ConfigSetting... configSettings) {
 		this.id = id;
@@ -31,9 +35,21 @@ public enum DownloadPlugin {
 	public String getName() {
 		return this.name;
 	}
+	
+	public String getPath()  {
+		return PLUGIN_DIR + name + ".jar";
+	}
 
 	public String getRequiredClassName() {
 		return this.requiredClassName;
+	}
+	
+	public void setPlugin(JavaPlugin plugin) {
+		this.plugin = plugin;
+	}
+	
+	public JavaPlugin getPlugin() {
+		return this.plugin;
 	}
 	
 	public boolean shallLoad() {
