@@ -14,6 +14,8 @@ public abstract class VaroList {
 	private static ArrayList<VaroList> lists;
 
 	static {
+		lists = new ArrayList<>();
+		
 		reloadConfig();
 	}
 
@@ -51,7 +53,6 @@ public abstract class VaroList {
 	private static void reloadConfig() {
 		file = new File("plugins/Varo/config", "lists.yml");
 		config = YamlConfiguration.loadConfiguration(file);
-		lists = new ArrayList<VaroList>();
 	}
 
 	public static ArrayList<VaroList> getLists() {
