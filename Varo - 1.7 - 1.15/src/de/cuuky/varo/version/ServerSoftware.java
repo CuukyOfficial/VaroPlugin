@@ -7,9 +7,10 @@ public enum ServerSoftware {
 
 	BUKKIT("Bukkit", false, "Bukkit"),
 	SPIGOT("Spigot", false, "Spigot"),
-	PAPER("PaperSpigot", false,"PaperSpigot", "Paper"),
-	TACO("TacoSpigot", false,"TacoSpigot"),
+	PAPER("PaperSpigot", false, "PaperSpigot", "Paper"),
+	TACO("TacoSpigot", false, "TacoSpigot"),
 	MAGMA("Magma", true, "Magma"),
+	CAULDRON("Cauldron", true, "Cauldron"),
 	THERMOS("Thermos", true, "Thermos"),
 	URANIUM("Uranium", true, "Uranium"),
 	UNKNOWN("Unknown", true);
@@ -29,7 +30,7 @@ public enum ServerSoftware {
 		this.versionnames = versionnames;
 		this.modsupport = modsupport;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
@@ -42,8 +43,9 @@ public enum ServerSoftware {
 		return this.modsupport;
 	}
 
-	public static ServerSoftware getServerSoftware(String version) {
+	public static ServerSoftware getServerSoftware(String version, String name) {
 		version = version.toLowerCase();
+		name = name.toLowerCase();
 
 		ServerSoftware found = null;
 		String foundName = null;
@@ -71,6 +73,20 @@ public enum ServerSoftware {
 			if(location + foundName.length() + 1 < version.length())
 				if(abc.contains(version.charAt(location + foundName.length())))
 					found = UNKNOWN;
+		}
+
+		if(found == UNKNOWN) {
+			for(ServerSoftware software : values()) {
+				for(String softwareName : software.getVersionNames()) {
+					softwareName = softwareName.toLowerCase();
+
+					if(!name.equals(softwareName))
+						continue;
+
+					found = software;
+					foundName = softwareName;
+				}
+			}
 		}
 
 		return found;
