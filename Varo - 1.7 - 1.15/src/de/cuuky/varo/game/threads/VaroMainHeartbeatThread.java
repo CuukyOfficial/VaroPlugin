@@ -93,16 +93,13 @@ public class VaroMainHeartbeatThread implements Runnable {
 							continue;
 						} else {
 							if(countdown == 1) {
-
 								if(!vp.canBeKicked(noKickDistance)) {
 									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
 									countdown += 1;
-								} else {
-									Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
-								}
-							} else {
-								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown)));
-							}
+								} else
+									 Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
+							} else
+								 Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
 						}
 					}
 
