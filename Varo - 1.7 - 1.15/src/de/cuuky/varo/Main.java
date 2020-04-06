@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
+import de.koburs.APIMain;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -80,6 +81,17 @@ public class Main extends JavaPlugin {
 		if(VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT) {
 			System.out.println(CONSOLE_PREFIX + "	It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
 			System.out.println(CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
+		}
+
+		try {
+			boolean answer = APIMain.initialiseAPI(this, "varo.admin");
+			if (!answer) {
+				Bukkit.shutdown();
+			}
+		} catch (Error | Exception e) {
+			System.err.println("Es gab einen Fehler mit der Koburs-Einbindung.\n" +
+					"Zur Sicherheit wird der Server heruntergefahren.");
+			Bukkit.shutdown();
 		}
 
 		try {

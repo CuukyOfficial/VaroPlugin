@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.utils.PlayerCheckUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -78,6 +79,10 @@ public class TeamCommand extends VaroCommand {
 						} catch(Exception f) {
 							sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 						}
+						continue;
+					}
+
+					if (!PlayerCheckUtils.checkPlayer(sender, args[0])) {
 						continue;
 					}
 
@@ -221,6 +226,11 @@ public class TeamCommand extends VaroCommand {
 
 				varoplayer.getTeam().removeMember(varoplayer);
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + varoplayer.getName() + " §7wurde aus seinem jetzigen Team entfernt!");
+			}
+
+			if (!PlayerCheckUtils.checkPlayer(sender, args[0])) {
+				VaroPlayer.getVaroPlayer().remove(varoplayer);
+				return;
 			}
 
 			team.addMember(varoplayer);
