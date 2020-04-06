@@ -153,7 +153,7 @@ public class AdminMainMenu extends SuperInventory {
 				opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
 				opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
 				opener.sendMessage(Main.getPrefix() + "§7Discordserver: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
-				opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
+				opener.sendMessage(Main.getPrefix() + "§7VaroPlugin is licensed under the GNU Affero General Public License v3.0");
 			}
 		});
 
