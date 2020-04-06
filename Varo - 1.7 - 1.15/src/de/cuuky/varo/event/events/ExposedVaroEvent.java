@@ -23,7 +23,7 @@ public class ExposedVaroEvent extends VaroEvent {
 	private PotionEffectType type;
 
 	public ExposedVaroEvent() {
-		super(VaroEventType.EXPOSED, Material.REDSTONE, "Laesst die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete");
+		super(VaroEventType.EXPOSED, Material.REDSTONE, "Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete");
 
 		type = PotionEffectType.getByName("GLOWING");
 	}

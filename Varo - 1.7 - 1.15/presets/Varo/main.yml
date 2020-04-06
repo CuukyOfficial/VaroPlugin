@@ -8,14 +8,14 @@
 #   Default-Value: true
 # 
 #  nametags:
-#   Ob das Plugin die Nametags ueber
-#   den Koepfen der Spieler veraendern soll.
+#   Ob das Plugin die Nametags über
+#   den Köpfen der Spieler verändern soll.
 #   Hinweis: du kannst diese in der messages.yml einstellen.
 #   Default-Value: true
 # 
 #  playTime:
 #   Zeit in Minuten, wie lange die Spieler
-#   pro Session auf dem Server spielen koennen.
+#   pro Session auf dem Server spielen können.
 #   Unlimited = -1
 #   Default-Value: 15
 # 
@@ -30,8 +30,8 @@
 #   Default-Value: Varo
 # 
 #  projectnameColorcode:
-#   Dieser Farbcode ist der Massgebende,
-#   der ueberall im Projekt verwendet wird..
+#   Dieser Farbcode ist der Maßgebende,
+#   der überall im Projekt verwendet wird..
 #   Default-Value: &3
 # 
 #  resetSessionHour:
@@ -55,7 +55,7 @@
 #   Default-Value: true
 # 
 #  unregisteredPlayerJoin:
-#   Ob unregistrierte Spieler joinen duerfen.
+#   Ob unregistrierte Spieler joinen dürfen.
 #   Default-Value: true
 # -------------------------
 

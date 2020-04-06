@@ -64,7 +64,7 @@ public class StatsCommand extends VaroCommand {
 
 				vp.update();
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
+				sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht für " + this.toString() + " gesetzt werden!");
 				return false;
 			}
 			return true;
@@ -128,7 +128,7 @@ public class StatsCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set §7<Spieler/@a> <Stat> <Value>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Spieler/@a> <Stat>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats reset §7<Spieler/@a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats odvReset §7<Spieler/@a> | Resettet alles ausser Kills, Wins, Rank, Team und YT-Link");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats odvReset §7<Spieler/@a> | Resettet alles außer Kills, Wins, Rank, Team und YT-Link");
 			return;
 		}
 
@@ -176,16 +176,16 @@ public class StatsCommand extends VaroCommand {
 				if(args[0].equalsIgnoreCase("set")) {
 					for(VaroPlayer all : VaroPlayer.getVaroPlayer())
 						if(!type.execute(args[3], all, sender)) {
-							sender.sendMessage(Main.getPrefix() + "Vorgang fuer alle Spieler abgebrochen!");
+							sender.sendMessage(Main.getPrefix() + "Vorgang für alle Spieler abgebrochen!");
 							return;
 						}
 
-					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer alle Spieler erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
+					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für alle Spieler erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
 				} else {
 					for(VaroPlayer all : VaroPlayer.getVaroPlayer())
 						type.remove(all);
 
-					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer alle Spieler erfolgreich zurueckgesetzt/entfernt!");
+					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für alle Spieler erfolgreich zurückgesetzt/entfernt!");
 				}
 
 				return;
@@ -193,23 +193,23 @@ public class StatsCommand extends VaroCommand {
 
 			if(args[0].equalsIgnoreCase("set")) {
 				if(type.execute(args[3], target, sender))
-					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer '" + Main.getColorCode() + target.getName() + "§7' erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
+					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für '" + Main.getColorCode() + target.getName() + "§7' erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
 			} else {
 				type.remove(target);
-				sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer '" + Main.getColorCode() + target.getName() + "§7' erfolgreich zurueckgesetzt/entfernt!");
+				sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für '" + Main.getColorCode() + target.getName() + "§7' erfolgreich zurückgesetzt/entfernt!");
 			}
 		} else if(args[0].equalsIgnoreCase("reset")) {
 			if(target == null) {
 				for(VaroPlayer all : VaroPlayer.getVaroPlayer())
 					all.getStats().loadDefaults();
 
-				sender.sendMessage(Main.getPrefix() + "Alle Spieler erfolgreich zurueckgesetzt!");
+				sender.sendMessage(Main.getPrefix() + "Alle Spieler erfolgreich zurückgesetzt!");
 				return;
 			}
 
 			target.getStats().loadDefaults();
 
-			sender.sendMessage(Main.getPrefix() + "Spieler '" + Main.getColorCode() + target.getName() + "§7' erfolgreich zurueckgesetzt!");
+			sender.sendMessage(Main.getPrefix() + "Spieler '" + Main.getColorCode() + target.getName() + "§7' erfolgreich zurückgesetzt!");
 		} else if(args[0].equalsIgnoreCase("odvreset")) {
 			if(target == null) {
 				for(VaroPlayer all : VaroPlayer.getVaroPlayer()) {
@@ -219,7 +219,7 @@ public class StatsCommand extends VaroCommand {
 						all.getTeam().removeMember(all);
 				}
 
-				sender.sendMessage(Main.getPrefix() + "Alle Spieler erfolgreich ODV-zurueckgesetzt!");
+				sender.sendMessage(Main.getPrefix() + "Alle Spieler erfolgreich ODV-zurückgesetzt!");
 				return;
 			}
 
@@ -228,7 +228,7 @@ public class StatsCommand extends VaroCommand {
 			if(target.getTeam() != null)
 				target.getTeam().removeMember(target);
 
-			sender.sendMessage(Main.getPrefix() + "Spieler '" + Main.getColorCode() + target.getName() + "§7' erfolgreich ODV-zurueckgesetzt!");
+			sender.sendMessage(Main.getPrefix() + "Spieler '" + Main.getColorCode() + target.getName() + "§7' erfolgreich ODV-zurückgesetzt!");
 		} else
 			sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + label + " stats §7for help.");
 	}

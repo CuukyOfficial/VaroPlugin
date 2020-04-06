@@ -16,7 +16,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 public class PlaceholderCommand extends VaroCommand {
 
 	public PlaceholderCommand() {
-		super("placeholder", "Zeigt alle Platzhalter fuer messages, scoreboard etc.", "varo.placeholder", "ph");
+		super("placeholder", "Zeigt alle Platzhalter für messages, scoreboard etc.", "varo.placeholder", "ph");
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class PlaceholderCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Placeholder Befehle:");
 			sender.sendMessage(Main.getPrefix());
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7info <name> §8- §7Zeigt Wert und Info vom gegebenen Placeholder");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7general §8- §7Zeigt alle ueberall anwendbaren Placeholder");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7general §8- §7Zeigt alle überall anwendbaren Placeholder");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7player §8- §7Zeigt alle im Spielerkontext anwendbaren Placeholder");
 			sender.sendMessage(Main.getPrefix());
 			sender.sendMessage(Main.getPrefix() + "Player-Beispiele: Killmessage, Scoreboard, Kickmessage, Tab");

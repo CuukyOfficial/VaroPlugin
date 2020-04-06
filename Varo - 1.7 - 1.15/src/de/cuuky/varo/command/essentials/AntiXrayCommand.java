@@ -56,7 +56,7 @@ public class AntiXrayCommand implements CommandExecutor {
 			String engineMode = spigotConfig.getString("world-settings.default.anti-xray.engine-mode");
 			if(enabled == null || engineMode == null) {
 				sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler mit dem Anti-Xray-System.");
-				sender.sendMessage(Main.getPrefix() + "Dies kann daran liegen, dass du eine nicht-unterstuetzte Serverversion benutzt.");
+				sender.sendMessage(Main.getPrefix() + "Dies kann daran liegen, dass du eine nicht-unterstützte Serverversion benutzt.");
 				return false;
 			}
 			if(!enabled.contentEquals("true") || !engineMode.contentEquals("2")) {
@@ -94,7 +94,7 @@ public class AntiXrayCommand implements CommandExecutor {
 		}
 
 		if(xrayAvailable == 2) {
-			sender.sendMessage(Main.getPrefix() + "In deiner Serverversion ist kein Anti-Xray verfuegbar.");
+			sender.sendMessage(Main.getPrefix() + "In deiner Serverversion ist kein Anti-Xray verfügbar.");
 			return false;
 		}
 

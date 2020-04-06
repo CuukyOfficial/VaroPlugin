@@ -7,7 +7,7 @@ public enum StartDelay {
 	HOUR(3600, "Stunde", "einer"),
 	HALF_HOUR(1800, "Stunde", "einer halben"),
 	TEN_MINTUES(60 * 10, "Minuten", "zehn"),
-	FIVE_MINTUES(60 * 5, "Minuten", "fuenf"),
+	FIVE_MINTUES(60 * 5, "Minuten", "fünf"),
 	FOUR_MINTUES(60 * 4, "Minuten", "vier"),
 	THREE_MINTUES(60 * 3, "Minuten", "drei"),
 	TWO_MINTUES(60 * 2, "Minuten", "zwei"),

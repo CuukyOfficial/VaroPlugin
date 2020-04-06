@@ -57,7 +57,7 @@ public class PlayerChatListener implements Listener {
 			}
 		}
 		if(mentionsHack == true && ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
-			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Scamming und aehnliches im Korbus-System mit §l/report");
+			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Scamming und ähnliches im Korbus-System mit §l/report");
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);

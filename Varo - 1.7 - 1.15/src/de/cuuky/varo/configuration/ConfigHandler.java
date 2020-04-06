@@ -165,7 +165,7 @@ public class ConfigHandler {
 	 * @return Every description of every ConfigEntry combined
 	 */
 	private String getConfigHeader(SectionConfiguration section) {
-		String header = "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRAEGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:";
+		String header = "WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!\n Hier ist die Beschreibung der Config:";
 		String desc = "\n----------- " + section.getName() + " -----------" + "\nBeschreibung: " + section.getDescription() + "\n";
 
 		for(SectionEntry entry : section.getEntries()) {
@@ -185,7 +185,7 @@ public class ConfigHandler {
 	public void testConfig() {
 		boolean shutdown = false;
 		if(ConfigSetting.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Groesse des Rucksackes darf nicht mehr als 54 betragen.");
+			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Größe des Rucksackes darf nicht mehr als 54 betragen.");
 			shutdown = true;
 		}
 

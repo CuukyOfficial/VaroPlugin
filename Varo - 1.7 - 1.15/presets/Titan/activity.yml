@@ -1,7 +1,7 @@
 # WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
 #  Hier ist die Beschreibung der Config:
 # ----------- Activity -----------
-# Beschreibung: Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen.
+# Beschreibung: Hier kannst du Einstellungen zur Aktivität eines Spielers vornehmen.
 # 
 #  noBloodlustDays:
 #   Nach wie vielen Tagen ohne Gegnerkontakt
@@ -10,7 +10,7 @@
 #   Default-Value: -1
 # 
 #  noActivityDays:
-#   Nach wie vielen Tagen ohne Aktiviaet auf dem
+#   Nach wie vielen Tagen ohne Aktiviät auf dem
 #   Server der Spieler gemeldet werden soll.
 #   Off = -1
 #   Default-Value: -1
@@ -18,7 +18,7 @@
 #  postCoordsDays:
 #   Postet nach den genannten Tagen
 #   von allen Spielern die Koordinatenum die Uhrzeit,
-#   um der auch Sessions etc. geprueft werden
+#   um der auch Sessions etc. geprüft werden
 #   Default-Value: -1
 # 
 #  strikeOnBloodlust:
@@ -29,7 +29,7 @@
 # 
 #  strikeOnNoActivity:
 #   Ob der Spieler nach den oben genannten Tagen
-#   ohne Aktivitaet auf dem Servergestriket werden soll.
+#   ohne Aktivität auf dem Servergestriket werden soll.
 #   Default-Value: false
 # -------------------------
 

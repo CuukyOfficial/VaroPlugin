@@ -27,9 +27,9 @@ public class BloodLustCheck extends Checker {
 			Date lastContact = player.getStats().getLastEnemyContact();
 
 			if(lastContact.before(DateUtils.addDays(new Date(), -days))) {
-				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekaempft!");
+				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekämpft!");
 				if(strike) {
-					player.getStats().addStrike(new Strike("Es wurde fuer zu viele Tage nicht gekaempft.", player, "CONSOLE"));
+					player.getStats().addStrike(new Strike("Es wurde für zu viele Tage nicht gekämpft.", player, "CONSOLE"));
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(player).replace("%days%", String.valueOf(days)));
 				} else
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(player).replace("%days%", String.valueOf(days)));

@@ -46,7 +46,7 @@ public class LobbyItem {
 			public void onEntityHit(EntityDamageByEntityEvent event) {}
 		});
 
-		new ItemHook(player, new ItemBuilder().lore(new String[] { "§7Mit diesem Item kannst du Spieler schlagen", "§7woraufhin sie in dein Team eingeladen werden!" }).itemstack(new ItemStack(Material.DIAMOND_SWORD)).displayname(Main.getColorCode() + "Schlagen §7fuer Team").build(), 0, new ItemHookListener() {
+		new ItemHook(player, new ItemBuilder().lore(new String[] { "§7Mit diesem Item kannst du Spieler schlagen", "§7woraufhin sie in dein Team eingeladen werden!" }).itemstack(new ItemStack(Material.DIAMOND_SWORD)).displayname(Main.getColorCode() + "Schlagen §7für Team").build(), 0, new ItemHookListener() {
 
 			@Override
 			public void onInteractEntity(PlayerInteractEntityEvent event) {}

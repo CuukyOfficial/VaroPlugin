@@ -24,7 +24,7 @@ public class InvSeeCommand implements CommandExecutor {
 		}
 
 		if(!(sender instanceof Player)) {
-			sender.sendMessage(Main.getPrefix() + "Nicht fuer die Konsole!");
+			sender.sendMessage(Main.getPrefix() + "Nicht für die Konsole!");
 			return false;
 		}
 

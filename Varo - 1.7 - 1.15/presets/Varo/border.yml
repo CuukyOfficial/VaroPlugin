@@ -9,8 +9,8 @@
 #   Default-Value: 1
 # 
 #  synchronizeBorders:
-#   Ob die Groesse der Border
-#   fuer alle Welten zaehlen soll
+#   Ob die Größe der Border
+#   für alle Welten zählen soll
 #   Default-Value: true
 # 
 #  deathBorderDecrease.enabled:
@@ -18,7 +18,7 @@
 #   Default-Value: true
 # 
 #  deathBorderDecrease.size:
-#   Um wie viele Bloecke sich die
+#   Um wie viele Blöcke sich die
 #   Border bei Tod verringern soll.
 #   Default-Value: 25
 # 
@@ -42,7 +42,7 @@
 #   Default-Value: 50
 # 
 #  dayBorderDecrease.speed:
-#   Wie viele Bloecke pro Sekunde sich
+#   Wie viele Blöcke pro Sekunde sich
 #   die Border nach Tagen verkleinern soll.
 #   Default-Value: 5
 # 
@@ -61,12 +61,12 @@
 #   Default-Value: 50
 # 
 #  minuteBorderDecrease.speed:
-#   Wie viele Bloecke pro Sekunde sichdie
+#   Wie viele Blöcke pro Sekunde sichdie
 #   Border nach Minuten verkleinern soll.
 #   Default-Value: 5
 # 
 #  minuteBorderDecrease.bcInterval:
-#   In welchen Sekundenabstaenden die Zeit bis zur Verkleinerung
+#   In welchen Sekundenabständen die Zeit bis zur Verkleinerung
 #   gebroacastet werden soll
 #   Default-Value: 300
 # 
@@ -80,7 +80,7 @@
 #   Default-Value: 300
 # 
 #  outsideBorderSpawnTeleport:
-#   Ob, wenn ein Spieler ausserhalb der Border joint, er in die Mitte teleportiert werden soll.
+#   Ob, wenn ein Spieler außerhalb der Border joint, er in die Mitte teleportiert werden soll.
 #   Default-Value: true
 # 
 #  showDistanceToBorder:

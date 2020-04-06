@@ -1,7 +1,7 @@
 # WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
 #  Hier ist die Beschreibung der Config:
 # ----------- JoinSystems -----------
-# Beschreibung: Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen.
+# Beschreibung: Hier kannst du einstellen, wann und wie oft Spieler joinen dürfen.
 # 
 #  catchUpSessions:
 #   NUR FÜR ERSTES JOIN SYSTEM
@@ -15,54 +15,54 @@
 #  joinAfterHours:
 #   ZWEITES JOIN SYSTEM
 #   Stellt ein, nach wie vielen Stunden
-#   Spieler regulaer wieder den Server betreten duerfen
+#   Spieler regulär wieder den Server betreten dürfen
 #   Default-Value: -1
 # 
 #  kickAtServerClose:
-#   Kickt den Spieler, sobald er ausserhalb
+#   Kickt den Spieler, sobald er außerhalb
 #   dererlaubten Zeit auf dem Server ist.
 #   Default-Value: false
 # 
 #  massRecordingTime:
-#   Die Laenge der Massenaufnahme, in der alle joinen koennen.
+#   Die Länge der Massenaufnahme, in der alle joinen können.
 #   Default-Value: 15
 # 
 #  onlyJoinBetweenHours:
 #   FÜR BEIDE JOIN SYSTEME
 #   Stellt ein, ob Spieler nur zwischen
-#   2 unten festgelegten Zeiten joinen duerfen.
+#   2 unten festgelegten Zeiten joinen dürfen.
 #   Default-Value: false
 # 
 #  onlyJoinBetweenHoursHour1:
 #   Erste Uhrzeit, zwischen welchen
-#   die Spieler joinen duerfen.
+#   die Spieler joinen dürfen.
 #   Default-Value: 14
 # 
 #  onlyJoinBetweenHoursMinute1:
 #   Erste Minuten-Uhrzeit, zwischen welchen
-#   die Spieler joinen duerfen.
+#   die Spieler joinen dürfen.
 #   Default-Value: 0
 # 
 #  onlyJoinBetweenHoursHour2:
 #   Zweite Uhrzeit, zwischen welchen
-#   die Spieler joinen duerfen.
+#   die Spieler joinen dürfen.
 #   Default-Value: 16
 # 
 #  onlyJoinBetweenHoursMinute2:
 #   Zweite Minuten-Uhrzeit, zwischen welchen
-#   die Spieler joinen duerfen.
+#   die Spieler joinen dürfen.
 #   Default-Value: 0
 # 
 #  preProduceSessions:
 #   FÜR BEIDE JOIN SYSTEME
-#   Stellt ein, wie viele Folgen der Spieler zusaetzlich zu
-#   den Regulaeren vorproduzieren darf.
+#   Stellt ein, wie viele Folgen der Spieler zusätzlich zu
+#   den Regulären vorproduzieren darf.
 #   Default-Value: 3
 # 
 #  sessionsPerDay:
 #   ERSTES JOIN SYSTEM
 #   Stellt ein, wie oft Spieler am Tag
-#   den Server regulaer betreten duerfen.
+#   den Server regulär betreten dürfen.
 #   Default-Value: 1
 # -------------------------
 

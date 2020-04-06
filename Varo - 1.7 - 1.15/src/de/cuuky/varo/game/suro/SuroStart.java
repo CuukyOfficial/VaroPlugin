@@ -29,7 +29,7 @@ public class SuroStart {
 		titles.add("§c%players% weitere Spieler auch!");
 		titles.add("§6Bist du bereit, §a%name%§6?");
 		titles.add("§aJa?");
-		titles.add("§6dann viel Glueck bei...");
+		titles.add("§6dann viel Glück bei...");
 		titles.add("§cMINECRAFT " + ConfigSetting.PROJECT_NAME.getValueAsString().toUpperCase() + "!");
 		titles.add("§cWach auf!");
 		titles.add("§c10!");

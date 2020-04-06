@@ -14,7 +14,7 @@ import de.cuuky.varo.preset.PresetLoader;
 public class PresetCommand extends VaroCommand {
 
 	public PresetCommand() {
-		super("preset", "Command fuer die Presets", "varo.preset", "presettings", "presets");
+		super("preset", "Command für die Presets", "varo.preset", "presettings", "presets");
 	}
 
 	@Override

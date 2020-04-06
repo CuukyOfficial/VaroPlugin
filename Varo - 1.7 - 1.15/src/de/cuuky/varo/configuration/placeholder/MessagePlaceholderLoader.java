@@ -132,7 +132,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse") {
+		new GeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergröße") {
 
 			@Override
 			protected String getValue() {
@@ -172,7 +172,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("nextLine", -1, "Fuegt neue Zeile ein") {
+		new GeneralMessagePlaceholder("nextLine", -1, "Fügt neue Zeile ein") {
 
 			@Override
 			protected String getValue() {
