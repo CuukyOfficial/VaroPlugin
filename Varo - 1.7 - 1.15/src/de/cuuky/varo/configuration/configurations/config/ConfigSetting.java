@@ -49,7 +49,7 @@ public enum ConfigSetting implements SectionEntry {
 	BAN_HACKING_ENABLED(ConfigSettingSection.BAN, "hacking", true, "Ob Spieler, die wegen Hacking von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
 	BAN_SCAMMING_ENABLED(ConfigSettingSection.BAN, "scamming", true, "Ob Spieler, die wegen Scammen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
 	BAN_BAD_BEHAVIOUR_ENABLED(ConfigSettingSection.BAN, "behaviour", true, "Ob Spieler, die aufgrund schlechten Verhaltens von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
-	BAN_IDENTITY_THEFT_ENABLED(ConfigSettingSection.BAN, "identityTheft", true, "Ob Spieler, die wegen Itenditätsdiebstahls von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_IDENTITY_THEFT_ENABLED(ConfigSettingSection.BAN, "identityTheft", true, "Ob Spieler, die wegen Identitätsdiebstahls von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
 	BAN_OTHER_ENABLED(ConfigSettingSection.BAN, "other", true, "Ob Spieler, die aus anderen Gründen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
 
 	// CHAT
