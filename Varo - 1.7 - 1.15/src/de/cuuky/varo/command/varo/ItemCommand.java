@@ -35,7 +35,7 @@ public class ItemCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fuegt die Sachen der Listen hinzu, die du in der Hand haeltst.");
+			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fuegt die Sachen der Listen hinzu, die du in der Hand hältst.");
 			sender.sendMessage(Main.getPrefix() + "§7-----------------");
 			return;
 		}

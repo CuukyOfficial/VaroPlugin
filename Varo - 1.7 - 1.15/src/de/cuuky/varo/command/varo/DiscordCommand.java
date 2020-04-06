@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.entities.User;
 public class DiscordCommand extends VaroCommand {
 
 	public DiscordCommand() {
-		super("discord", "Der Hauptbefehl fuer den DiscordBot", null);
+		super("discord", "Der Hauptbefehl für den DiscordBot", null);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class DiscordCommand extends VaroCommand {
 
 			User user = Main.getBotLauncher().getDiscordbot().getJda().getUserById(reg.getUserId());
 			if(user == null) {
-				sender.sendMessage(Main.getPrefix() + "§7User fuer diesen Spieler nicht gefunden!");
+				sender.sendMessage(Main.getPrefix() + "§7User für diesen Spieler nicht gefunden!");
 				return;
 			}
 

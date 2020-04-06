@@ -46,7 +46,7 @@ public class GetLinkCommand extends DiscordBotCommand {
 
 		User user = super.getDiscordBot().getJda().getUserById(reg.getUserId());
 		if(user == null) {
-			event.getChannel().sendMessage(Main.getPrefix() + "User fuer diesen Spieler nicht gefunden!").queue();
+			event.getChannel().sendMessage(Main.getPrefix() + "User für diesen Spieler nicht gefunden!").queue();
 			return;
 		}
 

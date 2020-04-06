@@ -4,21 +4,21 @@
 # Beschreibung: Hier kannst du alle Einstellungen zu Schutzzeiten vornehmen.
 # 
 #  canWalkOnJoinProtection:
-#   Ob Spieler waehrend der Joinschutzzeit laufen koennen.
+#   Ob Spieler während der Joinschutzzeit laufen können.
 #   Default-Value: false
 # 
 #  joinProtectionTime:
-#   Laenge der Schutzzeit in Sekunden beim Betreten des Servers.
+#   Länge der Schutzzeit in Sekunden beim Betreten des Servers.
 #   Off = -1
 #   Default-Value: 10
 # 
 #  startperiodProtectiontime:
-#   Laenge der Schutzzeit nach dem Start.
+#   Länge der Schutzzeit nach dem Start.
 #   Off = -1
 #   Default-Value: -1
 # 
 #  startperiodProtectiontimeBcInterval:
-#   In welchen Sekundenabstaenden die restliche Schutzzeit
+#   In welchen Sekundenabständen die restliche Schutzzeit
 #   gebroacastet werden soll
 #   Default-Value: 60
 # -------------------------

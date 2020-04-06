@@ -5,11 +5,11 @@
 # 
 #  addTeamLifesOnKill:
 #   Wie viele Leben ein Team bekommen soll,
-#   sobald es einen Spieler toetet.
+#   sobald es einen Spieler tötet.
 #   Default-Value: -1
 # 
 #  deathSound:
-#   Ob ein Withersound fuer alle abgespielt werden soll,
+#   Ob ein Withersound für alle abgespielt werden soll,
 #   sobald ein Spieler stirbt
 #   Default-Value: false
 # 

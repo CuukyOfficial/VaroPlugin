@@ -11,13 +11,13 @@ import de.cuuky.varo.version.types.Materials;
 
 public enum ConfigSettingSection implements SectionConfiguration {
 
-	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen."),
+	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivität eines Spielers vornehmen."),
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
-	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksaecken"),
+	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksäcken"),
 	BORDER("Border", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
 	BAN("Ban", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zu Bans vornehmen.\nDas Bannsystem wird von Cuuky geleitet und von allen Varo-Servern genutzt"),
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
-	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
+	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich während des Kampfes ausloggt."),
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
 	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
 	DISCORD("Discord", Material.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),

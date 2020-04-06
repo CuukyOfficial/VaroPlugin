@@ -64,7 +64,7 @@ public class StatsCommand extends VaroCommand {
 
 				vp.update();
 			} catch(Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
+				sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht für " + this.toString() + " gesetzt werden!");
 				return false;
 			}
 			return true;
@@ -176,16 +176,16 @@ public class StatsCommand extends VaroCommand {
 				if(args[0].equalsIgnoreCase("set")) {
 					for(VaroPlayer all : VaroPlayer.getVaroPlayer())
 						if(!type.execute(args[3], all, sender)) {
-							sender.sendMessage(Main.getPrefix() + "Vorgang fuer alle Spieler abgebrochen!");
+							sender.sendMessage(Main.getPrefix() + "Vorgang für alle Spieler abgebrochen!");
 							return;
 						}
 
-					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer alle Spieler erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
+					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für alle Spieler erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
 				} else {
 					for(VaroPlayer all : VaroPlayer.getVaroPlayer())
 						type.remove(all);
 
-					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer alle Spieler erfolgreich zurueckgesetzt/entfernt!");
+					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für alle Spieler erfolgreich zurueckgesetzt/entfernt!");
 				}
 
 				return;
@@ -193,10 +193,10 @@ public class StatsCommand extends VaroCommand {
 
 			if(args[0].equalsIgnoreCase("set")) {
 				if(type.execute(args[3], target, sender))
-					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer '" + Main.getColorCode() + target.getName() + "§7' erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
+					sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für '" + Main.getColorCode() + target.getName() + "§7' erfolgreich auf '" + Main.getColorCode() + args[3] + "§7' gesetzt!");
 			} else {
 				type.remove(target);
-				sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' fuer '" + Main.getColorCode() + target.getName() + "§7' erfolgreich zurueckgesetzt/entfernt!");
+				sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + type.getArg() + "§7' für '" + Main.getColorCode() + target.getName() + "§7' erfolgreich zurueckgesetzt/entfernt!");
 			}
 		} else if(args[0].equalsIgnoreCase("reset")) {
 			if(target == null) {

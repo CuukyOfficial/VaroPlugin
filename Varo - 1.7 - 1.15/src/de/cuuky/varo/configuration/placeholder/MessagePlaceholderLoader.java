@@ -132,7 +132,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse") {
+		new GeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergröße") {
 
 			@Override
 			protected String getValue() {

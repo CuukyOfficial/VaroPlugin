@@ -17,7 +17,7 @@ import de.cuuky.varo.utils.JavaUtils;
 public class ConfigCommand extends VaroCommand {
 
 	public ConfigCommand() {
-		super("config", "Hauptbefehl fuer die Config", "varo.config", "configuration");
+		super("config", "Hauptbefehl für die Config", "varo.config", "configuration");
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public class SpeedCommand implements CommandExecutor {
 				p.setFlySpeed(speed);
 			else
 				p.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "§7Deine " + Main.getColorCode() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7betraegt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7Deine " + Main.getColorCode() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else if(args.length == 2) {
 			try {
 				if(Float.valueOf(args[0]) > 10 || Float.valueOf(args[0]) < 0) {
@@ -83,7 +83,7 @@ public class SpeedCommand implements CommandExecutor {
 					else
 						pl.setWalkSpeed(speed);
 				}
-				sender.sendMessage(Main.getPrefix() + "§7Speed erfolgreich fuer alle gesetzt!");
+				sender.sendMessage(Main.getPrefix() + "§7Speed erfolgreich für alle gesetzt!");
 				return false;
 			}
 
@@ -106,7 +106,7 @@ public class SpeedCommand implements CommandExecutor {
 				to.setFlySpeed(speed);
 			else
 				to.setWalkSpeed(speed);
-			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + Main.getColorCode() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7betraegt nun " + args[0] + "!");
+			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + Main.getColorCode() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7beträgt nun " + args[0] + "!");
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed §7<Speed> [Player]");
 		return false;

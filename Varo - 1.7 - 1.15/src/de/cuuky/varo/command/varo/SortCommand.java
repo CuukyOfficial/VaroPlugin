@@ -13,7 +13,7 @@ import de.cuuky.varo.spawns.sort.PlayerSort.SortResult;
 public class SortCommand extends VaroCommand {
 
 	public SortCommand() {
-		super("sort", "Sortiert die Spieler in ihre Loecher", "varo.sort");
+		super("sort", "Sortiert die Spieler in ihre Löcher", "varo.sort");
 	}
 
 	@Override

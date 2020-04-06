@@ -120,7 +120,7 @@ public class ItemList extends VaroList {
 		return iList;
 	}
 
-	// TODO Dauerhafte Loesung finden
+	// TODO Dauerhafte Lösung finden
 	public static ArrayList<ItemList> getItemListsMultipleAdd() {
 		ArrayList<ItemList> itemLists = getItemLists();
 		ArrayList<ItemList> multipleAdd = new ArrayList<>();

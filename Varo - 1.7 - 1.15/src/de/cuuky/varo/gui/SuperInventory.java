@@ -34,8 +34,8 @@ public abstract class SuperInventory {
 	static {
 		guis = new ArrayList<>();
 
-		forward = new ItemBuilder().displayname("§aSeite vorwaerts").itemstack(new ItemStack(Material.ARROW)).build();
-		backwards = new ItemBuilder().displayname("§cSeite rueckwaerts").itemstack(new ItemStack(Material.ARROW)).build();
+		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
+		backwards = new ItemBuilder().displayname("§cSeite rueckwärts").itemstack(new ItemStack(Material.ARROW)).build();
 		
 		fill_inventory = ConfigSetting.GUI_FILL_INVENTORY.getValueAsBoolean();
 		animations = ConfigSetting.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();

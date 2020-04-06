@@ -15,7 +15,7 @@
 #  joinAfterHours:
 #   ZWEITES JOIN SYSTEM
 #   Stellt ein, nach wie vielen Stunden
-#   Spieler regulaer wieder den Server betreten duerfen
+#   Spieler regulär wieder den Server betreten duerfen
 #   Default-Value: -1
 # 
 #  kickAtServerClose:
@@ -24,7 +24,7 @@
 #   Default-Value: false
 # 
 #  massRecordingTime:
-#   Die Laenge der Massenaufnahme, in der alle joinen koennen.
+#   Die Länge der Massenaufnahme, in der alle joinen können.
 #   Default-Value: 15
 # 
 #  onlyJoinBetweenHours:
@@ -55,14 +55,14 @@
 # 
 #  preProduceSessions:
 #   FÜR BEIDE JOIN SYSTEME
-#   Stellt ein, wie viele Folgen der Spieler zusaetzlich zu
-#   den Regulaeren vorproduzieren darf.
+#   Stellt ein, wie viele Folgen der Spieler zusätzlich zu
+#   den Regulären vorproduzieren darf.
 #   Default-Value: 3
 # 
 #  sessionsPerDay:
 #   ERSTES JOIN SYSTEM
 #   Stellt ein, wie oft Spieler am Tag
-#   den Server regulaer betreten duerfen.
+#   den Server regulär betreten duerfen.
 #   Default-Value: 1
 # -------------------------
 

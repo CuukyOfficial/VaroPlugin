@@ -14,7 +14,7 @@ import de.cuuky.varo.utils.varo.LocationFormat;
 public class SpawnsCommand extends VaroCommand {
 
 	public SpawnsCommand() {
-		super("spawns", "Hauptbefehl fuer die Spawns, in welchen die Spieler spawnen", "varo.spawns", "spawnholes", "spawn", "holes");
+		super("spawns", "Hauptbefehl für die Spawns, in welchen die Spieler spawnen", "varo.spawns", "spawnholes", "spawn", "holes");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -23,7 +23,7 @@ public class SpawnsCommand extends VaroCommand {
 		if(args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Command§7§l:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set <Zahl/Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete <Zahl/Spieler> - (Loescht den Spawneintrag und den Spawn in der Welt)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete <Zahl/Spieler> - (Löscht den Spawneintrag und den Spawn in der Welt)");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> <set/remove> [Spieler]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
@@ -108,7 +108,7 @@ public class SpawnsCommand extends VaroCommand {
 					Spawn oldSpawn = Spawn.getSpawn(spawnNumber);
 					if(oldSpawn != null) {
 						oldSpawn.delete();
-						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + spawnNumber + " §7wurde entfernt, um fuer den neuen Platz zu machen.");
+						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + spawnNumber + " §7wurde entfernt, um für den neuen Platz zu machen.");
 					}
 
 					Spawn spawn = new Spawn(spawnNumber, player.getLocation());
@@ -123,11 +123,11 @@ public class SpawnsCommand extends VaroCommand {
 					Spawn oldSpawn = Spawn.getSpawn(varoplayer);
 					if(oldSpawn != null) {
 						oldSpawn.delete();
-						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + oldSpawn.getNumber() + " §7wurde entfernt, um fuer den neuen Platz zu machen.");
+						sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + oldSpawn.getNumber() + " §7wurde entfernt, um für den neuen Platz zu machen.");
 					}
 
 					Spawn spawn = new Spawn(varoplayer, player.getLocation());
-					sender.sendMessage(Main.getPrefix() + "Spielerspawn " + Main.getColorCode() + spawn.getNumber() + " §7fuer den Spieler " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
+					sender.sendMessage(Main.getPrefix() + "Spielerspawn " + Main.getColorCode() + spawn.getNumber() + " §7für den Spieler " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
 				}
 			} else
 				sender.sendMessage(Main.getPrefix() + "/varo spawns set [Zahl/Spieler]");

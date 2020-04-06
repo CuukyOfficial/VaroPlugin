@@ -19,7 +19,7 @@ import de.cuuky.varo.version.VersionUtils;
 public class ResetCommand extends VaroCommand {
 
 	public ResetCommand() {
-		super("reset", "Setzt ausgewaehlte Teile des Servers zurueck", "varo.reset");
+		super("reset", "Setzt ausgewählte Teile des Servers zurueck", "varo.reset");
 	}
 
 	private void deleteDirectory(File file) {
@@ -39,8 +39,8 @@ public class ResetCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo reset §7<Modifier1> <Modifier2> ...");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 1: §7Resettet den kompletten Plugin Ordner");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 2: §7Resettet logs + stats (keine configs)");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 3: §7Loescht alle Welten");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo reset 2 3 - Loescht alle Stats und Welten");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 3: §7Löscht alle Welten");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo reset 2 3 - Löscht alle Stats und Welten");
 			sender.sendMessage(Main.getPrefix() + "§cWarnung: §7Der Server wird nach dem Vorgang gestoppt");
 			return;
 		}

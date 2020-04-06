@@ -33,7 +33,7 @@ public class PingCommand implements CommandExecutor {
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Ping von " + Main.getColorCode() + args[0] + " §7betraegt " + Main.getColorCode() + String.valueOf(VaroPlayer.getPlayer(p).getNetworkManager().getPing()) + "ms§7!");
+			sender.sendMessage(Main.getPrefix() + "§7Der Ping von " + Main.getColorCode() + args[0] + " §7beträgt " + Main.getColorCode() + String.valueOf(VaroPlayer.getPlayer(p).getNetworkManager().getPing()) + "ms§7!");
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/ping §7[Player]");
 

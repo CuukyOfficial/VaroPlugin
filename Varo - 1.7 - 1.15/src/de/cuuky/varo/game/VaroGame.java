@@ -91,12 +91,12 @@ public class VaroGame implements VaroSerializeable {
 
 		if(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
 			VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
-			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
+			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufälligen Teampartner erhalten!");
 		}
 
 		if(ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
 			new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
-			Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
+			Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
 		}
 
 		if(ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {

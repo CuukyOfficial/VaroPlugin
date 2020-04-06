@@ -57,14 +57,14 @@ public class UpdateCommand extends VaroCommand {
 
 		// Step 2: Deleting old directory if wanted
 		if(resetOldDirectory) {
-			System.out.println("Das Verzeichnis der alten Pluginversion wird geloescht.");
+			System.out.println("Das Verzeichnis der alten Pluginversion wird gelöscht.");
 			File directory = new File("plugins/Varo/");
 			deleteDirectory(directory);
 		}
 
 		// Step 3: Deleting old Version if existing
 		if(this.pluginNameChanged) {
-			System.out.println("Da sich der Pluginname veraendert hat, wird die alte Pluginversion geloescht.");
+			System.out.println("Da sich der Pluginname verändert hat, wird die alte Pluginversion gelöscht.");
 			File oldPlugin = new File("plugins/" + this.oldFileName);
 			oldPlugin.delete();
 		}
@@ -83,9 +83,9 @@ public class UpdateCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behaelt alle Daten");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und loescht alle Daten");
-				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geaendert haben sollte, musst du manuell updaten.");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behält alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und löscht alle Daten");
+				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geändert haben sollte, musst du manuell updaten.");
 			} else {
 				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
 			}
@@ -116,7 +116,7 @@ public class UpdateCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
 			sender.sendMessage(Main.getPrefix() + "§7Backup wird erstellt...");
 			new VaroBackup();
-			sender.sendMessage(Main.getPrefix() + "§7Unter Umstaenden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
+			sender.sendMessage(Main.getPrefix() + "§7Unter Umständen wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
 			update(sender, resultSet);
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");

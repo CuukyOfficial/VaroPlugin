@@ -1,7 +1,7 @@
 # WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
 #  Hier ist die Beschreibung der Config:
 # ----------- Backpacks -----------
-# Beschreibung: Alle Einstellungen zur Rucksaecken
+# Beschreibung: Alle Einstellungen zur Rucksäcken
 # 
 #  backpackPlayerDropOnDeath:
 #   Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll.
@@ -9,12 +9,12 @@
 # 
 #  backpackPlayerEnabled:
 #   Wenn dies aktiviert ist, haben Spieler einen eigenen Rucksack,
-#   auf den sie mit /varo bp zugreifen koennen.
+#   auf den sie mit /varo bp zugreifen können.
 #   Dieser wird pro Spieler und nicht pro Team gespeichert.
 #   Default-Value: false
 # 
 #  backpackPlayerSize:
-#   Groesse des Spieler-Rucksacks (Max = 54)
+#   Größe des Spieler-Rucksacks (Max = 54)
 #   Default-Value: 54
 # 
 #  backpackTeamDropOnDeath:
@@ -23,12 +23,12 @@
 # 
 #  backpackTeamEnabled:
 #   Wenn dies aktiviert ist, haben Teams einen eigenen Rucksack,
-#   auf den sie mit /varo bp zugreifen koennen.
+#   auf den sie mit /varo bp zugreifen können.
 #   Dieser wird pro Team und nicht pro Spieler gespeichert.
 #   Default-Value: false
 # 
 #  backpackTeamSize:
-#   Groesse des Team-Rucksacks (Max = 54)
+#   Größe des Team-Rucksacks (Max = 54)
 #   Default-Value: 54
 # -------------------------
 
