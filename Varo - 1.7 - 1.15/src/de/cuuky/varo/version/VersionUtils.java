@@ -18,7 +18,7 @@ public class VersionUtils {
 	static {
 		nmsClass = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		version = BukkitVersion.getVersion(nmsClass);
-		serverSoftware = ServerSoftware.getServerSoftware(Bukkit.getVersion());
+		serverSoftware = ServerSoftware.getServerSoftware(Bukkit.getVersion(), Bukkit.getName());
 		
 		try {
 			spigot = Bukkit.getServer().getClass().getDeclaredMethod("spigot").invoke(Bukkit.getServer());
@@ -26,7 +26,7 @@ public class VersionUtils {
 
 		try {
 			chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent$ChatSerializer");
-		} catch(ClassNotFoundException e) {
+		} catch(ClassNotFoundException | NullPointerException e) {
 			try {
 				chatSerializer = Class.forName(VersionUtils.getNmsClass() + ".ChatSerializer");
 			} catch(ClassNotFoundException e1) {}
