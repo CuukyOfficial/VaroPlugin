@@ -56,8 +56,6 @@ commands:
      description: Mutet einen Spieler
   Protect:
      description: Beschützt Spieler vor Schaden
-  Report:
-     description: Reporte einen Spieler
   Unfly:
      description: Lässt dich oder einen Spieler nicht mehr fliegen
   Unfreeze:
@@ -86,3 +84,15 @@ commands:
      description: Startet einen Countdown
   Performance:
      description: Verbessert die Performance
+  report:
+    description: Der globale Koburs-Report Befehl
+    aliases: [globalreport, kobursreport]
+  permakick:
+    description: Lässt eine bestimmte Person nicht auf den Server, solange sie auf Liste 1 steht
+    aliases: [koburspermakick]
+  unkick:
+    description: Lässt eine Person nach Benutzung des Permakick-Befehls wieder auf den Server
+    aliases: [kobursunkick]
+  unwarn:
+    description: Stoppt das Warnen eines Admins vor einer bestimmten Person
+    aliases: [kobursunwarn]

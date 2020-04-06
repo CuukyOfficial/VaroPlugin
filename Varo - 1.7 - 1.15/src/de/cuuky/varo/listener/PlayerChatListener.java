@@ -50,14 +50,14 @@ public class PlayerChatListener implements Listener {
 			message = message.replace("%", "");
 
 		boolean mentionsHack = false;
-		String[] hackMentions = { "hack", "cheat", "x-ray", "xray", "unlegit" };
+		String[] hackMentions = { "hack", "cheat", "x-ray", "xray", "unlegit", "scamming" };
 		for(String mention : hackMentions) {
 			if(message.toLowerCase().contains(mention)) {
 				mentionsHack = true;
 			}
 		}
 		if(mentionsHack == true && ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
-			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Cheats und aehnliches mit §l/report");
+			player.sendMessage(Main.getPrefix() + "§7Erinnerung: Reporte Hacks, Scamming und aehnliches im Korbus-System mit §l/report");
 		}
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player);

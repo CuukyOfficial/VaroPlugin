@@ -166,7 +166,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	KILL_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "killOnCombatlog", true, "Ob ein Spieler, wenn er\nsich in der oben genannten Zeit ausloggt,\ngetoetet werden soll."),
 	KILLER_ADD_HEALTH_ON_KILL(ConfigSettingSection.DEATH, "killerHealthAddOnKill", -1, "Anzahl halber Herzen, die der Killer nach Kill bekommt.\nOff = -1"),
-	LOG_REPORTS(ConfigSettingSection.REPORT, "logReports", true, "Ob alle Reports in der reports.yml\nfestgehalten werden sollen."),
+	LOG_REPORTS(ConfigSettingSection.REPORT, "logReports", true, "Ob alle plugininternen Reports in der reports.yml\nfestgehalten werden sollen."),
 	MASS_RECORDING_TIME(ConfigSettingSection.JOIN_SYSTEMS, "massRecordingTime", 15, "Die Laenge der Massenaufnahme, in der alle joinen koennen."),
 	MIN_BORDER_SIZE(ConfigSettingSection.BORDER, "minBorderSize", 300, "Wie klein die Border maximal werden kann."),
 
@@ -210,11 +210,11 @@ public enum ConfigSetting implements SectionEntry {
 	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
 	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),
 	REMOVE_PLAYERS_ARENT_AT_START(ConfigSettingSection.START, "removePlayersArentAtStart", true, "Ob das Plugin alle Spieler, die nicht beim\nStart dabei sind vom Projekt entferenen soll."),
-	REPORT_SEND_DELAY(ConfigSettingSection.REPORT, "reportDelay", 30, "Zeit in Sekunden, die ein Spieler warten muss,\nbevor er einen neuen Spieler reporten kann.\nOff = -1"),
-	REPORT_STAFF_MEMBER(ConfigSettingSection.REPORT, "reportStaffMember", true, "Ob Spieler mit der Permission\n'varo.report' reportet werden koennen."),
+	REPORT_SEND_DELAY(ConfigSettingSection.REPORT, "reportDelay", 30, "Zeit in Sekunden, die ein Spieler warten muss,\nbevor er einen neuen Spieler im plugininternen System reporten kann.\nOff = -1"),
+	REPORT_STAFF_MEMBER(ConfigSettingSection.REPORT, "reportStaffMember", true, "Ob Spieler mit der Permission\n'varo.report' im plugininternen System reportet werden koennen."),
 
 	// REPORT
-	REPORTSYSTEM_ENABLED(ConfigSettingSection.REPORT, "enabled", true, "Ob das Report-System angeschaltet sein soll."),
+	REPORTSYSTEM_ENABLED(ConfigSettingSection.REPORT, "enabled", true, "Ob das plugininterne Report-System angeschaltet sein soll."),
 	RESET_SESSION_HOUR(ConfigSettingSection.MAIN, "resetSessionHour", 1, "Um welche Uhrzeit (24h) der Server den\nSpieler neue Sessions etc. gibt"),
 	RESPAWN_PROTECTION(ConfigSettingSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschuetzt sind"),
 	SCOREBOARD(ConfigSettingSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),

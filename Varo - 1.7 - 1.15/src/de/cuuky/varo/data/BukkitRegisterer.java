@@ -1,5 +1,7 @@
 package de.cuuky.varo.data;
 
+import de.koburs.APICommands;
+import de.koburs.APIListener;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
@@ -26,7 +28,6 @@ import de.cuuky.varo.command.essentials.PingCommand;
 import de.cuuky.varo.command.essentials.ProtectCommand;
 import de.cuuky.varo.command.essentials.RainCommand;
 import de.cuuky.varo.command.essentials.ReplyCommand;
-import de.cuuky.varo.command.essentials.ReportCommand;
 import de.cuuky.varo.command.essentials.SetWorldspawnCommand;
 import de.cuuky.varo.command.essentials.SpawnCommand;
 import de.cuuky.varo.command.essentials.SpeedCommand;
@@ -102,7 +103,6 @@ public final class BukkitRegisterer {
 		registerCommand("reply", new ReplyCommand());
 		registerCommand("speed", new SpeedCommand());
 		registerCommand("vanish", new VanishCommand());
-		registerCommand("report", new ReportCommand());
 		registerCommand("unfly", new UnflyCommand());
 		registerCommand("unfreeze", new UnfreezeCommand());
 		registerCommand("unmute", new UnmuteCommand());
@@ -117,6 +117,11 @@ public final class BukkitRegisterer {
 		registerCommand("protect", new ProtectCommand());
 		registerCommand("countdown", new CountdownCommand());
 		registerCommand("performance", new PerformanceCommand());
+		CommandExecutor commands = new APICommands();
+		registerCommand("report", commands);
+		registerCommand("permakick", commands);
+		registerCommand("unkick", commands);
+		registerCommand("unwarn", commands);
 	}
 
 	public static void registerEvents() {
@@ -151,6 +156,7 @@ public final class BukkitRegisterer {
 		registerEvent(new HookListener());
 		registerEvent(new VaroWorldListener());
 		registerEvent(new FancyEffectListener());
+		registerEvent(new APIListener());
 
 		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());

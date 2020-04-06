@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.utils.PlayerCheckUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -158,6 +159,10 @@ public class PlayerCommand extends VaroCommand {
 						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 					}
 					continue;
+				}
+
+				if (!PlayerCheckUtils.checkPlayer(sender, args[0])) {
+					return;
 				}
 
 				new VaroPlayer(arg, uuid);
