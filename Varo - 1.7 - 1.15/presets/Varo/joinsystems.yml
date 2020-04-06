@@ -1,10 +1,10 @@
-# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÃ„GEN WEGNEHMEN!
 #  Hier ist die Beschreibung der Config:
 # ----------- JoinSystems -----------
 # Beschreibung: Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen.
 # 
 #  catchUpSessions:
-#   NUR FÜR ERSTES JOIN SYSTEM
+#   NUR FÃœR ERSTES JOIN SYSTEM
 #   Stellt ein, ob man verpasste Folgen nachholen darf.
 #   Default-Value: false
 # 
@@ -28,7 +28,7 @@
 #   Default-Value: 15
 # 
 #  onlyJoinBetweenHours:
-#   FÜR BEIDE JOIN SYSTEME
+#   FÃœR BEIDE JOIN SYSTEME
 #   Stellt ein, ob Spieler nur zwischen
 #   2 unten festgelegten Zeiten joinen duerfen.
 #   Default-Value: false
@@ -54,7 +54,7 @@
 #   Default-Value: 0
 # 
 #  preProduceSessions:
-#   FÜR BEIDE JOIN SYSTEME
+#   FÃœR BEIDE JOIN SYSTEME
 #   Stellt ein, wie viele Folgen der Spieler zusaetzlich zu
 #   den Regulaeren vorproduzieren darf.
 #   Default-Value: 3
