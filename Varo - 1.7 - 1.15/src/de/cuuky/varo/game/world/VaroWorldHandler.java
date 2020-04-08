@@ -115,7 +115,7 @@ public class VaroWorldHandler {
 	}
 
 	public double getBorderSize() {
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return 0;
 
 		return this.mainVaroWorld.getVaroBorder().getBorderSize();
