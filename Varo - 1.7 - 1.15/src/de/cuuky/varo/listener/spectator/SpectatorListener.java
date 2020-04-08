@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener.spectator;
 
+import de.cuuky.varo.version.types.Materials;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
@@ -8,6 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
@@ -92,8 +94,22 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if(Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp() || VaroPlayer.getPlayer(event.getPlayer()).isInProtection())
+		if(Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp() || VaroPlayer.getPlayer(event.getPlayer()).isInProtection()) {
+			if(event.getAction().equals(Action.PHYSICAL)){
+				if(event.getClickedBlock().getType() == Materials.ACACIA_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.BIRCH_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.DARK_OAK_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.HEAVY_WEIGHTED_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.JUNGLE_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.LIGHT_WEIGHTED_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.OAK_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.SPRUCE_PRESSURE_PLATE.parseMaterial() ||
+						event.getClickedBlock().getType() == Materials.STONE_PRESSURE_PLATE.parseMaterial()) {
+					return;
+				}
+			}
 			event.setCancelled(true);
+		}
 
 		if(cancelEvent(event.getPlayer()))
 			event.setCancelled(true);
