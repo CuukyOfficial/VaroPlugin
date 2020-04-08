@@ -9,8 +9,8 @@ import de.cuuky.varo.Main;
 public class PlayerHungerListener implements Listener {
 
 	@EventHandler
-	public void on(FoodLevelChangeEvent e) {
+	public void on(FoodLevelChangeEvent event) {
 		if(!Main.getVaroGame().hasStarted())
-			e.setFoodLevel(40);
+			event.setFoodLevel(40);
 	}
 }

@@ -21,11 +21,11 @@ import de.cuuky.varo.version.types.Sounds;
 public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockPlace(final BlockPlaceEvent e) {
+	public void onBlockPlace(final BlockPlaceEvent event) {
 		if(!Main.getVaroGame().hasStarted())
 			return;
 
-		Block placed = e.getBlock();
+		Block placed = event.getBlock();
 
 		if(!(placed.getState() instanceof Chest))
 			return;
@@ -45,7 +45,7 @@ public class BlockPlaceListener implements Listener {
 		if(saveable == null || saveable.holderDead())
 			return;
 
-		Player p = e.getPlayer();
+		Player p = event.getPlayer();
 		VaroPlayer player = VaroPlayer.getPlayer(p);
 
 		if(saveable.canModify(player)) {
@@ -56,6 +56,6 @@ public class BlockPlaceListener implements Listener {
 			return;
 		}
 
-		e.setCancelled(true);
+		event.setCancelled(true);
 	}
 }
