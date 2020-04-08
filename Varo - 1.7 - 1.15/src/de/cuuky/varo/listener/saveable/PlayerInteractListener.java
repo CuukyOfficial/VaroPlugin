@@ -19,20 +19,20 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableTyp
 public class PlayerInteractListener implements Listener {
 
 	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent e) {
+	public void onPlayerInteract(PlayerInteractEvent event) {
 		if(!Main.getVaroGame().hasStarted())
 			return;
 
-		if(!Main.getVaroGame().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
-			e.setCancelled(true);
+		if(!Main.getVaroGame().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+			event.setCancelled(true);
 			return;
 		}
 
-		if(e.getAction() != Action.RIGHT_CLICK_BLOCK)
+		if(event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 
-		Player player = e.getPlayer();
-		Block block = e.getClickedBlock();
+		Player player = event.getPlayer();
+		Block block = event.getClickedBlock();
 
 		if(!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
 			return;
@@ -45,7 +45,7 @@ public class PlayerInteractListener implements Listener {
 
 		if(!player.hasPermission("varo.ignoreSaveable")) {
 			player.sendMessage(Main.getPrefix() + (saveable.getType() == SaveableType.CHEST ? ConfigMessages.CHEST_NOT_TEAM_CHEST.getValue().replace("%player%", saveable.getPlayer().getName()) : ConfigMessages.CHEST_NOT_TEAM_FURNACE.getValue().replace("%player%", saveable.getPlayer().getName())));
-			e.setCancelled(true);
+			event.setCancelled(true);
 		} else
 			player.sendMessage(Main.getPrefix() + "§7Diese Kiste gehört " + Main.getColorCode() + saveable.getPlayer().getName() + "§7, doch durch deine Rechte konntest du sie trotzdem öffnen!");
 	}
