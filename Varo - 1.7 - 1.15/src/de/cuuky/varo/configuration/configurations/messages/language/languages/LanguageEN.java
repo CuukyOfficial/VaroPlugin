@@ -1,21 +1,14 @@
 package de.cuuky.varo.configuration.configurations.messages.language.languages;
 
-public enum LanguageEN implements LanguageMessage {
+public enum LanguageEN implements DefaultLanguage {
 
-	TEST_MESSAGE(0, "testMessage", "This is an english test message!");
+	TEST_MESSAGE("test.message", "Heello, hov ar u");
 	
-	private int messageId;
 	private String path, message;
 	
-	private LanguageEN(int messageId, String path, String message) {
-		this.messageId = messageId;
+	private LanguageEN(String path, String message) {
 		this.path = path;
 		this.message = message;
-	}
-	
-	@Override
-	public int getMessageID() {
-		return messageId;
 	}
 
 	@Override

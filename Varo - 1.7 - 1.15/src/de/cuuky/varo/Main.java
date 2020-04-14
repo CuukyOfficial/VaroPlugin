@@ -93,7 +93,6 @@ public class Main extends JavaPlugin {
 
 			long dataStamp = System.currentTimeMillis();
 			dataManager = new DataManager();
-			languageManager = new VaroLanguageManager();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
 			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), new Runnable() {
@@ -199,6 +198,10 @@ public class Main extends JavaPlugin {
 
 	public static DataManager getDataManager() {
 		return dataManager;
+	}
+	
+	public static void setLanguageManager(VaroLanguageManager languageManager) {
+		Main.languageManager = languageManager;
 	}
 	
 	public static VaroLanguageManager getLanguageManager() {

@@ -20,7 +20,7 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_LOBBY_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.height", 10, "Hoehe der Lobby, die gespawnt werden soll"),
 	AUTOSETUP_LOBBY_SCHEMATIC(ConfigSettingSection.AUTOSETUP, "lobby.schematic", "plugins/Varo/schematics/lobby.schematic", "Schreibe hier den Pfad deiner Lobby-Schematic\nhin, die gepastet werden soll.\nHinweis: WorldEdit benoetigt"),
 	AUTOSETUP_LOBBY_SIZE(ConfigSettingSection.AUTOSETUP, "lobby.size", 25, "Groesse der Lobby, die gespawnt werden soll"),
-	
+
 	AUTOSETUP_PORTAL_ENABLED(ConfigSettingSection.AUTOSETUP, "portal.enabled", true, "Ob ein Portal gespawnt werden soll"),
 	AUTOSETUP_PORTAL_HEIGHT(ConfigSettingSection.AUTOSETUP, "portal.height", 5, "Hoehe des gespawnten Portals"),
 	AUTOSETUP_PORTAL_WIDTH(ConfigSettingSection.AUTOSETUP, "portal.width", 4, "Breite des gespawnten Portals"),
@@ -31,7 +31,7 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_13) ? "GRASS_BLOCK" : "GRASS", "Welche Block-ID der Block,\nden man abbaut haben soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
-	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP,"spawnGeneratorYTolerance", 4, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
+	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP, "spawnGeneratorYTolerance", 4, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
 
 	BACKPACK_PLAYER_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackPlayerDropOnDeath", true, "Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll."),
 
@@ -44,7 +44,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	BACKPACK_TEAM_SIZE(ConfigSettingSection.BACKPACKS, "backpackTeamSize", 54, "Groesse des Team-Rucksacks (Max = 54)"),
 	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
-	
+
 	// BAN
 	BAN_HACKING_ENABLED(ConfigSettingSection.BAN, "hacking", true, "Ob Spieler, die wegen Hacking von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
 	BAN_SCAMMING_ENABLED(ConfigSettingSection.BAN, "scamming", true, "Ob Spieler, die wegen Scammen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
@@ -128,7 +128,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	DISCORDBOT_SET_TEAM_AS_GROUP(ConfigSettingSection.DISCORD, "setTeamAsGroup", false, "Ob die Spieler, die ein Team bekommen,\ndiesen auch als Gruppe im Discord bekommen sollen."),
 	DISCORDBOT_TOKEN(ConfigSettingSection.DISCORD, "botToken", "ENTER TOKEN HERE", "Gib hier den Token an, welchen du auf\nder Bot Seite und 'create bot user' bekommst."),
-	
+
 	DISCORDBOT_VERIFYSYSTEM(ConfigSettingSection.DISCORD, "verify.enabled", false, "Ob das Verify System aktiviert werden soll.\nDieses laesst die Spieler sich mit Discord-Accounts verbinden."),
 	DISCORDBOT_VERIFYSYSTEM_OPTIONAL(ConfigSettingSection.DISCORD, "verify.optinal", false, "Ob das Verify-System optional sein soll\nWenn deaktiviert: Nur verifizierte Spieler koennen\nden Server betreten"),
 	DISCORDBOT_REGISTERCHANNELID(ConfigSettingSection.DISCORD, "verify.registerChannelID", -1, "Gib hier die Channel ID des #verify - Channels\nan, wo sich die User verifizieren koennen."),
@@ -137,7 +137,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_VERIFY_HOST(ConfigSettingSection.DISCORD, "verify.mysql.host", "HOST_HERE", "MySQL Host, zu welchem das Plugin sich verbinden soll"),
 	DISCORDBOT_VERIFY_PASSWORD(ConfigSettingSection.DISCORD, "verify.mysql.password", "PASSWORD_HERE", "Passwort fuer MySQL Nutzer,\nwelcher auf die Datenbank zugreifen soll"),
 	DISCORDBOT_VERIFY_USER(ConfigSettingSection.DISCORD, "verify.mysql.user", "USER_HERE", "MySQL Nutzer, welcher auf die Datenbank zugreifen soll"),
-	
+
 	DISTANCE_TO_BORDER_REQUIRED(ConfigSettingSection.BORDER, "distanceToBorderRequired", -1, "Die Distanz, die der Spieler haben muss,\ndamit die Distanz angezeigt wird."),
 	DO_DAILY_BACKUPS(ConfigSettingSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),
 
@@ -206,6 +206,8 @@ public enum ConfigSetting implements SectionEntry {
 	PREFIX(ConfigSettingSection.MAIN, "prefix", "&7[&3Varo&7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
 	PROJECT_NAME(ConfigSettingSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
 	PROJECTNAME_COLORCODE(ConfigSettingSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Massgebende,\nder ueberall im Projekt verwendet wird.."),
+	MAIN_LANGUAGE(ConfigSettingSection.MAIN, "mainLanguage", "de_DE", "Alle Sprachentypen hier zu finden: https://minecraft-el.gamepedia.com/Language"),
+	MAIN_LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "allowOtherLanguages", true, "Ob alle Spieler die mainLanguage\nnutzen sollen"),
 	RANDOM_CHEST_FILL_RADIUS(ConfigSettingSection.WORLD, "randomChestFillRadius", -1, "In welchem Radius die Kisten um den\nSpawn mit den in der Config angegebenen\nItems befuellt werden sollen.\nOff = -1"),
 	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
 	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),
@@ -247,13 +249,13 @@ public enum ConfigSetting implements SectionEntry {
 	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
 
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
-	
+
 	TEAMREQUEST_EXPIRETIME(ConfigSettingSection.TEAMS, "teamRequest.expiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
 	TEAMREQUEST_MAXTEAMNAMELENGTH(ConfigSettingSection.TEAMS, "teamRequest.maxTeamnameLength", 10, "Maximal Laenge eines Teamnamens."),
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen koennen.\nSehr gute Funktion fuer ODV's."),
 	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.lobbyItems", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können"),
-	
+
 	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots"),
 
 	// TELEGRAM
@@ -303,7 +305,7 @@ public enum ConfigSetting implements SectionEntry {
 			Bukkit.getServer().shutdown();
 		}
 	}
-	
+
 	@Override
 	public String getFullPath() {
 		return section.getName() + "." + this.path;
@@ -313,7 +315,7 @@ public enum ConfigSetting implements SectionEntry {
 	public Object getDefaultValue() {
 		return this.defaultValue;
 	}
-	
+
 	@Override
 	public String[] getDescription() {
 		return description.split("\n");
@@ -328,17 +330,17 @@ public enum ConfigSetting implements SectionEntry {
 	public ConfigSettingSection getSection() {
 		return section;
 	}
-	
+
 	@Override
 	public void setValue(Object value) {
 		setValue(value, false);
 	}
-	
+
 	@Override
 	public Object getValue() {
 		return this.value;
 	}
-	
+
 	public void setValue(Object value, boolean save) {
 		this.value = value;
 
@@ -390,7 +392,7 @@ public enum ConfigSetting implements SectionEntry {
 				sendFalseCast(Long.class);
 			}
 		}
-		
+
 		return (long) defaultValue;
 	}
 

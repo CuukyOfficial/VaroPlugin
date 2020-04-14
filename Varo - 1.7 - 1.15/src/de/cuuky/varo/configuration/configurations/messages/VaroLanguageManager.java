@@ -3,23 +3,36 @@ package de.cuuky.varo.configuration.configurations.messages;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.language.Language;
 import de.cuuky.varo.configuration.configurations.messages.language.LanguageManager;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageMessage;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageEN;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
 public class VaroLanguageManager extends LanguageManager {
-	
+
 	private static final String PATH_DIR = "plugins/Varo/languages";
-	
+
 	public VaroLanguageManager() {
 		super(PATH_DIR);
+
+		registerDefaultLanguage("en_US", LanguageEN.class);
+		registerDefaultLanguage("de_DE", LanguageDE.class);
+
+		loadLanguages();
 		
-		setDefaultLanguage(getLanguages().get("en_EN"));
+		Language lang = getLanguages().get(ConfigSetting.MAIN_LANGUAGE.getValueAsString());
+		if(lang == null)
+			throw new NullPointerException("Couldn't find language '" + ConfigSetting.MAIN_LANGUAGE.getValueAsString() + "'");
+		
+		setDefaultLanguage(lang);
 	}
-	
+
 	private ArrayList<Integer> getConvNumbers(String line, String key) {
 		ArrayList<Integer> list = new ArrayList<>();
 
@@ -45,7 +58,7 @@ public class VaroLanguageManager extends LanguageManager {
 		return list;
 	}
 
-	public String getValue(LanguageMessage message, VaroPlayer vplayer) {
+	public String getValue(DefaultLanguage message, VaroPlayer vplayer) {
 		String replaced = super.getMessage(message.getPath(), vplayer != null ? vplayer.getNetworkManager().getLocale() : null);
 
 		for(int rank : getConvNumbers(replaced, "%topplayer-")) {
@@ -72,7 +85,7 @@ public class VaroLanguageManager extends LanguageManager {
 		return vplayer != null ? PlayerMessagePlaceholder.replacePlaceholders(replaced, vplayer) : replaced;
 	}
 
-	public String getValue(LanguageMessage message) {
+	public String getValue(DefaultLanguage message) {
 		return this.getValue(message, null);
 	}
 }
