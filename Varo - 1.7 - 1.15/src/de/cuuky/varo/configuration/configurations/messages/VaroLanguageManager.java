@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.messages.language.LanguageManager;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageEN;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageMessage;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
@@ -14,11 +12,12 @@ import de.cuuky.varo.entity.team.VaroTeam;
 
 public class VaroLanguageManager extends LanguageManager {
 	
+	private static final String PATH_DIR = "plugins/Varo/languages";
+	
 	public VaroLanguageManager() {
-		super(Main.getInstance());
+		super(PATH_DIR);
 		
-		registerLanguage("en_EN", LanguageEN.class, true);
-		registerLanguage("de_DE", LanguageDE.class, false);
+		setDefaultLanguage(getLanguages().get("en_EN"));
 	}
 	
 	private ArrayList<Integer> getConvNumbers(String line, String key) {
@@ -47,7 +46,7 @@ public class VaroLanguageManager extends LanguageManager {
 	}
 
 	public String getValue(LanguageMessage message, VaroPlayer vplayer) {
-		String replaced = super.getMessage(message.getMessageID(), vplayer != null ? vplayer.getNetworkManager().getLocale() : null);
+		String replaced = super.getMessage(message.getPath(), vplayer != null ? vplayer.getNetworkManager().getLocale() : null);
 
 		for(int rank : getConvNumbers(replaced, "%topplayer-")) {
 			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);

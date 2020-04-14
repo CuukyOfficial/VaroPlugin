@@ -267,8 +267,8 @@ public enum LanguageDE implements LanguageMessage {
 	private int messageId;
 	private String path, message;
 
-	private LanguageDE(int messageId, String path, String message) {
-		this.messageId = messageId;
+	private LanguageDE(int id, String path, String message) {
+		this.messageId = id;
 		this.path = path;
 		this.message = message;
 	}

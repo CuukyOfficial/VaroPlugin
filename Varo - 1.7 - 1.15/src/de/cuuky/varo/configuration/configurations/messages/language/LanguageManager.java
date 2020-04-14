@@ -1,38 +1,35 @@
 package de.cuuky.varo.configuration.configurations.messages.language;
 
+import java.io.File;
 import java.util.HashMap;
-
-import org.bukkit.plugin.Plugin;
-
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageMessage;
 
 public class LanguageManager {
 
-	private Plugin plugin;
+	private String languagePath;
 	private Language defaultLanguage;
 	private HashMap<String, Language> languages;
 
-	public LanguageManager(Plugin plugin) {
-		this.plugin = plugin;
+	public LanguageManager(String languagesPath) {
+		this.languagePath = languagesPath;
 		this.languages = new HashMap<>();
+		
+		loadLanguages();
 	}
-
-	public String getMessage(int messageId, String locale) {
-		if(locale == null)
-			return defaultLanguage.getMessage(messageId);
-		else {
-			Language language = languages.get(locale);
-			if(language == null) 
-				language = defaultLanguage;
+	
+	private void loadLanguages() {
+		File file = new File(languagePath);
+		for(File listFile : file.listFiles()) {
+			if(!listFile.getName().endsWith(".yml"))
+				continue;
 			
-			return language.getMessage(messageId);
+			registerLanguage(listFile.getName().replace(".yml", ""), false);
 		}
 	}
+	
+	public void setDefaultLanguage(Language defaultLanguage) {
+		this.defaultLanguage = defaultLanguage;
+	}
 
-	@Deprecated
-	/*
-	 * @deprecated: Please use getMessage(int messageId, NetworkManager manager) instead
-	 */
 	public String getMessage(String messagePath, String locale) {
 		if(locale == null)
 			return defaultLanguage.getMessage(messagePath);
@@ -45,17 +42,9 @@ public class LanguageManager {
 		}
 	}
 
-	public String getMessage(LanguageMessage message, String locale) {
-		return getMessage(message.getMessageID(), locale);
-	}
-
-	public Language registerLanguage(String name, Class<? extends LanguageMessage> clazz, boolean defaultLanguage) {
-		return registerLanguage(name, clazz, null, defaultLanguage);
-	}
-
-	public Language registerLanguage(String name, Class<? extends LanguageMessage> clazz, String languagePath, boolean defaultLanguage) {
+	public Language registerLanguage(String name, boolean defaultLanguage) {
 		Language language = null;
-		languages.put(name, language = new Language(name, clazz, languagePath == null ? "plugins/" + this.plugin.getName() + "/messages/" : languagePath));
+		languages.put(name, language = new Language(name, this.languagePath));
 
 		if(defaultLanguage) {
 			this.defaultLanguage = language;
@@ -63,5 +52,9 @@ public class LanguageManager {
 		}
 
 		return language;
+	}
+	
+	public HashMap<String, Language> getLanguages() {
+		return this.languages;
 	}
 }
