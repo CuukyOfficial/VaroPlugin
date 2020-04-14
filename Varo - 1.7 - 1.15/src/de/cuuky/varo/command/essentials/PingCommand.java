@@ -13,14 +13,15 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 public class PingCommand implements CommandExecutor {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String ping, String[] args) {		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
+	public boolean onCommand(CommandSender sender, Command cmd, String ping, String[] args) {
+		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.OTHER_PING, vp, VaroPlayer.getPlayer((Player) sender)));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.OTHER_PING, vp, vp));
 		} else if(args.length == 1) {
 			if(!sender.hasPermission("varo.ping")) {
 				sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_PERMISSION, vp));

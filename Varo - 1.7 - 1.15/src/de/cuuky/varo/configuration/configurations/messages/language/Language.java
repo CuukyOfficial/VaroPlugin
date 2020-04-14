@@ -38,7 +38,7 @@ public class Language {
 			} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 			}
-			
+
 			load();
 		}
 	}
@@ -54,7 +54,7 @@ public class Language {
 	public void load() {
 		this.file = new File(manager.getLanguagePath(), this.name + ".yml");
 		this.configuration = YamlConfiguration.loadConfiguration(this.file);
-		
+
 		ArrayList<String> loadedMessages = new ArrayList<>();
 		boolean save = false;
 
@@ -64,7 +64,7 @@ public class Language {
 					save = true;
 					this.configuration.set(message.getPath(), message.getMessage());
 				}
-				
+
 				message.setMessage(this.configuration.getString(message.getPath()));
 				loadedMessages.add(message.getPath());
 			}
@@ -83,22 +83,25 @@ public class Language {
 
 			messages.put(path, this.configuration.getString(path));
 		}
-		
+
 		if(save)
 			saveConfiguration();
-		
+
 		this.loaded = true;
 	}
 
 	public String getMessage(String path) {
 		if(!loaded)
 			load();
-		
-		String message = messages.get(path);
-		return message != null ? message : null;
+
+		return messages.get(path);
 	}
-	
+
 	public String getName() {
 		return this.name;
+	}
+
+	public HashMap<String, String> getMessages() {
+		return this.messages;
 	}
 }

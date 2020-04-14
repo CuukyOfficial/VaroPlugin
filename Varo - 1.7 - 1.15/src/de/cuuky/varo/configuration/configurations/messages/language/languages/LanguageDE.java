@@ -285,7 +285,7 @@ public enum LanguageDE implements DefaultLanguage {
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
 
 	OTHER_CONFIG("other.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
-	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%other.ping%&7ms");
+	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%ping%&7ms");
 
 	private String path, message;
 

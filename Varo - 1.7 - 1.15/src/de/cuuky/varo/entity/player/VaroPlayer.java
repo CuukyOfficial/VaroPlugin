@@ -138,22 +138,22 @@ public class VaroPlayer extends VaroEntity {
 		String listname = "";
 		if(getTeam() != null) {
 			if(getRank() == null) {
-				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITH_TEAM, this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITH_TEAM, null, this);
 			} else {
-				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITH_TEAM_RANK, this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITH_TEAM_RANK, null, this);
 			}
 		} else {
 			if(getRank() == null) {
-				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM, this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM, null, this);
 			} else {
-				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM_RANK, this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM_RANK, null, this);
 			}
 		}
 		
 		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
 		if(maxlength > 0) {
 			if(listname.length() > maxlength)
-				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM_RANK, this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM_RANK, null, this);
 			
 			if(listname.length() > maxlength)
 				listname = this.name;

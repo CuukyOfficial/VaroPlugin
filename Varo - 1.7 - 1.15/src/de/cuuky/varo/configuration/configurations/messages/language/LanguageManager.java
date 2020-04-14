@@ -17,6 +17,44 @@ public class LanguageManager {
 		this.languages = new HashMap<>();
 	}
 
+	protected String getMessage(String messagePath, String locale) {
+		if(locale == null || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
+			return defaultLanguage.getMessage(messagePath);
+		else {
+			Language language = languages.get(locale);
+			String message = null;
+
+			if(language == null)
+				message = (language = defaultLanguage).getMessage(messagePath);
+			else {
+				message = language.getMessage(messagePath);
+
+				if(message == null)
+					message = (language = defaultLanguage).getMessage(messagePath);
+			}
+
+			if(message == null)
+				message = languages.get("de_DE").getMessage(messagePath);
+
+			return message;
+		}
+	}
+
+	protected Language registerLanguage(String name) {
+		return registerDefaultLanguage(name, null);
+	}
+
+	protected Language registerDefaultLanguage(String name, Class<? extends DefaultLanguage> clazz) {
+		Language language = null;
+		languages.put(name, language = new Language(name, this, clazz));
+
+		return language;
+	}
+	
+	protected void setDefaultLanguage(Language defaultLanguage) {
+		this.defaultLanguage = defaultLanguage;
+	}
+	
 	public void loadLanguages() {
 		File file = new File(languagePath);
 		for(File listFile : file.listFiles()) {
@@ -25,44 +63,6 @@ public class LanguageManager {
 
 			registerLanguage(listFile.getName().replace(".yml", ""));
 		}
-	}
-
-	public void setDefaultLanguage(Language defaultLanguage) {
-		this.defaultLanguage = defaultLanguage;
-	}
-
-	public String getMessage(String messagePath, String locale) {
-		if(locale == null)
-			return defaultLanguage.getMessage(messagePath);
-		else {
-			Language language = languages.get(locale);
-			String message = null;
-			
-			if(language == null || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
-				message = (language = defaultLanguage).getMessage(messagePath);
-			else {
-				message = language.getMessage(messagePath);
-				
-				if(message == null)
-					(language = defaultLanguage).getMessage(messagePath);
-			}
-			
-			if(message == null)
-				throw new NullPointerException("Couldn't find message for '" + messagePath + "' in language file '" + language.getName() + "'");
-
-			return message;
-		}
-	}
-
-	public Language registerLanguage(String name) {
-		return registerDefaultLanguage(name, null);
-	}
-
-	public Language registerDefaultLanguage(String name, Class<? extends DefaultLanguage> clazz) {
-		Language language = null;
-		languages.put(name, language = new Language(name, this, clazz));
-
-		return language;
 	}
 
 	public String getLanguagePath() {

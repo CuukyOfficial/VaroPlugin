@@ -50,7 +50,7 @@ public class Nametag {
 	private UUID uniqueID;
 
 	public Nametag(UUID uniqueID, Player p) {
-		this.hearts = Main.getLanguageManager().getValue(LanguageDE.NAMETAG_SUFFIX, null).contains("%hearts%");
+		this.hearts = Main.getLanguageManager().getValue(LanguageDE.NAMETAG_SUFFIX).contains("%hearts%");
 		this.player = p;
 		this.uniqueID = uniqueID;
 
@@ -80,14 +80,14 @@ public class Nametag {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
 
 		String newName = checkName(varoPlayer);
-		String newPrefix = (varoPlayer.getTeam() == null ? Main.getLanguageManager().getValue(LanguageDE.NAMETAG_NORMAL, varoPlayer, varoPlayer) : Main.getLanguageManager().getValue(LanguageDE.NAMETAG_TEAM_PREFIX, varoPlayer, varoPlayer));
-		String newSuffix = String.valueOf(Main.getLanguageManager().getValue(LanguageDE.NAMETAG_SUFFIX, varoPlayer, varoPlayer));
+		String newPrefix = (varoPlayer.getTeam() == null ? Main.getLanguageManager().getValue(LanguageDE.NAMETAG_NORMAL, null, varoPlayer) : Main.getLanguageManager().getValue(LanguageDE.NAMETAG_TEAM_PREFIX, null, varoPlayer));
+		String newSuffix = String.valueOf(Main.getLanguageManager().getValue(LanguageDE.NAMETAG_SUFFIX, null, varoPlayer));
 
 		if(newName.length() > 16)
 			newName = newName.substring(0, 16);
 
 		if(newPrefix.length() > 16)
-			newPrefix = Main.getLanguageManager().getValue(LanguageDE.NAMETAG_NORMAL, varoPlayer, varoPlayer);
+			newPrefix = Main.getLanguageManager().getValue(LanguageDE.NAMETAG_NORMAL, null, varoPlayer);
 
 		if(newSuffix.length() > 16)
 			newSuffix = newSuffix.substring(0, 16);
@@ -202,7 +202,7 @@ public class Nametag {
 		if(!init || !hearts)
 			return;
 
-		this.suffix = String.valueOf(Main.getLanguageManager().getValue(LanguageDE.NAMETAG_SUFFIX, VaroPlayer.getPlayer(player)));
+		this.suffix = String.valueOf(Main.getLanguageManager().getValue(LanguageDE.NAMETAG_SUFFIX));
 		setToAll();
 	}
 

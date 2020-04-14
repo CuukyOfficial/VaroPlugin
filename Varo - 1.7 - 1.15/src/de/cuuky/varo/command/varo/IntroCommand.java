@@ -20,16 +20,16 @@ public class IntroCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(suroStart != null) {
-			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_INTRO_ALREADY_STARTED, vp));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_INTRO_ALREADY_STARTED, vp, vp));
 			return;
 		}
 
 		if(Main.getVaroGame().hasStarted()) {
-			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED, vp));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED, vp, vp));
 			return;
 		}
 
 		suroStart = new SuroStart();
-		sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_INTRO_STARTED, vp));
+		sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_INTRO_STARTED, vp, vp));
 	}
 }
