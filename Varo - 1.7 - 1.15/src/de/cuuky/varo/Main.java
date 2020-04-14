@@ -11,6 +11,7 @@ import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.VaroGame;
@@ -36,6 +37,7 @@ public class Main extends JavaPlugin {
 	private static BotLauncher botLauncher;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
+	private static VaroLanguageManager languageManager;
 	private static VaroGame varoGame;
 
 	private boolean failed;
@@ -91,6 +93,7 @@ public class Main extends JavaPlugin {
 
 			long dataStamp = System.currentTimeMillis();
 			dataManager = new DataManager();
+			languageManager = new VaroLanguageManager();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
 			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), new Runnable() {
@@ -196,6 +199,10 @@ public class Main extends JavaPlugin {
 
 	public static DataManager getDataManager() {
 		return dataManager;
+	}
+	
+	public static VaroLanguageManager getLanguageManager() {
+		return languageManager;
 	}
 
 	public static BotLauncher getBotLauncher() {
