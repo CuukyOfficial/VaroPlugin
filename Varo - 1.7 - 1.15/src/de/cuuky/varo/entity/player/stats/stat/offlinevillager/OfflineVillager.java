@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
@@ -122,8 +122,8 @@ public class OfflineVillager implements VaroSerializeable {
 			if(it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
-		Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue().replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, Main.getLanguageManager().getValue(LanguageDE.ALERT_DISCORD_KILL, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_KILLED_BY, null, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
 
 		killer.onEvent(BukkitEventType.KILL);
 		vp.onEvent(BukkitEventType.KILLED);

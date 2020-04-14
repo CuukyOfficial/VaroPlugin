@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -14,6 +14,7 @@ public class VaroCommandListener implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		VaroPlayer player = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(args.length < 1) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro §7§lCommands:");
 			for(VaroCommand command : VaroCommand.getVaroCommand())
@@ -28,11 +29,11 @@ public class VaroCommandListener implements CommandExecutor {
 		}
 
 		if(command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
-			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
+			sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_PERMISSION, player));
 			return false;
 		}
 
-		command.onCommand(sender, (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null), cmd, label, JavaUtils.removeString(args, 0));
+		command.onCommand(sender, player, cmd, label, JavaUtils.removeString(args, 0));
 		return true;
 	}
 }

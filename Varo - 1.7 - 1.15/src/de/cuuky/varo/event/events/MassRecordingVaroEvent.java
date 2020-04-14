@@ -7,7 +7,7 @@ import org.bukkit.Material;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
@@ -52,9 +52,9 @@ public class MassRecordingVaroEvent extends VaroEvent {
 				if(vp.isOnline()) {
 					vp.setMassRecordingKick(true);
 
-					Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(vp));
+					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_KICK_BROADCAST, null, vp));
 					vp.onEvent(BukkitEventType.KICKED);
-					vp.getPlayer().kickPlayer(ConfigMessages.KICK_MASS_REC_SESSION_OVER.getValue(vp));
+					vp.getPlayer().kickPlayer(Main.getLanguageManager().getValue(LanguageDE.KICK_MASS_REC_SESSION_OVER, vp, vp));
 				}
 			}
 		}
@@ -102,9 +102,8 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		timer = ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() * 60;
 
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) 
 			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
-		}
 
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 			@Override

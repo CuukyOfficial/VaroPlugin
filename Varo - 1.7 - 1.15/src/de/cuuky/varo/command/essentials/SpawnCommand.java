@@ -8,17 +8,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class SpawnCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
 		if(!(sender instanceof Player)) {
 			if(loc == null)
 				sender.sendMessage(Main.getPrefix() + "§7Main World not found!");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_WORLD.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SPAWN_WORLD, vp).replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
 			return false;
 		}
 
@@ -34,11 +36,11 @@ public class SpawnCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "§7Im Ende kann dir der Spawn nicht angegeben werden.");
 			return false;
 		} else if(player.getWorld().getEnvironment() == World.Environment.NETHER) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_NETHER.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_DISTANCE_NETHER.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SPAWN_NETHER, vp).replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SPAWN_DISTANCE_NETHER, vp).replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		} else {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_WORLD.getValue().replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_DISTANCE.getValue().replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SPAWN_WORLD, vp).replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SPAWN_DISTANCE, vp).replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		}
 
 		return false;

@@ -10,7 +10,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;
@@ -42,7 +42,7 @@ public class VaroStartThread implements Runnable {
 			((Player) VersionUtils.getOnlinePlayer().toArray()[0]).getWorld().setTime(1000);
 
 		if(startcountdown != 0)
-			Bukkit.broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN.getValue().replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown)));
+			Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.GAME_START_COUNTDOWN).replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown)));
 
 		if(startcountdown == ConfigSetting.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
 			for(VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
@@ -63,7 +63,7 @@ public class VaroStartThread implements Runnable {
 				Player pl = vp.getPlayer();
 				pl.playSound(pl.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 
-				String[] title = ConfigMessages.GAME_VARO_START_TITLE.getValue().replace("%countdown%", String.valueOf(startcountdown)).split("\n");
+				String[] title = Main.getLanguageManager().getValue(LanguageDE.GAME_VARO_START_TITLE, vp).replace("%countdown%", String.valueOf(startcountdown)).split("\n");
 				if(title.length != 0)
 					vp.getNetworkManager().sendTitle(title[0], title.length == 2 ? title[1] : "");
 			}
@@ -101,8 +101,8 @@ public class VaroStartThread implements Runnable {
 				world.fillChests();
 			
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
-			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
+			Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.GAME_VARO_START));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, Main.getLanguageManager().getValue(LanguageDE.ALERT_GAME_STARTED));
 			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -115,7 +115,7 @@ public class VaroStartThread implements Runnable {
 
 			Main.getDataManager().getListManager().getStartItems().giveToAll();
 			if(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
+				Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 				game.setProtection(new ProtectionTime());
 			}
 

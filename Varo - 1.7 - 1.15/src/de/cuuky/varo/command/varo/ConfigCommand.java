@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
 import de.cuuky.varo.utils.JavaUtils;
@@ -21,25 +21,25 @@ public class ConfigCommand extends VaroCommand {
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, VaroPlayer player, Command cmd, String label, String[] args) {
+	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue().replace("%category%", "Config"));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_HELP_HEADER, vp).replace("%category%", "Config"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config set §7<key> <value>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config search <Keyword>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config menu");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config reload");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config reset");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue());
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_HELP_FOOTER, vp));
 			return;
 		}
 
 		if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
 			Main.getDataManager().reloadConfig();
 			Main.getDataManager().reloadPlayerClients();
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_RELOADED.getValue());
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_RELOADED, vp));
 		} else if(args[0].equalsIgnoreCase("set")) {
 			if(args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_HELP_SET.getValue());
+				sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_HELP_SET, vp));
 				return;
 			}
 
@@ -50,26 +50,26 @@ public class ConfigCommand extends VaroCommand {
 				Object arg = JavaUtils.getStringObject(args[2]);
 				entry.setValue(arg, true);
 
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_SET.getValue());
+				sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_ENTRY_SET, vp));
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND.getValue().replace("%entry%", args[1]));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND, vp).replace("%entry%", args[1]));
 		} else if(args[0].equalsIgnoreCase("reset")) {
 			for(ConfigSetting entry : ConfigSetting.values())
 				entry.setValue(entry.getDefaultValue(), true);
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_RESET.getValue());
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_RESET, vp));
 		}else if(args[0].equalsIgnoreCase("menu")) {
 			if(!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue());
+				sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_ERROR_NO_CONSOLE, vp));
 				return;
 			}
 			
 			new ConfigSectionGUI((Player) sender);
 		} else if(args[0].equalsIgnoreCase("search")) {
 			if(args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_HELP_SEARCH.getValue());
+				sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_HELP_SEARCH, vp));
 				return;
 			}
 			
@@ -84,14 +84,14 @@ public class ConfigCommand extends VaroCommand {
 			}
 			
 			if(foundSettings.isEmpty()) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND.getValue().replace("%entry%", needle));
+				sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND, vp).replace("%entry%", needle));
 				return;
 			}
 			
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE.getValue());
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE, vp));
 			for(ConfigSetting setting : foundSettings) 
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT.getValue().replace("%entry%", setting.getFullPath().toString()).replace("%description%", JavaUtils.getArgsToString(setting.getDescription(), " ")));
+				sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT, vp).replace("%entry%", setting.getFullPath().toString()).replace("%description%", JavaUtils.getArgsToString(setting.getDescription(), " ")));
 		} else
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue().replace("%command%", "config"));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_ERROR_USAGE, vp).replace("%command%", "config"));
 	}
 }

@@ -7,23 +7,23 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PingCommand implements CommandExecutor {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String ping, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String ping, String[] args) {		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(args.length == 0) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.OTHER_PING.getValue().replace("%ping%", String.valueOf(VaroPlayer.getPlayer((Player) sender).getNetworkManager().getPing())));
+			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.OTHER_PING, vp, VaroPlayer.getPlayer((Player) sender)));
 		} else if(args.length == 1) {
 			if(!sender.hasPermission("varo.ping")) {
-				sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
+				sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_PERMISSION, vp));
 				return false;
 			}
 

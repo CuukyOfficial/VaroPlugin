@@ -8,8 +8,8 @@ import java.util.HashMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.clientadapter.BoardHandler;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -40,7 +40,7 @@ public class TablistHandler implements BoardHandler {
 
 		boolean changed = false;
 		for(int index = 0; index < tablistLines.size(); index++) {
-			String line = ConfigMessages.getValue(tablistLines.get(index), player);
+			String line = Main.getLanguageManager().replaceMessage(tablistLines.get(index), player);
 			
 			if(oldList.size() < tablistLines.size()) {
 				oldList.add(line);

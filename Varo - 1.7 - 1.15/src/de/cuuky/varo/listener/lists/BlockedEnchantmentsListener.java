@@ -13,7 +13,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class BlockedEnchantmentsListener implements Listener {
 
@@ -25,7 +26,8 @@ public class BlockedEnchantmentsListener implements Listener {
 		for(Enchantment enc : event.getEnchantsToAdd().keySet())
 			if(Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
 				event.setCancelled(true);
-				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue());
+				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
+				event.getEnchanter().sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NOT_ALLOWED_CRAFT, vp, vp));
 				return;
 			}
 	}
@@ -53,7 +55,8 @@ public class BlockedEnchantmentsListener implements Listener {
 		for(Enchantment enc : item.getEnchantments().keySet())
 			if(Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
 				event.setCancelled(true);
-				((Player) event.getWhoClicked()).sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue());
+				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
+				vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NOT_ALLOWED_CRAFT, vp, vp));
 				return;
 			}
 	}

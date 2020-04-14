@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ActionbarCommand extends VaroCommand {
@@ -23,10 +23,10 @@ public class ActionbarCommand extends VaroCommand {
 
 		if(vp.getStats().isShowActionbarTime()) {
 			vp.getStats().setShowActionbarTime(false);
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED.getValue());
+			vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_ACTIONBAR_DEACTIVATED, vp));
 		} else {
 			vp.getStats().setShowActionbarTime(true);
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_ACTIVATED.getValue());
+			vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_ACTIONBAR_ACTIVATED, vp));
 		}
 	}
 }

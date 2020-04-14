@@ -7,8 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -86,7 +87,7 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	private String getNametagName() {
-		return this.player == null ? ConfigMessages.SPAWNS_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) : ConfigMessages.SPAWNS_SPAWN_PLAYER.getValue(player).replace("%number%", String.valueOf(number));
+		return this.player == null ? Main.getLanguageManager().getValue(LanguageDE.SPAWNS_SPAWN_NUMBER).replace("%number%", String.valueOf(number)) : Main.getLanguageManager().getValue(LanguageDE.SPAWNS_SPAWN_PLAYER, null, player).replace("%number%", String.valueOf(number));
 	}
 
 	private void remove() {

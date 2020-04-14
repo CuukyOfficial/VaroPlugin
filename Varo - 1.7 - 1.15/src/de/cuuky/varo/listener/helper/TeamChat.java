@@ -1,7 +1,7 @@
 package de.cuuky.varo.listener.helper;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
@@ -21,7 +21,7 @@ public class TeamChat {
 			if(!pl.isOnline())
 				continue;
 
-			pl.sendMessage(ConfigMessages.CHAT_TEAMCHAT_FORMAT.getValue(player).replace("%message%", message));
+			pl.sendMessage(Main.getLanguageManager().getValue(LanguageDE.CHAT_TEAMCHAT_FORMAT, player, player).replace("%message%", message));
 		}
 	}
 }

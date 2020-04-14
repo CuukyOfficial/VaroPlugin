@@ -16,7 +16,7 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.connection.NetworkManager;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
@@ -132,29 +132,28 @@ public class VaroPlayer extends VaroEntity {
 
 			db.getMainGuild().addRoleToMember(member, role).complete();
 		}
-
 	}
-	
+
 	private String getTabname() {
 		String listname = "";
 		if(getTeam() != null) {
 			if(getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITH_TEAM, this);
 			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITH_TEAM_RANK, this);
 			}
 		} else {
 			if(getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM, this);
 			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM_RANK, this);
 			}
 		}
 		
 		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
 		if(maxlength > 0) {
 			if(listname.length() > maxlength)
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(this);
+				listname = Main.getLanguageManager().getValue(LanguageDE.TABLIST_PLAYER_WITHOUT_TEAM_RANK, this);
 			
 			if(listname.length() > maxlength)
 				listname = this.name;
@@ -208,7 +207,7 @@ public class VaroPlayer extends VaroEntity {
 			rank.remove();
 
 		if(isOnline())
-			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this));
+			player.kickPlayer(Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_NOT_USER_OF_PROJECT, this));
 
 		if(villager != null)
 			villager.remove();
@@ -540,7 +539,7 @@ public class VaroPlayer extends VaroEntity {
 				continue;
 
 			if(!vp.getName().equalsIgnoreCase(player.getName())) {
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(vp).replace("%newName%", player.getName()));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, Main.getLanguageManager().getValue(LanguageDE.ALERT_SWITCHED_NAME, null, vp).replace("%newName%", player.getName()));
 				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				vp.setName(player.getName());

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 
@@ -75,7 +75,7 @@ public class TeamRequestCommand extends VaroCommand {
 						continue;
 					}
 
-				invite.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_REQUEST_RECIEVED.getValue(player).replace("%invitor%", player.getName()));
+				invite.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.TEAMREQUEST_TEAM_REQUEST_RECIEVED, player, invite).replace("%invitor%", player.getName()));
 				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " §7gesendet");
 				new VaroTeamRequest(player, invite);
 			}
@@ -158,5 +158,4 @@ public class TeamRequestCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr help");
 		sender.sendMessage(Main.getPrefix() + "§7--------------------------");
 	}
-
 }

@@ -16,6 +16,7 @@ public class ReportCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+//		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(!ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "§cReports §7wurden in der Config deaktiviert!");
 			return false;

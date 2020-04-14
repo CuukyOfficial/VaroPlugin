@@ -7,7 +7,7 @@ import org.bukkit.World;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
@@ -67,7 +67,7 @@ public final class VaroUtils {
 				}
 
 				if(teamMember.size() != teamSize)
-					vp.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER.getValue());
+					vp.getPlayer().sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER, vp, vp));
 
 				String teamName = "";
 				for(VaroPlayer teamPl : teamMember)

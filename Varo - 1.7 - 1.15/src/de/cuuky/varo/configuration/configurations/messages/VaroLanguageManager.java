@@ -32,6 +32,36 @@ public class VaroLanguageManager extends LanguageManager {
 		
 		setDefaultLanguage(lang);
 	}
+	
+	public String replaceMessage(String message) {
+		String replaced = message; 
+		
+		for(int rank : getConvNumbers(replaced, "%topplayer-")) {
+			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+			replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topplayerkills-")) {
+			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+			replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topteam-")) {
+			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+			replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
+		}
+
+		for(int rank : getConvNumbers(replaced, "%topteamkills-")) {
+			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
+		}
+
+		return GeneralMessagePlaceholder.replacePlaceholders(replaced);
+	}
+	
+	public String replaceMessage(String message, VaroPlayer player) {
+		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), player);
+	}
 
 	private ArrayList<Integer> getConvNumbers(String line, String key) {
 		ArrayList<Integer> list = new ArrayList<>();
@@ -58,34 +88,16 @@ public class VaroLanguageManager extends LanguageManager {
 		return list;
 	}
 
-	public String getValue(DefaultLanguage message, VaroPlayer vplayer) {
-		String replaced = super.getMessage(message.getPath(), vplayer != null ? vplayer.getNetworkManager().getLocale() : null);
-
-		for(int rank : getConvNumbers(replaced, "%topplayer-")) {
-			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-			replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
-		}
-
-		for(int rank : getConvNumbers(replaced, "%topplayerkills-")) {
-			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-			replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
-		}
-
-		for(int rank : getConvNumbers(replaced, "%topteam-")) {
-			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-			replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
-		}
-
-		for(int rank : getConvNumbers(replaced, "%topteamkills-")) {
-			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
-		}
-
-		replaced = GeneralMessagePlaceholder.replacePlaceholders(replaced);
-		return vplayer != null ? PlayerMessagePlaceholder.replacePlaceholders(replaced, vplayer) : replaced;
+	public String getValue(DefaultLanguage message, VaroPlayer languageHolder, VaroPlayer vplayer) {
+		String replaced = super.getMessage(message.getPath(), languageHolder != null && languageHolder.getNetworkManager() != null ? languageHolder.getNetworkManager().getLocale() : null);
+		return vplayer != null ? replaceMessage(replaced, vplayer) : replaceMessage(replaced);
 	}
 
+	public String getValue(DefaultLanguage message, VaroPlayer languageHolder) {
+		return this.getValue(message, languageHolder, null);
+	}
+	
 	public String getValue(DefaultLanguage message) {
-		return this.getValue(message, null);
+		return this.getValue(message, null, null);
 	}
 }

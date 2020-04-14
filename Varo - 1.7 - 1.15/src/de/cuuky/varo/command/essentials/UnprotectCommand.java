@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
@@ -16,8 +16,9 @@ public class UnprotectCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(!sender.hasPermission("varo.unprotect")) {
-			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
+			sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_PERMISSION, vp));
 			return false;
 		}
 
@@ -42,8 +43,8 @@ public class UnprotectCommand implements CommandExecutor {
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
+		VaroPlayer target = VaroPlayer.getPlayer(player);
+		VaroCancelAble.removeCancelAble(target, CancelAbleType.PROTECTION);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich unprotected!");
 		return false;

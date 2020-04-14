@@ -10,7 +10,8 @@ import org.bukkit.event.Listener;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
 import net.labymod.serverapi.bukkit.event.PermissionsSendEvent;
@@ -29,7 +30,8 @@ public class PermissionSendListener implements Listener {
 
 				@Override
 				public void run() {
-					event.getPlayer().kickPlayer(ConfigMessages.LABYMOD_KICK.getValue());
+					VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
+					vp.getPlayer().kickPlayer(Main.getLanguageManager().getValue(LanguageDE.LABYMOD_KICK, vp, vp));
 				}
 			}, 1);
 	}

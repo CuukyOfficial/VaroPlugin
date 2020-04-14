@@ -7,7 +7,7 @@ import org.bukkit.Location;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -65,7 +65,7 @@ public class Strike implements VaroSerializeable {
 		default:
 			striked.getStats().setState(PlayerState.DEAD);
 			if(striked.isOnline())
-				striked.getPlayer().kickPlayer(ConfigMessages.KICK_TOO_MANY_STRIKES.getValue());
+				striked.getPlayer().kickPlayer(Main.getLanguageManager().getValue(LanguageDE.KICK_TOO_MANY_STRIKES, striked));
 			break;
 		}
 
@@ -121,20 +121,20 @@ public class Strike implements VaroSerializeable {
 		case 1:
 			if(striked.getStats().getLastLocation() == null) {
 				Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, Main.getLanguageManager().getValue(LanguageDE.ALERT_FIRST_STRIKE_NEVER_ONLINE, striked, striked).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker));
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue().replace("%player%", striked.getName()).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, Main.getLanguageManager().getValue(LanguageDE.ALERT_FIRST_STRIKE, striked, striked).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker));
 			}
 			break;
 		case 2:
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue().replace("%player%", striked.getName()).replace("%reason%", reason).replace("%striker%", striker));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, Main.getLanguageManager().getValue(LanguageDE.ALERT_SECOND_STRIKE, striked, striked).replace("%reason%", reason).replace("%striker%", striker));
 			break;
 		case 3:
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue().replace("%player%", striked.getName()).replace("%reason%", reason).replace("%striker%", striker));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, Main.getLanguageManager().getValue(LanguageDE.ALERT_THRID_STRIKE, striked, striked).replace("%reason%", reason).replace("%striker%", striker));
 			break;
 		default:
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue().replace("%player%", striked.getName()).replace("%strikeNumber%", String.valueOf(number)).replace("%reason%", reason).replace("%striker%", striker));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, Main.getLanguageManager().getValue(LanguageDE.ALERT_GENERAL_STRIKE, striked, striked).replace("%strikeNumber%", String.valueOf(number)).replace("%reason%", reason).replace("%striker%", striker));
 			break;
 		}
 

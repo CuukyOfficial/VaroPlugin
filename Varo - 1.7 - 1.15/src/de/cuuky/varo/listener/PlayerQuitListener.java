@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.CombatlogCheck;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
@@ -27,7 +27,7 @@ public class PlayerQuitListener implements Listener {
 
 		// IF THEY WERE A SPECTATOR
 		if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
-			event.setQuitMessage(ConfigMessages.QUIT_SPECTATOR.getValue(vplayer));
+			event.setQuitMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_SPECTATOR, null, vplayer));
 			vplayer.onEvent(BukkitEventType.QUIT);
 			return;
 		}
@@ -38,7 +38,7 @@ public class PlayerQuitListener implements Listener {
 				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
 					if(vplayer.getStats().getState() != PlayerState.DEAD)
-						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(vplayer));
+						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, Main.getLanguageManager().getValue(LanguageDE.ALERT_KICKED_PLAYER, null, vplayer));
 					return;
 				}
 
@@ -64,14 +64,14 @@ public class PlayerQuitListener implements Listener {
 				}
 
 				VaroPlayerDisconnect.disconnected(vplayer.getName());
-				Bukkit.broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(vplayer));
+				Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_WITH_REMAINING_TIME, null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, Main.getLanguageManager().getValue(LanguageDE.ALERT_PLAYER_DC_TO_EARLY, null, vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}
 		}
 
 		vplayer.onEvent(BukkitEventType.QUIT);
-		event.setQuitMessage(ConfigMessages.QUIT_MESSAGE.getValue(vplayer));
+		event.setQuitMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_MESSAGE, null, vplayer));
 	}
 }

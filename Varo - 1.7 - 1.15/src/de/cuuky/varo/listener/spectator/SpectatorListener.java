@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
@@ -80,7 +80,7 @@ public class SpectatorListener implements Listener {
 		if(cancelEvent(event.getEntity()))
 			event.setCancelled(true);
 	}
-	
+
 	@EventHandler
 	public void onInteractEntity(PlayerInteractEntityEvent event) {
 		if(Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
@@ -131,7 +131,8 @@ public class SpectatorListener implements Listener {
 					Location tp = event.getFrom();
 					tp.setY(ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
 					event.setTo(tp);
-					event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT.getValue());
+					VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
+					vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_LOWER_FLIGHT, vp, vp));
 				}
 		return;
 

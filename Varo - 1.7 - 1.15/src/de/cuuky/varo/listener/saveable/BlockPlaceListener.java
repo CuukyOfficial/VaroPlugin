@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -21,11 +21,11 @@ import de.cuuky.varo.version.types.Sounds;
 public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockPlace(final BlockPlaceEvent e) {
+	public void onBlockPlace(final BlockPlaceEvent event) {
 		if(!Main.getVaroGame().hasStarted())
 			return;
 
-		Block placed = e.getBlock();
+		Block placed = event.getBlock();
 
 		if(!(placed.getState() instanceof Chest))
 			return;
@@ -45,17 +45,17 @@ public class BlockPlaceListener implements Listener {
 		if(saveable == null || saveable.holderDead())
 			return;
 
-		Player p = e.getPlayer();
+		Player p = event.getPlayer();
 		VaroPlayer player = VaroPlayer.getPlayer(p);
 
 		if(saveable.canModify(player)) {
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue());
+			player.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.CHEST_SAVED_CHEST, player, player));
 			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 			p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 			return;
 		}
 
-		e.setCancelled(true);
+		event.setCancelled(true);
 	}
 }
