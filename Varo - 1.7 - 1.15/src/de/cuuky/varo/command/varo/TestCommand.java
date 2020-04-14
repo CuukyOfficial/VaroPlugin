@@ -16,6 +16,6 @@ public class TestCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.TEST_MESSAGE, vp));
+		sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.COMBAT_IN_FIGHT, vp));
 	}
 }
