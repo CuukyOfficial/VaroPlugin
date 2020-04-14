@@ -54,15 +54,16 @@ public class Language {
 	public void load() {
 		this.file = new File(manager.getLanguagePath(), this.name + ".yml");
 		this.configuration = YamlConfiguration.loadConfiguration(this.file);
-
+		this.configuration.options().copyDefaults(true);
+		
 		ArrayList<String> loadedMessages = new ArrayList<>();
-		boolean save = false;
+		boolean save = file.exists();
 
 		if(this.clazz != null) {
 			for(DefaultLanguage message : values) {
 				if(!this.configuration.contains(message.getPath())) {
 					save = true;
-					this.configuration.set(message.getPath(), message.getMessage());
+					this.configuration.addDefault(message.getPath(), message.getMessage());
 				}
 
 				message.setMessage(this.configuration.getString(message.getPath()));
@@ -77,6 +78,7 @@ public class Language {
 			if(clazz != null)
 				if(!loadedMessages.contains(path)) {
 					save = true;
+					System.out.println("Removed lang path " + path);
 					this.configuration.set(path, null);
 					continue;
 				}

@@ -2,6 +2,8 @@ package de.cuuky.varo.configuration.configurations.messages;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.Language;
@@ -31,6 +33,31 @@ public class VaroLanguageManager extends LanguageManager {
 			throw new NullPointerException("Couldn't find language '" + ConfigSetting.MAIN_LANGUAGE.getValueAsString() + "'");
 		
 		setDefaultLanguage(lang);
+	}
+	
+	private ArrayList<Integer> getConvNumbers(String line, String key) {
+		ArrayList<Integer> list = new ArrayList<>();
+
+		boolean first = true;
+		for(String split0 : line.split(key)) {
+			if(first) {
+				first = false;
+				if(!line.startsWith(key))
+					continue;
+			}
+
+			String[] split1 = split0.split("%", 2);
+
+			if(split1.length == 2) {
+				try {
+					list.add(Integer.parseInt(split1[0]));
+				} catch(NumberFormatException e) {
+					continue;
+				}
+			}
+		}
+
+		return list;
 	}
 	
 	public String replaceMessage(String message) {
@@ -63,29 +90,14 @@ public class VaroLanguageManager extends LanguageManager {
 		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), player);
 	}
 
-	private ArrayList<Integer> getConvNumbers(String line, String key) {
-		ArrayList<Integer> list = new ArrayList<>();
-
-		boolean first = true;
-		for(String split0 : line.split(key)) {
-			if(first) {
-				first = false;
-				if(!line.startsWith(key))
-					continue;
-			}
-
-			String[] split1 = split0.split("%", 2);
-
-			if(split1.length == 2) {
-				try {
-					list.add(Integer.parseInt(split1[0]));
-				} catch(NumberFormatException e) {
-					continue;
-				}
-			}
-		}
-
-		return list;
+	public void broadcastMessage(DefaultLanguage lang, VaroPlayer replacement) {
+		Bukkit.broadcastMessage("");
+		Main.getLanguageManager().broadcastMessage(lang, replacement);
+		
+		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) 
+			vp.sendMessage(getValue(lang, vp, replacement));
+		
+		System.out.println(getValue(lang));
 	}
 
 	public String getValue(DefaultLanguage message, VaroPlayer languageHolder, VaroPlayer vplayer) {
