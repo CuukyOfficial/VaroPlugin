@@ -38,6 +38,7 @@ import de.cuuky.varo.command.varo.StatsCommand;
 import de.cuuky.varo.command.varo.StrikeCommand;
 import de.cuuky.varo.command.varo.TeamCommand;
 import de.cuuky.varo.command.varo.TeamRequestCommand;
+import de.cuuky.varo.command.varo.TestCommand;
 import de.cuuky.varo.command.varo.TrollCommand;
 import de.cuuky.varo.command.varo.UpdateCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -84,7 +85,7 @@ public abstract class VaroCommand {
 		new FinaleCommand();
 		new PlaceholderCommand();
 		new BugreportCommand();
-//		new TestCommand();
+		new TestCommand();
 	}
 
 	private String[] aliases;

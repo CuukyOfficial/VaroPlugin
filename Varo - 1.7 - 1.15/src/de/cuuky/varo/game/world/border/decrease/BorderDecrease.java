@@ -38,7 +38,7 @@ public class BorderDecrease {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void shrink() {
 		VaroWorldHandler worldHandler = Main.getVaroGame().getVaroWorldHandler();
 
@@ -50,7 +50,8 @@ public class BorderDecrease {
 			return;
 		}
 
-		startHook.run();
+		if(startHook != null)
+			startHook.run();
 		if(minsize > 0)
 			if((int) (size - amount) < minsize) {
 				worldHandler.setBorderSize(minsize, (long) ((size - minsize) / bps), null);
@@ -60,10 +61,11 @@ public class BorderDecrease {
 				waitForBorder(amount / bps);
 			}
 
-		finishHook.run();
+		if(finishHook != null)
+			finishHook.run();
 		remove();
 	}
-	
+
 	public void remove() {
 		decreases.remove(this);
 	}

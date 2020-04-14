@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class TestCommand extends VaroCommand {
@@ -15,6 +16,6 @@ public class TestCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		Main.getDataManager().getDailyTimer().doDailyChecks();
+		sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.TEST_MESSAGE, vp));
 	}
 }

@@ -17,7 +17,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class ItemCommand extends VaroCommand {
 
 	public ItemCommand() {
-		super("item", "Blockt oder erlaubt Items", "varo.item", "itemlist");
+		super("item", "Blockt oder erlaubt Items", "varo.item", "itemlist", "items");
 	}
 
 	@Override
@@ -31,6 +31,7 @@ public class ItemCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Item §7-----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Add <Anzahl>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove [@a/Anzahl]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
 			sender.sendMessage(Main.getPrefix());

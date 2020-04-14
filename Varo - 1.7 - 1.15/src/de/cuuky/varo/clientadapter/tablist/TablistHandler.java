@@ -72,9 +72,9 @@ public class TablistHandler implements BoardHandler {
 
 		ArrayList<String> footer = new ArrayList<>();
 		footer.add("&7------------------------");
-		footer.add("&7Registriert: %colorcode%%players%");
-		footer.add("&7Lebend: %colorcode%%remaining%");
 		footer.add("&7Online: %colorcode%%online%");
+		footer.add("&7Alive: %colorcode%%remaining%");
+		footer.add("&7Registered: %colorcode%%players%");
 		footer.add(" ");
 		footer.add("&7Plugin &8(&7v%colorcode%%pluginVersion%&8) &7by %colorcode%Cuuky");
 		footer.add(" ");

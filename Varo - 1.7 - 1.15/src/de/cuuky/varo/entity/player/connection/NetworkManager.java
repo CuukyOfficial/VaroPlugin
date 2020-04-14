@@ -36,7 +36,6 @@ public class NetworkManager {
 	private static Object healthPacket;
 
 	static {
-
 		try {
 			if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 				ioBaseChat = VersionUtils.getChatSerializer();
@@ -82,16 +81,18 @@ public class NetworkManager {
 		}
 	}
 
-	private Object connection;
-	private Field footerField;
-
-	private Field headerField;
 	private Player player;
+	private Object connection;
+	
+	private Field footerField;
+	private Field headerField;
 
 	private Object playerHandle;
 	private Method sendPacketMethod;
 	private Object tablist;
 	private Field pingField;
+	
+	private String locale;
 
 	public NetworkManager(Player player) {
 		this.player = player;
@@ -104,6 +105,10 @@ public class NetworkManager {
 			this.pingField = playerHandle.getClass().getField("ping");
 			this.connection = playerHandle.getClass().getField("playerConnection").get(playerHandle);
 			this.sendPacketMethod = connection.getClass().getMethod("sendPacket", Class.forName(VersionUtils.getNmsClass() + ".Packet"));
+			
+			Field localeField = playerHandle.getClass().getField("locale");
+			localeField.setAccessible(true);
+			this.locale = (String) localeField.get(playerHandle);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -266,5 +271,9 @@ public class NetworkManager {
 		}
 
 		return null;
+	}
+	
+	public String getLocale() {
+		return this.locale;
 	}
 }
