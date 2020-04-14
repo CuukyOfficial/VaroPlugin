@@ -24,7 +24,10 @@ public class Language {
 	public Language(String name, Class<? extends LanguageMessage> clazz, String languagePath) {
 		this.name = name;
 		this.clazz = clazz;
+		this.languagePath = languagePath;
 		this.messages = new HashMap<>();
+		
+		load();
 	}
 
 	private void saveConfiguration() {
@@ -48,7 +51,7 @@ public class Language {
 		this.file = new File(languagePath, this.name + ".yml");
 		this.configuration = YamlConfiguration.loadConfiguration(this.file);
 
-		boolean save = false;
+		boolean save = file.exists();
 		ArrayList<String> pathNames = new ArrayList<>();
 		for(LanguageMessage message : messages) {
 			if(!configuration.contains(message.getPath())) {

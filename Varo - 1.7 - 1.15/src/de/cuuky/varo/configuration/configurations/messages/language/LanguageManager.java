@@ -59,7 +59,7 @@ public class LanguageManager {
 
 		if(defaultLanguage) {
 			this.defaultLanguage = language;
-			language.load();
+//			language.load();
 		}
 
 		return language;
