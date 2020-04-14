@@ -227,6 +227,7 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_ERROR_NOT_STARTED(ConfigMessageSection.VARO_COMMANDS, "error.notstarted", "Das Spiel wurde noch nicht gestartet!"), 
 	VARO_COMMANDS_ERROR_USAGE(ConfigMessageSection.VARO_COMMANDS, "error.usage", "&cFehler! &7Nutze %colorcode%/varo %command% &7fuer Hilfe."), 
 	VARO_COMMANDS_ERROR_NO_NUMBER(ConfigMessageSection.VARO_COMMANDS, "error.nonumber", "%colorcode%%text% &7ist keine Zahl!"), 
+	VARO_COMMANDS_ERROR_USER_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "error.usernotfound", "&7Es konnte kein User für diesen Spieler gefunden werden!"), 
 	VARO_COMMANDS_ERROR(ConfigMessageSection.VARO_COMMANDS, "error.error", "&7Es ist ein Fehler aufgetreten!"), 
 	
 	VARO_COMMANDS_BUGREPORT_CREATED(ConfigMessageSection.VARO_COMMANDS, "bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"), 
@@ -286,13 +287,6 @@ public enum ConfigMessages implements SectionEntry {
 	
 	VARO_COMMANDS_EXPORT_SUCCESSFULL(ConfigMessageSection.VARO_COMMANDS, "export.players", "&7Alle Spieler wurden erfolgreich in '%colorcode%%file%&7' exportiert."), 
 
-	VARO_COMMANDS_DISCORD_PLEASE_RELOAD(ConfigMessageSection.VARO_COMMANDS, "discord.pleasereload", "&7Der DiscordBot wurde beim Start nicht aufgesetzt, bitte reloade!"), 
-	VARO_COMMANDS_DISCORD_VERIFY_DISABLED(ConfigMessageSection.VARO_COMMANDS, "discord.verifydisabled", "&7Das Verifzierungs-System wurde in der Config deaktiviert!"), 
-	VARO_COMMANDS_DISCORD_BOT_DISABLED(ConfigMessageSection.VARO_COMMANDS, "discord.botdisabled", "&7Der DiscordBot wurde nicht aktiviert!"), 
-	VARO_COMMANDS_DISCORD_USER_NOT_FOUND(ConfigMessageSection.VARO_COMMANDS, "discord.usernotfound", "&7User fuer diesen Spieler nicht gefunden!"), 
-	VARO_COMMANDS_DISCORD_GETLINK(ConfigMessageSection.VARO_COMMANDS, "discord.getlink", "&7Der Discord Account von %colorcode%%player% heisst %colorcode%%user%&7 und die ID lautet %colorcode%%id%&7!"), 
-	VARO_COMMANDS_DISCORD_UNVERIFY(ConfigMessageSection.VARO_COMMANDS, "discord.unverify", "&7Der Discord Account wurde erfolgreich von %colorcode%%player% &7entkoppelt!"), 
-
 	VARO_COMMANDS_INTRO_ALREADY_STARTED(ConfigMessageSection.VARO_COMMANDS, "intro.alreadystarted", "&7Das Intro wurde bereits gestartet!"), 
 	VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED(ConfigMessageSection.VARO_COMMANDS, "intro.gamealreadystarted", "&7Das Spiel wurde bereits gestartet!"), 
 	VARO_COMMANDS_INTRO_STARTED(ConfigMessageSection.VARO_COMMANDS, "intro.started", "&7Und los geht's!"), 
@@ -320,6 +314,27 @@ public enum ConfigMessages implements SectionEntry {
 	VARO_COMMANDS_SORT_SORTED_WELL(ConfigMessageSection.VARO_COMMANDS, "sort.sorted", "&7Alle Spieler wurden erfolgreich sortiert."),
 	VARO_COMMANDS_SORT_NO_SPAWN_WITH_TEAM(ConfigMessageSection.VARO_COMMANDS, "sort.nospawnwithteam", "&7Es konnte nicht fuer jeden Spieler ein Loch bei den Teampartnern gefunden werden!"),
 	VARO_COMMANDS_SORT_NO_SPAWN(ConfigMessageSection.VARO_COMMANDS, "sort.nospawn", "&7Es konnte nicht fuer jeden Spieler ein Loch gefunden werden!"),
+
+	VARO_COMMANDS_DISCORD_NOT_SETUP(ConfigMessageSection.VARO_COMMANDS, "discord.notsetup", "&7Der DiscordBot wurde beim Start nicht aufgesetzt!"),
+	VARO_COMMANDS_DISCORD_STATUS(ConfigMessageSection.VARO_COMMANDS, "discord.status", "&7Deine Discord Verifizierung ist %status%&7."),
+	VARO_COMMANDS_DISCORD_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "discord.status.active", "&aaktiv"),
+	VARO_COMMANDS_DISCORD_INACTIVE(ConfigMessageSection.VARO_COMMANDS, "discord.status.inactive", "&cinaktiv"),
+	VARO_COMMANDS_DISCORD_NOT_VERIFIED(ConfigMessageSection.VARO_COMMANDS, "discord.notverified", "&7Du bist noch nicht verifiziert!"),
+	VARO_COMMANDS_DISCORD_VERIFICATION_REMOVED(ConfigMessageSection.VARO_COMMANDS, "discord.verificationremoved", "&7Deine Verifizierung wurde entfernt."),
+	VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED(ConfigMessageSection.VARO_COMMANDS, "discord.verifysystemdisabled", "&7Das Verifysystem ist deaktiviert."),
+	VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED(ConfigMessageSection.VARO_COMMANDS, "discord.discordbotdisabled", "&7Der Discordbot ist deaktiviert."),
+	VARO_COMMANDS_DISCORD_GETLINK(ConfigMessageSection.VARO_COMMANDS, "discord.getlink", "&7Der Discord Account von %colorcode%%player% heisst %colorcode%%user%&7 und die ID lautet %colorcode%%id%&7!"), 
+	VARO_COMMANDS_DISCORD_UNVERIFY(ConfigMessageSection.VARO_COMMANDS, "discord.unverify", "&7Der Discord Account wurde erfolgreich von %colorcode%%player% &7entkoppelt!"), 
+	VARO_COMMANDS_DISCORD_RELOADED(ConfigMessageSection.VARO_COMMANDS, "discord.reloaded", "&7Der Discordbot wurde &aerfolgreich &7neu geladen."), 
+	VARO_COMMANDS_DISCORD_SHUTDOWN(ConfigMessageSection.VARO_COMMANDS, "discord.shutdown", "&7Der Discordbot wurde &aerfolgreich &7heruntergefahren."), 
+	VARO_COMMANDS_DISCORD_BOT_OFFLINE(ConfigMessageSection.VARO_COMMANDS, "discord.botoffline", "&7Der Discordbot ist nicht online!"), 
+	VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL(ConfigMessageSection.VARO_COMMANDS, "discord.noeventchannel", "&7Dem Bot wurde keine Event-Channel gegeben."), 
+	VARO_COMMANDS_DISCORD_VERIFY_ENABLED(ConfigMessageSection.VARO_COMMANDS, "discord.verifyenabled", "&7Das Verifysystem wurde aktiviert."), 
+	VARO_COMMANDS_DISCORD_DISCORD_MESSAGE_TITLE(ConfigMessageSection.VARO_COMMANDS, "discord.discordmessagetitle", "MESSAGE"), 
+	VARO_COMMANDS_DISCORD_BYPASS_ACTIVE(ConfigMessageSection.VARO_COMMANDS, "discord.bypassactive", "&7%player% umgeht nun das Verifysystem."), 
+	VARO_COMMANDS_DISCORD_BYPASS_INACTIVE(ConfigMessageSection.VARO_COMMANDS, "discord.bypassinactive", "&7%player% umgeht nicht mehr das Verifysystem."), 
+	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT(ConfigMessageSection.VARO_COMMANDS, "discord.account", "&7Account: %colorcode%%account%"), 
+	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE(ConfigMessageSection.VARO_COMMANDS, "discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."), 
 	
 	// SPAWNS
 
