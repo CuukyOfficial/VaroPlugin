@@ -99,6 +99,7 @@ public enum ConfigSetting implements SectionEntry {
 	// DEATH
 	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound", false, "Ob ein Withersound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
+	BLOCK_ACHIEVEMENTS(ConfigSettingSection.OTHER, "blockAchievements", true, "Ob Achievements deaktiviert werden sollen"),
 	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFuer diese Funktion wird dieses Plugin benoetigt:\nhttps://www.spigotmc.org/resources/52423/"),
 
 	// DISCONNECT
