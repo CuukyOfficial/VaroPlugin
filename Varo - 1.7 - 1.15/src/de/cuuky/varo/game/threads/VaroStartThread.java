@@ -8,7 +8,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;

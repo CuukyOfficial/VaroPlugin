@@ -1,4 +1,6 @@
-package de.cuuky.varo.configuration.configurations.messages.language.languages;
+package de.cuuky.varo.configuration.configurations.messages.language.languages.other;
+
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LoadableMessage;
 
 public enum LanguageEN implements LoadableMessage {
 

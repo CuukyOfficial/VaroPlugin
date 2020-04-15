@@ -16,7 +16,7 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.connection.NetworkManager;
 import de.cuuky.varo.entity.player.event.BukkitEvent;

@@ -4,7 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class TestCommand extends VaroCommand {

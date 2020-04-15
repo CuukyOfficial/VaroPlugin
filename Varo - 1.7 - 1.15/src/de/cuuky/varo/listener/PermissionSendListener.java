@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;

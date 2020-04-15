@@ -1,8 +1,9 @@
-package de.cuuky.varo.configuration.configurations.messages.language.languages;
+package de.cuuky.varo.configuration.configurations.messages.language.languages.defaults;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.Language;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public enum ConfigMessages implements DefaultLanguage {
