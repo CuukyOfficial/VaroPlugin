@@ -58,6 +58,9 @@ public class VaroWorld {
 
 		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
+		if(chestItems.isEmpty())
+			return;
+		
 		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
 			if(!(block.getState() instanceof Chest))
 				continue;
