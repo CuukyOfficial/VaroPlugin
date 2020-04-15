@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -29,9 +29,9 @@ public class EntityDamageByEntityListener implements Listener {
 		VaroPlayer vp = VaroPlayer.getPlayer(p), vDamager = VaroPlayer.getPlayer(damager);
 		if(Main.getVaroGame().getProtection() != null) {
 			if(damager == null)
-				vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.PROTECTION_TIME_RUNNING, vp, vp));
+				vp.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vp, vp));
 			else
-				vDamager.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.PROTECTION_TIME_RUNNING, vDamager, vDamager));
+				vDamager.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vDamager, vDamager));
 			event.setCancelled(true);
 			return;
 		}
@@ -54,7 +54,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 
 		event.setCancelled(true);
-		damager.sendMessage(Main.getLanguageManager().getValue(LanguageDE.COMBAT_FRIENDLY_FIRE, vDamager, vDamager));
+		damager.sendMessage(ConfigMessages.COMBAT_FRIENDLY_FIRE.getValue(vDamager, vDamager));
 		return;
 	}
 }

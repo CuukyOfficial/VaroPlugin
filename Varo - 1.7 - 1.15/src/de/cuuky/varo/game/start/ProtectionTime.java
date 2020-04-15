@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 
 public class ProtectionTime {
 
@@ -26,11 +26,11 @@ public class ProtectionTime {
 			@Override
 			public void run() {
 				if(this.protectionTimer == 0) {
-					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.PROTECTION_TIME_OVER, null));
+					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
 					Main.getVaroGame().setProtection(null);
 					Bukkit.getScheduler().cancelTask(scheduler);
 				} else if(protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
-					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.PROTECTION_TIME_UPDATE, null).replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer)));
+					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE.getValue().replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer)));
 
 				this.protectionTimer--;
 			}

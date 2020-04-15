@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.leaderboard.TopScoreList;
@@ -170,11 +170,11 @@ public class VaroGame implements VaroSerializeable {
 		}
 
 		if(first.contains("&")) {
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, Main.getLanguageManager().getValue(LanguageDE.ALERT_WINNER_TEAM).replace("%winnerPlayers%", first));
-			Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.GAME_WIN_TEAM).replace("%winnerPlayers%", first));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
+			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN_TEAM.getValue().replace("%winnerPlayers%", first));
 		} else {
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, Main.getLanguageManager().getValue(LanguageDE.ALERT_WINNER).replace("%player%", first));
-			Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.GAME_WIN).replace("%player%", first));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER.getValue().replace("%player%", first));
+			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN.getValue().replace("%player%", first));
 		}
 
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();

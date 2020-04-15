@@ -7,7 +7,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -58,11 +58,11 @@ public class CombatlogCheck {
 		new Alert(AlertType.COMBATLOG, player.getName() + " hat sich im Kampf ausgeloggt!");
 		if(ConfigSetting.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
 			player.getStats().addStrike(new Strike("CombatLog", player, "CONSOLE"));
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, Main.getLanguageManager().getValue(LanguageDE.ALERT_COMBAT_LOG_STRIKE, null, player));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(null, player));
 		} else
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, Main.getLanguageManager().getValue(LanguageDE.ALERT_COMBAT_LOG, null, player));
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(null, player));
 
-		Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.COMBAT_LOGGED_OUT, null, player));
+		Bukkit.broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT.getValue(null, player));
 	}
 
 	public boolean isCombatLog() {

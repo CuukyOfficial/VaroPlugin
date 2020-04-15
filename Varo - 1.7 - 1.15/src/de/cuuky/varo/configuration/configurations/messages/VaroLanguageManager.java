@@ -2,14 +2,11 @@ package de.cuuky.varo.configuration.configurations.messages;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.Language;
 import de.cuuky.varo.configuration.configurations.messages.language.LanguageManager;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageEN;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
@@ -24,7 +21,7 @@ public class VaroLanguageManager extends LanguageManager {
 		super(PATH_DIR);
 
 		registerDefaultLanguage("en_US", LanguageEN.class);
-		registerDefaultLanguage("de_DE", LanguageDE.class);
+		registerDefaultLanguage("de_DE", ConfigMessages.class);
 
 		loadLanguages();
 		
@@ -90,26 +87,26 @@ public class VaroLanguageManager extends LanguageManager {
 		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), player);
 	}
 
-	public void broadcastMessage(DefaultLanguage lang, VaroPlayer replacement) {
-		Bukkit.broadcastMessage("");
-		Main.getLanguageManager().broadcastMessage(lang, replacement);
-		
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) 
-			vp.sendMessage(getValue(lang, vp, replacement));
-		
-		System.out.println(getValue(lang));
-	}
+//	public void broadcastMessage(DefaultLanguage lang, VaroPlayer replacement) {
+//		Bukkit.broadcastMessage("");
+//		Main.getLanguageManager().broadcastMessage(lang, replacement);
+//		
+//		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) 
+//			vp.sendMessage(getValue(lang, vp, replacement));
+//		
+//		System.out.println(getValue(lang));
+//	}
 
-	public String getValue(DefaultLanguage message, VaroPlayer languageHolder, VaroPlayer vplayer) {
-		String replaced = super.getMessage(message.getPath(), languageHolder != null && languageHolder.getNetworkManager() != null ? languageHolder.getNetworkManager().getLocale() : null);
-		return vplayer != null ? replaceMessage(replaced, vplayer) : replaceMessage(replaced);
-	}
-
-	public String getValue(DefaultLanguage message, VaroPlayer languageHolder) {
-		return this.getValue(message, languageHolder, null);
-	}
-	
-	public String getValue(DefaultLanguage message) {
-		return this.getValue(message, null, null);
-	}
+//	public String getValue(DefaultLanguage message, VaroPlayer languageHolder, VaroPlayer vplayer) {
+//		String replaced = super.getMessage(message.getPath(), languageHolder != null && languageHolder.getNetworkManager() != null ? languageHolder.getNetworkManager().getLocale() : null);
+//		return vplayer != null ? replaceMessage(replaced, vplayer) : replaceMessage(replaced);
+//	}
+//
+//	public String getValue(DefaultLanguage message, VaroPlayer languageHolder) {
+//		return this.getValue(message, languageHolder, null);
+//	}
+//	
+//	public String getValue(DefaultLanguage message) {
+//		return this.getValue(message, null, null);
+//	}
 }

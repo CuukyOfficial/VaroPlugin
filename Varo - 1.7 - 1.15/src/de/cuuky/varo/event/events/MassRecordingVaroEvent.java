@@ -7,7 +7,7 @@ import org.bukkit.Material;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
@@ -52,9 +52,9 @@ public class MassRecordingVaroEvent extends VaroEvent {
 				if(vp.isOnline()) {
 					vp.setMassRecordingKick(true);
 
-					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_KICK_BROADCAST, null, vp));
+					Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(null, vp));
 					vp.onEvent(BukkitEventType.KICKED);
-					vp.getPlayer().kickPlayer(Main.getLanguageManager().getValue(LanguageDE.KICK_MASS_REC_SESSION_OVER, vp, vp));
+					vp.getPlayer().kickPlayer(ConfigMessages.KICK_MASS_REC_SESSION_OVER.getValue(vp, vp));
 				}
 			}
 		}

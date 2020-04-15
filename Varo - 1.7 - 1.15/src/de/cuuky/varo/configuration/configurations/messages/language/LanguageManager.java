@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.LoadableMessage;
 
 public class LanguageManager {
 
@@ -44,7 +44,7 @@ public class LanguageManager {
 		return registerDefaultLanguage(name, null);
 	}
 
-	protected Language registerDefaultLanguage(String name, Class<? extends DefaultLanguage> clazz) {
+	protected Language registerDefaultLanguage(String name, Class<? extends LoadableMessage> clazz) {
 		Language language = null;
 		languages.put(name, language = new Language(name, this, clazz));
 
@@ -67,6 +67,10 @@ public class LanguageManager {
 
 	public String getLanguagePath() {
 		return this.languagePath;
+	}
+	
+	public Language getDefaultLanguage() {
+		return this.defaultLanguage;
 	}
 
 	public HashMap<String, Language> getLanguages() {

@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.VaroWorldHandler;
 
 public class BorderDecrease {
@@ -45,7 +45,7 @@ public class BorderDecrease {
 		int minsize = ConfigSetting.MIN_BORDER_SIZE.getValueAsInt();
 		double size = worldHandler.getBorderSize(null);
 		if(size <= minsize) {
-			Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.BORDER_MINIMUM_REACHED));
+			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());
 			remove();
 			return;
 		}

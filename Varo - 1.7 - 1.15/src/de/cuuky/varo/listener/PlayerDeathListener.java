@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -44,9 +44,9 @@ public class PlayerDeathListener implements Listener {
 					return;
 
 				if(killerPlayer == null)
-					deadPlayer.getPlayer().kickPlayer(Main.getLanguageManager().getValue(LanguageDE.DEATH_KICK_DEAD, deadPlayer, deadPlayer));
+					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer, deadPlayer));
 				else
-					deadPlayer.getPlayer().kickPlayer(Main.getLanguageManager().getValue(LanguageDE.DEATH_KICK_KILLED, deadPlayer, deadPlayer).replace("%killer%", killerPlayer.getName()));
+					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_KILLED.getValue(deadPlayer, deadPlayer).replace("%killer%", killerPlayer.getName()));
 			}
 		}, 1);
 	}
@@ -74,8 +74,8 @@ public class PlayerDeathListener implements Listener {
 
 			if(deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
 				if(killerPlayer == null) {
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, Main.getLanguageManager().getValue(LanguageDE.ALERT_DISCORD_DEATH, null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
-					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_DEAD, null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
+					Bukkit.broadcastMessage(ConfigMessages.DEATH_DEAD.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
 				} else {
 					PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
 					if(hit1 != null)
@@ -87,11 +87,11 @@ public class PlayerDeathListener implements Listener {
 						} catch(Exception e) {
 							killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
 						}
-						killer.sendMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_KILL_LIFE_ADD, killer, killer));
+						killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD.getValue(killer, killer));
 					}
 
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, Main.getLanguageManager().getValue(LanguageDE.ALERT_DISCORD_KILL, null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
-					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_KILLED_BY, null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
+					Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 
 					killer.onEvent(BukkitEventType.KILL);
 					checkHealth(killerPlayer);
@@ -101,7 +101,7 @@ public class PlayerDeathListener implements Listener {
 
 				if(!ConfigSetting.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
 					if(ConfigSetting.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
-						Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_KICK_IN_SECONDS, null, deadP).replace("%countdown%", String.valueOf(ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
+						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(null, deadP).replace("%countdown%", String.valueOf(ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
 						deadP.getStats().setState(PlayerState.SPECTATOR);
 						deadP.setSpectacting();
 						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -110,7 +110,7 @@ public class PlayerDeathListener implements Listener {
 							public void run() {
 								deadP.getStats().setState(PlayerState.DEAD);
 								kickDeadPlayer(deadP, killer);
-								Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.QUIT_KICK_DELAY_OVER, null, deadP));
+								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER.getValue(null, deadP));
 							}
 						}, ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
 					} else
@@ -123,18 +123,18 @@ public class PlayerDeathListener implements Listener {
 			} else {
 				if(ConfigSetting.RESPAWN_PROTECTION.isIntActivated()) {
 					VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadP, ConfigSetting.RESPAWN_PROTECTION.getValueAsInt());
-					Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_RESPAWN_PROTECTION, null, deadP).replace("%seconds%", String.valueOf(ConfigSetting.RESPAWN_PROTECTION.getValueAsInt())));
+					Bukkit.broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION.getValue(null, deadP).replace("%seconds%", String.valueOf(ConfigSetting.RESPAWN_PROTECTION.getValueAsInt())));
 					prot.setTimerHook(new Runnable() {
 
 						@Override
 						public void run() {
-							Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_RESPAWN_PROTECTION_OVER, null, deadP));
+							Bukkit.broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION_OVER.getValue(null, deadP));
 						}
 					});
 				}
 
 				deadP.getTeam().setLifes(deadP.getTeam().getLifes() - 1);
-				Bukkit.broadcastMessage(Main.getLanguageManager().getValue(LanguageDE.DEATH_LIFE_LOST, null, deadP));
+				Bukkit.broadcastMessage(ConfigMessages.DEATH_LIFE_LOST.getValue(null, deadP));
 			}
 		}
 	}

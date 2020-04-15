@@ -7,7 +7,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 
 public class ServerListPingListener implements Listener {
 
@@ -20,19 +20,19 @@ public class ServerListPingListener implements Listener {
 		if(ConfigSetting.CHANGE_MOTD.getValueAsBoolean()) {
 			if(!Main.getVaroGame().hasStarted()) {
 				if(Bukkit.getServer().hasWhitelist())
-					event.setMotd(Main.getLanguageManager().getValue(LanguageDE.SERVER_MODT_NOT_OPENED));
+					event.setMotd(ConfigMessages.SERVER_MODT_NOT_OPENED.getValue());
 				else
-					event.setMotd(Main.getLanguageManager().getValue(LanguageDE.SERVER_MODT_OPEN));
+					event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}
 
 			if(!ConfigSetting.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || Main.getDataManager().getOutsideTimeChecker().canJoin() || !Main.getVaroGame().hasStarted()) {
-				event.setMotd(Main.getLanguageManager().getValue(LanguageDE.SERVER_MODT_OPEN));
+				event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}
 
 			if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
-				event.setMotd(Main.getLanguageManager().getValue(LanguageDE.SERVER_MODT_CANT_JOIN_HOURS).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
+				event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
 		}
 	}
 }

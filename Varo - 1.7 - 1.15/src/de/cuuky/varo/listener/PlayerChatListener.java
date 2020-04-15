@@ -9,7 +9,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
@@ -87,7 +87,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
-			player.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.CHAT_MUTED, vp));
+			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue(vp));
 			event.setCancelled(true);
 			return;
 		}
@@ -107,7 +107,7 @@ public class PlayerChatListener implements Listener {
 			}
 
 			if(Main.getVaroGame().hasStarted() == false && ConfigSetting.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
-				player.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.CHAT_WHEN_START, vp));
+				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue(vp));
 				event.setCancelled(true);
 				return;
 			}
@@ -119,15 +119,15 @@ public class PlayerChatListener implements Listener {
 		String messageFormat = "";
 		if(vp.getTeam() != null) {
 			if(vp.getRank() == null) {
-				messageFormat = Main.getLanguageManager().getValue(LanguageDE.CHAT_PLAYER_WITH_TEAM, null, vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM.getValue(null, vp);
 			} else {
-				messageFormat = Main.getLanguageManager().getValue(LanguageDE.CHAT_PLAYER_WITH_TEAM_RANK, null, vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM_RANK.getValue(null, vp);
 			}
 		} else {
 			if(vp.getRank() == null) {
-				messageFormat = Main.getLanguageManager().getValue(LanguageDE.CHAT_PLAYER_WITHOUT_TEAM, null, vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM.getValue(null, vp);
 			} else {
-				messageFormat = Main.getLanguageManager().getValue(LanguageDE.CHAT_PLAYER_WITHOUT_TEAM_RANK, null, vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM_RANK.getValue(null, vp);
 			}
 		}
 		

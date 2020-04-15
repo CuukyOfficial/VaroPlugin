@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.VaroWorldHandler;
 import de.cuuky.varo.version.BukkitVersion;
@@ -57,11 +57,11 @@ public class BorderCommand implements CommandExecutor {
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.BORDER_COMMAND_SET_BORDER, vp).replace("%size%", String.valueOf(borderSize)));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.BORDER_COMMAND_SET_BORDER.getValue(vp).replace("%size%", String.valueOf(borderSize)));
 			if(p != null)
 				p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		} else
-			sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_PERMISSION, vp));
+			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 		return false;
 	}
 }

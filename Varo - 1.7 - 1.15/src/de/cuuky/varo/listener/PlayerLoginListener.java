@@ -17,7 +17,7 @@ import de.cuuky.varo.ban.VaroPlayerBan;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
 import net.dv8tion.jda.api.entities.User;
@@ -56,7 +56,7 @@ public class PlayerLoginListener implements Listener {
 					User user = discordBot.getJda().getUserById(reg.getUserId());
 					if(user == null || !discordBot.getMainGuild().isMember(user)) {
 						if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
-							event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.BOTS_DISCORD_NO_SERVER_USER, vp, vp));
+							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
 							vp.setPlayer(null);
 							return;
 						} else
@@ -71,33 +71,33 @@ public class PlayerLoginListener implements Listener {
 		KickResult kickResult = vp.getStats().getKickResult(player);
 		switch(kickResult) {
 		case NO_PROJECTUSER:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_NOT_USER_OF_PROJECT, vp, vp));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp, vp));
 			break;
 		case BANNED:
 			for(BanEntry entry : Bukkit.getBanList(Type.NAME).getBanEntries()) {
 				if(entry.getTarget().equals(player.getName())) {
-					event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_BANNED, vp, vp).replace("%reason%", entry.getReason()));
+					event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_BANNED.getValue(vp, vp).replace("%reason%", entry.getReason()));
 					break;
 				}
 			}
 			break;
 		case DEAD:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.DEATH_KICK_DEAD, vp));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.DEATH_KICK_DEAD.getValue(vp));
 			break;
 		case STRIKE_BAN:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_STRIKE_BAN, vp, vp).replace("%hours%", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp, vp).replace("%hours%", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
 			break;
 		case NOT_IN_TIME:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.SERVER_MODT_CANT_JOIN_HOURS, vp, vp).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue(vp, vp).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
 			break;
 		case SERVER_FULL:
-			event.disallow(Result.KICK_FULL, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_SERVER_FULL, vp, vp));
+			event.disallow(Result.KICK_FULL, ConfigMessages.JOIN_KICK_SERVER_FULL.getValue(vp, vp));
 			break;
 		case NO_SESSIONS_LEFT:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_NO_SESSIONS_LEFT, vp, vp));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_SESSIONS_LEFT.getValue(vp, vp));
 			break;
 		case NO_PREPRODUCES_LEFT:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_NO_PREPRODUCES_LEFT, vp, vp));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_PREPRODUCES_LEFT.getValue(vp, vp));
 			break;
 		case NO_TIME:
 			Date current = new Date();
@@ -121,10 +121,10 @@ public class PlayerLoginListener implements Listener {
 			else
 				hours = "" + hr;
 
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_NO_TIME_LEFT, vp).replace("%timeHours%", String.valueOf(ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt())).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue(vp).replace("%timeHours%", String.valueOf(ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt())).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
 			break;
 		case SERVER_NOT_PUBLISHED:
-			event.disallow(Result.KICK_OTHER, Main.getLanguageManager().getValue(LanguageDE.JOIN_KICK_NOT_STARTED, vp, vp));
+			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp, vp));
 			break;
 		case MASS_RECORDING_JOIN:
 		case FINALE_JOIN:

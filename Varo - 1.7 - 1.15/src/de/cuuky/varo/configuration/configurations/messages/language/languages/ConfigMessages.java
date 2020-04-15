@@ -1,7 +1,12 @@
 package de.cuuky.varo.configuration.configurations.messages.language.languages;
 
-public enum LanguageDE implements DefaultLanguage {
-	
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.language.Language;
+import de.cuuky.varo.entity.player.VaroPlayer;
+
+public enum ConfigMessages implements DefaultLanguage {
+
 	TEST_MESSAGE("test.message", "Hallo, wie geht es dir"),
 
 	ALERT_AUTOSTART_AT("alerts.BOTS_ALERT.autostartAt", "%projectname% wird am %date% starten!"),
@@ -169,8 +174,8 @@ public enum LanguageDE implements DefaultLanguage {
 
 	VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode% %category% &7-------"),
 	VARO_COMMANDS_HELP_FOOTER("varoCommands.help.footer", "&7------------------------"),
-	
-	VARO_COMMANDS_ERROR_USER_NOT_FOUND("varoCommands.error.usernotfound", "&7Es konnte kein User für diesen Spieler gefunden werden!"), 
+
+	VARO_COMMANDS_ERROR_USER_NOT_FOUND("varoCommands.error.usernotfound", "&7Es konnte kein User für diesen Spieler gefunden werden!"),
 
 	VARO_COMMANDS_ERROR_UNKNOWN_PLAYER("varoCommands.error.unknownplayer", "&7Der Spieler %colorcode%%player% &7hat den Server noch nie betreten!"),
 	VARO_COMMANDS_ERROR_NO_CONSOLE("varoCommands.error.noconsole", "Du musst ein Spieler sein!"),
@@ -259,7 +264,7 @@ public enum LanguageDE implements DefaultLanguage {
 	VARO_COMMANDS_SORT_SORTED_WELL("varoCommands.sort.sorted", "&7Alle Spieler wurden erfolgreich sortiert."),
 	VARO_COMMANDS_SORT_NO_SPAWN_WITH_TEAM("varoCommands.sort.nospawnwithteam", "&7Es konnte nicht fuer jeden Spieler ein Loch bei den Teampartnern gefunden werden!"),
 	VARO_COMMANDS_SORT_NO_SPAWN("varoCommands.sort.nospawn", "&7Es konnte nicht fuer jeden Spieler ein Loch gefunden werden!"),
-	
+
 	VARO_COMMANDS_DISCORD_NOT_SETUP("varoCommands.discord.notsetup", "&7Der DiscordBot wurde beim Start nicht aufgesetzt!"),
 	VARO_COMMANDS_DISCORD_STATUS("varoCommands.discord.status", "&7Deine Discord Verifizierung ist %status%&7."),
 	VARO_COMMANDS_DISCORD_ACTIVE("varoCommands.discord.status.active", "&aaktiv"),
@@ -268,18 +273,18 @@ public enum LanguageDE implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_VERIFICATION_REMOVED("varoCommands.discord.verificationremoved", "&7Deine Verifizierung wurde entfernt."),
 	VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED("varoCommands.discord.verifysystemdisabled", "&7Das Verifysystem ist deaktiviert."),
 	VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED("varoCommands.discord.discordbotdisabled", "&7Der Discordbot ist deaktiviert."),
-	VARO_COMMANDS_DISCORD_GETLINK("varoCommands.discord.getlink", "&7Der Discord Account von %colorcode%%player% heisst %colorcode%%user%&7 und die ID lautet %colorcode%%id%&7!"), 
-	VARO_COMMANDS_DISCORD_UNVERIFY("varoCommands.discord.unverify", "&7Der Discord Account wurde erfolgreich von %colorcode%%player% &7entkoppelt!"), 
-	VARO_COMMANDS_DISCORD_RELOADED("varoCommands.discord.reloaded", "&7Der Discordbot wurde &aerfolgreich &7neu geladen."), 
-	VARO_COMMANDS_DISCORD_SHUTDOWN("varoCommands.discord.shutdown", "&7Der Discordbot wurde &aerfolgreich &7heruntergefahren."), 
-	VARO_COMMANDS_DISCORD_BOT_OFFLINE("varoCommands.discord.botoffline", "&7Der Discordbot ist nicht online!"), 
-	VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL("varoCommands.discord.noeventchannel", "&7Dem Bot wurde keine Event-Channel gegeben."), 
-	VARO_COMMANDS_DISCORD_VERIFY_ENABLED("varoCommands.discord.verifyenabled", "&7Das Verifysystem wurde aktiviert."), 
-	VARO_COMMANDS_DISCORD_DISCORD_MESSAGE_TITLE("varoCommands.discord.discordmessagetitle", "MESSAGE"), 
-	VARO_COMMANDS_DISCORD_BYPASS_ACTIVE("varoCommands.discord.bypassactive", "&7%player% umgeht nun das Verifysystem."), 
-	VARO_COMMANDS_DISCORD_BYPASS_INACTIVE("varoCommands.discord.bypassinactive", "&7%player% umgeht nicht mehr das Verifysystem."), 
-	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"), 
-	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."), 
+	VARO_COMMANDS_DISCORD_GETLINK("varoCommands.discord.getlink", "&7Der Discord Account von %colorcode%%player% heisst %colorcode%%user%&7 und die ID lautet %colorcode%%id%&7!"),
+	VARO_COMMANDS_DISCORD_UNVERIFY("varoCommands.discord.unverify", "&7Der Discord Account wurde erfolgreich von %colorcode%%player% &7entkoppelt!"),
+	VARO_COMMANDS_DISCORD_RELOADED("varoCommands.discord.reloaded", "&7Der Discordbot wurde &aerfolgreich &7neu geladen."),
+	VARO_COMMANDS_DISCORD_SHUTDOWN("varoCommands.discord.shutdown", "&7Der Discordbot wurde &aerfolgreich &7heruntergefahren."),
+	VARO_COMMANDS_DISCORD_BOT_OFFLINE("varoCommands.discord.botoffline", "&7Der Discordbot ist nicht online!"),
+	VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL("varoCommands.discord.noeventchannel", "&7Dem Bot wurde keine Event-Channel gegeben."),
+	VARO_COMMANDS_DISCORD_VERIFY_ENABLED("varoCommands.discord.verifyenabled", "&7Das Verifysystem wurde aktiviert."),
+	VARO_COMMANDS_DISCORD_DISCORD_MESSAGE_TITLE("varoCommands.discord.discordmessagetitle", "MESSAGE"),
+	VARO_COMMANDS_DISCORD_BYPASS_ACTIVE("varoCommands.discord.bypassactive", "&7%player% umgeht nun das Verifysystem."),
+	VARO_COMMANDS_DISCORD_BYPASS_INACTIVE("varoCommands.discord.bypassinactive", "&7%player% umgeht nicht mehr das Verifysystem."),
+	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
+	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
 
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
@@ -287,16 +292,23 @@ public enum LanguageDE implements DefaultLanguage {
 	OTHER_CONFIG("other.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
 	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%ping%&7ms");
 
-	private String path, message;
-
-	private LanguageDE(String path, String message) {
+	private String path, defaultMessage, message;
+	private ConfigMessages(String path, String message) {
 		this.path = path;
+		this.defaultMessage = message;
 		this.message = message;
 	}
 
-	@Override
-	public String getMessage() {
-		return message;
+	private String getMessage(Language lang) {
+		String message = null;
+		if(lang == Main.getLanguageManager().getDefaultLanguage() || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean()) 
+			message = Main.getLanguageManager().getDefaultLanguage().getMessage(this.path);
+		else {
+			String langMsg = lang.getMessage(this.path);
+			message = langMsg == null ? Main.getLanguageManager().getDefaultLanguage().getMessage(this.path) : langMsg;
+		}
+
+		return Main.getLanguageManager().replaceMessage(message != null ? message : this.message);
 	}
 
 	@Override
@@ -307,5 +319,25 @@ public enum LanguageDE implements DefaultLanguage {
 	@Override
 	public String getPath() {
 		return path;
+	}
+
+	@Override
+	public String getDefaultMessage() {
+		return this.defaultMessage;
+	}
+
+	@Override
+	public String getValue() {
+		return getMessage(Main.getLanguageManager().getDefaultLanguage());
+	}
+
+	@Override
+	public String getValue(VaroPlayer localeHolder) {
+		return getMessage(localeHolder != null && localeHolder.isOnline() ? Main.getLanguageManager().getLanguages().get(localeHolder.getNetworkManager().getLocale()) : Main.getLanguageManager().getDefaultLanguage());
+	}
+
+	@Override
+	public String getValue(VaroPlayer localeHolder, VaroPlayer replace) {
+		return Main.getLanguageManager().replaceMessage(getValue(localeHolder), replace);
 	}
 }

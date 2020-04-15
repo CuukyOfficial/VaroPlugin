@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class BlockedItemsListener implements Listener {
@@ -22,7 +22,7 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
-		vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NOT_ALLOWED_CRAFT, vp, vp));
+		vp.sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
 	}
 
 	@EventHandler
@@ -35,6 +35,6 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-		vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NOT_ALLOWED_CRAFT, vp, vp));
+		vp.sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
 	}
 }

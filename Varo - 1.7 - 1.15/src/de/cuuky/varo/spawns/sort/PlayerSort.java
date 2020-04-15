@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
 
@@ -58,7 +58,7 @@ public class PlayerSort {
 				continue;
 
 			toTeleport.put(vp.getPlayer(), vp.getPlayer().getWorld().getSpawnLocation());
-			vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_SPECTATOR_TELEPORT, vp, vp));
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_SPECTATOR_TELEPORT.getValue(vp, vp));
 			players.remove(vp);
 		}
 
@@ -70,7 +70,7 @@ public class PlayerSort {
 			} else {
 				spawn.getPlayer().cleanUpPlayer();
 				toTeleport.put(spawn.getPlayer().getPlayer(), spawn.getLocation());
-				spawn.getPlayer().sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_OWN_HOLE, spawn.getPlayer(), spawn.getPlayer()));
+				spawn.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.SORT_OWN_HOLE.getValue(spawn.getPlayer(), spawn.getPlayer()));
 				players.remove(spawn.getPlayer());
 				spawns.remove(spawn);
 			}
@@ -87,7 +87,7 @@ public class PlayerSort {
 			player.cleanUpPlayer();
 			toTeleport.put(player.getPlayer(), spawn.getLocation());
 			spawn.setPlayer(player);
-			player.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_NUMBER_HOLE, player, player).replace("%number%", String.valueOf(spawn.getNumber())));
+			player.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue(player, player).replace("%number%", String.valueOf(spawn.getNumber())));
 			players.remove(0);
 			spawns.remove(0);
 
@@ -106,7 +106,7 @@ public class PlayerSort {
 							teamPlayer.cleanUpPlayer();
 							toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
 							spawns.get(0).setPlayer(teamPlayer);
-							teamPlayer.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_NUMBER_HOLE, teamPlayer, teamPlayer).replace("%number%", String.valueOf(spawns.get(0).getNumber())));
+							teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue(teamPlayer, teamPlayer).replace("%number%", String.valueOf(spawns.get(0).getNumber())));
 							players.remove(teamPlayer);
 						}
 
@@ -115,13 +115,13 @@ public class PlayerSort {
 					} else {
 						result = SortResult.NO_SPAWN_WITH_TEAM;
 						players.remove(teamPlayer);
-						teamPlayer.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_NO_HOLE_FOUND_TEAM, teamPlayer, teamPlayer));
+						teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND_TEAM.getValue(teamPlayer, teamPlayer));
 					}
 				} else if(players.contains(teamPlayer)) {
 					teamPlayer.cleanUpPlayer();
 					toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
 					spawns.get(0).setPlayer(teamPlayer);
-					teamPlayer.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_NUMBER_HOLE, teamPlayer, teamPlayer).replace("%number%", String.valueOf(spawns.get(0).getNumber())));
+					teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue(teamPlayer, teamPlayer).replace("%number%", String.valueOf(spawns.get(0).getNumber())));
 					players.remove(teamPlayer);
 					spawns.remove(0);
 				}
@@ -129,7 +129,7 @@ public class PlayerSort {
 		}
 
 		for(VaroPlayer vp : players) {
-			vp.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.SORT_NO_HOLE_FOUND, vp));
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue(vp));
 			if(result == SortResult.SORTED_WELL) {
 				result = SortResult.NO_SPAWN;
 			}

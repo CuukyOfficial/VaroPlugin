@@ -1,6 +1,6 @@
 package de.cuuky.varo.configuration.configurations.messages.language.languages;
 
-public enum LanguageEN implements DefaultLanguage {
+public enum LanguageEN implements LoadableMessage {
 
 	TEST_MESSAGE("test.message", "Heello, hov ar u");
 	
@@ -12,17 +12,12 @@ public enum LanguageEN implements DefaultLanguage {
 	}
 
 	@Override
-	public String getMessage() {
-		return message;
-	}
-	
-	@Override
-	public void setMessage(String message) {
-		this.message = message;	
+	public String getPath() {
+		return path;
 	}
 
 	@Override
-	public String getPath() {
-		return path;
+	public String getDefaultMessage() {
+		return message;
 	}
 }

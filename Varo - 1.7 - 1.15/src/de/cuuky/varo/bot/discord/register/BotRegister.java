@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
@@ -74,7 +74,7 @@ public class BotRegister {
 	}
 
 	public String getKickMessage(VaroPlayer vp) {
-		return Main.getLanguageManager().getValue(LanguageDE.BOTS_DISCORD_NOT_REGISTERED_DISCORD, vp, vp).replace("%code%", String.valueOf(getCode()));
+		return ConfigMessages.BOTS_DISCORD_NOT_REGISTERED_DISCORD.getValue(vp, vp).replace("%code%", String.valueOf(getCode()));
 	}
 
 	public Member getMember() {

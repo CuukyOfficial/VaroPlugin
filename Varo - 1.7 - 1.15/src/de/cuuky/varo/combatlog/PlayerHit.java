@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PlayerHit {
@@ -67,7 +67,7 @@ public class PlayerHit {
 	public PlayerHit(Player player, Player opponent) {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		if(!hasOld(player))
-			player.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.COMBAT_IN_FIGHT, vp));
+			player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_IN_FIGHT.getValue(vp));
 
 		this.player = player;
 		this.opponent = opponent;
@@ -101,7 +101,7 @@ public class PlayerHit {
 
 	public void over() {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		player.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.COMBAT_NOT_IN_FIGHT, vp));
+		player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_NOT_IN_FIGHT.getValue(vp));
 		remove();
 	}
 

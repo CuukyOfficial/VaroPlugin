@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PingCommand implements CommandExecutor {
@@ -21,10 +21,10 @@ public class PingCommand implements CommandExecutor {
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.OTHER_PING, vp, vp));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.OTHER_PING.getValue(vp, vp));
 		} else if(args.length == 1) {
 			if(!sender.hasPermission("varo.ping")) {
-				sender.sendMessage(Main.getLanguageManager().getValue(LanguageDE.NOPERMISSION_NO_PERMISSION, vp));
+				sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 				return false;
 			}
 

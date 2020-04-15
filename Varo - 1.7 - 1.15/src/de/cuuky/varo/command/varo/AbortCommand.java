@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.LanguageDE;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class AbortCommand extends VaroCommand {
@@ -17,11 +17,12 @@ public class AbortCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if(!Main.getVaroGame().isStarting()) {
-			sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE, vp));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE.getValue(vp));
 			return;
 		}
 
+		ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue(vp);
 		Main.getVaroGame().abort();
-		sender.sendMessage(Main.getPrefix() + Main.getLanguageManager().getValue(LanguageDE.VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED, vp));
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED.getValue(vp));
 	}
 }
