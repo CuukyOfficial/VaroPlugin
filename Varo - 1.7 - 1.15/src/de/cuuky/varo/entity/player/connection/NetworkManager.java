@@ -8,6 +8,10 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 
 public class NetworkManager {
 
@@ -31,7 +35,7 @@ public class NetworkManager {
 	// ACTIONBAR
 	private static Object title, subtitle;
 	private static Constructor<?> chatByteMethod, chatEnumMethod;
-	
+
 	// FAKEHEALTH
 	private static Object healthPacket;
 
@@ -69,7 +73,7 @@ public class NetworkManager {
 
 				tablistClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutPlayerListHeaderFooter");
 				ioBaseChatMethod = ioBaseChat.getDeclaredMethod("a", String.class);
-				
+
 				healthPacket = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutUpdateHealth").newInstance();
 				for(Field f : healthPacket.getClass().getDeclaredFields()) {
 					f.setAccessible(true);
@@ -82,16 +86,13 @@ public class NetworkManager {
 	}
 
 	private Player player;
-	private Object connection;
-	
-	private Field footerField;
-	private Field headerField;
-
-	private Object playerHandle;
+	private Channel channel;
+	private Object connection, playerHandle, tablist, networkManager;
 	private Method sendPacketMethod;
-	private Object tablist;
+
+	private Field footerField, headerField;
 	private Field pingField;
-	
+
 	private String locale;
 
 	public NetworkManager(Player player) {
@@ -105,13 +106,63 @@ public class NetworkManager {
 			this.pingField = playerHandle.getClass().getField("ping");
 			this.connection = playerHandle.getClass().getField("playerConnection").get(playerHandle);
 			this.sendPacketMethod = connection.getClass().getMethod("sendPacket", Class.forName(VersionUtils.getNmsClass() + ".Packet"));
-			
+			this.networkManager = this.connection.getClass().getField("networkManager").get(this.connection);
+			this.channel = (Channel) this.networkManager.getClass().getField("channel").get(this.networkManager);
+
 			Field localeField = playerHandle.getClass().getField("locale");
 			localeField.setAccessible(true);
 			this.locale = (String) localeField.get(playerHandle);
+
+			hookChannel();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void hookChannel() {
+		this.channel.pipeline().addBefore("packet_handler", "Varo", new ChannelDuplexHandler() {
+			@Override
+			public void channelRead(ChannelHandlerContext arg0, Object arg1) throws Exception {
+				Class<?> clazz = arg1.getClass();
+				if(clazz.getName().endsWith("PacketPlayInSettings"))
+					locale = (String) clazz.getDeclaredMethod("a").invoke(arg1);
+
+				super.channelRead(arg0, arg1);
+			}
+
+			@Override
+			public void write(ChannelHandlerContext arg0, Object arg1, ChannelPromise arg2) throws Exception {
+//				Class<?> clazz = arg1.getClass();
+
+				// Tryed to make a anti damage indicator 
+//				// System.out.println(clazz.getName());
+//				if(clazz.getName().contains("Metadata")) {
+//					Field a = clazz.getDeclaredField("a");
+//					a.setAccessible(true);
+//
+//					// System.out.println(a.getInt(arg1));
+//					Field b = clazz.getDeclaredField("b");
+//					b.setAccessible(true);
+//
+//					ArrayList<WatchableObject> ao = (ArrayList<WatchableObject>) b.get(arg1);
+//					for(WatchableObject wo : ao) {
+//						Field wa = wo.getClass().getDeclaredField("a");
+//						wa.setAccessible(true);
+//						if(wa.getInt(wo) == 3) {
+//							Field wc = wo.getClass().getDeclaredField("c");
+//							wc.setAccessible(true);
+//							wc.set(wo, 0.0d);
+//						}
+//					}
+//				}
+
+				super.write(arg0, arg1, arg2);
+			}
+		});
+	}
+
+	public void close() {
+		this.channel.pipeline().remove("Varo");
 	}
 
 	public Object getConnection() {
@@ -134,7 +185,7 @@ public class NetworkManager {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public void sendFakeHealthUpdate() {
 		sendPacket(healthPacket);
 	}
@@ -272,7 +323,7 @@ public class NetworkManager {
 
 		return null;
 	}
-	
+
 	public String getLocale() {
 		return this.locale;
 	}
