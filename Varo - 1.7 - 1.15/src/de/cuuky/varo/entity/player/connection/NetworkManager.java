@@ -9,9 +9,6 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelDuplexHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPromise;
 
 public class NetworkManager {
 
@@ -107,58 +104,13 @@ public class NetworkManager {
 			this.connection = playerHandle.getClass().getField("playerConnection").get(playerHandle);
 			this.sendPacketMethod = connection.getClass().getMethod("sendPacket", Class.forName(VersionUtils.getNmsClass() + ".Packet"));
 			this.networkManager = this.connection.getClass().getField("networkManager").get(this.connection);
-			this.channel = (Channel) this.networkManager.getClass().getField("channel").get(this.networkManager);
 
 			Field localeField = playerHandle.getClass().getField("locale");
 			localeField.setAccessible(true);
 			this.locale = (String) localeField.get(playerHandle);
-
-			hookChannel();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void hookChannel() {
-		this.channel.pipeline().addBefore("packet_handler", "Varo", new ChannelDuplexHandler() {
-			@Override
-			public void channelRead(ChannelHandlerContext arg0, Object arg1) throws Exception {
-				Class<?> clazz = arg1.getClass();
-				if(clazz.getName().endsWith("PacketPlayInSettings"))
-					locale = (String) clazz.getDeclaredMethod("a").invoke(arg1);
-
-				super.channelRead(arg0, arg1);
-			}
-
-			@Override
-			public void write(ChannelHandlerContext arg0, Object arg1, ChannelPromise arg2) throws Exception {
-//				Class<?> clazz = arg1.getClass();
-
-				// Tryed to make a anti damage indicator 
-//				// System.out.println(clazz.getName());
-//				if(clazz.getName().contains("Metadata")) {
-//					Field a = clazz.getDeclaredField("a");
-//					a.setAccessible(true);
-//
-//					// System.out.println(a.getInt(arg1));
-//					Field b = clazz.getDeclaredField("b");
-//					b.setAccessible(true);
-//
-//					ArrayList<WatchableObject> ao = (ArrayList<WatchableObject>) b.get(arg1);
-//					for(WatchableObject wo : ao) {
-//						Field wa = wo.getClass().getDeclaredField("a");
-//						wa.setAccessible(true);
-//						if(wa.getInt(wo) == 3) {
-//							Field wc = wo.getClass().getDeclaredField("c");
-//							wc.setAccessible(true);
-//							wc.set(wo, 0.0d);
-//						}
-//					}
-//				}
-
-				super.write(arg0, arg1, arg2);
-			}
-		});
 	}
 
 	public void close() {
@@ -191,6 +143,9 @@ public class NetworkManager {
 	}
 
 	public void respawnPlayer() {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			return;
+		
 		try {
 			Object respawnEnum = Class.forName(VersionUtils.getNmsClass() + ".EnumClientCommand").getEnumConstants()[0];
 			Constructor<?>[] constructors = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayInClientCommand").getConstructors();
@@ -227,6 +182,9 @@ public class NetworkManager {
 	}
 
 	public void sendLinkedMessage(String message, String link) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			return;
+		
 		try {
 			Constructor<?> constructor = packetChatClass.getConstructor(ioBase);
 			Object text = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + message + "\", \"color\": \"white\", \"clickEvent\": {\"action\": \"open_url\" , \"value\": \"" + link + "\"}}");
@@ -326,5 +284,9 @@ public class NetworkManager {
 
 	public String getLocale() {
 		return this.locale;
+	}
+	
+	public Object getNetworkManager() {
+		return this.networkManager;
 	}
 }
