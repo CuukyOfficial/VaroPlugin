@@ -428,7 +428,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 		
-		new PlayerMessagePlaceholder("locale", -1, "Ersetzt durch die Sprache des Spielers") {
+		new PlayerMessagePlaceholder("locale", 1, "Ersetzt durch die Sprache des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
