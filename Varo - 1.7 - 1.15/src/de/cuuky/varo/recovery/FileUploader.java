@@ -23,12 +23,11 @@ public class FileUploader {
 		try {
 			MultipartUtility multipart = new MultipartUtility("https://api.anonfile.com/upload?token=894b0ea821338221", "UTF-8");
 			
-			multipart.addHeaderField("User-Agent", "CodeJava");
+			multipart.addHeaderField("User-Agent", "Varo Plugin by Cuuky");
             multipart.addHeaderField("Test-Header", "Header-Value");
-			
 			multipart.addFilePart("file", file);
-			String response = multipart.finish().get(0);
 			
+			String response = multipart.finish().get(0);
 			JSONObject object = (JSONObject) JSONValue.parseWithException(response);
 			return (String) getJSONObject(getJSONObject(getJSONObject(object, "data"), "file"), "url").get("short");
 		} catch(Exception e) {
