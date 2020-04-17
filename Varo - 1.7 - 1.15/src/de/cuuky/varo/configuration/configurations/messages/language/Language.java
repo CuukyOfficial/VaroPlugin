@@ -39,20 +39,23 @@ public class Language {
 	}
 
 	public void load() {
-		System.out.println(name);
-		
 		this.file = new File(manager.getLanguagePath(), this.name + ".yml");
 		this.configuration = YamlConfiguration.loadConfiguration(this.file);
 		this.configuration.options().copyDefaults(true);
 
 		boolean save = file.exists();
+		HashMap<String, String> msg = new HashMap<>();
+		if(this.clazz != null)
+			msg = manager.getValues(clazz);
 
 		for(String defaultPath : manager.getDefaultMessages().keySet()) {
 			if(this.configuration.contains(defaultPath))
 				continue;
 
 			save = true;
-			this.configuration.addDefault(defaultPath, manager.getDefaultMessages().get(defaultPath));
+			String defaultValue = manager.getDefaultMessages().get(defaultPath);
+			String value = msg.containsKey(defaultPath) ? msg.get(defaultPath) : defaultValue;
+			this.configuration.addDefault(defaultPath, value);
 		}
 
 		for(String path : this.configuration.getKeys(true)) {

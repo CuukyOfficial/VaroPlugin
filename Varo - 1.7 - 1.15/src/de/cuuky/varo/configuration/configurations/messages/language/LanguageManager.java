@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.LoadableMessage;
 
 public class LanguageManager {
@@ -61,17 +60,24 @@ public class LanguageManager {
 			throw new IllegalStateException("Cannot register another DefaultLanguage!");
 
 		this.defaultLanguage = defaultLanguage;
-
-		DefaultLanguage[] messages = {};
+		this.defaultMessages = getValues(defaultLanguage.getClazz());
+	}
+	
+	protected HashMap<String, String> getValues(Class<? extends LoadableMessage> clazz) {
+		HashMap<String, String> values = new HashMap<>();
+		LoadableMessage[] messages = null;
+		
 		try {
-			messages = (DefaultLanguage[]) defaultLanguage.getClazz().getMethod("values").invoke(null);
+			messages = (LoadableMessage[]) clazz.getMethod("values").invoke(null);
 		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
-			return;
+			return null;
 		}
 
-		for(DefaultLanguage dl : messages) 
-			this.defaultMessages.put(dl.getPath(), dl.getDefaultMessage());
+		for(LoadableMessage lm : messages) 
+			values.put(lm.getPath(), lm.getDefaultMessage());
+		
+		return values;
 	}
 
 	public void loadLanguages() {
