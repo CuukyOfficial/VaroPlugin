@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.version.BukkitVersion;
 import de.cuuky.varo.version.VersionUtils;
-import io.netty.channel.Channel;
 
 public class NetworkManager {
 
@@ -83,7 +82,6 @@ public class NetworkManager {
 	}
 
 	private Player player;
-	private Channel channel;
 	private Object connection, playerHandle, tablist, networkManager;
 	private Method sendPacketMethod;
 
@@ -114,7 +112,7 @@ public class NetworkManager {
 	}
 
 	public void close() {
-		this.channel.pipeline().remove("Varo");
+//		this.channel.pipeline().remove("Varo");
 	}
 
 	public Object getConnection() {
