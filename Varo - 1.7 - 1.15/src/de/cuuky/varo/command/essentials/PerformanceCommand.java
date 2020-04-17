@@ -33,9 +33,9 @@ public class PerformanceCommand implements CommandExecutor {
 
 		if(args[0].equalsIgnoreCase("improve") || args[0].equalsIgnoreCase("clear")) {
 			Runtime r = Runtime.getRuntime();
-			double ramUsage = (r.totalMemory() - r.freeMemory()) / 1048576;
+			double ramUsage = Math.round((r.totalMemory() - r.freeMemory()) / 1048576.0);
 			System.gc();
-			double ramCleared = ramUsage - (r.totalMemory() - r.freeMemory()) / 1048576;
+			double ramCleared = ramUsage - Math.round((r.totalMemory() - r.freeMemory()) / 1048576.0);
 			sender.sendMessage(Main.getPrefix() + "RAM wurde um §c" + ramCleared + "MB §7geleert!");
 		} else if(args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(Main.getPrefix() + "Derzeitige TPS: §c" + Math.round(LagCounter.getTPS()) + "§7 - Normalwert §c18-20 §7TPS");
