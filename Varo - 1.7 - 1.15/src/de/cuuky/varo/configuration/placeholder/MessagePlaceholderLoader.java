@@ -205,7 +205,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8))
+				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 					return "0";
 
 				return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));
