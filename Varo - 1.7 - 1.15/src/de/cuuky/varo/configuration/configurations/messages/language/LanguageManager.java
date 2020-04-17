@@ -56,9 +56,6 @@ public class LanguageManager {
 	}
 
 	protected void setDefaultLanguage(Language defaultLanguage) {
-		if(this.defaultLanguage != null)
-			throw new IllegalStateException("Cannot register another DefaultLanguage!");
-
 		this.defaultLanguage = defaultLanguage;
 		this.defaultMessages = getValues(defaultLanguage.getClazz());
 	}
