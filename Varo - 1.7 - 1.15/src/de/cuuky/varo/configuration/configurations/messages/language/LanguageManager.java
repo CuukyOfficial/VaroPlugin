@@ -1,9 +1,11 @@
 package de.cuuky.varo.configuration.configurations.messages.language;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.LoadableMessage;
 
 public class LanguageManager {
@@ -11,13 +13,16 @@ public class LanguageManager {
 	private String languagePath;
 	private Language defaultLanguage;
 	private HashMap<String, Language> languages;
+	private HashMap<String, String> defaultMessages;
 
 	public LanguageManager(String languagesPath) {
 		this.languagePath = languagesPath;
 		this.languages = new HashMap<>();
+		this.defaultMessages = new HashMap<>();
 	}
 
 	protected String getMessage(String messagePath, String locale) {
+		System.out.println("LOC: " + locale);
 		if(locale == null || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
 			return defaultLanguage.getMessage(messagePath);
 		else {
@@ -50,11 +55,25 @@ public class LanguageManager {
 
 		return language;
 	}
-	
+
 	protected void setDefaultLanguage(Language defaultLanguage) {
+		if(this.defaultLanguage != null)
+			throw new IllegalStateException("Cannot register another DefaultLanguage!");
+
 		this.defaultLanguage = defaultLanguage;
+
+		DefaultLanguage[] messages = {};
+		try {
+			messages = (DefaultLanguage[]) defaultLanguage.getClazz().getMethod("values").invoke(null);
+		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		for(DefaultLanguage dl : messages) 
+			this.defaultMessages.put(dl.getPath(), dl.getDefaultMessage());
 	}
-	
+
 	public void loadLanguages() {
 		File file = new File(languagePath);
 		for(File listFile : file.listFiles()) {
@@ -68,9 +87,13 @@ public class LanguageManager {
 	public String getLanguagePath() {
 		return this.languagePath;
 	}
-	
+
 	public Language getDefaultLanguage() {
 		return this.defaultLanguage;
+	}
+
+	public HashMap<String, String> getDefaultMessages() {
+		return this.defaultMessages;
 	}
 
 	public HashMap<String, Language> getLanguages() {

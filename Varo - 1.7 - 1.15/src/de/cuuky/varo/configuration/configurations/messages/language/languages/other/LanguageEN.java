@@ -4,7 +4,7 @@ import de.cuuky.varo.configuration.configurations.messages.language.languages.Lo
 
 public enum LanguageEN implements LoadableMessage {
 
-	TEST_MESSAGE("test.message", "Heello, hov ar u");
+	;
 	
 	private String path, message;
 	

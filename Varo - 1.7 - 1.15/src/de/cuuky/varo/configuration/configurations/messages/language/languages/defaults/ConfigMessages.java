@@ -313,11 +313,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	}
 
 	@Override
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	@Override
 	public String getPath() {
 		return path;
 	}

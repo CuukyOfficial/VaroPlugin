@@ -91,27 +91,4 @@ public class VaroLanguageManager extends LanguageManager {
 	public String replaceMessage(String message, VaroPlayer player) {
 		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), player);
 	}
-
-//	public void broadcastMessage(DefaultLanguage lang, VaroPlayer replacement) {
-//		Bukkit.broadcastMessage("");
-//		Main.getLanguageManager().broadcastMessage(lang, replacement);
-//		
-//		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) 
-//			vp.sendMessage(getValue(lang, vp, replacement));
-//		
-//		System.out.println(getValue(lang));
-//	}
-
-//	public String getValue(DefaultLanguage message, VaroPlayer languageHolder, VaroPlayer vplayer) {
-//		String replaced = super.getMessage(message.getPath(), languageHolder != null && languageHolder.getNetworkManager() != null ? languageHolder.getNetworkManager().getLocale() : null);
-//		return vplayer != null ? replaceMessage(replaced, vplayer) : replaceMessage(replaced);
-//	}
-//
-//	public String getValue(DefaultLanguage message, VaroPlayer languageHolder) {
-//		return this.getValue(message, languageHolder, null);
-//	}
-//	
-//	public String getValue(DefaultLanguage message) {
-//		return this.getValue(message, null, null);
-//	}
 }

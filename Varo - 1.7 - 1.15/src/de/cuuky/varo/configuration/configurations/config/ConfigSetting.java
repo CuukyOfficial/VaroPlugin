@@ -208,7 +208,7 @@ public enum ConfigSetting implements SectionEntry {
 	PROJECT_NAME(ConfigSettingSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
 	PROJECTNAME_COLORCODE(ConfigSettingSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Massgebende,\nder ueberall im Projekt verwendet wird.."),
 	MAIN_LANGUAGE(ConfigSettingSection.MAIN, "mainLanguage", "de_DE", "Alle Sprachentypen hier zu finden: https://minecraft-el.gamepedia.com/Language"),
-	MAIN_LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "allowOtherLanguages", false, "Ob jeder Spieler eine eigene Sprache\nnutzen darf"),
+	MAIN_LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "allowOtherLanguages", true, "Ob jeder Spieler eine eigene Sprache\nnutzen darf"),
 	RANDOM_CHEST_FILL_RADIUS(ConfigSettingSection.WORLD, "randomChestFillRadius", -1, "In welchem Radius die Kisten um den\nSpawn mit den in der Config angegebenen\nItems befuellt werden sollen.\nOff = -1"),
 	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
 	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),
