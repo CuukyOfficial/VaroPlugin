@@ -10,6 +10,8 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.recovery.FileUploader;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
+import de.cuuky.varo.version.BukkitVersion;
+import de.cuuky.varo.version.VersionUtils;
 
 public class BugreportCommand extends VaroCommand {
 
@@ -45,7 +47,7 @@ public class BugreportCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD.getValue(vp));
 		} else {
 			String message = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADED.getValue(vp).replace("%url%", url);
-			if(vp != null)
+			if(vp != null && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 				vp.getNetworkManager().sendLinkedMessage(message + ConfigMessages.VARO_COMMANDS_BUGREPORT_CLICK_ME.getValue(vp), url);
 			else
 				sender.sendMessage(message);
