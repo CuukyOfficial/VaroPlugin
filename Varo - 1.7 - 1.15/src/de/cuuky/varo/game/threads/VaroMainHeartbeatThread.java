@@ -1,8 +1,12 @@
 package de.cuuky.varo.game.threads;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.cuuky.varo.utils.IPUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -48,16 +52,34 @@ public class VaroMainHeartbeatThread implements Runnable {
 			if(seconds == 60) {
 				seconds = 0;
 				if(ConfigSetting.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-					double minutesToClose = (int) (((Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
+					if (!ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_PLAYER_TIME.getValueAsBoolean()) {
+						int minutesToClose = (int) Math.ceil(ZonedDateTime.now().until(Main.getDataManager().getOutsideTimeChecker().getDate2(), ChronoUnit.SECONDS) / 60.0);
 
-					if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
-						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
+						if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
+							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON_GLOBAL.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
-					if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
-						for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
-							vp.getStats().setCountdown(0);
-							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+						if(!Main.getDataManager().getOutsideTimeChecker().canJoin(null))
+							for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+								vp.getStats().setCountdown(0);
+								vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+							}
+
+					} else {
+						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+							ZoneId zone = ZoneId.of(IPUtils.ipToTimezone(vp.getIp()));
+							int minutesToClose = (int) Math.ceil(ZonedDateTime.now(zone).until(Main.getDataManager().getOutsideTimeChecker().getDate2().withZoneSameLocal(zone), ChronoUnit.SECONDS) / 60.0);
+
+							if(minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
+								vp.sendMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON_PLAYER.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
+
+							if (!Main.getDataManager().getOutsideTimeChecker().canJoin(vp.getIp())) {
+								vp.getStats().setCountdown(0);
+								vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+							}
+
 						}
+
+					}
 				}
 			}
 

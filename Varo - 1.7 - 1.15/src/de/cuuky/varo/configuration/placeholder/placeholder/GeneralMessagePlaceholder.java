@@ -16,9 +16,6 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 		cachedRequests = new HashMap<>();
 	}
 
-	private static long lastDateRefreshTime;
-	private static String[] lastDateRefresh;
-
 	private String value;
 	protected long lastRefresh;
 
@@ -61,15 +58,6 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	public void clearValue() {
 		this.value = null;
 		this.lastRefresh = 0;
-	}
-
-	protected static String getLastDateRefresh(int index) {
-		if(lastDateRefresh == null || lastDateRefreshTime + 900 <= System.currentTimeMillis()) {
-			lastDateRefreshTime = System.currentTimeMillis();
-			lastDateRefresh = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss").format(new Date()).split(",");
-		}
-
-		return lastDateRefresh[index];
 	}
 
 	private static Object[] replaceByList(String value, ArrayList<GeneralMessagePlaceholder> list) {

@@ -32,6 +32,7 @@ public class PlayerLoginListener implements Listener {
 			return;
 		
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
+		vp.setIp(event.getAddress().getHostAddress());
 
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
 		if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
@@ -87,8 +88,12 @@ public class PlayerLoginListener implements Listener {
 		case STRIKE_BAN:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp).replace("%hours%", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
 			break;
-		case NOT_IN_TIME:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
+		case NOT_IN_TIME_GLOBAL:
+			String[] dates = Main.getDataManager().getOutsideTimeChecker().getTimesForPlayer(vp.getIp());
+			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_GLOBAL.getValue(vp).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())).replace("%minPlayerHour%", dates[0]).replace("%minPlayerMinute%", dates[1]).replace("%maxPlayerHour%", dates[2]).replace("%maxPlayerMinute%", dates[3]));
+			break;
+		case NOT_IN_TIME_PLAYER:
+			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_PLAYER.getValue(vp).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())));
 			break;
 		case SERVER_FULL:
 			event.disallow(Result.KICK_FULL, ConfigMessages.JOIN_KICK_SERVER_FULL.getValue(vp));

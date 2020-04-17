@@ -183,6 +183,7 @@ public enum ConfigSetting implements SectionEntry {
 	OFFLINEVILLAGER(ConfigSettingSection.OFFLINEVILLAGER, "enableOfflineVillager", false, "Ob Villager, welche representativ für den Spieler während\nseiner Onlinezeit auf dem Server warten und gekillt werden können."),
 
 	ONLY_JOIN_BETWEEN_HOURS(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHours", false, "FÜR BEIDE JOIN SYSTEME\nStellt ein, ob Spieler nur zwischen\n2 unten festgelegten Zeiten joinen dürfen."),
+	ONLY_JOIN_BETWEEN_HOURS_PLAYER_TIME(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursPlayer", false, "Ob die 2 festgelegten Zeiten global für die Serverzeitzone gelten (false)\noder für jeden Spieler in der eigenen Zeitzone (true)"),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR1(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour1", 14, "Erste Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_MINUTE1(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursMinute1", 0, "Erste Minuten-Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR2(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour2", 16, "Zweite Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),

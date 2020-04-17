@@ -7,6 +7,7 @@ import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlacehol
 import de.cuuky.varo.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
+import de.cuuky.varo.utils.IPUtils;
 import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.utils.PermissionUtils;
 import de.cuuky.varo.version.BukkitVersion;
@@ -81,54 +82,6 @@ public class MessagePlaceholderLoader {
 			@Override
 			protected String getValue() {
 				return String.valueOf(VersionUtils.getOnlinePlayer().size());
-			}
-		};
-
-		new GeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit") {
-
-			@Override
-			protected String getValue() {
-				return getLastDateRefresh(DateInfo.YEAR);
-			}
-		};
-
-		new GeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit") {
-
-			@Override
-			protected String getValue() {
-				return getLastDateRefresh(DateInfo.MONTH);
-			}
-		};
-
-		new GeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit") {
-
-			@Override
-			protected String getValue() {
-				return getLastDateRefresh(DateInfo.DAY);
-			}
-		};
-
-		new GeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit") {
-
-			@Override
-			protected String getValue() {
-				return getLastDateRefresh(DateInfo.HOUR);
-			}
-		};
-
-		new GeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit") {
-
-			@Override
-			protected String getValue() {
-				return getLastDateRefresh(DateInfo.MINUTES);
-			}
-		};
-
-		new GeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit") {
-
-			@Override
-			protected String getValue() {
-				return getLastDateRefresh(DateInfo.SECONDS);
 			}
 		};
 
@@ -425,6 +378,54 @@ public class MessagePlaceholderLoader {
 			@Override
 			protected String getValue(VaroPlayer player) {
 				return PermissionUtils.getLuckPermsPrefix(player);
+			}
+		};
+
+		new PlayerMessagePlaceholder("currPlayerYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return getPlayerDate(player, DateInfo.YEAR);
+			}
+		};
+
+		new PlayerMessagePlaceholder("currPlayerMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return getPlayerDate(player, DateInfo.MONTH);
+			}
+		};
+
+		new PlayerMessagePlaceholder("currPlayerDay", 1, "Ersetzt durch den Tag der jetzigen Zeit") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return getPlayerDate(player, DateInfo.DAY);
+			}
+		};
+
+		new PlayerMessagePlaceholder("currPlayerHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return getPlayerDate(player, DateInfo.HOUR);
+			}
+		};
+
+		new PlayerMessagePlaceholder("currPlayerMin", 1, "Ersetzt durch die Minute der jetzigen Zeit") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return getPlayerDate(player, DateInfo.MINUTES);
+			}
+		};
+
+		new PlayerMessagePlaceholder("currPlayerSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return getPlayerDate(player, DateInfo.SECONDS);
 			}
 		};
 	}

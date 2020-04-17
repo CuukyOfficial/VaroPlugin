@@ -308,9 +308,15 @@ public class Stats implements VaroSerializeable {
 			result = KickResult.FINALE_JOIN;
 		}
 
-		if(Main.isBootedUp())
-			if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
-				result = KickResult.NOT_IN_TIME;
+		if(Main.isBootedUp()) {
+			if (ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_PLAYER_TIME.getValueAsBoolean()) {
+				if(!Main.getDataManager().getOutsideTimeChecker().canJoin(owner.getIp()))
+					result = KickResult.NOT_IN_TIME_PLAYER;
+			} else {
+				if(!Main.getDataManager().getOutsideTimeChecker().canJoin(null))
+					result = KickResult.NOT_IN_TIME_GLOBAL;
+			}
+		}
 
 		for(Strike strike : strikes)
 			if(strike.getBanUntil() != null)

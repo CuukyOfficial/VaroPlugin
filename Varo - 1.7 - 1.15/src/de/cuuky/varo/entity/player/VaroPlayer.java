@@ -73,6 +73,7 @@ public class VaroPlayer extends VaroEntity {
 	private VaroTeam team;
 	private Player player;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
+	private String ip;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -361,6 +362,13 @@ public class VaroPlayer extends VaroEntity {
 		return villager;
 	}
 
+	public String getIp() {
+		if (ip == null) {
+			ip = player.getAddress().getAddress().getHostAddress();
+		}
+		return ip;
+	}
+
 	public boolean isAdminIgnore() {
 		return adminIgnore;
 	}
@@ -457,6 +465,10 @@ public class VaroPlayer extends VaroEntity {
 
 		update();
 		Main.getVaroGame().getTopScores().update();
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	/**

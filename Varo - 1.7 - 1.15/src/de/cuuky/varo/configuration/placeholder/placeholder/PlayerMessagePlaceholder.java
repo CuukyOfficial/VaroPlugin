@@ -1,10 +1,17 @@
 package de.cuuky.varo.configuration.placeholder.placeholder;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.utils.IPUtils;
 
 public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 
@@ -61,6 +68,13 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 	public void clearValue() {
 		placeholderValues.clear();
 		placeholderRefreshes.clear();
+	}
+
+	protected static String getPlayerDate(VaroPlayer player, int index) {
+		ZonedDateTime cal = IPUtils.ipToTime(player.getIp());
+		String[] dates = cal.format(DateTimeFormatter.ofPattern("yyyy,MM,dd,HH,mm,ss")).split(",");
+
+		return dates[index];
 	}
 
 	private static Object[] replaceByList(String value, VaroPlayer vp, ArrayList<PlayerMessagePlaceholder> list) {

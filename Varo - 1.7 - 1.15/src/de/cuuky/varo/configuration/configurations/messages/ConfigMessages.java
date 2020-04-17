@@ -130,7 +130,8 @@ public enum ConfigMessages implements SectionEntry {
 	QUIT_KICK_DELAY_OVER(ConfigMessageSection.QUITMESSAGE, "protectionOver", "%colorcode%%player% &7wurde aufgrund seines Todes jetzt gekickt!"),
 	QUIT_KICK_IN_SECONDS(ConfigMessageSection.QUITMESSAGE, "kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunde(n) gekickt!"),
 	QUIT_KICK_PLAYER_NEARBY(ConfigMessageSection.QUITMESSAGE, "noKickPlayerNearby", "&cEs befindet sich ein Spieler &4%distance% &cBlöcke in deiner Nähe!%nextLine%&7Um gekickt zu werden, entferne dich von diesem Spieler!"),
-	QUIT_KICK_SERVER_CLOSE_SOON(ConfigMessageSection.QUITMESSAGE, "serverCloseSoon", "&7Der Server schließt in &c%minutes% &7Minuten!"),
+	QUIT_KICK_SERVER_CLOSE_SOON_GLOBAL(ConfigMessageSection.QUITMESSAGE, "serverCloseSoonGlobal", "&7Der Server schließt in &c%minutes% &7Minuten!"),
+	QUIT_KICK_SERVER_CLOSE_SOON_PLAYER(ConfigMessageSection.QUITMESSAGE, "serverCloseSoonLocal", "&7Der Server schließt für dich in &c%minutes% &7Minuten!"),
 
 	// KICK
 
@@ -156,7 +157,9 @@ public enum ConfigMessages implements SectionEntry {
 
 	// MOTD
 
-	SERVER_MODT_CANT_JOIN_HOURS(ConfigMessageSection.MOTD, "cantJoinHours", "&cDu kannst nur zwischen &4%minHour% &cund &4%maxHour%&c Uhr joinen! %nextLine%&7Versuche es später erneut! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
+	SERVER_MODT_CANT_JOIN_GLOBAL(ConfigMessageSection.MOTD, "cantJoinHoursGlobal", "&cDu kannst nur zwischen &4%minHour%:%minMinute% &cund &4%maxHour%:%maxMinute%&c Uhr joinen! %nextLine%&cDas ist in deiner Zeitzone &4%minPlayerHour%:%minPlayerMinute% &c- &4%maxPlayerHour%:%maxPlayerMinute%&c Uhr! %nextLine%&7Versuche es später erneut! &7%currPlayerHour%&7:&7%currPlayerMin%&7:&7%currPlayerSec%"),
+	SERVER_MODT_CANT_JOIN_PLAYER(ConfigMessageSection.MOTD, "cantJoinHoursPlayer", "&cDu kannst nur zwischen &4%minHour%:%minMinute% &cund &4%maxHour%:%maxMinute%&c Uhr joinen! %nextLine%&7Versuche es später erneut! &7%currPlayerHour%&7:&7%currPlayerMin%&7:&7%currPlayerSec%"),
+
 	SERVER_MODT_NOT_OPENED(ConfigMessageSection.MOTD, "serverNotOpened", "&cDer Server wurde noch nicht für alle geöffnet! %nextLine%&7Versuche es später erneut!"),
 	SERVER_MODT_OPEN(ConfigMessageSection.MOTD, "serverOpen", "&aSei nun bei %projectname% &adabei! \n&7Viel Spass!"),
 
