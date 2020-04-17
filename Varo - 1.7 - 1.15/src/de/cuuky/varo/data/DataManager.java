@@ -118,6 +118,7 @@ public class DataManager {
 		VaroList.reloadLists();
 		MessagePlaceholder.clearPlaceholder();
 		configHandler.reload();
+		Main.getLanguageManager().loadLanguages();
 		scoreboardHandler.updateList();
 		tablistHandler.updateList();
 	}

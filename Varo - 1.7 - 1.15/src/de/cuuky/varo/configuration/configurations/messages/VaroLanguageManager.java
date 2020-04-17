@@ -20,10 +20,15 @@ public class VaroLanguageManager extends LanguageManager {
 	public VaroLanguageManager() {
 		super(PATH_DIR);
 
+		loadLanguages();
+	}
+	
+	@Override
+	public void loadLanguages() {
 		registerDefaultLanguage("en_US", LanguageEN.class);
 		registerDefaultLanguage("de_DE", ConfigMessages.class);
 
-		loadLanguages();
+		super.loadLanguages();
 		
 		Language lang = getLanguages().get(ConfigSetting.MAIN_LANGUAGE.getValueAsString());
 		if(lang == null)
