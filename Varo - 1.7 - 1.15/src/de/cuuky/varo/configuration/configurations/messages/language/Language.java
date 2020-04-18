@@ -28,6 +28,10 @@ public class Language {
 		this.clazz = clazz;
 		this.manager = manager;
 		this.messages = new HashMap<>();
+		this.file = new File(manager.getLanguagePath(), this.name + ".yml");
+		
+		if(manager.getDefaultLanguage() != null && !this.file.exists())
+			load();
 	}
 
 	private void saveConfiguration() {
@@ -39,7 +43,9 @@ public class Language {
 	}
 
 	public void load() {
-		this.file = new File(manager.getLanguagePath(), this.name + ".yml");
+		if(manager.getDefaultLanguage() == null)
+			throw new IllegalStateException("Cannot load language while no default language is given");
+		
 		this.configuration = YamlConfiguration.loadConfiguration(this.file);
 		this.configuration.options().copyDefaults(true);
 
@@ -91,6 +97,10 @@ public class Language {
 
 	public String getName() {
 		return this.name;
+	}
+	
+	public File getFile() {
+		return this.file;
 	}
 	
 	public boolean isLoaded() {

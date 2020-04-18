@@ -44,10 +44,10 @@ public class LanguageManager {
 	}
 
 	protected Language registerLanguage(String name) {
-		return registerDefaultLanguage(name, null);
+		return registerLoadableLanguage(name, null);
 	}
 
-	protected Language registerDefaultLanguage(String name, Class<? extends LoadableMessage> clazz) {
+	protected Language registerLoadableLanguage(String name, Class<? extends LoadableMessage> clazz) {
 		Language language = null;
 		languages.put(name, language = new Language(name, this, clazz));
 
@@ -57,12 +57,17 @@ public class LanguageManager {
 	protected void setDefaultLanguage(Language defaultLanguage) {
 		this.defaultLanguage = defaultLanguage;
 		this.defaultMessages = getValues(defaultLanguage.getClazz());
+
+		this.defaultLanguage.load();
+		for(Language lang : this.languages.values())
+			if(!lang.isLoaded() && !lang.getFile().exists())
+				lang.load();
 	}
-	
+
 	protected HashMap<String, String> getValues(Class<? extends LoadableMessage> clazz) {
 		HashMap<String, String> values = new HashMap<>();
 		LoadableMessage[] messages = null;
-		
+
 		try {
 			messages = (LoadableMessage[]) clazz.getMethod("values").invoke(null);
 		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -70,14 +75,17 @@ public class LanguageManager {
 			return null;
 		}
 
-		for(LoadableMessage lm : messages) 
+		for(LoadableMessage lm : messages)
 			values.put(lm.getPath(), lm.getDefaultMessage());
-		
+
 		return values;
 	}
 
 	public void loadLanguages() {
 		File file = new File(languagePath);
+		if(!file.isDirectory())
+			file.mkdir();
+
 		for(File listFile : file.listFiles()) {
 			if(!listFile.getName().endsWith(".yml") || languages.containsKey(listFile.getName().replace(".yml", "")))
 				continue;
