@@ -212,7 +212,7 @@ public class Stats implements VaroSerializeable {
 					else
 						owner.setAdminIgnore(true);
 
-				result = KickResult.ALLOW;
+				result = KickResult.SPECTATOR;
 			}
 
 		return result;

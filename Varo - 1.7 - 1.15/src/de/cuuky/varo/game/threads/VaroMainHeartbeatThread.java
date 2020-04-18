@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.cuuky.varo.entity.player.stats.KickResult;
 import de.cuuky.varo.utils.IPUtils;
 import de.cuuky.varo.utils.varo.OutSideTimeChecker;
 import org.apache.commons.lang.time.DateUtils;
@@ -61,8 +62,10 @@ public class VaroMainHeartbeatThread implements Runnable {
 
 						if(!OutSideTimeChecker.canJoin(null))
 							for(VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
-								vp.getStats().setCountdown(0);
-								vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+								if (!vp.getStats().isSpectator()) {
+									vp.getStats().setCountdown(0);
+									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+								}
 							}
 
 					} else {
@@ -74,8 +77,10 @@ public class VaroMainHeartbeatThread implements Runnable {
 								vp.sendMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON_PLAYER.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
 
 							if (!OutSideTimeChecker.canJoin(vp.getIp())) {
-								vp.getStats().setCountdown(0);
-								vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+								if (!vp.getStats().isSpectator()) {
+									vp.getStats().setCountdown(0);
+									vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorüber!\n§7Versuche es morgen erneut");
+								}
 							}
 
 						}
