@@ -20,7 +20,7 @@ public class NetworkManager {
 	// IOBASE
 	private static Class<?> ioBaseChat;
 
-	private static Class<?> titleClass;
+	// private static Class<?> titleClass;
 	private static Constructor<?> titleConstructor;
 	private static Class<?> packetChatClass;
 
@@ -32,16 +32,15 @@ public class NetworkManager {
 	private static Object title, subtitle;
 	private static Constructor<?> chatByteMethod, chatEnumMethod;
 
-	// FAKEHEALTH
-	private static Object healthPacket;
-
 	static {
 		try {
-			if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-				ioBaseChat = VersionUtils.getChatSerializer();
+			ioBaseChat = VersionUtils.getChatSerializer();
 
-				ioBase = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent");
-				titleClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutTitle");
+			ioBase = Class.forName(VersionUtils.getNmsClass() + ".IChatBaseComponent");
+			ioBaseChatMethod = ioBaseChat.getDeclaredMethod("a", String.class);
+
+			if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+				Class<?> titleClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutTitle");
 
 				Class<?> enumTitleClass = null;
 				try {
@@ -50,12 +49,10 @@ public class NetworkManager {
 					enumTitleClass = Class.forName(VersionUtils.getNmsClass() + ".EnumTitleAction");
 				}
 
-				try {
-					title = enumTitleClass.getDeclaredField("TITLE").get(null);
-					subtitle = enumTitleClass.getDeclaredField("SUBTITLE").get(null);
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
+				title = enumTitleClass.getDeclaredField("TITLE").get(null);
+				subtitle = enumTitleClass.getDeclaredField("SUBTITLE").get(null);
+
+				titleConstructor = titleClass.getConstructor(enumTitleClass, ioBase, int.class, int.class, int.class);
 
 				packetChatClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutChat");
 				try {
@@ -65,18 +62,9 @@ public class NetworkManager {
 					chatByteMethod = packetChatClass.getConstructor(ioBase, byte.class);
 				}
 
-				titleConstructor = titleClass.getConstructor(enumTitleClass, ioBase, int.class, int.class, int.class);
-
 				tablistClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutPlayerListHeaderFooter");
-				ioBaseChatMethod = ioBaseChat.getDeclaredMethod("a", String.class);
-
-				healthPacket = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutUpdateHealth").newInstance();
-				for(Field f : healthPacket.getClass().getDeclaredFields()) {
-					f.setAccessible(true);
-					f.set(healthPacket, 0);
-				}
 			}
-		} catch(ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException e) {
+		} catch(ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | NoSuchFieldException e) {
 			e.printStackTrace();
 		}
 	}
@@ -93,9 +81,6 @@ public class NetworkManager {
 	public NetworkManager(Player player) {
 		this.player = player;
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			return;
-
 		try {
 			this.playerHandle = player.getClass().getMethod("getHandle").invoke(player);
 			this.pingField = playerHandle.getClass().getField("ping");
@@ -111,18 +96,11 @@ public class NetworkManager {
 		}
 	}
 
-	public void close() {
-//		this.channel.pipeline().remove("Varo");
-	}
-
 	public Object getConnection() {
 		return connection;
 	}
 
 	public int getPing() {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			return -1;
-
 		try {
 			return pingField.getInt(playerHandle);
 		} catch(Exception e) {
@@ -136,14 +114,7 @@ public class NetworkManager {
 		return player;
 	}
 
-	public void sendFakeHealthUpdate() {
-		sendPacket(healthPacket);
-	}
-
 	public void respawnPlayer() {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			return;
-		
 		try {
 			Object respawnEnum = Class.forName(VersionUtils.getNmsClass() + ".EnumClientCommand").getEnumConstants()[0];
 			Constructor<?>[] constructors = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayInClientCommand").getConstructors();
@@ -180,9 +151,6 @@ public class NetworkManager {
 	}
 
 	public void sendLinkedMessage(String message, String link) {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			return;
-		
 		try {
 			Constructor<?> constructor = packetChatClass.getConstructor(ioBase);
 			Object text = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + message + "\", \"color\": \"white\", \"clickEvent\": {\"action\": \"open_url\" , \"value\": \"" + link + "\"}}");
@@ -268,6 +236,14 @@ public class NetworkManager {
 		}
 	}
 
+	public Object getNetworkManager() {
+		return networkManager;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
 	private static Field getField(Class<?> clazz, String... strings) {
 		for(String s : strings) {
 			try {
@@ -278,13 +254,5 @@ public class NetworkManager {
 		}
 
 		return null;
-	}
-
-	public String getLocale() {
-		return this.locale;
-	}
-	
-	public Object getNetworkManager() {
-		return this.networkManager;
 	}
 }
