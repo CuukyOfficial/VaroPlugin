@@ -297,7 +297,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7beträgt: %colorcode%%ping%&7ms");
 
 	private String path, defaultMessage, message;
-	private ConfigMessages(String path, String message) {
+	ConfigMessages(String path, String message) {
 		this.path = path;
 		this.defaultMessage = message;
 		this.message = message;

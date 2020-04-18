@@ -9,12 +9,29 @@ import de.cuuky.varo.version.VersionUtils;
 
 public enum ConfigSetting implements SectionEntry {
 
-	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "addTeamLifesOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler tötet."),
-	ALWAYS_TIME(ConfigSettingSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000", true),
-	ALWAYS_TIME_USE_AFTER_START(ConfigSettingSection.WORLD, "alwaysTimeUseAfterStart", false, "Ob die Zeit auch stehen bleiben soll,\nwenn das Projekt gestartet wurde."),
-	AUTOSETUP_BORDER(ConfigSettingSection.AUTOSETUP, "border", 2000, "Wie groß die Border beim\nAutoSetup gesetzt werden soll"),
+	//MAIN
+	PLAY_TIME(ConfigSettingSection.MAIN, "playTime", 15, "Zeit in Minuten, wie lange die Spieler\npro Session auf dem Server spielen können.\nUnlimited = -1"),
+	PROJECT_NAME(ConfigSettingSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
+	PREFIX(ConfigSettingSection.MAIN, "prefix", "&7[&3Varo&7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
+	PROJECTNAME_COLORCODE(ConfigSettingSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Maßgebende,\nder überall im Projekt verwendet wird.."),
+	MAIN_LANGUAGE(ConfigSettingSection.MAIN, "mainLanguage", "de_DE", "Alle Sprachentypen hier zu finden: https://minecraft-el.gamepedia.com/Language"),
+	MAIN_LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "allowOtherLanguages", true, "Ob jeder Spieler eine eigene Sprache\nnutzen darf"),
+	UNREGISTERED_PLAYER_JOIN(ConfigSettingSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen dürfen."),
+	DO_DAILY_BACKUPS(ConfigSettingSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),
+	RESET_SESSION_HOUR(ConfigSettingSection.MAIN, "resetSessionHour", 1, "Um welche Uhrzeit (24h) der Server den\nSpieler neue Sessions etc. gibt"),
+	NAMETAGS(ConfigSettingSection.MAIN, "nametags", true, "Ob das Plugin die Nametags über\nden Köpfen der Spieler verändern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
+	SCOREBOARD(ConfigSettingSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),
+	TABLIST(ConfigSettingSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
+	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 
-	// AUTOSETUP
+	//ACTIVITY
+	BLOODLUST_DAYS(ConfigSettingSection.ACTIVITY, "noBloodlustDays", -1, "Nach wie vielen Tagen ohne Gegnerkontakt\nder Spieler gemeldet werden soll.\nOff = -1"),
+	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviät auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
+	POST_COORDS_DAYS(ConfigSettingSection.ACTIVITY, "postCoordsDays", -1, "Postet nach den genannten Tagen\nvon allen Spielern die Koordinatenum die Uhrzeit,\num der auch Sessions etc. geprüft werden"),
+	STRIKE_ON_BLOODLUST(ConfigSettingSection.ACTIVITY, "strikeOnBloodlust", false, "Ob der Spieler nach den oben\ngenannten Tagen ohne Gegnerkontakt\ngestriket werden soll."),
+	STRIKE_ON_NO_ACTIVITY(ConfigSettingSection.ACTIVITY, "strikeOnNoActivity", false, "Ob der Spieler nach den oben genannten Tagen\nohne Aktivität auf dem Servergestriket werden soll."),
+
+	//AUTOSETUP
 	AUTOSETUP_ENABLED(ConfigSettingSection.AUTOSETUP, "enabled", false, "Wenn Autosetup aktiviert ist, werden beim\nStart des Servers alle Spawns automatisch gesetzt und\noptional ein Autostart eingerichtet."),
 	AUTOSETUP_LOBBY_ENABLED(ConfigSettingSection.AUTOSETUP, "lobby.enabled", true, "Ob eine Lobby beim AutoSetup gespawnt werden soll"),
 	AUTOSETUP_LOBBY_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.height", 10, "Höhe der Lobby, die gespawnt werden soll"),
@@ -32,45 +49,26 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
 	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP, "spawnGeneratorYTolerance", 4, "Wie viel Höhe die Spawns von einander\nAbstand haben dürfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Blöcke höher als andere\n->wird weiter nach Terrain gesucht"),
+	AUTOSETUP_BORDER(ConfigSettingSection.AUTOSETUP, "border", 2000, "Wie groß die Border beim\nAutoSetup gesetzt werden soll"),
 
-	BACKPACK_PLAYER_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackPlayerDropOnDeath", true, "Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll."),
-
-	// BACKPACKS
+	//BACKPACKS
 	BACKPACK_PLAYER_ENABLED(ConfigSettingSection.BACKPACKS, "backpackPlayerEnabled", false, "Wenn dies aktiviert ist, haben Spieler einen eigenen Rucksack,\nauf den sie mit /varo bp zugreifen können.\nDieser wird pro Spieler und nicht pro Team gespeichert."),
 	BACKPACK_PLAYER_SIZE(ConfigSettingSection.BACKPACKS, "backpackPlayerSize", 54, "Größe des Spieler-Rucksacks (Max = 54)"),
-
-	BACKPACK_TEAM_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackTeamDropOnDeath", true, "Ob der Inhalt des Team-Rucksacks beim Tod des letzten Teammitglieds gedroppt werden soll."),
 	BACKPACK_TEAM_ENABLED(ConfigSettingSection.BACKPACKS, "backpackTeamEnabled", false, "Wenn dies aktiviert ist, haben Teams einen eigenen Rucksack,\nauf den sie mit /varo bp zugreifen können.\nDieser wird pro Team und nicht pro Spieler gespeichert."),
-
+	BACKPACK_PLAYER_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackPlayerDropOnDeath", true, "Ob der Inhalt des Spieler-Rucksacks beim Tod des Spielers gedroppt werden soll."),
+	BACKPACK_TEAM_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackTeamDropOnDeath", true, "Ob der Inhalt des Team-Rucksacks beim Tod des letzten Teammitglieds gedroppt werden soll."),
 	BACKPACK_TEAM_SIZE(ConfigSettingSection.BACKPACKS, "backpackTeamSize", 54, "Größe des Team-Rucksacks (Max = 54)"),
-	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
 
-	// BAN
-	BAN_HACKING_ENABLED(ConfigSettingSection.BAN, "hacking", true, "Ob Spieler, die wegen Hacking von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
-	BAN_SCAMMING_ENABLED(ConfigSettingSection.BAN, "scamming", true, "Ob Spieler, die wegen Scammen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
-	BAN_BAD_BEHAVIOUR_ENABLED(ConfigSettingSection.BAN, "behaviour", true, "Ob Spieler, die aufgrund schlechten Verhaltens von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
-	BAN_IDENTITY_THEFT_ENABLED(ConfigSettingSection.BAN, "identityTheft", true, "Ob Spieler, die wegen Identitätsdiebstahls von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
-	BAN_OTHER_ENABLED(ConfigSettingSection.BAN, "other", true, "Ob Spieler, die aus anderen Gründen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
-
-	// CHAT
-	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds", true, "Wenn aktiviert, können keine Links in den öffentlichen Chat gepostet werden."),
-
-	// WORLD
-	BLOCK_DESTROY_LOGGER(ConfigSettingSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Blöcke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
-	BLOCK_USER_PORTALS(ConfigSettingSection.WORLD, "blockUserPortals", true, "Ob Spieler nicht ihre eigenen\nPortale bauen können"),
-	WORLD_ENTITY_TRACER(ConfigSettingSection.WORLD, "entityTracer", false, "Ob Wassertropfen Items oder Projektilen\nfolgen sollen"),
-
-	// ACTIVITY
-	BLOODLUST_DAYS(ConfigSettingSection.ACTIVITY, "noBloodlustDays", -1, "Nach wie vielen Tagen ohne Gegnerkontakt\nder Spieler gemeldet werden soll.\nOff = -1"),
+	//BORDER
+	SHOW_DISTANCE_TO_BORDER(ConfigSettingSection.BORDER, "showDistanceToBorder", false, "Ob die Distanz zur Border in der\nActionBar angezeigt werden soll."),
+	DISTANCE_TO_BORDER_REQUIRED(ConfigSettingSection.BORDER, "distanceToBorderRequired", -1, "Die Distanz, die der Spieler haben muss,\ndamit die Distanz angezeigt wird."),
+	OUTSIDE_BORDER_SPAWN_TELEPORT(ConfigSettingSection.BORDER, "outsideBorderSpawnTeleport", true, "Ob, wenn ein Spieler außerhalb der Border joint, er in die Mitte teleportiert werden soll."),
+	MIN_BORDER_SIZE(ConfigSettingSection.BORDER, "minBorderSize", 300, "Wie klein die Border maximal werden kann."),
 	BORDER_DAMAGE(ConfigSettingSection.BORDER, "borderDamage", 1, "Wie viel Schaden die Border\nin halben Herzen macht."),
-
-	// BORDER
 	WORLD_SNCHRONIZE_BORDER(ConfigSettingSection.BORDER, "synchronizeBorders", true, "Ob die Größe der Border\nfür alle Welten zählen soll"),
 	BORDER_DEATH_DECREASE(ConfigSettingSection.BORDER, "deathBorderDecrease.enabled", true, "Ob sich die Border bei Tod verringern soll"),
 	BORDER_DEATH_DECREASE_SIZE(ConfigSettingSection.BORDER, "deathBorderDecrease.size", 25, "Um wie viele Blöcke sich die\nBorder bei Tod verringern soll."),
 	BORDER_DEATH_DECREASE_SPEED(ConfigSettingSection.BORDER, "deathBorderDecrease.speed", 1, "Mit welcher Geschwindigkeit sich\ndie Border beiTod verringern soll."),
-	BORDER_SIZE_IN_FINALE(ConfigSettingSection.FINALE, "borderSizeInFinale", 300, "Auf diese Größe wird die Border beim Starten des Finales gestellt."),
-
 	BORDER_TIME_DAY_DECREASE(ConfigSettingSection.BORDER, "dayBorderDecrease.enabled", true, "Ob sich die Border nach Tagen verringern soll"),
 	BORDER_TIME_DAY_DECREASE_DAYS(ConfigSettingSection.BORDER, "dayBorderDecrease.days", 3, "Nach wie vielen Tagen sich\ndie Border verkleinern soll."),
 	BORDER_TIME_DAY_DECREASE_SIZE(ConfigSettingSection.BORDER, "dayBorderDecrease.size", 50, "Um wieviel sich die Bordernach den\noben genannten Tagen verkleinern soll."),
@@ -80,56 +78,63 @@ public enum ConfigSetting implements SectionEntry {
 	BORDER_TIME_MINUTE_DECREASE_SIZE(ConfigSettingSection.BORDER, "minuteBorderDecrease.size", 50, "Um wieviel sich die Bordernach den oben\ngenannten Minuten verkleinern soll."),
 	BORDER_TIME_MINUTE_DECREASE_SPEED(ConfigSettingSection.BORDER, "minuteBorderDecrease.speed", 5, "Wie viele Blöcke pro Sekunde sichdie\nBorder nach Minuten verkleinern soll."),
 	BORDER_TIME_MINUTE_BC_INTERVAL(ConfigSettingSection.BORDER, "minuteBorderDecrease.bcInterval", 300, "In welchen Sekundenabständen die Zeit bis zur Verkleinerung\ngebroacastet werden soll"),
-	BROADCAST_INTERVAL_IN_SECONDS(ConfigSettingSection.OTHER, "broadcastIntervalInSeconds", -1, "Interval in Sekunden, in welcher der\nBroadcaster eine Nachricht postet.\nHinweis: Die Nachrichten kannst du in der broadcasts.yml einstellen.\nOff = -1"),
+
+	//BAN
+	BAN_HACKING_ENABLED(ConfigSettingSection.BAN, "hacking", true, "Ob Spieler, die wegen Hacking von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_SCAMMING_ENABLED(ConfigSettingSection.BAN, "scamming", true, "Ob Spieler, die wegen Scammen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_BAD_BEHAVIOUR_ENABLED(ConfigSettingSection.BAN, "behaviour", true, "Ob Spieler, die aufgrund schlechten Verhaltens von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_IDENTITY_THEFT_ENABLED(ConfigSettingSection.BAN, "identityTheft", true, "Ob Spieler, die wegen Identitätsdiebstahls von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+	BAN_OTHER_ENABLED(ConfigSettingSection.BAN, "other", true, "Ob Spieler, die aus anderen Gründen von allen\nServer gebannt wurden,\nauch hier gebannt sein sollen"),
+
+	//CHAT
+	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds", true, "Wenn aktiviert, können keine Links in den öffentlichen Chat gepostet werden."),
 	CAN_CHAT_BEFORE_START(ConfigSettingSection.CHAT, "canChatBeforeStart", true, "Ob die Spieler vor Start chatten können."),
-
-	CAN_MOVE_BEFORE_START(ConfigSettingSection.START, "canMoveBeforeStart", false, "Ob die Spieler sich vor Start bewegen können."),
-	CANWALK_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "canWalkOnJoinProtection", false, "Ob Spieler während der Joinschutzzeit laufen können."),
-	CATCH_UP_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "catchUpSessions", false, "NUR FÜR ERSTES JOIN SYSTEM\nStellt ein, ob man verpasste Folgen nachholen darf."),
-
-	// SERVERLIST
-	CHANGE_MOTD(ConfigSettingSection.SERVER_LIST, "changeMotd", true, "Ob das Plugin die Motd verändern soll.\nHinweis: du kannst die Motd in der messages.yml ändern."),
 	CHAT_COOLDOWN_IF_STARTED(ConfigSettingSection.CHAT, "chatCooldownIfStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde."),
 	CHAT_COOLDOWN_IN_SECONDS(ConfigSettingSection.CHAT, "chatCooldownInSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden können.\nOff = -1"),
-	CHAT_TRIGGER(ConfigSettingSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat auslöst."),
 
-	// COMBATLOG
+	//COMBATLOG
 	COMBATLOG_TIME(ConfigSettingSection.COMBATLOG, "combatlogTime", 30, "Zeit, nachdem sich ein Spieler\nnach dem Kampf wieder ausloggen kann.\nOff = -1"),
+	STRIKE_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "strikeOnCombatlog", true, "Ob ein Spieler, wenn er sich in\nder oben genannten Zeit ausloggt,\ngestriket werden soll."),
+	KILL_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "killOnCombatlog", true, "Ob ein Spieler, wenn er\nsich in der oben genannten Zeit ausloggt,\ngetötet werden soll."),
 
-	// DEATH
+	//DEATH
 	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound", false, "Ob ein Withersound für alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
-	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfügbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
-	BLOCK_ACHIEVEMENTS(ConfigSettingSection.OTHER, "blockAchievements", true, "Ob Achievements deaktiviert werden sollen"),
-	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nfür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
+	KICK_DELAY_AFTER_DEATH(ConfigSettingSection.DEATH, "kickDelayAfterDeath", -1, "Zeit in Sekunden, nach der ein Spieler\nnach Tod gekickt wird.\nOff = -1"),
+	PLAYER_SPECTATE_AFTER_DEATH(ConfigSettingSection.DEATH, "playerSpectateAfterDeath", false, "Ob ein Spieler nach seinem Tod Spectator wird."),
+	KILLER_ADD_HEALTH_ON_KILL(ConfigSettingSection.DEATH, "killerHealthAddOnKill", -1, "Anzahl halber Herzen, die der Killer nach Kill bekommt.\nOff = -1"),
+	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
+	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "addTeamLifesOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler tötet."),
+	RESPAWN_PROTECTION(ConfigSettingSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschützt sind"),
+	STOP_SERVER_ON_WIN(ConfigSettingSection.DEATH, "stopServerOnWin", -1, "Zeit in Sekunden, nachdem der Server nach\nWin eines Teams heruntergefahren wird."),
 
-	// DISCONNECT
+	//DISCONNECT
 	DISCONNECT_PER_SESSION(ConfigSettingSection.DISCONNECT, "maxDisconnectsPerSessions", 3, "Wie oft ein Spieler pro\nSession maximal disconnecten darf,\nbevor er bestraft wird.Off = -1"),
-	DISCORDBOT_ADD_POKAL_ON_WIN(ConfigSettingSection.DISCORD, "addPokalOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
-	DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
-	DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
-	DISCORDBOT_COMMANDTRIGGER(ConfigSettingSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
+	STRIKE_ON_DISCONNECT(ConfigSettingSection.DISCONNECT, "strikeOnMaxDisconnect", false, "Ob ein Spieler gestriket werden soll\nwenn zu oft disconnected wurde."),
+	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
+	NO_DISCONNECT_PING(ConfigSettingSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zählt."),
 
-	// DISCORDBOT
+	//DISCORDBOT
 	DISCORDBOT_ENABLED(ConfigSettingSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot für Events aktiviert werden soll.\nHinweis: bitte für diesen Informationen unten ausfüllen"),
+	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
+	DISCORDBOT_TOKEN(ConfigSettingSection.DISCORD, "botToken", "ENTER TOKEN HERE", "Gib hier den Token an, welchen du auf\nder Bot Seite und 'create bot user' bekommst."),
+	DISCORDBOT_SERVERID(ConfigSettingSection.DISCORD, "serverGuildID", -1, "Gib hier die ServerID deines Servers an.\nHinweis: Vorgangsweise, um die ID zu bekommen wie beim Channel."),
+	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
+
+	DISCORDBOT_EVENTCHANNELID(ConfigSettingSection.DISCORD, "eventChannelID", -1, "Gib hier die ChannelID des Channels an,\nin welchen der Bot Events posten soll.\nRechtsklick auf den Channel -> 'Copy ChannelID'\nWenn Option nicht vorhanden, schalte\n'developer options' in den Einstellungen von Discord ein."),
 	DISCORDBOT_EVENT_ALERT(ConfigSettingSection.DISCORD, "eventChannel.alert", -1, "ID's des Channels, wo die Benachrichtigungen gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_DEATH(ConfigSettingSection.DISCORD, "eventChannel.death", -1, "ID's des Channels, wo die Tode gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_JOIN_LEAVE(ConfigSettingSection.DISCORD, "eventChannel.joinLeave", -1, "ID's des Channels, wo die Joins/Leaves gepostet werden.\n-1= EventChannelID wird genutzt"),
-
 	DISCORDBOT_EVENT_KILL(ConfigSettingSection.DISCORD, "eventChannel.kill", -1, "ID's des Channels, wo die Kills gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_STRIKE(ConfigSettingSection.DISCORD, "eventChannel.strike", -1, "ID's des Channels, wo die Strikes gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_WIN(ConfigSettingSection.DISCORD, "eventChannel.win", -1, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_YOUTUBE(ConfigSettingSection.DISCORD, "eventChannel.youtube", -1, "ID's des Channels, wo die YT-Videos gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENTCHANNELID(ConfigSettingSection.DISCORD, "eventChannelID", -1, "Gib hier die ChannelID des Channels an,\nin welchen der Bot Events posten soll.\nRechtsklick auf den Channel -> 'Copy ChannelID'\nWenn Option nicht vorhanden, schalte\n'developer options' in den Einstellungen von Discord ein."),
-	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
-	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
-
-	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSettingSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufällige Farbe haben sollen"),
+	DISCORDBOT_EVENT_WIN(ConfigSettingSection.DISCORD, "eventChannel.win", -1, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_RESULT_CHANNELID(ConfigSettingSection.DISCORD, "resultChannelID", -1, "Gib hier die Channel ID an, in der später\ndie Logs und die Gewinner gepostet werden sollen."),
-	DISCORDBOT_SERVERID(ConfigSettingSection.DISCORD, "serverGuildID", -1, "Gib hier die ServerID deines Servers an.\nHinweis: Vorgangsweise, um die ID zu bekommen wie beim Channel."),
-
+	DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
+	DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1, "Gib hier die ID der Rolle ein, welche\nbei Nachrichten auf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
+	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSettingSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufällige Farbe haben sollen"),
+	DISCORDBOT_ADD_POKAL_ON_WIN(ConfigSettingSection.DISCORD, "addPokalOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
+	DISCORDBOT_COMMANDTRIGGER(ConfigSettingSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
 	DISCORDBOT_SET_TEAM_AS_GROUP(ConfigSettingSection.DISCORD, "setTeamAsGroup", false, "Ob die Spieler, die ein Team bekommen,\ndiesen auch als Gruppe im Discord bekommen sollen."),
-	DISCORDBOT_TOKEN(ConfigSettingSection.DISCORD, "botToken", "ENTER TOKEN HERE", "Gib hier den Token an, welchen du auf\nder Bot Seite und 'create bot user' bekommst."),
-
 	DISCORDBOT_VERIFYSYSTEM(ConfigSettingSection.DISCORD, "verify.enabled", false, "Ob das Verify System aktiviert werden soll.\nDieses lässt die Spieler sich mit Discord-Accounts verbinden."),
 	DISCORDBOT_VERIFYSYSTEM_OPTIONAL(ConfigSettingSection.DISCORD, "verify.optinal", false, "Ob das Verify-System optional sein soll\nWenn deaktiviert: Nur verifizierte Spieler können\nden Server betreten"),
 	DISCORDBOT_REGISTERCHANNELID(ConfigSettingSection.DISCORD, "verify.registerChannelID", -1, "Gib hier die Channel ID des #verify - Channels\nan, wo sich die User verifizieren können."),
@@ -139,145 +144,123 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_VERIFY_PASSWORD(ConfigSettingSection.DISCORD, "verify.mysql.password", "PASSWORD_HERE", "Passwort für MySQL Nutzer,\nwelcher auf die Datenbank zugreifen soll"),
 	DISCORDBOT_VERIFY_USER(ConfigSettingSection.DISCORD, "verify.mysql.user", "USER_HERE", "MySQL Nutzer, welcher auf die Datenbank zugreifen soll"),
 
-	DISTANCE_TO_BORDER_REQUIRED(ConfigSettingSection.BORDER, "distanceToBorderRequired", -1, "Die Distanz, die der Spieler haben muss,\ndamit die Distanz angezeigt wird."),
-	DO_DAILY_BACKUPS(ConfigSettingSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),
-
-	DO_RANDOMTEAM_AT_START(ConfigSettingSection.START, "doRandomTeamAtStart", -1, "Größe der Teams, in die die Teamlosen beim Start eingeordnet werden.\nAusgeschaltet = -1"),
-	DO_SORT_AT_START(ConfigSettingSection.START, "doSortAtStart", true, "Ob beim Start /sort ausgeführt werden soll."),
-	DO_SPAWN_GENERATE_AT_START(ConfigSettingSection.START, "doSpawnGenerateAtStart", false, "Ob die Spawnlöcher am Start basierend auf den\nderzeitigen Spielern generiert werden sollen"),
-	FAKE_MAX_SLOTS(ConfigSettingSection.SERVER_LIST, "fakeMaxSlots", -1, "Setzt die maximalen Slots des Servers gefaked.\nOff = -1"),
+	//FINALE
 	FINALE_PROTECTION_TIME(ConfigSettingSection.FINALE, "finaleProtectionTime", 30, "Länge der Schutzzeit nachdem alle Spieler in die Mitte teleportiert werden."),
+	PLAYER_SPECTATE_IN_FINALE(ConfigSettingSection.FINALE, "playerSpectateInFinale", true, "Ob die toten Spieler während des Finales spectaten dürfen."),
+	BORDER_SIZE_IN_FINALE(ConfigSettingSection.FINALE, "borderSizeInFinale", 300, "Auf diese Größe wird die Border beim Starten des Finales gestellt."),
 
-	// TEAMS
-	FRIENDLYFIRE(ConfigSettingSection.TEAMS, "friendlyFire", false, "Zufügen von Schaden unter Teamkameraden."),
+	//GUI
 	GUI_FILL_INVENTORY(ConfigSettingSection.GUI, "guiFillInventory", true, "Bestimmt, ob die leeren Felder der Gui mit Kacheln aufgefüllt werden."),
-
-	// GUI
 	GUI_INVENTORY_ANIMATIONS(ConfigSettingSection.GUI, "guiInventoryAnimations", false, "Bestimmt, ob beim Klicken in der Gui eine Animation abgespielt wird."),
 
-	// JOINSYSTEMS
-	IGNORE_JOINSYSTEMS_AS_OP(ConfigSettingSection.JOIN_SYSTEMS, "ignoreJoinSystemsAsOP", true, "Ob OP-Spieler die JoinSysteme ignorieren."),
+	//JOIN SYSTEM
+	SESSIONS_PER_DAY(ConfigSettingSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulär betreten dürfen."),
+	CATCH_UP_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "catchUpSessions", false, "NUR FÜR ERSTES JOIN SYSTEM\nStellt ein, ob man verpasste Folgen nachholen darf."),
 	JOIN_AFTER_HOURS(ConfigSettingSection.JOIN_SYSTEMS, "joinAfterHours", -1, "ZWEITES JOIN SYSTEM\nStellt ein, nach wie vielen Stunden\nSpieler regulär wieder den Server betreten dürfen"),
-
-	// PROTECTIONS
-	JOIN_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "joinProtectionTime", 10, "Länge der Schutzzeit in Sekunden beim Betreten des Servers.\nOff = -1"),
-	KICK_AT_SERVER_CLOSE(ConfigSettingSection.JOIN_SYSTEMS, "kickAtServerClose", false, "Kickt den Spieler, sobald er außerhalb\ndererlaubten Zeit auf dem Server ist."),
-	KICK_DELAY_AFTER_DEATH(ConfigSettingSection.DEATH, "kickDelayAfterDeath", -1, "Zeit in Sekunden, nach der ein Spieler\nnach Tod gekickt wird.\nOff = -1"),
-	KICK_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "kickLabyModPlayer", false, "Ob Spieler, die LabyMod nutzen,\ngekickt werden sollen.\nfür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
-
-	KILL_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "killOnCombatlog", true, "Ob ein Spieler, wenn er\nsich in der oben genannten Zeit ausloggt,\ngetötet werden soll."),
-	KILLER_ADD_HEALTH_ON_KILL(ConfigSettingSection.DEATH, "killerHealthAddOnKill", -1, "Anzahl halber Herzen, die der Killer nach Kill bekommt.\nOff = -1"),
-	LOG_REPORTS(ConfigSettingSection.REPORT, "logReports", true, "Ob alle plugininternen Reports in der reports.yml\nfestgehalten werden sollen."),
-	MASS_RECORDING_TIME(ConfigSettingSection.JOIN_SYSTEMS, "massRecordingTime", 15, "Die Länge der Massenaufnahme, in der alle joinen können."),
-	MIN_BORDER_SIZE(ConfigSettingSection.BORDER, "minBorderSize", 300, "Wie klein die Border maximal werden kann."),
-
-	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen können.\nOff = 0"),
-	NAMETAG_SPAWN_HEIGHT(ConfigSettingSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch über den Spawns\ndie Nametags sein sollen"),
-	NAMETAGS(ConfigSettingSection.MAIN, "nametags", true, "Ob das Plugin die Nametags über\nden Köpfen der Spieler verändern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
-	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviät auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
-
-	NO_DISCONNECT_PING(ConfigSettingSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zählt."),
-	NO_KICK_DISTANCE(ConfigSettingSection.OTHER, "noKickDistance", 30, "In welcher Distanz zum Gegner\nein Spieler nicht gekickt wird.\nOff = 0"),
-	NO_SATIATION_REGENERATE(ConfigSettingSection.OFFLINEVILLAGER, "noSatiationRegenerate", false, "Ob Spieler nicht durch Sättigung regenerieren\nkönnen sondern nur durch Gapple etc."),
-
-	// OFFLINEVILLAGER
-	OFFLINEVILLAGER(ConfigSettingSection.OFFLINEVILLAGER, "enableOfflineVillager", false, "Ob Villager, welche representativ für den Spieler während\nseiner Onlinezeit auf dem Server warten und gekillt werden können."),
+	PRE_PRODUCE_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "preProduceSessions", 3, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusätzlich zu\nden Regulären vorproduzieren darf."),
 
 	ONLY_JOIN_BETWEEN_HOURS(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHours", false, "FÜR BEIDE JOIN SYSTEME\nStellt ein, ob Spieler nur zwischen\n2 unten festgelegten Zeiten joinen dürfen."),
+	KICK_AT_SERVER_CLOSE(ConfigSettingSection.JOIN_SYSTEMS, "kickAtServerClose", false, "Kickt den Spieler, sobald er außerhalb\ndererlaubten Zeit auf dem Server ist."),
 	ONLY_JOIN_BETWEEN_HOURS_PLAYER_TIME(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursPlayer", false, "Ob die 2 festgelegten Zeiten global für die Serverzeitzone gelten (false)\noder für jeden Spieler in der eigenen Zeitzone (true)"),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR1(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour1", 14, "Erste Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_MINUTE1(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursMinute1", 0, "Erste Minuten-Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_HOUR2(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour2", 16, "Zweite Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 	ONLY_JOIN_BETWEEN_HOURS_MINUTE2(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursMinute2", 0, "Zweite Minuten-Uhrzeit, zwischen welchen\ndie Spieler joinen dürfen."),
 
-	ONLY_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "onlyLabyModPlayer", false, "Ob nur Spieler mit LabyMod joinen dürfen.\nfür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
-	OUTSIDE_BORDER_SPAWN_TELEPORT(ConfigSettingSection.BORDER, "outsideBorderSpawnTeleport", true, "Ob, wenn ein Spieler außerhalb der Border joint, er in die Mitte teleportiert werden soll."),
-	PLAY_TIME(ConfigSettingSection.MAIN, "playTime", 15, "Zeit in Minuten, wie lange die Spieler\npro Session auf dem Server spielen können.\nUnlimited = -1"),
+	MASS_RECORDING_TIME(ConfigSettingSection.JOIN_SYSTEMS, "massRecordingTime", 15, "Die Länge der Massenaufnahme, in der alle joinen können."),
+	IGNORE_JOINSYSTEMS_AS_OP(ConfigSettingSection.JOIN_SYSTEMS, "ignoreJoinSystemsAsOP", true, "Ob OP-Spieler die JoinSysteme ignorieren."),
 
-	// OTHER
-	PLAYER_CHEST_LIMIT(ConfigSettingSection.OTHER, "playerChestLimit", 2, "Wie viele Chests ein Team\nregistrieren darf.\nOff = 0, Unendlich = -1"),
-	PLAYER_FURNACE_LIMIT(ConfigSettingSection.OTHER, "playerFurnaceLimit", -1, "Wie viele Furnaces ein\nSpieler registrieren darf.\nOff = 0, Undendlich = -1"),
-	PLAYER_SPECTATE_AFTER_DEATH(ConfigSettingSection.DEATH, "playerSpectateAfterDeath", false, "Ob ein Spieler nach seinem Tod Spectator wird."),
+	//OFFLINEVILLAGER
+	OFFLINEVILLAGER(ConfigSettingSection.OFFLINEVILLAGER, "enableOfflineVillager", false, "Ob Villager, welche representativ für den Spieler während\nseiner Onlinezeit auf dem Server warten und gekillt werden können."),
+	NO_SATIATION_REGENERATE(ConfigSettingSection.OFFLINEVILLAGER, "noSatiationRegenerate", false, "Ob Spieler nicht durch Sättigung regenerieren\nkönnen sondern nur durch Gapple etc."),
 
-	// FINALE
-	PLAYER_SPECTATE_IN_FINALE(ConfigSettingSection.FINALE, "playerSpectateInFinale", true, "Ob die toten Spieler während des Finales spectaten dürfen."),
-	POST_COORDS_DAYS(ConfigSettingSection.ACTIVITY, "postCoordsDays", -1, "Postet nach den genannten Tagen\nvon allen Spielern die Koordinatenum die Uhrzeit,\num der auch Sessions etc. geprüft werden"),
-	PRE_PRODUCE_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "preProduceSessions", 3, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusätzlich zu\nden Regulären vorproduzieren darf."),
+	//PROTECTIONS
+	STARTPERIOD_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontime", -1, "Länge der Schutzzeit nach dem Start.\nOff = -1"),
+	STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontimeBcInterval", 60, "In welchen Sekundenabständen die restliche Schutzzeit\ngebroacastet werden soll"),
+	JOIN_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "joinProtectionTime", 10, "Länge der Schutzzeit in Sekunden beim Betreten des Servers.\nOff = -1"),
+	CANWALK_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "canWalkOnJoinProtection", false, "Ob Spieler während der Joinschutzzeit laufen können."),
 
-	// MAIN
-	PREFIX(ConfigSettingSection.MAIN, "prefix", "&7[&3Varo&7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
-	PROJECT_NAME(ConfigSettingSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
-	PROJECTNAME_COLORCODE(ConfigSettingSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Maßgebende,\nder überall im Projekt verwendet wird.."),
-	MAIN_LANGUAGE(ConfigSettingSection.MAIN, "mainLanguage", "de_DE", "Alle Sprachentypen hier zu finden: https://minecraft-el.gamepedia.com/Language"),
-	MAIN_LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "allowOtherLanguages", true, "Ob jeder Spieler eine eigene Sprache\nnutzen darf"),
-	RANDOM_CHEST_FILL_RADIUS(ConfigSettingSection.WORLD, "randomChestFillRadius", -1, "In welchem Radius die Kisten um den\nSpawn mit den in der Config angegebenen\nItems befüllt werden sollen.\nOff = -1"),
-	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
-	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),
-	REMOVE_PLAYERS_ARENT_AT_START(ConfigSettingSection.START, "removePlayersArentAtStart", true, "Ob das Plugin alle Spieler, die nicht beim\nStart dabei sind vom Projekt entferenen soll."),
+	//REPORT
+	REPORTSYSTEM_ENABLED(ConfigSettingSection.REPORT, "enabled", true, "Ob das plugininterne Report-System angeschaltet sein soll."),
+	LOG_REPORTS(ConfigSettingSection.REPORT, "logReports", true, "Ob alle plugininternen Reports in der reports.yml\nfestgehalten werden sollen."),
 	REPORT_SEND_DELAY(ConfigSettingSection.REPORT, "reportDelay", 30, "Zeit in Sekunden, die ein Spieler warten muss,\nbevor er einen neuen Spieler im plugininternen System reporten kann.\nOff = -1"),
 	REPORT_STAFF_MEMBER(ConfigSettingSection.REPORT, "reportStaffMember", true, "Ob Spieler mit der Permission\n'varo.report' im plugininternen System reportet werden können."),
 
-	// REPORT
-	REPORTSYSTEM_ENABLED(ConfigSettingSection.REPORT, "enabled", true, "Ob das plugininterne Report-System angeschaltet sein soll."),
-	RESET_SESSION_HOUR(ConfigSettingSection.MAIN, "resetSessionHour", 1, "Um welche Uhrzeit (24h) der Server den\nSpieler neue Sessions etc. gibt"),
-	RESPAWN_PROTECTION(ConfigSettingSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschützt sind"),
-	SCOREBOARD(ConfigSettingSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),
-	SESSIONS_PER_DAY(ConfigSettingSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulär betreten dürfen."),
+	//SERVER LIST
+	CHANGE_MOTD(ConfigSettingSection.SERVER_LIST, "changeMotd", true, "Ob das Plugin die Motd verändern soll.\nHinweis: du kannst die Motd in der messages.yml ändern."),
+	FAKE_MAX_SLOTS(ConfigSettingSection.SERVER_LIST, "fakeMaxSlots", -1, "Setzt die maximalen Slots des Servers gefaked.\nOff = -1"),
 
-	SET_NAMETAGS_OVER_SPAWN(ConfigSettingSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags über den\nSpawns erscheinen sollen"),
-	SHOW_DISTANCE_TO_BORDER(ConfigSettingSection.BORDER, "showDistanceToBorder", false, "Ob die Distanz zur Border in der\nActionBar angezeigt werden soll."),
-	SHOW_TIME_IN_ACTIONBAR(ConfigSettingSection.OTHER, "showTimeInActionbar", false, "Ob die verbleibende Sessionzeit in\nder Actionbar angezeigt werden soll."),
-	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen können."),
-
-	SPAWN_TELEPORT_JOIN(ConfigSettingSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfür sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),
-	START_AT_PLAYERS(ConfigSettingSection.START, "startAtPlayers", -1, "Startet das Projekt automatisch wenn die\nAnzahl der Online Spieler dieser entspricht."),
-
-	// START
+	//START
 	STARTCOUNTDOWN(ConfigSettingSection.START, "startCountdown", 30, "Wie lange der Startcountdown\nbei Start in Sekunden ist."),
-	STARTPERIOD_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontime", -1, "Länge der Schutzzeit nach dem Start.\nOff = -1"),
-	STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontimeBcInterval", 60, "In welchen Sekundenabständen die restliche Schutzzeit\ngebroacastet werden soll"),
-	STOP_SERVER_ON_WIN(ConfigSettingSection.DEATH, "stopServerOnWin", -1, "Zeit in Sekunden, nachdem der Server nach\nWin eines Teams heruntergefahren wird."),
-	STRIKE_BAN_AFTER_STRIKE_HOURS(ConfigSettingSection.STRIKE, "banOnPostHours", -1, "für wie viele Stunden die Spieler\nnach einem Strike gestriket werden"),
+	CAN_MOVE_BEFORE_START(ConfigSettingSection.START, "canMoveBeforeStart", false, "Ob die Spieler sich vor Start bewegen können."),
+	REMOVE_PLAYERS_ARENT_AT_START(ConfigSettingSection.START, "removePlayersArentAtStart", true, "Ob das Plugin alle Spieler, die nicht beim\nStart dabei sind vom Projekt entferenen soll."),
+	START_AT_PLAYERS(ConfigSettingSection.START, "startAtPlayers", -1, "Startet das Projekt automatisch wenn die\nAnzahl der Online Spieler dieser entspricht."),
+	SPAWN_TELEPORT_JOIN(ConfigSettingSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfür sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),
+	DO_SORT_AT_START(ConfigSettingSection.START, "doSortAtStart", true, "Ob beim Start /sort ausgeführt werden soll."),
+	DO_SPAWN_GENERATE_AT_START(ConfigSettingSection.START, "doSpawnGenerateAtStart", false, "Ob die Spawnlöcher am Start basierend auf den\nderzeitigen Spielern generiert werden sollen"),
+	DO_RANDOMTEAM_AT_START(ConfigSettingSection.START, "doRandomTeamAtStart", -1, "Größe der Teams, in die die Teamlosen beim Start eingeordnet werden.\nAusgeschaltet = -1"),
+
+	//STRIKE
 	STRIKE_BAN_AT_POST(ConfigSettingSection.STRIKE, "banAtPost", true, "Ob der Spieler beim Posten des Strikes\num die oben genannte Zahl gebannt werden soll.\nSonst wird dieser beim Erhalten gebannt"),
-	STRIKE_ON_BLOODLUST(ConfigSettingSection.ACTIVITY, "strikeOnBloodlust", false, "Ob der Spieler nach den oben\ngenannten Tagen ohne Gegnerkontakt\ngestriket werden soll."),
-	STRIKE_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "strikeOnCombatlog", true, "Ob ein Spieler, wenn er sich in\nder oben genannten Zeit ausloggt,\ngestriket werden soll."),
-	STRIKE_ON_DISCONNECT(ConfigSettingSection.DISCONNECT, "strikeOnMaxDisconnect", false, "Ob ein Spieler gestriket werden soll\nwenn zu oft disconnected wurde."),
-	STRIKE_ON_NO_ACTIVITY(ConfigSettingSection.ACTIVITY, "strikeOnNoActivity", false, "Ob der Spieler nach den oben genannten Tagen\nohne Aktivität auf dem Servergestriket werden soll."),
-
-	// STRIKE
+	STRIKE_BAN_AFTER_STRIKE_HOURS(ConfigSettingSection.STRIKE, "banOnPostHours", -1, "für wie viele Stunden die Spieler\nnach einem Strike gestriket werden"),
 	STRIKE_POST_RESET_HOUR(ConfigSettingSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostet werden sollen"),
-	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
-	TABLIST(ConfigSettingSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
-	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
 
+	//TEAMS
+	FRIENDLYFIRE(ConfigSettingSection.TEAMS, "friendlyFire", false, "Zufügen von Schaden unter Teamkameraden."),
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplätzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Lücke für fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen großen Kreis gibt."),
-
+	CHAT_TRIGGER(ConfigSettingSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat auslöst."),
+	TRIGGER_FOR_GLOBAL(ConfigSettingSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	TEAMREQUEST_EXPIRETIME(ConfigSettingSection.TEAMS, "teamRequest.expiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
 	TEAMREQUEST_MAXTEAMNAMELENGTH(ConfigSettingSection.TEAMS, "teamRequest.maxTeamnameLength", 10, "Maximal Länge eines Teamnamens."),
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen können.\nSehr gute Funktion für ODV's."),
 	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.lobbyItems", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können"),
 
-	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots"),
-
-	// TELEGRAM
+	//TELEGRAM
 	TELEGRAM_ENABLED(ConfigSettingSection.TELEGRAM, "telegrambotEnabled", false, "Ob der Telegrambot aktiviert werden soll."),
+	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots"),
 	TELEGRAM_EVENT_CHAT_ID(ConfigSettingSection.TELEGRAM, "eventChatId", -1, "In diesen Chat werden alle Events gepostet."),
 	TELEGRAM_VIDEOS_CHAT_ID(ConfigSettingSection.TELEGRAM, "videosChatId", -1, "Hier kannst du die ID des Chats angeben, wo\ndie Videos der User gepostet werden sollen."),
-	TRIGGER_FOR_GLOBAL(ConfigSettingSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmäßig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
-	UNREGISTERED_PLAYER_JOIN(ConfigSettingSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen dürfen."),
 
-	// YOUTUBE
+	//WORLD
+	ALWAYS_TIME(ConfigSettingSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000", true),
+	ALWAYS_TIME_USE_AFTER_START(ConfigSettingSection.WORLD, "alwaysTimeUseAfterStart", false, "Ob die Zeit auch stehen bleiben soll,\nwenn das Projekt gestartet wurde."),
+	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen können."),
+	SET_NAMETAGS_OVER_SPAWN(ConfigSettingSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags über den\nSpawns erscheinen sollen"),
+	NAMETAG_SPAWN_HEIGHT(ConfigSettingSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch über den Spawns\ndie Nametags sein sollen"),
+	BLOCK_USER_PORTALS(ConfigSettingSection.WORLD, "blockUserPortals", true, "Ob Spieler nicht ihre eigenen\nPortale bauen können"),
+	RANDOM_CHEST_FILL_RADIUS(ConfigSettingSection.WORLD, "randomChestFillRadius", -1, "In welchem Radius die Kisten um den\nSpawn mit den in der Config angegebenen\nItems befüllt werden sollen.\nOff = -1"),
+	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
+	BLOCK_DESTROY_LOGGER(ConfigSettingSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Blöcke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
+	WORLD_ENTITY_TRACER(ConfigSettingSection.WORLD, "entityTracer", false, "Ob Wassertropfen Items oder Projektilen\nfolgen sollen"),
+
+	//YOUTUBE
 	YOUTUBE_ENABLED(ConfigSettingSection.YOUTUBE, "enabled", false, "Checkt jeden Tag bei den Spielern,\ndie einen YouTube Link registriert haben,\nnach den Uploads"),
 	YOUTUBE_SET_OWN_LINK(ConfigSettingSection.YOUTUBE, "setOwnLink", true, "Ob die Spieler sich selbst den\nYouTube-Link per /yt setzen dürfen"),
-	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmüssen, um als Varovideo zu gelten.");
+	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmüssen, um als Varovideo zu gelten."),
+
+	//OTHER
+	NO_KICK_DISTANCE(ConfigSettingSection.OTHER, "noKickDistance", 30, "In welcher Distanz zum Gegner\nein Spieler nicht gekickt wird.\nOff = 0"),
+	PLAYER_CHEST_LIMIT(ConfigSettingSection.OTHER, "playerChestLimit", 2, "Wie viele Chests ein Team\nregistrieren darf.\nOff = 0, Unendlich = -1"),
+	PLAYER_FURNACE_LIMIT(ConfigSettingSection.OTHER, "playerFurnaceLimit", -1, "Wie viele Furnaces ein\nSpieler registrieren darf.\nOff = 0, Undendlich = -1"),
+	BLOCK_ACHIEVEMENTS(ConfigSettingSection.OTHER, "blockAchievements", true, "Ob Achievements deaktiviert werden sollen"),
+	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),
+	SHOW_TIME_IN_ACTIONBAR(ConfigSettingSection.OTHER, "showTimeInActionbar", false, "Ob die verbleibende Sessionzeit in\nder Actionbar angezeigt werden soll."),
+
+	ONLY_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "onlyLabyModPlayer", false, "Ob nur Spieler mit LabyMod joinen dürfen.\nfür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
+	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nfür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
+	KICK_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "kickLabyModPlayer", false, "Ob Spieler, die LabyMod nutzen,\ngekickt werden sollen.\nfür diese Funktion wird dieses Plugin benötigt:\nhttps://www.spigotmc.org/resources/52423/"),
+
+	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen können.\nOff = 0"),
+	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfügbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
+	BROADCAST_INTERVAL_IN_SECONDS(ConfigSettingSection.OTHER, "broadcastIntervalInSeconds", -1, "Interval in Sekunden, in welcher der\nBroadcaster eine Nachricht postet.\nHinweis: Die Nachrichten kannst du in der broadcasts.yml einstellen.\nOff = -1");
 
 	private Object defaultValue, value;
 	private String path, description;
 	private ConfigSettingSection section;
 	private boolean reducesPerformance;
 
-	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description) {
+	ConfigSetting(ConfigSettingSection section, String path, Object value, String description) {
 		this.section = section;
 		this.path = path;
 		this.value = value;

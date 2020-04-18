@@ -259,7 +259,7 @@ public enum LanguageEN implements LoadableMessage {
 
 	private String path, message;
 
-	private LanguageEN(String path, String message) {
+	LanguageEN(String path, String message) {
 		this.path = path;
 		this.message = message;
 	}
