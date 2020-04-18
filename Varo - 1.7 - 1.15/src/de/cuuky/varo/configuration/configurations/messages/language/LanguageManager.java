@@ -21,7 +21,6 @@ public class LanguageManager {
 	}
 
 	protected String getMessage(String messagePath, String locale) {
-		System.out.println("LOC: " + locale);
 		if(locale == null || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
 			return defaultLanguage.getMessage(messagePath);
 		else {
