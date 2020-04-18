@@ -43,14 +43,14 @@ public class ServerListPingListener implements Listener {
 					ZonedDateTime cal = IPUtils.ipToTime(event.getAddress().getHostAddress());
 					String[] dates = cal.format(DateTimeFormatter.ofPattern("yyyy,MM,dd,HH,mm,ss")).split(",");
 
-					event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_PLAYER.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())).replace("%currPlayerHour%", dates[DateInfo.HOUR]).replace("%currPlayerMin%", dates[DateInfo.MINUTES]).replace("%currPlayerSec%", dates[DateInfo.SECONDS]));
+					event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_PLAYER.getValue().replace("%minHour%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())).replace("%currPlayerHour%", dates[DateInfo.HOUR]).replace("%currPlayerMin%", dates[DateInfo.MINUTES]).replace("%currPlayerSec%", dates[DateInfo.SECONDS]));
 				}
 			} else {
 				if (Main.getDataManager().getOutsideTimeChecker().canJoin(null)) {
 					event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				} else {
 					String[] dates = Main.getDataManager().getOutsideTimeChecker().getTimesForPlayer(event.getAddress().getHostAddress());
-					event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_GLOBAL.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())).replace("%minPlayerHour%", dates[0]).replace("%minPlayerMinute%", dates[1]).replace("%maxPlayerHour%", dates[2]).replace("%maxPlayerMinute%", dates[3]));
+					event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_GLOBAL.getValue().replace("%minHour%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())).replace("%minPlayerHour%", dates[0]).replace("%minPlayerMinute%", dates[1]).replace("%maxPlayerHour%", dates[2]).replace("%maxPlayerMinute%", dates[3]));
 				}
 			}
 
