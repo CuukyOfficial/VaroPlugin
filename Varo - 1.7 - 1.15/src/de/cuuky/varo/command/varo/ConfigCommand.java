@@ -50,7 +50,7 @@ public class ConfigCommand extends VaroCommand {
 				Object arg = JavaUtils.getStringObject(args[2]);
 				entry.setValue(arg, true);
 
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_SET.getValue(vp));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_SET.getValue(vp).replace("%entry%", args[1]).replace("%value%", args[2]));
 				return;
 			}
 
