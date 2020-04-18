@@ -42,7 +42,6 @@ public class DataManager {
 	private TablistHandler tablistHandler;
 	private ReportHandler reportHandler;
 	private AlertHandler alertHandler;
-	private OutSideTimeChecker outsideTimeChecker;
 	private MySQLClient mysqlClient;
 	private VaroListManager listManager;
 	private VaroLoggerManager varoLoggerManager;
@@ -77,7 +76,6 @@ public class DataManager {
 		this.spawnHandler = new SpawnHandler();
 		this.reportHandler = new ReportHandler();
 		this.alertHandler = new AlertHandler();
-		this.outsideTimeChecker = new OutSideTimeChecker();
 		this.mysqlClient = new MySQLClient();
 		this.listManager = new VaroListManager();
 		this.broadcaster = new Broadcaster();
@@ -179,10 +177,6 @@ public class DataManager {
 
 	public MySQLClient getMysqlClient() {
 		return this.mysqlClient;
-	}
-
-	public OutSideTimeChecker getOutsideTimeChecker() {
-		return this.outsideTimeChecker;
 	}
 
 	public ReportHandler getReportHandler() {

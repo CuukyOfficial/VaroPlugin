@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import de.cuuky.varo.utils.varo.OutSideTimeChecker;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -310,10 +311,10 @@ public class Stats implements VaroSerializeable {
 
 		if(Main.isBootedUp()) {
 			if (ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_PLAYER_TIME.getValueAsBoolean()) {
-				if(!Main.getDataManager().getOutsideTimeChecker().canJoin(owner.getIp()))
+				if(!OutSideTimeChecker.canJoin(owner.getIp()))
 					result = KickResult.NOT_IN_TIME_PLAYER;
 			} else {
-				if(!Main.getDataManager().getOutsideTimeChecker().canJoin(null))
+				if(!OutSideTimeChecker.canJoin(null))
 					result = KickResult.NOT_IN_TIME_GLOBAL;
 			}
 		}

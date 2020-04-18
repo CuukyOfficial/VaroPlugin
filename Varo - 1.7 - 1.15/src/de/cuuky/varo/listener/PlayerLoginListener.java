@@ -2,6 +2,7 @@ package de.cuuky.varo.listener;
 
 import java.util.Date;
 
+import de.cuuky.varo.utils.varo.OutSideTimeChecker;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
@@ -89,7 +90,7 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp).replace("%hours%", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
 			break;
 		case NOT_IN_TIME_GLOBAL:
-			String[] dates = Main.getDataManager().getOutsideTimeChecker().getTimesForPlayer(vp.getIp());
+			String[] dates = OutSideTimeChecker.getTimesForPlayer(vp.getIp());
 			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_GLOBAL.getValue(vp).replace("%minHour%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%minMinute%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt())).replace("%maxHour%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())).replace("%maxMinute%", String.format("%02d", ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt())).replace("%minPlayerHour%", dates[0]).replace("%minPlayerMinute%", dates[1]).replace("%maxPlayerHour%", dates[2]).replace("%maxPlayerMinute%", dates[3]));
 			break;
 		case NOT_IN_TIME_PLAYER:

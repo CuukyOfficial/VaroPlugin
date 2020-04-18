@@ -9,15 +9,13 @@ import java.time.format.DateTimeFormatter;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.utils.IPUtils;
 
-public class OutSideTimeChecker {
+public final class OutSideTimeChecker {
 
-	private ZonedDateTime date1, date2;
+	private static ZonedDateTime date1, date2;
 
-	public OutSideTimeChecker() {
-		refreshDates();
-	}
+	private OutSideTimeChecker() {}
 
-	private void refreshDates() {
+	private static void refreshDates() {
 		date1 = ZonedDateTime.of(LocalDate.now(), LocalTime.of(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt(), ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE1.getValueAsInt()), ZoneId.systemDefault());
 		date2 = ZonedDateTime.of(LocalDate.now(), LocalTime.of(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt(), ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_MINUTE2.getValueAsInt()), ZoneId.systemDefault());
 
@@ -26,7 +24,7 @@ public class OutSideTimeChecker {
 		}
 	}
 
-	public boolean canJoin(String IP) {
+	public static boolean canJoin(String IP) {
 		if(!ConfigSetting.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean())
 			return true;
 
@@ -52,7 +50,7 @@ public class OutSideTimeChecker {
 		return false;
 	}
 
-	public String[] getTimesForPlayer(String IP) {
+	public static String[] getTimesForPlayer(String IP) {
 		refreshDates();
 
 		date1 = date1.withZoneSameInstant(ZoneId.of(IPUtils.ipToTimezone(IP)));
@@ -65,7 +63,10 @@ public class OutSideTimeChecker {
 		return dates;
 	}
 
-	public ZonedDateTime getDate2() {
+	public static ZonedDateTime getDate2() {
+		if (date2 == null) {
+			refreshDates();
+		}
 		return date2;
 	}
 }
