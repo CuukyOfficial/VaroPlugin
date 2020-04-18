@@ -34,7 +34,6 @@ public class ConfigHandler {
 
 	private void loadConfigurations() {
 		loadConfiguration(ConfigSettingSection.values(), CONFIG_PATH);
-//		loadConfiguration(ConfigMessageSection.values(), MESSAGE_PATH);
 
 		if(legacyFound)
 			moveLegacyFiles();
