@@ -30,11 +30,6 @@ public class HealCommand implements CommandExecutor {
 			p.setFoodLevel(20);
 			sender.sendMessage(Main.getPrefix() + "Du wurdest erfolgreich §ageheilt§7!");
 		} else if(args.length == 1) {
-			if(Bukkit.getPlayerExact(args[0]) == null) {
-				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
-				return false;
-			}
-
 			if(args[0].equalsIgnoreCase("@a")) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					p.setHealth(20);
@@ -42,6 +37,11 @@ public class HealCommand implements CommandExecutor {
 					p.setFoodLevel(20);
 				}
 				sender.sendMessage(Main.getPrefix() + "§aAlle Spieler §7erfolgreich geheilt!");
+				return false;
+			}
+
+			if(Bukkit.getPlayerExact(args[0]) == null) {
+				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 				return false;
 			}
 
