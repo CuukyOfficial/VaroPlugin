@@ -43,9 +43,9 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 		clearOld();
 
 		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			if(vp.isOnline()) 
-				vp.getNetworkManager().close();
-			
+//			if(vp.isOnline()) 
+//				vp.getNetworkManager().close();
+//			
 			save(String.valueOf(vp.getId()), vp, getConfiguration());
 		}
 
