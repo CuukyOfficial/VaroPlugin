@@ -25,8 +25,8 @@ public class VaroLanguageManager extends LanguageManager {
 	
 	@Override
 	public void loadLanguages() {
-		registerDefaultLanguage("en_US", LanguageEN.class);
-		registerDefaultLanguage("de_DE", ConfigMessages.class);
+		registerLoadableLanguage("en_US", LanguageEN.class);
+		registerLoadableLanguage("de_DE", ConfigMessages.class);
 
 		super.loadLanguages();
 		
