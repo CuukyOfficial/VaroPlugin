@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -50,7 +50,7 @@ public class BlockPlaceListener implements Listener {
 
 		if(saveable.canModify(player)) {
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue());
+			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue(player, player));
 			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 			p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 			return;

@@ -8,14 +8,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class SunCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(!(sender.hasPermission("varo.sun"))) {
-			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
+			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}
 

@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -25,18 +25,17 @@ public class EntityDamageByEntityListener implements Listener {
 		if(Main.getVaroGame().getGameState() == GameState.END)
 			return;
 
-		Player p = (Player) event.getEntity();
-		Player damager = new EntityDamageByEntityUtil(event).getDamager();
+		Player p = (Player) event.getEntity(), damager = new EntityDamageByEntityUtil(event).getDamager();
+		VaroPlayer vp = VaroPlayer.getPlayer(p), vDamager = VaroPlayer.getPlayer(damager);
 		if(Main.getVaroGame().getProtection() != null) {
 			if(damager == null)
-				p.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
+				vp.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vp, vp));
 			else
-				damager.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue());
+				vDamager.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vDamager, vDamager));
 			event.setCancelled(true);
 			return;
 		}
 
-		VaroPlayer vp = VaroPlayer.getPlayer(p);
 		if(Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
@@ -55,7 +54,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 
 		event.setCancelled(true);
-		damager.sendMessage(ConfigMessages.COMBAT_FRIENDLY_FIRE.getValue());
+		damager.sendMessage(ConfigMessages.COMBAT_FRIENDLY_FIRE.getValue(vDamager, vDamager));
 		return;
 	}
 }

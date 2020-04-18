@@ -14,7 +14,6 @@ import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessageSection;
 import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {
@@ -35,7 +34,7 @@ public class ConfigHandler {
 
 	private void loadConfigurations() {
 		loadConfiguration(ConfigSettingSection.values(), CONFIG_PATH);
-		loadConfiguration(ConfigMessageSection.values(), MESSAGE_PATH);
+//		loadConfiguration(ConfigMessageSection.values(), MESSAGE_PATH);
 
 		if(legacyFound)
 			moveLegacyFiles();

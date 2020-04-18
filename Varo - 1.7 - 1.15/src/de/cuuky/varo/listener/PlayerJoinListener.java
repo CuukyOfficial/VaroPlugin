@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
@@ -100,20 +100,20 @@ public class PlayerJoinListener implements Listener {
 
 			if(isOutsideOfBorder(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				player.teleport(player.getWorld().getSpawnLocation());
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer));
 			}
 
 			if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
-				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(vplayer));
+				event.setJoinMessage(ConfigMessages.JOIN_SPECTATOR.getValue(null, vplayer));
 			} else if(Main.getVaroGame().getFinaleJoinStart()) {
-				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(vplayer));
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(vplayer));
+				event.setJoinMessage(ConfigMessages.JOIN_FINALE.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer));
 				vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
 				if(!player.isOp())
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 			} else if(!ConfigSetting.PLAY_TIME.isIntActivated()) {
-				event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(vplayer));
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(vplayer));
+				event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer));
 			} else if(massRecording.isEnabled()) {
 				if(massRecording.getCountdown(vplayer) == ConfigSetting.PLAY_TIME.getValueAsInt() * 60)
 					vplayer.getStats().setCountdown(massRecording.getTimer());
@@ -122,31 +122,31 @@ public class PlayerJoinListener implements Listener {
 
 				if(!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
-					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(vplayer));
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(vplayer));
+					event.setJoinMessage(ConfigMessages.JOIN_MASS_RECORDING.getValue(null, vplayer));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(null, vplayer));
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 						@Override
 						public void run() {
 							vplayer.setinMassProtectionTime(false);
-							Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vplayer));
+							Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(null, vplayer));
 						}
 					}, ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
-					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+					event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(null, vplayer));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer));
 				}
 			} else if(!vplayer.getStats().hasTimeLeft()) {
-				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(vplayer));
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(vplayer));
+				event.setJoinMessage(ConfigMessages.JOIN_PROTECTION_TIME.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(null, vplayer));
 			} else {
-				event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(vplayer));
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(vplayer));
+				event.setJoinMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer));
 			}
 			return;
 		}
 
-		event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(vplayer));
+		event.setJoinMessage(ConfigMessages.JOIN_MESSAGE.getValue(null, vplayer));
 	}
 }

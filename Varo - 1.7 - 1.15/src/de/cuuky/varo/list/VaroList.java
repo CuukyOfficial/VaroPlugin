@@ -25,13 +25,16 @@ public abstract class VaroList {
 		this.location = location;
 		config.options().copyDefaults(true);
 
-		List<?> loadList = config.getList(location);
+		loadList(config.getList(location));
+
+		lists.add(this);
+	}
+	
+	public void loadList(List<?> loadList) {
 		if(loadList == null)
 			loadList = new ArrayList<>();
 
 		onLoad(loadList);
-
-		lists.add(this);
 	}
 
 	public abstract ArrayList<?> getAsList();
@@ -64,7 +67,7 @@ public abstract class VaroList {
 		reloadConfig();
 
 		for(VaroList list : lists)
-			list.onLoad(config.getStringList(list.getLocation()));
+			list.loadList(config.getList(list.getLocation()));
 	}
 
 	public static void saveLists() {

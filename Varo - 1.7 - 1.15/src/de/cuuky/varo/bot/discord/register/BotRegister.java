@@ -14,7 +14,8 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
@@ -72,8 +73,8 @@ public class BotRegister {
 		return this.code;
 	}
 
-	public String getKickMessage() {
-		return ConfigMessages.BOTS_DISCORD_NOT_REGISTERED_DISCORD.getValue().replace("%code%", String.valueOf(getCode()));
+	public String getKickMessage(VaroPlayer vp) {
+		return ConfigMessages.BOTS_DISCORD_NOT_REGISTERED_DISCORD.getValue(vp, vp).replace("%code%", String.valueOf(getCode()));
 	}
 
 	public Member getMember() {
@@ -154,8 +155,9 @@ public class BotRegister {
 					reg.setBypass(rs.getBoolean("bypass"));
 					reg.setPlayerName(rs.getString("name"));
 
-					if(Bukkit.getPlayer(UUID.fromString(uuid)) != null && !reg.isActive())
-						Bukkit.getPlayer(UUID.fromString(uuid)).kickPlayer(reg.getKickMessage());
+					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+					if(player != null && !reg.isActive())
+						player.kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(player)));
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
@@ -182,8 +184,9 @@ public class BotRegister {
 				reg.setCode(cfg.getInt(uuid + ".code"));
 				reg.setPlayerName(cfg.getString(uuid + ".name"));
 
-				if(Bukkit.getPlayer(UUID.fromString(uuid)) != null && !reg.isActive())
-					Bukkit.getPlayer(UUID.fromString(uuid)).kickPlayer(reg.getKickMessage());
+				Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+				if(player != null && !reg.isActive())
+					player.kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(player)));
 			}
 		}
 	}

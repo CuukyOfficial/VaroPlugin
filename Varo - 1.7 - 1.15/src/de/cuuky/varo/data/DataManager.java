@@ -12,6 +12,7 @@ import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
 import de.cuuky.varo.clientadapter.tablist.TablistHandler;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.VaroLanguageManager;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
 import de.cuuky.varo.data.plugin.PluginLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -67,6 +68,7 @@ public class DataManager {
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
+		Main.setLanguageManager(new VaroLanguageManager());
 		this.propertiesReader = new ServerPropertiesReader();
 		this.scoreboardHandler = new ScoreboardHandler();
 		this.tablistHandler = new TablistHandler();
@@ -114,6 +116,7 @@ public class DataManager {
 		VaroList.reloadLists();
 		MessagePlaceholder.clearPlaceholder();
 		configHandler.reload();
+		Main.getLanguageManager().loadLanguages();
 		scoreboardHandler.updateList();
 		tablistHandler.updateList();
 	}

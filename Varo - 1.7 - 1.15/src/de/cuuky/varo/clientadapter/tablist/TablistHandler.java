@@ -8,8 +8,8 @@ import java.util.HashMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.clientadapter.BoardHandler;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.utils.JavaUtils;
 
@@ -40,7 +40,7 @@ public class TablistHandler implements BoardHandler {
 
 		boolean changed = false;
 		for(int index = 0; index < tablistLines.size(); index++) {
-			String line = ConfigMessages.getValue(tablistLines.get(index), player);
+			String line = Main.getLanguageManager().replaceMessage(tablistLines.get(index), player);
 			
 			if(oldList.size() < tablistLines.size()) {
 				oldList.add(line);
@@ -72,9 +72,9 @@ public class TablistHandler implements BoardHandler {
 
 		ArrayList<String> footer = new ArrayList<>();
 		footer.add("&7------------------------");
-		footer.add("&7Registriert: %colorcode%%players%");
-		footer.add("&7Lebend: %colorcode%%remaining%");
 		footer.add("&7Online: %colorcode%%online%");
+		footer.add("&7Alive: %colorcode%%remaining%");
+		footer.add("&7Registered: %colorcode%%players%");
 		footer.add(" ");
 		footer.add("&7Plugin &8(&7v%colorcode%%pluginVersion%&8) &7by %colorcode%Cuuky");
 		footer.add(" ");

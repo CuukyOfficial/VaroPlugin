@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
@@ -40,7 +40,7 @@ public class VaroTeamRequest {
 			invited.getTeam().removeMember(invited);
 
 		if(ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
-			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue().replace("%invited%", invited.getName()));
+			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue(invitor).replace("%invited%", invited.getName()));
 			return;
 		}
 
@@ -48,25 +48,25 @@ public class VaroTeamRequest {
 	}
 
 	private void sendChatHook() {
-		new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue().replace("%invited%", invited.getName()), new ChatHookListener() {
+		new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue(invitor).replace("%invited%", invited.getName()), new ChatHookListener() {
 
 			@Override
 			public void onChat(String message) {
 				if(message.contains("#")) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_HASHTAG.getValue());
+					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_HASHTAG.getValue(invitor));
 					sendChatHook();
 					return;
 				}
 
 				if(message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_COLORCODE.getValue());
+					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_COLORCODE.getValue(invitor));
 					sendChatHook();
 					return;
 				}
 
 				int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
 				if(message.length() > (maxLength) - 1) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH.getValue().replace("%maxLength%", String.valueOf(maxLength)));
+					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH.getValue(invitor).replace("%maxLength%", String.valueOf(maxLength)));
 					sendChatHook();
 					return;
 				}
@@ -99,7 +99,7 @@ public class VaroTeamRequest {
 
 	public void accept() {
 		if(!invitor.isOnline()) {
-			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue().replace("%invitor%", invitor.getName()));
+			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue(invited).replace("%invitor%", invitor.getName()));
 			remove();
 			return;
 		}
@@ -121,7 +121,7 @@ public class VaroTeamRequest {
 	}
 
 	public void revoke() {
-		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue());
+		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue(invitor));
 		remove();
 	}
 	

@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.version.VersionUtils;
 
 public class Broadcaster {
@@ -65,7 +65,7 @@ public class Broadcaster {
 			@Override
 			public void run() {
 				int random = new Random().nextInt(((messages.size() - 1) - 0) + 1) + 0;
-				Bukkit.broadcastMessage(ConfigMessages.getValue(messages.get(random)));
+				Bukkit.broadcastMessage(GeneralMessagePlaceholder.replacePlaceholders(messages.get(random)));
 			}
 		}, interval, interval);
 	}

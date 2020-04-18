@@ -9,7 +9,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.utils.chat.ChatHook;
 import de.cuuky.varo.listener.helper.ChatMessage;
@@ -87,7 +87,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if(VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue());
+			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue(vp));
 			event.setCancelled(true);
 			return;
 		}
@@ -107,7 +107,7 @@ public class PlayerChatListener implements Listener {
 			}
 
 			if(Main.getVaroGame().hasStarted() == false && ConfigSetting.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
-				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue());
+				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue(vp));
 				event.setCancelled(true);
 				return;
 			}
@@ -119,15 +119,15 @@ public class PlayerChatListener implements Listener {
 		String messageFormat = "";
 		if(vp.getTeam() != null) {
 			if(vp.getRank() == null) {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM.getValue(vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM.getValue(null, vp);
 			} else {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM_RANK.getValue(vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM_RANK.getValue(null, vp);
 			}
 		} else {
 			if(vp.getRank() == null) {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM.getValue(vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM.getValue(null, vp);
 			} else {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM_RANK.getValue(vp);
+				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM_RANK.getValue(null, vp);
 			}
 		}
 		

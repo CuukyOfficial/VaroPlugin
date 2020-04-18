@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 
 public class ProtectionTime {
-	
+
 	private int scheduler;
 
 	public ProtectionTime() {
@@ -36,7 +36,7 @@ public class ProtectionTime {
 			}
 		}, 1, 20);
 	}
-	
+
 	private String getCountdownMin(int sec) {
 		int min = sec / 60;
 

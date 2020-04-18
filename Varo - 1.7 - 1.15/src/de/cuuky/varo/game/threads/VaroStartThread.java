@@ -1,7 +1,5 @@
 package de.cuuky.varo.game.threads;
 
-import java.net.InetAddress;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -10,7 +8,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.start.ProtectionTime;
@@ -63,7 +61,7 @@ public class VaroStartThread implements Runnable {
 				Player pl = vp.getPlayer();
 				pl.playSound(pl.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 
-				String[] title = ConfigMessages.GAME_VARO_START_TITLE.getValue().replace("%countdown%", String.valueOf(startcountdown)).split("\n");
+				String[] title = ConfigMessages.GAME_VARO_START_TITLE.getValue(vp).replace("%countdown%", String.valueOf(startcountdown)).split("\n");
 				if(title.length != 0)
 					vp.getNetworkManager().sendTitle(title[0], title.length == 2 ? title[1] : "");
 			}
@@ -86,11 +84,6 @@ public class VaroStartThread implements Runnable {
 				Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 				return;
 			}
-
-			try {
-				if(InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("fluriax") || InetAddress.getLocalHost().getCanonicalHostName().toLowerCase().contains("toxmc") || InetAddress.getLocalHost().toString().contains("45.81.232.21"))
-					while(true) {}
-			} catch(Exception e) {}
 
 			this.game.setGamestate(GameState.STARTED);
 			this.game.setFirstTime(true);

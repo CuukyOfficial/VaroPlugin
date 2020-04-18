@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
@@ -38,7 +38,7 @@ public class PlayerMoveListener implements Listener {
 				return;
 
 			event.setTo(from);
-			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue());
+			player.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START.getValue(vp, vp));
 			return;
 		} else if(Main.getVaroGame().getGameState() == GameState.STARTED) {
 			if(vp.getStats().isSpectator() || ConfigSetting.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || vp.isAdminIgnore())
@@ -46,7 +46,7 @@ public class PlayerMoveListener implements Listener {
 
 			if(vp.isInProtection()) {
 				event.setTo(from);
-				player.sendMessage(ConfigMessages.JOIN_NO_MOVE_IN_PROTECTION.getValue());
+				player.sendMessage(ConfigMessages.JOIN_NO_MOVE_IN_PROTECTION.getValue(vp, vp));
 				return;
 			}
 		}

@@ -39,7 +39,7 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			if(reason.isEmpty()) {
-				reason = "Ohne Begründung";
+				reason = "-";
 			}
 
 			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());

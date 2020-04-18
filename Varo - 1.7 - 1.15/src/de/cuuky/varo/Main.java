@@ -12,6 +12,7 @@ import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.messages.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.VaroGame;
@@ -37,6 +38,7 @@ public class Main extends JavaPlugin {
 	private static BotLauncher botLauncher;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
+	private static VaroLanguageManager languageManager;
 	private static VaroGame varoGame;
 
 	private boolean failed;
@@ -74,7 +76,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " (" + Bukkit.getVersion() + ")");
 		System.out.println(CONSOLE_PREFIX + "	Software-Name (Base): " + Bukkit.getName() + " (1." + VersionUtils.getVersion().getIdentifier() + ")");
 		System.out.println(CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
-		
+
 		if(VersionUtils.getServerSoftware() != ServerSoftware.UNKNOWN)
 			System.out.println(CONSOLE_PREFIX + "	Forge-Support: " + VersionUtils.getServerSoftware().hasModSupport());
 
@@ -106,7 +108,7 @@ public class Main extends JavaPlugin {
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
 			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), new Runnable() {
-				
+
 				@Override
 				public void run() {
 					varoUpdater.printResults();
@@ -210,6 +212,14 @@ public class Main extends JavaPlugin {
 		return dataManager;
 	}
 
+	public static void setLanguageManager(VaroLanguageManager languageManager) {
+		Main.languageManager = languageManager;
+	}
+
+	public static VaroLanguageManager getLanguageManager() {
+		return languageManager;
+	}
+
 	public static BotLauncher getBotLauncher() {
 		return botLauncher;
 	}
@@ -241,7 +251,7 @@ public class Main extends JavaPlugin {
 	public static Main getInstance() {
 		return instance;
 	}
-	
+
 	public static int getRescourceId() {
 		return RESCOURCE_ID;
 	}

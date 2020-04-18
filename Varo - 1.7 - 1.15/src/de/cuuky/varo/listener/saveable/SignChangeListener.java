@@ -17,7 +17,7 @@ import org.bukkit.material.Sign;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -65,7 +65,7 @@ public class SignChangeListener implements Listener {
 			}
 
 			if(sorted.size() >= ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() || secChest != null && sorted.size() + 1 >= ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt()) {
-				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten für " + Main.getColorCode() + (player.getTeam() != null ? "das Team " + player.getTeam().getName() : "dich")+ " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
+				p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Kisten für " + Main.getColorCode() + (player.getTeam() != null ? "das Team " + player.getTeam().getName() : "dich") + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 				event.setCancelled(true);
 				return;
 			}
@@ -88,7 +88,7 @@ public class SignChangeListener implements Listener {
 				p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue());
+			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue(player, player));
 		} else if(attached.getState() instanceof Furnace) {
 			Furnace furnace = (Furnace) attached.getState();
 
@@ -117,7 +117,7 @@ public class SignChangeListener implements Listener {
 
 			if(ConfigSetting.PLAYER_FURNACE_LIMIT.isIntActivated())
 				if(sorted.size() >= ConfigSetting.PLAYER_FURNACE_LIMIT.getValueAsInt()) {
-					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Öfen für " + Main.getColorCode() + (player.getTeam() != null ? "das Team " + player.getTeam().getName() : "dich")+ " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
+					p.sendMessage(Main.getPrefix() + "§7Die maximale Anzahl an gesetzten Öfen für " + Main.getColorCode() + (player.getTeam() != null ? "das Team " + player.getTeam().getName() : "dich") + " §7wurde bereits §7erreicht! (Anzahl: §6" + sorted.size() + " §7Max: §6" + ConfigSetting.PLAYER_CHEST_LIMIT.getValueAsInt() + "§7)");
 					event.setCancelled(true);
 					return;
 				}
@@ -130,7 +130,7 @@ public class SignChangeListener implements Listener {
 			for(int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNANCE, furnace.getBlock().getLocation(), player);
-			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_FURNACE.getValue());
+			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_FURNACE.getValue(player, player));
 		}
 	}
 }

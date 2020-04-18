@@ -24,7 +24,7 @@ public class SpawnsCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Command§7§l:");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set <Zahl/Spieler>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete <Zahl/Spieler> - (Löscht den Spawneintrag und den Spawn in der Welt)");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> <set/remove> [Spieler]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> <set/remove> [Spieler/@a]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 list");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
 			sender.sendMessage(Main.getPrefix() + "------");

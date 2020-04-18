@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -110,24 +110,24 @@ public class VaroMainHeartbeatThread implements Runnable {
 						vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
 					if(countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
-						Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(vp));
+						Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(null, vp));
 
 					if(countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
 						if(countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
-							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(vp));
+							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(null, vp));
 							vp.onEvent(BukkitEventType.KICKED);
-							// p.kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
-							vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
+							// p.kickPlayer(Main.getLanguageManager().getValue(LanguageDE.KICK_SESSION_OVER.getValue(vp));
+							vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(null, vp));
 							continue;
 						} else {
 							if(countdown == 1) {
 								if(!vp.canBeKicked(noKickDistance)) {
-									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue().replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
+									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue(vp).replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
 									countdown += 1;
 								} else
-									 Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
+									 Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(vp).replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
 							} else
-								 Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue().replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
+								 Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(vp).replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
 						}
 					}
 

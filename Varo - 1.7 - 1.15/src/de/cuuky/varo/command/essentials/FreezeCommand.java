@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
@@ -16,8 +16,9 @@ public class FreezeCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if(!sender.hasPermission("varo.freeze")) {
-			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue());
+			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}
 
@@ -45,13 +46,13 @@ public class FreezeCommand implements CommandExecutor {
 		}
 
 		Player player = Bukkit.getPlayerExact(args[0]);
-		VaroPlayer vp = VaroPlayer.getPlayer(player);
+		VaroPlayer target = VaroPlayer.getPlayer(player);
 		if(player.isOp()) {
 			sender.sendMessage(Main.getPrefix() + "Ein Admin kann nicht gefreezed werden!");
 			return false;
 		}
 
-		new VaroCancelAble(CancelAbleType.FREEZE, vp);
+		new VaroCancelAble(CancelAbleType.FREEZE, target);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gefreezed!");
 		return false;

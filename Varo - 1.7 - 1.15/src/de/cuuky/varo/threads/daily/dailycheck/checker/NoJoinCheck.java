@@ -9,7 +9,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -32,11 +32,11 @@ public class NoJoinCheck extends Checker {
 			if(vp.getStats().getLastJoined().before(DateUtils.addDays(current, -ConfigSetting.NO_ACTIVITY_DAYS.getValueAsInt()))) {
 				new Alert(AlertType.NO_JOIN, vp.getName() + " hat die Anzahl an maximal inaktiven Tagen überschritten!");
 				if(ConfigSetting.STRIKE_ON_NO_ACTIVITY.getValueAsBoolean()) {
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN_STRIKE.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN_STRIKE.getValue(null, vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 
 					vp.getStats().addStrike(new Strike("Es wurde für zu viele Tage nicht auf den Server gejoint.", vp, "CONSOLE"));
 				} else
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN.getValue(vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NOT_JOIN.getValue(null, vp).replace("%days%", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))).replace("%player%", vp.getName()));
 			}
 		}
 	}

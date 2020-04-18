@@ -12,7 +12,7 @@ import org.bukkit.scoreboard.Team;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -80,14 +80,14 @@ public class Nametag {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(this.player);
 
 		String newName = checkName(varoPlayer);
-		String newPrefix = (varoPlayer.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(varoPlayer));
-		String newSuffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(varoPlayer));
+		String newPrefix = (varoPlayer.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(null, varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(null, varoPlayer));
+		String newSuffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(null, varoPlayer));
 
 		if(newName.length() > 16)
 			newName = newName.substring(0, 16);
 
 		if(newPrefix.length() > 16)
-			newPrefix = ConfigMessages.NAMETAG_NORMAL.getValue();
+			newPrefix = ConfigMessages.NAMETAG_NORMAL.getValue(null, varoPlayer);
 
 		if(newSuffix.length() > 16)
 			newSuffix = newSuffix.substring(0, 16);
@@ -202,7 +202,7 @@ public class Nametag {
 		if(!init || !hearts)
 			return;
 
-		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(VaroPlayer.getPlayer(player)));
+		this.suffix = String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(null, VaroPlayer.getPlayer(this.player)));
 		setToAll();
 	}
 

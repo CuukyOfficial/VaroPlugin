@@ -10,7 +10,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
@@ -61,8 +61,8 @@ public class VaroPlayerDisconnect {
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
 		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(vp));
-		Bukkit.broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN.getValue(vp));
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
+		Bukkit.broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN.getValue(null, vp));
 		this.remove();
 		return true;
 	}
@@ -111,7 +111,7 @@ public class VaroPlayerDisconnect {
 				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
-				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
+				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(null, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
 			}
 		}, (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
 	}

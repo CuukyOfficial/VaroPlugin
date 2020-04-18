@@ -31,12 +31,11 @@ public class NetworkManager {
 	// ACTIONBAR
 	private static Object title, subtitle;
 	private static Constructor<?> chatByteMethod, chatEnumMethod;
-	
+
 	// FAKEHEALTH
 	private static Object healthPacket;
 
 	static {
-
 		try {
 			if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 				ioBaseChat = VersionUtils.getChatSerializer();
@@ -70,7 +69,7 @@ public class NetworkManager {
 
 				tablistClass = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutPlayerListHeaderFooter");
 				ioBaseChatMethod = ioBaseChat.getDeclaredMethod("a", String.class);
-				
+
 				healthPacket = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayOutUpdateHealth").newInstance();
 				for(Field f : healthPacket.getClass().getDeclaredFields()) {
 					f.setAccessible(true);
@@ -82,16 +81,14 @@ public class NetworkManager {
 		}
 	}
 
-	private Object connection;
-	private Field footerField;
-
-	private Field headerField;
 	private Player player;
-
-	private Object playerHandle;
+	private Object connection, playerHandle, tablist, networkManager;
 	private Method sendPacketMethod;
-	private Object tablist;
+
+	private Field footerField, headerField;
 	private Field pingField;
+
+	private String locale;
 
 	public NetworkManager(Player player) {
 		this.player = player;
@@ -104,9 +101,18 @@ public class NetworkManager {
 			this.pingField = playerHandle.getClass().getField("ping");
 			this.connection = playerHandle.getClass().getField("playerConnection").get(playerHandle);
 			this.sendPacketMethod = connection.getClass().getMethod("sendPacket", Class.forName(VersionUtils.getNmsClass() + ".Packet"));
+			this.networkManager = this.connection.getClass().getField("networkManager").get(this.connection);
+
+			Field localeField = playerHandle.getClass().getField("locale");
+			localeField.setAccessible(true);
+			this.locale = (String) localeField.get(playerHandle);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void close() {
+//		this.channel.pipeline().remove("Varo");
 	}
 
 	public Object getConnection() {
@@ -129,12 +135,15 @@ public class NetworkManager {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public void sendFakeHealthUpdate() {
 		sendPacket(healthPacket);
 	}
 
 	public void respawnPlayer() {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			return;
+		
 		try {
 			Object respawnEnum = Class.forName(VersionUtils.getNmsClass() + ".EnumClientCommand").getEnumConstants()[0];
 			Constructor<?>[] constructors = Class.forName(VersionUtils.getNmsClass() + ".PacketPlayInClientCommand").getConstructors();
@@ -171,6 +180,9 @@ public class NetworkManager {
 	}
 
 	public void sendLinkedMessage(String message, String link) {
+		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			return;
+		
 		try {
 			Constructor<?> constructor = packetChatClass.getConstructor(ioBase);
 			Object text = ioBaseChatMethod.invoke(ioBaseChat, "{\"text\": \"" + message + "\", \"color\": \"white\", \"clickEvent\": {\"action\": \"open_url\" , \"value\": \"" + link + "\"}}");
@@ -266,5 +278,13 @@ public class NetworkManager {
 		}
 
 		return null;
+	}
+
+	public String getLocale() {
+		return this.locale;
+	}
+	
+	public Object getNetworkManager() {
+		return this.networkManager;
 	}
 }

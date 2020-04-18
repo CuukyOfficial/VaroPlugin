@@ -24,7 +24,7 @@ import de.cuuky.varo.version.types.Materials;
 public abstract class SuperInventory {
 
 	// AUTHOR: "Cuuky",
-	// VERSION: "0.3.1";
+	// VERSION: "0.3.2";
 
 	private static boolean fill_inventory, animations;
 
@@ -36,7 +36,7 @@ public abstract class SuperInventory {
 
 		forward = new ItemBuilder().displayname("§aSeite vorwärts").itemstack(new ItemStack(Material.ARROW)).build();
 		backwards = new ItemBuilder().displayname("§cSeite rückwärts").itemstack(new ItemStack(Material.ARROW)).build();
-		
+
 		fill_inventory = ConfigSetting.GUI_FILL_INVENTORY.getValueAsBoolean();
 		animations = ConfigSetting.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean();
 	}
@@ -190,9 +190,9 @@ public abstract class SuperInventory {
 			new MainMenu(opener);
 	}
 
-	public void clear() {
+	public void clear(boolean all) {
 		for(int i = 0; i < inv.getContents().length; i++) {
-			if(modifier.contains(i))
+			if(modifier.contains(i) && !all)
 				continue;
 
 			inv.setItem(i, new ItemStack(Material.AIR));
@@ -237,7 +237,10 @@ public abstract class SuperInventory {
 
 		setSwitcher();
 		fillSpace();
-		this.opener.openInventory(inv);
+		
+		if(this.opener.getOpenInventory() == null || !this.opener.getOpenInventory().getTopInventory().equals(this.inv))
+			this.opener.openInventory(inv);
+		
 		doAnimation();
 	}
 
@@ -272,16 +275,17 @@ public abstract class SuperInventory {
 	 * Updating inventory items
 	 */
 	public void updateInventory() {
-		if(opener.getOpenInventory() != null) {
+		String title = getPageUpdate();
+		if(opener.getOpenInventory() != null && !this.title.equals(title)) {
 			ignoreNextClose = true;
 			opener.closeInventory();
+			Inventory newInv = Bukkit.createInventory(null, size != 54 ? size + 9 : size, title);
+			this.inv = newInv;
+			this.title = title;
 		}
 
-		title = getPageUpdate();
-		Inventory newInv = Bukkit.createInventory(null, size != 54 ? size + 9 : size, title);
-
 		this.itemlinks = new HashMap<ItemMeta, Runnable>();
-		this.inv = newInv;
+		clear(true);
 		open();
 	}
 
@@ -347,7 +351,7 @@ public abstract class SuperInventory {
 
 		return null;
 	}
-	
+
 	public static ArrayList<SuperInventory> getGUIS() {
 		return guis;
 	}

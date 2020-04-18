@@ -15,9 +15,9 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.clientadapter.BoardHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ScoreboardHandler implements BoardHandler {
@@ -80,7 +80,7 @@ public class ScoreboardHandler implements BoardHandler {
 			if(ConfigSetting.PLAY_TIME.getValueAsInt() < 1)
 				return "§cUnlimited";
 
-		line = ConfigMessages.getValue(line, vp);
+		line = Main.getLanguageManager().replaceMessage(line, vp);
 
 		return line;
 	}
@@ -117,11 +117,11 @@ public class ScoreboardHandler implements BoardHandler {
 		scoreboard.add("&7Kills&8:");
 		scoreboard.add("%colorcode%%kills%");
 		scoreboard.add("%space%");
-		scoreboard.add("&7Zeit&8:");
+		scoreboard.add("&7Time&8:");
 		scoreboard.add("%colorcode%%min%&8:%colorcode%%sec%");
 		scoreboard.add("%space%");
 		scoreboard.add("&7Online: %colorcode%%online%");
-		scoreboard.add("&7Remaining: %colorcode%%remaining%");
+		scoreboard.add("&7Alive: %colorcode%%remaining%");
 		scoreboard.add("&7Players: %colorcode%%players%");
 		scoreboard.add("%space%");
 
