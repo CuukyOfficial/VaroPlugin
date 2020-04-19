@@ -11,10 +11,10 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 
+import de.cuuky.cfw.recovery.FileZipper;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.recovery.FileZipper;
 import de.cuuky.varo.threads.LagCounter;
 
 public class VaroBugreport extends FileZipper {

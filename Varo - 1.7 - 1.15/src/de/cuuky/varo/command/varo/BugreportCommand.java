@@ -9,7 +9,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.recovery.FileUploader;
+import de.cuuky.varo.recovery.VaroFileUploader;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
@@ -37,7 +37,7 @@ public class BugreportCommand extends VaroCommand {
 		}
 
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_CREATED.getValue(vp).replace("%filename%", bugreport.getZipFile().getPath().toString()));
-		FileUploader uploader = new FileUploader(bugreport.getZipFile());
+		VaroFileUploader uploader = new VaroFileUploader(bugreport.getZipFile());
 
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADING.getValue(vp));
 		String url = uploader.uploadFile();
