@@ -4,7 +4,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.LoadableMessage;
 
 public class LanguageManager {
@@ -18,29 +17,6 @@ public class LanguageManager {
 		this.languagePath = languagesPath;
 		this.languages = new HashMap<>();
 		this.defaultMessages = new HashMap<>();
-	}
-
-	protected String getMessage(String messagePath, String locale) {
-		if(locale == null || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
-			return defaultLanguage.getMessage(messagePath);
-		else {
-			Language language = languages.get(locale);
-			String message = null;
-
-			if(language == null)
-				message = (language = defaultLanguage).getMessage(messagePath);
-			else {
-				message = language.getMessage(messagePath);
-
-				if(message == null)
-					message = (language = defaultLanguage).getMessage(messagePath);
-			}
-
-			if(message == null)
-				message = languages.get("de_DE").getMessage(messagePath);
-
-			return message;
-		}
 	}
 
 	protected Language registerLanguage(String name) {
