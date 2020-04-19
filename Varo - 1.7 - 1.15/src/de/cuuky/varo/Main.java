@@ -90,7 +90,7 @@ public class Main extends JavaPlugin {
 				Bukkit.getPluginManager().disablePlugin(Main.getInstance());
 				return;
 			}
-
+			
 			long dataStamp = System.currentTimeMillis();
 			dataManager = new DataManager();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
@@ -103,7 +103,7 @@ public class Main extends JavaPlugin {
 				}
 			});
 			botLauncher = new BotLauncher();
-
+			
 			new MetricsLoader(this);
 			new SmartLagDetector(this);
 

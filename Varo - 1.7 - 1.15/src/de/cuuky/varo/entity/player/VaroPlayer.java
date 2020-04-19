@@ -149,16 +149,16 @@ public class VaroPlayer extends VaroEntity {
 				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, this);
 			}
 		}
-		
+
 		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
 		if(maxlength > 0) {
 			if(listname.length() > maxlength)
 				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, this);
-			
+
 			if(listname.length() > maxlength)
 				listname = this.name;
 		}
-		
+
 		return listname;
 	}
 
@@ -448,8 +448,18 @@ public class VaroPlayer extends VaroEntity {
 			return;
 
 		try {
-			if(ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean())
-				updateDiscordTeam(oldTeam);
+			if(ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
+				if(Main.getBotLauncher() == null)
+					Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
+
+						@Override
+						public void run() {
+							updateDiscordTeam(oldTeam);
+						}
+					}, 1);
+				else
+					updateDiscordTeam(oldTeam);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
