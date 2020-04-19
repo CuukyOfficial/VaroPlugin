@@ -30,7 +30,10 @@ public class ConsoleLogger extends VaroLogger {
 			public void println(String x) {
 				super.println(x);
 
-				ConsoleLogger.this.println(x);
+				if(x == null)
+					ConsoleLogger.this.println("null");
+				else
+					ConsoleLogger.this.println(x);
 			}
 		});
 
@@ -40,14 +43,20 @@ public class ConsoleLogger extends VaroLogger {
 			public void println(Object x) {
 				super.println(x);
 
-				ConsoleLogger.this.println(x.toString());
+				if(x == null)
+					ConsoleLogger.this.println("null");
+				else
+					ConsoleLogger.this.println(x.toString());
 			}
 
 			@Override
 			public void println(String x) {
 				super.println(x);
 
-				ConsoleLogger.this.println(x);
+				if(x == null)
+					ConsoleLogger.this.println("null");
+				else
+					ConsoleLogger.this.println(x);
 			}
 		});
 	}
