@@ -96,11 +96,6 @@ public class VaroBoardProvider implements BoardUpdateHandler {
 	}
 
 	@Override
-	public boolean showHeartsBelowName(Player player) {
-		return false;
-	}
-
-	@Override
 	public String getNametagName(Player player) {
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 		String name = vplayer.getName();
