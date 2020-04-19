@@ -18,7 +18,7 @@ import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigHandler {
 
-	private static final String VARO_DIR = "plugins/Varo/", CONFIG_PATH = VARO_DIR + "config", MESSAGE_PATH = VARO_DIR + "messages";
+	private static final String VARO_DIR = "plugins/Varo/", CONFIG_PATH = VARO_DIR + "config";
 
 	private HashMap<String, YamlConfiguration> configurations;
 	private HashMap<String, File> files;
@@ -192,10 +192,6 @@ public class ConfigHandler {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
 		}
-	}
-
-	public static String getMessagePath() {
-		return MESSAGE_PATH;
 	}
 
 	public static String getConfigPath() {
