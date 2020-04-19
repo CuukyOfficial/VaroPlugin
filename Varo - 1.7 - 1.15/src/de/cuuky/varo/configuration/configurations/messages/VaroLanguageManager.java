@@ -25,13 +25,13 @@ public class VaroLanguageManager extends LanguageManager {
 	
 	@Override
 	public void loadLanguages() {
-		registerLoadableLanguage("en_US", LanguageEN.class);
-		registerLoadableLanguage("de_DE", ConfigMessages.class);
+		registerLoadableLanguage("en_us", LanguageEN.class);
+		registerLoadableLanguage("de_de", ConfigMessages.class);
 
 		super.loadLanguages();
 		
 		Language lang = getLanguages().get(ConfigSetting.MAIN_LANGUAGE.getValueAsString());
-		if(lang == null)
+		if(lang == null || lang.getClazz() == null)
 			throw new NullPointerException("Couldn't find language '" + ConfigSetting.MAIN_LANGUAGE.getValueAsString() + "'");
 		
 		setDefaultLanguage(lang);

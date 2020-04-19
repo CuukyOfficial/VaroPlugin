@@ -91,17 +91,19 @@ public class NetworkManager {
 			if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11)) {
 				Method localeMethod = player.getClass().getDeclaredMethod("getLocale");
 				localeMethod.setAccessible(true);
-				String[] localeParts = ((String) localeMethod.invoke(player)).split("_");
-				this.locale = localeParts[0] + "_" + localeParts[1].toUpperCase();
+				this.locale= (String) localeMethod.invoke(player);
 			} else {
 				try {
 					Field localeField = playerHandle.getClass().getField("locale");
 					localeField.setAccessible(true);
-					locale = (String) localeField.get(playerHandle);
+					this.locale = (String) localeField.get(playerHandle);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
+			
+			this.locale = this.locale.toLowerCase();
+			System.out.println(locale);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
