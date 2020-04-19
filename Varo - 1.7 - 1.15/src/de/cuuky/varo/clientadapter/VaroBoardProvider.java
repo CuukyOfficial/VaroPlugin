@@ -139,6 +139,6 @@ public class VaroBoardProvider implements BoardUpdateHandler {
 
 	@Override
 	public boolean isNametagVisible(Player player) {
-		return ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean();
+		return ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean();
 	}
 }
