@@ -34,8 +34,8 @@ public enum PlayerState implements VaroSerializeable {
 	}
 
 	public static PlayerState getByName(String name) {
-		for(PlayerState state : values())
-			if(state.getName().equalsIgnoreCase(name))
+		for (PlayerState state : values())
+			if (state.getName().equalsIgnoreCase(name))
 				return state;
 
 		return null;

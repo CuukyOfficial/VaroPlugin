@@ -25,7 +25,7 @@ public abstract class MessagePlaceholder {
 	}
 
 	public MessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier, String description) {
-		if(rawIdentifier)
+		if (rawIdentifier)
 			this.identifier = identifier;
 		else
 			this.identifier = "%" + identifier + "%";
@@ -38,7 +38,7 @@ public abstract class MessagePlaceholder {
 	}
 
 	protected boolean shallRefresh(long last) {
-		if(last < 1)
+		if (last < 1)
 			return true;
 
 		return (last + this.refreshDelay) - TICK_TOLERANCE <= System.currentTimeMillis() ? true : false;
@@ -66,7 +66,7 @@ public abstract class MessagePlaceholder {
 		GeneralMessagePlaceholder.clearCache();
 		PlayerMessagePlaceholder.clearCache();
 
-		for(MessagePlaceholder placeholder : placeholders)
+		for (MessagePlaceholder placeholder : placeholders)
 			placeholder.clearValue();
 	}
 

@@ -35,8 +35,8 @@ public class LanguageManager {
 		this.defaultMessages = getValues(defaultLanguage.getClazz());
 
 		this.defaultLanguage.load();
-		for(Language lang : this.languages.values())
-			if(!lang.isLoaded() && !lang.getFile().exists())
+		for (Language lang : this.languages.values())
+			if (!lang.isLoaded() && !lang.getFile().exists())
 				lang.load();
 	}
 
@@ -46,12 +46,12 @@ public class LanguageManager {
 
 		try {
 			messages = (LoadableMessage[]) clazz.getMethod("values").invoke(null);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		for(LoadableMessage lm : messages)
+		for (LoadableMessage lm : messages)
 			values.put(lm.getPath(), lm.getDefaultMessage());
 
 		return values;
@@ -59,11 +59,11 @@ public class LanguageManager {
 
 	public void loadLanguages() {
 		File file = new File(languagePath);
-		if(!file.isDirectory())
+		if (!file.isDirectory())
 			file.mkdir();
 
-		for(File listFile : file.listFiles()) {
-			if(!listFile.getName().endsWith(".yml") || languages.containsKey(listFile.getName().replace(".yml", "")))
+		for (File listFile : file.listFiles()) {
+			if (!listFile.getName().endsWith(".yml") || languages.containsKey(listFile.getName().replace(".yml", "")))
 				continue;
 
 			registerLanguage(listFile.getName().replace(".yml", ""));

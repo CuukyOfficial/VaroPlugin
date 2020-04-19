@@ -16,7 +16,7 @@ public class RainCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-		if(!(sender.hasPermission("varo.rain"))) {
+		if (!(sender.hasPermission("varo.rain"))) {
 			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}

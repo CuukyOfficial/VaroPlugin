@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+import de.cuuky.cfw.utils.BlockUtils;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.spawns.Spawn;
-import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.version.types.Materials;
 
 public class SpawnGenerator {
 
@@ -19,7 +19,7 @@ public class SpawnGenerator {
 		this.blockId = blockId;
 		this.sideBlockId = sideBlockId;
 
-		for(Spawn spawn : Spawn.getSpawnsClone()) 
+		for (Spawn spawn : Spawn.getSpawnsClone())
 			spawn.delete();
 	}
 
@@ -27,7 +27,7 @@ public class SpawnGenerator {
 		this(location, radius, blockId, sideBlockId);
 
 		int i = 0;
-		for(Location loc : generateSpawns(location, radius, amount)) {
+		for (Location loc : generateSpawns(location, radius, amount)) {
 			i++;
 			Location newLoc = loc.clone();
 
@@ -41,10 +41,10 @@ public class SpawnGenerator {
 		ArrayList<Location> locations = generateSpawns(location, radius, VaroPlayer.getAlivePlayer().size());
 		int i = 0;
 
-		if(withTeams) {
-			for(VaroTeam team : VaroTeam.getTeams()) {
-				for(VaroPlayer player : team.getMember()) {
-					if(!player.getStats().isAlive())
+		if (withTeams) {
+			for (VaroTeam team : VaroTeam.getTeams()) {
+				for (VaroPlayer player : team.getMember()) {
+					if (!player.getStats().isAlive())
 						continue;
 
 					new Spawn(player, setSpawnAt(locations.get(i)));
@@ -53,8 +53,8 @@ public class SpawnGenerator {
 			}
 		}
 
-		for(VaroPlayer player : VaroPlayer.getAlivePlayer()) {
-			if(Spawn.getSpawn(player) != null)
+		for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
+			if (Spawn.getSpawn(player) != null)
 				continue;
 
 			new Spawn(player, setSpawnAt(locations.get(i)));
@@ -63,11 +63,11 @@ public class SpawnGenerator {
 	}
 
 	private Location setSpawnAt(Location newLoc) {
-		if(BlockUtils.isAir(newLoc.getBlock()))
-			while(BlockUtils.isAir(newLoc.clone().add(0, -1, 0).getBlock()))
+		if (BlockUtils.isAir(newLoc.getBlock()))
+			while (BlockUtils.isAir(newLoc.clone().add(0, -1, 0).getBlock()))
 				newLoc = newLoc.add(0, -1, 0);
 		else
-			while(!BlockUtils.isAir(newLoc.getBlock())) 
+			while (!BlockUtils.isAir(newLoc.getBlock()))
 				newLoc = newLoc.add(0, +1, 0);
 
 		newLoc.getBlock().setType(Material.AIR);
@@ -93,7 +93,7 @@ public class SpawnGenerator {
 
 		ArrayList<Location> locs = new ArrayList<>();
 
-		for(int count = 0; count != amount; count++) {
+		for (int count = 0; count != amount; count++) {
 			double beta = alpha * count;
 
 			double x = radius * Math.cos(beta);

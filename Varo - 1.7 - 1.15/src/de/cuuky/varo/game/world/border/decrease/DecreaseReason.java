@@ -28,11 +28,11 @@ public enum DecreaseReason {
 	public double getDecreaseSpeed() {
 		try {
 			return speed.getValueAsInt();
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return speed.getValueAsDouble();
 		}
 	}
-	
+
 	public void postAlert() {
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.BORDER, alert.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
 	}

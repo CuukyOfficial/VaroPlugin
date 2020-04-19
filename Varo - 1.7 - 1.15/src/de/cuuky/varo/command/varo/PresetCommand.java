@@ -19,7 +19,7 @@ public class PresetCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Presets"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7load <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7save <PresetPath>");
@@ -28,14 +28,14 @@ public class PresetCommand extends VaroCommand {
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("load")) {
-			if(args.length != 2) {
+		if (args[0].equalsIgnoreCase("load")) {
+			if (args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_HELP_LOAD.getValue(vp));
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
-			if(!loader.getFile().isDirectory()) {
+			if (!loader.getFile().isDirectory()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_NOT_FOUND.getValue(vp).replace("%preset%", args[1]));
 				return;
 			}
@@ -44,8 +44,8 @@ public class PresetCommand extends VaroCommand {
 			Main.getDataManager().reloadConfig();
 			Main.getDataManager().reloadPlayerClients();
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LOADED.getValue(vp).replace("%preset%", args[1]));
-		} else if(args[0].equalsIgnoreCase("save")) {
-			if(args.length != 2) {
+		} else if (args[0].equalsIgnoreCase("save")) {
+			if (args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_HELP_SAVE.getValue(vp));
 				return;
 			}
@@ -53,10 +53,10 @@ public class PresetCommand extends VaroCommand {
 			PresetLoader loader = new PresetLoader(args[1]);
 			loader.copyCurrentSettingsTo();
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_SAVED.getValue(vp).replace("%preset%", args[1]));
-		} else if(args[0].equalsIgnoreCase("list")) {
+		} else if (args[0].equalsIgnoreCase("list")) {
 			File file = new File("plugins/Varo/presets");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LIST.getValue(vp));
-			for(File f : file.listFiles())
+			for (File f : file.listFiles())
 				sender.sendMessage(Main.getPrefix() + f.getName());
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "preset"));

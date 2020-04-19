@@ -6,19 +6,21 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.varo.LocationFormat;
 
 public class GameOptionsGUI extends SuperInventory {
 
 	public GameOptionsGUI(Player opener) {
 		super("Game", opener, 9, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -45,7 +47,7 @@ public class GameOptionsGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				switch(Main.getVaroGame().getGameState()) {
+				switch (Main.getVaroGame().getGameState()) {
 				case STARTED:
 					Main.getVaroGame().setGamestate(GameState.END);
 					break;

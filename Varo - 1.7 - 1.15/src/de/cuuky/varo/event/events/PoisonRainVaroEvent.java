@@ -4,11 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import de.cuuky.cfw.utils.BlockUtils;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
-import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.version.VersionUtils;
 
 public class PoisonRainVaroEvent extends VaroEvent {
 
@@ -29,10 +29,10 @@ public class PoisonRainVaroEvent extends VaroEvent {
 
 			@Override
 			public void run() {
-				playerLoop: for(Player p : VersionUtils.getOnlinePlayer()) {
-					if(p.getWorld().hasStorm() && !p.getLocation().getBlock().getBiome().toString().contains("SAVANNA")) {
-						for(int i = p.getLocation().getBlockY(); i < p.getWorld().getMaxHeight(); i++)
-							if(!BlockUtils.isAir(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i, p.getLocation().getBlockZ())))
+				playerLoop: for (Player p : VersionUtils.getOnlinePlayer()) {
+					if (p.getWorld().hasStorm() && !p.getLocation().getBlock().getBiome().toString().contains("SAVANNA")) {
+						for (int i = p.getLocation().getBlockY(); i < p.getWorld().getMaxHeight(); i++)
+							if (!BlockUtils.isAir(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i, p.getLocation().getBlockZ())))
 								continue playerLoop;
 
 						p.damage(0.75);

@@ -6,18 +6,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 
 public class BotRegisterListGUI extends SuperInventory {
 
 	public BotRegisterListGUI(Player opener) {
 		super("§cBotVerify", opener, 45, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -41,11 +43,11 @@ public class BotRegisterListGUI extends SuperInventory {
 		ArrayList<BotRegister> list = BotRegister.getBotRegister();
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			BotRegister register;
 			try {
 				register = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 

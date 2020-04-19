@@ -29,7 +29,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	public GeneralMessagePlaceholder(String identifier, int refreshDelay, boolean rawIdentifier, String description) {
 		super(identifier, refreshDelay, rawIdentifier, description);
 
-		if(generalPlaceholder == null)
+		if (generalPlaceholder == null)
 			generalPlaceholder = new ArrayList<>();
 
 		this.lastRefresh = 0;
@@ -38,7 +38,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	private void checkRefresh() {
-		if(!shallRefresh(this.lastRefresh))
+		if (!shallRefresh(this.lastRefresh))
 			return;
 
 		refreshValue();
@@ -64,7 +64,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	protected static String getLastDateRefresh(int index) {
-		if(lastDateRefresh == null || lastDateRefreshTime + 900 <= System.currentTimeMillis()) {
+		if (lastDateRefresh == null || lastDateRefreshTime + 900 <= System.currentTimeMillis()) {
 			lastDateRefreshTime = System.currentTimeMillis();
 			lastDateRefresh = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss").format(new Date()).split(",");
 		}
@@ -74,8 +74,8 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 
 	private static Object[] replaceByList(String value, ArrayList<GeneralMessagePlaceholder> list) {
 		ArrayList<GeneralMessagePlaceholder> cached = new ArrayList<>();
-		for(GeneralMessagePlaceholder pmp : list)
-			if(pmp.containsPlaceholder(value)) {
+		for (GeneralMessagePlaceholder pmp : list)
+			if (pmp.containsPlaceholder(value)) {
 				value = pmp.replacePlaceholder(value);
 				cached.add(pmp);
 			}
@@ -84,7 +84,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	public static String replacePlaceholders(String value) {
-		if(cachedRequests.get(value) != null)
+		if (cachedRequests.get(value) != null)
 			return (String) replaceByList(value, cachedRequests.get(value))[0];
 		else {
 			Object[] result = replaceByList(value, generalPlaceholder);
@@ -92,7 +92,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 			return (String) result[0];
 		}
 	}
-	
+
 	public static void clearCache() {
 		cachedRequests.clear();
 	}

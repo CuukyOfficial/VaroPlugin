@@ -5,11 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
-import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.version.types.Materials;
 
 public class MoonGravityVaroEvent extends VaroEvent {
 
@@ -24,18 +24,18 @@ public class MoonGravityVaroEvent extends VaroEvent {
 
 	@Override
 	public void onDisable() {
-		if(type == null)
+		if (type == null)
 			return;
 
 		Bukkit.getScheduler().cancelTask(sched);
 
-		for(Player p : VersionUtils.getOnlinePlayer())
+		for (Player p : VersionUtils.getOnlinePlayer())
 			p.removePotionEffect(PotionEffectType.getByName("SLOW_FALLING"));
 	}
 
 	@Override
 	public void onEnable() {
-		if(type == null) {
+		if (type == null) {
 			enabled = false;
 			return;
 		}
@@ -44,7 +44,7 @@ public class MoonGravityVaroEvent extends VaroEvent {
 
 			@Override
 			public void run() {
-				for(Player p : VersionUtils.getOnlinePlayer())
+				for (Player p : VersionUtils.getOnlinePlayer())
 					p.addPotionEffect(new PotionEffect(PotionEffectType.getByName("SLOW_FALLING"), 9999, 1));
 			}
 		}, 1, 100);

@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommandListener;
 import de.cuuky.varo.command.essentials.AntiXrayCommand;
@@ -40,12 +42,9 @@ import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.event.VaroEventListener;
 import de.cuuky.varo.game.world.listener.VaroWorldListener;
-import de.cuuky.varo.gui.utils.InventoryListener;
-import de.cuuky.varo.item.hook.HookListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
 import de.cuuky.varo.listener.FancyEffectListener;
-import de.cuuky.varo.listener.HealtLoseListener;
 import de.cuuky.varo.listener.NoPortalListener;
 import de.cuuky.varo.listener.PlayerAchievementListener;
 import de.cuuky.varo.listener.PlayerChatListener;
@@ -70,8 +69,6 @@ import de.cuuky.varo.listener.saveable.InventoryMoveListener;
 import de.cuuky.varo.listener.saveable.PlayerInteractListener;
 import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 
 public final class BukkitRegisterer {
 
@@ -132,7 +129,6 @@ public final class BukkitRegisterer {
 		registerEvent(new PlayerChatListener());
 		registerEvent(new BlockPlaceListener());
 		registerEvent(new InventoryMoveListener());
-		registerEvent(new InventoryListener());
 		registerEvent(new ServerListPingListener());
 		registerEvent(new PlayerDeathListener());
 		registerEvent(new BlockedEnchantmentsListener());
@@ -144,15 +140,13 @@ public final class BukkitRegisterer {
 		registerEvent(new PlayerHungerListener());
 		registerEvent(new NoPortalListener());
 		registerEvent(new PlayerCommandPreprocessListener());
-		registerEvent(new HealtLoseListener());
 		registerEvent(new SpectatorListener());
 		registerEvent(new PlayerRespawnListener());
 		registerEvent(new VaroEventListener());
-		registerEvent(new HookListener());
 		registerEvent(new VaroWorldListener());
 		registerEvent(new FancyEffectListener());
 
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
+		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
 	}
 }

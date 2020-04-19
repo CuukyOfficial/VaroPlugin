@@ -24,8 +24,8 @@ public class DeathEvent extends BukkitEvent {
 	}
 
 	private void dropInventory(VaroInventory inventory, Location location) {
-		for(ItemStack item : inventory.getInventory().getContents())
-			if(item != null && item.getType() != Material.AIR)
+		for (ItemStack item : inventory.getInventory().getContents())
+			if (item != null && item.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, item);
 	}
 
@@ -37,15 +37,15 @@ public class DeathEvent extends BukkitEvent {
 		player.getStats().setDiedAt(new Date());
 		player.getStats().setState(PlayerState.DEAD);
 
-		if(ConfigSetting.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean())
-			if(player.getStats().getPlayerBackpack() != null)
+		if (ConfigSetting.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean())
+			if (player.getStats().getPlayerBackpack() != null)
 				dropInventory(player.getStats().getPlayerBackpack(), player.getPlayer().getLocation());
 
-		if(ConfigSetting.BACKPACK_TEAM_DROP_ON_DEATH.getValueAsBoolean())
-			if(player.getTeam() != null && player.getTeam().isDead() && player.getTeam().getTeamBackPack() != null)
+		if (ConfigSetting.BACKPACK_TEAM_DROP_ON_DEATH.getValueAsBoolean())
+			if (player.getTeam() != null && player.getTeam().isDead() && player.getTeam().getTeamBackPack() != null)
 				dropInventory(player.getTeam().getTeamBackPack(), player.getPlayer().getLocation());
 
-		if(Main.getVaroGame().getGameState() == GameState.STARTED)
+		if (Main.getVaroGame().getGameState() == GameState.STARTED)
 			Main.getVaroGame().getVaroWorldHandler().decreaseBorder(DecreaseReason.DEATH);
 	}
 }

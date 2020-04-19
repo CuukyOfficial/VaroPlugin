@@ -7,12 +7,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
-import de.cuuky.varo.version.types.Materials;
 
 public class BackupGUI extends SuperInventory {
 
@@ -22,6 +22,9 @@ public class BackupGUI extends SuperInventory {
 		super("§7Backup §a" + backup.getZipFile().getName().replace(".zip", ""), opener, 0, false);
 
 		this.backup = backup;
+
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -45,15 +48,15 @@ public class BackupGUI extends SuperInventory {
 		int i = -1;
 		do {
 			i += 1;
-			if(i != 1 && i != 4 && i != 7)
+			if (i != 1 && i != 4 && i != 7)
 				inv.setItem(i, new ItemStack(Materials.BLACK_STAINED_GLASS_PANE.parseMaterial(), 1, (short) 15));
 			else {
-				if(i == 1)
+				if (i == 1)
 					linkItemTo(i, new ItemBuilder().displayname("§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
 
 						@Override
 						public void run() {
-							if(backup.unzip("plugins/Varo")) {
+							if (backup.unzip("plugins/Varo")) {
 								opener.sendMessage(Main.getPrefix() + "Backup erfolgreich wieder hergestellt!");
 								closeInventory();
 								Main.getDataManager().setDoSave(false);
@@ -63,7 +66,7 @@ public class BackupGUI extends SuperInventory {
 						}
 					});
 
-				if(i == 7)
+				if (i == 7)
 					linkItemTo(i, new ItemBuilder().displayname("§4Delete").itemstack(Materials.REDSTONE.parseItem()).build(), new Runnable() {
 
 						@Override
@@ -73,7 +76,7 @@ public class BackupGUI extends SuperInventory {
 						}
 					});
 			}
-		} while(i != inv.getSize() - 1);
+		} while (i != inv.getSize() - 1);
 
 		return true;
 	}

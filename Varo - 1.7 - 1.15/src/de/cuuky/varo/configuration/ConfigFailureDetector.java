@@ -31,10 +31,10 @@ public final class ConfigFailureDetector {
 
 	private void detectConfig() {
 		File newFile = new File("plugins/Varo");
-		if(newFile.listFiles() == null)
+		if (newFile.listFiles() == null)
 			newFile.mkdir();
 
-		if(scanDirectory(newFile)) {
+		if (scanDirectory(newFile)) {
 			System.out.println(Main.getConsolePrefix() + "Configurations scanned for mistakes - mistakes have been found");
 			System.out.println(Main.getConsolePrefix() + "Plugin will get shut down.");
 
@@ -45,26 +45,26 @@ public final class ConfigFailureDetector {
 	}
 
 	private boolean scanDirectory(File newFile) {
-		for(File file : newFile.listFiles()) {
-			if(file.isDirectory()) {
-				if(ignoreScan.contains(file.getName()))
+		for (File file : newFile.listFiles()) {
+			if (file.isDirectory()) {
+				if (ignoreScan.contains(file.getName()))
 					continue;
 
-				if(scanDirectory(file))
+				if (scanDirectory(file))
 					return true;
 				else
 					continue;
 			}
 
-			if(!file.getName().endsWith(".yml"))
+			if (!file.getName().endsWith(".yml"))
 				continue;
 
 			try {
 				new YamlConfiguration().load(file);
-			} catch(NullPointerException e) {
+			} catch (NullPointerException e) {
 				System.out.println(Main.getConsolePrefix() + "Odd config found, ignoring it");
-			} catch(ScannerException e) {} catch(FileNotFoundException e) {} catch(IOException e) {} catch(InvalidConfigurationException e) {
-				if(e.getMessage().contains("deserialize"))
+			} catch (ScannerException e) {} catch (FileNotFoundException e) {} catch (IOException e) {} catch (InvalidConfigurationException e) {
+				if (e.getMessage().contains("deserialize"))
 					continue;
 
 				System.err.println(Main.getConsolePrefix() + "Config failure detected!");
@@ -72,7 +72,7 @@ public final class ConfigFailureDetector {
 				System.err.println(Main.getConsolePrefix() + "Usually the first information of the message gives you the location of the mistake. Just read the error and check the files.");
 				System.err.println(Main.getConsolePrefix() + "Message: \n" + e.getMessage());
 				return true;
-			} 
+			}
 		}
 
 		return false;

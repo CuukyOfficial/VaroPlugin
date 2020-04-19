@@ -8,23 +8,27 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
+import de.cuuky.varo.gui.MainMenu;
 
 public class EventListGUI extends SuperInventory {
 
 	public EventListGUI(Player opener) {
 		super("§5Events", opener, 45, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		return false;
+		new MainMenu(opener);
+		return true;
 	}
 
 	@Override
@@ -42,11 +46,11 @@ public class EventListGUI extends SuperInventory {
 		Collections.reverse(list);
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			String[] line;
 			try {
 				line = list.get(start).split("] ");
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 

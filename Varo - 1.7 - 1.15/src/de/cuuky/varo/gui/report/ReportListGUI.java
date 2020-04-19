@@ -9,17 +9,20 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.report.Report;
 
 public class ReportListGUI extends SuperInventory {
 
 	public ReportListGUI(Player player) {
 		super("§cReport List", player, 27, false);
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -40,7 +43,7 @@ public class ReportListGUI extends SuperInventory {
 		Report report = Report.getReport(id);
 		this.close(true);
 
-		if(report == null) {
+		if (report == null) {
 			update();
 			return;
 		}
@@ -59,11 +62,11 @@ public class ReportListGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i < getSize(); i++) {
+		for (int i = 0; i < getSize(); i++) {
 			Report reports;
 			try {
 				reports = Report.getReports().get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 

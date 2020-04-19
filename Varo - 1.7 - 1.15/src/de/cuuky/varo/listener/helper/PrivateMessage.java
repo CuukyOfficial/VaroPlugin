@@ -45,8 +45,8 @@ public class PrivateMessage {
 	}
 
 	public static PrivateMessage getMessage(Player player) {
-		for(PrivateMessage pmessage : messages) {
-			if(pmessage.getReciever().equals(player))
+		for (PrivateMessage pmessage : messages) {
+			if (pmessage.getReciever().equals(player))
 				continue;
 
 			return pmessage;

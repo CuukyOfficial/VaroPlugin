@@ -14,47 +14,48 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
 
 public class PlayerSort {
-	
+
 	public enum SortResult {
 		NO_SPAWN,
 		NO_SPAWN_WITH_TEAM,
 		SORTED_WELL;
 	}
-	
+
 	private int scheduler;
 	private HashMap<Player, Location> toTeleport;
+
 	public PlayerSort() {
 		toTeleport = new HashMap<>();
 	}
-	
+
 	private void startTeleporting() {
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-			
+
 			int index = 0;
-			
+
 			@Override
 			public void run() {
-				if(index == toTeleport.size()) {
+				if (index == toTeleport.size()) {
 					toTeleport.clear();
 					Bukkit.getScheduler().cancelTask(scheduler);
 					return;
 				}
-				
+
 				Player player = (Player) toTeleport.keySet().toArray()[index];
 				player.teleport(toTeleport.get(player));
 				index++;
 			}
 		}, 0, 1);
 	}
-	
+
 	public SortResult sortPlayers() {
 		ArrayList<VaroPlayer> players = VaroPlayer.getOnlinePlayer();
 		ArrayList<VaroPlayer> playersForIterator = VaroPlayer.getOnlinePlayer();
 		ArrayList<Spawn> spawns = Spawn.getSpawnsClone();
 		ArrayList<Spawn> spawnsForIterator = Spawn.getSpawns();
 
-		for(VaroPlayer vp : playersForIterator) {
-			if(!vp.getStats().isSpectator()) 
+		for (VaroPlayer vp : playersForIterator) {
+			if (!vp.getStats().isSpectator())
 				continue;
 
 			toTeleport.put(vp.getPlayer(), vp.getPlayer().getWorld().getSpawnLocation());
@@ -62,10 +63,10 @@ public class PlayerSort {
 			players.remove(vp);
 		}
 
-		for(Spawn spawn : spawnsForIterator) {
-			if(spawn.getPlayer() == null) {
+		for (Spawn spawn : spawnsForIterator) {
+			if (spawn.getPlayer() == null) {
 				continue;
-			} else if(!spawn.getPlayer().isOnline()) {
+			} else if (!spawn.getPlayer().isOnline()) {
 				continue;
 			} else {
 				spawn.getPlayer().cleanUpPlayer();
@@ -78,8 +79,8 @@ public class PlayerSort {
 
 		SortResult result = SortResult.SORTED_WELL;
 
-		while(spawns.size() > 0) {
-			if(players.size() <= 0) 
+		while (spawns.size() > 0) {
+			if (players.size() <= 0)
 				break;
 
 			VaroPlayer player = players.get(0);
@@ -91,18 +92,18 @@ public class PlayerSort {
 			players.remove(0);
 			spawns.remove(0);
 
-			if(player.getTeam() == null) 
+			if (player.getTeam() == null)
 				continue;
 
 			int playerTeamRegistered = 1;
-			for(VaroPlayer teamPlayer : player.getTeam().getMember()) {
-				if(spawns.size() <= 0) {
+			for (VaroPlayer teamPlayer : player.getTeam().getMember()) {
+				if (spawns.size() <= 0) {
 					break;
 				}
 
-				if(ConfigSetting.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
-					if(playerTeamRegistered < ConfigSetting.TEAM_PLACE_SPAWN.getValueAsInt()) {
-						if(players.contains(teamPlayer)) {
+				if (ConfigSetting.TEAM_PLACE_SPAWN.getValueAsInt() > 0) {
+					if (playerTeamRegistered < ConfigSetting.TEAM_PLACE_SPAWN.getValueAsInt()) {
+						if (players.contains(teamPlayer)) {
 							teamPlayer.cleanUpPlayer();
 							toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
 							spawns.get(0).setPlayer(teamPlayer);
@@ -117,7 +118,7 @@ public class PlayerSort {
 						players.remove(teamPlayer);
 						teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND_TEAM.getValue(teamPlayer, teamPlayer));
 					}
-				} else if(players.contains(teamPlayer)) {
+				} else if (players.contains(teamPlayer)) {
 					teamPlayer.cleanUpPlayer();
 					toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
 					spawns.get(0).setPlayer(teamPlayer);
@@ -128,13 +129,13 @@ public class PlayerSort {
 			}
 		}
 
-		for(VaroPlayer vp : players) {
+		for (VaroPlayer vp : players) {
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue(vp));
-			if(result == SortResult.SORTED_WELL) {
+			if (result == SortResult.SORTED_WELL) {
 				result = SortResult.NO_SPAWN;
 			}
 		}
-	
+
 		startTeleporting();
 		return result;
 	}

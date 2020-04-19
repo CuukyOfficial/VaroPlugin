@@ -7,14 +7,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.version.types.Materials;
 
 public class Spawn implements VaroSerializeable {
 
@@ -66,7 +66,7 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	public Spawn(int number, Location location) {
-		if(getSpawn(number) != null)
+		if (getSpawn(number) != null)
 			getSpawn(number).remove();
 
 		this.number = number;
@@ -79,7 +79,7 @@ public class Spawn implements VaroSerializeable {
 
 	private int generateId() {
 		int i = spawns.size() + 1;
-		while(getSpawn(i) != null)
+		while (getSpawn(i) != null)
 			i++;
 
 		return i;
@@ -95,14 +95,14 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	private void removeNameTag() {
-		if(armorStand == null)
+		if (armorStand == null)
 			return;
 
 		armorStand.remove();
 	}
 
 	private void setNameTag() {
-		if(!ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+		if (!ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() || !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		nameTagLocation = location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
@@ -112,26 +112,26 @@ public class Spawn implements VaroSerializeable {
 			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
 			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
 			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
-			
+
 			updateNametag();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void updateNametag() {
-		if(this.armorStand == null)
+		if (this.armorStand == null)
 			return;
 
 		try {
 			String nameTagName = getNametagName();
 			String entName = ((String) armorStand.getClass().getMethod("getCustomName").invoke(armorStand));
 
-			if(entName == null || !nameTagName.equals(entName)) {
+			if (entName == null || !nameTagName.equals(entName)) {
 				this.nameTagName = nameTagName;
 				armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -149,35 +149,35 @@ public class Spawn implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(this.location == null)
+		if (this.location == null)
 			remove();
-		
-		if(playerId != -1)
+
+		if (playerId != -1)
 			this.player = VaroPlayer.getPlayer(playerId);
 
-		if(nameTagLocation != null && nameTagName != null) {
-			for(Entity ent : nameTagLocation.getWorld().getEntities()) {
-				if(!ent.getType().toString().contains("ARMOR_STAND"))
+		if (nameTagLocation != null && nameTagName != null) {
+			for (Entity ent : nameTagLocation.getWorld().getEntities()) {
+				if (!ent.getType().toString().contains("ARMOR_STAND"))
 					continue;
 
 				try {
 					String entName = ((String) ent.getClass().getMethod("getCustomName").invoke(ent));
-					if(ent.getLocation().distance(nameTagLocation) < 1 && entName.equals(nameTagName)) {
+					if (ent.getLocation().distance(nameTagLocation) < 1 && entName.equals(nameTagName)) {
 						this.armorStand = ent;
 
-						if(!ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand != null) {
+						if (!ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean() && armorStand != null) {
 							this.armorStand.remove();
 							this.armorStand = null;
 						} else {
 							updateNametag();
 						}
 					}
-				} catch(Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 
-			if(this.armorStand == null)
+			if (this.armorStand == null)
 				setNameTag();
 		}
 	}
@@ -205,13 +205,13 @@ public class Spawn implements VaroSerializeable {
 
 	public void setPlayer(VaroPlayer player) {
 		this.player = player;
-		
+
 		updateNametag();
 	}
 
 	public static Spawn getSpawn(int number) {
-		for(Spawn spawn : spawns) {
-			if(spawn.getNumber() != number)
+		for (Spawn spawn : spawns) {
+			if (spawn.getNumber() != number)
 				continue;
 
 			return spawn;
@@ -221,8 +221,8 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	public static Spawn getSpawn(VaroPlayer player) {
-		for(Spawn spawn : spawns) {
-			if(spawn.getPlayer() == null || !spawn.getPlayer().equals(player))
+		for (Spawn spawn : spawns) {
+			if (spawn.getPlayer() == null || !spawn.getPlayer().equals(player))
 				continue;
 
 			return spawn;

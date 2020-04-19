@@ -1,5 +1,9 @@
 package de.cuuky.varo.configuration.placeholder;
 
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.utils.PermissionUtils;
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
@@ -7,10 +11,6 @@ import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlacehol
 import de.cuuky.varo.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
-import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.utils.PermissionUtils;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 
 public class MessagePlaceholderLoader {
 
@@ -27,7 +27,7 @@ public class MessagePlaceholderLoader {
 				return Main.getInstance().getDescription().getName();
 			}
 		};
-		
+
 		new GeneralMessagePlaceholder("pluginAuthor", -1, "Ersetzt durch den Plugin-Macher") {
 
 			@Override
@@ -35,7 +35,7 @@ public class MessagePlaceholderLoader {
 				return Main.getInstance().getDescription().getAuthors().get(0);
 			}
 		};
-		
+
 		new GeneralMessagePlaceholder("pluginVersion", -1, "Ersetzt durch die Plugin-Version") {
 
 			@Override
@@ -43,7 +43,7 @@ public class MessagePlaceholderLoader {
 				return Main.getInstance().getDescription().getVersion();
 			}
 		};
-		
+
 		new GeneralMessagePlaceholder("projectname", 10, "Ersetzt durch den Projektnamen") {
 
 			@Override
@@ -189,7 +189,7 @@ public class MessagePlaceholderLoader {
 		};
 
 		// MAYBE ?
-		for(ConfigSetting setting : ConfigSetting.values()) {
+		for (ConfigSetting setting : ConfigSetting.values()) {
 			new GeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
 
 				@Override
@@ -205,7 +205,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+				if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 					return "0";
 
 				return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));
@@ -227,7 +227,7 @@ public class MessagePlaceholderLoader {
 				return player.getStats().getCountdownSec(player.getStats().getCountdown());
 			}
 		};
-		
+
 		new PlayerMessagePlaceholder("hearts", 1, "Ersetzt durch die Leben des Spielers") {
 
 			@Override
@@ -235,7 +235,7 @@ public class MessagePlaceholderLoader {
 				return player.isOnline() ? String.valueOf(VersionUtils.getHearts(player.getPlayer())) : "0";
 			}
 		};
-		
+
 		new PlayerMessagePlaceholder("food", 1, "Ersetzt durch das Foodlevel des Spielers") {
 
 			@Override
@@ -387,7 +387,7 @@ public class MessagePlaceholderLoader {
 				return player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockZ()) : "0";
 			}
 		};
-		
+
 		new PlayerMessagePlaceholder("playerWorld", 1, "Ersetzt durch den Weltnamen des Spielers") {
 
 			@Override
@@ -427,7 +427,7 @@ public class MessagePlaceholderLoader {
 				return PermissionUtils.getLuckPermsPrefix(player);
 			}
 		};
-		
+
 		new PlayerMessagePlaceholder("locale", 1, "Ersetzt durch die Sprache des Spielers") {
 
 			@Override

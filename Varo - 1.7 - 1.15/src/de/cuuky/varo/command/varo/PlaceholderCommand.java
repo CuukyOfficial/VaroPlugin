@@ -21,7 +21,7 @@ public class PlaceholderCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Placeholder Befehle:");
 			sender.sendMessage(Main.getPrefix());
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7info <name> §8- §7Zeigt Wert und Info vom gegebenen Placeholder");
@@ -32,29 +32,29 @@ public class PlaceholderCommand extends VaroCommand {
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("get")) {
-			if(args.length != 2) {
+		if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("get")) {
+			if (args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7get <name> §8- §7Zeigt Wert vom gegebenen Placeholder");
 				return;
 			}
 
 			MessagePlaceholder mp = null;
-			for(MessagePlaceholder mp1 : MessagePlaceholder.getPlaceholders()) {
-				if(mp1.getIdentifier().replace("%", "").equalsIgnoreCase(args[1].replace("%", ""))) {
+			for (MessagePlaceholder mp1 : MessagePlaceholder.getPlaceholders()) {
+				if (mp1.getIdentifier().replace("%", "").equalsIgnoreCase(args[1].replace("%", ""))) {
 					mp = mp1;
 				}
 			}
 
-			if(mp == null) {
+			if (mp == null) {
 				sender.sendMessage(Main.getPrefix() + "Placeholder nicht gefunden!");
 				return;
 			}
 
 			String value = "/";
-			if(mp instanceof PlayerMessagePlaceholder) {
-				if(vp != null)
+			if (mp instanceof PlayerMessagePlaceholder) {
+				if (vp != null)
 					value = "(" + vp.getName() + ") " + ((PlayerMessagePlaceholder) mp).replacePlaceholder(mp.getIdentifier(), vp);
-			} else if(mp instanceof GeneralMessagePlaceholder)
+			} else if (mp instanceof GeneralMessagePlaceholder)
 				value = ((GeneralMessagePlaceholder) mp).replacePlaceholder(mp.getIdentifier());
 			else {
 				sender.sendMessage(Main.getPrefix() + "Undefinierter Placeholder gefunden!?");
@@ -68,26 +68,26 @@ public class PlaceholderCommand extends VaroCommand {
 		}
 
 		ArrayList<MessagePlaceholder> placeholders = new ArrayList<>();
-		if(args[0].equalsIgnoreCase("general")) {
-			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
-				if(mp instanceof GeneralMessagePlaceholder && ConfigSetting.getEntryByPath(mp.getIdentifier().replace("%", "")) == null)
+		if (args[0].equalsIgnoreCase("general")) {
+			for (MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
+				if (mp instanceof GeneralMessagePlaceholder && ConfigSetting.getEntryByPath(mp.getIdentifier().replace("%", "")) == null)
 					placeholders.add(mp);
-		} else if(args[0].equalsIgnoreCase("player")) {
-			for(MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
-				if(mp instanceof PlayerMessagePlaceholder)
+		} else if (args[0].equalsIgnoreCase("player")) {
+			for (MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
+				if (mp instanceof PlayerMessagePlaceholder)
 					placeholders.add(mp);
 		}
 
-		if(placeholders.isEmpty()) {
+		if (placeholders.isEmpty()) {
 			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! §c/varo ph");
 			return;
 		}
 
 		sender.sendMessage(Main.getPrefix() + "- Placeholder -");
-		for(MessagePlaceholder mp : placeholders)
+		for (MessagePlaceholder mp : placeholders)
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §8- §7" + mp.getDescription());
 
-		if(args[0].equalsIgnoreCase("general")) {
+		if (args[0].equalsIgnoreCase("general")) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayer-<RANK>% §8- §7Ersetzt durch den Spieler, der an RANK auf dem Leaderboard ist");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% §8- §7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% §8- §7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");

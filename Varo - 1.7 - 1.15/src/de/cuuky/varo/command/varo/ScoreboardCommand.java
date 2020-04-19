@@ -18,26 +18,28 @@ public class ScoreboardCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(vp == null) {
+		if (vp == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 			return;
 		}
 
-		if(!ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
+		if (!ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_DEACTIVATED.getValue(vp));
 			return;
 		}
 
-		if(vp.getStats().isShowScoreboard()) {
+		if (vp.getStats().isShowScoreboard()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_DISABLED.getValue(vp));
 			vp.getStats().setShowScoreboard(false);
+			vp.getScoreboard().setEnabled(false);
 		} else {
 			vp.getStats().setShowScoreboard(true);
-			Main.getDataManager().getScoreboardHandler().sendScoreBoard(vp);
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_ENABLED.getValue(vp));
-			if(vp.getNametag() != null)
+			vp.getScoreboard().setEnabled(true);
+			vp.getScoreboard().sendScoreBoard();
+			if (vp.getNametag() != null)
 				vp.getNametag().giveAll();
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_ENABLED.getValue(vp));
 		}
 
 		vp.update();

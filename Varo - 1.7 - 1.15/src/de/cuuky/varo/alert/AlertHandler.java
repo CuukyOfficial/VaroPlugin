@@ -17,7 +17,7 @@ public class AlertHandler extends VaroSerializeObject {
 	public void onSave() {
 		clearOld();
 
-		for(Alert alert : Alert.getAlerts())
+		for (Alert alert : Alert.getAlerts())
 			save(String.valueOf(alert.getId()), alert, getConfiguration());
 
 		saveFile();

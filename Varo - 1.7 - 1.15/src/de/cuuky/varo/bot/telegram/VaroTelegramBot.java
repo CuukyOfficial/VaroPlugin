@@ -29,11 +29,11 @@ public class VaroTelegramBot implements VaroBot {
 
 			@Override
 			public int process(List<Update> args) {
-				for(Update update : args) {
-					if(update.message() == null)
+				for (Update update : args) {
+					if (update.message() == null)
 						continue;
 
-					if(!update.message().text().contains("/getId"))
+					if (!update.message().text().contains("/getId"))
 						continue;
 
 					telegrambot.execute(new SendMessage(update.message().chat().id(), "Chat ID von diesem Chat: " + update.message().chat().id()));
@@ -50,12 +50,12 @@ public class VaroTelegramBot implements VaroBot {
 
 		eventChannelId = ConfigSetting.TELEGRAM_EVENT_CHAT_ID.getValueAsLong();
 
-		if(eventChannelId == -1)
+		if (eventChannelId == -1)
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of chat id");
 
 		youtubeChannelId = ConfigSetting.TELEGRAM_VIDEOS_CHAT_ID.getValueAsLong();
 
-		if(youtubeChannelId == -1)
+		if (youtubeChannelId == -1)
 			System.out.println(Main.getConsolePrefix() + "Could not get chat of videochat id");
 
 		System.out.println(Main.getConsolePrefix() + "Telegram Bot connected!");
@@ -69,7 +69,7 @@ public class VaroTelegramBot implements VaroBot {
 	public void sendEvent(String message) {
 		try {
 			telegrambot.execute(new SendMessage(eventChannelId, message));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not send events");
 		}
 	}
@@ -77,7 +77,7 @@ public class VaroTelegramBot implements VaroBot {
 	public void sendVideo(String message) {
 		try {
 			telegrambot.execute(new SendMessage(youtubeChannelId, message));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Could not send videos");
 		}
 	}

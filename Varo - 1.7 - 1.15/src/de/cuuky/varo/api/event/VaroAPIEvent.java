@@ -18,7 +18,7 @@ public class VaroAPIEvent {
 	}
 
 	public void setCancelled(boolean cancelled) {
-		if(this.cancelAble)
+		if (this.cancelAble)
 			this.cancelled = cancelled;
 	}
 }

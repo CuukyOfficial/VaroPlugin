@@ -23,7 +23,7 @@ public class PluginLoader {
 		try {
 			getFileMethod = JavaPlugin.class.getDeclaredMethod("getFile");
 			getFileMethod.setAccessible(true);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -35,33 +35,33 @@ public class PluginLoader {
 	private void loadPlugins() {
 		System.out.println(Main.getConsolePrefix() + "Checking for additional plugins to load...");
 		boolean failed = false;
-		for(DownloadPlugin dp : DownloadPlugin.values()) {
-			if(!dp.shallLoad())
+		for (DownloadPlugin dp : DownloadPlugin.values()) {
+			if (!dp.shallLoad())
 				continue;
 
 			try {
 				Class.forName(dp.getRequiredClassName());
 
-				for(Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+				for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
 					try {
 						File file = (File) getFileMethod.invoke((JavaPlugin) plugin);
-						if(file.getName().equals(dp.getName() + ".jar")) {
+						if (file.getName().equals(dp.getName() + ".jar")) {
 							dp.setPlugin((JavaPlugin) plugin);
 							dp.checkedAndLoaded();
 						}
-					} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 						e.printStackTrace();
 					}
 				}
-			} catch(ClassNotFoundException | UnknownDependencyException e) {
-				if(!loadPlugin(dp)) {
+			} catch (ClassNotFoundException | UnknownDependencyException e) {
+				if (!loadPlugin(dp)) {
 					failed = true;
 					continue;
 				}
 			}
 		}
 
-		if(failed) {
+		if (failed) {
 			System.out.println(Main.getConsolePrefix() + "Beim Herunterladen / Initialisieren der Plugins ist ein Fehler aufgetreten.");
 			System.out.println(Main.getConsolePrefix() + "Der Server wird nun heruntergefahren. Bitte danach fahre den Server wieder hoch.");
 			Bukkit.getServer().shutdown();
@@ -73,9 +73,9 @@ public class PluginLoader {
 
 	private boolean loadPlugin(DownloadPlugin downloadPlugin) {
 		File pluginFile = new File(downloadPlugin.getPath());
-		if(!pluginFile.exists()) {
+		if (!pluginFile.exists()) {
 			System.out.println(Main.getConsolePrefix() + "Das " + downloadPlugin.getName() + "-Plugin wird automatisch heruntergeladen...");
-			if(!downloadLibraryPlugin(downloadPlugin.getId(), downloadPlugin.getPath()))
+			if (!downloadLibraryPlugin(downloadPlugin.getId(), downloadPlugin.getPath()))
 				return false;
 		}
 
@@ -86,7 +86,7 @@ public class PluginLoader {
 			Bukkit.getPluginManager().enablePlugin(plugin);
 
 			System.out.println(Main.getConsolePrefix() + downloadPlugin.getName() + " wurde erfolgreich geladen!");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -108,13 +108,13 @@ public class PluginLoader {
 
 			System.out.println(Main.getConsolePrefix() + "Donwload von " + dataName + " erfolgreich abgeschlossen!");
 
-			if(enablePlugin) {
+			if (enablePlugin) {
 				System.out.println(Main.getConsolePrefix() + dataName + " wird nun geladen...");
 				Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().loadPlugin(new File("plugins/" + dataName)));
 				System.out.println(Main.getConsolePrefix() + dataName + " wurde erfolgreich geladen!");
 			}
 			return true;
-		} catch(IOException | UnknownDependencyException | InvalidPluginException | InvalidDescriptionException e) {
+		} catch (IOException | UnknownDependencyException | InvalidPluginException | InvalidDescriptionException e) {
 			System.out.println(Main.getConsolePrefix() + "Es gab einen kritischen Fehler beim Download eines Plugins.");
 			System.out.println(Main.getConsolePrefix() + "---------- Stack Trace ----------");
 			e.printStackTrace();

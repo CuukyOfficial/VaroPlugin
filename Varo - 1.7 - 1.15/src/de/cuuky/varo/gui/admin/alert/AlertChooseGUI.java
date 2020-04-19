@@ -10,11 +10,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
 
 public class AlertChooseGUI extends SuperInventory {
 
@@ -36,7 +37,7 @@ public class AlertChooseGUI extends SuperInventory {
 		}
 
 		public ArrayList<Alert> getList() {
-			switch(this) {
+			switch (this) {
 			case ALL:
 				return Alert.getAlerts();
 			case CLOSED:
@@ -53,8 +54,8 @@ public class AlertChooseGUI extends SuperInventory {
 		}
 
 		public static AlertGUIType getType(String name) {
-			for(AlertGUIType type : values())
-				if(type.getTypeName().equals(name))
+			for (AlertGUIType type : values())
+				if (type.getTypeName().equals(name))
 					return type;
 
 			return null;
@@ -68,6 +69,8 @@ public class AlertChooseGUI extends SuperInventory {
 
 		this.type = type;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -92,14 +95,14 @@ public class AlertChooseGUI extends SuperInventory {
 		Collections.reverse(alerts);
 
 		int start = getSize() * (getPage() - 1);
-		if(start != 0)
+		if (start != 0)
 			start -= 2;
 
-		for(int i = 0; i != getSize() - 2; i++) {
+		for (int i = 0; i != getSize() - 2; i++) {
 			Alert alert;
 			try {
 				alert = alerts.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -117,7 +120,7 @@ public class AlertChooseGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				for(Alert alert : alerts)
+				for (Alert alert : alerts)
 					alert.setOpen(false);
 
 				updateInventory();

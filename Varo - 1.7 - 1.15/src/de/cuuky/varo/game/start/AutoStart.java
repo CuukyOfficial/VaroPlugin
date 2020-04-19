@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class AutoStart implements VaroSerializeable {
 
@@ -39,7 +39,7 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private String getDayByInt(int i) {
-		switch(i) {
+		switch (i) {
 		case 1:
 			return "Sonntag";
 		case 2:
@@ -65,14 +65,14 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	private void postMessage(String message) {
-		if(Main.getBotLauncher().getDiscordbot() != null && Main.getBotLauncher().getDiscordbot().isEnabled() && Main.getBotLauncher().getDiscordbot().getAnnouncementChannel() != null)
+		if (Main.getBotLauncher().getDiscordbot() != null && Main.getBotLauncher().getDiscordbot().isEnabled() && Main.getBotLauncher().getDiscordbot().getAnnouncementChannel() != null)
 			Main.getBotLauncher().getDiscordbot().sendRawMessage(JavaUtils.replaceAllColors(message) + " " + Main.getBotLauncher().getDiscordbot().getMentionRole(), Main.getBotLauncher().getDiscordbot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
 
 	@SuppressWarnings("deprecation")
 	private void start() {
-		if(new Date().after(start)) {
+		if (new Date().after(start)) {
 			stop();
 			return;
 		}
@@ -87,7 +87,7 @@ public class AutoStart implements VaroSerializeable {
 			@Override
 			public void run() {
 				Bukkit.getScheduler().cancelTask(sched);
-				if(startDelay == StartDelay.GO) {
+				if (startDelay == StartDelay.GO) {
 					stop();
 					Main.getVaroGame().start();
 					Bukkit.broadcastMessage(Main.getProjectName() + " §7wird gestartet...");

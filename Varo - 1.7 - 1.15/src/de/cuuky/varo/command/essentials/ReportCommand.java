@@ -16,35 +16,36 @@ public class ReportCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-//		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-		if(!ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
+		// VaroPlayer vp = (sender instanceof Player ?
+		// VaroPlayer.getPlayer((Player) sender) : null);
+		if (!ConfigSetting.REPORTSYSTEM_ENABLED.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "§cReports §7wurden in der Config deaktiviert!");
 			return false;
 		}
 
-		if(!(sender instanceof Player)) {
+		if (!(sender instanceof Player)) {
 			sender.sendMessage(Main.getPrefix() + "Only for Player");
 			return false;
 		}
 
 		Player player = Bukkit.getPlayerExact(sender.getName());
 
-		if(args.length == 0 || args.length > 1) {
+		if (args.length == 0 || args.length > 1) {
 			sender.sendMessage(Main.getPrefix() + "§7------ §cReport §7------");
 			sender.sendMessage(Main.getPrefix() + "§c/report §7<Player>");
-			if(sender.hasPermission("varo.reports"))
+			if (sender.hasPermission("varo.reports"))
 				sender.sendMessage(Main.getPrefix() + "§c/report list");
 			sender.sendMessage(Main.getPrefix() + "§7-------------------");
 			return false;
 		}
 
-		if(args[0].equals("list") && player.hasPermission("varo.reports")) {
+		if (args[0].equals("list") && player.hasPermission("varo.reports")) {
 			new ReportListGUI(player);
 			return false;
 		}
 
 		VaroPlayer reported = VaroPlayer.getPlayer(args[0]);
-		if(reported == null) {
+		if (reported == null) {
 			sender.sendMessage(Main.getPrefix() + "Dieser Spieler existiert nicht!");
 			return false;
 		}

@@ -17,14 +17,14 @@ public class SpawnCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
-		if(!(sender instanceof Player)) {
-			if(loc == null)
+		if (!(sender instanceof Player)) {
+			if (loc == null)
 				sender.sendMessage(Main.getPrefix() + "§7Main World not found!");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_WORLD.getValue(vp).replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
 			return false;
 		}
 
-		if(args.length != 0) {
+		if (args.length != 0) {
 			sender.sendMessage(Main.getPrefix() + "§7/spawn");
 			return false;
 		}
@@ -32,10 +32,10 @@ public class SpawnCommand implements CommandExecutor {
 		Player player = (Player) sender;
 		loc = player.getWorld().getSpawnLocation();
 
-		if(player.getWorld().getEnvironment() == World.Environment.THE_END) {
+		if (player.getWorld().getEnvironment() == World.Environment.THE_END) {
 			sender.sendMessage(Main.getPrefix() + "§7Im Ende kann dir der Spawn nicht angegeben werden.");
 			return false;
-		} else if(player.getWorld().getEnvironment() == World.Environment.NETHER) {
+		} else if (player.getWorld().getEnvironment() == World.Environment.NETHER) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_NETHER.getValue(vp).replace("%x%", loc.getBlockX() + "").replace("%y%", loc.getBlockY() + "").replace("%z%", loc.getBlockZ() + ""));
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.SPAWN_DISTANCE_NETHER.getValue(vp).replace("%distance%", String.valueOf((int) player.getLocation().distance(loc))));
 		} else {

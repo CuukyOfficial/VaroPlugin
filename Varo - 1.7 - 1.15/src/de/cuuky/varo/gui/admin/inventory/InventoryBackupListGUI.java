@@ -9,13 +9,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.player.PlayerGUI;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 
 public class InventoryBackupListGUI extends SuperInventory {
 
@@ -26,6 +26,8 @@ public class InventoryBackupListGUI extends SuperInventory {
 
 		this.target = target;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -49,14 +51,14 @@ public class InventoryBackupListGUI extends SuperInventory {
 		ArrayList<InventoryBackup> backups = target.getStats().getInventoryBackups();
 
 		int start = getSize() * (getPage() - 1);
-		if(start != 0)
+		if (start != 0)
 			start -= 2;
 
-		for(int i = 0; i != getSize() - 2; i++) {
+		for (int i = 0; i != getSize() - 2; i++) {
 			InventoryBackup backup;
 			try {
 				backup = backups.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -74,7 +76,7 @@ public class InventoryBackupListGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(!target.isOnline()) {
+				if (!target.isOnline()) {
 					opener.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
 					return;
 				}

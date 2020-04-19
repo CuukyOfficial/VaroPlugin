@@ -24,11 +24,11 @@ public class DiscordCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Discord-Commands §7-----");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Discord"));
 
-			if(sender.hasPermission("varo.discord")) {
+			if (sender.hasPermission("varo.discord")) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord getLink §7<Spieler>");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord unlink §7<Spieler>");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord bypassRegister §7<Spieler> <true/false>");
@@ -41,33 +41,33 @@ public class DiscordCommand extends VaroCommand {
 			return;
 		}
 
-		if(Main.getBotLauncher().getDiscordbot() == null) {
+		if (Main.getBotLauncher().getDiscordbot() == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_NOT_SETUP.getValue(vp));
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("verify")) {
-			if(!(sender instanceof Player)) {
+		if (args[0].equalsIgnoreCase("verify")) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 				return;
 			}
 
-			BotRegister reg = BotRegister.getRegister(vp.getUuid()) == null ? new BotRegister(vp.getUuid(), true) : BotRegister.getRegister(vp.getUuid());
+			BotRegister reg = BotRegister.getRegister(vp.getUUID()) == null ? new BotRegister(vp.getUUID(), true) : BotRegister.getRegister(vp.getUUID());
 			reg.setPlayerName(vp.getName());
-			if(args.length == 1) {
+			if (args.length == 1) {
 				String status = ConfigMessages.VARO_COMMANDS_DISCORD_INACTIVE.getValue(vp);
-				if(reg.isActive()) {
+				if (reg.isActive()) {
 					status = ConfigMessages.VARO_COMMANDS_DISCORD_ACTIVE.getValue(vp);
 				}
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_STATUS.getValue(vp).replace("%status%", status));
-				if(!reg.isActive())
+				if (!reg.isActive())
 					sender.sendMessage(reg.getKickMessage(vp));
 				else {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT.getValue(vp).replace("%account%", reg.getMember().getNickname()));
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE.getValue(vp));
 				}
-			} else if(args[1].equals("remove")) {
-				if(!reg.isActive()) {
+			} else if (args[1].equals("remove")) {
+				if (!reg.isActive()) {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_NOT_VERIFIED.getValue(vp));
 					return;
 				}
@@ -77,7 +77,7 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			return;
-		} else if(sender.hasPermission("varo.discord")) {
+		} else if (sender.hasPermission("varo.discord")) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "discord"));
 			return;
 		}
@@ -85,78 +85,78 @@ public class DiscordCommand extends VaroCommand {
 		BotRegister reg = null;
 		try {
 			reg = BotRegister.getBotRegisterByPlayerName(args[1]);
-		} catch(Exception e) {}
+		} catch (Exception e) {}
 
-		if(args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
-			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+		if (args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
+			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
+			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(reg == null) {
+			if (reg == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_UNKNOWN_PLAYER.getValue(vp).replace("%player%", args[1]));
 				return;
 			}
 
 			User user = Main.getBotLauncher().getDiscordbot().getJda().getUserById(reg.getUserId());
-			if(user == null) {
+			if (user == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USER_NOT_FOUND.getValue(vp));
 				return;
 			}
 
 			sender.sendMessage(Main.getPrefix() + "§7Der Discord Account von " + args[1] + " heisst: " + Main.getColorCode() + user.getName() + "§7 und die ID lautet " + Main.getColorCode() + user.getId() + "§7!");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_GETLINK.getValue(vp).replace("%player%", args[1]).replace("%user%", user.getName().replace("%id%", user.getId())));
-		} else if(args[0].equalsIgnoreCase("unlink")) {
-			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+		} else if (args[0].equalsIgnoreCase("unlink")) {
+			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
+			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(reg == null) {
+			if (reg == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_UNKNOWN_PLAYER.getValue(vp).replace("%player%", args[1]));
 				return;
 			}
 
 			reg.setUserId(-1);
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_UNVERIFY.getValue(vp).replace("%player%", args[1]));
-			
+
 			Player target = Bukkit.getPlayerExact(reg.getPlayerName());
-			if(target != null)
+			if (target != null)
 				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(target)));
-		} else if(args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
-			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+		} else if (args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
+			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
+			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(reg == null) {
+			if (reg == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_UNKNOWN_PLAYER.getValue(vp).replace("%player%", args[1]));
 				return;
 			}
 
-			if(args.length != 3) {
+			if (args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <Spieler> <true/false>");
 				return;
 			}
 
-			if(args[2].equalsIgnoreCase("true") || args[2].equalsIgnoreCase("false")) {
+			if (args[2].equalsIgnoreCase("true") || args[2].equalsIgnoreCase("false")) {
 				reg.setBypass(args[2].equalsIgnoreCase("true") ? true : false);
-				if(reg.isBypass()) {
+				if (reg.isBypass()) {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_BYPASS_ACTIVE.getValue(vp).replace("%player%", args[1]));
 				} else {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_BYPASS_INACTIVE.getValue(vp).replace("%player%", args[1]));
@@ -164,44 +164,44 @@ public class DiscordCommand extends VaroCommand {
 
 			} else
 				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <add/remove> <Spielername>");
-		} else if(args[0].equalsIgnoreCase("reload")) {
+		} else if (args[0].equalsIgnoreCase("reload")) {
 			Main.getBotLauncher().getDiscordbot().disconnect();
 			Main.getBotLauncher().getDiscordbot().connect();
-			for(Player pl : Bukkit.getOnlinePlayers())
-				if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
+			for (Player pl : Bukkit.getOnlinePlayers())
+				if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
 					pl.kickPlayer(ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_ENABLED.getValue(vp));
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_RELOADED.getValue(vp));
-		} else if(args[0].equalsIgnoreCase("settings")) {
-			if(!(sender instanceof Player)) {
+		} else if (args[0].equalsIgnoreCase("settings")) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 				return;
 			}
 
 			new DiscordBotGUI((Player) sender);
-		} else if(args[0].equalsIgnoreCase("shutdown")) {
-			if(Main.getBotLauncher().getDiscordbot().getJda() == null) {
+		} else if (args[0].equalsIgnoreCase("shutdown")) {
+			if (Main.getBotLauncher().getDiscordbot().getJda() == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_BOT_OFFLINE.getValue(vp));
 				return;
 			}
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_SHUTDOWN.getValue(vp));
 			Main.getBotLauncher().getDiscordbot().disconnect();
-		} else if(args[0].equalsIgnoreCase("sendMessage")) {
-			if(Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
+		} else if (args[0].equalsIgnoreCase("sendMessage")) {
+			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED.getValue(vp));
 				return;
 			}
 
-			if(Main.getBotLauncher().getDiscordbot().getEventChannel() == null) {
+			if (Main.getBotLauncher().getDiscordbot().getEventChannel() == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL.getValue(vp));
 				return;
 			}
 
 			String message = "";
-			for(String ar : args) {
-				if(ar.equals(args[0]))
+			for (String ar : args) {
+				if (ar.equals(args[0]))
 					continue;
-				if(message.equals(""))
+				if (message.equals(""))
 					message = ar;
 				else
 					message = message + " " + ar;

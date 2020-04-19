@@ -6,12 +6,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.gui.SuperInventory;
+import de.cuuky.varo.gui.MainMenu;
 import de.cuuky.varo.gui.admin.alert.AlertTypeChooseGUI;
 import de.cuuky.varo.gui.admin.backup.BackupListGUI;
 import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
@@ -23,22 +27,22 @@ import de.cuuky.varo.gui.admin.setuphelp.SetupHelpGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.report.Report;
-import de.cuuky.varo.version.types.Materials;
 
 public class AdminMainMenu extends SuperInventory {
 
 	public AdminMainMenu(Player opener) {
 		super(Main.getProjectName() + " §8| §cAdmin", opener, 45, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		return false;
+		new MainMenu(opener);
+		return true;
 	}
 
 	@Override
@@ -102,7 +106,7 @@ public class AdminMainMenu extends SuperInventory {
 
 		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(Main.getBotLauncher().getDiscordbot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
 			public void run() {
-				if(Main.getBotLauncher().getDiscordbot() == null) {
+				if (Main.getBotLauncher().getDiscordbot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und ueberpruefe, ob du den DiscordBot aktiviert hast.");
 					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
@@ -137,7 +141,7 @@ public class AdminMainMenu extends SuperInventory {
 			}
 		});
 
-		if(ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
+		if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
 			linkItemTo(inv.getSize() - 9, new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
 
 				@Override

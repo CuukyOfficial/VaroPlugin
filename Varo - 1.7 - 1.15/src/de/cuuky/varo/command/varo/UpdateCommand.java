@@ -25,8 +25,8 @@ public class UpdateCommand extends VaroCommand {
 	}
 
 	private void deleteDirectory(File file) {
-		for(File listFile : file.listFiles()) {
-			if(listFile.isDirectory())
+		for (File listFile : file.listFiles()) {
+			if (listFile.isDirectory())
 				deleteDirectory(listFile);
 
 			listFile.delete();
@@ -43,7 +43,7 @@ public class UpdateCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Starte Download...");
 
 			fd.startDownload();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
 			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
 			System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
@@ -56,14 +56,14 @@ public class UpdateCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + "Update erfolgreich installiert");
 
 		// Step 2: Deleting old directory if wanted
-		if(resetOldDirectory) {
+		if (resetOldDirectory) {
 			System.out.println("Das Verzeichnis der alten Pluginversion wird geloescht.");
 			File directory = new File("plugins/Varo/");
 			deleteDirectory(directory);
 		}
 
 		// Step 3: Deleting old Version if existing
-		if(this.pluginNameChanged) {
+		if (this.pluginNameChanged) {
 			System.out.println("Da sich der Pluginname veraendert hat, wird die alte Pluginversion geloescht.");
 			File oldPlugin = new File("plugins/" + this.oldFileName);
 			oldPlugin.delete();
@@ -71,15 +71,15 @@ public class UpdateCommand extends VaroCommand {
 
 		Bukkit.getServer().shutdown();
 	}
-	
+
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		VaroUpdateResultSet resultSet = Main.getVaroUpdater().checkForUpdates();
 		UpdateResult result = resultSet.getUpdateResult();
 		String updateVersion = resultSet.getVersionName();
 
-		if(args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
-			if(result == UpdateResult.UPDATE_AVAILABLE) {
+		if (args.length == 0 || (!args[0].equalsIgnoreCase("normal") && !args[0].equalsIgnoreCase("reset"))) {
+			if (result == UpdateResult.UPDATE_AVAILABLE) {
 				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
@@ -92,9 +92,9 @@ public class UpdateCommand extends VaroCommand {
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("normal")) {
+		if (args[0].equalsIgnoreCase("normal")) {
 			resetOldDirectory = false;
-		} else if(args[0].equalsIgnoreCase("reset")) {
+		} else if (args[0].equalsIgnoreCase("reset")) {
 			resetOldDirectory = true;
 		}
 
@@ -103,16 +103,16 @@ public class UpdateCommand extends VaroCommand {
 
 		try {
 			oldFileName = URLDecoder.decode(oldFileName, "UTF-8");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			oldFileName = oldFileName.replace("%20", " ");
 		}
 
-		if(!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar")) 
+		if (!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar"))
 			this.pluginNameChanged = true;
 
 		Main.getDataManager().setDoSave(false);
 
-		if(result == UpdateResult.UPDATE_AVAILABLE) {
+		if (result == UpdateResult.UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
 			sender.sendMessage(Main.getPrefix() + "§7Backup wird erstellt...");
 			new VaroBackup();

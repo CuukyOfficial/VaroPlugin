@@ -11,11 +11,11 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
-import de.cuuky.varo.version.VersionUtils;
 
 public class ExposedVaroEvent extends VaroEvent {
 
@@ -30,8 +30,8 @@ public class ExposedVaroEvent extends VaroEvent {
 
 	@Override
 	public void onDisable() {
-		if(type != null)
-			for(Player pl : VersionUtils.getOnlinePlayer())
+		if (type != null)
+			for (Player pl : VersionUtils.getOnlinePlayer())
 				pl.removePotionEffect(type);
 
 		Bukkit.getScheduler().cancelTask(scheduler);
@@ -46,10 +46,10 @@ public class ExposedVaroEvent extends VaroEvent {
 			public void run() {
 				FireworkEffect effect = FireworkEffect.builder().withColor(Color.RED, Color.WHITE).withFade(Color.PURPLE).with(FireworkEffect.Type.BURST).trail(false).flicker(true).build();
 
-				for(VaroPlayer vpl : VaroPlayer.getOnlineAndAlivePlayer()) {
+				for (VaroPlayer vpl : VaroPlayer.getOnlineAndAlivePlayer()) {
 					Player pl = vpl.getPlayer();
 
-					if(type != null)
+					if (type != null)
 						pl.getPlayer().addPotionEffect(new PotionEffect(type, 11, 1));
 					else {
 						Firework fw = (Firework) pl.getWorld().spawnEntity(pl.getLocation(), EntityType.FIREWORK);

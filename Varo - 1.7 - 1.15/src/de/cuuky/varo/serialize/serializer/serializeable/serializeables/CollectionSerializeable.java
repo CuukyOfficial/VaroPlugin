@@ -20,17 +20,17 @@ public class CollectionSerializeable extends VaroSerialize {
 
 	@Override
 	public Object deserialize(Field field, Object obj, MemorySection section, String path, VaroSerializeObject object) {
-		if(Collection.class.isAssignableFrom(field.getType())) {
+		if (Collection.class.isAssignableFrom(field.getType())) {
 			Class<?> clazz = object.getFieldLoader().getArrayTypes().get(field);
-			if(clazz != null) {
+			if (clazz != null) {
 				VaroSerializeObject handl = getHandler(object.getFieldLoader().getArrayTypes().get(field));
-				if(handl != null) {
+				if (handl != null) {
 					ArrayList<VaroSerializeable> newList = new ArrayList<VaroSerializeable>();
-					if(obj instanceof MemorySection) {
+					if (obj instanceof MemorySection) {
 						MemorySection listSection = ((MemorySection) obj);
-						for(String listStr : listSection.getKeys(true)) {
+						for (String listStr : listSection.getKeys(true)) {
 							Object listEntry = listSection.get(listStr);
-							if(!(listEntry instanceof MemorySection) || listStr.contains("."))
+							if (!(listEntry instanceof MemorySection) || listStr.contains("."))
 								continue;
 
 							VaroDeserializer des = new VaroDeserializer((MemorySection) listEntry, handl);

@@ -19,8 +19,8 @@ public enum VaroAPIState {
 	}
 
 	public static VaroAPIState getState(PlayerState state) {
-		for(VaroAPIState apistate : values())
-			if(apistate.getOrigin() == state)
+		for (VaroAPIState apistate : values())
+			if (apistate.getOrigin() == state)
 				return apistate;
 
 		return null;

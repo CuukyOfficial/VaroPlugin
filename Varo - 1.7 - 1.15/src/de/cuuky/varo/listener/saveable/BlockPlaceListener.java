@@ -11,44 +11,44 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
 
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
-import de.cuuky.varo.version.types.Sounds;
 
 public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(final BlockPlaceEvent event) {
-		if(!Main.getVaroGame().hasStarted())
+		if (!Main.getVaroGame().hasStarted())
 			return;
 
 		Block placed = event.getBlock();
 
-		if(!(placed.getState() instanceof Chest))
+		if (!(placed.getState() instanceof Chest))
 			return;
 
 		Chest chest = (Chest) placed.getState();
 		InventoryHolder ih = ((InventoryHolder) chest).getInventory().getHolder();
 
-		if(!(ih instanceof DoubleChest))
+		if (!(ih instanceof DoubleChest))
 			return;
 
 		Chest secChest = (Chest) ((DoubleChest) ih).getLeftSide();
 
-		if(chest.equals(secChest) && secChest != null)
+		if (chest.equals(secChest) && secChest != null)
 			secChest = (Chest) ((DoubleChest) ih).getRightSide();
 
 		VaroSaveable saveable = VaroSaveable.getByLocation(secChest.getLocation());
-		if(saveable == null || saveable.holderDead())
+		if (saveable == null || saveable.holderDead())
 			return;
 
 		Player p = event.getPlayer();
 		VaroPlayer player = VaroPlayer.getPlayer(p);
 
-		if(saveable.canModify(player)) {
+		if (saveable.canModify(player)) {
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
 			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue(player, player));
 			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);

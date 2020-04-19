@@ -16,12 +16,12 @@ public class ActionbarCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(vp == null) {
+		if (vp == null) {
 			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 			return;
 		}
 
-		if(vp.getStats().isShowActionbarTime()) {
+		if (vp.getStats().isShowActionbarTime()) {
 			vp.getStats().setShowActionbarTime(false);
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED.getValue(vp));
 		} else {

@@ -17,19 +17,19 @@ public class UnprotectCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-		if(!sender.hasPermission("varo.unprotect")) {
+		if (!sender.hasPermission("varo.unprotect")) {
 			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}
 
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7/protect <Player/@a>");
 			sender.sendMessage(Main.getPrefix() + "§7/unprotect <Player/@a>");
 			return false;
 		}
 
-		if(args[0].equalsIgnoreCase("@a")) {
-			for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+		if (args[0].equalsIgnoreCase("@a")) {
+			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 				VaroCancelAble.removeCancelAble(player, CancelAbleType.PROTECTION);
 			}
 
@@ -37,7 +37,7 @@ public class UnprotectCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(Bukkit.getPlayerExact(args[0]) == null) {
+		if (Bukkit.getPlayerExact(args[0]) == null) {
 			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7nicht gefunden!");
 			return false;
 		}

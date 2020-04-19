@@ -5,19 +5,21 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigSectionGUI extends SuperInventory {
 
 	public ConfigSectionGUI(Player opener) {
 		super("§aConfig-Section", opener, JavaUtils.getNextToNine(ConfigSettingSection.values().length), false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -39,7 +41,7 @@ public class ConfigSectionGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ConfigSettingSection section : ConfigSettingSection.values()) {
+		for (ConfigSettingSection section : ConfigSettingSection.values()) {
 			i++;
 
 			linkItemTo(i, new ItemBuilder().displayname("§7" + section.getName()).itemstack(new ItemStack(section.getMaterial())).lore((JavaUtils.getArgsToString(JavaUtils.addIntoEvery(section.getDescription().split("\n"), Main.getColorCode(), true), "\n")).split("\n")).build(), new Runnable() {

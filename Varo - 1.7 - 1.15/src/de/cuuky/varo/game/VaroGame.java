@@ -30,7 +30,7 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -66,10 +66,10 @@ public class VaroGame implements VaroSerializeable {
 	}
 
 	private void loadVariables() {
-		if(startThread != null)
+		if (startThread != null)
 			startThread.loadVaraibles();
 
-		if(mainThread != null)
+		if (mainThread != null)
 			mainThread.loadVariables();
 
 		this.topScores = new TopScoreList();
@@ -86,28 +86,28 @@ public class VaroGame implements VaroSerializeable {
 	}
 
 	public void start() {
-		if(hasStarted() || isStarting())
+		if (hasStarted() || isStarting())
 			return;
 
-		if(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
+		if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
 			VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
 			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
 		}
 
-		if(ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
+		if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
 			new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
 			Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
 		}
 
-		if(ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {
+		if (ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {
 			new PlayerSort().sortPlayers();
 			Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
 		}
 
-		if(ConfigSetting.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
+		if (ConfigSetting.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
 			removeArentAtStart();
 
-		if(minuteTimer != null)
+		if (minuteTimer != null)
 			minuteTimer.remove();
 
 		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
@@ -122,16 +122,16 @@ public class VaroGame implements VaroSerializeable {
 
 	@SuppressWarnings("unchecked")
 	private void removeArentAtStart() {
-		for(VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
-			if(!varoplayer.isOnline())
+		for (VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
+			if (!varoplayer.isOnline())
 				varoplayer.delete();
 	}
 
 	public void end(WinnerCheck check) {
 		this.gamestate = GameState.END;
 
-		for(VaroPlayer vp : check.getPlaces().get(1)) {
-			if(!vp.isOnline())
+		for (VaroPlayer vp : check.getPlaces().get(1)) {
+			if (!vp.isOnline())
 				continue;
 
 			Player p = vp.getPlayer();
@@ -144,19 +144,19 @@ public class VaroGame implements VaroSerializeable {
 		String first = "";
 		String second = "";
 		String third = "";
-		for(int i = 1; i <= 3; i++) {
+		for (int i = 1; i <= 3; i++) {
 			ArrayList<VaroPlayer> won;
 			won = check.getPlaces().get(i);
 
-			if(won == null)
+			if (won == null)
 				break;
 
 			String names = "";
-			for(VaroPlayer vp : won)
+			for (VaroPlayer vp : won)
 				names = names + (!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : " & ") + vp.getName()));
 			names = names + (won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
-			switch(i) {
+			switch (i) {
 			case 1:
 				first = names;
 				break;
@@ -169,7 +169,7 @@ public class VaroGame implements VaroSerializeable {
 			}
 		}
 
-		if(first.contains("&")) {
+		if (first.contains("&")) {
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
 			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN_TEAM.getValue().replace("%winnerPlayers%", first));
 		} else {
@@ -178,18 +178,18 @@ public class VaroGame implements VaroSerializeable {
 		}
 
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
-		if(db != null && db.isEnabled()) {
-			if(db.getResultChannel() != null && db.isEnabled())
+		if (db != null && db.isEnabled()) {
+			if (db.getResultChannel() != null && db.isEnabled())
 				db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glueckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getBotLauncher().getDiscordbot().getResultChannel());
 
-			if(Main.getBotLauncher().getDiscordbot().getResultChannel() != null) {
+			if (Main.getBotLauncher().getDiscordbot().getResultChannel() != null) {
 				File file = new File("plugins/Varo/logs", "logs.yml");
-				if(file.exists())
+				if (file.exists())
 					db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
 			}
 		}
 
-		if(ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
+		if (ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
 			Bukkit.getServer().broadcastMessage("§7Der Server wird in " + Main.getColorCode() + ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() + " Sekunden §7heruntergefahren...");
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 
@@ -202,17 +202,17 @@ public class VaroGame implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
-//		mainThread = new VaroMainHeartbeatThread();
-		
-//		new Timer().schedule(new TimerTask() {
-//			
-//			@Override
-//			public void run() {
-//				System.out.println("REFRESH ");
-//				mainThread.run();
-//			}
-//		}, 0, 1000);
-		
+		// mainThread = new VaroMainHeartbeatThread();
+
+		// new Timer().schedule(new TimerTask() {
+		//
+		// @Override
+		// public void run() {
+		// System.out.println("REFRESH ");
+		// mainThread.run();
+		// }
+		// }, 0, 1000);
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), mainThread = new VaroMainHeartbeatThread(), 0, 20);
 	}
 
@@ -322,7 +322,7 @@ public class VaroGame implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(gamestate == GameState.STARTED)
+		if (gamestate == GameState.STARTED)
 			minuteTimer = new BorderDecreaseMinuteTimer();
 
 		startRefreshTimer();

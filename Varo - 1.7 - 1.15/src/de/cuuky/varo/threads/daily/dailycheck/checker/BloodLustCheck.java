@@ -20,15 +20,15 @@ public class BloodLustCheck extends Checker {
 	public void check() {
 		int days = ConfigSetting.BLOODLUST_DAYS.getValueAsInt();
 		boolean strike = ConfigSetting.STRIKE_ON_BLOODLUST.getValueAsBoolean();
-		if(!ConfigSetting.BLOODLUST_DAYS.isIntActivated())
+		if (!ConfigSetting.BLOODLUST_DAYS.isIntActivated())
 			return;
 
-		for(VaroPlayer player : VaroPlayer.getAlivePlayer()) {
+		for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
 			Date lastContact = player.getStats().getLastEnemyContact();
 
-			if(lastContact.before(DateUtils.addDays(new Date(), -days))) {
+			if (lastContact.before(DateUtils.addDays(new Date(), -days))) {
 				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekaempft!");
-				if(strike) {
+				if (strike) {
 					player.getStats().addStrike(new Strike("Es wurde fuer zu viele Tage nicht gekaempft.", player, "CONSOLE"));
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(null, player).replace("%days%", String.valueOf(days)));
 				} else

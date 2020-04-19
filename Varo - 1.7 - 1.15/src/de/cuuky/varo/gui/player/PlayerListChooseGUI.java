@@ -5,11 +5,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.gui.SuperInventory;
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 
 public class PlayerListChooseGUI extends SuperInventory {
 
@@ -19,12 +20,14 @@ public class PlayerListChooseGUI extends SuperInventory {
 		super("§aChoose Players", opener, 9, false);
 
 		this.showStats = showStats;
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		if(opener.hasPermission("varo.admin")) {
+		if (opener.hasPermission("varo.admin")) {
 			new AdminMainMenu(opener);
 			return true;
 		}
@@ -43,7 +46,7 @@ public class PlayerListChooseGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = 0;
-		for(PlayerGUIType type : PlayerGUIType.values()) {
+		for (PlayerGUIType type : PlayerGUIType.values()) {
 			linkItemTo(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), new Runnable() {
 
 				@Override

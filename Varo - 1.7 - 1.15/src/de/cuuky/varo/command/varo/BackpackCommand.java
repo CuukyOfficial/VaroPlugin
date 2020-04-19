@@ -17,9 +17,9 @@ public class BackpackCommand extends VaroCommand {
 	}
 
 	private void playerBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
-		if(vp.getPlayer().isOp() && args.length > number) {
+		if (vp.getPlayer().isOp() && args.length > number) {
 			VaroPlayer p = VaroPlayer.getPlayer(args[number]);
-			if(p != null) {
+			if (p != null) {
 				vp.getPlayer().openInventory(p.getStats().getPlayerBackpack().getInventory());
 			} else {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_PLAYER_DOESNT_EXIST.getValue(vp, p));
@@ -33,9 +33,9 @@ public class BackpackCommand extends VaroCommand {
 	}
 
 	private void teamBackPack(CommandSender sender, VaroPlayer vp, String[] args, int number) {
-		if(vp.getPlayer().isOp() && args.length > number) {
+		if (vp.getPlayer().isOp() && args.length > number) {
 			VaroTeam t = VaroTeam.getTeam(args[number]);
-			if(t != null) {
+			if (t != null) {
 				vp.getPlayer().openInventory(t.getTeamBackPack().getInventory());
 			} else {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_TEAM_DOESNT_EXIST.getValue(vp).replace("%team%", args[number]));
@@ -43,7 +43,7 @@ public class BackpackCommand extends VaroCommand {
 			}
 			return;
 		}
-		if(vp.getTeam() == null) {
+		if (vp.getTeam() == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_NO_TEAM.getValue(vp));
 		} else {
 			vp.getPlayer().openInventory(vp.getTeam().getTeamBackPack().getInventory());
@@ -53,34 +53,34 @@ public class BackpackCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Main.getVaroGame().hasStarted()) {
+		if (!Main.getVaroGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NOT_STARTED.getValue(vp));
 			return;
 		}
 
-		if(vp == null) {
+		if (vp == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 			return;
 		}
 
-		if(ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
-			if(args.length == 0 || (!args[0].equalsIgnoreCase("player") && !args[0].equalsIgnoreCase("team"))) {
+		if (ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
+			if (args.length == 0 || (!args[0].equalsIgnoreCase("player") && !args[0].equalsIgnoreCase("team"))) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_CHOOSE_TYPE.getValue(vp));
-				if(vp.getPlayer().isOp()) {
+				if (vp.getPlayer().isOp()) {
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player §7[Player]");
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team §7[Team]");
 				} else {
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player");
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team");
 				}
-			} else if(args[0].equalsIgnoreCase("player")) {
+			} else if (args[0].equalsIgnoreCase("player")) {
 				playerBackPack(sender, vp, args, 1);
 			} else {
 				teamBackPack(sender, vp, args, 1);
 			}
-		} else if(ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && !ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
+		} else if (ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && !ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			playerBackPack(sender, vp, args, 0);
-		} else if(!ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
+		} else if (!ConfigSetting.BACKPACK_PLAYER_ENABLED.getValueAsBoolean() && ConfigSetting.BACKPACK_TEAM_ENABLED.getValueAsBoolean()) {
 			teamBackPack(sender, vp, args, 0);
 		} else {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_NOT_ENABLED.getValue(vp));

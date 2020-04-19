@@ -5,20 +5,20 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.version.types.Materials;
 
 public class SpawnChecker {
 
 	public static boolean checkSpawns(World world, int xPos, int zPos, float radius, int amount) {
 		double alpha = (2 * Math.PI) / amount;
 		Biome biome = new Location(world, xPos, world.getMaxHeight(), zPos).getBlock().getBiome();
-		if(biome != Biome.PLAINS)
+		if (biome != Biome.PLAINS)
 			return false;
 
 		int tolerance = ConfigSetting.WORLD_SPAWNS_GENERATE_Y_TOLERANCE.getValueAsInt();
 		int firstY = -1;
-		for(int count = 0; count != amount; count++) {
+		for (int count = 0; count != amount; count++) {
 			double beta = alpha * count;
 
 			double x = radius * Math.sin(beta);
@@ -26,16 +26,16 @@ public class SpawnChecker {
 
 			int y = world.getMaxHeight();
 			Material type;
-			while(!(type = world.getBlockAt(xPos + (int) x, y, zPos + (int) z).getType()).isSolid()) {
-				if(type == Material.WATER || type == Materials.WATER.parseMaterial() || type == Material.LAVA || type == Materials.LAVA.parseMaterial() || type.name().contains("LEAVES") || type.name().contains("WOOD"))
+			while (!(type = world.getBlockAt(xPos + (int) x, y, zPos + (int) z).getType()).isSolid()) {
+				if (type == Material.WATER || type == Materials.WATER.parseMaterial() || type == Material.LAVA || type == Materials.LAVA.parseMaterial() || type.name().contains("LEAVES") || type.name().contains("WOOD"))
 					return false;
 
 				y--;
 			}
-			
-			if(firstY == -1)
+
+			if (firstY == -1)
 				firstY = y;
-			else if((firstY > y ? firstY - y : y - firstY) > tolerance) 
+			else if ((firstY > y ? firstY - y : y - firstY) > tolerance)
 				return false;
 		}
 

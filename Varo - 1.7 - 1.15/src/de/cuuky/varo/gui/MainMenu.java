@@ -6,6 +6,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.LocationFormat;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -18,17 +23,15 @@ import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
 import de.cuuky.varo.gui.strike.StrikeListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
-import de.cuuky.varo.gui.utils.PageAction;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.varo.LocationFormat;
-import de.cuuky.varo.version.types.Materials;
 
 public class MainMenu extends SuperInventory {
 
 	public MainMenu(Player opener) {
 		super(Main.getProjectName(), opener, 36, true);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -60,7 +63,7 @@ public class MainMenu extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(!opener.hasPermission("varo.teleportSpawn"))
+				if (!opener.hasPermission("varo.teleportSpawn"))
 					return;
 
 				opener.teleport(opener.getWorld().getSpawnLocation());
@@ -107,7 +110,7 @@ public class MainMenu extends SuperInventory {
 			}
 		});
 
-		if(opener.hasPermission("varo.admin")) {
+		if (opener.hasPermission("varo.admin")) {
 			linkItemTo(36, new ItemBuilder().displayname("§cAdmin-Section").itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), new Runnable() {
 
 				@Override
@@ -117,7 +120,7 @@ public class MainMenu extends SuperInventory {
 			});
 		}
 
-		if(ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+		if (ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
 
 				@Override

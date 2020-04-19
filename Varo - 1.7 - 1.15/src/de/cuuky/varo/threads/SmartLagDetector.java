@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.version.VersionUtils;
 
 public class SmartLagDetector implements Runnable {
 
@@ -24,14 +24,14 @@ public class SmartLagDetector implements Runnable {
 
 	private void checkPerformance() {
 		lastPost++;
-		if(lastPost == 30)
+		if (lastPost == 30)
 			lastPost = 0;
 		else
 			return;
 
 		double size = 0, summ = 0;
-		for(int index = 0; index <= 30; index++) {
-			if(index >= lastTps.size())
+		for (int index = 0; index <= 30; index++) {
+			if (index >= lastTps.size())
 				break;
 
 			double tps = (double) lastTps.toArray()[index];
@@ -41,13 +41,13 @@ public class SmartLagDetector implements Runnable {
 		}
 
 		double tpsUsage = (double) (summ / size);
-		if(tpsUsage <= 14)
+		if (tpsUsage <= 14)
 			warnAdmins("§4The CPU-Performance of the server is running low! §cLags could appear!");
 
 		Runtime r = Runtime.getRuntime();
 		double ramUsage = (double) (((double) r.totalMemory() - (double) r.freeMemory()) / (double) r.maxMemory());
-		if(ramUsage >= 0.95) {
-			if(ramCleared)
+		if (ramUsage >= 0.95) {
+			if (ramCleared)
 				warnAdmins("§4the RAM of the server is fully used and the plugin couldn't manage to clear it!");
 
 			System.gc();
@@ -57,8 +57,8 @@ public class SmartLagDetector implements Runnable {
 	}
 
 	private void warnAdmins(String message) {
-		for(Player player : VersionUtils.getOnlinePlayer()) {
-			if(!player.hasPermission("varo.warnperformance"))
+		for (Player player : VersionUtils.getOnlinePlayer()) {
+			if (!player.hasPermission("varo.warnperformance"))
 				continue;
 
 			player.sendMessage(Main.getPrefix() + message);

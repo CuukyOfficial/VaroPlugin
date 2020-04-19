@@ -8,14 +8,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.varo.LocationFormat;
+import de.cuuky.varo.gui.MainMenu;
 
 public class PlayerSaveableChooseGUI extends SuperInventory {
 
@@ -26,12 +27,15 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 
 		this.target = target;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		return false;
+		new MainMenu(opener);
+		return true;
 	}
 
 	@Override
@@ -48,11 +52,11 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 		ArrayList<VaroSaveable> list = VaroSaveable.getSaveable(target);
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			VaroSaveable saveable;
 			try {
 				saveable = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 

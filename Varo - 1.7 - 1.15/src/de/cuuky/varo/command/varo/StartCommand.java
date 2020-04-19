@@ -17,12 +17,12 @@ public class StartCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		VaroGame game = Main.getVaroGame();
-		if(game.isStarting()) {
+		if (game.isStarting()) {
 			sender.sendMessage(Main.getPrefix() + "Das Spiel startet bereits!");
 			return;
 		}
 
-		if(game.hasStarted()) {
+		if (game.hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "Das Spiel wurde bereits gestartet!");
 			return;
 		}

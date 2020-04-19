@@ -38,14 +38,14 @@ public class SchematicLoader {
 			clipboardFormatsClass = Class.forName("com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats");
 			blockVectorClass = Class.forName("com.sk89q.worldedit.math.BlockVector3");
 			old = false;
-		} catch(Exception | Error e) {}
+		} catch (Exception | Error e) {}
 
 		try {
 			vectorClass = Class.forName("com.sk89q.worldedit.Vector");
 			cuboidClipClass = Class.forName("com.sk89q.worldedit.CuboidClipboard");
 			localWorldClass = Class.forName("com.sk89q.worldedit.LocalWorld");
 			old = true;
-		} catch(Exception | Error e) {}
+		} catch (Exception | Error e) {}
 	}
 
 	private File file;
@@ -55,7 +55,7 @@ public class SchematicLoader {
 	}
 
 	public void paste(Location location) {
-		if(!old) {
+		if (!old) {
 			try {
 				ClipboardFormat format = (ClipboardFormat) clipboardFormatsClass.getDeclaredMethod("findByFile", File.class).invoke(null, file);
 				Clipboard clipboard = null;
@@ -78,7 +78,7 @@ public class SchematicLoader {
 
 				Operations.complete(operation);
 				editSession.getClass().getDeclaredMethod("flushSession").invoke(editSession, null);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
@@ -89,7 +89,7 @@ public class SchematicLoader {
 
 				Object clipboard = cuboidClipClass.getDeclaredMethod("loadSchematic", File.class).invoke(null, file);
 				clipboard.getClass().getMethod("paste", es.getClass(), vectorClass, boolean.class).invoke(clipboard, es, origin, false);
-			} catch(Exception e2) {
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}

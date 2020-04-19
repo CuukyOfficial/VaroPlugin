@@ -1,7 +1,7 @@
 package de.cuuky.varo.spigot.updater;
 
 public class VaroUpdateResultSet {
-	
+
 	public static enum UpdateResult {
 
 		FAIL_SPIGOT("Es konnte keine Verbindung zum Server hergestellt werden."),
@@ -19,24 +19,24 @@ public class VaroUpdateResultSet {
 			return message;
 		}
 	}
-	
+
 	private UpdateResult updateResult;
 	private String versionName, versionId;
-	
+
 	public VaroUpdateResultSet(UpdateResult result, String versionName, String versionId) {
 		this.updateResult = result;
 		this.versionName = versionName;
 		this.versionId = versionId;
 	}
-	
+
 	public UpdateResult getUpdateResult() {
 		return this.updateResult;
 	}
-	
+
 	public String getVersionName() {
 		return this.versionName;
 	}
-	
+
 	public String getVersionId() {
 		return this.versionId;
 	}

@@ -6,12 +6,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
 
 public class InventoryBackupGUI extends SuperInventory {
 
@@ -22,6 +22,8 @@ public class InventoryBackupGUI extends SuperInventory {
 
 		this.backup = backup;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -54,7 +56,7 @@ public class InventoryBackupGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(!backup.getVaroPlayer().isOnline()) {
+				if (!backup.getVaroPlayer().isOnline()) {
 					backup.getVaroPlayer().getStats().setRestoreBackup(backup);
 					opener.sendMessage(Main.getPrefix() + "Inventar wird beim naechsten Betreten wiederhergestellt!");
 					return;

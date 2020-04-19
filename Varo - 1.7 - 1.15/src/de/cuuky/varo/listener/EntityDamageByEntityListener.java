@@ -19,16 +19,16 @@ public class EntityDamageByEntityListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
-		if(!(event.getEntity() instanceof Player))
+		if (!(event.getEntity() instanceof Player))
 			return;
 
-		if(Main.getVaroGame().getGameState() == GameState.END)
+		if (Main.getVaroGame().getGameState() == GameState.END)
 			return;
 
 		Player p = (Player) event.getEntity(), damager = new EntityDamageByEntityUtil(event).getDamager();
 		VaroPlayer vp = VaroPlayer.getPlayer(p), vDamager = VaroPlayer.getPlayer(damager);
-		if(Main.getVaroGame().getProtection() != null) {
-			if(damager == null)
+		if (Main.getVaroGame().getProtection() != null) {
+			if (damager == null)
 				vp.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vp, vp));
 			else
 				vDamager.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vDamager, vDamager));
@@ -36,21 +36,21 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 		}
 
-		if(Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
+		if (Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if(ConfigSetting.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
+		if (ConfigSetting.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
 			return;
 
 		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
-		if(VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
+		if (VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if(damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null || !vp.getTeam().equals(vdamager.getTeam()))
+		if (damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null || !vp.getTeam().equals(vdamager.getTeam()))
 			return;
 
 		event.setCancelled(true);

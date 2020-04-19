@@ -1,7 +1,7 @@
 package de.cuuky.varo.logger.logger;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.logger.VaroLogger;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class ChatLogger extends VaroLogger {
 
@@ -21,8 +21,8 @@ public class ChatLogger extends VaroLogger {
 		}
 
 		public static ChatLogType getType(String s) {
-			for(ChatLogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
+			for (ChatLogType type : values())
+				if (type.getName().equalsIgnoreCase(s))
 					return type;
 
 			return null;

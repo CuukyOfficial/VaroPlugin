@@ -6,15 +6,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.LocationFormat;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
 import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.varo.LocationFormat;
-import de.cuuky.varo.version.types.Materials;
 
 public class PlayerGUI extends SuperInventory {
 
@@ -27,12 +28,14 @@ public class PlayerGUI extends SuperInventory {
 		this.target = target;
 		this.type = type;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		if(type != null)
+		if (type != null)
 			new PlayerListGUI(opener, true, type);
 		else
 			new PlayerListChooseGUI(opener, true);
@@ -64,7 +67,7 @@ public class PlayerGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(target.getStats().getLastLocation() == null)
+				if (target.getStats().getLastLocation() == null)
 					return;
 
 				opener.teleport(target.getStats().getLastLocation());
@@ -84,7 +87,7 @@ public class PlayerGUI extends SuperInventory {
 			@Override
 			public void run() {
 				target.delete();
-				if(type != null)
+				if (type != null)
 					new PlayerListGUI(opener, true, type);
 				else
 					new PlayerListChooseGUI(opener, true);
@@ -95,7 +98,7 @@ public class PlayerGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(target.isOnline())
+				if (target.isOnline())
 					target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 
 				target.getStats().loadDefaults();

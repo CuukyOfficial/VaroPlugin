@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroStartEvent;
@@ -16,8 +18,6 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.version.types.Sounds;
 
 public class VaroStartThread implements Runnable {
 
@@ -36,15 +36,15 @@ public class VaroStartThread implements Runnable {
 
 	@Override
 	public void run() {
-		if(VersionUtils.getOnlinePlayer().size() != 0)
+		if (VersionUtils.getOnlinePlayer().size() != 0)
 			((Player) VersionUtils.getOnlinePlayer().toArray()[0]).getWorld().setTime(1000);
 
-		if(startcountdown != 0)
+		if (startcountdown != 0)
 			Bukkit.broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN.getValue().replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown)));
 
-		if(startcountdown == ConfigSetting.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
-			for(VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
-				if(pl1.getStats().isSpectator())
+		if (startcountdown == ConfigSetting.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
+			for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
+				if (pl1.getStats().isSpectator())
 					continue;
 
 				Player pl = pl1.getPlayer();
@@ -53,23 +53,23 @@ public class VaroStartThread implements Runnable {
 			}
 		}
 
-		if(startcountdown == 5 || startcountdown == 4 || startcountdown == 3 || startcountdown == 2 || startcountdown == 1) {
-			for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-				if(vp.getStats().isSpectator())
+		if (startcountdown == 5 || startcountdown == 4 || startcountdown == 3 || startcountdown == 2 || startcountdown == 1) {
+			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+				if (vp.getStats().isSpectator())
 					continue;
 
 				Player pl = vp.getPlayer();
 				pl.playSound(pl.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 
 				String[] title = ConfigMessages.GAME_VARO_START_TITLE.getValue(vp).replace("%countdown%", String.valueOf(startcountdown)).split("\n");
-				if(title.length != 0)
+				if (title.length != 0)
 					vp.getNetworkManager().sendTitle(title[0], title.length == 2 ? title[1] : "");
 			}
 		}
 
-		if(startcountdown == 0) {
-			for(VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
-				if(pl1.getStats().isSpectator())
+		if (startcountdown == 0) {
+			for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
+				if (pl1.getStats().isSpectator())
 					continue;
 
 				Player pl = pl1.getPlayer();
@@ -79,7 +79,7 @@ public class VaroStartThread implements Runnable {
 				pl1.getStats().loadStartDefaults();
 			}
 
-			if(VaroAPI.getEventManager().executeEvent(new VaroStartEvent(game))) {
+			if (VaroAPI.getEventManager().executeEvent(new VaroStartEvent(game))) {
 				startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 				Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 				return;
@@ -90,9 +90,9 @@ public class VaroStartThread implements Runnable {
 			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
 
-			for(VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
+			for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
 				world.fillChests();
-			
+
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
@@ -107,7 +107,7 @@ public class VaroStartThread implements Runnable {
 			}, ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
 
 			Main.getDataManager().getListManager().getStartItems().giveToAll();
-			if(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+			if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
 				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
 				game.setProtection(new ProtectionTime());
 			}

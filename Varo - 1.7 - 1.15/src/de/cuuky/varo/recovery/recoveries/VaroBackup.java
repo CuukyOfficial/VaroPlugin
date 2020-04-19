@@ -4,9 +4,9 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.recovery.FileZipper;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class VaroBackup extends FileZipper {
 
@@ -17,7 +17,7 @@ public class VaroBackup extends FileZipper {
 
 		loadBackups();
 	}
-	
+
 	private VaroBackup(File file) {
 		super(file);
 	}
@@ -26,7 +26,7 @@ public class VaroBackup extends FileZipper {
 		super(new File("plugins/Varo/backups/" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
 
 		Main.getDataManager().save();
-		
+
 		zip(getFiles("plugins/Varo"), Paths.get("plugins/Varo"));
 
 		backups.add(this);
@@ -36,8 +36,8 @@ public class VaroBackup extends FileZipper {
 		File pathFile = new File(path);
 		ArrayList<File> files = new ArrayList<>();
 
-		for(File file : pathFile.listFiles()) {
-			if(file.isDirectory())
+		for (File file : pathFile.listFiles()) {
+			if (file.isDirectory())
 				files.addAll(getFiles(file.getPath()));
 			else
 				files.add(file);
@@ -53,17 +53,17 @@ public class VaroBackup extends FileZipper {
 
 	private static void loadBackups() {
 		File file = new File("plugins/Varo/backups/");
-		if(!file.isDirectory())
+		if (!file.isDirectory())
 			return;
 
-		for(File listFile : file.listFiles())
-			if(listFile.getName().endsWith(".zip"))
+		for (File listFile : file.listFiles())
+			if (listFile.getName().endsWith(".zip"))
 				backups.add(new VaroBackup(listFile));
 	}
 
 	public static VaroBackup getBackup(String filename) {
-		for(VaroBackup backup : backups) {
-			if(!backup.getZipFile().getName().equals(filename.endsWith(".zip") ? filename : filename + ".zip"))
+		for (VaroBackup backup : backups) {
+			if (!backup.getZipFile().getName().equals(filename.endsWith(".zip") ? filename : filename + ".zip"))
 				continue;
 
 			return backup;

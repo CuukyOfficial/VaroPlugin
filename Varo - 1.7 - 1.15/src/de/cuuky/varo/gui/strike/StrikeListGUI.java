@@ -9,11 +9,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.gui.MainMenu;
 
 public class StrikeListGUI extends SuperInventory {
 
@@ -24,12 +26,15 @@ public class StrikeListGUI extends SuperInventory {
 
 		this.target = target;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		return false;
+		new MainMenu(opener);
+		return true;
 	}
 
 	@Override
@@ -46,11 +51,11 @@ public class StrikeListGUI extends SuperInventory {
 		ArrayList<Strike> list = VaroPlayer.getPlayer(target).getStats().getStrikes();
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			Strike strike;
 			try {
 				strike = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -58,7 +63,7 @@ public class StrikeListGUI extends SuperInventory {
 
 				@Override
 				public void run() {
-					if(!opener.hasPermission("varo.admin"))
+					if (!opener.hasPermission("varo.admin"))
 						return;
 
 					// TODO: DO OPTION STUFF

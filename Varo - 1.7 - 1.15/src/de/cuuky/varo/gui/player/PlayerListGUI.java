@@ -7,11 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
 
 public class PlayerListGUI extends SuperInventory {
 
@@ -35,7 +36,7 @@ public class PlayerListGUI extends SuperInventory {
 		}
 
 		public ArrayList<VaroPlayer> getList() {
-			switch(this) {
+			switch (this) {
 			case SPECTATOR:
 				return VaroPlayer.getSpectator();
 			case DEAD:
@@ -56,8 +57,8 @@ public class PlayerListGUI extends SuperInventory {
 		}
 
 		public static PlayerGUIType getType(String name) {
-			for(PlayerGUIType type : values())
-				if(type.getTypeName().equals(name))
+			for (PlayerGUIType type : values())
+				if (type.getTypeName().equals(name))
 					return type;
 
 			return null;
@@ -73,6 +74,8 @@ public class PlayerListGUI extends SuperInventory {
 
 		this.showStats = showstats;
 		this.type = type;
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -96,11 +99,11 @@ public class PlayerListGUI extends SuperInventory {
 		ArrayList<VaroPlayer> list = type.getList();
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			VaroPlayer players;
 			try {
 				players = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -108,7 +111,7 @@ public class PlayerListGUI extends SuperInventory {
 
 				@Override
 				public void run() {
-					if(!opener.hasPermission("varo.player"))
+					if (!opener.hasPermission("varo.player"))
 						return;
 
 					new PlayerGUI(opener, players, type);

@@ -18,13 +18,13 @@ public class SortCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length != 0) {
+		if (args.length != 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SORT_HELP.getValue(vp));
 			return;
 		}
 
 		SortResult result = new PlayerSort().sortPlayers();
-		switch(result) {
+		switch (result) {
 		case SORTED_WELL:
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SORT_SORTED_WELL.getValue(vp));
 			break;

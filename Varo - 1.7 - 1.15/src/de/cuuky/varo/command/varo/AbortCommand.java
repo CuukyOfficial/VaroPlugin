@@ -16,7 +16,7 @@ public class AbortCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(!Main.getVaroGame().isStarting()) {
+		if (!Main.getVaroGame().isStarting()) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE.getValue(vp));
 			return;
 		}

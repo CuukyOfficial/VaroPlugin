@@ -4,9 +4,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
 
 public class InventoryBackupShowGUI extends SuperInventory {
 
@@ -17,6 +18,8 @@ public class InventoryBackupShowGUI extends SuperInventory {
 
 		this.backup = backup;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -37,10 +40,10 @@ public class InventoryBackupShowGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		for(int i = 0; i < backup.getInventory().getInventory().getContents().length; i++)
+		for (int i = 0; i < backup.getInventory().getInventory().getContents().length; i++)
 			inv.setItem(i, backup.getInventory().getInventory().getContents()[i]);
 
-		for(int i = 0; i < backup.getArmor().size(); i++)
+		for (int i = 0; i < backup.getArmor().size(); i++)
 			inv.setItem(41 + i, backup.getArmor().get(i));
 		return true;
 	}

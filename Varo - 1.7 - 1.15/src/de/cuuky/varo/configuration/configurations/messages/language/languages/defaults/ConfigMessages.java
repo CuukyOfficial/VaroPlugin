@@ -292,6 +292,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%ping%&7ms");
 
 	private String path, defaultMessage, message;
+
 	private ConfigMessages(String path, String message) {
 		this.path = path;
 		this.defaultMessage = message;
@@ -300,7 +301,7 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	private String getMessage(Language lang) {
 		String message = null;
-		if(lang == null || lang == Main.getLanguageManager().getDefaultLanguage() || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean()) 
+		if (lang == null || lang == Main.getLanguageManager().getDefaultLanguage() || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
 			message = Main.getLanguageManager().getDefaultLanguage().getMessage(this.path);
 		else {
 			String langMsg = lang.getMessage(this.path);

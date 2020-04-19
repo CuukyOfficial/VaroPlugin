@@ -15,21 +15,21 @@ public class PingCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String ping, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-		if(args.length == 0) {
-			if(!(sender instanceof Player)) {
+		if (args.length == 0) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 				return false;
 			}
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.OTHER_PING.getValue(vp, vp));
-		} else if(args.length == 1) {
-			if(!sender.hasPermission("varo.ping")) {
+		} else if (args.length == 1) {
+			if (!sender.hasPermission("varo.ping")) {
 				sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 				return false;
 			}
 
 			Player p = Bukkit.getPlayerExact(args[0]);
-			if(p == null) {
+			if (p == null) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7nicht gefunden!");
 				return false;
 			}

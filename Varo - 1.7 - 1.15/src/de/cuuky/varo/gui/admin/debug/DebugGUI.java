@@ -4,25 +4,28 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
+import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.LocationFormat;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.gui.utils.chat.ChatHook;
-import de.cuuky.varo.gui.utils.chat.ChatHookListener;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.utils.varo.LocationFormat;
-import de.cuuky.varo.version.types.Materials;
 
 public class DebugGUI extends SuperInventory {
 
 	public DebugGUI(Player opener) {
 		super("§6DEBUG", opener, 18, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -49,13 +52,13 @@ public class DebugGUI extends SuperInventory {
 			public void run() {
 				close(false);
 
-				new ChatHook(opener, "§7Enter Event Message:", new ChatHookListener() {
+				new ChatHook(opener, "§7Enter Event Message:", new ChatHookHandler() {
 
 					@Override
-					public void onChat(String message) {
-						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, message);
+					public boolean onChat(AsyncPlayerChatEvent event) {
+						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, event.getMessage());
 						opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
-
+						return true;
 					}
 				});
 			}
@@ -75,7 +78,7 @@ public class DebugGUI extends SuperInventory {
 			@Override
 			public void run() {
 				String post = "";
-				for(VaroPlayer vp : VaroPlayer.getAlivePlayer())
+				for (VaroPlayer vp : VaroPlayer.getAlivePlayer())
 					post = post + (post.isEmpty() ? "Liste der Koordinaten aller Spieler:\n\n" : "\n") + vp.getName() + (vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "") + ": " + (vp.getStats().getLastLocation() != null ? new LocationFormat(vp.getStats().getLastLocation()).format("X:x Y:y Z:z in world") : "/");
 
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, post);

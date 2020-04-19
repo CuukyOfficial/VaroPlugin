@@ -17,21 +17,20 @@ public class QuitEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
-		if(Main.getVaroGame().isRunning() && player.getStats().getState() == PlayerState.ALIVE) {
+		if (Main.getVaroGame().isRunning() && player.getStats().getState() == PlayerState.ALIVE) {
 			player.getStats().addInventoryBackup(new InventoryBackup(player));
 
-			if(ConfigSetting.OFFLINEVILLAGER.getValueAsBoolean())
+			if (ConfigSetting.OFFLINEVILLAGER.getValueAsBoolean())
 				player.setVillager(new OfflineVillager(player, player.getPlayer().getLocation()));
 		}
 
-		if(!player.getStats().hasTimeLeft())
+		if (!player.getStats().hasTimeLeft())
 			player.getStats().removeCountdown();
 
 		player.getStats().setLastLocation(player.getPlayer().getLocation());
-		if(player.getNametag() != null)
+		if (player.getNametag() != null)
 			player.getNametag().remove();
-		player.setNametag(null);
-		player.setNetworkManager(null);
+
 		player.setAdminIgnore(false);
 		player.setPlayer(null);
 	}

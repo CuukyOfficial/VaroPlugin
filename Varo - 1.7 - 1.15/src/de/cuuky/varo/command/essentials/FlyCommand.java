@@ -15,13 +15,13 @@ public class FlyCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-		if(!sender.hasPermission("varo.fly")) {
+		if (!sender.hasPermission("varo.fly")) {
 			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}
 
-		if(args.length == 0) {
-			if(!(sender instanceof Player)) {
+		if (args.length == 0) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "§7Entweder /fly [Player/@a] oder Spieler sein!");
 				return false;
 			}
@@ -30,9 +30,9 @@ public class FlyCommand implements CommandExecutor {
 			p.setAllowFlight(true);
 			p.setFlying(true);
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst jetzt §afliegen§7!");
-		} else if(args.length == 1) {
-			if(args[0].equalsIgnoreCase("@a")) {
-				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
+		} else if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("@a")) {
+				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 					player.getPlayer().setAllowFlight(true);
 					player.getPlayer().setFlying(true);
 				}
@@ -42,7 +42,7 @@ public class FlyCommand implements CommandExecutor {
 			}
 
 			Player to = Bukkit.getPlayerExact(args[0]);
-			if(to == null) {
+			if (to == null) {
 				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + "§7 nicht gefunden!");
 				return false;
 			}

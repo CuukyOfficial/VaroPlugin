@@ -5,13 +5,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.report.Report;
-import de.cuuky.varo.version.types.Materials;
 
 public class ReportPickGUI extends SuperInventory {
 
@@ -24,6 +24,8 @@ public class ReportPickGUI extends SuperInventory {
 		this.report = report;
 		this.varoPlayer = opener;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -48,7 +50,7 @@ public class ReportPickGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(report.getReported().isOnline()) {
+				if (report.getReported().isOnline()) {
 					varoPlayer.getPlayer().teleport(report.getReported().getPlayer());
 					varoPlayer.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
 					return;

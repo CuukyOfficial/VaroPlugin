@@ -11,13 +11,13 @@ public class PlayerCommandPreprocessListener implements Listener {
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
 		String lowerMessage = event.getMessage().toLowerCase();
-		if(lowerMessage.startsWith("/pl") || lowerMessage.startsWith("/plugins") || lowerMessage.startsWith("/?") || lowerMessage.startsWith("/bukkit:?") || lowerMessage.startsWith("/bukkit:pl") || lowerMessage.startsWith("/bukkit:plugins") || lowerMessage.startsWith("/help") || lowerMessage.startsWith("/bukkit:help") || lowerMessage.startsWith("/me") || lowerMessage.startsWith("/minecraft:me") || lowerMessage.startsWith("/tell") || lowerMessage.startsWith("/minecraft:tell") || lowerMessage.startsWith("/icanhasbukkit") || lowerMessage.startsWith("/version") || lowerMessage.startsWith("/bukkit:version") || lowerMessage.startsWith("/ver") || lowerMessage.startsWith("/about") || lowerMessage.startsWith("/bukkit:about")) {
+		if (lowerMessage.startsWith("/pl") || lowerMessage.startsWith("/plugins") || lowerMessage.startsWith("/?") || lowerMessage.startsWith("/bukkit:?") || lowerMessage.startsWith("/bukkit:pl") || lowerMessage.startsWith("/bukkit:plugins") || lowerMessage.startsWith("/help") || lowerMessage.startsWith("/bukkit:help") || lowerMessage.startsWith("/me") || lowerMessage.startsWith("/minecraft:me") || lowerMessage.startsWith("/tell") || lowerMessage.startsWith("/minecraft:tell") || lowerMessage.startsWith("/icanhasbukkit") || lowerMessage.startsWith("/version") || lowerMessage.startsWith("/bukkit:version") || lowerMessage.startsWith("/ver") || lowerMessage.startsWith("/about") || lowerMessage.startsWith("/bukkit:about")) {
 
-			if(event.getPlayer().hasPermission("varo.readInfo"))
+			if (event.getPlayer().hasPermission("varo.readInfo"))
 				return;
 
-			if(Main.getVaroGame().isRunning())
-				if(lowerMessage.contains("tell"))
+			if (Main.getVaroGame().isRunning())
+				if (lowerMessage.contains("tell"))
 					return;
 
 			event.setCancelled(true);

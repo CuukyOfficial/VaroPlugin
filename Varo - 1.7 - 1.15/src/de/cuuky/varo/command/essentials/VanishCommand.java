@@ -20,19 +20,19 @@ public class VanishCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-		if(!sender.hasPermission("varo.vanish")) {
+		if (!sender.hasPermission("varo.vanish")) {
 			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}
 
-		if(args.length == 0) {
-			if(!(sender instanceof Player)) {
+		if (args.length == 0) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Not for console. Type /vanish [Player]");
 				return false;
 			}
 
 			Vanish v = Vanish.getVanish((Player) sender);
-			if(v == null) {
+			if (v == null) {
 				v = new Vanish((Player) sender);
 				sender.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "gevanished§7!");
 				return false;
@@ -40,15 +40,15 @@ public class VanishCommand implements CommandExecutor {
 
 			v.remove();
 			sender.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "unvanished§7!");
-		} else if(args.length == 1) {
+		} else if (args.length == 1) {
 			Player player = Bukkit.getPlayerExact(args[0]);
-			if(player == null) {
+			if (player == null) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7nicht gefunden!");
 				return false;
 			}
 
 			Vanish v = Vanish.getVanish(player);
-			if(v == null) {
+			if (v == null) {
 				v = new Vanish(player);
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + player.getName() + " §7erfolgreich gevanished!");
 				player.sendMessage(Main.getPrefix() + "Du bist nun " + Main.getColorCode() + "gevanished§7!");

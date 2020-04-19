@@ -13,9 +13,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class FancyEffectListener implements Listener {
 
@@ -34,14 +34,14 @@ public class FancyEffectListener implements Listener {
 
 			@Override
 			public void run() {
-				if(effectEntites.isEmpty())
+				if (effectEntites.isEmpty())
 					return;
 
 				Set<Entity> iterate = effectEntites.keySet();
-				for(int i = effectEntites.size() - 1; i != 0; i--) {
+				for (int i = effectEntites.size() - 1; i != 0; i--) {
 					Entity entity = (Entity) iterate.toArray()[i];
 
-					if(entity.isDead() || entity.isOnGround()) {
+					if (entity.isDead() || entity.isOnGround()) {
 						effectEntites.remove(entity);
 						continue;
 					}
@@ -62,15 +62,15 @@ public class FancyEffectListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThrow(ProjectileLaunchEvent event) {
-		if(!isEnabled(event))
+		if (!isEnabled(event))
 			return;
 
 		addEntity(event.getEntity());
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThrow(PlayerDropItemEvent event) {
-		if(!isEnabled(event))
+		if (!isEnabled(event))
 			return;
 
 		addEntity(event.getItemDrop());

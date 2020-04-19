@@ -7,22 +7,27 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
+import de.cuuky.varo.gui.MainMenu;
 
 public class YouTubeVideoListGUI extends SuperInventory {
 
 	public YouTubeVideoListGUI(Player opener) {
 		super("§5Videos", opener, 45, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	@Override
 	public boolean onBackClick() {
-		return false;
+		new MainMenu(opener);
+		return true;
 	}
 
 	@Override
@@ -39,11 +44,11 @@ public class YouTubeVideoListGUI extends SuperInventory {
 		ArrayList<YouTubeVideo> list = YouTubeVideo.getVideos();
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			YouTubeVideo video;
 			try {
 				video = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -53,7 +58,7 @@ public class YouTubeVideoListGUI extends SuperInventory {
 
 				@Override
 				public void run() {
-					if(!opener.hasPermission("varo.player")) {
+					if (!opener.hasPermission("varo.player")) {
 						opener.sendMessage("§7Video: " + video.getLink());
 						return;
 					}

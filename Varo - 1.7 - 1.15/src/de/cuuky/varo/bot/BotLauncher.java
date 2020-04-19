@@ -16,25 +16,25 @@ public class BotLauncher {
 	}
 
 	public void disconnect() {
-		if(discordbot != null)
+		if (discordbot != null)
 			discordbot.disconnect();
 
-		if(telegrambot != null)
+		if (telegrambot != null)
 			telegrambot.disconnect();
 	}
 
 	public void startupDiscord() {
-		if(!ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean())
+		if (!ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean())
 			return;
 
-		if(ConfigSetting.DISCORDBOT_TOKEN.getValue().equals("ENTER TOKEN HERE") || ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong() == -1) {
+		if (ConfigSetting.DISCORDBOT_TOKEN.getValue().equals("ENTER TOKEN HERE") || ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong() == -1) {
 			System.err.println(Main.getConsolePrefix() + "DiscordBot deactivated because of missing information in the config (DiscordToken or ServerID missing)");
 			return;
 		}
 
 		try {
 			discordbot = new VaroDiscordBot();
-		} catch(NoClassDefFoundError | BootstrapMethodError e) {
+		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
 			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
 			System.out.println(Main.getConsolePrefix() + "If you want to use the DiscordBot please install this plugin:");
@@ -44,23 +44,23 @@ public class BotLauncher {
 
 		try {
 			discordbot.connect();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void startupTelegram() {
-		if(!ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean())
+		if (!ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean())
 			return;
 
-		if(ConfigSetting.TELEGRAM_BOT_TOKEN.getValue().equals("ENTER TOKEN HERE")) {
+		if (ConfigSetting.TELEGRAM_BOT_TOKEN.getValue().equals("ENTER TOKEN HERE")) {
 			System.err.println(Main.getConsolePrefix() + "TelegramBot deactivated because of missing information in the config");
 			return;
 		}
 
 		try {
 			telegrambot = new VaroTelegramBot();
-		} catch(NoClassDefFoundError | BootstrapMethodError e) {
+		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
 			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin.");
 			System.out.println(Main.getConsolePrefix() + "If you want to use the TelegramBot please install this plugin:");
@@ -70,15 +70,15 @@ public class BotLauncher {
 
 		try {
 			telegrambot.connect();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public VaroDiscordBot getDiscordbot() {
 		return this.discordbot;
 	}
-	
+
 	public VaroTelegramBot getTelegrambot() {
 		return this.telegrambot;
 	}

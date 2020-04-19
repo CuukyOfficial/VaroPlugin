@@ -18,17 +18,17 @@ public class AutoSetupCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length >= 1) {
-			if(args[0].equalsIgnoreCase("run")) {
-				if(!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
+		if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("run")) {
+				if (!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET.getValue(vp));
 					return;
 				}
 
 				new AutoSetup();
-				for(VaroPlayer player : VaroPlayer.getOnlinePlayer()) 
+				for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
 					player.getPlayer().teleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
-				
+
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_FINISHED.getValue(vp));
 				return;
 			}
@@ -36,5 +36,5 @@ public class AutoSetupCommand extends VaroCommand {
 
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_HELP.getValue(vp));
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_ATTENTION.getValue(vp));
-	}	
+	}
 }

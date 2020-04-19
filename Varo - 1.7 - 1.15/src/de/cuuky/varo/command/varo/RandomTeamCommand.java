@@ -7,7 +7,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class RandomTeamCommand extends VaroCommand {
 
@@ -17,7 +17,7 @@ public class RandomTeamCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length != 1) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_HELP.getValue(vp));
 			return;
 		}
@@ -25,12 +25,12 @@ public class RandomTeamCommand extends VaroCommand {
 		int teamsize = 0;
 		try {
 			teamsize = Integer.parseInt(args[0]);
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue(vp).replace("%text%", args[0]));
 			return;
 		}
 
-		if(teamsize < 1) {
+		if (teamsize < 1) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL.getValue(vp));
 			return;
 		} else {

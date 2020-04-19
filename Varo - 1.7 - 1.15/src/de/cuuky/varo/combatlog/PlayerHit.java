@@ -26,23 +26,23 @@ public class PlayerHit {
 
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onHit(EntityDamageByEntityEvent event) {
-			if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
+			if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 				return;
 
-			if(!Main.getVaroGame().isRunning() || event.isCancelled())
+			if (!Main.getVaroGame().isRunning() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());
 			VaroPlayer vp1 = VaroPlayer.getPlayer(((Player) event.getDamager()).getName());
 
-			if(vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
+			if (vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
 				return;
 
 			Date current = new Date();
 			vp.getStats().setLastEnemyContact(current);
 			vp1.getStats().setLastEnemyContact(current);
 
-			if(!ConfigSetting.COMBATLOG_TIME.isIntActivated())
+			if (!ConfigSetting.COMBATLOG_TIME.isIntActivated())
 				return;
 
 			Player player1 = (Player) event.getDamager();
@@ -66,7 +66,7 @@ public class PlayerHit {
 	@SuppressWarnings("deprecation")
 	public PlayerHit(Player player, Player opponent) {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if(!hasOld(player))
+		if (!hasOld(player))
 			player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_IN_FIGHT.getValue(vp));
 
 		this.player = player;
@@ -88,8 +88,8 @@ public class PlayerHit {
 	}
 
 	public boolean hasOld(Player p) {
-		for(PlayerHit hit : hits) {
-			if(!hit.getPlayer().equals(p))
+		for (PlayerHit hit : hits) {
+			if (!hit.getPlayer().equals(p))
 				continue;
 
 			hit.remove();
@@ -119,8 +119,8 @@ public class PlayerHit {
 	}
 
 	public static PlayerHit getHit(Player p) {
-		for(PlayerHit hit : hits) {
-			if(!hit.getPlayer().equals(p))
+		for (PlayerHit hit : hits) {
+			if (!hit.getPlayer().equals(p))
 				continue;
 
 			return hit;

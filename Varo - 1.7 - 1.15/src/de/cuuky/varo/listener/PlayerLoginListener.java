@@ -28,54 +28,54 @@ public class PlayerLoginListener implements Listener {
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
 		VaroPlayerBan ban = VaroPlayerBan.getBan(player.getUniqueId().toString());
-		if(ban != null && ban.checkBan(player, event))
+		if (ban != null && ban.checkBan(player, event))
 			return;
-		
+
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
-		if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
+		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
-			if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
-				if(reg == null) {
+			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
+				if (reg == null) {
 					reg = new BotRegister(event.getPlayer().getUniqueId().toString(), true);
 					reg.setPlayerName(event.getPlayer().getName());
 					event.disallow(Result.KICK_OTHER, reg.getKickMessage(vp));
 					return;
-				} else if(reg.isBypass()) {
+				} else if (reg.isBypass()) {
 					event.allow();
-				} else if(!reg.isActive()) {
+				} else if (!reg.isActive()) {
 					event.disallow(Result.KICK_OTHER, reg.getKickMessage(vp));
 					return;
 				}
 			}
 
-			if(reg != null) {
+			if (reg != null) {
 				reg.setPlayerName(event.getPlayer().getName());
 				try {
 					User user = discordBot.getJda().getUserById(reg.getUserId());
-					if(user == null || !discordBot.getMainGuild().isMember(user)) {
-						if(!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
+					if (user == null || !discordBot.getMainGuild().isMember(user)) {
+						if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
 							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
 							vp.setPlayer(null);
 							return;
 						} else
 							reg.delete();
 					}
-				} catch(Exception e2) {
+				} catch (Exception e2) {
 					System.err.println("[Varo] Es wurde keine Server ID angegeben oder die ID des Spielers ist falsch!");
 				}
 			}
 		}
 
 		KickResult kickResult = vp.getStats().getKickResult(player);
-		switch(kickResult) {
+		switch (kickResult) {
 		case NO_PROJECTUSER:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp, vp));
 			break;
 		case BANNED:
-			for(BanEntry entry : Bukkit.getBanList(Type.NAME).getBanEntries()) {
-				if(entry.getTarget().equals(player.getName())) {
+			for (BanEntry entry : Bukkit.getBanList(Type.NAME).getBanEntries()) {
+				if (entry.getTarget().equals(player.getName())) {
 					event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_BANNED.getValue(vp, vp).replace("%reason%", entry.getReason()));
 					break;
 				}
@@ -108,15 +108,15 @@ public class PlayerLoginListener implements Listener {
 			String seconds = "";
 			String minutes = "";
 			String hours = "";
-			if(String.valueOf(sec).length() == 1)
+			if (String.valueOf(sec).length() == 1)
 				seconds = "0" + sec;
 			else
 				seconds = "" + sec;
-			if(String.valueOf(min).length() == 1)
+			if (String.valueOf(min).length() == 1)
 				minutes = "0" + min;
 			else
 				minutes = "" + min;
-			if(String.valueOf(hr).length() == 1)
+			if (String.valueOf(hr).length() == 1)
 				hours = "0" + hr;
 			else
 				hours = "" + hr;
@@ -130,7 +130,7 @@ public class PlayerLoginListener implements Listener {
 		case FINALE_JOIN:
 		default:
 			event.allow();
-			if(!vp.isRegistered())
+			if (!vp.isRegistered())
 				vp.register();
 			break;
 		}

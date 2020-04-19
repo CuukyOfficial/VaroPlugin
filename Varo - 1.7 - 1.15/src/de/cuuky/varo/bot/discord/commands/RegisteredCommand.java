@@ -18,14 +18,14 @@ public class RegisteredCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if(VaroPlayer.getVaroPlayer().size() == 0) {
+		if (VaroPlayer.getVaroPlayer().size() == 0) {
 			getDiscordBot().sendMessage("Es sind keine Spieler registriert!", "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}
 
 		String players = "";
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			if(players.equals(""))
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+			if (players.equals(""))
 				players = vp.getName();
 			else
 				players = players + ", " + vp.getName();

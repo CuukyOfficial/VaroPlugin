@@ -84,7 +84,7 @@ public abstract class VaroCommand {
 		new FinaleCommand();
 		new PlaceholderCommand();
 		new BugreportCommand();
-//		new TestCommand();
+		// new TestCommand();
 	}
 
 	private String[] aliases;
@@ -112,11 +112,11 @@ public abstract class VaroCommand {
 	}
 
 	public boolean isAlias(String s) {
-		if(this.aliases == null)
+		if (this.aliases == null)
 			return false;
 
-		for(String alias : aliases)
-			if(alias.equalsIgnoreCase(s))
+		for (String alias : aliases)
+			if (alias.equalsIgnoreCase(s))
 				return true;
 
 		return false;
@@ -142,8 +142,8 @@ public abstract class VaroCommand {
 	 * @return Returns the VaroCommand Object
 	 */
 	public static VaroCommand getCommand(String command) {
-		for(VaroCommand chunkCommand : varoCommands) {
-			if(!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
+		for (VaroCommand chunkCommand : varoCommands) {
+			if (!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
 				continue;
 
 			return chunkCommand;

@@ -14,24 +14,24 @@ public class ServerListPingListener implements Listener {
 	@EventHandler
 	public void onServerListPing(ServerListPingEvent event) {
 		int slots = ConfigSetting.FAKE_MAX_SLOTS.getValueAsInt();
-		if(slots != -1)
+		if (slots != -1)
 			event.setMaxPlayers(slots);
 
-		if(ConfigSetting.CHANGE_MOTD.getValueAsBoolean()) {
-			if(!Main.getVaroGame().hasStarted()) {
-				if(Bukkit.getServer().hasWhitelist())
+		if (ConfigSetting.CHANGE_MOTD.getValueAsBoolean()) {
+			if (!Main.getVaroGame().hasStarted()) {
+				if (Bukkit.getServer().hasWhitelist())
 					event.setMotd(ConfigMessages.SERVER_MODT_NOT_OPENED.getValue());
 				else
 					event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}
 
-			if(!ConfigSetting.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || Main.getDataManager().getOutsideTimeChecker().canJoin() || !Main.getVaroGame().hasStarted()) {
+			if (!ConfigSetting.ONLY_JOIN_BETWEEN_HOURS.getValueAsBoolean() || Main.getDataManager().getOutsideTimeChecker().canJoin() || !Main.getVaroGame().hasStarted()) {
 				event.setMotd(ConfigMessages.SERVER_MODT_OPEN.getValue());
 				return;
 			}
 
-			if(!Main.getDataManager().getOutsideTimeChecker().canJoin())
+			if (!Main.getDataManager().getOutsideTimeChecker().canJoin())
 				event.setMotd(ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue().replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
 		}
 	}

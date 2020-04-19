@@ -19,7 +19,7 @@ public class VaroGameHandler extends VaroSerializeObject {
 
 		load();
 
-		if(Main.getVaroGame() == null) 
+		if (Main.getVaroGame() == null)
 			new VaroGame().init(); // When nothing got deserialized -> new game
 	}
 

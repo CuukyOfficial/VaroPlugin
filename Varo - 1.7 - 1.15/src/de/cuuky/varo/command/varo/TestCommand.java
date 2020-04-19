@@ -14,6 +14,6 @@ public class TestCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-//		sender.sendMessage(ConfigMessages.TEST_MESSAGE.getValue(vp, vp));
+		// sender.sendMessage(ConfigMessages.TEST_MESSAGE.getValue(vp, vp));
 	}
 }

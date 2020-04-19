@@ -10,24 +10,24 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 
 public class VaroWorldBorder {
 
 	private static Method setCenterMethod, getCenterMethod, setSizeMethod, getSizeMethod;
 
 	static {
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
 			try {
 				Class<?> borderClass = Class.forName("org.bukkit.WorldBorder");
-				
+
 				setCenterMethod = borderClass.getDeclaredMethod("setCenter", Location.class);
 				getCenterMethod = borderClass.getDeclaredMethod("getCenter");
 				setSizeMethod = borderClass.getDeclaredMethod("setSize", double.class, long.class);
 				getSizeMethod = borderClass.getDeclaredMethod("getSize");
-			} catch(ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 			}
 		}
@@ -38,7 +38,7 @@ public class VaroWorldBorder {
 	private HashMap<Player, Double> distances;
 
 	public VaroWorldBorder(World world) {
-		if(!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
 		this.world = world;
@@ -51,7 +51,7 @@ public class VaroWorldBorder {
 	private void loadBorder() {
 		try {
 			border = world.getClass().getDeclaredMethod("getWorldBorder").invoke(world);
-		} catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
 	}
@@ -70,8 +70,8 @@ public class VaroWorldBorder {
 		distanceArray.add(Math.abs(playerDifferenceZ + size));
 		distanceArray.add(Math.abs(playerDifferenceZ - size));
 		double nearest = Double.MAX_VALUE;
-		for(double distance : distanceArray)
-			if(distance < nearest)
+		for (double distance : distanceArray)
+			if (distance < nearest)
 				nearest = distance;
 
 		return Math.round(nearest);
@@ -82,16 +82,16 @@ public class VaroWorldBorder {
 
 			@Override
 			public void run() {
-				for(Player player : VersionUtils.getOnlinePlayer())
+				for (Player player : VersionUtils.getOnlinePlayer())
 					distances.put(player, getDistanceToBorder(player));
 			}
 		}, 20, 20 * 1);
 	}
-	
+
 	public Location getCenter() {
 		try {
 			return (Location) getCenterMethod.invoke(border);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -99,7 +99,7 @@ public class VaroWorldBorder {
 	}
 
 	public double getBorderDistanceTo(Player p) {
-		if(p == null || distances == null || !distances.containsKey(p))
+		if (p == null || distances == null || !distances.containsKey(p))
 			return 0;
 
 		return distances.get(p);
@@ -108,7 +108,7 @@ public class VaroWorldBorder {
 	public double getBorderSize() {
 		try {
 			return (double) getSizeMethod.invoke(border);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -118,7 +118,7 @@ public class VaroWorldBorder {
 	public void setBorderCenter(Location loc) {
 		try {
 			setCenterMethod.invoke(border, loc);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -126,7 +126,7 @@ public class VaroWorldBorder {
 	public void setBorderSize(double size, long time) {
 		try {
 			setSizeMethod.invoke(border, size, time);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

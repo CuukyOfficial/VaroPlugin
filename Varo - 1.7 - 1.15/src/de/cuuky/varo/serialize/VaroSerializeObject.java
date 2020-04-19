@@ -38,7 +38,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	public VaroSerializeObject(Class<? extends VaroSerializeable> clazz, String fileName) {
 		this(clazz);
 
-		if(files.get(fileName) != null) {
+		if (files.get(fileName) != null) {
 			this.file = files.get(fileName);
 			this.configuration = configs.get(fileName);
 		} else {
@@ -51,15 +51,15 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 
 	protected void clearOld() {
 		Map<String, Object> configValues = configuration.getValues(false);
-		for(Map.Entry<String, Object> entry : configValues.entrySet())
+		for (Map.Entry<String, Object> entry : configValues.entrySet())
 			configuration.set(entry.getKey(), null);
 	}
 
 	protected void load() {
-		for(String string : configuration.getKeys(true)) {
+		for (String string : configuration.getKeys(true)) {
 			Object obj = configuration.get(string);
-			if(obj instanceof MemorySection) {
-				if(string.contains("."))
+			if (obj instanceof MemorySection) {
+				if (string.contains("."))
 					continue;
 
 				new VaroDeserializer((MemorySection) obj, this).deserialize();
@@ -70,7 +70,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	protected void save(String saveUnder, VaroSerializeable instance, YamlConfiguration saveTo) {
 		try {
 			new VaroSerializer(saveUnder, instance, saveTo);
-		} catch(NoClassDefFoundError e) {
+		} catch (NoClassDefFoundError e) {
 			System.out.println(Main.getConsolePrefix() + "Failed to save files - did you change the version while the server was running?");
 		}
 	}
@@ -78,7 +78,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	protected void saveFile() {
 		try {
 			configuration.save(file);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

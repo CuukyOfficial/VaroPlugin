@@ -2,10 +2,10 @@ package de.cuuky.varo.report;
 
 import java.util.ArrayList;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class Report implements VaroSerializeable {
 
@@ -26,10 +26,10 @@ public class Report implements VaroSerializeable {
 
 	@VaroSerializeField(path = "reportedId")
 	private int reportedId;
-	
+
 	@VaroSerializeField(path = "reporterId")
 	private int reporterId;
-	
+
 	private VaroPlayer reporter, reported;
 
 	public Report() {
@@ -48,7 +48,7 @@ public class Report implements VaroSerializeable {
 
 	private int generateId() {
 		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getReport(id) != null)
+		while (getReport(id) != null)
 			generateId();
 
 		return id;
@@ -87,15 +87,15 @@ public class Report implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {
-		if(reporter != null)
+		if (reporter != null)
 			this.reporterId = reporter.getId();
-		if(reported != null)
+		if (reported != null)
 			this.reportedId = reported.getId();
 	}
 
 	public static Report getReport(int id) {
-		for(Report r : reports)
-			if(r.getId() == id)
+		for (Report r : reports)
+			if (r.getId() == id)
 				return r;
 
 		return null;

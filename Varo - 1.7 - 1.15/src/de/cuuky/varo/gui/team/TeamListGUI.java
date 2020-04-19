@@ -7,11 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
 
 public class TeamListGUI extends SuperInventory {
 
@@ -34,7 +35,7 @@ public class TeamListGUI extends SuperInventory {
 		}
 
 		public ArrayList<VaroTeam> getList() {
-			switch(this) {
+			switch (this) {
 			case DEAD:
 				return VaroTeam.getDeadTeams();
 			case REGISTERED:
@@ -59,6 +60,8 @@ public class TeamListGUI extends SuperInventory {
 		super("§7Choose Team", opener, 45, false);
 
 		this.type = type;
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -84,11 +87,11 @@ public class TeamListGUI extends SuperInventory {
 		ArrayList<VaroTeam> list = type.getList();
 
 		int start = getSize() * (getPage() - 1);
-		for(int i = 0; i != getSize(); i++) {
+		for (int i = 0; i != getSize(); i++) {
 			VaroTeam team;
 			try {
 				team = list.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -96,7 +99,7 @@ public class TeamListGUI extends SuperInventory {
 
 				@Override
 				public void run() {
-					if(!opener.hasPermission("varo.admin")) {
+					if (!opener.hasPermission("varo.admin")) {
 						return;
 					}
 

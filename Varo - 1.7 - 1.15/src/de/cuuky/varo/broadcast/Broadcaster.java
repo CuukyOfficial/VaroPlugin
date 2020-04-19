@@ -8,10 +8,10 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
-import de.cuuky.varo.version.VersionUtils;
 
 public class Broadcaster {
 
@@ -22,12 +22,12 @@ public class Broadcaster {
 	private ArrayList<String> messages;
 
 	public Broadcaster() {
-		if(ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
+		if (ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
 			startPluginAd();
 
 		loadMessages();
 
-		if(!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
+		if (!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
 			return;
 
 		starteSchedule();
@@ -39,18 +39,18 @@ public class Broadcaster {
 		File file = new File("plugins/Varo/config", "broadcasts.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
-		if(!file.exists()) {
+		if (!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
 			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewaehlt werden.");
 
-			if(!cfg.contains("messages"))
+			if (!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
 			cfg.options().copyDefaults(true);
 
 			try {
 				cfg.save(file);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -76,10 +76,10 @@ public class Broadcaster {
 
 			@Override
 			public void run() {
-				if(VersionUtils.getOnlinePlayer().size() == 0)
+				if (VersionUtils.getOnlinePlayer().size() == 0)
 					return;
 
-				for(String m : getAdMessage())
+				for (String m : getAdMessage())
 					Bukkit.broadcastMessage(m.replaceAll("&", "§"));
 			}
 		}, delay, delay);

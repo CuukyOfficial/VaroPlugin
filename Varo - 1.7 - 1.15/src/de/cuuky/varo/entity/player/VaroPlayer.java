@@ -9,16 +9,22 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.clientadapter.board.nametag.CustomNametag;
+import de.cuuky.cfw.clientadapter.board.scoreboard.CustomScoreboard;
+import de.cuuky.cfw.clientadapter.board.tablist.CustomTablist;
+import de.cuuky.cfw.player.CustomPlayer;
+import de.cuuky.cfw.player.connection.NetworkManager;
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.VaroEntity;
-import de.cuuky.varo.entity.player.connection.NetworkManager;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.Stats;
@@ -31,14 +37,11 @@ import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.utils.JavaUtils;
 import de.cuuky.varo.vanish.Vanish;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
-public class VaroPlayer extends VaroEntity {
+public class VaroPlayer extends VaroEntity implements CustomPlayer {
 
 	private static ArrayList<VaroPlayer> varoplayer;
 
@@ -67,9 +70,11 @@ public class VaroPlayer extends VaroEntity {
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
 
-	private Nametag nametag;
+	private CustomNametag nametag;
+	private CustomScoreboard scoreboard;
+	private CustomTablist tablist;
 	private NetworkManager networkManager;
-	private String tabName;
+
 	private VaroTeam team;
 	private Player player;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
@@ -102,7 +107,7 @@ public class VaroPlayer extends VaroEntity {
 
 	private int generateId() {
 		int id = JavaUtils.randomInt(1000, 9999999);
-		while(getPlayer(id) != null)
+		while (getPlayer(id) != null)
 			generateId();
 
 		return id;
@@ -110,78 +115,50 @@ public class VaroPlayer extends VaroEntity {
 
 	private void updateDiscordTeam(VaroTeam oldTeam) {
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
-		if(db == null || !db.isEnabled())
+		if (db == null || !db.isEnabled())
 			return;
 
 		BotRegister reg = BotRegister.getBotRegisterByPlayerName(name);
-		if(reg == null)
+		if (reg == null)
 			return;
 
 		Member member = reg.getMember();
-		if(oldTeam != null) {
-			if(db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
+		if (oldTeam != null) {
+			if (db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
 				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
 				db.getMainGuild().removeRoleFromMember(member, role).complete();
 			}
 		}
 
-		if(this.team != null) {
+		if (this.team != null) {
 			Role role = db.getMainGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getMainGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
-			if(role == null)
+			if (role == null)
 				role = db.getMainGuild().createCopyOfRole(db.getMainGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
 
 			db.getMainGuild().addRoleToMember(member, role).complete();
 		}
 	}
 
-	private String getTabname() {
-		String listname = "";
-		if(getTeam() != null) {
-			if(getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, this);
-			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, this);
-			}
-		} else {
-			if(getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, this);
-			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, this);
-			}
-		}
-
-		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
-		if(maxlength > 0) {
-			if(listname.length() > maxlength)
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, this);
-
-			if(listname.length() > maxlength)
-				listname = this.name;
-		}
-
-		return listname;
-	}
-
 	/**
 	 * @return Returns if a player is nearby
 	 */
 	public boolean canBeKicked(int noKickDistance) {
-		if(noKickDistance < 1)
+		if (noKickDistance < 1)
 			return true;
 
-		for(Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
-			if(!(entity instanceof Player))
+		for (Entity entity : player.getNearbyEntities(noKickDistance, noKickDistance, noKickDistance)) {
+			if (!(entity instanceof Player))
 				continue;
 
 			VaroPlayer vp = getPlayer((Player) entity);
-			if(vp.equals(this))
+			if (vp.equals(this))
 				continue;
 
-			if(vp.getTeam() != null)
-				if(vp.getTeam().equals(team))
+			if (vp.getTeam() != null)
+				if (vp.getTeam().equals(team))
 					continue;
 
-			if(vp.getStats().isSpectator() || vp.isAdminIgnore())
+			if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 				continue;
 
 			return false;
@@ -200,16 +177,16 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public void delete() {
-		if(team != null)
+		if (team != null)
 			team.removeMember(this);
 
-		if(rank != null)
+		if (rank != null)
 			rank.remove();
 
-		if(isOnline())
+		if (isOnline())
 			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this, this));
 
-		if(villager != null)
+		if (villager != null)
 			villager.remove();
 
 		stats.remove();
@@ -220,15 +197,15 @@ public class VaroPlayer extends VaroEntity {
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
-		if(isOnline()) {
-			update();
-
-			if(getStats().isSpectator() || isAdminIgnore())
+		if (this.player != null)
+			setPlayer(this.player);
+		if (isOnline()) {
+			if (getStats().isSpectator() || isAdminIgnore())
 				setSpectacting();
 
 			setNormalAttackSpeed();
 			LobbyItem.giveItems(player);
-		} else if(isAdminIgnore())
+		} else if (isAdminIgnore())
 			adminIgnore = false;
 
 		this.stats.setOwner(this);
@@ -242,7 +219,7 @@ public class VaroPlayer extends VaroEntity {
 	public void onSerializeStart() {}
 
 	public void register() {
-		if(this.stats == null)
+		if (this.stats == null)
 			this.stats = new Stats(this);
 
 		stats.loadDefaults();
@@ -251,10 +228,10 @@ public class VaroPlayer extends VaroEntity {
 
 	public String getPrefix() {
 		String pr = "";
-		if(team != null)
+		if (team != null)
 			pr = team.getDisplay() + " ";
 
-		if(rank != null)
+		if (rank != null)
 			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
 
 		return pr;
@@ -272,7 +249,7 @@ public class VaroPlayer extends VaroEntity {
 				player.getPlayer().setHealth(20);
 				player.getPlayer().setFoodLevel(20);
 
-				if(!adminIgnore) {
+				if (!adminIgnore) {
 					player.getInventory().clear();
 					player.getInventory().setArmorContents(new ItemStack[] {});
 				}
@@ -281,31 +258,15 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public void update() {
-		if(!isOnline())
-			return;
-		else {
-			if(!player.isOnline()) {
-				this.player = null;
-				return;
-			}
-		}
+		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			if (ConfigSetting.TABLIST.getValueAsBoolean())
+				this.tablist.update();
 
-		if(ConfigSetting.NAMETAGS.getValueAsBoolean()) {
-			if(nametag == null)
-				nametag = new Nametag(player.getUniqueId(), player);
-			else
-				nametag.refresh();
-		}
+		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
+			this.nametag.update();
 
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-			if(ConfigSetting.TABLIST.getValueAsBoolean())
-				Main.getDataManager().getTablistHandler().updatePlayer(this);
-
-		Main.getDataManager().getScoreboardHandler().updatePlayer(this);
-
-		String listname = getTabname();
-		if(this.tabName == null || !this.tabName.equals(listname))
-			player.setPlayerListName(this.tabName = listname);
+		if (ConfigSetting.SCOREBOARD.getValueAsBoolean())
+			this.scoreboard.update();
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
@@ -324,14 +285,25 @@ public class VaroPlayer extends VaroEntity {
 		return name;
 	}
 
-	public Nametag getNametag() {
-		return nametag;
+	public CustomNametag getNametag() {
+		return this.nametag;
 	}
 
+	public CustomScoreboard getScoreboard() {
+		return this.scoreboard;
+	}
+
+	@Override
 	public NetworkManager getNetworkManager() {
-		return networkManager == null ? this.networkManager = new NetworkManager(player) : networkManager;
+		return networkManager;
 	}
 
+	@Override
+	public String getUUID() {
+		return this.uuid;
+	}
+
+	@Override
 	public Player getPlayer() {
 		return player;
 	}
@@ -352,10 +324,6 @@ public class VaroPlayer extends VaroEntity {
 		return team;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public OfflineVillager getVillager() {
 		return villager;
 	}
@@ -365,7 +333,7 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public boolean isInProtection() {
-		if(VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
+		if (VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;
 		} else {
 			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() && Main.getVaroGame().isRunning() && !Main.getVaroGame().isFirstTime() && ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() && !isAdminIgnore();
@@ -411,20 +379,28 @@ public class VaroPlayer extends VaroEntity {
 		this.name = name;
 	}
 
-	public void setNametag(Nametag nametag) {
-		this.nametag = nametag;
-	}
-
-	public void setNetworkManager(NetworkManager networkManager) {
-		this.networkManager = networkManager;
-	}
-
 	public void setNormalAttackSpeed() {
 		getNetworkManager().setAttributeSpeed(!ConfigSetting.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
+
+		if (player != null) {
+			this.networkManager = new NetworkManager(player);
+			this.scoreboard = (CustomScoreboard) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomScoreboard(this));
+			this.nametag = (CustomNametag) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomNametag(this));
+			this.tablist = (CustomTablist) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomTablist(this));
+		} else {
+			this.scoreboard.remove();
+			this.nametag.remove();
+			this.tablist.remove();
+
+			this.networkManager = null;
+			this.scoreboard = null;
+			this.nametag = null;
+			this.tablist = null;
+		}
 	}
 
 	public void setRank(Rank rank) {
@@ -444,12 +420,12 @@ public class VaroPlayer extends VaroEntity {
 		VaroTeam oldTeam = this.team;
 		this.team = team;
 
-		if(!Main.isBootedUp())
+		if (!Main.isBootedUp())
 			return;
 
 		try {
-			if(ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
-				if(Main.getBotLauncher() == null)
+			if (ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
+				if (Main.getBotLauncher() == null)
 					Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
 
 						@Override
@@ -460,7 +436,7 @@ public class VaroPlayer extends VaroEntity {
 				else
 					updateDiscordTeam(oldTeam);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -473,8 +449,8 @@ public class VaroPlayer extends VaroEntity {
 	 */
 	public static ArrayList<VaroPlayer> getAlivePlayer() {
 		ArrayList<VaroPlayer> alive = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isAlive())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getStats().isAlive())
 				continue;
 
 			alive.add(vp);
@@ -485,8 +461,8 @@ public class VaroPlayer extends VaroEntity {
 
 	public static ArrayList<VaroPlayer> getDeadPlayer() {
 		ArrayList<VaroPlayer> dead = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getStats().getState() != PlayerState.DEAD)
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getStats().getState() != PlayerState.DEAD)
 				continue;
 
 			dead.add(vp);
@@ -497,8 +473,8 @@ public class VaroPlayer extends VaroEntity {
 
 	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
 		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline() || !vp.getStats().isAlive())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.isOnline() || !vp.getStats().isAlive())
 				continue;
 
 			online.add(vp);
@@ -512,8 +488,8 @@ public class VaroPlayer extends VaroEntity {
 	 */
 	public static ArrayList<VaroPlayer> getOnlinePlayer() {
 		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.isOnline())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.isOnline())
 				continue;
 
 			online.add(vp);
@@ -523,8 +499,8 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public static VaroPlayer getPlayer(int id) {
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getId() != id)
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getId() != id)
 				continue;
 
 			return vp;
@@ -538,17 +514,17 @@ public class VaroPlayer extends VaroEntity {
 	 *         changed it before
 	 */
 	public static VaroPlayer getPlayer(Player player) {
-		for(VaroPlayer vp : varoplayer) {
-			if(vp.getUuid() != null)
-				if(!vp.getUuid().equals(player.getUniqueId().toString()))
+		for (VaroPlayer vp : varoplayer) {
+			if (vp.getUUID() != null)
+				if (!vp.getUUID().equals(player.getUniqueId().toString()))
 					continue;
 
-			if(vp.getUuid() == null && player.getName().equalsIgnoreCase(vp.getName()))
+			if (vp.getUUID() == null && player.getName().equalsIgnoreCase(vp.getName()))
 				vp.setUuid(player.getUniqueId().toString());
-			else if(vp.getUuid() == null)
+			else if (vp.getUUID() == null)
 				continue;
 
-			if(!vp.getName().equalsIgnoreCase(player.getName())) {
+			if (!vp.getName().equalsIgnoreCase(player.getName())) {
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(null, vp).replace("%newName%", player.getName()));
 				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
@@ -562,8 +538,8 @@ public class VaroPlayer extends VaroEntity {
 	}
 
 	public static VaroPlayer getPlayer(String name) {
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getName().equalsIgnoreCase(name))
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getName().equalsIgnoreCase(name))
 				continue;
 
 			return vp;
@@ -574,8 +550,8 @@ public class VaroPlayer extends VaroEntity {
 
 	public static ArrayList<VaroPlayer> getSpectator() {
 		ArrayList<VaroPlayer> spectator = new ArrayList<>();
-		for(VaroPlayer vp : varoplayer) {
-			if(!vp.getStats().isSpectator())
+		for (VaroPlayer vp : varoplayer) {
+			if (!vp.getStats().isSpectator())
 				continue;
 
 			spectator.add(vp);

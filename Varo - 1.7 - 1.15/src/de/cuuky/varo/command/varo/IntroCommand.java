@@ -19,12 +19,12 @@ public class IntroCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(suroStart != null) {
+		if (suroStart != null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_INTRO_ALREADY_STARTED.getValue(vp));
 			return;
 		}
 
-		if(Main.getVaroGame().hasStarted()) {
+		if (Main.getVaroGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED.getValue(vp));
 			return;
 		}

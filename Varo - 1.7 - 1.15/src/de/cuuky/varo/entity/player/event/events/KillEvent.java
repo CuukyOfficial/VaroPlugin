@@ -1,11 +1,11 @@
 package de.cuuky.varo.entity.player.event.events;
 
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
-import de.cuuky.varo.version.VersionUtils;
-import de.cuuky.varo.version.types.Sounds;
 
 public class KillEvent extends BukkitEvent {
 
@@ -15,7 +15,7 @@ public class KillEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
-		if(ConfigSetting.DEATH_SOUND.getValueAsBoolean())
+		if (ConfigSetting.DEATH_SOUND.getValueAsBoolean())
 			VersionUtils.getOnlinePlayer().forEach(pl -> pl.playSound(pl.getLocation(), Sounds.WITHER_IDLE.bukkitSound(), 1, 1));
 
 		player.getStats().addKill();

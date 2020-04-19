@@ -5,20 +5,21 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
+import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.gui.utils.chat.ChatHook;
-import de.cuuky.varo.gui.utils.chat.ChatHookListener;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.version.types.Materials;
-import de.cuuky.varo.version.types.Sounds;
 
 public class ConfigGUI extends SuperInventory {
 
@@ -26,27 +27,29 @@ public class ConfigGUI extends SuperInventory {
 
 	public ConfigGUI(Player opener, ConfigSettingSection section) {
 		super("§a" + section.getName(), opener, JavaUtils.getNextToNine(section.getEntries().size() + 1), false);
-		
+
 		this.section = section;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
 	private void hookChat(ConfigSetting entry) {
-		new ChatHook(opener, "§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookListener() {
+		new ChatHook(opener, "§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookHandler() {
 
 			@Override
-			public void onChat(String message) {
-				if(message.equalsIgnoreCase("cancel")) {
+			public boolean onChat(AsyncPlayerChatEvent event) {
+				String message = event.getMessage();
+				if (message.equalsIgnoreCase("cancel")) {
 					opener.sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
 				} else {
 					try {
 						entry.setValue(JavaUtils.getStringObject(message), true);
 
-					} catch(Exception e) {
+					} catch (Exception e) {
 						opener.sendMessage(Main.getPrefix() + e.getMessage());
-						hookChat(entry);
-						return;
+						return false;
 					}
 
 					opener.playSound(opener.getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
@@ -54,6 +57,7 @@ public class ConfigGUI extends SuperInventory {
 				}
 
 				reopenSoon();
+				return true;
 			}
 		});
 		opener.sendMessage(Main.getPrefix() + "§7Gib zum Abbruch §ccancel§7 ein.");
@@ -77,11 +81,11 @@ public class ConfigGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(SectionEntry sentry : section.getEntries()) {
+		for (SectionEntry sentry : section.getEntries()) {
 			ConfigSetting entry = (ConfigSetting) sentry;
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
-			for(String strin : entry.getDescription())
+			for (String strin : entry.getDescription())
 				lore.add(Main.getColorCode() + strin);
 
 			lore.add(" ");

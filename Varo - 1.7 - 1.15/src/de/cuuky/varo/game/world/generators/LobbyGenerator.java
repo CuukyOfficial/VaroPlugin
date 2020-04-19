@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import org.bukkit.Location;
 
+import de.cuuky.cfw.utils.BlockUtils;
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.world.schematic.SchematicLoader;
-import de.cuuky.varo.utils.BlockUtils;
-import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.version.types.Materials;
 
 public class LobbyGenerator {
 
@@ -33,7 +33,7 @@ public class LobbyGenerator {
 	public LobbyGenerator(Location loc, File file) {
 		try {
 			new SchematicLoader(file).paste(loc);
-		} catch(Error e) {
+		} catch (Error e) {
 			System.out.println(Main.getConsolePrefix() + "Du brauchst WorldEdit, um den SchematicLoader zu nutzen!");
 			return;
 		}
@@ -61,9 +61,9 @@ public class LobbyGenerator {
 		int topBlockZ = (from.getBlockZ() < to.getBlockZ() ? to.getBlockZ() : from.getBlockZ());
 		int bottomBlockZ = (from.getBlockZ() > to.getBlockZ() ? to.getBlockZ() : from.getBlockZ());
 
-		for(int x = bottomBlockX; x <= topBlockX; x++)
-			for(int y = bottomBlockY; y <= topBlockY; y++)
-				for(int z = bottomBlockZ; z <= topBlockZ; z++)
+		for (int x = bottomBlockX; x <= topBlockX; x++)
+			for (int y = bottomBlockY; y <= topBlockY; y++)
+				for (int z = bottomBlockZ; z <= topBlockZ; z++)
 					BlockUtils.setBlock(to.getWorld().getBlockAt(x, y, z), glassTypes.get(JavaUtils.randomInt(0, glassTypes.size() - 1)));
 	}
 }

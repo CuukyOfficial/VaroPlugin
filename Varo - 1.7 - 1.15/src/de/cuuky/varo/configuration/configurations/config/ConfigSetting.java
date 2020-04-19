@@ -2,10 +2,10 @@ package de.cuuky.varo.configuration.configurations.config;
 
 import org.bukkit.Bukkit;
 
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 
 public enum ConfigSetting implements SectionEntry {
 
@@ -173,7 +173,8 @@ public enum ConfigSetting implements SectionEntry {
 
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen koennen.\nOff = 0"),
 	NAMETAG_SPAWN_HEIGHT(ConfigSettingSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch ueber den Spawns\ndie Nametags sein sollen"),
-	NAMETAGS(ConfigSettingSection.MAIN, "nametags", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
+	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
+	NAMETAGS_VISIBLE(ConfigSettingSection.MAIN, "nametags.visible", true, "Ob NameTags sichtbar sein sollen"),
 	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviaet auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 
 	NO_DISCONNECT_PING(ConfigSettingSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zaehlt."),
@@ -295,12 +296,12 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	private void sendFalseCast(Class<?> failedToCast) {
-		if(value instanceof Integer && failedToCast.equals(Long.class) || value instanceof Long && failedToCast.equals(Integer.class))
+		if (value instanceof Integer && failedToCast.equals(Long.class) || value instanceof Long && failedToCast.equals(Integer.class))
 			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
 
 		try {
 			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			Bukkit.getServer().shutdown();
@@ -345,14 +346,14 @@ public enum ConfigSetting implements SectionEntry {
 	public void setValue(Object value, boolean save) {
 		this.value = value;
 
-		if(save)
+		if (save)
 			save();
 	}
 
 	public boolean getValueAsBoolean() {
 		try {
 			return (boolean) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast(Boolean.class);
 		}
 
@@ -362,10 +363,10 @@ public enum ConfigSetting implements SectionEntry {
 	public double getValueAsDouble() {
 		try {
 			return (double) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			try {
 				return Double.valueOf(getValueAsInt());
-			} catch(Exception e2) {
+			} catch (Exception e2) {
 				sendFalseCast(Double.class);
 			}
 		}
@@ -376,7 +377,7 @@ public enum ConfigSetting implements SectionEntry {
 	public int getValueAsInt() {
 		try {
 			return (int) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast(Integer.class);
 		}
 
@@ -386,10 +387,10 @@ public enum ConfigSetting implements SectionEntry {
 	public long getValueAsLong() {
 		try {
 			return (long) this.value;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			try {
 				return Long.valueOf(getValueAsInt());
-			} catch(Exception e2) {
+			} catch (Exception e2) {
 				sendFalseCast(Long.class);
 			}
 		}
@@ -398,12 +399,12 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	public String getValueAsString() {
-		if(this.value instanceof String)
+		if (this.value instanceof String)
 			return ((String) (this.value)).replace("&", "§");
 
 		try {
 			return (String) (this.value = String.valueOf(this.value).replace("&", "§"));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			sendFalseCast(String.class);
 		}
 
@@ -419,8 +420,8 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	public static ConfigSetting getEntryByPath(String path) {
-		for(ConfigSetting entry : ConfigSetting.values()) {
-			if(!entry.getPath().equals(path))
+		for (ConfigSetting entry : ConfigSetting.values()) {
+			if (!entry.getPath().equals(path))
 				continue;
 
 			return entry;

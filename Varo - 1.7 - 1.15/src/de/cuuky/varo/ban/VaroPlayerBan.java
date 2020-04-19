@@ -38,10 +38,10 @@ public class VaroPlayerBan {
 	}
 
 	public boolean checkBan(Player player, PlayerLoginEvent event) {
-		if(!isBanned(player))
+		if (!isBanned(player))
 			return false;
 
-		if(event == null)
+		if (event == null)
 			player.kickPlayer(getKickMessage());
 		else
 			event.disallow(Result.KICK_BANNED, getKickMessage());
@@ -57,8 +57,8 @@ public class VaroPlayerBan {
 	}
 
 	public static VaroPlayerBan getBan(String uuid) {
-		for(VaroPlayerBan ban : bans)
-			if(ban.getUuid().equals(uuid))
+		for (VaroPlayerBan ban : bans)
+			if (ban.getUuid().equals(uuid))
 				return ban;
 
 		return null;
@@ -74,7 +74,7 @@ public class VaroPlayerBan {
 				try {
 					URL url = new URL("https://varoplugin.de/varo/blocked");
 					Scanner scanner = new Scanner(url.openStream());
-					while(scanner.hasNext()) {
+					while (scanner.hasNext()) {
 						String line = scanner.nextLine();
 						String[] block = line.split(";");
 
@@ -85,13 +85,13 @@ public class VaroPlayerBan {
 
 						@Override
 						public void run() {
-							for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-								if(getBan(vp.getUuid()) != null)
-									getBan(vp.getUuid()).checkBan(vp.getPlayer(), null);
+							for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+								if (getBan(vp.getUUID()) != null)
+									getBan(vp.getUUID()).checkBan(vp.getPlayer(), null);
 							}
 						}
 					}, 1);
-				} catch(Exception e) {}
+				} catch (Exception e) {}
 			}
 		}, 1);
 	}

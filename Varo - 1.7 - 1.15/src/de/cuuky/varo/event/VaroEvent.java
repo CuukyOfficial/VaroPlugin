@@ -57,12 +57,12 @@ public class VaroEvent {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	public void setEnabled(boolean enabled) {
-		if(Main.getVaroGame().getGameState() != GameState.STARTED && enabled)
+		if (Main.getVaroGame().getGameState() != GameState.STARTED && enabled)
 			return;
 
-		if(enabled)
+		if (enabled)
 			onEnable();
 		else
 			onDisable();
@@ -71,22 +71,25 @@ public class VaroEvent {
 	}
 
 	public void onDisable() {}
+
 	public void onEnable() {}
+
 	public void onInteract(PlayerInteractEvent event) {}
+
 	public void onMove(PlayerMoveEvent event) {}
 
 	public static ArrayList<VaroEvent> getEnabledEvents() {
 		ArrayList<VaroEvent> enabledEvents = new ArrayList<>();
-		for(VaroEvent event : events)
-			if(event.isEnabled())
+		for (VaroEvent event : events)
+			if (event.isEnabled())
 				enabledEvents.add(event);
 
 		return enabledEvents;
 	}
 
 	public static VaroEvent getEvent(VaroEventType eventType) {
-		for(VaroEvent event : events)
-			if(event.getEventType() == eventType)
+		for (VaroEvent event : events)
+			if (event.getEventType() == eventType)
 				return event;
 
 		return null;

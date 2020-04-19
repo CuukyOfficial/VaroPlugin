@@ -11,11 +11,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
 
 public class BackupListGUI extends SuperInventory {
@@ -23,6 +23,8 @@ public class BackupListGUI extends SuperInventory {
 	public BackupListGUI(Player opener) {
 		super("§aBackups", opener, 45, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -45,14 +47,14 @@ public class BackupListGUI extends SuperInventory {
 	public boolean onOpen() {
 		ArrayList<VaroBackup> backups = VaroBackup.getBackups();
 		int start = getSize() * (getPage() - 1);
-		if(start != 0)
+		if (start != 0)
 			start -= 2;
 
-		for(int i = 0; i != getSize() - 2; i++) {
+		for (int i = 0; i != getSize() - 2; i++) {
 			VaroBackup backup;
 			try {
 				backup = backups.get(start);
-			} catch(IndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				break;
 			}
 
@@ -82,7 +84,7 @@ public class BackupListGUI extends SuperInventory {
 
 			@Override
 			public void run() {
-				if(VaroBackup.getBackup(getCurrentDate()) != null) {
+				if (VaroBackup.getBackup(getCurrentDate()) != null) {
 					opener.sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
 					return;
 				}

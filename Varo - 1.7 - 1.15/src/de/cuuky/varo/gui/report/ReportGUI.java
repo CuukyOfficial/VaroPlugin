@@ -7,11 +7,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.SuperInventory;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
 import de.cuuky.varo.report.Report;
 import de.cuuky.varo.report.ReportReason;
 
@@ -26,6 +26,8 @@ public class ReportGUI extends SuperInventory {
 		this.reporter = VaroPlayer.getPlayer(opener);
 		this.reported = reported;
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -53,10 +55,10 @@ public class ReportGUI extends SuperInventory {
 	@Override
 	public boolean onOpen() {
 		int i = -1;
-		for(ReportReason reasons : ReportReason.values()) {
+		for (ReportReason reasons : ReportReason.values()) {
 			i++;
 			ArrayList<String> lore = new ArrayList<>();
-			for(String strin : reasons.getDescription().split("\n"))
+			for (String strin : reasons.getDescription().split("\n"))
 				lore.add("§c" + strin);
 
 			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());

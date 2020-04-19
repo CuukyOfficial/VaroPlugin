@@ -3,13 +3,12 @@ package de.cuuky.varo.data;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 
+import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.ban.VaroPlayerBan;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
-import de.cuuky.varo.clientadapter.scoreboard.ScoreboardHandler;
-import de.cuuky.varo.clientadapter.tablist.TablistHandler;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.VaroLanguageManager;
@@ -28,9 +27,8 @@ import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.threads.daily.DailyTimer;
-import de.cuuky.varo.utils.varo.OutSideTimeChecker;
-import de.cuuky.varo.utils.varo.ServerPropertiesReader;
-import de.cuuky.varo.utils.varo.VaroUtils;
+import de.cuuky.varo.utils.OutSideTimeChecker;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class DataManager {
 
@@ -39,8 +37,6 @@ public class DataManager {
 	private VaroPlayerHandler varoPlayerHandler;
 	private VaroTeamHandler varoTeamHandler;
 	private SpawnHandler spawnHandler;
-	private ScoreboardHandler scoreboardHandler;
-	private TablistHandler tablistHandler;
 	private ReportHandler reportHandler;
 	private AlertHandler alertHandler;
 	private OutSideTimeChecker outsideTimeChecker;
@@ -51,28 +47,26 @@ public class DataManager {
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
 	private PluginLoader pluginLoader;
-	
+
 	private boolean doSave;
 
 	public DataManager() {
 		Main.setDataManager(this);
-		
+
 		load();
 		startAutoSave();
-		
+
 		doSave = true;
 	}
 
 	private void load() {
 		VaroPlayerBan.loadBans();
-		
+
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
 		Main.setLanguageManager(new VaroLanguageManager());
 		this.propertiesReader = new ServerPropertiesReader();
-		this.scoreboardHandler = new ScoreboardHandler();
-		this.tablistHandler = new TablistHandler();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
@@ -89,7 +83,7 @@ public class DataManager {
 		VaroUtils.setWorldToTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
-		
+
 		this.pluginLoader = new PluginLoader();
 	}
 
@@ -101,9 +95,9 @@ public class DataManager {
 			public void run() {
 				reloadConfig();
 				save();
-				
+
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-					
+
 					@Override
 					public void run() {
 						reloadPlayerClients();
@@ -119,21 +113,18 @@ public class DataManager {
 		MessagePlaceholder.clearPlaceholder();
 		configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
-		scoreboardHandler.updateList();
-		tablistHandler.updateList();
+		Main.getVaroBoard().update();
 	}
-	
+
 	public void reloadPlayerClients() {
-		for(VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			scoreboardHandler.sendScoreBoard(vp);
-			if(vp.getNametag() != null)
-				vp.getNametag().giveAll();
+			vp.update();
 		}
 	}
 
 	public void save() {
-		if(!doSave)
+		if (!doSave)
 			return;
 
 		VaroSerializeHandler.saveAll();
@@ -141,23 +132,19 @@ public class DataManager {
 
 		try {
 			BotRegister.saveAll();
-		} catch(NoClassDefFoundError e) {}
+		} catch (NoClassDefFoundError e) {}
 	}
 
 	public PluginLoader getPluginLoader() {
 		return this.pluginLoader;
 	}
-	
+
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
 	}
-	
+
 	public ServerPropertiesReader getPropertiesReader() {
 		return this.propertiesReader;
-	}
-	
-	public TablistHandler getTablistHandler() {
-		return this.tablistHandler;
 	}
 
 	public AlertHandler getAlertHandler() {
@@ -175,7 +162,7 @@ public class DataManager {
 	public VaroListManager getListManager() {
 		return this.listManager;
 	}
-	
+
 	public VaroLoggerManager getVaroLoggerManager() {
 		return this.varoLoggerManager;
 	}
@@ -190,10 +177,6 @@ public class DataManager {
 
 	public ReportHandler getReportHandler() {
 		return this.reportHandler;
-	}
-
-	public ScoreboardHandler getScoreboardHandler() {
-		return this.scoreboardHandler;
 	}
 
 	public SpawnHandler getSpawnHandler() {
@@ -211,7 +194,7 @@ public class DataManager {
 	public VaroTeamHandler getVaroTeamHandler() {
 		return this.varoTeamHandler;
 	}
-	
+
 	public DailyTimer getDailyTimer() {
 		return this.dailyTimer;
 	}

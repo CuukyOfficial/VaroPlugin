@@ -33,8 +33,8 @@ public class BukkitEvent {
 	}
 
 	public BukkitEvent(VaroPlayer player, BukkitEventType eventType) {
-		for(BukkitEvent event : events)
-			if(event.getEventType().equals(eventType))
+		for (BukkitEvent event : events)
+			if (event.getEventType().equals(eventType))
 				event.onExec(player);
 	}
 

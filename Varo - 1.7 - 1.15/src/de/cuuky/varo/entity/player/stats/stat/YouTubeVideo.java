@@ -17,16 +17,16 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 
 	@VaroSerializeField(path = "detectedAt")
 	private Date detectedAt;
-	
+
 	@VaroSerializeField(path = "duration")
 	private String duration;
-	
+
 	@VaroSerializeField(path = "link")
 	private String link;
-	
+
 	@VaroSerializeField(path = "title")
 	private String title;
-	
+
 	@VaroSerializeField(path = "videoId")
 	private String videoId;
 
@@ -63,8 +63,8 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	}
 
 	public VaroPlayer getOwner() {
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
-			if(vp.getStats().getVideos().contains(this))
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
+			if (vp.getStats().getVideos().contains(this))
 				return vp;
 
 		return null;
@@ -86,15 +86,15 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 
 	public void remove() {
 		VaroPlayer owner = getOwner();
-		if(owner != null)
+		if (owner != null)
 			owner.getStats().removeVideo(this);
 
 		videos.remove(this);
 	}
 
 	public static YouTubeVideo getVideo(String videoId) {
-		for(YouTubeVideo video : videos)
-			if(video.getVideoId().equals(videoId))
+		for (YouTubeVideo video : videos)
+			if (video.getVideoId().equals(videoId))
 				return video;
 
 		return null;

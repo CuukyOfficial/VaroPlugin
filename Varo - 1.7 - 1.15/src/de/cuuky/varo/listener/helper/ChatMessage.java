@@ -34,8 +34,8 @@ public class ChatMessage {
 	}
 
 	public static ChatMessage getMessage(Player player) {
-		for(ChatMessage cmessage : messages) {
-			if(cmessage.getPlayer().equals(player))
+		for (ChatMessage cmessage : messages) {
+			if (cmessage.getPlayer().equals(player))
 				continue;
 
 			return cmessage;

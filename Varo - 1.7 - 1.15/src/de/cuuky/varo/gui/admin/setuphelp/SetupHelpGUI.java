@@ -6,12 +6,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
 
 public class SetupHelpGUI extends SuperInventory {
 
@@ -62,6 +62,8 @@ public class SetupHelpGUI extends SuperInventory {
 	public SetupHelpGUI(Player opener) {
 		super("§eSetup Assistant", opener, 9, false);
 
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 
@@ -84,7 +86,7 @@ public class SetupHelpGUI extends SuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		for(int i = 0; i < SetupCheckList.values().length; i++) {
+		for (int i = 0; i < SetupCheckList.values().length; i++) {
 			SetupCheckList check = SetupCheckList.values()[i];
 
 			linkItemTo(i, new ItemBuilder().displayname(Main.getColorCode() + check.getName()).itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon())).lore(check.getDescription()).build(), new Runnable() {

@@ -15,7 +15,7 @@ public abstract class VaroList {
 
 	static {
 		lists = new ArrayList<>();
-		
+
 		reloadConfig();
 	}
 
@@ -29,15 +29,16 @@ public abstract class VaroList {
 
 		lists.add(this);
 	}
-	
+
 	public void loadList(List<?> loadList) {
-		if(loadList == null)
+		if (loadList == null)
 			loadList = new ArrayList<>();
 
 		onLoad(loadList);
 	}
 
 	public abstract ArrayList<?> getAsList();
+
 	public abstract void onLoad(List<?> list);
 
 	public String getLocation() {
@@ -50,7 +51,7 @@ public abstract class VaroList {
 
 		try {
 			config.save(file);
-		} catch(IOException e) {}
+		} catch (IOException e) {}
 	}
 
 	private static void reloadConfig() {
@@ -66,19 +67,19 @@ public abstract class VaroList {
 		saveLists();
 		reloadConfig();
 
-		for(VaroList list : lists)
+		for (VaroList list : lists)
 			list.loadList(config.getList(list.getLocation()));
 	}
 
 	public static void saveLists() {
-		for(VaroList list : lists) {
+		for (VaroList list : lists) {
 			config.set(list.getLocation(), null);
 			config.set(list.getLocation(), list.getAsList());
 		}
 
 		try {
 			config.save(file);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

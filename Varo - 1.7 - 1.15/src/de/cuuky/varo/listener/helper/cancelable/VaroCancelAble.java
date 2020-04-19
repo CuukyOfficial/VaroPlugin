@@ -70,17 +70,17 @@ public class VaroCancelAble {
 	}
 
 	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
-		for(VaroCancelAble able : cancelables)
-			if(able.getPlayer().equals(player) && able.getType().equals(type))
+		for (VaroCancelAble able : cancelables)
+			if (able.getPlayer().equals(player) && able.getType().equals(type))
 				return able;
 
 		return null;
 	}
 
 	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
-		for(int i = 0; i < cancelables.size(); i++) {
+		for (int i = 0; i < cancelables.size(); i++) {
 			VaroCancelAble able = cancelables.get(i);
-			if(able.getPlayer().equals(player) && able.getType().equals(type)) {
+			if (able.getPlayer().equals(player) && able.getType().equals(type)) {
 				able.remove();
 				i--;
 			}

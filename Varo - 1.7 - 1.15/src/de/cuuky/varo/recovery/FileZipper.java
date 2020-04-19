@@ -25,20 +25,20 @@ public class FileZipper {
 
 	private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
 		File oldFile = new File(filePath);
-		if(oldFile.exists())
+		if (oldFile.exists())
 			oldFile.delete();
 
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
 		byte[] bytesIn = new byte[BUFFER_SIZE];
 		int read = 0;
-		while((read = zipIn.read(bytesIn)) != -1) {
+		while ((read = zipIn.read(bytesIn)) != -1) {
 			bos.write(bytesIn, 0, read);
 		}
 		bos.close();
 	}
 
 	private void zipFile(File file, ZipOutputStream outputStream, Path root) {
-		if(file.getName().endsWith(".zip"))
+		if (file.getName().endsWith(".zip"))
 			return;
 
 		try {
@@ -49,14 +49,14 @@ public class FileZipper {
 			byte[] buffer = Files.readAllBytes(orgPath);
 			outputStream.write(buffer, 0, buffer.length);
 			outputStream.closeEntry();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void zipFolder(File file, ZipOutputStream outputStream, Path root) {
-		for(File toZip : file.listFiles()) {
-			if(toZip.isFile())
+		for (File toZip : file.listFiles()) {
+			if (toZip.isFile())
 				zipFile(toZip, outputStream, root);
 			else
 				zipFolder(toZip, outputStream, root);
@@ -66,11 +66,11 @@ public class FileZipper {
 	public void zip(ArrayList<File> files, Path rootFrom) {
 		try {
 			File file1 = new File(zipFile.getParent());
-			if(!file1.isDirectory())
+			if (!file1.isDirectory())
 				file1.mkdirs();
-			if(!zipFile.exists())
+			if (!zipFile.exists())
 				zipFile.createNewFile();
-		} catch(IOException e1) {
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 
@@ -79,15 +79,15 @@ public class FileZipper {
 			FileOutputStream fileoutputStream = null;
 			ZipOutputStream outputStream = new ZipOutputStream(fileoutputStream = new FileOutputStream(zipFileName));
 
-			for(File toZip : files) 
-				if(toZip.isFile())
+			for (File toZip : files)
+				if (toZip.isFile())
 					zipFile(toZip, outputStream, rootFrom);
 				else
 					zipFolder(toZip, outputStream, rootFrom);
 
 			outputStream.close();
 			fileoutputStream.close();
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -95,13 +95,13 @@ public class FileZipper {
 	public boolean unzip(String destDirectory) {
 		try {
 			File destDir = new File(destDirectory);
-			if(!destDir.exists())
+			if (!destDir.exists())
 				destDir.mkdir();
 			ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFile));
 			ZipEntry entry = zipIn.getNextEntry();
-			while(entry != null) {
+			while (entry != null) {
 				String filePath = destDirectory + File.separator + entry.getName();
-				if(!entry.isDirectory()) {
+				if (!entry.isDirectory()) {
 					extractFile(zipIn, filePath);
 				} else {
 					File dir = new File(filePath);
@@ -112,7 +112,7 @@ public class FileZipper {
 			}
 			zipIn.close();
 			return true;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}

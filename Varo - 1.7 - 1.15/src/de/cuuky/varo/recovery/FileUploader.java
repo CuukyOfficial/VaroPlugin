@@ -55,7 +55,7 @@ public class FileUploader {
 			FileInputStream inputStream = new FileInputStream(this.file);
 			byte[] buffer = new byte[4096];
 			int bytesRead = -1;
-			while((bytesRead = inputStream.read(buffer)) != -1) {
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
 				out.write(buffer, 0, bytesRead);
 			}
 			out.flush();
@@ -67,12 +67,12 @@ public class FileUploader {
 			writer.append(LINE_FEED).flush();
 			writer.append("--" + boundary + "--").append(LINE_FEED);
 			writer.close();
-			
-			if(connection.getResponseCode() != HttpURLConnection.HTTP_OK)
+
+			if (connection.getResponseCode() != HttpURLConnection.HTTP_OK)
 				return null;
 
 			return new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -83,12 +83,12 @@ public class FileUploader {
 		try {
 			String response = uploadToServer();
 
-			if(response == null)
+			if (response == null)
 				return null;
 
 			JSONObject object = (JSONObject) JSONValue.parseWithException(response);
 			return (String) getJSONObject(getJSONObject(getJSONObject(object, "data"), "file"), "url").get("short");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

@@ -37,10 +37,10 @@ public class VaroAPITeam {
 	public void setColorcode(String code) {
 		team.setColorCode(code);
 	}
-	
+
 	public ArrayList<VaroAPIPlayer> getMember() {
 		ArrayList<VaroAPIPlayer> teams = new ArrayList<>();
-		for(VaroPlayer player : team.getMember())
+		for (VaroPlayer player : team.getMember())
 			teams.add(new VaroAPIPlayer(player));
 
 		return teams;
@@ -48,7 +48,7 @@ public class VaroAPITeam {
 
 	public static ArrayList<VaroAPITeam> getTeams() {
 		ArrayList<VaroAPITeam> teams = new ArrayList<>();
-		for(VaroTeam team : VaroTeam.getTeams())
+		for (VaroTeam team : VaroTeam.getTeams())
 			teams.add(new VaroAPITeam(team));
 
 		return teams;

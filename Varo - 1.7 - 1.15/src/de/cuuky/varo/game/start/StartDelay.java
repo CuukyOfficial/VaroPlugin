@@ -46,11 +46,11 @@ public enum StartDelay {
 
 	public static StartDelay getStartDelay(long delay) {
 		StartDelay lastDelay = null;
-		for(StartDelay sd : values()) {
-			if(!(delay >= sd.getDelay()) || sd.isUsed())
+		for (StartDelay sd : values()) {
+			if (!(delay >= sd.getDelay()) || sd.isUsed())
 				continue;
 
-			if(lastDelay == null || lastDelay.getDelay() < sd.getDelay())
+			if (lastDelay == null || lastDelay.getDelay() < sd.getDelay())
 				lastDelay = sd;
 		}
 
@@ -59,7 +59,7 @@ public enum StartDelay {
 	}
 
 	public static void reset() {
-		for(StartDelay sd : values())
+		for (StartDelay sd : values())
 			sd.setUsed(false);
 	}
 }

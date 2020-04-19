@@ -6,12 +6,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.gui.SuperInventory;
 import de.cuuky.varo.gui.admin.alert.AlertChooseGUI.AlertGUIType;
-import de.cuuky.varo.gui.utils.PageAction;
-import de.cuuky.varo.item.ItemBuilder;
-import de.cuuky.varo.version.types.Materials;
 
 public class AlertOptionGUI extends SuperInventory {
 
@@ -23,6 +24,8 @@ public class AlertOptionGUI extends SuperInventory {
 
 		this.type = type;
 		this.alert = alert;
+		this.setModifier = true;
+		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
 

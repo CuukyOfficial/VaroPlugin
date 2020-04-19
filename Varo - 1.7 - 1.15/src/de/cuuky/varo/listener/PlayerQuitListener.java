@@ -26,38 +26,38 @@ public class PlayerQuitListener implements Listener {
 		event.setQuitMessage(null);
 
 		// IF THEY WERE A SPECTATOR
-		if(vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
+		if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 			event.setQuitMessage(ConfigMessages.QUIT_SPECTATOR.getValue(null, vplayer));
 			vplayer.onEvent(BukkitEventType.QUIT);
 			return;
 		}
 
-		if(Main.getVaroGame().getGameState() == GameState.STARTED) {
+		if (Main.getVaroGame().getGameState() == GameState.STARTED) {
 			// IF THEY WERE KICKED OR DEAD
-			if(ConfigSetting.PLAY_TIME.isIntActivated())
-				if(vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
+			if (ConfigSetting.PLAY_TIME.isIntActivated())
+				if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
 					vplayer.onEvent(BukkitEventType.QUIT);
-					if(vplayer.getStats().getState() != PlayerState.DEAD)
+					if (vplayer.getStats().getState() != PlayerState.DEAD)
 						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer));
 					return;
 				}
 
 			// CHECK IF THEY COMBATLOGGED
 			CombatlogCheck check = new CombatlogCheck(event);
-			if(check.isCombatLog()) {
+			if (check.isCombatLog()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}
 
 			// CHECK DISCONNECTS
-			if(vplayer.getStats().hasTimeLeft()) {
-				if(ConfigSetting.DISCONNECT_PER_SESSION.isIntActivated()) {
+			if (vplayer.getStats().hasTimeLeft()) {
+				if (ConfigSetting.DISCONNECT_PER_SESSION.isIntActivated()) {
 					VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
-					if(dc == null)
+					if (dc == null)
 						dc = new VaroPlayerDisconnect(player);
 					dc.addDisconnect();
 
-					if(dc.check()) {
+					if (dc.check()) {
 						vplayer.onEvent(BukkitEventType.QUIT);
 						return;
 					}

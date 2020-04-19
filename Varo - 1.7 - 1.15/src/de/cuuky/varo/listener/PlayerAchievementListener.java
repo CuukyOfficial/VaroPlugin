@@ -11,8 +11,8 @@ public class PlayerAchievementListener implements Listener {
 
 	@EventHandler
 	public void on(PlayerAchievementAwardedEvent event) {
-		if(ConfigSetting.BLOCK_ACHIEVEMENTS.getValueAsBoolean()) {
-			event.setCancelled(true);	
+		if (ConfigSetting.BLOCK_ACHIEVEMENTS.getValueAsBoolean()) {
+			event.setCancelled(true);
 		}
 	}
 }

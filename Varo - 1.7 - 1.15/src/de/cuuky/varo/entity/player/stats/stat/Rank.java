@@ -2,7 +2,6 @@ package de.cuuky.varo.entity.player.stats.stat;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.clientadapter.nametag.Nametag;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
@@ -34,8 +33,6 @@ public class Rank implements VaroSerializeable {
 		this.tablistLocation = 1;
 
 		ranks.add(this);
-
-		Nametag.refreshAll();
 	}
 
 	public int getColorcode() {
@@ -56,7 +53,7 @@ public class Rank implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		if(tablistLocation > highestLocation)
+		if (tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 
@@ -74,7 +71,7 @@ public class Rank implements VaroSerializeable {
 	public void setTablistLocation(int tablistLocation) {
 		this.tablistLocation = tablistLocation;
 
-		if(tablistLocation > highestLocation)
+		if (tablistLocation > highestLocation)
 			highestLocation = tablistLocation;
 	}
 

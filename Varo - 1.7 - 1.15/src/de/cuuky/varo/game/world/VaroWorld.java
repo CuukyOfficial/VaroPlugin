@@ -10,22 +10,22 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.world.border.VaroWorldBorder;
-import de.cuuky.varo.utils.JavaUtils;
-import de.cuuky.varo.version.BukkitVersion;
-import de.cuuky.varo.version.VersionUtils;
 
 public class VaroWorld {
-	
+
 	private World world;
 	private VaroWorldBorder varoWorldBorder;
-	
+
 	public VaroWorld(World world) {
 		this.world = world;
-		
-		if(VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+
+		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			this.varoWorldBorder = new VaroWorldBorder(world);
 	}
 
@@ -38,18 +38,18 @@ public class VaroWorld {
 		int topBlockZ = (Math.max(l1.getBlockZ(), l2.getBlockZ()));
 		int bottomBlockZ = (Math.min(l1.getBlockZ(), l2.getBlockZ()));
 
-		for(int x = bottomBlockX; x <= topBlockX; x++) {
-			for(int y = bottomBlockY; y <= topBlockY; y++) {
-				for(int z = bottomBlockZ; z <= topBlockZ; z++) {
+		for (int x = bottomBlockX; x <= topBlockX; x++) {
+			for (int y = bottomBlockY; y <= topBlockY; y++) {
+				for (int z = bottomBlockZ; z <= topBlockZ; z++) {
 					blocks.add(l1.getWorld().getBlockAt(x, y, z));
 				}
 			}
 		}
 		return blocks;
 	}
-	
+
 	public void fillChests() {
-		if(!ConfigSetting.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
+		if (!ConfigSetting.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
 
 		int radius = ConfigSetting.RANDOM_CHEST_FILL_RADIUS.getValueAsInt();
@@ -58,18 +58,18 @@ public class VaroWorld {
 
 		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
-		if(chestItems.isEmpty())
+		if (chestItems.isEmpty())
 			return;
-		
-		for(Block block : getBlocksBetweenPoints(loc, loc2)) {
-			if(!(block.getState() instanceof Chest))
+
+		for (Block block : getBlocksBetweenPoints(loc, loc2)) {
+			if (!(block.getState() instanceof Chest))
 				continue;
 
 			Chest chest = (Chest) block.getState();
 			chest.getBlockInventory().clear();
-			for(int i = 0; i < itemsPerChest; i++) {
+			for (int i = 0; i < itemsPerChest; i++) {
 				int random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
-				while(chest.getBlockInventory().getContents().length != chest.getBlockInventory().getSize())
+				while (chest.getBlockInventory().getContents().length != chest.getBlockInventory().getSize())
 					random = JavaUtils.randomInt(0, chest.getBlockInventory().getSize() - 1);
 
 				chest.getBlockInventory().setItem(random, chestItems.get(JavaUtils.randomInt(0, chestItems.size() - 1)));
@@ -79,11 +79,10 @@ public class VaroWorld {
 		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
 	}
 
-	
 	public World getWorld() {
 		return this.world;
 	}
-	
+
 	public VaroWorldBorder getVaroBorder() {
 		return this.varoWorldBorder;
 	}

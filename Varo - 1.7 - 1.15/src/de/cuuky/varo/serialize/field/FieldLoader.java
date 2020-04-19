@@ -19,15 +19,15 @@ public class FieldLoader {
 		this.arrayTypes = new HashMap<Field, Class<? extends VaroSerializeable>>();
 
 		Field[] declFields = clazz.getDeclaredFields();
-		for(Field field : declFields) {
-			if(field.getAnnotation(VaroSerializeField.class) == null)
+		for (Field field : declFields) {
+			if (field.getAnnotation(VaroSerializeField.class) == null)
 				continue;
 
 			VaroSerializeField anno = field.getAnnotation(VaroSerializeField.class);
 
 			fields.put(anno.path(), field);
 
-			if(Collection.class.isAssignableFrom(field.getType()) && anno.arrayClass() != NullClass.class)
+			if (Collection.class.isAssignableFrom(field.getType()) && anno.arrayClass() != NullClass.class)
 				arrayTypes.put(field, anno.arrayClass());
 		}
 	}

@@ -14,7 +14,7 @@ public class VaroTeamHandler extends VaroSerializeObject {
 	public void onSave() {
 		clearOld();
 
-		for(VaroTeam team : VaroTeam.getTeams())
+		for (VaroTeam team : VaroTeam.getTeams())
 			save(String.valueOf(team.getId()), team, getConfiguration());
 
 		saveFile();

@@ -2,11 +2,11 @@ package de.cuuky.varo.logger.logger;
 
 import java.awt.Color;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.VaroLogger;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class EventLogger extends VaroLogger {
 
@@ -41,15 +41,15 @@ public class EventLogger extends VaroLogger {
 		}
 
 		public long getPostChannel() {
-			if(idEntry == null || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
+			if (idEntry == null || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
 				return -1;
 
 			return idEntry.getValueAsLong() != -1 ? idEntry.getValueAsLong() : ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
 		}
 
 		public static LogType getType(String s) {
-			for(LogType type : values())
-				if(type.getName().equalsIgnoreCase(s))
+			for (LogType type : values())
+				if (type.getName().equalsIgnoreCase(s))
 					return type;
 
 			return null;
@@ -63,9 +63,9 @@ public class EventLogger extends VaroLogger {
 	private void sendToDiscord(LogType type, String msg) {
 		try {
 			Main.getBotLauncher().getDiscordbot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
-		} catch(NoClassDefFoundError | BootstrapMethodError e) {
+		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(Main.getPrefix() + "Failed to broadcast message! Did you enter a wrong channel ID?");
 			return;
@@ -74,15 +74,15 @@ public class EventLogger extends VaroLogger {
 
 	private void sendToTelegram(LogType type, String message) {
 		VaroTelegramBot telegramBot = Main.getBotLauncher().getTelegrambot();
-		if(telegramBot == null)
+		if (telegramBot == null)
 			return;
 
 		try {
-			if(!type.equals(LogType.YOUTUBE))
+			if (!type.equals(LogType.YOUTUBE))
 				telegramBot.sendEvent(message);
 			else
 				telegramBot.sendVideo(message);
-		} catch(ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException e) {
 			telegramBot.sendEvent(message);
 		}
 	}
@@ -97,7 +97,7 @@ public class EventLogger extends VaroLogger {
 
 		pw.flush();
 
-		if(type.getPostChannel() == -1 || message.contains("%noBot%"))
+		if (type.getPostChannel() == -1 || message.contains("%noBot%"))
 			return;
 
 		sendToDiscord(type, message);

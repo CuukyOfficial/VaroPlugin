@@ -20,12 +20,12 @@ public class EnchantmentList extends VaroList {
 
 		saveList();
 	}
-	
+
 	@Override
 	public void onLoad(List<?> list) {
 		enchantments = new ArrayList<String>();
 
-		for(Object id : list)
+		for (Object id : list)
 			enchantments.add((String) id);
 	}
 
@@ -49,8 +49,8 @@ public class EnchantmentList extends VaroList {
 	}
 
 	public static EnchantmentList getEnchantmentList(String list) {
-		for(EnchantmentList eList : getEnchantmentLists())
-			if(eList.getLocation().equalsIgnoreCase(list))
+		for (EnchantmentList eList : getEnchantmentLists())
+			if (eList.getLocation().equalsIgnoreCase(list))
 				return eList;
 
 		return null;
@@ -59,8 +59,8 @@ public class EnchantmentList extends VaroList {
 	public static ArrayList<EnchantmentList> getEnchantmentLists() {
 		ArrayList<EnchantmentList> eList = new ArrayList<>();
 
-		for(VaroList vlist : VaroList.getLists())
-			if(vlist instanceof EnchantmentList)
+		for (VaroList vlist : VaroList.getLists())
+			if (vlist instanceof EnchantmentList)
 				eList.add((EnchantmentList) vlist);
 
 		return eList;

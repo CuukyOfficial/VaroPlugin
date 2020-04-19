@@ -6,13 +6,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class ConfigCommand extends VaroCommand {
 
@@ -22,7 +22,7 @@ public class ConfigCommand extends VaroCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Config"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config set §7<key> <value>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config search <Keyword>");
@@ -33,18 +33,18 @@ public class ConfigCommand extends VaroCommand {
 			return;
 		}
 
-		if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
+		if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
 			Main.getDataManager().reloadConfig();
 			Main.getDataManager().reloadPlayerClients();
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_RELOADED.getValue(vp));
-		} else if(args[0].equalsIgnoreCase("set")) {
-			if(args.length != 3) {
+		} else if (args[0].equalsIgnoreCase("set")) {
+			if (args.length != 3) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_HELP_SET.getValue(vp));
 				return;
 			}
 
-			for(ConfigSetting entry : ConfigSetting.values()) {
-				if(!entry.getPath().equalsIgnoreCase(args[1]))
+			for (ConfigSetting entry : ConfigSetting.values()) {
+				if (!entry.getPath().equalsIgnoreCase(args[1]))
 					continue;
 
 				Object arg = JavaUtils.getStringObject(args[2]);
@@ -55,41 +55,41 @@ public class ConfigCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND.getValue(vp).replace("%entry%", args[1]));
-		} else if(args[0].equalsIgnoreCase("reset")) {
-			for(ConfigSetting entry : ConfigSetting.values())
+		} else if (args[0].equalsIgnoreCase("reset")) {
+			for (ConfigSetting entry : ConfigSetting.values())
 				entry.setValue(entry.getDefaultValue(), true);
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_RESET.getValue(vp));
-		}else if(args[0].equalsIgnoreCase("menu")) {
-			if(!(sender instanceof Player)) {
+		} else if (args[0].equalsIgnoreCase("menu")) {
+			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 				return;
 			}
-			
+
 			new ConfigSectionGUI((Player) sender);
-		} else if(args[0].equalsIgnoreCase("search")) {
-			if(args.length != 2) {
+		} else if (args[0].equalsIgnoreCase("search")) {
+			if (args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_HELP_SEARCH.getValue(vp));
 				return;
 			}
-			
+
 			String needle = args[1];
 			ArrayList<ConfigSetting> foundSettings = new ArrayList<>();
-			
-			for(ConfigSetting setting : ConfigSetting.values()) {
-				if(!setting.getFullPath().toLowerCase().contains(needle))
+
+			for (ConfigSetting setting : ConfigSetting.values()) {
+				if (!setting.getFullPath().toLowerCase().contains(needle))
 					continue;
-				
+
 				foundSettings.add(setting);
 			}
-			
-			if(foundSettings.isEmpty()) {
+
+			if (foundSettings.isEmpty()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND.getValue(vp).replace("%entry%", needle));
 				return;
 			}
-			
+
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE.getValue(vp));
-			for(ConfigSetting setting : foundSettings) 
+			for (ConfigSetting setting : foundSettings)
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT.getValue(vp).replace("%entry%", setting.getFullPath().toString()).replace("%description%", JavaUtils.getArgsToString(setting.getDescription(), " ")));
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "config"));

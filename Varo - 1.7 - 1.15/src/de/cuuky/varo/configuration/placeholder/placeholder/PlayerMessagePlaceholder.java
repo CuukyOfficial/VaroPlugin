@@ -24,23 +24,23 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 		this.placeholderValues = new HashMap<>();
 		this.placeholderRefreshes = new HashMap<>();
 
-		if(playerPlaceholder == null)
+		if (playerPlaceholder == null)
 			playerPlaceholder = new ArrayList<>();
 
 		playerPlaceholder.add(this);
 	}
 
 	private void checkRefresh(VaroPlayer player) {
-		if(!shallRefresh(player))
+		if (!shallRefresh(player))
 			return;
 
 		refreshValue(player);
 	}
 
 	private boolean shallRefresh(VaroPlayer player) {
-		if(!this.placeholderRefreshes.containsKey(player))
+		if (!this.placeholderRefreshes.containsKey(player))
 			return true;
-		
+
 		return this.shallRefresh(this.placeholderRefreshes.get(player));
 	}
 
@@ -65,8 +65,8 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 
 	private static Object[] replaceByList(String value, VaroPlayer vp, ArrayList<PlayerMessagePlaceholder> list) {
 		ArrayList<PlayerMessagePlaceholder> cached = new ArrayList<>();
-		for(PlayerMessagePlaceholder pmp : list)
-			if(pmp.containsPlaceholder(value)) {
+		for (PlayerMessagePlaceholder pmp : list)
+			if (pmp.containsPlaceholder(value)) {
 				value = pmp.replacePlaceholder(value, vp);
 				cached.add(pmp);
 			}
@@ -75,7 +75,7 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 	}
 
 	public static String replacePlaceholders(String value, VaroPlayer vp) {
-		if(cachedRequests.get(value) != null)
+		if (cachedRequests.get(value) != null)
 			return (String) replaceByList(value, vp, cachedRequests.get(value))[0];
 		else {
 			Object[] result = replaceByList(value, vp, playerPlaceholder);
@@ -83,7 +83,7 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 			return (String) result[0];
 		}
 	}
-	
+
 	public static void clearCache() {
 		cachedRequests.clear();
 	}

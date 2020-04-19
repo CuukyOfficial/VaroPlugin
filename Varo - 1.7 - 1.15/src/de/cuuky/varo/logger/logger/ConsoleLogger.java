@@ -2,8 +2,8 @@ package de.cuuky.varo.logger.logger;
 
 import java.io.PrintStream;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.logger.VaroLogger;
-import de.cuuky.varo.utils.JavaUtils;
 
 public class ConsoleLogger extends VaroLogger {
 
@@ -20,7 +20,7 @@ public class ConsoleLogger extends VaroLogger {
 			public void println(Object x) {
 				super.println(x);
 
-				if(x == null)
+				if (x == null)
 					ConsoleLogger.this.println("null");
 				else
 					ConsoleLogger.this.println(x.toString());
@@ -30,7 +30,7 @@ public class ConsoleLogger extends VaroLogger {
 			public void println(String x) {
 				super.println(x);
 
-				if(x == null)
+				if (x == null)
 					ConsoleLogger.this.println("null");
 				else
 					ConsoleLogger.this.println(x);
@@ -43,7 +43,7 @@ public class ConsoleLogger extends VaroLogger {
 			public void println(Object x) {
 				super.println(x);
 
-				if(x == null)
+				if (x == null)
 					ConsoleLogger.this.println("null");
 				else
 					ConsoleLogger.this.println(x.toString());
@@ -53,7 +53,7 @@ public class ConsoleLogger extends VaroLogger {
 			public void println(String x) {
 				super.println(x);
 
-				if(x == null)
+				if (x == null)
 					ConsoleLogger.this.println("null");
 				else
 					ConsoleLogger.this.println(x);

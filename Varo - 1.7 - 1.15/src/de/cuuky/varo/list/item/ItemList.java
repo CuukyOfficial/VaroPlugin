@@ -18,18 +18,18 @@ public class ItemList extends VaroList {
 	protected ItemStack fixItem(ItemStack item) {
 		item = item.clone();
 		item.setAmount(1);
-		if(isDamageable(item))
+		if (isDamageable(item))
 			item.setDurability((short) 0);
 		return item;
 	}
 
 	protected boolean isDamageable(ItemStack item) {
-		if(item == null)
+		if (item == null)
 			return false;
 
 		String[] split = item.getType().toString().split("_");
 		int length = split.length;
-		switch(split[length - 1]) {
+		switch (split[length - 1]) {
 		case "HELMET":
 			return true;
 		case "CHESTPLATE":
@@ -77,11 +77,11 @@ public class ItemList extends VaroList {
 	public void onLoad(List<?> list) {
 		items = new ArrayList<ItemStack>();
 
-		for(Object id : list) {
+		for (Object id : list) {
 			try {
 				ItemStack c = (ItemStack) id;
 				items.add(c);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				continue;
 			}
 		}
@@ -92,7 +92,7 @@ public class ItemList extends VaroList {
 
 		saveList();
 	}
-	
+
 	@Override
 	public ArrayList<?> getAsList() {
 		return items;
@@ -103,8 +103,8 @@ public class ItemList extends VaroList {
 	}
 
 	public static ItemList getItemList(String list) {
-		for(ItemList iList : getItemLists())
-			if(iList.getLocation().equalsIgnoreCase(list))
+		for (ItemList iList : getItemLists())
+			if (iList.getLocation().equalsIgnoreCase(list))
 				return iList;
 
 		return null;
@@ -113,8 +113,8 @@ public class ItemList extends VaroList {
 	public static ArrayList<ItemList> getItemLists() {
 		ArrayList<ItemList> iList = new ArrayList<>();
 
-		for(VaroList vlist : VaroList.getLists())
-			if(vlist instanceof ItemList)
+		for (VaroList vlist : VaroList.getLists())
+			if (vlist instanceof ItemList)
 				iList.add((ItemList) vlist);
 
 		return iList;
@@ -124,8 +124,8 @@ public class ItemList extends VaroList {
 	public static ArrayList<ItemList> getItemListsMultipleAdd() {
 		ArrayList<ItemList> itemLists = getItemLists();
 		ArrayList<ItemList> multipleAdd = new ArrayList<>();
-		for(ItemList list : itemLists) {
-			switch(list.getLocation()) {
+		for (ItemList list : itemLists) {
+			switch (list.getLocation()) {
 			case "ChestItems":
 			case "StartItems":
 			case "DeathItems":

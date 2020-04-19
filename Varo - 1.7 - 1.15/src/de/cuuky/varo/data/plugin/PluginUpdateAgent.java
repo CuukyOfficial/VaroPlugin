@@ -19,8 +19,8 @@ public class PluginUpdateAgent {
 		this.updater = new HashMap<>();
 		this.loader = loader;
 
-		for(DownloadPlugin plugin : DownloadPlugin.values())
-			if(plugin.getPlugin() != null) 
+		for (DownloadPlugin plugin : DownloadPlugin.values())
+			if (plugin.getPlugin() != null)
 				this.updater.put(plugin, new VaroUpdater(plugin.getId(), plugin.getPlugin().getDescription().getVersion(), null));
 
 		startAgent();
@@ -32,16 +32,16 @@ public class PluginUpdateAgent {
 			@Override
 			public void run() {
 				ArrayList<DownloadPlugin> needUpdate = new ArrayList<>();
-				for(DownloadPlugin plugin : updater.keySet()) {
+				for (DownloadPlugin plugin : updater.keySet()) {
 					VaroUpdater pluginUpdater = updater.get(plugin);
-					if(pluginUpdater.getLastResult() == null)
+					if (pluginUpdater.getLastResult() == null)
 						return;
 
-					if(pluginUpdater.getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
+					if (pluginUpdater.getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
 						needUpdate.add(plugin);
 				}
 
-				if(!needUpdate.isEmpty())
+				if (!needUpdate.isEmpty())
 					updatePlugins(needUpdate);
 				else {
 					System.out.println(Main.getConsolePrefix() + "Updater: All libraries are up to date!");
@@ -54,7 +54,7 @@ public class PluginUpdateAgent {
 	private void updatePlugins(ArrayList<DownloadPlugin> needUpdate) {
 		Main.getDataManager().setDoSave(false);
 
-		for(DownloadPlugin plugin : needUpdate) {
+		for (DownloadPlugin plugin : needUpdate) {
 			Bukkit.getPluginManager().disablePlugin(plugin.getPlugin());
 
 			System.out.println(Main.getConsolePrefix() + "Downloading update of library " + plugin.getName() + "...");

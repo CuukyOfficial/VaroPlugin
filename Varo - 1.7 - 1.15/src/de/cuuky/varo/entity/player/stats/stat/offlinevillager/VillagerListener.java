@@ -15,11 +15,11 @@ public class VillagerListener implements Listener {
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
-		if(!event.getEntity().getType().toString().contains("ZOMBIE") || event.getCause().toString().contains("ENTITY"))
+		if (!event.getEntity().getType().toString().contains("ZOMBIE") || event.getCause().toString().contains("ENTITY"))
 			return;
 
 		OfflineVillager vill = OfflineVillager.getVillager(event.getEntity());
-		if(vill == null)
+		if (vill == null)
 			return;
 
 		event.setCancelled(true);
@@ -27,19 +27,19 @@ public class VillagerListener implements Listener {
 
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-		if(!event.getEntity().getType().toString().contains("ZOMBIE"))
+		if (!event.getEntity().getType().toString().contains("ZOMBIE"))
 			return;
 
 		OfflineVillager vill = OfflineVillager.getVillager(event.getEntity());
-		if(vill == null)
+		if (vill == null)
 			return;
 
 		Player damager = new EntityDamageByEntityUtil(event).getDamager();
-		if(damager == null)
+		if (damager == null)
 			return;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(damager);
-		if(vp.getTeam() == null || vill.getVp().getTeam() == null || !vp.getTeam().equals(vill.getVp().getTeam()))
+		if (vp.getTeam() == null || vill.getVp().getTeam() == null || !vp.getTeam().equals(vill.getVp().getTeam()))
 			return;
 
 		event.setCancelled(true);
@@ -47,11 +47,11 @@ public class VillagerListener implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
-		if(event.getEntity().getKiller() == null || !event.getEntity().getType().toString().contains("ZOMBIE"))
+		if (event.getEntity().getKiller() == null || !event.getEntity().getType().toString().contains("ZOMBIE"))
 			return;
 
 		OfflineVillager vill = OfflineVillager.getVillager(event.getEntity());
-		if(vill == null)
+		if (vill == null)
 			return;
 
 		vill.kill(VaroPlayer.getPlayer(event.getEntity().getKiller()));
@@ -59,11 +59,11 @@ public class VillagerListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEntityEvent event) {
-		if(!event.getRightClicked().getType().toString().contains("ZOMBIE"))
+		if (!event.getRightClicked().getType().toString().contains("ZOMBIE"))
 			return;
 
 		OfflineVillager vill = OfflineVillager.getVillager(event.getRightClicked());
-		if(vill == null)
+		if (vill == null)
 			return;
 
 		event.setCancelled(true);

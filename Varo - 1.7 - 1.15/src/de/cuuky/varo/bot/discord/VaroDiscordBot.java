@@ -39,7 +39,7 @@ public class VaroDiscordBot implements VaroBot {
 		try {
 			jda = builder.build();
 			jda.addEventListener(new DiscordBotEventListener());
-		} catch(Exception | Error e) {
+		} catch (Exception | Error e) {
 			e.printStackTrace();
 			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
 			return;
@@ -48,51 +48,51 @@ public class VaroDiscordBot implements VaroBot {
 		try {
 			System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
 			jda.awaitReady();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return;
 		}
 
 		loadChannel();
-		if(getMainGuild() == null) {
+		if (getMainGuild() == null) {
 			System.out.println(Main.getConsolePrefix() + "Cannot get server from ID " + ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong());
 			disconnect();
 		}
-		
+
 		System.out.println(Main.getConsolePrefix() + "DiscordBot enabled successfully!");
 	}
 
 	private void loadChannel() {
 		try {
 			announcementChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
-			
-			if(announcementChannel == -1)
+
+			if (announcementChannel == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not load announcement-channel");
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+		} catch (ClassCastException | IllegalArgumentException | NullPointerException e) {
 			System.err.println(Main.getConsolePrefix() + "Could not load announcement-channel");
 		}
 
 		try {
 			eventChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+		} catch (ClassCastException | IllegalArgumentException | NullPointerException e) {
 			System.err.println(Main.getConsolePrefix() + "Could not load event-channel");
 		}
 
 		try {
 			resultChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
 
-			if(resultChannel == -1)
+			if (resultChannel == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+		} catch (ClassCastException | IllegalArgumentException | NullPointerException e) {
 			System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
 		}
 
 		try {
-			if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+			if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
 				registerChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_REGISTERCHANNELID.getValueAsLong()).getIdLong();
 
-			if(registerChannel == -1)
+			if (registerChannel == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not load register-channel");
-		} catch(ClassCastException | IllegalArgumentException | NullPointerException e) {
+		} catch (ClassCastException | IllegalArgumentException | NullPointerException e) {
 			System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
 		}
 
@@ -100,30 +100,30 @@ public class VaroDiscordBot implements VaroBot {
 			pingRole = -1;
 			pingRole = jda.getRoleById(ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong()).getIdLong();
 
-			if(pingRole == -1)
+			if (pingRole == -1)
 				System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
-		} catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			System.err.println(Main.getConsolePrefix() + "Could not find role for: " + ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
 		}
 	}
 
 	@Override
 	public void disconnect() {
-		if(!isEnabled())
+		if (!isEnabled())
 			return;
 
 		try {
 			jda.shutdownNow();
-		} catch(Exception | Error e) {
+		} catch (Exception | Error e) {
 			System.err.println("[Varo] DiscordBot failed shutting down! Maybe you switched the version while the plugin was running?");
 			try {
 				jda.shutdown();
-			} catch(Exception | Error e1) {}
+			} catch (Exception | Error e1) {}
 		}
 
 		jda = null;
 	}
-	
+
 	public void sendFile(String message, File file, TextChannel channel) {
 		channel.sendFile(file, message.replace("_", "\\_")).queue();
 	}
@@ -132,20 +132,20 @@ public class VaroDiscordBot implements VaroBot {
 		TextChannel channel = null;
 		try {
 			channel = jda.getTextChannelById(channelid);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println(Main.getConsolePrefix() + "Failed to print message");
 			return;
 		}
 
 		EmbedBuilder builder = new EmbedBuilder();
-		if(!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
+		if (!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
 			builder.setColor(color);
 		else
 			builder.setColor(getRandomColor());
 		builder.addField(title, message.replace("_", "\\_"), true);
 		try {
 			channel.sendMessage(builder.build()).queue();
-		} catch(PermissionException e) {
+		} catch (PermissionException e) {
 			System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 			System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());
 		}
@@ -157,25 +157,25 @@ public class VaroDiscordBot implements VaroBot {
 		builder.addField(title, message.replace("_", "\\_"), true);
 		try {
 			channel.sendMessage(builder.build()).queue();
-		} catch(PermissionException e) {
+		} catch (PermissionException e) {
 			System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 			System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());
 		}
 	}
 
 	public void sendRawMessage(String message, TextChannel channel) {
-		if(jda == null || message.isEmpty())
+		if (jda == null || message.isEmpty())
 			return;
 
 		try {
 			channel.sendMessage(message.replace("_", "\\_")).queue();
-		} catch(PermissionException e) {
+		} catch (PermissionException e) {
 			System.err.println("Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 		}
 	}
-	
+
 	public String getMentionRole() {
-		if(pingRole == -1)
+		if (pingRole == -1)
 			return "@everyone";
 
 		return jda.getRoleById(pingRole).getAsMention();
@@ -188,7 +188,7 @@ public class VaroDiscordBot implements VaroBot {
 	public TextChannel getEventChannel() {
 		return jda.getTextChannelById(eventChannel);
 	}
-	
+
 	public TextChannel getRegisterChannel() {
 		return jda.getTextChannelById(registerChannel);
 	}
