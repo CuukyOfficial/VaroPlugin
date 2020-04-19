@@ -103,7 +103,6 @@ public class NetworkManager {
 			}
 			
 			this.locale = this.locale.toLowerCase();
-			System.out.println(locale);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
