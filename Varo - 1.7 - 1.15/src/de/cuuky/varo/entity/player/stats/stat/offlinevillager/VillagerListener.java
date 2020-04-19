@@ -8,8 +8,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.listener.utils.EntityDamageByEntityUtil;
 
 public class VillagerListener implements Listener {
 

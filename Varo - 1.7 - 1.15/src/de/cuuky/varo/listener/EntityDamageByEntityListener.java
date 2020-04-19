@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
@@ -13,7 +14,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
-import de.cuuky.varo.listener.utils.EntityDamageByEntityUtil;
 
 public class EntityDamageByEntityListener implements Listener {
 
