@@ -53,8 +53,10 @@ public class VaroDiscordBot implements VaroBot {
 		}
 
 		loadChannel();
-		if(getMainGuild() == null) 
-			throw new NullPointerException("Cannot get server ID from " + ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong());
+		if(getMainGuild() == null) {
+			System.out.println(Main.getConsolePrefix() + "Cannot get server from ID " + ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong());
+			disconnect();
+		}
 		
 		System.out.println(Main.getConsolePrefix() + "DiscordBot enabled successfully!");
 	}
