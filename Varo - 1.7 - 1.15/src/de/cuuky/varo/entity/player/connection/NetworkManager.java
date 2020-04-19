@@ -98,8 +98,6 @@ public class NetworkManager {
 					Field localeField = playerHandle.getClass().getField("locale");
 					localeField.setAccessible(true);
 					locale = (String) localeField.get(playerHandle);
-
-					System.out.println(locale);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
