@@ -31,6 +31,8 @@ import de.cuuky.varo.utils.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;
 
 public class DataManager {
+	
+	private static final int SAVE_DELAY = 12000; 
 
 	private ConfigHandler configHandler;
 	private VaroGameHandler varoGameHandler;
@@ -104,7 +106,7 @@ public class DataManager {
 					}
 				}, 1);
 			}
-		}, 12000, 12000);
+		}, SAVE_DELAY, SAVE_DELAY);
 	}
 
 	public void reloadConfig() {
