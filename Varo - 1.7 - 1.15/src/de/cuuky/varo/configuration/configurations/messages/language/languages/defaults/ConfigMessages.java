@@ -8,8 +8,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 
 public enum ConfigMessages implements DefaultLanguage {
 
-	TEST_MESSAGE("test.message", "Hallo, wie geht es dir"),
-
 	ALERT_AUTOSTART_AT("alerts.BOTS_ALERT.autostartAt", "%projectname% wird am %date% starten!"),
 	ALERT_BORDER_CHANGED("alerts.BOTS_ALERT.borderChanged", "Die Border wurde auf %size% gesetzt!"),
 	ALERT_BORDER_DECREASED_DEATH("alerts.BOTS_ALERT.borderDecrease.death", "Die Border wurde um %size% aufgrund eines Todes verringert!"),
