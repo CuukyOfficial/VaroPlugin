@@ -302,7 +302,7 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	private String getMessage(Language lang) {
 		String message = null;
-		if(lang == Main.getLanguageManager().getDefaultLanguage() || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean()) 
+		if(lang == null || lang == Main.getLanguageManager().getDefaultLanguage() || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean()) 
 			message = Main.getLanguageManager().getDefaultLanguage().getMessage(this.path);
 		else {
 			String langMsg = lang.getMessage(this.path);
