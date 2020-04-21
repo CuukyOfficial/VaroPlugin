@@ -127,6 +127,16 @@ public class BotRegister {
 	public void setUserId(long user) {
 		this.userId = user;
 	}
+	
+	private static void kickPlayerLater(Player player, String message) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+			
+			@Override
+			public void run() {
+				player.kickPlayer(message);
+			}
+		}, 0);
+	}
 
 	private static void loadAll() {
 		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
@@ -157,7 +167,7 @@ public class BotRegister {
 
 					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 					if (player != null && !reg.isActive())
-						player.kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(player)));
+						kickPlayerLater(player, reg.getKickMessage(VaroPlayer.getPlayer(player)));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -186,7 +196,7 @@ public class BotRegister {
 
 				Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 				if (player != null && !reg.isActive())
-					player.kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(player)));
+					kickPlayerLater(player, reg.getKickMessage(VaroPlayer.getPlayer(player)));
 			}
 		}
 	}
