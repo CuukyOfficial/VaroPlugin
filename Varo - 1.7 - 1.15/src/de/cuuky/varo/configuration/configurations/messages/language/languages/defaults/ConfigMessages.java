@@ -328,7 +328,7 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	@Override
 	public String getValue(VaroPlayer localeHolder) {
-		return getMessage(localeHolder != null && localeHolder.isOnline() ? Main.getLanguageManager().getLanguages().get(localeHolder.getNetworkManager().getLocale()) : Main.getLanguageManager().getDefaultLanguage());
+		return getMessage(localeHolder != null && localeHolder.getLocale() != null ? Main.getLanguageManager().getLanguages().get(localeHolder.getLocale()) : Main.getLanguageManager().getDefaultLanguage());
 	}
 
 	@Override

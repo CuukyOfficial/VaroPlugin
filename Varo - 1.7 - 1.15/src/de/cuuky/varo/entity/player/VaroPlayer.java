@@ -57,6 +57,9 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 
 	@VaroSerializeField(path = "uuid")
 	private String uuid;
+	
+	@VaroSerializeField(path = "locale")
+	private String locale;
 
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
@@ -301,6 +304,11 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 	@Override
 	public String getUUID() {
 		return this.uuid;
+	}
+	
+	@Override
+	public String getLocale() {
+		return this.networkManager != null && this.networkManager.getLocale() != null ? this.networkManager.getLocale() : this.locale;
 	}
 
 	@Override
