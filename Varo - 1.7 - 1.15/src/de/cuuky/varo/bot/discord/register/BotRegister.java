@@ -129,6 +129,9 @@ public class BotRegister {
 	}
 	
 	private static void kickPlayerLater(Player player, String message) {
+		if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean())
+			return;
+		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 			
 			@Override
