@@ -126,6 +126,9 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 			return;
 
 		Member member = reg.getMember();
+		if(member == null)
+			return;
+		
 		if (oldTeam != null) {
 			if (db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
 				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
