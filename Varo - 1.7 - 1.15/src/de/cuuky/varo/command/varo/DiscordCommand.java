@@ -77,7 +77,7 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			return;
-		} else if (sender.hasPermission("varo.discord")) {
+		} else if (!sender.hasPermission("varo.discord")) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "discord"));
 			return;
 		}
