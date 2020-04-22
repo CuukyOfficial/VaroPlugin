@@ -230,7 +230,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_CONFIG_RELOADED("varoCommands.config.reloaded", "&7Alle %colorcode%Listen&7, %colorcode%Nachrichten &7und die %colorcode%Config &7wurden erfolgreich neu geladen."),
 	VARO_COMMANDS_CONFIG_HELP_SET("varoCommands.config.helpset", "%colorcode%/varo config &7set <key> <value>"),
 	VARO_COMMANDS_CONFIG_HELP_SEARCH("varoCommands.config.helpsearch", "%colorcode%/varo config &7search <key>"),
-	VARO_COMMANDS_CONFIG_ENTRY_SET("varoCommands.config.entryset", "&7Der Eintrag '%colorcode%%entry%&7' wurde erfolgreich auf '%colorcode%%value%&7'gesetzt."),
+	VARO_COMMANDS_CONFIG_ENTRY_SET("varoCommands.config.entryset", "&7Der Eintrag '%colorcode%%entry%&7' wurde erfolgreich auf '%colorcode%%value%&7' gesetzt."),
 	VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND("varoCommands.config.entrynotfound", "&7Der Eintrag '%colorcode%%entry%&7' wurde nicht gefunden."),
 	VARO_COMMANDS_CONFIG_RESET("varoCommands.config.reset", "&7Alle Eintraege wurden erfolgreich zurueckgesetzt."),
 	VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE("varoCommands.config.searchlisttitle", "&lFolgende Einstellungen wurden gefunden:"),
