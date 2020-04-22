@@ -62,7 +62,8 @@ public class StatsCommand extends VaroCommand {
 					break;
 				}
 
-				vp.update();
+				if (vp.isOnline())
+					vp.update();
 			} catch (Exception e) {
 				sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
 				return false;
@@ -105,7 +106,8 @@ public class StatsCommand extends VaroCommand {
 				break;
 			}
 
-			vp.update();
+			if (vp.isOnline())
+				vp.update();
 		}
 
 		public static SetArgumentType getByName(String name) {

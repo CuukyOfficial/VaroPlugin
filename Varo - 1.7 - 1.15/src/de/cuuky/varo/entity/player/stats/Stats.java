@@ -102,7 +102,10 @@ public class Stats implements VaroSerializeable {
 
 	public void addKill() {
 		this.kills++;
-		owner.update();
+		
+		if (owner.isOnline())
+			owner.update();
+		
 		Main.getVaroGame().getTopScores().update();
 	}
 

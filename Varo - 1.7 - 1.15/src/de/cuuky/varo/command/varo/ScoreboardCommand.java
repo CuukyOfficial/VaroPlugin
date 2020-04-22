@@ -42,6 +42,7 @@ public class ScoreboardCommand extends VaroCommand {
 			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_ENABLED.getValue(vp));
 		}
 
-		vp.update();
+		if (vp.isOnline())
+			vp.update();
 	}
 }

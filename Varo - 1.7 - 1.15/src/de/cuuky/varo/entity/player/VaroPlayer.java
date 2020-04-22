@@ -57,7 +57,7 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 
 	@VaroSerializeField(path = "uuid")
 	private String uuid;
-	
+
 	@VaroSerializeField(path = "locale")
 	private String locale;
 
@@ -126,9 +126,9 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 			return;
 
 		Member member = reg.getMember();
-		if(member == null)
+		if (member == null)
 			return;
-		
+
 		if (oldTeam != null) {
 			if (db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
 				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
@@ -308,7 +308,7 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 	public String getUUID() {
 		return this.uuid;
 	}
-	
+
 	@Override
 	public String getLocale() {
 		return this.networkManager != null && this.networkManager.getLocale() != null ? this.networkManager.getLocale() : this.locale;
@@ -416,7 +416,9 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 
 	public void setRank(Rank rank) {
 		this.rank = rank;
-		update();
+
+		if (isOnline())
+			update();
 	}
 
 	public void setUuid(String uuid) {
@@ -451,7 +453,9 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 			e.printStackTrace();
 		}
 
-		update();
+		if (isOnline())
+			update();
+
 		Main.getVaroGame().getTopScores().update();
 	}
 

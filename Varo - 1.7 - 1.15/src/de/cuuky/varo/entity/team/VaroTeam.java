@@ -219,7 +219,9 @@ public class VaroTeam extends VaroEntity {
 	}
 
 	public void statChanged() {
-		this.member.forEach(member -> member.update());
+		for (VaroPlayer member : this.member)
+			if (member.isOnline())
+				member.update();
 	}
 
 	public static ArrayList<VaroTeam> getAliveTeams() {
