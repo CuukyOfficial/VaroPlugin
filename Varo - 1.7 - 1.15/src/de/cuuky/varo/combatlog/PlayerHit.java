@@ -22,7 +22,7 @@ public class PlayerHit {
 	 * OLD CODE
 	 */
 
-	private static class HitListener implements Listener {
+	public static class HitListener implements Listener {
 
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onHit(EntityDamageByEntityEvent event) {
@@ -34,8 +34,8 @@ public class PlayerHit {
 
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());
 			VaroPlayer vp1 = VaroPlayer.getPlayer(((Player) event.getDamager()).getName());
-
-			if (vp.getTeam() == null || vp1.getTeam() == null || vp.getTeam().equals(vp1.getTeam()))
+			
+			if (vp.getTeam() != null && vp1.getTeam() != null && vp.getTeam().equals(vp1.getTeam()))
 				return;
 
 			Date current = new Date();
@@ -56,8 +56,6 @@ public class PlayerHit {
 
 	static {
 		hits = new ArrayList<>();
-
-		Bukkit.getPluginManager().registerEvents(new HitListener(), Main.getInstance());
 	}
 
 	private int task;
@@ -78,6 +76,7 @@ public class PlayerHit {
 	}
 
 	private void scheduleOvertime() {
+		System.out.println(1);
 		task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
 
 			@Override

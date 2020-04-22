@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.combatlog.PlayerHit.HitListener;
 import de.cuuky.varo.command.VaroCommandListener;
 import de.cuuky.varo.command.essentials.AntiXrayCommand;
 import de.cuuky.varo.command.essentials.BorderCommand;
@@ -145,6 +146,7 @@ public final class BukkitRegisterer {
 		registerEvent(new VaroEventListener());
 		registerEvent(new VaroWorldListener());
 		registerEvent(new FancyEffectListener());
+		registerEvent(new HitListener());
 
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			registerEvent(new PlayerAchievementListener());
