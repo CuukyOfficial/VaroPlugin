@@ -19,11 +19,11 @@ public class TeamCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Befehle:");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Teamname> <Spieler 1, 2, 3...>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Team/TeamID> <Spieler 1, 2, 3...>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player/@a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add §7<Player> <Team/TeamID>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team-Name> <Neuer Team-Name>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode §7<Team-Name> remove/<Farbcode>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add §7<Team/TeamID> <Player>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team/TeamID> <Neuer Team-Name>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode §7<Team/TeamID> remove/<Farbcode>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list");
 			return;
 		}
@@ -189,12 +189,12 @@ public class TeamCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "Das Team " + Main.getColorCode() + args[1] + " §7wurde erfolgreich in " + Main.getColorCode() + team.getName() + " §7umbenannt!");
 		} else if (args[0].equalsIgnoreCase("add")) {
 			if (args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + "/varo team add <Player> <Team/TeamID>");
+				sender.sendMessage(Main.getPrefix() + "/varo team add <Team/TeamID> <Player>");
 				return;
 			}
 
-			VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
-			VaroTeam team = VaroTeam.getTeam(args[2]);
+			VaroPlayer varoplayer = VaroPlayer.getPlayer(args[2]);
+			VaroTeam team = VaroTeam.getTeam(args[1]);
 
 			if (team == null) {
 				sender.sendMessage(Main.getPrefix() + "Team nicht gefunden!");
