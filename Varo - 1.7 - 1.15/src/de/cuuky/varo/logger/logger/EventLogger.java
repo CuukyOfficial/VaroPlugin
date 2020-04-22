@@ -13,7 +13,7 @@ public class EventLogger extends VaroLogger {
 	public enum LogType {
 
 		ALERT("ALERT", Color.RED, ConfigSetting.DISCORDBOT_EVENT_ALERT),
-		BORDER("BORDER", Color.GREEN, ConfigSetting.DISCORDBOT_EVENT_YOUTUBE),
+		BORDER("BORDER", Color.GREEN, ConfigSetting.DISCORDBOT_EVENT_BORDER),
 		DEATH("DEATH", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_DEATH),
 		JOIN_LEAVE("JOIN/LEAVE", Color.CYAN, ConfigSetting.DISCORDBOT_EVENT_JOIN_LEAVE),
 		KILL("KILL", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_KILL),
