@@ -44,7 +44,7 @@ public class ConfigCommand extends VaroCommand {
 			}
 
 			for (ConfigSetting entry : ConfigSetting.values()) {
-				if (!entry.getPath().equalsIgnoreCase(args[1]))
+				if (!entry.getFullPath().equalsIgnoreCase(args[1]))
 					continue;
 
 				Object arg = JavaUtils.getStringObject(args[2]);
