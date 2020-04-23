@@ -2,12 +2,14 @@ package de.cuuky.varo.command.varo;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.utils.UUIDUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.gui.team.TeamGUI;
 
 public class TeamCommand extends VaroCommand {
 
@@ -19,12 +21,19 @@ public class TeamCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Team setup Befehle:");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team §7<Team/TeamID>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team create §7<Team/TeamID> <Spieler 1, 2, 3...>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team remove §7<Team/TeamID/Player/@a>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team add §7<Team/TeamID> <Player>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team rename §7<Team/TeamID> <Neuer Team-Name>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team colorcode §7<Team/TeamID> remove/<Farbcode>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list");
+			return;
+		}
+		
+		VaroTeam vteam = VaroTeam.getTeam(args[0]);
+		if(vteam != null && sender instanceof Player) {
+			new TeamGUI((Player) sender, vteam);
 			return;
 		}
 
@@ -206,11 +215,11 @@ public class TeamCommand extends VaroCommand {
 				try {
 					uuid = UUIDUtils.getUUID(args[1]).toString();
 				} catch (Exception e) {
-					sender.sendMessage(Main.getPrefix() + args[1] + " besitzt keinen Minecraft-Account!");
+					sender.sendMessage(Main.getPrefix() + args[2] + " besitzt keinen Minecraft-Account!");
 					return;
 				}
 
-				varoplayer = new VaroPlayer(args[1], uuid);
+				varoplayer = new VaroPlayer(args[2], uuid);
 			}
 
 			if (varoplayer.getTeam() != null) {
