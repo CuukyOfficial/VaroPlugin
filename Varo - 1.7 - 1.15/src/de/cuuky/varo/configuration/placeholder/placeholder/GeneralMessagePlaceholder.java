@@ -54,8 +54,7 @@ public abstract class GeneralMessagePlaceholder extends MessagePlaceholder {
 	public String replacePlaceholder(String message) {
 		checkRefresh();
 
-		String value = message.replace(this.identifier, this.value);
-		return message.replace(this.identifier, value != null ? value : "");
+		return message.replace(this.identifier, this.value != null ? this.value : "");
 	}
 
 	@Override

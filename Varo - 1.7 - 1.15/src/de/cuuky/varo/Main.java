@@ -16,7 +16,7 @@ import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.VaroLanguageManager;
+import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.game.VaroGame;

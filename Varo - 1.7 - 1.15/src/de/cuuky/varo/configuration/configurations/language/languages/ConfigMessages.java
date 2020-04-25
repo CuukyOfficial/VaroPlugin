@@ -1,10 +1,10 @@
-package de.cuuky.varo.configuration.configurations.messages.language.languages.defaults;
+package de.cuuky.varo.configuration.configurations.language.languages;
 
+import de.cuuky.cfw.configuration.language.Language;
+import de.cuuky.cfw.configuration.language.languages.DefaultLanguage;
+import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.Language;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.DefaultLanguage;
-import de.cuuky.varo.entity.player.VaroPlayer;
 
 public enum ConfigMessages implements DefaultLanguage {
 
@@ -327,12 +327,12 @@ public enum ConfigMessages implements DefaultLanguage {
 	}
 
 	@Override
-	public String getValue(VaroPlayer localeHolder) {
+	public String getValue(CustomPlayer localeHolder) {
 		return getMessage(localeHolder != null && localeHolder.getLocale() != null ? Main.getLanguageManager().getLanguages().get(localeHolder.getLocale()) : Main.getLanguageManager().getDefaultLanguage());
 	}
 
 	@Override
-	public String getValue(VaroPlayer localeHolder, VaroPlayer replace) {
+	public String getValue(CustomPlayer localeHolder, CustomPlayer replace) {
 		return Main.getLanguageManager().replaceMessage(getValue(localeHolder), replace);
 	}
 }

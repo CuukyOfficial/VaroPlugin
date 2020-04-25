@@ -11,7 +11,7 @@ import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.VaroLanguageManager;
+import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
 import de.cuuky.varo.data.plugin.PluginLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;

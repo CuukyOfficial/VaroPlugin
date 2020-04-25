@@ -1,13 +1,14 @@
-package de.cuuky.varo.configuration.configurations.messages;
+package de.cuuky.varo.configuration.configurations.language;
 
 import java.util.ArrayList;
 
+import de.cuuky.cfw.configuration.language.Language;
+import de.cuuky.cfw.configuration.language.LanguageManager;
+import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.messages.language.Language;
-import de.cuuky.varo.configuration.configurations.messages.language.LanguageManager;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.defaults.ConfigMessages;
-import de.cuuky.varo.configuration.configurations.messages.language.languages.other.LanguageEN;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.configuration.configurations.language.languages.LanguageEN;
 import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -15,18 +16,18 @@ import de.cuuky.varo.entity.team.VaroTeam;
 
 public class VaroLanguageManager extends LanguageManager {
 
-	private static final String PATH_DIR = "plugins/Varo/languages";
+	private static final String PATH_DIR = "plugins/Varo/languages", FALLBACK_LANGUAGE = "de_de";
 
 	public VaroLanguageManager() {
-		super(PATH_DIR);
+		super(PATH_DIR, FALLBACK_LANGUAGE);
 
 		loadLanguages();
 	}
 
 	@Override
 	public void loadLanguages() {
-		registerLoadableLanguage("en_us", LanguageEN.class);
 		registerLoadableLanguage("de_de", ConfigMessages.class);
+		registerLoadableLanguage("en_us", LanguageEN.class);
 
 		super.loadLanguages();
 
@@ -88,7 +89,7 @@ public class VaroLanguageManager extends LanguageManager {
 		return GeneralMessagePlaceholder.replacePlaceholders(replaced);
 	}
 
-	public String replaceMessage(String message, VaroPlayer player) {
-		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), player);
+	public String replaceMessage(String message, CustomPlayer player) {
+		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), (VaroPlayer) player);
 	}
 }
