@@ -169,7 +169,7 @@ public enum LanguageEN implements LoadableMessage {
 	TEAMREQUEST_NO_HASHTAG("teamrequest.noHashtag", "Your team name must not contain a '#'. (Will be added automatically)"),
 	TEAMREQUEST_PLAYER_NOT_ONLINE("teamrequest.playerNotOnline", "%colorcode%%invitor% is no longer online!"),
 	TEAMREQUEST_REVOKED("teamrequest.invationRevoked", "Invitation successfully withdrawn!"),
-	TEAMREQUEST_TEAM_FULL("teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),
+	TEAMREQUEST_TEAM_FULL("teamrequest.teamIsFull", "%invited% wasn't able to join your team - team member limit reached."),
 	TEAMREQUEST_TEAM_REQUEST_RECIEVED("teamrequest.teamRequestRecieved", "%colorcode%%invitor% &7has invited you to join a team (/varo tr)!"),
 	TEAMREQUEST_INVITED_TEAM("teamrequest.invitedInTeam", "&7You have invited %colorcode%%invited% &7 in the team %colorcode%%team% &7!"),
 	TEAMREQUEST_NO_TEAMNAME("teamrequest.noteamname", "&7You still have no team name!"),
