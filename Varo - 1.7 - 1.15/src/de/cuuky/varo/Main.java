@@ -28,7 +28,7 @@ import de.cuuky.varo.threads.SmartLagDetector;
 public class Main extends JavaPlugin {
 
 	/*
-	 * Plugin by Cuuky @ 2019-2020 - All rights reserved!
+	 * Plugin by Cuuky @ 2019-2020
 	 */
 
 	private static final String CONSOLE_PREFIX = "[Varo] ";
