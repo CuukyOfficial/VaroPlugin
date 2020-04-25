@@ -95,7 +95,7 @@ public class TeamListGUI extends SuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname(team.getDisplay()).playername(team.getMember().get(0).getName()).buildSkull(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(team.getDisplay()).material(Material.DIAMOND_HELMET).build(), new Runnable() {
 
 				@Override
 				public void run() {
