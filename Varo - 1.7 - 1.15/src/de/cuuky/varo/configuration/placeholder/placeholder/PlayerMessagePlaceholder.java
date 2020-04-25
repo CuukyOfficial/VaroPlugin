@@ -53,8 +53,9 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 
 	public String replacePlaceholder(String message, VaroPlayer player) {
 		checkRefresh(player);
-
-		return message.replace(identifier, placeholderValues.get(player));
+		
+		String value = placeholderValues.get(player);
+		return message.replace(identifier, value != null ? value : "");
 	}
 
 	@Override
