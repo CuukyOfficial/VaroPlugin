@@ -1,6 +1,7 @@
 package de.cuuky.varo;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -8,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.CuukyFrameWork;
+import de.cuuky.cfw.manager.FrameworkManager;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
@@ -97,10 +99,9 @@ public class Main extends JavaPlugin {
 
 			long dataStamp = System.currentTimeMillis();
 
-			cuukyFrameWork = new CuukyFrameWork(instance);
-			cuukyFrameWork.getClientAdapterManager().setUpdateHandler(varoBoard = new VaroBoardProvider());
-
-			dataManager = new DataManager();
+			initiliazeCfw();
+			
+			dataManager = new DataManager(this);
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
 			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), new Runnable() {
@@ -162,6 +163,15 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
+	}
+	
+	private void initiliazeCfw() {
+		ArrayList<FrameworkManager> manager = new ArrayList<>();
+		languageManager = new VaroLanguageManager(this);
+		manager.add(languageManager);
+		
+		cuukyFrameWork = new CuukyFrameWork(instance, manager);
+		cuukyFrameWork.getClientAdapterManager().setUpdateHandler(varoBoard = new VaroBoardProvider());
 	}
 
 	public void setFailed(boolean failed) {

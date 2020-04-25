@@ -1,6 +1,7 @@
 package de.cuuky.varo.data;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.cfw.utils.ServerPropertiesReader;
@@ -11,8 +12,7 @@ import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
-import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
+import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
 import de.cuuky.varo.data.plugin.PluginLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
@@ -34,6 +34,8 @@ public class DataManager {
 	
 	private static final int SAVE_DELAY = 12000; 
 
+	private Main ownerInstance;
+	
 	private ConfigHandler configHandler;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
@@ -52,7 +54,9 @@ public class DataManager {
 
 	private boolean doSave;
 
-	public DataManager() {
+	public DataManager(Main ownerInstance) {
+		this.ownerInstance = ownerInstance;
+		
 		Main.setDataManager(this);
 
 		load();
@@ -67,7 +71,6 @@ public class DataManager {
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
-		Main.setLanguageManager(new VaroLanguageManager());
 		this.propertiesReader = new ServerPropertiesReader();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
@@ -80,6 +83,8 @@ public class DataManager {
 		this.listManager = new VaroListManager();
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
+		
+		new MessagePlaceholderLoader();
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
@@ -112,7 +117,7 @@ public class DataManager {
 	public void reloadConfig() {
 		VaroPlayerBan.loadBans();
 		VaroList.reloadLists();
-		MessagePlaceholder.clearPlaceholder();
+		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
 		Main.getVaroBoard().update();
@@ -199,5 +204,9 @@ public class DataManager {
 
 	public DailyTimer getDailyTimer() {
 		return this.dailyTimer;
+	}
+	
+	public JavaPlugin getOwnerInstance() {
+		return this.ownerInstance;
 	}
 }

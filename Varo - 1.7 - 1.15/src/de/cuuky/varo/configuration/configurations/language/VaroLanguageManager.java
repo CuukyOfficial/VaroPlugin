@@ -2,15 +2,16 @@ package de.cuuky.varo.configuration.configurations.language;
 
 import java.util.ArrayList;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.cfw.configuration.language.LanguageManager;
+import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.configuration.configurations.language.languages.LanguageEN;
-import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
-import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 
@@ -18,8 +19,8 @@ public class VaroLanguageManager extends LanguageManager {
 
 	private static final String PATH_DIR = "plugins/Varo/languages", FALLBACK_LANGUAGE = "de_de";
 
-	public VaroLanguageManager() {
-		super(PATH_DIR, FALLBACK_LANGUAGE);
+	public VaroLanguageManager(JavaPlugin ownerInstance) {
+		super(PATH_DIR, FALLBACK_LANGUAGE, ownerInstance);
 
 		loadLanguages();
 	}
@@ -86,10 +87,10 @@ public class VaroLanguageManager extends LanguageManager {
 			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
 		}
 
-		return GeneralMessagePlaceholder.replacePlaceholders(replaced);
+		return Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
 	}
 
 	public String replaceMessage(String message, CustomPlayer player) {
-		return PlayerMessagePlaceholder.replacePlaceholders(replaceMessage(message), (VaroPlayer) player);
+		return Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message), (VaroPlayer) player, MessagePlaceholderType.PLAYER);
 	}
 }

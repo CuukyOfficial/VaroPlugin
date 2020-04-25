@@ -1,14 +1,14 @@
 package de.cuuky.varo.configuration.placeholder;
 
+import de.cuuky.cfw.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.PermissionUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
-import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
-import de.cuuky.varo.configuration.placeholder.placeholder.util.DateInfo;
+import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
+import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 
@@ -20,7 +20,7 @@ public class MessagePlaceholderLoader {
 	}
 
 	private void loadMessagePlaceHolder() {
-		new GeneralMessagePlaceholder("pluginName", -1, "Ersetzt durch den Plugin-Namen") {
+		new VaroGeneralMessagePlaceholder("pluginName", -1, "Ersetzt durch den Plugin-Namen") {
 
 			@Override
 			protected String getValue() {
@@ -28,7 +28,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("pluginAuthor", -1, "Ersetzt durch den Plugin-Macher") {
+		new VaroGeneralMessagePlaceholder("pluginAuthor", -1, "Ersetzt durch den Plugin-Macher") {
 
 			@Override
 			protected String getValue() {
@@ -36,7 +36,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("pluginVersion", -1, "Ersetzt durch die Plugin-Version") {
+		new VaroGeneralMessagePlaceholder("pluginVersion", -1, "Ersetzt durch die Plugin-Version") {
 
 			@Override
 			protected String getValue() {
@@ -44,7 +44,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("projectname", 10, "Ersetzt durch den Projektnamen") {
+		new VaroGeneralMessagePlaceholder("projectname", 10, "Ersetzt durch den Projektnamen") {
 
 			@Override
 			protected String getValue() {
@@ -52,7 +52,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("colorcode", 10, "Ersetzt durch den Farbcode") {
+		new VaroGeneralMessagePlaceholder("colorcode", 10, "Ersetzt durch den Farbcode") {
 
 			@Override
 			protected String getValue() {
@@ -60,7 +60,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("remaining", 1, "Ersetzt durch die Anzahl lebender Spieler") {
+		new VaroGeneralMessagePlaceholder("remaining", 1, "Ersetzt durch die Anzahl lebender Spieler") {
 
 			@Override
 			protected String getValue() {
@@ -68,7 +68,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("players", 1, "Ersetzt durch die Anzahl aller Spieler") {
+		new VaroGeneralMessagePlaceholder("players", 1, "Ersetzt durch die Anzahl aller Spieler") {
 
 			@Override
 			protected String getValue() {
@@ -76,7 +76,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("online", 1, "Ersetzt durch die Anzahl aller online Spieler") {
+		new VaroGeneralMessagePlaceholder("online", 1, "Ersetzt durch die Anzahl aller online Spieler") {
 
 			@Override
 			protected String getValue() {
@@ -84,7 +84,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit") {
+		new VaroGeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit") {
 
 			@Override
 			protected String getValue() {
@@ -92,7 +92,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit") {
+		new VaroGeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit") {
 
 			@Override
 			protected String getValue() {
@@ -100,7 +100,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit") {
+		new VaroGeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit") {
 
 			@Override
 			protected String getValue() {
@@ -108,7 +108,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit") {
+		new VaroGeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit") {
 
 			@Override
 			protected String getValue() {
@@ -116,7 +116,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit") {
+		new VaroGeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit") {
 
 			@Override
 			protected String getValue() {
@@ -124,7 +124,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit") {
+		new VaroGeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit") {
 
 			@Override
 			protected String getValue() {
@@ -132,7 +132,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse") {
+		new VaroGeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse") {
 
 			@Override
 			protected String getValue() {
@@ -140,7 +140,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("discordLink", 20, "Ersetzt durch den DiscordLink aus der Config") {
+		new VaroGeneralMessagePlaceholder("discordLink", 20, "Ersetzt durch den DiscordLink aus der Config") {
 
 			@Override
 			protected String getValue() {
@@ -148,7 +148,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("protectionTime", 5, "Ersetzt durch die Schutzzeit aus der Config") {
+		new VaroGeneralMessagePlaceholder("protectionTime", 5, "Ersetzt durch die Schutzzeit aus der Config") {
 
 			@Override
 			protected String getValue() {
@@ -156,7 +156,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("&", -1, true, "Ersetzt durch §") {
+		new VaroGeneralMessagePlaceholder("&", -1, true, "Ersetzt durch §") {
 
 			@Override
 			protected String getValue() {
@@ -164,7 +164,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("heart", -1, "Ersetzt durch ♥") {
+		new VaroGeneralMessagePlaceholder("heart", -1, "Ersetzt durch ♥") {
 
 			@Override
 			protected String getValue() {
@@ -172,7 +172,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("nextLine", -1, "Fuegt neue Zeile ein") {
+		new VaroGeneralMessagePlaceholder("nextLine", -1, "Fuegt neue Zeile ein") {
 
 			@Override
 			protected String getValue() {
@@ -180,7 +180,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new GeneralMessagePlaceholder("null", -1, "Ersetzt durch nichts") {
+		new VaroGeneralMessagePlaceholder("null", -1, "Ersetzt durch nichts") {
 
 			@Override
 			protected String getValue() {
@@ -190,7 +190,7 @@ public class MessagePlaceholderLoader {
 
 		// MAYBE ?
 		for (ConfigSetting setting : ConfigSetting.values()) {
-			new GeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
+			new VaroGeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " ")) {
 
 				@Override
 				protected String getValue() {
@@ -201,7 +201,7 @@ public class MessagePlaceholderLoader {
 	}
 
 	private void loadPlayerPlaceholder() {
-		new PlayerMessagePlaceholder("distanceToBorder", 1, "Ersetzt durch die Distanz zur Border des Spielers") {
+		new VaroPlayerMessagePlaceholder("distanceToBorder", 1, "Ersetzt durch die Distanz zur Border des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -212,7 +212,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("min", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers") {
+		new VaroPlayerMessagePlaceholder("min", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -220,7 +220,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("sec", 1, "Ersetzt durch die Sekunden der Spielzeit des Spielers") {
+		new VaroPlayerMessagePlaceholder("sec", 1, "Ersetzt durch die Sekunden der Spielzeit des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -228,7 +228,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("hearts", 1, "Ersetzt durch die Leben des Spielers") {
+		new VaroPlayerMessagePlaceholder("hearts", 1, "Ersetzt durch die Leben des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -236,7 +236,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("food", 1, "Ersetzt durch das Foodlevel des Spielers") {
+		new VaroPlayerMessagePlaceholder("food", 1, "Ersetzt durch das Foodlevel des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -244,7 +244,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("kills", 1, "Ersetzt durch Kills des Spielers") {
+		new VaroPlayerMessagePlaceholder("kills", 1, "Ersetzt durch Kills des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -252,7 +252,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("strikes", 1, "Ersetzt durch die Strikes des Spielers") {
+		new VaroPlayerMessagePlaceholder("strikes", 1, "Ersetzt durch die Strikes des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -260,7 +260,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("teamKills", 2, "Ersetzt durch die Teamkills des Spielers") {
+		new VaroPlayerMessagePlaceholder("teamKills", 2, "Ersetzt durch die Teamkills des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -268,7 +268,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("teamLifes", 2, "Ersetzt durch die Teamleben des Spielers") {
+		new VaroPlayerMessagePlaceholder("teamLifes", 2, "Ersetzt durch die Teamleben des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -276,7 +276,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("player", 1, "Ersetzt durch den Namen des Spielers") {
+		new VaroPlayerMessagePlaceholder("player", 1, "Ersetzt durch den Namen des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -284,7 +284,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("prefix", 1, "Ersetzt durch den Prefix des Spielers") {
+		new VaroPlayerMessagePlaceholder("prefix", 1, "Ersetzt durch den Prefix des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -292,7 +292,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("team", 1, "Ersetzt durch den Teamname des Spielers") {
+		new VaroPlayerMessagePlaceholder("team", 1, "Ersetzt durch den Teamname des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -300,7 +300,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("rank", 1, "Ersetzt durch den Rangnamen des Spielers") {
+		new VaroPlayerMessagePlaceholder("rank", 1, "Ersetzt durch den Rangnamen des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -308,7 +308,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("episodesPlayedPlus1", 1, "Ersetzt durch die gespielten Episoden+1 des Spielers") {
+		new VaroPlayerMessagePlaceholder("episodesPlayedPlus1", 1, "Ersetzt durch die gespielten Episoden+1 des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -316,7 +316,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("sessions", 1, "Ersetzt durch die Sessions des Spielers") {
+		new VaroPlayerMessagePlaceholder("sessions", 1, "Ersetzt durch die Sessions des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -324,7 +324,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("seconds", 1, "Ersetzt durch den Countdown des Spielers") {
+		new VaroPlayerMessagePlaceholder("seconds", 1, "Ersetzt durch den Countdown des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -332,7 +332,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("countdown", 1, "Ersetzt durch den Countdown des Spielers") {
+		new VaroPlayerMessagePlaceholder("countdown", 1, "Ersetzt durch den Countdown des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -340,7 +340,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("remainingDisconnects", 1, "Ersetzt durch die Disconnects der Session des Spielers") {
+		new VaroPlayerMessagePlaceholder("remainingDisconnects", 1, "Ersetzt durch die Disconnects der Session des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -348,7 +348,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("ping", 1, "Ersetzt durch den Countdown des Spielers") {
+		new VaroPlayerMessagePlaceholder("ping", 1, "Ersetzt durch den Countdown des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -356,7 +356,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("pexPrefix", 10, "Ersetzt durch den Pex-Prefix des Spielers") {
+		new VaroPlayerMessagePlaceholder("pexPrefix", 10, "Ersetzt durch den Pex-Prefix des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -364,7 +364,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("worldSpawnX", 1, "Ersetzt durch die X-Koord des Spawns der Welt") {
+		new VaroPlayerMessagePlaceholder("worldSpawnX", 1, "Ersetzt durch die X-Koord des Spawns der Welt") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -372,7 +372,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("worldSpawnY", 1, "Ersetzt durch die Y-Koord des Spawns der Welt") {
+		new VaroPlayerMessagePlaceholder("worldSpawnY", 1, "Ersetzt durch die Y-Koord des Spawns der Welt") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -380,7 +380,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("worldSpawnZ", 1, "Ersetzt durch die Z-Koord des Spawns der Welt") {
+		new VaroPlayerMessagePlaceholder("worldSpawnZ", 1, "Ersetzt durch die Z-Koord des Spawns der Welt") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -388,7 +388,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("playerWorld", 1, "Ersetzt durch den Weltnamen des Spielers") {
+		new VaroPlayerMessagePlaceholder("playerWorld", 1, "Ersetzt durch den Weltnamen des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -396,7 +396,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("playerLocX", 1, "Ersetzt durch die X-Koordinate des Spielers") {
+		new VaroPlayerMessagePlaceholder("playerLocX", 1, "Ersetzt durch die X-Koordinate des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -404,7 +404,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("playerLocY", 1, "Ersetzt durch die Y-Koordinate des Spielers") {
+		new VaroPlayerMessagePlaceholder("playerLocY", 1, "Ersetzt durch die Y-Koordinate des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -412,7 +412,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("playerLocZ", 1, "Ersetzt durch die Z-Koordinate des Spielers") {
+		new VaroPlayerMessagePlaceholder("playerLocZ", 1, "Ersetzt durch die Z-Koordinate des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
@@ -420,7 +420,7 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
-		new PlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers") {
+		new VaroPlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers") {
 
 			@Override
 			protected String getValue(VaroPlayer player) {

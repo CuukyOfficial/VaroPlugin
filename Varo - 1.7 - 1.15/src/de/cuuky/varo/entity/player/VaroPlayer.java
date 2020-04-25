@@ -554,7 +554,7 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 
 	public static VaroPlayer getPlayer(String name) {
 		for (VaroPlayer vp : varoplayer) {
-			if (!vp.getName().equalsIgnoreCase(name))
+			if (!vp.getName().equalsIgnoreCase(name) && !vp.getUUID().equals(name))
 				continue;
 
 			return vp;

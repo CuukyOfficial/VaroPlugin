@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import de.cuuky.cfw.configuration.placeholder.MessagePlaceholder;
+import de.cuuky.cfw.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
+import de.cuuky.cfw.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.placeholder.MessagePlaceholder;
-import de.cuuky.varo.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
-import de.cuuky.varo.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PlaceholderCommand extends VaroCommand {
@@ -39,7 +39,7 @@ public class PlaceholderCommand extends VaroCommand {
 			}
 
 			MessagePlaceholder mp = null;
-			for (MessagePlaceholder mp1 : MessagePlaceholder.getPlaceholders()) {
+			for (MessagePlaceholder mp1 : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders()) {
 				if (mp1.getIdentifier().replace("%", "").equalsIgnoreCase(args[1].replace("%", ""))) {
 					mp = mp1;
 				}
@@ -69,11 +69,11 @@ public class PlaceholderCommand extends VaroCommand {
 
 		ArrayList<MessagePlaceholder> placeholders = new ArrayList<>();
 		if (args[0].equalsIgnoreCase("general")) {
-			for (MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
+			for (MessagePlaceholder mp : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders())
 				if (mp instanceof GeneralMessagePlaceholder && ConfigSetting.getEntryByPath(mp.getIdentifier().replace("%", "")) == null)
 					placeholders.add(mp);
 		} else if (args[0].equalsIgnoreCase("player")) {
-			for (MessagePlaceholder mp : MessagePlaceholder.getPlaceholders())
+			for (MessagePlaceholder mp : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders())
 				if (mp instanceof PlayerMessagePlaceholder)
 					placeholders.add(mp);
 		}
