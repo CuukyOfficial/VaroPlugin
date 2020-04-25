@@ -26,11 +26,11 @@ public class ProtectionTime {
 			@Override
 			public void run() {
 				if (this.protectionTimer == 0) {
-					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER.getValue());
+					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
 					Main.getVaroGame().setProtection(null);
 					Bukkit.getScheduler().cancelTask(scheduler);
 				} else if (protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
-					Bukkit.broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE.getValue().replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer)));
+					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE).replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer));
 
 				this.protectionTimer--;
 			}

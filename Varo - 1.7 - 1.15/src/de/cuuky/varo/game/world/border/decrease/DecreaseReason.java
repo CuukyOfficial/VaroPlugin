@@ -1,7 +1,5 @@
 package de.cuuky.varo.game.world.border.decrease;
 
-import org.bukkit.Bukkit;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -38,7 +36,7 @@ public enum DecreaseReason {
 	}
 
 	public void postBroadcast() {
-		Bukkit.broadcastMessage(broadcast.getValue().replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : ""));
+		Main.getLanguageManager().broadcastMessage(broadcast).replace("%size%", String.valueOf(getSize())).replace("%speed%", String.valueOf(getDecreaseSpeed())).replace("%days%", time != null ? String.valueOf(time.getValueAsInt()) : "").replace("%minutes%", time != null ? String.valueOf(time.getValueAsInt()) : "");
 	}
 
 	public int getSize() {

@@ -45,7 +45,7 @@ public class BorderDecrease {
 		int minsize = ConfigSetting.MIN_BORDER_SIZE.getValueAsInt();
 		double size = worldHandler.getBorderSize(null);
 		if (size <= minsize) {
-			Bukkit.broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED.getValue());
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED);
 			remove();
 			return;
 		}

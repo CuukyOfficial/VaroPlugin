@@ -1,6 +1,5 @@
 package de.cuuky.varo.combatlog;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
@@ -62,7 +61,7 @@ public class CombatlogCheck {
 		} else
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(null, player));
 
-		Bukkit.broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT.getValue(null, player));
+		Main.getLanguageManager().broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT, player);
 	}
 
 	public boolean isCombatLog() {

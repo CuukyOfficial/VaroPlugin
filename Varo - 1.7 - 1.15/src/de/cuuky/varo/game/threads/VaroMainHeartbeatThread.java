@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.utils.JavaUtils;
@@ -51,7 +50,7 @@ public class VaroMainHeartbeatThread implements Runnable {
 					double minutesToClose = (int) (((Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
 
 					if (minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
-						Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON.getValue().replace("%minutes%", String.valueOf(minutesToClose)));
+						Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON).replace("%minutes%", String.valueOf(minutesToClose));
 
 					if (!Main.getDataManager().getOutsideTimeChecker().canJoin())
 						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
@@ -82,24 +81,23 @@ public class VaroMainHeartbeatThread implements Runnable {
 						vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
 					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
-						Bukkit.broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER.getValue(null, vp));
+						Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER, vp);
 
 					if (countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
 						if (countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
-							Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST.getValue(null, vp));
+							Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST, vp);
 							vp.onEvent(BukkitEventType.KICKED);
-							// p.kickPlayer(Main.getLanguageManager().getValue(LanguageDE.KICK_SESSION_OVER.getValue(vp));
 							vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(null, vp));
 							continue;
 						} else {
 							if (countdown == 1) {
 								if (!vp.canBeKicked(noKickDistance)) {
-									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY.getValue(vp).replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())));
+									vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY).replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt()));
 									countdown += 1;
 								} else
-									Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(vp).replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
+									Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown));
 							} else
-								Bukkit.broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS.getValue(vp).replace("%player%", vp.getName()).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown)));
+								Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown));
 						}
 					}
 

@@ -132,7 +132,7 @@ public class SpectatorListener implements Listener {
 					tp.setY(ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
 					event.setTo(tp);
 					VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-					vp.sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT.getValue(vp, vp));
+					vp.sendMessage(ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT, vp);
 				}
 		return;
 

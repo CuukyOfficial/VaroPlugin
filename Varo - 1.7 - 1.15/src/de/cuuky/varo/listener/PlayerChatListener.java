@@ -80,7 +80,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if (VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_MUTED.getValue(vp));
+			vp.sendMessage(ConfigMessages.CHAT_MUTED);
 			event.setCancelled(true);
 			return;
 		}
@@ -100,7 +100,7 @@ public class PlayerChatListener implements Listener {
 			}
 
 			if (Main.getVaroGame().hasStarted() == false && ConfigSetting.CAN_CHAT_BEFORE_START.getValueAsBoolean() == false) {
-				player.sendMessage(Main.getPrefix() + ConfigMessages.CHAT_WHEN_START.getValue(vp));
+				vp.sendMessage(ConfigMessages.CHAT_WHEN_START);
 				event.setCancelled(true);
 				return;
 			}

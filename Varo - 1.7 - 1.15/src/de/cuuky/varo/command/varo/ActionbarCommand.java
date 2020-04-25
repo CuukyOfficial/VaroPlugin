@@ -23,10 +23,10 @@ public class ActionbarCommand extends VaroCommand {
 
 		if (vp.getStats().isShowActionbarTime()) {
 			vp.getStats().setShowActionbarTime(false);
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED.getValue(vp));
+			vp.sendMessage(ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED);
 		} else {
 			vp.getStats().setShowActionbarTime(true);
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_ACTIVATED.getValue(vp));
+			vp.sendMessage(ConfigMessages.VARO_COMMANDS_ACTIONBAR_ACTIVATED);
 		}
 	}
 }

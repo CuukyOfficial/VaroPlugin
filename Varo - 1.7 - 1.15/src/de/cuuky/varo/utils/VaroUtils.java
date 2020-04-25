@@ -67,7 +67,7 @@ public final class VaroUtils {
 				}
 
 				if (teamMember.size() != teamSize)
-					vp.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER.getValue(vp, vp));
+					vp.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER);
 
 				String teamName = "";
 				for (VaroPlayer teamPl : teamMember)

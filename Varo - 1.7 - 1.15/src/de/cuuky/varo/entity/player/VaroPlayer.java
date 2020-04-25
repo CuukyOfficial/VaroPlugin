@@ -12,6 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.clientadapter.board.nametag.CustomNametag;
 import de.cuuky.cfw.clientadapter.board.scoreboard.CustomScoreboard;
 import de.cuuky.cfw.clientadapter.board.tablist.CustomTablist;
+import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
+import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
+import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.connection.NetworkManager;
 import de.cuuky.cfw.utils.JavaUtils;
@@ -24,7 +27,6 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.Stats;
@@ -37,11 +39,12 @@ import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
-public class VaroPlayer extends VaroEntity implements CustomPlayer {
+public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
 	private static ArrayList<VaroPlayer> varoplayer;
 
@@ -365,9 +368,17 @@ public class VaroPlayer extends VaroEntity implements CustomPlayer {
 	public boolean isRegistered() {
 		return varoplayer.contains(this);
 	}
-
+	
 	public void sendMessage(String message) {
-		player.sendMessage(message);
+		this.player.sendMessage(message);
+	}
+	
+	public MessageHolder sendMessage(LoadableMessage message) {
+		return super.sendTranslatedMessage(message, null, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
+	}
+	
+	public MessageHolder sendMessage(LoadableMessage message, CustomPlayer replacement) {
+		return super.sendTranslatedMessage(message, replacement, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
 	}
 
 	public void setAdminIgnore(boolean adminIgnore) {

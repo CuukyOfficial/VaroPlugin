@@ -40,7 +40,7 @@ public class VaroStartThread implements Runnable {
 			((Player) VersionUtils.getOnlinePlayer().toArray()[0]).getWorld().setTime(1000);
 
 		if (startcountdown != 0)
-			Bukkit.broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN.getValue().replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown)));
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN).replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown));
 
 		if (startcountdown == ConfigSetting.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
 			for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
@@ -94,7 +94,7 @@ public class VaroStartThread implements Runnable {
 				world.fillChests();
 
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
-			Bukkit.broadcastMessage(ConfigMessages.GAME_VARO_START.getValue());
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_VARO_START);
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 
@@ -108,7 +108,7 @@ public class VaroStartThread implements Runnable {
 
 			Main.getDataManager().getListManager().getStartItems().giveToAll();
 			if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-				Bukkit.broadcastMessage(ConfigMessages.PROTECTION_START.getValue().replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt())));
+				Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
 				game.setProtection(new ProtectionTime());
 			}
 

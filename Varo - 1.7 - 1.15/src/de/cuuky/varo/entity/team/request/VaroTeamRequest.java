@@ -41,7 +41,7 @@ public class VaroTeamRequest {
 			invited.getTeam().removeMember(invited);
 
 		if (ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
-			invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_TEAM_FULL.getValue(invitor).replace("%invited%", invited.getName()));
+			invitor.sendMessage(ConfigMessages.TEAMREQUEST_TEAM_FULL, invitor).replace("%invited%", invited.getName());
 			return;
 		}
 
@@ -55,18 +55,18 @@ public class VaroTeamRequest {
 			public boolean onChat(AsyncPlayerChatEvent event) {
 				String message = event.getMessage();
 				if (message.contains("#")) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_HASHTAG.getValue(invitor));
+					invitor.sendMessage(ConfigMessages.TEAMREQUEST_NO_HASHTAG, invitor);
 					return false;
 				}
 
 				if (message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_NO_COLORCODE.getValue(invitor));
+					invitor.sendMessage(ConfigMessages.TEAMREQUEST_NO_COLORCODE, invitor);
 					return false;
 				}
 
 				int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
 				if (message.length() > (maxLength) - 1) {
-					invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH.getValue(invitor).replace("%maxLength%", String.valueOf(maxLength)));
+					invitor.sendMessage(ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH, invitor).replace("%maxLength%", String.valueOf(maxLength));
 					return false;
 				}
 
@@ -99,7 +99,7 @@ public class VaroTeamRequest {
 
 	public void accept() {
 		if (!invitor.isOnline()) {
-			invited.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE.getValue(invited).replace("%invitor%", invitor.getName()));
+			invited.sendMessage(ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE, invited).replace("%invitor%", invitor.getName());
 			remove();
 			return;
 		}
@@ -121,7 +121,7 @@ public class VaroTeamRequest {
 	}
 
 	public void revoke() {
-		invitor.sendMessage(Main.getPrefix() + ConfigMessages.TEAMREQUEST_REVOKED.getValue(invitor));
+		invitor.sendMessage(ConfigMessages.TEAMREQUEST_REVOKED, invitor);
 		remove();
 	}
 

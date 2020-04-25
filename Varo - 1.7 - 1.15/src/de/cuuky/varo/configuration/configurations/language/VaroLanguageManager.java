@@ -6,7 +6,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.cfw.configuration.language.LanguageManager;
+import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
+import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
+import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -92,5 +95,17 @@ public class VaroLanguageManager extends LanguageManager {
 
 	public String replaceMessage(String message, CustomPlayer player) {
 		return Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message), (VaroPlayer) player, MessagePlaceholderType.PLAYER);
+	}
+	
+	public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace) {
+		ArrayList<CustomLanguagePlayer> players = new ArrayList<>();
+		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
+			players.add(vp);
+		
+		return super.broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
+	}
+	
+	public MessageHolder broadcastMessage(LoadableMessage message) {
+		return this.broadcastMessage(message, null);
 	}
 }

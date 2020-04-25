@@ -64,7 +64,7 @@ public class PlayerHit {
 	public PlayerHit(Player player, Player opponent) {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		if (!hasOld(player))
-			player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_IN_FIGHT.getValue(vp));
+			vp.sendMessage(ConfigMessages.COMBAT_IN_FIGHT);
 
 		this.player = player;
 		this.opponent = opponent;
@@ -98,7 +98,7 @@ public class PlayerHit {
 
 	public void over() {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		player.sendMessage(Main.getPrefix() + ConfigMessages.COMBAT_NOT_IN_FIGHT.getValue(vp));
+		vp.sendMessage(ConfigMessages.COMBAT_NOT_IN_FIGHT);
 		remove();
 	}
 

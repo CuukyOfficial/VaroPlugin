@@ -71,6 +71,7 @@ public class DataManager {
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
+		new MessagePlaceholderLoader();
 		this.propertiesReader = new ServerPropertiesReader();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
@@ -83,8 +84,6 @@ public class DataManager {
 		this.listManager = new VaroListManager();
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
-		
-		new MessagePlaceholderLoader();
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();

@@ -62,7 +62,7 @@ public class VaroPlayerDisconnect {
 
 		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
-		Bukkit.broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN.getValue(null, vp));
+		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN, vp);
 		this.remove();
 		return true;
 	}
@@ -111,7 +111,7 @@ public class VaroPlayerDisconnect {
 				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
-				Bukkit.broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END.getValue(null, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt())));
+				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
 			}
 		}, (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
 	}

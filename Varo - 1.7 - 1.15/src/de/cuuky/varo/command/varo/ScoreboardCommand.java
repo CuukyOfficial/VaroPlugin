@@ -30,7 +30,7 @@ public class ScoreboardCommand extends VaroCommand {
 
 		if (vp.getStats().isShowScoreboard()) {
 			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_DISABLED.getValue(vp));
+			vp.sendMessage(ConfigMessages.VARO_COMMANDS_SCOREBOARD_DISABLED);
 			vp.getStats().setShowScoreboard(false);
 			vp.getScoreboard().setEnabled(false);
 		} else {
@@ -39,7 +39,7 @@ public class ScoreboardCommand extends VaroCommand {
 			vp.getScoreboard().sendScoreBoard();
 			if (vp.getNametag() != null)
 				vp.getNametag().giveAll();
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_ENABLED.getValue(vp));
+			vp.sendMessage(ConfigMessages.VARO_COMMANDS_SCOREBOARD_ENABLED);
 		}
 
 		if (vp.isOnline())

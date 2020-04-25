@@ -22,7 +22,7 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
-		vp.sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
+		vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
 	}
 
 	@EventHandler
@@ -35,6 +35,6 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-		vp.sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
+		vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
 	}
 }

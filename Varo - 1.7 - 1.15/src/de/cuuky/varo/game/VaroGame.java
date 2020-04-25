@@ -171,10 +171,10 @@ public class VaroGame implements VaroSerializeable {
 
 		if (first.contains("&")) {
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
-			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN_TEAM.getValue().replace("%winnerPlayers%", first));
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN_TEAM).replace("%winnerPlayers%", first);
 		} else {
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER.getValue().replace("%player%", first));
-			Bukkit.broadcastMessage(ConfigMessages.GAME_WIN.getValue().replace("%player%", first));
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN).replace("%player%", first);
 		}
 
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();

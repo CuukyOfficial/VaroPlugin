@@ -29,9 +29,9 @@ public class EntityDamageByEntityListener implements Listener {
 		VaroPlayer vp = VaroPlayer.getPlayer(p), vDamager = VaroPlayer.getPlayer(damager);
 		if (Main.getVaroGame().getProtection() != null) {
 			if (damager == null)
-				vp.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vp, vp));
+				vp.sendMessage(ConfigMessages.PROTECTION_TIME_RUNNING);
 			else
-				vDamager.sendMessage(Main.getPrefix() + ConfigMessages.PROTECTION_TIME_RUNNING.getValue(vDamager, vDamager));
+				vDamager.sendMessage(ConfigMessages.PROTECTION_TIME_RUNNING, vDamager);
 			event.setCancelled(true);
 			return;
 		}
@@ -44,17 +44,16 @@ public class EntityDamageByEntityListener implements Listener {
 		if (ConfigSetting.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
 			return;
 
-		VaroPlayer vdamager = VaroPlayer.getPlayer(damager);
-		if (VaroCancelAble.getCancelAble(vdamager, CancelAbleType.PROTECTION) != null || vdamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
+		if (VaroCancelAble.getCancelAble(vDamager, CancelAbleType.PROTECTION) != null || vDamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}
 
-		if (damager.equals(p) || vp.getTeam() == null || vdamager.getTeam() == null || !vp.getTeam().equals(vdamager.getTeam()))
+		if (damager.equals(p) || vp.getTeam() == null || vDamager.getTeam() == null || !vp.getTeam().equals(vDamager.getTeam()))
 			return;
 
 		event.setCancelled(true);
-		damager.sendMessage(ConfigMessages.COMBAT_FRIENDLY_FIRE.getValue(vDamager, vDamager));
+		vDamager.sendMessage(ConfigMessages.COMBAT_FRIENDLY_FIRE);
 		return;
 	}
 }

@@ -59,7 +59,7 @@ public class PlayerSort {
 				continue;
 
 			toTeleport.put(vp.getPlayer(), vp.getPlayer().getWorld().getSpawnLocation());
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_SPECTATOR_TELEPORT.getValue(vp, vp));
+			vp.sendMessage(ConfigMessages.SORT_SPECTATOR_TELEPORT, vp);
 			players.remove(vp);
 		}
 
@@ -71,7 +71,7 @@ public class PlayerSort {
 			} else {
 				spawn.getPlayer().cleanUpPlayer();
 				toTeleport.put(spawn.getPlayer().getPlayer(), spawn.getLocation());
-				spawn.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.SORT_OWN_HOLE.getValue(spawn.getPlayer(), spawn.getPlayer()));
+				spawn.getPlayer().sendMessage(ConfigMessages.SORT_OWN_HOLE);
 				players.remove(spawn.getPlayer());
 				spawns.remove(spawn);
 			}
@@ -88,7 +88,7 @@ public class PlayerSort {
 			player.cleanUpPlayer();
 			toTeleport.put(player.getPlayer(), spawn.getLocation());
 			spawn.setPlayer(player);
-			player.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue(player, player).replace("%number%", String.valueOf(spawn.getNumber())));
+			player.sendMessage(ConfigMessages.SORT_NUMBER_HOLE).replace("%number%", String.valueOf(spawn.getNumber()));
 			players.remove(0);
 			spawns.remove(0);
 
@@ -107,7 +107,7 @@ public class PlayerSort {
 							teamPlayer.cleanUpPlayer();
 							toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
 							spawns.get(0).setPlayer(teamPlayer);
-							teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue(teamPlayer, teamPlayer).replace("%number%", String.valueOf(spawns.get(0).getNumber())));
+							teamPlayer.sendMessage(ConfigMessages.SORT_NUMBER_HOLE).replace("%number%", String.valueOf(spawns.get(0).getNumber()));
 							players.remove(teamPlayer);
 						}
 
@@ -116,13 +116,13 @@ public class PlayerSort {
 					} else {
 						result = SortResult.NO_SPAWN_WITH_TEAM;
 						players.remove(teamPlayer);
-						teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND_TEAM.getValue(teamPlayer, teamPlayer));
+						teamPlayer.sendMessage(ConfigMessages.SORT_NO_HOLE_FOUND_TEAM);
 					}
 				} else if (players.contains(teamPlayer)) {
 					teamPlayer.cleanUpPlayer();
 					toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
 					spawns.get(0).setPlayer(teamPlayer);
-					teamPlayer.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NUMBER_HOLE.getValue(teamPlayer, teamPlayer).replace("%number%", String.valueOf(spawns.get(0).getNumber())));
+					teamPlayer.sendMessage(ConfigMessages.SORT_NUMBER_HOLE).replace("%number%", String.valueOf(spawns.get(0).getNumber()));
 					players.remove(teamPlayer);
 					spawns.remove(0);
 				}
@@ -130,7 +130,7 @@ public class PlayerSort {
 		}
 
 		for (VaroPlayer vp : players) {
-			vp.sendMessage(Main.getPrefix() + ConfigMessages.SORT_NO_HOLE_FOUND.getValue(vp));
+			vp.sendMessage(ConfigMessages.SORT_NO_HOLE_FOUND);
 			if (result == SortResult.SORTED_WELL) {
 				result = SortResult.NO_SPAWN;
 			}

@@ -1,6 +1,5 @@
 package de.cuuky.varo.listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +26,7 @@ public class PlayerQuitListener implements Listener {
 
 		// IF THEY WERE A SPECTATOR
 		if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
-			event.setQuitMessage(ConfigMessages.QUIT_SPECTATOR.getValue(null, vplayer));
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_SPECTATOR, vplayer);
 			vplayer.onEvent(BukkitEventType.QUIT);
 			return;
 		}
@@ -64,7 +63,7 @@ public class PlayerQuitListener implements Listener {
 				}
 
 				VaroPlayerDisconnect.disconnected(vplayer.getName());
-				Bukkit.broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME.getValue(null, vplayer));
+				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME, vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
@@ -72,6 +71,6 @@ public class PlayerQuitListener implements Listener {
 		}
 
 		vplayer.onEvent(BukkitEventType.QUIT);
-		event.setQuitMessage(ConfigMessages.QUIT_MESSAGE.getValue(null, vplayer));
+		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_MESSAGE, vplayer);
 	}
 }

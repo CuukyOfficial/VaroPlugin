@@ -123,7 +123,7 @@ public class OfflineVillager implements VaroSerializeable {
 				location.getWorld().dropItemNaturally(location, it);
 
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_KILL.getValue(vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
-		Bukkit.broadcastMessage(ConfigMessages.DEATH_KILLED_BY.getValue(null, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_KILLED_BY, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName());
 
 		killer.onEvent(BukkitEventType.KILL);
 		vp.onEvent(BukkitEventType.KILLED);

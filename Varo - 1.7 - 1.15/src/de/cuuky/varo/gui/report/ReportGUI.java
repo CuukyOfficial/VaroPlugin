@@ -66,5 +66,4 @@ public class ReportGUI extends SuperInventory {
 
 		return true;
 	}
-
 }
