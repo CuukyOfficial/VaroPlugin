@@ -41,7 +41,7 @@ public abstract class PlayerMessagePlaceholder extends MessagePlaceholder {
 		if (!this.placeholderRefreshes.containsKey(player))
 			return true;
 
-		return this.shallRefresh(this.placeholderRefreshes.get(player));
+		return super.shallRefresh(this.placeholderRefreshes.get(player));
 	}
 
 	private void refreshValue(VaroPlayer player) {
