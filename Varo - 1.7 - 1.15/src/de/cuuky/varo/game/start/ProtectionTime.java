@@ -14,8 +14,8 @@ public class ProtectionTime {
 		startGeneralTimer(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
 	}
 
-	public ProtectionTime(int Timer) {
-		startGeneralTimer(Timer);
+	public ProtectionTime(int timer) {
+		startGeneralTimer(timer);
 	}
 
 	private void startGeneralTimer(int timer) {
