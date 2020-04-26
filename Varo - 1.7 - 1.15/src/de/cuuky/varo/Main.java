@@ -98,9 +98,7 @@ public class Main extends JavaPlugin {
 			}
 
 			long dataStamp = System.currentTimeMillis();
-
-			initiliazeCfw();
-			
+			initiliazeCFW();
 			dataManager = new DataManager(this);
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
@@ -165,10 +163,9 @@ public class Main extends JavaPlugin {
 		super.onDisable();
 	}
 	
-	private void initiliazeCfw() {
+	private void initiliazeCFW() {
 		ArrayList<FrameworkManager> manager = new ArrayList<>();
-		languageManager = new VaroLanguageManager(this);
-		manager.add(languageManager);
+		manager.add(languageManager = new VaroLanguageManager(this));
 		
 		cuukyFrameWork = new CuukyFrameWork(instance, manager);
 		cuukyFrameWork.getClientAdapterManager().setUpdateHandler(varoBoard = new VaroBoardProvider());
