@@ -2,6 +2,9 @@ package de.cuuky.varo.configuration.configurations.language;
 
 import java.util.ArrayList;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.configuration.language.Language;
@@ -22,8 +25,12 @@ public class VaroLanguageManager extends LanguageManager {
 
 	private static final String PATH_DIR = "plugins/Varo/languages", FALLBACK_LANGUAGE = "de_de";
 
+	private ScriptEngine scriptEngine;
+
 	public VaroLanguageManager(JavaPlugin ownerInstance) {
 		super(PATH_DIR, FALLBACK_LANGUAGE, ownerInstance);
+
+		scriptEngine = new ScriptEngineManager().getEngineByName("js");
 
 		loadLanguages();
 	}
@@ -67,7 +74,25 @@ public class VaroLanguageManager extends LanguageManager {
 		return list;
 	}
 
-	public String replaceMessage(String message) {
+	private String replaceEvals(String message) {
+		if (message.contains("eval(")) {
+			String split = message.split("eval\\(")[1];
+			if (split.contains(")")) {
+				String eval = split.split("\\)")[0];
+
+				try {
+					Object result = scriptEngine.eval(eval);
+					return message.replace("eval(" + eval + ")", result.toString());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return message;
+	}
+
+	public String replaceMessage(String message, boolean replaceEval) {
 		String replaced = message;
 
 		for (int rank : getConvNumbers(replaced, "%topplayer-")) {
@@ -90,21 +115,30 @@ public class VaroLanguageManager extends LanguageManager {
 			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
 		}
 
-		return Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
+		replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
+		
+		if (replaceEval)
+			replaced = replaceEvals(replaced);
+
+		return replaced;
+	}
+
+	public String replaceMessage(String message) {
+		return replaceMessage(message, false);
 	}
 
 	public String replaceMessage(String message, CustomPlayer player) {
-		return Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message), (VaroPlayer) player, MessagePlaceholderType.PLAYER);
+		return replaceEvals(Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), (VaroPlayer) player, MessagePlaceholderType.PLAYER));
 	}
-	
+
 	public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace) {
 		ArrayList<CustomLanguagePlayer> players = new ArrayList<>();
-		for(VaroPlayer vp : VaroPlayer.getVaroPlayer())
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
 			players.add(vp);
-		
+
 		return super.broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
 	}
-	
+
 	public MessageHolder broadcastMessage(LoadableMessage message) {
 		return this.broadcastMessage(message, null);
 	}

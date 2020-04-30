@@ -21,7 +21,7 @@ public class PlayerChatListener implements Listener {
 
 	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
 		if (vp.getStats().getYoutubeLink() == null) {
-			event.setCancelled(false);
+			event.setCancelled(true);
 			event.setFormat(msg);
 			return;
 		}
