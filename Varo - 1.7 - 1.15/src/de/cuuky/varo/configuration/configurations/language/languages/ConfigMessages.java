@@ -143,12 +143,12 @@ public enum ConfigMessages implements DefaultLanguage {
 	NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7Niedriger darfst du nicht fliegen!"),
 
 	PROTECTION_NO_MOVE_START("protection.noMoveStart", "&7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
-	PROTECTION_START("protection.start", "&7Die &cSchutzzeit &7protection.startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
+	PROTECTION_START("protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
 	PROTECTION_TIME_OVER("protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorrueber!"),
 	PROTECTION_TIME_UPDATE("protection.protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes%&7:&c%seconds% &7vorrueber!"),
 	PROTECTION_TIME_RUNNING("protection.timeRunning", "&7Die %colorcode%Schutzzeit &7laeuft noch!"),
 
-	SORT_NO_HOLE_FOUND("sort.noHoleFound", "Es konnte fuer dich kein Loch gefunden werden!"),
+	SORT_NO_HOLE_FOUND("sort.noHoleFound", "&7Es konnte fuer dich kein Loch gefunden werden!"),
 	SORT_NO_HOLE_FOUND_TEAM("sort.noHoleFoundTeam", "Es konnte fuer dich kein Loch bei deinen Teampartnern gefunden werden."),
 	SORT_NUMBER_HOLE("sort.numberHoleTeleport", "Du wurdest in das Loch %colorcode%%number% &7teleportiert!"),
 	SORT_OWN_HOLE("sort.ownHoleTeleport", "Du wurdest in dein Loch einsortiert!"),
