@@ -29,7 +29,7 @@ public class ProtectionTime {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
 					Main.getVaroGame().setProtection(null);
 					Bukkit.getScheduler().cancelTask(scheduler);
-				} else if (protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
+				} else if (protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer) 
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE).replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer));
 
 				this.protectionTimer--;
