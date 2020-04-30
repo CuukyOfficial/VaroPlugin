@@ -213,7 +213,7 @@ public class TeamCommand extends VaroCommand {
 			if (varoplayer == null) {
 				String uuid = null;
 				try {
-					uuid = UUIDUtils.getUUID(args[1]).toString();
+					uuid = UUIDUtils.getUUID(args[2]).toString();
 				} catch (Exception e) {
 					sender.sendMessage(Main.getPrefix() + args[2] + " besitzt keinen Minecraft-Account!");
 					return;
