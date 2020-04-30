@@ -314,7 +314,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	@Override
 	public String getLocale() {
-		return this.locale == null ? this.networkManager.getLocale() : this.locale;
+		return this.locale == null && this.networkManager != null ? this.networkManager.getLocale() : this.locale;
 	}
 	
 	public String setLocale(String locale) {
