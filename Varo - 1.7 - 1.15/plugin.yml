@@ -86,3 +86,6 @@ commands:
      description: Startet einen Countdown
   Performance:
      description: Verbessert die Performance
+  Language:
+     aliases: [lang]
+     description: Changes language of player

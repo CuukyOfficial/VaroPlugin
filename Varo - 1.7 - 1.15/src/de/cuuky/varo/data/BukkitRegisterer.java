@@ -21,6 +21,7 @@ import de.cuuky.varo.command.essentials.GamemodeCommand;
 import de.cuuky.varo.command.essentials.HealCommand;
 import de.cuuky.varo.command.essentials.InfoCommand;
 import de.cuuky.varo.command.essentials.InvSeeCommand;
+import de.cuuky.varo.command.essentials.LanguageCommand;
 import de.cuuky.varo.command.essentials.MessageCommand;
 import de.cuuky.varo.command.essentials.MuteCommand;
 import de.cuuky.varo.command.essentials.NightCommand;
@@ -115,6 +116,7 @@ public final class BukkitRegisterer {
 		registerCommand("protect", new ProtectCommand());
 		registerCommand("countdown", new CountdownCommand());
 		registerCommand("performance", new PerformanceCommand());
+		registerCommand("language", new LanguageCommand());
 	}
 
 	public static void registerEvents() {
