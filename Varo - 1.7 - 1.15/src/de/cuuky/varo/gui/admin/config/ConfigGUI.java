@@ -36,7 +36,7 @@ public class ConfigGUI extends SuperInventory {
 	}
 
 	private void hookChat(ConfigSetting entry) {
-		new ChatHook(opener, "§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookHandler() {
+		Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookHandler() {
 
 			@Override
 			public boolean onChat(AsyncPlayerChatEvent event) {
@@ -59,7 +59,7 @@ public class ConfigGUI extends SuperInventory {
 				reopenSoon();
 				return true;
 			}
-		});
+		}));
 		opener.sendMessage(Main.getPrefix() + "§7Gib zum Abbruch §ccancel§7 ein.");
 	}
 
