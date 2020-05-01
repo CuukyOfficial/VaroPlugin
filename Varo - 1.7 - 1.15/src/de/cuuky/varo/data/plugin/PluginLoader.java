@@ -45,6 +45,9 @@ public class PluginLoader {
 				for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
 					try {
 						File file = (File) getFileMethod.invoke((JavaPlugin) plugin);
+						if (file == null)
+							continue;
+
 						if (file.getName().equals(dp.getName() + ".jar")) {
 							dp.setPlugin((JavaPlugin) plugin);
 							dp.checkedAndLoaded();
