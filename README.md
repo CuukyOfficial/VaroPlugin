@@ -15,6 +15,7 @@ Version: 3.3.0.1</br></br>
 **Libraries:**</br>
 - <a href='https://www.mediafire.com/file/5p7c1e706szh64i/VaroPlugin.rar/file'>DiscordBot, TelegramBot, LabyModAPI und WorldEdit</a>
 - <a href='https://getbukkit.org/download/spigot'>Spigot/Bukkit</a></br>
+- <a href='https://github.com/CuukyOfficial/CFW/'>CuukyFrameWork</a></br>
 
 </br>Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/CONTRIBUTING.md'>Richtlinien zum Programmieren</a> beachten!</br>
 </br>
