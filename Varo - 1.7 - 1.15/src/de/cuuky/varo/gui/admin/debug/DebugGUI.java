@@ -52,7 +52,7 @@ public class DebugGUI extends SuperInventory {
 			public void run() {
 				close(false);
 
-				new ChatHook(opener, "§7Enter Event Message:", new ChatHookHandler() {
+				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter Event Message:", new ChatHookHandler() {
 
 					@Override
 					public boolean onChat(AsyncPlayerChatEvent event) {
@@ -60,7 +60,7 @@ public class DebugGUI extends SuperInventory {
 						opener.sendMessage(Main.getPrefix() + "§aErfolgreich!");
 						return true;
 					}
-				});
+				}));
 			}
 		});
 

@@ -49,7 +49,7 @@ public class VaroTeamRequest {
 	}
 
 	private void sendChatHook() {
-		new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue(invitor).replace("%invited%", invited.getName()), new ChatHookHandler() {
+		Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue(invitor).replace("%invited%", invited.getName()), new ChatHookHandler() {
 
 			@Override
 			public boolean onChat(AsyncPlayerChatEvent event) {
@@ -73,7 +73,7 @@ public class VaroTeamRequest {
 				addToTeam(invitor.getTeam() == null ? new VaroTeam(message) : invitor.getTeam());
 				return true;
 			}
-		});
+		}));
 	}
 
 	@SuppressWarnings("deprecation")

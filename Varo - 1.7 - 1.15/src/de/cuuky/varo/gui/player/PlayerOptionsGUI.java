@@ -114,7 +114,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 			if (itemname.contains("Set")) {
 				close(false);
 
-				new ChatHook(opener, "Enter Youtube-Link:", new ChatHookHandler() {
+				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "Enter Youtube-Link:", new ChatHookHandler() {
 
 					@Override
 					public boolean onChat(AsyncPlayerChatEvent event) {
@@ -128,7 +128,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 						reopenSoon();
 						return true;
 					}
-				});
+				}));
 			} else if (itemname.contains("Remove"))
 				stats.setYoutubeLink(null);
 		}
@@ -137,7 +137,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 			if (itemname.contains("Set")) {
 				close(false);
 
-				new ChatHook(opener, "§7Enter Rank", new ChatHookHandler() {
+				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter Rank", new ChatHookHandler() {
 
 					@Override
 					public boolean onChat(AsyncPlayerChatEvent event) {
@@ -146,7 +146,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 						reopenSoon();
 						return true;
 					}
-				});
+				}));
 			} else if (itemname.contains("Remove"))
 				target.setRank(null);
 		}
