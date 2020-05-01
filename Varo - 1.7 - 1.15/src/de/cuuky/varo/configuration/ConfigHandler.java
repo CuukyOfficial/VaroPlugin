@@ -34,7 +34,9 @@ public class ConfigHandler {
 
 	private void loadConfigurations() {
 		loadConfiguration(ConfigSettingSection.values(), CONFIG_PATH);
-		// loadConfiguration(ConfigMessageSection.values(), MESSAGE_PATH);
+		
+		if(new File(VARO_DIR + "messages").isDirectory()) 
+			System.err.println(Main.getConsolePrefix() + "The messages folder " + VARO_DIR + "messages/ has been moved to " + VARO_DIR + "languages/! Please delete the old folder!");
 
 		if (legacyFound)
 			moveLegacyFiles();
