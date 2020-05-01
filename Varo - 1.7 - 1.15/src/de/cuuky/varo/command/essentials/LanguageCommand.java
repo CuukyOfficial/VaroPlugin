@@ -19,8 +19,8 @@ public class LanguageCommand implements CommandExecutor {
 		}
 		
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/language §7<languagecode>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/language list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + label + " §7<languagecode>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + label + " list");
 			return false;
 		}
 
@@ -33,7 +33,7 @@ public class LanguageCommand implements CommandExecutor {
 
 		Language lang = Main.getLanguageManager().getLanguages().get(args[0]);
 		if (lang == null) {
-			sender.sendMessage(Main.getPrefix() + "Language " + args[0] + " is not useable on this server! §a/language list");
+			sender.sendMessage(Main.getPrefix() + "Language " + args[0] + " is not useable on this server! §a/" + label + " list");
 			return false;
 		}
 		

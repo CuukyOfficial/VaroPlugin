@@ -87,5 +87,5 @@ commands:
   Performance:
      description: Verbessert die Performance
   Language:
-     aliases: [lang]
+     aliases: [lang, язык, 语言]
      description: Changes language of player
