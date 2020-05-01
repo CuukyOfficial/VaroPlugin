@@ -48,6 +48,11 @@ public class VaroLanguageManager extends LanguageManager {
 
 		setDefaultLanguage(lang);
 	}
+	
+	@Override
+	public String getMessage(String messagePath, String locale) {
+		return super.getMessage(messagePath, !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean() ? getDefaultLanguage().getName() : locale);
+	}
 
 	private ArrayList<Integer> getConvNumbers(String line, String key) {
 		ArrayList<Integer> list = new ArrayList<>();
