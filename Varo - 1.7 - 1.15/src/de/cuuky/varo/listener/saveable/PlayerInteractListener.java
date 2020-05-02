@@ -2,8 +2,6 @@ package de.cuuky.varo.listener.saveable;
 
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,7 +32,7 @@ public class PlayerInteractListener implements Listener {
 		Player player = e.getPlayer();
 		Block block = e.getClickedBlock();
 
-		if (!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
+		if (!block.getType().name().contains("CHEST") && !block.getType().name().contains("FURNACE"))
 			return;
 
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);

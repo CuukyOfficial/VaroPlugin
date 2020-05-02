@@ -3,10 +3,8 @@ package de.cuuky.varo.listener.saveable;
 import java.util.Iterator;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Furnace;
-import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -36,13 +34,13 @@ public class EntityExplodeListener implements Listener {
 			return;
 		}
 
-		final Iterator<Block> iter = event.blockList().iterator();
+		Iterator<Block> iter = event.blockList().iterator();
 		while (iter.hasNext()) {
 			Block block = iter.next();
-			if (block.getState() instanceof Chest || block.getState() instanceof Furnace) {
+			if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE) {
 				if (VaroSaveable.getByLocation(block.getLocation()) != null)
 					iter.remove();
-			} else if (block.getState() instanceof Sign)
+			} else if (block.getType().name().contains("SIGN"))
 				if (chestNearby(block.getLocation()))
 					iter.remove();
 		}

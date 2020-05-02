@@ -3,9 +3,9 @@ package de.cuuky.varo.listener.saveable;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +30,7 @@ public class BlockBreakListener implements Listener {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
 		Block block = event.getBlock();
 
-		if (!(block.getState() instanceof Chest) && !(block.getState() instanceof Furnace))
+		if (block.getType() != Material.CHEST && block.getType() != Material.FURNACE)
 			return;
 
 		if (!Main.getVaroGame().hasStarted())
@@ -45,11 +45,10 @@ public class BlockBreakListener implements Listener {
 		VaroPlayer holder = saveable.getPlayer();
 
 		if (saveable.canModify(varoPlayer)) {
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_REMOVED_SAVEABLE.getValue(varoPlayer, varoPlayer).replace("%saveable%", block.getState() instanceof Chest ? "Chest" : "Furnace"));
+			varoPlayer.sendMessage(ConfigMessages.CHEST_REMOVED_SAVEABLE).replace("%saveable%", block.getState() instanceof Chest ? "Chest" : "Furnace");
 			player.playSound(player.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
-			player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
-			player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
-			player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
+			for (int i = 0; i < 3; i++)
+				player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
 			saveable.remove();
 			return;
 		}
@@ -58,10 +57,10 @@ public class BlockBreakListener implements Listener {
 			return;
 
 		if (!player.hasPermission("varo.ignoreSaveable")) {
-			player.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_NOT_TEAM_CHEST.getValue(varoPlayer).replace("%player%", holder.getName()));
+			varoPlayer.sendMessage(ConfigMessages.CHEST_NOT_TEAM_CHEST).replace("%player%", holder.getName());
 			event.setCancelled(true);
 		} else {
-			player.sendMessage(Main.getPrefix() + "§7Diese Kiste gehoerte " + Main.getColorCode() + saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstoeren!");
+			player.sendMessage("§7Diese Kiste gehoerte " + Main.getColorCode() + saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstoeren!");
 			saveable.remove();
 		}
 	}

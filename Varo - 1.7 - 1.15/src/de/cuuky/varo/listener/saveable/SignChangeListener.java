@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Furnace;
@@ -13,8 +14,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.material.Sign;
 
+import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -27,23 +28,16 @@ public class SignChangeListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onSignChange(SignChangeEvent event) {
-		Sign sign = null;
-		
-		try {
-			sign = (Sign) event.getBlock().getState().getData();
-		} catch (ClassCastException e) {
-			event.getPlayer().sendMessage(Main.getPrefix() + "§cNot available on your MC-Version!");
-			return;
-		}
-		
 		if (event.getPlayer().isOp())
 			for (int i = 0; i < event.getLines().length; i++)
 				event.setLine(i, event.getLines()[i].replace("&", "§"));
 
 		if (!Main.getVaroGame().hasStarted())
 			return;
-
-		Block attached = event.getBlock().getRelative(sign.getAttachedFace());
+		
+		Object sign = BlockUtils.getBlockData(event.getBlock(), event.getBlock().getState());
+		BlockFace attachedFace = BlockUtils.getAttachedSignFace(sign);
+		Block attached = event.getBlock().getRelative(attachedFace);
 
 		if (attached.getState() instanceof Chest) {
 			Chest chest = (Chest) attached.getState();
@@ -80,8 +74,13 @@ public class SignChangeListener implements Listener {
 				return;
 			}
 
-			if (secChest != null)
+			if (secChest != null) {
+				for (int i = 0; i < 6; i++)
+					p.getWorld().playEffect(secChest.getLocation(), Effect.ENDER_SIGNAL, 1);
+
 				new VaroSaveable(SaveableType.CHEST, secChest.getLocation(), player);
+				player.sendMessage(ConfigMessages.CHEST_SAVED_CHEST);
+			}
 
 			event.setLine(0, "§8--------------");
 			event.setLine(1, "§lSavedChest");
@@ -92,7 +91,7 @@ public class SignChangeListener implements Listener {
 				p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_CHEST.getValue(player, player));
+			player.sendMessage(ConfigMessages.CHEST_SAVED_CHEST);
 		} else if (attached.getState() instanceof Furnace) {
 			Furnace furnace = (Furnace) attached.getState();
 
@@ -134,7 +133,7 @@ public class SignChangeListener implements Listener {
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNANCE, furnace.getBlock().getLocation(), player);
-			p.sendMessage(Main.getPrefix() + ConfigMessages.CHEST_SAVED_FURNACE.getValue(player, player));
+			player.sendMessage(ConfigMessages.CHEST_SAVED_FURNACE);
 		}
 	}
 }
