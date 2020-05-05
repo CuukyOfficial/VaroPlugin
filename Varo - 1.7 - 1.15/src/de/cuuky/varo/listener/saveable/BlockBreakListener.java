@@ -60,7 +60,7 @@ public class BlockBreakListener implements Listener {
 			varoPlayer.sendMessage(ConfigMessages.CHEST_NOT_TEAM_CHEST).replace("%player%", holder.getName());
 			event.setCancelled(true);
 		} else {
-			player.sendMessage("§7Diese Kiste gehoerte " + Main.getColorCode() + saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstoeren!");
+			player.sendMessage("§7Diese(r) " + saveable.getType().toString() + " gehoerte " + Main.getColorCode() + saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstoeren!");
 			saveable.remove();
 		}
 	}

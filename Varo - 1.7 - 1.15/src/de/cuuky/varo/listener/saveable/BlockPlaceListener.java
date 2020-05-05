@@ -23,7 +23,7 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableTyp
 public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockPlace(final BlockPlaceEvent event) {
+	public void onBlockPlace(BlockPlaceEvent event) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 			
 			@Override
@@ -62,7 +62,7 @@ public class BlockPlaceListener implements Listener {
 					return;
 				}
 
-				event.setCancelled(true);
+				event.getBlock().breakNaturally();
 			}
 		}, 1);
 	}

@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener.saveable;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +33,7 @@ public class PlayerInteractListener implements Listener {
 		Player player = e.getPlayer();
 		Block block = e.getClickedBlock();
 
-		if (!block.getType().name().contains("CHEST") && !block.getType().name().contains("FURNACE"))
+		if (block.getType() != Material.CHEST && block.getType() != Material.FURNACE)
 			return;
 
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
@@ -42,9 +43,9 @@ public class PlayerInteractListener implements Listener {
 			return;
 
 		if (!player.hasPermission("varo.ignoreSaveable")) {
-			player.sendMessage(Main.getPrefix() + (saveable.getType() == SaveableType.CHEST ? ConfigMessages.CHEST_NOT_TEAM_CHEST.getValue(varoPlayer).replace("%player%", saveable.getPlayer().getName()) : ConfigMessages.CHEST_NOT_TEAM_FURNACE.getValue(varoPlayer).replace("%player%", saveable.getPlayer().getName())));
+			player.sendMessage((saveable.getType() == SaveableType.CHEST ? ConfigMessages.CHEST_NOT_TEAM_CHEST.getValue(varoPlayer).replace("%player%", saveable.getPlayer().getName()) : ConfigMessages.CHEST_NOT_TEAM_FURNACE.getValue(varoPlayer).replace("%player%", saveable.getPlayer().getName())));
 			e.setCancelled(true);
 		} else
-			player.sendMessage(Main.getPrefix() + "§7Diese Kiste gehoert " + Main.getColorCode() + saveable.getPlayer().getName() + "§7, doch durch deine Rechte konntest du sie trotzdem oeffnen!");
+			player.sendMessage("§7Diese(r) " + saveable.getType().toString() + " gehoert " + Main.getColorCode() + saveable.getPlayer().getName() + "§7, doch durch deine Rechte konntest du sie trotzdem oeffnen!");
 	}
 }
