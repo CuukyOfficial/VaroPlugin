@@ -2,7 +2,6 @@ package de.cuuky.varo.data;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.varo.Main;
@@ -123,10 +122,8 @@ public class DataManager {
 	}
 
 	public void reloadPlayerClients() {
-		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) 
 			vp.update();
-		}
 	}
 
 	public void save() {
