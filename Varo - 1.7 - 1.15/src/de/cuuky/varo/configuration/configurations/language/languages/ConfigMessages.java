@@ -24,6 +24,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	ALERT_GENERAL_STRIKE("alerts.BOTS_ALERT.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Der Strike wurde von %striker% gegeben. Begruendung: %reason%"),
 	ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% &7hat den Server zum Finale betreten."),
 	ALERT_KICKED_PLAYER("alerts.BOTS_ALERT.kickedPlayer", "%player% wurde gekickt!"),
+	ALERT_SESSIONS_ENDED("alerts.BOTS_ALERT.sessionsEnded", "%player%'s Session wurde beendet, da der Spieltag vorrüber ist!"),
 	ALERT_NEW_SESSIONS("alerts.BOTS_ALERT.newSessions", "Es wurden %newSessions% neue Folgen an die Spieler gegeben!"),
 	ALERT_NEW_SESSIONS_FOR_ALL("alerts.BOTS_ALERT.newSessionsForAll", "Alle haben %newSessions% neue Folgen bekommen!"),
 	ALERT_NO_BLOODLUST("alerts.BOTS_ALERT.noBloodlust", "%player% hat nun %days% Tage nicht gekaempft, was das Limit ueberschritten hat!"),

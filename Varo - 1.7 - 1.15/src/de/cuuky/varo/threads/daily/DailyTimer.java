@@ -10,7 +10,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.threads.daily.dailycheck.Checker;
@@ -107,13 +106,6 @@ public final class DailyTimer {
 	}
 
 	public void doDailyChecks() {
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
-			vp.getStats().setCountdown(ConfigSetting.PLAY_TIME.getValueAsInt() * 60);
-
-			if (vp.isOnline())
-				vp.getPlayer().kickPlayer("RESET");
-		}
-
 		for (Checker checkers : checker) {
 			try {
 				checkers.check();

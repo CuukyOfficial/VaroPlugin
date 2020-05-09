@@ -20,6 +20,7 @@ public enum LanguageEN implements LoadableMessage {
 	ALERT_GENERAL_STRIKE("alerts.BOTS_ALERT.generalStrike", "%player% now has %strikeNumber% strikes! The strike was given by %striker%. Reason: %reason%"),
 	ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% &7has entered the server to participate in the final"),
 	ALERT_KICKED_PLAYER("alerts.BOTS_ALERT.kickedPlayer", "%player% has been kicked!"),
+	ALERT_SESSIONS_ENDED("alerts.BOTS_ALERT.sessionsEnded", "Due to end of a day, %player%'s session has been endet!"),
 	ALERT_NEW_SESSIONS("alerts.BOTS_ALERT.newSessions", "There were %newSessions% new sessions given to the players!"),
 	ALERT_NEW_SESSIONS_FOR_ALL("alerts.BOTS_ALERT.newSessionsForAll", "Everybody got %newSessions% new sessions!"),
 	ALERT_NO_BLOODLUST("alerts.BOTS_ALERT.noBloodlust", "%player% has now not fought for %days% days, which has exceeded the limit!"),
