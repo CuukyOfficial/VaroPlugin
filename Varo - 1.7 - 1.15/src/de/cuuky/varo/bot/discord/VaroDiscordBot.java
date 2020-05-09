@@ -133,7 +133,7 @@ public class VaroDiscordBot implements VaroBot {
 		try {
 			channel = jda.getTextChannelById(channelid);
 		} catch (Exception e) {
-			System.err.println(Main.getConsolePrefix() + "Failed to print message");
+			System.err.println(Main.getConsolePrefix() + "Failed to print discord message!");
 			return;
 		}
 

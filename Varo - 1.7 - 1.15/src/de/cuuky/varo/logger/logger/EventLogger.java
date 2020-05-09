@@ -1,6 +1,9 @@
 package de.cuuky.varo.logger.logger;
 
 import java.awt.Color;
+import java.util.ArrayList;
+
+import org.bukkit.Bukkit;
 
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
@@ -41,7 +44,7 @@ public class EventLogger extends VaroLogger {
 		}
 
 		public long getPostChannel() {
-			if (idEntry == null || Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled())
+			if (idEntry == null)
 				return -1;
 
 			return idEntry.getValueAsLong() != -1 ? idEntry.getValueAsLong() : ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
@@ -56,19 +59,45 @@ public class EventLogger extends VaroLogger {
 		}
 	}
 
+	private ArrayList<Object[]> queue;
+
 	public EventLogger(String name) {
 		super(name, true);
+
+		this.queue = new ArrayList<>();
+		startQueue();
 	}
 
-	private void sendToDiscord(LogType type, String msg) {
+	private void startQueue() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				if (Main.getBotLauncher() == null)
+					return;
+
+				for (Object[] msg : new ArrayList<>(queue)) {
+					sendToDiscord((LogType) msg[0], (String) msg[1]);
+					sendToTelegram((LogType) msg[0], (String) msg[1]);
+					queue.remove(msg);
+				}
+			}
+		}, 20, 20);
+	}
+
+	private boolean sendToDiscord(LogType type, String msg) {
+		if (Main.getBotLauncher().getDiscordbot() == null)
+			return true;
+
 		try {
 			Main.getBotLauncher().getDiscordbot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
+			return true;
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
-			return;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(Main.getPrefix() + "Failed to broadcast message! Did you enter a wrong channel ID?");
-			return;
+			return false;
 		}
 	}
 
@@ -97,8 +126,13 @@ public class EventLogger extends VaroLogger {
 
 		pw.flush();
 
-		if (type.getPostChannel() == -1 || message.contains("%noBot%"))
+		if (message.contains("%noBot%"))
 			return;
+
+		if (Main.getBotLauncher() == null) {
+			queue.add(new Object[] { type, message });
+			return;
+		}
 
 		sendToDiscord(type, message);
 		sendToTelegram(type, message);
