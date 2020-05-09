@@ -19,7 +19,7 @@ public class EntityDamageByEntityListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
-		if (!(event.getEntity() instanceof Player))
+		if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
 			return;
 
 		if (Main.getVaroGame().getGameState() == GameState.END)
