@@ -23,6 +23,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 
@@ -92,7 +93,8 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp() || VaroPlayer.getPlayer(event.getPlayer()).isInProtection())
+		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
+		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp() || vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
 			event.setCancelled(true);
 
 		if (cancelEvent(event.getPlayer()))
