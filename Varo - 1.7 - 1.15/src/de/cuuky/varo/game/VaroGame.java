@@ -27,6 +27,7 @@ import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
@@ -110,6 +111,7 @@ public class VaroGame implements VaroSerializeable {
 		if (minuteTimer != null)
 			minuteTimer.remove();
 
+		new VaroBackup();
 		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
 	}
 
