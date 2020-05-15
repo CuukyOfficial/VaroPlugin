@@ -89,6 +89,8 @@ public class VaroGame implements VaroSerializeable {
 	public void start() {
 		if (hasStarted() || isStarting())
 			return;
+		
+		new VaroBackup();
 
 		if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
 			VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
@@ -111,7 +113,6 @@ public class VaroGame implements VaroSerializeable {
 		if (minuteTimer != null)
 			minuteTimer.remove();
 
-		new VaroBackup();
 		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
 	}
 
