@@ -34,6 +34,9 @@ public class PlayerHit {
 			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());
 			VaroPlayer vp1 = VaroPlayer.getPlayer(((Player) event.getDamager()).getName());
 			
+			if (!vp1.getStats().isAlive() || vp1.isAdminIgnore()) 
+				return;
+			
 			if (vp.getTeam() != null && vp1.getTeam() != null && vp.getTeam().equals(vp1.getTeam()))
 				return;
 

@@ -39,9 +39,8 @@ public class CombatlogCheck {
 		if (hit.getOpponent() != null && hit.getOpponent().isOnline())
 			PlayerHit.getHit(hit.getOpponent()).over();
 
-		if (!vp.getStats().isAlive()) {
+		if (!vp.getStats().isAlive() || vp.isAdminIgnore()) 
 			return;
-		}
 
 		if (ConfigSetting.KILL_ON_COMBATLOG.getValueAsBoolean()) {
 			event.getPlayer().setHealth(0);
