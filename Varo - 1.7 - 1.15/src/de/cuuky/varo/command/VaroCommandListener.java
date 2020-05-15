@@ -18,7 +18,7 @@ public class VaroCommandListener implements CommandExecutor {
 		if (args.length < 1) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro §7§lCommands:");
 			for (VaroCommand command : VaroCommand.getVaroCommand())
-				if (sender.hasPermission(command.getPermission()))
+				if (command.getPermission() == null || sender.hasPermission(command.getPermission()))
 					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo " + command.getName() + "§8: §7" + command.getDescription());
 			return false;
 		}
