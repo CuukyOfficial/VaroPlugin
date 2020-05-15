@@ -145,7 +145,7 @@ public class SpectatorListener implements Listener {
 
 		Player player = (Player) interact;
 
-		if (Vanish.getVanish(player) == null && player.getGameMode() != GameMode.ADVENTURE)
+		if (Vanish.getVanish(player) == null || player.getGameMode() != GameMode.ADVENTURE)
 			return false;
 
 		return true;
