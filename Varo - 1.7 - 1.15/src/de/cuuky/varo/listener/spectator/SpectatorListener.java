@@ -2,10 +2,9 @@ package de.cuuky.varo.listener.spectator;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -35,23 +34,23 @@ public class SpectatorListener implements Listener {
 		Entity entityDamaged = event.getEntity();
 
 		if (cancelEvent(event.getEntity())) {
-			if (entityDamager instanceof Arrow) {
-				if (((Arrow) entityDamager).getShooter() instanceof Player) {
-					Arrow arrow = (Arrow) entityDamager;
+			if (entityDamager instanceof Projectile) {
+				if (((Projectile) entityDamager).getShooter() instanceof Player) {
+					Projectile projectile = (Projectile) entityDamager;
 
-					Player shooter = (Player) arrow.getShooter();
+					Player shooter = (Player) projectile.getShooter();
 					Player damaged = (Player) entityDamaged;
 
 					if (Vanish.getVanish((Player) entityDamaged) != null) {
 						damaged.teleport(entityDamaged.getLocation().add(0, 5, 0));
 
-						Arrow newArrow = (Arrow) arrow.getWorld().spawnEntity(arrow.getLocation(), EntityType.ARROW);
-						newArrow.setShooter(shooter);
-						newArrow.setVelocity(arrow.getVelocity());
-						newArrow.setBounce(arrow.doesBounce());
+						Projectile newProjectile = (Projectile) projectile.getWorld().spawnEntity(projectile.getLocation(), projectile.getType());
+						newProjectile.setShooter(shooter);
+						newProjectile.setVelocity(projectile.getVelocity());
+						newProjectile.setBounce(projectile.doesBounce());
 
 						event.setCancelled(true);
-						arrow.remove();
+						projectile.remove();
 					}
 				}
 			}
@@ -146,7 +145,7 @@ public class SpectatorListener implements Listener {
 
 		Player player = (Player) interact;
 
-		if (Vanish.getVanish(player) == null || player.getGameMode() != GameMode.ADVENTURE)
+		if (Vanish.getVanish(player) == null && player.getGameMode() != GameMode.ADVENTURE)
 			return false;
 
 		return true;
