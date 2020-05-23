@@ -113,6 +113,7 @@ public class VaroGame implements VaroSerializeable {
 		if (minuteTimer != null)
 			minuteTimer.remove();
 
+		this.lastDayTimer = new Date();
 		startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
 	}
 
