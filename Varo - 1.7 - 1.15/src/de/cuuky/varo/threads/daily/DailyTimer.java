@@ -114,5 +114,7 @@ public final class DailyTimer {
 				continue;
 			}
 		}
+		
+		Main.getVaroGame().setLastDayTimer(new Date());
 	}
 }
