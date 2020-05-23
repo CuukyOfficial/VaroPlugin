@@ -38,8 +38,12 @@ public class VaroPlayerBan {
 	}
 
 	public boolean checkBan(Player player, PlayerLoginEvent event) {
-		if (!isBanned(player))
+		if (!isBanned(player)) {
+			if(!ownerBlock && !reason.isEnabled()) 
+				Bukkit.broadcastMessage("§4" + player.getName() + " §7is banned on all Varo-Servers for §4" + reason.toString() + ", §7but due to the ban-policy of this server he is allowed to join anyway!");
+			
 			return false;
+		}
 
 		if (event == null)
 			player.kickPlayer(getKickMessage());
