@@ -39,9 +39,17 @@ public class VaroPlayerBan {
 
 	public boolean checkBan(Player player, PlayerLoginEvent event) {
 		if (!isBanned(player)) {
-			if(!ownerBlock && !reason.isEnabled()) 
-				Bukkit.broadcastMessage("§4" + player.getName() + " §7is banned on all Varo-Servers for §4" + reason.toString() + ", §7but due to the ban-policy of this server he is allowed to join anyway!");
-			
+			if (!ownerBlock && !reason.isEnabled()) {
+				Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
+
+					@Override
+					public void run() {
+						if (event == null || event.getResult() == Result.ALLOWED)
+							Bukkit.broadcastMessage("§4" + player.getName() + " §7has been banned on all Varo-Servers for §4" + reason.toString() + "§7, but due to the ban-policy of this server players which are banned for §4" + reason.toString() + " §7are allowed to join anyway!");
+					}
+				}, 1);
+			}
+
 			return false;
 		}
 
