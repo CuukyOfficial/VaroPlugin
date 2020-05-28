@@ -257,7 +257,7 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7Das Spiel wurde neugestartet."),
-	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboard sind deaktiviert."),
+	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboard ist deaktiviert."),
 	VARO_COMMANDS_SCOREBOARD_ENABLED("varoCommands.scoreboard.enabled", "&7Du siehst nun das Scoreboard."),
 	VARO_COMMANDS_SCOREBOARD_DISABLED("varoCommands.scoreboard.disabled", "&7Du siehst nun das Scoreboard."),
 	VARO_COMMANDS_SORT_HELP("varoCommands.sort.help", "%colorcode%/varo sort"),
@@ -292,9 +292,11 @@ public enum ConfigMessages implements DefaultLanguage {
 	OTHER_CONFIG("other.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
 	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%ping%&7ms");
 
-	private String path, defaultMessage, message;
+	private final String path;
+	private final String defaultMessage;
+	private final String message;
 
-	private ConfigMessages(String path, String message) {
+	ConfigMessages(String path, String message) {
 		this.path = path;
 		this.defaultMessage = message;
 		this.message = message;
