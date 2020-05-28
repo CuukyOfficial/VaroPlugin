@@ -16,7 +16,7 @@ import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 public class VaroUpdater {
 
-	private static enum VersionCompareResult {
+	private enum VersionCompareResult {
 		VERSION1GREATER,
 		VERSION2GREATER,
 		VERSIONS_EQUAL;
@@ -25,9 +25,10 @@ public class VaroUpdater {
 	private static final String UPDATE_LINK = "https://api.spiget.org/v2/resources/%version%/versions/latest";
 
 	private VaroUpdateResultSet lastResult;
-	private String updateLink, currentVersion;
-	private int resourceId;
-	private Runnable finishHook;
+	private final String updateLink;
+	private final String currentVersion;
+	private final int resourceId;
+	private final Runnable finishHook;
 
 	public VaroUpdater(int resourceId, String currentVersion, Runnable finishedHook) {
 		this.resourceId = resourceId;
@@ -35,13 +36,14 @@ public class VaroUpdater {
 		this.updateLink = UPDATE_LINK.replace("%version%", String.valueOf(resourceId));
 		this.finishHook = finishedHook;
 
-		checkUpdate();
+		scheduleUpdateChecker();
 	}
 
 	private VersionCompareResult compareVersions(String version1, String version2) {
 		try {
-			if (!version1.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") || !version2.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*"))
+			if (!version1.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") || !version2.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*")) {
 				throw new IllegalArgumentException("Invalid version format");
+			}
 
 			String[] version1Parts = version1.replace("-BETA", "").split("\\.");
 			String[] version2Parts = version2.replace("-BETA", "").split("\\.");
@@ -49,32 +51,29 @@ public class VaroUpdater {
 			for (int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
 				int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
 				int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
-				if (version1Part < version2Part)
+				if (version1Part < version2Part) {
 					return VersionCompareResult.VERSION2GREATER;
-				if (version1Part > version2Part)
+				}
+				if (version1Part > version2Part) {
 					return VersionCompareResult.VERSION1GREATER;
+				}
 			}
 
-			if (version1.contains("BETA"))
+			if (version1.contains("BETA")) {
 				return VersionCompareResult.VERSION2GREATER;
+			}
 
-			if (version2.contains("BETA"))
+			if (version2.contains("BETA")) {
 				return VersionCompareResult.VERSION1GREATER;
+			}
 		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
 		}
-
 		return VersionCompareResult.VERSIONS_EQUAL;
 	}
 
-	private void checkUpdate() {
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				checkForUpdates();
-			}
-		}, 20);
+	private void scheduleUpdateChecker() {
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), this::checkForUpdates, 20);
 	}
 
 	public void printResults() {
@@ -83,44 +82,43 @@ public class VaroUpdater {
 
 		System.out.println(Main.getConsolePrefix() + "Updater: " + lastResult.getUpdateResult().getMessage());
 
-		for (Alert upAlert : Alert.getAlerts(AlertType.UPDATE_AVAILABLE))
-			if (upAlert.isOpen() && upAlert.getMessage().contains(lastResult.getVersionName()))
+		for (Alert upAlert : Alert.getAlerts(AlertType.UPDATE_AVAILABLE)) {
+			if (upAlert.isOpen() && upAlert.getMessage().contains(lastResult.getVersionName())) {
 				return;
+			}
+		}
 
-		if (lastResult.getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
+		if (lastResult.getUpdateResult() == UpdateResult.UPDATE_AVAILABLE) {
 			new Alert(AlertType.UPDATE_AVAILABLE, "§cA newer version of the plugin ( " + lastResult.getVersionName() + ") is available!\n§7Usually you can update without any loss of data\nwe recommend you reading the update logs anyway!");
+		}
 	}
 
 	public VaroUpdateResultSet checkForUpdates() {
 		UpdateResult result = UpdateResult.NO_UPDATE;
 		String version, id;
 
-		try {
-			Scanner scanner = new Scanner(new URL(updateLink).openStream());
-			String all = "";
+		try (Scanner scanner = new Scanner(new URL(this.updateLink).openStream())) {
+			StringBuilder all = new StringBuilder();
 			while (scanner.hasNextLine()) {
-				all += scanner.nextLine();
+				all.append(scanner.nextLine());
 			}
-			scanner.close();
 
-			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
+			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all.toString());
 			version = scannerJSON.get("name").toString();
 			id = scannerJSON.get("id").toString();
 			switch (compareVersions(version, this.currentVersion)) {
-			case VERSION1GREATER:
-				result = UpdateResult.UPDATE_AVAILABLE;
-				break;
-			case VERSIONS_EQUAL:
-				result = UpdateResult.NO_UPDATE;
-				break;
-			case VERSION2GREATER:
-				result = UpdateResult.TEST_BUILD;
-				break;
+				case VERSION1GREATER:
+					result = UpdateResult.UPDATE_AVAILABLE;
+					break;
+				case VERSIONS_EQUAL:
+					result = UpdateResult.NO_UPDATE;
+					break;
+				case VERSION2GREATER:
+					result = UpdateResult.TEST_BUILD;
+					break;
 			}
 		} catch (IOException e) {
 			result = UpdateResult.FAIL_SPIGOT;
-			version = "";
-			id = "";
 		} catch (ParseException | IllegalArgumentException e) {
 			e.getSuppressed();
 			System.out.println(Main.getConsolePrefix() + "Failed to fetch server version!");
@@ -131,8 +129,9 @@ public class VaroUpdater {
 
 		this.lastResult = new VaroUpdateResultSet(result, version, id);
 
-		if (finishHook != null)
+		if (finishHook != null) {
 			this.finishHook.run();
+		}
 
 		return lastResult;
 	}

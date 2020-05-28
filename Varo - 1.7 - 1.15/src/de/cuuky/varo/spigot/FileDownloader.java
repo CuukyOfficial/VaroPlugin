@@ -15,24 +15,15 @@ public class FileDownloader {
 	}
 
 	public void startDownload() throws IOException {
-		URL download = new URL(this.link);
-		BufferedInputStream in;
-		FileOutputStream fout;
+		URL downloadURL = new URL(this.link);
 
-		in = new BufferedInputStream(download.openStream());
-		fout = new FileOutputStream(path);
+		try (BufferedInputStream input = new BufferedInputStream(downloadURL.openStream()); FileOutputStream output =  new FileOutputStream(this.path)) {
+			byte[] data = new byte[1024];
 
-		final byte data[] = new byte[1024];
-		int count;
-		while ((count = in.read(data, 0, 1024)) != -1) {
-			fout.write(data, 0, count);
-		}
-
-		if (in != null) {
-			in.close();
-		}
-		if (fout != null) {
-			fout.close();
+			int count;
+			while ((count = input.read(data, 0, 1024)) != -1) {
+				output.write(data, 0, count);
+			}
 		}
 	}
 }
