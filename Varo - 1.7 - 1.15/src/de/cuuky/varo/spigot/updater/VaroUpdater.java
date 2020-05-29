@@ -19,14 +19,13 @@ public class VaroUpdater {
 	private enum VersionCompareResult {
 		VERSION1GREATER,
 		VERSION2GREATER,
-		VERSIONS_EQUAL;
+		VERSIONS_EQUAL
 	}
 
 	private static final String UPDATE_LINK = "https://api.spiget.org/v2/resources/%version%/versions/latest";
 
 	private VaroUpdateResultSet lastResult;
-	private final String updateLink;
-	private final String currentVersion;
+	private final String updateLink, currentVersion;
 	private final int resourceId;
 	private final Runnable finishHook;
 
@@ -41,9 +40,8 @@ public class VaroUpdater {
 
 	private VersionCompareResult compareVersions(String version1, String version2) {
 		try {
-			if (!version1.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") || !version2.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*")) {
-				throw new IllegalArgumentException("Invalid version format");
-			}
+			assert version1.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") && version2
+					.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") : "Invalid version format";
 
 			String[] version1Parts = version1.replace("-BETA", "").split("\\.");
 			String[] version2Parts = version2.replace("-BETA", "").split("\\.");
@@ -51,21 +49,16 @@ public class VaroUpdater {
 			for (int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
 				int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
 				int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
-				if (version1Part < version2Part) {
+				if (version1Part < version2Part)
 					return VersionCompareResult.VERSION2GREATER;
-				}
-				if (version1Part > version2Part) {
+				else if (version1Part > version2Part)
 					return VersionCompareResult.VERSION1GREATER;
-				}
 			}
 
-			if (version1.contains("BETA")) {
+			if (version1.contains("BETA"))
 				return VersionCompareResult.VERSION2GREATER;
-			}
-
-			if (version2.contains("BETA")) {
+			else if (version2.contains("BETA"))
 				return VersionCompareResult.VERSION1GREATER;
-			}
 		} catch (Exception e) {
 			System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
 		}

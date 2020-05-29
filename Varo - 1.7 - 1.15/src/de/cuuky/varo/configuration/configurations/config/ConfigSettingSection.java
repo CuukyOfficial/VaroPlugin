@@ -37,10 +37,10 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	WORLD("World", Material.GRASS, "Hier kannst du Einstellungen zur Welt vornehmen."),
 	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");
 
-	private String name, description;
-	private Material material;
+	private final String name, description;
+	private final Material material;
 
-	private ConfigSettingSection(String name, Material material, String description) {
+	ConfigSettingSection(String name, Material material, String description) {
 		this.name = name;
 		this.material = material;
 		this.description = description;

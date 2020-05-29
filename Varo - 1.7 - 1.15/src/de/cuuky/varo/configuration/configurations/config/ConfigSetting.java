@@ -273,12 +273,12 @@ public enum ConfigSetting implements SectionEntry {
 	YOUTUBE_SET_OWN_LINK(ConfigSettingSection.YOUTUBE, "setOwnLink", true, "Ob die Spieler sich selbst den\nYouTube-Link per /yt setzen duerfen"),
 	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmuessen, um als Varovideo zu gelten.");
 
-	private Object defaultValue, value;
-	private String path, description;
-	private ConfigSettingSection section;
+	private final Object defaultValue, value;
+	private final String path, description;
+	private final ConfigSettingSection section;
 	private boolean reducesPerformance;
 
-	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description) {
+	ConfigSetting(ConfigSettingSection section, String path, Object value, String description) {
 		this.section = section;
 		this.path = path;
 		this.value = value;
@@ -286,7 +286,8 @@ public enum ConfigSetting implements SectionEntry {
 		this.description = description;
 	}
 
-	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description, boolean reducesPerformance) {
+	ConfigSetting(ConfigSettingSection section, String path, Object value, String description,
+			boolean reducesPerformance) {
 		this(section, path, value, description);
 
 		this.reducesPerformance = reducesPerformance;
