@@ -7,6 +7,7 @@ import de.cuuky.varo.list.item.lists.ChestItems;
 import de.cuuky.varo.list.item.lists.DeathItems;
 import de.cuuky.varo.list.item.lists.LogDestroyedBlocks;
 import de.cuuky.varo.list.item.lists.StartItems;
+import de.cuuky.varo.list.mod.lists.BlockedMods;
 
 public class VaroListManager {
 
@@ -17,6 +18,7 @@ public class VaroListManager {
 	private DeathItems deathItems;
 	private LogDestroyedBlocks destroyedBlocks;
 	private StartItems startItems;
+	private BlockedMods blockedMods;
 
 	public VaroListManager() {
 		this.blockedEnchantments = new BlockedEnchantments();
@@ -26,6 +28,7 @@ public class VaroListManager {
 		this.destroyedBlocks = new LogDestroyedBlocks();
 		this.startItems = new StartItems();
 		this.deathItems = new DeathItems();
+		this.blockedMods = new BlockedMods();
 
 		VaroList.saveLists();
 	}
@@ -56,5 +59,8 @@ public class VaroListManager {
 
 	public StartItems getStartItems() {
 		return startItems;
+	}
+	public BlockedMods getBlockedMods() {
+		return blockedMods;
 	}
 }
