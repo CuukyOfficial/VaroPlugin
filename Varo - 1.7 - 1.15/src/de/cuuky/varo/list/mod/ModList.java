@@ -13,7 +13,7 @@ public class ModList extends VaroList {
 		super(location);
 	}
 
-	public void addEnchantment(String name) {
+	public void addMod(String name) {
 		mods.add(name);
 
 		saveList();
