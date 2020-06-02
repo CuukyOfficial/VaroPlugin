@@ -1,8 +1,5 @@
 package de.cuuky.varo.listener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,9 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.magmafoundation.magma.api.PlayerAPI;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
@@ -27,13 +22,13 @@ import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.world.VaroWorld;
-import de.cuuky.varo.list.mod.ModList;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
+import de.cuuky.varo.utils.ModUtils;
 
 public class PlayerJoinListener implements Listener {
 
@@ -63,28 +58,7 @@ public class PlayerJoinListener implements Listener {
 		vplayer.onEvent(BukkitEventType.JOINED);
 		event.setJoinMessage(null);
 		if(VersionUtils.getServerSoftware() == ServerSoftware.MAGMA) {
-
-			boolean kickPlayer = false;
-			String modList = PlayerAPI.getModlist(player);
-			ArrayList<String> usedMods = new ArrayList<String>();
-			for(String mod : Main.getDataManager().getListManager().getBlockedMods().getAsList()) {
-				if(modList.toLowerCase().contains(mod.toLowerCase())) {
-					kickPlayer = true;
-					usedMods.add(mod);
-				}
-				if(kickPlayer) {
-					String illegalMods = JavaUtils.getArgsToString(usedMods, "§7, " + Main.getColorCode());
-					if(!player.hasPermission("varo.alwaysjoin")) {
-						player.kickPlayer(Main.getPrefix() + "\n§7Bitte entferne folgende Mods: " + Main.getColorCode() + illegalMods);
-					}
-					for(Player p : Bukkit.getOnlinePlayers()) {
-						if(p.hasPermission("varo.admin")) {
-							p.sendMessage(Main.getPrefix() + "§7Der Spieler " + Main.getColorCode() + player.getName() + " §7hat versucht mit folgenden blockierten Mods zu joinen: " + Main.getColorCode() + JavaUtils.getArgsToString(usedMods, "§7, " + Main.getColorCode()));
-						}
-					}
-				}
-			}
-
+			ModUtils.checkForIllegalMods(player);
 		}
 
 		if(Main.getVaroGame().getGameState() == GameState.LOBBY) {
