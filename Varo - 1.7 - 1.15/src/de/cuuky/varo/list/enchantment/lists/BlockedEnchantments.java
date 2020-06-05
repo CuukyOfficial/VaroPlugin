@@ -13,7 +13,7 @@ public class BlockedEnchantments extends EnchantmentList {
 		if (!enchantments.isEmpty())
 			return;
 
-		enchantments.add(Enchantment.ARROW_INFINITE.getName() + ":1");
+		enchantments.add(Enchantment.DAMAGE_ARTHROPODS.getName() + ":1");
 	}
 
 	@SuppressWarnings("deprecation")
