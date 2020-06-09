@@ -6,6 +6,7 @@
 Das Plugin läuft universal auf den Versionen 1.7 - 1.15.</br></br>
 
 **This is a project I started years ago, don't blame me for old code. Newer code is in the CFW linked below**
+<br>
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg"></br>
 
