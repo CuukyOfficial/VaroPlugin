@@ -16,7 +16,6 @@ public class BlockedRecipes extends ItemList {
 		items.add(new ItemStack(Material.AIR));
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean isBlocked(ItemStack itemstack) {
 		itemstack = fixItem(itemstack);
 		for (ItemStack stack : items)

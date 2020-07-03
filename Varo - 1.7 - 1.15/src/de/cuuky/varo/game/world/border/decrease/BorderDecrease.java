@@ -85,7 +85,6 @@ public class BorderDecrease {
 	private static void startShrinking() {
 		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				if (running)

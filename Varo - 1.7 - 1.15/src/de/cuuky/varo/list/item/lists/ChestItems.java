@@ -5,7 +5,6 @@ import de.cuuky.varo.list.item.ItemList;
 
 public class ChestItems extends ItemList {
 
-	@SuppressWarnings("deprecation")
 	public ChestItems() {
 		super("ChestItems");
 

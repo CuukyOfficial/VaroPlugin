@@ -41,7 +41,6 @@ public class NoPortalListener implements Listener {
 		event.setCancelled(true);
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		if (!ConfigSetting.BLOCK_USER_PORTALS.getValueAsBoolean())

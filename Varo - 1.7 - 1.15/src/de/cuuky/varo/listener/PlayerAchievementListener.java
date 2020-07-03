@@ -6,7 +6,6 @@ import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
-@SuppressWarnings("deprecation")
 public class PlayerAchievementListener implements Listener {
 
 	@EventHandler

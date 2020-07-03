@@ -1,7 +1,6 @@
 package de.cuuky.varo;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -9,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.CuukyFrameWork;
-import de.cuuky.cfw.manager.FrameworkManager;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
@@ -164,10 +162,7 @@ public class Main extends JavaPlugin {
 	}
 	
 	private void initiliazeCFW() {
-		ArrayList<FrameworkManager> manager = new ArrayList<>();
-		manager.add(languageManager = new VaroLanguageManager(this));
-		
-		cuukyFrameWork = new CuukyFrameWork(instance, manager);
+		cuukyFrameWork = new CuukyFrameWork(instance, languageManager = new VaroLanguageManager(cuukyFrameWork));
 		cuukyFrameWork.getClientAdapterManager().setUpdateHandler(varoBoard = new VaroBoardProvider());
 	}
 
