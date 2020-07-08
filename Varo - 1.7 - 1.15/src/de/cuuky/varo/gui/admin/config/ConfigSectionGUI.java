@@ -16,7 +16,7 @@ import de.cuuky.varo.gui.admin.AdminMainMenu;
 public class ConfigSectionGUI extends SuperInventory {
 
 	public ConfigSectionGUI(Player opener) {
-		super("§aConfig-Section", opener, JavaUtils.getNextToNine(ConfigSettingSection.values().length), false);
+		super("§aConfig-Section", opener, JavaUtils.getNextToNine(ConfigSettingSection.values().length) + 9, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
