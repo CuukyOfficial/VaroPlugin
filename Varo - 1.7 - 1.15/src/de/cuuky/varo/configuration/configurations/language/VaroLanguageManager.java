@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import de.cuuky.cfw.CuukyFrameWork;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.cfw.configuration.language.LanguageManager;
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
@@ -26,8 +27,8 @@ public class VaroLanguageManager extends LanguageManager {
 
 	private ScriptEngine scriptEngine;
 
-	public VaroLanguageManager(CuukyFrameWork framework) {
-		super(PATH_DIR, FALLBACK_LANGUAGE, framework);
+	public VaroLanguageManager(JavaPlugin instance) {
+		super(PATH_DIR, FALLBACK_LANGUAGE, instance);
 
 		scriptEngine = new ScriptEngineManager().getEngineByName("js");
 

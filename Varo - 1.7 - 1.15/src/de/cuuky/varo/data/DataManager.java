@@ -9,6 +9,7 @@ import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.ban.VaroPlayerBan;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
+import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
@@ -92,7 +93,6 @@ public class DataManager {
 		this.pluginLoader = new PluginLoader();
 	}
 
-	@SuppressWarnings("deprecation")
 	private void startAutoSave() {
 		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
 
@@ -118,7 +118,7 @@ public class DataManager {
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
-		Main.getVaroBoard().update();
+		VaroBoardProvider.update();
 	}
 
 	public void reloadPlayerClients() {

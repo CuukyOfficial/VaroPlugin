@@ -2,9 +2,7 @@ package de.cuuky.varo.clientadapter;
 
 import java.util.ArrayList;
 
-import org.bukkit.entity.Player;
-
-import de.cuuky.cfw.clientadapter.board.BoardUpdateHandler;
+import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
@@ -16,19 +14,23 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
 
-public class VaroBoardProvider implements BoardUpdateHandler {
+public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 
-	private ScoreboardBoardList scoreboard;
-	private TablistBoardList tablist;
+	private static ScoreboardBoardList scoreboard;
+	private static TablistBoardList tablist;
 
-	public VaroBoardProvider() {
-		this.scoreboard = new ScoreboardBoardList();
-		this.tablist = new TablistBoardList();
-
+	static {
+		scoreboard = new ScoreboardBoardList();
+		tablist = new TablistBoardList();
+		
 		update();
 	}
+	
+	public VaroBoardProvider(VaroPlayer player) {
+		super(player);
+	}
 
-	private ArrayList<String> replaceList(ArrayList<String> list, VaroPlayer vp) {
+	private ArrayList<String> replaceList(ArrayList<String> list) {
 		ArrayList<String> newList = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			String line = list.get(i);
@@ -36,7 +38,7 @@ public class VaroBoardProvider implements BoardUpdateHandler {
 				if (ConfigSetting.PLAY_TIME.getValueAsInt() < 1)
 					line = "§cUnlimited";
 
-			line = Main.getLanguageManager().replaceMessage(line, vp);
+			line = Main.getLanguageManager().replaceMessage(line, player);
 
 			newList.add(line);
 		}
@@ -44,72 +46,65 @@ public class VaroBoardProvider implements BoardUpdateHandler {
 		return newList;
 	}
 
-	public void update() {
-		scoreboard.update();
-		tablist.update();
+	@Override
+	public ArrayList<String> getTablistHeader() {
+		return replaceList(tablist.getHeaderLines());
 	}
 
 	@Override
-	public ArrayList<String> getTablistHeader(Player player) {
-		return replaceList(tablist.getHeaderLines(), VaroPlayer.getPlayer(player));
+	public ArrayList<String> getTablistFooter() {
+		return replaceList(tablist.getFooterLines());
 	}
 
 	@Override
-	public ArrayList<String> getTablistFooter(Player player) {
-		return replaceList(tablist.getFooterLines(), VaroPlayer.getPlayer(player));
-	}
-
-	@Override
-	public String getTablistName(Player player) {
+	public String getTablistName() {
 		String listname = "";
-		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if (vp.getTeam() != null) {
-			if (vp.getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, vp);
+		if (player.getTeam() != null) {
+			if (player.getRank() == null) {
+				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, player);
 			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, vp);
+				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, player);
 			}
 		} else {
-			if (vp.getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, vp);
+			if (player.getRank() == null) {
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, player);
 			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, vp);
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
 			}
 		}
 
 		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
 		if (maxlength > 0)
 			if (listname.length() > maxlength)
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, vp);
+				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
 
 		return listname;
 	}
 
 	@Override
-	public String getScoreboardTitle(Player player) {
-		return Main.getLanguageManager().replaceMessage(scoreboard.getHeader(), VaroPlayer.getPlayer(player));
+	public String getScoreboardTitle() {
+		return Main.getLanguageManager().replaceMessage(scoreboard.getHeader(), player);
 	}
 
 	@Override
-	public ArrayList<String> getScoreboardEntries(Player player) {
-		return replaceList(scoreboard.getScoreboardLines(), VaroPlayer.getPlayer(player));
+	public ArrayList<String> getScoreboardEntries() {
+		return replaceList(scoreboard.getScoreboardLines());
 	}
 
 	@Override
-	public String getNametagName(Player player) {
-		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
-		String name = vplayer.getName();
+	public String getNametagName() {
+		String name = player.getName();
 
 		int teamsize = VaroTeam.getHighestNumber() + 1;
 		int ranks = Rank.getHighestLocation() + 1;
 
-		if (vplayer.getTeam() != null)
-			name = vplayer.getTeam().getId() + name;
+		if (player.getTeam() != null)
+			name = player.getTeam().getId() + name;
 		else
 			name = teamsize + name;
 
-		if (vplayer.getRank() != null)
-			name = vplayer.getRank().getTablistLocation() + name;
+		if (player.getRank() != null)
+			name = player.getRank().getTablistLocation() + name;
 		else
 			name = ranks + name;
 
@@ -117,23 +112,27 @@ public class VaroBoardProvider implements BoardUpdateHandler {
 	}
 
 	@Override
-	public String getNametagPrefix(Player player) {
-		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
-		String prefix = (varoPlayer.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(null, varoPlayer) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(null, varoPlayer));
+	public String getNametagPrefix() {
+		String prefix = (player.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(null, player) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(null, player));
 
 		if (prefix.length() > 16)
-			prefix = ConfigMessages.NAMETAG_NORMAL.getValue(null, varoPlayer);
+			prefix = ConfigMessages.NAMETAG_NORMAL.getValue(null, player);
 
 		return prefix;
 	}
 
 	@Override
-	public String getNametagSuffix(Player player) {
-		return String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(null, VaroPlayer.getPlayer(player)));
+	public String getNametagSuffix() {
+		return String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(null, player));
 	}
 
 	@Override
-	public boolean isNametagVisible(Player player) {
+	public boolean isNametagVisible() {
 		return ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean();
+	}
+	
+	public static void update() {
+		scoreboard.update();
+		tablist.update();
 	}
 }

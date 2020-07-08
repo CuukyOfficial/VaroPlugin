@@ -19,6 +19,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
@@ -38,7 +39,7 @@ public class Main extends JavaPlugin {
 
 	private static BotLauncher botLauncher;
 	private static VaroBoardProvider varoBoard;
-	private static CuukyFrameWork cuukyFrameWork;
+	private static CuukyFrameWork<VaroPlayer> cuukyFrameWork;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
 	private static VaroLanguageManager languageManager;
@@ -96,7 +97,7 @@ public class Main extends JavaPlugin {
 			}
 
 			long dataStamp = System.currentTimeMillis();
-			initiliazeCFW();
+			cuukyFrameWork = new CuukyFrameWork<VaroPlayer>(instance, languageManager = new VaroLanguageManager(Main.this));
 			dataManager = new DataManager(this);
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
@@ -160,11 +161,6 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
 	}
-	
-	private void initiliazeCFW() {
-		cuukyFrameWork = new CuukyFrameWork(instance, languageManager = new VaroLanguageManager(cuukyFrameWork));
-		cuukyFrameWork.getClientAdapterManager().setUpdateHandler(varoBoard = new VaroBoardProvider());
-	}
 
 	public void setFailed(boolean failed) {
 		this.failed = failed;
@@ -202,7 +198,7 @@ public class Main extends JavaPlugin {
 		return varoBoard;
 	}
 
-	public static CuukyFrameWork getCuukyFrameWork() {
+	public static CuukyFrameWork<VaroPlayer> getCuukyFrameWork() {
 		return cuukyFrameWork;
 	}
 
