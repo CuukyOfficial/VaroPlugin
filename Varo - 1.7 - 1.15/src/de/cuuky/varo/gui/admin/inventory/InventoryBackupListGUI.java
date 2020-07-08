@@ -22,7 +22,7 @@ public class InventoryBackupListGUI extends SuperInventory {
 	private VaroPlayer target;
 
 	public InventoryBackupListGUI(Player opener, VaroPlayer target) {
-		super("§7Backups: §b" + target.getName(), opener, 45, false);
+		super("§7Backups: §b" + target.getName(), opener, 54, false);
 
 		this.target = target;
 

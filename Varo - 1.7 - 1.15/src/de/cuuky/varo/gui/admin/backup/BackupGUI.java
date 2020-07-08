@@ -19,7 +19,7 @@ public class BackupGUI extends SuperInventory {
 	private VaroBackup backup;
 
 	public BackupGUI(Player opener, VaroBackup backup) {
-		super("§7Backup §a" + backup.getZipFile().getName().replace(".zip", ""), opener, 0, false);
+		super("§7Backup §a" + backup.getZipFile().getName().replace(".zip", ""), opener, 9, false);
 
 		this.backup = backup;
 

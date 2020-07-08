@@ -16,7 +16,7 @@ import de.cuuky.varo.game.state.GameState;
 public class VaroEventGUI extends SuperInventory {
 
 	public VaroEventGUI(Player opener) {
-		super("§5VaroEvents", opener, 9, false);
+		super("§5VaroEvents", opener, 18, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

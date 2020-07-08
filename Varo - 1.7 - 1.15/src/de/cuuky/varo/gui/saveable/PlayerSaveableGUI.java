@@ -16,7 +16,7 @@ public class PlayerSaveableGUI extends SuperInventory {
 	private VaroSaveable saveable;
 
 	public PlayerSaveableGUI(Player opener, VaroSaveable saveable) {
-		super("§7Saveable §e" + saveable.getId(), opener, 0, false);
+		super("§7Saveable §e" + saveable.getId(), opener, 9, false);
 
 		this.saveable = saveable;
 

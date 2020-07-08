@@ -20,7 +20,7 @@ public class TeamGUI extends SuperInventory {
 	private VaroTeam team;
 
 	public TeamGUI(Player opener, VaroTeam team) {
-		super("§7Team-ID: §2" + team.getId(), opener, 9, false);
+		super("§7Team-ID: §2" + team.getId(), opener, 18, false);
 
 		this.team = team;
 		this.setModifier = true;

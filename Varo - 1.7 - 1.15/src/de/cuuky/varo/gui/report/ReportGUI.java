@@ -21,7 +21,7 @@ public class ReportGUI extends SuperInventory {
 	private VaroPlayer reporter;
 
 	public ReportGUI(Player opener, VaroPlayer reported) {
-		super("§cReport", opener, 9, false);
+		super("§cReport", opener, 18, false);
 
 		this.reporter = VaroPlayer.getPlayer(opener);
 		this.reported = reported;

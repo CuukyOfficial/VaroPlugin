@@ -16,7 +16,7 @@ import de.cuuky.varo.gui.team.TeamListGUI.TeamGUIType;
 public class TeamChooseGUI extends SuperInventory {
 
 	public TeamChooseGUI(Player opener) {
-		super("§3Choose Category", opener, 9, false);
+		super("§3Choose Category", opener, 18, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

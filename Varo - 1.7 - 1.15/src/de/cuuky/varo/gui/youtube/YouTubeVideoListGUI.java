@@ -17,7 +17,7 @@ import de.cuuky.varo.gui.MainMenu;
 public class YouTubeVideoListGUI extends SuperInventory {
 
 	public YouTubeVideoListGUI(Player opener) {
-		super("§5Videos", opener, 45, false);
+		super("§5Videos", opener, 54, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

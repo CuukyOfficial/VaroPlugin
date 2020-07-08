@@ -17,7 +17,7 @@ import de.cuuky.varo.gui.admin.AdminMainMenu;
 public class GameOptionsGUI extends SuperInventory {
 
 	public GameOptionsGUI(Player opener) {
-		super("Game", opener, 9, false);
+		super("Game", opener, 18, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

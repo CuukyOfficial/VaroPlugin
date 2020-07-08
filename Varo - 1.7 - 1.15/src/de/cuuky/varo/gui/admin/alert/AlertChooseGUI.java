@@ -65,7 +65,7 @@ public class AlertChooseGUI extends SuperInventory {
 	private AlertGUIType type;
 
 	public AlertChooseGUI(Player opener, AlertGUIType type) {
-		super("§4Alerts", opener, 45, false);
+		super("§4Alerts", opener, 54, false);
 
 		this.type = type;
 

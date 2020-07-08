@@ -18,7 +18,7 @@ import de.cuuky.varo.gui.MainMenu;
 public class EventListGUI extends SuperInventory {
 
 	public EventListGUI(Player opener) {
-		super("§5Events", opener, 45, false);
+		super("§5Events", opener, 54, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

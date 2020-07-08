@@ -17,7 +17,7 @@ public class BotRegisterGUI extends SuperInventory {
 	private BotRegister register;
 
 	public BotRegisterGUI(Player opener, BotRegister register) {
-		super("§7BotRegister: §a" + register.getPlayerName(), opener, 9, false);
+		super("§7BotRegister: §a" + register.getPlayerName(), opener, 18, false);
 
 		this.register = register;
 		this.setModifier = true;

@@ -28,7 +28,7 @@ import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 public class MainMenu extends SuperInventory {
 
 	public MainMenu(Player opener) {
-		super(Main.getProjectName(), opener, 36, true);
+		super(Main.getProjectName(), opener, 45, true);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

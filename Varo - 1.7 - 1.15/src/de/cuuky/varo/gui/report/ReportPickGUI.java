@@ -19,7 +19,7 @@ public class ReportPickGUI extends SuperInventory {
 	private VaroPlayer varoPlayer;
 
 	public ReportPickGUI(VaroPlayer opener, Report report) {
-		super("§cReport " + report.getId(), opener.getPlayer(), 9, false);
+		super("§cReport " + report.getId(), opener.getPlayer(), 18, false);
 
 		this.report = report;
 		this.varoPlayer = opener;

@@ -16,7 +16,7 @@ import de.cuuky.varo.gui.admin.AdminMainMenu;
 public class DiscordBotGUI extends SuperInventory {
 
 	public DiscordBotGUI(Player opener) {
-		super("§2DiscordBot", opener, 9, false);
+		super("§2DiscordBot", opener, 18, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

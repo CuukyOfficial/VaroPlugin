@@ -3,6 +3,7 @@ package de.cuuky.varo.data;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.cuuky.cfw.clientadapter.board.CustomBoardType;
 import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
@@ -85,6 +86,10 @@ public class DataManager {
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
 
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG, ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD, ConfigSetting.SCOREBOARD.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST, ConfigSetting.TABLIST.getValueAsBoolean());
+		
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
 
@@ -119,6 +124,10 @@ public class DataManager {
 		configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
 		VaroBoardProvider.update();
+		
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG, ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD, ConfigSetting.SCOREBOARD.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST, ConfigSetting.TABLIST.getValueAsBoolean());
 	}
 
 	public void reloadPlayerClients() {

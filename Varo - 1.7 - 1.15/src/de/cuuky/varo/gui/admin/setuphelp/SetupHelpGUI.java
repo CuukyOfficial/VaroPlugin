@@ -60,7 +60,7 @@ public class SetupHelpGUI extends SuperInventory {
 	}
 
 	public SetupHelpGUI(Player opener) {
-		super("§eSetup Assistant", opener, 9, false);
+		super("§eSetup Assistant", opener, 18, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

@@ -23,7 +23,7 @@ public class PlayerGUI extends SuperInventory {
 	private PlayerGUIType type;
 
 	public PlayerGUI(Player opener, VaroPlayer target, PlayerGUIType type) {
-		super("§2" + target.getName() + " §7(" + target.getId() + ")", opener, 27, false);
+		super("§2" + target.getName() + " §7(" + target.getId() + ")", opener, 36, false);
 
 		this.target = target;
 		this.type = type;
