@@ -6,7 +6,8 @@
 Das Plugin läuft universal auf den Versionen 1.7 - 1.15.</br></br>
 
 **This is a project I started years ago, don't blame me for old code.
-If you came here to check my coding skills, my newest project is the CFW but this isn't my best code.**
+This project probably describes my progress in coding - not my skills I have today.
+If you came here to check my coding skills, my newest project is the CFW which describes my skills better.**
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg"></br>
 
