@@ -53,6 +53,7 @@ public class PlayerJoinListener implements Listener {
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 
 		vplayer.setPlayer(player);
+		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		vplayer.onEvent(BukkitEventType.JOINED);
 		event.setJoinMessage(null);
 
