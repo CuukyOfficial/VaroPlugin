@@ -81,11 +81,14 @@ public class PlayerDeathListener implements Listener {
 					if (hit1 != null)
 						hit1.over();
 
-					if (killer.getTeam() != null && ConfigSetting.ADD_TEAM_LIFE_ON_KILL.isIntActivated()) {
+					if (killer.getTeam() != null) {
 						try {
-							killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble());
+							double d = ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble();
+							if (d > 0)
+								killer.getTeam().setLifes(killer.getTeam().getLifes() + d);
 						} catch (Exception e) {
-							killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
+							if (ConfigSetting.ADD_TEAM_LIFE_ON_KILL.isIntActivated())
+								killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
 						}
 						killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD);
 					}
