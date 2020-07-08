@@ -214,7 +214,7 @@ public enum ConfigSetting implements SectionEntry {
 	RANDOM_CHEST_FILL_RADIUS(ConfigSettingSection.WORLD, "randomChestFillRadius", -1, "In welchem Radius die Kisten um den\nSpawn mit den in der Config angegebenen\nItems befuellt werden sollen.\nOff = -1"),
 	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
 	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),
-	REMOVE_PLAYERS_ARENT_AT_START(ConfigSettingSection.START, "removePlayersArentAtStart", true, "Ob das Plugin alle Spieler, die nicht beim\nStart dabei sind vom Projekt entferenen soll."),
+	REMOVE_PLAYERS_ARENT_AT_START(ConfigSettingSection.START, "removePlayersArentAtStart", false, "Ob das Plugin alle Spieler, die nicht beim\nStart dabei sind vom Projekt entferenen soll."),
 	REPORT_SEND_DELAY(ConfigSettingSection.REPORT, "reportDelay", 30, "Zeit in Sekunden, die ein Spieler warten muss,\nbevor er einen neuen Spieler reporten kann.\nOff = -1"),
 	REPORT_STAFF_MEMBER(ConfigSettingSection.REPORT, "reportStaffMember", true, "Ob Spieler mit der Permission\n'varo.report' reportet werden koennen."),
 
