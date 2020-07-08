@@ -273,11 +273,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (ConfigSetting.TABLIST.getValueAsBoolean())
 				this.tablist.update();
 
-		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
-			this.nametag.update();
-
 		if (ConfigSetting.SCOREBOARD.getValueAsBoolean())
 			this.scoreboard.update();
+		
+		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
+			this.nametag.update();
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
