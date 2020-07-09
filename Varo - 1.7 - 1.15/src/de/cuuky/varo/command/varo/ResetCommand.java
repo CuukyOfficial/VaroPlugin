@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
@@ -20,17 +21,6 @@ public class ResetCommand extends VaroCommand {
 
 	public ResetCommand() {
 		super("reset", "Setzt ausgewaehlte Teile des Servers zurueck", "varo.reset");
-	}
-
-	private void deleteDirectory(File file) {
-		for (File listFile : file.listFiles()) {
-			if (listFile.isDirectory())
-				deleteDirectory(listFile);
-
-			listFile.delete();
-		}
-
-		file.delete();
 	}
 
 	@Override
@@ -75,7 +65,7 @@ public class ResetCommand extends VaroCommand {
 					for (Chunk chunk : world.getLoadedChunks())
 						chunk.unload(false);
 
-					deleteDirectory(world.getWorldFolder());
+					JavaUtils.deleteDirectory(world.getWorldFolder());
 				}
 				break;
 			default:
@@ -90,7 +80,7 @@ public class ResetCommand extends VaroCommand {
 			Main.getDataManager().setDoSave(false);
 			for (File file : toDelete) {
 				if (file.isDirectory())
-					deleteDirectory(file);
+					JavaUtils.deleteDirectory(file);
 				else
 					file.delete();
 			}
