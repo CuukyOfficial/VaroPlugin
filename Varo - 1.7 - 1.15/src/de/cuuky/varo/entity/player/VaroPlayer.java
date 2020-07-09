@@ -81,6 +81,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private CustomNametag<VaroPlayer> nametag;
 	private CustomScoreboard<VaroPlayer> scoreboard;
 	private CustomTablist<VaroPlayer> tablist;
+	private VaroBoardProvider boardProvider;
 	private NetworkManager networkManager;
 
 	private VaroTeam team;
@@ -478,7 +479,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	
 	@Override
 	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
-		return new VaroBoardProvider(this);
+		return this.boardProvider == null ? this.boardProvider = new VaroBoardProvider(this) : this.boardProvider;
 	}
 
 	/**
