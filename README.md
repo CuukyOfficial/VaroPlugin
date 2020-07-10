@@ -5,7 +5,9 @@
 </br>Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
 Das Plugin läuft universal auf den Versionen 1.7 - 1.15.</br></br>
 
-**Ich habe dieses Projekt vor einigen Jahren gestartet, der Code ist teilweise nicht der Beste, mein neuestes Projekt ist das CFW.**
+**This is a project I started years ago, don't blame me for old code.
+This project probably describes my progress in coding - not my skills I have today.
+If you came here to check my coding skills, my newest project is the CFW which describes my skills better.**
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg"></br>
 
