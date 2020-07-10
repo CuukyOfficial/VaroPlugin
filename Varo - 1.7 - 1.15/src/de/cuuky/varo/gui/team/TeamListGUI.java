@@ -57,7 +57,7 @@ public class TeamListGUI extends SuperInventory {
 	private TeamGUIType type;
 
 	public TeamListGUI(Player opener, TeamGUIType type) {
-		super("§7Choose Team", opener, 45, false);
+		super("§7Choose Team", opener, 54, false);
 
 		this.type = type;
 		this.setModifier = true;

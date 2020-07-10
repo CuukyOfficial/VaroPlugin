@@ -8,7 +8,6 @@ import de.cuuky.varo.list.item.ItemList;
 
 public class LogDestroyedBlocks extends ItemList {
 
-	@SuppressWarnings("deprecation")
 	public LogDestroyedBlocks() {
 		super("BlockLogger");
 

@@ -23,7 +23,7 @@ public class PlayerSaveableChooseGUI extends SuperInventory {
 	private VaroPlayer target;
 
 	public PlayerSaveableChooseGUI(Player opener, VaroPlayer target) {
-		super("§eÖfen/Kisten", opener, 45, false);
+		super("§eÖfen/Kisten", opener, 54, false);
 
 		this.target = target;
 

@@ -21,7 +21,7 @@ import de.cuuky.varo.recovery.recoveries.VaroBackup;
 public class BackupListGUI extends SuperInventory {
 
 	public BackupListGUI(Player opener) {
-		super("§aBackups", opener, 45, false);
+		super("§aBackups", opener, 54, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

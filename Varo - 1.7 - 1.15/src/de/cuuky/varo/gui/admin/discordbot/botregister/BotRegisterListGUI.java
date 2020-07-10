@@ -16,7 +16,7 @@ import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 public class BotRegisterListGUI extends SuperInventory {
 
 	public BotRegisterListGUI(Player opener) {
-		super("§cBotVerify", opener, 45, false);
+		super("§cBotVerify", opener, 54, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

@@ -16,6 +16,7 @@ import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
+import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.player.connection.NetworkManager;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
@@ -25,6 +26,7 @@ import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
+import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
@@ -76,9 +78,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
 
-	private CustomNametag nametag;
-	private CustomScoreboard scoreboard;
-	private CustomTablist tablist;
+	private CustomNametag<VaroPlayer> nametag;
+	private CustomScoreboard<VaroPlayer> scoreboard;
+	private CustomTablist<VaroPlayer> tablist;
+	private VaroBoardProvider boardProvider;
 	private NetworkManager networkManager;
 
 	private VaroTeam team;
@@ -271,11 +274,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (ConfigSetting.TABLIST.getValueAsBoolean())
 				this.tablist.update();
 
-		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
-			this.nametag.update();
-
 		if (ConfigSetting.SCOREBOARD.getValueAsBoolean())
 			this.scoreboard.update();
+		
+		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
+			this.nametag.update();
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
@@ -294,11 +297,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return name;
 	}
 
-	public CustomNametag getNametag() {
+	public CustomNametag<VaroPlayer> getNametag() {
 		return this.nametag;
 	}
 
-	public CustomScoreboard getScoreboard() {
+	public CustomScoreboard<VaroPlayer> getScoreboard() {
 		return this.scoreboard;
 	}
 
@@ -414,9 +417,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 		if (player != null) {
 			this.networkManager = new NetworkManager(player);
-			this.scoreboard = (CustomScoreboard) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomScoreboard(this));
-			this.nametag = (CustomNametag) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomNametag(this));
-			this.tablist = (CustomTablist) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomTablist(this));
+			this.scoreboard = (CustomScoreboard<VaroPlayer>) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomScoreboard<VaroPlayer>(this));
+			this.nametag = (CustomNametag<VaroPlayer>) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomNametag<VaroPlayer>(this));
+			this.tablist = (CustomTablist<VaroPlayer>) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomTablist<VaroPlayer>(this));
 		} else {
 			this.scoreboard.remove();
 			this.nametag.remove();
@@ -472,6 +475,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			update();
 
 		Main.getVaroGame().getTopScores().update();
+	}
+	
+	@Override
+	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
+		return this.boardProvider == null ? this.boardProvider = new VaroBoardProvider(this) : this.boardProvider;
 	}
 
 	/**

@@ -7,7 +7,6 @@ import de.cuuky.varo.list.item.ItemList;
 
 public class BlockedItems extends ItemList {
 
-	@SuppressWarnings("deprecation")
 	public BlockedItems() {
 		super("BlockedItems");
 
@@ -17,7 +16,6 @@ public class BlockedItems extends ItemList {
 		items.add(Materials.AIR.parseItem());
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean isBlocked(ItemStack itemstack) {
 		itemstack = fixItem(itemstack);
 		for (ItemStack stack : items)

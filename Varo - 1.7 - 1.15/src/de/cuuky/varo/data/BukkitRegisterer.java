@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit.HitListener;
 import de.cuuky.varo.command.VaroCommandListener;
@@ -48,7 +46,6 @@ import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
 import de.cuuky.varo.listener.FancyEffectListener;
 import de.cuuky.varo.listener.NoPortalListener;
-import de.cuuky.varo.listener.PlayerAchievementListener;
 import de.cuuky.varo.listener.PlayerChatListener;
 import de.cuuky.varo.listener.PlayerCommandPreprocessListener;
 import de.cuuky.varo.listener.PlayerDeathListener;
@@ -149,8 +146,5 @@ public final class BukkitRegisterer {
 		registerEvent(new VaroWorldListener());
 		registerEvent(new FancyEffectListener());
 		registerEvent(new HitListener());
-
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
-			registerEvent(new PlayerAchievementListener());
 	}
 }

@@ -20,7 +20,7 @@ import de.cuuky.varo.report.Report;
 public class ReportListGUI extends SuperInventory {
 
 	public ReportListGUI(Player player) {
-		super("§cReport List", player, 27, false);
+		super("§cReport List", player, 36, false);
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();

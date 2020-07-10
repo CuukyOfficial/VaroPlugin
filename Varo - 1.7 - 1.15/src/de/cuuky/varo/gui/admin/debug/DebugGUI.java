@@ -22,7 +22,7 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 public class DebugGUI extends SuperInventory {
 
 	public DebugGUI(Player opener) {
-		super("§6DEBUG", opener, 18, false);
+		super("§6DEBUG", opener, 27, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

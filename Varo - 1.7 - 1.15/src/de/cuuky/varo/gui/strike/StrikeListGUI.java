@@ -22,7 +22,7 @@ public class StrikeListGUI extends SuperInventory {
 	private Player target;
 
 	public StrikeListGUI(Player opener, Player target) {
-		super("Strikes", opener, 45, false);
+		super("Strikes", opener, 54, false);
 
 		this.target = target;
 

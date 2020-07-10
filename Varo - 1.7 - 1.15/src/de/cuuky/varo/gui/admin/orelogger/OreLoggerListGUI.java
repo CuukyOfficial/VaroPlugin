@@ -20,7 +20,7 @@ import de.cuuky.varo.gui.admin.AdminMainMenu;
 public class OreLoggerListGUI extends SuperInventory {
 
 	public OreLoggerListGUI(Player opener) {
-		super("§6OreLogger", opener, 45, false);
+		super("§6OreLogger", opener, 54, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

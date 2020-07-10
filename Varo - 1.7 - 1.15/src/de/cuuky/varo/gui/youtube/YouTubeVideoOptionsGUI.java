@@ -17,7 +17,7 @@ public class YouTubeVideoOptionsGUI extends SuperInventory {
 	private YouTubeVideo video;
 
 	public YouTubeVideoOptionsGUI(Player opener, YouTubeVideo video) {
-		super("§5" + video.getVideoId(), opener, 9, false);
+		super("§5" + video.getVideoId(), opener, 18, false);
 
 		this.video = video;
 

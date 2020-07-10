@@ -32,7 +32,7 @@ import de.cuuky.varo.report.Report;
 public class AdminMainMenu extends SuperInventory {
 
 	public AdminMainMenu(Player opener) {
-		super(Main.getProjectName() + " §8| §cAdmin", opener, 45, false);
+		super(Main.getProjectName() + " §8| §cAdmin", opener, 54, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

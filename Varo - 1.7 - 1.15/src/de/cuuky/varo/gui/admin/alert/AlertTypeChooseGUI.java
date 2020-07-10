@@ -15,7 +15,7 @@ import de.cuuky.varo.gui.admin.alert.AlertChooseGUI.AlertGUIType;
 public class AlertTypeChooseGUI extends SuperInventory {
 
 	public AlertTypeChooseGUI(Player opener) {
-		super("§eChoose Alert", opener, 9, false);
+		super("§eChoose Alert", opener, 18, false);
 
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);

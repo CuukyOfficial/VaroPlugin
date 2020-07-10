@@ -9,7 +9,6 @@ import de.cuuky.varo.list.item.ItemList;
 
 public class StartItems extends ItemList {
 
-	@SuppressWarnings("deprecation")
 	public StartItems() {
 		super("StartItems");
 

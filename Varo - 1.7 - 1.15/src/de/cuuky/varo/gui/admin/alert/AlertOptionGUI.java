@@ -20,7 +20,7 @@ public class AlertOptionGUI extends SuperInventory {
 	private AlertGUIType type;
 
 	public AlertOptionGUI(Player opener, Alert alert, AlertGUIType type) {
-		super("§7Alert §c" + alert.getId(), opener, 9, false);
+		super("§7Alert §c" + alert.getId(), opener, 18, false);
 
 		this.type = type;
 		this.alert = alert;

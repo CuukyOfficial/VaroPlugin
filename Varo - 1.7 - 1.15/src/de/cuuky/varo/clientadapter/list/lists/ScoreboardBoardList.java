@@ -1,7 +1,6 @@
 package de.cuuky.varo.clientadapter.list.lists;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import de.cuuky.varo.clientadapter.list.BoardList;
 
@@ -41,8 +40,6 @@ public class ScoreboardBoardList extends BoardList {
 		scoreboardLines.addAll(configuration.getStringList("scoreboard"));
 
 		this.header = configuration.getString("header");
-
-		Collections.reverse(scoreboardLines);
 
 		String space = "";
 		for (int i = 0; i < scoreboardLines.size(); i++) {

@@ -17,7 +17,7 @@ public class PlayerListChooseGUI extends SuperInventory {
 	private boolean showStats;
 
 	public PlayerListChooseGUI(Player opener, boolean showStats) {
-		super("§aChoose Players", opener, 9, false);
+		super("§aChoose Players", opener, 18, false);
 
 		this.showStats = showStats;
 		this.setModifier = true;

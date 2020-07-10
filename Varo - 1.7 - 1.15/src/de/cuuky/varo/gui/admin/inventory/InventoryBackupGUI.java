@@ -18,7 +18,7 @@ public class InventoryBackupGUI extends SuperInventory {
 	private InventoryBackup backup;
 
 	public InventoryBackupGUI(Player opener, InventoryBackup backup) {
-		super("§b" + backup.getVaroPlayer().getName(), opener, 9, false);
+		super("§b" + backup.getVaroPlayer().getName(), opener, 18, false);
 
 		this.backup = backup;
 

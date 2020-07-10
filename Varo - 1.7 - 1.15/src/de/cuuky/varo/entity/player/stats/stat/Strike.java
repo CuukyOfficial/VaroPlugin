@@ -59,7 +59,10 @@ public class Strike implements VaroSerializeable {
 		case 1:
 			break;
 		case 2:
-			striked.getStats().clearInventory();
+			if (striked.isOnline())
+				striked.getStats().clearInventory();
+			else
+				striked.getStats().setWillClear(true);
 			break;
 		case 3:
 		default:

@@ -27,8 +27,8 @@ public class VaroLanguageManager extends LanguageManager {
 
 	private ScriptEngine scriptEngine;
 
-	public VaroLanguageManager(JavaPlugin ownerInstance) {
-		super(PATH_DIR, FALLBACK_LANGUAGE, ownerInstance);
+	public VaroLanguageManager(JavaPlugin instance) {
+		super(PATH_DIR, FALLBACK_LANGUAGE, instance);
 
 		scriptEngine = new ScriptEngineManager().getEngineByName("js");
 

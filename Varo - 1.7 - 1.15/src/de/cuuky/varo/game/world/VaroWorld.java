@@ -25,6 +25,11 @@ public class VaroWorld {
 	public VaroWorld(World world) {
 		this.world = world;
 
+		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()) {
+			world.setGameRuleValue("announceAdvancements", "false");
+			world.setGameRuleValue("announce-player-achievements", "false");
+		}
+
 		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			this.varoWorldBorder = new VaroWorldBorder(world);
 	}

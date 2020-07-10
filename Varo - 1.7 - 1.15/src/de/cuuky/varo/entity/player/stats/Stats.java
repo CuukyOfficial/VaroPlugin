@@ -102,10 +102,10 @@ public class Stats implements VaroSerializeable {
 
 	public void addKill() {
 		this.kills++;
-		
+
 		if (owner.isOnline())
 			owner.update();
-		
+
 		Main.getVaroGame().getTopScores().update();
 	}
 
@@ -142,6 +142,7 @@ public class Stats implements VaroSerializeable {
 			owner.getPlayer().getInventory().clear();
 			for (ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
 				stack.setType(Material.AIR);
+			owner.getPlayer().getInventory().setArmorContents(new ItemStack[] {});
 		} else
 			setWillClear(true);
 
