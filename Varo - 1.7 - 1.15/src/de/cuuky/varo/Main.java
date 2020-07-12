@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.cuuky.cfw.CuukyFrameWork;
+import de.cuuky.cfw.AdapterCuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
 
 	private static BotLauncher botLauncher;
 	private static VaroBoardProvider varoBoard;
-	private static CuukyFrameWork<VaroPlayer> cuukyFrameWork;
+	private static AdapterCuukyFrameWork<VaroPlayer> cuukyFrameWork;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
 	private static VaroLanguageManager languageManager;
@@ -97,7 +97,7 @@ public class Main extends JavaPlugin {
 			}
 
 			long dataStamp = System.currentTimeMillis();
-			cuukyFrameWork = new CuukyFrameWork<VaroPlayer>(instance, languageManager = new VaroLanguageManager(Main.this));
+			cuukyFrameWork = new AdapterCuukyFrameWork<VaroPlayer>(instance, languageManager = new VaroLanguageManager(Main.this));
 			dataManager = new DataManager(this);
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
@@ -198,7 +198,7 @@ public class Main extends JavaPlugin {
 		return varoBoard;
 	}
 
-	public static CuukyFrameWork<VaroPlayer> getCuukyFrameWork() {
+	public static AdapterCuukyFrameWork<VaroPlayer> getCuukyFrameWork() {
 		return cuukyFrameWork;
 	}
 
