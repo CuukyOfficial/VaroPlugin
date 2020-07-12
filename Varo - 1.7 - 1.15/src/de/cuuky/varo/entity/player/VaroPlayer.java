@@ -276,7 +276,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 		if (ConfigSetting.SCOREBOARD.getValueAsBoolean())
 			this.scoreboard.update();
-		
+
 		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
 			this.nametag.update();
 	}
@@ -319,7 +319,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	public String getLocale() {
 		return this.locale == null && this.networkManager != null ? this.networkManager.getLocale() : this.locale;
 	}
-	
+
 	public String setLocale(String locale) {
 		return this.locale = locale;
 	}
@@ -375,15 +375,15 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	public boolean isRegistered() {
 		return varoplayer.contains(this);
 	}
-	
+
 	public void sendMessage(String message) {
 		this.player.sendMessage(message);
 	}
-	
+
 	public MessageHolder sendMessage(LoadableMessage message) {
 		return super.sendTranslatedMessage(message, null, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
 	}
-	
+
 	public MessageHolder sendMessage(LoadableMessage message, CustomPlayer replacement) {
 		return super.sendTranslatedMessage(message, replacement, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
 	}
@@ -476,7 +476,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 		Main.getVaroGame().getTopScores().update();
 	}
-	
+
 	@Override
 	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
 		return this.boardProvider == null ? this.boardProvider = new VaroBoardProvider(this) : this.boardProvider;

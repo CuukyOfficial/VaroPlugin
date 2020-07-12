@@ -30,7 +30,7 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 
 	public VaroPlayerHandler() {
 		super(VaroPlayer.class, "/stats/players.yml");
-		
+
 		load();
 
 		for (Player player : VersionUtils.getOnlinePlayer())

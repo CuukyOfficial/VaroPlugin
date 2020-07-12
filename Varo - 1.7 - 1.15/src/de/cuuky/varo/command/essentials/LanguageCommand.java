@@ -13,11 +13,11 @@ public class LanguageCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(!(sender instanceof Player)) {
+		if (!(sender instanceof Player)) {
 			sender.sendMessage(Main.getPrefix() + "Not for console!");
 			return false;
 		}
-		
+
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + label + " §7<languagecode>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + label + " list");
@@ -36,7 +36,7 @@ public class LanguageCommand implements CommandExecutor {
 			sender.sendMessage(Main.getPrefix() + "Language " + args[0] + " is not useable on this server! §a/" + label + " list");
 			return false;
 		}
-		
+
 		VaroPlayer.getPlayer((Player) sender).setLocale(args[0]);
 		sender.sendMessage(Main.getPrefix() + "Language successfully changed to " + args[0] + "!");
 		return false;

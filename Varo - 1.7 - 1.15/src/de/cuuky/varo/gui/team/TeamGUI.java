@@ -59,7 +59,7 @@ public class TeamGUI extends SuperInventory {
 							opener.sendMessage(Main.getPrefix() + "Pleas enter a valid value for team lifes");
 							return false;
 						}
-						
+
 						team.setLifes(lifes);
 						opener.sendMessage(Main.getPrefix() + "Team lifes of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getLifes() + "§7'");
 						open();
@@ -111,7 +111,7 @@ public class TeamGUI extends SuperInventory {
 				close(false);
 			}
 		});
-		
+
 		linkItemTo(7, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
 
 			@Override

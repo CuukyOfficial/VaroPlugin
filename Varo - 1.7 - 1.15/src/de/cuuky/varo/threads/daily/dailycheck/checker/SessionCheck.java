@@ -26,7 +26,7 @@ public class SessionCheck extends Checker {
 
 		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
 			if (vp.getStats().getCountdown() != ConfigSetting.PLAY_TIME.getValueAsInt() * 60) {
-				if(vp.isOnline()) 
+				if (vp.isOnline())
 					vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 
 				vp.onEvent(BukkitEventType.KICKED);

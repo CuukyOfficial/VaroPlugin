@@ -22,7 +22,7 @@ public class InventoryBackupShowGUI extends SuperInventory {
 		this.backup = backup;
 		this.setModifier = true;
 		this.fillInventory = false;
-		
+
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
@@ -56,15 +56,15 @@ public class InventoryBackupShowGUI extends SuperInventory {
 			public void run() {
 				backup.getInventory().getInventory().clear();
 				backup.getArmor().clear();
-				
-				for(int i = 0; i < 36; i++) {
-					if(inv.getItem(i) == null)
+
+				for (int i = 0; i < 36; i++) {
+					if (inv.getItem(i) == null)
 						continue;
-					
+
 					backup.getInventory().getInventory().setItem(i, inv.getItem(i));
 				}
-				
-				for(int i = 0; i < 4; i++) 
+
+				for (int i = 0; i < 4; i++)
 					backup.getArmor().add(inv.getItem(36 + i) == null ? new ItemStack(Material.AIR) : inv.getItem(36 + i));
 			}
 		});

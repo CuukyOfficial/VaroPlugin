@@ -89,7 +89,7 @@ public class VaroGame implements VaroSerializeable {
 	public void start() {
 		if (hasStarted() || isStarting())
 			return;
-		
+
 		new VaroBackup();
 
 		if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
