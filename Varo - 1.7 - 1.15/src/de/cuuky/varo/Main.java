@@ -2,8 +2,6 @@ package de.cuuky.varo;
 
 import java.io.File;
 
-import javax.swing.JOptionPane;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -244,10 +242,6 @@ public class Main extends JavaPlugin {
 
 	public static boolean isBootedUp() {
 		return dataManager != null;
-	}
-
-	public static void main(String[] args) {
-		JOptionPane.showMessageDialog(null, "No don't do it");
 	}
 
 	public static Main getInstance() {
