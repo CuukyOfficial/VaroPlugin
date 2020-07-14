@@ -22,8 +22,6 @@ public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 	static {
 		scoreboard = new ScoreboardBoardList();
 		tablist = new TablistBoardList();
-
-		update();
 	}
 
 	public VaroBoardProvider(VaroPlayer player) {

@@ -75,6 +75,7 @@ public class DataManager {
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
 		new MessagePlaceholderLoader();
+		VaroBoardProvider.update();
 		this.propertiesReader = new ServerPropertiesReader();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
