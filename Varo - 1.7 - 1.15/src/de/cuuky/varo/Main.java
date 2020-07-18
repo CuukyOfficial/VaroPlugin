@@ -99,12 +99,8 @@ public class Main extends JavaPlugin {
 			dataManager = new DataManager(this);
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
-			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), new Runnable() {
-
-				@Override
-				public void run() {
-					varoUpdater.printResults();
-				}
+			varoUpdater = new VaroUpdater(RESCOURCE_ID, getDescription().getVersion(), () -> {
+				varoUpdater.printResults();
 			});
 			botLauncher = new BotLauncher();
 
