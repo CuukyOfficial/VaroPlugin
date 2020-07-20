@@ -27,7 +27,7 @@ public class AutoSetupCommand extends VaroCommand {
 
 				new AutoSetup();
 				for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
-					player.getPlayer().teleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
+					player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
 
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_FINISHED.getValue(vp));
 				return;

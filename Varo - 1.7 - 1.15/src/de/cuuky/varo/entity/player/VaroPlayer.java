@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,7 @@ import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.player.connection.NetworkManager;
+import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -279,6 +281,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
 			this.nametag.update();
+	}
+	
+	public void saveTeleport(Location location) {
+		BukkitUtils.saveTeleport(this.player, location);
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {

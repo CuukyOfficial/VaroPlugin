@@ -130,6 +130,6 @@ public class VaroWorldHandler {
 	}
 
 	public Location getTeleportLocation() {
-		return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : this.mainVaroWorld.getWorld().getSpawnLocation().add(0, 5, 0);
+		return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : this.mainVaroWorld.getWorld().getSpawnLocation();
 	}
 }

@@ -49,7 +49,7 @@ public class FinaleCommand extends VaroCommand {
 			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
 			if (player.getPlayer() != null) {
 				if (player.getPlayer().isOnline()) {
-					player.getPlayer().teleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
+					player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 					continue;
 				}
 			}

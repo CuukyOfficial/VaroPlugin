@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -42,7 +43,7 @@ public class PlayerSort {
 				}
 
 				Player player = (Player) toTeleport.keySet().toArray()[index];
-				player.teleport(toTeleport.get(player));
+				BukkitUtils.saveTeleport(player, toTeleport.get(player));
 				index++;
 			}
 		}, 0, 1);

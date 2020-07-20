@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 
@@ -75,7 +76,7 @@ public class OreLoggerListGUI extends SuperInventory {
 
 				@Override
 				public void run() {
-					opener.teleport(loc);
+					BukkitUtils.saveTeleport(opener, loc);
 				}
 			});
 

@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -70,7 +71,7 @@ public class PlayerGUI extends SuperInventory {
 				if (target.getStats().getLastLocation() == null)
 					return;
 
-				opener.teleport(target.getStats().getLastLocation());
+				BukkitUtils.saveTeleport(opener, target.getStats().getLastLocation());
 			}
 		});
 

@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
+import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -66,7 +67,7 @@ public class MainMenu extends SuperInventory {
 				if (!opener.hasPermission("varo.teleportSpawn"))
 					return;
 
-				opener.teleport(opener.getWorld().getSpawnLocation());
+				BukkitUtils.saveTeleport(opener, opener.getWorld().getSpawnLocation());
 			}
 		});
 

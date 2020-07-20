@@ -70,9 +70,9 @@ public class PlayerJoinListener implements Listener {
 
 			Spawn spawn = Spawn.getSpawn(vplayer);
 			if (spawn != null && (ConfigSetting.SPAWN_TELEPORT_JOIN.getValueAsBoolean() || Main.getVaroGame().isStarting()))
-				player.teleport(spawn.getLocation());
+				vplayer.saveTeleport(spawn.getLocation());
 			else {
-				player.teleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
+				vplayer.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
 				LobbyItem.giveItems(player);
 			}
 
@@ -102,12 +102,12 @@ public class PlayerJoinListener implements Listener {
 			if (vplayer.getStats().getSessionsPlayed() == 0) {
 				int countdown = massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
 				if (countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60 && ConfigSetting.PLAY_TIME.getValueAsInt() > 0) {
-					player.teleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
+					vplayer.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 				}
 			}
 
 			if (isOutsideOfBorder(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
-				player.teleport(player.getWorld().getSpawnLocation());
+				vplayer.saveTeleport(player.getWorld().getSpawnLocation());
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer));
 			}
 

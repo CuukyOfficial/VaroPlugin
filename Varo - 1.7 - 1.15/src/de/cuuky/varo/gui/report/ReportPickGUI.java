@@ -51,7 +51,7 @@ public class ReportPickGUI extends SuperInventory {
 			@Override
 			public void run() {
 				if (report.getReported().isOnline()) {
-					varoPlayer.getPlayer().teleport(report.getReported().getPlayer());
+					varoPlayer.saveTeleport(report.getReported().getPlayer().getLocation());
 					varoPlayer.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
 					return;
 				}
