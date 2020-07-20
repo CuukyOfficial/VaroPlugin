@@ -7,14 +7,14 @@ public class BlockedMods extends ModList {
 	public BlockedMods() {
 		super("BlockedMods");
 
-		if(!mods.isEmpty())
+		if (!mods.isEmpty())
 			return;
 
 		mods.add("Xray");
 	}
 
 	public boolean isBlocked(String name) {
-		if(mods.contains(name))
+		if (mods.contains(name))
 			return true;
 
 		return false;

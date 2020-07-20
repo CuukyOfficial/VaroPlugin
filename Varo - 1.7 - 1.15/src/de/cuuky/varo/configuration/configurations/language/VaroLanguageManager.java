@@ -48,7 +48,7 @@ public class VaroLanguageManager extends LanguageManager {
 
 		setDefaultLanguage(lang);
 	}
-	
+
 	@Override
 	public String getMessage(String messagePath, String locale) {
 		return super.getMessage(messagePath, !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean() ? getDefaultLanguage().getName() : locale);
@@ -121,7 +121,7 @@ public class VaroLanguageManager extends LanguageManager {
 		}
 
 		replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
-		
+
 		if (replaceEval)
 			replaced = replaceEvals(replaced);
 

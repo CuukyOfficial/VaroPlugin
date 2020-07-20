@@ -114,7 +114,7 @@ public class PlayerOptionsGUI extends SuperInventory {
 			if (itemname.contains("Set")) {
 				close(false);
 
-				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "Enter Youtube-Link:", new ChatHookHandler() {
+				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter Youtube-Link:", new ChatHookHandler() {
 
 					@Override
 					public boolean onChat(AsyncPlayerChatEvent event) {

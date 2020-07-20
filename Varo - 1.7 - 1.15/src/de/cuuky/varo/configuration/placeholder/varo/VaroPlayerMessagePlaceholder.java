@@ -9,7 +9,7 @@ public abstract class VaroPlayerMessagePlaceholder extends PlayerMessagePlacehol
 
 	public VaroPlayerMessagePlaceholder(String identifier, int refreshDelay, String description) {
 		super(identifier, refreshDelay, description);
-		
+
 		Main.getCuukyFrameWork().getPlaceholderManager().registerPlaceholder(this);
 	}
 
@@ -17,6 +17,6 @@ public abstract class VaroPlayerMessagePlaceholder extends PlayerMessagePlacehol
 	protected String getValue(CustomPlayer player) {
 		return getValue(VaroPlayer.getPlayer(player.getUUID()));
 	}
-	
+
 	protected abstract String getValue(VaroPlayer player);
 }

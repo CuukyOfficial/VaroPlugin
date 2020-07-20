@@ -22,10 +22,8 @@ public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 	static {
 		scoreboard = new ScoreboardBoardList();
 		tablist = new TablistBoardList();
-		
-		update();
 	}
-	
+
 	public VaroBoardProvider(VaroPlayer player) {
 		super(player);
 	}
@@ -130,7 +128,7 @@ public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 	public boolean isNametagVisible() {
 		return ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean();
 	}
-	
+
 	public static void update() {
 		scoreboard.update();
 		tablist.update();

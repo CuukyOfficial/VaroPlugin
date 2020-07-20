@@ -23,7 +23,7 @@ public class ModList extends VaroList {
 	public void onLoad(List<?> list) {
 		mods = new ArrayList<String>();
 
-		for(Object mod : list)
+		for (Object mod : list)
 			mods.add((String) mod);
 	}
 
@@ -47,8 +47,8 @@ public class ModList extends VaroList {
 	}
 
 	public static ModList getModList(String list) {
-		for(ModList mList : getModLists())
-			if(mList.getLocation().equalsIgnoreCase(list))
+		for (ModList mList : getModLists())
+			if (mList.getLocation().equalsIgnoreCase(list))
 				return mList;
 
 		return null;
@@ -57,8 +57,8 @@ public class ModList extends VaroList {
 	public static ArrayList<ModList> getModLists() {
 		ArrayList<ModList> mList = new ArrayList<>();
 
-		for(VaroList vlist : VaroList.getLists())
-			if(vlist instanceof ModList)
+		for (VaroList vlist : VaroList.getLists())
+			if (vlist instanceof ModList)
 				mList.add((ModList) vlist);
 
 		return mList;

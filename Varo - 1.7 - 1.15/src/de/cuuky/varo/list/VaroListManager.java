@@ -60,6 +60,7 @@ public class VaroListManager {
 	public StartItems getStartItems() {
 		return startItems;
 	}
+
 	public BlockedMods getBlockedMods() {
 		return blockedMods;
 	}

@@ -127,13 +127,13 @@ public class BotRegister {
 	public void setUserId(long user) {
 		this.userId = user;
 	}
-	
+
 	private static void kickPlayerLater(Player player, String message) {
-		if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean())
+		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean())
 			return;
-		
+
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-			
+
 			@Override
 			public void run() {
 				player.kickPlayer(message);

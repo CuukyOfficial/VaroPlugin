@@ -25,7 +25,7 @@ public class BlockPlaceListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-			
+
 			@Override
 			public void run() {
 				if (!Main.getVaroGame().hasStarted())

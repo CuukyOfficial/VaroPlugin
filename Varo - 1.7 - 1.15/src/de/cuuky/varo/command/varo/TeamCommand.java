@@ -30,9 +30,9 @@ public class TeamCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo team list");
 			return;
 		}
-		
+
 		VaroTeam vteam = VaroTeam.getTeam(args[0]);
-		if(vteam != null && sender instanceof Player) {
+		if (vteam != null && sender instanceof Player) {
 			new TeamGUI((Player) sender, vteam);
 			return;
 		}

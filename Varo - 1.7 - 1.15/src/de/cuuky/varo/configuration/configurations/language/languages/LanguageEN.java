@@ -39,7 +39,7 @@ public enum LanguageEN implements LoadableMessage {
 	ALERT_THRID_STRIKE("alerts.BOTS_ALERT.thirdStrike", "%player% now has three strikes. The strike was given by %striker%. Reason: %reason%\nThis means that %player% has been removed from %projectname%!"),
 	ALERT_WINNER("alerts.BOTS_ALERT.win.player", "%player% has won %projectname%! Congratulations!"),
 	ALERT_WINNER_TEAM("alerts.BOTS_ALERT.win.team", "%winnerPlayers% have won %projectname%! Congratulations!"),
-	
+
 	BORDER_MINIMUM_REACHED("border.minimumReached", "&cThe Border has reached its minimum!"),
 	BORDER_DECREASE_DAYS("border.decreaseDays", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s. &7Next reduction in &c%days% &7days!"),
 	BORDER_DECREASE_DEATH("border.decreaseDeath", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s due to a death."),
@@ -47,10 +47,10 @@ public enum LanguageEN implements LoadableMessage {
 	BORDER_DECREASE_MINUTES("border.decreaseMinutes", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s. &7Next reduction in &c%days% &7minutes!"),
 	BORDER_DISTANCE("border.distanceToBorder", "&7Distance to border: %colorcode%%size% &7blocks"),
 	BORDER_COMMAND_SET_BORDER("border.borderSet", "&7The border was set to %colorcode%%size% &7!"),
-	
+
 	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYou are not yet authenticated with the discord!\n&7To authenticate yourself, write in the #verify channel &c'varo verify <Your ID>' &7on the discord!\nLink to the Discordserver: &c%discordLink%\n&7Your ID is: &c%code%"),
 	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
-	
+
 	CHAT_PLAYER_WITH_TEAM("chat.format.withTeam", "%colorcode%%team% &8| &7%player% &8» &f%message%"),
 	CHAT_PLAYER_WITH_TEAM_RANK("chat.format.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player% &8» &f%message%"),
 	CHAT_PLAYER_WITHOUT_TEAM("chat.format.withoutTeam", "&7%player% &8» &f%message%"),
@@ -59,31 +59,31 @@ public enum LanguageEN implements LoadableMessage {
 	CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
 	CHAT_MUTED("chat.muted", "&7You have been muted!"),
 	CHAT_WHEN_START("chat.chatOnStart", "&7You can only write again after the start!"),
-	
+
 	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
 	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7This furnace belongs to %colorcode%%player%&7!"),
 	CHEST_REMOVED_SAVEABLE("chest.removedChest", "&7You have removed this %saveable% %colorcode%successfully"),
 	CHEST_SAVED_CHEST("chest.newChestSaved", "&7A new chest was secured!"),
 	CHEST_SAVED_FURNACE("chest.newFurnaceSaved", "&7A new furnace was secured!"),
-	
+
 	COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7This player is on your team!"),
 	COMBAT_IN_FIGHT("combat.inFight", "&7You are now in combat, do &4NOT &7log &7out!"),
 	COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7has left the server during a fight!"),
 	COMBAT_NOT_IN_FIGHT("combat.notInFight", "&7You are now no longer in a &cfight&7!"),
-	
+
 	DEATH_DEAD("death.killMessage", "&c%player% &7has died. &7Reason: &c%reason%"),
 	DEATH_KILLED_BY("death.killed", "%colorcode%%player% &7was killed by &c%killer% &7!"),
 	DEATH_LIFE_LOST("death.teamLifeLost", "%player% now still has %colorcode%%teamLifes% &7team lives left!"),
 	DEATH_RESPAWN_PROTECTION("death.respawnProtection", "&c%player% now has one life less and is invulnerable for %seconds% seconds!"),
 	DEATH_RESPAWN_PROTECTION_OVER("death.respawnProtectionOver", "&c%player% is now vulnerable again!"),
 	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "Your team got a team life because of a kill!"),
-	
+
 	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7starts in %colorcode%%countdown% &7second(s)!"),
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7was started! &5Good luck!"),
 	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%\n&7Good luck!"),
 	GAME_WIN("game.win.single", "&5%player% &7has won %projectname%&7! &5Congratulations!"),
 	GAME_WIN_TEAM("game.win.team", "&5%winnerPlayers% &7 have won %projectname% &7! &5Congratulations!"),
-	
+
 	JOIN_MESSAGE("joinmessage.join", "%prefix%&a%player% &7has entered the server!"),
 	JOIN_FINALE("joinmessage.finale", "%prefix%&a%player% &7has entered the server for the final."),
 	JOIN_MASS_RECORDING("joinmessage.massrecording", "%prefix%&a%player% &7has entered the server in mass recording and is vulnerable in %colorcode%%protectionTime% &7seconds!"),
@@ -92,7 +92,7 @@ public enum LanguageEN implements LoadableMessage {
 	JOIN_PROTECTION_TIME("joinmessage.joinProtectionTime", "%prefix%&a%player% &7has entered the server and is vulnerable in %colorcode%%protectionTime% &7seconds!"),
 	JOIN_SPECTATOR("joinmessage.spectator", "&a%player% &7has entered the server as a spectator!"),
 	JOIN_WITH_REMAINING_TIME("joinmessage.joinWithRemainingTime", "%prefix%&a%player% &7had left the server too early and now has %colorcode%%seconds% &7seconds left! Remaining &cDisconnects&7: &c%remainingDisconnects%"),
-	
+
 	DEATH_KICK_DEAD("kick.kickedKilled", "&You died! %nextLine% &7With this you are removed from %projectname%"),
 	DEATH_KICK_KILLED("kick.killedKick", "&7You were killed by &c%killer% &7! %nextLine% &7You have been removed from %projectname%&7!"),
 	JOIN_KICK_NOT_USER_OF_PROJECT("kick.notUserOfTheProject", "&7You are not a participant of this %projectname%&7!"),
@@ -107,15 +107,15 @@ public enum LanguageEN implements LoadableMessage {
 	KICK_MASS_REC_SESSION_OVER("kick.kickMessageMassRec", "&cThe mass recording is finished, %nextLine%&7that's why you got kicked!"),
 	KICK_TOO_MANY_STRIKES("kick.tooManyStrikes", "&7You got too many strikes and were therefore removed from the project %projectname%"),
 	KICK_COMMAND("kick.kick", "%colorcode%%player% &7was kicked!"),
-	
+
 	LABYMOD_DISABLED("labymod.labyModDisabled", "&7All your LabyMod functions have been deactivated!"),
 	LABYMOD_KICK("labymod.labyMod", "&cLabyMod isn't allowed on this server."),
-	
+
 	SERVER_MODT_CANT_JOIN_GLOBAL("motd.cantJoinGlobal", "&cYou can only join between &4%minHour%:%minMinute% &cand &4%maxHour%:%maxMinute%&c! %nextLine%&cThat's &4%minPlayerHour%:%minPlayerMinute% &c- &4%maxPlayerHour%:%maxPlayerMinute%&c in your time zone! %nextLine%&7Please try again later! &7%currPlayerHour%&7:&7%currPlayerMin%&7:&7%currPlayerSec%"),
 	SERVER_MODT_CANT_JOIN_PLAYER("motd.cantJoinPlayer", "&cYou can only join between &4%minHour%:%minMinute% &cand &4%maxHour%:%maxMinute%&c! %nextLine%&7Please try again later! &7%currPlayerHour%&7:&7%currPlayerMin%&7:&7%currPlayerSec%"),
 	SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cThe server has not yet been opened for everyone! %nextLine%&7Try again later!"),
 	SERVER_MODT_OPEN("motd.serverOpen", "&aBe now with us in %projectname%&a!\n&7Have fun!"),
-	
+
 	NAMETAG_NORMAL("nametag.normalNametagPrefix", "&7"),
 	NAMETAG_SUFFIX("nametag.normalSuffix", "&c %kills%"),
 	NAMETAG_TEAM_PREFIX("nametag.nametagWithTeam", "%colorcode%%team% &7"),
@@ -123,16 +123,16 @@ public enum LanguageEN implements LoadableMessage {
 	NOPERMISSION_NO_PERMISSION("nopermission.noPermission", "%colorcode%You are not authorized for this!"),
 	NOPERMISSION_NOT_ALLOWED_CRAFT("nopermission.notAllowedCraft", "&7You may not craft, use or brew that!"),
 	NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7You can not fly lower!"),
-	
+
 	OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),
 	OTHER_PING("other.ping", "&7Your %colorcode%Ping &7 is: %colorcode%%ping%&7ms"),
-	
+
 	PROTECTION_NO_MOVE_START("protection.noMoveStart", "&7You cannot move until the project has been started."),
 	PROTECTION_START("protection.start", "&7The &cProtection time &7starts now and will stop in &c%seconds% &7seconds!"),
 	PROTECTION_TIME_OVER("protection.protectionOver", "&7The &cprotection time &7is now over!"),
 	PROTECTION_TIME_UPDATE("protection.protectionUpdate", "&7The &cprotection time &7is over in &c%minutes%&7:&c%seconds% &7!"),
 	PROTECTION_TIME_RUNNING("protection.timeRunning", "&7The %colorcode%protection time &7 is still running!"),
-	
+
 	QUIT_MESSAGE("quitmessage.quit", "%prefix%&c%player%&7 has left the server!"),
 	QUIT_DISCONNECT_SESSION_END("quitmessage.disconnectKilled", "&c%player% &7has left the game and is no longer online since &c%banTime% &7minute(s).%nextLine%&7This means he has been removed from %projectname% &7!"),
 	QUIT_SPECTATOR("quitmessage.spectator", "&c%player% &7has left the server as a spectator!"),
@@ -144,26 +144,26 @@ public enum LanguageEN implements LoadableMessage {
 	QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cThere is a player &4%distance% &cblocks near you!%nextLine%&7To get kicked, move away from this player!"),
 	QUIT_KICK_SERVER_CLOSE_SOON_GLOBAL("quitmessage.serverCloseSoonGlobal", "&7The server closes in &c%minutes% &7minutes!"),
 	QUIT_KICK_SERVER_CLOSE_SOON_PLAYER("quitmessage.serverCloseSoonLocal", "&7The server closes in &c%minutes% &7minutes for you!"),
-	
+
 	SORT_NO_HOLE_FOUND("sort.noHoleFound", "&7No hole could be found for you!"),
 	SORT_NO_HOLE_FOUND_TEAM("sort.noHoleFoundTeam", "&7No hole could be found for you beside your team partners."),
 	SORT_NUMBER_HOLE("sort.numberHoleTeleport", "&7You have been teleported to the hole %colorcode%%number% &7!"),
 	SORT_OWN_HOLE("sort.ownHoleTeleport", "&7You've been put in your hole!"),
 	SORT_SPECTATOR_TELEPORT("sort.spectatorTeleport", "&7You were teleported to spawn because you're a spectator!"),
 	SORT_SORTED("sort.sorted", "&7You have been teleported to the hole %colorcode%%number% &7!"),
-	
+
 	SPAWN_WORLD("spawn.spawn", "%colorcode%Coordinates&7 of the spawn: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
 	SPAWN_NETHER("spawn.spawnNether", "%colorcode%Coordinates&7 of the portal to the world: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
 	SPAWN_DISTANCE("spawn.spawnDistance", "&7You are %colorcode%%distance% &7blocks away from spawn!"),
 	SPAWN_DISTANCE_NETHER("spawn.spawnDistanceNether", "&7You are %colorcode%%distance% &7blocks away from the portal to the world!"),
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),
-	
+
 	TABLIST_PLAYER_WITH_TEAM("tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITH_TEAM_RANK("tablist.player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM("tablist.player.withoutTeam", "&7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM_RANK("tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
-	
+
 	TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%colorcode%&lType the team name for you and %invited%:"),
 	TEAMREQUEST_MAX_TEAMNAME_LENGTH("teamrequest.maxTeamnameLength", "&7Your team name must not contain more than %colorcode%%maxLength% &7characters!"),
 	TEAMREQUEST_NO_COLORCODE("teamrequest.noColorCode", "&7Your team name must not contain color codes!"),
@@ -174,7 +174,7 @@ public enum LanguageEN implements LoadableMessage {
 	TEAMREQUEST_TEAM_REQUEST_RECIEVED("teamrequest.teamRequestRecieved", "%colorcode%%invitor% &7has invited you to join a team (/varo tr)!"),
 	TEAMREQUEST_INVITED_TEAM("teamrequest.invitedInTeam", "&7You have invited %colorcode%%invited% &7 in the team %colorcode%%team% &7!"),
 	TEAMREQUEST_NO_TEAMNAME("teamrequest.noteamname", "&7You still have no team name!"),
-	
+
 	VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode% %category% &7-------"),
 	VARO_COMMANDS_HELP_FOOTER("varoCommands.help.footer", "&7------------------------"),
 	VARO_COMMANDS_ERROR_USER_NOT_FOUND("varoCommands.error.usernotfound", "&7No user could be found for this player!"),

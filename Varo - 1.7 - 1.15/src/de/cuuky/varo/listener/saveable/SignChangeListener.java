@@ -34,7 +34,7 @@ public class SignChangeListener implements Listener {
 
 		if (!Main.getVaroGame().hasStarted())
 			return;
-		
+
 		Object sign = BlockUtils.getBlockData(event.getBlock(), event.getBlock().getState());
 		BlockFace attachedFace = BlockUtils.getAttachedSignFace(sign);
 		Block attached = event.getBlock().getRelative(attachedFace);
