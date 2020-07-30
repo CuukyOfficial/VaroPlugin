@@ -3,6 +3,8 @@ package de.cuuky.varo.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -29,11 +31,7 @@ public class ModUtils {
 
 		boolean kickPlayer = false;
 		String modList = null;
-		try {
-			modList = (String) getModList.invoke(null, player);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			return;
-		}
+		modList = getModListString(player);
 
 		ArrayList<String> usedMods = new ArrayList<String>();
 		for (String mod : Main.getDataManager().getListManager().getBlockedMods().getAsList()) {
@@ -50,6 +48,18 @@ public class ModUtils {
 					VaroPlayer.getPlayer(p).sendMessage(Main.getPrefix() + ConfigMessages.MODS_BLOCKED_MODS_BROADCAST.getValue().replace("%mods%", illegalMods).replace("%player%", player.getName()));
 				}
 			}
+		}
+	}
+	
+	public static List<String> getModList(Player player) {
+		return Arrays.asList(getModListString(player).split(", "));
+	}
+	
+	public static String getModListString(Player player) {
+		try {
+			return (String) getModList.invoke(null, player);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			return "-";
 		}
 	}
 }
