@@ -40,7 +40,7 @@ public class ModUtils {
 				usedMods.add(mod);
 			}
 			if (kickPlayer) {
-				String illegalMods = JavaUtils.getArgsToString(usedMods, "§7, " + Main.getColorCode());
+				String illegalMods = JavaUtils.getArgsToString(usedMods, ConfigMessages.MODS_BLOCKED_MODLIST_SPLIT.getValue() + Main.getColorCode());
 				if (!player.hasPermission("varo.alwaysjoin")) {
 					player.kickPlayer(Main.getPrefix() + ConfigMessages.MODS_BLOCKED_MODS_KICK.getValue(VaroPlayer.getPlayer(player)).replace("%mods%", illegalMods));
 				}

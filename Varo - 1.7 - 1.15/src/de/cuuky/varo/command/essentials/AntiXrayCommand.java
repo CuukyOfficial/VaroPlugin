@@ -58,8 +58,7 @@ public class AntiXrayCommand implements CommandExecutor {
 			String enabled = spigotConfig.getString("world-settings.default.anti-xray.enabled");
 			String engineMode = spigotConfig.getString("world-settings.default.anti-xray.engine-mode");
 			if (enabled == null || engineMode == null) {
-				sender.sendMessage(Main.getPrefix() + "§cEs gab einen Fehler mit dem Anti-Xray-System.");
-				sender.sendMessage(Main.getPrefix() + "Dies kann daran liegen, dass du eine nicht-unterstuetzte Serverversion benutzt.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName()));
 				return false;
 			}
 			if (!enabled.contentEquals("true") || !engineMode.contentEquals("2")) {
@@ -81,13 +80,12 @@ public class AntiXrayCommand implements CommandExecutor {
 					antiXrayActivated = true;
 				}
 			} else {
-				sender.sendMessage(Main.getPrefix() + "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_INSTALLING_PLUGIN.getValue(vp));
 
 				boolean xrayDownload = Main.getDataManager().getPluginLoader().downloadAdditionalPlugin(22818, "plugins/Anti-Xray.jar", true);
 
 				if (!xrayDownload) {
-					sender.sendMessage(Main.getPrefix() + "Es gab einen kritischen Fehler beim Download des Plugins.");
-					sender.sendMessage(Main.getPrefix() + "Du kannst dir das externe Plugin hier manuell herunterladen: https://www.spigotmc.org/resources/22818/");
+					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_INSTALLING_ERROR.getValue(vp));
 					return false;
 				}
 
@@ -97,20 +95,21 @@ public class AntiXrayCommand implements CommandExecutor {
 		}
 
 		if (xrayAvailable == 2) {
-			sender.sendMessage(Main.getPrefix() + "In deiner Serverversion ist kein Anti-Xray verfuegbar.");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_VERSION_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName() + " 1." + VersionUtils.getVersion().getIdentifier()));
 			return false;
 		}
 
 		if (args.length != 1 || (!args[0].equalsIgnoreCase("on") && !args[0].equalsIgnoreCase("off"))) {
-			sender.sendMessage(Main.getPrefix() + "§7Anti-Xray momentan §l" + (antiXrayActivated ? "aktiviert" : "deaktiviert"));
-			sender.sendMessage(Main.getPrefix() + "§7/antixray on - Aktiviert den Schutz vor X-Ray");
-			sender.sendMessage(Main.getPrefix() + "§7/antixray off - Deaktiviert den Schutz vor X-Ray");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Anti-Xray"));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_STATUS.getValue(vp) + (antiXrayActivated ? ConfigMessages.VARO_COMMANDS_XRAY_STATUS_ACTIVATED.getValue(vp) : ConfigMessages.VARO_COMMANDS_XRAY_STATUS_DEACTIVATED.getValue(vp)));
+			sender.sendMessage(Main.getPrefix() + "/antixray <on/off>");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return false;
 		}
 
 		if (args[0].equalsIgnoreCase("on")) {
 			if (antiXrayActivated) {
-				sender.sendMessage(Main.getPrefix() + "§7Das Anti-Xray ist bereits aktiviert.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_ALREADY_ACTIVATED.getValue(vp));
 				return false;
 			} else {
 				if (xrayAvailable == 0) {
@@ -120,7 +119,7 @@ public class AntiXrayCommand implements CommandExecutor {
 					try {
 						spigotConfig.save("spigot.yml");
 					} catch (IOException e) {
-						sender.sendMessage(Main.getPrefix() + "§cFehler: §7Das Anti-Xray konnte nicht aktiviert werden.");
+						sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName()));
 						return false;
 					}
 				} else if (xrayAvailable == 1) {
@@ -128,11 +127,11 @@ public class AntiXrayCommand implements CommandExecutor {
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ofc engine 2");
 				}
 
-				sender.sendMessage(Main.getPrefix() + "§7Das Anti-Xray wurde aktiviert.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_ACTIVATED.getValue(vp));
 			}
 		} else if (args[0].equalsIgnoreCase("off")) {
 			if (!antiXrayActivated) {
-				sender.sendMessage(Main.getPrefix() + "§7Das Anti-Xray ist bereits deaktiviert.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_ALREADY_DEACTIVATED.getValue(vp));
 				return false;
 			} else {
 				if (xrayAvailable == 0) {
@@ -142,14 +141,14 @@ public class AntiXrayCommand implements CommandExecutor {
 					try {
 						spigotConfig.save("spigot.yml");
 					} catch (IOException e) {
-						sender.sendMessage(Main.getPrefix() + "§cFehler: §7Das Anti-Xray konnte nicht deaktiviert werden.");
+						sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName()));
 						return false;
 					}
 				} else if (xrayAvailable == 1) {
 					Bukkit.dispatchCommand(sender, "ofc disable");
 				}
 
-				sender.sendMessage(Main.getPrefix() + "§7Das Anti-Xray wurde deaktiviert.");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_XRAY_DEACTIVATED.getValue(vp));
 			}
 		}
 

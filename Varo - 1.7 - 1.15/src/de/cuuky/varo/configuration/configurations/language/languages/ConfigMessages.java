@@ -172,7 +172,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	TEAMREQUEST_INVITED_TEAM("teamrequest.invitedInTeam", "&7Du hast %colorcode%%invited% &7in das Team %colorcode%%team% &7eingeladen!"),
 	TEAMREQUEST_NO_TEAMNAME("teamrequest.noteamname", "&7Du hast noch &7keinen &7Teamnamen!"),
 
-	VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode% %category% &7-------"),
+	VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode%%category% &7-------"),
 	VARO_COMMANDS_HELP_FOOTER("varoCommands.help.footer", "&7------------------------"),
 
 	VARO_COMMANDS_ERROR_USER_NOT_FOUND("varoCommands.error.usernotfound", "&7Es konnte kein User für diesen Spieler gefunden werden!"),
@@ -182,6 +182,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_ERROR_NOT_STARTED("varoCommands.error.notstarted", "Das Spiel wurde noch nicht gestartet!"),
 	VARO_COMMANDS_ERROR_USAGE("varoCommands.error.usage", "&cFehler! &7Nutze %colorcode%/varo %command% &7fuer Hilfe."),
 	VARO_COMMANDS_ERROR_NO_NUMBER("varoCommands.error.nonumber", "%colorcode%%text% &7ist keine Zahl!"),
+	VARO_COMMANDS_ERROR_WRONGVERSION("varoCommands.error.wrongVersion", "&7Dieses Feature ist vor der Version %colorcode%%version% &7nicht verfügbar!"),
 	VARO_COMMANDS_ERROR("varoCommands.error.error", "&7Es ist ein Fehler aufgetreten!"),
 
 	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"),
@@ -286,10 +287,23 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
 
+	VARO_COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cEs gab einen Fehler mit dem Anti-Xray-System. Bitte überprüfe, deine Serverversion (%version%) auf Spigot basiert."),
+	VARO_COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren."),
+	VARO_COMMANDS_XRAY_INSTALLING_ERROR("varoCommands.xray.installingError", "Es gab einen kritischen Fehler beim Download des Plugins. Du kannst dir das externe Plugin hier manuell herunterladen: %colorcode%&nhttps://www.spigotmc.org/resources/22818/"),
+	VARO_COMMANDS_XRAY_VERSION_NOT_AVAIALABLE("varoCommands.xray.versionNotAvailable", "&cAuf deiner Serverversion ist kein X-Ray verfügbar (%version%)."),
+	VARO_COMMANDS_XRAY_STATUS("varoCommands.xray.status", "Anti-Xray ist momentan: %status%&7."),
+	VARO_COMMANDS_XRAY_STATUS_ACTIVATED("varoCommands.xray.statusActivated", "&aaktiviert"),
+	VARO_COMMANDS_XRAY_STATUS_DEACTIVATED("varoCommands.xray.statusDeactivated", "&cdeaktiviert"),
+	VARO_COMMANDS_XRAY_ACTIVATED("varoCommands.xray.activated", "Das Anti-Xray wurde aktiviert."),
+	VARO_COMMANDS_XRAY_DEACTIVATED("varoCommands.xray.dectivated", "Das Anti-Xray wurde deaktiviert."),
+	VARO_COMMANDS_XRAY_ALREADY_ACTIVATED("varoCommands.xray.alreadyActivated", "Das Anti-Xray ist bereits aktiviert."),
+	VARO_COMMANDS_XRAY_ALREADY_DEACTIVATED("varoCommands.xray.alreadyDactivated", "Das Anti-Xray ist bereits deaktiviert."),
+
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
 
 	MODS_BLOCKED_MODS_KICK("mods.blockedModsKick", "&7Bitte entferne folgende Mods: %colorcode%%mods%"),
+	MODS_BLOCKED_MODLIST_SPLIT("mods.blockedModsListSplit", "&7, "),
 	MODS_BLOCKED_MODS_BROADCAST("mods.blockedModsBroadcast", "&7Der Spieler %colorcode%%player% &7hat versucht mit folgenden blockierten Mods zu joinen: %colorcode%%mods%"),
 
 	OTHER_CONFIG("other.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
