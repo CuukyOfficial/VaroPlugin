@@ -41,7 +41,7 @@ public class InfoCommand implements CommandExecutor {
 		sender.sendMessage(Main.getPrefix() + "Location: x:" + Main.getColorCode() + player.getLocation().getBlockX() + "§7, y:" + Main.getColorCode() + player.getLocation().getBlockY() + "§7, z:" + Main.getColorCode() + player.getLocation().getBlockZ());
 		sender.sendMessage(Main.getPrefix() + "IP: " + Main.getColorCode() + player.getAddress().getAddress().toString());
 		if(VersionUtils.getServerSoftware() == ServerSoftware.MAGMA)
-			sender.sendMessage(Main.getPrefix() + "Mods: " + Main.getColorCode() + ModUtils.getModList(player));
+			sender.sendMessage(Main.getPrefix() + "Mods: " + Main.getColorCode() + ModUtils.getModListString(player));
 		return false;
 	}
 }
