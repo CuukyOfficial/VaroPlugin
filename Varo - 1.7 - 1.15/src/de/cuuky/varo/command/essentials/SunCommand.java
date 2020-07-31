@@ -25,7 +25,7 @@ public class SunCommand implements CommandExecutor {
 
 		world.setStorm(false);
 		world.setThundering(false);
-		sender.sendMessage(Main.getPrefix() + "Wechsle zu schoenem Wetter...");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_WEATHER_SUN.getValue(vp));
 		return false;
 	}
 

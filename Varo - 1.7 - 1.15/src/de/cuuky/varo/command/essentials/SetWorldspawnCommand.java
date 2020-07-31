@@ -33,7 +33,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 
 		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
 		Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().setBorderCenter(p.getLocation());
-		p.sendMessage(Main.getPrefix() + Main.getColorCode() + "Weltspawn §7erfolgreich gesetzt!");
+		p.sendMessage(Main.getPrefix() + Main.getColorCode() + ConfigMessages.COMMANDS_SETWORLDSPAWN.getValue(vp));
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;
 	}

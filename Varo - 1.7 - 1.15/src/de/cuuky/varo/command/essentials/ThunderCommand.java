@@ -25,7 +25,7 @@ public class ThunderCommand implements CommandExecutor {
 
 		world.setStorm(true);
 		world.setThundering(true);
-		sender.sendMessage(Main.getPrefix() + "Wechsle zu Gewitter...");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_WEATHER_THUNDER.getValue(vp));
 		return false;
 	}
 

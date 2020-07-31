@@ -287,17 +287,39 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
 
-	VARO_COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cEs gab einen Fehler mit dem Anti-Xray-System. Bitte überprüfe, deine Serverversion (%version%) auf Spigot basiert."),
-	VARO_COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren."),
-	VARO_COMMANDS_XRAY_INSTALLING_ERROR("varoCommands.xray.installingError", "Es gab einen kritischen Fehler beim Download des Plugins. Du kannst dir das externe Plugin hier manuell herunterladen: %colorcode%&nhttps://www.spigotmc.org/resources/22818/"),
-	VARO_COMMANDS_XRAY_VERSION_NOT_AVAIALABLE("varoCommands.xray.versionNotAvailable", "&cAuf deiner Serverversion ist kein X-Ray verfügbar (%version%)."),
-	VARO_COMMANDS_XRAY_STATUS("varoCommands.xray.status", "Anti-Xray ist momentan: %status%&7."),
-	VARO_COMMANDS_XRAY_STATUS_ACTIVATED("varoCommands.xray.statusActivated", "&aaktiviert"),
-	VARO_COMMANDS_XRAY_STATUS_DEACTIVATED("varoCommands.xray.statusDeactivated", "&cdeaktiviert"),
-	VARO_COMMANDS_XRAY_ACTIVATED("varoCommands.xray.activated", "Das Anti-Xray wurde aktiviert."),
-	VARO_COMMANDS_XRAY_DEACTIVATED("varoCommands.xray.dectivated", "Das Anti-Xray wurde deaktiviert."),
-	VARO_COMMANDS_XRAY_ALREADY_ACTIVATED("varoCommands.xray.alreadyActivated", "Das Anti-Xray ist bereits aktiviert."),
-	VARO_COMMANDS_XRAY_ALREADY_DEACTIVATED("varoCommands.xray.alreadyDactivated", "Das Anti-Xray ist bereits deaktiviert."),
+	COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cEs gab einen Fehler mit dem Anti-Xray-System. Bitte überprüfe, deine Serverversion (%version%) auf Spigot basiert."),
+	COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren."),
+	COMMANDS_XRAY_INSTALLING_ERROR("varoCommands.xray.installingError", "Es gab einen kritischen Fehler beim Download des Plugins. Du kannst dir das externe Plugin hier manuell herunterladen: %colorcode%&nhttps://www.spigotmc.org/resources/22818/"),
+	COMMANDS_XRAY_VERSION_NOT_AVAIALABLE("varoCommands.xray.versionNotAvailable", "&cAuf deiner Serverversion ist kein X-Ray verfügbar (%version%)."),
+	COMMANDS_XRAY_STATUS("varoCommands.xray.status", "Anti-Xray ist momentan: %status%&7."),
+	COMMANDS_XRAY_STATUS_ACTIVATED("varoCommands.xray.statusActivated", "&aaktiviert"),
+	COMMANDS_XRAY_STATUS_DEACTIVATED("varoCommands.xray.statusDeactivated", "&cdeaktiviert"),
+	COMMANDS_XRAY_ACTIVATED("varoCommands.xray.activated", "Das Anti-Xray wurde aktiviert."),
+	COMMANDS_XRAY_DEACTIVATED("varoCommands.xray.dectivated", "Das Anti-Xray wurde deaktiviert."),
+	COMMANDS_XRAY_ALREADY_ACTIVATED("varoCommands.xray.alreadyActivated", "Das Anti-Xray ist bereits aktiviert."),
+	COMMANDS_XRAY_ALREADY_DEACTIVATED("varoCommands.xray.alreadyDactivated", "Das Anti-Xray ist bereits deaktiviert."),
+
+	COMMANDS_BORDER_SIZE("varoCommands.border.size", "Die Border ist momentan %colorcode%%size% Bloecke &7gross."),
+	COMMANDS_BORDER_DISTANCE("varoCommands.border.distance", "Du bist %colorcode%%distance% Blocke &7von der Border entfernt."),
+	COMMANDS_BORDER_USAGE("varoCommands.border.usage", "Du kannst die Groesse der Border mit %colorcode%/border <Durchmesser> [Sekunden] &7setzen. Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt."),
+
+	COMMANDS_BROADCAST_FORMAT("varoCommands.broadcast.format", "&8[&cBroadcast&8] &7%message%"),
+
+	COMMANDS_CHATCLEAR_CLEAR("varoCommands.chatclear.cleared", "Der Chat wurde %colorcode%gecleart&7."),
+
+	COMMANDS_COUNTDOWN_ABORT("varoCommands.countdown.abort", "Der Countdown wurde abgebrochen."),
+	COMMANDS_COUNTDOWN_TOO_SMALL("varoCommands.countdown.tooSmall", "Der Countdown kann nicht negativ oder 0 sein!"),
+	COMMANDS_COUNTDOWN_START("varoCommands.countdown.start", "Los!"),
+	COMMANDS_COUNTDOWN_FORMAT("varoCommands.countdown.format", "%colorcode%%seconds%"),
+
+	COMMANDS_TIME_DAY("varoCommands.time.day", "Es ist jetzt %colorcode%Tag&7."),
+	COMMANDS_TIME_NIGHT("varoCommands.time.night", "Es ist jetzt %colorcode%Nacht&7."),
+
+	COMMANDS_WEATHER_SUN("varoCommands.weather.sun", "Es ist jetzt %colorcode%sonnig&7."),
+	COMMANDS_WEATHER_RAIN("varoCommands.weather.rain", "Es ist jetzt %colorcode%regnerisch&7."),
+	COMMANDS_WEATHER_THUNDER("varoCommands.weather.thunder", "Es %colorcode%gewittert &7nun."),
+	
+	COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Weltspawn erfolgreich gesetzt."),
 
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),

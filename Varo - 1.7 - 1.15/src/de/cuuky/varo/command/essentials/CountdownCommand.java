@@ -31,7 +31,7 @@ public class CountdownCommand implements CommandExecutor {
 			Bukkit.getScheduler().cancelTask(sched);
 			sched = -1;
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Countdown wurde abgebrochen!");
+			sender.sendMessage(Main.getPrefix() +ConfigMessages.COMMANDS_COUNTDOWN_ABORT.getValue(vp));
 			return false;
 		}
 
@@ -44,11 +44,11 @@ public class CountdownCommand implements CommandExecutor {
 		try {
 			time = Integer.parseInt(args[0]);
 		} catch (NumberFormatException e) {
-			sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7ist keine Zahl!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue(vp));
 		}
 
 		if (time < 1) {
-			sender.sendMessage(Main.getPrefix() + "§7Der Countdown kann nicht - sein!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_TOO_SMALL.getValue(vp));
 			return false;
 		}
 
@@ -57,14 +57,14 @@ public class CountdownCommand implements CommandExecutor {
 			@Override
 			public void run() {
 				if (time == 0) {
-					Bukkit.broadcastMessage(Main.getPrefix() + Main.getColorCode() + "Los geht's!");
+					Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_START.getValue(vp));
 					Bukkit.getScheduler().cancelTask(sched);
 					time = -1;
 					sched = -1;
 					return;
 				}
 
-				Bukkit.broadcastMessage(Main.getPrefix() + Main.getColorCode() + time);
+				Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_FORMAT.getValue(vp).replace("%seconds%", String.valueOf(time)));
 				time--;
 			}
 		}, 0, 20);

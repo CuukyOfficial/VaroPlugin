@@ -19,18 +19,16 @@ public class BorderCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			sender.sendMessage(Main.getPrefix() + "Nicht verfuegbar vor der 1.8!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_WRONGVERSION.getValue(vp).replace("%version%", "1.8"));
 			return false;
 		}
 
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + "§7Die Border ist " + Main.getColorCode() + (sender instanceof Player ? Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderSize() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getVaroBorder().getBorderSize()) + " §7Bloecke gross!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_SIZE.getValue(vp).replace("%size",String.valueOf((sender instanceof Player ? Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderSize() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getVaroBorder().getBorderSize()))));
 			if (sender instanceof Player)
-				sender.sendMessage(Main.getPrefix() + "§7Du bist " + Main.getColorCode() + (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderDistanceTo((Player) sender) + "§7 Bloecke von der Border entfernt!");
-
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_DISTANCE.getValue(vp).replace("%distance%", String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderDistanceTo((Player) sender))));
 			if (sender.hasPermission("varo.setup")) {
-				sender.sendMessage(Main.getPrefix() + "§7Du kannst die Groesse der Border mit " + Main.getColorCode() + "/border <Groesse> [Sekunden] §7setzen!");
-				sender.sendMessage(Main.getPrefix() + "§7Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_USAGE.getValue(vp));
 			}
 			return false;
 		} else if (args.length >= 1 && sender.hasPermission("varo.setup")) {
@@ -40,7 +38,7 @@ public class BorderCommand implements CommandExecutor {
 			try {
 				borderSize = Integer.parseInt(args[0]);
 			} catch (NumberFormatException e) {
-				p.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
+				p.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue(vp));
 				return false;
 			}
 
@@ -53,7 +51,7 @@ public class BorderCommand implements CommandExecutor {
 			} catch (ArrayIndexOutOfBoundsException e) {
 				worldHandler.setBorderSize(borderSize, 0, p != null ? p.getWorld() : null);
 			} catch (NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + "§7Das ist keine Zahl!");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue(vp));
 				return false;
 			}
 
