@@ -1,0 +1,59 @@
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRAEGEN WEGNEHMEN!
+#  Hier ist die Beschreibung der Config:
+# ----------- Teams -----------
+# Beschreibung: Hier kannst du Einstellungen zu Teams vornehmen.
+# 
+#  chatTrigger:
+#   Definiert den Buchstaben am Anfang einer
+#   Nachricht, der den Teamchat ausloest.
+#   Default-Value: #
+# 
+#  friendlyFire:
+#   Zufuegen von Schaden unter Teamkameraden.
+#   Default-Value: false
+# 
+#  teamPlaceSpawn:
+#   Anzahl an Spawnplaetzen in einer Teambasis
+#   Wenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.
+#   Anschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt.
+#   Default-Value: -1
+# 
+#  teamRequest.expiretime:
+#   Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll.
+#   Default-Value: 30
+# 
+#  teamRequest.maxTeamMembers:
+#   Anzahl an Teammitglieder pro Team.
+#   Default-Value: 2
+# 
+#  teamRequest.maxTeamnameLength:
+#   Maximal Laenge eines Teamnamens.
+#   Default-Value: 10
+# 
+#  teamRequest.enabled:
+#   Ob Spieler sich gegenseitig in Teams
+#   mit /tr einladen koennen.
+#   Sehr gute Funktion fuer ODV's.
+#   Default-Value: false
+# 
+#  teamRequest.lobbyItems:
+#   Ob die Spieler Items in
+#   der Lobby erhalten sollen,
+#   womit sie sich einladen k�nnen
+#   Default-Value: true
+# 
+#  triggerForGlobal:
+#   Wenn aktiviert, wird standardmaessig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt.
+#   Default-Value: false
+# -------------------------
+
+chatTrigger: '#'
+friendlyFire: false
+teamPlaceSpawn: -1
+teamRequest:
+  expiretime: 30
+  maxTeamMembers: 2
+  maxTeamnameLength: 10
+  enabled: true
+  lobbyItems: true
+triggerForGlobal: false

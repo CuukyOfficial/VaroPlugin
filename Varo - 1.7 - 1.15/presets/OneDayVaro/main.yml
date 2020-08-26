@@ -1,4 +1,4 @@
-# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRï¿½GEN WEGNEHMEN!
 #  Hier ist die Beschreibung der Config:
 # ----------- Main -----------
 # Beschreibung: Hier kannst du alle Haupteinstellungen vornehmen.
@@ -60,11 +60,16 @@
 # -------------------------
 
 dailyBackups: true
-nametags: true
+nametags:
+  enabled: true
+  visible: true
 playTime: -1
 prefix: '&7[&3ODV&7] '
 projectname: ODV
 projectnameColorcode: '&3'
+language:
+  main: de_de
+  allowOther: true
 resetSessionHour: 1
 scoreboard: true
 supportPluginAds: false
