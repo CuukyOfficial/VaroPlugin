@@ -39,7 +39,7 @@
 #  teamRequest.lobbyItems:
 #   Ob die Spieler Items in
 #   der Lobby erhalten sollen,
-#   womit sie sich einladen k�nnen
+#   womit sie sich einladen können
 #   Default-Value: true
 # 
 #  triggerForGlobal:
