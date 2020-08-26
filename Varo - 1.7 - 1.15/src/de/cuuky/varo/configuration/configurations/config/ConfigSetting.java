@@ -121,7 +121,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_EVENT_WIN(ConfigSettingSection.DISCORD, "eventChannel.win", -1, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_YOUTUBE(ConfigSettingSection.DISCORD, "eventChannel.youtube", -1, "ID's des Channels, wo die YT-Videos gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENTCHANNELID(ConfigSettingSection.DISCORD, "eventChannelID", -1, "Gib hier die ChannelID des Channels an,\nin welchen der Bot Events posten soll.\nRechtsklick auf den Channel -> 'Copy ChannelID'\nWenn Option nicht vorhanden, schalte\n'developer options' in den Einstellungen von Discord ein."),
-	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
+	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127, UeberallGebannt", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 
 	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSettingSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufaellige Farbe haben sollen"),
