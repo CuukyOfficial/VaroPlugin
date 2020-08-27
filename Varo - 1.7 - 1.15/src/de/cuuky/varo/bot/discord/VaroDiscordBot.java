@@ -136,18 +136,26 @@ public class VaroDiscordBot implements VaroBot {
 			System.err.println(Main.getConsolePrefix() + "Failed to print discord message!");
 			return;
 		}
-
-		EmbedBuilder builder = new EmbedBuilder();
-		if (!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
-			builder.setColor(color);
-		else
-			builder.setColor(getRandomColor());
-		builder.addField(title, message.replace("_", "\\_"), true);
-		try {
-			channel.sendMessage(builder.build()).queue();
-		} catch (PermissionException e) {
-			System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
-			System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());
+		if (ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean()) {
+			EmbedBuilder builder = new EmbedBuilder();
+			if (!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
+				builder.setColor(color);
+			else
+				builder.setColor(getRandomColor());
+			builder.addField(title, message.replace("_", "\\_"), true);
+			try {
+				channel.sendMessage(builder.build()).queue();
+			} catch (PermissionException e) {
+				System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
+				System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());
+			}
+		} else {
+			try {
+				channel.sendMessage(message).queue();
+			} catch (PermissionException e) {
+				System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
+				System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());
+			}
 		}
 	}
 
