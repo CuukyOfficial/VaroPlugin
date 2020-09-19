@@ -16,10 +16,7 @@ import de.cuuky.varo.serialize.serializer.VaroSerializer;
 public class VaroSerializeObject extends VaroSerializeHandler {
 
 	/*
-	 * Pls dont look too close at this class. I made this withing like 4 hours
-	 * and it works so I don't wanna change anything. I know, this is pretty
-	 * ugly and too much code in one class but I'm really happy it works like
-	 * this
+	 * Pls dont look too close at this class. I made this withing like 4 hours and it works so I don't wanna change anything. I know, this is pretty ugly and too much code in one class but I'm really happy it works like this
 	 */
 
 	private Class<? extends VaroSerializeable> clazz;

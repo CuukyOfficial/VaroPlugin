@@ -282,7 +282,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
 			this.nametag.update();
 	}
-	
+
 	public void saveTeleport(Location location) {
 		BukkitUtils.saveTeleport(this.player, location);
 	}
@@ -554,8 +554,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	/**
-	 * @return Returns the varoplayer and sets the name right if the player
-	 *         changed it before
+	 * @return Returns the varoplayer and sets the name right if the player changed it before
 	 */
 	public static VaroPlayer getPlayer(Player player) {
 		for (VaroPlayer vp : varoplayer) {

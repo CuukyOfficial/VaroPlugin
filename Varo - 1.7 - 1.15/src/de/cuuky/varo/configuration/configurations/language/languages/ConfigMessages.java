@@ -318,7 +318,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	COMMANDS_WEATHER_SUN("varoCommands.weather.sun", "Es ist jetzt %colorcode%sonnig&7."),
 	COMMANDS_WEATHER_RAIN("varoCommands.weather.rain", "Es ist jetzt %colorcode%regnerisch&7."),
 	COMMANDS_WEATHER_THUNDER("varoCommands.weather.thunder", "Es %colorcode%gewittert &7nun."),
-	
+
 	COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Weltspawn erfolgreich gesetzt."),
 
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),

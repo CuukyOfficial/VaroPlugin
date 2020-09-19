@@ -31,7 +31,7 @@ public class CountdownCommand implements CommandExecutor {
 			Bukkit.getScheduler().cancelTask(sched);
 			sched = -1;
 
-			sender.sendMessage(Main.getPrefix() +ConfigMessages.COMMANDS_COUNTDOWN_ABORT.getValue(vp));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_ABORT.getValue(vp));
 			return false;
 		}
 
