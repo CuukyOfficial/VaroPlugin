@@ -33,12 +33,16 @@ public class VaroBugreport extends FileZipper {
 	public VaroBugreport() {
 		super(new File("plugins/Varo/bugreports/bugreport-" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
 
-		this.discordBotToken = ConfigSetting.DISCORDBOT_TOKEN.getValueAsString();
-		ConfigSetting.DISCORDBOT_TOKEN.setValue("hidden", true);
+		boolean fileInit = Main.getDataManager() != null && Main.getDataManager().getConfigHandler() != null;
+		if (fileInit) {
+			this.discordBotToken = ConfigSetting.DISCORDBOT_TOKEN.getValueAsString();
+			ConfigSetting.DISCORDBOT_TOKEN.setValue("hidden", true);
+		}
 
 		loadFiles();
 
-		ConfigSetting.DISCORDBOT_TOKEN.setValue(this.discordBotToken, true);
+		if (fileInit)
+			ConfigSetting.DISCORDBOT_TOKEN.setValue(this.discordBotToken, true);
 	}
 
 	private void loadFiles() {
