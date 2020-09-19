@@ -25,7 +25,7 @@ public class RainCommand implements CommandExecutor {
 
 		world.setStorm(true);
 		world.setThundering(false);
-		sender.sendMessage(Main.getPrefix() + "Wechsle zu Regen...");
+		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_WEATHER_RAIN.getValue(vp));
 		return false;
 	}
 }

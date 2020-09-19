@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import net.md_5.bungee.api.ChatColor;
 
 public class BroadcastCommand implements CommandExecutor {
 
@@ -32,7 +33,7 @@ public class BroadcastCommand implements CommandExecutor {
 			else
 				msg = arg;
 
-		Bukkit.broadcastMessage("§7[§cBroadcast§7] §c" + msg.replace("&", "§"));
+		Bukkit.broadcastMessage(ConfigMessages.COMMANDS_BROADCAST_FORMAT.getValue(vp).replace("%message%", ChatColor.translateAlternateColorCodes('&', msg)));
 		return false;
 	}
 

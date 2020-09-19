@@ -25,7 +25,7 @@ public class ChatClearCommand implements CommandExecutor {
 			for (Player pl : VersionUtils.getOnlinePlayer())
 				pl.sendMessage("");
 
-		Bukkit.broadcastMessage(Main.getPrefix() + "§7Der Chat wurde §7gecleart§7!");
+		Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_CHATCLEAR_CLEAR.getValue(vp));
 		return false;
 	}
 }
