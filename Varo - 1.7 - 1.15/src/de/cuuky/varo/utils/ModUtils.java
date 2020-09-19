@@ -16,17 +16,17 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ModUtils {
 
-	private static Method getModList;
+	private static Method getModListMethod;
 
 	static {
 		try {
 			Class<?> playerApiClass = Class.forName("org.magmafoundation.magma.api.PlayerAPI");
-			getModList = playerApiClass.getMethod("getModlist", Player.class);
+			getModListMethod = playerApiClass.getMethod("getModlist", Player.class);
 		} catch (NoSuchMethodException | ClassNotFoundException e) {}
 	}
 
 	public static void checkForIllegalMods(Player player) {
-		if (getModList == null)
+		if (getModListMethod == null)
 			return;
 
 		boolean kickPlayer = false;
@@ -57,7 +57,7 @@ public class ModUtils {
 
 	public static String getModListString(Player player) {
 		try {
-			String mods = (String) getModList.invoke(null, player);
+			String mods = (String) getModListMethod.invoke(null, player);
 			return mods.equalsIgnoreCase("null") ? "-" : mods;
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			return "-";
