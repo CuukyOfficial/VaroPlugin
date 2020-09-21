@@ -49,7 +49,7 @@ public class PlayerQuitListener implements Listener {
 			}
 
 			// CHECK DISCONNECTS
-			if (vplayer.getStats().hasTimeLeft()) {
+			if (vplayer.getStats().hasTimeLeft() || !ConfigSetting.PLAY_TIME.isIntActivated()) {
 				if (ConfigSetting.DISCONNECT_PER_SESSION.isIntActivated()) {
 					VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
 					if (dc == null)
