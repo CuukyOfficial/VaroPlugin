@@ -256,6 +256,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 			@Override
 			public void run() {
+				if (!isOnline())
+					return;
+
 				new Vanish(player.getPlayer());
 				player.getPlayer().setGameMode(GameMode.ADVENTURE);
 				player.getPlayer().setAllowFlight(true);
