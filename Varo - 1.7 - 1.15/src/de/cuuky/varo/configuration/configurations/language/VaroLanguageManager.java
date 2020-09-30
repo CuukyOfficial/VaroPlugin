@@ -1,6 +1,7 @@
 package de.cuuky.varo.configuration.configurations.language;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -54,7 +55,7 @@ public class VaroLanguageManager extends LanguageManager {
 		return super.getMessage(messagePath, !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean() ? getDefaultLanguage().getName() : locale);
 	}
 
-	private ArrayList<Integer> getConvNumbers(String line, String key) {
+	private List<Integer> getConvNumbers(String line, String key) {
 		ArrayList<Integer> list = new ArrayList<>();
 
 		boolean first = true;
