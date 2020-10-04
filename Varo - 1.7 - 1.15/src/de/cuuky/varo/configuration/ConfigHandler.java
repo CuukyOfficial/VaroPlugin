@@ -9,7 +9,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.google.common.io.Files;
 
+import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
@@ -189,6 +191,8 @@ public class ConfigHandler {
 			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Groesse des Rucksackes darf nicht mehr als 54 betragen.");
 			shutdown = true;
 		}
+		if (ConfigSetting.REMOVE_HIT_COOLDOWN.getValueAsBoolean() && BukkitUtils.isPluginEnabled("OldCombatMechanics"))
+			System.out.println(Main.getConsolePrefix() + "Warning! Found a plugin that messes with hit delay, please disable 'removeHitDelay' in the config file.");
 
 		if (shutdown) {
 			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
