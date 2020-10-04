@@ -63,11 +63,13 @@ public class PlayerDeathListener implements Listener {
 			PlayerHit hit = PlayerHit.getHit(deadPlayer);
 			if (hit != null)
 				hit.over();
+			if (ConfigSetting.PLAY_DEATH_EFFECT.getValueAsBoolean())
+				deadPlayer.getWorld().strikeLightningEffect(deadPlayer.getLocation());
 
-			deadPlayer.getWorld().strikeLightningEffect(deadPlayer.getLocation());
-			for (ItemStack stack : Main.getDataManager().getListManager().getDeathItems().getItems())
-				if (stack.getType() != Material.AIR)
-					deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
+			if (ConfigSetting.PLAY_DEATH_EFFECT.getValueAsBoolean())
+				for (ItemStack stack : Main.getDataManager().getListManager().getDeathItems().getItems())
+					if (stack.getType() != Material.AIR)
+						deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
 
 			for (int i = 0; i < 3; i++)
 				deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
