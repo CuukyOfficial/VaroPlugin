@@ -66,14 +66,14 @@ public class PlayerDeathListener implements Listener {
 			if (ConfigSetting.PLAY_DEATH_EFFECT.getValueAsBoolean())
 				deadPlayer.getWorld().strikeLightningEffect(deadPlayer.getLocation());
 
-			if (ConfigSetting.PLAY_DEATH_EFFECT.getValueAsBoolean())
-				for (ItemStack stack : Main.getDataManager().getListManager().getDeathItems().getItems())
-					if (stack.getType() != Material.AIR)
-						deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
+			for (ItemStack stack : Main.getDataManager().getListManager().getDeathItems().getItems())
+				if (stack.getType() != Material.AIR)
+					deadPlayer.getWorld().dropItemNaturally(deadPlayer.getLocation(), stack);
 
-			for (int i = 0; i < 3; i++)
-				deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
-
+			if (ConfigSetting.PLAY_DEATH_EFFECT.getValueAsBoolean()) {
+				for (int i = 0; i < 3; i++)
+					deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
+			}
 			if (deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
 				if (killerPlayer == null) {
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
