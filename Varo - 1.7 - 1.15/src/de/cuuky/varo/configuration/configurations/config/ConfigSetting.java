@@ -97,7 +97,8 @@ public enum ConfigSetting implements SectionEntry {
 	COMBATLOG_TIME(ConfigSettingSection.COMBATLOG, "combatlogTime", 30, "Zeit, nachdem sich ein Spieler\nnach dem Kampf wieder ausloggen kann.\nOff = -1"),
 
 	// DEATH
-	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound", false, "Ob ein Withersound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
+	PLAY_DEATH_SOUND(ConfigSettingSection.DEATH, "playDeathSound", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
+	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound", "WITHER_IDLE", "Der Sound, der beim Tod eines Spielers gespielt wird"),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFuer diese Funktion wird dieses Plugin benoetigt:\nhttps://www.spigotmc.org/resources/52423/"),
