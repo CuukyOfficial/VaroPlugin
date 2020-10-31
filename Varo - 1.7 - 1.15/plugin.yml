@@ -1,7 +1,7 @@
 name: Varo
 author: Cuuky
 authors: [Korne127, UeberallGebannt]
-version: 4.3.8.1
+version: 4.3.9
 softdepend: [CuukyFrameWork, JDA, LabyModAPI, TelegramPlugin, PermissionsEx, LabyModAPI]
 api-version: 1.13
 main: de.cuuky.varo.Main
