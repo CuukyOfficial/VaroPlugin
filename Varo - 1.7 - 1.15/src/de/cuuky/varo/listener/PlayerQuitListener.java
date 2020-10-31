@@ -33,13 +33,12 @@ public class PlayerQuitListener implements Listener {
 
 		if (Main.getVaroGame().getGameState() == GameState.STARTED) {
 			// IF THEY WERE KICKED OR DEAD
-			if (ConfigSetting.PLAY_TIME.isIntActivated())
-				if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft()) {
-					vplayer.onEvent(BukkitEventType.QUIT);
-					if (vplayer.getStats().getState() != PlayerState.DEAD)
-						Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer));
-					return;
-				}
+			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && ConfigSetting.PLAY_TIME.isIntActivated()) {
+				vplayer.onEvent(BukkitEventType.QUIT);
+				if (vplayer.getStats().getState() != PlayerState.DEAD)
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer));
+				return;
+			}
 
 			// CHECK IF THEY COMBATLOGGED
 			CombatlogCheck check = new CombatlogCheck(event);
