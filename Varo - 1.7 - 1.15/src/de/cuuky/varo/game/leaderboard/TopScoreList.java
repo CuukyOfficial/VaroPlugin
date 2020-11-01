@@ -3,6 +3,7 @@ package de.cuuky.varo.game.leaderboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -12,8 +13,8 @@ public class TopScoreList {
 	private Comparator<VaroPlayer> playerSort;
 	private Comparator<VaroTeam> teamSort;
 
-	private ArrayList<VaroPlayer> topPlayer;
-	private ArrayList<VaroTeam> topTeams;
+	private List<VaroPlayer> topPlayer;
+	private List<VaroTeam> topTeams;
 
 	public TopScoreList() {
 		this.topPlayer = new ArrayList<>();
