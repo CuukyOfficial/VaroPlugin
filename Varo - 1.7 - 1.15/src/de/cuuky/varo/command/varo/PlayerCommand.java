@@ -1,5 +1,7 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.ArrayList;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -109,7 +111,7 @@ public class PlayerCommand extends VaroCommand {
 			return;
 		} else if (args[0].equalsIgnoreCase("remove")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
-				for (VaroPlayer pl : VaroPlayer.getVaroPlayer()) {
+				for (VaroPlayer pl : new ArrayList<>(VaroPlayer.getVaroPlayer())) {
 					if (pl.isOnline())
 						pl.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp));
 
