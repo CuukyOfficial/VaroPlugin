@@ -44,6 +44,7 @@ public class Main extends JavaPlugin {
 	private static VaroGame varoGame;
 
 	private boolean failed;
+	
 
 	@Override
 	public void onLoad() {
