@@ -10,14 +10,14 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.gui.MainMenu;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
-public class StrikeListGUI extends SuperInventory {
+public class StrikeListGUI extends VaroSuperInventory {
 
 	private Player target;
 

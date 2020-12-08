@@ -8,13 +8,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.MainMenu;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
-public class YouTubeVideoListGUI extends SuperInventory {
+public class YouTubeVideoListGUI extends VaroSuperInventory {
 
 	public YouTubeVideoListGUI(Player opener) {
 		super("§5Videos", opener, 54, false);

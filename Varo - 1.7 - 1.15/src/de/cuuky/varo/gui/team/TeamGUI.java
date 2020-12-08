@@ -10,12 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
-public class TeamGUI extends SuperInventory {
+public class TeamGUI extends VaroSuperInventory {
 
 	private VaroTeam team;
 

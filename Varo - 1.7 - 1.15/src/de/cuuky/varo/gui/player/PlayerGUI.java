@@ -7,18 +7,18 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
 import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
 
-public class PlayerGUI extends SuperInventory {
+public class PlayerGUI extends VaroSuperInventory {
 
 	private VaroPlayer target;
 	private PlayerGUIType type;

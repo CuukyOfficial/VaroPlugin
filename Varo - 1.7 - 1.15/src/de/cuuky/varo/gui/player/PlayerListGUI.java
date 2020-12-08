@@ -8,13 +8,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
-public class PlayerListGUI extends SuperInventory {
+public class PlayerListGUI extends VaroSuperInventory {
 
 	public enum PlayerGUIType {
 		ALIVE("§aALIVE", Material.POTION),

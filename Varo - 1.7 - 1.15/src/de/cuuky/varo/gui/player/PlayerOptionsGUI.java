@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -20,9 +19,10 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.Stats;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 
-public class PlayerOptionsGUI extends SuperInventory {
+public class PlayerOptionsGUI extends VaroSuperInventory {
 
 	private Stats stats;
 	private VaroPlayer target;

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.types.Materials;
@@ -21,7 +21,7 @@ import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 
-public class ConfigGUI extends SuperInventory {
+public class ConfigGUI extends VaroSuperInventory {
 
 	private ConfigSettingSection section;
 

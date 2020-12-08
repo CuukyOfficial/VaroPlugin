@@ -7,13 +7,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 
-public class BotRegisterListGUI extends SuperInventory {
+public class BotRegisterListGUI extends VaroSuperInventory {
 
 	public BotRegisterListGUI(Player opener) {
 		super("§cBotVerify", opener, 54, false);

@@ -7,7 +7,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
@@ -26,7 +25,7 @@ import de.cuuky.varo.gui.strike.StrikeListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 
-public class MainMenu extends SuperInventory {
+public class MainMenu extends VaroSuperInventory {
 
 	public MainMenu(Player opener) {
 		super(Main.getProjectName(), opener, 45, true);

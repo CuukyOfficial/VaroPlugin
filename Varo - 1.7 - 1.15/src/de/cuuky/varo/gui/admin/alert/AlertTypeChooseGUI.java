@@ -6,13 +6,13 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.admin.alert.AlertChooseGUI.AlertGUIType;
 
-public class AlertTypeChooseGUI extends SuperInventory {
+public class AlertTypeChooseGUI extends VaroSuperInventory {
 
 	public AlertTypeChooseGUI(Player opener) {
 		super("§eChoose Alert", opener, 18, false);

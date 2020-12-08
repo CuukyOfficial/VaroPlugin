@@ -7,13 +7,13 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 
-public class DiscordBotGUI extends SuperInventory {
+public class DiscordBotGUI extends VaroSuperInventory {
 
 	public DiscordBotGUI(Player opener) {
 		super("§2DiscordBot", opener, 18, false);

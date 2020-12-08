@@ -12,13 +12,13 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 
-public class OreLoggerListGUI extends SuperInventory {
+public class OreLoggerListGUI extends VaroSuperInventory {
 
 	public OreLoggerListGUI(Player opener) {
 		super("§6OreLogger", opener, 54, false);

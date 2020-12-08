@@ -6,14 +6,14 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.MainMenu;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.team.TeamListGUI.TeamGUIType;
 
-public class TeamChooseGUI extends SuperInventory {
+public class TeamChooseGUI extends VaroSuperInventory {
 
 	public TeamChooseGUI(Player opener) {
 		super("§3Choose Category", opener, 18, false);

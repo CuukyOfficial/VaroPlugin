@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -29,7 +29,7 @@ import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.report.Report;
 
-public class AdminMainMenu extends SuperInventory {
+public class AdminMainMenu extends VaroSuperInventory {
 
 	public AdminMainMenu(Player opener) {
 		super(Main.getProjectName() + " §8| §cAdmin", opener, 54, false);

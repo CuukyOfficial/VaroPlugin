@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
@@ -19,7 +19,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
-public class DebugGUI extends SuperInventory {
+public class DebugGUI extends VaroSuperInventory {
 
 	public DebugGUI(Player opener) {
 		super("§6DEBUG", opener, 27, false);

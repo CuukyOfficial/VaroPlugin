@@ -7,12 +7,12 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
-public class YouTubeVideoOptionsGUI extends SuperInventory {
+public class YouTubeVideoOptionsGUI extends VaroSuperInventory {
 
 	private YouTubeVideo video;
 

@@ -6,14 +6,14 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 
-public class ConfigSectionGUI extends SuperInventory {
+public class ConfigSectionGUI extends VaroSuperInventory {
 
 	public ConfigSectionGUI(Player opener) {
 		super("§aConfig-Section", opener, JavaUtils.getNextToNine(ConfigSettingSection.values().length) + 9, false);

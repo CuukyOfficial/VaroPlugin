@@ -7,14 +7,14 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 
-public class GameOptionsGUI extends SuperInventory {
+public class GameOptionsGUI extends VaroSuperInventory {
 
 	public GameOptionsGUI(Player opener) {
 		super("Game", opener, 18, false);
