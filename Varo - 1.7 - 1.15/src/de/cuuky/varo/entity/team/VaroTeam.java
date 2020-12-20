@@ -53,6 +53,8 @@ public class VaroTeam extends VaroEntity {
 
 		this.name = name;
 		this.id = generateId();
+		this.memberid = new ArrayList<Integer>();
+		
 		loadDefaults();
 
 		// Nametag.refreshAll();
@@ -125,6 +127,7 @@ public class VaroTeam extends VaroEntity {
 
 		if (id > highestNumber)
 			highestNumber = id;
+		
 		memberid.clear();
 		teams.add(this);
 	}
