@@ -44,20 +44,20 @@ public class SpawnGenerator {
 		if (withTeams) {
 			for (VaroTeam team : VaroTeam.getTeams()) {
 				for (VaroPlayer player : team.getMember()) {
-					if (!player.getStats().isAlive())
+					if (!player.getStats().isAlive() || i >= locations.size())
 						continue;
 
-					new Spawn(player, setSpawnAt(locations.get(i)));
+					new Spawn(player, this.setSpawnAt(locations.get(i)));
 					i++;
 				}
 			}
 		}
 
 		for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
-			if (Spawn.getSpawn(player) != null)
+			if (Spawn.getSpawn(player) != null || i >= locations.size())
 				continue;
 
-			new Spawn(player, setSpawnAt(locations.get(i)));
+			new Spawn(player, this.setSpawnAt(locations.get(i)));
 			i++;
 		}
 	}
