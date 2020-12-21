@@ -24,11 +24,11 @@ public class ConfigCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Config"));
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config set §7<key> <value>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config search <Keyword>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config menu");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config reload");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/config reset");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config set §7<key> <value>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config search <Keyword>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config menu");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config reload");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config reset");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return;
 		}

@@ -76,7 +76,7 @@ public enum LanguageEN implements LoadableMessage {
 	DEATH_LIFE_LOST("death.teamLifeLost", "%player% now still has %colorcode%%teamLifes% &7team lives left!"),
 	DEATH_RESPAWN_PROTECTION("death.respawnProtection", "&c%player% now has one life less and is invulnerable for %seconds% seconds!"),
 	DEATH_RESPAWN_PROTECTION_OVER("death.respawnProtectionOver", "&c%player% is now vulnerable again!"),
-	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "Your team got a team life because of a kill!"),
+	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "&7Your team got a team life because of a kill!"),
 
 	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7starts in %colorcode%%countdown% &7second(s)!"),
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7was started! &5Good luck!"),
@@ -87,7 +87,7 @@ public enum LanguageEN implements LoadableMessage {
 	JOIN_MESSAGE("joinmessage.join", "%prefix%&a%player% &7has entered the server!"),
 	JOIN_FINALE("joinmessage.finale", "%prefix%&a%player% &7has entered the server for the final."),
 	JOIN_MASS_RECORDING("joinmessage.massrecording", "%prefix%&a%player% &7has entered the server in mass recording and is vulnerable in %colorcode%%protectionTime% &7seconds!"),
-	JOIN_NO_MOVE_IN_PROTECTION("joinmessage.notMoveinProtection", "&7You cannot move while you still are in the %colorcode%protection time &7!"),
+	JOIN_NO_MOVE_IN_PROTECTION("joinmessage.notMoveinProtection", "&7You cannot move while you still are in the %colorcode%protection time&7!"),
 	JOIN_PROTECTION_OVER("joinmessage.joinProtectionOver", "%prefix%&a%player% &7is now vulnerable!"),
 	JOIN_PROTECTION_TIME("joinmessage.joinProtectionTime", "%prefix%&a%player% &7has entered the server and is vulnerable in %colorcode%%protectionTime% &7seconds!"),
 	JOIN_SPECTATOR("joinmessage.spectator", "&a%player% &7has entered the server as a spectator!"),
