@@ -17,7 +17,6 @@ public class SpawnsCommand extends VaroCommand {
 		super("spawns", "Hauptbefehl fuer die Spawns, in welchen die Spieler spawnen", "varo.spawns", "spawnholes", "spawn", "holes");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {

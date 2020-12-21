@@ -63,7 +63,6 @@ public class PlayerHit {
 	private int task;
 	private Player player, opponent;
 
-	@SuppressWarnings("deprecation")
 	public PlayerHit(Player player, Player opponent) {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 		if (!hasOld(player))

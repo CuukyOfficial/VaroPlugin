@@ -232,7 +232,7 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	public static ArrayList<Spawn> getSpawnsClone() {
-		return (ArrayList<Spawn>) spawns.clone();
+		return new ArrayList<>(spawns);
 	}
 
 	public static ArrayList<Spawn> getSpawns() {
