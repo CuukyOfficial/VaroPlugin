@@ -69,8 +69,22 @@ public class ConfigHandler {
 				if (!config.contains(entry.getPath()))
 					save = true;
 
-				config.addDefault(entry.getPath(), entry.getDefaultValue());
-				entry.setValue(config.get(entry.getPath()));
+				boolean old = false;
+				for (String oldPath : entry.getOldPaths()) {
+					if (!config.contains(oldPath))
+						continue;
+
+					System.out.println(Main.getConsolePrefix() + "Found legacy configuration entry '" + oldPath + "', got value and renamed it to '" + entry.getPath() + "'!");
+					entry.setValue(config.get(oldPath));
+					config.addDefault(entry.getPath(), entry.getValue());
+					old = true;
+					break;
+				}
+
+				if (!old) {
+					config.addDefault(entry.getPath(), entry.getDefaultValue());
+					entry.setValue(config.get(entry.getPath()));
+				}
 			}
 
 			for (String path : config.getKeys(true)) {

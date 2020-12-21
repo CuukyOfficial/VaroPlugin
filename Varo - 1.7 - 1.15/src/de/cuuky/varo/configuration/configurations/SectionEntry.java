@@ -15,5 +15,7 @@ public interface SectionEntry {
 	public void setValue(Object value);
 
 	public SectionConfiguration getSection();
+	
+	public String[] getOldPaths();
 
 }
