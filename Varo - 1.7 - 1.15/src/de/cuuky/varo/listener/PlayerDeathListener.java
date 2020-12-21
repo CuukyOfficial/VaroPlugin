@@ -77,22 +77,6 @@ public class PlayerDeathListener implements Listener {
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_DEAD, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString());
 				} else {
-					PlayerHit hit1 = PlayerHit.getHit(killerPlayer);
-					if (hit1 != null)
-						hit1.over();
-
-					if (killer.getTeam() != null) {
-						try {
-							double d = ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsDouble();
-							if (d > 0)
-								killer.getTeam().setLifes(killer.getTeam().getLifes() + d);
-						} catch (Exception e) {
-							if (ConfigSetting.ADD_TEAM_LIFE_ON_KILL.isIntActivated())
-								killer.getTeam().setLifes(killer.getTeam().getLifes() + ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsInt());
-						}
-						killer.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD);
-					}
-
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_KILLED_BY, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName());
 

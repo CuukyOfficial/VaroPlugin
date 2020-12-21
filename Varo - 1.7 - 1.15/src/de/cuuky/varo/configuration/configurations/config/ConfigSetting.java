@@ -9,7 +9,7 @@ import de.cuuky.varo.configuration.configurations.SectionEntry;
 
 public enum ConfigSetting implements SectionEntry {
 
-	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "addTeamLifesOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler toetet."),
+	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "teamLife.addOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler toetet.", "addTeamLifesOnKill"),
 	ALWAYS_TIME(ConfigSettingSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000", true),
 	ALWAYS_TIME_USE_AFTER_START(ConfigSettingSection.WORLD, "alwaysTimeUseAfterStart", false, "Ob die Zeit auch stehen bleiben soll,\nwenn das Projekt gestartet wurde."),
 	AUTOSETUP_BORDER(ConfigSettingSection.AUTOSETUP, "border", 2000, "Wie gross die Border beim\nAutoSetup gesetzt werden soll"),
@@ -250,7 +250,8 @@ public enum ConfigSetting implements SectionEntry {
 	STRIKE_POST_RESET_HOUR(ConfigSettingSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostet werden sollen"),
 	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 	TABLIST(ConfigSettingSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
-	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLifes", 1, "Wie viele Leben ein Team hat"),
+	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1, "Wie viele Leben ein Team hat", "teamLifes"),
+	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5, "Wie viele Leben ein maximal haben kann"),
 
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
 
@@ -275,16 +276,17 @@ public enum ConfigSetting implements SectionEntry {
 	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmuessen, um als Varovideo zu gelten.");
 
 	private Object defaultValue, value;
-	private String path, description;
+	private String path, description, oldPaths[];
 	private ConfigSettingSection section;
 	private boolean reducesPerformance;
 
-	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description) {
+	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description, String... oldPaths) {
 		this.section = section;
 		this.path = path;
 		this.value = value;
 		this.defaultValue = value;
 		this.description = description;
+		this.oldPaths = oldPaths;
 	}
 
 	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description, boolean reducesPerformance) {
@@ -343,6 +345,11 @@ public enum ConfigSetting implements SectionEntry {
 	@Override
 	public Object getValue() {
 		return this.value;
+	}
+
+	@Override
+	public String[] getOldPaths() {
+		return this.oldPaths;
 	}
 
 	public void setValue(Object value, boolean save) {
