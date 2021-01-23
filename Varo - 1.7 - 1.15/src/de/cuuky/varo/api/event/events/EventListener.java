@@ -13,6 +13,6 @@ public class EventListener implements VaroListener {
 
 	@VaroEventMethod
 	public void onPlayerStrike(PlayerStrikeReceiveEvent event) {
-		System.out.println(event.getStrike().getReason());
+//		System.out.println(event.getStrike().getReason());
 	}
 }
