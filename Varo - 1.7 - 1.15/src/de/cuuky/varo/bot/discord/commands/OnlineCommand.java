@@ -2,6 +2,8 @@ package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
 
+import org.bukkit.GameMode;
+
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -25,6 +27,9 @@ public class OnlineCommand extends DiscordBotCommand {
 
 		String players = "";
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			if (vp.getPlayer().getGameMode() != GameMode.SURVIVAL)
+				continue;
+
 			if (players.equals(""))
 				players = vp.getName();
 			else
