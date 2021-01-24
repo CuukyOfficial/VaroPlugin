@@ -9,7 +9,7 @@ import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
-import de.cuuky.varo.ban.VaroPlayerBan;
+import de.cuuky.varo.ban.VaroPlayerBanHandler;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.clientadapter.VaroBoardProvider;
@@ -54,6 +54,7 @@ public class DataManager {
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
 	private PluginLoader pluginLoader;
+	private VaroPlayerBanHandler banHandler;
 
 	private boolean doSave;
 
@@ -69,8 +70,7 @@ public class DataManager {
 	}
 
 	private void load() {
-		VaroPlayerBan.loadBans();
-
+		this.banHandler = new VaroPlayerBanHandler();
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
@@ -124,7 +124,6 @@ public class DataManager {
 	}
 
 	public void reloadConfig() {
-		VaroPlayerBan.loadBans();
 		VaroList.reloadLists();
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		configHandler.reload();
@@ -219,5 +218,9 @@ public class DataManager {
 
 	public JavaPlugin getOwnerInstance() {
 		return this.ownerInstance;
+	}
+	
+	public VaroPlayerBanHandler getBanHandler() {
+		return banHandler;
 	}
 }
