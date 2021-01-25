@@ -29,6 +29,7 @@ import de.cuuky.varo.command.varo.PresetCommand;
 import de.cuuky.varo.command.varo.RandomTeamCommand;
 import de.cuuky.varo.command.varo.ResetCommand;
 import de.cuuky.varo.command.varo.RestartCommand;
+import de.cuuky.varo.command.varo.ReviveCommand;
 import de.cuuky.varo.command.varo.ScoreboardCommand;
 import de.cuuky.varo.command.varo.SetupCommand;
 import de.cuuky.varo.command.varo.SortCommand;
@@ -84,6 +85,7 @@ public abstract class VaroCommand {
 		new FinaleCommand();
 		new PlaceholderCommand();
 		new BugreportCommand();
+		new ReviveCommand();
 		// new TestCommand();
 	}
 
