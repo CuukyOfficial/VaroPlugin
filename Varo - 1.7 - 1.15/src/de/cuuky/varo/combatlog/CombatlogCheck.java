@@ -36,7 +36,7 @@ public class CombatlogCheck {
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer().getName());
 		PlayerHit hit = PlayerHit.getHit(event.getPlayer());
 
-		if (hit.getOpponent() != null && hit.getOpponent().isOnline())
+		if (hit.getOpponent() != null && hit.getOpponent().isOnline() && PlayerHit.getHit(hit.getOpponent()) != null)
 			PlayerHit.getHit(hit.getOpponent()).over();
 
 		if (!vp.getStats().isAlive() || vp.isAdminIgnore())
