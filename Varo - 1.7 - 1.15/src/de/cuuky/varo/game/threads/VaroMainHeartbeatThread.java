@@ -2,6 +2,7 @@ package de.cuuky.varo.game.threads;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.entity.Player;
@@ -20,12 +21,11 @@ import de.cuuky.varo.game.state.GameState;
 
 public class VaroMainHeartbeatThread implements Runnable {
 
-	private int seconds, protectionTime, noKickDistance, playTime;
+	private int protectionTime, noKickDistance, playTime;
 	private boolean showDistanceToBorder, showTimeInActionBar;
 	private VaroGame game;
 
 	public VaroMainHeartbeatThread() {
-		this.seconds = 0;
 		this.game = Main.getVaroGame();
 
 		loadVariables();
@@ -39,25 +39,24 @@ public class VaroMainHeartbeatThread implements Runnable {
 		playTime = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		seconds++;
 		if (game.getGameState() == GameState.STARTED) {
-			if (seconds == 60) {
-				seconds = 0;
-				if (ConfigSetting.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
-					double minutesToClose = (int) (((Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime()) / 1000) / 60);
-
+			if (ConfigSetting.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
+				int secondsToClose = (int) TimeUnit.SECONDS.convert(Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime(), TimeUnit.MILLISECONDS);
+				if (secondsToClose % 60 == 0) {
+					int minutesToClose = secondsToClose / 60;
 					if (minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
 						Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON).replace("%minutes%", String.valueOf(minutesToClose));
 
-					if (!Main.getDataManager().getOutsideTimeChecker().canJoin())
+					if (!Main.getDataManager().getOutsideTimeChecker().canJoin()) {
 						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 							vp.getStats().setCountdown(0);
 							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorueber!\n§7Versuche es morgen erneut");
 						}
+					}
 				}
+
 			}
 
 			if (ConfigSetting.PLAY_TIME.isIntActivated()) {
