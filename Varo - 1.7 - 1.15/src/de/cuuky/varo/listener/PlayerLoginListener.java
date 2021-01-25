@@ -26,7 +26,6 @@ public class PlayerLoginListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
-		System.out.println("VaroPl: " + event.getResult());
 		if (event.getResult() != Result.ALLOWED || Main.getDataManager().getBanHandler().hasBan(player, event))
 			return;
 
