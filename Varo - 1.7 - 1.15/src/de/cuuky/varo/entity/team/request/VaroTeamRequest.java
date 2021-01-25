@@ -37,13 +37,13 @@ public class VaroTeamRequest {
 		if (!team.isMember(invitor))
 			team.addMember(invitor);
 
-		if (invited.getTeam() != null)
-			invited.getTeam().removeMember(invited);
-
 		if (ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
 			invitor.sendMessage(ConfigMessages.TEAMREQUEST_TEAM_FULL, invitor).replace("%invited%", invited.getName());
 			return;
 		}
+		
+		if (invited.getTeam() != null)
+			invited.getTeam().removeMember(invited);
 
 		team.addMember(invited);
 	}
@@ -76,7 +76,6 @@ public class VaroTeamRequest {
 		}));
 	}
 
-	@SuppressWarnings("deprecation")
 	private void startSched() {
 		if (!ConfigSetting.TEAMREQUEST_EXPIRETIME.isIntActivated())
 			return;
