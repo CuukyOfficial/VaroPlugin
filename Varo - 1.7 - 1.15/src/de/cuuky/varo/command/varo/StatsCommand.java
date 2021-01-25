@@ -37,25 +37,25 @@ public class StatsCommand extends VaroCommand {
 					vp.setAdminIgnore(Boolean.valueOf(value));
 					break;
 				case KILLS:
-					vp.getStats().setKills(Integer.valueOf(value));
+					vp.getStats().setKills(Integer.parseInt(value));
 					break;
 				case SESSIONS:
-					vp.getStats().setSessions(Integer.valueOf(value));
+					vp.getStats().setSessions(Integer.parseInt(value));
 					break;
 				case EPISODES_PLAYED:
-					vp.getStats().setSessionsPlayed(Integer.valueOf(value));
+					vp.getStats().setSessionsPlayed(Integer.parseInt(value));
 					break;
 				case RANK:
 					vp.setRank(new Rank(value));
 					break;
 				case COUNTDOWN:
-					vp.getStats().setCountdown(Integer.valueOf(value));
+					vp.getStats().setCountdown(Integer.parseInt(value));
 					break;
 				case PLAYER_STATE:
 					vp.getStats().setState(PlayerState.getByName(value));
 					break;
 				case WINS:
-					vp.getStats().setWins(Integer.valueOf(value));
+					vp.getStats().setWins(Integer.parseInt(value));
 					break;
 				case YOUTUBE_LINK:
 					vp.getStats().setYoutubeLink(value);
@@ -65,6 +65,7 @@ public class StatsCommand extends VaroCommand {
 				if (vp.isOnline())
 					vp.update();
 			} catch (Exception e) {
+				e.printStackTrace();
 				sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
 				return false;
 			}
