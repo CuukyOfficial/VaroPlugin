@@ -23,10 +23,11 @@ import net.dv8tion.jda.api.entities.User;
 
 public class PlayerLoginListener implements Listener {
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
-		if (Main.getDataManager().getBanHandler().hasBan(player, event))
+		System.out.println("VaroPl: " + event.getResult());
+		if (event.getResult() != Result.ALLOWED || Main.getDataManager().getBanHandler().hasBan(player, event))
 			return;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
@@ -39,9 +40,7 @@ public class PlayerLoginListener implements Listener {
 					reg.setPlayerName(event.getPlayer().getName());
 					event.disallow(Result.KICK_OTHER, reg.getKickMessage(vp));
 					return;
-				} else if (reg.isBypass()) {
-					event.allow();
-				} else if (!reg.isActive()) {
+				} else if (!reg.isActive() && !reg.isBypass()) {
 					event.disallow(Result.KICK_OTHER, reg.getKickMessage(vp));
 					return;
 				}
@@ -126,7 +125,6 @@ public class PlayerLoginListener implements Listener {
 		case MASS_RECORDING_JOIN:
 		case FINALE_JOIN:
 		default:
-			event.allow();
 			if (!vp.isRegistered())
 				vp.register();
 			break;
