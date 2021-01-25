@@ -73,9 +73,10 @@ public class PlayerDeathListener implements Listener {
 				deadPlayer.getWorld().playEffect(deadPlayer.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 
 			if (deadP.getTeam() == null || deadP.getTeam().getLifes() <= 1) {
+				String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
 				if (killerPlayer == null) {
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString()));
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_DEAD, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", deadPlayer.getLastDamageCause().getCause().toString());
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
+					Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_DEAD, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause);
 				} else {
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()));
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_KILLED_BY, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName());
