@@ -9,12 +9,8 @@ import org.bukkit.potion.PotionEffectType;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.game.world.VaroWorld;
-import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 
@@ -66,24 +62,6 @@ public class SuroStart {
 				if (i >= titles.size()) {
 					Bukkit.getScheduler().cancelTask(sched);
 					Main.getVaroGame().setGamestate(GameState.STARTED);
-					Main.getVaroGame().setFirstTime(true);
-					Main.getDataManager().getListManager().getStartItems().giveToAll();
-					if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-						Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
-						Main.getVaroGame().setProtection(new ProtectionTime());
-					}
-					Main.getVaroGame().setMinuteTimer(new BorderDecreaseMinuteTimer());
-
-					for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
-						world.fillChests();
-					
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-						@Override
-						public void run() {
-							Main.getVaroGame().setFirstTime(false);
-						}
-					}, ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
 					
 					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
@@ -92,6 +70,8 @@ public class SuroStart {
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
 					}
+					
+					Main.getVaroGame().doStartStuff();
 					return;
 				}
 

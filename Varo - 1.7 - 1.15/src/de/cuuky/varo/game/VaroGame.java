@@ -22,6 +22,7 @@ import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.threads.VaroMainHeartbeatThread;
 import de.cuuky.varo.game.threads.VaroStartThread;
+import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.game.world.VaroWorldHandler;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
@@ -205,18 +206,29 @@ public class VaroGame implements VaroSerializeable {
 	}
 
 	private void startRefreshTimer() {
-		// mainThread = new VaroMainHeartbeatThread();
-
-		// new Timer().schedule(new TimerTask() {
-		//
-		// @Override
-		// public void run() {
-		// System.out.println("REFRESH ");
-		// mainThread.run();
-		// }
-		// }, 0, 1000);
-
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), mainThread = new VaroMainHeartbeatThread(), 0, 20);
+	}
+
+	public void doStartStuff() {
+		Main.getVaroGame().setFirstTime(true);
+		Main.getDataManager().getListManager().getStartItems().giveToAll();
+		Main.getVaroGame().setMinuteTimer(new BorderDecreaseMinuteTimer());
+
+		for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
+			world.fillChests();
+
+		if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
+			Main.getVaroGame().setProtection(new ProtectionTime());
+		}
+
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				Main.getVaroGame().setFirstTime(false);
+			}
+		}, ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
 	}
 
 	public TopScoreList getTopScores() {

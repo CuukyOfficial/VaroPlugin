@@ -13,10 +13,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
-import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.game.world.VaroWorld;
-import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class VaroStartThread implements Runnable {
@@ -85,32 +82,15 @@ public class VaroStartThread implements Runnable {
 				return;
 			}
 
-			this.game.setGamestate(GameState.STARTED);
-			this.game.setFirstTime(true);
+			Main.getVaroGame().setGamestate(GameState.STARTED);
 			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
-			this.game.setMinuteTimer(new BorderDecreaseMinuteTimer());
-
-			for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
-				world.fillChests();
 
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_VARO_START);
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
 
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-				@Override
-				public void run() {
-					game.setFirstTime(false);
-				}
-			}, ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
-
-			Main.getDataManager().getListManager().getStartItems().giveToAll();
-			if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
-				game.setProtection(new ProtectionTime());
-			}
+			this.game.doStartStuff();
 
 			game.setStartThread(null);
 			return;
