@@ -17,7 +17,7 @@ import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 
 public class EntityDamageByEntityListener implements Listener {
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		if (!(event.getEntity() instanceof Player))
 			return;
