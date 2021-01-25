@@ -124,7 +124,6 @@ public class VaroGame implements VaroSerializeable {
 		startThread = null;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void removeArentAtStart() {
 		for (VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
 			if (!varoplayer.isOnline())
