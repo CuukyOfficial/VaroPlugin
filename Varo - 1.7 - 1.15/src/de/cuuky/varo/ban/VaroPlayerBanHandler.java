@@ -34,7 +34,7 @@ public class VaroPlayerBanHandler {
 			public void accept(Throwable t) {
 				t.printStackTrace();
 			}
-		}, 10, null);
+		});
 
 		this.bansHandler.registerListener(new VaroPlayerBanListener(this));
 		this.bansHandler.start();
