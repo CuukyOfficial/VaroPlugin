@@ -60,9 +60,7 @@ public class EventListGUI extends VaroSuperInventory {
 			linkItemTo(i, new ItemBuilder().displayname("§7" + line[1]).itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(s).build(), new Runnable() {
 
 				@Override
-				public void run() {
-
-				}
+				public void run() {}
 			});
 			start++;
 		}
