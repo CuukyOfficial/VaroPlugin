@@ -101,6 +101,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
 	DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
 	DISCORDBOT_COMMANDTRIGGER(ConfigSettingSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
+	DISCORDBOT_ENABLED_PRIVILIGES(ConfigSettingSection.DISCORD, "enabledPriviliges", false, "Aktiviere diesen Eintrag nur, wenn\ndu die besonderen Rechte\ndes Discordbots aktiviert hast\n-> Priviliged Gateway Intents\nAktiviere dies, sobald das Plugin meldet\ndass die Nutzer nicht auf dem Discord sind."),
 
 	// DISCORDBOT
 	DISCORDBOT_ENABLED(ConfigSettingSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot fuer Events aktiviert werden soll.\nHinweis: bitte fuer diesen Informationen unten ausfuellen"),

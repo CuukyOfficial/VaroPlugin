@@ -16,6 +16,9 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class VaroDiscordBot implements VaroBot {
 
@@ -35,6 +38,12 @@ public class VaroDiscordBot implements VaroBot {
 		builder.setAutoReconnect(true);
 		builder.setRequestTimeoutRetry(true);
 		builder.setStatus(OnlineStatus.ONLINE);
+		
+		if(ConfigSetting.DISCORDBOT_ENABLED_PRIVILIGES.getValueAsBoolean()) {
+		builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+		builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+		builder.setChunkingFilter(ChunkingFilter.ALL);
+		}
 
 		try {
 			jda = builder.build();
