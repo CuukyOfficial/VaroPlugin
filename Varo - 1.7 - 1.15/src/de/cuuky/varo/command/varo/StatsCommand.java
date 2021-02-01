@@ -143,6 +143,11 @@ public class StatsCommand extends VaroCommand {
 		}
 
 		if (args.length == 1) {
+			if (t.equalsIgnoreCase("@a")) {
+				sender.sendMessage(Main.getPrefix() + "Du kannst nur Stats von einer Person gleichzeitig auslesen!");
+				return;
+			}
+
 			sender.sendMessage(Main.getPrefix() + "Stats von " + Main.getColorCode() + target.getName() + "§7:");
 			sender.sendMessage(Main.getPrefix());
 			for (String stat : target.getStats().getStatsListed())
