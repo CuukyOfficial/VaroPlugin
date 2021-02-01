@@ -98,7 +98,9 @@ public class VaroSaveable implements VaroSerializeable {
 			@Override
 			public void run() {
 				player = VaroPlayer.getPlayer(playerId);
-				block = blockLocation.getBlock();
+				if ((block = blockLocation.getBlock()) == null) {
+					remove();
+				}
 			}
 		}, 1);
 	}
