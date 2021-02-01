@@ -141,7 +141,8 @@ public class Stats implements VaroSerializeable {
 		if (owner.isOnline()) {
 			owner.getPlayer().getInventory().clear();
 			for (ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
-				stack.setType(Material.AIR);
+				if (stack != null)
+					stack.setType(Material.AIR);
 			owner.getPlayer().getInventory().setArmorContents(new ItemStack[] {});
 		} else
 			setWillClear(true);
