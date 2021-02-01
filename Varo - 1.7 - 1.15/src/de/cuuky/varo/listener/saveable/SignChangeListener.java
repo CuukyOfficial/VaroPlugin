@@ -37,7 +37,13 @@ public class SignChangeListener implements Listener {
 
 		Object sign = BlockUtils.getBlockData(event.getBlock(), event.getBlock().getState());
 		BlockFace attachedFace = BlockUtils.getAttachedSignFace(sign);
-		Block attached = event.getBlock().getRelative(attachedFace);
+		Block attached = null;
+		try {
+			attached = event.getBlock().getRelative(attachedFace);
+		} catch (NullPointerException e) {
+			event.getPlayer().sendMessage(Main.getPrefix() + "Oops... That didn't work. Please report this to an admin!");
+			return;
+		}
 
 		if (attached.getState() instanceof Chest) {
 			Chest chest = (Chest) attached.getState();
