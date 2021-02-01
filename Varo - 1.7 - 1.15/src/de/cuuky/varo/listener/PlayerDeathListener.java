@@ -120,6 +120,11 @@ public class PlayerDeathListener implements Listener {
 						}
 					});
 				}
+				
+				if(killerPlayer != null) {
+					killer.onEvent(BukkitEventType.KILL);
+					checkHealth(killerPlayer);
+				}
 
 				deadP.getTeam().setLifes(deadP.getTeam().getLifes() - 1);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_LIFE_LOST, deadP);
