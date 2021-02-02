@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -14,18 +15,28 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class VaroSaveable implements VaroSerializeable {
 
-	public enum SaveableType implements VaroSerializeable {
+	public static enum SaveableType implements VaroSerializeable {
 		@VaroSerializeField(enumValue = "CHEST")
-		CHEST,
+		CHEST(Materials.CHEST),
 
 		@VaroSerializeField(enumValue = "FURNACE")
-		FURNANCE;
+		FURNANCE(Materials.FURNACE);
+
+		private Materials material;
+
+		private SaveableType(Materials material) {
+			this.material = material;
+		}
 
 		@Override
 		public void onDeserializeEnd() {}
 
 		@Override
 		public void onSerializeStart() {}
+
+		public Materials getMaterial() {
+			return material;
+		}
 	}
 
 	private static ArrayList<VaroSaveable> saveables;
@@ -71,6 +82,10 @@ public class VaroSaveable implements VaroSerializeable {
 		return id;
 	}
 
+	private boolean exists() {
+		return this.blockLocation.getBlock().getType() == this.type.getMaterial().parseMaterial();
+	}
+
 	public boolean canModify(VaroPlayer player) {
 		if (this.player.getTeam() == null && !player.equals(this.player))
 			return false;
@@ -98,7 +113,9 @@ public class VaroSaveable implements VaroSerializeable {
 			@Override
 			public void run() {
 				player = VaroPlayer.getPlayer(playerId);
-				if ((block = blockLocation.getBlock()) == null) {
+				block = blockLocation.getBlock();
+
+				if (!VaroSaveable.this.exists()) {
 					remove();
 				}
 			}

@@ -11,6 +11,7 @@ import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.serialize.VaroSerializeObject;
 
@@ -26,6 +27,7 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 		registerClass(VaroInventory.class);
 		registerClass(OfflineVillager.class);
 		registerEnum(PlayerState.class);
+		registerEnum(SaveableType.class);
 	}
 
 	public VaroPlayerHandler() {
