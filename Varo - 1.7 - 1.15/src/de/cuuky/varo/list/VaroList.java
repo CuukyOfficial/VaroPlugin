@@ -62,13 +62,17 @@ public abstract class VaroList {
 	public static ArrayList<VaroList> getLists() {
 		return lists;
 	}
-
-	public static void reloadLists() {
-		saveLists();
+	
+	public static void loadLists() {
 		reloadConfig();
 
 		for (VaroList list : lists)
 			list.loadList(config.getList(list.getLocation()));
+	}
+
+	public static void reloadLists() {
+		saveLists();
+		loadLists();
 	}
 
 	public static void saveLists() {

@@ -9,6 +9,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.preset.PresetLoader;
 
 public class PresetCommand extends VaroCommand {
@@ -42,6 +43,7 @@ public class PresetCommand extends VaroCommand {
 
 			loader.loadSettings();
 			Main.getDataManager().reloadConfig();
+			VaroList.loadLists();
 			Main.getDataManager().reloadPlayerClients();
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LOADED.getValue(vp).replace("%preset%", args[1]));
 		} else if (args[0].equalsIgnoreCase("save")) {
