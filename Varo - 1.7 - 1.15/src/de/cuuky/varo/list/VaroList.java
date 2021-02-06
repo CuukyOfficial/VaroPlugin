@@ -70,11 +70,6 @@ public abstract class VaroList {
 			list.loadList(config.getList(list.getLocation()));
 	}
 
-	public static void reloadLists() {
-		saveLists();
-		loadLists();
-	}
-
 	public static void saveLists() {
 		for (VaroList list : lists) {
 			config.set(list.getLocation(), null);
