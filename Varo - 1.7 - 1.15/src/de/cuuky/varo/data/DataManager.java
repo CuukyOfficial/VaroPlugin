@@ -70,7 +70,6 @@ public class DataManager {
 	}
 
 	private void load() {
-		this.banHandler = new VaroPlayerBanHandler();
 		new DefaultPresetLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		this.configHandler = new ConfigHandler();
@@ -102,6 +101,7 @@ public class DataManager {
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 
 		this.pluginLoader = new PluginLoader();
+		this.banHandler = new VaroPlayerBanHandler();
 	}
 
 	private void startAutoSave() {
@@ -124,7 +124,7 @@ public class DataManager {
 	}
 
 	public void reloadConfig() {
-		VaroList.reloadLists();
+		VaroList.loadLists();
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
