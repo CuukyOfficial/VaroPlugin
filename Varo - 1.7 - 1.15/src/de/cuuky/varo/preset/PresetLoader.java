@@ -7,45 +7,40 @@ import com.google.common.io.Files;
 
 public class PresetLoader {
 
-	private File file;
+	private final File file;
+	private final File configDir;
 
 	public PresetLoader(String name) {
 		this.file = new File("plugins/Varo/presets/" + name);
+		this.configDir = new File("plugins/Varo/config/");
 	}
 
-	public void copyCurrentSettingsTo() {
-		if (!file.exists())
-			file.mkdirs();
+	private void copy(File from, File to) {
+		if (!to.exists())
+			to.mkdirs();
 
-		for (File config : new File("plugins/Varo/config/").listFiles()) {
+		for (File config : from.listFiles()) {
 			if (!config.isFile())
 				continue;
 
 			try {
-				Files.copy(config, new File(file.getPath() + "/" + config.getName()));
+				File toFile = new File(to.getPath() + File.separator + config.getName());
+				Files.copy(config, toFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void copyCurrentSettingsTo() {
+		this.copy(this.configDir, file);
+	}
+
+	public void loadSettings() {
+		this.copy(file, this.configDir);
 	}
 
 	public File getFile() {
 		return file;
-	}
-
-	public void loadSettings() {
-		if (!file.exists())
-			file.mkdirs();
-
-		for (File config : file.listFiles()) {
-			if (!config.isFile())
-				continue;
-
-			try {
-				Files.copy(config, new File("plugins/Varo/config/" + config.getName()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }
