@@ -93,6 +93,7 @@ public class ItemCommand extends VaroCommand {
 					list.addItem(item);
 				}
 				sender.sendMessage(Main.getPrefix() + "Item erfolgreich " + String.valueOf(Anzahl) + " mal zu " + list.getLocation() + " hinzugefuegt!");
+				list.saveList();
 			} else {
 				if (list.hasItem(item)) {
 					sender.sendMessage(Main.getPrefix() + "Auf dieser Liste kann ein item nicht mehrmals stehen.\n" + Main.getPrefix() + "Das item steht bereits auf dieser Liste.");
