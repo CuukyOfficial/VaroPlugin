@@ -1,12 +1,14 @@
 package de.cuuky.varo;
 
 import java.io.File;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.AdapterCuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.utils.UUIDUtils;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.bot.BotLauncher;
@@ -44,7 +46,6 @@ public class Main extends JavaPlugin {
 	private static VaroGame varoGame;
 
 	private boolean failed;
-	
 
 	@Override
 	public void onLoad() {
@@ -155,6 +156,10 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
+	}
+
+	public UUID getUUID(String name) throws Exception {
+		return this.getServer().getOnlineMode() ? UUIDUtils.getUUID(name) : UUIDUtils.getCrackedUUID(name);
 	}
 
 	public void setFailed(boolean failed) {

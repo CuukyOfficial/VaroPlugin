@@ -148,7 +148,7 @@ public class PlayerCommand extends VaroCommand {
 
 				String uuid;
 				try {
-					uuid = UUIDUtils.getUUID(arg).toString();
+					uuid = Main.getInstance().getUUID(arg).toString();
 				} catch (Exception e) {
 					sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
 					String newName;
