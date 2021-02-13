@@ -11,9 +11,9 @@ public class PlayerCommandPreprocessListener implements Listener {
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
 		String lowerMessage = event.getMessage().toLowerCase();
-
-		if (!lowerMessage.startsWith("/tell") && !lowerMessage.startsWith("/bukkit:tell"))
+		if (!lowerMessage.startsWith("/tell") && !lowerMessage.startsWith("/bukkit:tell") && !lowerMessage.startsWith("/me") && !lowerMessage.startsWith("/bukkit:me"))
 			return;
+
 		if (Main.getVaroGame().isRunning())
 			return;
 
