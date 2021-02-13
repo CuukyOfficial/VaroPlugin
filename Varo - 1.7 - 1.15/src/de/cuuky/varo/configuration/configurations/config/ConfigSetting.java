@@ -234,6 +234,7 @@ public enum ConfigSetting implements SectionEntry {
 	STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontimeBcInterval", 60, "In welchen Sekundenabstaenden die restliche Schutzzeit\ngebroacastet werden soll"),
 	STOP_SERVER_ON_WIN(ConfigSettingSection.DEATH, "stopServerOnWin", -1, "Zeit in Sekunden, nachdem der Server nach\nWin eines Teams heruntergefahren wird."),
 	STRIKE_BAN_AFTER_STRIKE_HOURS(ConfigSettingSection.STRIKE, "banOnPostHours", -1, "Fuer wie viele Stunden die Spieler\nnach einem Strike gestriket werden"),
+	STRIKE_CLEAR_ARMOR(ConfigSettingSection.STRIKE, "clearArmor", true, "Ob die Rüstung beim 2ten Strike\nauch gecleart werden soll"),
 	STRIKE_BAN_AT_POST(ConfigSettingSection.STRIKE, "banAtPost", true, "Ob der Spieler beim Posten des Strikes\num die oben genannte Zahl gebannt werden soll.\nSonst wird dieser beim Erhalten gebannt"),
 	STRIKE_ON_BLOODLUST(ConfigSettingSection.ACTIVITY, "strikeOnBloodlust", false, "Ob der Spieler nach den oben\ngenannten Tagen ohne Gegnerkontakt\ngestriket werden soll."),
 	STRIKE_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "strikeOnCombatlog", true, "Ob ein Spieler, wenn er sich in\nder oben genannten Zeit ausloggt,\ngestriket werden soll."),
