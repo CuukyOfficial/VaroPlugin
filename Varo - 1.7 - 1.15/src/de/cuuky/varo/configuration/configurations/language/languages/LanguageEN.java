@@ -94,7 +94,7 @@ public enum LanguageEN implements LoadableMessage {
 	JOIN_WITH_REMAINING_TIME("joinmessage.joinWithRemainingTime", "%prefix%&a%player% &7had left the server too early and now has %colorcode%%seconds% &7seconds left! Remaining &cDisconnects&7: &c%remainingDisconnects%"),
 
 	DEATH_KICK_DEAD("kick.kickedKilled", "&You died! %nextLine% &7With this you are removed from %projectname%"),
-	DEATH_KICK_KILLED("kick.killedKick", "&7You were killed by &c%killer% &7! %nextLine% &7You have been removed from %projectname%&7!"),
+	DEATH_KICK_KILLED("kick.killedKick", "&7You were killed by &c%killer%&7! %nextLine% &7You have been removed from %projectname%&7!"),
 	JOIN_KICK_NOT_USER_OF_PROJECT("kick.notUserOfTheProject", "&7You are not a participant of this %projectname%&7!"),
 	JOIN_KICK_SERVER_FULL("kick.serverFull", "&cThe server is full!%nextLine%&7Talk to the owner if this is a mistake!"),
 	JOIN_KICK_STRIKE_BAN("kick.strikeBan", "&cYou were banned for %hours% hours because of your last strike!\nTry again later."),
