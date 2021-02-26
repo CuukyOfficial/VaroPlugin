@@ -8,6 +8,8 @@ import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -71,8 +73,8 @@ public class VaroMainHeartbeatThread implements Runnable {
 					if (showTimeInActionBar || vp.getStats().isShowActionbarTime())
 						actionbar.add(Main.getColorCode() + vp.getStats().getCountdownMin(countdown) + "§8:" + Main.getColorCode() + vp.getStats().getCountdownSec(countdown));
 					if (showDistanceToBorder) {
-						int distance = (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().getBorderDistanceTo(p);
-						if (!ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt())
+						int distance = VersionUtils.getVersion() == BukkitVersion.ONE_7 ? -1 : (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().getBorderDistanceTo(p);
+						if (distance != -1 && (!ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt()))
 							actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 					}
 
