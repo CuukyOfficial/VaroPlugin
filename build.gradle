@@ -1,0 +1,48 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "5.1.0"
+}
+
+group = 'de.cuuky'
+version = '4.5.4-BETA'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        name = 'sk89q-snapshots'
+        url = 'http://maven.sk89q.com/artifactory/repo'
+    }
+}
+
+dependencies {
+    compileOnly('org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT')
+    compileOnly('net.dv8tion:JDA:4.2.0_229')
+    compileOnly('com.googlecode.json-simple:json-simple:1.1.1')
+    compileOnly('com.github.pengrad:java-telegram-bot-api:5.0.1')
+    compileOnly('com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT')
+    compileOnly files('offlinelibs/LabyModAPI.jar')
+    implementation files('offlinelibs/CuukyFrameWork.jar')
+    implementation files('offlinelibs/VaroBanAPI.jar')
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
