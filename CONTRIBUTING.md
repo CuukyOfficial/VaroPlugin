@@ -8,7 +8,6 @@ Richtilinien zum Programmieren:
 - Keine Fehler im Code nach Wechseln der Bukkit oder Spigot API (Reflections)
 - Variablen nutzen, keine Config-Zugriffe während des Spielens
 - Leerzeilen möglichst vermeiden -> Zeilen sinngemäß anordnen
-- Keine Initialisierung der Variablen (außer ggf. final) in der Deklarierung
 - Fields mit Annotations vor allen anderen mit Leerzeile
 - Getter-Setter unten und nacheinander - Methoden sinngemäß und nach reihenfolge sortieren
 - Sortierung nach Sichtbarkeit
@@ -48,7 +47,6 @@ Guidelines for programming:
 - No errors in code after changing the Bukkit or Spigot API (Reflections)
 - use variables, no config accesses during the game
 - Avoid blank lines if possible -> arrange lines accordingly
-- No initialization of the variables (except final) in the declaration
 - Fields with annotations before all others with blank line
 - Getter-setters below and one after the other - Sort the methods in the same order
 - Sorting by visibility
