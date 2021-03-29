@@ -107,15 +107,14 @@ public class PlayerListGUI extends VaroSuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().playername(players.getName()).lore((showStats ? players.getStats().getStatsListed() : new String[] {})).buildSkull(), new Runnable() {
-
-				@Override
-				public void run() {
+			int finalI = i;
+			Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+				linkItemTo(finalI, new ItemBuilder().playername(players.getName()).lore((showStats ? players.getStats().getStatsListed() : new String[] {})).buildSkull(), () -> {
 					if (!opener.hasPermission("varo.player"))
 						return;
 
 					new PlayerGUI(opener, players, type);
-				}
+				});
 			});
 			start++;
 		}
