@@ -1,0 +1,69 @@
+apply plugin: 'java-library'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+compileJava.options.encoding = 'UTF-8'
+
+sourceSets {
+	main {
+		java {
+			srcDirs 'src'
+		}
+
+		resources {
+			srcDirs 'resources'
+		}
+	}
+}
+
+repositories {
+	maven {
+		url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+	}
+
+	maven {
+		url 'https://maven.sk89q.com/repo/'
+	}
+
+	maven {
+		url 'https://jitpack.io'
+	}
+
+	jcenter()
+}
+
+configurations {
+	internalLibs
+}
+	
+dependencies {
+	compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+	compileOnly 'com.googlecode.json-simple:json-simple:1.1.1'
+	compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
+	compileOnly 'com.github.LabyMod:labymod-server-api:master-SNAPSHOT'
+    
+	compileOnly 'net.dv8tion:JDA:4.2.0_229'
+	compileOnly 'com.github.pengrad:java-telegram-bot-api:5.0.1'
+
+	internalLibs 'com.github.Almighty-Satan:CFW:master-SNAPSHOT'
+	internalLibs 'com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT'
+
+	compile configurations.internalLibs
+}
+
+jar {
+	manifest {
+		attributes(
+			'Manifest-Version': '1.0',
+			'Class-Path': '.',
+			'Main-Class': 'de.cuuky.varo.MainLauncher',
+		)
+	}
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from {
+		configurations.internalLibs.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+}

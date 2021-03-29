@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 import de.varoplugin.banapi.Ban;
 import de.varoplugin.banapi.BanApi;
 import de.varoplugin.banapi.BanDuration;
+import de.varoplugin.banapi.BanUser;
 import de.varoplugin.banapi.LatestBansHandler;
 import de.varoplugin.banapi.LatestBansHandler.Mode;
-import de.varoplugin.banapi.User;
 import de.varoplugin.banapi.request.RequestFailedException;
 
 public class VaroPlayerBanHandler {
@@ -53,7 +53,7 @@ public class VaroPlayerBanHandler {
 		if (this.bansHandler.getCurrentData() == null)
 			return false;
 
-		User user = this.bansHandler.getCurrentData().getUser(player.getUniqueId());
+		BanUser user = this.bansHandler.getCurrentData().getUser(player.getUniqueId());
 		if (user == null || !user.hasActiveMinecraftBan())
 			return false;
 
