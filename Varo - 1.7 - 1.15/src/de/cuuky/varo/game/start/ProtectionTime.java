@@ -25,6 +25,11 @@ public class ProtectionTime {
 
 			@Override
 			public void run() {
+				if (!Main.getVaroGame().isRunning()) {
+					Bukkit.getScheduler().cancelTask(scheduler);
+					return;
+				}
+
 				if (this.protectionTimer == 0) {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
 					Main.getVaroGame().setProtection(null);
