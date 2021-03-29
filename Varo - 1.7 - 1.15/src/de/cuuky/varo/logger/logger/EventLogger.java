@@ -2,6 +2,8 @@ package de.cuuky.varo.logger.logger;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.Bukkit;
 
@@ -29,7 +31,7 @@ public class EventLogger extends VaroLogger {
 		private ConfigSetting idEntry;
 		private String name;
 
-		private LogType(String name, Color color, ConfigSetting idEntry) {
+		LogType(String name, Color color, ConfigSetting idEntry) {
 			this.color = color;
 			this.name = name;
 			this.idEntry = idEntry;
@@ -59,30 +61,26 @@ public class EventLogger extends VaroLogger {
 		}
 	}
 
-	private ArrayList<Object[]> queue;
+	private List<Object[]> queue;
 
 	public EventLogger(String name) {
 		super(name, true);
 
-		this.queue = new ArrayList<>();
+		this.queue = new CopyOnWriteArrayList<>();
 		startQueue();
 	}
 
 	private void startQueue() {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+			if (Main.getBotLauncher() == null)
+				return;
 
-			@Override
-			public void run() {
-				if (Main.getBotLauncher() == null)
-					return;
-
-				for (Object[] msg : new ArrayList<>(queue)) {
-					sendToDiscord((LogType) msg[0], (String) msg[1]);
-					sendToTelegram((LogType) msg[0], (String) msg[1]);
-					queue.remove(msg);
-				}
+			for (Object[] msg : queue) {
+				sendToDiscord((LogType) msg[0], (String) msg[1]);
+				sendToTelegram((LogType) msg[0], (String) msg[1]);
+				queue.remove(msg);
 			}
-		}, 20, 20);
+		}, 20L, 20L);
 	}
 
 	private boolean sendToDiscord(LogType type, String msg) {
@@ -120,19 +118,10 @@ public class EventLogger extends VaroLogger {
 		message = JavaUtils.replaceAllColors(message);
 
 		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noBot%", "");
-
-		pw.println(log);
-		logs.add(log);
-
-		pw.flush();
+		this.queLog(log);
 
 		if (message.contains("%noBot%"))
 			return;
-
-		if (Main.getBotLauncher() == null) {
-			queue.add(new Object[] { type, message });
-			return;
-		}
 
 		sendToDiscord(type, message);
 		sendToTelegram(type, message);

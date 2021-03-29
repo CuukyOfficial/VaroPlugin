@@ -17,10 +17,6 @@ public class BlockLogger extends VaroLogger {
 			return;
 
 		String log = "[" + getCurrentDate() + "] " + player.getName() + " mined " + block.getType().toString() + " at x:" + block.getLocation().getBlockX() + " y:" + block.getLocation().getBlockY() + " z:" + block.getLocation().getBlockZ() + " in the world '" + block.getWorld().getName() + "'!";
-
-		pw.println(log);
-		logs.add(log);
-
-		pw.flush();
+		this.queLog(log);
 	}
 }

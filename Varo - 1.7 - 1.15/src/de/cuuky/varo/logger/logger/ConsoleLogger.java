@@ -63,10 +63,6 @@ public class ConsoleLogger extends VaroLogger {
 
 	public void println(String line) {
 		line = "[" + getCurrentDate() + "] " + JavaUtils.replaceAllColors(line);
-
-		pw.println(line);
-		logs.add(line);
-
-		pw.flush();
+		this.queLog(line);
 	}
 }
