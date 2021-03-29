@@ -12,6 +12,8 @@ import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 
+import java.util.stream.Collectors;
+
 public class MessagePlaceholderLoader {
 
 	public MessagePlaceholderLoader() {
@@ -264,7 +266,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return String.valueOf(player.getTeam() != null ? player.getTeam().getKills() : 0);
+				return String.valueOf(player.getTeam() != null ? player.getTeam().getKills() : "-");
 			}
 		};
 
@@ -272,7 +274,23 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return String.valueOf((player.getTeam() != null ? player.getTeam().getLifes() : 0));
+				return String.valueOf((player.getTeam() != null ? player.getTeam().getLifes() : "-"));
+			}
+		};
+
+		new VaroPlayerMessagePlaceholder("teamAlive", 1, "Ersetzt durch den Wahrheitswert, ob das Team lebt") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return String.valueOf((player.getTeam() != null ? !player.getTeam().isDead() : "-"));
+			}
+		};
+
+		new VaroPlayerMessagePlaceholder("teamMates", 1, "Ersetzt durch eine Liste der Mitspieler") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return player.getTeam() == null ? "-" : player.getTeam().getMember().stream().map(VaroPlayer::getName).collect(Collectors.joining(", "));
 			}
 		};
 
