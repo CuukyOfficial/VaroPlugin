@@ -10,7 +10,7 @@ import de.varoplugin.banapi.AccountType;
 import de.varoplugin.banapi.Ban;
 import de.varoplugin.banapi.BanChangeListener;
 import de.varoplugin.banapi.BanDataListener;
-import de.varoplugin.banapi.User;
+import de.varoplugin.banapi.BanUser;
 import de.varoplugin.banapi.UsersDataWrapper;
 
 public class VaroPlayerBanListener implements BanChangeListener, BanDataListener {
@@ -34,7 +34,7 @@ public class VaroPlayerBanListener implements BanChangeListener, BanDataListener
 	@Override
 	public void onBanDataUpdated(UsersDataWrapper data) {
 		for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
-			User user = data.getUser(player.getUniqueId());
+			BanUser user = data.getUser(player.getUniqueId());
 			if (user == null || !user.hasActiveMinecraftBan())
 				continue;
 
@@ -43,7 +43,7 @@ public class VaroPlayerBanListener implements BanChangeListener, BanDataListener
 	}
 
 	@Override
-	public void onBanUpdate(User user, Ban ban, AccountType type) {
+	public void onBanUpdate(BanUser user, Ban ban, AccountType type) {
 		if (!user.hasActiveMinecraftBan())
 			return;
 
