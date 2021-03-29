@@ -24,9 +24,9 @@ public class SmartLagDetector implements Runnable {
 
 	private void checkPerformance() {
 		lastPost++;
-		if (lastPost == 30)
+		if (lastPost == 30) {
 			lastPost = 0;
-		else
+		} else
 			return;
 
 		double size = 0, sum = 0;
@@ -54,6 +54,8 @@ public class SmartLagDetector implements Runnable {
 			ramCleared = true;
 		} else
 			ramCleared = false;
+
+		lastTps.clear();
 	}
 
 	private void warnAdmins(String message) {
