@@ -316,6 +316,14 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
+		new VaroPlayerMessagePlaceholder("teamID", 1, "Ersetzt durch die TeamID des Spielers") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return player.getTeam() != null ? String.valueOf(player.getTeam().getId()) : "-";
+			}
+		};
+
 		new VaroPlayerMessagePlaceholder("rank", 1, "Ersetzt durch den Rangnamen des Spielers") {
 
 			@Override
