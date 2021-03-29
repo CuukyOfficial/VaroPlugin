@@ -1,7 +1,5 @@
 package de.cuuky.varo.clientadapter;
 
-import java.util.ArrayList;
-
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -14,123 +12,129 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
 
+import java.util.ArrayList;
+
 public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 
-	private static ScoreboardBoardList scoreboard;
-	private static TablistBoardList tablist;
+    private static ScoreboardBoardList scoreboard;
+    private static TablistBoardList tablist;
 
-	static {
-		scoreboard = new ScoreboardBoardList();
-		tablist = new TablistBoardList();
-	}
+    static {
+        scoreboard = new ScoreboardBoardList();
+        tablist = new TablistBoardList();
+    }
 
-	public VaroBoardProvider(VaroPlayer player) {
-		super(player);
-	}
+    public VaroBoardProvider(VaroPlayer player) {
+        super(player);
+    }
 
-	private ArrayList<String> replaceList(ArrayList<String> list) {
-		ArrayList<String> newList = new ArrayList<>();
-		for (int i = 0; i < list.size(); i++) {
-			String line = list.get(i);
-			if (line.contains("%min%") || line.contains("%sec%"))
-				if (ConfigSetting.PLAY_TIME.getValueAsInt() < 1)
-					line = "§cUnlimited";
+    private ArrayList<String> replaceList(ArrayList<String> list) {
+        ArrayList<String> newList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String line = list.get(i);
+            if (line.contains("%min%") || line.contains("%sec%"))
+                if (ConfigSetting.PLAY_TIME.getValueAsInt() < 1) {
+                    int index = Math.min(line.indexOf("%min%"), line.indexOf("%sec%"));
 
-			line = Main.getLanguageManager().replaceMessage(line, player);
+                    String newLine = line.substring(0, index) + "§cUnlimited" + line.substring(index);
+                    line = newLine.replace("%min%", "").replace("%sec%", "");
+                }
 
-			newList.add(line);
-		}
+            line = Main.getLanguageManager().replaceMessage(line, player);
 
-		return newList;
-	}
+            newList.add(line);
+        }
 
-	@Override
-	public ArrayList<String> getTablistHeader() {
-		return replaceList(tablist.getHeaderLines());
-	}
+        return newList;
+    }
 
-	@Override
-	public ArrayList<String> getTablistFooter() {
-		return replaceList(tablist.getFooterLines());
-	}
+    @Override
+    public ArrayList<String> getTablistHeader() {
+        return replaceList(tablist.getHeaderLines());
+    }
 
-	@Override
-	public String getTablistName() {
-		String listname = "";
-		if (player.getTeam() != null) {
-			if (player.getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, player);
-			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, player);
-			}
-		} else {
-			if (player.getRank() == null) {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, player);
-			} else {
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
-			}
-		}
+    @Override
+    public ArrayList<String> getTablistFooter() {
+        return replaceList(tablist.getFooterLines());
+    }
 
-		int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
-		if (maxlength > 0)
-			if (listname.length() > maxlength)
-				listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
+    @Override
+    public String getTablistName() {
+        String listname = "";
+        if (player.getTeam() != null) {
+            if (player.getRank() == null) {
+                listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, player);
+            } else {
+                listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, player);
+            }
+        } else {
+            if (player.getRank() == null) {
+                listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, player);
+            } else {
+                listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
+            }
+        }
 
-		return listname;
-	}
+        int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
+        if (maxlength > 0)
+            if (listname.length() > maxlength)
+                listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
 
-	@Override
-	public String getScoreboardTitle() {
-		return Main.getLanguageManager().replaceMessage(scoreboard.getHeader(), player);
-	}
+        return listname;
+    }
 
-	@Override
-	public ArrayList<String> getScoreboardEntries() {
-		return replaceList(scoreboard.getScoreboardLines());
-	}
+    @Override
+    public String getScoreboardTitle() {
+        return Main.getLanguageManager().replaceMessage(scoreboard.getHeader(), player);
+    }
 
-	@Override
-	public String getNametagName() {
-		String name = player.getName();
+    @Override
+    public ArrayList<String> getScoreboardEntries() {
+        return replaceList(scoreboard.getScoreboardLines());
+    }
 
-		int teamsize = VaroTeam.getHighestNumber() + 1;
-		int ranks = Rank.getHighestLocation() + 1;
+    @Override
+    public String getNametagName() {
+        String name = player.getName();
 
-		if (player.getTeam() != null)
-			name = player.getTeam().getId() + name;
-		else
-			name = teamsize + name;
+        int teamsize = VaroTeam.getHighestNumber() + 1;
+        int ranks = Rank.getHighestLocation() + 1;
 
-		if (player.getRank() != null)
-			name = player.getRank().getTablistLocation() + name;
-		else
-			name = ranks + name;
+        if (player.getTeam() != null)
+            name = player.getTeam().getId() + name;
+        else
+            name = teamsize + name;
 
-		return name;
-	}
+        if (player.getRank() != null)
+            name = player.getRank().getTablistLocation() + name;
+        else
+            name = ranks + name;
 
-	@Override
-	public String getNametagPrefix() {
-		String prefix = (player.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(null, player) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(null, player));
+        return name;
+    }
 
-		if (prefix.length() > 16)
-			prefix = ConfigMessages.NAMETAG_NORMAL.getValue(null, player);
+    @Override
+    public String getNametagPrefix() {
+        String prefix = (player.getTeam() == null ? ConfigMessages.NAMETAG_NORMAL.getValue(null, player) : ConfigMessages.NAMETAG_TEAM_PREFIX.getValue(null, player));
 
-		return prefix;
-	}
+        if (prefix.length() > 16)
+            prefix = ConfigMessages.NAMETAG_NORMAL.getValue(null, player);
 
-	@Override
-	public String getNametagSuffix() {
-		return String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(null, player));
-	}
+        return prefix;
+    }
 
-	@Override
-	public boolean isNametagVisible() {
-		return ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean();
-	}
+    @Override
+    public String getNametagSuffix() {
+        return String.valueOf(ConfigMessages.NAMETAG_SUFFIX.getValue(null, player));
+    }
 
-	public static void update() {
-		scoreboard.update();
-		tablist.update();
-	}
+    @Override
+    public boolean isNametagVisible() {
+        return ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean();
+    }
+
+    public static void update() {
+        scoreboard.update();
+        tablist.update();
+    }
 }
