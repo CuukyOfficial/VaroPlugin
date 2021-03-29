@@ -11,6 +11,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class SpawnsCommand extends VaroCommand {
 
     public SpawnsCommand() {
@@ -41,17 +43,22 @@ public class SpawnsCommand extends VaroCommand {
             }
 
             if (args.length < 3) {
-                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius> <amount>/player/teams [Half-Step-Materiall] [Side-Block-Material]");
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
                 return;
             }
 
             String material = null;
-            if (args.length == 4)
-                material = String.valueOf(args[3]);
+            if (args.length >= 4)
+                material = args[3];
 
             String sideBlockMaterial = null;
-            if (args.length == 5)
-                sideBlockMaterial = String.valueOf(args[4]);
+            if (args.length >= 5)
+                sideBlockMaterial = args[4];
+
+            if (material != null && Materials.fromString(material) == null || sideBlockMaterial != null && Materials.fromString(sideBlockMaterial) == null ) {
+                sender.sendMessage(Main.getPrefix() + "ID's der Blöcke nicht gefunden!");
+                return;
+            }
 
             try {
                 Integer.valueOf(args[1]);
@@ -68,11 +75,6 @@ public class SpawnsCommand extends VaroCommand {
                     e1.printStackTrace();
                     return;
                 }
-            }
-
-            if (Materials.fromString(material) == null || Materials.fromString(sideBlockMaterial) == null) {
-                sender.sendMessage(Main.getPrefix() + "ID des Blocks konnte nicht gefunden werden!");
-                return;
             }
 
             try {
