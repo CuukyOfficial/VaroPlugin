@@ -61,7 +61,7 @@ public class SpawnsCommand extends VaroCommand {
 						if (args[2].equalsIgnoreCase("player") || args[2].equalsIgnoreCase("team"))
 							args[1] = String.valueOf((int) (VaroPlayer.getAlivePlayer().size() * 0.85));
 						else
-							args[1] = String.valueOf((int) (Integer.valueOf(args[2]) * 0.85));
+							args[1] = String.valueOf((int) (Integer.parseInt(args[2]) * 0.85));
 					}
 				} catch (Exception e1) {
 					sender.sendMessage(Main.getPrefix() + "Beim erstellen der Spawns ist ein Fehler aufgetreten! Richtige Werte angegeben?");
@@ -72,9 +72,9 @@ public class SpawnsCommand extends VaroCommand {
 
 			try {
 				if (args[2].equalsIgnoreCase("player") || args[2].equalsIgnoreCase("team"))
-					new SpawnGenerator(((Player) sender).getLocation(), Integer.valueOf(args[1]), args[2].equalsIgnoreCase("team"), material, sideBlockMaterial);
+					new SpawnGenerator(((Player) sender).getLocation(), Integer.parseInt(args[1]), args[2].equalsIgnoreCase("team"), material, sideBlockMaterial);
 				else
-					new SpawnGenerator(((Player) sender).getLocation(), Integer.valueOf(args[1]), Integer.valueOf(args[2]), material, sideBlockMaterial);
+					new SpawnGenerator(((Player) sender).getLocation(), Integer.parseInt(args[1]), Integer.parseInt(args[2]), material, sideBlockMaterial);
 			} catch (Exception e) {
 				sender.sendMessage(Main.getPrefix() + "Beim erstellen der Spawns ist ein Fehler aufgetreten! Richtige Werte angegeben?");
 				e.printStackTrace();
@@ -82,7 +82,6 @@ public class SpawnsCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "§7Die Spawns wurden mit der Anzahl " + Main.getColorCode() + args[2] + "§7, dem Radius " + Main.getColorCode() + args[1] + "§7, dem Block-Material " + Main.getColorCode() + (args.length >= 4 ? args[3] : "STONE_BRICK_SLAB") + " §7und dem Seitenblock-Material " + Main.getColorCode() + (args.length >= 5 ? args[4] : "DIRT") + " §7generiert!");
-			return;
 		} else if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("place")) {
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Not for console!");
@@ -96,12 +95,12 @@ public class SpawnsCommand extends VaroCommand {
 			} else if (args.length == 2) {
 				int spawnNumber = -1;
 				try {
-					spawnNumber = Integer.valueOf(args[1]);
+					spawnNumber = Integer.parseInt(args[1]);
 					if (!(spawnNumber > 0)) {
 						player.sendMessage(Main.getPrefix() + "Spawn Zahl muss positiv sein!");
 						return;
 					}
-				} catch (NumberFormatException e) {}
+				} catch (NumberFormatException ignored) {}
 
 				if (spawnNumber != -1) {
 					Spawn oldSpawn = Spawn.getSpawn(spawnNumber);
@@ -130,7 +129,6 @@ public class SpawnsCommand extends VaroCommand {
 				}
 			} else
 				sender.sendMessage(Main.getPrefix() + "/varo spawns set [Zahl/Spieler]");
-			return;
 		} else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(Main.getPrefix() + "Not for console!");
@@ -153,12 +151,12 @@ public class SpawnsCommand extends VaroCommand {
 			Player player = (Player) sender;
 			int spawnNumber = -1;
 			try {
-				spawnNumber = Integer.valueOf(args[1]);
+				spawnNumber = Integer.parseInt(args[1]);
 				if (!(spawnNumber > 0)) {
 					player.sendMessage(Main.getPrefix() + "Spawn Zahl muss positiv sein!");
 					return;
 				}
-			} catch (NumberFormatException e) {}
+			} catch (NumberFormatException ignored) {}
 
 			Spawn spawn;
 			if (spawnNumber != -1) {
@@ -186,7 +184,6 @@ public class SpawnsCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "Spawn von " + Main.getColorCode() + varoplayer.getName() + " §7entfernt!");
 			}
 			spawn.delete();
-			return;
 		} else if (args[0].equalsIgnoreCase("player")) {
 			if (args.length < 3) {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl/@a> <set/remove> [Spieler]");
@@ -195,12 +192,12 @@ public class SpawnsCommand extends VaroCommand {
 
 			int spawnNumber = -1;
 			try {
-				spawnNumber = Integer.valueOf(args[1]);
+				spawnNumber = Integer.parseInt(args[1]);
 				if (!(spawnNumber > 0)) {
 					sender.sendMessage(Main.getPrefix() + "Spawn Zahl muss positiv sein!");
 					return;
 				}
-			} catch (NumberFormatException e) {}
+			} catch (NumberFormatException ignored) {}
 
 			Spawn spawn = Spawn.getSpawn(spawnNumber);
 			if (spawn == null && (!args[1].equals("@a") && args[2].equalsIgnoreCase("set"))) {
@@ -249,7 +246,6 @@ public class SpawnsCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "§7Spieler: " + Main.getColorCode() + (spawn.getPlayer() != null ? spawn.getPlayer().getName() : "Keinen"));
 				sender.sendMessage(Main.getPrefix());
 			}
-			return;
 		} else
 			sender.sendMessage(Main.getPrefix() + "Not found! /varo spawns");
 	}
