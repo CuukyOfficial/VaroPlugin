@@ -218,7 +218,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return player.getStats().getCountdownMin(player.getStats().getCountdown());
+				return ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : player.getStats().getCountdownMin(player.getStats().getCountdown());
 			}
 		};
 
@@ -226,7 +226,7 @@ public class MessagePlaceholderLoader {
 
 			@Override
 			protected String getValue(VaroPlayer player) {
-				return player.getStats().getCountdownSec(player.getStats().getCountdown());
+				return ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : player.getStats().getCountdownSec(player.getStats().getCountdown());
 			}
 		};
 

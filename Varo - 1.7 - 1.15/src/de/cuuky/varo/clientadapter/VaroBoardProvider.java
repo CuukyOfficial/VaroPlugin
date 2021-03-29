@@ -32,16 +32,7 @@ public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
         ArrayList<String> newList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             String line = list.get(i);
-            if (line.contains("%min%") || line.contains("%sec%"))
-                if (ConfigSetting.PLAY_TIME.getValueAsInt() < 1) {
-                    int index = Math.min(line.indexOf("%min%"), line.indexOf("%sec%"));
-
-                    String newLine = line.substring(0, index) + "§cUnlimited" + line.substring(index);
-                    line = newLine.replace("%min%", "").replace("%sec%", "");
-                }
-
             line = Main.getLanguageManager().replaceMessage(line, player);
-
             newList.add(line);
         }
 
