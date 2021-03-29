@@ -29,7 +29,7 @@ public class SmartLagDetector implements Runnable {
 		else
 			return;
 
-		double size = 0, summ = 0;
+		double size = 0, sum = 0;
 		for (int index = 0; index <= 30; index++) {
 			if (index >= lastTps.size())
 				break;
@@ -37,15 +37,15 @@ public class SmartLagDetector implements Runnable {
 			double tps = (double) lastTps.toArray()[index];
 
 			size++;
-			summ += tps;
+			sum += tps;
 		}
 
-		double tpsUsage = (double) (summ / size);
+		double tpsUsage = sum / size;
 		if (tpsUsage <= 14)
 			warnAdmins("§4The CPU-Performance of the server is running low! §cLags could appear!");
 
 		Runtime r = Runtime.getRuntime();
-		double ramUsage = (double) (((double) r.totalMemory() - (double) r.freeMemory()) / (double) r.maxMemory());
+		double ramUsage = ((double) r.totalMemory() - (double) r.freeMemory()) / (double) r.maxMemory();
 		if (ramUsage >= 0.95) {
 			if (ramCleared)
 				warnAdmins("§4the RAM of the server is fully used and the plugin couldn't manage to clear it!");
