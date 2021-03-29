@@ -15,15 +15,15 @@ public class HelpCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		String cmds = "";
+		StringBuilder cmds = new StringBuilder();
 		for (DiscordBotCommand cmd : DiscordBotCommand.getCommands()) {
-			String aliases = "";
+			StringBuilder aliases = new StringBuilder();
 			for (String a : cmd.getAliases())
-				if (aliases.equals(""))
-					aliases = a;
+				if (aliases.toString().equals(""))
+					aliases = new StringBuilder(a);
 				else
-					aliases = aliases + ", " + a;
-			cmds = cmds + "\n" + cmd.getName() + ":\n" + "  Aliases: " + aliases + "\n  Description: " + cmd.getDescription();
+					aliases.append(", ").append(a);
+			cmds.append("\n").append(cmd.getName()).append(":\n").append("  Aliases: ").append(aliases).append("\n  Description: ").append(cmd.getDescription());
 		}
 
 		super.getDiscordBot().sendRawMessage("``` Hier eine Übersicht aller Commands: " + cmds + "```", event.getTextChannel());
