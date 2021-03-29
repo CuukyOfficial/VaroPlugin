@@ -15,7 +15,7 @@ import de.varoplugin.banapi.UsersDataWrapper;
 
 public class VaroPlayerBanListener implements BanChangeListener, BanDataListener {
 
-	private VaroPlayerBanHandler handler;
+	private final VaroPlayerBanHandler handler;
 
 	public VaroPlayerBanListener(VaroPlayerBanHandler handler) {
 		this.handler = handler;
