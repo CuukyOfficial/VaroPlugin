@@ -65,17 +65,6 @@ public class VaroStartThread implements Runnable {
 		}
 
 		if (startcountdown == 0) {
-			for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
-				if (pl1.getStats().isSpectator())
-					continue;
-
-				Player pl = pl1.getPlayer();
-				pl.playSound(pl.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
-				pl.setGameMode(GameMode.SURVIVAL);
-				pl1.cleanUpPlayer();
-				pl1.getStats().loadStartDefaults();
-			}
-
 			if (VaroAPI.getEventManager().executeEvent(new VaroStartEvent(game))) {
 				startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 				Bukkit.getScheduler().cancelTask(game.getStartScheduler());
