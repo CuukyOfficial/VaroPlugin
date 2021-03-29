@@ -45,7 +45,7 @@ dependencies {
 	compileOnly 'net.dv8tion:JDA:4.2.0_229'
 	compileOnly 'com.github.pengrad:java-telegram-bot-api:5.0.1'
 
-	internalLibs 'com.github.Almighty-Satan:CFW:master-SNAPSHOT'
+	internalLibs 'com.github.CuukyOfficial:CFW:master-SNAPSHOT'
 	internalLibs 'com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT'
 
 	compile configurations.internalLibs
