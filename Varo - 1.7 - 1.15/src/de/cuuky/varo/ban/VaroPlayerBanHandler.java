@@ -1,5 +1,6 @@
 package de.cuuky.varo.ban;
 
+import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.varoplugin.banapi.*;
 import de.varoplugin.banapi.LatestBansHandler.Mode;
 import org.bukkit.entity.Player;
@@ -27,15 +28,39 @@ public class VaroPlayerBanHandler {
             return BanDuration.getDisplaynameFromMillis(duration);
     }
 
+    private Ban getMCBan(long discordID) {
+        BanUser user = this.bansHandler.getCurrentData().getUser(discordID);
+        if (user == null || !user.hasActiveMinecraftBan())
+            return null;
+
+        return this.bansHandler.getCurrentData().getUser(discordID).getLatestMinecraftBan();
+    }
+
+    protected Ban hasBannedDiscordLink(Player player) {
+        BotRegister register = BotRegister.getRegister(player.getUniqueId().toString());
+        if (register == null)
+            return null;
+
+        return this.getMCBan(register.getUserId());
+    }
+
+    protected Ban getBan(BanUser user, Player player) {
+        Ban ban = null;
+        if ((user == null || !user.hasActiveMinecraftBan()) && (ban = this.hasBannedDiscordLink(player)) == null)
+            return null;
+
+        return ban == null ? user.getLatestMinecraftBan() : ban;
+    }
+
     public boolean hasBan(Player player, PlayerLoginEvent event) {
         if (this.bansHandler.getCurrentData() == null)
             return false;
 
         BanUser user = this.bansHandler.getCurrentData().getUser(player.getUniqueId());
-        if (user == null || !user.hasActiveMinecraftBan())
+        Ban ban;
+        if ((ban = this.getBan(user, player)) == null)
             return false;
 
-        Ban ban = user.getLatestMinecraftBan();
         if (event == null)
             player.kickPlayer(getKickMessage(ban));
         else
