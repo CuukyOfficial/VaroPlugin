@@ -98,22 +98,18 @@ public class VaroPlayerDisconnect {
 		if (!VaroPlayer.getPlayer(playerName).getStats().isAlive())
 			return;
 
-		scheds.put(playerName, Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+		scheds.put(playerName, Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+			if (Bukkit.getPlayerExact(playerName) != null)
+				return;
 
-			@Override
-			public void run() {
-				if (Bukkit.getPlayerExact(playerName) != null)
-					return;
+			if (Main.getVaroGame().getGameState() != GameState.STARTED)
+				return;
 
-				if (Main.getVaroGame().getGameState() != GameState.STARTED)
-					return;
-
-				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
-				vp.getStats().removeCountdown();
-				vp.getStats().setState(PlayerState.DEAD);
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
-			}
-		}, (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60) * 20));
+			VaroPlayer vp = VaroPlayer.getPlayer(playerName);
+			vp.getStats().removeCountdown();
+			vp.getStats().setState(PlayerState.DEAD);
+			Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
+		}, (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
 	}
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {

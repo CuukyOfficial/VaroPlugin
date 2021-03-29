@@ -284,6 +284,22 @@ public class MessagePlaceholderLoader {
 			}
 		};
 
+		new VaroPlayerMessagePlaceholder("playerID", 1, "Ersetzt durch die ID des Spielers") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return String.valueOf(player.getId());
+			}
+		};
+
+		new VaroPlayerMessagePlaceholder("playerUUID", 1, "Ersetzt durch die UUID des Spielers") {
+
+			@Override
+			protected String getValue(VaroPlayer player) {
+				return String.valueOf(player.getUUID());
+			}
+		};
+
 		new VaroPlayerMessagePlaceholder("prefix", 1, "Ersetzt durch den Prefix des Spielers") {
 
 			@Override
