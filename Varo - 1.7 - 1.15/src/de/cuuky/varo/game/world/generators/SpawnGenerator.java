@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class SpawnGenerator {
 
-    private String blockId, sideBlockId;
+    private final String blockId, sideBlockId;
 
-    private SpawnGenerator(Location location, int radius, String blockId, String sideBlockId) {
+    private SpawnGenerator(String blockId, String sideBlockId) {
         this.blockId = blockId;
         this.sideBlockId = sideBlockId;
 
@@ -23,7 +23,7 @@ public class SpawnGenerator {
     }
 
     public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {
-        this(location, radius, blockId, sideBlockId);
+        this(blockId, sideBlockId);
 
         int i = 0;
         for (Location loc : generateSpawns(location, radius, amount)) {
@@ -35,7 +35,7 @@ public class SpawnGenerator {
     }
 
     public SpawnGenerator(Location location, int radius, boolean withTeams, String blockId, String sideBlockId) {
-        this(location, radius, blockId, sideBlockId);
+        this(blockId, sideBlockId);
 
         ArrayList<Location> locations = generateSpawns(location, radius, VaroPlayer.getAlivePlayer().size());
         int i = 0;
