@@ -60,7 +60,7 @@ public class SchematicLoader {
 				ClipboardFormat format = (ClipboardFormat) clipboardFormatsClass.getDeclaredMethod("findByFile", File.class).invoke(null, file);
 				Clipboard clipboard = null;
 				ClipboardReader reader = format.getReader(new FileInputStream(file));
-				clipboard = (Clipboard) reader.getClass().getDeclaredMethod("read").invoke(reader, null);
+				clipboard = (Clipboard) reader.getClass().getDeclaredMethod("read").invoke(reader);
 
 				EditSessionFactory factory = WorldEdit.getInstance().getEditSessionFactory();
 				Method m = factory.getClass().getDeclaredMethod("getEditSession", World.class, int.class);
@@ -77,7 +77,7 @@ public class SchematicLoader {
 				Operation operation = ((PasteBuilder) to).ignoreAirBlocks(false).build();
 
 				Operations.complete(operation);
-				editSession.getClass().getDeclaredMethod("flushSession").invoke(editSession, null);
+				editSession.getClass().getDeclaredMethod("flushSession").invoke(editSession);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
