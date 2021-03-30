@@ -7,8 +7,8 @@ import de.cuuky.varo.logger.VaroLogger;
 
 public class ConsoleLogger extends VaroLogger {
 
-	public ConsoleLogger(String name) {
-		super(name, false);
+	public ConsoleLogger(String name, boolean startQueue) {
+		super(name, false, startQueue);
 
 		startListening();
 	}

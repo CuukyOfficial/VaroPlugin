@@ -37,9 +37,9 @@ public class PlayerGUI extends VaroSuperInventory {
 	@Override
 	public boolean onBackClick() {
 		if (type != null)
-			new PlayerListGUI(opener, true, type);
+			new PlayerListGUI(opener, type);
 		else
-			new PlayerListChooseGUI(opener, true);
+			new PlayerListChooseGUI(opener);
 		return true;
 	}
 
@@ -89,9 +89,9 @@ public class PlayerGUI extends VaroSuperInventory {
 			public void run() {
 				target.delete();
 				if (type != null)
-					new PlayerListGUI(opener, true, type);
+					new PlayerListGUI(opener, type);
 				else
-					new PlayerListChooseGUI(opener, true);
+					new PlayerListChooseGUI(opener);
 			}
 		});
 

@@ -69,10 +69,10 @@ public class PlayerListGUI extends VaroSuperInventory {
 
 	private PlayerGUIType type;
 
-	public PlayerListGUI(Player opener, boolean showstats, PlayerGUIType type) {
+	public PlayerListGUI(Player opener, PlayerGUIType type) {
 		super("§cPlayer", opener, 54, false);
 
-		this.showStats = showstats;
+		this.showStats = opener.hasPermission("varo.setup");
 		this.type = type;
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
@@ -81,7 +81,7 @@ public class PlayerListGUI extends VaroSuperInventory {
 
 	@Override
 	public boolean onBackClick() {
-		new PlayerListChooseGUI(opener, showStats);
+		new PlayerListChooseGUI(opener);
 		return true;
 	}
 

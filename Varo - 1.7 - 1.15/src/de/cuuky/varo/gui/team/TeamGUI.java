@@ -70,55 +70,43 @@ public class TeamGUI extends VaroSuperInventory {
 			}
 		});
 
-		linkItemTo(3, new ItemBuilder().displayname("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplay()).itemstack(new ItemStack(Material.DIAMOND_HELMET)).build(), new Runnable() {
+		linkItemTo(3, new ItemBuilder().displayname("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplay()).itemstack(new ItemStack(Material.DIAMOND_HELMET)).build(), () -> {
+			Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter team name:", new ChatHookHandler() {
 
-			@Override
-			public void run() {
-				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter team name:", new ChatHookHandler() {
-
-					@Override
-					public boolean onChat(AsyncPlayerChatEvent event) {
-						VaroTeam otherTeam = VaroTeam.getTeam(event.getMessage());
-						if (otherTeam != null) {
-							opener.sendMessage(Main.getPrefix() + "Team name already exists");
-							return false;
-						}
-
-						team.setName(event.getMessage());
-						opener.sendMessage(Main.getPrefix() + "Team name of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + Main.getColorCode() + team.getName() + "§7'");
-						open();
-						return true;
+				@Override
+				public boolean onChat(AsyncPlayerChatEvent event) {
+					VaroTeam otherTeam = VaroTeam.getTeam(event.getMessage());
+					if (otherTeam != null) {
+						opener.sendMessage(Main.getPrefix() + "Team name already exists");
+						return false;
 					}
-				}));
-				close(false);
-			}
+
+					team.setName(event.getMessage());
+					opener.sendMessage(Main.getPrefix() + "Team name of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + Main.getColorCode() + team.getName() + "§7'");
+					open();
+					return true;
+				}
+			}));
+			close(false);
 		});
 
-		linkItemTo(5, new ItemBuilder().displayname("§7Set §acolorcode").lore("§7Current§8: §5" + team.getColorCode() != null ? (team.getColorCode() + "Like this!") : "-").itemstack(new ItemStack(Material.BOOK)).build(), new Runnable() {
+		linkItemTo(5, new ItemBuilder().displayname("§7Set §acolorcode").lore("§7Current§8: §5" + (team.getColorCode() != null ? team.getColorCode() + "Like this!" : "-")).itemstack(new ItemStack(Material.BOOK)).build(), () -> {
+			Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter team colorcode:", new ChatHookHandler() {
 
-			@Override
-			public void run() {
-				Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(opener, "§7Enter team colorcode:", new ChatHookHandler() {
-
-					@Override
-					public boolean onChat(AsyncPlayerChatEvent event) {
-						team.setColorCode(event.getMessage());
-						opener.sendMessage(Main.getPrefix() + "Team colorocode of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getDisplay() + "§7'");
-						open();
-						return true;
-					}
-				}));
-				close(false);
-			}
+				@Override
+				public boolean onChat(AsyncPlayerChatEvent event) {
+					team.setColorCode(event.getMessage());
+					opener.sendMessage(Main.getPrefix() + "Team colorocode of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getDisplay() + "§7'");
+					open();
+					return true;
+				}
+			}));
+			close(false);
 		});
 
-		linkItemTo(7, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				team.delete();
-				close(true);
-			}
+		linkItemTo(7, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Material.BUCKET)).build(), () -> {
+			team.delete();
+			close(true);
 		});
 		return true;
 	}

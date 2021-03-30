@@ -74,7 +74,7 @@ public class MainMenu extends VaroSuperInventory {
 
 			@Override
 			public void run() {
-				new PlayerListChooseGUI(opener, opener.hasPermission("varo.setup"));
+				new PlayerListChooseGUI(opener);
 			}
 		});
 

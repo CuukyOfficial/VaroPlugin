@@ -84,7 +84,7 @@ public class AdminMainMenu extends VaroSuperInventory {
 
 			@Override
 			public void run() {
-				new PlayerListChooseGUI(opener, true);
+				new PlayerListChooseGUI(opener);
 			}
 		});
 

@@ -16,10 +16,10 @@ public class PlayerListChooseGUI extends VaroSuperInventory {
 
 	private boolean showStats;
 
-	public PlayerListChooseGUI(Player opener, boolean showStats) {
+	public PlayerListChooseGUI(Player opener) {
 		super("§aChoose Players", opener, 18, false);
 
-		this.showStats = showStats;
+		this.showStats = opener.hasPermission("varo.setup");
 		this.setModifier = true;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
@@ -51,7 +51,7 @@ public class PlayerListChooseGUI extends VaroSuperInventory {
 
 				@Override
 				public void run() {
-					new PlayerListGUI(opener, showStats, type);
+					new PlayerListGUI(opener, type);
 				}
 			});
 			i += 2;

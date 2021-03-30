@@ -24,24 +24,18 @@ public abstract class VaroLogger {
     private PrintWriter pw;
     private Scanner scanner;
 
-    public VaroLogger(String name, boolean loadPrevious) {
+    protected VaroLogger(String name, boolean loadPrevious, boolean startQueue) {
         this.file = new File("plugins/Varo/logs/", name + ".yml");
         this.logs = new ArrayList<>();
         this.queue = new CopyOnWriteArrayList<>();
         this.loadFile(loadPrevious);
 
-        this.startQueue();
+        if (startQueue)
+            this.startQueue();
     }
 
-    private void startQueue() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            for (String s : queue) {
-                pw.println(s);
-                queue.remove(s);
-            }
-
-            pw.flush();
-        }, 20L, 20L);
+    protected VaroLogger(String name, boolean loadPrevious) {
+        this(name, loadPrevious, true);
     }
 
     private void loadFile(boolean loadPrevious) {
@@ -73,6 +67,17 @@ public abstract class VaroLogger {
     protected void queLog(String log) {
         logs.add(log);
         queue.add(log);
+    }
+
+    public void startQueue() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
+            for (String s : queue) {
+                pw.println(s);
+                queue.remove(s);
+            }
+
+            pw.flush();
+        }, 20L, 20L);
     }
 
     public File getFile() {

@@ -62,28 +62,18 @@ public class InventoryBackupListGUI extends VaroSuperInventory {
 				break;
 			}
 
-			linkItemTo(i, new ItemBuilder().displayname(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(backup.getDate())).itemstack(new ItemStack(Material.BOOK)).build(), new Runnable() {
-
-				@Override
-				public void run() {
-					new InventoryBackupGUI(opener, backup);
-				}
-			});
+			linkItemTo(i, new ItemBuilder().displayname(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(backup.getDate())).itemstack(new ItemStack(Material.BOOK)).build(), () -> new InventoryBackupGUI(opener, backup));
 			start++;
 		}
 
-		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				if (!target.isOnline()) {
-					opener.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
-					return;
-				}
-
-				target.getStats().addInventoryBackup(new InventoryBackup(target));
-				updateInventory();
+		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), () -> {
+			if (!target.isOnline()) {
+				opener.sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
+				return;
 			}
+
+			target.getStats().addInventoryBackup(new InventoryBackup(target));
+			updateInventory();
 		});
 
 		return calculatePages(backups.size(), getSize() - 2) == getPage();

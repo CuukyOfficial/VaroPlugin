@@ -67,10 +67,10 @@ public class EventLogger extends VaroLogger {
 		super(name, true);
 
 		this.queue = new CopyOnWriteArrayList<>();
-		startQueue();
+		startSendQueue();
 	}
 
-	private void startQueue() {
+	private void startSendQueue() {
 		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
 			if (Main.getBotLauncher() == null)
 				return;
