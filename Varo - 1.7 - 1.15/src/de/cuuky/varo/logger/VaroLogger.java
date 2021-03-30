@@ -35,11 +35,10 @@ public abstract class VaroLogger {
 
     private void startQueue() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            String[] copy = this.queue.toArray(new String[0]);
-            queue.clear();
-
-            for (String s : copy)
+            for (String s : queue) {
                 pw.println(s);
+                queue.remove(s);
+            }
 
             pw.flush();
         }, 20L, 20L);
