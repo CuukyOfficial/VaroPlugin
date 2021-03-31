@@ -19,6 +19,10 @@ sourceSets {
 }
 
 repositories {
+	jcenter()
+	flatDir {
+	   	dirs 'libs'
+	}
 	maven {
 		url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
 	}
@@ -30,27 +34,28 @@ repositories {
 	maven {
 		url 'https://jitpack.io'
 	}
-
-	jcenter()
 }
 
 configurations {
 	internalLibs
 }
-	
+
 dependencies {
 	compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
 	compileOnly 'com.googlecode.json-simple:json-simple:1.1.1'
-	compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
-	compileOnly 'com.github.LabyMod:labymod-server-api:master-SNAPSHOT'
-    
+	compileOnly ('com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT') {changing = true}
+	compileOnly ('com.github.LabyMod:labymod-server-api:master-SNAPSHOT') {changing = true}
+
 	compileOnly 'net.dv8tion:JDA:4.2.0_229'
 	compileOnly 'com.github.pengrad:java-telegram-bot-api:5.0.1'
 
-	internalLibs 'com.github.CuukyOfficial:CFW:master-SNAPSHOT'
-	internalLibs 'com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT'
+	internalLibs ('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT') {changing = true}
+	if(file("libs/CFW - Cuuky FrameWork.jar").exists())
+		internalLibs name: 'CFW - Cuuky FrameWork'
+	else
+		internalLibs ('com.github.CuukyOfficial:CFW:master-SNAPSHOT') {changing = true}
 
-	compile configurations.internalLibs
+	compileOnly configurations.internalLibs
 }
 
 jar {
