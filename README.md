@@ -25,7 +25,7 @@ Version: 3.3.0.1</br></br>
 
 <table>
   <tr>
-    <td><a href='https://www.tipeeestream.com/cuuky/donation'><img src="https://pbs.twimg.com/profile_images/935529696158208000/m-8CPCSG_400x400.jpg" height=100px></a></td>
+    <td><a href='https://www.tipeeestream.com/cuuky/donation'><img src="https://pbs.twimg.com/profile_images/1349058374080602115/b0jnfeCy_400x400.jpg" height=100px></a></td>
     <td><a href='https://www.paypal.me/Cuuky'><img src="https://images.ctfassets.net/k4kk06v59kf0/1B9DpTnsBuQAu60wCIemGK/c164faa3862e39b23ef49b4adaf127dd/paypalWide.svg" height=100px></a></td>
     <td><a href='https://www.youtube.com/channel/UCkVjKrNb8w_C8Zp8nmPtpPg'><img src="https://lh3.googleusercontent.com/lMoItBgdPPVDJsNOVtP26EKHePkwBg-PkuY9NOrc-fumRtTFP4XhpUNk_22syN4Datc" height=100px></a></td>
     <td><a href="https://www.spigotmc.org/resources/71075/"><img src="https://static.spigotmc.org/img/spigot.png" height=100px></a></td>
