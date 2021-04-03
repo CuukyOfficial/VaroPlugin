@@ -67,7 +67,7 @@ public class EventLogger extends VaroLogger {
 		super(name, true);
 
 		this.queue = new CopyOnWriteArrayList<>();
-		startSendQueue();
+		this.startSendQueue();
 	}
 
 	private void startSendQueue() {
@@ -122,6 +122,11 @@ public class EventLogger extends VaroLogger {
 
 		if (message.contains("%noBot%"))
 			return;
+
+		if (Main.getBotLauncher() == null) {
+			queue.add(new Object[] { type, message });
+			return;
+		}
 
 		sendToDiscord(type, message);
 		sendToTelegram(type, message);
