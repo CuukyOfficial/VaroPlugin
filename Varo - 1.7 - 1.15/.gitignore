@@ -4,6 +4,7 @@
 /.settings/
 **.class
 /target/
+/libs/
 
 # Ignore Gradle project-specific cache directory
 .gradle
