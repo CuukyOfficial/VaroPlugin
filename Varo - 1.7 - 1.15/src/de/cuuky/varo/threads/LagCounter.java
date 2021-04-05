@@ -1,6 +1,8 @@
 package de.cuuky.varo.threads;
 
-public class LagCounter implements Runnable {
+import org.bukkit.scheduler.BukkitRunnable;
+
+public class LagCounter extends BukkitRunnable {
 
 	// STOLEN FROM:
 	// https://bukkit.org/threads/get-server-tps.143410/

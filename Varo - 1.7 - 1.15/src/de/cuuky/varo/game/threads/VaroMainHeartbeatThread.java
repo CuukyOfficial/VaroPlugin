@@ -20,8 +20,9 @@ import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class VaroMainHeartbeatThread implements Runnable {
+public class VaroMainHeartbeatThread extends BukkitRunnable {
 
 	private int protectionTime, noKickDistance, playTime;
 	private boolean showDistanceToBorder, showTimeInActionBar;

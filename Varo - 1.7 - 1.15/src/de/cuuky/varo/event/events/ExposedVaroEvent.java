@@ -1,6 +1,10 @@
 package de.cuuky.varo.event.events;
 
-import org.bukkit.Bukkit;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
@@ -10,16 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class ExposedVaroEvent extends VaroEvent {
 
-	private int scheduler;
+	private BukkitTask scheduler;
 	private PotionEffectType type;
 
 	public ExposedVaroEvent() {
@@ -34,14 +34,13 @@ public class ExposedVaroEvent extends VaroEvent {
 			for (Player pl : VersionUtils.getOnlinePlayer())
 				pl.removePotionEffect(type);
 
-		Bukkit.getScheduler().cancelTask(scheduler);
+		scheduler.cancel();
 		super.onDisable();
 	}
 
 	@Override
 	public void onEnable() {
-		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		scheduler = new BukkitRunnable() {
 			@Override
 			public void run() {
 				FireworkEffect effect = FireworkEffect.builder().withColor(Color.RED, Color.WHITE).withFade(Color.PURPLE).with(FireworkEffect.Type.BURST).trail(false).flicker(true).build();
@@ -59,10 +58,8 @@ public class ExposedVaroEvent extends VaroEvent {
 						fw.setFireworkMeta(meta);
 					}
 				}
-
 			}
-		}, 10 * 20, 10 * 20);
+		}.runTaskTimer(Main.getInstance(), 10 * 20, 10 * 20);
 		super.onEnable();
 	}
-
 }

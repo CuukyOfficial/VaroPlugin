@@ -23,6 +23,7 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class OfflineVillager implements VaroSerializeable {
 
@@ -67,13 +68,12 @@ public class OfflineVillager implements VaroSerializeable {
 
 	private void freezeVillager() {
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+			new BukkitRunnable() {
 				@Override
 				public void run() {
 					zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 255));
 				}
-			}, 0, 1000000 * 20);
+			}.runTaskTimer(Main.getInstance(), 0, 1000000 * 20);
 		} else
 			try {
 				Object nmsEn = zombie.getClass().getMethod("getHandle").invoke(zombie);
@@ -87,8 +87,7 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	public void create() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (location.getWorld().getDifficulty() == Difficulty.PEACEFUL)
@@ -105,7 +104,7 @@ public class OfflineVillager implements VaroSerializeable {
 				freezeVillager();
 				entity = zombie;
 			}
-		}, 1);
+		}.runTaskLater(Main.getInstance(), 1L);
 	}
 
 	public void kill(VaroPlayer killer) {

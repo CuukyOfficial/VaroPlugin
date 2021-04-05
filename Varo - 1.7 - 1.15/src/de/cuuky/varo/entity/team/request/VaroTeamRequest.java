@@ -12,6 +12,8 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class VaroTeamRequest {
 
@@ -22,7 +24,7 @@ public class VaroTeamRequest {
 	}
 
 	private VaroPlayer invited, invitor;
-	private int sched;
+	private BukkitTask sched;
 
 	public VaroTeamRequest(VaroPlayer invitor, VaroPlayer invited) {
 		this.invitor = invitor;
@@ -80,8 +82,7 @@ public class VaroTeamRequest {
 		if (!ConfigSetting.TEAMREQUEST_EXPIRETIME.isIntActivated())
 			return;
 
-		this.sched = Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		this.sched = new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (!invited.isOnline())
@@ -92,8 +93,7 @@ public class VaroTeamRequest {
 
 				remove();
 			}
-
-		}, 20 * ConfigSetting.TEAMREQUEST_EXPIRETIME.getValueAsInt());
+		}.runTaskLaterAsynchronously(Main.getInstance(), 20 * ConfigSetting.TEAMREQUEST_EXPIRETIME.getValueAsInt());
 	}
 
 	public void accept() {
@@ -115,7 +115,7 @@ public class VaroTeamRequest {
 	}
 
 	public void remove() {
-		Bukkit.getScheduler().cancelTask(sched);
+		sched.cancel();
 		requests.remove(this);
 	}
 

@@ -13,11 +13,13 @@ import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class MassRecordingVaroEvent extends VaroEvent {
 
 	private ArrayList<Integer[]> countdowns;
-	private int scheduler;
+	private BukkitTask scheduler;
 	private int timer;
 	private boolean timerEnd = false;
 
@@ -43,7 +45,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 	@Override
 	public void onDisable() {
-		Bukkit.getScheduler().cancelTask(scheduler);
+		scheduler.cancel();
 
 		for (Integer[] Speicher : countdowns) {
 			VaroPlayer vp = VaroPlayer.getPlayer(Speicher[0]);
@@ -105,7 +107,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
 			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 
-		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		scheduler = new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (timer < 1) {
@@ -115,6 +117,6 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 				timer -= 1;
 			}
-		}, 0, 20);
+		}.runTaskTimer(Main.getInstance(), 0L, 20L);
 	}
 }

@@ -12,10 +12,12 @@ import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class AutoStart implements VaroSerializeable {
 
-	private int sched;
+	private BukkitTask sched;
 	@VaroSerializeField(path = "start")
 	private Date start;
 
@@ -82,11 +84,10 @@ public class AutoStart implements VaroSerializeable {
 		StartDelay startDelay = StartDelay.getStartDelay(delay);
 		long seconds = (long) (delay - startDelay.getDelay());
 
-		this.sched = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		this.sched = new BukkitRunnable() {
 			@Override
 			public void run() {
-				Bukkit.getScheduler().cancelTask(sched);
+				sched.cancel();
 				if (startDelay == StartDelay.GO) {
 					stop();
 					Main.getVaroGame().start();
@@ -98,18 +99,18 @@ public class AutoStart implements VaroSerializeable {
 
 				start();
 			}
-		}, (seconds / 1000) * 20 + 20);
+		}.runTaskLater(Main.getInstance(), (seconds / 1000) * 20 + 20);
 	}
 
 	public void delay(int seconds) {
-		Bukkit.getScheduler().cancelTask(sched);
+		sched.cancel();
 		this.start = DateUtils.addMinutes(this.start, seconds);
 		StartDelay.reset();
 		start();
 	}
 
 	public void stop() {
-		Bukkit.getScheduler().cancelTask(sched);
+		sched.cancel();
 		Main.getVaroGame().setAutoStart(null);
 		StartDelay.reset();
 	}

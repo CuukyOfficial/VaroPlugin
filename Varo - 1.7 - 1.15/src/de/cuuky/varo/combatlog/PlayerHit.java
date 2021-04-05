@@ -1,19 +1,19 @@
 package de.cuuky.varo.combatlog;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.bukkit.Bukkit;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class PlayerHit {
 
@@ -60,7 +60,7 @@ public class PlayerHit {
 		hits = new ArrayList<>();
 	}
 
-	private int task;
+	private BukkitTask task;
 	private Player player, opponent;
 
 	public PlayerHit(Player player, Player opponent) {
@@ -77,13 +77,12 @@ public class PlayerHit {
 	}
 
 	private void scheduleOvertime() {
-		task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		task = new BukkitRunnable() {
 			@Override
 			public void run() {
 				over();
 			}
-		}, ConfigSetting.COMBATLOG_TIME.getValueAsInt() * 20);
+		}.runTaskLater(Main.getInstance(), ConfigSetting.COMBATLOG_TIME.getValueAsInt() * 20);
 	}
 
 	public boolean hasOld(Player p) {
@@ -105,7 +104,7 @@ public class PlayerHit {
 	}
 
 	public void remove() {
-		Bukkit.getScheduler().cancelTask(task);
+		task.cancel();
 		hits.remove(this);
 	}
 

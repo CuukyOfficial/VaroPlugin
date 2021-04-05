@@ -20,6 +20,7 @@ import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerDeathListener implements Listener {
 
@@ -36,8 +37,7 @@ public class PlayerDeathListener implements Listener {
 	}
 
 	private void kickDeadPlayer(VaroPlayer deadPlayer, VaroPlayer killerPlayer) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (!deadPlayer.isOnline())
@@ -48,7 +48,7 @@ public class PlayerDeathListener implements Listener {
 				else
 					deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_KILLED.getValue(deadPlayer, deadPlayer).replace("%killer%", killerPlayer.getName()));
 			}
-		}, 1);
+		}.runTaskLater(Main.getInstance(), 1L);
 	}
 
 	@EventHandler
@@ -92,15 +92,14 @@ public class PlayerDeathListener implements Listener {
 						Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, deadP).replace("%countdown%", String.valueOf(ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt()));
 						deadP.getStats().setState(PlayerState.SPECTATOR);
 						deadP.setSpectacting();
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+						new BukkitRunnable() {
 							@Override
 							public void run() {
 								deadP.getStats().setState(PlayerState.DEAD);
 								kickDeadPlayer(deadP, killer);
 								Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER, deadP);
 							}
-						}, ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
+						}.runTaskLater(Main.getInstance(), ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
 					} else
 						kickDeadPlayer(deadP, killer);
 				} else {

@@ -18,6 +18,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class BotRegister {
 
@@ -132,13 +133,12 @@ public class BotRegister {
 		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean())
 			return;
 
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				player.kickPlayer(message);
 			}
-		}, 0);
+		}.runTask(Main.getInstance());
 	}
 
 	private static void loadAll() {

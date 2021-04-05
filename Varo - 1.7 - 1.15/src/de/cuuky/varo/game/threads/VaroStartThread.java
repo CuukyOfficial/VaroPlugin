@@ -1,9 +1,5 @@
 package de.cuuky.varo.game.threads;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
@@ -15,8 +11,11 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class VaroStartThread implements Runnable {
+public class VaroStartThread extends BukkitRunnable {
 
 	private VaroGame game;
 	private int startcountdown;
@@ -67,7 +66,7 @@ public class VaroStartThread implements Runnable {
 		if (startcountdown == 0) {
 			if (VaroAPI.getEventManager().executeEvent(new VaroStartEvent(game))) {
 				startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
-				Bukkit.getScheduler().cancelTask(game.getStartScheduler());
+				cancel();
 				return;
 			}
 
@@ -77,7 +76,7 @@ public class VaroStartThread implements Runnable {
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_VARO_START);
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
-			Bukkit.getScheduler().cancelTask(game.getStartScheduler());
+			cancel();
 
 			this.game.doStartStuff();
 

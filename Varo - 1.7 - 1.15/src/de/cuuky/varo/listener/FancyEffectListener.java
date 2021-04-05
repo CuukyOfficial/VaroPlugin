@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class FancyEffectListener implements Listener {
 
@@ -25,31 +27,30 @@ public class FancyEffectListener implements Listener {
 		ALLOWED_EFFECTS = new Effect[] { Effect.EXTINGUISH };
 	}
 
-	private HashMap<Entity, Effect> effectEntites;
+	private Map<Entity, Effect> effectEntities;
 
 	public FancyEffectListener() {
-		effectEntites = new HashMap<Entity, Effect>();
+		effectEntities = new HashMap<>();
 
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (effectEntites.isEmpty())
+				if (effectEntities.isEmpty())
 					return;
 
-				Set<Entity> iterate = effectEntites.keySet();
-				for (int i = effectEntites.size() - 1; i != 0; i--) {
+				Set<Entity> iterate = effectEntities.keySet();
+				for (int i = effectEntities.size() - 1; i != 0; i--) {
 					Entity entity = (Entity) iterate.toArray()[i];
 
 					if (entity.isDead() || entity.isOnGround()) {
-						effectEntites.remove(entity);
+						effectEntities.remove(entity);
 						continue;
 					}
 
-					entity.getWorld().playEffect(entity.getLocation(), effectEntites.get(entity), 1);
+					entity.getWorld().playEffect(entity.getLocation(), effectEntities.get(entity), 1);
 				}
 			}
-		}, 1, 1);
+		}.runTaskTimer(Main.getInstance(), 1L, 1L);
 	}
 
 	private boolean isEnabled(Cancellable event) {
@@ -57,7 +58,7 @@ public class FancyEffectListener implements Listener {
 	}
 
 	private void addEntity(Entity entity) {
-		effectEntites.put(entity, ALLOWED_EFFECTS[JavaUtils.randomInt(0, ALLOWED_EFFECTS.length - 1)]);
+		effectEntities.put(entity, ALLOWED_EFFECTS[JavaUtils.randomInt(0, ALLOWED_EFFECTS.length - 1)]);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

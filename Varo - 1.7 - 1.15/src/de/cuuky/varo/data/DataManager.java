@@ -32,6 +32,10 @@ import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.threads.daily.DailyTimer;
 import de.cuuky.varo.utils.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;
+import org.bukkit.scheduler.BukkitRunnable;
+import sun.security.acl.WorldGroupImpl;
+
+import java.net.Inet4Address;
 
 public class DataManager {
 
@@ -105,22 +109,21 @@ public class DataManager {
 	}
 
 	private void startAutoSave() {
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
 
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				reloadConfig();
 				save();
 
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+				new BukkitRunnable() {
 					@Override
 					public void run() {
 						reloadPlayerClients();
 					}
-				}, 1);
+				}.runTask(Main.getInstance());
 			}
-		}, SAVE_DELAY, SAVE_DELAY);
+		}.runTaskTimerAsynchronously(Main.getInstance(), SAVE_DELAY, SAVE_DELAY);
 	}
 
 	public void reloadConfig() {

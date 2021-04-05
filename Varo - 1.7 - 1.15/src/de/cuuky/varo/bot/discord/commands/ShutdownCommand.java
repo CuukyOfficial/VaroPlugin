@@ -1,12 +1,12 @@
 package de.cuuky.varo.bot.discord.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ShutdownCommand extends DiscordBotCommand {
 
@@ -44,13 +44,12 @@ public class ShutdownCommand extends DiscordBotCommand {
 			}
 
 			event.getTextChannel().sendMessage("Bye, bye.").queue();
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+			new BukkitRunnable() {
 				@Override
 				public void run() {
 					getDiscordBot().disconnect();
 				}
-			}, 20);
+			}.runTaskLater(Main.getInstance(), 20L);
 		} catch (Exception e) {
 			super.getDiscordBot().disconnect();
 		}

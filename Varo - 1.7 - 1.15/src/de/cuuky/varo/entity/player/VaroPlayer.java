@@ -47,6 +47,7 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
@@ -252,8 +253,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	public void setSpectacting() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (!isOnline())
@@ -271,7 +271,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 					player.getInventory().setArmorContents(new ItemStack[] {});
 				}
 			}
-		}, 1);
+		}.runTask(Main.getInstance());
 	}
 
 	public void update() {
@@ -466,13 +466,12 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		try {
 			if (ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
 				if (Main.getBotLauncher() == null)
-					Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
-
+					new BukkitRunnable() {
 						@Override
 						public void run() {
 							updateDiscordTeam(oldTeam);
 						}
-					}, 1);
+					}.runTaskLaterAsynchronously(Main.getInstance(), 1L);
 				else
 					updateDiscordTeam(oldTeam);
 			}

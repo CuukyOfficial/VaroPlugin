@@ -1,18 +1,18 @@
 package de.cuuky.varo.event.events;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class PoisonRainVaroEvent extends VaroEvent {
 
-	private int sched;
+	private BukkitTask sched;
 
 	public PoisonRainVaroEvent() {
 		super(VaroEventType.POISON_RAIN, Material.ARROW, "Regen macht Schaden");
@@ -20,13 +20,12 @@ public class PoisonRainVaroEvent extends VaroEvent {
 
 	@Override
 	public void onDisable() {
-		Bukkit.getScheduler().cancelTask(sched);
+		sched.cancel();
 	}
 
 	@Override
 	public void onEnable() {
-		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		sched = new BukkitRunnable() {
 			@Override
 			public void run() {
 				playerLoop: for (Player p : VersionUtils.getOnlinePlayer()) {
@@ -39,6 +38,6 @@ public class PoisonRainVaroEvent extends VaroEvent {
 					}
 				}
 			}
-		}, 1, 20);
+		}.runTaskTimer(Main.getInstance(), 1L, 20L);
 	}
 }

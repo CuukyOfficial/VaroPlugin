@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroWorldBorder {
 
@@ -78,14 +79,13 @@ public class VaroWorldBorder {
 	}
 
 	private void startCalculating() {
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				for (Player player : VersionUtils.getOnlinePlayer())
 					distances.put(player, getDistanceToBorder(player));
 			}
-		}, 20, 20 * 1);
+		}.runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
 	}
 
 	public Location getCenter() {

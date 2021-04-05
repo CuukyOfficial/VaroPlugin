@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
@@ -68,13 +69,12 @@ public class VaroUpdater {
 	}
 
 	private void checkUpdate() {
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				checkForUpdates();
 			}
-		}, 20);
+		}.runTaskLaterAsynchronously(Main.getInstance(), 20L);
 	}
 
 	public void printResults() {

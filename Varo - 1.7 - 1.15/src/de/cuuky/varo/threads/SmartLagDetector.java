@@ -8,8 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class SmartLagDetector implements Runnable {
+public class SmartLagDetector extends BukkitRunnable {
 
 	private ArrayList<Double> lastTps;
 	private long lastPost;
@@ -18,8 +19,8 @@ public class SmartLagDetector implements Runnable {
 	public SmartLagDetector(JavaPlugin instance) {
 		this.lastTps = new ArrayList<>();
 
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new LagCounter(), 100L, 1L);
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, this, 20 * 60, 30);
+		new LagCounter().runTaskTimerAsynchronously(instance, 100L, 1L);
+		this.runTaskTimerAsynchronously(instance, 20 * 60, 30);
 	}
 
 	private void checkPerformance() {

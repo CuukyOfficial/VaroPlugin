@@ -2,6 +2,7 @@ package de.cuuky.varo.logger;
 
 import de.cuuky.varo.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -70,14 +71,17 @@ public abstract class VaroLogger {
     }
 
     public void startQueue() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            for (String s : queue) {
-                pw.println(s);
-                queue.remove(s);
-            }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (String s : queue) {
+                    pw.println(s);
+                    queue.remove(s);
+                }
 
-            pw.flush();
-        }, 20L, 20L);
+                pw.flush();
+            }
+        }.runTaskTimerAsynchronously(Main.getInstance(), 20L, 20L);
     }
 
     public File getFile() {

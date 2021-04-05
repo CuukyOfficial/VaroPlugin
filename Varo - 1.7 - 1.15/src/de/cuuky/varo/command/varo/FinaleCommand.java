@@ -14,6 +14,8 @@ import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class FinaleCommand extends VaroCommand {
 
@@ -21,10 +23,11 @@ public class FinaleCommand extends VaroCommand {
 		COUNTDOWN_PHASE,
 		JOIN_PHASE,
 		NONE,
-		STARTED;
+		STARTED
 	}
 
-	private int startScheduler, countdown;
+	private BukkitTask startScheduler;
+	private int countdown;
 
 	private FinalState status;
 
@@ -134,18 +137,18 @@ public class FinaleCommand extends VaroCommand {
 			}
 			if (countdown != 0) {
 				status = FinalState.COUNTDOWN_PHASE;
-				startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+				startScheduler = new BukkitRunnable() {
 					@Override
 					public void run() {
 						if (countdown != 0) {
 							Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + countdown + " Sekunden!");
 						} else {
 							finaleStart();
-							Bukkit.getScheduler().cancelTask(startScheduler);
+							startScheduler.cancel();
 						}
 						countdown--;
 					}
-				}, 0, 20);
+				}.runTaskTimer(Main.getInstance(), 0L, 20L);
 			} else {
 				finaleStart();
 			}
@@ -160,7 +163,7 @@ public class FinaleCommand extends VaroCommand {
 				return;
 			}
 
-			Bukkit.getScheduler().cancelTask(startScheduler);
+			startScheduler.cancel();
 			status = FinalState.JOIN_PHASE;
 			Bukkit.broadcastMessage("§7Der Finale-Start wurde §cabgebrochen§7!");
 		}

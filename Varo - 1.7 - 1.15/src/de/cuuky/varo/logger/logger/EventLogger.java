@@ -12,6 +12,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.VaroLogger;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class EventLogger extends VaroLogger {
 
@@ -71,16 +72,19 @@ public class EventLogger extends VaroLogger {
 	}
 
 	private void startSendQueue() {
-		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
-			if (Main.getBotLauncher() == null)
-				return;
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (Main.getBotLauncher() == null)
+					return;
 
-			for (Object[] msg : queue) {
-				sendToDiscord((LogType) msg[0], (String) msg[1]);
-				sendToTelegram((LogType) msg[0], (String) msg[1]);
-				queue.remove(msg);
+				for (Object[] msg : queue) {
+					sendToDiscord((LogType) msg[0], (String) msg[1]);
+					sendToTelegram((LogType) msg[0], (String) msg[1]);
+					queue.remove(msg);
+				}
 			}
-		}, 20L, 20L);
+		}.runTaskTimer(Main.getInstance(), 20L, 20L);
 	}
 
 	private boolean sendToDiscord(LogType type, String msg) {

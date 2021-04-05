@@ -10,26 +10,28 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class VaroUtils {
 
-	private static int worldToTimeID = 0;
+	private static BukkitTask worldToTimeID;
 
 	public static void setWorldToTime() {
 		if (!ConfigSetting.ALWAYS_TIME.isIntActivated())
 			return;
 
-		if (worldToTimeID != 0)
-			Bukkit.getScheduler().cancelTask(worldToTimeID);
+		if (worldToTimeID != null)
+			worldToTimeID.cancel();
 
-		worldToTimeID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		worldToTimeID = new BukkitRunnable() {
 
 			int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
 
 			@Override
 			public void run() {
 				if (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
-					Bukkit.getScheduler().cancelTask(worldToTimeID);
+					worldToTimeID.cancel();
 					return;
 				}
 
@@ -39,7 +41,7 @@ public final class VaroUtils {
 					world.setStorm(false);
 				}
 			}
-		}, 0, 40);
+		}.runTaskTimer(Main.getInstance(), 0, 40);
 	}
 
 	public static void doRandomTeam(int teamSize) {

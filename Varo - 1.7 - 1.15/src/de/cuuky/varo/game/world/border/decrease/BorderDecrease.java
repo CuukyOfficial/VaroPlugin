@@ -8,6 +8,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.VaroWorldHandler;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class BorderDecrease {
 
@@ -83,8 +84,7 @@ public class BorderDecrease {
 	}
 
 	private static void startShrinking() {
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (running)
@@ -97,6 +97,6 @@ public class BorderDecrease {
 
 				running = false;
 			}
-		}, 1, 20);
+		}.runTaskTimerAsynchronously(Main.getInstance(), 1L, 20L);
 	}
 }

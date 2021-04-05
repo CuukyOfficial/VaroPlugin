@@ -17,6 +17,8 @@ import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class VaroPlayerDisconnect {
 
@@ -25,7 +27,7 @@ public class VaroPlayerDisconnect {
 	 */
 
 	private static ArrayList<VaroPlayerDisconnect> disconnects;
-	private static HashMap<String, Integer> scheds;
+	private static HashMap<String, BukkitTask> scheds;
 
 	static {
 		disconnects = new ArrayList<>();
@@ -98,18 +100,21 @@ public class VaroPlayerDisconnect {
 		if (!VaroPlayer.getPlayer(playerName).getStats().isAlive())
 			return;
 
-		scheds.put(playerName, Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			if (Bukkit.getPlayerExact(playerName) != null)
-				return;
+		scheds.put(playerName, new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (Bukkit.getPlayerExact(playerName) != null)
+					return;
 
-			if (Main.getVaroGame().getGameState() != GameState.STARTED)
-				return;
+				if (Main.getVaroGame().getGameState() != GameState.STARTED)
+					return;
 
-			VaroPlayer vp = VaroPlayer.getPlayer(playerName);
-			vp.getStats().removeCountdown();
-			vp.getStats().setState(PlayerState.DEAD);
-			Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
-		}, (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
+				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
+				vp.getStats().removeCountdown();
+				vp.getStats().setState(PlayerState.DEAD);
+				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
+			}
+		}.runTaskLater(Main.getInstance(), (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
 	}
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {
@@ -124,7 +129,7 @@ public class VaroPlayerDisconnect {
 		if (!scheds.containsKey(playerName))
 			return;
 
-		Bukkit.getScheduler().cancelTask(scheds.get(playerName));
+		scheds.get(playerName).cancel();
 		scheds.remove(playerName);
 	}
 }

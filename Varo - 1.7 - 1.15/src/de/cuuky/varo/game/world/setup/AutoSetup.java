@@ -11,8 +11,8 @@ import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
@@ -30,7 +30,12 @@ public class AutoSetup {
             return;
 
         world = Main.getVaroGame().getVaroWorldHandler().getMainWorld();
-        task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), this::setupPlugin, 1L, 1L);
+        task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                setupPlugin();
+            }
+        }.runTaskTimer(Main.getInstance(), 1L, 1L);
     }
 
     private void setupPlugin() {

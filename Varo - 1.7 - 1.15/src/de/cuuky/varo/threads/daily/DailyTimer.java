@@ -69,9 +69,7 @@ public final class DailyTimer {
 			Main.getVaroGame().setLastDayTimer(new Date());
 		}
 
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
-			@SuppressWarnings("deprecation")
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				try {
@@ -84,25 +82,18 @@ public final class DailyTimer {
 
 						doDailyChecks();
 					}
-
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
-
-						@Override
-						public void run() {
-							startTimer();
-						}
-					}, 100);
-				} catch (Exception e) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new BukkitRunnable() {
-
-						@Override
-						public void run() {
-							startTimer();
-						}
-					}, 100);
+				} catch (Throwable e) {
+					e.printStackTrace();
 				}
+
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						startTimer();
+					}
+				}.runTaskLaterAsynchronously(Main.getInstance(), 100L);
 			}
-		}, getNextReset() * 20);
+		}.runTaskLater(Main.getInstance(), getNextReset() * 20);
 	}
 
 	public void doDailyChecks() {

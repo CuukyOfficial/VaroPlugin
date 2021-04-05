@@ -13,10 +13,12 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class SuroStart {
 
-	private int sched;
+	private BukkitTask sched;
 	private ArrayList<String> titles;
 
 	public SuroStart() {
@@ -48,21 +50,20 @@ public class SuroStart {
 	}
 
 	public void start(int delay, int start, boolean ignore) {
-		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		sched = new BukkitRunnable() {
 
 			int i = start;
-
 			@Override
 			public void run() {
 				if (titles.size() - 11 == i && !ignore) {
-					Bukkit.getScheduler().cancelTask(sched);
+					sched.cancel();
 					start(20, i, true);
 				}
 
 				if (i >= titles.size()) {
-					Bukkit.getScheduler().cancelTask(sched);
+					sched.cancel();
 					Main.getVaroGame().setGamestate(GameState.STARTED);
-					
+
 					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
@@ -70,7 +71,7 @@ public class SuroStart {
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
 					}
-					
+
 					Main.getVaroGame().doStartStuff();
 					return;
 				}
@@ -88,6 +89,6 @@ public class SuroStart {
 
 				i++;
 			}
-		}, 1, delay);
+		}.runTaskTimer(Main.getInstance(), 1, delay);
 	}
 }

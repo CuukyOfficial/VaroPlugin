@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroCancelAble {
 
@@ -47,14 +48,13 @@ public class VaroCancelAble {
 	}
 
 	private void schedule(int time) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				timerHook.run();
 				remove();
 			}
-		}, time * 20);
+		}.runTaskLater(Main.getInstance(), time * 20);
 	}
 
 	public VaroPlayer getPlayer() {

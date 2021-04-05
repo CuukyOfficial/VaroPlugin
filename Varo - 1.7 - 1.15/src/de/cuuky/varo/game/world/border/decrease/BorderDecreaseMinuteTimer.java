@@ -6,10 +6,13 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.state.GameState;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class BorderDecreaseMinuteTimer {
 
-	private int decreaseScheduler, secondsPassed, timer;
+	private BukkitTask decreaseScheduler;
+	private int secondsPassed, timer;
 
 	public BorderDecreaseMinuteTimer() {
 		if (!DecreaseReason.TIME_MINUTES.isEnabled())
@@ -21,8 +24,7 @@ public class BorderDecreaseMinuteTimer {
 	}
 
 	private void startScheduling() {
-		decreaseScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		decreaseScheduler = new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (Main.getVaroGame().getGameState() != GameState.STARTED && !Main.getVaroGame().isStarting() || !DecreaseReason.TIME_MINUTES.isEnabled()) {
@@ -38,7 +40,7 @@ public class BorderDecreaseMinuteTimer {
 
 				secondsPassed--;
 			}
-		}, 20, 20);
+		}.runTaskTimer(Main.getInstance(), 20L, 20L);
 	}
 
 	private String getCountdownMin(int sec) {
@@ -60,6 +62,6 @@ public class BorderDecreaseMinuteTimer {
 	}
 
 	public void remove() {
-		Bukkit.getScheduler().cancelTask(decreaseScheduler);
+		decreaseScheduler.cancel();
 	}
 }

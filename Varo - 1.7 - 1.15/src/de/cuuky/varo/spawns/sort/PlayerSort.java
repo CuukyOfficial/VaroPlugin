@@ -13,6 +13,8 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class PlayerSort {
 
@@ -22,7 +24,7 @@ public class PlayerSort {
 		SORTED_WELL;
 	}
 
-	private int scheduler;
+	private BukkitTask scheduler;
 	private HashMap<Player, Location> toTeleport;
 
 	public PlayerSort() {
@@ -30,7 +32,7 @@ public class PlayerSort {
 	}
 
 	private void startTeleporting() {
-		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+		scheduler = new BukkitRunnable() {
 
 			int index = 0;
 
@@ -38,7 +40,7 @@ public class PlayerSort {
 			public void run() {
 				if (index == toTeleport.size()) {
 					toTeleport.clear();
-					Bukkit.getScheduler().cancelTask(scheduler);
+					scheduler.cancel();
 					return;
 				}
 
@@ -46,7 +48,7 @@ public class PlayerSort {
 				BukkitUtils.saveTeleport(player, toTeleport.get(player));
 				index++;
 			}
-		}, 0, 1);
+		}.runTaskTimer(Main.getInstance(), 0,1);
 	}
 
 	public SortResult sortPlayers() {

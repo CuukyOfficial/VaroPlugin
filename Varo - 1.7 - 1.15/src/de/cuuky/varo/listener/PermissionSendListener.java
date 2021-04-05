@@ -15,6 +15,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
 import net.labymod.serverapi.bukkit.event.PermissionsSendEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PermissionSendListener implements Listener {
 
@@ -26,14 +27,13 @@ public class PermissionSendListener implements Listener {
 			labyJoined.add(event.getPlayer());
 
 		if (ConfigSetting.KICK_LABYMOD_PLAYER.getValueAsBoolean())
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+			new BukkitRunnable() {
 				@Override
 				public void run() {
 					VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
 					vp.getPlayer().kickPlayer(ConfigMessages.LABYMOD_KICK.getValue(vp, vp));
 				}
-			}, 1);
+			}.runTaskLater(Main.getInstance(), 1L);
 	}
 
 	@EventHandler

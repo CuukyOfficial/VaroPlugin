@@ -8,25 +8,25 @@ import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class PoisonWaterVaroEvent extends VaroEvent {
 
-	private int sched;
+	private BukkitTask sched;
 
 	public PoisonWaterVaroEvent() {
 		super(VaroEventType.POISON_WATER, Material.WATER_BUCKET, "Bei Kontakt mit Wasser erhaelt man Schaden");
-
 	}
 
 	@Override
 	public void onDisable() {
-		Bukkit.getScheduler().cancelTask(sched);
+		sched.cancel();
 	}
 
 	@Override
 	public void onEnable() {
-		sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		sched = new BukkitRunnable() {
 			@Override
 			public void run() {
 				for (Player p : VersionUtils.getOnlinePlayer()) {
@@ -34,6 +34,6 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 						p.damage(0.75);
 				}
 			}
-		}, 1, 20);
+		}.runTaskTimer(Main.getInstance(), 1L, 20L);
 	}
 }

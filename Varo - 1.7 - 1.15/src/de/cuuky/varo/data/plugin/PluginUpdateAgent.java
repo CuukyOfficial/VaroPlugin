@@ -1,18 +1,19 @@
 package de.cuuky.varo.data.plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PluginUpdateAgent {
 
 	private HashMap<DownloadPlugin, VaroUpdater> updater;
-	private int scheduler;
+	private BukkitTask scheduler;
 	private PluginLoader loader;
 
 	public PluginUpdateAgent(PluginLoader loader) {
@@ -27,8 +28,7 @@ public class PluginUpdateAgent {
 	}
 
 	private void startAgent() {
-		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-
+		scheduler = new BukkitRunnable() {
 			@Override
 			public void run() {
 				ArrayList<DownloadPlugin> needUpdate = new ArrayList<>();
@@ -45,10 +45,10 @@ public class PluginUpdateAgent {
 					updatePlugins(needUpdate);
 				else {
 					System.out.println(Main.getConsolePrefix() + "Updater: All libraries are up to date!");
-					Bukkit.getScheduler().cancelTask(scheduler);
+					scheduler.cancel();
 				}
 			}
-		}, 20, 20);
+		}.runTaskTimer(Main.getInstance(), 20L, 20L);
 	}
 
 	private void updatePlugins(ArrayList<DownloadPlugin> needUpdate) {

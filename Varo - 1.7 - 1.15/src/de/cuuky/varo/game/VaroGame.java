@@ -35,6 +35,8 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.utils.VaroUtils;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -56,7 +58,7 @@ public class VaroGame implements VaroSerializeable {
     @VaroSerializeField(path = "lobby")
     private Location lobby;
 
-    private int startScheduler;
+    private BukkitTask startScheduler;
     private boolean finaleJoinStart, firstTime;
     private VaroMainHeartbeatThread mainThread;
     private VaroStartThread startThread;
@@ -117,11 +119,11 @@ public class VaroGame implements VaroSerializeable {
             minuteTimer.remove();
 
         this.lastDayTimer = new Date();
-        startScheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), startThread = new VaroStartThread(), 0, 20);
+        startScheduler = new VaroStartThread().runTaskTimer(Main.getInstance(), 0, 20);
     }
 
     public void abort() {
-        Bukkit.getScheduler().cancelTask(startScheduler);
+        startScheduler.cancel();
         Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
 
         startThread = null;
@@ -197,14 +199,18 @@ public class VaroGame implements VaroSerializeable {
 
         if (ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
             Bukkit.getServer().broadcastMessage("§7Der Server wird in " + Main.getColorCode() + ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() + " Sekunden §7heruntergefahren...");
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-                Bukkit.getServer().shutdown();
-            }, ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Bukkit.getServer().shutdown();
+                }
+            }.runTaskLater(Main.getInstance(), ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20);
         }
     }
 
     private void startRefreshTimer() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), mainThread = new VaroMainHeartbeatThread(), 0, 20);
+        (mainThread = new VaroMainHeartbeatThread()).runTaskTimer(Main.getInstance(), 0L, 20L);
     }
 
     public void doStartStuff() {
@@ -234,9 +240,12 @@ public class VaroGame implements VaroSerializeable {
             Main.getVaroGame().setProtection(new ProtectionTime());
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-            Main.getVaroGame().setFirstTime(false);
-        }, ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                setFirstTime(false);
+            }
+        }.runTaskLater(Main.getInstance(), ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
     }
 
     public TopScoreList getTopScores() {
@@ -337,10 +346,6 @@ public class VaroGame implements VaroSerializeable {
 
     public void setFirstTime(boolean firstTime) {
         this.firstTime = firstTime;
-    }
-
-    public int getStartScheduler() {
-        return this.startScheduler;
     }
 
     @Override

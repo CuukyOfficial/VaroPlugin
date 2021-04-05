@@ -35,6 +35,7 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.Spawn;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Stats implements VaroSerializeable {
 
@@ -396,13 +397,12 @@ public class Stats implements VaroSerializeable {
 		removeTeamAndRank();
 
 		if (owner.isOnline()) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+			new BukkitRunnable() {
 				@Override
 				public void run() {
 					lastLocation = owner.getPlayer().getLocation();
 				}
-			}, 1);
+			}.runTaskLater(Main.getInstance(), 1L);
 		} else
 			lastLocation = null;
 

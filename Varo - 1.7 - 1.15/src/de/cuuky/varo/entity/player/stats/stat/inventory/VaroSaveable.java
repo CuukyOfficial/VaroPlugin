@@ -12,6 +12,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroSaveable implements VaroSerializeable {
 
@@ -108,8 +109,7 @@ public class VaroSaveable implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-
+		new BukkitRunnable() {
 			@Override
 			public void run() {
 				player = VaroPlayer.getPlayer(playerId);
@@ -119,7 +119,7 @@ public class VaroSaveable implements VaroSerializeable {
 					remove();
 				}
 			}
-		}, 1);
+		}.runTaskLater(Main.getInstance(), 1L);
 	}
 
 	@Override
