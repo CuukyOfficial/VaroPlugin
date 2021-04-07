@@ -1,12 +1,5 @@
 package de.cuuky.varo.game.threads;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.entity.Player;
-
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -20,7 +13,13 @@ import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
+import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class VaroMainHeartbeatThread extends BukkitRunnable {
 
@@ -54,6 +53,9 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 
 					if (!Main.getDataManager().getOutsideTimeChecker().canJoin()) {
 						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+							if (vp.isAdminIgnore())
+								continue;
+
 							vp.getStats().setCountdown(0);
 							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorueber!\n§7Versuche es morgen erneut");
 						}
