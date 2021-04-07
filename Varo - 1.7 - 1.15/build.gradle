@@ -5,80 +5,95 @@ apply plugin: 'java-library'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.options.encoding = 'UTF-8'
+libsDirName = System.getenv("libsDirName") == null ? libsDirName : System.getenv("libsDirName")
 
 sourceSets {
-	main {
-		java {
-			srcDirs 'src'
-		}
+    main {
+        java {
+            srcDirs 'src'
+        }
 
-		resources {
-			srcDirs 'resources'
-		}
-	}
+        resources {
+            srcDirs 'resources'
+        }
+    }
 }
 
 repositories {
-	jcenter()
-	flatDir {
-	   	dirs 'libs'
-	}
-	maven {
-		url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-	}
+    jcenter()
+    flatDir {
+        dirs 'libs'
+    }
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
 
-	maven {
-		url 'https://maven.sk89q.com/repo/'
-	}
+    maven {
+        url 'https://maven.sk89q.com/repo/'
+    }
 
-	maven {
-		url 'https://jitpack.io'
-	}
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 configurations {
-	internalLibs
+    internalLibs
 }
 
 dependencies {
-	compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-	compileOnly 'com.googlecode.json-simple:json-simple:1.1.1'
-	compileOnly ('com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT') {changing = true}
-	compileOnly ('com.github.LabyMod:labymod-server-api:master-SNAPSHOT') {changing = true}
+    this.addModularCompile('org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT', 'spigot', false)
+    this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
+    this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT', 'worldedit', true)
+    this.addModularCompile('com.github.LabyMod:labymod-server-api:master-SNAPSHOT', 'labymodapi', true)
+    this.addModularCompile('net.dv8tion:JDA:4.2.0_229', 'jda', false)
+    this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.0.1', 'telegramapi', false)
 
-	compileOnly 'net.dv8tion:JDA:4.2.0_229'
-	compileOnly 'com.github.pengrad:java-telegram-bot-api:5.0.1'
+    this.addModularInternal('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT', 'banapi', true)
+    this.addModularInternal('com.github.CuukyOfficial:CFW:master-SNAPSHOT', 'CFW - Cuuky FrameWork', true)
 
-	internalLibs ('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT') {changing = true}
-	if(file("libs/CFW - Cuuky FrameWork.jar").exists())
-		internalLibs name: 'CFW - Cuuky FrameWork'
-	else
-		internalLibs ('com.github.CuukyOfficial:CFW:master-SNAPSHOT') {changing = true}
+    compileOnly configurations.internalLibs
+}
 
-	compileOnly configurations.internalLibs
+boolean checkLib(String filePath) {
+    return file('libs/' + filePath + '.jar').exists();
+}
+
+void addModularCompile(String repoName, String fileName, boolean changingB) {
+    if (this.checkLib(fileName))
+        this.dependencies.compileOnly name: fileName
+    else
+        this.dependencies.compileOnly (repoName) { changing = changingB }
+}
+
+void addModularInternal(String repoName, String fileName, boolean changingB) {
+    if (this.checkLib(fileName))
+        this.dependencies.internalLibs name: fileName
+    else
+        this.dependencies.internalLibs (repoName) { changing = changingB }
 }
 
 jar {
-	manifest {
-		attributes(
-			'Manifest-Version': '1.0',
-			'Class-Path': '.',
-			'Main-Class': 'de.cuuky.varo.MainLauncher',
-		)
-	}
+    manifest {
+        attributes(
+                'Manifest-Version': '1.0',
+                'Class-Path': '.',
+                'Main-Class': 'de.cuuky.varo.MainLauncher',
+        )
+    }
 
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-	from {
-		configurations.internalLibs.collect {
-			it.isDirectory() ? it : zipTree(it)
-		}
-	}
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.internalLibs.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
 
 processResources {
-	from(sourceSets.main.resources.srcDirs) {
-		filter ReplaceTokens, tokens: [name: "Varo"]
-		filter ReplaceTokens, tokens: [version: "4.5.6"]
-		filter ReplaceTokens, tokens: [author: "Cuuky"]
-	}
+    from (sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [name: "Varo"]
+        filter ReplaceTokens, tokens: [version: "4.5.7"]
+        filter ReplaceTokens, tokens: [author: "Cuuky"]
+    }
 }
