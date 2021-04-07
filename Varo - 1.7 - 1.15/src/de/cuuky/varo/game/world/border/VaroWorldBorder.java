@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.game.world.VaroWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -124,10 +126,15 @@ public class VaroWorldBorder {
 	}
 
 	public void setBorderSize(double size, long time) {
-		try {
-			setSizeMethod.invoke(border, size, time);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					setSizeMethod.invoke(border, size, time);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.runTask(Main.getInstance());
 	}
 }
