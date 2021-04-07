@@ -24,11 +24,13 @@ public class AutoSetup {
     private BukkitTask task;
     private VaroWorld world;
     private int x, z;
+    private Runnable onFinish;
 
-    public AutoSetup() {
+    public AutoSetup(Runnable onFinish) {
         if (Main.getVaroGame().hasStarted())
             return;
 
+        this.onFinish = onFinish;
         world = Main.getVaroGame().getVaroWorldHandler().getMainWorld();
         task = new BukkitRunnable() {
             @Override
@@ -111,5 +113,6 @@ public class AutoSetup {
         }
 
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
+        this.onFinish.run();
     }
 }

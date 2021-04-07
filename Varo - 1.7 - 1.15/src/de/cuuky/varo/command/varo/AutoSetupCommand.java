@@ -25,11 +25,12 @@ public class AutoSetupCommand extends VaroCommand {
 					return;
 				}
 
-				new AutoSetup();
-				for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
-					player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
+				new AutoSetup(()-> {
+					for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
+						player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
 
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_FINISHED.getValue(vp));
+					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_FINISHED.getValue(vp));
+				});
 				return;
 			}
 		}
