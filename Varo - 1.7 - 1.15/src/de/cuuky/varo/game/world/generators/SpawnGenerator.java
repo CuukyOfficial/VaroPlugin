@@ -61,15 +61,23 @@ public class SpawnGenerator {
         }
     }
 
+    private Location searchNext(Location newLoc, int add, boolean needsAir) {
+        newLoc = newLoc.clone();
+        while (BlockUtils.isAir(newLoc.clone().add(0, add, 0).getBlock()) != needsAir)
+            newLoc = newLoc.add(0, add, 0);
+
+        if (add > 0)
+            newLoc.add(0, 1, 0);
+
+        return newLoc;
+    }
+
     private Location setSpawnAt(Location newLoc) {
         if (BlockUtils.isAir(newLoc.getBlock()))
-            while (BlockUtils.isAir(newLoc.clone().add(0, -1, 0).getBlock()))
-                newLoc = newLoc.add(0, -1, 0);
+            newLoc = this.searchNext(newLoc, -1, false);
         else
-            while (!BlockUtils.isAir(newLoc.getBlock()))
-                newLoc = newLoc.add(0, +1, 0);
+            newLoc = this.searchNext(newLoc, 1, true);
 
-        newLoc.getBlock().setType(Material.AIR);
         newLoc.clone().add(0, -1, 0).getBlock().setType(Material.AIR);
         Materials xmat = blockId != null && !blockId.isEmpty() ? Materials.fromString(blockId) : Materials.STONE_BRICK_SLAB;
         BlockUtils.setBlock(newLoc.clone().add(1, 0, 0).getBlock(), xmat);
