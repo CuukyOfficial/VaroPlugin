@@ -1,38 +1,51 @@
 package de.cuuky.varo.spigot;
 
-import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
 public class FileDownloader {
 
-	protected String link, path;
+    protected String link, path;
 
-	public FileDownloader(String link, String path) {
-		this.link = link;
-		this.path = path;
-	}
+    public FileDownloader(String link, String path) {
+        this.link = link;
+        this.path = path;
+    }
 
-	public void startDownload() throws IOException {
-		URL download = new URL(this.link);
-		BufferedInputStream in;
-		FileOutputStream fout;
+    private void startDownload(String link) throws IOException {
+        URL url = new URL(link);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.addRequestProperty("User-Agent", "Mozilla");
+        conn.setInstanceFollowRedirects(true);
+        HttpURLConnection.setFollowRedirects(true);
 
-		in = new BufferedInputStream(download.openStream());
-		fout = new FileOutputStream(path);
+        boolean redirect = false;
+        int status = conn.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK) {
+            if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                    || status == HttpURLConnection.HTTP_MOVED_PERM
+                    || status == HttpURLConnection.HTTP_SEE_OTHER)
+                redirect = true;
+        }
 
-		final byte data[] = new byte[1024];
-		int count;
-		while ((count = in.read(data, 0, 1024)) != -1) {
-			fout.write(data, 0, count);
-		}
+        if (redirect)
+            this.startDownload(conn.getHeaderField("Location"));
+        else {
+            new File(this.path).getParentFile().mkdirs();
+            ReadableByteChannel readableByteChannel = Channels.newChannel(conn.getInputStream());
+            FileOutputStream fileOutputStream = new FileOutputStream(this.path);
+            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+        }
 
-		if (in != null) {
-			in.close();
-		}
-		if (fout != null) {
-			fout.close();
-		}
-	}
+        conn.disconnect();
+    }
+
+    public void startDownload() throws IOException {
+        this.startDownload(this.link);
+    }
 }
