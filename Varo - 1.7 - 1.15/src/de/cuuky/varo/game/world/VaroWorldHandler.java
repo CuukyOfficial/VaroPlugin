@@ -15,6 +15,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
 import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroWorldHandler {
 
@@ -85,13 +86,18 @@ public class VaroWorldHandler {
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 			return;
 
-		if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
-			for (VaroWorld vworld : worlds)
-				vworld.getVaroBorder().setBorderSize(size, time);
-		else {
-			VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
-			vworld.getVaroBorder().setBorderSize(size, time);
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+					for (VaroWorld vworld : worlds)
+						vworld.getVaroBorder().setBorderSize(size, time);
+				else {
+					VaroWorld vworld = world != null ? getVaroWorld(world) : mainVaroWorld;
+					vworld.getVaroBorder().setBorderSize(size, time);
+				}
+			}
+		}.runTask(Main.getInstance());
 	}
 
 	public VaroWorld getVaroWorld(World world) {
