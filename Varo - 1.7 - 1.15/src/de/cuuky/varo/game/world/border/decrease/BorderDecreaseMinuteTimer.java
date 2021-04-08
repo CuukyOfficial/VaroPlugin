@@ -1,7 +1,5 @@
 package de.cuuky.varo.game.world.border.decrease;
 
-import org.bukkit.Bukkit;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -62,6 +60,7 @@ public class BorderDecreaseMinuteTimer {
 	}
 
 	public void remove() {
-		decreaseScheduler.cancel();
+		if (decreaseScheduler != null)
+		    decreaseScheduler.cancel();
 	}
 }

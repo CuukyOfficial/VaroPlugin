@@ -1,5 +1,7 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.game.lobby.LobbyItem;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -21,8 +23,8 @@ public class AbortCommand extends VaroCommand {
 			return;
 		}
 
-		ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue(vp);
 		Main.getVaroGame().abort();
+		Bukkit.getOnlinePlayers().forEach(player -> LobbyItem.giveItems(player));
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED.getValue(vp));
 	}
 }

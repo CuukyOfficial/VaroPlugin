@@ -2,6 +2,7 @@ package de.cuuky.varo.game.suro;
 
 import java.util.ArrayList;
 
+import de.cuuky.varo.game.lobby.LobbyItem;
 import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -50,6 +51,7 @@ public class SuroStart {
 	}
 
 	public void start(int delay, int start, boolean ignore) {
+		LobbyItem.removeHooks();
 		sched = new BukkitRunnable() {
 
 			int i = start;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import de.cuuky.cfw.version.types.Sounds;
+import de.cuuky.varo.game.lobby.LobbyItem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -58,7 +59,6 @@ public class VaroGame implements VaroSerializeable {
     @VaroSerializeField(path = "lobby")
     private Location lobby;
 
-    private BukkitTask startScheduler;
     private boolean finaleJoinStart, firstTime;
     private VaroMainHeartbeatThread mainThread;
     private VaroStartThread startThread;
@@ -96,7 +96,7 @@ public class VaroGame implements VaroSerializeable {
             return;
 
         new VaroBackup();
-
+        LobbyItem.removeHooks();
         if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
             VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
@@ -119,11 +119,11 @@ public class VaroGame implements VaroSerializeable {
             minuteTimer.remove();
 
         this.lastDayTimer = new Date();
-        startScheduler = new VaroStartThread().runTaskTimer(Main.getInstance(), 0, 20);
+        (startThread = new VaroStartThread()).runTaskTimer(Main.getInstance(), 0, 20);
     }
 
     public void abort() {
-        startScheduler.cancel();
+        startThread.cancel();
         Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
 
         startThread = null;
@@ -222,7 +222,6 @@ public class VaroGame implements VaroSerializeable {
             pl.playSound(pl.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
             pl.setGameMode(GameMode.SURVIVAL);
             pl1.cleanUpPlayer();
-
         }
 
         for (VaroPlayer pl1 : VaroPlayer.getVaroPlayer())
