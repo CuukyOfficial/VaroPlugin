@@ -109,7 +109,7 @@ public class AdminMainMenu extends VaroSuperInventory {
 				if (Main.getBotLauncher().getDiscordbot() == null) {
 					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
 					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und ueberpruefe, ob du den DiscordBot aktiviert hast.");
-					opener.sendMessage(Main.getPrefix() + "https://www.mediafire.com/file/yzhm845j7ieh678/JDA.jar/file");
+					opener.sendMessage(Main.getPrefix() + "https://www.spigotmc.org/resources/66778/");
 					return;
 				}
 
