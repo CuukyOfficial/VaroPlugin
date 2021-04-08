@@ -13,6 +13,7 @@ import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroSuperInventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerListGUI extends VaroSuperInventory {
 
@@ -75,6 +76,7 @@ public class PlayerListGUI extends VaroSuperInventory {
 		this.showStats = opener.hasPermission("varo.setup");
 		this.type = type;
 		this.setModifier = true;
+		this.animations = false;
 		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
 		open();
 	}
@@ -108,14 +110,17 @@ public class PlayerListGUI extends VaroSuperInventory {
 			}
 
 			int finalI = i;
-			Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
-				linkItemTo(finalI, new ItemBuilder().playername(players.getName()).lore((showStats ? players.getStats().getStatsListed() : new String[] {})).buildSkull(), () -> {
-					if (!opener.hasPermission("varo.player"))
-						return;
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					linkItemTo(finalI, new ItemBuilder().playername(players.getName()).lore((showStats ? players.getStats().getStatsListed() : new String[] {})).buildSkull(), () -> {
+						if (!opener.hasPermission("varo.player"))
+							return;
 
-					new PlayerGUI(opener, players, type);
-				});
-			});
+						new PlayerGUI(opener, players, type);
+					});
+				}
+			}.runTaskAsynchronously(Main.getInstance());
 			start++;
 		}
 
