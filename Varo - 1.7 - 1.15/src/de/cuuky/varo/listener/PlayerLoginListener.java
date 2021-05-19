@@ -100,9 +100,7 @@ public class PlayerLoginListener implements Listener {
 			long sec = (milli / 1000) % 60;
 			long min = (milli / 1000 / 60) % 60;
 			long hr = (milli / 1000 / 60 / 60) % 24;
-			String seconds = "";
-			String minutes = "";
-			String hours = "";
+			String seconds, minutes, hours;
 			if (String.valueOf(sec).length() == 1)
 				seconds = "0" + sec;
 			else
