@@ -56,7 +56,7 @@ public class VaroTeamRequest {
 			@Override
 			public boolean onChat(AsyncPlayerChatEvent event) {
 				String message = event.getMessage();
-				if (message.contains("#")) {
+				if (!message.matches("[a-z0-9]*")) {
 					invitor.sendMessage(ConfigMessages.TEAMREQUEST_NO_HASHTAG, invitor);
 					return false;
 				}

@@ -43,8 +43,8 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			if (args[1].contains("#")) {
-				sender.sendMessage(Main.getPrefix() + "Der Name darf kein '#' enthalten. (Wird automatisch hinzugefuegt)");
+			if (!args[1].matches("[a-z0-9]*")) {
+				sender.sendMessage(Main.getPrefix() + "Teamname nicht valide!");
 				return;
 			}
 
