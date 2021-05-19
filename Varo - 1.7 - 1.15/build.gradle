@@ -20,16 +20,26 @@ sourceSets {
 }
 
 repositories {
-    jcenter()
+	mavenCentral()
+	
     flatDir {
         dirs 'libs'
     }
+    
     maven {
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+	
+	maven {
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
 
     maven {
         url 'https://maven.sk89q.com/repo/'
+    }
+    
+    maven {
+    	url 'https://m2.dv8tion.net/releases'
     }
 
     maven {
@@ -44,9 +54,9 @@ configurations {
 dependencies {
     this.addModularCompile('org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT', 'spigot', false)
     this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
-    this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT', 'worldedit', true)
-    this.addModularCompile('com.github.LabyMod:labymod-server-api:master-SNAPSHOT', 'labymodapi', true)
-    this.addModularCompile('net.dv8tion:JDA:4.2.0_229', 'jda', false)
+    this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT', 'worldedit', true)
+    this.addModularCompile('com.github.LabyMod:legacy-labymod-server-api:master-SNAPSHOT', 'labymodapi', true)
+    this.addModularCompile('net.dv8tion:JDA:4.2.1_264', 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.0.1', 'telegramapi', false)
 
     this.addModularInternal('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT', 'banapi', true)
