@@ -26,10 +26,7 @@ public class PlayerDeathListener implements Listener {
         int healthAdd = ConfigSetting.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
         if (healthAdd > 0) {
             double hearts = VersionUtils.getHearts(killer) + healthAdd;
-            if (hearts > 20.0)
-                killer.setHealth(20.0);
-            else
-                killer.setHealth(hearts);
+            killer.setHealth(Math.min(hearts, 20.0));
             killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
         }
     }
@@ -98,7 +95,7 @@ public class PlayerDeathListener implements Listener {
                                 kickDeadPlayer(deadP, killer);
                                 Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER, deadP);
                             }
-                        }.runTaskLater(Main.getInstance(), ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20);
+                        }.runTaskLater(Main.getInstance(), ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20L);
                     } else
                         kickDeadPlayer(deadP, killer);
                 } else {
