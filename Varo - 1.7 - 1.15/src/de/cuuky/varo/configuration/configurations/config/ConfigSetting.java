@@ -247,6 +247,7 @@ public enum ConfigSetting implements SectionEntry {
 	TABLIST(ConfigSettingSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
 	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1, "Wie viele Leben ein Team hat", "teamLifes"),
 	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5, "Wie viele Leben ein maximal haben kann"),
+	DEATH_LIGHTNING_EFFECT(ConfigSettingSection.DEATH, "deathLightningEffect", true, "Ob beim Tod eines Spielers\nein Blitz-Effekt kommen soll"),
 
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
 
