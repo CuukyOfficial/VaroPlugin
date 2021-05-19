@@ -4,7 +4,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.menu.SuperInventory;
-import sun.security.krb5.internal.ccache.CredentialsCache;
 
 public abstract class VaroSuperInventory extends SuperInventory {
 
