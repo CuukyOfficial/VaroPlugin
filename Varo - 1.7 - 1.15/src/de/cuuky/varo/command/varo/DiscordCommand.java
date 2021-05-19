@@ -109,7 +109,7 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_GETLINK.getValue(vp).replace("%player%", args[1]).replace("%user%", user.getName().replace("%id%", user.getId())));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_GETLINK.getValue(vp).replace("%player%", args[1]).replace("%user%", user.getName()).replace("%id%", user.getId()));
 		} else if (args[0].equalsIgnoreCase("unlink")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
