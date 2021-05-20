@@ -46,13 +46,12 @@ public class EventListGUI extends VaroSuperInventory {
     @Override
     public boolean onOpen() {
         List<String> list = Main.getDataManager().getVaroLoggerManager().getEventLogger().getLogs();
-        Collections.reverse(list);
 
         int start = getSize() * (getPage() - 1);
         for (int i = 0; i != getSize(); i++) {
             String[] line;
             try {
-                line = list.get(start).split("] ");
+                line = list.get(list.size() - 1 - start).split("] ");
             } catch (IndexOutOfBoundsException e) {
                 break;
             }

@@ -63,16 +63,14 @@ public class DataManager {
 		this.ownerInstance = ownerInstance;
 
 		Main.setDataManager(this);
-
-		load();
-		startAutoSave();
-
-		doSave = true;
 	}
 
-	private void load() {
-		new DefaultPresetLoader();
+	public void loadLogger() {
 		this.varoLoggerManager = new VaroLoggerManager();
+	}
+
+	public void load() {
+		new DefaultPresetLoader();
 		this.configHandler = new ConfigHandler();
 		new MessagePlaceholderLoader();
 		VaroBoardProvider.update();
@@ -103,6 +101,10 @@ public class DataManager {
 
 		this.pluginLoader = new PluginLoader();
 		this.banHandler = new VaroPlayerBanHandler();
+		
+		startAutoSave();
+
+		doSave = true;
 	}
 
 	private void startAutoSave() {

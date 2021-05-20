@@ -5,12 +5,12 @@ import java.io.PrintStream;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.logger.VaroLogger;
 
-public class ConsoleLogger extends VaroLogger {
+public class ConsoleLogger extends VaroLogger<String> {
 
-	public ConsoleLogger(String name, boolean startQueue) {
-		super(name, false, startQueue);
+	public ConsoleLogger(String name) {
+		super(name);
 
-		startListening();
+		this.startListening();
 	}
 
 	private void startListening() {

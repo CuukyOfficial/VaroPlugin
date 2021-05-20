@@ -1,7 +1,9 @@
 package de.cuuky.varo.gui.admin.orelogger;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -13,13 +15,16 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
+import de.cuuky.varo.logger.logger.LoggedBlock;
 
 public class OreLoggerListGUI extends VaroSuperInventory {
+
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	public OreLoggerListGUI(Player opener) {
 		super("§6OreLogger", opener, 54, false);
@@ -46,42 +51,32 @@ public class OreLoggerListGUI extends VaroSuperInventory {
 
 	@Override
 	public boolean onOpen() {
-		List<String> list = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs();
-		Collections.reverse(list);
+		List<LoggedBlock> list = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs();
 
-		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
-			String str;
-			try {
-				str = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
+		int index = getSize() * (getPage() - 1);
+		for (int i = 0; i < getSize(); i++) {
+			if(index < 0 || index >= list.size())
 				break;
-			}
 
-			String name = str.split("\\] ")[1].split(" ")[0];
+			LoggedBlock block = list.get(list.size() - 1 - index);
+
 			ArrayList<String> lore = new ArrayList<>();
-
-			String minedAt = str.split("at ")[1].replace("!", "");
-
-			Material blocktype = Material.matchMaterial(str.split("mined ")[1].split(" ")[0]);
-			Location loc = new Location(Bukkit.getWorld(minedAt.split("\\'")[1]), Integer.valueOf(minedAt.split("x:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("y:")[1].split(" ")[0]), Integer.valueOf(minedAt.split("z:")[1].split(" ")[0]));
-
-			lore.add("Block Type: §c" + blocktype.name());
-			lore.add("Mined at: §c" + minedAt);
-			lore.add("Time mined: §c" + str.split("\\]")[0].split("\\[")[1]);
-			lore.add("Mined by: " + Main.getColorCode() + name);
+			lore.add("Block Type: §c" + block.getMaterial());
+			lore.add("Mined at: §c" + String.format("x:%d y:%d z:%d world:%s", block.getX(), block.getY(), block.getZ(), block.getWorld()));
+			lore.add("Time mined: §c" + DATE_FORMAT.format(new Date(block.getTimestamp())));
+			lore.add("Mined by: " + Main.getColorCode() + block.getName());
 			lore.add(" ");
 			lore.add("§cClick to teleport!");
 
-			linkItemTo(i, new ItemBuilder().displayname(name).itemstack(new ItemStack(blocktype)).lore(lore).build(), new Runnable() {
+			linkItemTo(i, new ItemBuilder().displayname(block.getName()).itemstack(new ItemStack(Material.matchMaterial(block.getMaterial()))).lore(lore).build(), new Runnable() {
 
 				@Override
 				public void run() {
-					BukkitUtils.saveTeleport(opener, loc);
+					BukkitUtils.saveTeleport(opener, new Location(Bukkit.getWorld(block.getWorld()), block.getX(), block.getY(), block.getZ()));
 				}
 			});
 
-			start++;
+			index++;
 		}
 
 		return calculatePages(list.size(), getSize()) == page;
