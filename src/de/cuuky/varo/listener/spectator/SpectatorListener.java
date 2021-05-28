@@ -93,7 +93,10 @@ public class SpectatorListener implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp() || vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
+		if (!Main.getVaroGame().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE)
+			event.setCancelled(true);
+
+		if (vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
 			event.setCancelled(true);
 
 		if (cancelEvent(event.getPlayer()))
