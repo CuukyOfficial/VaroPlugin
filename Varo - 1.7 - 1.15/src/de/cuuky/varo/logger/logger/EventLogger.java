@@ -1,20 +1,18 @@
 package de.cuuky.varo.logger.logger;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.logger.VaroLogger;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.cuuky.varo.logger.CachedVaroLogger;
 
-public class EventLogger extends VaroLogger {
+public class EventLogger extends CachedVaroLogger<String> {
 
 	public enum LogType {
 
@@ -65,7 +63,7 @@ public class EventLogger extends VaroLogger {
 	private List<Object[]> queue;
 
 	public EventLogger(String name) {
-		super(name, true);
+		super(name, String.class);
 
 		this.queue = new CopyOnWriteArrayList<>();
 		this.startSendQueue();

@@ -21,7 +21,6 @@ import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
-import de.cuuky.varo.logger.logger.ConsoleLogger;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
@@ -46,21 +45,20 @@ public class Main extends JavaPlugin {
     private static VaroGame varoGame;
 
     private boolean failed;
-    private ConsoleLogger consoleLogger;
 
     @Override
     public void onLoad() {
         failed = false;
         instance = this;
 
-        this.consoleLogger = new ConsoleLogger("consoleLogs", false);
         super.onLoad();
     }
 
     @Override
     public void onEnable() {
-        this.consoleLogger.startQueue();
         long timestamp = System.currentTimeMillis();
+        dataManager = new DataManager(this);
+        dataManager.loadLogger();
 
         System.out.println("############################################################################");
         System.out.println("#                                                                          #");
@@ -100,7 +98,7 @@ public class Main extends JavaPlugin {
 
             long dataStamp = System.currentTimeMillis();
             cuukyFrameWork = new AdapterCuukyFrameWork<VaroPlayer>(instance, languageManager = new VaroLanguageManager(Main.this));
-            dataManager = new DataManager(this);
+            dataManager.load();
             System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
             varoUpdater = new VaroUpdater(RESOURCE_ID, getDescription().getVersion(), () -> varoUpdater.printResults());
@@ -152,6 +150,7 @@ public class Main extends JavaPlugin {
         }
         dataManager.getBanHandler().cancel();
         Bukkit.getScheduler().cancelTasks(this);
+        dataManager.getVaroLoggerManager().cleanUp();
 
         System.out.println(CONSOLE_PREFIX + "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
         System.out.println(CONSOLE_PREFIX + " ");

@@ -107,7 +107,7 @@ public class PlayerChatListener implements Listener {
 		} else
 			message = message.replace("&", "§");
 
-		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player.getName() + "» '" + message + "'");
+		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player, null, message);
 
 		String messageFormat = "";
 		if (vp.getTeam() != null) {

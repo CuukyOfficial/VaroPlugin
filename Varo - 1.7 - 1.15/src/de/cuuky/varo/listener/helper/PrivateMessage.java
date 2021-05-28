@@ -23,7 +23,7 @@ public class PrivateMessage {
 		this.message = message;
 		this.written = new Date();
 
-		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.PRIVATE_CHAT, sender.getName() + " >> " + reciever.getName() + ": " + message);
+		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.PRIVATE_CHAT, sender, reciever.getName(), message);
 
 		messages.add(this);
 	}

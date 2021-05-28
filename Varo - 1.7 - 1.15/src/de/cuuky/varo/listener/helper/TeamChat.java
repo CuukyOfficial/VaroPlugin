@@ -16,7 +16,7 @@ public class TeamChat {
 		if (message.isEmpty())
 			return;
 
-		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.TEAM_CHAT, "#" + player.getTeam().getName() + " | " + player.getName() + " >> " + message);
+		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.TEAM_CHAT, player.getPlayer(), "#" + player.getTeam().getName(), message);
 		for (VaroPlayer pl : player.getTeam().getMember()) {
 			if (!pl.isOnline())
 				continue;

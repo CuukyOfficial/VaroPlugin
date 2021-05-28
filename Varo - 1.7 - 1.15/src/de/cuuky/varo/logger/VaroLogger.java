@@ -1,94 +1,104 @@
 package de.cuuky.varo.logger;
 
-import de.cuuky.varo.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-public abstract class VaroLogger {
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-    private final File file;
-    private FileWriter fw;
-    private final List<String> logs;
-    private final List<String> queue;
-    private PrintWriter pw;
-    private Scanner scanner;
+public abstract class VaroLogger<T> {
 
-    protected VaroLogger(String name, boolean loadPrevious, boolean startQueue) {
-        this.file = new File("plugins/Varo/logs/", name + ".yml");
-        this.logs = new ArrayList<>();
-        this.queue = new CopyOnWriteArrayList<>();
-        this.loadFile(loadPrevious);
+	private static final File LOGS_FOLDER = new File("plugins/Varo/logs/");
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private final static HashFunction SHA256 = Hashing.sha256();
+	static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
-        if (startQueue)
-            this.startQueue();
-    }
+	private final File file;
+	private PrintWriter pw;
+	private final Queue<T> queue;
+	private byte[] remote;
+	private byte[] prevSignature = new byte[0];
 
-    protected VaroLogger(String name, boolean loadPrevious) {
-        this(name, loadPrevious, true);
-    }
+	protected VaroLogger(String name) {
+		this.file = new File(LOGS_FOLDER, name + ".varolog");
+		try {
+			if (!this.file.exists()) {
+				new File(this.file.getParent()).mkdirs();
+				this.file.createNewFile();
+			}
 
-    private void loadFile(boolean loadPrevious) {
-        try {
-            if (!file.exists()) {
-                new File(file.getParent()).mkdirs();
-                file.createNewFile();
-            }
+			this.pw = new PrintWriter(new FileWriter(this.file, true));
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		this.queue = new ConcurrentLinkedQueue<>();
+	}
 
-            fw = new FileWriter(file, true);
-            pw = new PrintWriter(fw);
-            scanner = new Scanner(file);
+	protected void load() throws IOException {}
 
-            if (loadPrevious)
-                while (scanner.hasNextLine())
-                    logs.add(scanner.nextLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	protected void queLog(T log) {
+		if(log != null)
+			this.queue.add(log);
+	}
 
-    protected String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
+	public void processQueue() {
+		if(!this.queue.isEmpty()) {
+			T log;
+			while((log = this.queue.poll()) != null)
+				this.print(log);
 
-        return dateFormat.format(date);
-    }
+			this.pw.flush();
+		}
+	}
 
-    protected void queLog(String log) {
-        logs.add(log);
-        queue.add(log);
-    }
+	void print(Object object) {
+		String value = GSON.toJson(object);
 
-    public void startQueue() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (String s : queue) {
-                    pw.println(s);
-                    queue.remove(s);
-                }
+		byte[] message = value.getBytes(StandardCharsets.UTF_8);
+		byte[] data = new byte[this.remote.length + this.prevSignature.length + message.length];
+		System.arraycopy(this.remote, 0, data, 0, this.remote.length);
+		System.arraycopy(this.prevSignature, 0, data, this.remote.length, this.prevSignature.length);
+		System.arraycopy(message, 0, data, this.remote.length + this.prevSignature.length, message.length);
 
-                pw.flush();
-            }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 20L, 20L);
-    }
+		HashCode signature = SHA256.hashBytes(data);
+		this.prevSignature = signature.asBytes();
 
-    public File getFile() {
-        return file;
-    }
+		this.print(signature.toString(), value);
+	}
 
-    public List<String> getLogs() {
-        return logs;
-    }
+	void print(String signature, String value) {
+		this.pw.print(signature);
+		this.pw.println(value);
+	}
+
+	public void cleanUp() {
+		this.pw.close();
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setRemote(byte[] remote) {
+		this.remote = remote;
+	}
+
+	protected String getCurrentDate() {
+		return DATE_FORMAT.format(new Date());
+	}
+
+	protected Gson getGson() {
+		return GSON;
+	}
 }
