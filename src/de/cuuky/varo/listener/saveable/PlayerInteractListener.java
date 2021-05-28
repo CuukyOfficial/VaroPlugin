@@ -22,7 +22,7 @@ public class PlayerInteractListener implements Listener {
 		if (!Main.getVaroGame().hasStarted())
 			return;
 
-		if (!Main.getVaroGame().hasStarted() && e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+		if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
 			e.setCancelled(true);
 			return;
 		}
