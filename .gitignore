@@ -1,4 +1,17 @@
+/bin/
+.project
+.classpath
+/.settings/
+**.class
+/target/
+/libs/
 .DS_Store
 .idea/
 *.iml
 /out/
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
