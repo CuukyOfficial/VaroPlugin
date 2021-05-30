@@ -43,7 +43,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			if (!args[1].matches("[a-z0-9]*")) {
+			if (!args[1].matches("[a-zA-Z0-9]*")) {
 				sender.sendMessage(Main.getPrefix() + "Teamname nicht valide!");
 				return;
 			}
