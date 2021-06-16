@@ -60,7 +60,7 @@ dependencies {
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.0.1', 'telegramapi', false)
 
     this.addModularInternal('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT', 'banapi', true)
-    this.addModularInternal('com.github.CuukyOfficial:CFW:master-SNAPSHOT', 'CFW - Cuuky FrameWork', true)
+    this.addModularInternal('com.github.CuukyOfficial:CFW:master-SNAPSHOT', 'CFW', true)
 
     compileOnly configurations.internalLibs
 }
