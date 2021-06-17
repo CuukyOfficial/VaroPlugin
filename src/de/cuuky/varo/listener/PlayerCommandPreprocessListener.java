@@ -22,7 +22,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 		if (WORLDEDIT_CRASH_COMMANDS.contains(lowerMessage)) {
 			event.setCancelled(true);
 			Bukkit.getServer().broadcastMessage(String.format("%s§e%s §chat möglicherweise versucht den Server zu crashen!", Main.getPrefix(), event.getPlayer().getName(), event.getMessage()));
-		} else if (TELL_COMMANDS.contains(lowerMessage) && !Main.getVaroGame().isRunning()) {
+		} else if (TELL_COMMANDS.contains(lowerMessage)) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(Main.getPrefix() + "§7Nein.");
 		}
