@@ -58,6 +58,12 @@ public class PlayerJoinListener implements Listener {
 
         vplayer.setPlayer(player);
         vplayer.onEvent(BukkitEventType.JOINED);
+        
+        //TEST
+        vplayer.getNetworkManager().sendTitle("TEST TITLE", "TEST");
+        vplayer.getNetworkManager().sendActionbar("UNSTALE VERSION");
+        vplayer.getNetworkManager().sendLinkedMessage("Klick here to open test link", "https://varoplugin.de");
+        
         event.setJoinMessage(null);
         if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA)
             ModUtils.checkForIllegalMods(player);
