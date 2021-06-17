@@ -14,6 +14,8 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 
 public class VaroTeam extends VaroEntity {
 
+	public static final String NAME_REGEX = "[a-zA-Z0-9]+";
+
 	private static int highestNumber;
 	private static ArrayList<VaroTeam> teams;
 

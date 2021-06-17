@@ -164,7 +164,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%colorcode%&lGib jetzt den Teamnamen fuer dich und %invited% ein:"),
 	TEAMREQUEST_MAX_TEAMNAME_LENGTH("teamrequest.maxTeamnameLength", "Dein Teamname darf maximal %colorcode%%maxLength% &7Zeichen enthalten!"),
 	TEAMREQUEST_NO_COLORCODE("teamrequest.noColorCode", "Dein Teamname darf keine Farbcodes enthalten!"),
-	TEAMREQUEST_NO_HASHTAG("teamrequest.noHashtag", "Dein Teamname darf kein '#' enthalten. (Wird automatisch hinzugefuegt)"),
+	TEAMREQUEST_INVALID_NAME("teamrequest.invalid", "Ungültiger Teamname!"),
 	TEAMREQUEST_PLAYER_NOT_ONLINE("teamrequest.playerNotOnline", "%colorcode%%invitor% ist nicht mehr online!"),
 	TEAMREQUEST_REVOKED("teamrequest.invationRevoked", "Einladung erfolgreich zurueckgezogen!"),
 	TEAMREQUEST_TEAM_FULL("teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),

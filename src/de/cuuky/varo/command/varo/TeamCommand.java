@@ -43,7 +43,7 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			if (!args[1].matches("[a-zA-Z0-9]*")) {
+			if (!args[1].matches(VaroTeam.NAME_REGEX)) {
 				sender.sendMessage(Main.getPrefix() + "Teamname nicht valide!");
 				return;
 			}
@@ -182,8 +182,8 @@ public class TeamCommand extends VaroCommand {
 				return;
 			}
 
-			if (args[1].startsWith("#") || args[2].startsWith("#")) {
-				sender.sendMessage(Main.getPrefix() + "Deine Teamnamen duerfen nicht mit " + Main.getColorCode() + "# §7anfangen!");
+			if (!args[2].matches(VaroTeam.NAME_REGEX)) {
+				sender.sendMessage(Main.getPrefix() + "Ungültiger teamname!");
 				return;
 			}
 

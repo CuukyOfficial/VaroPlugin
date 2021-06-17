@@ -2,8 +2,9 @@ package de.cuuky.varo.entity.team.request;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
@@ -12,8 +13,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class VaroTeamRequest {
 
@@ -56,8 +55,8 @@ public class VaroTeamRequest {
 			@Override
 			public boolean onChat(AsyncPlayerChatEvent event) {
 				String message = event.getMessage();
-				if (!message.matches("[a-zA-Z0-9]*")) {
-					invitor.sendMessage(ConfigMessages.TEAMREQUEST_NO_HASHTAG, invitor);
+				if (!message.matches(VaroTeam.NAME_REGEX)) {
+					invitor.sendMessage(ConfigMessages.TEAMREQUEST_INVALID_NAME, invitor);
 					return false;
 				}
 
