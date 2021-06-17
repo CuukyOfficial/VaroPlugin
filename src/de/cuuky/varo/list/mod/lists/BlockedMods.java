@@ -6,11 +6,11 @@ public class BlockedMods extends ModList {
 
 	public BlockedMods() {
 		super("BlockedMods");
-
-		if (!mods.isEmpty())
-			return;
-
-		mods.add("Xray");
+	}
+	
+	@Override
+	public void loadDefaultValues() {
+		this.mods.add("Xray");
 	}
 
 	public boolean isBlocked(String name) {

@@ -11,11 +11,11 @@ public class StartItems extends ItemList {
 
 	public StartItems() {
 		super("StartItems");
-
-		if (!items.isEmpty())
-			return;
-
-		items.add(Materials.AIR.parseItem());
+	}
+	
+	@Override
+	public void loadDefaultValues() {
+		this.items.add(Materials.AIR.parseItem());
 	}
 
 	public void giveToAll() {

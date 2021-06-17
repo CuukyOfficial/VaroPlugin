@@ -9,11 +9,11 @@ public class BlockedEnchantments extends EnchantmentList {
 	@SuppressWarnings("deprecation")
 	public BlockedEnchantments() {
 		super("BlockedEnchantments");
-
-		if (!enchantments.isEmpty())
-			return;
-
-		enchantments.add(Enchantment.DAMAGE_ARTHROPODS.getName() + ":1");
+	}
+	
+	@Override
+	public void loadDefaultValues() {
+		this.enchantments.add(Enchantment.DAMAGE_ARTHROPODS.getName() + ":1");
 	}
 
 	@SuppressWarnings("deprecation")

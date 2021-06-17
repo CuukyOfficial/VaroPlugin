@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.list.VaroList;
 
-public class ItemList extends VaroList {
+public abstract class ItemList extends VaroList {
 
 	protected ArrayList<ItemStack> items;
 
@@ -74,9 +74,12 @@ public class ItemList extends VaroList {
 	}
 
 	@Override
-	public void onLoad(List<?> list) {
-		items = new ArrayList<ItemStack>();
+	public void init() {
+		this.items = new ArrayList<ItemStack>();
+	}
 
+	@Override
+	public void onLoad(List<?> list) {
 		for (Object id : list) {
 			try {
 				ItemStack c = (ItemStack) id;

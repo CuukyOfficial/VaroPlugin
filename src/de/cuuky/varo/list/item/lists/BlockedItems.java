@@ -9,11 +9,11 @@ public class BlockedItems extends ItemList {
 
 	public BlockedItems() {
 		super("BlockedItems");
-
-		if (!items.isEmpty())
-			return;
-
-		items.add(Materials.AIR.parseItem());
+	}
+	
+	@Override
+	public void loadDefaultValues() {
+		this.items.add(Materials.AIR.parseItem());
 	}
 
 	public boolean isBlocked(ItemStack itemstack) {
