@@ -106,34 +106,13 @@ public class Spawn implements VaroSerializeable {
 			return;
 
 		nameTagLocation = location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0);
-		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.valueOf("ARMOR_STAND"));
+		armorStand = location.getWorld().spawnEntity(nameTagLocation, EntityType.ARMOR_STAND);
 
-		try {
-			armorStand.getClass().getDeclaredMethod("setVisible", boolean.class).invoke(armorStand, false);
-			armorStand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorStand, true);
-			armorStand.getClass().getDeclaredMethod("setGravity", boolean.class).invoke(armorStand, false);
-
-			updateNametag();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		updateNametag();
 	}
 
 	public void updateNametag() {
-		if (this.armorStand == null)
-			return;
-
-		try {
-			String nameTagName = getNametagName();
-			String entName = ((String) armorStand.getClass().getMethod("getCustomName").invoke(armorStand));
-
-			if (entName == null || !nameTagName.equals(entName)) {
-				this.nameTagName = nameTagName;
-				armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand, nameTagName);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		VersionUtils.getVersionAdapter().setArmorstandAttributes(this.armorStand, false, true, false, this.getNametagName());
 	}
 
 	public void delete() {
