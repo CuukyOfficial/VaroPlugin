@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_17_R1.CraftServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.cuuky.cfw.AdapterCuukyFrameWork;
@@ -159,7 +160,7 @@ public class Main extends JavaPlugin {
     }
 
     public UUID getUUID(String name) throws Exception {
-        return this.getServer().getOnlineMode() ? UUIDUtils.getUUID(name) : UUIDUtils.getCrackedUUID(name);
+        return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? UUIDUtils.getUUID(name) : UUIDUtils.getCrackedUUID(name);
     }
 
     public void setFailed(boolean failed) {

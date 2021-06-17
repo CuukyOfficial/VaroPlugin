@@ -36,17 +36,13 @@ public class VaroWorldHandler {
     }
 
     private void disableWorldDownloader() {
-        Bukkit.getServer().getMessenger().registerIncomingPluginChannel(Main.getInstance(), "WDL|INIT", new PluginMessageListener() {
+        Bukkit.getServer().getMessenger().registerIncomingPluginChannel(Main.getInstance(), "WDL|INIT", (channel, player, data) -> {
+            if (player.hasPermission("varo.worlddownloader"))
+                return;
 
-            @Override
-            public void onPluginMessageReceived(String channel, Player player, byte[] data) {
-                if (player.hasPermission("varo.worlddownloader"))
-                    return;
-
-                Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, player.getName() + " nutzt einen WorldDownloader!");
-                Bukkit.broadcastMessage("§4" + player.getName() + " nutzt einen WorldDownloader!");
-                player.kickPlayer("§4WorldDownloader sind bei Varos untersagt");
-            }
+            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, player.getName() + " nutzt einen WorldDownloader!");
+            Bukkit.broadcastMessage("§4" + player.getName() + " nutzt einen WorldDownloader!");
+            player.kickPlayer("§4WorldDownloader sind bei Varos untersagt");
         });
     }
 
