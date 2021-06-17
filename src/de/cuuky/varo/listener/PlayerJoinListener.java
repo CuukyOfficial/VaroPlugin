@@ -8,6 +8,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
@@ -58,6 +59,11 @@ public class PlayerJoinListener implements Listener {
 
         vplayer.setPlayer(player);
         vplayer.onEvent(BukkitEventType.JOINED);
+        
+        if(vplayer.getStats().isSpectator())
+			VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
+		else
+			VersionUtils.getVersionAdapter().setXpCooldown(player, 0);
         
         //TEST
         vplayer.getNetworkManager().sendTitle("TEST TITLE", "TEST");

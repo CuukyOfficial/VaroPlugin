@@ -570,6 +570,14 @@ public class Stats implements VaroSerializeable {
 		this.state = state;
 		if (state == PlayerState.DEAD)
 			this.diedAt = new Date();
+		
+		Player player = this.owner.getPlayer();
+		if(player != null) {
+			if(state == PlayerState.SPECTATOR)
+				VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
+			else
+				VersionUtils.getVersionAdapter().setXpCooldown(player, 0);
+		}
 
 		new WinnerCheck();
 	}
