@@ -14,9 +14,9 @@ public class PluginUpdateAgent {
 
 	private HashMap<DownloadPlugin, VaroUpdater> updater;
 	private BukkitTask scheduler;
-	private PluginLoader loader;
+	private ExternalPluginLoader loader;
 
-	public PluginUpdateAgent(PluginLoader loader) {
+	public PluginUpdateAgent(ExternalPluginLoader loader) {
 		this.updater = new HashMap<>();
 		this.loader = loader;
 

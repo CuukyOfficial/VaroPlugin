@@ -19,6 +19,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.data.plugin.ExternalPluginLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
@@ -36,6 +37,7 @@ public class Main extends JavaPlugin {
 
     private static Main instance;
 
+    private static ExternalPluginLoader pluginLoader;
     private static BotLauncher botLauncher;
     private static VaroBoardProvider varoBoard;
     private static AdapterCuukyFrameWork<VaroPlayer> cuukyFrameWork;
@@ -58,6 +60,9 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         long timestamp = System.currentTimeMillis();
         dataManager = new DataManager(this);
+        
+        pluginLoader = new ExternalPluginLoader();
+        
         dataManager.loadLogger();
 
         System.out.println("############################################################################");
@@ -193,6 +198,10 @@ public class Main extends JavaPlugin {
     public static VaroGame getVaroGame() {
         return varoGame;
     }
+
+    public static ExternalPluginLoader getExternalPluginLoader() {
+		return pluginLoader;
+	}
 
     public static VaroBoardProvider getVaroBoard() {
         return varoBoard;

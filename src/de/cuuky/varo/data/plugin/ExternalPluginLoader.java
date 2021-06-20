@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.spigot.FileDownloader;
 
-public class PluginLoader {
+public class ExternalPluginLoader {
 
 	private static Method getFileMethod;
 
@@ -28,7 +28,7 @@ public class PluginLoader {
 		}
 	}
 
-	public PluginLoader() {
+	public ExternalPluginLoader() {
 		loadPlugins();
 	}
 
