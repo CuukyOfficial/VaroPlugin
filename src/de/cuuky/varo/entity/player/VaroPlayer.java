@@ -41,6 +41,7 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
+import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -90,6 +91,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private VaroTeam team;
 	private Player player;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
+	private ChatMessage lastMessage;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -372,6 +374,14 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	public boolean isMassRecordingKick() {
 		return massRecordingKick;
+	}
+	
+	public ChatMessage getLastMessage() {
+		return lastMessage;
+	}
+	
+	public void setLastMessage(ChatMessage lastMessage) {
+		this.lastMessage = lastMessage;
 	}
 
 	/**
