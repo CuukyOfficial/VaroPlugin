@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.menu.utils.PageAction;
@@ -13,7 +14,6 @@ import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroSuperInventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerListGUI extends VaroSuperInventory {
 

@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.VersionUtils;
@@ -35,7 +36,6 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.Spawn;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class Stats implements VaroSerializeable {
 

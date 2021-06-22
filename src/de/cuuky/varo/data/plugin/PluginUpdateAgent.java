@@ -1,14 +1,15 @@
 package de.cuuky.varo.data.plugin;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
-import de.cuuky.varo.spigot.updater.VaroUpdater;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
+import de.cuuky.varo.spigot.updater.VaroUpdater;
 
 public class PluginUpdateAgent {
 

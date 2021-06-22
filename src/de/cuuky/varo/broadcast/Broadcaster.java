@@ -1,17 +1,18 @@
 package de.cuuky.varo.broadcast;
 
-import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class Broadcaster {
 

@@ -1,11 +1,16 @@
 package de.cuuky.varo.ban;
 
-import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.varoplugin.banapi.*;
-import de.varoplugin.banapi.LatestBansHandler.Mode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
+
+import de.cuuky.varo.bot.discord.register.BotRegister;
+import de.varoplugin.banapi.Ban;
+import de.varoplugin.banapi.BanApi;
+import de.varoplugin.banapi.BanDuration;
+import de.varoplugin.banapi.BanUser;
+import de.varoplugin.banapi.LatestBansHandler;
+import de.varoplugin.banapi.LatestBansHandler.Mode;
 
 public class VaroPlayerBanHandler {
 

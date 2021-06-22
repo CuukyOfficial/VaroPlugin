@@ -1,5 +1,13 @@
 package de.cuuky.varo.game.world.setup;
 
+import java.io.File;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import org.bukkit.Location;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -11,13 +19,6 @@ import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
-import org.bukkit.Location;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class AutoSetup {
 

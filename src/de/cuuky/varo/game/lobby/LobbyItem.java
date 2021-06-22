@@ -1,5 +1,15 @@
 package de.cuuky.varo.game.lobby;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+
 import de.cuuky.cfw.hooking.hooks.item.ItemHook;
 import de.cuuky.cfw.hooking.hooks.item.ItemHookHandler;
 import de.cuuky.cfw.item.ItemBuilder;
@@ -8,15 +18,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 import de.cuuky.varo.game.state.GameState;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LobbyItem {
 

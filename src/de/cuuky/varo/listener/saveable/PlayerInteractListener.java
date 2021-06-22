@@ -1,10 +1,5 @@
 package de.cuuky.varo.listener.saveable;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,6 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 
 public class PlayerInteractListener implements Listener {
 

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
@@ -13,11 +12,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class FancyEffectListener implements Listener {
 

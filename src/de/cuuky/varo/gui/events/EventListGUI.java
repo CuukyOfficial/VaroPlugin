@@ -1,19 +1,19 @@
 package de.cuuky.varo.gui.events;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemStack;
+
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.MainMenu;
 import de.cuuky.varo.gui.VaroSuperInventory;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class EventListGUI extends VaroSuperInventory {
 

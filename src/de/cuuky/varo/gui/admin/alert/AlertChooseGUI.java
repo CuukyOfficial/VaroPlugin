@@ -11,11 +11,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
 public class AlertChooseGUI extends VaroSuperInventory {
 

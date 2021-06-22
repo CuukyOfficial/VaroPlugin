@@ -2,8 +2,9 @@ package de.cuuky.varo.event.events;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -13,8 +14,6 @@ import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class MassRecordingVaroEvent extends VaroEvent {
 

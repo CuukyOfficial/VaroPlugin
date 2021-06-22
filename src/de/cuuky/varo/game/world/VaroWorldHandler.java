@@ -1,5 +1,13 @@
 package de.cuuky.varo.game.world;
 
+import java.util.ArrayList;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
@@ -7,13 +15,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
 import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.messaging.PluginMessageListener;
-
-import java.util.ArrayList;
 
 public class VaroWorldHandler {
 

@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
@@ -14,8 +16,6 @@ import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class FinaleCommand extends VaroCommand {
 

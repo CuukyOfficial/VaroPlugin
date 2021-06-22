@@ -7,10 +7,10 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
 public class BotRegisterGUI extends VaroSuperInventory {
 

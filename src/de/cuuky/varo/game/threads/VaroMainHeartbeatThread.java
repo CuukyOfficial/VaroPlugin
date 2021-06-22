@@ -1,5 +1,13 @@
 package de.cuuky.varo.game.threads;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -13,13 +21,6 @@ import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
-import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class VaroMainHeartbeatThread extends BukkitRunnable {
 
