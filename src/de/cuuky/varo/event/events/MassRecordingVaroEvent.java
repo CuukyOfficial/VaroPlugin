@@ -63,13 +63,13 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 		if (!timerEnd) {
 			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme wurde beendet.");
+				vp.getVersionAdapter().sendTitle("Ende", "Die Massenaufnahme wurde beendet.");
 
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme wurde vorzeitig beendet.");
 			}
 		} else {
 			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-				vp.getNetworkManager().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
+				vp.getVersionAdapter().sendTitle("Ende", "Die Massenaufnahme ist zu Ende.");
 
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Die Massenaufnahme ist zu Ende.");
 			}
@@ -105,7 +105,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-			vp.getNetworkManager().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
+			vp.getVersionAdapter().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 
 		scheduler = new BukkitRunnable() {
 			@Override

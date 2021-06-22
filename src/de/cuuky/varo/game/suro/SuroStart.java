@@ -86,7 +86,7 @@ public class SuroStart {
 					vp.cleanUpPlayer();
 					vp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
 					if (!titles.get(i).isEmpty())
-						vp.getNetworkManager().sendTitle(titles.get(i).replace("%name%", vp.getName()).replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size())), "");
+						vp.getVersionAdapter().sendTitle(titles.get(i).replace("%name%", vp.getName()).replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size())), "");
 				}
 
 				i++;

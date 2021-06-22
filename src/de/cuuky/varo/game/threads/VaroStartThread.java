@@ -59,7 +59,7 @@ public class VaroStartThread extends BukkitRunnable {
 
 				String[] title = ConfigMessages.GAME_VARO_START_TITLE.getValue(vp).replace("%countdown%", String.valueOf(startcountdown)).split("\n");
 				if (title.length != 0)
-					vp.getNetworkManager().sendTitle(title[0], title.length == 2 ? title[1] : "");
+					vp.getVersionAdapter().sendTitle(title[0], title.length == 2 ? title[1] : "");
 			}
 		}
 

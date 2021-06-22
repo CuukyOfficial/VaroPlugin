@@ -44,7 +44,7 @@ public class VaroPlayerDisconnect {
 	}
 
 	public void addDisconnect() {
-		if (VaroPlayer.getPlayer(name).getNetworkManager().getPing() >= ConfigSetting.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
+		if (VaroPlayer.getPlayer(name).getVersionAdapter().getPing() >= ConfigSetting.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
 			return;
 
 		amount++;

@@ -25,7 +25,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		for (VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
-			vpo.getNetworkManager().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
+			vpo.getVersionAdapter().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
 		event.setCancelled(true);
 	}
 

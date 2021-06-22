@@ -82,7 +82,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					}
 
 					if (!actionbar.isEmpty())
-						vp.getNetworkManager().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
+						vp.getVersionAdapter().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 
 					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
 						Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER, vp);

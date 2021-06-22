@@ -400,7 +400,7 @@ public class MessagePlaceholderLoader {
 
             @Override
             protected String getValue(VaroPlayer player) {
-                return String.valueOf(player.getNetworkManager().getPing());
+                return String.valueOf(player.getVersionAdapter().getPing());
             }
         };
 
