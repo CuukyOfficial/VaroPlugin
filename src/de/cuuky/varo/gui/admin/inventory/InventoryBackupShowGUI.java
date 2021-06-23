@@ -30,13 +30,19 @@ public class InventoryBackupShowGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        for (int i = 0; i < backup.getInventory().getInventory().getContents().length; i++)
-            addItem(i, backup.getInventory().getInventory().getContents()[i]);
+        for (int i = 0; i < backup.getInventory().getInventory().getContents().length; i++) {
+            ItemStack st = backup.getInventory().getInventory().getContents()[i];
+            addItem(i, st);
+            System.out.println(i);
+        }
 
-        for (int i = 0; i < backup.getArmor().size(); i++)
-            addItem(36 + i, backup.getArmor().get(i));
+        for (int i = 0; i < backup.getArmor().size(); i++) {
+            ItemStack st = backup.getArmor().get(i);
+            addItem(36 + i, st);
+            System.out.println(i);
+        }
 
-        addItem(44, new ItemBuilder().itemstack(new ItemStack(Material.PAPER)).displayname("§aSave backup").build(), (event) -> {
+        addItem(this.getSize() - 1, new ItemBuilder().itemstack(new ItemStack(Material.PAPER)).displayname("§aSave backup").build(), (event) -> {
             backup.getInventory().getInventory().clear();
             backup.getArmor().clear();
 

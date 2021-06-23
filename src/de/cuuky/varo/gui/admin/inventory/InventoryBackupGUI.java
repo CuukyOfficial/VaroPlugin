@@ -26,13 +26,13 @@ public class InventoryBackupGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 27;
+        return 18;
     }
 
     @Override
     public void refreshContent() {
         addItem(1, new ItemBuilder().displayname("§aShow").itemstack(new ItemStack(Material.CHEST)).build(),
-                (event) -> new InventoryBackupShowGUI(getPlayer(), backup));
+                (event) -> this.openNext(new InventoryBackupShowGUI(getPlayer(), backup)));
 
         addItem(4, new ItemBuilder().displayname("§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
             if (!backup.getVaroPlayer().isOnline()) {

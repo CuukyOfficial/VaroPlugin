@@ -44,19 +44,12 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
         }
     }
 
+    private TeamGUIType type;
+
     public TeamListGUI(Player player, TeamGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
 
-    }
-
-    @Override
-    public String getTitle() {
-        return "§7Choose Team";
-    }
-
-    @Override
-    public int getSize() {
-        return 54;
+        this.type = type;
     }
 
     @Override
@@ -70,5 +63,20 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
             if (getPlayer().hasPermission("varo.admin"))
                 this.openNext(new TeamGUI(getPlayer(), team));
         };
+    }
+
+    @Override
+    public List<VaroTeam> getList() {
+        return type.getList();
+    }
+
+    @Override
+    public String getTitle() {
+        return "§7Choose Team";
+    }
+
+    @Override
+    public int getSize() {
+        return 54;
     }
 }

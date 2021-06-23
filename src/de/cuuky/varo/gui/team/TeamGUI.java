@@ -28,7 +28,7 @@ public class TeamGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 27;
+        return 18;
     }
 
     @Override

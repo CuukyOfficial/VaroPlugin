@@ -144,5 +144,7 @@ public class PlayerOptionsGUI extends VaroPageInventory implements InventoryNoti
             stats.setTimeUntilAddSession(null);
             stats.setSessions(stats.getSessions() + 1);
         }
+
+        this.update();
     }
 }
