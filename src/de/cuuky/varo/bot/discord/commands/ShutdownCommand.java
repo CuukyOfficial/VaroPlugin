@@ -1,12 +1,13 @@
 package de.cuuky.varo.bot.discord.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class ShutdownCommand extends DiscordBotCommand {
 

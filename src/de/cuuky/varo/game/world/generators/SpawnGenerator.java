@@ -1,14 +1,15 @@
 package de.cuuky.varo.game.world.generators;
 
+import java.util.ArrayList;
+
+import org.bukkit.Location;
+import org.bukkit.Material;
+
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.spawns.Spawn;
-import org.bukkit.Location;
-import org.bukkit.Material;
-
-import java.util.ArrayList;
 
 public class SpawnGenerator {
 

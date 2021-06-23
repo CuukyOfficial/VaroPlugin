@@ -48,7 +48,7 @@ public class BugreportCommand extends VaroCommand {
 		} else {
 			String message = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADED.getValue(vp).replace("%url%", url);
 			if (vp != null && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-				vp.getNetworkManager().sendLinkedMessage(message + ConfigMessages.VARO_COMMANDS_BUGREPORT_CLICK_ME.getValue(vp), url);
+				vp.getVersionAdapter().sendLinkedMessage(message + ConfigMessages.VARO_COMMANDS_BUGREPORT_CLICK_ME.getValue(vp), url);
 			else
 				sender.sendMessage(message);
 		}

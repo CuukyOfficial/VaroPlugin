@@ -1,5 +1,7 @@
 package de.cuuky.varo.clientadapter;
 
+import java.util.ArrayList;
+
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -11,8 +13,6 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
-
-import java.util.ArrayList;
 
 public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 

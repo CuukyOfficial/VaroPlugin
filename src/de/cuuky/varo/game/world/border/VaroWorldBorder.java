@@ -5,17 +5,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.game.world.VaroWorld;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroWorldBorder {
 

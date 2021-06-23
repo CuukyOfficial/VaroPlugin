@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;

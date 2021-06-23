@@ -71,7 +71,8 @@ public class ReportListGUI extends VaroSuperInventory {
 			}
 
 			ArrayList<String> lore = new ArrayList<>();
-			lore.add("§c" + reports.getId());
+			lore.add("§cID: " + reports.getId());
+			lore.add("§cReason: " + reports.getReason().getName());
 
 			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reports.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build());
 			start++;

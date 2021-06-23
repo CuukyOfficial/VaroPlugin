@@ -75,6 +75,11 @@ public class TeamGUI extends VaroSuperInventory {
 
 				@Override
 				public boolean onChat(AsyncPlayerChatEvent event) {
+					if(!event.getMessage().matches(VaroTeam.NAME_REGEX)) {
+						opener.sendMessage(Main.getPrefix() + "Invalid team name!");
+						return false;
+					}
+					
 					VaroTeam otherTeam = VaroTeam.getTeam(event.getMessage());
 					if (otherTeam != null) {
 						opener.sendMessage(Main.getPrefix() + "Team name already exists");

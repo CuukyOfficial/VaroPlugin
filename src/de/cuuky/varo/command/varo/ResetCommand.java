@@ -61,10 +61,11 @@ public class ResetCommand extends VaroCommand {
 			case 3:
 				for (World world : Bukkit.getWorlds()) {
 					world.setAutoSave(false);
-					Bukkit.unloadWorld(world, false);
 					for (Chunk chunk : world.getLoadedChunks())
 						chunk.unload(false);
+					Bukkit.unloadWorld(world, false);
 
+					VersionUtils.getVersionAdapter().forceClearWorlds();
 					JavaUtils.deleteDirectory(world.getWorldFolder());
 				}
 				break;

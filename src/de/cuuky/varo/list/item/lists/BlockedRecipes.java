@@ -9,11 +9,11 @@ public class BlockedRecipes extends ItemList {
 
 	public BlockedRecipes() {
 		super("BlockedRecipes");
-
-		if (!items.isEmpty())
-			return;
-
-		items.add(new ItemStack(Material.AIR));
+	}
+	
+	@Override
+	public void loadDefaultValues() {
+		this.items.add(new ItemStack(Material.AIR));
 	}
 
 	public boolean isBlocked(ItemStack itemstack) {

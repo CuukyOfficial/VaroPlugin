@@ -4,6 +4,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Furnace;
 import org.bukkit.block.Hopper;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -18,7 +19,7 @@ public class InventoryMoveListener implements Listener {
 		if (!Main.getVaroGame().hasStarted())
 			return;
 
-		if (!(e.getInitiator().getHolder() instanceof Hopper))
+		if (!(e.getInitiator().getHolder() instanceof Hopper || e.getInitiator().getHolder() instanceof HopperMinecart))
 			return;
 
 		if (!(e.getSource().getHolder() instanceof Chest) && !(e.getSource().getHolder() instanceof Furnace) && !(e.getSource().getHolder() instanceof DoubleChest))

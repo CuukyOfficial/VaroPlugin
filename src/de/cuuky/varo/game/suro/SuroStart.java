@@ -2,20 +2,19 @@ package de.cuuky.varo.game.suro;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.game.lobby.LobbyItem;
-import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class SuroStart {
 
@@ -86,7 +85,7 @@ public class SuroStart {
 					vp.cleanUpPlayer();
 					vp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
 					if (!titles.get(i).isEmpty())
-						vp.getNetworkManager().sendTitle(titles.get(i).replace("%name%", vp.getName()).replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size())), "");
+						vp.getVersionAdapter().sendTitle(titles.get(i).replace("%name%", vp.getName()).replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size())), "");
 				}
 
 				i++;

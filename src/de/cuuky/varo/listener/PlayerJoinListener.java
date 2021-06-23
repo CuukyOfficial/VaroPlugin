@@ -1,5 +1,14 @@
 package de.cuuky.varo.listener;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
@@ -21,14 +30,6 @@ import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.utils.ModUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinListener implements Listener {
 
@@ -58,6 +59,12 @@ public class PlayerJoinListener implements Listener {
 
         vplayer.setPlayer(player);
         vplayer.onEvent(BukkitEventType.JOINED);
+        
+        if(vplayer.getStats().isSpectator())
+			VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
+		else
+			VersionUtils.getVersionAdapter().setXpCooldown(player, 0);
+
         event.setJoinMessage(null);
         if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA)
             ModUtils.checkForIllegalMods(player);
@@ -93,7 +100,7 @@ public class PlayerJoinListener implements Listener {
 
                     if (result == UpdateResult.UPDATE_AVAILABLE) {
                         if (Main.getVaroGame().getGameState() == GameState.LOBBY)
-                            vplayer.getNetworkManager().sendTitle("§cUpdate verfuegbar", "Deine Pluginversion ist nicht aktuell!");
+                            vplayer.getVersionAdapter().sendTitle("§cUpdate verfuegbar", "Deine Pluginversion ist nicht aktuell!");
 
                         player.sendMessage("§cUpdate auf Version " + updateVersion + " verfuegbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
                     }

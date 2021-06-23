@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.clientadapter.board.nametag.CustomNametag;
 import de.cuuky.cfw.clientadapter.board.scoreboard.CustomScoreboard;
@@ -17,8 +18,8 @@ import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
+import de.cuuky.cfw.player.PlayerVersionAdapter;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
-import de.cuuky.cfw.player.connection.NetworkManager;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
@@ -41,13 +42,13 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
+import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
@@ -85,11 +86,12 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private CustomScoreboard<VaroPlayer> scoreboard;
 	private CustomTablist<VaroPlayer> tablist;
 	private VaroBoardProvider boardProvider;
-	private NetworkManager networkManager;
+	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
 	private Player player;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
+	private ChatMessage lastMessage;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -314,9 +316,8 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return this.scoreboard;
 	}
 
-	@Override
-	public NetworkManager getNetworkManager() {
-		return networkManager;
+	public PlayerVersionAdapter getVersionAdapter() {
+		return versionAdapter;
 	}
 
 	@Override
@@ -326,7 +327,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	@Override
 	public String getLocale() {
-		return this.locale == null && this.networkManager != null ? this.networkManager.getLocale() : this.locale;
+		return this.locale == null && this.versionAdapter != null ? this.versionAdapter.getLocale() : this.locale;
 	}
 
 	public String setLocale(String locale) {
@@ -374,6 +375,14 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return massRecordingKick;
 	}
 
+	public ChatMessage getLastMessage() {
+		return lastMessage;
+	}
+
+	public void setLastMessage(ChatMessage lastMessage) {
+		this.lastMessage = lastMessage;
+	}
+
 	/**
 	 * @return Returns if the Player is online
 	 */
@@ -418,14 +427,14 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	public void setNormalAttackSpeed() {
-		getNetworkManager().setAttributeSpeed(!ConfigSetting.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
+		this.versionAdapter.setAttributeSpeed(!ConfigSetting.REMOVE_HIT_COOLDOWN.getValueAsBoolean() ? 4D : 100D);
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
 
 		if (player != null) {
-			this.networkManager = new NetworkManager(player);
+			this.versionAdapter = new PlayerVersionAdapter(player);
 			this.scoreboard = (CustomScoreboard<VaroPlayer>) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomScoreboard<VaroPlayer>(this));
 			this.nametag = (CustomNametag<VaroPlayer>) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomNametag<VaroPlayer>(this));
 			this.tablist = (CustomTablist<VaroPlayer>) Main.getCuukyFrameWork().getClientAdapterManager().registerBoard(new CustomTablist<VaroPlayer>(this));
@@ -434,7 +443,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			this.nametag.remove();
 			this.tablist.remove();
 
-			this.networkManager = null;
+			this.versionAdapter = null;
 			this.scoreboard = null;
 			this.nametag = null;
 			this.tablist = null;
@@ -467,11 +476,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
 				if (Main.getBotLauncher() == null)
 					new BukkitRunnable() {
-						@Override
-						public void run() {
-							updateDiscordTeam(oldTeam);
-						}
-					}.runTaskLaterAsynchronously(Main.getInstance(), 1L);
+					@Override
+					public void run() {
+						updateDiscordTeam(oldTeam);
+					}
+				}.runTaskLaterAsynchronously(Main.getInstance(), 1L);
 				else
 					updateDiscordTeam(oldTeam);
 			}

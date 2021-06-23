@@ -24,22 +24,26 @@ public abstract class VaroList {
 	public VaroList(String location) {
 		this.location = location;
 		config.options().copyDefaults(true);
-
-		loadList(config.getList(location));
+		config.options().header("Beispiel fuer eine leere Liste:\nBlockedEnchantments: []");
+		
+		this.load();
 
 		lists.add(this);
 	}
-
-	public void loadList(List<?> loadList) {
-		if (loadList == null)
-			loadList = new ArrayList<>();
-
-		onLoad(loadList);
+	
+	private void load() {
+		this.init();
+		if (config.contains(location))
+			this.onLoad(config.getList(location));
+		else
+			this.loadDefaultValues();
 	}
-
+	
 	public abstract ArrayList<?> getAsList();
 
+	public abstract void init();
 	public abstract void onLoad(List<?> list);
+	public abstract void loadDefaultValues();
 
 	public String getLocation() {
 		return location;
@@ -67,7 +71,7 @@ public abstract class VaroList {
 		reloadConfig();
 
 		for (VaroList list : lists)
-			list.loadList(config.getList(list.getLocation()));
+			list.load();
 	}
 
 	public static void saveLists() {

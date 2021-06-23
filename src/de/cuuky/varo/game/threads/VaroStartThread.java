@@ -1,5 +1,9 @@
 package de.cuuky.varo.game.threads;
 
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
@@ -11,9 +15,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroStartThread extends BukkitRunnable {
 
@@ -59,7 +60,7 @@ public class VaroStartThread extends BukkitRunnable {
 
 				String[] title = ConfigMessages.GAME_VARO_START_TITLE.getValue(vp).replace("%countdown%", String.valueOf(startcountdown)).split("\n");
 				if (title.length != 0)
-					vp.getNetworkManager().sendTitle(title[0], title.length == 2 ? title[1] : "");
+					vp.getVersionAdapter().sendTitle(title[0], title.length == 2 ? title[1] : "");
 			}
 		}
 

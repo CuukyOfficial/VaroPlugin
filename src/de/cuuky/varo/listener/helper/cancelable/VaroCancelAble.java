@@ -2,11 +2,10 @@ package de.cuuky.varo.listener.helper.cancelable;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class VaroCancelAble {
 

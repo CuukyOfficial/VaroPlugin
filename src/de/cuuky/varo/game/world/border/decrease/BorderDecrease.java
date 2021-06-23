@@ -2,13 +2,12 @@ package de.cuuky.varo.game.world.border.decrease;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.VaroWorldHandler;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class BorderDecrease {
 

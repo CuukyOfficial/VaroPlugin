@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.cuuky.varo.list.VaroList;
 
-public class ModList extends VaroList {
+public abstract class ModList extends VaroList {
 
 	protected ArrayList<String> mods;
 
@@ -18,11 +18,14 @@ public class ModList extends VaroList {
 
 		saveList();
 	}
+	
+	@Override
+	public void init() {
+		this.mods = new ArrayList<String>();
+	}
 
 	@Override
 	public void onLoad(List<?> list) {
-		mods = new ArrayList<String>();
-
 		for (Object mod : list)
 			mods.add((String) mod);
 	}

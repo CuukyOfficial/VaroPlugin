@@ -1,5 +1,7 @@
 package de.cuuky.varo.configuration.placeholder;
 
+import java.util.stream.Collectors;
+
 import de.cuuky.cfw.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.PermissionUtils;
@@ -11,8 +13,6 @@ import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholde
 import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
-
-import java.util.stream.Collectors;
 
 public class MessagePlaceholderLoader {
 
@@ -400,7 +400,7 @@ public class MessagePlaceholderLoader {
 
             @Override
             protected String getValue(VaroPlayer player) {
-                return String.valueOf(player.getNetworkManager().getPing());
+                return String.valueOf(player.getVersionAdapter().getPing());
             }
         };
 

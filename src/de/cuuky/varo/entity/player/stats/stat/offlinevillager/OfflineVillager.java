@@ -10,8 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
@@ -23,23 +22,14 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class OfflineVillager implements VaroSerializeable {
-
-	private static Class<?> nbttagClass;
 
 	private static ArrayList<OfflineVillager> villagers;
 
 	static {
 		villagers = new ArrayList<>();
 		Bukkit.getPluginManager().registerEvents(new VillagerListener(), Main.getInstance());
-
-		try {
-			nbttagClass = Class.forName(VersionUtils.getNmsClass() + ".NBTTagCompound");
-		} catch (Exception | Error e) {
-			e.printStackTrace();
-		}
 	}
 
 	@VaroSerializeField(path = "lastInventory")
@@ -67,23 +57,7 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	private void freezeVillager() {
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 255));
-				}
-			}.runTaskTimer(Main.getInstance(), 0, 1000000 * 20);
-		} else
-			try {
-				Object nmsEn = zombie.getClass().getMethod("getHandle").invoke(zombie);
-				Object compound = nbttagClass.newInstance();
-				nmsEn.getClass().getMethod("c", compound.getClass()).invoke(nmsEn, compound);
-				compound.getClass().getDeclaredMethod("setByte", String.class, byte.class).invoke(compound, "NoAI", (byte) 1);
-				nmsEn.getClass().getMethod("f", nbttagClass).invoke(nmsEn, compound);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		VersionUtils.getVersionAdapter().removeAi(this.zombie);
 	}
 
 	public void create() {

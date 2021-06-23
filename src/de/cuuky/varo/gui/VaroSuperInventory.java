@@ -1,9 +1,9 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.menu.SuperInventory;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public abstract class VaroSuperInventory extends SuperInventory {
 

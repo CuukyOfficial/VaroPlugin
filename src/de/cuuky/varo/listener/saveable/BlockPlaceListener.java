@@ -1,11 +1,5 @@
 package de.cuuky.varo.listener.saveable;
 
-import de.cuuky.cfw.version.types.Sounds;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,6 +12,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import de.cuuky.cfw.version.types.Sounds;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 
 public class BlockPlaceListener implements Listener {
 

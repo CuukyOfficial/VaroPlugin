@@ -82,7 +82,7 @@ public class AntiXrayCommand implements CommandExecutor {
 			} else {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_INSTALLING_PLUGIN.getValue(vp));
 
-				boolean xrayDownload = Main.getDataManager().getPluginLoader().downloadAdditionalPlugin(22818, "plugins/Anti-Xray.jar", true);
+				boolean xrayDownload = Main.getExternalPluginLoader().downloadAdditionalPlugin(22818, "plugins/Anti-Xray.jar", true);
 
 				if (!xrayDownload) {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_INSTALLING_ERROR.getValue(vp));

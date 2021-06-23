@@ -7,7 +7,7 @@ import org.bukkit.enchantments.Enchantment;
 
 import de.cuuky.varo.list.VaroList;
 
-public class EnchantmentList extends VaroList {
+public abstract class EnchantmentList extends VaroList {
 
 	protected ArrayList<String> enchantments;
 
@@ -20,11 +20,14 @@ public class EnchantmentList extends VaroList {
 
 		saveList();
 	}
+	
+	@Override
+	public void init() {
+		this.enchantments = new ArrayList<String>();
+	}
 
 	@Override
 	public void onLoad(List<?> list) {
-		enchantments = new ArrayList<String>();
-
 		for (Object id : list)
 			enchantments.add((String) id);
 	}

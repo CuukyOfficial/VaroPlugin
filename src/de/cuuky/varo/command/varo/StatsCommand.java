@@ -1,20 +1,21 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.entity.player.stats.stat.Rank;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.entity.player.stats.stat.Rank;
 
 public class StatsCommand extends VaroCommand {
 

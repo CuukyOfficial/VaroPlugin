@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;

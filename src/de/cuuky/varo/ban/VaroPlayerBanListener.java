@@ -1,11 +1,17 @@
 package de.cuuky.varo.ban;
 
-import de.cuuky.varo.Main;
-import de.varoplugin.banapi.*;
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.UUID;
+import de.cuuky.varo.Main;
+import de.varoplugin.banapi.AccountType;
+import de.varoplugin.banapi.Ban;
+import de.varoplugin.banapi.BanChangeListener;
+import de.varoplugin.banapi.BanDataListener;
+import de.varoplugin.banapi.BanUser;
+import de.varoplugin.banapi.UsersDataWrapper;
 
 public class VaroPlayerBanListener implements BanChangeListener, BanDataListener {
 

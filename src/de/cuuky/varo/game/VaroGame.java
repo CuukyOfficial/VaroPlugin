@@ -5,14 +5,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.cuuky.cfw.version.types.Sounds;
-import de.cuuky.varo.game.lobby.LobbyItem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -20,6 +20,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.leaderboard.TopScoreList;
+import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.state.GameState;
@@ -36,8 +37,6 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.utils.VaroUtils;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class VaroGame implements VaroSerializeable {
 

@@ -3,6 +3,7 @@ package de.cuuky.varo.listener.spectator;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -62,6 +63,12 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void onEntityTarget(EntityTargetLivingEntityEvent event) {
+		if(event.getEntity() instanceof ExperienceOrb && event.getTarget() instanceof Player) {
+			VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getTarget());
+			if(vp.getStats().isSpectator())
+				event.setTarget(null);
+		}
+		
 		if (Main.getVaroGame().getGameState() == GameState.LOBBY)
 			event.setCancelled(true);
 

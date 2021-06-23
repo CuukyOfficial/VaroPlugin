@@ -1,5 +1,15 @@
 package de.cuuky.varo.listener;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -7,15 +17,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import net.labymod.serverapi.Permission;
 import net.labymod.serverapi.bukkit.event.LabyModPlayerJoinEvent;
 import net.labymod.serverapi.bukkit.event.PermissionsSendEvent;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class PermissionSendListener implements Listener {
 

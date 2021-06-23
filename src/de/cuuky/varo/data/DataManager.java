@@ -2,6 +2,7 @@ package de.cuuky.varo.data;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.clientadapter.board.CustomBoardType;
 import de.cuuky.cfw.utils.ServerPropertiesReader;
@@ -16,7 +17,6 @@ import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
-import de.cuuky.varo.data.plugin.PluginLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
@@ -32,7 +32,6 @@ import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.threads.daily.DailyTimer;
 import de.cuuky.varo.utils.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class DataManager {
 
@@ -54,7 +53,6 @@ public class DataManager {
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
-	private PluginLoader pluginLoader;
 	private VaroPlayerBanHandler banHandler;
 
 	private boolean doSave;
@@ -99,7 +97,6 @@ public class DataManager {
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 
-		this.pluginLoader = new PluginLoader();
 		this.banHandler = new VaroPlayerBanHandler();
 		
 		startAutoSave();
@@ -152,10 +149,6 @@ public class DataManager {
 		try {
 			BotRegister.saveAll();
 		} catch (NoClassDefFoundError e) {}
-	}
-
-	public PluginLoader getPluginLoader() {
-		return this.pluginLoader;
 	}
 
 	public void setDoSave(boolean doSave) {

@@ -1,10 +1,5 @@
 package de.cuuky.varo.event.events;
 
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
@@ -16,6 +11,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 
 public class ExposedVaroEvent extends VaroEvent {
 

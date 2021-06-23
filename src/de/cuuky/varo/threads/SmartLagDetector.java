@@ -2,13 +2,12 @@ package de.cuuky.varo.threads;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class SmartLagDetector extends BukkitRunnable {
 

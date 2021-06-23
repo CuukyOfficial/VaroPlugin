@@ -10,13 +10,13 @@ public class LogDestroyedBlocks extends ItemList {
 
 	public LogDestroyedBlocks() {
 		super("BlockLogger");
-
-		if (!items.isEmpty())
-			return;
-
-		items.add(Materials.DIAMOND_ORE.parseItem());
-		items.add(Materials.LAPIS_ORE.parseItem());
-		items.add(Materials.GOLD_ORE.parseItem());
+	}
+	
+	@Override
+	public void loadDefaultValues() {
+		this.items.add(Materials.DIAMOND_ORE.parseItem());
+		this.items.add(Materials.LAPIS_ORE.parseItem());
+		this.items.add(Materials.GOLD_ORE.parseItem());
 	}
 
 	public boolean shallLog(Block block) {

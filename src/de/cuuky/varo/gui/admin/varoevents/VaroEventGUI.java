@@ -6,12 +6,12 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.varo.gui.VaroSuperInventory;
 import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.gui.VaroSuperInventory;
 
 public class VaroEventGUI extends VaroSuperInventory {
 
