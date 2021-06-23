@@ -1,13 +1,13 @@
 package de.cuuky.varo.configuration.configurations.config;
 
-import java.util.ArrayList;
-
-import org.bukkit.Material;
-
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
+import org.bukkit.Material;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public enum ConfigSettingSection implements SectionConfiguration {
 
@@ -66,8 +66,8 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	}
 
 	@Override
-	public ArrayList<SectionEntry> getEntries() {
-		ArrayList<SectionEntry> temp = new ArrayList<>();
+	public List<ConfigSetting> getEntries() {
+		List<ConfigSetting> temp = new ArrayList<>();
 		for (ConfigSetting entry : ConfigSetting.values()) {
 			if (!entry.getSection().equals(this))
 				continue;

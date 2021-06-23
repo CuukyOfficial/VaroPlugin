@@ -1,6 +1,8 @@
 package de.cuuky.varo.configuration.configurations;
 
-import java.util.ArrayList;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+
+import java.util.List;
 
 public interface SectionConfiguration {
 
@@ -10,7 +12,7 @@ public interface SectionConfiguration {
 
 	public String getFolder();
 
-	public ArrayList<SectionEntry> getEntries();
+	public List<ConfigSetting> getEntries();
 
 	public SectionEntry getEntry(String name);
 

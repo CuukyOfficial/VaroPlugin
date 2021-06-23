@@ -1,21 +1,13 @@
 package de.cuuky.varo.gui.admin;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
-
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.gui.MainMenu;
-import de.cuuky.varo.gui.VaroSuperInventory;
+import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.alert.AlertTypeChooseGUI;
 import de.cuuky.varo.gui.admin.backup.BackupListGUI;
 import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
@@ -28,139 +20,76 @@ import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.report.Report;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class AdminMainMenu extends VaroSuperInventory {
+public class AdminMainMenu extends VaroInventory {
 
-	public AdminMainMenu(Player opener) {
-		super(Main.getProjectName() + " §8| §cAdmin", opener, 54, false);
+    public AdminMainMenu(Player player) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+    }
 
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
+    @Override
+    public String getTitle() {
+        return Main.getProjectName() + " §8| §cAdmin";
+    }
 
-	@Override
-	public boolean onBackClick() {
-		new MainMenu(opener);
-		return true;
-	}
+    @Override
+    public int getSize() {
+        return 54;
+    }
 
-	@Override
-	public void onClick(InventoryClickEvent event) {}
+    @Override
+    public void refreshContent() {
+        addItem(0, new ItemBuilder().displayname("§eSetup Assistant").itemstack(new ItemStack(Materials.ENDER_EYE.parseMaterial())).build(),
+                (event) -> this.openNext(new SetupHelpGUI(getPlayer())));
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
+        addItem(4, new ItemBuilder().displayname("§cConfig").itemstack(new ItemStack(Materials.WHEAT.parseMaterial())).build(),
+                (event) -> this.openNext(new ConfigSectionGUI(getPlayer())));
 
-	@Override
-	public void onInventoryAction(PageAction action) {}
+        addItem(10, new ItemBuilder().displayname("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(),
+                (event) -> this.openNext(new ReportListGUI(getPlayer())));
 
-	@Override
-	public boolean onOpen() {
-		linkItemTo(0, new ItemBuilder().displayname("§eSetup Assistant").itemstack(new ItemStack(Materials.ENDER_EYE.parseMaterial())).build(), new Runnable() {
+        addItem(16, new ItemBuilder().playername(getPlayer().getName()).displayname("§aSpieler").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).buildSkull(),
+                (event) -> this.openNext(new PlayerListChooseGUI(getPlayer())));
 
-			@Override
-			public void run() {
-				new SetupHelpGUI(opener);
-			}
-		});
+        addItem(18, new ItemBuilder().displayname("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(),
+                (event) -> this.openNext(new AlertTypeChooseGUI(getPlayer())));
 
-		linkItemTo(4, new ItemBuilder().displayname("§cConfig").itemstack(new ItemStack(Materials.WHEAT.parseMaterial())).build(), new Runnable() {
+        addItem(22, new ItemBuilder().displayname("§aBackups").itemstack(Materials.WRITTEN_BOOK.parseItem()).build(),
+                (event) -> this.openNext(new BackupListGUI(getPlayer())));
 
-			@Override
-			public void run() {
-				new ConfigSectionGUI(opener);
-			}
-		});
+        addItem(26, new ItemBuilder().displayname("§1DiscordBot")
+                        .itemstack(new ItemStack(Main.getBotLauncher().getDiscordbot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(),
+                (event) -> {
+                    if (Main.getBotLauncher().getDiscordbot() == null) {
+                        getPlayer().sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
+                        getPlayer().sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und ueberpruefe, ob du den DiscordBot aktiviert hast.");
+                        getPlayer().sendMessage(Main.getPrefix() + "https://www.spigotmc.org/resources/66778/");
+                        return;
+                    }
 
-		linkItemTo(10, new ItemBuilder().displayname("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(), new Runnable() {
+                    this.openNext(new DiscordBotGUI(getPlayer()));
+                });
 
-			@Override
-			public void run() {
-				new ReportListGUI(opener);
-			}
-		});
+        addItem(28, new ItemBuilder().displayname("§5Game").itemstack(new ItemStack(Material.CAKE)).build(),
+                (event) -> this.openNext(new GameOptionsGUI(getPlayer())));
 
-		linkItemTo(16, new ItemBuilder().playername(opener.getName()).displayname("§aSpieler").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).buildSkull(), new Runnable() {
+        addItem(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
+                        .amount(getFixedSize(VaroTeam.getTeams().size())).build(),
+                (event) -> this.openNext(new TeamChooseGUI(getPlayer())));
 
-			@Override
-			public void run() {
-				new PlayerListChooseGUI(opener);
-			}
-		});
+        addItem(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE))
+                        .amount(getFixedSize(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs().size())).build(),
+                (event) -> this.openNext(new OreLoggerListGUI(getPlayer())));
 
-		linkItemTo(18, new ItemBuilder().displayname("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(), new Runnable() {
+        if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
+            addItem(this.getUsableSize(), new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(),
+                    (event) -> this.openNext(new DebugGUI(getPlayer())));
 
-			@Override
-			public void run() {
-				new AlertTypeChooseGUI(opener);
-			}
-		});
-
-		linkItemTo(22, new ItemBuilder().displayname("§aBackups").itemstack(Materials.WRITTEN_BOOK.parseItem()).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				new BackupListGUI(opener);
-			}
-		});
-
-		linkItemTo(26, new ItemBuilder().displayname("§1DiscordBot").itemstack(new ItemStack(Main.getBotLauncher().getDiscordbot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(), new Runnable() {
-			public void run() {
-				if (Main.getBotLauncher().getDiscordbot() == null) {
-					opener.sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
-					opener.sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und ueberpruefe, ob du den DiscordBot aktiviert hast.");
-					opener.sendMessage(Main.getPrefix() + "https://www.spigotmc.org/resources/66778/");
-					return;
-				}
-
-				new DiscordBotGUI(opener);
-			}
-		});
-
-		linkItemTo(28, new ItemBuilder().displayname("§5Game").itemstack(new ItemStack(Material.CAKE)).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				new GameOptionsGUI(opener);
-			}
-		});
-
-		linkItemTo(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET)).amount(getFixedSize(VaroTeam.getTeams().size())).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				new TeamChooseGUI(opener);
-			}
-		});
-
-		linkItemTo(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE)).amount(getFixedSize(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs().size())).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				new OreLoggerListGUI(opener);
-			}
-		});
-
-		if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
-			linkItemTo(inv.getSize() - 9, new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
-
-				@Override
-				public void run() {
-					new DebugGUI(opener);
-				}
-			});
-
-		linkItemTo(inv.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				opener.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
-				opener.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
-				opener.sendMessage(Main.getPrefix() + "§7Discordserver: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
-				opener.sendMessage(Main.getPrefix() + "§7All rights reserved!");
-			}
-		});
-
-		return true;
-	}
+        addItem(this.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), (event) -> {
+            this.sendInfo();
+        });
+    }
 }

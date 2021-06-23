@@ -1,63 +1,36 @@
 package de.cuuky.varo.gui.player;
 
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.gui.VaroInventory;
+import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.VaroSuperInventory;
-import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
+public class PlayerListChooseGUI extends VaroInventory {
 
-public class PlayerListChooseGUI extends VaroSuperInventory {
+    public PlayerListChooseGUI(Player player) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+    }
 
-	private boolean showStats;
+    @Override
+    public String getTitle() {
+        return "§aChoose Players";
+    }
 
-	public PlayerListChooseGUI(Player opener) {
-		super("§aChoose Players", opener, 18, false);
+    @Override
+    public int getSize() {
+        return 18;
+    }
 
-		this.showStats = opener.hasPermission("varo.setup");
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
-
-	@Override
-	public boolean onBackClick() {
-		if (opener.hasPermission("varo.admin")) {
-			new AdminMainMenu(opener);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
-
-	@Override
-	public void onInventoryAction(PageAction action) {}
-
-	@Override
-	public boolean onOpen() {
-		int i = 0;
-		for (PlayerGUIType type : PlayerGUIType.values()) {
-			linkItemTo(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), new Runnable() {
-
-				@Override
-				public void run() {
-					new PlayerListGUI(opener, type);
-				}
-			});
-			i += 2;
-		}
-
-		return true;
-	}
-
+    @Override
+    public void refreshContent() {
+        int i = 0;
+        for (PlayerGUIType type : PlayerGUIType.values()) {
+            addItem(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon()))
+                    .amount(getFixedSize(type.getList().size())).build(), (event) ->
+                    this.openNext(new PlayerListGUI(getPlayer(), type)));
+            i += 2;
+        }
+    }
 }

@@ -1,120 +1,76 @@
 package de.cuuky.varo.gui.player;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
-
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.VaroSuperInventory;
+import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
-import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
-import de.cuuky.varo.gui.saveable.PlayerSaveableChooseGUI;
+import de.cuuky.varo.gui.saveable.PlayerSavableChooseGUI;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class PlayerGUI extends VaroSuperInventory {
+public class PlayerGUI extends VaroInventory {
 
-	private VaroPlayer target;
-	private PlayerGUIType type;
+    private final VaroPlayer target;
 
-	public PlayerGUI(Player opener, VaroPlayer target, PlayerGUIType type) {
-		super("§2" + target.getName() + " §7(" + target.getId() + ")", opener, 36, false);
+    public PlayerGUI(Player player, VaroPlayer target) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
 
-		this.target = target;
-		this.type = type;
+        this.target = target;
+    }
 
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
+    @Override
+    public String getTitle() {
+        return "§2" + target.getName() + " §7(" + target.getId() + ")";
+    }
 
-	@Override
-	public boolean onBackClick() {
-		if (type != null)
-			new PlayerListGUI(opener, type);
-		else
-			new PlayerListChooseGUI(opener);
-		return true;
-	}
+    @Override
+    public int getSize() {
+        return 36;
+    }
 
-	@Override
-	public void onClick(InventoryClickEvent event) {}
+    @Override
+    public void refreshContent() {
+        // TODO: Strikes
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
+        addItem(1, new ItemBuilder().displayname("§aInventory Backups")
+                        .itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("§7Click to see more options").build(),
+                (event) -> this.openNext(new InventoryBackupListGUI(getPlayer(), target)));
 
-	@Override
-	public void onInventoryAction(PageAction action) {}
+        addItem(4, new ItemBuilder().displayname("§2Last Location")
+                        .itemstack(new ItemStack(Materials.MAP.parseMaterial()))
+                        .lore(new String[]{"§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormat(target.getStats().getLastLocation()).format("x, y, z in world") : "/")}).build(),
+                (event) -> {
+                    if (target.getStats().getLastLocation() == null)
+                        return;
 
-	@Override
-	public boolean onOpen() {
-		// TODO: Strikes
+                    BukkitUtils.saveTeleport(getPlayer(), target.getStats().getLastLocation());
+                });
 
-		linkItemTo(1, new ItemBuilder().displayname("§aInventory Backups").itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("§7Click to see more options").build(), new Runnable() {
+        addItem(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial()))
+                        .amount(getFixedSize(target.getStats().getSaveables().size())).build(),
+                (event) -> this.openNext(new PlayerSavableChooseGUI(getPlayer(), target)));
 
-			@Override
-			public void run() {
-				new InventoryBackupListGUI(opener, target);
-			}
-		});
+        addItem(11, new ItemBuilder().displayname("§4Remove")
+                .itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), (event) -> {
+            this.back();
+            target.delete();
+        });
 
-		linkItemTo(4, new ItemBuilder().displayname("§2Last Location").itemstack(new ItemStack(Materials.MAP.parseMaterial())).lore(new String[] { "§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormat(target.getStats().getLastLocation()).format("x, y, z in world") : "/") }).build(), new Runnable() {
+        addItem(15, new ItemBuilder().displayname("§cReset")
+                .itemstack(new ItemStack(Material.BUCKET)).build(), (event) -> {
+            if (target.isOnline())
+                target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 
-			@Override
-			public void run() {
-				if (target.getStats().getLastLocation() == null)
-					return;
+            target.getStats().loadDefaults();
+        });
 
-				BukkitUtils.saveTeleport(opener, target.getStats().getLastLocation());
-			}
-		});
-
-		linkItemTo(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).amount(getFixedSize(target.getStats().getSaveables().size())).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				new PlayerSaveableChooseGUI(opener, target);
-			}
-		});
-
-		linkItemTo(11, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				target.delete();
-				if (type != null)
-					new PlayerListGUI(opener, type);
-				else
-					new PlayerListChooseGUI(opener);
-			}
-		});
-
-		linkItemTo(15, new ItemBuilder().displayname("§cReset").itemstack(new ItemStack(Material.BUCKET)).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				if (target.isOnline())
-					target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
-
-				target.getStats().loadDefaults();
-				updateInventory();
-			}
-		});
-
-		linkItemTo(22, new ItemBuilder().displayname("§5More Options").itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				new PlayerOptionsGUI(opener, target, type);
-			}
-		});
-
-		return true;
-	}
+        addItem(22, new ItemBuilder().displayname("§5More Options")
+                        .itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(),
+                (event) -> this.openNext(new PlayerOptionsGUI(getPlayer(), target)));
+    }
 }

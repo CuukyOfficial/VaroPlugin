@@ -1,73 +1,49 @@
 package de.cuuky.varo.gui.youtube;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-
+import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
-import de.cuuky.varo.gui.MainMenu;
-import de.cuuky.varo.gui.VaroSuperInventory;
+import de.cuuky.varo.gui.VaroListInventory;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class YouTubeVideoListGUI extends VaroSuperInventory {
+import java.text.SimpleDateFormat;
 
-	public YouTubeVideoListGUI(Player opener) {
-		super("§5Videos", opener, 54, false);
+public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
+    public YouTubeVideoListGUI(Player player) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, YouTubeVideo.getVideos());
+    }
 
-	@Override
-	public boolean onBackClick() {
-		new MainMenu(opener);
-		return true;
-	}
+    @Override
+    public String getTitle() {
+        return "§5Videos";
+    }
 
-	@Override
-	public void onClick(InventoryClickEvent event) {}
+    @Override
+    public int getSize() {
+        return 54;
+    }
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
+    @Override
+    protected ItemStack getItemStack(YouTubeVideo video) {
+        return new ItemBuilder().displayname("§5" + video.getTitle())
+                .lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm")
+                        .format(video.getDetectedAt()), "§7User: " +
+                        (video.getOwner() != null ? video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink()})
+                .playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build();
+    }
 
-	@Override
-	public void onInventoryAction(PageAction action) {}
+    @Override
+    protected ItemClick getClick(YouTubeVideo video) {
+        return (event) -> {
+            if (!getPlayer().hasPermission("varo.player")) {
+                getPlayer().sendMessage("§7Video: " + video.getLink());
+                return;
+            }
 
-	@Override
-	public boolean onOpen() {
-		ArrayList<YouTubeVideo> list = YouTubeVideo.getVideos();
-
-		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i != getSize(); i++) {
-			YouTubeVideo video;
-			try {
-				video = list.get(start);
-			} catch (IndexOutOfBoundsException e) {
-				break;
-			}
-
-			;
-
-			linkItemTo(i, new ItemBuilder().displayname("§5" + video.getTitle()).lore(new String[] { "§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm").format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ? video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink() }).playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build(), new Runnable() {
-
-				@Override
-				public void run() {
-					if (!opener.hasPermission("varo.player")) {
-						opener.sendMessage("§7Video: " + video.getLink());
-						return;
-					}
-
-					new YouTubeVideoOptionsGUI(opener, video);
-				}
-			});
-			start++;
-		}
-		return calculatePages(YouTubeVideo.getVideos().size(), getSize()) == getPage();
-	}
+            this.openNext(new YouTubeVideoOptionsGUI(getPlayer(), video));
+        };
+    }
 }

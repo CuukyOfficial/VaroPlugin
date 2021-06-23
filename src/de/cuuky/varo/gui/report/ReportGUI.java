@@ -1,69 +1,52 @@
 package de.cuuky.varo.gui.report;
 
-import java.util.ArrayList;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
-
+import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.VaroSuperInventory;
+import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.report.Report;
 import de.cuuky.varo.report.ReportReason;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class ReportGUI extends VaroSuperInventory {
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-	private VaroPlayer reported;
-	private VaroPlayer reporter;
+public class ReportGUI extends VaroListInventory<ReportReason> {
 
-	public ReportGUI(Player opener, VaroPlayer reported) {
-		super("§cReport", opener, 18, false);
+    private final VaroPlayer reported, reporter;
 
-		this.reporter = VaroPlayer.getPlayer(opener);
-		this.reported = reported;
+    public ReportGUI(Player player, VaroPlayer reported) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Arrays.asList(ReportReason.values()));
 
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
+        this.reporter = VaroPlayer.getPlayer(player);
+        this.reported = reported;
+    }
 
-	@Override
-	public boolean onBackClick() {
-		return false;
-	}
+    @Override
+    public String getTitle() {
+        return "§cReport";
+    }
 
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		this.close(true);
+    @Override
+    public int getSize() {
+        return 18;
+    }
 
-		String reportName = event.getCurrentItem().getItemMeta().getDisplayName().replace("§7", "");
-		ReportReason reason = ReportReason.getByName(reportName);
-		new Report(reporter, reported, reason);
-		reporter.sendMessage(Main.getPrefix() + Main.getColorCode() + reported.getName() + " §7wurde erfolgreich reportet!");
-	}
+    @Override
+    protected ItemStack getItemStack(ReportReason reason) {
+        List<String> lore = Arrays.stream(reason.getDescription().split("\n")).map(s -> "§c" + s).collect(Collectors.toList());
+        return new ItemBuilder().displayname("§7" + reason.getName()).itemstack(new ItemStack(reason.getMaterial())).lore(lore).build();
+    }
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
-
-	@Override
-	public void onInventoryAction(PageAction action) {}
-
-	@Override
-	public boolean onOpen() {
-		int i = -1;
-		for (ReportReason reasons : ReportReason.values()) {
-			i++;
-			ArrayList<String> lore = new ArrayList<>();
-			for (String strin : reasons.getDescription().split("\n"))
-				lore.add("§c" + strin);
-
-			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reasons.getName()).itemstack(new ItemStack(reasons.getMaterial())).lore(lore).build());
-		}
-
-		return true;
-	}
+    @Override
+    protected ItemClick getClick(ReportReason reason) {
+        return (event) -> {
+            this.close();
+            new Report(reporter, reported, reason);
+            reporter.sendMessage(Main.getPrefix() + Main.getColorCode() + reported.getName() + " §7wurde erfolgreich reportet!");
+        };
+    }
 }

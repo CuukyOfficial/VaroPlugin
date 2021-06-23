@@ -1,83 +1,44 @@
 package de.cuuky.varo.gui.report;
 
+import de.cuuky.cfw.inventory.ItemClick;
+import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.VaroListInventory;
+import de.cuuky.varo.report.Report;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
+public class ReportListGUI extends VaroListInventory<Report> {
 
-import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.VaroSuperInventory;
-import de.cuuky.varo.gui.admin.AdminMainMenu;
-import de.cuuky.varo.report.Report;
+    public ReportListGUI(Player player) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Report.getReports());
+    }
 
-public class ReportListGUI extends VaroSuperInventory {
+    @Override
+    public String getTitle() {
+        return "§cReport List";
+    }
 
-	public ReportListGUI(Player player) {
-		super("§cReport List", player, 36, false);
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
+    @Override
+    public int getSize() {
+        return 54;
+    }
 
-	private void update() {
-		new ReportListGUI(getOpener());
-	}
+    @Override
+    protected ItemStack getItemStack(Report report) {
+        List<String> lore = new ArrayList<>();
+        lore.add("§cID: " + report.getId());
+        lore.add("§cReason: " + report.getReason().getName());
+        return new ItemBuilder().displayname("§7" + report.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build();
+    }
 
-	@Override
-	public boolean onBackClick() {
-		new AdminMainMenu(opener);
-		return true;
-	}
-
-	@Override
-	public void onClick(InventoryClickEvent event) {
-		List<String> lore = event.getCurrentItem().getItemMeta().getLore();
-		int id = Integer.parseInt(lore.get(0).replace("§c", ""));
-		Report report = Report.getReport(id);
-		this.close(true);
-
-		if (report == null) {
-			update();
-			return;
-		}
-
-		VaroPlayer vp = VaroPlayer.getPlayer(getOpener());
-
-		new ReportPickGUI(vp, report);
-	}
-
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
-
-	@Override
-	public void onInventoryAction(PageAction action) {}
-
-	@Override
-	public boolean onOpen() {
-		int start = getSize() * (getPage() - 1);
-		for (int i = 0; i < getSize(); i++) {
-			Report reports;
-			try {
-				reports = Report.getReports().get(start);
-			} catch (IndexOutOfBoundsException e) {
-				break;
-			}
-
-			ArrayList<String> lore = new ArrayList<>();
-			lore.add("§cID: " + reports.getId());
-			lore.add("§cReason: " + reports.getReason().getName());
-
-			getInventory().setItem(i, new ItemBuilder().displayname("§7" + reports.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build());
-			start++;
-		}
-
-		return calculatePages(Report.getReports().size(), getSize()) == page;
-	}
+    @Override
+    protected ItemClick getClick(Report report) {
+        return (event) -> this.openNext(new ReportPickGUI(VaroPlayer.getPlayer(getPlayer()), report));
+    }
 }

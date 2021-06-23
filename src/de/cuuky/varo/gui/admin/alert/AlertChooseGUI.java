@@ -1,132 +1,91 @@
 package de.cuuky.varo.gui.admin.alert;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
-
+import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.item.ItemBuilder;
-import de.cuuky.cfw.menu.utils.PageAction;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.gui.VaroSuperInventory;
+import de.cuuky.varo.gui.VaroListInventory;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class AlertChooseGUI extends VaroSuperInventory {
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.function.Supplier;
 
-	public enum AlertGUIType {
-		ALL("§fALL", Material.BOOK),
-		CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial()),
-		OPEN("§eOPENED", Material.EMERALD);
+public class AlertChooseGUI extends VaroListInventory<Alert> {
 
-		private Material icon;
-		private String typeName;
+    public enum AlertGUIType {
 
-		private AlertGUIType(String typeName, Material icon) {
-			this.typeName = typeName;
-			this.icon = icon;
-		}
+        ALL("§fALL", Material.BOOK, Alert::getAlerts),
+        CLOSED("§4CLOSED", Materials.SKELETON_SKULL.parseMaterial(), Alert::getClosedAlerts),
+        OPEN("§eOPENED", Material.EMERALD, Alert::getOpenAlerts);
 
-		public Material getIcon() {
-			return icon;
-		}
+        private Material icon;
+        private String typeName;
+        private Supplier<List<Alert>> alertSupplier;
 
-		public ArrayList<Alert> getList() {
-			switch (this) {
-			case ALL:
-				return Alert.getAlerts();
-			case CLOSED:
-				return Alert.getClosedAlerts();
-			case OPEN:
-				return Alert.getOpenAlerts();
-			}
+        AlertGUIType(String typeName, Material icon, Supplier<List<Alert>> alertSupplier) {
+            this.typeName = typeName;
+            this.icon = icon;
+            this.alertSupplier = alertSupplier;
+        }
 
-			return null;
-		}
+        public Material getIcon() {
+            return icon;
+        }
 
-		public String getTypeName() {
-			return typeName;
-		}
+        public List<Alert> getList() {
+            return this.alertSupplier.get();
+        }
 
-		public static AlertGUIType getType(String name) {
-			for (AlertGUIType type : values())
-				if (type.getTypeName().equals(name))
-					return type;
+        public String getTypeName() {
+            return typeName;
+        }
+    }
 
-			return null;
-		}
-	}
+    private AlertGUIType type;
 
-	private AlertGUIType type;
+    public AlertChooseGUI(Player player, AlertGUIType type) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
 
-	public AlertChooseGUI(Player opener, AlertGUIType type) {
-		super("§4Alerts", opener, 54, false);
+        this.type = type;
+    }
 
-		this.type = type;
+    @Override
+    protected ItemStack getItemStack(Alert alert) {
+        return new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId())
+                .itemstack(new ItemStack(Material.BOOK))
+                .lore(new String[]{"§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss")
+                        .format(alert.getCreated()), "§7Open: §f" + alert.isOpen()}).build();
+    }
 
-		this.setModifier = true;
-		Main.getCuukyFrameWork().getInventoryManager().registerInventory(this);
-		open();
-	}
+    @Override
+    protected ItemClick getClick(Alert alert) {
+        return (event) -> this.openNext(new AlertOptionGUI(getPlayer(), alert));
+    }
 
-	@Override
-	public boolean onBackClick() {
-		new AlertTypeChooseGUI(opener);
-		return true;
-	}
+    @Override
+    public String getTitle() {
+        return "§4Alerts";
+    }
 
-	@Override
-	public void onClick(InventoryClickEvent event) {}
+    @Override
+    public int getSize() {
+        return 54;
+    }
 
-	@Override
-	public void onClose(InventoryCloseEvent event) {}
+    @Override
+    public List<Alert> getList() {
+        return this.type.getList();
+    }
 
-	@Override
-	public void onInventoryAction(PageAction action) {}
-
-	@Override
-	public boolean onOpen() {
-		ArrayList<Alert> alerts = type.getList();
-		Collections.reverse(alerts);
-
-		int start = getSize() * (getPage() - 1);
-		if (start != 0)
-			start -= 2;
-
-		for (int i = 0; i != getSize() - 2; i++) {
-			Alert alert;
-			try {
-				alert = alerts.get(start);
-			} catch (IndexOutOfBoundsException e) {
-				break;
-			}
-
-			linkItemTo(i, new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId()).itemstack(new ItemStack(Material.BOOK)).lore(new String[] { "§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss").format(alert.getCreated()), "§7Open: §f" + alert.isOpen() }).build(), new Runnable() {
-
-				@Override
-				public void run() {
-					new AlertOptionGUI(opener, alert, type);
-				}
-			});
-			start++;
-		}
-
-		linkItemTo(getSize() - 1, new ItemBuilder().displayname("§cClose all").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(), new Runnable() {
-
-			@Override
-			public void run() {
-				for (Alert alert : alerts)
-					alert.setOpen(false);
-
-				updateInventory();
-			}
-		});
-
-		return calculatePages(alerts.size(), getSize()) == getPage();
-	}
+    @Override
+    public void refreshContent() {
+        super.refreshContent();
+        addItem(getSize() - 1, new ItemBuilder().displayname("§cClose all")
+                        .itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(),
+                (event) -> this.getList().forEach(alert -> alert.setOpen(false)));
+    }
 }
