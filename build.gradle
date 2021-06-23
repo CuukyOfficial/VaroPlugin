@@ -103,7 +103,7 @@ jar {
 processResources {
     from (sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [name: "Varo"]
-        filter ReplaceTokens, tokens: [version: "4.8.0-BETA-3"]
+        filter ReplaceTokens, tokens: [version: "4.8.0-BETA-4"]
         filter ReplaceTokens, tokens: [author: "Cuuky"]
     }
 }
