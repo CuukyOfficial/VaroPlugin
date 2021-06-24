@@ -8,7 +8,6 @@ import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
-import de.cuuky.varo.entity.player.stats.Stats;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -18,14 +17,12 @@ import java.util.Arrays;
 
 public class PlayerOptionsGUI extends VaroListInventory<StatType> {
 
-    private final Stats stats;
     private final VaroPlayer target;
 
     public PlayerOptionsGUI(Player opener, VaroPlayer target) {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, Arrays.asList(StatType.values()));
 
         this.target = target;
-        this.stats = target.getStats();
     }
 
     @Override
