@@ -1,9 +1,11 @@
 package de.cuuky.varo.command.varo;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -11,11 +13,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResetCommand extends VaroCommand {
 
@@ -35,59 +35,61 @@ public class ResetCommand extends VaroCommand {
 			return;
 		}
 
-		for (Player pl : VersionUtils.getOnlinePlayer())
-			pl.kickPlayer("§cRESET");
-
-		Main.getDataManager().save();
-		List<Integer> success = new ArrayList<Integer>();
-		List<File> toDelete = new ArrayList<File>();
-		for (String arg : args) {
-			int mod = -1;
-			try {
-				mod = Integer.valueOf(arg);
-			} catch (NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + arg + " ist keine Zahl!");
-				continue;
-			}
-
-			switch (mod) {
-			case 1:
-				toDelete.add(new File("plugins/Varo/"));
-				break;
-			case 2:
-				toDelete.add(new File("plugins/Varo/logs/"));
-				toDelete.add(new File("plugins/Varo/stats/"));
-				break;
-			case 3:
-				for (World world : Bukkit.getWorlds()) {
-					world.setAutoSave(false);
-					for (Chunk chunk : world.getLoadedChunks())
-						chunk.unload(false);
-					Bukkit.unloadWorld(world, false);
-
-					VersionUtils.getVersionAdapter().forceClearWorlds();
-					JavaUtils.deleteDirectory(world.getWorldFolder());
+		new ConfirmInventory(Main.getCuukyFrameWork().getAdvancedInventoryManager(), vp.getPlayer(), (result) -> {
+			for (Player pl : VersionUtils.getOnlinePlayer())
+				pl.kickPlayer("§cRESET");
+			
+			Main.getDataManager().save();
+			List<Integer> success = new ArrayList<Integer>();
+			List<File> toDelete = new ArrayList<File>();
+			for (String arg : args) {
+				int mod;
+				try {
+					mod = Integer.valueOf(arg);
+				} catch (NumberFormatException e) {
+					sender.sendMessage(Main.getPrefix() + arg + " ist keine Zahl!");
+					continue;
 				}
-				break;
-			default:
-				sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
-				break;
+
+				switch (mod) {
+					case 1:
+						toDelete.add(new File("plugins/Varo/"));
+						break;
+					case 2:
+						toDelete.add(new File("plugins/Varo/logs/"));
+						toDelete.add(new File("plugins/Varo/stats/"));
+						break;
+					case 3:
+						for (World world : Bukkit.getWorlds()) {
+							world.setAutoSave(false);
+							for (Chunk chunk : world.getLoadedChunks())
+								chunk.unload(false);
+							Bukkit.unloadWorld(world, false);
+
+							VersionUtils.getVersionAdapter().forceClearWorlds();
+							JavaUtils.deleteDirectory(world.getWorldFolder());
+						}
+						break;
+					default:
+						sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
+						break;
+				}
+
+				success.add(mod);
 			}
 
-			success.add(mod);
-		}
-
-		if (!toDelete.isEmpty()) {
-			Main.getDataManager().setDoSave(false);
-			for (File file : toDelete) {
-				if (file.isDirectory())
-					JavaUtils.deleteDirectory(file);
-				else
-					file.delete();
+			if (!toDelete.isEmpty()) {
+				Main.getDataManager().setDoSave(false);
+				for (File file : toDelete) {
+					if (file.isDirectory())
+						JavaUtils.deleteDirectory(file);
+					else
+						file.delete();
+				}
 			}
-		}
 
-		if (!success.isEmpty())
-			Bukkit.getServer().shutdown();
+			if (!success.isEmpty())
+				Bukkit.getServer().shutdown();
+		});
 	}
 }
