@@ -1,15 +1,14 @@
 package de.cuuky.varo.entity.player.stats.stat.inventory;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class InventoryBackup implements VaroSerializeable {
 
@@ -40,7 +39,7 @@ public class InventoryBackup implements VaroSerializeable {
 	public InventoryBackup(VaroPlayer vp) {
 		this.varoplayer = vp;
 		this.date = new Date();
-		this.inventory = new VaroInventory(45);
+		this.inventory = new VaroInventory(36);
 		this.armor = new ArrayList<>();
 
 		if (vp.isOnline())

@@ -19,6 +19,15 @@ public class InventoryBackupShowGUI extends VaroInventory {
     }
 
     @Override
+    protected boolean cancelClick(int slot) {
+        return slot >= this.getUsableSize();
+    }
+
+    @Override
+    protected void playSound() {
+    }
+
+    @Override
     public String getTitle() {
         return "§7Inventory: " + Main.getColorCode() + backup.getVaroPlayer().getName();
     }
@@ -30,16 +39,14 @@ public class InventoryBackupShowGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        for (int i = 0; i < backup.getInventory().getInventory().getContents().length; i++) {
+        for (int i = 0; i < 36; i++) {
             ItemStack st = backup.getInventory().getInventory().getContents()[i];
             addItem(i, st);
-            System.out.println(i);
         }
 
         for (int i = 0; i < backup.getArmor().size(); i++) {
             ItemStack st = backup.getArmor().get(i);
             addItem(36 + i, st);
-            System.out.println(i);
         }
 
         addItem(this.getSize() - 1, new ItemBuilder().itemstack(new ItemStack(Material.PAPER)).displayname("§aSave backup").build(), (event) -> {
