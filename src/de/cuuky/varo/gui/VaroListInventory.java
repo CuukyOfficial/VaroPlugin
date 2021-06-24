@@ -5,7 +5,9 @@ import de.cuuky.cfw.inventory.ItemInserter;
 import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
 import de.cuuky.cfw.inventory.inserter.DirectInserter;
 import de.cuuky.cfw.inventory.list.AdvancedListInventory;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.logger.logger.EventLogger;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,6 +21,14 @@ public abstract class VaroListInventory<T> extends AdvancedListInventory<T> {
 
     public VaroListInventory(AdvancedInventoryManager manager, Player player) {
         super(manager, player);
+    }
+
+    @Override
+    protected String getEmptyName() {
+        if (this.getEmptyClicked() == 21474)
+            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(EventLogger.LogType.LOG, "You clicked too often!%noDiscord%");
+
+        return super.getEmptyName();
     }
 
     @Override

@@ -33,7 +33,7 @@ public class ReportPickGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(0, new ItemBuilder().displayname("§5Teleport").itemstack(new ItemStack(Material.ENDER_PEARL)).build(), (event) -> {
+        addItem(2, new ItemBuilder().displayname("§5Teleport").itemstack(new ItemStack(Material.ENDER_PEARL)).build(), (event) -> {
             if (report.getReported().isOnline()) {
                 player.saveTeleport(report.getReported().getPlayer().getLocation());
                 player.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
@@ -41,7 +41,7 @@ public class ReportPickGUI extends VaroInventory {
                 player.sendMessage(Main.getPrefix() + "§7Der reportete Spieler ist nicht mehr online!");
         });
 
-        addItem(8, new ItemBuilder().displayname("§cClose").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
+        addItem(6, new ItemBuilder().displayname("§cClose").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
             player.sendMessage(Main.getPrefix() + "§7Du hast den Report §c" + +report.getId() + " §7geschlossen");
             report.close();
             back();
