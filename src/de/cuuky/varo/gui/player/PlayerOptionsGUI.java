@@ -54,7 +54,7 @@ public class PlayerOptionsGUI extends VaroListInventory<StatType> {
         return (event) -> {
             if (event.isLeftClick()) {
                 Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(),
-                        Main.getPrefix() + "Enter new " + Main.getColorCode() + statType.name() + "§7: ('!cancel' to cancel)", new ChatHookHandler() {
+                        Main.getPrefix() + "Enter new " + Main.getColorCode() + statType.name() + "§7: §8('!cancel' to cancel)", new ChatHookHandler() {
 
                     @Override
                     public boolean onChat(AsyncPlayerChatEvent event) {
