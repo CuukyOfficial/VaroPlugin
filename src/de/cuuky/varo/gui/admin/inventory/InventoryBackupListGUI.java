@@ -24,12 +24,12 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
 
     @Override
     public String getTitle() {
-        return "§7Backups: §b" + target.getName();
+        return "§7Backups: " + Main.getColorCode() + target.getName();
     }
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

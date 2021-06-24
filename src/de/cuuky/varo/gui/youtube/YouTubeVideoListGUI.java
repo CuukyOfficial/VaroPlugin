@@ -23,7 +23,7 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

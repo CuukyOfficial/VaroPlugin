@@ -23,7 +23,7 @@ public class VaroEventGUI extends VaroListInventory<VaroEvent> {
 
     @Override
     public int getSize() {
-        return 27;
+        return this.getRecommendedSize();
     }
 
     @Override

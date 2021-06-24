@@ -1,87 +1,20 @@
 package de.cuuky.varo.command.varo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.StatType;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.entity.player.stats.stat.Rank;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class StatsCommand extends VaroCommand {
-
-    interface ArgumentReceiver {
-
-        void receive(String value, VaroPlayer vp);
-
-    }
-
-    public enum SetArgumentType {
-
-        ADMIN_IGNORE("adminignore", (value, vp) -> vp.setAdminIgnore(Boolean.parseBoolean(value)), VaroPlayer::isAdminIgnore, (vp) -> vp.setAdminIgnore(false)),
-        COUNTDOWN("countdown", (value, vp) -> vp.getStats().setCountdown(Integer.parseInt(value)), vp -> vp.getStats().getCountdown(), (vp) -> vp.getStats().setCountdown(ConfigSetting.PLAY_TIME.getValueAsInt() * 60)),
-        EPISODES_PLAYED("episodesplayed", (value, vp) -> vp.getStats().setSessionsPlayed(Integer.parseInt(value)), vp -> vp.getStats().getSessionsPlayed(), (vp) -> vp.getStats().setSessionsPlayed(0)),
-        KILLS("kills", (value, vp) -> vp.getStats().setKills(Integer.parseInt(value)), vp -> vp.getStats().getKills(), (vp) -> vp.getStats().setKills(0)),
-        PLAYER_STATE("playerstate", (value, vp) -> vp.getStats().setState(PlayerState.getByName(value)), vp -> vp.getStats().getState(), (vp) -> vp.getStats().setState(PlayerState.ALIVE)),
-        RANK("rank", (value, vp) -> vp.setRank(new Rank(value)), vp -> vp.getRank().getDisplay(), (vp) -> vp.setRank(null)),
-        SESSIONS("sessions", (value, vp) -> vp.getStats().setSessions(Integer.parseInt(value)), vp -> vp.getStats().getSessions(), (vp) -> vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())),
-        WINS("wins", (value, vp) -> vp.getStats().setWins(Integer.parseInt(value)), vp -> vp.getStats().getWins(), (vp) -> vp.getStats().setWins(0)),
-        YOUTUBE_LINK("youtubelink", (value, vp) -> vp.getStats().setYoutubeLink(value), vp -> vp.getStats().getYoutubeLink(), (vp) -> vp.getStats().setYoutubeLink(null));
-
-        private final String arg;
-        private final ArgumentReceiver receiver;
-        private final Function<VaroPlayer, Object> getter;
-        private final Consumer<VaroPlayer> reset;
-
-        SetArgumentType(String arg, ArgumentReceiver receiver, Function<VaroPlayer, Object> getter, Consumer<VaroPlayer> reset) {
-            this.arg = arg;
-            this.receiver = receiver;
-            this.getter = getter;
-            this.reset = reset;
-        }
-
-        public void execute(String value, VaroPlayer vp, CommandSender sender) {
-            try {
-                this.receiver.receive(value, vp);
-                if (vp.isOnline())
-                    vp.update();
-            } catch (Exception e) {
-                e.printStackTrace();
-                sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
-            }
-        }
-
-        public void remove(VaroPlayer vp) {
-            this.reset.accept(vp);
-            if (vp.isOnline())
-                vp.update();
-        }
-
-        public String getArg() {
-            return this.arg;
-        }
-
-        public Object get(VaroPlayer vp) {
-            return this.getter.apply(vp);
-        }
-
-        public static SetArgumentType getByName(String name) {
-            for (SetArgumentType type : values())
-                if (type.getArg().equalsIgnoreCase(name))
-                    return type;
-
-            return null;
-        }
-    }
 
     public StatsCommand() {
         super("stats", "Bearbeiten von Stats", "varo.stats", "stat");
@@ -140,12 +73,12 @@ public class StatsCommand extends VaroCommand {
 
         if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("decrease")) {
             if (args.length == 2) {
-                String stats = Arrays.stream(SetArgumentType.values()).map(SetArgumentType::getArg).collect(Collectors.joining(", "));
+                String stats = Arrays.stream(StatType.values()).map(StatType::getArg).collect(Collectors.joining(", "));
                 sender.sendMessage(Main.getPrefix() + "Stats available: " + stats);
                 return;
             }
 
-            SetArgumentType type = SetArgumentType.getByName(args[1]);
+            StatType type = StatType.getByName(args[1]);
             boolean set = !args[0].equalsIgnoreCase("remove");
             int min = set ? 4 : 3;
             if (set) {

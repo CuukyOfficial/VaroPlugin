@@ -25,7 +25,7 @@ public class StrikeListGUI extends VaroListInventory<Strike> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

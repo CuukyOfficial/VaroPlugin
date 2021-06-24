@@ -26,7 +26,7 @@ public class ReportListGUI extends VaroListInventory<Report> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

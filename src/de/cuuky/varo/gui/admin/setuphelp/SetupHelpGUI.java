@@ -68,7 +68,7 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
 
     @Override
     public int getSize() {
-        return 18;
+        return this.getRecommendedSize(9);
     }
 
     @Override

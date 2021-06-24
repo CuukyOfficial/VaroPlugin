@@ -25,7 +25,7 @@ public class PlayerSavableChooseGUI extends VaroListInventory<VaroSaveable> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

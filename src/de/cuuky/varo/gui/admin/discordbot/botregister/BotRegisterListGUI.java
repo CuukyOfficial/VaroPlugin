@@ -35,6 +35,6 @@ public class BotRegisterListGUI extends VaroAsyncListInventory<BotRegister> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 }

@@ -20,7 +20,7 @@ public class InventoryBackupShowGUI extends VaroInventory {
 
     @Override
     public String getTitle() {
-        return "§7Inventory: §c" + backup.getVaroPlayer().getName();
+        return "§7Inventory: " + Main.getColorCode() + backup.getVaroPlayer().getName();
     }
 
     @Override

@@ -21,7 +21,7 @@ public class EventListGUI extends VaroListInventory<String> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

@@ -25,7 +25,7 @@ public class PlayerGUI extends VaroInventory {
 
     @Override
     public String getTitle() {
-        return "§2" + target.getName() + " §7(" + target.getId() + ")";
+        return Main.getColorCode() + target.getName() + " §7(" + target.getId() + ")";
     }
 
     @Override

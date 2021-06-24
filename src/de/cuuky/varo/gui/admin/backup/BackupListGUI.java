@@ -61,7 +61,7 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
 

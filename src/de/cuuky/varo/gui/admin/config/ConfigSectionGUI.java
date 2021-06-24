@@ -32,11 +32,11 @@ public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
 
     @Override
     public String getTitle() {
-        return "§aConfig-Sections";
+        return Main.getColorCode() + "Config-Sections";
     }
 
     @Override
     public int getSize() {
-        return 45;
+        return this.getRecommendedSize();
     }
 }

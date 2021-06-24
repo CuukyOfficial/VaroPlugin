@@ -28,36 +28,6 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
         this.section = section;
     }
 
-    @Override
-    public String getTitle() {
-        return "§a" + section.getName();
-    }
-
-    @Override
-    public int getSize() {
-        return 45;
-    }
-
-    @Override
-    protected ItemStack getItemStack(ConfigSetting setting) {
-        List<String> lore = new ArrayList<>();
-        for (String strin : setting.getDescription())
-            lore.add(Main.getColorCode() + strin);
-
-        lore.add(" ");
-        lore.add("Value: " + setting.getValue());
-        return new ItemBuilder().displayname("§7" + setting.getPath())
-                .itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build();
-    }
-
-    @Override
-    protected ItemClick getClick(ConfigSetting setting) {
-        return (event) -> {
-            this.close();
-            this.hookChat(setting);
-        };
-    }
-
     private void hookChat(ConfigSetting entry) {
         Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Gib einen Wert ein fuer "
                 + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookHandler() {
@@ -83,6 +53,37 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
                 return true;
             }
         }));
+        this.close();
         getPlayer().sendMessage(Main.getPrefix() + "§7Gib zum Abbruch §ccancel§7 ein.");
+    }
+
+    @Override
+    protected ItemClick getClick(ConfigSetting setting) {
+        return (event) -> {
+            this.close();
+            this.hookChat(setting);
+        };
+    }
+
+    @Override
+    protected ItemStack getItemStack(ConfigSetting setting) {
+        List<String> lore = new ArrayList<>();
+        for (String strin : setting.getDescription())
+            lore.add(Main.getColorCode() + strin);
+
+        lore.add(" ");
+        lore.add("Value: " + setting.getValue());
+        return new ItemBuilder().displayname("§7" + setting.getPath())
+                .itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build();
+    }
+
+    @Override
+    public String getTitle() {
+        return Main.getColorCode() + section.getName();
+    }
+
+    @Override
+    public int getSize() {
+        return this.getRecommendedSize();
     }
 }

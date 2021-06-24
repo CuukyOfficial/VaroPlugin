@@ -73,7 +73,7 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override

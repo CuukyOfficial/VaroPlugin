@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
 
     public enum PlayerGUIType {
+
         ALIVE("§aALIVE", Material.POTION, VaroPlayer::getAlivePlayer),
         DEAD("§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial(), VaroPlayer::getDeadPlayer),
         ONLINE("§eONLINE", Material.EMERALD, VaroPlayer::getOnlinePlayer),
@@ -60,7 +61,7 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
     public PlayerListGUI(Player player, PlayerGUIType type) {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
 
-        this.showStats = player.hasPermission("varo.setup");
+        this.showStats = player.hasPermission("varo.viewStats");
         this.type = type;
     }
 
@@ -71,12 +72,14 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override
     protected ItemStack getItemStack(VaroPlayer player) {
-        return new ItemBuilder().playername(player.getName()).lore((showStats ? player.getStats().getStatsListed() : new String[]{})).buildSkull();
+        return new ItemBuilder().displayname(Main.getColorCode() + player.getName())
+                .playername(player.getName())
+                .lore((showStats ? player.getStats().getStatsListed() : new String[]{})).buildSkull();
     }
 
     @Override

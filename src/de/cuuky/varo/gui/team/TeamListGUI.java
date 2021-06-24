@@ -77,6 +77,6 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 }

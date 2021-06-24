@@ -33,7 +33,7 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
 
     @Override
     public int getSize() {
-        return 54;
+        return this.getRecommendedSize();
     }
 
     @Override
