@@ -70,7 +70,7 @@ public class PlayerOptionsGUI extends VaroListInventory<StatType> {
                 }));
                 this.close();
             } else if (event.isRightClick())
-                this.openNext(new ConfirmInventory(this, (accept) -> {
+                this.openNext(new ConfirmInventory(this, "§cReset " + statType.name() + "?", (accept) -> {
                     if (accept) statType.remove(this.target);
                     this.open();
                 }));
