@@ -59,7 +59,7 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
     private final PlayerGUIType type;
 
     public PlayerListGUI(Player player, PlayerGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
 
         this.showStats = player.hasPermission("varo.viewStats");
         this.type = type;
@@ -73,6 +73,11 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
     @Override
     public int getSize() {
         return this.getRecommendedSize();
+    }
+
+    @Override
+    public List<VaroPlayer> getList() {
+        return type.getList();
     }
 
     @Override

@@ -19,9 +19,8 @@ public abstract class VaroAsyncListInventory<T> extends AdvancedAsyncListInvento
         super(manager, player, list);
     }
 
-    @Override
-    public String getTitle() {
-        return this.getTitle().length() > 32 ? this.getTitle().substring(0, 32) : getTitle();
+    public VaroAsyncListInventory(AdvancedInventoryManager manager, Player player) {
+        super(manager, player);
     }
 
     @Override

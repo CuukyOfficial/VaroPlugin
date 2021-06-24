@@ -32,11 +32,6 @@ public abstract class VaroListInventory<T> extends AdvancedListInventory<T> {
     }
 
     @Override
-    public String getTitle() {
-        return this.getTitle().length() > 32 ? this.getTitle().substring(0, 32) : getTitle();
-    }
-
-    @Override
     protected ItemInserter getInserter() {
         return ConfigSetting.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean() ? new AnimatedClosingInserter() : new DirectInserter();
     }
