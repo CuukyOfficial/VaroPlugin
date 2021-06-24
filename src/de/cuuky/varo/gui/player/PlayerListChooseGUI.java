@@ -20,12 +20,12 @@ public class PlayerListChooseGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        int i = 0;
+        int i = 9;
         for (PlayerGUIType type : PlayerGUIType.values()) {
             addItem(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon()))
                     .amount(getFixedSize(type.getList().size())).build(), (event) ->

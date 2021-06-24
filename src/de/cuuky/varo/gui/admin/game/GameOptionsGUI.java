@@ -23,23 +23,23 @@ public class GameOptionsGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§aChange GameState")
+        addItem(10, new ItemBuilder().displayname("§aChange GameState")
                         .itemstack(new ItemStack(Material.EMERALD))
                         .lore(new String[]{"§7Current: §c" + Main.getVaroGame().getGameState().getName()}).build(),
                 (event) -> Main.getVaroGame().setGamestate(ArrayUtils.getNext(Main.getVaroGame().getGameState(), GameState.values())));
 
-        addItem(7, new ItemBuilder().displayname("§bSet Lobby Location")
+        addItem(16, new ItemBuilder().displayname("§bSet Lobby Location")
                         .itemstack(new ItemStack(Material.DIAMOND_BLOCK))
                         .lore(new String[]{"§7Current: " + (Main.getVaroGame().getLobby() != null ? new LocationFormat(Main.getVaroGame().getLobby())
                                 .format("x, y, z in world") : "§c-")}).build(),
                 (event) -> Main.getVaroGame().setLobby(getPlayer().getLocation()));
 
-        addItem(4, new ItemBuilder().displayname("§2Set World Spawn")
+        addItem(13, new ItemBuilder().displayname("§2Set World Spawn")
                         .itemstack(new ItemStack(Material.BEACON))
                         .lore(new String[]{"§7Current: " + (getPlayer().getWorld().getSpawnLocation() != null ? new LocationFormat(getPlayer().getWorld().getSpawnLocation()).format("x, y, z in world") : "§c-")})
                         .build(),

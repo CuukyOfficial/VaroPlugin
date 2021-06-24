@@ -25,17 +25,17 @@ public class YouTubeVideoOptionsGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), (event) -> {
+        addItem(11, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), (event) -> {
             getPlayer().sendMessage(Main.getPrefix() + "Link:");
             getPlayer().sendMessage(Main.getPrefix() + video.getLink());
         });
 
-        addItem(8, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
+        addItem(15, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
             video.remove();
             this.back();
         });

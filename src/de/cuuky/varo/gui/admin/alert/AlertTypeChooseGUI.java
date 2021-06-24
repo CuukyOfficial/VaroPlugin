@@ -20,12 +20,12 @@ public class AlertTypeChooseGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        int i = 2;
+        int i = 11;
         for (AlertGUIType type : AlertGUIType.values()) {
             addItem(i, new ItemBuilder().displayname(type.getTypeName())
                             .itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(),

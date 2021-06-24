@@ -20,12 +20,12 @@ public class TeamChooseGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        int i = 1;
+        int i = 10;
         for (TeamGUIType type : TeamGUIType.values()) {
             addItem(i, new ItemBuilder().displayname(type.getTypeName())
                     .itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), (event) ->
