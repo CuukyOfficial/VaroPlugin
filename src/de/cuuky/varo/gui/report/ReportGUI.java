@@ -37,8 +37,8 @@ public class ReportGUI extends VaroListInventory<ReportReason> {
 
     @Override
     protected ItemStack getItemStack(ReportReason reason) {
-        List<String> lore = Arrays.stream(reason.getDescription().split("\n")).map(s -> "§c" + s).collect(Collectors.toList());
-        return new ItemBuilder().displayname("§7" + reason.getName()).itemstack(new ItemStack(reason.getMaterial())).lore(lore).build();
+        List<String> lore = Arrays.stream(reason.getDescription().split("\n")).map(s -> "§7" + s).collect(Collectors.toList());
+        return new ItemBuilder().displayname("§c" + reason.getName()).itemstack(new ItemStack(reason.getMaterial())).lore(lore).build();
     }
 
     @Override
