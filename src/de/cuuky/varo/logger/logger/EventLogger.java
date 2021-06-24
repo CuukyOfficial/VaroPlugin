@@ -1,16 +1,15 @@
 package de.cuuky.varo.logger.logger;
 
-import java.awt.Color;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.CachedVaroLogger;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.awt.*;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventLogger extends CachedVaroLogger<String> {
 
@@ -119,10 +118,10 @@ public class EventLogger extends CachedVaroLogger<String> {
 	public void println(LogType type, String message) {
 		message = JavaUtils.replaceAllColors(message);
 
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noBot%", "");
+		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
 		this.queLog(log);
 
-		if (message.contains("%noBot%"))
+		if (message.contains("%noBot%") || message.contains("%noDiscord%"))
 			return;
 
 		if (Main.getBotLauncher() == null) {

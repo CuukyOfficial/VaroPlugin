@@ -13,7 +13,7 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.events.EventListGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
-import de.cuuky.varo.gui.saveable.PlayerSavableChooseGUI;
+import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
 import de.cuuky.varo.gui.strike.StrikeListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;

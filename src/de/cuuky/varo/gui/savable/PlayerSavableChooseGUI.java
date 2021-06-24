@@ -1,4 +1,4 @@
-package de.cuuky.varo.gui.saveable;
+package de.cuuky.varo.gui.savable;
 
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.item.ItemBuilder;

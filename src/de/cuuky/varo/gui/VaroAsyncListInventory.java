@@ -26,8 +26,8 @@ public abstract class VaroAsyncListInventory<T> extends AdvancedAsyncListInvento
 
     @Override
     protected String getEmptyName() {
-        if (this.getEmptyClicked() == 21474)
-            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(EventLogger.LogType.LOG, "You clicked too often!%noDiscord%");
+        if (this.getEmptyClicked() == 200 && getPlayer().hasPermission("varo.setup"))
+            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(EventLogger.LogType.LOG, "An admin clicked too often!%noDiscord%");
 
         return super.getEmptyName();
     }

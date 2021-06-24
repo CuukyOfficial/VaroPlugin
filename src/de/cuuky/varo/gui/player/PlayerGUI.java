@@ -8,7 +8,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
-import de.cuuky.varo.gui.saveable.PlayerSavableChooseGUI;
+import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -51,18 +51,18 @@ public class PlayerGUI extends VaroInventory {
                     BukkitUtils.saveTeleport(getPlayer(), target.getStats().getLastLocation());
                 });
 
-        addItem(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Materials.REDSTONE.parseMaterial()))
+        addItem(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(Materials.CHEST.parseItem())
                         .amount(getFixedSize(target.getStats().getSaveables().size())).build(),
                 (event) -> this.openNext(new PlayerSavableChooseGUI(getPlayer(), target)));
 
         addItem(11, new ItemBuilder().displayname("§4Remove")
-                .itemstack(new ItemStack(Materials.SKELETON_SKULL.parseMaterial())).build(), (event) -> {
+                .itemstack(Materials.ROSE_RED.parseItem()).build(), (event) -> {
             this.back();
             target.delete();
         });
 
         addItem(15, new ItemBuilder().displayname("§cReset")
-                .itemstack(new ItemStack(Material.BUCKET)).build(), (event) -> {
+                .itemstack(Materials.SKELETON_SKULL.parseItem()).build(), (event) -> {
             if (target.isOnline())
                 target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 

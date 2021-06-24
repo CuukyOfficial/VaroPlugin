@@ -6,8 +6,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.report.Report;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class ReportPickGUI extends VaroInventory {
 
@@ -28,12 +26,12 @@ public class ReportPickGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        addItem(2, new ItemBuilder().displayname("§5Teleport").itemstack(new ItemStack(Material.ENDER_PEARL)).build(), (event) -> {
+        addItem(11, new ItemBuilder().displayname("§5Teleport").itemstack(Materials.ENDER_PEARL.parseItem()).build(), (event) -> {
             if (report.getReported().isOnline()) {
                 player.saveTeleport(report.getReported().getPlayer().getLocation());
                 player.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
@@ -41,7 +39,7 @@ public class ReportPickGUI extends VaroInventory {
                 player.sendMessage(Main.getPrefix() + "§7Der reportete Spieler ist nicht mehr online!");
         });
 
-        addItem(6, new ItemBuilder().displayname("§cClose").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
+        addItem(15, new ItemBuilder().displayname("§cClose").itemstack(Materials.ROSE_RED.parseItem()).build(), (event) -> {
             player.sendMessage(Main.getPrefix() + "§7Du hast den Report §c" + +report.getId() + " §7geschlossen");
             report.close();
             back();

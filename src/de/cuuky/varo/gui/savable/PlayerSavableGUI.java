@@ -1,4 +1,4 @@
-package de.cuuky.varo.gui.saveable;
+package de.cuuky.varo.gui.savable;
 
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.version.types.Materials;
@@ -24,12 +24,16 @@ public class PlayerSavableGUI extends VaroInventory {
 
     @Override
     public int getSize() {
-        return 18;
+        return 36;
     }
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§cDelete").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
+        if (getPlayer().hasPermission("varo.setup"))
+            addItem(this.getUsableSize(), new ItemBuilder().displayname("§bTeleport").itemstack(Materials.ENDER_PEARL.parseItem()).build(),
+                    (event) -> getPlayer().teleport(savable.getBlock().getLocation()));
+
+        addItem(this.getCenter(), new ItemBuilder().displayname("§cDelete").itemstack(Materials.ROSE_RED.parseItem()).build(), (event) -> {
             savable.remove();
             this.back();
         });
