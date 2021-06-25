@@ -150,6 +150,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	// GUI
 	GUI_INVENTORY_ANIMATIONS(ConfigSettingSection.GUI, "guiInventoryAnimations", false, "Bestimmt, ob beim Klicken in der Gui eine Animation abgespielt wird."),
+	GUI_PLAY_SOUND(ConfigSettingSection.GUI, "playSound", true, "Bestimmt, ob ein Sound beim\nKlicken abgespielt werden soll."),
 
 	// JOINSYSTEMS
 	IGNORE_JOINSYSTEMS_AS_OP(ConfigSettingSection.JOIN_SYSTEMS, "ignoreJoinSystemsAsOP", true, "Ob OP-Spieler die JoinSysteme ignorieren."),

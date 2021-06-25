@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.function.Consumer;
+
 public class InventoryBackupShowGUI extends VaroInventory {
 
     private final InventoryBackup backup;
@@ -18,13 +20,18 @@ public class InventoryBackupShowGUI extends VaroInventory {
         this.backup = backup;
     }
 
-    @Override
-    protected boolean cancelClick(int slot) {
-        return slot >= this.getUsableSize();
+    private boolean isStuff() {
+        return this.getLastClickedSlot() < 40;
     }
 
     @Override
-    protected void playSound() {
+    public boolean cancelClick() {
+        return !this.isStuff();
+    }
+
+    @Override
+    public Consumer<Player> getSoundPlayer() {
+        return this.isStuff() ? null : super.getSoundPlayer();
     }
 
     @Override

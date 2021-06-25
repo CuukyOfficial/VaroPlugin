@@ -2,15 +2,14 @@ package de.cuuky.varo.gui;
 
 import de.cuuky.cfw.inventory.AdvancedInventory;
 import de.cuuky.cfw.inventory.AdvancedInventoryManager;
-import de.cuuky.cfw.inventory.ItemInserter;
-import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
-import de.cuuky.cfw.inventory.inserter.DirectInserter;
+import de.cuuky.cfw.inventory.InfoProvider;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class VaroInventory extends AdvancedInventory {
 
@@ -19,13 +18,8 @@ public abstract class VaroInventory extends AdvancedInventory {
     }
 
     @Override
-    protected ItemInserter getInserter() {
-        return ConfigSetting.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean() ? new AnimatedClosingInserter() : new DirectInserter();
-    }
-
-    @Override
-    protected ItemStack getFillerStack() {
-        return ConfigSetting.GUI_FILL_INVENTORY.getValueAsBoolean() ? super.getFillerStack() : null;
+    protected List<InfoProvider> getInfoProvider() {
+        return Arrays.asList(new VaroInventoryConfigProvider(this));
     }
 
     protected void sendInfo() {
