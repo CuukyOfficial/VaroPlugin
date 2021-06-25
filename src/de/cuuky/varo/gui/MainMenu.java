@@ -85,8 +85,6 @@ public class MainMenu extends VaroInventory {
 
         if (ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
             addItem(this.getUsableSize() - 1, new ItemBuilder().displayname("§5Info")
-                    .itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), (event) -> {
-                sendInfo();
-            });
+                    .itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), (event) -> sendInfo());
     }
 }

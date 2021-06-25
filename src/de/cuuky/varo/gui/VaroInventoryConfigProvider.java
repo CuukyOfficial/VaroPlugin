@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class VaroInventoryConfigProvider implements InfoProvider {
 
-    private AdvancedInventory inventory;
+    private final AdvancedInventory inventory;
 
     VaroInventoryConfigProvider(AdvancedInventory inventory) {
         this.inventory = inventory;
@@ -24,7 +24,7 @@ public class VaroInventoryConfigProvider implements InfoProvider {
 
     @Override
     public int getPriority() {
-        return 1;
+        return 2;
     }
 
     @Override
