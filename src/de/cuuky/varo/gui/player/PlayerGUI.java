@@ -6,6 +6,7 @@ import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.VaroConfirmInventory;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
 import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
@@ -56,18 +57,22 @@ public class PlayerGUI extends VaroInventory {
                 (event) -> this.openNext(new PlayerSavableChooseGUI(getPlayer(), target)));
 
         addItem(11, new ItemBuilder().displayname("§4Remove")
-                .itemstack(Materials.ROSE_RED.parseItem()).build(), (event) -> {
-            this.back();
-            target.delete();
-        });
+                .itemstack(Materials.ROSE_RED.parseItem()).build(), (event) ->
+                this.openNext(new VaroConfirmInventory(this, "§cRemove?", (accept) -> {
+                    this.back();
+                    target.delete();
+                    this.open();
+                })));
 
         addItem(15, new ItemBuilder().displayname("§cReset")
-                .itemstack(Materials.SKELETON_SKULL.parseItem()).build(), (event) -> {
-            if (target.isOnline())
-                target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
+                .itemstack(Materials.SKELETON_SKULL.parseItem()).build(), (event) ->
+                this.openNext(new VaroConfirmInventory(this, "§cReset?", (accept) -> {
+                    if (target.isOnline())
+                        target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 
-            target.getStats().loadDefaults();
-        });
+                    target.getStats().loadDefaults();
+                    this.open();
+                })));
 
         addItem(22, new ItemBuilder().displayname("§5More Options")
                         .itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(),

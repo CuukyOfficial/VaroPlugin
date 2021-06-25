@@ -1,5 +1,6 @@
 package de.cuuky.varo.gui;
 
+import de.cuuky.cfw.inventory.Info;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
@@ -14,6 +15,7 @@ import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.events.EventListGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
+import de.cuuky.varo.gui.settings.VaroSettingsMenu;
 import de.cuuky.varo.gui.strike.StrikeListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
@@ -42,7 +44,7 @@ public class MainMenu extends VaroInventory {
         addItem(4, new ItemBuilder().displayname("§5Events").itemstack(new ItemStack(Material.APPLE)).build(),
                 (event) -> this.openNext(new EventListGUI(getPlayer())));
 
-        addItem(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.DIAMOND_BLOCK))
+        addItem(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.EMERALD))
                         .lore(new String[]{new LocationFormat(getPlayer().getWorld().getSpawnLocation())
                                 .format(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z")}).build(),
                 inventoryClickEvent -> {
@@ -71,6 +73,11 @@ public class MainMenu extends VaroInventory {
                 this.openNext(new TeamChooseGUI(getPlayer()))
         );
 
+        addItem(28, new ItemBuilder().displayname("§5Einstellungen")
+                .itemstack(Materials.CRAFTING_TABLE.parseItem()).build(), (event) ->
+                this.openNext(new VaroSettingsMenu(getPlayer()))
+        );
+
         addItem(34, new ItemBuilder().displayname("§5Videos").itemstack(new ItemStack(Material.COMPASS))
                 .amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), (event) ->
                 this.openNext(new YouTubeVideoListGUI(getPlayer()))
@@ -84,7 +91,7 @@ public class MainMenu extends VaroInventory {
         }
 
         if (ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
-            addItem(this.getUsableSize() - 1, new ItemBuilder().displayname("§5Info")
+            addItem(this.getInfo(Info.SIZE) - 1, new ItemBuilder().displayname("§5Info")
                     .itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), (event) -> sendInfo());
     }
 }

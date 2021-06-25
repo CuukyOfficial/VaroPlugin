@@ -6,7 +6,7 @@ import de.cuuky.cfw.inventory.InfoProvider;
 import de.cuuky.cfw.inventory.ItemInserter;
 import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
 import de.cuuky.cfw.inventory.inserter.DirectInserter;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,9 +17,11 @@ import java.util.function.Consumer;
 public class VaroInventoryConfigProvider implements InfoProvider {
 
     private final AdvancedInventory inventory;
+    private final VaroPlayer player;
 
     VaroInventoryConfigProvider(AdvancedInventory inventory) {
         this.inventory = inventory;
+        this.player = VaroPlayer.getPlayer(this.inventory.getPlayer());
     }
 
     @Override
@@ -34,16 +36,17 @@ public class VaroInventoryConfigProvider implements InfoProvider {
 
     @Override
     public ItemInserter getInserter() {
-        return ConfigSetting.GUI_INVENTORY_ANIMATIONS.getValueAsBoolean() ? new AnimatedClosingInserter() : new DirectInserter();
+        return this.player.hasGuiAnimation() ? new AnimatedClosingInserter() : new DirectInserter();
     }
 
     @Override
     public ItemStack getFillerStack() {
-        return ConfigSetting.GUI_FILL_INVENTORY.getValueAsBoolean() ? this.inventory.getFillerStack() : null;
+        return this.player.getGuiFiller() != null ? this.player.getGuiFiller().getColorPane() : null;
     }
 
     @Override
     public Consumer<Player> getSoundPlayer() {
-        return ConfigSetting.GUI_PLAY_SOUND.getValueAsBoolean() ? this.inventory.getSoundPlayer() : null;
+        return this.player.getGuiSound() != null ? (player) ->
+                player.playSound(player.getLocation(), this.player.getGuiSound(), 1f, 1f) : null;
     }
 }

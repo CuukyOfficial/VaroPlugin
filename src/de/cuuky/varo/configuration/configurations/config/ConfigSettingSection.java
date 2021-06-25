@@ -22,7 +22,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
 	DISCORD("Discord", Material.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
 	FINALE("Finale", Materials.END_PORTAL_FRAME.parseMaterial(), "Hier kannst du Einstellungen zum Finale des Projektes vornehmen."),
-	GUI("Gui", Materials.COMPASS.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
+//	GUI("Gui", Materials.COMPASS.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
 	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen."),
 	MAIN("Main", Material.LEVER, "Hier kannst du alle Haupteinstellungen vornehmen."),
 	OFFLINEVILLAGER("OfflineVillager", Materials.EMERALD.parseMaterial(), "Einstellungen zu den OfflineVillagern"),

@@ -1,5 +1,6 @@
 package de.cuuky.varo.gui;
 
+import de.cuuky.cfw.hooking.HookManager;
 import de.cuuky.cfw.inventory.AdvancedInventoryManager;
 import de.cuuky.cfw.inventory.list.AdvancedListInventory;
 import de.cuuky.varo.Main;
@@ -18,6 +19,11 @@ public abstract class VaroListInventory<T> extends AdvancedListInventory<T> {
     public VaroListInventory(AdvancedInventoryManager manager, Player player) {
         super(manager, player);
         this.addProvider(new VaroInventoryConfigProvider(this));
+    }
+
+    @Override
+    protected HookManager getHookManager() {
+        return Main.getCuukyFrameWork().getHookManager();
     }
 
     @Override

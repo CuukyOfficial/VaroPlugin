@@ -1,16 +1,5 @@
 package de.cuuky.varo.entity.player;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.cuuky.cfw.clientadapter.board.nametag.CustomNametag;
 import de.cuuky.cfw.clientadapter.board.scoreboard.CustomScoreboard;
 import de.cuuky.cfw.clientadapter.board.tablist.CustomTablist;
@@ -24,6 +13,7 @@ import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -42,6 +32,7 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
+import de.cuuky.varo.gui.settings.VaroMenuColor;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -49,6 +40,17 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
@@ -71,7 +73,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private String locale;
 
 	@VaroSerializeField(path = "adminIgnore")
-	private boolean adminIgnore;
+	private boolean adminIgnore = false;
 
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
@@ -82,6 +84,15 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	@VaroSerializeField(path = "stats")
 	private Stats stats;
 
+	@VaroSerializeField(path = "guiFill")
+	private VaroMenuColor guiFiller = VaroMenuColor.GRAY;
+
+	@VaroSerializeField(path = "guiSound")
+	private String guiSoundName;
+
+	@VaroSerializeField(path = "guiAnimation")
+	private boolean guiAnimation = true;
+
 	private CustomNametag<VaroPlayer> nametag;
 	private CustomScoreboard<VaroPlayer> scoreboard;
 	private CustomTablist<VaroPlayer> tablist;
@@ -89,6 +100,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
+	private Sound guiSound = Sounds.CLICK.bukkitSound();
 	private Player player;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 	private ChatMessage lastMessage;
@@ -102,7 +114,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		this.uuid = player.getUniqueId().toString();
 		this.player = player;
 		this.id = generateId();
-		this.adminIgnore = false;
 
 		this.stats = new Stats(this);
 	}
@@ -214,6 +225,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
+		this.guiSound = this.guiSoundName != null ? Sound.valueOf(this.guiSoundName) : null;
 		if (this.player != null)
 			setPlayer(this.player);
 		if (isOnline()) {
@@ -228,12 +240,14 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		this.stats.setOwner(this);
 	}
 
+	@Override
+	public void onSerializeStart() {
+		this.guiSoundName = this.guiSound != null ? this.guiSound.toString() : null;
+	}
+
 	public void onEvent(BukkitEventType type) {
 		new BukkitEvent(this, type);
 	}
-
-	@Override
-	public void onSerializeStart() {}
 
 	public void register() {
 		if (this.stats == null)
@@ -455,6 +469,30 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 		if (isOnline())
 			update();
+	}
+
+	public void setGuiFiller(VaroMenuColor guiFiller) {
+		this.guiFiller = guiFiller;
+	}
+
+	public VaroMenuColor getGuiFiller() {
+		return guiFiller;
+	}
+
+	public void setGuiSound(Sound guiSound) {
+		this.guiSound = guiSound;
+	}
+
+	public Sound getGuiSound() {
+		return guiSound;
+	}
+
+	public void setGuiAnimation(boolean guiAnimation) {
+		this.guiAnimation = guiAnimation;
+	}
+
+	public boolean hasGuiAnimation() {
+		return guiAnimation;
 	}
 
 	public void setUuid(String uuid) {

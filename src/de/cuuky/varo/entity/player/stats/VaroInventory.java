@@ -1,15 +1,14 @@
 package de.cuuky.varo.entity.player.stats;
 
-import java.util.HashMap;
-
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import java.util.HashMap;
 
 public class VaroInventory implements VaroSerializeable {
 
@@ -30,7 +29,7 @@ public class VaroInventory implements VaroSerializeable {
 		createInventory();
 	}
 
-	private void createInventory() {
+    private void createInventory() {
 		inventory = Bukkit.createInventory(null, size, "§aBackpack");
 	}
 

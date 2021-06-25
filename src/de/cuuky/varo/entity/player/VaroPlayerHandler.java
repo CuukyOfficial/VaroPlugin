@@ -1,7 +1,5 @@
 package de.cuuky.varo.entity.player;
 
-import org.bukkit.entity.Player;
-
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.entity.player.stats.Stats;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
@@ -13,7 +11,9 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
+import de.cuuky.varo.gui.settings.VaroMenuColor;
 import de.cuuky.varo.serialize.VaroSerializeObject;
+import org.bukkit.entity.Player;
 
 public class VaroPlayerHandler extends VaroSerializeObject {
 
@@ -28,6 +28,7 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 		registerClass(OfflineVillager.class);
 		registerEnum(PlayerState.class);
 		registerEnum(SaveableType.class);
+		registerEnum(VaroMenuColor.class);
 	}
 
 	public VaroPlayerHandler() {
