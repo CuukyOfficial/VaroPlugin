@@ -33,7 +33,7 @@ public class TeamGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§cSet teamlifes").lore("§7Current§8: §4" + team.getLifes()).itemstack(new ItemStack(Material.DIAMOND)).build(), (event) -> {
+        addItem(1, new ItemBuilder().displayname("§cSet teamlives").lore("§7Current§8: §4" + team.getLifes()).itemstack(new ItemStack(Material.DIAMOND)).build(), (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team colorcode:", new ChatHookHandler() {
 
                 @Override
@@ -42,12 +42,12 @@ public class TeamGUI extends VaroInventory {
                     try {
                         lives = Double.parseDouble(event.getMessage());
                     } catch (NumberFormatException e) {
-                        getPlayer().sendMessage(Main.getPrefix() + "Pleas enter a valid value for team lifes");
+                        getPlayer().sendMessage(Main.getPrefix() + "Pleas enter a valid value for team lives");
                         return false;
                     }
 
                     team.setLifes(lives);
-                    getPlayer().sendMessage(Main.getPrefix() + "Team lifes of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getLifes() + "§7'");
+                    getPlayer().sendMessage(Main.getPrefix() + "Team lives of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getLifes() + "§7'");
                     open();
                     return true;
                 }
