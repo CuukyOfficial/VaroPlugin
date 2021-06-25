@@ -33,17 +33,17 @@ public class DebugGUI extends VaroInventory {
     @Override
     public void refreshContent() {
         addItem(10, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[]{"§7Fuehrt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen"}).build(), (event) -> {
-            close(false);
-
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter Event Message:", new ChatHookHandler() {
 
                 @Override
                 public boolean onChat(AsyncPlayerChatEvent event) {
                     Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, event.getMessage());
                     getPlayer().sendMessage(Main.getPrefix() + "§aErfolgreich!");
+                    open();
                     return true;
                 }
             }));
+            this.close();
         });
 
         addItem(13, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[]{"§7Fuehrt die Dinge aus, die sonst immer", "§7Nachts ausgefuehrt werden, wie Sessionreset"}).build(), (event) -> {

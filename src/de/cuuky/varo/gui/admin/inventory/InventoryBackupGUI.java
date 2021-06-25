@@ -47,7 +47,7 @@ public class InventoryBackupGUI extends VaroInventory {
 
         addItem(7, new ItemBuilder().displayname("§cRemove").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
             backup.getVaroPlayer().getStats().removeInventoryBackup(backup);
-            this.openNext(new InventoryBackupListGUI(getPlayer(), backup.getVaroPlayer()));
+            this.back();
         });
     }
 }

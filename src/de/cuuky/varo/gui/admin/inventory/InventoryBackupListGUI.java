@@ -24,7 +24,7 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
 
     @Override
     public String getTitle() {
-        return "§7Backups: " + Main.getColorCode() + target.getName();
+        return "§7Backups " + Main.getColorCode() + target.getName();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
     public void refreshContent() {
         super.refreshContent();
 
-        addItem(this.getSize() - 1, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
+        addItem(this.getSize() - 2, new ItemBuilder().displayname("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
             if (!target.isOnline()) {
                 getPlayer().sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
                 return;
