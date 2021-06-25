@@ -31,7 +31,7 @@ public abstract class VaroInventory extends AdvancedInventory {
     protected void sendInfo() {
         getPlayer().sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
         getPlayer().sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
-        getPlayer().sendMessage(Main.getPrefix() + "§7Discordserver: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
+        getPlayer().sendMessage(Main.getPrefix() + "§7Discord-Server: " + Main.getColorCode() + "https://discord.gg/CnDSVVx");
         getPlayer().sendMessage(Main.getPrefix() + "§7All rights reserved!");
     }
 
