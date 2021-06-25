@@ -41,7 +41,7 @@ public class MainMenu extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(4, new ItemBuilder().displayname("§5Events").itemstack(new ItemStack(Material.APPLE)).build(),
+        addItem(4, new ItemBuilder().displayname("§7Alle §5Events").itemstack(new ItemStack(Material.APPLE)).build(),
                 (event) -> this.openNext(new EventListGUI(getPlayer())));
 
         addItem(10, new ItemBuilder().displayname("§bSpawn").itemstack(new ItemStack(Material.EMERALD))
@@ -55,20 +55,20 @@ public class MainMenu extends VaroInventory {
                 });
 
         addItem(16, new ItemBuilder().player(getPlayer()).amount(getFixedSize(VaroPlayer.getVaroPlayer().size()))
-                .displayname("§aSpieler").buildSkull(), (event) ->
+                .displayname("§7Alle §aSpieler").buildSkull(), (event) ->
                 this.openNext(new PlayerListChooseGUI(getPlayer()))
         );
 
-        addItem(18, new ItemBuilder().displayname("§6Strikes").itemstack(new ItemStack(Material.PAPER))
+        addItem(18, new ItemBuilder().displayname("§7Deine §6Strikes").itemstack(new ItemStack(Material.PAPER))
                         .amount(getFixedSize(VaroPlayer.getPlayer(getPlayer()).getStats().getStrikes().size())).build(),
                 (event) -> this.openNext(new StrikeListGUI(getPlayer(), getPlayer())));
 
-        addItem(22, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(new ItemStack(Material.CHEST))
+        addItem(22, new ItemBuilder().displayname("§7Deine §eKisten/Öfen").itemstack(new ItemStack(Material.CHEST))
                 .amount(getFixedSize(VaroSaveable.getSaveable(VaroPlayer.getPlayer(getPlayer())).size())).build(), (event) ->
                 this.openNext(new PlayerSavableChooseGUI(getPlayer(), VaroPlayer.getPlayer(getPlayer())))
         );
 
-        addItem(26, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
+        addItem(26, new ItemBuilder().displayname("§7Alle §2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
                 .amount(getFixedSize(VaroTeam.getTeams().size())).build(), (event) ->
                 this.openNext(new TeamChooseGUI(getPlayer()))
         );
@@ -78,13 +78,13 @@ public class MainMenu extends VaroInventory {
                 this.openNext(new VaroSettingsMenu(getPlayer()))
         );
 
-        addItem(34, new ItemBuilder().displayname("§5Videos").itemstack(new ItemStack(Material.COMPASS))
+        addItem(34, new ItemBuilder().displayname("§7Deine §5Videos").itemstack(new ItemStack(Material.COMPASS))
                 .amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), (event) ->
                 this.openNext(new YouTubeVideoListGUI(getPlayer()))
         );
 
         if (getPlayer().hasPermission("varo.admin")) {
-            addItem(36, new ItemBuilder().displayname("§cAdmin-Section")
+            addItem(36, new ItemBuilder().displayname("§cAdmin-Section").lore("§cNur für Admins sichtbar")
                     .itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), (event) ->
                     this.openNext(new AdminMainMenu(getPlayer()))
             );

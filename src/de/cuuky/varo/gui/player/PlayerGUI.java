@@ -58,7 +58,7 @@ public class PlayerGUI extends VaroInventory {
 
         addItem(11, new ItemBuilder().displayname("§4Remove")
                 .itemstack(Materials.ROSE_RED.parseItem()).build(), (event) ->
-                this.openNext(new VaroConfirmInventory(this, "§cRemove?", (accept) -> {
+                this.openNext(new VaroConfirmInventory(this, "§4Remove?", (accept) -> {
                     this.back();
                     target.delete();
                     this.open();
@@ -66,7 +66,7 @@ public class PlayerGUI extends VaroInventory {
 
         addItem(15, new ItemBuilder().displayname("§cReset")
                 .itemstack(Materials.SKELETON_SKULL.parseItem()).build(), (event) ->
-                this.openNext(new VaroConfirmInventory(this, "§cReset?", (accept) -> {
+                this.openNext(new VaroConfirmInventory(this, "§4Reset?", (accept) -> {
                     if (target.isOnline())
                         target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
 
