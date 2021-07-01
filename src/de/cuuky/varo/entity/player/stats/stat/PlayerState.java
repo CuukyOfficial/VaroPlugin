@@ -14,7 +14,7 @@ public enum PlayerState implements VaroSerializeable {
 
 	private String name;
 
-	private PlayerState(String name) {
+	PlayerState(String name) {
 		this.name = name;
 	}
 
@@ -31,13 +31,5 @@ public enum PlayerState implements VaroSerializeable {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public static PlayerState getByName(String name) {
-		for (PlayerState state : values())
-			if (state.getName().equalsIgnoreCase(name))
-				return state;
-
-		return null;
 	}
 }

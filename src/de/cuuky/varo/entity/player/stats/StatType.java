@@ -18,7 +18,7 @@ public enum StatType {
     COUNTDOWN("countdown","§bCountdown", Materials.SIGN, (value, vp) -> vp.getStats().setCountdown(Integer.parseInt(value)), vp -> vp.getStats().getCountdown(), (vp) -> vp.getStats().setCountdown(ConfigSetting.PLAY_TIME.getValueAsInt() * 60)),
     EPISODES_PLAYED("episodesplayed","§5Episodes played", Materials.BLAZE_POWDER, (value, vp) -> vp.getStats().setSessionsPlayed(Integer.parseInt(value)), vp -> vp.getStats().getSessionsPlayed(), (vp) -> vp.getStats().setSessionsPlayed(0)),
     KILLS("kills","§4Kills", Materials.DIAMOND_SWORD, (value, vp) -> vp.getStats().setKills(Integer.parseInt(value)), vp -> vp.getStats().getKills(), (vp) -> vp.getStats().setKills(0)),
-    PLAYER_STATE("playerstate","§6Player State", Materials.GOLDEN_APPLE, (value, vp) -> vp.getStats().setState(PlayerState.getByName(value)), vp -> vp.getStats().getState(), (vp) -> vp.getStats().setState(PlayerState.ALIVE)),
+    PLAYER_STATE("playerstate","§6Player State", Materials.GOLDEN_APPLE, (value, vp) -> vp.getStats().setState(PlayerState.valueOf(value)), vp -> vp.getStats().getState(), (vp) -> vp.getStats().setState(PlayerState.ALIVE)),
     RANK("rank","§2Rank", Materials.EMERALD, (value, vp) -> vp.setRank(new Rank(value)), vp -> vp.getRank() == null ? null : vp.getRank().getDisplay(), (vp) -> vp.setRank(null)),
     SESSIONS("sessions","§bSessions", Materials.DIAMOND, (value, vp) -> vp.getStats().setSessions(Integer.parseInt(value)), vp -> vp.getStats().getSessions(), (vp) -> vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())),
     WINS("wins","§dWins", Materials.GOLD_INGOT, (value, vp) -> vp.getStats().setWins(Integer.parseInt(value)), vp -> vp.getStats().getWins(), (vp) -> vp.getStats().setWins(0)),
@@ -46,7 +46,6 @@ public enum StatType {
                 vp.update();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
             sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
         }
         return false;

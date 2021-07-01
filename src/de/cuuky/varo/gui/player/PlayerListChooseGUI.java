@@ -15,7 +15,7 @@ public class PlayerListChooseGUI extends VaroInventory {
 
     @Override
     public String getTitle() {
-        return "§cChoose player";
+        return "§cChoose Player";
     }
 
     @Override

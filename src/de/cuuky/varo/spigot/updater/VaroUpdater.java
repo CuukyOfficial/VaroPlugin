@@ -1,22 +1,21 @@
 package de.cuuky.varo.spigot.updater;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Scanner;
-
+import de.cuuky.varo.Main;
+import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Scanner;
 
 public class VaroUpdater {
 
-	private static enum VersionCompareResult {
+	private enum VersionCompareResult {
 		VERSION1GREATER,
 		VERSION2GREATER,
 		VERSIONS_EQUAL;
@@ -40,11 +39,13 @@ public class VaroUpdater {
 
 	private VersionCompareResult compareVersions(String version1, String version2) {
 		try {
-			if (!version1.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*") || !version2.replace("-BETA", "").matches("[0-9]+(\\.[0-9]+)*"))
+			String version1Use = version1.split("-BETA")[0], version2Use = version2.split("-BETA")[0];
+			if (!version1Use.matches("[0-9]+(\\.[0-9]+)*")
+					|| !version2Use.matches("[0-9]+(\\.[0-9]+)*"))
 				throw new IllegalArgumentException("Invalid version format");
 
-			String[] version1Parts = version1.replace("-BETA", "").split("\\.");
-			String[] version2Parts = version2.replace("-BETA", "").split("\\.");
+			String[] version1Parts = version1Use.split("\\.");
+			String[] version2Parts = version2Use.split("\\.");
 
 			for (int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
 				int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
@@ -54,16 +55,13 @@ public class VaroUpdater {
 				if (version1Part > version2Part)
 					return VersionCompareResult.VERSION1GREATER;
 			}
-
-			if (version1.contains("BETA"))
-				return VersionCompareResult.VERSION2GREATER;
-
-			if (version2.contains("BETA"))
-				return VersionCompareResult.VERSION1GREATER;
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
 		}
 
+		if (version1.contains("BETA")) return VersionCompareResult.VERSION2GREATER;
+		if (version2.contains("BETA")) return VersionCompareResult.VERSION1GREATER;
 		return VersionCompareResult.VERSIONS_EQUAL;
 	}
 
@@ -118,8 +116,6 @@ public class VaroUpdater {
 			}
 		} catch (IOException e) {
 			result = UpdateResult.FAIL_SPIGOT;
-			version = "";
-			id = "";
 		} catch (ParseException | IllegalArgumentException e) {
 			e.getSuppressed();
 			System.out.println(Main.getConsolePrefix() + "Failed to fetch server version!");
