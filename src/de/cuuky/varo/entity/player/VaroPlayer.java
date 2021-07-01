@@ -199,7 +199,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		player.setHealth(20);
 		player.setFoodLevel(20);
 		player.getInventory().clear();
-		player.getInventory().setArmorContents(new ItemStack[] {});
+		player.getInventory().setArmorContents(null);
 		player.setExp(0);
 		player.setLevel(0);
 	}
