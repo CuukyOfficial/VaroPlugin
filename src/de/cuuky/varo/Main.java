@@ -1,12 +1,5 @@
 package de.cuuky.varo;
 
-import java.io.File;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_17_R1.CraftServer;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.cuuky.cfw.AdapterCuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
@@ -14,7 +7,6 @@ import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
-import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
@@ -26,6 +18,11 @@ import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -40,7 +37,6 @@ public class Main extends JavaPlugin {
 
     private static ExternalPluginLoader pluginLoader;
     private static BotLauncher botLauncher;
-    private static VaroBoardProvider varoBoard;
     private static AdapterCuukyFrameWork<VaroPlayer> cuukyFrameWork;
     private static DataManager dataManager;
     private static VaroUpdater varoUpdater;
@@ -103,7 +99,7 @@ public class Main extends JavaPlugin {
             }
 
             long dataStamp = System.currentTimeMillis();
-            cuukyFrameWork = new AdapterCuukyFrameWork<VaroPlayer>(instance, languageManager = new VaroLanguageManager(Main.this));
+            cuukyFrameWork = new AdapterCuukyFrameWork<>(instance, languageManager = new VaroLanguageManager(Main.this));
             dataManager.load();
             System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
@@ -203,10 +199,6 @@ public class Main extends JavaPlugin {
     public static ExternalPluginLoader getExternalPluginLoader() {
 		return pluginLoader;
 	}
-
-    public static VaroBoardProvider getVaroBoard() {
-        return varoBoard;
-    }
 
     public static AdapterCuukyFrameWork<VaroPlayer> getCuukyFrameWork() {
         return cuukyFrameWork;
