@@ -90,8 +90,7 @@ public class Main extends JavaPlugin {
 
 		try {
 			if (new ConfigFailureDetector().hasFailed()) {
-				failed = true;
-				Bukkit.getPluginManager().disablePlugin(Main.getInstance());
+				this.fail();
 				return;
 			}
 
@@ -103,6 +102,9 @@ public class Main extends JavaPlugin {
 			varoUpdater = new VaroUpdater(RESOURCE_ID, getDescription().getVersion(), () -> varoUpdater.printResults());
 			botLauncher = new BotLauncher();
 
+			if(this.isFailed())
+				return;
+
 			new MetricsLoader(this);
 			new SmartLagDetector(this);
 
@@ -110,8 +112,7 @@ public class Main extends JavaPlugin {
 			BukkitRegisterer.registerCommands();
 		} catch (Throwable e) {
 			e.printStackTrace();
-			failed = true;
-			Bukkit.getPluginManager().disablePlugin(Main.this);
+			this.fail();
 		}
 
 		if (failed)
@@ -161,8 +162,9 @@ public class Main extends JavaPlugin {
 		return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? UUIDUtils.getUUID(name) : UUIDUtils.getCrackedUUID(name);
 	}
 
-	public void setFailed(boolean failed) {
-		this.failed = failed;
+	public void fail() {
+		this.failed = true;
+		Bukkit.getPluginManager().disablePlugin(this);
 	}
 
 	public boolean isFailed() {

@@ -40,9 +40,13 @@ public class VaroDiscordBot implements VaroBot {
 		builder.setStatus(OnlineStatus.ONLINE);
 		
 		if(ConfigSetting.DISCORDBOT_ENABLED_PRIVILIGES.getValueAsBoolean()) {
-		builder.setMemberCachePolicy(MemberCachePolicy.ALL);
-		builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
-		builder.setChunkingFilter(ChunkingFilter.ALL);
+			builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+			builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+			builder.setChunkingFilter(ChunkingFilter.ALL);
+		}else if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			System.err.println(Main.getConsolePrefix() + "ERROR: '" + ConfigSetting.DISCORDBOT_ENABLED_PRIVILIGES.getPath() + "' has to be enabled in order to use the verify system! Disabling discord bot!");
+			Main.getInstance().fail();
+			return;
 		}
 
 		try {
