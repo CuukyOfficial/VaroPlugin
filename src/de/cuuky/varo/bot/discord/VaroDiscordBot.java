@@ -47,17 +47,12 @@ public class VaroDiscordBot implements VaroBot {
 
 		try {
 			jda = builder.build();
-			jda.addEventListener(new DiscordBotEventListener());
-		} catch (Exception | Error e) {
-			e.printStackTrace();
-			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
-			return;
-		}
-
-		try {
 			System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
 			jda.awaitReady();
-		} catch (Exception e) {
+			jda.addEventListener(new DiscordBotEventListener());
+		} catch (Throwable t) {
+			t.printStackTrace();
+			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
 			return;
 		}
 
