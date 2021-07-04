@@ -57,7 +57,7 @@ public class SpectatorListener implements Listener {
 			}
 		}
 
-		if (cancelEvent(entityDamager))
+		if (!event.isCancelled() && entityDamager instanceof Player && VaroPlayer.getPlayer((Player) entityDamager).getStats().isSpectator())
 			event.setCancelled(true);
 	}
 
