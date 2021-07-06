@@ -144,6 +144,11 @@ public class VaroDiscordBot implements VaroBot {
 			System.err.println(Main.getConsolePrefix() + "Failed to print discord message!");
 			return;
 		}
+		if(channel == null) {
+			System.err.println(String.format("%sFailed to find discord channel %d", Main.getConsolePrefix(), channelid));
+			return;
+		}
+			
 		if (ConfigSetting.DISCORDBOT_USE_EMBEDS.getValueAsBoolean()) {
 			EmbedBuilder builder = new EmbedBuilder();
 			if (!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
