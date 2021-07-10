@@ -95,10 +95,8 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	private void removeNameTag() {
-		if (armorStand == null)
-			return;
-
-		armorStand.remove();
+		if (armorStand != null)
+			armorStand.remove();
 	}
 
 	private void setNameTag() {
@@ -112,7 +110,8 @@ public class Spawn implements VaroSerializeable {
 	}
 
 	public void updateNametag() {
-		VersionUtils.getVersionAdapter().setArmorstandAttributes(this.armorStand, false, true, false, this.getNametagName());
+		if(this.armorStand != null)
+			VersionUtils.getVersionAdapter().setArmorstandAttributes(this.armorStand, false, true, false, this.getNametagName());
 	}
 
 	public void delete() {

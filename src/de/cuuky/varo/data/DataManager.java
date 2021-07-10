@@ -17,6 +17,7 @@ import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
+import de.cuuky.varo.data.plugin.ExternalPluginLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
@@ -39,6 +40,8 @@ public class DataManager {
 
 	private Main ownerInstance;
 
+	private ExternalPluginLoader pluginLoader;
+	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
@@ -49,7 +52,6 @@ public class DataManager {
 	private OutSideTimeChecker outsideTimeChecker;
 	private MySQLClient mysqlClient;
 	private VaroListManager listManager;
-	private VaroLoggerManager varoLoggerManager;
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
@@ -63,13 +65,14 @@ public class DataManager {
 		Main.setDataManager(this);
 	}
 
-	public void loadLogger() {
+	public void preLoad() {
+		this.configHandler = new ConfigHandler();
+		this.pluginLoader = new ExternalPluginLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
+		new DefaultPresetLoader();
 	}
 
 	public void load() {
-		new DefaultPresetLoader();
-		this.configHandler = new ConfigHandler();
 		new MessagePlaceholderLoader();
 		VaroBoardProvider.update();
 		this.propertiesReader = new ServerPropertiesReader();
@@ -98,7 +101,7 @@ public class DataManager {
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 
 		this.banHandler = new VaroPlayerBanHandler();
-		
+
 		startAutoSave();
 
 		doSave = true;
@@ -167,6 +170,10 @@ public class DataManager {
 		return this.broadcaster;
 	}
 
+	public ExternalPluginLoader getExternalPluginLoader() {
+		return pluginLoader;
+	}
+
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
 	}
@@ -214,7 +221,7 @@ public class DataManager {
 	public JavaPlugin getOwnerInstance() {
 		return this.ownerInstance;
 	}
-	
+
 	public VaroPlayerBanHandler getBanHandler() {
 		return banHandler;
 	}

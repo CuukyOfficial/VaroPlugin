@@ -40,24 +40,23 @@ public class VaroDiscordBot implements VaroBot {
 		builder.setStatus(OnlineStatus.ONLINE);
 		
 		if(ConfigSetting.DISCORDBOT_ENABLED_PRIVILIGES.getValueAsBoolean()) {
-		builder.setMemberCachePolicy(MemberCachePolicy.ALL);
-		builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
-		builder.setChunkingFilter(ChunkingFilter.ALL);
-		}
-
-		try {
-			jda = builder.build();
-			jda.addEventListener(new DiscordBotEventListener());
-		} catch (Exception | Error e) {
-			e.printStackTrace();
-			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
+			builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+			builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+			builder.setChunkingFilter(ChunkingFilter.ALL);
+		}else if(ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			System.err.println(Main.getConsolePrefix() + "ERROR: '" + ConfigSetting.DISCORDBOT_ENABLED_PRIVILIGES.getPath() + "' has to be enabled in order to use the verify system! Disabling discord bot!");
+			Main.getInstance().fail();
 			return;
 		}
 
 		try {
+			jda = builder.build();
 			System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
 			jda.awaitReady();
-		} catch (Exception e) {
+			jda.addEventListener(new DiscordBotEventListener());
+		} catch (Throwable t) {
+			t.printStackTrace();
+			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
 			return;
 		}
 
@@ -145,6 +144,11 @@ public class VaroDiscordBot implements VaroBot {
 			System.err.println(Main.getConsolePrefix() + "Failed to print discord message!");
 			return;
 		}
+		if(channel == null) {
+			System.err.println(String.format("%sFailed to find discord channel %d", Main.getConsolePrefix(), channelid));
+			return;
+		}
+			
 		if (ConfigSetting.DISCORDBOT_USE_EMBEDS.getValueAsBoolean()) {
 			EmbedBuilder builder = new EmbedBuilder();
 			if (!ConfigSetting.DISCORDBOT_MESSAGE_RANDOM_COLOR.getValueAsBoolean())
