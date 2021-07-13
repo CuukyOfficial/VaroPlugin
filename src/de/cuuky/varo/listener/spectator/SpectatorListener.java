@@ -6,8 +6,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
@@ -19,6 +22,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
+import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -28,6 +32,8 @@ import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
 
 public class SpectatorListener implements Listener {
+
+	private static final int BLOCK_INTERACT_DISTANCE = 60;
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
@@ -57,8 +63,37 @@ public class SpectatorListener implements Listener {
 			}
 		}
 
-		if (!event.isCancelled() && entityDamager instanceof Player && VaroPlayer.getPlayer((Player) entityDamager).getStats().isSpectator())
-			event.setCancelled(true);
+		if (!event.isCancelled()) {
+			Player damager = new EntityDamageByEntityUtil(event).getDamager();
+			if (damager != null && VaroPlayer.getPlayer(damager).getStats().isSpectator())
+				event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {
+		this.checkBlockEvent(event, event.getPlayer());
+	}
+
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event) {
+		this.checkBlockEvent(event, event.getPlayer());
+	}
+
+	private void checkBlockEvent(Cancellable event, Player player) {
+		if (!event.isCancelled() && Main.getVaroGame().getGameState() == GameState.STARTED && VaroPlayer.getPlayer(player).getStats().isSpectator()) {
+			for (Entity entity : player.getNearbyEntities(BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE)) {
+				if (!(entity instanceof Player))
+					continue;
+
+				VaroPlayer vp = VaroPlayer.getPlayer((Player) entity);
+				if (!vp.getStats().isSpectator()) {
+					event.setCancelled(true);
+					player.sendMessage(Main.getPrefix() + "You can't place or destroy blocks in close proximity to another player!");
+					return;
+				}
+			}
+		}
 	}
 
 	@EventHandler
@@ -68,7 +103,7 @@ public class SpectatorListener implements Listener {
 			if(vp.getStats().isSpectator())
 				event.setTarget(null);
 		}
-		
+
 		if (Main.getVaroGame().getGameState() == GameState.LOBBY)
 			event.setCancelled(true);
 
