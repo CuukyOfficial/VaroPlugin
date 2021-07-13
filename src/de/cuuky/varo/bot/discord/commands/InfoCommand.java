@@ -18,7 +18,7 @@ public class InfoCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage(Main.getPluginName(), "Version: " + Main.getInstance().getDescription().getVersion() + "\n  Link: https://discord.gg/CnDSVVx", Color.BLUE, event.getTextChannel());
+		getDiscordBot().sendMessage(Main.getPluginName(), "Version: " + Main.getInstance().getDescription().getVersion() + "\n  Link: " + Main.DISCORD_INVITE, Color.BLUE, event.getTextChannel());
 	}
 
 }

@@ -113,15 +113,10 @@ public class VaroSaveable implements VaroSerializeable {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (player == null || blockLocation == null) {
-                    remove();
-                    return;
-                }
-
                 player = VaroPlayer.getPlayer(playerId);
                 block = blockLocation.getBlock();
 
-                if (!VaroSaveable.this.exists())
+                if (player == null || block == null || !VaroSaveable.this.exists())
                     remove();
             }
         }.runTaskLater(Main.getInstance(), 1L);

@@ -1,6 +1,9 @@
 package de.cuuky.varo.listener;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.BanEntry;
 import org.bukkit.BanList.Type;
@@ -9,29 +12,41 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
+import de.cuuky.cfw.utils.UUIDUtils;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.ban.VaroPlayerBanHandler;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
+import de.varoplugin.banapi.Ban;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class PlayerLoginListener implements Listener {
+
+	private Map<String, UUID> uuidCache = new HashMap<>();
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
-		if (event.getResult() != Result.ALLOWED || Main.getDataManager().getBanHandler().hasBan(player, event))
+		if (event.getResult() != Result.ALLOWED)
 			return;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
 		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
+			if(!discordBot.getJda().getGatewayIntents().contains(GatewayIntent.GUILD_MEMBERS)) {
+				event.disallow(Result.KICK_OTHER, "§cPrivileged gateway intents have to be enabled in order to use the discord verify system!\n§cPlease enable them and restart the server!\n\n§7Need help? " + Main.DISCORD_INVITE);
+				return;
+			}
+
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
 				if (reg == null) {
@@ -125,6 +140,36 @@ public class PlayerLoginListener implements Listener {
 			if (!vp.isRegistered())
 				vp.register();
 			break;
+		}
+	}
+
+	@EventHandler
+	public void onAsyncLogin(AsyncPlayerPreLoginEvent event) {
+		VaroPlayerBanHandler banHandler = Main.getDataManager().getBanHandler();
+		Ban ban = null;
+
+		UUID uuid = this.uuidCache.get(event.getName());
+		if (uuid == null) {
+			ban = banHandler.getActiveBan(event.getUniqueId());
+			if (ban != null) {
+				event.disallow(org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.KICK_BANNED, banHandler.getKickMessage(ban));
+				return;
+			}
+
+			try {
+				uuid = UUIDUtils.getUUID(event.getName(), 10000);
+			}catch(Throwable t) {
+				System.err.println("Unable to retreive uuid! Are the mojang servers down?");
+				t.printStackTrace();
+				return;
+			}
+		}
+
+		if(uuid != null) {
+			this.uuidCache.put(event.getName(), uuid);
+			ban = banHandler.getActiveBan(uuid);
+			if (ban != null)
+				event.disallow(org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.KICK_BANNED, banHandler.getKickMessage(ban));
 		}
 	}
 }

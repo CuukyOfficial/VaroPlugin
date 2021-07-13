@@ -88,7 +88,7 @@ public class Broadcaster {
 	private static String[] getAdMessage() {
 		String[] messages = new String[] { "", "", "" };
 		messages[0] = "&7-----------------------------------------";
-		messages[1] = "&7Du moechtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: https://discord.gg/CnDSVVx";
+		messages[1] = "&7Du moechtest auch ein &5(OneDay)Varo's &7veranstalten? Link zum Plugin: " + Main.DISCORD_INVITE;
 		messages[2] = "&7-----------------------------------------";
 		return messages;
 	}
