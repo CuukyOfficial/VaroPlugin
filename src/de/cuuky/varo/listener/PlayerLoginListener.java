@@ -20,6 +20,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class PlayerLoginListener implements Listener {
 
@@ -32,6 +33,11 @@ public class PlayerLoginListener implements Listener {
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
 		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
+			if(!discordBot.getJda().getGatewayIntents().contains(GatewayIntent.GUILD_MEMBERS)) {
+				event.disallow(Result.KICK_OTHER, "§cPrivileged gateway intents have to be enabled in order to use the discord verify system!\n§cPlease enable them and restart the server!\n\n§7Need help? " + Main.DISCORD_INVITE);
+				return;
+			}
+			
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
 				if (reg == null) {
