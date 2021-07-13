@@ -32,6 +32,7 @@ public class Main extends JavaPlugin {
 
 	private static final String CONSOLE_PREFIX = "[Varo] ";
 	private static final int RESOURCE_ID = 71075;
+	public static final String DISCORD_INVITE = "https://discord.varoplugin.de/";
 
 	private static Main instance;
 
