@@ -75,7 +75,7 @@ public class VaroPlayerBanHandler {
     }
 
     public String getKickMessage(Ban ban) {
-        return "§4You have been banned from all Varo-Servers!\n§cReason: §f" + ban.getReason() + "\n§cDuration: §f" + this.getDuration(ban.getDuration()) + "\n§cDescription: §f" + (ban.getNotes() == null ? "/" : ban.getNotes()) + "\n§cUnban here: §f" + Main.DISCORD_INVITE;
+        return "§4You have been banned from all Varo-Servers!\n§cReason: §f" + ban.getReason() + "\n§cDuration: §f" + this.getDuration(ban.getDuration()) + "\n§cNote: §f" + (ban.getNotes() == null ? "/" : ban.getNotes()) + "\n§cUnban here: §f" + Main.DISCORD_INVITE;
     }
 
     public void cancel() {
