@@ -1,8 +1,6 @@
 package de.cuuky.varo.ban;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerLoginEvent.Result;
+import java.util.UUID;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -42,36 +40,32 @@ public class VaroPlayerBanHandler {
         return this.bansHandler.getCurrentData().getUser(discordID).getLatestMinecraftBan();
     }
 
-    protected Ban hasBannedDiscordLink(Player player) {
-        BotRegister register = BotRegister.getRegister(player.getUniqueId().toString());
+    protected Ban hasBannedDiscordLink(UUID uuid) {
+        BotRegister register = BotRegister.getRegister(uuid.toString());
         if (register == null)
             return null;
 
         return this.getMCBan(register.getUserId());
     }
 
-    protected Ban getBan(BanUser user, Player player) {
+    protected Ban getBan(BanUser user, UUID uuid) {
         Ban ban = null;
-        if ((user == null || !user.hasActiveMinecraftBan()) && (ban = this.hasBannedDiscordLink(player)) == null)
+        if ((user == null || !user.hasActiveMinecraftBan()) && (ban = this.hasBannedDiscordLink(uuid)) == null)
             return null;
 
         return ban == null ? user.getLatestMinecraftBan() : ban;
     }
 
-    public boolean hasBan(Player player, PlayerLoginEvent event) {
+    public Ban getActiveBan(UUID uuid) {
         if (this.bansHandler.getCurrentData() == null)
-            return false;
+            return null;
 
-        BanUser user = this.bansHandler.getCurrentData().getUser(player.getUniqueId());
-        Ban ban;
-        if ((ban = this.getBan(user, player)) == null)
-            return false;
+        BanUser user = this.bansHandler.getCurrentData().getUser(uuid);
+        Ban ban = this.getBan(user, uuid);
+        if (ban == null)
+            return null;
 
-        if (event == null)
-            player.kickPlayer(getKickMessage(ban));
-        else
-            event.disallow(Result.KICK_BANNED, getKickMessage(ban));
-        return true;
+        return ban;
     }
 
     public String getKickMessage(Ban ban) {

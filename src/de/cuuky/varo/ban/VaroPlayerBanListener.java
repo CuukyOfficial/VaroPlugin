@@ -40,7 +40,7 @@ public class VaroPlayerBanListener implements BanChangeListener, BanDataListener
         for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
             BanUser user = data.getUser(player.getUniqueId());
             Ban ban;
-            if ((ban = this.handler.getBan(user, player)) == null)
+            if ((ban = this.handler.getBan(user, player.getUniqueId())) == null)
                 continue;
 
             this.kickPlayer(player, ban);
