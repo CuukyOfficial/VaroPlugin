@@ -1,17 +1,17 @@
 package de.cuuky.varo.entity.player.stats.stat.inventory;
 
-import java.util.ArrayList;
-
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VaroSaveable implements VaroSerializeable {
 
@@ -20,11 +20,11 @@ public class VaroSaveable implements VaroSerializeable {
         CHEST(Materials.CHEST),
 
         @VaroSerializeField(enumValue = "FURNACE")
-        FURNANCE(Materials.FURNACE);
+        FURNACE(Materials.FURNACE);
 
         private Materials material;
 
-        private SaveableType(Materials material) {
+        SaveableType(Materials material) {
             this.material = material;
         }
 
@@ -41,11 +41,7 @@ public class VaroSaveable implements VaroSerializeable {
         }
     }
 
-    private static ArrayList<VaroSaveable> saveables;
-
-    static {
-        saveables = new ArrayList<>();
-    }
+    private static List<VaroSaveable> saveables = new ArrayList<>();
 
     @VaroSerializeField(path = "id")
     private int id;
@@ -113,10 +109,15 @@ public class VaroSaveable implements VaroSerializeable {
         new BukkitRunnable() {
             @Override
             public void run() {
+                if (player == null || blockLocation == null) {
+                    remove();
+                    return;
+                }
+
                 player = VaroPlayer.getPlayer(playerId);
                 block = blockLocation.getBlock();
 
-                if (player == null || block == null || !VaroSaveable.this.exists())
+                if (!VaroSaveable.this.exists())
                     remove();
             }
         }.runTaskLater(Main.getInstance(), 1L);
@@ -129,8 +130,7 @@ public class VaroSaveable implements VaroSerializeable {
     }
 
     public void remove() {
-        if (player != null)
-            player.getStats().removeSaveable(this);
+        if (player != null) player.getStats().removeSaveable(this);
         saveables.remove(this);
     }
 
@@ -175,7 +175,7 @@ public class VaroSaveable implements VaroSerializeable {
         return player.getStats().getSaveables();
     }
 
-    public static ArrayList<VaroSaveable> getSaveables() {
+    public static List<VaroSaveable> getSaveables() {
         return saveables;
     }
 }

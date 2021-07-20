@@ -1,20 +1,5 @@
 package de.cuuky.varo.listener.saveable;
 
-import java.util.ArrayList;
-
-import org.bukkit.Effect;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
-import org.bukkit.block.Furnace;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.inventory.InventoryHolder;
-
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
@@ -23,6 +8,16 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import org.bukkit.Effect;
+import org.bukkit.block.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.inventory.InventoryHolder;
+
+import java.util.ArrayList;
 
 public class SignChangeListener implements Listener {
 
@@ -113,7 +108,7 @@ public class SignChangeListener implements Listener {
 			ArrayList<VaroSaveable> sorted = new ArrayList<>();
 
 			for (VaroSaveable saves : teamSaves) {
-				if (saves.getType() == SaveableType.FURNANCE)
+				if (saves.getType() == SaveableType.FURNACE)
 					sorted.add(saves);
 				continue;
 			}
@@ -138,7 +133,7 @@ public class SignChangeListener implements Listener {
 			p.playSound(furnace.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
-			new VaroSaveable(SaveableType.FURNANCE, furnace.getBlock().getLocation(), player);
+			new VaroSaveable(SaveableType.FURNACE, furnace.getBlock().getLocation(), player);
 			player.sendMessage(ConfigMessages.CHEST_SAVED_FURNACE);
 		}
 	}

@@ -1,17 +1,17 @@
 package de.cuuky.varo.threads;
 
-import java.util.ArrayList;
-
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SmartLagDetector extends BukkitRunnable {
 
-	private ArrayList<Double> lastTps;
+	private final List<Double> lastTps;
 	private long lastPost;
 	private boolean ramCleared;
 
