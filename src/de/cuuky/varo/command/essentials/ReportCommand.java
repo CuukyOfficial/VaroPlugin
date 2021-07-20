@@ -52,6 +52,11 @@ public class ReportCommand implements CommandExecutor {
 			return false;
 		}
 
+		if (reported == player) {
+			sender.sendMessage(Main.getPrefix() + "Du kannst dich nicht selber reporten >:(");
+			return false;
+		}
+
 		if (!ConfigSetting.REPORT_STAFF_MEMBER.getValueAsBoolean() && reported.hasPermission("varo.reports")) {
 			sender.sendMessage(Main.getPrefix() + "Du darfst keine Teammitgleider reporten!");
 			return false;
