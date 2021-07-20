@@ -37,8 +37,7 @@ public class ResetCommand extends VaroCommand {
 
 		if (sender instanceof Player)
 			new VaroConfirmInventory(Main.getCuukyFrameWork().getAdvancedInventoryManager(), vp.getPlayer(), "§4Reset server?", (result) -> {
-				if (!result)
-					return;
+				if (!result) return;
 				this.resetServer(sender, args);
 			});
 		else

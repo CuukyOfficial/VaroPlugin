@@ -275,6 +275,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				if (!isOnline())
 					return;
 
+				VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
 				new Vanish(player.getPlayer());
 				player.getPlayer().setGameMode(GameMode.ADVENTURE);
 				player.getPlayer().setAllowFlight(true);

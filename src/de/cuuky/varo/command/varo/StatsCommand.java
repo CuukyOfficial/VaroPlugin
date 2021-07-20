@@ -27,16 +27,12 @@ public class StatsCommand extends VaroCommand {
         else {
             for (int i = start; i < args.length; i++) {
                 VaroPlayer vp = VaroPlayer.getPlayer(args[i]);
-                if (vp == null)
-                    continue;
-
+                if (vp == null) continue;
                 players.add(VaroPlayer.getPlayer(args[i]));
             }
         }
 
-        if (players.isEmpty())
-            return null;
-
+        if (players.isEmpty()) return null;
         for (VaroPlayer vp : players)
             if (!execute.apply(vp))
                 return null;
