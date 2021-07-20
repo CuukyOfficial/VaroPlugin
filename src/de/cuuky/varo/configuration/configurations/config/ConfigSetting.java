@@ -82,8 +82,8 @@ public enum ConfigSetting implements SectionEntry {
 
 	// SERVERLIST
 	CHANGE_MOTD(ConfigSettingSection.SERVER_LIST, "changeMotd", true, "Ob das Plugin die Motd veraendern soll.\nHinweis: du kannst die Motd in der messages.yml aendern."),
-	CHAT_COOLDOWN_IF_STARTED(ConfigSettingSection.CHAT, "chatCooldownIfStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde."),
-	CHAT_COOLDOWN_IN_SECONDS(ConfigSettingSection.CHAT, "chatCooldownInSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden koennen.\nOff = -1"),
+	CHAT_COOLDOWN_IF_STARTED(ConfigSettingSection.CHAT, "chatCooldown.ifStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde.", "chatCooldownIfStarted"),
+	CHAT_COOLDOWN_IN_SECONDS(ConfigSettingSection.CHAT, "chatCooldown.inSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden koennen.\nOff = -1", "chatCooldownInSeconds"),
 	CHAT_TRIGGER(ConfigSettingSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat ausloest."),
 
 	// COMBATLOG
