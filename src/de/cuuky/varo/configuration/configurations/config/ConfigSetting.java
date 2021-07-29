@@ -46,7 +46,11 @@ public enum ConfigSetting implements SectionEntry {
 	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
 
 	// CHAT
-	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds", true, "Wenn aktiviert, koennen keine Links in den oeffentlichen Chat gepostet werden."),
+	CAN_CHAT_BEFORE_START(ConfigSettingSection.CHAT, "canChatBeforeStart", true, "Ob die Spieler vor Start chatten koennen."),
+	BLOCK_CHAT_ADS(ConfigSettingSection.CHAT, "blockChatAds.enabled", true, "Wenn aktiviert, koennen keine Links in den oeffentlichen Chat gepostet werden."),
+	BLOCK_CHAT_ADS_AGRESSIVE(ConfigSettingSection.CHAT, "blockChatAds.agressive", true, "Wenn aktiviert, wird z.b. nicht nur \"varoplugin.de\" sondern auch \"varoplugin, de\" geblockt. Es kann aber in seltenen fällen zu false positives kommen. Diese Einstellung ist nur relevant wenn blockChatAds aktiviert ist."),
+	CHAT_COOLDOWN_IF_STARTED(ConfigSettingSection.CHAT, "chatCooldown.ifStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde.", "chatCooldownIfStarted"),
+	CHAT_COOLDOWN_IN_SECONDS(ConfigSettingSection.CHAT, "chatCooldown.inSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden koennen.\nOff = -1", "chatCooldownInSeconds"),
 
 	// WORLD
 	BLOCK_DESTROY_LOGGER(ConfigSettingSection.WORLD, "blockDestroyLogger", true, "Loggt alle abgebauten Bloecke, die ihr\nunten eintragt unter 'oreLogger.yml'", true),
@@ -74,7 +78,6 @@ public enum ConfigSetting implements SectionEntry {
 	BORDER_TIME_MINUTE_DECREASE_SPEED(ConfigSettingSection.BORDER, "minuteBorderDecrease.speed", 5, "Wie viele Bloecke pro Sekunde sichdie\nBorder nach Minuten verkleinern soll."),
 	BORDER_TIME_MINUTE_BC_INTERVAL(ConfigSettingSection.BORDER, "minuteBorderDecrease.bcInterval", 300, "In welchen Sekundenabstaenden die Zeit bis zur Verkleinerung\ngebroacastet werden soll"),
 	BROADCAST_INTERVAL_IN_SECONDS(ConfigSettingSection.OTHER, "broadcastIntervalInSeconds", -1, "Interval in Sekunden, in welcher der\nBroadcaster eine Nachricht postet.\nHinweis: Die Nachrichten kannst du in der broadcasts.yml einstellen.\nOff = -1"),
-	CAN_CHAT_BEFORE_START(ConfigSettingSection.CHAT, "canChatBeforeStart", true, "Ob die Spieler vor Start chatten koennen."),
 
 	CAN_MOVE_BEFORE_START(ConfigSettingSection.START, "canMoveBeforeStart", false, "Ob die Spieler sich vor Start bewegen koennen."),
 	CANWALK_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "canWalkOnJoinProtection", false, "Ob Spieler waehrend der Joinschutzzeit laufen koennen."),
@@ -82,8 +85,6 @@ public enum ConfigSetting implements SectionEntry {
 
 	// SERVERLIST
 	CHANGE_MOTD(ConfigSettingSection.SERVER_LIST, "changeMotd", true, "Ob das Plugin die Motd veraendern soll.\nHinweis: du kannst die Motd in der messages.yml aendern."),
-	CHAT_COOLDOWN_IF_STARTED(ConfigSettingSection.CHAT, "chatCooldown.ifStarted", false, "Ob der Chatcooldown auch aktiviert sein\\nsoll wenn das Projekt gestartet wurde.", "chatCooldownIfStarted"),
-	CHAT_COOLDOWN_IN_SECONDS(ConfigSettingSection.CHAT, "chatCooldown.inSeconds", 3, "Der Cooldown der Spieler im Chat,\nbevor sie wieder eine Nachricht senden koennen.\nOff = -1", "chatCooldownInSeconds"),
 	CHAT_TRIGGER(ConfigSettingSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat ausloest."),
 
 	// COMBATLOG
@@ -240,13 +241,15 @@ public enum ConfigSetting implements SectionEntry {
 
 	// STRIKE
 	STRIKE_POST_RESET_HOUR(ConfigSettingSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostet werden sollen"),
-	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut,was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
+	
+	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut, was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
+	
 	TABLIST(ConfigSettingSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
+	
+	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
 	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1, "Wie viele Leben ein Team hat", "teamLifes"),
 	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5, "Wie viele Leben ein maximal haben kann"),
 	DEATH_LIGHTNING_EFFECT(ConfigSettingSection.DEATH, "deathLightningEffect", true, "Ob beim Tod eines Spielers\nein Blitz-Effekt kommen soll"),
-
-	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
 
 	TEAMREQUEST_EXPIRETIME(ConfigSettingSection.TEAMS, "teamRequest.expiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
