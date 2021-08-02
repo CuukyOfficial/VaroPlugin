@@ -45,6 +45,10 @@ repositories {
     maven {
         url 'https://jitpack.io'
     }
+
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
 }
 
 configurations {
@@ -58,6 +62,7 @@ dependencies {
     this.addModularCompile('com.github.LabyMod:legacy-labymod-server-api:master-SNAPSHOT', 'labymodapi', true)
     this.addModularCompile('net.dv8tion:JDA:4.2.1_264', 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.0.1', 'telegramapi', false)
+    this.addModularCompile("me.clip:placeholderapi:2.10.10", "placeholderapi", false)
 
     this.addModularInternal('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT', 'banapi', true)
     this.addModularInternal('com.github.CuukyOfficial:CFW:master-SNAPSHOT', 'CFW', true)

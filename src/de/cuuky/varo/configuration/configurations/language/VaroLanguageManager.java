@@ -1,13 +1,5 @@
 package de.cuuky.varo.configuration.configurations.language;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.cfw.configuration.language.LanguageManager;
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
@@ -21,131 +13,141 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.configuration.configurations.language.languages.LanguageEN;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VaroLanguageManager extends LanguageManager {
 
-	private static final String PATH_DIR = "plugins/Varo/languages", FALLBACK_LANGUAGE = "de_de";
+    private static final String PATH_DIR = "plugins/Varo/languages", FALLBACK_LANGUAGE = "de_de";
 
-	private ScriptEngine scriptEngine;
+    private final ScriptEngine scriptEngine;
+    private PlaceholderAPIAdapter placeholderAPIAdapter;
 
-	public VaroLanguageManager(JavaPlugin instance) {
-		super(PATH_DIR, FALLBACK_LANGUAGE, instance);
+    public VaroLanguageManager(JavaPlugin instance) {
+        super(PATH_DIR, FALLBACK_LANGUAGE, instance);
 
-		scriptEngine = new ScriptEngineManager().getEngineByName("js");
+        this.scriptEngine = new ScriptEngineManager().getEngineByName("js");
+        if (instance.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
+            this.placeholderAPIAdapter = new PlaceholderAPIAdapter();
 
-		loadLanguages();
-	}
+        loadLanguages();
+    }
 
-	@Override
-	public void loadLanguages() {
-		registerLoadableLanguage("de_de", ConfigMessages.class);
-		registerLoadableLanguage("en_us", LanguageEN.class);
+    @Override
+    public void loadLanguages() {
+        registerLoadableLanguage("de_de", ConfigMessages.class);
+        registerLoadableLanguage("en_us", LanguageEN.class);
 
-		super.loadLanguages();
+        super.loadLanguages();
 
-		Language lang = getLanguages().get(ConfigSetting.MAIN_LANGUAGE.getValueAsString());
-		if (lang == null || lang.getClazz() == null)
-			throw new NullPointerException("Couldn't find language '" + ConfigSetting.MAIN_LANGUAGE.getValueAsString() + "'");
+        Language lang = getLanguages().get(ConfigSetting.MAIN_LANGUAGE.getValueAsString());
+        if (lang == null || lang.getClazz() == null)
+            throw new NullPointerException("Couldn't find language '" + ConfigSetting.MAIN_LANGUAGE.getValueAsString() + "'");
 
-		setDefaultLanguage(lang);
-	}
+        setDefaultLanguage(lang);
+    }
 
-	@Override
-	public String getMessage(String messagePath, String locale) {
-		return super.getMessage(messagePath, !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean() ? getDefaultLanguage().getName() : locale);
-	}
+    @Override
+    public String getMessage(String messagePath, String locale) {
+        return super.getMessage(messagePath, !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean() ? getDefaultLanguage().getName() : locale);
+    }
 
-	private List<Integer> getConvNumbers(String line, String key) {
-		ArrayList<Integer> list = new ArrayList<>();
+    private List<Integer> getConvNumbers(String line, String key) {
+        ArrayList<Integer> list = new ArrayList<>();
 
-		boolean first = true;
-		for (String split0 : line.split(key)) {
-			if (first) {
-				first = false;
-				if (!line.startsWith(key))
-					continue;
-			}
+        boolean first = true;
+        for (String split0 : line.split(key)) {
+            if (first) {
+                first = false;
+                if (!line.startsWith(key))
+                    continue;
+            }
 
-			String[] split1 = split0.split("%", 2);
+            String[] split1 = split0.split("%", 2);
 
-			if (split1.length == 2) {
-				try {
-					list.add(Integer.parseInt(split1[0]));
-				} catch (NumberFormatException e) {
-					continue;
-				}
-			}
-		}
+            if (split1.length == 2) {
+                try {
+                    list.add(Integer.parseInt(split1[0]));
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        }
 
-		return list;
-	}
+        return list;
+    }
 
-	private String replaceEvals(String message) {
-		if (message.contains("eval(")) {
-			String split = message.split("eval\\(")[1];
-			if (split.contains(")")) {
-				String eval = split.split("\\)")[0];
+    private String replaceEvals(String message) {
+        if (message.contains("eval(")) {
+            String split = message.split("eval\\(")[1];
+            if (split.contains(")")) {
+                String eval = split.split("\\)")[0];
 
-				try {
-					Object result = scriptEngine.eval(eval);
-					return message.replace("eval(" + eval + ")", result.toString());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+                try {
+                    Object result = scriptEngine.eval(eval);
+                    return message.replace("eval(" + eval + ")", result.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-		return message;
-	}
+        return message;
+    }
 
-	public String replaceMessage(String message, boolean replaceEval) {
-		String replaced = message;
+    public String replaceMessage(String message, boolean replaceEval) {
+        String replaced = message;
 
-		for (int rank : getConvNumbers(replaced, "%topplayer-")) {
-			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-			replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
-		}
+        for (int rank : getConvNumbers(replaced, "%topplayer-")) {
+            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+            replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
+        }
 
-		for (int rank : getConvNumbers(replaced, "%topplayerkills-")) {
-			VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-			replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
-		}
+        for (int rank : getConvNumbers(replaced, "%topplayerkills-")) {
+            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+            replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
+        }
 
-		for (int rank : getConvNumbers(replaced, "%topteam-")) {
-			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-			replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
-		}
+        for (int rank : getConvNumbers(replaced, "%topteam-")) {
+            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+            replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
+        }
 
-		for (int rank : getConvNumbers(replaced, "%topteamkills-")) {
-			VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-			replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
-		}
+        for (int rank : getConvNumbers(replaced, "%topteamkills-")) {
+            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+            replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
+        }
 
-		replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
+        replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
+        if (replaceEval) {
+            replaced = replaceEvals(replaced);
+            if (this.placeholderAPIAdapter != null)
+                replaced = this.placeholderAPIAdapter.setGeneralPlaceholders(replaced);
+        }
 
-		if (replaceEval)
-			replaced = replaceEvals(replaced);
+        return replaced;
+    }
 
-		return replaced;
-	}
+    public String replaceMessage(String message) {
+        return replaceMessage(message, false);
+    }
 
-	public String replaceMessage(String message) {
-		return replaceMessage(message, false);
-	}
+    public String replaceMessage(String message, CustomPlayer player) {
+        message = replaceEvals(Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), player, MessagePlaceholderType.PLAYER));
+        if (this.placeholderAPIAdapter != null && player instanceof VaroPlayer)
+            return this.placeholderAPIAdapter.setPlayerPlaceholders(message, (VaroPlayer) player);
+        return message;
+    }
 
-	public String replaceMessage(String message, CustomPlayer player) {
-		return replaceEvals(Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), (VaroPlayer) player, MessagePlaceholderType.PLAYER));
-	}
+    public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace) {
+        ArrayList<CustomLanguagePlayer> players = new ArrayList<>(VaroPlayer.getVaroPlayer());
+        return super.broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
+    }
 
-	public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace) {
-		ArrayList<CustomLanguagePlayer> players = new ArrayList<>();
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
-			players.add(vp);
-
-		return super.broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
-	}
-
-	public MessageHolder broadcastMessage(LoadableMessage message) {
-		return this.broadcastMessage(message, null);
-	}
+    public MessageHolder broadcastMessage(LoadableMessage message) {
+        return this.broadcastMessage(message, null);
+    }
 }
