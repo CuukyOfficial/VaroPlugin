@@ -16,6 +16,9 @@ import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PlayerChatListener implements Listener {
+	
+	private static final String AD_REGEX = "(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.](d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v|t\\s*o)).*";
+	private static final String AD_REGEX_AGRESSIVE = "(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v|t\\s*o)).*";
 
 	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
 		if (vp.getStats().getYoutubeLink() == null) {
@@ -63,12 +66,13 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if (ConfigSetting.BLOCK_CHAT_ADS.getValueAsBoolean() && !player.isOp()) {
-			if (message.matches("(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v)).*")) {
+			if (message.matches(ConfigSetting.BLOCK_CHAT_ADS_AGRESSIVE.getValueAsBoolean() ? AD_REGEX_AGRESSIVE : AD_REGEX)) {
 				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Links.");
 				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
 				event.setCancelled(true);
 				return;
 			}
+			
 			if (message.matches("(?iu).*(meins?e?m?n?)\\s*(Projekt|Plugin|Server|Netzwerk|Varo).*")) {
 				player.sendMessage(Main.getPrefix() + "Du darfst keine Werbung senden - bitte sende keine Eigenwerbung.");
 				player.sendMessage(Main.getPrefix() + "Falls dies ein Fehler sein sollte, frage einen Admin.");
