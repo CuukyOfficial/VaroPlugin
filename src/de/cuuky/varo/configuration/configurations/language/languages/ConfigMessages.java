@@ -287,6 +287,8 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
 
+	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7Deine verbleibende Zeit: %formattedCountdown%&7."),
+
 	COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cEs gab einen Fehler mit dem Anti-Xray-System. Bitte überprüfe, deine Serverversion (%version%) auf Spigot basiert."),
 	COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Das Anti-Xray-Plugin wird installiert und der Server danach heruntergefahren."),
 	COMMANDS_XRAY_INSTALLING_ERROR("varoCommands.xray.installingError", "Es gab einen kritischen Fehler beim Download des Plugins. Du kannst dir das externe Plugin hier manuell herunterladen: %colorcode%&nhttps://www.spigotmc.org/resources/22818/"),

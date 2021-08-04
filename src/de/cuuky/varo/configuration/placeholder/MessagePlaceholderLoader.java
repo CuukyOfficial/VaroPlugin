@@ -13,6 +13,7 @@ import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholde
 import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
+import org.bukkit.ChatColor;
 
 public class MessagePlaceholderLoader {
 
@@ -473,6 +474,19 @@ public class MessagePlaceholderLoader {
             @Override
             protected String getValue(VaroPlayer player) {
                 return PermissionUtils.getLuckPermsPrefix(player);
+            }
+        };
+
+        new VaroPlayerMessagePlaceholder("formattedCountdown", 1, "Ersetzt durch den formatierten Countdown des Spielers.") {
+
+            @Override
+            protected String getValue(VaroPlayer player) {
+                String msg;
+                int secs = player.getStats().getCountdown();
+                int hours = secs / 3600;
+                String minsSecs = Main.getColorCode() + String.format("%02d", (secs / 60) % 60) + ChatColor.GRAY + ":" + Main.getColorCode() + String.format("%02d", secs % 60) + ChatColor.GRAY;
+                msg = (hours >= 1) ? Main.getColorCode() + String.format("%02d", hours) + ChatColor.GRAY + ":" + minsSecs : minsSecs;
+                return msg;
             }
         };
     }
