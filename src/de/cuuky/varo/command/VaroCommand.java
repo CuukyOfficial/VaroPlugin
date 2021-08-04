@@ -1,47 +1,11 @@
 package de.cuuky.varo.command;
 
-import java.util.ArrayList;
-
+import de.cuuky.varo.command.varo.*;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.varo.command.varo.AbortCommand;
-import de.cuuky.varo.command.varo.ActionbarCommand;
-import de.cuuky.varo.command.varo.AutoSetupCommand;
-import de.cuuky.varo.command.varo.AutoStartCommand;
-import de.cuuky.varo.command.varo.BackpackCommand;
-import de.cuuky.varo.command.varo.BugreportCommand;
-import de.cuuky.varo.command.varo.ConfigCommand;
-import de.cuuky.varo.command.varo.DiscordCommand;
-import de.cuuky.varo.command.varo.EnchantmentCommand;
-import de.cuuky.varo.command.varo.EventsCommand;
-import de.cuuky.varo.command.varo.ExportCommand;
-import de.cuuky.varo.command.varo.FinaleCommand;
-import de.cuuky.varo.command.varo.GameCommand;
-import de.cuuky.varo.command.varo.InfoCommand;
-import de.cuuky.varo.command.varo.IntroCommand;
-import de.cuuky.varo.command.varo.ItemCommand;
-import de.cuuky.varo.command.varo.LobbyCommand;
-import de.cuuky.varo.command.varo.MenuCommand;
-import de.cuuky.varo.command.varo.PlaceholderCommand;
-import de.cuuky.varo.command.varo.PlayerCommand;
-import de.cuuky.varo.command.varo.PresetCommand;
-import de.cuuky.varo.command.varo.RandomTeamCommand;
-import de.cuuky.varo.command.varo.ResetCommand;
-import de.cuuky.varo.command.varo.RestartCommand;
-import de.cuuky.varo.command.varo.ReviveCommand;
-import de.cuuky.varo.command.varo.ScoreboardCommand;
-import de.cuuky.varo.command.varo.SetupCommand;
-import de.cuuky.varo.command.varo.SortCommand;
-import de.cuuky.varo.command.varo.SpawnsCommand;
-import de.cuuky.varo.command.varo.StartCommand;
-import de.cuuky.varo.command.varo.StatsCommand;
-import de.cuuky.varo.command.varo.StrikeCommand;
-import de.cuuky.varo.command.varo.TeamCommand;
-import de.cuuky.varo.command.varo.TeamRequestCommand;
-import de.cuuky.varo.command.varo.TrollCommand;
-import de.cuuky.varo.command.varo.UpdateCommand;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.util.ArrayList;
 
 public abstract class VaroCommand {
 
@@ -86,6 +50,7 @@ public abstract class VaroCommand {
 		new PlaceholderCommand();
 		new BugreportCommand();
 		new ReviveCommand();
+		new PlaytimeCommand();
 		// new TestCommand();
 	}
 
