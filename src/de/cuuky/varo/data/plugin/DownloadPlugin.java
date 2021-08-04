@@ -9,10 +9,12 @@ import de.cuuky.varo.listener.PermissionSendListener;
 
 public enum DownloadPlugin {
 
-	DISCORDBOT(66778, "Discordbot", "net.dv8tion.jda.api.JDABuilder", ConfigSetting.DISCORDBOT_ENABLED),
+	// DISCORDBOT(66778, "Discordbot", "net.dv8tion.jda.api.JDABuilder",
+	// ConfigSetting.DISCORDBOT_ENABLED),
 	SERVER_LIBRARY_EXTENSION(76114, "ServerLibraryExtension", "com.google.gson.JsonElement"),
 	TELEGRAM(66823, "Telegrambot", "com.pengrad.telegrambot.TelegramBot", ConfigSetting.TELEGRAM_ENABLED),
-	LABYMOD(52423, "Labymod", "net.labymod.serverapi.LabyModAPI", ConfigSetting.DISABLE_LABYMOD_FUNCTIONS, ConfigSetting.KICK_LABYMOD_PLAYER, ConfigSetting.ONLY_LABYMOD_PLAYER);
+	LABYMOD(52423, "Labymod", "net.labymod.serverapi.LabyModAPI", ConfigSetting.DISABLE_LABYMOD_FUNCTIONS,
+			ConfigSetting.KICK_LABYMOD_PLAYER, ConfigSetting.ONLY_LABYMOD_PLAYER);
 
 	private static final String PLUGIN_DIR = "plugins/";
 
@@ -37,7 +39,7 @@ public enum DownloadPlugin {
 	}
 
 	public String getPath() {
-		return PLUGIN_DIR + name + ".jar";
+		return PLUGIN_DIR + this.name + ".jar";
 	}
 
 	public String getRequiredClassName() {
@@ -53,10 +55,10 @@ public enum DownloadPlugin {
 	}
 
 	public boolean shallLoad() {
-		if (configSettings.length == 0)
+		if (this.configSettings.length == 0)
 			return true;
 
-		for (ConfigSetting setting : configSettings)
+		for (ConfigSetting setting : this.configSettings)
 			if (setting.getValueAsBoolean())
 				return true;
 

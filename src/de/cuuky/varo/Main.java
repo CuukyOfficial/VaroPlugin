@@ -47,7 +47,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onLoad() {
-		failed = false;
+		this.failed = false;
 		instance = this;
 
 		super.onLoad();
@@ -59,6 +59,9 @@ public class Main extends JavaPlugin {
 		dataManager = new DataManager(this);
 
 		dataManager.preLoad();
+
+		if (this.failed)
+			return;
 
 		System.out.println("############################################################################");
 		System.out.println("#                                                                          #");
@@ -77,16 +80,22 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX);
 		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
 		System.out.println(CONSOLE_PREFIX + "Your server: ");
-		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " (" + Bukkit.getVersion() + ")");
-		System.out.println(CONSOLE_PREFIX + "	Software-Name (Base): " + Bukkit.getName() + " (1." + VersionUtils.getVersion().getIdentifier() + ")");
-		System.out.println(CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
+		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " ("
+				+ Bukkit.getVersion() + ")");
+		System.out.println(CONSOLE_PREFIX + "	Software-Name (Base): " + Bukkit.getName() + " (1."
+				+ VersionUtils.getVersion().getIdentifier() + ")");
+		System.out.println(
+				CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
 
 		if (VersionUtils.getServerSoftware() != ServerSoftware.UNKNOWN)
-			System.out.println(CONSOLE_PREFIX + "	Forge-Support: " + VersionUtils.getServerSoftware().hasModSupport());
+			System.out
+					.println(CONSOLE_PREFIX + "	Forge-Support: " + VersionUtils.getServerSoftware().hasModSupport());
 
 		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT) {
-			System.out.println(CONSOLE_PREFIX + "	It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
-			System.out.println(CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
+			System.out.println(CONSOLE_PREFIX
+					+ "	It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
+			System.out.println(
+					CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
 		}
 
 		try {
@@ -96,14 +105,16 @@ public class Main extends JavaPlugin {
 			}
 
 			long dataStamp = System.currentTimeMillis();
-			cuukyFrameWork = new AdapterCuukyFrameWork<>(instance, languageManager = new VaroLanguageManager(Main.this));
+			cuukyFrameWork = new AdapterCuukyFrameWork<>(instance,
+					languageManager = new VaroLanguageManager(Main.this));
 			dataManager.load();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
-			varoUpdater = new VaroUpdater(RESOURCE_ID, getDescription().getVersion(), () -> varoUpdater.printResults());
+			varoUpdater = new VaroUpdater(RESOURCE_ID, this.getDescription().getVersion(),
+					() -> varoUpdater.printResults());
 			botLauncher = new BotLauncher();
 
-			if(this.isFailed())
+			if (this.isFailed())
 				return;
 
 			new MetricsLoader(this);
@@ -116,7 +127,7 @@ public class Main extends JavaPlugin {
 			this.fail();
 		}
 
-		if (failed)
+		if (this.failed)
 			return;
 
 		System.out.println(CONSOLE_PREFIX + "Enabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
@@ -133,7 +144,7 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
 
-		if (dataManager != null && !failed) {
+		if (dataManager != null && !this.failed) {
 			System.out.println(CONSOLE_PREFIX + "Saving data...");
 			dataManager.save();
 		}
@@ -143,8 +154,9 @@ public class Main extends JavaPlugin {
 			botLauncher.disconnect();
 		}
 
-		if (!failed)
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+		if (!this.failed)
+			VersionUtils.getOnlinePlayer()
+					.forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
 		else {
 			VaroBugreport report = new VaroBugreport();
 			System.out.println(CONSOLE_PREFIX + "Saved Crashreport to " + report.getZipFile().getName());
@@ -160,7 +172,8 @@ public class Main extends JavaPlugin {
 	}
 
 	public UUID getUUID(String name) throws Exception {
-		return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? UUIDUtils.getUUID(name) : UUIDUtils.getCrackedUUID(name);
+		return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? UUIDUtils.getUUID(name)
+				: UUIDUtils.getCrackedUUID(name);
 	}
 
 	public void fail() {
@@ -173,7 +186,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public File getThisFile() {
-		return getFile();
+		return this.getFile();
 	}
 
 	public static void broadcastMessage(String message) {
@@ -225,11 +238,13 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getPluginName() {
-		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by " + instance.getDescription().getAuthors().get(0) + " - Contributors: " + getContributors();
+		return instance.getDescription().getName() + " v" + instance.getDescription().getVersion() + " by "
+				+ instance.getDescription().getAuthors().get(0) + " - Contributors: " + getContributors();
 	}
 
 	public static String getContributors() {
-		return JavaUtils.getArgsToString(JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ", ");
+		return JavaUtils.getArgsToString(
+				JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ", ");
 	}
 
 	public static String getPrefix() {
