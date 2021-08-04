@@ -41,8 +41,9 @@ public class PlayerQuitListener implements Listener {
 			}
 
 			// CHECK IF THEY COMBATLOGGED
-			CombatlogCheck check = new CombatlogCheck(event);
+			CombatlogCheck check = new CombatlogCheck(player);
 			if (check.isCombatLog()) {
+				check.punish();
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}
