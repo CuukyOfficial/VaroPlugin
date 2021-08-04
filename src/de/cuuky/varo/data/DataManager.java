@@ -17,7 +17,6 @@ import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
-import de.cuuky.varo.data.plugin.ExternalPluginLoader;
 import de.cuuky.varo.data.plugin.LibraryLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
@@ -41,9 +40,9 @@ public class DataManager {
 
 	private Main ownerInstance;
 
-	private ExternalPluginLoader pluginLoader;
 	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
+	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
 	private VaroTeamHandler varoTeamHandler;
@@ -68,7 +67,7 @@ public class DataManager {
 
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
-		new LibraryLoader();
+		this.libraryLoader = new LibraryLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		new DefaultPresetLoader();
 	}
@@ -179,12 +178,12 @@ public class DataManager {
 		return this.broadcaster;
 	}
 
-	public ExternalPluginLoader getExternalPluginLoader() {
-		return this.pluginLoader;
-	}
-
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
+	}
+
+	public LibraryLoader getLibraryLoader() {
+		return this.libraryLoader;
 	}
 
 	public VaroListManager getListManager() {
