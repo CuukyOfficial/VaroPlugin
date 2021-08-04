@@ -21,7 +21,7 @@ public class CheckCombatCommand extends VaroCommand {
             return;
         }
 
-        if (args.length == 0) {
+        if (args.length != 0) {
             sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CHECKCOMBAT_HELP.getValue(vp));
             return;
         }
