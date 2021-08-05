@@ -214,7 +214,31 @@ public class MessagePlaceholderLoader {
                 return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));
             }
         };
+        
+        new VaroPlayerMessagePlaceholder("seconds", 1, "Ersetzt durch den Countdown des Spielers") {
 
+            @Override
+            protected String getValue(VaroPlayer player) {
+                return String.valueOf(player.getStats().getCountdown());
+            }
+        };
+
+        new VaroPlayerMessagePlaceholder("countdown", 1, "Ersetzt durch den Countdown des Spielers") {
+
+            @Override
+            protected String getValue(VaroPlayer player) {
+                return String.valueOf(player.getStats().getCountdown());
+            }
+        };
+        
+        new VaroPlayerMessagePlaceholder("hour", 1, "Ersetzt durch die Stunden der Spielzeit des Spielers") {
+
+            @Override
+            protected String getValue(VaroPlayer player) {
+                return ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : String.format("%02d", player.getStats().getCountdown() / 3600);
+            }
+        };
+        
         new VaroPlayerMessagePlaceholder("min", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers") {
 
             @Override
@@ -228,6 +252,20 @@ public class MessagePlaceholderLoader {
             @Override
             protected String getValue(VaroPlayer player) {
                 return ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : player.getStats().getCountdownSec(player.getStats().getCountdown());
+            }
+        };
+        
+        new VaroPlayerMessagePlaceholder("formattedCountdown", 1, "Ersetzt durch den formatierten Countdown des Spielers.") {
+
+            @Override
+            protected String getValue(VaroPlayer player) {
+                int secs = player.getStats().getCountdown();
+                int hours = secs / 3600;
+                String minsSecs = String.format("%s%02d%s:%s%02d%s", Main.getColorCode(), (secs / 60) % 60, ChatColor.GRAY, Main.getColorCode(), secs % 60, ChatColor.GRAY);
+
+                String msg = (hours >= 1) ? String.format("%s%02d%s:%s", Main.getColorCode(), hours, ChatColor.GRAY, minsSecs) : minsSecs;
+
+                return msg;
             }
         };
 
@@ -373,22 +411,6 @@ public class MessagePlaceholderLoader {
             }
         };
 
-        new VaroPlayerMessagePlaceholder("seconds", 1, "Ersetzt durch den Countdown des Spielers") {
-
-            @Override
-            protected String getValue(VaroPlayer player) {
-                return String.valueOf(player.getStats().getCountdown());
-            }
-        };
-
-        new VaroPlayerMessagePlaceholder("countdown", 1, "Ersetzt durch den Countdown des Spielers") {
-
-            @Override
-            protected String getValue(VaroPlayer player) {
-                return String.valueOf(player.getStats().getCountdown());
-            }
-        };
-
         new VaroPlayerMessagePlaceholder("remainingDisconnects", 1, "Ersetzt durch die Disconnects der Session des Spielers") {
 
             @Override
@@ -397,7 +419,7 @@ public class MessagePlaceholderLoader {
             }
         };
 
-        new VaroPlayerMessagePlaceholder("ping", 1, "Ersetzt durch den Countdown des Spielers") {
+        new VaroPlayerMessagePlaceholder("ping", 1, "Ersetzt durch den Ping des Spielers") {
 
             @Override
             protected String getValue(VaroPlayer player) {
@@ -474,20 +496,6 @@ public class MessagePlaceholderLoader {
             @Override
             protected String getValue(VaroPlayer player) {
                 return PermissionUtils.getLuckPermsPrefix(player);
-            }
-        };
-
-        new VaroPlayerMessagePlaceholder("formattedCountdown", 1, "Ersetzt durch den formatierten Countdown des Spielers.") {
-
-            @Override
-            protected String getValue(VaroPlayer player) {
-                int secs = player.getStats().getCountdown();
-                int hours = secs / 3600;
-                String minsSecs = String.format("%s%02d%s:%s%02d%s", Main.getColorCode(), (secs / 60) % 60, ChatColor.GRAY, Main.getColorCode(), secs % 60, ChatColor.GRAY);
-
-                String msg = (hours >= 1) ? String.format("%s%02d%s:%s", Main.getColorCode(), hours, ChatColor.GRAY, minsSecs) : minsSecs;
-
-                return msg;
             }
         };
     }
