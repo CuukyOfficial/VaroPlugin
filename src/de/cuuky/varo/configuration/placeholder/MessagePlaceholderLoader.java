@@ -485,7 +485,8 @@ public class MessagePlaceholderLoader {
                 int hours = secs / 3600;
                 String minsSecs = String.format("%s%02d%s:%s%02d%s", Main.getColorCode(), (secs / 60) % 60, ChatColor.GRAY, Main.getColorCode(), secs % 60, ChatColor.GRAY);
 
-                String msg = (hours >= 1) ? Main.getColorCode() + String.format("%02d", hours) + ChatColor.GRAY + ":" + minsSecs : minsSecs;
+                String msg = (hours >= 1) ? String.format("%s%02d%s:%s", Main.getColorCode(), hours, ChatColor.GRAY, minsSecs) : minsSecs;
+
                 return msg;
             }
         };
