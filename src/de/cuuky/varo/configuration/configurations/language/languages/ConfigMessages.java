@@ -285,7 +285,8 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_BYPASS_ACTIVE("varoCommands.discord.bypassactive", "&7%player% umgeht nun das Verifysystem."),
 	VARO_COMMANDS_DISCORD_BYPASS_INACTIVE("varoCommands.discord.bypassinactive", "&7%player% umgeht nicht mehr das Verifysystem."),
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
-	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
+	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
+
 
 	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7Deine verbleibende Zeit: %formattedCountdown%&7."),
 
