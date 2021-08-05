@@ -41,18 +41,19 @@ repositories {
     maven {
     	url 'https://m2.dv8tion.net/releases'
     }
-
+    
     maven {
-        url 'https://jitpack.io'
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
 
     maven {
-        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+        url 'https://jitpack.io'
     }
 }
 
 configurations {
     internalLibs
+    compileOnly.extendsFrom(internalLibs)
 }
 
 dependencies {
@@ -60,14 +61,12 @@ dependencies {
     this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
     this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT', 'worldedit', true)
     this.addModularCompile('com.github.LabyMod:legacy-labymod-server-api:master-SNAPSHOT', 'labymodapi', true)
-    this.addModularCompile('net.dv8tion:JDA:4.2.1_264', 'jda', false)
-    this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.0.1', 'telegramapi', false)
+    this.addModularCompile('net.dv8tion:JDA:4.3.0_304', 'jda', false)
+    this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.2.0', 'telegramapi', false)
     this.addModularCompile("me.clip:placeholderapi:2.10.10", "placeholderapi", false)
 
     this.addModularInternal('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT', 'banapi', true)
     this.addModularInternal('com.github.CuukyOfficial:CFW:master-SNAPSHOT', 'CFW', true)
-
-    compileOnly configurations.internalLibs
 }
 
 boolean checkLib(String filePath) {
@@ -106,9 +105,10 @@ jar {
 }
 
 processResources {
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from (sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [name: "Varo"]
-        filter ReplaceTokens, tokens: [version: "4.8.0-BETA-9"]
+        filter ReplaceTokens, tokens: [version: "4.8.0-BETA-10"]
         filter ReplaceTokens, tokens: [author: "Cuuky"]
     }
 }

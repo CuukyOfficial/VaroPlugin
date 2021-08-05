@@ -40,6 +40,9 @@ public enum LanguageEN implements LoadableMessage {
 	ALERT_WINNER("alerts.BOTS_ALERT.win.player", "%player% has won %projectname%! Congratulations!"),
 	ALERT_WINNER_TEAM("alerts.BOTS_ALERT.win.team", "%winnerPlayers% have won %projectname%! Congratulations!"),
 
+	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYou are not yet authenticated with the discord!\n&7To authenticate yourself, write in the #verify channel &c'varo verify <Your ID>' &7on the discord!\nLink to the Discordserver: &c%discordLink%\n&7Your ID is: &c%code%"),
+	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
+
 	BORDER_MINIMUM_REACHED("border.minimumReached", "&cThe Border has reached its minimum!"),
 	BORDER_DECREASE_DAYS("border.decreaseDays", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s. &7Next reduction in &c%days% &7days!"),
 	BORDER_DECREASE_DEATH("border.decreaseDeath", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s due to a death."),
@@ -47,9 +50,6 @@ public enum LanguageEN implements LoadableMessage {
 	BORDER_DECREASE_MINUTES("border.decreaseMinutes", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s. &7Next reduction in &c%days% &7minutes!"),
 	BORDER_DISTANCE("border.distanceToBorder", "&7Distance to border: %colorcode%%size% &7blocks"),
 	BORDER_COMMAND_SET_BORDER("border.borderSet", "&7The border was set to %colorcode%%size% &7!"),
-
-	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYou are not yet authenticated with the discord!\n&7To authenticate yourself, write in the #verify channel &c'varo verify <Your ID>' &7on the discord!\nLink to the Discordserver: &c%discordLink%\n&7Your ID is: &c%code%"),
-	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
 
 	CHAT_PLAYER_WITH_TEAM("chat.format.withTeam", "%colorcode%%team% &8| &7%player% &8» &f%message%"),
 	CHAT_PLAYER_WITH_TEAM_RANK("chat.format.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player% &8» &f%message%"),
@@ -60,16 +60,15 @@ public enum LanguageEN implements LoadableMessage {
 	CHAT_MUTED("chat.muted", "&7You have been muted!"),
 	CHAT_WHEN_START("chat.chatOnStart", "&7You can only write again after the start!"),
 
-	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
-	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7This furnace belongs to %colorcode%%player%&7!"),
-	CHEST_REMOVED_SAVEABLE("chest.removedChest", "&7You have removed this %saveable% %colorcode%successfully"),
-	CHEST_SAVED_CHEST("chest.newChestSaved", "&7A new chest was secured!"),
-	CHEST_SAVED_FURNACE("chest.newFurnaceSaved", "&7A new furnace was secured!"),
-
 	COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7This player is on your team!"),
 	COMBAT_IN_FIGHT("combat.inFight", "&7You are now in combat, do &4NOT &7log &7out!"),
 	COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7has left the server during a fight!"),
 	COMBAT_NOT_IN_FIGHT("combat.notInFight", "&7You are now no longer in a &cfight&7!"),
+
+	SPAWN_WORLD("spawn.spawn", "%colorcode%Coordinates&7 of the spawn: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
+	SPAWN_NETHER("spawn.spawnNether", "%colorcode%Coordinates&7 of the portal to the world: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
+	SPAWN_DISTANCE("spawn.spawnDistance", "&7You are %colorcode%%distance% &7blocks away from spawn!"),
+	SPAWN_DISTANCE_NETHER("spawn.spawnDistanceNether", "&7You are %colorcode%%distance% &7blocks away from the portal to the world!"),
 
 	DEATH_DEAD("death.killMessage", "&c%player% &7has died. &7Reason: &c%reason%"),
 	DEATH_KILLED_BY("death.killed", "%colorcode%%player% &7was killed by &c%killer% &7!"),
@@ -92,6 +91,18 @@ public enum LanguageEN implements LoadableMessage {
 	JOIN_PROTECTION_TIME("joinmessage.joinProtectionTime", "%prefix%&a%player% &7has entered the server and is vulnerable in %colorcode%%protectionTime% &7seconds!"),
 	JOIN_SPECTATOR("joinmessage.spectator", "&a%player% &7has entered the server as a spectator!"),
 	JOIN_WITH_REMAINING_TIME("joinmessage.joinWithRemainingTime", "%prefix%&a%player% &7had left the server too early and now has %colorcode%%seconds% &7seconds left! Remaining &cDisconnects&7: &c%remainingDisconnects%"),
+
+	QUIT_MESSAGE("quitmessage.quit", "%prefix%&c%player%&7 has left the server!"),
+	QUIT_DISCONNECT_SESSION_END("quitmessage.disconnectKilled", "&c%player% &7has left the game and is no longer online since &c%banTime% &7minute(s).%nextLine%&7This means he has been removed from %projectname% &7!"),
+	QUIT_SPECTATOR("quitmessage.spectator", "&c%player% &7has left the server as a spectator!"),
+	QUIT_TOO_OFTEN("quitmessage.quitTooOften", "&c%player% &7has left the server too often and thus lost their session."),
+	QUIT_WITH_REMAINING_TIME("quitmessage.quitRemainingTime", "%prefix%&c%player% &7has left the server early!"),
+	QUIT_KICK_BROADCAST("quitmessage.broadcast", "%colorcode%%player% &7has been kicked!"),
+	QUIT_KICK_DELAY_OVER("quitmessage.protectionOver", "%colorcode%%player% &7was kicked because of their death now!"),
+	QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7will be kicked in %colorcode%%countdown% &7second(s)!"),
+	QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cThere is a player &4%distance% &cblocks near you!%nextLine%&7To get kicked, move away from this player!"),
+	QUIT_KICK_SERVER_CLOSE_SOON_GLOBAL("quitmessage.serverCloseSoonGlobal", "&7The server closes in &c%minutes% &7minutes!"),
+	QUIT_KICK_SERVER_CLOSE_SOON_PLAYER("quitmessage.serverCloseSoonLocal", "&7The server closes in &c%minutes% &7minutes for you!"),
 
 	DEATH_KICK_DEAD("kick.kickedKilled", "&cYou died! %nextLine% &7With this you are removed from %projectname%"),
 	DEATH_KICK_KILLED("kick.killedKick", "&7You were killed by &c%killer%&7! %nextLine% &7You have been removed from %projectname%&7!"),
@@ -120,12 +131,15 @@ public enum LanguageEN implements LoadableMessage {
 	NAMETAG_SUFFIX("nametag.normalSuffix", "&c %kills%"),
 	NAMETAG_TEAM_PREFIX("nametag.nametagWithTeam", "%colorcode%%team% &7"),
 
+	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
+	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7This furnace belongs to %colorcode%%player%&7!"),
+	CHEST_REMOVED_SAVEABLE("chest.removedChest", "&7You have removed this %saveable% %colorcode%successfully"),
+	CHEST_SAVED_CHEST("chest.newChestSaved", "&7A new chest was secured!"),
+	CHEST_SAVED_FURNACE("chest.newFurnaceSaved", "&7A new furnace was secured!"),
+
 	NOPERMISSION_NO_PERMISSION("nopermission.noPermission", "%colorcode%You are not authorized for this!"),
 	NOPERMISSION_NOT_ALLOWED_CRAFT("nopermission.notAllowedCraft", "&7You may not craft, use or brew that!"),
 	NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7You can not fly lower!"),
-
-	OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),
-	OTHER_PING("other.ping", "&7Your %colorcode%Ping &7 is: %colorcode%%ping%&7ms"),
 
 	PROTECTION_NO_MOVE_START("protection.noMoveStart", "&7You cannot move until the project has been started."),
 	PROTECTION_START("protection.start", "&7The &cProtection time &7starts now and will stop in &c%seconds% &7seconds!"),
@@ -133,31 +147,12 @@ public enum LanguageEN implements LoadableMessage {
 	PROTECTION_TIME_UPDATE("protection.protectionUpdate", "&7The &cprotection time &7is over in &c%minutes%&7:&c%seconds% &7!"),
 	PROTECTION_TIME_RUNNING("protection.timeRunning", "&7The %colorcode%protection time &7 is still running!"),
 
-	QUIT_MESSAGE("quitmessage.quit", "%prefix%&c%player%&7 has left the server!"),
-	QUIT_DISCONNECT_SESSION_END("quitmessage.disconnectKilled", "&c%player% &7has left the game and is no longer online since &c%banTime% &7minute(s).%nextLine%&7This means he has been removed from %projectname% &7!"),
-	QUIT_SPECTATOR("quitmessage.spectator", "&c%player% &7has left the server as a spectator!"),
-	QUIT_TOO_OFTEN("quitmessage.quitTooOften", "&c%player% &7has left the server too often and thus lost their session."),
-	QUIT_WITH_REMAINING_TIME("quitmessage.quitRemainingTime", "%prefix%&c%player% &7has left the server early!"),
-	QUIT_KICK_BROADCAST("quitmessage.broadcast", "%colorcode%%player% &7has been kicked!"),
-	QUIT_KICK_DELAY_OVER("quitmessage.protectionOver", "%colorcode%%player% &7was kicked because of their death now!"),
-	QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7will be kicked in %colorcode%%countdown% &7second(s)!"),
-	QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cThere is a player &4%distance% &cblocks near you!%nextLine%&7To get kicked, move away from this player!"),
-	QUIT_KICK_SERVER_CLOSE_SOON_GLOBAL("quitmessage.serverCloseSoonGlobal", "&7The server closes in &c%minutes% &7minutes!"),
-	QUIT_KICK_SERVER_CLOSE_SOON_PLAYER("quitmessage.serverCloseSoonLocal", "&7The server closes in &c%minutes% &7minutes for you!"),
-
 	SORT_NO_HOLE_FOUND("sort.noHoleFound", "&7No hole could be found for you!"),
 	SORT_NO_HOLE_FOUND_TEAM("sort.noHoleFoundTeam", "&7No hole could be found for you beside your team partners."),
 	SORT_NUMBER_HOLE("sort.numberHoleTeleport", "&7You have been teleported to the hole %colorcode%%number% &7!"),
 	SORT_OWN_HOLE("sort.ownHoleTeleport", "&7You've been put in your hole!"),
 	SORT_SPECTATOR_TELEPORT("sort.spectatorTeleport", "&7You were teleported to spawn because you're a spectator!"),
 	SORT_SORTED("sort.sorted", "&7You have been teleported to the hole %colorcode%%number% &7!"),
-
-	SPAWN_WORLD("spawn.spawn", "%colorcode%Coordinates&7 of the spawn: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
-	SPAWN_NETHER("spawn.spawnNether", "%colorcode%Coordinates&7 of the portal to the world: %colorcode%%x%&7, %colorcode%%y%&7, %colorcode%%z%"),
-	SPAWN_DISTANCE("spawn.spawnDistance", "&7You are %colorcode%%distance% &7blocks away from spawn!"),
-	SPAWN_DISTANCE_NETHER("spawn.spawnDistanceNether", "&7You are %colorcode%%distance% &7blocks away from the portal to the world!"),
-	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
-	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),
 
 	TABLIST_PLAYER_WITH_TEAM("tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITH_TEAM_RANK("tablist.player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
@@ -177,13 +172,16 @@ public enum LanguageEN implements LoadableMessage {
 
 	VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode% %category% &7-------"),
 	VARO_COMMANDS_HELP_FOOTER("varoCommands.help.footer", "&7------------------------"),
+
 	VARO_COMMANDS_ERROR_USER_NOT_FOUND("varoCommands.error.usernotfound", "&7No user could be found for this player!"),
+
 	VARO_COMMANDS_ERROR_UNKNOWN_PLAYER("varoCommands.error.unknownplayer", "&7The player %colorcode%%player% &7has never entered the server before!"),
 	VARO_COMMANDS_ERROR_NO_CONSOLE("varoCommands.error.noconsole", "You must be a player!"),
 	VARO_COMMANDS_ERROR_NOT_STARTED("varoCommands.error.notstarted", "The games have not started yet!"),
 	VARO_COMMANDS_ERROR_USAGE("varoCommands.error.usage", "&cError! &7Use %colorcode%/varo %command% &7for help."),
 	VARO_COMMANDS_ERROR_NO_NUMBER("varoCommands.error.nonumber", "%colorcode%%text% &7is not a number!"),
 	VARO_COMMANDS_ERROR("varoCommands.error.error", "&7An error has occurred!"),
+
 	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport was saved under &c%filename% &7!"),
 	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD("varoCommands.bugreport.sendtodiscord", "Please send the bug report as FILE manually to the discord in the support, because the upload did not work!"),
 	VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION("varoCommands.bugreport.outdatedversion", "You cannot make bug reports from an old plugin version!"),
@@ -195,21 +193,25 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR("varoCommands.bugreport.uploaderror", "The bug report could not be uploaded!"),
 	VARO_COMMANDS_BUGREPORT_UPLOADED("varoCommands.bugreport.uploaded", "Bugreport has been uploaded to &c%url% &7!"),
 	VARO_COMMANDS_BUGREPORT_CLICK_ME("varoCommands.bugreport.clickme", " &7(&aClick me&7)"),
+
 	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE("varoCommands.abort.notactive", "The start countdown is not active!"),
 	VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED("varoCommands.abort.stopped", "Start countdown successfully stopped!"),
+
 	VARO_COMMANDS_ACTIONBAR_ACTIVATED("varoCommands.actionbar.activated", "You can now see the time in the action bar!"),
 	VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "You can no longer see the time in the action bar!"),
+
 	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autostart.notsetupyet", "The AutoSetup has not yet been set up in the Config!"),
 	VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autostart.finished", "The AutoSetup is finished."),
 	VARO_COMMANDS_AUTOSETUP_HELP("varoCommands.autostart.help", "%colorcode%/varo autosetup run &7starts the autosetup"),
 	VARO_COMMANDS_AUTOSETUP_ATTENTION("varoCommands.autostart.attention", "&cCaution: &7This command sets new spawns, lobby, portal, border and &loptional&7 an autostart"),
+
 	VARO_COMMANDS_AUTOSTART_ALREADY_STARTED("varoCommands.autostart.alreadystarted", "%projectname% &7has already been started!"),
 	VARO_COMMANDS_AUTOSTART_ALREADY_SETUP("varoCommands.autostart.alreadysetup", "&7Remove the AutoStart first before you set a new one!"),
 	VARO_COMMANDS_AUTOSTART_HELP_SET("varoCommands.autostart.helpset", "%colorcode%/autostart &7set <Hour> <Minute> <Day> <Month> <Year>"),
 	VARO_COMMANDS_AUTOSTART_NO_NUMBER("varoCommands.autostart.nonumber", "One or more arguments are &cnot &7a number!"),
 	VARO_COMMANDS_AUTOSTART_DATE_IN_THE_PAST("varoCommands.autostart.dateinthepast", "&7The %colorcode%date &7must not be in the past!"),
-	VARO_COMMANDS_AUTOSTART_REMOVED("varoCommands.autostart.removed", "%colorcode%AutoStart &7 successfully removed!"),
 	VARO_COMMANDS_AUTOSTART_NOT_SETUP_YET("varoCommands.autostart.notsetupyet", "&7There is no %colorcode%autostart &7defined yet!"),
+	VARO_COMMANDS_AUTOSTART_REMOVED("varoCommands.autostart.removed", "%colorcode%AutoStart &7 successfully removed!"),
 	VARO_COMMANDS_AUTOSTART_DELAY_HELP("varoCommands.autostart.delayhelp", "%colorcode%/autostart delay &7<Delay in Minutes>"),
 	VARO_COMMANDS_AUTOSTART_DELAY_TO_SMALL("varoCommands.autostart.delaytosmall", "The delay must not be less than 1!"),
 	VARO_COMMANDS_AUTOSTART_START_DELAYED("varoCommands.autostart.startdelayed", "&7The start has been delayed by %colorcode%%delay% &7minutes!"),
@@ -237,8 +239,6 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_DISCORD_VERIFY_DISABLED("varoCommands.discord.verifydisabled", "&7The verification system has been deactivated in the Config!"),
 	VARO_COMMANDS_DISCORD_BOT_DISABLED("varoCommands.discord.botdisabled", "&7The DiscordBot is disabled!"),
 	VARO_COMMANDS_DISCORD_USER_NOT_FOUND("varoCommands.discord.usernotfound", "&7User not found for this player!"),
-	VARO_COMMANDS_DISCORD_GETLINK("varoCommands.discord.getlink", "%colorcode%%player%'s account is called %colorcode%%user%&7 and the ID is %colorcode%%id%&7!"),
-	VARO_COMMANDS_DISCORD_UNVERIFY("varoCommands.discord.unverify", "&7The account has successfully been unlinked from %colorcode%%player%&7!"),
 	VARO_COMMANDS_INTRO_ALREADY_STARTED("varoCommands.intro.alreadystarted", "&7The intro has already been started!"),
 	VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED("varoCommands.intro.gamealreadystarted", "&7The game has already been started!"),
 	VARO_COMMANDS_INTRO_STARTED("varoCommands.intro.started", "&7And here we go!"),
@@ -252,6 +252,7 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL("varoCommands.randomteam.teamsizetoosmall", "&7The team size must be at least 1."),
 	VARO_COMMANDS_RANDOMTEAM_SORTED("varoCommands.randomteam.sorted", "&7All players without a team are now in teams of %colorcode%%teamsize% &7!"),
 	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.sorted", "&7Not enough team partners could be found for you."),
+
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7The game is already in the lobby phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7The games has been restarted."),
 	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboards are disabled."),
@@ -270,6 +271,8 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_DISCORD_VERIFICATION_REMOVED("varoCommands.discord.verificationremoved", "&7Your verification was removed."),
 	VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED("varoCommands.discord.verifysystemdisabled", "&7The Verify system is disabled."),
 	VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED("varoCommands.discord.discordbotdisabled", "&7The Discordbot is disabled."),
+	VARO_COMMANDS_DISCORD_GETLINK("varoCommands.discord.getlink", "%colorcode%%player%'s account is called %colorcode%%user%&7 and the ID is %colorcode%%id%&7!"),
+	VARO_COMMANDS_DISCORD_UNVERIFY("varoCommands.discord.unverify", "&7The account has successfully been unlinked from %colorcode%%player%&7!"),
 	VARO_COMMANDS_DISCORD_RELOADED("varoCommands.discord.reloaded", "&7The Discordbot was &asuccessfully &7reloaded."),
 	VARO_COMMANDS_DISCORD_SHUTDOWN("varoCommands.discord.shutdown", "&7The Discordbot was &asuccessfully &7shut down."),
 	VARO_COMMANDS_DISCORD_BOT_OFFLINE("varoCommands.discord.botoffline", "&7The Discordbot is not online!"),
@@ -281,8 +284,13 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Use %colorcode%/varo discord verify remove &7to remove the verification."),
 
-
 	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7The rest of your time: %formattedCountdown%&7.");
+  
+  SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
+	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),
+
+	OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),
+	OTHER_PING("other.ping", "&7Your %colorcode%Ping &7 is: %colorcode%%ping%&7ms");
 
 	private String path, message;
 

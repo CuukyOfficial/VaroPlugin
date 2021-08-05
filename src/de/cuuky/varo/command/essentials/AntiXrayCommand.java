@@ -15,6 +15,7 @@ import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.data.plugin.OrebfuscatorPluginLibrary;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class AntiXrayCommand implements CommandExecutor {
@@ -29,22 +30,22 @@ public class AntiXrayCommand implements CommandExecutor {
 			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 			return false;
 		}
-		antiXrayActivated = false;
+		this.antiXrayActivated = false;
 
 		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8)) {
-			xrayAvailable = 0;
+			this.xrayAvailable = 0;
 		} else if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_13)) {
-			xrayAvailable = 1;
+			this.xrayAvailable = 1;
 		} else {
-			xrayAvailable = 2;
+			this.xrayAvailable = 2;
 		}
 
 		if (VersionUtils.getSpigot() == null)
-			if (xrayAvailable != 1)
-				xrayAvailable = 2;
+			if (this.xrayAvailable != 1)
+				this.xrayAvailable = 2;
 
 		YamlConfiguration spigotConfig = null;
-		if (xrayAvailable == 0)
+		if (this.xrayAvailable == 0)
 			try {
 				Method m = VersionUtils.getSpigot().getClass().getMethod("getConfig");
 				m.setAccessible(true);
@@ -54,75 +55,81 @@ public class AntiXrayCommand implements CommandExecutor {
 				e.printStackTrace();
 			}
 
-		if (xrayAvailable == 0) {
+		if (this.xrayAvailable == 0) {
 			String enabled = spigotConfig.getString("world-settings.default.anti-xray.enabled");
 			String engineMode = spigotConfig.getString("world-settings.default.anti-xray.engine-mode");
 			if (enabled == null || engineMode == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName()));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp)
+						.replace("%version%", Bukkit.getName()));
 				return false;
 			}
 			if (!enabled.contentEquals("true") || !engineMode.contentEquals("2")) {
-				antiXrayActivated = false;
+				this.antiXrayActivated = false;
 			} else {
-				antiXrayActivated = true;
+				this.antiXrayActivated = true;
 			}
 		}
 
-		if (xrayAvailable == 1) {
+		if (this.xrayAvailable == 1) {
 			File file = new File("plugins/Orebfuscator4", "config.yml");
 			if (file.exists()) {
 				YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 				String enabled = config.getString("Booleans.Enabled");
 				String engineMode = config.getString("Integers.EngineMode");
 				if (!enabled.contentEquals("true") || !engineMode.contentEquals("2")) {
-					antiXrayActivated = false;
+					this.antiXrayActivated = false;
 				} else {
-					antiXrayActivated = true;
+					this.antiXrayActivated = true;
 				}
 			} else {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_INSTALLING_PLUGIN.getValue(vp));
 
-				boolean xrayDownload = Main.getDataManager().getExternalPluginLoader().downloadAdditionalPlugin(22818, "plugins/Anti-Xray.jar", true);
+				Main.getDataManager().getLibraryLoader().loadLibraryIfNecessary(new OrebfuscatorPluginLibrary());
 
-				if (!xrayDownload) {
-					sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_INSTALLING_ERROR.getValue(vp));
-					return false;
-				}
+				/*
+				 * if (!xrayDownload) { sender.sendMessage(Main.getPrefix() +
+				 * ConfigMessages.COMMANDS_XRAY_INSTALLING_ERROR.getValue(vp)); return false; }
+				 */
 
 				Bukkit.getServer().shutdown();
 				return false;
 			}
 		}
 
-		if (xrayAvailable == 2) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_VERSION_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName() + " 1." + VersionUtils.getVersion().getIdentifier()));
+		if (this.xrayAvailable == 2) {
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_VERSION_NOT_AVAIALABLE.getValue(vp)
+					.replace("%version%", Bukkit.getName() + " 1." + VersionUtils.getVersion().getIdentifier()));
 			return false;
 		}
 
 		if (args.length != 1 || (!args[0].equalsIgnoreCase("on") && !args[0].equalsIgnoreCase("off"))) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Anti-Xray"));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_STATUS.getValue(vp) + (antiXrayActivated ? ConfigMessages.COMMANDS_XRAY_STATUS_ACTIVATED.getValue(vp) : ConfigMessages.COMMANDS_XRAY_STATUS_DEACTIVATED.getValue(vp)));
+			sender.sendMessage(Main.getPrefix()
+					+ ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Anti-Xray"));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_STATUS.getValue(vp).replace("%status%",
+					this.antiXrayActivated ? ConfigMessages.COMMANDS_XRAY_STATUS_ACTIVATED.getValue(vp)
+							: ConfigMessages.COMMANDS_XRAY_STATUS_DEACTIVATED.getValue(vp)));
 			sender.sendMessage(Main.getPrefix() + "/antixray <on/off>");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return false;
 		}
 
 		if (args[0].equalsIgnoreCase("on")) {
-			if (antiXrayActivated) {
+			if (this.antiXrayActivated) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ALREADY_ACTIVATED.getValue(vp));
 				return false;
 			} else {
-				if (xrayAvailable == 0) {
+				if (this.xrayAvailable == 0) {
 					spigotConfig.set("world-settings.default.anti-xray.enabled", true);
 					spigotConfig.set("world-settings.default.anti-xray.engine-mode", 2);
 
 					try {
 						spigotConfig.save("spigot.yml");
 					} catch (IOException e) {
-						sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName()));
+						sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ERROR_NOT_AVAIALABLE
+								.getValue(vp).replace("%version%", Bukkit.getName()));
 						return false;
 					}
-				} else if (xrayAvailable == 1) {
+				} else if (this.xrayAvailable == 1) {
 					Bukkit.dispatchCommand(sender, "ofc enable");
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ofc engine 2");
 				}
@@ -130,21 +137,22 @@ public class AntiXrayCommand implements CommandExecutor {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ACTIVATED.getValue(vp));
 			}
 		} else if (args[0].equalsIgnoreCase("off")) {
-			if (!antiXrayActivated) {
+			if (!this.antiXrayActivated) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ALREADY_DEACTIVATED.getValue(vp));
 				return false;
 			} else {
-				if (xrayAvailable == 0) {
+				if (this.xrayAvailable == 0) {
 					spigotConfig.set("world-settings.default.anti-xray.enabled", true);
 					spigotConfig.set("world-settings.default.anti-xray.engine-mode", 1);
 
 					try {
 						spigotConfig.save("spigot.yml");
 					} catch (IOException e) {
-						sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ERROR_NOT_AVAIALABLE.getValue(vp).replace("%version%", Bukkit.getName()));
+						sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_XRAY_ERROR_NOT_AVAIALABLE
+								.getValue(vp).replace("%version%", Bukkit.getName()));
 						return false;
 					}
-				} else if (xrayAvailable == 1) {
+				} else if (this.xrayAvailable == 1) {
 					Bukkit.dispatchCommand(sender, "ofc disable");
 				}
 
