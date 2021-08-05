@@ -17,7 +17,7 @@ import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
-import de.cuuky.varo.data.plugin.ExternalPluginLoader;
+import de.cuuky.varo.data.plugin.LibraryLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
@@ -40,9 +40,9 @@ public class DataManager {
 
 	private Main ownerInstance;
 
-	private ExternalPluginLoader pluginLoader;
 	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
+	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
 	private VaroTeamHandler varoTeamHandler;
@@ -67,7 +67,7 @@ public class DataManager {
 
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
-		this.pluginLoader = new ExternalPluginLoader();
+		this.libraryLoader = new LibraryLoader();
 		this.varoLoggerManager = new VaroLoggerManager();
 		new DefaultPresetLoader();
 	}
@@ -88,12 +88,16 @@ public class DataManager {
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
 
-		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean() && !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
+		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
+				&& !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			VersionUtils.setMinecraftServerProperty("announce-player-achievements", false);
 
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG, ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD, ConfigSetting.SCOREBOARD.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST, ConfigSetting.TABLIST.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG,
+				ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD,
+				ConfigSetting.SCOREBOARD.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST,
+				ConfigSetting.TABLIST.getValueAsBoolean());
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
@@ -102,9 +106,9 @@ public class DataManager {
 
 		this.banHandler = new VaroPlayerBanHandler();
 
-		startAutoSave();
+		this.startAutoSave();
 
-		doSave = true;
+		this.doSave = true;
 	}
 
 	private void startAutoSave() {
@@ -112,13 +116,13 @@ public class DataManager {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				reloadConfig();
-				save();
+				DataManager.this.reloadConfig();
+				DataManager.this.save();
 
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						reloadPlayerClients();
+						DataManager.this.reloadPlayerClients();
 					}
 				}.runTask(Main.getInstance());
 			}
@@ -128,13 +132,16 @@ public class DataManager {
 	public void reloadConfig() {
 		VaroList.loadLists();
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
-		configHandler.reload();
+		this.configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
 		VaroBoardProvider.update();
 
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG, ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD, ConfigSetting.SCOREBOARD.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST, ConfigSetting.TABLIST.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG,
+				ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD,
+				ConfigSetting.SCOREBOARD.getValueAsBoolean());
+		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST,
+				ConfigSetting.TABLIST.getValueAsBoolean());
 	}
 
 	public void reloadPlayerClients() {
@@ -143,7 +150,7 @@ public class DataManager {
 	}
 
 	public void save() {
-		if (!doSave)
+		if (!this.doSave)
 			return;
 
 		VaroSerializeHandler.saveAll();
@@ -151,7 +158,8 @@ public class DataManager {
 
 		try {
 			BotRegister.saveAll();
-		} catch (NoClassDefFoundError e) {}
+		} catch (NoClassDefFoundError e) {
+		}
 	}
 
 	public void setDoSave(boolean doSave) {
@@ -170,12 +178,12 @@ public class DataManager {
 		return this.broadcaster;
 	}
 
-	public ExternalPluginLoader getExternalPluginLoader() {
-		return pluginLoader;
-	}
-
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
+	}
+
+	public LibraryLoader getLibraryLoader() {
+		return this.libraryLoader;
 	}
 
 	public VaroListManager getListManager() {
@@ -223,6 +231,6 @@ public class DataManager {
 	}
 
 	public VaroPlayerBanHandler getBanHandler() {
-		return banHandler;
+		return this.banHandler;
 	}
 }

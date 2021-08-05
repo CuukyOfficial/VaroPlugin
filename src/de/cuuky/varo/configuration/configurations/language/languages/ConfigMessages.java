@@ -256,6 +256,9 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_RANDOMTEAM_SORTED("varoCommands.randomteam.sorted", "&7Alle Spieler ohne Team sind nun in %colorcode%%teamsize%er &7Teams!"),
 	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.sorted", "&7Fuer dich konnten nicht genug Teampartner gefunden werden."),
 
+	VARO_COMMANDS_CHECKCOMBAT_HELP("varoCommands.checkcombat.help", "%colorcode%/varo checkcombat"),
+	VARO_COMMANDS_CHECKCOMBAT_INCOMBAT("varoCommands.checkcombat.incombat", "&7Du bist momentan im %colorcode%Combat&7!"),
+	VARO_COMMANDS_CHECKCOMBAT_NOTINCOMBAT("varoCommands.checkcombat.notincombat", "&7Du bist momentan nicht im %colorcode%Combat&7!"),
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7Das Spiel wurde neugestartet."),
 	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboard sind deaktiviert."),
