@@ -282,9 +282,11 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_DISCORD_BYPASS_ACTIVE("varoCommands.discord.bypassactive", "&7%player% now bypasses the verification system."),
 	VARO_COMMANDS_DISCORD_BYPASS_INACTIVE("varoCommands.discord.bypassinactive", "&7%player% no longer bypasses the verification system."),
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
-	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.account", "&7Use %colorcode%/varo discord verify remove &7to remove the verification."),
+	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Use %colorcode%/varo discord verify remove &7to remove the verification."),
 
-	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
+	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7The rest of your time: %formattedCountdown%&7."),
+  
+ 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),
 
 	OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),

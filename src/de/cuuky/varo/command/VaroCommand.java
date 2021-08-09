@@ -2,10 +2,10 @@ package de.cuuky.varo.command;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.command.varo.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import de.cuuky.varo.command.varo.*;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public abstract class VaroCommand {
@@ -51,6 +51,7 @@ public abstract class VaroCommand {
 		new PlaceholderCommand();
 		new BugreportCommand();
 		new ReviveCommand();
+		new PlaytimeCommand();
 		new CheckCombatCommand();
 		// new TestCommand();
 	}
