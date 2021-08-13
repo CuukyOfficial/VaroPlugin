@@ -127,5 +127,7 @@ test {
 
 	testLogging {
         exceptionFormat = 'full'
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
     }
 }
