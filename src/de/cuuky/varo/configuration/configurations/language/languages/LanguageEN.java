@@ -101,8 +101,7 @@ public enum LanguageEN implements LoadableMessage {
 	QUIT_KICK_DELAY_OVER("quitmessage.protectionOver", "%colorcode%%player% &7was kicked because of their death now!"),
 	QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7will be kicked in %colorcode%%countdown% &7second(s)!"),
 	QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cThere is a player &4%distance% &cblocks near you!%nextLine%&7To get kicked, move away from this player!"),
-	QUIT_KICK_SERVER_CLOSE_SOON_GLOBAL("quitmessage.serverCloseSoonGlobal", "&7The server closes in &c%minutes% &7minutes!"),
-	QUIT_KICK_SERVER_CLOSE_SOON_PLAYER("quitmessage.serverCloseSoonLocal", "&7The server closes in &c%minutes% &7minutes for you!"),
+	QUIT_KICK_SERVER_CLOSE_SOON("quitmessage.serverCloseSoon", "&7The server closes in &c%minutes% &7minutes!"),
 
 	DEATH_KICK_DEAD("kick.kickedKilled", "&cYou died! %nextLine% &7With this you are removed from %projectname%"),
 	DEATH_KICK_KILLED("kick.killedKick", "&7You were killed by &c%killer%&7! %nextLine% &7You have been removed from %projectname%&7!"),
@@ -122,8 +121,7 @@ public enum LanguageEN implements LoadableMessage {
 	LABYMOD_DISABLED("labymod.labyModDisabled", "&7All your LabyMod functions have been deactivated!"),
 	LABYMOD_KICK("labymod.labyMod", "&cLabyMod isn't allowed on this server."),
 
-	SERVER_MODT_CANT_JOIN_GLOBAL("motd.cantJoinGlobal", "&cYou can only join between &4%minHour%:%minMinute% &cand &4%maxHour%:%maxMinute%&c! %nextLine%&cThat's &4%minPlayerHour%:%minPlayerMinute% &c- &4%maxPlayerHour%:%maxPlayerMinute%&c in your time zone! %nextLine%&7Please try again later! &7%currPlayerHour%&7:&7%currPlayerMin%&7:&7%currPlayerSec%"),
-	SERVER_MODT_CANT_JOIN_PLAYER("motd.cantJoinPlayer", "&cYou can only join between &4%minHour%:%minMinute% &cand &4%maxHour%:%maxMinute%&c! %nextLine%&7Please try again later! &7%currPlayerHour%&7:&7%currPlayerMin%&7:&7%currPlayerSec%"),
+	SERVER_MODT_CANT_JOIN_HOURS("motd.cantJoinHours", "&cYou can only join between &4%minHour% &cand &4%maxHour%&c o'clock! %nextLine%&7Please try again later! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
 	SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cThe server has not yet been opened for everyone! %nextLine%&7Try again later!"),
 	SERVER_MODT_OPEN("motd.serverOpen", "&aBe now with us in %projectname%&a!\n&7Have fun!"),
 
@@ -200,10 +198,10 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_ACTIONBAR_ACTIVATED("varoCommands.actionbar.activated", "You can now see the time in the action bar!"),
 	VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "You can no longer see the time in the action bar!"),
 
-	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autostart.notsetupyet", "The AutoSetup has not yet been set up in the Config!"),
-	VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autostart.finished", "The AutoSetup is finished."),
-	VARO_COMMANDS_AUTOSETUP_HELP("varoCommands.autostart.help", "%colorcode%/varo autosetup run &7starts the autosetup"),
-	VARO_COMMANDS_AUTOSETUP_ATTENTION("varoCommands.autostart.attention", "&cCaution: &7This command sets new spawns, lobby, portal, border and &loptional&7 an autostart"),
+	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autosetup.notsetupyet", "The AutoSetup has not yet been set up in the Config!"),
+	VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autosetup.finished", "The AutoSetup is finished."),
+	VARO_COMMANDS_AUTOSETUP_HELP("varoCommands.autosetup.help", "%colorcode%/varo autosetup run &7starts the autosetup"),
+	VARO_COMMANDS_AUTOSETUP_ATTENTION("varoCommands.autosetup.attention", "&cCaution: &7This command sets new spawns, lobby, portal, border and &loptional&7 an autostart"),
 
 	VARO_COMMANDS_AUTOSTART_ALREADY_STARTED("varoCommands.autostart.alreadystarted", "%projectname% &7has already been started!"),
 	VARO_COMMANDS_AUTOSTART_ALREADY_SETUP("varoCommands.autostart.alreadysetup", "&7Remove the AutoStart first before you set a new one!"),
@@ -251,7 +249,7 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_RANDOMTEAM_HELP("varoCommands.randomteam.help", "%colorcode%/varo randomTeam <team size>"),
 	VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL("varoCommands.randomteam.teamsizetoosmall", "&7The team size must be at least 1."),
 	VARO_COMMANDS_RANDOMTEAM_SORTED("varoCommands.randomteam.sorted", "&7All players without a team are now in teams of %colorcode%%teamsize% &7!"),
-	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.sorted", "&7Not enough team partners could be found for you."),
+	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.nopartner", "&7Not enough team partners could be found for you."),
 
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7The game is already in the lobby phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7The games has been restarted."),
