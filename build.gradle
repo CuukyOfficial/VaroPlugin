@@ -1,11 +1,11 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 apply plugin: 'java-library'
+apply plugin: 'java'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.options.encoding = 'UTF-8'
-libsDirName = System.getenv("libsDirName") == null ? libsDirName : System.getenv("libsDirName")
 
 sourceSets {
     main {
@@ -15,6 +15,12 @@ sourceSets {
 
         resources {
             srcDirs 'resources'
+        }
+    }
+    
+    test {
+    	java {
+            srcDirs 'test'
         }
     }
 }
@@ -53,10 +59,13 @@ repositories {
 
 configurations {
     internalLibs
-    compileOnly.extendsFrom(internalLibs)
+    implementation.extendsFrom(internalLibs)
 }
 
 dependencies {
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+
     this.addModularCompile('org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT', 'spigot', false)
     this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
     this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT', 'worldedit', true)
@@ -75,9 +84,9 @@ boolean checkLib(String filePath) {
 
 void addModularCompile(String repoName, String fileName, boolean changingB) {
     if (this.checkLib(fileName))
-        this.dependencies.compileOnly name: fileName
+        this.dependencies.implementation name: fileName
     else
-        this.dependencies.compileOnly (repoName) { changing = changingB }
+        this.dependencies.implementation (repoName) { changing = changingB }
 }
 
 void addModularInternal(String repoName, String fileName, boolean changingB) {
@@ -110,5 +119,15 @@ processResources {
         filter ReplaceTokens, tokens: [name: "Varo"]
         filter ReplaceTokens, tokens: [version: "4.8.0-BETA-10"]
         filter ReplaceTokens, tokens: [author: "Cuuky"]
+    }
+}
+
+test {
+	useJUnitPlatform()
+
+	testLogging {
+        exceptionFormat = 'full'
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
     }
 }

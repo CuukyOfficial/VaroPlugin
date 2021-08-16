@@ -203,10 +203,10 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_ACTIONBAR_ACTIVATED("varoCommands.actionbar.activated", "Du siehst nun die Zeit in der Actionbar!"),
 	VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "Du siehst nun nicht mehr die Zeit in der Actionbar!"),
 
-	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autostart.notsetupyet", "Der AutoSetup wurde noch nicht in der Config eingerichtet!"),
-	VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autostart.finished", "Der AutoSetup ist fertig."),
-	VARO_COMMANDS_AUTOSETUP_HELP("varoCommands.autostart.help", "%colorcode%/varo autosetup run &7startet den Autosetup"),
-	VARO_COMMANDS_AUTOSETUP_ATTENTION("varoCommands.autostart.attention", "&cVorsicht: &7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und &loptional&7 einen Autostart."),
+	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autosetup.notsetupyet", "Das AutoSetup wurde noch nicht in der Config eingerichtet!"),
+	VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autosetup.finished", "Der AutoSetup ist fertig."),
+	VARO_COMMANDS_AUTOSETUP_HELP("varoCommands.autosetup.help", "%colorcode%/varo autosetup run &7startet den Autosetup"),
+	VARO_COMMANDS_AUTOSETUP_ATTENTION("varoCommands.autosetup.attention", "&cVorsicht: &7Dieser Befehl setzt neue Spawns, Lobby, Portal, Border und &loptional&7 einen Autostart."),
 
 	VARO_COMMANDS_AUTOSTART_ALREADY_STARTED("varoCommands.autostart.alreadystarted", "%projectname% &7wurde bereits gestartet!"),
 	VARO_COMMANDS_AUTOSTART_ALREADY_SETUP("varoCommands.autostart.alreadysetup", "&7Entferne erst den AutoStart, bevor du einen neuen setzt!"),
@@ -254,7 +254,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_RANDOMTEAM_HELP("varoCommands.randomteam.help", "%colorcode%/varo randomTeam <Teamgroesse>"),
 	VARO_COMMANDS_RANDOMTEAM_TEAMSIZE_TOO_SMALL("varoCommands.randomteam.teamsizetoosmall", "&7Die Teamgroesse muss mindestens 1 betragen."),
 	VARO_COMMANDS_RANDOMTEAM_SORTED("varoCommands.randomteam.sorted", "&7Alle Spieler ohne Team sind nun in %colorcode%%teamsize%er &7Teams!"),
-	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.sorted", "&7Fuer dich konnten nicht genug Teampartner gefunden werden."),
+	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.nopartner", "&7Fuer dich konnten nicht genug Teampartner gefunden werden."),
 
 	VARO_COMMANDS_CHECKCOMBAT_HELP("varoCommands.checkcombat.help", "%colorcode%/varo checkcombat"),
 	VARO_COMMANDS_CHECKCOMBAT_INCOMBAT("varoCommands.checkcombat.incombat", "&7Du bist momentan im %colorcode%Combat&7!"),

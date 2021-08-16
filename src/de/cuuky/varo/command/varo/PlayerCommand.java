@@ -1,7 +1,9 @@
 package de.cuuky.varo.command.varo;
 
 import de.cuuky.cfw.utils.UUIDUtils;
+import de.cuuky.cfw.utils.chat.PageableChatBuilder;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -15,8 +17,15 @@ import java.util.ArrayList;
 
 public class PlayerCommand extends VaroCommand {
 
+	private PageableChatBuilder<VaroPlayer> listBuilder;
+
 	public PlayerCommand() {
 		super("player", "Verwaltet die Spieler", "varo.player");
+
+		this.listBuilder = new PageableChatBuilder<>(VaroPlayer::getVaroPlayer)
+				.messages(new VaroChatListMessages<>(player ->
+						Main.getPrefix() + Main.getColorCode() + "§l" + (player.getId() + 1) + "§7: " + Main.getColorCode() + player.getName(),
+						"/varo player list", "List aller Spieler"));
 	}
 
 	@Override
@@ -186,55 +195,7 @@ public class PlayerCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§a" + vps.getName() + " §7erfolgreich wiederbelebt!");
 			return;
 		} else if (args[0].equalsIgnoreCase("list")) {
-			if (VaroPlayer.getVaroPlayer().isEmpty()) {
-				sender.sendMessage(Main.getPrefix() + "Kein Spieler gefunden!");
-				return;
-			}
-
-			int playerNumber = VaroPlayer.getVaroPlayer().size();
-			int playerPages = 1 + (playerNumber / 50);
-
-			int lastPlayerOnPage = 50;
-			int page = 1;
-
-			if (args.length != 1) {
-				try {
-					page = Integer.parseInt(args[1]);
-				} catch (NumberFormatException e) {
-					page = 1;
-				}
-
-				lastPlayerOnPage = page * 50;
-			}
-
-			if (page == playerPages) {
-				lastPlayerOnPage = playerNumber;
-			}
-
-			if (page > playerPages) {
-				sender.sendMessage(Main.getPrefix() + "Keine Seite " + page + " der Spieler gefunden!");
-				return;
-			}
-
-			if (playerPages == 1) {
-				sender.sendMessage(Main.getPrefix() + "§lListe aller " + Main.getColorCode() + " §lSpieler§7§l:");
-			} else {
-				sender.sendMessage(Main.getPrefix() + "§lListe der " + Main.getColorCode() + " §lSpieler§7§l " + ((page - 1) * 50 + 1) + " bis " + lastPlayerOnPage + ":");
-			}
-
-			for (int i = (page - 1) * 50; i < lastPlayerOnPage; i++) {
-				VaroPlayer player = VaroPlayer.getVaroPlayer().get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + (i + 1) + "§7: " + Main.getColorCode() + player.getName());
-			}
-
-			int lastPlayerNextSite = 0;
-			if (page + 1 < playerPages)
-				lastPlayerNextSite = (page + 1) * 50;
-			else if (page + 1 == playerPages)
-				lastPlayerNextSite = playerPages;
-
-			if (page < playerPages)
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player list " + (page + 1) + " §7fuer " + Main.getColorCode() + "Spieler §7 " + (page * 50 + 1) + " bis " + lastPlayerNextSite);
+            this.listBuilder.page(args.length >= 2 ? args[1] : "1").build().send(sender);
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7Player/Command not found! §7Type /player for more.");
 		return;
