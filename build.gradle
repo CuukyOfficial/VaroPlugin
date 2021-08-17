@@ -3,6 +3,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 apply plugin: 'java-library'
 apply plugin: 'java'
 
+libsDirName = System.getenv("libsDirName") == null ? libsDirName : System.getenv("libsDirName")
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.options.encoding = 'UTF-8'
