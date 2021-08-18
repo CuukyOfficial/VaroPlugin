@@ -50,7 +50,7 @@ public class CreateCustomCommandGUI extends VaroInventory {
     private ItemClick getInput(String current, String inputName, Consumer<String> resultReceiver, Function<String, String> checker) {
         return (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(),
-                    "§7Gebe den/die " + inputName + " ein:", new ChatHookHandler() {
+                    "§7Gib den/die " + inputName + " ein:", new ChatHookHandler() {
 
                 @Override
                 public boolean onChat(AsyncPlayerChatEvent event) {
