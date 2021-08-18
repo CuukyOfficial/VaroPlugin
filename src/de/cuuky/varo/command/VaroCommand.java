@@ -1,20 +1,19 @@
 package de.cuuky.varo.command;
 
-import java.util.ArrayList;
-
+import de.cuuky.varo.command.varo.*;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.varo.command.varo.*;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class VaroCommand {
 
-	private static ArrayList<VaroCommand> varoCommands;
+	private static final List<VaroCommand> varoCommands = new ArrayList<>();
 
 	static {
-		varoCommands = new ArrayList<>();
-
 		new StartCommand();
 		new DiscordCommand();
 		new TeamCommand();
@@ -53,6 +52,7 @@ public abstract class VaroCommand {
 		new ReviveCommand();
 		new PlaytimeCommand();
 		new CheckCombatCommand();
+		new CommandCommand();
 		// new TestCommand();
 	}
 
@@ -68,27 +68,16 @@ public abstract class VaroCommand {
 		varoCommands.add(this);
 	}
 
-	public String getDescription() {
-		return description;
+	public boolean isAlias(String check) {
+	    return this.aliases != null && Arrays.stream(this.aliases).anyMatch(alias -> alias.equalsIgnoreCase(check));
 	}
 
-	public String getName() {
-		return name;
+	public void remove() {
+		varoCommands.remove(this);
 	}
 
-	public String getPermission() {
-		return permission;
-	}
-
-	public boolean isAlias(String s) {
-		if (this.aliases == null)
-			return false;
-
-		for (String alias : aliases)
-			if (alias.equalsIgnoreCase(s))
-				return true;
-
-		return false;
+	public boolean matches(String command) {
+		return this.name.equalsIgnoreCase(command) || this.isAlias(command);
 	}
 
 	public abstract void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args);
@@ -105,25 +94,31 @@ public abstract class VaroCommand {
 		this.name = name;
 	}
 
+	public void setPermission(String perm) { this.permission =  perm; }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getName() { return name; }
+
+	public String getPermission() { return permission; }
+
+	public String[] getAliases() { return aliases; }
+
 	/**
 	 * @param command
 	 *            The ingame command
 	 * @return Returns the VaroCommand Object
 	 */
 	public static VaroCommand getCommand(String command) {
-		for (VaroCommand chunkCommand : varoCommands) {
-			if (!chunkCommand.getName().equalsIgnoreCase(command) && !chunkCommand.isAlias(command))
-				continue;
-
-			return chunkCommand;
-		}
-		return null;
+		return varoCommands.stream().filter(cc -> cc.matches(command)).findFirst().orElse(null);
 	}
 
 	/**
 	 * @return Returns all VaroCommand Objects
 	 */
-	public static ArrayList<VaroCommand> getVaroCommand() {
+	public static List<VaroCommand> getVaroCommand() {
 		return varoCommands;
 	}
 }

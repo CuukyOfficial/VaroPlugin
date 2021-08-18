@@ -1,5 +1,6 @@
 package de.cuuky.varo.data;
 
+import de.cuuky.varo.command.custom.CustomCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -56,6 +57,7 @@ public class DataManager {
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
 	private VaroPlayerBanHandler banHandler;
+	private CustomCommandManager customCommandManager;
 
 	private boolean doSave;
 
@@ -87,6 +89,7 @@ public class DataManager {
 		this.listManager = new VaroListManager();
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
+		this.customCommandManager = new CustomCommandManager();
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
 				&& !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
@@ -131,6 +134,7 @@ public class DataManager {
 
 	public void reloadConfig() {
 		VaroList.loadLists();
+		this.customCommandManager.reload();
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		this.configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
@@ -155,6 +159,7 @@ public class DataManager {
 
 		VaroSerializeHandler.saveAll();
 		VaroList.saveLists();
+		this.customCommandManager.reloadSave();
 
 		try {
 			BotRegister.saveAll();
@@ -230,7 +235,7 @@ public class DataManager {
 		return this.ownerInstance;
 	}
 
-	public VaroPlayerBanHandler getBanHandler() {
-		return this.banHandler;
-	}
+	public VaroPlayerBanHandler getBanHandler() { return this.banHandler; }
+
+	public CustomCommandManager getCustomCommandManager() { return customCommandManager; }
 }

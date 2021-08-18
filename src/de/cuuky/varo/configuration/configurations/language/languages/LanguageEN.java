@@ -284,7 +284,7 @@ public enum LanguageEN implements LoadableMessage {
 
 	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7The rest of your time: %formattedCountdown%&7."),
   
- 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
+  	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),
 
 	OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),
