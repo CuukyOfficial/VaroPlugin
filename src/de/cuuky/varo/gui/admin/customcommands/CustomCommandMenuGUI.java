@@ -1,4 +1,4 @@
-package de.cuuky.varo.gui.command.custom;
+package de.cuuky.varo.gui.admin.customcommands;
 
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.version.types.Materials;

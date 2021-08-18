@@ -1,4 +1,4 @@
-package de.cuuky.varo.gui.command.custom;
+package de.cuuky.varo.gui.admin.customcommands;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
@@ -15,14 +15,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class CreateCustomCommandGUI extends VaroInventory {
-
-    private interface StringChecker {
-
-        String check(String result);
-
-    }
 
     private String guiName = "Create Command";
     private boolean unsaved;
@@ -52,14 +47,14 @@ public class CreateCustomCommandGUI extends VaroInventory {
         return this.getInput(current, inputName, resultReceiver, (result -> result));
     }
 
-    private ItemClick getInput(String current, String inputName, Consumer<String> resultReceiver, StringChecker checker) {
+    private ItemClick getInput(String current, String inputName, Consumer<String> resultReceiver, Function<String, String> checker) {
         return (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(),
                     "§7Gebe den/die " + inputName + " ein:", new ChatHookHandler() {
 
                 @Override
                 public boolean onChat(AsyncPlayerChatEvent event) {
-                    String result = checker.check(event.getMessage());
+                    String result = checker.apply(event.getMessage());
                     if (result == null) return false;
 
                     resultReceiver.accept(result);
@@ -150,8 +145,6 @@ public class CreateCustomCommandGUI extends VaroInventory {
                     }
 
                     this.unsaved = false;
-                    this.open();
-                    return;
                 }
 
                 this.open();
@@ -164,7 +157,6 @@ public class CreateCustomCommandGUI extends VaroInventory {
                 this.openNext(new VaroConfirmInventory(this, "§7Delete?", (accept) -> {
                     if (accept) {
                         this.command.removeCommand();
-
                         this.back();
                         return;
                     }

@@ -1,11 +1,10 @@
-package de.cuuky.varo.gui.command.custom;
+package de.cuuky.varo.gui.admin.customcommands;
 
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.gui.VaroListInventory;
-import de.cuuky.varo.gui.player.PlayerGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,9 +30,7 @@ public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
 
     @Override
     protected ItemClick getClick(CustomCommand customCommand) {
-        return (event) -> {
-            this.openNext(new CreateCustomCommandGUI(getPlayer(), customCommand));
-        };
+        return (event) -> this.openNext(new CreateCustomCommandGUI(getPlayer(), customCommand));
     }
 
     @Override
