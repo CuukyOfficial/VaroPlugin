@@ -45,7 +45,7 @@ public class ResetCommand extends VaroCommand {
 	}
 
 	private void resetServer(CommandSender sender, String[] args) {
-		for (Player pl : VersionUtils.getOnlinePlayer())
+		for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
 			pl.kickPlayer("§cRESET");
 
 		Main.getDataManager().save();
