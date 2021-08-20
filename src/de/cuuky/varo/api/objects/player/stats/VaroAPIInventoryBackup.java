@@ -3,7 +3,7 @@ package de.cuuky.varo.api.objects.player.stats;
 import java.util.Date;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 
@@ -19,8 +19,8 @@ public class VaroAPIInventoryBackup {
 		return backup.getDate();
 	}
 
-	public Inventory getInventory() {
-		return backup.getInventory().getInventory();
+	public ItemStack[] getInventory() {
+		return backup.getAllContents();
 	}
 
 	public void restore(Player player) {

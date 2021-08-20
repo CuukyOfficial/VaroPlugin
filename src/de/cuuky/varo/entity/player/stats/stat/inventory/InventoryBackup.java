@@ -1,14 +1,15 @@
 package de.cuuky.varo.entity.player.stats.stat.inventory;
 
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.VaroInventory;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Date;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class InventoryBackup implements VaroSerializeable {
 
@@ -18,14 +19,11 @@ public class InventoryBackup implements VaroSerializeable {
 		allBackups = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "armor")
-	private ArrayList<ItemStack> armor;
-
 	@VaroSerializeField(path = "date")
 	private Date date;
 
-	@VaroSerializeField(path = "inventory")
-	private VaroInventory inventory;
+	@VaroSerializeField(path = "contents")
+	private ArrayList<ItemStack> contents;
 
 	private VaroPlayer varoplayer;
 
@@ -39,8 +37,8 @@ public class InventoryBackup implements VaroSerializeable {
 	public InventoryBackup(VaroPlayer vp) {
 		this.varoplayer = vp;
 		this.date = new Date();
-		this.inventory = new VaroInventory(36);
-		this.armor = new ArrayList<>();
+		this.contents = new ArrayList<>();
+		this.clear(vp.getPlayer().getInventory().getContents().length == 36 ? 40 : vp.getPlayer().getInventory().getContents().length);
 
 		if (vp.isOnline())
 			addUpdate(vp.getPlayer());
@@ -49,23 +47,43 @@ public class InventoryBackup implements VaroSerializeable {
 	}
 
 	public void addUpdate(Player player) {
-		this.inventory.getInventory().setContents(player.getInventory().getContents());
-		this.armor = new ArrayList<>();
+		ItemStack[] contents = player.getInventory().getContents();
+		for (int i = 0; i < contents.length; i++)
+			this.contents.set(i, contents[i]);
 
-		for (ItemStack l : player.getInventory().getArmorContents())
-			armor.add(l);
+		if (player.getInventory().getContents().length == 36) {
+			ItemStack[] armor = player.getInventory().getArmorContents();
+			for(int i = 0; i < 4; i++)
+				this.contents.set(i + 36, armor[i]);
+		}
 	}
 
-	public ArrayList<ItemStack> getArmor() {
-		return armor;
+	public ItemStack[] getArmor() {
+		return new ItemStack[] {this.contents.get(36), this.contents.get(37), this.contents.get(38), this.contents.get(39)};
 	}
 
 	public Date getDate() {
 		return date;
 	}
 
-	public VaroInventory getInventory() {
-		return inventory;
+	public ItemStack[] getAllContents() {
+		return this.contents.toArray(new ItemStack[this.contents.size()]);
+	}
+
+	public void setItem(int index, ItemStack stack) {
+		this.contents.set(index, stack);
+	}
+
+	public void clear() {
+		this.clear(this.contents.size());
+	}
+	
+	public void clear(int size) {
+		for (int i = 0; i < size; i++)
+			if (i < this.contents.size())
+				this.contents.set(i, new ItemStack(Material.AIR));
+			else
+				this.contents.add(new ItemStack(Material.AIR));
 	}
 
 	public VaroPlayer getVaroPlayer() {
@@ -90,15 +108,11 @@ public class InventoryBackup implements VaroSerializeable {
 	public void restoreUpdate(Player player) {
 		player.getInventory().clear();
 
-		try {
-			for (int i = 0; i < inventory.getInventory().getContents().length; i++)
-				player.getInventory().setItem(i, inventory.getInventory().getContents()[i]);
-		} catch (ArrayIndexOutOfBoundsException e) {}
+		for (int i = 0; i < player.getInventory().getContents().length; i++)
+			player.getInventory().setItem(i, this.contents.get(i));
 
-		ItemStack[] armorc = new ItemStack[4];
-		for (int i = 0; i < armor.size(); i++)
-			armorc[i] = armor.get(i);
-		player.getInventory().setArmorContents(armorc);
+		if (player.getInventory().getContents().length == 36)
+			player.getInventory().setArmorContents(this.getArmor());
 
 		player.updateInventory();
 	}
