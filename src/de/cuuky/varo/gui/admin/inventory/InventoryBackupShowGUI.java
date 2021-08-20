@@ -47,7 +47,7 @@ public class InventoryBackupShowGUI extends VaroInventory {
     }
 
     private boolean isStuff() {
-        return super.getLastClickedSlot() <= 39 && super.getLastClickedSlot() >= 0;
+        return super.getLastClickedSlot() < this.backup.getAllContents().length && super.getLastClickedSlot() >= 0;
     }
 
     @Override
@@ -74,29 +74,20 @@ public class InventoryBackupShowGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        for (int i = 0; i < 36; i++) {
-            ItemStack st = backup.getInventory().getInventory().getContents()[i];
+    	ItemStack[] contents = this.backup.getAllContents();
+        for (int i = 0; i < 45; i++) {
+            ItemStack st = i < contents.length ? contents[i] : getFillerStack();
             addItem(i, st);
         }
 
-        for (int i = 0; i < backup.getArmor().size(); i++) {
-            ItemStack st = backup.getArmor().get(i);
-            addItem(36 + i, st);
-        }
-
         addItem(this.getSize() - 1, new ItemBuilder().itemstack(new ItemStack(Material.PAPER)).displayname("§aSave backup").build(), (event) -> {
-            backup.getInventory().getInventory().clear();
-            backup.getArmor().clear();
-
-            for (int i = 0; i < 36; i++) {
-                if (getInventory().getItem(i) == null)
-                    continue;
-
-                backup.getInventory().getInventory().setItem(i, getInventory().getItem(i));
+            this.backup.clear();
+            
+            for (int i = 0; i < contents.length; i++) {
+            	ItemStack item = getInventory().getItem(i);
+            	if (item != null)
+            		this.backup.setItem(i, item);
             }
-
-            for (int i = 0; i < 4; i++)
-                backup.getArmor().add(getInventory().getItem(36 + i) == null ? new ItemStack(Material.AIR) : getInventory().getItem(36 + i));
         });
     }
 }

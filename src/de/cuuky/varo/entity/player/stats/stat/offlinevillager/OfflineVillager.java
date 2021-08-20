@@ -87,11 +87,7 @@ public class OfflineVillager implements VaroSerializeable {
 
 		remove();
 
-		for (ItemStack it : backup.getInventory().getInventory().getContents())
-			if (it != null && it.getType() != Material.AIR)
-				location.getWorld().dropItemNaturally(location, it);
-
-		for (ItemStack it : backup.getArmor())
+		for (ItemStack it : backup.getAllContents())
 			if (it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
 
