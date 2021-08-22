@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
@@ -24,6 +25,14 @@ public class InventoryBackup implements VaroSerializeable {
 
 	@VaroSerializeField(path = "contents")
 	private ArrayList<ItemStack> contents;
+
+	@Deprecated
+	@VaroSerializeField(path = "inventory")
+	private VaroInventory inventory;
+
+	@Deprecated
+	@VaroSerializeField(path = "armor")
+	private ArrayList<ItemStack> armor;
 
 	private VaroPlayer varoplayer;
 
@@ -77,7 +86,7 @@ public class InventoryBackup implements VaroSerializeable {
 	public void clear() {
 		this.clear(this.contents.size());
 	}
-	
+
 	public void clear(int size) {
 		for (int i = 0; i < size; i++)
 			if (i < this.contents.size())
@@ -93,6 +102,20 @@ public class InventoryBackup implements VaroSerializeable {
 	@Override
 	public void onDeserializeEnd() {
 		this.varoplayer = VaroPlayer.getPlayer(vpId);
+
+		//legacy support
+		if (this.inventory != null) {
+			this.contents = new ArrayList<>();
+			
+			ItemStack[] contents = this.inventory.getInventory().getContents();
+			for(int i = 0; i < 36; i++)
+				this.contents.add(contents[i]);
+			this.inventory = null;
+			
+			for(int i = 0; i < 4; i++)
+				this.contents.add(this.armor.get(i));
+			this.armor = null;
+		}
 	}
 
 	@Override
