@@ -1,11 +1,11 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.VaroConfirmInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -36,7 +36,7 @@ public class ResetCommand extends VaroCommand {
 		}
 
 		if (sender instanceof Player)
-			new VaroConfirmInventory(Main.getCuukyFrameWork().getAdvancedInventoryManager(), vp.getPlayer(), "§4Reset server?", (result) -> {
+			new ConfirmInventory(Main.getCuukyFrameWork().getAdvancedInventoryManager(), vp.getPlayer(), "§4Reset server?", (result) -> {
 				if (!result) return;
 				this.resetServer(sender, args);
 			});
@@ -49,12 +49,12 @@ public class ResetCommand extends VaroCommand {
 			pl.kickPlayer("§cRESET");
 
 		Main.getDataManager().save();
-		List<Integer> success = new ArrayList<Integer>();
-		List<File> toDelete = new ArrayList<File>();
+		List<Integer> success = new ArrayList<>();
+		List<File> toDelete = new ArrayList<>();
 		for (String arg : args) {
 			int mod;
 			try {
-				mod = Integer.valueOf(arg);
+				mod = Integer.parseInt(arg);
 			} catch (NumberFormatException e) {
 				sender.sendMessage(Main.getPrefix() + arg + " ist keine Zahl!");
 				continue;

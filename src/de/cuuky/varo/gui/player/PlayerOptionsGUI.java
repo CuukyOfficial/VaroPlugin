@@ -3,11 +3,11 @@ package de.cuuky.varo.gui.player;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.inventory.ItemClick;
+import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
-import de.cuuky.varo.gui.VaroConfirmInventory;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -67,7 +67,7 @@ public class PlayerOptionsGUI extends VaroListInventory<StatType> {
                 }));
                 this.close();
             } else if (event.isRightClick())
-                this.openNext(new VaroConfirmInventory(this, "§cReset " + statType.name() + "?", (accept) -> {
+                this.openNext(new ConfirmInventory(this, "§cReset " + statType.name() + "?", (accept) -> {
                     if (accept) statType.remove(this.target);
                     this.open();
                 }));

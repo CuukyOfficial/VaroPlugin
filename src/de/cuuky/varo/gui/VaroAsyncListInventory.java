@@ -12,12 +12,10 @@ public abstract class VaroAsyncListInventory<T> extends AdvancedAsyncListInvento
 
     public VaroAsyncListInventory(AdvancedInventoryManager manager, Player player, List<T> list) {
         super(manager, player, list);
-        this.addProvider(new VaroInventoryConfigProvider(this));
     }
 
     public VaroAsyncListInventory(AdvancedInventoryManager manager, Player player) {
         super(manager, player);
-        this.addProvider(new VaroInventoryConfigProvider(this));
     }
 
     @Override

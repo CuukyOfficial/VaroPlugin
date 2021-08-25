@@ -3,11 +3,11 @@ package de.cuuky.varo.gui.admin.customcommands;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.inventory.ItemClick;
+import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
 import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
-import de.cuuky.varo.gui.VaroConfirmInventory;
 import de.cuuky.varo.gui.VaroInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -127,7 +127,7 @@ public class CreateCustomCommandGUI extends VaroInventory {
                 return;
             }
 
-            this.openNext(new VaroConfirmInventory(this, "§7Save?", (accept) -> {
+            this.openNext(new ConfirmInventory(this, "§7Save?", (accept) -> {
                 if (accept) {
                     if (this.command == null) {
                         CustomCommand command = new CustomCommand(this.name, this.output, this.description, this.permission, this.unused);
@@ -154,7 +154,7 @@ public class CreateCustomCommandGUI extends VaroInventory {
         addItem(3 * 9, new ItemBuilder().displayname((this.command != null) ? ChatColor.RED + "Delete" : "")
                 .itemstack((this.command != null) ? Materials.BUCKET.parseItem() : Materials.GRAY_STAINED_GLASS_PANE.parseItem()).build(), (event) -> {
             if (this.command != null) {
-                this.openNext(new VaroConfirmInventory(this, "§7Delete?", (accept) -> {
+                this.openNext(new ConfirmInventory(this, "§7Delete?", (accept) -> {
                     if (accept) {
                         this.command.removeCommand();
                         this.back();

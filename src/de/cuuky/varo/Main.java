@@ -1,11 +1,5 @@
 package de.cuuky.varo;
 
-import java.io.File;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.cuuky.cfw.AdapterCuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
@@ -20,9 +14,15 @@ import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
+import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -106,7 +106,7 @@ public class Main extends JavaPlugin {
 
 			long dataStamp = System.currentTimeMillis();
 			cuukyFrameWork = new AdapterCuukyFrameWork<>(instance,
-					languageManager = new VaroLanguageManager(Main.this));
+					languageManager = new VaroLanguageManager(Main.this), new VaroInventoryManager(this));
 			dataManager.load();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
@@ -155,7 +155,7 @@ public class Main extends JavaPlugin {
 		}
 
 		if (!this.failed)
-			VersionUtils.getOnlinePlayer()
+			VersionUtils.getVersionAdapter().getOnlinePlayers()
 					.forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
 		else {
 			VaroBugreport report = new VaroBugreport();

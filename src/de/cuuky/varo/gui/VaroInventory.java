@@ -11,7 +11,6 @@ public abstract class VaroInventory extends AdvancedInventory {
 
     public VaroInventory(AdvancedInventoryManager manager, Player player) {
         super(manager, player);
-        this.addProvider(new VaroInventoryConfigProvider(this));
     }
 
     protected void sendInfo() {
