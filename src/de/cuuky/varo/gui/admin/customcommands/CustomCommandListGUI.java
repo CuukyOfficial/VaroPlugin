@@ -2,11 +2,11 @@ package de.cuuky.varo.gui.admin.customcommands;
 
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,7 +24,7 @@ public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
                 ChatColor.GRAY + "Permission: " + Main.getColorCode() + customCommand.getPermission(), ChatColor.GRAY + "Unused: " + Main.getColorCode() + customCommand.isUnused()};
 
         return new ItemBuilder().displayname(Main.getColorCode() + customCommand.getName())
-                .playername(customCommand.getName()).itemstack(new ItemStack(Material.SIGN))
+                .playername(customCommand.getName()).itemstack(Materials.SIGN.parseItem())
                 .lore(lore).build();
     }
 

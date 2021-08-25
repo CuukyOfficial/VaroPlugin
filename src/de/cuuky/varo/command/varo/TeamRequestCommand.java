@@ -1,16 +1,16 @@
 package de.cuuky.varo.command.varo;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
+import de.cuuky.varo.gui.settings.VaroColorMenu;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class TeamRequestCommand extends VaroCommand {
 
@@ -25,6 +25,36 @@ public class TeamRequestCommand extends VaroCommand {
 			return;
 		}
 
+		if (args.length == 0) {
+			sendInfo((Player) sender);
+			return;
+		} else if (args[0].equals("help")) {
+			sendInfo((Player) sender);
+			return;
+		} else if (args[0].equals("color")) {
+			if (player.getTeam() == null) {
+				player.sendMessage(Main.getPrefix() + "Du bist in keinem Team!");
+				return;
+			}
+
+			if (!player.getPlayer().hasPermission("varo.changeTeamColor")) {
+				player.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(player));
+				return;
+			}
+
+			if (args.length >= 2 && args[1].equalsIgnoreCase("remove")) {
+				player.getTeam().setColorCode(null);
+				player.sendMessage(Main.getPrefix() + "Farbe erfolgreich entfernt!");
+				return;
+			}
+
+			new VaroColorMenu(Main.getCuukyFrameWork().getAdvancedInventoryManager(), (Player) sender, varoMenuColor -> {
+				player.getTeam().setColorCode(varoMenuColor.getColorCode());
+				sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + player.getTeam().getDisplay() + " §7erfolgreich geaendert!");
+			}, true);
+			return;
+		}
+
 		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean()) {
 			sender.sendMessage(Main.getPrefix() + "§7Das " + Main.getColorCode() + "Teamanfragen-System §7wurde in der Config deaktiviert!");
 			return;
@@ -32,14 +62,6 @@ public class TeamRequestCommand extends VaroCommand {
 
 		if (Main.getVaroGame().hasStarted()) {
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst dein Team nicht wechseln, da " + Main.getProjectName() + " schon gestartet ist!");
-			return;
-		}
-
-		if (args.length == 0) {
-			sendInfo((Player) sender);
-			return;
-		} else if (args[0].equals("help")) {
-			sendInfo((Player) sender);
 			return;
 		}
 
@@ -118,7 +140,6 @@ public class TeamRequestCommand extends VaroCommand {
 				return;
 			}
 
-			VaroTeamRequest.getByAll(player, VaroPlayer.getPlayer(args[1]));
 			VaroTeamRequest tr = VaroTeamRequest.getByInvitor(VaroPlayer.getPlayer(args[1]));
 
 			if (tr == null) {
@@ -150,6 +171,7 @@ public class TeamRequestCommand extends VaroCommand {
 
 	public void sendInfo(Player sender) {
 		sender.sendMessage(Main.getPrefix() + "§7--- " + Main.getColorCode() + "TeamRequestor-System §7---");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr color §7[remove]");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr invite §7<Player 1, Player 2, ...>");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr revoke §7<Player>");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr decline §7<Player>");

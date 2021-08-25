@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
 
@@ -20,6 +21,13 @@ public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
         this.chosenConsumer = chosenConsumer;
     }
 
+    public VaroColorMenu(AdvancedInventoryManager manager, Player player, Consumer<VaroMenuColor> chosenConsumer, boolean onlyColorCodes) {
+        super(manager, player, !onlyColorCodes ? Arrays.asList(VaroMenuColor.values()) :
+                Arrays.stream(VaroMenuColor.values()).filter(varoMenuColor -> varoMenuColor.getColorCode() != null).collect(Collectors.toList()));
+
+        this.chosenConsumer = chosenConsumer;
+    }
+
     @Override
     public String getTitle() {
         return "§2Choose color";
@@ -27,7 +35,9 @@ public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
 
     @Override
     protected ItemStack getItemStack(VaroMenuColor varoMenuColor) {
-        return new ItemBuilder().itemstack(varoMenuColor.getColorPane()).displayname("§f" + varoMenuColor.name()).build();
+        return new ItemBuilder().itemstack(varoMenuColor.getColorPane())
+                .displayname((varoMenuColor.getColorCode() != null ? varoMenuColor.getColorCode() : "§f")
+                        + varoMenuColor.name()).build();
     }
 
     @Override

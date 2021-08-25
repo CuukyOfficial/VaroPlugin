@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class VaroSettingsMenu extends VaroInventory {
 
-    private VaroPlayer player;
+    private final VaroPlayer player;
 
     public VaroSettingsMenu(Player player) {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);

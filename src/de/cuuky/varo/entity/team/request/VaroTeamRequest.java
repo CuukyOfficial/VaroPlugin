@@ -1,11 +1,5 @@
 package de.cuuky.varo.entity.team.request;
 
-import java.util.ArrayList;
-
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.varo.Main;
@@ -13,6 +7,11 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
 
 public class VaroTeamRequest {
 
@@ -129,10 +128,6 @@ public class VaroTeamRequest {
 
 	public VaroPlayer getInvitor() {
 		return invitor;
-	}
-
-	public static ArrayList<VaroTeamRequest> getAllRequests() {
-		return requests;
 	}
 
 	public static VaroTeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {
