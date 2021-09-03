@@ -274,9 +274,9 @@ public enum ConfigSetting implements SectionEntry {
 
 	// TABLIST
 	TABLIST(ConfigSettingSection.TABLIST, "tablist", true, "Ob das Plugin die Tablist modfizieren soll\nMuss aktiviert sein, um folgende Einstellungen\nvorzunehmen.", true),
-	TABLIST_USE_HEADER(ConfigSettingSection.TABLIST, "useHeader", true, "Ob die Tablist einen Header haben soll.\nErfordert reload/restart und ggf. rejoin."),
-	TABLIST_USE_FOOTER(ConfigSettingSection.TABLIST, "useFooter", true, "Ob die Tablist einen Footer haben soll.\nErfordert reload/restart und ggf. rejoin."),
-	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen.\nErfordert reload/restart und ggf. rejoin.");
+	TABLIST_USE_HEADER(ConfigSettingSection.TABLIST, "useHeader", true, "Ob die Tablist einen Header haben soll.\nErfordert config reload und ggf. rejoin."),
+	TABLIST_USE_FOOTER(ConfigSettingSection.TABLIST, "useFooter", true, "Ob die Tablist einen Footer haben soll.\nErfordert reload reload und ggf. rejoin."), // enable: config reload
+	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen.");
 
 	private Object defaultValue, value;
 	private String path, description, oldPaths[];
