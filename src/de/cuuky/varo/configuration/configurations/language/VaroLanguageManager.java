@@ -121,7 +121,7 @@ public class VaroLanguageManager extends LanguageManager {
             replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
         }
 
-        replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, null, MessagePlaceholderType.GENERAL);
+        replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, MessagePlaceholderType.GENERAL);
         if (replaceEval) {
             replaced = replaceEvals(replaced);
             if (this.placeholderAPIAdapter != null)
@@ -136,7 +136,7 @@ public class VaroLanguageManager extends LanguageManager {
     }
 
     public String replaceMessage(String message, CustomPlayer player) {
-        message = replaceEvals(Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), player, MessagePlaceholderType.PLAYER));
+        message = replaceEvals(Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), MessagePlaceholderType.OBJECT, player));
         if (this.placeholderAPIAdapter != null && player instanceof VaroPlayer)
             return this.placeholderAPIAdapter.setPlayerPlaceholders(message, (VaroPlayer) player);
         return message;

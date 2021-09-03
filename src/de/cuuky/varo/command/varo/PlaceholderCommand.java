@@ -1,100 +1,93 @@
 package de.cuuky.varo.command.varo;
 
-import java.util.ArrayList;
-
+import de.cuuky.cfw.configuration.placeholder.MessagePlaceholder;
+import de.cuuky.cfw.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
+import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
+import de.cuuky.cfw.configuration.placeholder.placeholder.type.PlaceholderType;
+import de.cuuky.cfw.utils.chat.PageableChat;
+import de.cuuky.cfw.utils.chat.PageableChatBuilder;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroChatListMessages;
+import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.cfw.configuration.placeholder.MessagePlaceholder;
-import de.cuuky.cfw.configuration.placeholder.placeholder.GeneralMessagePlaceholder;
-import de.cuuky.cfw.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.util.Locale;
 
 public class PlaceholderCommand extends VaroCommand {
 
-	public PlaceholderCommand() {
-		super("placeholder", "Zeigt alle Platzhalter fuer messages, scoreboard etc.", "varo.placeholder", "ph");
-	}
+    private final PageableChatBuilder<MessagePlaceholder> listBuilder;
 
-	@Override
-	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Placeholder Befehle:");
-			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7info <name> §8- §7Zeigt Wert und Info vom gegebenen Placeholder");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7general §8- §7Zeigt alle ueberall anwendbaren Placeholder");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7player §8- §7Zeigt alle im Spielerkontext anwendbaren Placeholder");
-			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "Player-Beispiele: Killmessage, Scoreboard, Kickmessage, Tab");
-			return;
-		}
+    public PlaceholderCommand() {
+        super("placeholder", "Zeigt alle Platzhalter fuer messages, scoreboard etc.", "varo.placeholder", "ph");
 
-		if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("get")) {
-			if (args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7get <name> §8- §7Zeigt Wert vom gegebenen Placeholder");
-				return;
-			}
+        this.listBuilder = new PageableChatBuilder<MessagePlaceholder>()
+                .messages(new VaroChatListMessages<>(mp ->
+                        Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §8- §7" + mp.getDescription(),
+                        "/varo placeholder <general/player>", "List der Placeholder"));
+    }
 
-			MessagePlaceholder mp = null;
-			for (MessagePlaceholder mp1 : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders()) {
-				if (mp1.getIdentifier().replace("%", "").equalsIgnoreCase(args[1].replace("%", ""))) {
-					mp = mp1;
-				}
-			}
+    @Override
+    public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
+        if (args.length == 0) {
+            sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Placeholder Befehle:");
+            sender.sendMessage(Main.getPrefix());
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7info <name> §8- §7Zeigt Wert und Info vom gegebenen Placeholder");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7general §8- §7Zeigt alle ueberall anwendbaren Placeholder");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7player §8- §7Zeigt alle im Spielerkontext anwendbaren Placeholder");
+            sender.sendMessage(Main.getPrefix());
+            sender.sendMessage(Main.getPrefix() + "Player-Beispiele: Killmessage, Scoreboard, Kickmessage, Tab");
+            return;
+        }
 
-			if (mp == null) {
-				sender.sendMessage(Main.getPrefix() + "Placeholder nicht gefunden!");
-				return;
-			}
+        if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("get")) {
+            if (args.length != 2) {
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7get <name> §8- §7Zeigt Wert vom gegebenen Placeholder");
+                return;
+            }
 
-			String value = "/";
-			if (mp instanceof PlayerMessagePlaceholder) {
-				if (vp != null)
-					value = "(" + vp.getName() + ") " + ((PlayerMessagePlaceholder) mp).replacePlaceholder(mp.getIdentifier(), vp);
-			} else if (mp instanceof GeneralMessagePlaceholder)
-				value = ((GeneralMessagePlaceholder) mp).replacePlaceholder(mp.getIdentifier());
-			else {
-				sender.sendMessage(Main.getPrefix() + "Undefinierter Placeholder gefunden!?");
-				return;
-			}
+            MessagePlaceholder mp = null;
+            for (MessagePlaceholder mp1 : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders())
+                if (mp1.getIdentifier().replace("%", "").equalsIgnoreCase(args[1].replace("%", "")))
+                    mp = mp1;
 
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §7Info§8:");
-			sender.sendMessage(Main.getPrefix() + "§7Wert§8: " + Main.getColorCode() + value);
-			sender.sendMessage(Main.getPrefix() + "§7Refresh-Delay§8: " + Main.getColorCode() + mp.getDefaultRefresh() + "s");
-			return;
-		}
+            if (mp == null) {
+                sender.sendMessage(Main.getPrefix() + "Placeholder nicht gefunden!");
+                return;
+            }
 
-		ArrayList<MessagePlaceholder> placeholders = new ArrayList<>();
-		if (args[0].equalsIgnoreCase("general")) {
-			for (MessagePlaceholder mp : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders())
-				if (mp instanceof GeneralMessagePlaceholder && ConfigSetting.getEntryByPath(mp.getIdentifier().replace("%", "")) == null)
-					placeholders.add(mp);
-		} else if (args[0].equalsIgnoreCase("player")) {
-			for (MessagePlaceholder mp : Main.getCuukyFrameWork().getPlaceholderManager().getAllPlaceholders())
-				if (mp instanceof PlayerMessagePlaceholder)
-					placeholders.add(mp);
-		}
+            String value = "/";
+            if (!(mp instanceof PlayerMessagePlaceholder) || vp == null)
+                value = "(" + vp.getName() + ") " + mp.replacePlaceholder(mp.getIdentifier(), vp);
 
-		if (placeholders.isEmpty()) {
-			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! §c/varo ph");
-			return;
-		}
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §7Info§8:");
+            sender.sendMessage(Main.getPrefix() + "§7Wert§8: " + Main.getColorCode() + value);
+            sender.sendMessage(Main.getPrefix() + "§7Refresh-Delay§8: " + Main.getColorCode() + mp.getDefaultRefresh() + "s");
+            return;
+        }
 
-		sender.sendMessage(Main.getPrefix() + "- Placeholder -");
-		for (MessagePlaceholder mp : placeholders)
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §8- §7" + mp.getDescription());
+        PlaceholderType type;
+        if (args[0].equalsIgnoreCase("player"))
+            type = MessagePlaceholderType.OBJECT;
+        else
+            try {
+                type = MessagePlaceholderType.valueOf(args[0].toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                sender.sendMessage(Main.getPrefix() + "Falsche Argumente! §c/varo ph");
+                return;
+            }
 
-		if (args[0].equalsIgnoreCase("general")) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayer-<RANK>% §8- §7Ersetzt durch den Spieler, der an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% §8- §7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% §8- §7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% §8- §7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
-			sender.sendMessage(Main.getPrefix() + "Zusätzlich werden alle Einstellungen mit %<ConfigEintrag>% ersetzt");
-		}
+        PageableChat<?> chat = this.listBuilder.list(() -> Main.getCuukyFrameWork().getPlaceholderManager().getPlaceholders(type))
+                .page(args.length >= 2 ? args[1] : "1").build();
+        chat.send(sender);
 
-		sender.sendMessage(Main.getPrefix() + "----------------");
-	}
+        if (type == MessagePlaceholderType.GENERAL && chat.getPage() == 1) {
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayer-<RANK>% §8- §7Ersetzt durch den Spieler, der an RANK auf dem Leaderboard ist");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topplayerkills-<RANK>% §8- §7Ersetzt durch die Kills des Spielers, der an RANK auf dem Leaderboard ist");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteam-<RANK>% §8- §7Ersetzt durch das Team, das an RANK auf dem Leaderboard ist");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% §8- §7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
+            sender.sendMessage(Main.getPrefix() + "Zusätzlich werden alle Einstellungen mit %<ConfigEintrag>% ersetzt");
+        }
+    }
 }
