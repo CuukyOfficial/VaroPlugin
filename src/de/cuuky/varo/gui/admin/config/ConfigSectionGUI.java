@@ -20,7 +20,7 @@ public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
     @Override
     protected ItemStack getItemStack(ConfigSettingSection section) {
         return new BuildItem().displayName("§7" + section.getName())
-                .material(section.getMaterial())
+                .material(section.getMaterial()).deleteDamageAnnotation()
                 .lore((JavaUtils.getArgsToString(JavaUtils.addIntoEvery(section.getDescription().split("\n"), Main.getColorCode(), true),
                         "\n")).split("\n")).build();
     }

@@ -43,7 +43,7 @@ public class PlayerOptionsGUI extends VaroListInventory<StatType> {
     protected ItemStack getItemStack(StatType statType) {
         return new BuildItem().itemstack(statType.getIcon()).displayName(statType.getDisplayName())
                 .lore("§7Current: " + Main.getColorCode() + statType.get(this.target),
-                        "", "Left-Click to set value", "Right-Click to reset").build();
+                        "", "Left-Click to set value", "Right-Click to reset").deleteDamageAnnotation().build();
     }
 
     @Override
