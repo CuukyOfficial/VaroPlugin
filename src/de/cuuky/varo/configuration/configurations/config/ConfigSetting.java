@@ -244,8 +244,6 @@ public enum ConfigSetting implements SectionEntry {
 	
 	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut, was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 	
-	TABLIST(ConfigSettingSection.MAIN, "tablist", true, "Ob das Plugin die Tablist modfizieren soll", true),
-	
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
 	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1, "Wie viele Leben ein Team hat", "teamLifes"),
 	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5, "Wie viele Leben ein maximal haben kann"),
@@ -272,7 +270,13 @@ public enum ConfigSetting implements SectionEntry {
 	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmuessen, um als Varovideo zu gelten."),
 
 	// CUSTOM COMMAND
-	CUSTOMCOMMAND_USEPREFIX(ConfigSettingSection.OTHER, "customCommandUsePrefix", true, "Ob bei allen Custom Commands automatisch\nder Prefix genutzt werden soll."),;
+	CUSTOMCOMMAND_USEPREFIX(ConfigSettingSection.OTHER, "customCommandUsePrefix", true, "Ob bei allen Custom Commands automatisch\nder Prefix genutzt werden soll."),
+
+	// TABLIST
+	TABLIST(ConfigSettingSection.TABLIST, "tablist", true, "Ob das Plugin die Tablist modfizieren soll\nMuss aktiviert sein, um folgende Einstellungen\nvorzunehmen.", true),
+	TABLIST_USE_HEADER(ConfigSettingSection.TABLIST, "useHeader", true, "Ob die Tablist einen Header haben soll.\nErfordert reload/restart und ggf. rejoin."),
+	TABLIST_USE_FOOTER(ConfigSettingSection.TABLIST, "useFooter", true, "Ob die Tablist einen Footer haben soll.\nErfordert reload/restart und ggf. rejoin."),
+	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen.\nErfordert reload/restart und ggf. rejoin.");
 
 	private Object defaultValue, value;
 	private String path, description, oldPaths[];

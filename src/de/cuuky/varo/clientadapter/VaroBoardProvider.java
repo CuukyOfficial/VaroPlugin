@@ -13,6 +13,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
+import org.bukkit.ChatColor;
 
 public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
 
@@ -52,24 +53,28 @@ public class VaroBoardProvider extends BoardUpdateHandler<VaroPlayer> {
     @Override
     public String getTablistName() {
         String listname = "";
-        if (player.getTeam() != null) {
-            if (player.getRank() == null) {
-                listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, player);
+        if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean()) {
+            if (player.getTeam() != null) {
+                if (player.getRank() == null) {
+                    listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, player);
+                } else {
+                    listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, player);
+                }
             } else {
-                listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, player);
+                if (player.getRank() == null) {
+                    listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, player);
+                } else {
+                    listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
+                }
             }
-        } else {
-            if (player.getRank() == null) {
-                listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, player);
-            } else {
-                listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
-            }
-        }
 
-        int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
-        if (maxlength > 0)
-            if (listname.length() > maxlength)
-                listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
+            int maxlength = BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) ? 16 : -1;
+            if (maxlength > 0)
+                if (listname.length() > maxlength)
+                    listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, player);
+        } else {
+            listname = player.getName() + ChatColor.RESET;
+        }
 
         return listname;
     }
