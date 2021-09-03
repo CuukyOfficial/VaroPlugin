@@ -1,8 +1,8 @@
 package de.cuuky.varo.gui.admin.varoevents;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.state.GameState;
@@ -28,7 +28,7 @@ public class VaroEventGUI extends VaroListInventory<VaroEvent> {
 
     @Override
     protected ItemStack getItemStack(VaroEvent event) {
-        return new ItemBuilder().displayname(event.getEventType().getName())
+        return new BuildItem().displayName(event.getEventType().getName())
                 .itemstack(new ItemStack(event.getIcon()))
                 .lore(JavaUtils.combineArrays(new String[]{"§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), ""},
                         JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build();

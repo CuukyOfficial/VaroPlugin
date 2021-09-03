@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.team;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.team.TeamListGUI.TeamGUIType;
@@ -27,7 +27,7 @@ public class TeamChooseGUI extends VaroInventory {
     public void refreshContent() {
         int i = 10;
         for (TeamGUIType type : TeamGUIType.values()) {
-            addItem(i, new ItemBuilder().displayname(type.getTypeName())
+            addItem(i, new BuildItem().displayName(type.getTypeName())
                     .itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), (event) ->
                     this.openNext(new TeamListGUI(getPlayer(), type))
             );

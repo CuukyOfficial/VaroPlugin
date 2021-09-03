@@ -1,8 +1,8 @@
 package de.cuuky.varo.gui.savable;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.LocationFormat;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
@@ -30,7 +30,7 @@ public class PlayerSavableChooseGUI extends VaroListInventory<VaroSaveable> {
 
     @Override
     protected ItemStack getItemStack(VaroSaveable savable) {
-        return new ItemBuilder().displayname(Main.getColorCode() + savable.getId())
+        return new BuildItem().displayName(Main.getColorCode() + savable.getId())
                 .itemstack(new ItemStack(savable.getType() == SaveableType.CHEST ? Material.CHEST : Material.FURNACE))
                 .lore("§7Location§8: " + new LocationFormat(savable.getBlock().getLocation())
                         .format(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world"))

@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.discordbot.botregister;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.gui.VaroInventory;
@@ -30,15 +30,15 @@ public class BotRegisterGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
+        addItem(1, new BuildItem().displayName("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
             register.delete();
             this.back();
         });
 
-        addItem(4, new ItemBuilder().displayname("§cUnregister").itemstack(new ItemStack(Material.COAL)).build(),
+        addItem(4, new BuildItem().displayName("§cUnregister").itemstack(new ItemStack(Material.COAL)).build(),
                 (event) -> register.setUserId(-1));
 
-        addItem(7, new ItemBuilder().displayname((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass")
+        addItem(7, new BuildItem().displayName((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass")
                         .itemstack(new ItemStack(register.isBypass() ? Material.ANVIL : Material.EMERALD)).build(),
                 (event) -> register.setBypass(!register.isBypass()));
     }

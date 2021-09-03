@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.customcommands;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
@@ -23,8 +23,8 @@ public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
         String[] lore = new String[]{ChatColor.GRAY + "Output: " + Main.getColorCode() + customCommand.getOutput(), ChatColor.GRAY + "Beschreibung: " + Main.getColorCode() + customCommand.getDescription(),
                 ChatColor.GRAY + "Permission: " + Main.getColorCode() + customCommand.getPermission(), ChatColor.GRAY + "Unused: " + Main.getColorCode() + customCommand.isUnused()};
 
-        return new ItemBuilder().displayname(Main.getColorCode() + customCommand.getName())
-                .playername(customCommand.getName()).itemstack(Materials.SIGN.parseItem())
+        return new BuildSkull().player(customCommand.getName())
+                .displayName(Main.getColorCode() + customCommand.getName()).itemstack(Materials.SIGN.parseItem())
                 .lore(lore).build();
     }
 

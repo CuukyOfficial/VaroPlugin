@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.settings;
 
 import de.cuuky.cfw.inventory.AdvancedInventoryManager;
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,8 +35,8 @@ public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
 
     @Override
     protected ItemStack getItemStack(VaroMenuColor varoMenuColor) {
-        return new ItemBuilder().itemstack(varoMenuColor.getColorPane())
-                .displayname((varoMenuColor.getColorCode() != null ? varoMenuColor.getColorCode() : "§f")
+        return new BuildItem().itemstack(varoMenuColor.getColorPane())
+                .displayName((varoMenuColor.getColorCode() != null ? varoMenuColor.getColorCode() : "§f")
                         + varoMenuColor.name()).build();
     }
 

@@ -1,8 +1,8 @@
 package de.cuuky.varo.gui.admin.orelogger;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.BukkitUtils;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.logger.logger.LoggedBlock;
@@ -50,7 +50,7 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
         lore.add("Mined by: " + Main.getColorCode() + block.getName());
         lore.add(" ");
         lore.add("§cClick to teleport!");
-        return new ItemBuilder().displayname(block.getName()).itemstack(new ItemStack(Material.matchMaterial(block.getMaterial()))).lore(lore).build();
+        return new BuildItem().displayName(block.getName()).itemstack(new ItemStack(Material.matchMaterial(block.getMaterial()))).lore(lore).build();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.team;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -54,7 +54,7 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
 
     @Override
     protected ItemStack getItemStack(VaroTeam team) {
-        return new ItemBuilder().displayname(team.getDisplay()).material(Material.DIAMOND_HELMET).build();
+        return new BuildItem().displayName(team.getDisplay()).material(Material.DIAMOND_HELMET).build();
     }
 
     @Override

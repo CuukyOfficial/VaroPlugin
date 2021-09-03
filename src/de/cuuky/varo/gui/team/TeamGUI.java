@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.team;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.VaroInventory;
@@ -33,7 +33,7 @@ public class TeamGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§cSet teamlives").lore("§7Current§8: §4" + team.getLifes()).itemstack(new ItemStack(Material.DIAMOND)).build(), (event) -> {
+        addItem(1, new BuildItem().displayName("§cSet teamlives").lore("§7Current§8: §4" + team.getLifes()).itemstack(new ItemStack(Material.DIAMOND)).build(), (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team colorcode:", new ChatHookHandler() {
 
                 @Override
@@ -55,7 +55,7 @@ public class TeamGUI extends VaroInventory {
             this.close();
         });
 
-        addItem(3, new ItemBuilder().displayname("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplay())
+        addItem(3, new BuildItem().displayName("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplay())
                 .itemstack(new ItemStack(Material.DIAMOND_HELMET)).build(), (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team name:", new ChatHookHandler() {
 
@@ -81,7 +81,7 @@ public class TeamGUI extends VaroInventory {
             this.close();
         });
 
-        addItem(5, new ItemBuilder().displayname("§7Set §acolorcode").lore("§7Current§8: §5" + (team.getColorCode() != null ? team.getColorCode() + "Like this!" : "-"))
+        addItem(5, new BuildItem().displayName("§7Set §acolorcode").lore("§7Current§8: §5" + (team.getColorCode() != null ? team.getColorCode() + "Like this!" : "-"))
                 .itemstack(new ItemStack(Material.BOOK)).build(), (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team colorcode:", new ChatHookHandler() {
 
@@ -96,7 +96,7 @@ public class TeamGUI extends VaroInventory {
             this.close();
         });
 
-        addItem(7, new ItemBuilder().displayname("§4Remove").itemstack(new ItemStack(Material.BUCKET)).build(), (event) -> {
+        addItem(7, new BuildItem().displayName("§4Remove").itemstack(new ItemStack(Material.BUCKET)).build(), (event) -> {
             team.delete();
             back();
         });

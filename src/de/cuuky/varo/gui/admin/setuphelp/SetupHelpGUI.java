@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.setuphelp;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroListInventory;
@@ -73,7 +73,7 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
 
     @Override
     protected ItemStack getItemStack(SetupCheckList check) {
-        return new ItemBuilder().displayname(Main.getColorCode() + check.getName())
+        return new BuildItem().displayName(Main.getColorCode() + check.getName())
                 .itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon()))
                 .lore(check.getDescription()).build();
     }

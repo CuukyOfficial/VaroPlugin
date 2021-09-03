@@ -3,8 +3,8 @@ package de.cuuky.varo.gui.admin.config;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
@@ -73,8 +73,8 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
 
         lore.add(" ");
         lore.add("Value: " + setting.getValue());
-        return new ItemBuilder().displayname("§7" + setting.getPath())
-                .itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build();
+        return new BuildItem().displayName("§7" + setting.getPath())
+                .material(Materials.SIGN).lore(lore).build();
     }
 
     @Override

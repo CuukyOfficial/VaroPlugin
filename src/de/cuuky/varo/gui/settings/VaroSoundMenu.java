@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.settings;
 
 import de.cuuky.cfw.inventory.AdvancedInventoryManager;
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.Sound;
@@ -29,7 +29,7 @@ public class VaroSoundMenu extends VaroListInventory<Sound> {
 
     @Override
     protected ItemStack getItemStack(Sound sound) {
-        return new ItemBuilder().itemstack(Materials.NOTE_BLOCK.parseItem()).displayname("§f" + sound.name()).build();
+        return new BuildItem().material(Materials.NOTE_BLOCK).displayName("§f" + sound.name()).build();
     }
 
     @Override

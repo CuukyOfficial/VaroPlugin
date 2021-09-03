@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.events;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroListInventory;
@@ -28,8 +28,8 @@ public class EventListGUI extends VaroListInventory<String> {
     protected ItemStack getItemStack(String string) {
         String[] line = string.split("] ");
         String lore = "§c" + line[0].replace("[", "");
-        return new ItemBuilder().displayname("§7" + line[1])
-                .itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(lore).build();
+        return new BuildItem().displayName("§7" + line[1])
+                .material(Materials.SIGN).lore(lore).build();
     }
 
     @Override

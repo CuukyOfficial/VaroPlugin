@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.customcommands;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroInventory;
@@ -20,13 +20,13 @@ public class CustomCommandMenuGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(11, new ItemBuilder().displayname(ChatColor.DARK_PURPLE + "Custom Commands")
-                .itemstack(Materials.BOOK.parseItem()).build(), (event) ->
+        addItem(11, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Custom Commands")
+                .material(Materials.BOOK).build(), (event) ->
                 this.openNext(new CustomCommandListGUI(getPlayer()))
         );
 
-        addItem(15, new ItemBuilder().displayname(ChatColor.GREEN + "Create Command")
-                .itemstack(Materials.EMERALD.parseItem()).build(), (event) ->
+        addItem(15, new BuildItem().displayName(ChatColor.GREEN + "Create Command")
+                .material(Materials.EMERALD).build(), (event) ->
                 this.openNext(new CreateCustomCommandGUI(getPlayer()))
         );
     }

@@ -2,8 +2,8 @@ package de.cuuky.varo.gui.admin.debug;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.LocationFormat;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -32,7 +32,7 @@ public class DebugGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(10, new ItemBuilder().displayname("§cTrigger Event").itemstack(new ItemStack(Materials.SIGN.parseMaterial())).lore(new String[]{"§7Fuehrt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen"}).build(), (event) -> {
+        addItem(10, new BuildItem().displayName("§cTrigger Event").material(Materials.SIGN).lore("§7Fuehrt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen").build(), (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter Event Message:", new ChatHookHandler() {
 
                 @Override
@@ -46,12 +46,12 @@ public class DebugGUI extends VaroInventory {
             this.close();
         });
 
-        addItem(13, new ItemBuilder().displayname("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore(new String[]{"§7Fuehrt die Dinge aus, die sonst immer", "§7Nachts ausgefuehrt werden, wie Sessionreset"}).build(), (event) -> {
+        addItem(13, new BuildItem().displayName("§cDo daily timer").itemstack(new ItemStack(Material.DAYLIGHT_DETECTOR)).lore("§7Fuehrt die Dinge aus, die sonst immer", "§7Nachts ausgefuehrt werden, wie Sessionreset").build(), (event) -> {
             Main.getDataManager().getDailyTimer().doDailyChecks();
             getPlayer().sendMessage(Main.getPrefix() + "§aErfolgreich!");
         });
 
-        addItem(16, new ItemBuilder().displayname("§cTrigger Coordpost").itemstack(new ItemStack(Material.ANVIL)).amount(1).build(), (event) -> {
+        addItem(16, new BuildItem().displayName("§cTrigger Coordpost").itemstack(new ItemStack(Material.ANVIL)).amount(1).build(), (event) -> {
             StringBuilder post = new StringBuilder();
             for (VaroPlayer vp : VaroPlayer.getAlivePlayer())
                 post.append((post.length() == 0) ? "Liste der Koordinaten aller Spieler:\n\n" : "\n").append(vp.getName()).append(vp.getTeam() != null ? " (#" + vp.getTeam().getName() + ")" : "").append(": ").append(vp.getStats().getLastLocation() != null ? new LocationFormat(vp.getStats().getLastLocation()).format("X:x Y:y Z:z in world") : "/");

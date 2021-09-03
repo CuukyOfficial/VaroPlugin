@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.backup;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
@@ -35,8 +35,8 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
         String[] split1 = backup.getZipFile().getName().split("_");
         lore.add("Year: " + split1[0].split("-")[0] + ", Month: " + split1[0].split("-")[1] + ", Day: " + split1[0].split("-")[2]);
         lore.add("Hour: " + split1[1].split("-")[0] + ", Minute: " + split1[1].split("-")[1] + ", Second: " + split1[1].split("-")[2].replace(".zip", ""));
-        return new ItemBuilder()
-                .displayname("§7" + backup.getZipFile().getName().replace(".zip", ""))
+        return new BuildItem()
+                .displayName("§7" + backup.getZipFile().getName().replace(".zip", ""))
                 .itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build();
     }
 
@@ -48,7 +48,7 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
     @Override
     public void refreshContent() {
         super.refreshContent();
-        addItem(this.getSize() - 1, new ItemBuilder().displayname("§aCreate Backup")
+        addItem(this.getSize() - 1, new BuildItem().displayName("§aCreate Backup")
                 .itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
             if (VaroBackup.getBackup(getCurrentDate()) != null) {
                 getPlayer().sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
