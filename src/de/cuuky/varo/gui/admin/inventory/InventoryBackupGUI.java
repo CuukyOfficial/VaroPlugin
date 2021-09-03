@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.inventory;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
@@ -31,10 +31,10 @@ public class InventoryBackupGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§aShow").itemstack(new ItemStack(Material.CHEST)).build(),
+        addItem(1, new BuildItem().displayName("§aShow").itemstack(new ItemStack(Material.CHEST)).build(),
                 (event) -> this.openNext(new InventoryBackupShowGUI(getPlayer(), backup)));
 
-        addItem(4, new ItemBuilder().displayname("§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
+        addItem(4, new BuildItem().displayName("§2Restore").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
             if (!backup.getVaroPlayer().isOnline()) {
                 backup.getVaroPlayer().getStats().setRestoreBackup(backup);
                 getPlayer().sendMessage(Main.getPrefix() + "Inventar wird beim naechsten Betreten wiederhergestellt!");
@@ -45,7 +45,7 @@ public class InventoryBackupGUI extends VaroInventory {
             getPlayer().sendMessage(Main.getPrefix() + "Inventar wurde wiederhergestellt!");
         });
 
-        addItem(7, new ItemBuilder().displayname("§cRemove").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
+        addItem(7, new BuildItem().displayName("§cRemove").material(Materials.REDSTONE).build(), (event) -> {
             backup.getVaroPlayer().getStats().removeInventoryBackup(backup);
             this.back();
         });

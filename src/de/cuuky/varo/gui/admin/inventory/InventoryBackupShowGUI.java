@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.admin.inventory;
 
 import de.cuuky.cfw.inventory.Info;
 import de.cuuky.cfw.inventory.InfoProvider;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.gui.VaroInventory;
@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -52,7 +53,7 @@ public class InventoryBackupShowGUI extends VaroInventory {
 
     @Override
     protected List<InfoProvider> getTemporaryProvider() {
-        return this.isStuff() ? Arrays.asList(this.clickInfoProvider) : super.getTemporaryProvider();
+        return this.isStuff() ? Collections.singletonList(this.clickInfoProvider) : super.getTemporaryProvider();
     }
 
     @Override
@@ -80,7 +81,7 @@ public class InventoryBackupShowGUI extends VaroInventory {
             addItem(i, st);
         }
 
-        addItem(this.getSize() - 1, new ItemBuilder().itemstack(new ItemStack(Material.PAPER)).displayname("§aSave backup").build(), (event) -> {
+        addItem(this.getSize() - 1, new BuildItem().itemstack(new ItemStack(Material.PAPER)).displayName("§aSave backup").build(), (event) -> {
             this.backup.clear();
             
             for (int i = 0; i < contents.length; i++) {

@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.youtube;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.VaroInventory;
@@ -30,12 +30,12 @@ public class YouTubeVideoOptionsGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(11, new ItemBuilder().displayname("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), (event) -> {
+        addItem(11, new BuildItem().displayName("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), (event) -> {
             getPlayer().sendMessage(Main.getPrefix() + "Link:");
             getPlayer().sendMessage(Main.getPrefix() + video.getLink());
         });
 
-        addItem(15, new ItemBuilder().displayname("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
+        addItem(15, new BuildItem().displayName("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
             video.remove();
             this.back();
         });

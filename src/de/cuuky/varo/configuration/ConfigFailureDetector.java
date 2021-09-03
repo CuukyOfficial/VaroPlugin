@@ -1,27 +1,19 @@
 package de.cuuky.varo.configuration;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-
+import de.cuuky.varo.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.yaml.snakeyaml.scanner.ScannerException;
 
-import de.cuuky.varo.Main;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public final class ConfigFailureDetector {
 
-	private static ArrayList<String> ignoreScan;
-
-	static {
-		ignoreScan = new ArrayList<>();
-
-		ignoreScan.add("logs");
-		ignoreScan.add("presets");
-		ignoreScan.add("legacy");
-	}
+	private static List<String> ignoreScan = Arrays.asList("logs", "presets", "legacy");
 
 	private boolean failed;
 
@@ -50,14 +42,11 @@ public final class ConfigFailureDetector {
 				if (ignoreScan.contains(file.getName()))
 					continue;
 
-				if (scanDirectory(file))
-					return true;
-				else
-					continue;
+				if (scanDirectory(file)) return true;
+				else continue;
 			}
 
-			if (!file.getName().endsWith(".yml"))
-				continue;
+			if (!file.getName().endsWith(".yml")) continue;
 
 			try {
 				new YamlConfiguration().load(file);

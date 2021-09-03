@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.player;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.player.PlayerListGUI.PlayerGUIType;
@@ -27,7 +27,7 @@ public class PlayerListChooseGUI extends VaroInventory {
     public void refreshContent() {
         int i = 9;
         for (PlayerGUIType type : PlayerGUIType.values()) {
-            addItem(i, new ItemBuilder().displayname(type.getTypeName()).itemstack(new ItemStack(type.getIcon()))
+            addItem(i, new BuildItem().displayName(type.getTypeName()).itemstack(new ItemStack(type.getIcon()))
                     .amount(getFixedSize(type.getList().size())).build(), (event) ->
                     this.openNext(new PlayerListGUI(getPlayer(), type)));
             i += 2;

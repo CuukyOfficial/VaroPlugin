@@ -1,9 +1,9 @@
 package de.cuuky.varo.gui.player;
 
 import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -38,12 +38,12 @@ public class PlayerGUI extends VaroInventory {
     public void refreshContent() {
         // TODO: Strikes
 
-        addItem(1, new ItemBuilder().displayname("§aInventory Backups")
+        addItem(1, new BuildItem().displayName("§aInventory Backups")
                         .itemstack(new ItemStack(Material.DIAMOND_CHESTPLATE)).lore("§7Click to see more options").build(),
                 (event) -> this.openNext(new InventoryBackupListGUI(getPlayer(), target)));
 
-        addItem(4, new ItemBuilder().displayname("§2Last Location")
-                        .itemstack(new ItemStack(Materials.MAP.parseMaterial()))
+        addItem(4, new BuildItem().displayName("§2Last Location")
+                        .material(Materials.MAP)
                         .lore(new String[]{"§cClick to teleport", "§7" + (target.getStats().getLastLocation() != null ? new LocationFormat(target.getStats().getLastLocation()).format("x, y, z in world") : "/")}).build(),
                 (event) -> {
                     if (target.getStats().getLastLocation() == null)
@@ -52,12 +52,12 @@ public class PlayerGUI extends VaroInventory {
                     BukkitUtils.saveTeleport(getPlayer(), target.getStats().getLastLocation());
                 });
 
-        addItem(7, new ItemBuilder().displayname("§eKisten/Öfen").itemstack(Materials.CHEST.parseItem())
+        addItem(7, new BuildItem().displayName("§eKisten/Öfen").material(Materials.CHEST)
                         .amount(getFixedSize(target.getStats().getSaveables().size())).build(),
                 (event) -> this.openNext(new PlayerSavableChooseGUI(getPlayer(), target)));
 
-        addItem(11, new ItemBuilder().displayname("§4Remove")
-                .itemstack(Materials.ROSE_RED.parseItem()).build(), (event) ->
+        addItem(11, new BuildItem().displayName("§4Remove")
+                .material(Materials.ROSE_RED).build(), (event) ->
                 this.openNext(new ConfirmInventory(this, "§4Remove?", (accept) -> {
                     if (accept) {
                         this.back();
@@ -65,8 +65,8 @@ public class PlayerGUI extends VaroInventory {
                     } else this.open();
                 })));
 
-        addItem(15, new ItemBuilder().displayname("§cReset")
-                .itemstack(Materials.SKELETON_SKULL.parseItem()).build(), (event) ->
+        addItem(15, new BuildItem().displayName("§cReset")
+                .material(Materials.SKELETON_SKULL).build(), (event) ->
                 this.openNext(new ConfirmInventory(this, "§4Reset?", (accept) -> {
                     if (accept) {
                         if (target.isOnline())
@@ -78,7 +78,7 @@ public class PlayerGUI extends VaroInventory {
                     this.open();
                 })));
 
-        addItem(22, new ItemBuilder().displayname("§5More Options")
+        addItem(22, new BuildItem().displayName("§5More Options")
                         .itemstack(new ItemStack(Material.BOOK)).lore(target.getStats().getStatsListed()).build(),
                 (event) -> this.openNext(new PlayerOptionsGUI(getPlayer(), target)));
     }

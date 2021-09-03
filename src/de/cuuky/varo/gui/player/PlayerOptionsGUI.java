@@ -4,7 +4,7 @@ import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
@@ -41,9 +41,9 @@ public class PlayerOptionsGUI extends VaroListInventory<StatType> {
 
     @Override
     protected ItemStack getItemStack(StatType statType) {
-        return new ItemBuilder().itemstack(statType.getIcon()).displayname(statType.getDisplayName())
+        return new BuildItem().itemstack(statType.getIcon()).displayName(statType.getDisplayName())
                 .lore("§7Current: " + Main.getColorCode() + statType.get(this.target),
-                        "", "Left-Click to set value", "Right-Click to reset").build();
+                        "", "Left-Click to set value", "Right-Click to reset").deleteDamageAnnotation().build();
     }
 
     @Override

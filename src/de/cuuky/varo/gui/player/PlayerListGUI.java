@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.player;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -82,9 +82,9 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
 
     @Override
     protected ItemStack getItemStack(VaroPlayer player) {
-        return new ItemBuilder().displayname(Main.getColorCode() + player.getName())
-                .playername(player.getName())
-                .lore((showStats ? player.getStats().getStatsListed() : new String[]{})).buildSkull();
+        return new BuildSkull().displayName(Main.getColorCode() + player.getName())
+                .player(player.getName())
+                .lore((showStats ? player.getStats().getStatsListed() : new String[]{})).build();
     }
 
     @Override

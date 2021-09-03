@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.youtube;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.VaroListInventory;
@@ -28,11 +28,11 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     @Override
     protected ItemStack getItemStack(YouTubeVideo video) {
-        return new ItemBuilder().displayname("§5" + video.getTitle())
+        return new BuildSkull().player(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN")
+                .displayName("§5" + video.getTitle())
                 .lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm")
-                        .format(video.getDetectedAt()), "§7User: " +
-                        (video.getOwner() != null ? video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink()})
-                .playername(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN").build();
+                        .format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ?
+                        video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink()}).build();
     }
 
     @Override

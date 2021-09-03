@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.alert;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -55,7 +55,7 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
 
     @Override
     protected ItemStack getItemStack(Alert alert) {
-        return new ItemBuilder().displayname("§c" + alert.getType() + " §8| §7" + alert.getId())
+        return new BuildItem().displayName("§c" + alert.getType() + " §8| §7" + alert.getId())
                 .itemstack(new ItemStack(Material.BOOK))
                 .lore(new String[]{"§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss")
                         .format(alert.getCreated()), "§7Open: §f" + alert.isOpen()}).build();
@@ -84,7 +84,7 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
     @Override
     public void refreshContent() {
         super.refreshContent();
-        addItem(getSize() - 1, new ItemBuilder().displayname("§cClose all")
+        addItem(getSize() - 1, new BuildItem().displayName("§cClose all")
                         .itemstack(new ItemStack(Materials.REDSTONE.parseMaterial())).build(),
                 (event) -> this.getList().forEach(alert -> alert.setOpen(false)));
     }

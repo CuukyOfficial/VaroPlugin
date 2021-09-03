@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.alert;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -31,7 +31,7 @@ public class AlertOptionGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(4, new ItemBuilder().displayname(alert.isOpen() ? "§cClose" : "§aOpen")
+        addItem(4, new BuildItem().displayName(alert.isOpen() ? "§cClose" : "§aOpen")
                         .itemstack(new ItemStack(alert.isOpen() ? Materials.REDSTONE.parseMaterial() : Material.EMERALD)).build(),
                 (event) -> alert.switchOpenState());
     }

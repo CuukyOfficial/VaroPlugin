@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.strike;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
@@ -30,7 +30,7 @@ public class StrikeListGUI extends VaroListInventory<Strike> {
 
     @Override
     protected ItemStack getItemStack(Strike strike) {
-        return new ItemBuilder().displayname("§c" + strike.getStrikeNumber())
+        return new BuildItem().displayName("§c" + strike.getStrikeNumber())
                 .itemstack(new ItemStack(Material.PAPER)).lore(new String[]{"§7Reason: §c" + strike.getReason(), "§7Striker: §c" + strike.getStriker(),
                         "§7Date: §c" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
                                 .format(strike.getAcquiredDate())}).build();

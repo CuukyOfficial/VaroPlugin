@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.backup;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroInventory;
@@ -32,7 +32,7 @@ public class BackupGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new ItemBuilder().displayname("§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
+        addItem(1, new BuildItem().displayName("§aLoad").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
             if (backup.unzip("plugins/Varo")) {
                 this.close();
                 getPlayer().sendMessage(Main.getPrefix() + "Backup erfolgreich wieder hergestellt!");
@@ -42,7 +42,7 @@ public class BackupGUI extends VaroInventory {
                 getPlayer().sendMessage(Main.getPrefix() + "Backup konnte nicht wieder hergestellt werden!");
         });
 
-        addItem(7, new ItemBuilder().displayname("§4Delete").itemstack(Materials.REDSTONE.parseItem()).build(), (event) -> {
+        addItem(7, new BuildItem().displayName("§4Delete").material(Materials.REDSTONE).build(), (event) -> {
             backup.delete();
             this.back();
         });

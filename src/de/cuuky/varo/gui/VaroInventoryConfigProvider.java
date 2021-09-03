@@ -6,7 +6,7 @@ import de.cuuky.cfw.inventory.InfoProvider;
 import de.cuuky.cfw.inventory.ItemInserter;
 import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
 import de.cuuky.cfw.inventory.inserter.DirectInserter;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.settings.VaroMenuColor;
 import org.bukkit.entity.Player;
@@ -44,7 +44,7 @@ public class VaroInventoryConfigProvider implements InfoProvider {
     @Override
     public ItemStack getFillerStack() {
         VaroMenuColor color = this.player.getGuiFiller();
-        return color != null ? new ItemBuilder().itemstack(color.getColorPane()).displayname("§f").build() : null;
+        return color != null ? new BuildItem().itemstack(color.getColorPane()).displayName("§f").build() : null;
     }
 
     @Override

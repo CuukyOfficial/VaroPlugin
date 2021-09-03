@@ -1,8 +1,8 @@
 package de.cuuky.varo.gui.admin.config;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
 import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.VaroListInventory;
@@ -19,8 +19,8 @@ public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
 
     @Override
     protected ItemStack getItemStack(ConfigSettingSection section) {
-        return new ItemBuilder().displayname("§7" + section.getName())
-                .itemstack(new ItemStack(section.getMaterial()))
+        return new BuildItem().displayName("§7" + section.getName())
+                .material(section.getMaterial()).deleteDamageAnnotation()
                 .lore((JavaUtils.getArgsToString(JavaUtils.addIntoEvery(section.getDescription().split("\n"), Main.getColorCode(), true),
                         "\n")).split("\n")).build();
     }

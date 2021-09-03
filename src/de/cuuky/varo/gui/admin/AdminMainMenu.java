@@ -1,6 +1,7 @@
 package de.cuuky.varo.gui.admin;
 
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
+import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -42,25 +43,25 @@ public class AdminMainMenu extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(0, new ItemBuilder().displayname("§eSetup Assistant").itemstack(new ItemStack(Materials.ENDER_EYE.parseMaterial())).build(),
+        addItem(0, new BuildItem().displayName("§eSetup Assistant").material(Materials.ENDER_EYE).build(),
                 (event) -> this.openNext(new SetupHelpGUI(getPlayer())));
 
-        addItem(4, new ItemBuilder().displayname("§cConfig").itemstack(new ItemStack(Materials.WHEAT.parseMaterial())).build(),
+        addItem(4, new BuildItem().displayName("§cConfig").material(Materials.WHEAT).build(),
                 (event) -> this.openNext(new ConfigSectionGUI(getPlayer())));
 
-        addItem(10, new ItemBuilder().displayname("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(),
+        addItem(10, new BuildItem().displayName("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(),
                 (event) -> this.openNext(new ReportListGUI(getPlayer())));
 
-        addItem(16, new ItemBuilder().playername(getPlayer().getName()).displayname("§aSpieler").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).buildSkull(),
+        addItem(16, new BuildSkull().player(getPlayer().getName()).displayName("§aSpieler").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).build(),
                 (event) -> this.openNext(new PlayerListChooseGUI(getPlayer())));
 
-        addItem(18, new ItemBuilder().displayname("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(),
+        addItem(18, new BuildItem().displayName("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(),
                 (event) -> this.openNext(new AlertTypeChooseGUI(getPlayer())));
 
-        addItem(22, new ItemBuilder().displayname("§aBackups").itemstack(Materials.WRITTEN_BOOK.parseItem()).build(),
+        addItem(22, new BuildItem().displayName("§aBackups").material(Materials.WRITTEN_BOOK).build(),
                 (event) -> this.openNext(new BackupListGUI(getPlayer())));
 
-        addItem(26, new ItemBuilder().displayname("§1DiscordBot")
+        addItem(26, new BuildItem().displayName("§1DiscordBot")
                         .itemstack(new ItemStack(Main.getBotLauncher().getDiscordbot() != null ? Material.ANVIL : Materials.GUNPOWDER.parseMaterial())).build(),
                 (event) -> {
                     if (Main.getBotLauncher().getDiscordbot() == null) {
@@ -73,23 +74,22 @@ public class AdminMainMenu extends VaroInventory {
                     this.openNext(new DiscordBotGUI(getPlayer()));
                 });
 
-        addItem(28, new ItemBuilder().displayname("§5Game").itemstack(new ItemStack(Material.CAKE)).build(),
+        addItem(28, new BuildItem().displayName("§5Game").material(Materials.CAKE).build(),
                 (event) -> this.openNext(new GameOptionsGUI(getPlayer())));
 
-        addItem(34, new ItemBuilder().displayname("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
+        addItem(34, new BuildItem().displayName("§2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
                         .amount(getFixedSize(VaroTeam.getTeams().size())).build(),
                 (event) -> this.openNext(new TeamChooseGUI(getPlayer())));
 
-        addItem(40, new ItemBuilder().displayname("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE))
+        addItem(40, new BuildItem().displayName("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE))
                         .amount(getFixedSize(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs().size())).build(),
                 (event) -> this.openNext(new OreLoggerListGUI(getPlayer())));
 
         if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
-            addItem(this.getUsableSize(), new ItemBuilder().displayname("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(),
+            addItem(this.getUsableSize(), new BuildItem().displayName("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(),
                     (event) -> this.openNext(new DebugGUI(getPlayer())));
 
-        addItem(this.getSize() - 1, new ItemBuilder().displayname("§5Info").itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), (event) -> {
-            this.sendInfo();
-        });
+        addItem(this.getSize() - 1, new BuildItem().displayName("§5Info")
+                .material(Materials.MAP.parseMaterial()).build(), (event) -> this.sendInfo());
     }
 }

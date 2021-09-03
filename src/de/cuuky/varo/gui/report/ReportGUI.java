@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.report;
 
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.item.ItemBuilder;
+import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroListInventory;
@@ -38,7 +38,7 @@ public class ReportGUI extends VaroListInventory<ReportReason> {
     @Override
     protected ItemStack getItemStack(ReportReason reason) {
         List<String> lore = Arrays.stream(reason.getDescription().split("\n")).map(s -> "§7" + s).collect(Collectors.toList());
-        return new ItemBuilder().displayname("§c" + reason.getName()).itemstack(new ItemStack(reason.getMaterial())).lore(lore).build();
+        return new BuildItem().displayName("§c" + reason.getName()).itemstack(new ItemStack(reason.getMaterial())).lore(lore).build();
     }
 
     @Override
