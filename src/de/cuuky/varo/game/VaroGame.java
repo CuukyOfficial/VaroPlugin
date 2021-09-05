@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.cuuky.varo.api.VaroAPI;
+import de.cuuky.varo.api.event.events.game.VaroEndEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -135,6 +137,9 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void end(WinnerCheck check) {
+        if (VaroAPI.getEventManager().executeEvent(new VaroEndEvent(this)))
+            return;
+
         this.gamestate = GameState.END;
 
         for (VaroPlayer vp : check.getPlaces().get(1)) {
