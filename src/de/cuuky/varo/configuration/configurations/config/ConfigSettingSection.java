@@ -35,7 +35,8 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	TEAMS("Teams", Material.BOOK, "Hier kannst du Einstellungen zu Teams vornehmen."),
 	TELEGRAM("Telegram", Materials.MAP.parseMaterial(), "Alle Einstellungen zum Telegram-Bot."),
 	WORLD("World", Material.GRASS, "Hier kannst du Einstellungen zur Welt vornehmen."),
-	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");
+	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen."),
+	TABLIST("TablistSettings", Material.STONE_SWORD, "Hier kannst du Einstellungen zur Tablist vornehmen.");
 
 	private String name, description;
 	private Material material;

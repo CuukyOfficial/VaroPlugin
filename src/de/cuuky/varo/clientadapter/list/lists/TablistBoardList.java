@@ -3,6 +3,7 @@ package de.cuuky.varo.clientadapter.list.lists;
 import java.util.ArrayList;
 
 import de.cuuky.varo.clientadapter.list.BoardList;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class TablistBoardList extends BoardList {
 
@@ -37,8 +38,10 @@ public class TablistBoardList extends BoardList {
 		configuration.addDefault("header", header);
 		configuration.addDefault("footer", footer);
 
-		headerLines.addAll(configuration.getStringList("header"));
-		footerLines.addAll(configuration.getStringList("footer"));
+		if (ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean())
+			headerLines.addAll(configuration.getStringList("header"));
+		if (ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean())
+			footerLines.addAll(configuration.getStringList("footer"));
 	}
 
 	public ArrayList<String> getHeaderLines() {
