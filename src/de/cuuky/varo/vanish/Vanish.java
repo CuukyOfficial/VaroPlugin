@@ -1,7 +1,7 @@
 package de.cuuky.varo.vanish;
 
-import java.util.ArrayList;
-
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.cuuky.varo.Main;
+import java.util.ArrayList;
 
 public class Vanish {
 
@@ -32,11 +32,9 @@ public class Vanish {
 		}
 	}
 
-	private static ArrayList<Vanish> vanishes;
+	private static final ArrayList<Vanish> vanishes = new ArrayList<>();
 
 	static {
-		vanishes = new ArrayList<Vanish>();
-
 		Bukkit.getPluginManager().registerEvents(new VanishListener(), Main.getInstance());
 	}
 
@@ -50,12 +48,12 @@ public class Vanish {
 	}
 
 	private void hide() {
-		for (Player allplayer : Bukkit.getOnlinePlayers())
+		for (Player allplayer : VersionUtils.getVersionAdapter().getOnlinePlayers())
 			allplayer.hidePlayer(player);
 	}
 
 	private void unhide() {
-		for (Player allplayer : Bukkit.getOnlinePlayers())
+		for (Player allplayer : VersionUtils.getVersionAdapter().getOnlinePlayers())
 			allplayer.showPlayer(player);
 	}
 

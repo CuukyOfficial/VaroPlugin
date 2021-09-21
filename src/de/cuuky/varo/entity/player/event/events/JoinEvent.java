@@ -49,7 +49,7 @@ public class JoinEvent extends BukkitEvent {
 		} else {
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
 			for (Player pl1 : VersionUtils.getVersionAdapter().getOnlinePlayers())
-				pl1.showPlayer(Main.getInstance(), player.getPlayer());
+				pl1.showPlayer(player.getPlayer());
 		}
 
 		VaroPlayerDisconnect.joinedAgain(player.getName());
