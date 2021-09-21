@@ -1,14 +1,15 @@
 package de.cuuky.varo.entity.player.event.events;
 
-import java.util.Date;
-
-import org.bukkit.GameMode;
-
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
+
+import java.util.Date;
 
 public class JoinEvent extends BukkitEvent {
 
@@ -45,8 +46,11 @@ public class JoinEvent extends BukkitEvent {
 		if (player.getStats().isSpectator() || player.isAdminIgnore()) {
 			player.setSpectacting();
 			player.sendMessage(Main.getPrefix() + "Da Du §c" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "Spectator bist") + " §7wurdest du in den Zuschauer-Modus gesetzt!");
-		} else
+		} else {
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
+			for (Player pl1 : VersionUtils.getVersionAdapter().getOnlinePlayers())
+				pl1.showPlayer(Main.getInstance(), player.getPlayer());
+		}
 
 		VaroPlayerDisconnect.joinedAgain(player.getName());
 	}
