@@ -13,8 +13,8 @@ public class LibraryLoader {
 	private static final Collection<Library> LIBRARIES = new ArrayList<>();
 
 	static {
-		LIBRARIES.add(new JarLibrary("JDA-4.3.0_304", "net.dv8tion.jda.api.JDABuilder",
-				"https://ci.dv8tion.net/job/JDA/304/artifact/build/libs/JDA-4.3.0_304-withDependencies-no-opus.jar",
+		LIBRARIES.add(new JarLibrary("JDA-4.3.0_330", "net.dv8tion.jda.api.JDABuilder",
+				"https://ci.dv8tion.net/job/JDA/304/artifact/build/libs/JDA-4.3.0_330-withDependencies-no-opus.jar",
 				ConfigSetting.DISCORDBOT_ENABLED));
 		LIBRARIES.add(new JarLibrary("gson-2.8.7", "com.google.gson.JsonElement",
 				"https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.7/gson-2.8.7.jar"));
