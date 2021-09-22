@@ -67,7 +67,6 @@ public class AdminMainMenu extends VaroInventory {
                     if (Main.getBotLauncher().getDiscordbot() == null) {
                         getPlayer().sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");
                         getPlayer().sendMessage(Main.getPrefix() + "Bitte untersuche die Konsolenausgaben nach Fehlern und ueberpruefe, ob du den DiscordBot aktiviert hast.");
-                        getPlayer().sendMessage(Main.getPrefix() + "https://www.spigotmc.org/resources/66778/");
                         return;
                     }
 

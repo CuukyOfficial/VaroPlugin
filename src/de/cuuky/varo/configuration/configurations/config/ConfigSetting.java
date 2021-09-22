@@ -94,7 +94,7 @@ public enum ConfigSetting implements SectionEntry {
 	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound", false, "Ob ein Withersound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
-	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFuer diese Funktion wird dieses Plugin benoetigt:\nhttps://www.spigotmc.org/resources/52423/"),
+	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFuer diese Funktion wird dieses Plugin automatisch installiert:\nhttps://www.spigotmc.org/resources/52423/"),
 
 	// DISCONNECT
 	DISCONNECT_PER_SESSION(ConfigSettingSection.DISCONNECT, "maxDisconnectsPerSessions", 3, "Wie oft ein Spieler pro\nSession maximal disconnecten darf,\nbevor er bestraft wird.Off = -1"),
@@ -156,7 +156,7 @@ public enum ConfigSetting implements SectionEntry {
 	JOIN_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "joinProtectionTime", 10, "Laenge der Schutzzeit in Sekunden beim Betreten des Servers.\nOff = -1"),
 	KICK_AT_SERVER_CLOSE(ConfigSettingSection.JOIN_SYSTEMS, "kickAtServerClose", false, "Kickt den Spieler, sobald er ausserhalb\ndererlaubten Zeit auf dem Server ist."),
 	KICK_DELAY_AFTER_DEATH(ConfigSettingSection.DEATH, "kickDelayAfterDeath", -1, "Zeit in Sekunden, nach der ein Spieler\nnach Tod gekickt wird.\nOff = -1"),
-	KICK_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "kickLabyModPlayer", false, "Ob Spieler, die LabyMod nutzen,\ngekickt werden sollen.\nFuer diese Funktion wird dieses Plugin benoetigt:\nhttps://www.spigotmc.org/resources/52423/"),
+	KICK_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "kickLabyModPlayer", false, "Ob Spieler, die LabyMod nutzen,\ngekickt werden sollen.\nFuer diese Funktion wird dieses Plugin automatisch installiert:\nhttps://www.spigotmc.org/resources/52423/"),
 
 	KILL_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "killOnCombatlog", true, "Ob ein Spieler, wenn er\nsich in der oben genannten Zeit ausloggt,\ngetoetet werden soll."),
 	KILLER_ADD_HEALTH_ON_KILL(ConfigSettingSection.DEATH, "killerHealthAddOnKill", -1, "Anzahl halber Herzen, die der Killer nach Kill bekommt.\nOff = -1"),
@@ -183,7 +183,7 @@ public enum ConfigSetting implements SectionEntry {
 	ONLY_JOIN_BETWEEN_HOURS_HOUR2(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursHour2", 16, "Zweite Uhrzeit, zwischen welchen\ndie Spieler joinen duerfen."),
 	ONLY_JOIN_BETWEEN_HOURS_MINUTE2(ConfigSettingSection.JOIN_SYSTEMS, "onlyJoinBetweenHoursMinute2", 0, "Zweite Minuten-Uhrzeit, zwischen welchen\ndie Spieler joinen duerfen."),
 
-	ONLY_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "onlyLabyModPlayer", false, "Ob nur Spieler mit LabyMod joinen duerfen.\nFuer diese Funktion wird dieses Plugin benoetigt:\nhttps://www.spigotmc.org/resources/52423/"),
+	ONLY_LABYMOD_PLAYER(ConfigSettingSection.OTHER, "onlyLabyModPlayer", false, "Ob nur Spieler mit LabyMod joinen duerfen.\nFuer diese Funktion wird dieses Plugin automatisch installiert:\nhttps://www.spigotmc.org/resources/52423/"),
 	OUTSIDE_BORDER_SPAWN_TELEPORT(ConfigSettingSection.BORDER, "outsideBorderSpawnTeleport", true, "Ob, wenn ein Spieler ausserhalb der Border joint, er in die Mitte teleportiert werden soll."),
 	PLAY_TIME(ConfigSettingSection.MAIN, "playTime", 15, "Zeit in Minuten, wie lange die Spieler\npro Session auf dem Server spielen koennen.\nUnlimited = -1"),
 
