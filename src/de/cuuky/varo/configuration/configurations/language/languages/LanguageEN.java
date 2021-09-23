@@ -178,6 +178,7 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_ERROR_NOT_STARTED("varoCommands.error.notstarted", "The games have not started yet!"),
 	VARO_COMMANDS_ERROR_USAGE("varoCommands.error.usage", "&cError! &7Use %colorcode%/varo %command% &7for help."),
 	VARO_COMMANDS_ERROR_NO_NUMBER("varoCommands.error.nonumber", "%colorcode%%text% &7is not a number!"),
+	VARO_COMMANDS_ERROR_WRONGVERSION("varoCommands.error.wrongVersion", "&7This feature is not available on versions lower than %colorcode%%version% &7!"),
 	VARO_COMMANDS_ERROR("varoCommands.error.error", "&7An error has occurred!"),
 
 	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport was saved under &c%filename% &7!"),
@@ -251,6 +252,9 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_RANDOMTEAM_SORTED("varoCommands.randomteam.sorted", "&7All players without a team are now in teams of %colorcode%%teamsize% &7!"),
 	VARO_COMMANDS_RANDOMTEAM_NO_PARTNER("varoCommands.randomteam.nopartner", "&7Not enough team partners could be found for you."),
 
+	VARO_COMMANDS_CHECKCOMBAT_HELP("varoCommands.checkcombat.help", "%colorcode%/varo checkcombat"),
+	VARO_COMMANDS_CHECKCOMBAT_INCOMBAT("varoCommands.checkcombat.incombat", "&7You are currently in %colorcode%combat&7!"),
+	VARO_COMMANDS_CHECKCOMBAT_NOTINCOMBAT("varoCommands.checkcombat.notincombat", "&7You are currently %colorcode%not in combat&7!"),
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7The game is already in the lobby phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7The games has been restarted."),
 	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboards are disabled."),
@@ -283,9 +287,47 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Use %colorcode%/varo discord verify remove &7to remove the verification."),
 
 	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7The rest of your time: %formattedCountdown%&7."),
+	
+	COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cAn error occurred while enabling Anti-Xray. Please check if your server version (%version%) is based on spigot."),
+	COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Installing Anti-Xray... The server will restart afterwards."),
+	COMMANDS_XRAY_INSTALLING_ERROR("varoCommands.xray.installingError", "Critical error while downloading the external plugin. You can try to download it manually: %colorcode%&nhttps://www.spigotmc.org/resources/22818/"),
+	COMMANDS_XRAY_VERSION_NOT_AVAIALABLE("varoCommands.xray.versionNotAvailable", "&cThere is no Anti-Xray available for your server version (%version%)."),
+	COMMANDS_XRAY_STATUS("varoCommands.xray.status", "Anti-Xray is currently %status%&7."),
+	COMMANDS_XRAY_STATUS_ACTIVATED("varoCommands.xray.statusActivated", "&aenabled"),
+	COMMANDS_XRAY_STATUS_DEACTIVATED("varoCommands.xray.statusDeactivated", "&cdisabled"),
+	COMMANDS_XRAY_ACTIVATED("varoCommands.xray.activated", "Anti-Xray enabled"),
+	COMMANDS_XRAY_DEACTIVATED("varoCommands.xray.dectivated", "Anti-Xray disabled"),
+	COMMANDS_XRAY_ALREADY_ACTIVATED("varoCommands.xray.alreadyActivated", "Anti-Xray already enabled"),
+	COMMANDS_XRAY_ALREADY_DEACTIVATED("varoCommands.xray.alreadyDactivated", "Anti-Xray already disabled"),
+
+	COMMANDS_BORDER_SIZE("varoCommands.border.size", "The border has a size of %colorcode%%size% blocks &7."),
+	COMMANDS_BORDER_DISTANCE("varoCommands.border.distance", "You are %colorcode%%distance% blocks &7away from the border."),
+	COMMANDS_BORDER_USAGE("varoCommands.border.usage", "You can change the size of the border using %colorcode%/border <diameter> [seconds]&7. The center of the border will be set to your current position."),
+
+	COMMANDS_BROADCAST_FORMAT("varoCommands.broadcast.format", "&8[&cBroadcast&8] &7%message%"),
+
+	COMMANDS_CHATCLEAR_CLEAR("varoCommands.chatclear.cleared", "The chat was cleared."),
+
+	COMMANDS_COUNTDOWN_ABORT("varoCommands.countdown.abort", "Countdown canceled!"),
+	COMMANDS_COUNTDOWN_TOO_SMALL("varoCommands.countdown.tooSmall", "The countdown has to be greater than zero!"),
+	COMMANDS_COUNTDOWN_START("varoCommands.countdown.start", "Go!"),
+	COMMANDS_COUNTDOWN_FORMAT("varoCommands.countdown.format", "%colorcode%%seconds%"),
+
+	COMMANDS_TIME_DAY("varoCommands.time.day", "Time set to %colorcode%day&7."),
+	COMMANDS_TIME_NIGHT("varoCommands.time.night", "Time set to %colorcode%night&7."),
+
+	COMMANDS_WEATHER_SUN("varoCommands.weather.sun", "Weather %colorcode%cleared&7."),
+	COMMANDS_WEATHER_RAIN("varoCommands.weather.rain", "It's %colorcode%raining &7now."),
+	COMMANDS_WEATHER_THUNDER("varoCommands.weather.thunder", "Changed weather to %colorcode%thunderstorm&7."),
+
+	COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Worldspawn set."),
   
   	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),
+	
+	MODS_BLOCKED_MODS_KICK("mods.blockedModsKick", "&7Please remove the following mods: %colorcode%%mods%"),
+	MODS_BLOCKED_MODLIST_SPLIT("mods.blockedModsListSplit", "&7, "),
+	MODS_BLOCKED_MODS_BROADCAST("mods.blockedModsBroadcast", "%colorcode%%player% &7tried to join while having the following mods installed: %colorcode%%mods%"),
 
 	OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),
 	OTHER_PING("other.ping", "&7Your %colorcode%Ping &7 is: %colorcode%%ping%&7ms");

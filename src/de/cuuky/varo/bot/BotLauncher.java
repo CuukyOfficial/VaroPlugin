@@ -36,9 +36,8 @@ public class BotLauncher {
 			discordbot = new VaroDiscordBot();
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
-			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin.");
-			System.out.println(Main.getConsolePrefix() + "If you want to use the DiscordBot please install this plugin:");
-			System.out.println(Main.getConsolePrefix() + "https://www.spigotmc.org/resources/66778/");
+			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin. Please report this error on our discord " + Main.DISCORD_INVITE);
+			e.printStackTrace();
 			return;
 		}
 
@@ -62,9 +61,8 @@ public class BotLauncher {
 			telegrambot = new VaroTelegramBot();
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
-			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin.");
-			System.out.println(Main.getConsolePrefix() + "If you want to use the TelegramBot please install this plugin:");
-			System.out.println(Main.getConsolePrefix() + "https://www.spigotmc.org/resources/66823/");
+			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin. Please report this error on our discord " + Main.DISCORD_INVITE);
+			e.printStackTrace();
 			return;
 		}
 

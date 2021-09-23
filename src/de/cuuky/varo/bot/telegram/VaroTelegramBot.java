@@ -30,7 +30,7 @@ public class VaroTelegramBot implements VaroBot {
 			@Override
 			public int process(List<Update> args) {
 				for (Update update : args) {
-					if (update.message() == null)
+					if (update.message() == null || update.message().text() == null)
 						continue;
 
 					if (!update.message().text().contains("/getId"))
