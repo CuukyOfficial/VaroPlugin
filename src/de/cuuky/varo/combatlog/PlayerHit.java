@@ -43,16 +43,13 @@ public class PlayerHit {
 			if (vp.getTeam() != null && vp1.getTeam() != null && vp.getTeam().equals(vp1.getTeam()))
 				return;
 
-			Date current = new Date();
-			vp.getStats().setLastEnemyContact(current);
-			vp1.getStats().setLastEnemyContact(current);
+			vp.getStats().setLastEnemyContact(new Date());
+			vp1.getStats().setLastEnemyContact(new Date());
 
 			if (!ConfigSetting.COMBATLOG_TIME.isIntActivated()) return;
 
-			Player player1 = (Player) event.getDamager();
-			Player player2 = (Player) event.getEntity();
-			new PlayerHit(player1, player2);
-			new PlayerHit(player2, player1);
+			new PlayerHit(damager, vp.getPlayer());
+			new PlayerHit(vp.getPlayer(), damager);
 		}
 	}
 
