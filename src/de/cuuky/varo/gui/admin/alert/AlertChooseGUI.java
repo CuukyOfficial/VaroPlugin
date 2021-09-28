@@ -45,12 +45,8 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
         }
     }
 
-    private AlertGUIType type;
-
     public AlertChooseGUI(Player player, AlertGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
-
-        this.type = type;
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
     }
 
     @Override
@@ -74,11 +70,6 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
     @Override
     public int getSize() {
         return this.getRecommendedSize();
-    }
-
-    @Override
-    public List<Alert> getList() {
-        return this.type.getList();
     }
 
     @Override

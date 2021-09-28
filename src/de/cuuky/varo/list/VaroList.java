@@ -1,11 +1,11 @@
 package de.cuuky.varo.list;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public abstract class VaroList {
 
@@ -39,7 +39,7 @@ public abstract class VaroList {
 			this.loadDefaultValues();
 	}
 	
-	public abstract ArrayList<?> getAsList();
+	public abstract List<?> getAsList();
 
 	public abstract void init();
 	public abstract void onLoad(List<?> list);

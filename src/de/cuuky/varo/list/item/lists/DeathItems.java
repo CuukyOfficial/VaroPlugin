@@ -6,7 +6,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class DeathItems extends ItemList {
 
 	public DeathItems() {
-		super("DeathItems");
+		super("DeathItems", -1, false);
 	}
 
 	@Override

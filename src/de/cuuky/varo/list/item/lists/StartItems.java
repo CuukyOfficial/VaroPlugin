@@ -10,7 +10,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class StartItems extends ItemList {
 
 	public StartItems() {
-		super("StartItems");
+		super("StartItems", 40, false);
 	}
 	
 	@Override

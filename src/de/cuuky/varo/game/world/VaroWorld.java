@@ -1,8 +1,11 @@
 package de.cuuky.varo.game.world;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.game.world.border.VaroWorldBorder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -10,12 +13,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.game.world.border.VaroWorldBorder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VaroWorld {
 
@@ -62,7 +61,7 @@ public class VaroWorld {
 		Location loc2 = world.getSpawnLocation().clone().add(-radius, -radius, -radius);
 
 		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
-		ArrayList<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
+		List<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
 		if (chestItems.isEmpty())
 			return;
 

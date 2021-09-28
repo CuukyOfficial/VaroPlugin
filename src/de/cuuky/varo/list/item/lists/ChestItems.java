@@ -6,7 +6,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class ChestItems extends ItemList {
 
 	public ChestItems() {
-		super("ChestItems");
+		super("ChestItems", -1, true);
 	}
 	
 	@Override

@@ -8,7 +8,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class BlockedItems extends ItemList {
 
 	public BlockedItems() {
-		super("BlockedItems");
+		super("BlockedItems", -1, true);
 	}
 	
 	@Override

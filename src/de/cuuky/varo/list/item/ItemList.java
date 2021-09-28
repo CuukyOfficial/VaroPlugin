@@ -1,32 +1,37 @@
 package de.cuuky.varo.list.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.cuuky.varo.list.VaroList;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.list.VaroList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class ItemList extends VaroList {
 
-	protected ArrayList<ItemStack> items;
+	protected List<ItemStack> items;
+	private final int maxSize;
+	private final boolean uniqueType;
 
-	public ItemList(String location) {
+	public ItemList(String location, int maxSize, boolean uniqueType) {
 		super(location);
+
+		this.maxSize = maxSize;
+		this.uniqueType = uniqueType;
 	}
 
 	protected ItemStack fixItem(ItemStack item) {
 		item = item.clone();
+		if (!this.uniqueType) return item;
 		item.setAmount(1);
-		if (isDamageable(item))
-			item.setDurability((short) 0);
+		if (isDamageable(item)) item.setDurability((short) 0);
 		return item;
 	}
 
 	protected boolean isDamageable(ItemStack item) {
-		if (item == null)
-			return false;
-
+		if (item == null) return false;
 		String[] split = item.getType().toString().split("_");
 		int length = split.length;
 		switch (split[length - 1]) {
@@ -63,10 +68,18 @@ public abstract class ItemList extends VaroList {
 		}
 	}
 
-	public void addItem(ItemStack item) {
-		items.add(fixItem(item));
+	private void processItem(ItemStack stack, Consumer<ItemStack> process) {
+		process.accept(fixItem(stack));
+	}
 
-		saveList();
+	public boolean addItem(ItemStack item) {
+		if (this.items.size() >= this.maxSize) return false;
+		this.processItem(item, this.items::add);
+		return true;
+	}
+
+	public void removeItem(ItemStack item) {
+		this.processItem(item, this.items::remove);
 	}
 
 	public boolean hasItem(ItemStack item) {
@@ -75,7 +88,7 @@ public abstract class ItemList extends VaroList {
 
 	@Override
 	public void init() {
-		this.items = new ArrayList<ItemStack>();
+		this.items = new ArrayList<>();
 	}
 
 	@Override
@@ -85,56 +98,41 @@ public abstract class ItemList extends VaroList {
 				ItemStack c = (ItemStack) id;
 				items.add(c);
 			} catch (Exception e) {
-				continue;
 			}
 		}
-	}
-
-	public void removeItem(ItemStack item) {
-		items.remove(fixItem(item));
-
-		saveList();
 	}
 
 	@Override
-	public ArrayList<?> getAsList() {
+	public List<?> getAsList() {
 		return items;
 	}
 
-	public ArrayList<ItemStack> getItems() {
+	public List<ItemStack> getItems() {
 		return items;
+	}
+
+	public void setItems(List<ItemStack> items) {
+		this.items = items;
+	}
+
+	public boolean isUniqueType() {
+		return uniqueType;
+	}
+
+	public int getMaxSize() {
+		return maxSize;
+	}
+
+	private static Stream<ItemList> getItemList() {
+		return getLists().stream().filter(list -> list instanceof ItemList).map(v -> (ItemList) v);
 	}
 
 	public static ItemList getItemList(String list) {
-		for (ItemList iList : getItemLists())
-			if (iList.getLocation().equalsIgnoreCase(list))
-				return iList;
-
-		return null;
+		return getItemLists().stream()
+				.filter(iList -> iList.getLocation().equalsIgnoreCase(list)).findFirst().orElse(null);
 	}
 
-	public static ArrayList<ItemList> getItemLists() {
-		ArrayList<ItemList> iList = new ArrayList<>();
-
-		for (VaroList vlist : VaroList.getLists())
-			if (vlist instanceof ItemList)
-				iList.add((ItemList) vlist);
-
-		return iList;
-	}
-
-	// TODO Dauerhafte Loesung finden
-	public static ArrayList<ItemList> getItemListsMultipleAdd() {
-		ArrayList<ItemList> itemLists = getItemLists();
-		ArrayList<ItemList> multipleAdd = new ArrayList<>();
-		for (ItemList list : itemLists) {
-			switch (list.getLocation()) {
-			case "ChestItems":
-			case "StartItems":
-			case "DeathItems":
-				multipleAdd.add(list);
-			}
-		}
-		return multipleAdd;
+	public static List<ItemList> getItemLists() {
+		return getItemList().collect(Collectors.toList());
 	}
 }

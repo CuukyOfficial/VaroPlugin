@@ -9,7 +9,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class LogDestroyedBlocks extends ItemList {
 
 	public LogDestroyedBlocks() {
-		super("BlockLogger");
+		super("BlockLogger", -1, true);
 	}
 	
 	@Override

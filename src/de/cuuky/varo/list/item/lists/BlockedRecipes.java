@@ -8,7 +8,7 @@ import de.cuuky.varo.list.item.ItemList;
 public class BlockedRecipes extends ItemList {
 
 	public BlockedRecipes() {
-		super("BlockedRecipes");
+		super("BlockedRecipes", -1, true);
 	}
 	
 	@Override

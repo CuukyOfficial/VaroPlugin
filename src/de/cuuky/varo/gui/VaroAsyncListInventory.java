@@ -14,10 +14,6 @@ public abstract class VaroAsyncListInventory<T> extends AdvancedAsyncListInvento
         super(manager, player, list);
     }
 
-    public VaroAsyncListInventory(AdvancedInventoryManager manager, Player player) {
-        super(manager, player);
-    }
-
     @Override
     protected HookManager getHookManager() {
         return Main.getCuukyFrameWork().getHookManager();

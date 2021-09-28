@@ -10,12 +10,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
 
     public CustomCommandListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Main.getDataManager().getCustomCommandManager().getCommands());
     }
 
     @Override
@@ -31,11 +29,6 @@ public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
     @Override
     protected ItemClick getClick(CustomCommand customCommand) {
         return (event) -> this.openNext(new CreateCustomCommandGUI(getPlayer(), customCommand));
-    }
-
-    @Override
-    public List<CustomCommand> getList() {
-        return Main.getDataManager().getCustomCommandManager().getCommands();
     }
 
     @Override
