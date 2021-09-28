@@ -1,8 +1,10 @@
 package de.cuuky.varo.combatlog;
 
-import java.util.ArrayList;
-import java.util.Date;
-
+import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,10 +13,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class PlayerHit {
 
@@ -32,8 +33,8 @@ public class PlayerHit {
 			if (!Main.getVaroGame().isRunning() || event.isCancelled())
 				return;
 
-			VaroPlayer vp = VaroPlayer.getPlayer(((Player) event.getEntity()).getName());
-			VaroPlayer vp1 = VaroPlayer.getPlayer(((Player) event.getDamager()).getName());
+			VaroPlayer vp = VaroPlayer.getPlayer(event.getEntity().getName());
+			VaroPlayer vp1 = VaroPlayer.getPlayer(new EntityDamageByEntityUtil(event).getDamager());
 
 			if (!vp1.getStats().isAlive() || vp1.isAdminIgnore())
 				return;
@@ -45,8 +46,7 @@ public class PlayerHit {
 			vp.getStats().setLastEnemyContact(current);
 			vp1.getStats().setLastEnemyContact(current);
 
-			if (!ConfigSetting.COMBATLOG_TIME.isIntActivated())
-				return;
+			if (!ConfigSetting.COMBATLOG_TIME.isIntActivated()) return;
 
 			Player player1 = (Player) event.getDamager();
 			Player player2 = (Player) event.getEntity();
@@ -55,19 +55,14 @@ public class PlayerHit {
 		}
 	}
 
-	private static ArrayList<PlayerHit> hits;
-
-	static {
-		hits = new ArrayList<>();
-	}
+	private static final List<PlayerHit> hits = new ArrayList<>();
 
 	private BukkitTask task;
-	private Player player, opponent;
+	private final Player player, opponent;
 
 	public PlayerHit(Player player, Player opponent) {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if (!hasOld(player))
-			vp.sendMessage(ConfigMessages.COMBAT_IN_FIGHT);
+		if (!hasOld(player)) vp.sendMessage(ConfigMessages.COMBAT_IN_FIGHT);
 
 		this.player = player;
 		this.opponent = opponent;
@@ -83,7 +78,7 @@ public class PlayerHit {
 			public void run() {
 				over();
 			}
-		}.runTaskLater(Main.getInstance(), ConfigSetting.COMBATLOG_TIME.getValueAsInt() * 20);
+		}.runTaskLater(Main.getInstance(), ConfigSetting.COMBATLOG_TIME.getValueAsInt() * 20L);
 	}
 
 	public boolean hasOld(Player p) {
@@ -118,13 +113,6 @@ public class PlayerHit {
 	}
 
 	public static PlayerHit getHit(Player p) {
-		for (PlayerHit hit : hits) {
-			if (!hit.getPlayer().equals(p))
-				continue;
-
-			return hit;
-		}
-
-		return null;
+		return hits.stream().filter(hit -> hit.getPlayer().equals(p)).findFirst().orElse(null);
 	}
 }
