@@ -27,14 +27,15 @@ public class PlayerHit {
 
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onHit(EntityDamageByEntityEvent event) {
-			if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
+			Player damager = new EntityDamageByEntityUtil(event).getDamager();
+			if (!(event.getEntity() instanceof Player) || damager == null)
 				return;
 
 			if (!Main.getVaroGame().isRunning() || event.isCancelled())
 				return;
 
 			VaroPlayer vp = VaroPlayer.getPlayer(event.getEntity().getName());
-			VaroPlayer vp1 = VaroPlayer.getPlayer(new EntityDamageByEntityUtil(event).getDamager());
+			VaroPlayer vp1 = VaroPlayer.getPlayer(damager);
 
 			if (!vp1.getStats().isAlive() || vp1.isAdminIgnore())
 				return;
