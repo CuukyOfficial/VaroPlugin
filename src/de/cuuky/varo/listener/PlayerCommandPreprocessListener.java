@@ -2,6 +2,7 @@ package de.cuuky.varo.listener;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -13,6 +14,8 @@ import de.cuuky.varo.Main;
 public class PlayerCommandPreprocessListener implements Listener {
 	
 	private static final List<String> WORLDEDIT_CRASH_COMMANDS = Arrays.asList(new String[] {"//calc", "/worldedit:/calc", "//calculate", "/worldedit:/calculate", "//eval", "/worldedit:/eval", "//evaluate", "/worldedit:/evaluate", "//solve", "/worldedit:/solve"});
+	private static final Pattern CRASH_DETECT_PATTERN = Pattern.compile(".+for\\(.+for\\(.+for\\(.+", Pattern.CASE_INSENSITIVE);
+	private static final Pattern CRASH_DETECT_PATTERN_SEVERE = Pattern.compile(".+\\sfor\\([a-z]+=0;[a-z]+<256;[a-z]+\\+\\+\\)\\{for\\([a-z]+=0;[a-z]+<256;[a-z]+\\+\\+\\)\\{for\\([a-z]+=0;[a-z]+<256;[a-z]+\\+\\+\\)\\{for\\([a-z]+=0;[a-z]+<256;[a-z]+\\+\\+\\)\\{\\}\\}\\}\\}", Pattern.CASE_INSENSITIVE);
 	private static final List<String> TELL_COMMANDS = Arrays.asList(new String[] {"/tell", "/bukkit:tell", "/me", "/bukkit:me"});
 
 	@EventHandler
@@ -21,7 +24,13 @@ public class PlayerCommandPreprocessListener implements Listener {
 		
 		if (WORLDEDIT_CRASH_COMMANDS.contains(lowerMessage)) {
 			event.setCancelled(true);
-			Bukkit.getServer().broadcastMessage(String.format("%s§e%s §chat möglicherweise versucht den Server zu crashen!", Main.getPrefix(), event.getPlayer().getName(), event.getMessage()));
+			if (CRASH_DETECT_PATTERN.matcher(event.getMessage()).matches()) {
+				if (CRASH_DETECT_PATTERN_SEVERE.matcher(event.getMessage()).matches())
+					Bukkit.getServer().broadcastMessage(String.format("%s§e%s §chat mit hoher Sicherheit versucht den Server zu crashen!", Main.getPrefix(), event.getPlayer().getName(), event.getMessage()));
+				else
+					Bukkit.getServer().broadcastMessage(String.format("%s§e%s §chat möglicherweise versucht den Server zu crashen!", Main.getPrefix(), event.getPlayer().getName(), event.getMessage()));
+			} else
+				event.getPlayer().sendMessage(Main.getPrefix() + "§7Nein.");
 		} else if (TELL_COMMANDS.contains(lowerMessage)) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(Main.getPrefix() + "§7Nein.");
