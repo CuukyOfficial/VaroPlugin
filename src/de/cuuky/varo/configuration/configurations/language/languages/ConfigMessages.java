@@ -306,7 +306,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	COMMANDS_XRAY_ALREADY_DEACTIVATED("varoCommands.xray.alreadyDactivated", "Das Anti-Xray ist bereits deaktiviert."),
 
 	COMMANDS_BORDER_SIZE("varoCommands.border.size", "Die Border ist momentan %colorcode%%size% Bloecke &7gross."),
-	COMMANDS_BORDER_DISTANCE("varoCommands.border.distance", "Du bist %colorcode%%distance% Blocke &7von der Border entfernt."),
+	COMMANDS_BORDER_DISTANCE("varoCommands.border.distance", "Du bist %colorcode%%distance% Bloecke &7von der Border entfernt."),
 	COMMANDS_BORDER_USAGE("varoCommands.border.usage", "Du kannst die Groesse der Border mit %colorcode%/border <Durchmesser> [Sekunden] &7setzen. Der Mittelpunkt der Border wird zu deinem derzeiten Punkt gesetzt."),
 
 	COMMANDS_BROADCAST_FORMAT("varoCommands.broadcast.format", "&8[&cBroadcast&8] &7%message%"),

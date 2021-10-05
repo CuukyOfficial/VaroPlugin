@@ -300,7 +300,7 @@ public enum LanguageEN implements LoadableMessage {
 	COMMANDS_XRAY_ALREADY_ACTIVATED("varoCommands.xray.alreadyActivated", "Anti-Xray already enabled"),
 	COMMANDS_XRAY_ALREADY_DEACTIVATED("varoCommands.xray.alreadyDactivated", "Anti-Xray already disabled"),
 
-	COMMANDS_BORDER_SIZE("varoCommands.border.size", "The border has a size of %colorcode%%size% blocks &7."),
+	COMMANDS_BORDER_SIZE("varoCommands.border.size", "The border has a size of %colorcode%%size% blocks&7."),
 	COMMANDS_BORDER_DISTANCE("varoCommands.border.distance", "You are %colorcode%%distance% blocks &7away from the border."),
 	COMMANDS_BORDER_USAGE("varoCommands.border.usage", "You can change the size of the border using %colorcode%/border <diameter> [seconds]&7. The center of the border will be set to your current position."),
 
