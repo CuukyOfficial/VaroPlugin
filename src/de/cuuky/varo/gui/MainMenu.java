@@ -14,6 +14,7 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.admin.AdminMainMenu;
 import de.cuuky.varo.gui.events.EventListGUI;
+import de.cuuky.varo.gui.items.ItemListSelectInventory;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
 import de.cuuky.varo.gui.settings.VaroSettingsMenu;
@@ -44,6 +45,9 @@ public class MainMenu extends VaroInventory {
     public void refreshContent() {
         addItem(4, new BuildItem().displayName("§7Alle §5Events").itemstack(new ItemStack(Material.APPLE)).build(),
                 (event) -> this.openNext(new EventListGUI(getPlayer())));
+
+        addItem(8, new BuildItem().material(Materials.CHEST).displayName("§aItem-Settings").build(),
+                (e) -> this.openNext(new ItemListSelectInventory(getPlayer())));
 
         addItem(10, new BuildItem().displayName("§bSpawn").itemstack(new ItemStack(Material.EMERALD))
                         .lore(new String[]{new LocationFormat(getPlayer().getWorld().getSpawnLocation())

@@ -18,7 +18,7 @@ import java.util.List;
 public class BackupListGUI extends VaroListInventory<VaroBackup> {
 
     public BackupListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, VaroBackup.getBackups());
     }
 
     private String getCurrentDate() {
@@ -68,10 +68,5 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
     @Override
     public String getTitle() {
         return "§aBackups";
-    }
-
-    @Override
-    public List<VaroBackup> getList() {
-        return VaroBackup.getBackups();
     }
 }

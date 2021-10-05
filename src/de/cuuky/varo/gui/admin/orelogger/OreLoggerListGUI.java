@@ -23,7 +23,8 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     public OreLoggerListGUI(Player opener) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener);
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener,
+                Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs());
     }
 
     @Override
@@ -34,11 +35,6 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
     @Override
     public int getSize() {
         return this.getRecommendedSize();
-    }
-
-    @Override
-    public List<LoggedBlock> getList() {
-        return Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs();
     }
 
     @Override

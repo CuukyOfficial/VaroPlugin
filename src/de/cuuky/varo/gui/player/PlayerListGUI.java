@@ -59,7 +59,7 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
     private final PlayerGUIType type;
 
     public PlayerListGUI(Player player, PlayerGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
 
         this.showStats = player.hasPermission("varo.viewStats");
         this.type = type;
@@ -76,22 +76,15 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
     }
 
     @Override
-    public List<VaroPlayer> getList() {
-        return type.getList();
-    }
-
-    @Override
     protected ItemStack getItemStack(VaroPlayer player) {
         return new BuildSkull().displayName(Main.getColorCode() + player.getName())
-                .player(player.getName())
-                .lore((showStats ? player.getStats().getStatsListed() : new String[]{})).build();
+                .player(player.getName()).lore((showStats ? player.getStats().getStatsListed() : null)).build();
     }
 
     @Override
     protected ItemClick getClick(VaroPlayer player) {
         return (event) -> {
-            if (getPlayer().hasPermission("varo.player"))
-                this.openNext(new PlayerGUI(getPlayer(), player));
+            if (getPlayer().hasPermission("varo.player")) this.openNext(new PlayerGUI(getPlayer(), player));
         };
     }
 }

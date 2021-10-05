@@ -8,17 +8,17 @@ import de.cuuky.varo.list.item.ItemList;
 public class BlockedItems extends ItemList {
 
 	public BlockedItems() {
-		super("BlockedItems");
+		super("BlockedItems", -1, true);
 	}
 	
 	@Override
 	public void loadDefaultValues() {
-		this.items.add(Materials.AIR.parseItem());
+		this.addItem(Materials.AIR.parseItem());
 	}
 
 	public boolean isBlocked(ItemStack itemstack) {
 		itemstack = fixItem(itemstack);
-		for (ItemStack stack : items)
+		for (ItemStack stack : this.getItems())
 			if (stack.equals(itemstack))
 				return true;
 

@@ -1,9 +1,6 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.cfw.inventory.AdvancedInventory;
-import de.cuuky.cfw.inventory.Info;
-import de.cuuky.cfw.inventory.InfoProvider;
-import de.cuuky.cfw.inventory.ItemInserter;
+import de.cuuky.cfw.inventory.*;
 import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
 import de.cuuky.cfw.inventory.inserter.DirectInserter;
 import de.cuuky.cfw.utils.item.BuildItem;
@@ -21,6 +18,9 @@ public class VaroInventoryConfigProvider implements InfoProvider {
     private final AdvancedInventory inventory;
     private final VaroPlayer player;
 
+    private final List<PrioritisedInfo> infos = Arrays.asList(new PrioritisedInfo(() -> 1, Info.ITEM_INSERTER),
+            new PrioritisedInfo(() -> 1, Info.FILLER_STACK), new PrioritisedInfo(() -> 1, Info.PLAY_SOUND));
+
     VaroInventoryConfigProvider(AdvancedInventory inventory) {
         this.inventory = inventory;
         this.player = VaroPlayer.getPlayer(this.inventory.getPlayer());
@@ -28,12 +28,17 @@ public class VaroInventoryConfigProvider implements InfoProvider {
 
     @Override
     public int getPriority() {
-        return 2;
+        return 0;
     }
 
     @Override
     public List<Info<?>> getProvidedInfos() {
-        return Arrays.asList(Info.ITEM_INSERTER, Info.FILLER_STACK, Info.PLAY_SOUND);
+        return null;
+    }
+
+    @Override
+    public List<PrioritisedInfo> getPrioritisedInfos() {
+        return this.infos;
     }
 
     @Override

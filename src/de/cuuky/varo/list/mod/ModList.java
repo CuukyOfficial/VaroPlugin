@@ -1,13 +1,13 @@
 package de.cuuky.varo.list.mod;
 
+import de.cuuky.varo.list.VaroList;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuuky.varo.list.VaroList;
-
 public abstract class ModList extends VaroList {
 
-	protected ArrayList<String> mods;
+	protected List<String> mods;
 
 	public ModList(String location) {
 		super(location);
@@ -21,7 +21,7 @@ public abstract class ModList extends VaroList {
 	
 	@Override
 	public void init() {
-		this.mods = new ArrayList<String>();
+		this.mods = new ArrayList<>();
 	}
 
 	@Override
@@ -37,11 +37,11 @@ public abstract class ModList extends VaroList {
 	}
 
 	@Override
-	public ArrayList<String> getAsList() {
+	public List<String> getAsList() {
 		return mods;
 	}
 
-	public ArrayList<String> getModList() {
+	public List<String> getModList() {
 		return mods;
 	}
 

@@ -1,59 +1,28 @@
 package de.cuuky.varo.gui.admin.inventory;
 
-import de.cuuky.cfw.inventory.Info;
-import de.cuuky.cfw.inventory.InfoProvider;
+import de.cuuky.cfw.inventory.InventoryNotifiable;
+import de.cuuky.cfw.inventory.list.AdvancedEditInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
-
-public class InventoryBackupShowGUI extends VaroInventory {
+public class InventoryBackupShowGUI extends AdvancedEditInventory implements InventoryNotifiable {
 
     private final InventoryBackup backup;
-    private final InfoProvider clickInfoProvider;
 
     public InventoryBackupShowGUI(Player player, InventoryBackup backup) {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
 
         this.backup = backup;
-        this.clickInfoProvider = new InfoProvider() {
-            @Override
-            public int getPriority() {
-                return 10;
-            }
-
-            @Override
-            public List<Info<?>> getProvidedInfos() {
-                return Arrays.asList(Info.CANCEL_CLICK, Info.PLAY_SOUND);
-            }
-
-            @Override
-            public boolean cancelClick() {
-                return false;
-            }
-
-            @Override
-            public Consumer<Player> getSoundPlayer() {
-                return null;
-            }
-        };
-    }
-
-    private boolean isStuff() {
-        return super.getLastClickedSlot() < this.backup.getAllContents().length && super.getLastClickedSlot() >= 0;
     }
 
     @Override
-    protected List<InfoProvider> getTemporaryProvider() {
-        return this.isStuff() ? Collections.singletonList(this.clickInfoProvider) : super.getTemporaryProvider();
+    protected ItemStack getStack(int i) {
+        ItemStack[] content = this.backup.getAllContents();
+        return content.length <= i ? null : this.backup.getAllContents()[i];
     }
 
     @Override
@@ -62,33 +31,36 @@ public class InventoryBackupShowGUI extends VaroInventory {
     }
 
     @Override
+    public int getMaxPage() {
+        return 1;
+    }
+
+    @Override
     public int getSize() {
         return 54;
     }
 
     @Override
-    public void update() {
-        this.updateProvider();
-        if (!this.isOpen())
-            super.update();
+    public boolean shallInsertFiller(int location, ItemStack stack) {
+        return location >= this.backup.getAllContents().length;
+    }
+
+    @Override
+    public void onClose() {
+        this.backup.clear();
+        for (int i = 0; i < this.backup.getAllContents().length; i++) {
+            ItemStack item = getInventory().getItem(i);
+            if (item != null) this.backup.setItem(i, item);
+        }
     }
 
     @Override
     public void refreshContent() {
-    	ItemStack[] contents = this.backup.getAllContents();
-        for (int i = 0; i < 45; i++) {
-            ItemStack st = i < contents.length ? contents[i] : getFillerStack();
-            addItem(i, st);
-        }
-
-        addItem(this.getSize() - 1, new BuildItem().itemstack(new ItemStack(Material.PAPER)).displayName("§aSave backup").build(), (event) -> {
-            this.backup.clear();
-            
-            for (int i = 0; i < contents.length; i++) {
-            	ItemStack item = getInventory().getItem(i);
-            	if (item != null)
-            		this.backup.setItem(i, item);
-            }
-        });
+        super.refreshContent();
+        this.addItem(this.getUsableSize(), new BuildItem().material(Materials.SIGN).displayName("§aTipp!")
+                .lore("§7Du kannst in dem Feld über mir die Rüstung platzieren!", "",
+                        "§7Starte dafür über mir mit den Schuhen",
+                        "§7und danach jeweils einen nach rechts die",
+                        "§7Hose, den Brustpanzer und den Helm!").build());
     }
 }

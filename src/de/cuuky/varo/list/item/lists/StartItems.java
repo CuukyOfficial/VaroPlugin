@@ -1,26 +1,25 @@
 package de.cuuky.varo.list.item.lists;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.list.item.ItemList;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class StartItems extends ItemList {
 
 	public StartItems() {
-		super("StartItems");
+		super("StartItems", 36, false);
 	}
 	
 	@Override
 	public void loadDefaultValues() {
-		this.items.add(Materials.AIR.parseItem());
+		this.addItem(Materials.AIR.parseItem());
 	}
 
 	public void giveToAll() {
-		for (Player player : Bukkit.getOnlinePlayers())
-			for (ItemStack item : items)
+		for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers())
+			for (ItemStack item : getItems())
 				player.getInventory().addItem(item);
 	}
 }
