@@ -12,7 +12,7 @@ public class VaroInventoryManager extends AdvancedInventoryManager {
 
     @Override
     protected AdvancedInventory registerInventory(AdvancedInventory inventory) {
-        inventory.addProvider(new VaroInventoryConfigProvider(inventory));
+        inventory.addProvider("PlayerConfig", new VaroInventoryConfigProvider(inventory));
         return super.registerInventory(inventory);
     }
 }

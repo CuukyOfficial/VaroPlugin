@@ -1,4 +1,4 @@
-package de.cuuky.varo.gui.admin.items;
+package de.cuuky.varo.gui.items;
 
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
@@ -15,9 +15,14 @@ public class ItemListSelectInventory extends VaroListInventory<ItemList> {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, ItemList.getItemLists());
     }
 
+    private boolean hasWritePermission() {
+        return getPlayer().hasPermission("varo.item");
+    }
+
     @Override
     protected ItemStack getItemStack(ItemList itemList) {
-        return new BuildItem().material(Materials.CHEST).displayName(Main.getColorCode() + itemList.getLocation()).build();
+        return new BuildItem().material(Materials.CHEST).displayName(Main.getColorCode() + itemList.getLocation())
+                .lore(this.hasWritePermission() && !itemList.isPublic() ? "§7Nur für Admins einsehbar" : "§cNicht für dich").build();
     }
 
     @Override
@@ -32,6 +37,9 @@ public class ItemListSelectInventory extends VaroListInventory<ItemList> {
 
     @Override
     protected ItemClick getClick(ItemList itemList) {
-        return (e) -> this.openNext(new ItemListInventory(this.getPlayer(), itemList));
+        return (e) -> {
+            if (itemList.isPublic() || this.hasWritePermission())
+                this.openNext(new ItemListInventory(this.getPlayer(), itemList));
+        };
     }
 }

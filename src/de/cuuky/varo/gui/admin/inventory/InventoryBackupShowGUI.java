@@ -4,7 +4,6 @@ import de.cuuky.cfw.inventory.InventoryNotifiable;
 import de.cuuky.cfw.inventory.list.AdvancedEditInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import org.bukkit.entity.Player;
@@ -42,15 +41,17 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
     }
 
     @Override
+    public boolean shallInsertFiller(int location, ItemStack stack) {
+        return location >= this.backup.getAllContents().length;
+    }
+
+    @Override
     public void onClose() {
         this.backup.clear();
-
-        ItemStack[] stack = this.collectItems();
-        for (int i = 0; i < 40; i++) {
-            ItemStack item = stack[i];
+        for (int i = 0; i < this.backup.getAllContents().length; i++) {
+            ItemStack item = getInventory().getItem(i);
             if (item != null) this.backup.setItem(i, item);
         }
-        this.getPlayer().playSound(this.getPlayer().getLocation(), Sounds.ANVIL_USE.bukkitSound(), 1f, 1f);
     }
 
     @Override

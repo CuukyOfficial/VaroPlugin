@@ -11,13 +11,13 @@ public class ChestItems extends ItemList {
 	
 	@Override
 	public void loadDefaultValues() {
-		this.items.add(Materials.WOODEN_AXE.parseItem());
-		this.items.add(Materials.SUGAR_CANE.parseItem());
-		this.items.add(Materials.APPLE.parseItem());
-		this.items.add(Materials.PORKCHOP.parseItem());
-		this.items.add(Materials.OAK_WOOD.parseItem());
-		this.items.add(Materials.STICK.parseItem());
-		this.items.add(Materials.COBBLESTONE.parseItem());
-		this.items.add(Materials.SAND.parseItem());
+		this.addItem(Materials.WOODEN_AXE.parseItem());
+		this.addItem(Materials.SUGAR_CANE.parseItem());
+		this.addItem(Materials.APPLE.parseItem());
+		this.addItem(Materials.PORKCHOP.parseItem());
+		this.addItem(Materials.OAK_WOOD.parseItem());
+		this.addItem(Materials.STICK.parseItem());
+		this.addItem(Materials.COBBLESTONE.parseItem());
+		this.addItem(Materials.SAND.parseItem());
 	}
 }

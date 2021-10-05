@@ -3,7 +3,7 @@ package de.cuuky.varo.command.varo;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.admin.items.ItemListInventory;
+import de.cuuky.varo.gui.items.ItemListInventory;
 import de.cuuky.varo.list.VaroList;
 import de.cuuky.varo.list.item.ItemList;
 import org.bukkit.Material;
@@ -27,10 +27,10 @@ public class ItemCommand extends VaroCommand {
 
         if (args.length == 0) {
             sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Item §7-----");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> - Öffnet Inventar");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Add");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> list");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> show/menu");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
             sender.sendMessage(Main.getPrefix());
@@ -46,11 +46,6 @@ public class ItemCommand extends VaroCommand {
             return;
         }
 
-        if (args.length < 2) {
-            sender.sendMessage(Main.getPrefix() + "Falsche Argumente! " + Main.getColorCode() + label + " item <liste> <Add/Remove> [Anzahl]");
-            return;
-        }
-
         ItemList list = ItemList.getItemList(args[0]);
         if (list == null) {
             sender.sendMessage(Main.getPrefix() + "Liste " + args[0] + " nicht gefunden!");
@@ -58,6 +53,11 @@ public class ItemCommand extends VaroCommand {
         }
 
         Player player = vp.getPlayer();
+        if (args.length == 1) {
+            new ItemListInventory(player, list);
+            return;
+        }
+
         if (args[1].equalsIgnoreCase("list")) {
             if (list.getItems().size() < 1) {
                 sender.sendMessage(Main.getPrefix() + "Keine Items gefunden!");
@@ -66,9 +66,6 @@ public class ItemCommand extends VaroCommand {
 
             sender.sendMessage(Main.getPrefix() + "Liste aller Items von " + Main.getColorCode() + list.getLocation() + "§7:");
             for (ItemStack stack : list.getItems()) sender.sendMessage(Main.getPrefix() + stack.toString());
-            return;
-        } else if (args[1].equalsIgnoreCase("menu") || args[1].equalsIgnoreCase("show")) {
-            new ItemListInventory(player, list);
             return;
         }
 

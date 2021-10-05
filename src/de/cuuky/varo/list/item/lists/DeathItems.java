@@ -11,6 +11,6 @@ public class DeathItems extends ItemList {
 
 	@Override
 	public void loadDefaultValues() {
-		this.items.add(Materials.AIR.parseItem());
+		this.getItems().add(Materials.AIR.parseItem());
 	}
 }

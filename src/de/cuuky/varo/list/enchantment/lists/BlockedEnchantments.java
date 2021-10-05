@@ -6,7 +6,6 @@ import de.cuuky.varo.list.enchantment.EnchantmentList;
 
 public class BlockedEnchantments extends EnchantmentList {
 
-	@SuppressWarnings("deprecation")
 	public BlockedEnchantments() {
 		super("BlockedEnchantments");
 	}
@@ -18,9 +17,6 @@ public class BlockedEnchantments extends EnchantmentList {
 
 	@SuppressWarnings("deprecation")
 	public boolean isBlocked(Enchantment ench, int amplifier) {
-		if (enchantments.contains(ench.getName() + ":" + amplifier))
-			return true;
-
-		return false;
+		return enchantments.contains(ench.getName() + ":" + amplifier);
 	}
 }

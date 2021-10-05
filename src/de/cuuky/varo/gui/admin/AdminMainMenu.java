@@ -15,7 +15,6 @@ import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
 import de.cuuky.varo.gui.admin.debug.DebugGUI;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 import de.cuuky.varo.gui.admin.game.GameOptionsGUI;
-import de.cuuky.varo.gui.admin.items.ItemListSelectInventory;
 import de.cuuky.varo.gui.admin.orelogger.OreLoggerListGUI;
 import de.cuuky.varo.gui.admin.setuphelp.SetupHelpGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
@@ -49,9 +48,6 @@ public class AdminMainMenu extends VaroInventory {
 
         addItem(4, new BuildItem().displayName("§cConfig").material(Materials.WHEAT).build(),
                 (event) -> this.openNext(new ConfigSectionGUI(getPlayer())));
-
-        addItem(8, new BuildItem().material(Materials.CHEST).displayName("§aItem-Settings").build(),
-                (e) -> this.openNext(new ItemListSelectInventory(getPlayer())));
 
         addItem(10, new BuildItem().displayName("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(),
                 (event) -> this.openNext(new ReportListGUI(getPlayer())));

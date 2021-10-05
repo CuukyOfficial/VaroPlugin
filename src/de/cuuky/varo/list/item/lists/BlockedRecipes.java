@@ -1,9 +1,8 @@
 package de.cuuky.varo.list.item.lists;
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.list.item.ItemList;
+import org.bukkit.inventory.ItemStack;
 
 public class BlockedRecipes extends ItemList {
 
@@ -13,12 +12,12 @@ public class BlockedRecipes extends ItemList {
 	
 	@Override
 	public void loadDefaultValues() {
-		this.items.add(new ItemStack(Material.AIR));
+		this.addItem(Materials.AIR.parseItem());
 	}
 
 	public boolean isBlocked(ItemStack itemstack) {
 		itemstack = fixItem(itemstack);
-		for (ItemStack stack : items)
+		for (ItemStack stack : this.getItems())
 			if (stack.equals(itemstack))
 				return true;
 

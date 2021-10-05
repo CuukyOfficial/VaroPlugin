@@ -11,15 +11,20 @@ import java.util.stream.Stream;
 
 public abstract class ItemList extends VaroList {
 
-	protected List<ItemStack> items;
 	private final int maxSize;
-	private final boolean uniqueType;
+	private final boolean uniqueType, publicc;
+	private List<ItemStack> items;
 
-	public ItemList(String location, int maxSize, boolean uniqueType) {
+	public ItemList(String location, int maxSize, boolean uniqueType, boolean publicc) {
 		super(location);
 
+		this.publicc = publicc;
 		this.maxSize = maxSize;
 		this.uniqueType = uniqueType;
+	}
+
+	public ItemList(String location, int maxSize, boolean uniqueType) {
+		this(location, maxSize, uniqueType, true);
 	}
 
 	protected ItemStack fixItem(ItemStack item) {
@@ -73,7 +78,7 @@ public abstract class ItemList extends VaroList {
 	}
 
 	public boolean addItem(ItemStack item) {
-		if (this.items.size() >= this.maxSize) return false;
+		if (this.maxSize > 0 && this.items.size() >= this.maxSize) return false;
 		this.processItem(item, this.items::add);
 		return true;
 	}
@@ -121,6 +126,10 @@ public abstract class ItemList extends VaroList {
 
 	public int getMaxSize() {
 		return maxSize;
+	}
+
+	public boolean isPublic() {
+		return publicc;
 	}
 
 	private static Stream<ItemList> getItemList() {

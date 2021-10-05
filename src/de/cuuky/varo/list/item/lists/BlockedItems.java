@@ -13,12 +13,12 @@ public class BlockedItems extends ItemList {
 	
 	@Override
 	public void loadDefaultValues() {
-		this.items.add(Materials.AIR.parseItem());
+		this.addItem(Materials.AIR.parseItem());
 	}
 
 	public boolean isBlocked(ItemStack itemstack) {
 		itemstack = fixItem(itemstack);
-		for (ItemStack stack : items)
+		for (ItemStack stack : this.getItems())
 			if (stack.equals(itemstack))
 				return true;
 
