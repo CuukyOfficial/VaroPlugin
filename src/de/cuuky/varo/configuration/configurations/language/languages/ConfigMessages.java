@@ -60,7 +60,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	CHAT_PLAYER_WITHOUT_TEAM("chat.format.withoutTeam", "&7%player% &8» &f%message%"),
 	CHAT_PLAYER_WITHOUT_TEAM_RANK("chat.format.withoutTeamWithRank", "&7%rank% &8| &7%player% &8» &f%message%"),
 
-	CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
+	CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %from% &8» &f%message%"),
 	CHAT_MUTED("chat.muted", "&7Du wurdest gemutet!"),
 	CHAT_WHEN_START("chat.chatOnStart", "&7Du kannst erst ab dem Start wieder schreiben!"),
 
@@ -339,14 +339,14 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	private String path, defaultMessage, message;
 
-	private ConfigMessages(String path, String message) {
+	ConfigMessages(String path, String message) {
 		this.path = path;
 		this.defaultMessage = message;
 		this.message = message;
 	}
 
 	private String getMessage(Language lang) {
-		String message = null;
+		String message;
 		if (lang == null || lang == Main.getLanguageManager().getDefaultLanguage() || !ConfigSetting.MAIN_LANGUAGE_ALLOW_OTHER.getValueAsBoolean())
 			message = Main.getLanguageManager().getDefaultLanguage().getMessage(this.path);
 		else {
