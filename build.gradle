@@ -118,7 +118,7 @@ processResources {
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from (sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [name: "Varo"]
-        filter ReplaceTokens, tokens: [version: "4.8.1"]
+        filter ReplaceTokens, tokens: [version: "4.8.2-BETA-1"]
         filter ReplaceTokens, tokens: [author: "Cuuky"]
     }
 }
