@@ -49,7 +49,7 @@ public abstract class Library {
 		File jar = new File(LIB_FOLDER, this.getName() + ".jar");
 
 		// download jar if necessary
-		if (!jar.exists()) {
+		if (!jar.exists() || jar.length() == 0) {
 			System.out.println(Main.getConsolePrefix() + "Downloading " + this.link);
 			try {
 				jar.createNewFile();
