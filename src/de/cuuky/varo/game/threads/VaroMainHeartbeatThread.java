@@ -113,7 +113,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 						continue;
 
-					Player p = vp.getPlayer();
+					Player pp = vp.getPlayer();
 					ArrayList<String> actionbar = new ArrayList<>();
 
 					int distance = VersionUtils.getVersion() == BukkitVersion.ONE_7 ? -1 : (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().getBorderDistanceTo(p);
