@@ -78,7 +78,7 @@ public enum LanguageEN implements LoadableMessage {
 	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "&7Your team got a team life because of a kill!"),
 
 	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7starts in %colorcode%%countdown% &7second(s)!"),
-	GAME_VARO_START("game.start.varoStart", "%projectname% &7was started! &5Good luck!"),
+	GAME_VARO_START("game.start.varoStart", "%projectname% &7has started! &5Good luck!"),
 	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%\n&7Good luck!"),
 	GAME_WIN("game.win.single", "&5%player% &7has won %projectname%&7! &5Congratulations!"),
 	GAME_WIN_TEAM("game.win.team", "&5%winnerPlayers% &7 have won %projectname% &7! &5Congratulations!"),
