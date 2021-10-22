@@ -113,8 +113,8 @@ public class VaroGame implements VaroSerializeable {
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
         }
 
-        if (ConfigSetting.REMOVE_PLAYERS_ARENT_AT_START.getValueAsBoolean())
-            removeArentAtStart();
+        if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
+            removeAbsentAtStart();
 
         if (minuteTimer != null)
             minuteTimer.remove();
@@ -130,7 +130,7 @@ public class VaroGame implements VaroSerializeable {
         startThread = null;
     }
 
-    private void removeArentAtStart() {
+    private void removeAbsentAtStart() {
         for (VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
             if (!varoplayer.isOnline())
                 varoplayer.delete();
