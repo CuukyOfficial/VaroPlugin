@@ -83,7 +83,8 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunde(n)!"),
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7wurde gestartet! &5Viel Erfolg!"),
-	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%\n&7Viel Glueck!"),
+	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
+	GAME_VARO_START_SUBTITLE("game.start.startSubtitle", "&7Viel Glueck!"),
 	GAME_WIN("game.win.single", "&5%player% &7hat %projectname% &7gewonnen! &5Gratulation!"),
 	GAME_WIN_TEAM("game.win.team", "&5%winnerPlayers% &7haben %projectname% &7gewonnen! &5Gratulation!"),
 
