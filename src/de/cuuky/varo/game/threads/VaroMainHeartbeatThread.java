@@ -113,9 +113,10 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 						continue;
 
+					Player p = vp.getPlayer();
 					ArrayList<String> actionbar = new ArrayList<>();
 
-					int distance = VersionUtils.getVersion() == BukkitVersion.ONE_7 ? -1 : (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(vp.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(vp.getPlayer());
+					int distance = VersionUtils.getVersion() == BukkitVersion.ONE_7 ? -1 : (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().getBorderDistanceTo(p);
 					if (distance != -1 && (!ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt()))
 						actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
 
