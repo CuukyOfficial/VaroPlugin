@@ -65,11 +65,11 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 
 			}
 
-			if (ConfigSetting.PLAY_TIME.isIntActivated()) {
-				for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
-					if (vp.getStats().isSpectator() || vp.isAdminIgnore())
-						continue;
+			for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+				if (vp.getStats().isSpectator() || vp.isAdminIgnore())
+					continue;
 
+				if (ConfigSetting.PLAY_TIME.isIntActivated()) {
 					int countdown = vp.getStats().getCountdown() - 1;
 					Player p = vp.getPlayer();
 					ArrayList<String> actionbar = new ArrayList<>();
@@ -107,6 +107,14 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					}
 
 					vp.getStats().setCountdown(countdown);
+				} else if (showDistanceToBorder) {
+					ArrayList<String> actionbar = new ArrayList<>();
+					int distance = VersionUtils.getVersion() == BukkitVersion.ONE_7 ? -1 : (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(vp.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(vp.getPlayer());
+					if (distance != -1 && (!ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.isIntActivated() || distance <= ConfigSetting.DISTANCE_TO_BORDER_REQUIRED.getValueAsInt()))
+						actionbar.add("§7Distanz zur Border: " + Main.getColorCode() + distance);
+
+					if (!actionbar.isEmpty())
+						vp.getVersionAdapter().sendActionbar(JavaUtils.getArgsToString(actionbar, "§7 | "));
 				}
 			}
 		}
