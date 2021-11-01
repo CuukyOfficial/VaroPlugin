@@ -25,6 +25,16 @@ public class ItemListInventory extends AdvancedEditListInventory implements Inve
         return getPlayer().hasPermission("varo.item");
     }
 
+    private void save() {
+        if (!this.hasWritePermission()) return;
+        this.list.getItems().clear();
+        this.collectNullFilteredItems().forEach(item -> {
+            if (this.list.isUniqueType() && this.list.hasItem(item)) return;
+            this.list.addItem(item);
+        });
+        this.list.saveList();
+    }
+
     @Override
     public int getMaxPage() {
         return this.list.getMaxSize() == -1 ? Integer.MAX_VALUE
@@ -43,21 +53,22 @@ public class ItemListInventory extends AdvancedEditListInventory implements Inve
 
     @Override
     public void onClose() {
-        if (!this.hasWritePermission()) return;
-        this.list.getItems().clear();
-        this.collectNullFilteredItems().forEach(item -> {
-            if (this.list.isUniqueType() && this.list.hasItem(item)) return;
-            this.list.addItem(item);
-        });
-        this.list.saveList();
+        this.save();
     }
 
     @Override
     public void refreshContent() {
         super.refreshContent();
-        if (this.hasWritePermission())
-            this.addItem(this.getUsableSize(), new BuildItem().material(Materials.SIGN).displayName("§aTipp!")
+        if (this.hasWritePermission()) {
+            this.addItem(this.getUsableSize() + 1, new BuildItem().material(Materials.SIGN).displayName("§aTipp!")
                     .lore("", "§7Nur du als Admin kannst diese", "§7Listen bearbeiten!").build());
+//            this.addItem(this.getUsableSize() + 7, new BuildItem().material(Materials.EMERALD).displayName("§2Save")
+//                    .lore("§7Speichere das Inventar", "§7(Beim Schließen des Inventars wird automatisch gespeichert)")
+//                    .build(), (e) -> {
+//                this.save();
+//                update();
+//            });
+        }
     }
 
     @Override

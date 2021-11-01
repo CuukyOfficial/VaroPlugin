@@ -154,6 +154,8 @@ public class Main extends JavaPlugin {
 			botLauncher.disconnect();
 		}
 
+		cuukyFrameWork.disable();
+
 		if (!this.failed)
 			VersionUtils.getVersionAdapter().getOnlinePlayers()
 					.forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
