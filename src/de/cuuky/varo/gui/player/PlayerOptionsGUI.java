@@ -30,10 +30,10 @@ public class PlayerOptionsGUI extends VaroListInventory<StatType> {
         return Main.getColorCode() + target.getName() + " §7(" + target.getId() + ")";
     }
 
-    @Override
-    public int getSize() {
-        return this.getRecommendedSize(9);
-    }
+//    @Override
+//    public int getSize() {
+//        return this.getRecommendedSize(9);
+//    }
 
     public VaroPlayer getTarget() {
         return this.target;

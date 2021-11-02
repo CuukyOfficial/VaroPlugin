@@ -9,6 +9,9 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public class InventoryBackupShowGUI extends AdvancedEditInventory implements InventoryNotifiable {
 
     private final InventoryBackup backup;
@@ -19,11 +22,11 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
         this.backup = backup;
     }
 
-    @Override
-    protected ItemStack getStack(int i) {
-        ItemStack[] content = this.backup.getAllContents();
-        return content.length <= i ? null : this.backup.getAllContents()[i];
-    }
+//    @Override
+//    protected ItemStack getStack(int i) {
+//        ItemStack[] content = this.backup.getAllContents();
+//        return content.length <= i ? null : this.backup.getAllContents()[i];
+//    }
 
     @Override
     public String getTitle() {
@@ -36,8 +39,8 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
     }
 
     @Override
-    public int getSize() {
-        return 54;
+    protected Collection<ItemStack> getInitialItems() {
+        return Arrays.asList(this.backup.getAllContents());
     }
 
     @Override

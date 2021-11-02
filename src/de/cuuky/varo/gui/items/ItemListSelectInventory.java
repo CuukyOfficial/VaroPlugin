@@ -25,10 +25,10 @@ public class ItemListSelectInventory extends VaroListInventory<ItemList> {
                 .lore(this.hasWritePermission() && !itemList.isPublic() ? "§7Nur für Admins einsehbar" : null).build();
     }
 
-    @Override
-    protected int getMinPageSize() {
-        return ItemList.getItemLists().size();
-    }
+//    @Override
+//    protected int getMinPageSize() {
+//        return ItemList.getItemLists().size();
+//    }
 
     @Override
     public String getTitle() {

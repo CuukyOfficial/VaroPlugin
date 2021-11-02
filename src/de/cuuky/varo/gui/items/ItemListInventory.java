@@ -41,10 +41,10 @@ public class ItemListInventory extends AdvancedEditListInventory implements Inve
                 : (int) Math.ceil((double) this.list.getMaxSize() / (double) this.getInfo(Info.SIZE));
     }
 
-    @Override
-    protected int getMinPageSize() {
-        return this.list.getMaxSize() == -1 ? 54 : this.list.getMaxSize();
-    }
+//    @Override
+//    protected int getMinPageSize() {
+//        return this.list.getMaxSize() == -1 ? 54 : this.list.getMaxSize();
+//    }
 
     @Override
     public String getTitle() {

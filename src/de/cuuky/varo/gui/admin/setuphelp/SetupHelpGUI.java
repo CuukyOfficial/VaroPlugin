@@ -66,10 +66,10 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
         return "§eSetup Assistant";
     }
 
-    @Override
-    public int getSize() {
-        return this.getRecommendedSize(9);
-    }
+//    @Override
+//    public int getSize() {
+//        return this.getRecommendedSize(0, 9);
+//    }
 
     @Override
     protected ItemStack getItemStack(SetupCheckList check) {
