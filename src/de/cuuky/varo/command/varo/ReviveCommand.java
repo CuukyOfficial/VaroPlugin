@@ -1,6 +1,5 @@
 package de.cuuky.varo.command.varo;
 
-import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -34,9 +33,6 @@ public class ReviveCommand extends VaroCommand {
 		}
 
 		target.getStats().setState(PlayerState.ALIVE);
-		if (target.isOnline()) {
-			target.getPlayer().setGameMode(GameMode.SURVIVAL);
-		}
 
 		sender.sendMessage(Main.getPrefix() + "Spieler erfolgreich wiederbelebt!");
 	}
