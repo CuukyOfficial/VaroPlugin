@@ -1,5 +1,18 @@
 package de.cuuky.varo.entity.player.stats;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
@@ -23,18 +36,6 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.Spawn;
-import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Stats implements VaroSerializeable {
 
@@ -566,12 +567,23 @@ public class Stats implements VaroSerializeable {
 		if (VaroAPI.getEventManager().executeEvent(new PlayerStateChangeEvent(owner, state))) return;
 
 		this.state = state;
-		if (state == PlayerState.DEAD) this.diedAt = new Date();
-
-		if (this.owner.isOnline())
-			if (this.state == PlayerState.SPECTATOR) this.owner.setSpectacting();
-            else VersionUtils.getVersionAdapter().setXpCooldown(this.owner.getPlayer(), 0);
-
+		if (state == PlayerState.DEAD)
+			this.diedAt = new Date();
+		
+		switch (state) {
+		case ALIVE:
+			this.owner.setAlive();
+			break;
+		case DEAD:
+			this.diedAt = new Date();
+			break;
+		case SPECTATOR:
+			this.owner.setSpectacting();
+			break;
+		default:
+			throw new Error("Unknown playerstate");
+		}
+		
 		new WinnerCheck();
 	}
 

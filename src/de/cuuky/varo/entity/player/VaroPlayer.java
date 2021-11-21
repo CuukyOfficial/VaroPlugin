@@ -290,6 +290,26 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			}
 		}.runTask(Main.getInstance());
 	}
+	
+	public void setAlive() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (!isOnline())
+					return;
+
+				VersionUtils.getVersionAdapter().setXpCooldown(player, 0);
+				player.getPlayer().setGameMode(GameMode.SURVIVAL);
+				player.getPlayer().setAllowFlight(false);
+				player.getPlayer().setFlying(false);
+				cleanUpPlayer();
+				
+				Vanish v = Vanish.getVanish(player);
+				if(v != null)
+					v.remove();
+			}
+		}.runTask(Main.getInstance());
+	}
 
 	public void update() {
 		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
