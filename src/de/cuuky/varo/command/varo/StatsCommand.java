@@ -44,10 +44,14 @@ public class StatsCommand extends VaroCommand {
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats §7<Spieler>");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set/add*/decrease* §7<Stat> <Value> <Spieler.../@a> | Setzt einen Stat auf einen bestimmten Wert");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Stat> <Spieler.../@a> | Setzt einen oder alle Wert(e) zurück");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats reset §7<Spieler.../@a> | Resettet alle Stats");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats odvReset §7<Spieler.../@a> | Resettet alles ausser Kills, Wins, Rank, Team und YT-Link");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label +
+                " stats set/add*/decrease* §7<Stat> <Value> <Spieler.../@a> | Setzt einen Stat auf einen bestimmten Wert");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label +
+                " stats remove §7<Stat> <Spieler.../@a> | Setzt einen oder alle Wert(e) zurück");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label +
+                " stats reset §7<Spieler.../@a> | Resettet alle Stats");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label +
+                " stats odvReset §7<Spieler.../@a> | Resettet alles ausser Kills, Wins, Rank, Team und YT-Link");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + " *Nur für Werte nutzbar, die eine Zahl sind");
             sender.sendMessage(Main.getPrefix() + " Tipp: Das '...' bedeutet, dass man mehrere Spieler angeben kann.");
             return;
@@ -67,7 +71,8 @@ public class StatsCommand extends VaroCommand {
             return;
         }
 
-        if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("decrease")) {
+        if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("add") ||
+            args[0].equalsIgnoreCase("decrease")) {
             if (args.length == 2) {
                 String stats = Arrays.stream(StatType.values()).map(StatType::getArg).collect(Collectors.joining(", "));
                 sender.sendMessage(Main.getPrefix() + "Stats available: " + stats);
@@ -79,18 +84,21 @@ public class StatsCommand extends VaroCommand {
             int min = set ? 4 : 3;
             if (set) {
                 if (args.length < min) {
-                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats set/add/decrease §7<Stat...> <Value> <Spieler.../@a> | Setzt einen Stat auf einen bestimmten Wert");
+                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label +
+                        " stats set/add/decrease §7<Stat...> <Value> <Spieler.../@a> | Setzt einen Stat auf einen bestimmten Wert");
                     return;
                 }
             } else {
                 if (args.length < min) {
-                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " stats remove §7<Stat> <Spieler.../@a> | Setzt einen oder alle Wert(e) zurück");
+                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label +
+                        " stats remove §7<Stat> <Spieler.../@a> | Setzt einen oder alle Wert(e) zurück");
                     return;
                 }
             }
 
             if (type == null) {
-                sender.sendMessage(Main.getPrefix() + "Stat '" + Main.getColorCode() + args[1] + "§7' konnte nicht gefunden werden!");
+                sender.sendMessage(
+                    Main.getPrefix() + "Stat '" + Main.getColorCode() + args[1] + "§7' konnte nicht gefunden werden!");
                 return;
             }
 
@@ -99,7 +107,8 @@ public class StatsCommand extends VaroCommand {
                 boolean add = args[0].equalsIgnoreCase("add"), dec = args[0].equalsIgnoreCase("decrease");
                 if (add || dec) {
                     try {
-                        int from = Integer.parseInt(String.valueOf(type.get(target))), calc = Integer.parseInt(toSet) * (dec ? -1 : 1);
+                        int from = Integer.parseInt(String.valueOf(type.get(target))), calc =
+                            Integer.parseInt(toSet) * (dec ? -1 : 1);
                         toSet = String.valueOf(from + calc);
                     } catch (NumberFormatException e) {
                         sender.sendMessage(Main.getPrefix() + "Konnte Zahlen nicht verrechnen!");
@@ -107,16 +116,20 @@ public class StatsCommand extends VaroCommand {
                     }
                 }
 
-                if (!args[0].equalsIgnoreCase("remove"))
-                    type.execute(toSet, target, sender);
-                else type.remove(target);
+                if (!args[0].equalsIgnoreCase("remove")) {
+                    if (!type.execute(toSet, target)) {
+                        sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + toSet +
+                            "§7' §7konnte nicht fuer " + this + " gesetzt werden!");
+                    }
+                } else type.remove(target);
                 return true;
             }, args, min - 1);
 
             if (found == null)
                 sender.sendMessage(Main.getPrefix() + "Keine Spieler gefunden!");
             else
-                sender.sendMessage(Main.getPrefix() + "Stat erfolgreich für " + Main.getColorCode() + found + " §7geupdated!");
+                sender.sendMessage(
+                    Main.getPrefix() + "Stat erfolgreich für " + Main.getColorCode() + found + " §7geupdated!");
         } else if (args[0].equalsIgnoreCase("reset")) {
             String found = this.doCommand((target) -> {
                 target.getStats().loadDefaults();
@@ -126,7 +139,8 @@ public class StatsCommand extends VaroCommand {
             if (found == null)
                 sender.sendMessage(Main.getPrefix() + "Keine Spieler gefunden!");
             else
-                sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + found + "§7 erfolgreich zurueckgesetzt!");
+                sender.sendMessage(
+                    Main.getPrefix() + "Spieler " + Main.getColorCode() + found + "§7 erfolgreich zurueckgesetzt!");
         } else if (args[0].equalsIgnoreCase("odvreset")) {
             String found = this.doCommand((target) -> {
                 target.getStats().loadStartDefaults();
@@ -136,8 +150,10 @@ public class StatsCommand extends VaroCommand {
                 return true;
             }, args, 1);
 
-            sender.sendMessage(Main.getPrefix() + "Spieler " + Main.getColorCode() + found + "§7 erfolgreich ODV-zurueckgesetzt!");
+            sender.sendMessage(
+                Main.getPrefix() + "Spieler " + Main.getColorCode() + found + "§7 erfolgreich ODV-zurueckgesetzt!");
         } else
-            sender.sendMessage(Main.getPrefix() + "Not found! Type " + Main.getColorCode() + label + " stats §7for help.");
+            sender.sendMessage(
+                Main.getPrefix() + "Not found! Type " + Main.getColorCode() + label + " stats §7for help.");
     }
 }
