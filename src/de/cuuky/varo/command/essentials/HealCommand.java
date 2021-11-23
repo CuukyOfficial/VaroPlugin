@@ -51,7 +51,7 @@ public class HealCommand implements CommandExecutor {
 			p.setHealth(20);
 			p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
 			p.setFoodLevel(20);
-            Bukkit.broadcastMessage("§a" + p.getName() + " §7wurde geheilt!");
+            Bukkit.broadcastMessage("§a" + p.getName() + " §7wurde von §a" + sender.getName() + "§7 geheilt!");
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7/heal [Player]");
 		return false;
