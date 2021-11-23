@@ -2,6 +2,7 @@ package de.cuuky.varo.listener.spectator;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
@@ -72,7 +73,9 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        this.checkWorldInteract(event, event.getPlayer());
+    	if(event.getBlock() == null || event.getBlock().getType() != Material.FIRE || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == Material.FLINT_AND_STEEL || event.getPlayer().getItemInHand().getType() == Material.FIREBALL))
+    		this.checkWorldInteract(event, event.getPlayer());
     }
 
     @EventHandler
@@ -122,11 +125,11 @@ public class SpectatorListener implements Listener {
         VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
         if (!Main.getVaroGame().hasStarted() && event.getPlayer().getGameMode() != GameMode.CREATIVE)
             event.setCancelled(true);
-
-        if (vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
+        else if (vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
             event.setCancelled(true);
-        
-        this.checkWorldInteract(event, event.getPlayer());
+        else if(event.getClickedBlock() == null || event.getClickedBlock().getType() != Material.OBSIDIAN || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == Material.FLINT_AND_STEEL || event.getPlayer().getItemInHand().getType() == Material.FIREBALL))
+        	this.checkWorldInteract(event, event.getPlayer());
     }
 
     @EventHandler

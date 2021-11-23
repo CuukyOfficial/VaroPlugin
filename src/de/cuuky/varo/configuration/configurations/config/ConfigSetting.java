@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 
@@ -253,7 +254,9 @@ public enum ConfigSetting implements SectionEntry {
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
 	TEAMREQUEST_MAXTEAMNAMELENGTH(ConfigSettingSection.TEAMS, "teamRequest.maxTeamnameLength", 10, "Maximal Laenge eines Teamnamens."),
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen koennen.\nSehr gute Funktion fuer ODV's."),
-	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.lobbyItems", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können"),
+	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.items.enabled", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können", "teamRequest.lobbyItems"),
+	TEAMREQUEST_LOBBYITEM_INVITE(ConfigSettingSection.TEAMS, "teamRequest.items.invite", Materials.STICK.parseItem(), "Item um andere Spieler in ein Team einzuladen"),
+	TEAMREQUEST_LOBBYITEM_LEAVE(ConfigSettingSection.TEAMS, "teamRequest.items.leave", Materials.REDSTONE.parseItem(), "Item zum Verlassen eines Teams"),
 
 	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots"),
 
