@@ -1,12 +1,10 @@
 package de.cuuky.varo.entity.player.stats;
 
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
-import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
@@ -21,6 +19,7 @@ public enum StatType {
     PLAYER_STATE("playerstate","§6Player State", Materials.GOLDEN_APPLE, (value, vp) -> vp.getStats().setState(PlayerState.valueOf(value)), vp -> vp.getStats().getState(), (vp) -> vp.getStats().setState(PlayerState.ALIVE)),
     RANK("rank","§2Rank", Materials.EMERALD, (value, vp) -> vp.setRank(new Rank(value)), vp -> vp.getRank() == null ? null : vp.getRank().getDisplay(), (vp) -> vp.setRank(null)),
     SESSIONS("sessions","§bSessions", Materials.DIAMOND, (value, vp) -> vp.getStats().setSessions(Integer.parseInt(value)), vp -> vp.getStats().getSessions(), (vp) -> vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())),
+    WILL_INVENTORY_CLEAR("willInventoryClear", "§cWill Inventory-Clear", Materials.CHEST, (value, vp) -> vp.getStats().setWillClear(Boolean.parseBoolean(value)), vp -> vp.getStats().isWillClear(), vp -> vp.getStats().setWillClear(false)),
     WINS("wins","§dWins", Materials.GOLD_INGOT, (value, vp) -> vp.getStats().setWins(Integer.parseInt(value)), vp -> vp.getStats().getWins(), (vp) -> vp.getStats().setWins(0)),
     YOUTUBE_LINK("youtubelink","§5YouTube-Link", Materials.PAPER, (value, vp) -> vp.getStats().setYoutubeLink(value), vp -> vp.getStats().getYoutubeLink(), (vp) -> vp.getStats().setYoutubeLink(null));
 
@@ -39,16 +38,19 @@ public enum StatType {
         this.reset = reset;
     }
 
-    public boolean execute(String value, VaroPlayer vp, CommandSender sender) {
+    public boolean execute(Object value, VaroPlayer vp) {
+        return this.execute(String.valueOf(value), vp);
+    }
+
+    public boolean execute(String value, VaroPlayer vp) {
         try {
             this.receiver.receive(value, vp);
             if (vp.isOnline())
                 vp.update();
             return true;
         } catch (Exception e) {
-            sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + value + "§7' §7konnte nicht fuer " + this.toString() + " gesetzt werden!");
+            return false;
         }
-        return false;
     }
 
     public void remove(VaroPlayer vp) {
