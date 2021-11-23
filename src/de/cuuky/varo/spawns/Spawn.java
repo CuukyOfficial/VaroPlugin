@@ -43,14 +43,16 @@ public class Spawn implements VaroSerializeable {
     }
 
     private Spawn(VaroPlayer player, int number, Location location) {
+        System.out.println(number + "," + location);
         if (number == -1) {
-            this.number = generateId();
+            number = generateId();
         } else {
             Spawn spawn = getSpawn(number);
             if (spawn != null)
                 spawn.remove();
         }
 
+        this.number = number;
         this.location = location;
         this.player = player;
         this.setNameTag();
