@@ -31,27 +31,6 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
         this.target = target;
     }
 
-    @Override
-    public String getTitle() {
-        return Main.getColorCode() + target.getName() + " §7(" + target.getId() + ")";
-    }
-
-    @Override
-    public int getSize() {
-        return 45;
-    }
-
-    public VaroPlayer getTarget() {
-        return this.target;
-    }
-
-    private void openReset(StatType type) {
-        this.openNext(new ConfirmInventory(this, "§cReset " + type.name() + "?", (accept) -> {
-            if (accept) type.remove(this.target);
-            this.open();
-        }));
-    }
-
     private ItemClick getClick(StatType statType) {
         return (event) -> {
             if (event.isLeftClick()) {
@@ -89,12 +68,6 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
         });
     }
 
-    private ItemStack getItemStack(StatType statType) {
-        return new BuildItem().itemstack(statType.getIcon()).displayName(statType.getDisplayName())
-            .lore("§7Current: " + Main.getColorCode() + statType.get(this.target),
-                "", "Left-Click to change value", "Right-Click to reset").deleteDamageAnnotation().build();
-    }
-
     private void addLeftClickable(Predicate<Object> objectPredicate, Consumer<StatType> leftClick) {
         this.applyToTypes(objectPredicate, s -> this.addItem(index, this.getItemStack(s), (event) -> {
             if (event.isLeftClick()) {
@@ -103,12 +76,39 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
         }), 1);
     }
 
+    private ItemStack getItemStack(StatType statType) {
+        return new BuildItem().itemstack(statType.getIcon()).displayName(statType.getDisplayName())
+            .lore("§7Current: " + Main.getColorCode() + statType.get(this.target),
+                "", "§7Left-Click to change value", "§7Right-Click to reset").deleteDamageAnnotation().build();
+    }
+
+    private void openReset(StatType type) {
+        this.openNext(new ConfirmInventory(this, "§cReset " + type.name() + "?", (accept) -> {
+            if (accept) type.remove(this.target);
+            this.open();
+        }));
+    }
+
+    @Override
+    public String getTitle() {
+        return Main.getColorCode() + target.getName() + " §7(" + target.getId() + ")";
+    }
+
+    @Override
+    public int getSize() {
+        return 45;
+    }
+
+    public VaroPlayer getTarget() {
+        return this.target;
+    }
+
     @Override
     public void refreshContent() {
         this.index = 0;
         this.applyToTypes(i -> i instanceof Integer, s -> {
             this.addItem(index, new BuildItem().material(Materials.ROSE_RED).displayName("§c-").build(),
-                (e) -> s.execute(String.valueOf(((int) s.get(this.target)) - 1), this.target));
+                (e) -> s.execute(((int) s.get(this.target)) - 1, this.target));
             this.addItem(index + 4, this.getItemStack(s), this.getClick(s));
             this.addItem(index + 8, new BuildItem().material(Materials.CACTUS_GREEN).displayName("§a+").build(),
                 (e) -> s.execute(((int) s.get(this.target)) + 1, this.target));
@@ -116,9 +116,10 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
         this.index += 9;
 
         this.addLeftClickable(b -> b instanceof Boolean, s -> s.execute(!((Boolean) s.get(this.target)), this.target));
-        this.applyToTypes(i -> i instanceof String, s ->
-            this.addItem(index, this.getItemStack(s), this.getClick(s)), 1);
         this.addLeftClickable(b -> b instanceof PlayerState,
             s -> s.execute(ArrayUtils.getNext(s.get(this.target), PlayerState.values()), this.target));
+
+        this.applyToTypes(i -> !(i instanceof Integer) && !(i instanceof Boolean) && !(i instanceof PlayerState),
+            s -> this.addItem(index, this.getItemStack(s), this.getClick(s)), 1);
     }
 }
