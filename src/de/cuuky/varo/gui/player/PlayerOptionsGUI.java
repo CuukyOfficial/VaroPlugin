@@ -2,10 +2,8 @@ package de.cuuky.varo.gui.player;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.AdvancedInventory;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.inventory.list.AdvancedItemShowInventory;
 import de.cuuky.cfw.inventory.page.AdvancedInfiniteInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
@@ -13,7 +11,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.utils.ArrayUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -113,7 +110,7 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
             this.addItem(index, new BuildItem().material(Materials.ROSE_RED).displayName("§c-").build(),
                 (e) -> s.execute(String.valueOf(((int) s.get(this.target)) - 1), this.target));
             this.addItem(index + 4, this.getItemStack(s), this.getClick(s));
-            this.addItem(index + 8, new BuildItem().material(Materials.ROSE_RED).displayName("§a+").build(),
+            this.addItem(index + 8, new BuildItem().material(Materials.CACTUS_GREEN).displayName("§a+").build(),
                 (e) -> s.execute(((int) s.get(this.target)) + 1, this.target));
         }, 9);
         this.index += 9;
