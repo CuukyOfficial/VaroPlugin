@@ -39,6 +39,11 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
     }
 
     @Override
+    protected int getMinSize() {
+        return 54;
+    }
+
+    @Override
     protected Collection<ItemStack> getInitialItems() {
         return Arrays.asList(this.backup.getAllContents());
     }
