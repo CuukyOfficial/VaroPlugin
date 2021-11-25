@@ -43,7 +43,6 @@ public class Spawn implements VaroSerializeable {
     }
 
     private Spawn(VaroPlayer player, int number, Location location) {
-        System.out.println(number + "," + location);
         if (number == -1) {
             number = generateId();
         } else {
