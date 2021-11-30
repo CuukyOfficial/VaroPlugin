@@ -154,12 +154,11 @@ public class Main extends JavaPlugin {
 			botLauncher.disconnect();
 		}
 
-		cuukyFrameWork.disable();
-
-		if (!this.failed)
-			VersionUtils.getVersionAdapter().getOnlinePlayers()
-					.forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
-		else {
+		if (!this.failed) {
+            cuukyFrameWork.disable();
+            VersionUtils.getVersionAdapter().getOnlinePlayers()
+                .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+        } else {
 			VaroBugreport report = new VaroBugreport();
 			System.out.println(CONSOLE_PREFIX + "Saved Crashreport to " + report.getZipFile().getName());
 		}
