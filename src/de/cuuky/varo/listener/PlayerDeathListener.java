@@ -92,9 +92,11 @@ public class PlayerDeathListener implements Listener {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                deadP.getStats().setState(PlayerState.DEAD);
-                                kickDeadPlayer(deadP, killer);
-                                Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER, deadP);
+                            	if (!deadP.getStats().isAlive()) {
+	                                deadP.getStats().setState(PlayerState.DEAD);
+	                                kickDeadPlayer(deadP, killer);
+	                                Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER, deadP);
+                            	}
                             }
                         }.runTaskLater(Main.getInstance(), ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt() * 20L);
                     } else
