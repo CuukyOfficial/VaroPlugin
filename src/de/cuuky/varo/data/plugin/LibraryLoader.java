@@ -36,7 +36,7 @@ public class LibraryLoader {
 	}
 
 	public LibraryLoader() {
-		Bukkit.getConsoleSender().sendMessage(Main.getConsolePrefix() + "Checking for additional librarys to load...");
+		Bukkit.getConsoleSender().sendMessage(Main.getConsolePrefix() + "Checking for additional libraries to load...");
 		for (Library lib : LIBRARIES)
 			this.loadLibraryIfNecessary(lib);
 		Bukkit.getConsoleSender().sendMessage(Main.getConsolePrefix() + "Finished loading libraries");
