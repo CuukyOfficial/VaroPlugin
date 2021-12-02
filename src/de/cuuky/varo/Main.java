@@ -56,12 +56,6 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		long timestamp = System.currentTimeMillis();
-		dataManager = new DataManager(this);
-
-		dataManager.preLoad();
-
-		if (this.failed)
-			return;
 
 		System.out.println("############################################################################");
 		System.out.println("#                                                                          #");
@@ -79,6 +73,7 @@ public class Main extends JavaPlugin {
 
 		System.out.println(CONSOLE_PREFIX);
 		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
+		
 		System.out.println(CONSOLE_PREFIX + "Your server: ");
 		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " ("
 				+ Bukkit.getVersion() + ")");
@@ -97,6 +92,15 @@ public class Main extends JavaPlugin {
 			System.out.println(
 					CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
 		}
+		System.out.println(CONSOLE_PREFIX);
+		
+		dataManager = new DataManager(this);
+		dataManager.preLoad();
+		
+		System.out.println(CONSOLE_PREFIX);
+
+		if (this.failed)
+			return;
 
 		try {
 			if (new ConfigFailureDetector().hasFailed()) {
