@@ -68,12 +68,12 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
         });
     }
 
-    private void addLeftClickable(Predicate<Object> objectPredicate, Consumer<StatType> leftClick) {
+    private void addLeftClickable(Predicate<Object> objectPredicate, Consumer<StatType> leftClick, int offset) {
         this.applyToTypes(objectPredicate, s -> this.addItem(index, this.getItemStack(s), (event) -> {
             if (event.isLeftClick()) {
                 leftClick.accept(s);
             } else this.openReset(s);
-        }), 1);
+        }), offset);
     }
 
     private ItemStack getItemStack(StatType statType) {
@@ -115,11 +115,11 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
         }, 9);
         this.index += 9;
 
-        this.addLeftClickable(b -> b instanceof Boolean, s -> s.execute(!((Boolean) s.get(this.target)), this.target));
+        this.addLeftClickable(b -> b instanceof Boolean, s -> s.execute(!((Boolean) s.get(this.target)), this.target), 2);
         this.addLeftClickable(b -> b instanceof PlayerState,
-            s -> s.execute(ArrayUtils.getNext(s.get(this.target), PlayerState.values()), this.target));
+            s -> s.execute(ArrayUtils.getNext(s.get(this.target), PlayerState.values()), this.target), 2);
 
         this.applyToTypes(i -> !(i instanceof Integer) && !(i instanceof Boolean) && !(i instanceof PlayerState),
-            s -> this.addItem(index, this.getItemStack(s), this.getClick(s)), 1);
+            s -> this.addItem(index, this.getItemStack(s), this.getClick(s)), 2);
     }
 }
