@@ -9,6 +9,7 @@ import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.world.border.VaroWorldBorder;
 
 public class SetWorldspawnCommand implements CommandExecutor {
 
@@ -32,7 +33,10 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
-		Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder().setBorderCenter(p.getLocation());
+		VaroWorldBorder border = Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder();
+		if(border != null)
+			border.setBorderCenter(p.getLocation());
+		
 		p.sendMessage(Main.getPrefix() + Main.getColorCode() + ConfigMessages.COMMANDS_SETWORLDSPAWN.getValue(vp));
 		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
 		return false;
