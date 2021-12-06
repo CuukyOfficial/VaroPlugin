@@ -20,8 +20,8 @@ public class LibraryLoader {
 				"https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.7/gson-2.8.7.jar"));
 		LIBRARIES.add(new JarLibrary("guava-19.0.jar", "com.google.common.hash.Hashing",
 				"https://repo1.maven.org/maven2/com/google/guava/guava/19.0/guava-19.0.jar"));
-		LIBRARIES.add(new JarLibrary("java-telegram-bot-api-5.2.0", "com.pengrad.telegrambot.TelegramBot",
-				"https://repo1.maven.org/maven2/com/github/pengrad/java-telegram-bot-api/5.2.0/java-telegram-bot-api-5.2.0.jar",
+		LIBRARIES.add(new JarLibrary("java-telegram-bot-api-5.4.0", "com.pengrad.telegrambot.TelegramBot",
+				"https://repo1.maven.org/maven2/com/github/pengrad/java-telegram-bot-api/5.4.0/java-telegram-bot-api-5.4.0.jar",
 				ConfigSetting.TELEGRAM_ENABLED));
 		LIBRARIES.add(new JarLibrary("okhttp-4.9.1", "okhttp3.OkHttp",
 				"https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.9.1/okhttp-4.9.1.jar",
