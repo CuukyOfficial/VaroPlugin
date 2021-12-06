@@ -7,6 +7,7 @@ import org.bukkit.Material;
 
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.spawns.Spawn;
@@ -81,17 +82,17 @@ public class SpawnGenerator {
 
         newLoc.clone().add(0, -1, 0).getBlock().setType(Material.AIR);
         Materials xmat = blockId != null && !blockId.isEmpty() ? Materials.fromString(blockId) : Materials.STONE_BRICK_SLAB;
-        BlockUtils.setBlock(newLoc.clone().add(1, 0, 0).getBlock(), xmat);
-        BlockUtils.setBlock(newLoc.clone().add(0, 0, 1).getBlock(), xmat);
-        BlockUtils.setBlock(newLoc.clone().add(-1, 0, 0).getBlock(), xmat);
-        BlockUtils.setBlock(newLoc.clone().add(0, 0, -1).getBlock(), xmat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(1, 0, 0).getBlock(), xmat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, 0, 1).getBlock(), xmat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(-1, 0, 0).getBlock(), xmat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, 0, -1).getBlock(), xmat);
 
         Materials mat = sideBlockId != null && !sideBlockId.isEmpty() ? Materials.fromString(sideBlockId) : Materials.GRASS_BLOCK;
-        BlockUtils.setBlock(newLoc.clone().add(0, -2, 0).getBlock(), mat);
-        BlockUtils.setBlock(newLoc.clone().add(1, -1, 0).getBlock(), mat);
-        BlockUtils.setBlock(newLoc.clone().add(0, -1, 1).getBlock(), mat);
-        BlockUtils.setBlock(newLoc.clone().add(-1, -1, 0).getBlock(), mat);
-        BlockUtils.setBlock(newLoc.clone().add(0, -1, -1).getBlock(), mat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, -2, 0).getBlock(), mat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(1, -1, 0).getBlock(), mat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, -1, 1).getBlock(), mat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(-1, -1, 0).getBlock(), mat);
+        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, -1, -1).getBlock(), mat);
 
         return newLoc.getBlock().getLocation().add(0.5, -1, 0.5);
     }

@@ -1,11 +1,11 @@
 package de.cuuky.varo.game.world.generators;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Main;
 
 public class PortalGenerator {
 
@@ -17,16 +17,16 @@ public class PortalGenerator {
 		int offset = width / 2;
 		for (int y = 1; y < height - 1; y++) {
 			for (int x = 1; x < width - 1; x++) {
-				world.getBlockAt(xPos - offset + x, yPos + y, zPos).setType(Materials.NETHER_PORTAL.parseMaterial());
+				BlockUtils.setBlockDelayed(Main.getInstance(), world, xPos - offset + x, yPos + y, zPos, Materials.NETHER_PORTAL);
 			}
 
-			world.getBlockAt(xPos - offset, yPos + y, zPos).setType(Material.OBSIDIAN);
-			world.getBlockAt(xPos - offset + width - 1, yPos + y, zPos).setType(Material.OBSIDIAN);
+			BlockUtils.setBlockDelayed(Main.getInstance(), world, xPos - offset, yPos + y, zPos, Materials.OBSIDIAN);
+			BlockUtils.setBlockDelayed(Main.getInstance(), world, xPos - offset + width - 1, yPos + y, zPos, Materials.OBSIDIAN);
 		}
 
 		for (int x = 0; x < width; x++) {
-			world.getBlockAt(xPos - offset + x, yPos, zPos).setType(Material.OBSIDIAN);
-			world.getBlockAt(xPos - offset + x, yPos + height - 1, zPos).setType(Material.OBSIDIAN);
+			BlockUtils.setBlockDelayed(Main.getInstance(), world, xPos - offset + x, yPos, zPos, Materials.OBSIDIAN);
+			BlockUtils.setBlockDelayed(Main.getInstance(), world, xPos - offset + x, yPos + height - 1, zPos, Materials.OBSIDIAN);
 		}
 	}
 }
