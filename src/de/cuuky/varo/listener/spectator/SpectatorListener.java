@@ -2,7 +2,6 @@ package de.cuuky.varo.listener.spectator;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
@@ -24,6 +23,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -73,8 +73,8 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-    	if(event.getBlock() == null || event.getBlock().getType() != Material.FIRE || event.getPlayer().getItemInHand() == null
-        		|| !(event.getPlayer().getItemInHand().getType() == Material.FLINT_AND_STEEL || event.getPlayer().getItemInHand().getType() == Material.FIREBALL))
+    	if(event.getBlock() == null || event.getBlock().getType() != Materials.FIRE.parseMaterial() || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == Materials.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == Materials.FIRE_CHARGE.parseMaterial()))
     		this.checkWorldInteract(event, event.getPlayer());
     }
 
@@ -127,8 +127,8 @@ public class SpectatorListener implements Listener {
             event.setCancelled(true);
         else if (vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
             event.setCancelled(true);
-        else if(event.getClickedBlock() == null || event.getClickedBlock().getType() != Material.OBSIDIAN || event.getPlayer().getItemInHand() == null
-        		|| !(event.getPlayer().getItemInHand().getType() == Material.FLINT_AND_STEEL || event.getPlayer().getItemInHand().getType() == Material.FIREBALL))
+        else if(event.getClickedBlock() == null || event.getClickedBlock().getType() != Materials.OBSIDIAN.parseMaterial() || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == Materials.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == Materials.FIRE_CHARGE.parseMaterial()))
         	this.checkWorldInteract(event, event.getPlayer());
     }
 
