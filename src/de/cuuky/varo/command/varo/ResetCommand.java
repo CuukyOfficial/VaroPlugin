@@ -63,10 +63,12 @@ public class ResetCommand extends VaroCommand {
 			switch (mod) {
 			case 1:
 				toDelete.add(new File("plugins/Varo/"));
+				Main.getDataManager().setDoSave(false);
 				break;
 			case 2:
 				toDelete.add(new File("plugins/Varo/logs/"));
 				toDelete.add(new File("plugins/Varo/stats/"));
+				Main.getDataManager().setDoSave(false);
 				break;
 			case 3:
 				for (World world : Bukkit.getWorlds()) {
@@ -75,9 +77,9 @@ public class ResetCommand extends VaroCommand {
 						chunk.unload(false);
 					Bukkit.unloadWorld(world, false);
 
-					VersionUtils.getVersionAdapter().forceClearWorlds();
-					JavaUtils.deleteDirectory(world.getWorldFolder());
+					toDelete.add(world.getWorldFolder());
 				}
+				VersionUtils.getVersionAdapter().forceClearWorlds();
 				break;
 			default:
 				sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
@@ -86,16 +88,9 @@ public class ResetCommand extends VaroCommand {
 
 			success.add(mod);
 		}
-
-		if (!toDelete.isEmpty()) {
-			Main.getDataManager().setDoSave(false);
-			for (File file : toDelete) {
-				if (file.isDirectory())
-					JavaUtils.deleteDirectory(file);
-				else
-					file.delete();
-			}
-		}
+		
+		for (File file : toDelete)
+			JavaUtils.deleteDirectory(file);
 
 		if (!success.isEmpty())
 			Bukkit.getServer().shutdown();
