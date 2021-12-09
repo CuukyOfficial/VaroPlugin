@@ -1,7 +1,8 @@
 package de.cuuky.varo.entity.player.event.events;
 
+import org.bukkit.Sound;
+
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.combatlog.PlayerHit;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -10,9 +11,12 @@ import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 
 public class KillEvent extends BukkitEvent {
+	
+	private Sound deathSound;
 
 	public KillEvent() {
 		super(BukkitEventType.KILL);
+		this.deathSound = Sound.valueOf(ConfigSetting.DEATH_SOUND.getValueAsString());
 	}
 
 	@Override
@@ -31,8 +35,8 @@ public class KillEvent extends BukkitEvent {
 			}
 		}
 
-		if (ConfigSetting.DEATH_SOUND.getValueAsBoolean())
-			VersionUtils.getOnlinePlayer().forEach(pl -> pl.playSound(pl.getLocation(), Sounds.WITHER_IDLE.bukkitSound(), 1, 1));
+		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean())
+			VersionUtils.getVersionAdapter().getOnlinePlayers().forEach(pl -> pl.playSound(pl.getLocation(), this.deathSound, 1, 1));
 
 		player.getStats().addKill();
 		super.onExec(player);

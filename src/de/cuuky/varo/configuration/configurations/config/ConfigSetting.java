@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 
@@ -92,7 +93,8 @@ public enum ConfigSetting implements SectionEntry {
 	COMBATLOG_TIME(ConfigSettingSection.COMBATLOG, "combatlogTime", 30, "Zeit, nachdem sich ein Spieler\nnach dem Kampf wieder ausloggen kann.\nOff = -1"),
 
 	// DEATH
-	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound", false, "Ob ein Withersound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
+	DEATH_SOUND_ENABLED(ConfigSettingSection.DEATH, "deathSound.enabled", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
+	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", Sounds.WITHER_IDLE.bukkitSound().name(), "Sound der abgespielt werden soll", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFuer diese Funktion wird dieses Plugin automatisch installiert:\nhttps://www.spigotmc.org/resources/52423/"),
