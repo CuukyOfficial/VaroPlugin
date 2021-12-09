@@ -1,8 +1,16 @@
 package de.cuuky.varo.data;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit.HitListener;
@@ -40,6 +48,7 @@ import de.cuuky.varo.command.essentials.UnmuteCommand;
 import de.cuuky.varo.command.essentials.UnprotectCommand;
 import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.event.VaroEventListener;
 import de.cuuky.varo.game.world.listener.VaroWorldListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
@@ -70,9 +79,39 @@ import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
 
 public final class BukkitRegisterer {
+	
+	private static final SimpleCommandMap commandMap;
+	private static final Constructor<PluginCommand> pluginCommandConstructor;
+	
+	static {
+		try {
+			Field commandMapField = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+			commandMapField.setAccessible(true);
+			commandMap = (SimpleCommandMap) commandMapField.get(Bukkit.getServer());
+			
+			pluginCommandConstructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
+			pluginCommandConstructor.setAccessible(true);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException e) {
+			throw new Error(e);
+		}
+	}
 
-	private static void registerCommand(String name, CommandExecutor cm) {
-		Main.getInstance().getCommand(name).setExecutor(cm);
+	private static void registerDynamicCommand(String name, String desc, CommandExecutor executor, ConfigSetting configSetting, String... aliases) {
+		if (!configSetting.getValueAsBoolean())
+			return;
+		
+		PluginCommand command;
+		try {
+			command = pluginCommandConstructor.newInstance(name, Main.getInstance());
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			throw new Error("Unable to register command " + name, e);
+		}
+		command.setDescription(desc);
+		command.setAliases(Arrays.asList(aliases));
+		command.setExecutor(executor);
+		
+		commandMap.register(name, command);
 	}
 
 	private static void registerEvent(Listener listener) {
@@ -80,40 +119,40 @@ public final class BukkitRegisterer {
 	}
 
 	public static void registerCommands() {
-		registerCommand("varo", new VaroCommandListener());
-		registerCommand("antixray", new AntiXrayCommand());
-		registerCommand("broadcast", new BroadcastCommand());
-		registerCommand("chatclear", new ChatClearCommand());
-		registerCommand("day", new DayCommand());
-		registerCommand("fly", new FlyCommand());
-		registerCommand("freeze", new FreezeCommand());
-		registerCommand("gamemode", new GamemodeCommand());
-		registerCommand("heal", new HealCommand());
-		registerCommand("info", new InfoCommand());
-		registerCommand("invsee", new InvSeeCommand());
-		registerCommand("message", new MessageCommand());
-		registerCommand("mute", new MuteCommand());
-		registerCommand("night", new NightCommand());
-		registerCommand("ping", new PingCommand());
-		registerCommand("reply", new ReplyCommand());
-		registerCommand("speed", new SpeedCommand());
-		registerCommand("vanish", new VanishCommand());
-		registerCommand("report", new ReportCommand());
-		registerCommand("unfly", new UnflyCommand());
-		registerCommand("unfreeze", new UnfreezeCommand());
-		registerCommand("unmute", new UnmuteCommand());
-		registerCommand("unprotect", new UnprotectCommand());
-		registerCommand("usage", new UsageCommand());
-		registerCommand("border", new BorderCommand());
-		registerCommand("setworldspawn", new SetWorldspawnCommand());
-		registerCommand("spawn", new SpawnCommand());
-		registerCommand("sun", new SunCommand());
-		registerCommand("rain", new RainCommand());
-		registerCommand("thunder", new ThunderCommand());
-		registerCommand("protect", new ProtectCommand());
-		registerCommand("countdown", new CountdownCommand());
-		registerCommand("performance", new PerformanceCommand());
-		registerCommand("language", new LanguageCommand());
+		registerDynamicCommand("varo", "Hauptbefehl des Plugins", new VaroCommandListener(), ConfigSetting.COMMAND_VARO_ENABLED, "titan", "suro", "uhc", "odv", "onedayvaro");
+		registerDynamicCommand("antixray", "Schaltet einen Schutz vor X-Ray an und aus", new AntiXrayCommand(), ConfigSetting.COMMAND_ANTIXRAY_ENABLED);
+		registerDynamicCommand("broadcast", "Sendet eine Nachricht an den Server", new BroadcastCommand(), ConfigSetting.COMMAND_BROADCAST_ENABLED, "bc");
+		registerDynamicCommand("chatclear", "Leert den Chat", new ChatClearCommand(), ConfigSetting.COMMAND_CHATCLEAR_ENABLED, "cc");
+		registerDynamicCommand("day", "Setzt die Tageszeit auf Tag", new DayCommand(), ConfigSetting.COMMAND_TIME_ENABLED);
+		registerDynamicCommand("fly", "Lässt dich oder einen Spieler fliegen", new FlyCommand(), ConfigSetting.COMMAND_FLY_ENABLED);
+		registerDynamicCommand("freeze", "Lässt einen Spieler einfrieren", new FreezeCommand(), ConfigSetting.COMMAND_FREEZE_ENABLED, "nomove");
+		registerDynamicCommand("gamemode", "Setzt den Spielmodus von dir oder einem Spieler", new GamemodeCommand(), ConfigSetting.COMMAND_GAMEMODE_ENABLED, "gm");
+		registerDynamicCommand("heal", "Heilt einen Spieler", new HealCommand(), ConfigSetting.COMMAND_HEAL_ENABLED, "feed");
+		registerDynamicCommand("info", "Zeigt Infos über einen Spieler", new InfoCommand(), ConfigSetting.COMMAND_INFO_ENABLED, "life");
+		registerDynamicCommand("invsee", "Zeigt das Inventar eines anderen Spielers", new InvSeeCommand(), ConfigSetting.COMMAND_INVSEE_ENABLED, "inventorysee");
+		registerDynamicCommand("message", "Schreibt einem Spieler eine Nachricht", new MessageCommand(), ConfigSetting.COMMAND_MESSAGE_ENABLED, "msg");
+		registerDynamicCommand("mute", "Mutet einen Spieler", new MuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
+		registerDynamicCommand("night", "Setzt die Tageszeit auf Nacht", new NightCommand(), ConfigSetting.COMMAND_TIME_ENABLED);
+		registerDynamicCommand("ping", "Zeigt den Ping von dir oder einem Spieler", new PingCommand(), ConfigSetting.COMMAND_PING_ENABLED);
+		registerDynamicCommand("reply", "Antwortet einem Spieler", new ReplyCommand(), ConfigSetting.COMMAND_MESSAGE_ENABLED, "r");
+		registerDynamicCommand("speed", "Setzt die Geschwindigkeit von dir oder einem Spieler", new SpeedCommand(), ConfigSetting.COMMAND_SPEED_ENABLED);
+		registerDynamicCommand("vanish", "Versteckt dich oder einen Spieler vor allen anderen", new VanishCommand(), ConfigSetting.COMMAND_VANISH_ENABLED, "v");
+		registerDynamicCommand("report", "Reporte einen Spieler", new ReportCommand(), ConfigSetting.COMMAND_REPORT_ENABLED);
+		registerDynamicCommand("unfly", "Lässt dich oder einen Spieler nicht mehr fliegen", new UnflyCommand(), ConfigSetting.COMMAND_FLY_ENABLED);
+		registerDynamicCommand("unfreeze", "Entfriert einen Spieler", new UnfreezeCommand(), ConfigSetting.COMMAND_FREEZE_ENABLED, "move");
+		registerDynamicCommand("unmute", "Entmutet einen Spieler", new UnmuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
+		registerDynamicCommand("unprotect", "Beendet die Beschützung vor Schaden von Spielern", new UnprotectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
+		registerDynamicCommand("usage", "Zeigt die Nutzung des Servers", new UsageCommand(), ConfigSetting.COMMAND_USAGE_ENABLED);
+		registerDynamicCommand("border", "Zeigt Infos zur Border", new BorderCommand(), ConfigSetting.COMMAND_BORDER_ENABLED, "setborder");
+		registerDynamicCommand("setworldspawn", "Setzt den Spawn", new SetWorldspawnCommand(), ConfigSetting.COMMAND_SETSPAWN_ENABLED);
+		registerDynamicCommand("spawn", "Zeigt Distanz und Information zum Spawn", new SpawnCommand(), ConfigSetting.COMMAND_SPAWN_ENABLED);
+		registerDynamicCommand("sun", "Wechselt zu schönem Wetter", new SunCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
+		registerDynamicCommand("rain", "Wechselt zu Regen", new RainCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
+		registerDynamicCommand("thunder", "Wechselt zu Gewitter", new ThunderCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
+		registerDynamicCommand("protect", "Beschützt Spieler vor Schaden", new ProtectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
+		registerDynamicCommand("countdown", "Startet einen Countdown", new CountdownCommand(), ConfigSetting.COMMAND_COUNTDOWN_ENABLED);
+		registerDynamicCommand("performance", "Verbessert die Performance", new PerformanceCommand(), ConfigSetting.COMMAND_PERFORMANCE_ENABLED);
+		registerDynamicCommand("language", "Changes language of player", new LanguageCommand(), ConfigSetting.COMMAND_LANGUAGE_ENABLED);
 	}
 
 	public static void registerEvents() {

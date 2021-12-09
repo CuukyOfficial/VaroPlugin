@@ -279,7 +279,35 @@ public enum ConfigSetting implements SectionEntry {
 	TABLIST(ConfigSettingSection.TABLIST, "tablist", true, "Ob das Plugin die Tablist modfizieren soll\nMuss aktiviert sein, um folgende Einstellungen\nvorzunehmen.", true),
 	TABLIST_USE_HEADER(ConfigSettingSection.TABLIST, "useHeader", true, "Ob die Tablist einen Header haben soll.\nErfordert config reload und ggf. rejoin."),
 	TABLIST_USE_FOOTER(ConfigSettingSection.TABLIST, "useFooter", true, "Ob die Tablist einen Footer haben soll.\nErfordert config reload und ggf. rejoin."), // enable: config reload
-	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen.");
+	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen."),
+	
+	// COMMANDS
+	COMMAND_VARO_ENABLED(ConfigSettingSection.COMMANDS, "varo.enabled", true, "Ob /varo aktiviert sein soll"),
+	COMMAND_ANTIXRAY_ENABLED(ConfigSettingSection.COMMANDS, "antixray.enabled", true, "Ob /antixray aktiviert sein soll"),
+	COMMAND_BROADCAST_ENABLED(ConfigSettingSection.COMMANDS, "broadcast.enabled", true, "Ob /broadcast aktiviert sein soll"),
+	COMMAND_CHATCLEAR_ENABLED(ConfigSettingSection.COMMANDS, "chatclear.enabled", true, "Ob /chatclear aktiviert sein soll"),
+	COMMAND_TIME_ENABLED(ConfigSettingSection.COMMANDS, "time.enabled", true, "Ob /day und /night aktiviert sein soll"),
+	COMMAND_FLY_ENABLED(ConfigSettingSection.COMMANDS, "fly.enabled", true, "Ob /fly und /unfly aktiviert sein soll"),
+	COMMAND_FREEZE_ENABLED(ConfigSettingSection.COMMANDS, "freeze.enabled", true, "Ob /freeze und /unfreeze aktiviert sein soll"),
+	COMMAND_GAMEMODE_ENABLED(ConfigSettingSection.COMMANDS, "gamemode.enabled", true, "Ob /gamemode aktiviert sein soll"),
+	COMMAND_HEAL_ENABLED(ConfigSettingSection.COMMANDS, "heal.enabled", true, "Ob /heal aktiviert sein soll"),
+	COMMAND_INFO_ENABLED(ConfigSettingSection.COMMANDS, "info.enabled", true, "Ob /info aktiviert sein soll"),
+	COMMAND_INVSEE_ENABLED(ConfigSettingSection.COMMANDS, "invsee.enabled", true, "Ob /invsee aktiviert sein soll"),
+	COMMAND_MESSAGE_ENABLED(ConfigSettingSection.COMMANDS, "message.enabled", true, "Ob /message und /reply aktiviert sein soll"),
+	COMMAND_MUTE_ENABLED(ConfigSettingSection.COMMANDS, "mute.enabled", true, "Ob /mute und /unmute aktiviert sein soll"),
+	COMMAND_PING_ENABLED(ConfigSettingSection.COMMANDS, "ping.enabled", true, "Ob /ping aktiviert sein soll"),
+	COMMAND_SPEED_ENABLED(ConfigSettingSection.COMMANDS, "speed.enabled", true, "Ob /speed aktiviert sein soll"),
+	COMMAND_VANISH_ENABLED(ConfigSettingSection.COMMANDS, "vanish.enabled", true, "Ob /vanish aktiviert sein soll"),
+	COMMAND_REPORT_ENABLED(ConfigSettingSection.COMMANDS, "report.enabled", true, "Ob /report aktiviert sein soll"),
+	COMMAND_USAGE_ENABLED(ConfigSettingSection.COMMANDS, "usage.enabled", true, "Ob /usage aktiviert sein soll"),
+	COMMAND_BORDER_ENABLED(ConfigSettingSection.COMMANDS, "border.enabled", true, "Ob /border aktiviert sein soll"),
+	COMMAND_SETSPAWN_ENABLED(ConfigSettingSection.COMMANDS, "setworldspawn.enabled", true, "Ob /setworldspawn aktiviert sein soll"),
+	COMMAND_SPAWN_ENABLED(ConfigSettingSection.COMMANDS, "spawn.enabled", true, "Ob /spawn aktiviert sein soll"),
+	COMMAND_WEATHER_ENABLED(ConfigSettingSection.COMMANDS, "weather.enabled", true, "Ob /sun, /rain und /thunder aktiviert sein soll"),
+	COMMAND_PROTECT_ENABLED(ConfigSettingSection.COMMANDS, "protect.enabled", true, "Ob /protect und /unprotect aktiviert sein soll"),
+	COMMAND_COUNTDOWN_ENABLED(ConfigSettingSection.COMMANDS, "countdown.enabled", true, "Ob /countdown aktiviert sein soll"),
+	COMMAND_PERFORMANCE_ENABLED(ConfigSettingSection.COMMANDS, "performance.enabled", true, "Ob /performance aktiviert sein soll"),
+	COMMAND_LANGUAGE_ENABLED(ConfigSettingSection.COMMANDS, "language.enabled", true, "Ob /language aktiviert sein soll");
 
 	private Object defaultValue, value;
 	private String path, description, oldPaths[];

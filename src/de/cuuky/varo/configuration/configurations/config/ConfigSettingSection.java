@@ -18,6 +18,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	// BAN("Ban", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zu Bans vornehmen.\nDas Bannsystem wird von Cuuky geleitet und von allen Varo-Servern genutzt"),
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
 	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
+	COMMANDS("Commands", Materials.COMMAND_BLOCK.parseMaterial(), "Hier kannst Commands aktivieren oder deaktivieren (Neustart erforderlich)"),
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
 	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
 	DISCORD("Discord", Material.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
