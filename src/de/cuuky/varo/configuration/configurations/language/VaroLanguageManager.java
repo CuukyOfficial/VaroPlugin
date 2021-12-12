@@ -15,8 +15,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +22,11 @@ public class VaroLanguageManager extends LanguageManager {
 
     private static final String PATH_DIR = "plugins/Varo/languages", FALLBACK_LANGUAGE = "de_de";
 
-    private final ScriptEngine scriptEngine;
     private PlaceholderAPIAdapter placeholderAPIAdapter;
 
     public VaroLanguageManager(JavaPlugin instance) {
         super(PATH_DIR, FALLBACK_LANGUAGE, instance);
 
-        this.scriptEngine = new ScriptEngineManager().getEngineByName("js");
         if (instance.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
             this.placeholderAPIAdapter = new PlaceholderAPIAdapter();
 
@@ -80,24 +76,6 @@ public class VaroLanguageManager extends LanguageManager {
         return list;
     }
 
-    private String replaceEvals(String message) {
-        if (message.contains("eval(")) {
-            String split = message.split("eval\\(")[1];
-            if (split.contains(")")) {
-                String eval = split.split("\\)")[0];
-
-                try {
-                    Object result = scriptEngine.eval(eval);
-                    return message.replace("eval(" + eval + ")", result.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return message;
-    }
-
     public String replaceMessage(String message, boolean replaceEval) {
         String replaced = message;
 
@@ -123,7 +101,6 @@ public class VaroLanguageManager extends LanguageManager {
 
         replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, MessagePlaceholderType.GENERAL);
         if (replaceEval) {
-            replaced = replaceEvals(replaced);
             if (this.placeholderAPIAdapter != null)
                 replaced = this.placeholderAPIAdapter.setGeneralPlaceholders(replaced);
         }
@@ -136,7 +113,7 @@ public class VaroLanguageManager extends LanguageManager {
     }
 
     public String replaceMessage(String message, CustomPlayer player) {
-        message = replaceEvals(Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), MessagePlaceholderType.OBJECT, player));
+        message = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), MessagePlaceholderType.OBJECT, player);
         if (this.placeholderAPIAdapter != null && player instanceof VaroPlayer)
             return this.placeholderAPIAdapter.setPlayerPlaceholders(message, (VaroPlayer) player);
         return message;
