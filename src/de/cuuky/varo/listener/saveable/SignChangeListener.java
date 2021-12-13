@@ -1,15 +1,13 @@
 package de.cuuky.varo.listener.saveable;
 
-import de.cuuky.cfw.utils.BlockUtils;
-import de.cuuky.cfw.version.types.Sounds;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import java.util.ArrayList;
+
 import org.bukkit.Effect;
-import org.bukkit.block.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,7 +15,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.util.ArrayList;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Sounds;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 
 public class SignChangeListener implements Listener {
 
@@ -30,15 +35,14 @@ public class SignChangeListener implements Listener {
 		if (!Main.getVaroGame().hasStarted())
 			return;
 
-		Object sign = BlockUtils.getBlockData(event.getBlock(), event.getBlock().getState());
-		BlockFace attachedFace = BlockUtils.getAttachedSignFace(sign);
-		Block attached = null;
-		try {
-			attached = event.getBlock().getRelative(attachedFace);
-		} catch (NullPointerException e) {
-			event.getPlayer().sendMessage(Main.getPrefix() + "Oops... That didn't work. Please report this to an admin!");
-			return;
-		}
+		BlockFace attachedFace = VersionUtils.getVersionAdapter().getSignAttachedFace(event.getBlock());
+		
+		System.out.println(attachedFace);
+		
+		if(attachedFace == null)
+			throw new Error("attachedFace should not be null");
+		
+		Block attached = event.getBlock().getRelative(attachedFace);
 
 		if (attached.getState() instanceof Chest) {
 			Chest chest = (Chest) attached.getState();
