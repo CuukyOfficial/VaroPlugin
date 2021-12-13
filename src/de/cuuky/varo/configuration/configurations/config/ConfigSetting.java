@@ -285,6 +285,7 @@ public enum ConfigSetting implements SectionEntry {
 	
 	// COMMANDS
 	COMMAND_VARO_ENABLED(ConfigSettingSection.COMMANDS, "varo.enabled", true, "Ob /varo aktiviert sein soll"),
+	COMMAND_VARO_NAME(ConfigSettingSection.COMMANDS, "varo.name", "varo", "Ob custom name für  /varo"),
 	COMMAND_ANTIXRAY_ENABLED(ConfigSettingSection.COMMANDS, "antixray.enabled", true, "Ob /antixray aktiviert sein soll"),
 	COMMAND_BROADCAST_ENABLED(ConfigSettingSection.COMMANDS, "broadcast.enabled", true, "Ob /broadcast aktiviert sein soll"),
 	COMMAND_CHATCLEAR_ENABLED(ConfigSettingSection.COMMANDS, "chatclear.enabled", true, "Ob /chatclear aktiviert sein soll"),
