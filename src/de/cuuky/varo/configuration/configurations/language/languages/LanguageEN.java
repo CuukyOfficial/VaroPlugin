@@ -1,6 +1,7 @@
 package de.cuuky.varo.configuration.configurations.language.languages;
 
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
+import de.cuuky.varo.Main;
 
 public enum LanguageEN implements LoadableMessage {
 
@@ -182,7 +183,7 @@ public enum LanguageEN implements LoadableMessage {
 	VARO_COMMANDS_ERROR_WRONGVERSION("varoCommands.error.wrongVersion", "&7This feature is not available on versions lower than %colorcode%%version% &7!"),
 	VARO_COMMANDS_ERROR("varoCommands.error.error", "&7An error has occurred!"),
 
-	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport was saved under &c%filename% &7!"),
+	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport was saved as &c%filename% &7! Please upload this file to our Discord server: " + Main.DISCORD_INVITE),
 	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD("varoCommands.bugreport.sendtodiscord", "Please send the bug report as FILE manually to the discord in the support, because the upload did not work!"),
 	VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION("varoCommands.bugreport.outdatedversion", "You cannot make bug reports from an old plugin version!"),
 	VARO_COMMANDS_BUGREPORT_CURRENT_VERSION("varoCommands.bugreport.currentversion", "Current version: &c%version%"),

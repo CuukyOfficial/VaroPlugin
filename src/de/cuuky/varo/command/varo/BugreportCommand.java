@@ -39,18 +39,21 @@ public class BugreportCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_CREATED.getValue(vp).replace("%filename%", bugreport.getZipFile().getPath().toString()));
 		VaroFileUploader uploader = new VaroFileUploader(bugreport.getZipFile());
 
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADING.getValue(vp));
-		String url = uploader.uploadFile();
 
-		if (url == null) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR.getValue(vp));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD.getValue(vp));
-		} else {
-			String message = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADED.getValue(vp).replace("%url%", url);
-			if (vp != null && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-				vp.getVersionAdapter().sendLinkedMessage(message + ConfigMessages.VARO_COMMANDS_BUGREPORT_CLICK_ME.getValue(vp), url);
-			else
-				sender.sendMessage(message);
+		if(args.length == 1 && args[0].equalsIgnoreCase("upload")) {
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADING.getValue(vp));
+			String url = uploader.uploadFile();
+
+			if (url == null) {
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR.getValue(vp));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD.getValue(vp));
+			} else {
+				String message = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADED.getValue(vp).replace("%url%", url);
+				if (vp != null && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+					vp.getVersionAdapter().sendLinkedMessage(message + ConfigMessages.VARO_COMMANDS_BUGREPORT_CLICK_ME.getValue(vp), url);
+				else
+					sender.sendMessage(message);
+			}
 		}
 	}
 }

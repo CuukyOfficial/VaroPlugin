@@ -186,7 +186,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_ERROR_WRONGVERSION("varoCommands.error.wrongVersion", "&7Dieses Feature ist vor der Version %colorcode%%version% &7nicht verfügbar!"),
 	VARO_COMMANDS_ERROR("varoCommands.error.error", "&7Es ist ein Fehler aufgetreten!"),
 
-	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert!"),
+	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert! Bitte lade die Datei auf unserem Discord hoch: " + Main.DISCORD_INVITE),
 	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD("varoCommands.bugreport.sendtodiscord", "Bitte sende den Bugreport als DATEI manuell auf den Discord in den Support, da das Hochladen nicht funktioniert hat!"),
 	VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION("varoCommands.bugreport.outdatedversion", "Du kannst keine Bugreports von einer alten Plugin-Version machen!"),
 	VARO_COMMANDS_BUGREPORT_CURRENT_VERSION("varoCommands.bugreport.currentversion", "Derzeitige Version: &c%version%"),
