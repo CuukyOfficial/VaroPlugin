@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
@@ -21,7 +22,7 @@ public class VaroCommandListener implements CommandExecutor {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro §7§lCommands:");
             for (VaroCommand command : VaroCommand.getVaroCommand())
                 if ((command.getPermission() == null || sender.hasPermission(command.getPermission())) && (command instanceof CustomCommand) ? !((CustomCommand) command).isUnused() : true)
-                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo " + command.getName() + "§8: §7" + command.getDescription());
+                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " " + command.getName() + "§8: §7" + command.getDescription());
             return false;
         }
 

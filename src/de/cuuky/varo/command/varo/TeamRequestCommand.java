@@ -1,5 +1,10 @@
 package de.cuuky.varo.command.varo;
 
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -7,10 +12,6 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 import de.cuuky.varo.gui.settings.VaroColorMenu;
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class TeamRequestCommand extends VaroCommand {
 
@@ -171,13 +172,13 @@ public class TeamRequestCommand extends VaroCommand {
 
 	public void sendInfo(Player sender) {
 		sender.sendMessage(Main.getPrefix() + "§7--- " + Main.getColorCode() + "TeamRequestor-System §7---");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr color §7[remove]");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr invite §7<Player 1, Player 2, ...>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr revoke §7<Player>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr decline §7<Player>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr accept §7<Player>");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr leave");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo tr help");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr color §7[remove]");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr invite §7<Player 1, Player 2, ...>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr revoke §7<Player>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr decline §7<Player>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr accept §7<Player>");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr leave");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " tr help");
 		sender.sendMessage(Main.getPrefix() + "§7--------------------------");
 	}
 }

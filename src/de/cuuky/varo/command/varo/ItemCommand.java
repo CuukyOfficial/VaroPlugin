@@ -1,16 +1,18 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.items.ItemListInventory;
-import de.cuuky.varo.list.VaroList;
-import de.cuuky.varo.list.item.ItemList;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.items.ItemListInventory;
+import de.cuuky.varo.list.VaroList;
+import de.cuuky.varo.list.item.ItemList;
 
 public class ItemCommand extends VaroCommand {
 
@@ -32,7 +34,7 @@ public class ItemCommand extends VaroCommand {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> Remove");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7<itemlist> list");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " item §7list");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /varo enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Tipp: §7Der /" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " enchant Befehl blockt alle Enchantments, die auf deinem derzeitigen Item sind.");
             sender.sendMessage(Main.getPrefix());
             sender.sendMessage(Main.getPrefix() + "§7Dieser Command fuegt die Sachen der Listen hinzu, die du in der Hand haeltst.");
             sender.sendMessage(Main.getPrefix() + "§7-----------------");

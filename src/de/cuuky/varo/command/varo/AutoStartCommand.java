@@ -33,10 +33,10 @@ public class AutoStartCommand extends VaroCommand {
 
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Autostart"));
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7info");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7remove");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo autostart §7delay <Minutes>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7info");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7remove");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7delay <Minutes>");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return;
 		}

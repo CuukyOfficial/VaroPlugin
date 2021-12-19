@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.spigot.FileDownloader;
@@ -82,8 +83,8 @@ public class UpdateCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update normal §7- Updated die Version, aber behaelt alle Daten");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo update reset §7- Updated die Version und loescht alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update normal §7- Updated die Version, aber behaelt alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update reset §7- Updated die Version und loescht alle Daten");
 				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geaendert haben sollte, musst du manuell updaten.");
 			} else {
 				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");

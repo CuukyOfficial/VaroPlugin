@@ -1,11 +1,9 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -13,9 +11,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
+import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ResetCommand extends VaroCommand {
 
@@ -26,11 +28,11 @@ public class ResetCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo reset §7<Modifier1> <Modifier2> ...");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " reset §7<Modifier1> <Modifier2> ...");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 1: §7Resettet den kompletten Plugin Ordner");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 2: §7Resettet logs + stats (keine configs)");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Modifier 3: §7Loescht alle Welten");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/varo reset 2 3 - Loescht alle Stats und Welten");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example: §7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " reset 2 3 - Loescht alle Stats und Welten");
 			sender.sendMessage(Main.getPrefix() + "§cWarnung: §7Der Server wird nach dem Vorgang gestoppt");
 			return;
 		}

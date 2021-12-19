@@ -24,11 +24,11 @@ public class ConfigCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Config"));
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config set §7<key> <value>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config search <Keyword>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config menu");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config reload");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo config reset");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config set §7<key> <value>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config search <Keyword>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config menu");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config reload");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config reset");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return;
 		}

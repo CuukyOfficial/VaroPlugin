@@ -74,9 +74,9 @@ public class FinaleCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart") && !args[0].equalsIgnoreCase("abort") && !args[0].equalsIgnoreCase("abbruch") && !!args[0].equalsIgnoreCase("abbrechen") && !!args[0].equalsIgnoreCase("stop"))) {
 			sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Finale Befehle:");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale joinStart");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale hauptStart [Countdown]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo finale abort");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale joinStart");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale hauptStart [Countdown]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale abort");
 			return;
 		}
 
@@ -110,7 +110,7 @@ public class FinaleCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es koennen nun alle zum Finale joinen.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
-			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/varo finale hauptStart§7 werden alle Spieler, die nicht online sind, getoetet.");
+			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale hauptStart§7 werden alle Spieler, die nicht online sind, getoetet.");
 
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
 

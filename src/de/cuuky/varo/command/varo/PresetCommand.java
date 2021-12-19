@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.preset.PresetLoader;
@@ -21,9 +22,9 @@ public class PresetCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Presets"));
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7load <PresetPath>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7save <PresetPath>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo preset §7list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7load <PresetPath>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7save <PresetPath>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7list");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return;
 		}

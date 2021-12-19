@@ -102,7 +102,7 @@ public class PlayerJoinListener implements Listener {
                         if (Main.getVaroGame().getGameState() == GameState.LOBBY)
                             vplayer.getVersionAdapter().sendTitle("§cUpdate verfuegbar", "Deine Pluginversion ist nicht aktuell!");
 
-                        player.sendMessage("§cUpdate auf Version " + updateVersion + " verfuegbar!§7 Mit §l/varo update§7 kannst du das Update installieren.");
+                        player.sendMessage("§cUpdate auf Version " + updateVersion + " verfuegbar!§7 Mit §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 kannst du das Update installieren.");
                     }
                 }
             }

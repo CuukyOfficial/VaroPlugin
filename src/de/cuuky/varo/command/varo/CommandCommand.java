@@ -1,21 +1,23 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import de.cuuky.cfw.utils.chat.PageableChatBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.command.custom.CustomCommandManager;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.customcommands.CreateCustomCommandGUI;
 import de.cuuky.varo.gui.admin.customcommands.CustomCommandMenuGUI;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class CommandCommand extends VaroCommand {
 
@@ -31,7 +33,7 @@ public class CommandCommand extends VaroCommand {
             str += Main.getPrefix() + "  " + ChatColor.GRAY + command.getOutput() + "\n";
             str += Main.getPrefix();
             return str;
-        }, "/varo command list", "Varo Commands " + ChatColor.RED + "*deactivated"));
+        }, "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command list", "Varo Commands " + ChatColor.RED + "*deactivated"));
     }
 
     @Override
@@ -53,7 +55,7 @@ public class CommandCommand extends VaroCommand {
         String subCommand = args[0].toLowerCase();
         if (subCommand.equalsIgnoreCase("create")) {
             if (args.length < 2) {
-                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command create §7<Name>;<Output>;<Beschreibung>;<Permission>");
+                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command create §7<Name>;<Output>;<Beschreibung>;<Permission>");
                 return;
             }
 
@@ -61,7 +63,7 @@ public class CommandCommand extends VaroCommand {
             String[] arguments = compressed.replaceAll("\\s*;\\s*", ";").split(";");
 
             if (arguments.length != 4) {
-                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command create §7<Name>;<Output>;<Beschreibung>;<Permission>");
+                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command create §7<Name>;<Output>;<Beschreibung>;<Permission>");
                 return;
             }
 
@@ -88,23 +90,23 @@ public class CommandCommand extends VaroCommand {
             if (args.length < 4) {
                 switch (subSubCommand) {
                     case "description": {
-                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit description <Name> <Neue Beschreibung>");
+                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit description <Name> <Neue Beschreibung>");
                         break;
                     }
                     case "output": {
-                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit output <Name> <Neuer Output>");
+                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit output <Name> <Neuer Output>");
                         break;
                     }
                     case "permission": {
-                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit permission <Name> <Neue Permission>");
+                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit permission <Name> <Neue Permission>");
                         break;
                     }
                     case "name": {
-                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit name <Name> <Neuer Name>");
+                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit name <Name> <Neuer Name>");
                         break;
                     }
                     case "deactivated": {
-                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit deactivated <Name> <true/false>");
+                        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit deactivated <Name> <true/false>");
                         break;
                     }
                     default: {
@@ -165,7 +167,7 @@ public class CommandCommand extends VaroCommand {
             }
         } else if (subCommand.equalsIgnoreCase("help")) {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.BOLD + "Hilfe zu Custom commands:");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Du kannst die Commands, sowohl mit Commands\n" + Main.getPrefix() + "  als auch via GUI bearbeiten: " + Main.getColorCode() + "/varo command menu");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Du kannst die Commands, sowohl mit Commands\n" + Main.getPrefix() + "  als auch via GUI bearbeiten: " + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command menu");
             sender.sendMessage(Main.getPrefix());
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Die Permission kannst du auf \"null\" setzen.");
             sender.sendMessage(Main.getPrefix());
@@ -173,12 +175,12 @@ public class CommandCommand extends VaroCommand {
             sender.sendMessage(Main.getPrefix());
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Ein Name darf keine Leerzeichen enthalten.");
             sender.sendMessage(Main.getPrefix());
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Du kannst Custom Commands deaktivieren:\n" + Main.getPrefix() + Main.getColorCode() + "  /varo command edit deactivated <Name> <true/false>");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Du kannst Custom Commands deaktivieren:\n" + Main.getPrefix() + Main.getColorCode() + "  /" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit deactivated <Name> <true/false>");
             sender.sendMessage(Main.getPrefix());
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Du kannst die Commands auch in der Datei der config\n" + Main.getPrefix() + "  verändern. Dabei sollten keine Umlaute (ä, ö, ü)\n" + Main.getPrefix() + "  benutzt werden. Die Änderungen, die du dort triffst\n" + Main.getPrefix() + "  kannst du mit " + Main.getColorCode() + "/varo config reload" + ChatColor.GRAY + " laden.");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + ChatColor.GRAY + "- Du kannst die Commands auch in der Datei der config\n" + Main.getPrefix() + "  verändern. Dabei sollten keine Umlaute (ä, ö, ü)\n" + Main.getPrefix() + "  benutzt werden. Die Änderungen, die du dort triffst\n" + Main.getPrefix() + "  kannst du mit " + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config reload" + ChatColor.GRAY + " laden.");
         } else if (subCommand.equalsIgnoreCase("info")) {
             if (args.length < 2) {
-                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command info <Name>");
+                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command info <Name>");
                 return;
             }
 
@@ -205,7 +207,7 @@ public class CommandCommand extends VaroCommand {
             new CustomCommandMenuGUI((Player) sender);
         } else if (subCommand.equalsIgnoreCase("remove") || subCommand.equalsIgnoreCase("delete")) {
             if (args.length < 2) {
-                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command remove <Name>");
+                sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command remove <Name>");
                 return;
             }
 
@@ -222,21 +224,21 @@ public class CommandCommand extends VaroCommand {
 
     private void sendUsage(CommandSender sender) {
         sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Command Befehle:");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command §7<Name>");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command create §7<Name>;<Output>;<Beschreibung>;<Permission>");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command edit §7<description/name/output/deactivated/permission>");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command help");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command info §7<Name>");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command list");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command menu");
-        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo command remove §7<Name>");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command §7<Name>");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command create §7<Name>;<Output>;<Beschreibung>;<Permission>");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit §7<description/name/output/deactivated/permission>");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command help");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command info §7<Name>");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command list");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command menu");
+        sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command remove §7<Name>");
     }
 
     private void sendEditUsage(CommandSender sender) {
-        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit description <Name> <Neue Beschreibung>");
-        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit name <Name> <Neuer Name>");
-        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit output <Name> <Neuer Output>");
-        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit deactivated <Name> <true/false>");
-        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/varo command edit permission <Name> <Neue Permission>");
+        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit description <Name> <Neue Beschreibung>");
+        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit name <Name> <Neuer Name>");
+        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit output <Name> <Neuer Output>");
+        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit deactivated <Name> <true/false>");
+        sender.sendMessage(Main.getPrefix() + ChatColor.GRAY + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " command edit permission <Name> <Neue Permission>");
     }
 }

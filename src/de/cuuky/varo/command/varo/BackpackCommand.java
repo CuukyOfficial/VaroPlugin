@@ -67,11 +67,11 @@ public class BackpackCommand extends VaroCommand {
 			if (args.length == 0 || (!args[0].equalsIgnoreCase("player") && !args[0].equalsIgnoreCase("team"))) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BACKPACK_CHOOSE_TYPE.getValue(vp));
 				if (vp.getPlayer().isOp()) {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player §7[Player]");
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team §7[Team]");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " bp player §7[Player]");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " bp team §7[Team]");
 				} else {
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp player");
-					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo bp team");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " bp player");
+					sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " bp team");
 				}
 			} else if (args[0].equalsIgnoreCase("player")) {
 				playerBackPack(sender, vp, args, 1);

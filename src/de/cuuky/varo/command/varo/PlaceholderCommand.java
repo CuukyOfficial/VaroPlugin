@@ -1,5 +1,10 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.Locale;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+
 import de.cuuky.cfw.configuration.placeholder.MessagePlaceholder;
 import de.cuuky.cfw.configuration.placeholder.placeholder.PlayerMessagePlaceholder;
 import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
@@ -9,11 +14,8 @@ import de.cuuky.cfw.utils.chat.PageableChatBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-
-import java.util.Locale;
 
 public class PlaceholderCommand extends VaroCommand {
 
@@ -25,7 +27,7 @@ public class PlaceholderCommand extends VaroCommand {
         this.listBuilder = new PageableChatBuilder<MessagePlaceholder>()
                 .messages(new VaroChatListMessages<>(mp ->
                         Main.getPrefix() + Main.getColorCode() + mp.getIdentifier() + " §8- §7" + mp.getDescription(),
-                        "/varo placeholder <general/player>", "List der Placeholder"));
+                        "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " placeholder <general/player>", "List der Placeholder"));
     }
 
     @Override
@@ -33,9 +35,9 @@ public class PlaceholderCommand extends VaroCommand {
         if (args.length == 0) {
             sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Placeholder Befehle:");
             sender.sendMessage(Main.getPrefix());
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7info <name> §8- §7Zeigt Wert und Info vom gegebenen Placeholder");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7general §8- §7Zeigt alle ueberall anwendbaren Placeholder");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7player §8- §7Zeigt alle im Spielerkontext anwendbaren Placeholder");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " placeholder §7info <name> §8- §7Zeigt Wert und Info vom gegebenen Placeholder");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " placeholder §7general §8- §7Zeigt alle ueberall anwendbaren Placeholder");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " placeholder §7player §8- §7Zeigt alle im Spielerkontext anwendbaren Placeholder");
             sender.sendMessage(Main.getPrefix());
             sender.sendMessage(Main.getPrefix() + "Player-Beispiele: Killmessage, Scoreboard, Kickmessage, Tab");
             return;
@@ -43,7 +45,7 @@ public class PlaceholderCommand extends VaroCommand {
 
         if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("get")) {
             if (args.length != 2) {
-                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo placeholder §7get <name> §8- §7Zeigt Wert vom gegebenen Placeholder");
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " placeholder §7get <name> §8- §7Zeigt Wert vom gegebenen Placeholder");
                 return;
             }
 
@@ -74,7 +76,7 @@ public class PlaceholderCommand extends VaroCommand {
             try {
                 type = MessagePlaceholderType.valueOf(args[0].toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
-                sender.sendMessage(Main.getPrefix() + "Falsche Argumente! §c/varo ph");
+                sender.sendMessage(Main.getPrefix() + "Falsche Argumente! §c/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " ph");
                 return;
             }
 

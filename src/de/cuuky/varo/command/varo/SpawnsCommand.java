@@ -8,6 +8,7 @@ import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.Spawn;
@@ -22,15 +23,15 @@ public class SpawnsCommand extends VaroCommand {
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lSpawn Command§7§l:");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 set <Zahl/Spieler>");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 delete <Zahl/Spieler> - (Loescht den Spawneintrag und den Spawn in der Welt)");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> <set/remove> [Spieler/@a]");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 list");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 set <Zahl/Spieler>");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 delete <Zahl/Spieler> - (Loescht den Spawneintrag und den Spawn in der Welt)");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 player <Zahl> <set/remove> [Spieler/@a]");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 list");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
             sender.sendMessage(Main.getPrefix() + "------");
-            sender.sendMessage(Main.getPrefix() + "/varo spawns generate kann dir deine Spawns entweder nach Anzahl oder den eingetragenen Teams oder Spielern generieren.\n" + "Der Unterschied zwischen 'player' und 'team' ist, dass bei 'team' auch die Teams bei der Sortierung beruecksichtigt werden.");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for number: §7/varo spawns generate 30 40 STONE_SLAB");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for players: §7/varo spawns generate auto team");
+            sender.sendMessage(Main.getPrefix() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns generate kann dir deine Spawns entweder nach Anzahl oder den eingetragenen Teams oder Spielern generieren.\n" + "Der Unterschied zwischen 'player' und 'team' ist, dass bei 'team' auch die Teams bei der Sortierung beruecksichtigt werden.");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for number: §7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns generate 30 40 STONE_SLAB");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Example for players: §7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns generate auto team");
             sender.sendMessage(Main.getPrefix() + "------");
             return;
         }
@@ -42,7 +43,7 @@ public class SpawnsCommand extends VaroCommand {
             }
 
             if (args.length < 3) {
-                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 generate <radius>/auto <amount>/player/team [Half-Step-Materiall] [Side-Block-Material]");
                 return;
             }
 
@@ -135,7 +136,7 @@ public class SpawnsCommand extends VaroCommand {
                     sender.sendMessage(Main.getPrefix() + "Spielerspawn " + Main.getColorCode() + spawn.getNumber() + " §7fuer den Spieler " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
                 }
             } else
-                sender.sendMessage(Main.getPrefix() + "/varo spawns set [Zahl/Spieler]");
+                sender.sendMessage(Main.getPrefix() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns set [Zahl/Spieler]");
         } else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Main.getPrefix() + "Not for console!");
@@ -143,7 +144,7 @@ public class SpawnsCommand extends VaroCommand {
             }
 
             if (args.length != 2) {
-                sender.sendMessage(Main.getPrefix() + "/varo spawns " + args[0] + " [Zahl/Spieler/@a]");
+                sender.sendMessage(Main.getPrefix() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns " + args[0] + " [Zahl/Spieler/@a]");
                 return;
             }
 
@@ -194,7 +195,7 @@ public class SpawnsCommand extends VaroCommand {
             spawn.delete();
         } else if (args[0].equalsIgnoreCase("player")) {
             if (args.length < 3) {
-                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl/@a> <set/remove> [Spieler]");
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 player <Zahl/@a> <set/remove> [Spieler]");
                 return;
             }
 
@@ -216,7 +217,7 @@ public class SpawnsCommand extends VaroCommand {
 
             if (args[2].equalsIgnoreCase("set")) {
                 if (args.length < 4) {
-                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo spawns§7 player <Zahl> set [Spieler]");
+                    sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 player <Zahl> set [Spieler]");
                     return;
                 }
 
@@ -256,6 +257,6 @@ public class SpawnsCommand extends VaroCommand {
                 sender.sendMessage(Main.getPrefix());
             }
         } else
-            sender.sendMessage(Main.getPrefix() + "Not found! /varo spawns");
+            sender.sendMessage(Main.getPrefix() + "Not found! /" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns");
     }
 }

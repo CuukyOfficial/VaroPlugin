@@ -29,13 +29,13 @@ public class DiscordCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Discord"));
 
 			if (sender.hasPermission("varo.discord")) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord getLink §7<Spieler>");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord unlink §7<Spieler>");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord bypassRegister §7<Spieler> <true/false>");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord sendMessage §7<Nachricht>");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord reload");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord shutdown");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo discord settings");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord getLink §7<Spieler>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord unlink §7<Spieler>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord bypassRegister §7<Spieler> <true/false>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord sendMessage §7<Nachricht>");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord reload");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord shutdown");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord settings");
 			}
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 			return;
@@ -149,7 +149,7 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			if (args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <Spieler> <true/false>");
+				sender.sendMessage(Main.getPrefix() + "§7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord bypass <Spieler> <true/false>");
 				return;
 			}
 
@@ -162,7 +162,7 @@ public class DiscordCommand extends VaroCommand {
 				}
 
 			} else
-				sender.sendMessage(Main.getPrefix() + "§7/varo discord bypass <add/remove> <Spielername>");
+				sender.sendMessage(Main.getPrefix() + "§7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord bypass <add/remove> <Spielername>");
 		} else if (args[0].equalsIgnoreCase("reload")) {
 			Main.getBotLauncher().getDiscordbot().disconnect();
 			Main.getBotLauncher().getDiscordbot().connect();

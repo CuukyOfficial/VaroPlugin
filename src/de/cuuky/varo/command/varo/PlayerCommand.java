@@ -1,19 +1,21 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.ArrayList;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import de.cuuky.cfw.utils.UUIDUtils;
 import de.cuuky.cfw.utils.chat.PageableChatBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.gui.player.PlayerGUI;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class PlayerCommand extends VaroCommand {
 
@@ -25,20 +27,20 @@ public class PlayerCommand extends VaroCommand {
 		this.listBuilder = new PageableChatBuilder<>(VaroPlayer::getVaroPlayer)
 				.messages(new VaroChatListMessages<>(player ->
 						Main.getPrefix() + Main.getColorCode() + "§l" + (player.getId() + 1) + "§7: " + Main.getColorCode() + player.getName(),
-						"/varo player list", "List aller Spieler"));
+						"/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player list", "List aller Spieler"));
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Player §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player add §7<Spieler1> <Spieler2> ...");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player remove §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player respawn §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player kill §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player reset §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player §7<Spieler>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player add §7<Spieler1> <Spieler2> ...");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player remove §7<Spieler / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player respawn §7<Spieler / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player kill §7<Spieler / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player reset §7<Spieler / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player list");
 			sender.sendMessage(Main.getPrefix() + "§7------------------");
 			return;
 		}
@@ -141,7 +143,7 @@ public class PlayerCommand extends VaroCommand {
 			return;
 		} else if (args[0].equalsIgnoreCase("add")) {
 			if (args.length <= 1) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo player add §7<Spieler1> <Spieler2> ...");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player add §7<Spieler1> <Spieler2> ...");
 				return;
 			}
 
@@ -163,7 +165,7 @@ public class PlayerCommand extends VaroCommand {
 					try {
 						newName = UUIDUtils.getNamesChanged(arg);
 						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hiess, hat sich in §7" + newName + " §cumbenannt.");
-						sender.sendMessage(Main.getPrefix() + "Benutze \"/varo team add\", um diese Person einem Team hinzuzufuegen.");
+						sender.sendMessage(Main.getPrefix() + "Benutze \"/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team add\", um diese Person einem Team hinzuzufuegen.");
 					} catch (Exception f) {
 						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
 					}

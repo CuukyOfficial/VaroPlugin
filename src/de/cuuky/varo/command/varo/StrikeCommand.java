@@ -8,6 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
 
@@ -21,9 +22,9 @@ public class StrikeCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7------ " + Main.getColorCode() + "Strike §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike §7<Player> [Grund]");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike list §7<Player>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo strike remove §7<Player> <StrikeNummer>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike §7<Player> [Grund]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike list §7<Player>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike remove §7<Player> <StrikeNummer>");
 			sender.sendMessage(Main.getPrefix() + "§7-----------------------");
 			return;
 		}

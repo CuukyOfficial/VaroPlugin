@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -24,7 +25,7 @@ public class ExportCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Export"));
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/varo export players");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " export players");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 		}
 
@@ -65,7 +66,7 @@ public class ExportCommand extends VaroCommand {
 				e.printStackTrace();
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_EXPORT_SUCCESSFULL.getValue(vp).replace("%file%", "/plugins/Varo/exports/players.yml"));
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_EXPORT_SUCCESSFULL.getValue(vp).replace("%file%", "/plugins/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + "/exports/players.yml"));
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%commands%", "export"));
 	}
