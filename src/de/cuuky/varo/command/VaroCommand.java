@@ -42,7 +42,6 @@ public abstract class VaroCommand {
 		new LobbyCommand();
 		new IntroCommand();
 		new EventsCommand();
-		new TrollCommand();
 		new ExportCommand();
 		new StatsCommand();
 		new UpdateCommand();
