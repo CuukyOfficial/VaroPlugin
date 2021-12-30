@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,6 +20,11 @@ public class EntityDamageByEntityListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
+		if(!Main.getVaroGame().hasStarted() && event.getDamager() instanceof Player && ((Player) event.getDamager()).getGameMode() != GameMode.CREATIVE) {
+			event.setCancelled(true);
+			return;
+		}
+		
 		if (!(event.getEntity() instanceof Player))
 			return;
 

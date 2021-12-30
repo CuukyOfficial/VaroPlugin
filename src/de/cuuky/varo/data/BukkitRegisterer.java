@@ -54,6 +54,9 @@ import de.cuuky.varo.game.world.listener.VaroWorldListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
 import de.cuuky.varo.listener.FancyEffectListener;
+import de.cuuky.varo.listener.InventoryMoveListener;
+import de.cuuky.varo.listener.ItemDropListener;
+import de.cuuky.varo.listener.ItemPickupListener;
 import de.cuuky.varo.listener.NoPortalListener;
 import de.cuuky.varo.listener.PlayerChatListener;
 import de.cuuky.varo.listener.PlayerCommandPreprocessListener;
@@ -73,7 +76,7 @@ import de.cuuky.varo.listener.logging.DestroyedBlocksListener;
 import de.cuuky.varo.listener.saveable.BlockBreakListener;
 import de.cuuky.varo.listener.saveable.BlockPlaceListener;
 import de.cuuky.varo.listener.saveable.EntityExplodeListener;
-import de.cuuky.varo.listener.saveable.InventoryMoveListener;
+import de.cuuky.varo.listener.saveable.InventoryMoveSavableListener;
 import de.cuuky.varo.listener.saveable.PlayerInteractListener;
 import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
@@ -167,7 +170,7 @@ public final class BukkitRegisterer {
 		registerEvent(new SignChangeListener());
 		registerEvent(new PlayerChatListener());
 		registerEvent(new BlockPlaceListener());
-		registerEvent(new InventoryMoveListener());
+		registerEvent(new InventoryMoveSavableListener());
 		registerEvent(new ServerListPingListener());
 		registerEvent(new PlayerDeathListener());
 		registerEvent(new BlockedEnchantmentsListener());
@@ -185,5 +188,8 @@ public final class BukkitRegisterer {
 		registerEvent(new VaroWorldListener());
 		registerEvent(new FancyEffectListener());
 		registerEvent(new HitListener());
+		registerEvent(new InventoryMoveListener());
+		registerEvent(new ItemDropListener());
+		registerEvent(new ItemPickupListener());
 	}
 }

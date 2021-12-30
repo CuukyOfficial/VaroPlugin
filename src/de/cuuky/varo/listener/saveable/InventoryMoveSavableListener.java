@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 
-public class InventoryMoveListener implements Listener {
+public class InventoryMoveSavableListener implements Listener {
 
 	@EventHandler
 	public void onInventoryMove(InventoryMoveItemEvent e) {
