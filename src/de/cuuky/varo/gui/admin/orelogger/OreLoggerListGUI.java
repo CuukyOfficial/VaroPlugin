@@ -22,9 +22,12 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
+    public OreLoggerListGUI(Player opener, List<LoggedBlock> blocks) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, blocks);
+    }
+
     public OreLoggerListGUI(Player opener) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener,
-                Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs());
+        this(opener, Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs());
     }
 
     @Override
