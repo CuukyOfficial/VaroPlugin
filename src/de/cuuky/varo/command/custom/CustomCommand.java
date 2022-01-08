@@ -59,7 +59,9 @@ public class CustomCommand extends VaroCommand {
         this.setConfigEntry();
     }
 
-    public void save() { Main.getDataManager().getCustomCommandManager().save(); }
+    public void save() {
+    	Main.getDataManager().getCustomCommandManager().save();
+    }
 
     public void editPermission(String newPermission) {
         this.setPermission(newPermission);

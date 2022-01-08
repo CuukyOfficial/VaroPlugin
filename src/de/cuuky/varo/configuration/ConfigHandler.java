@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.google.common.io.Files;
 
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
@@ -54,7 +55,7 @@ public class ConfigHandler {
 			}
 
 			File file = new File(filepath, section.getName().toLowerCase() + ".yml");
-			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+			YamlConfiguration config = YamlConfigurationUtil.loadConfiguration(file);
 
 			boolean save = false;
 			config.options().copyDefaults(true);
@@ -126,15 +127,16 @@ public class ConfigHandler {
 
 	private void checkLegacyConfiguration(SectionConfiguration[] sections, String filepath) {
 		File file = new File(filepath + ".yml");
-		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
 		if (!file.exists())
 			return;
+		
+		YamlConfiguration config = YamlConfigurationUtil.loadConfiguration(file);
 
 		System.out.println(Main.getConsolePrefix() + "Found legacy configuration! Loading " + file.getName() + "...");
 		for (SectionConfiguration section : sections) {
 			File sectionFile = new File(filepath, section.getName().toLowerCase() + ".yml");
-			YamlConfiguration sectionConfig = YamlConfiguration.loadConfiguration(sectionFile);
+			YamlConfiguration sectionConfig = YamlConfigurationUtil.loadConfiguration(sectionFile);
 
 			for (SectionEntry entry : section.getEntries()) {
 				if (!config.contains(entry.getFullPath()))
@@ -143,23 +145,14 @@ public class ConfigHandler {
 				entry.setValue(config.get(entry.getFullPath()));
 				sectionConfig.set(entry.getPath(), entry.getValue());
 			}
-
-			try {
-				sectionConfig.save(sectionFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			YamlConfigurationUtil.save(sectionConfig, sectionFile);
 		}
 
 		this.legacyFound = true;
 	}
 
 	private void saveFile(YamlConfiguration config, File file) {
-		try {
-			config.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		YamlConfigurationUtil.save(config, file);
 	}
 
 	public void saveValue(SectionEntry entry) {

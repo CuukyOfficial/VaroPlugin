@@ -1,14 +1,15 @@
 package de.cuuky.varo.command.custom;
 
-import de.cuuky.varo.command.VaroCommand;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
+import de.cuuky.varo.command.VaroCommand;
 
 public class CustomCommandManager {
 
@@ -42,7 +43,7 @@ public class CustomCommandManager {
 
     private void reloadConfig() {
         file = new File("plugins/Varo/config", "customcommands.yml");
-        config = YamlConfiguration.loadConfiguration(file);
+        config = YamlConfigurationUtil.loadConfiguration(file);
     }
 
     public void reload() {
@@ -62,11 +63,7 @@ public class CustomCommandManager {
     }
 
     public void save() {
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        YamlConfigurationUtil.save(config, file);
     }
 
     public YamlConfiguration getConfig() {

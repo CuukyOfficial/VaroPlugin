@@ -1,15 +1,13 @@
 package de.cuuky.varo.configuration;
 
-import de.cuuky.varo.Main;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.scanner.ScannerException;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import org.yaml.snakeyaml.scanner.ScannerException;
+
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
+import de.cuuky.varo.Main;
 
 public final class ConfigFailureDetector {
 
@@ -49,10 +47,10 @@ public final class ConfigFailureDetector {
 			if (!file.getName().endsWith(".yml")) continue;
 
 			try {
-				new YamlConfiguration().load(file);
+				YamlConfigurationUtil.loadConfiguration(file);
 			} catch (NullPointerException e) {
 				System.out.println(Main.getConsolePrefix() + "Odd config found, ignoring it");
-			} catch (ScannerException e) {} catch (FileNotFoundException e) {} catch (IOException e) {} catch (InvalidConfigurationException e) {
+			} catch (ScannerException e) {
 				if (e.getMessage().contains("deserialize"))
 					continue;
 

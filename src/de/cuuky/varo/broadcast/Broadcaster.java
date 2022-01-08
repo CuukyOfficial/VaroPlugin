@@ -1,7 +1,6 @@
 package de.cuuky.varo.broadcast;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -38,7 +37,7 @@ public class Broadcaster {
 		this.messages = new ArrayList<>();
 
 		File file = new File("plugins/Varo/config", "broadcasts.yml");
-		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		YamlConfiguration cfg = YamlConfigurationUtil.loadConfiguration(file);
 
 		if (!file.exists()) {
 			ArrayList<String> sb = new ArrayList<>();
@@ -49,11 +48,7 @@ public class Broadcaster {
 				cfg.addDefault("messages", sb);
 			cfg.options().copyDefaults(true);
 
-			try {
-				cfg.save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			YamlConfigurationUtil.save(cfg, file);
 		}
 
 		messages.addAll(cfg.getStringList("messages"));
