@@ -58,7 +58,7 @@ public class AdminMainMenu extends VaroInventory {
         addItem(18, new BuildItem().displayName("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(),
                 (event) -> this.openNext(new AlertTypeChooseGUI(getPlayer())));
 
-        addItem(22, new BuildItem().displayName("§aBackups").material(Materials.WRITTEN_BOOK).build(),
+        addItem(22, new BuildItem().displayName("§aBackups").material(Materials.ENCHANTED_BOOK).build(),
                 (event) -> this.openNext(new BackupListGUI(getPlayer())));
 
         addItem(26, new BuildItem().displayName("§1DiscordBot")
