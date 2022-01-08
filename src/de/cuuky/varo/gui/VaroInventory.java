@@ -17,7 +17,8 @@ public abstract class VaroInventory extends AdvancedInventory {
         getPlayer().sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
         getPlayer().sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
         getPlayer().sendMessage(Main.getPrefix() + "§7Discord-Server: " + Main.getColorCode() + Main.DISCORD_INVITE);
-        getPlayer().sendMessage(Main.getPrefix() + "§7All rights reserved!");
+        getPlayer().sendMessage(Main.getPrefix() + "§7This software is licensed under the GNU AGPL v3 license");
+        getPlayer().sendMessage(Main.getPrefix() + "§7Source code: https://github.com/CuukyOfficial/VaroPlugin");
     }
 
     protected int getFixedSize(int size) {
