@@ -89,7 +89,7 @@ public class MainMenu extends VaroInventory {
         );
 
         if (getPlayer().hasPermission("varo.admin")) {
-            addItem(36, new BuildItem().displayName("§cAdmin-Section").lore("§cNur für Admins sichtbar")
+            addItem(36, new BuildItem().displayName("§cAdmin-Section").lore("§cOnly available to admins")
                     .itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), (event) ->
                     this.openNext(new AdminMainMenu(getPlayer()))
             );
