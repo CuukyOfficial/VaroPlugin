@@ -52,7 +52,7 @@ public class AdminMainMenu extends VaroInventory {
         addItem(10, new BuildItem().displayName("§4Reports").itemstack(new ItemStack(Material.BLAZE_ROD)).amount(getFixedSize(Report.getReports().size())).build(),
                 (event) -> this.openNext(new ReportListGUI(getPlayer())));
 
-        addItem(16, new BuildSkull().player(getPlayer().getName()).displayName("§aSpieler").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).build(),
+        addItem(16, new BuildSkull().player(getPlayer().getName()).displayName("§aPlayers").amount(getFixedSize(VaroPlayer.getVaroPlayer().size())).build(),
                 (event) -> this.openNext(new PlayerListChooseGUI(getPlayer())));
 
         addItem(18, new BuildItem().displayName("§cAlerts").itemstack(new ItemStack(Material.BOOK)).amount(getFixedSize(Alert.getOpenAlerts().size())).build(),
