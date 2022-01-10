@@ -1,7 +1,6 @@
 package de.cuuky.varo.bot.discord.register;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -178,7 +178,7 @@ public class BotRegister {
 
 		} else {
 			File file = new File("plugins/Varo", "registrations.yml");
-			YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+			YamlConfiguration cfg = YamlConfigurationUtil.loadConfiguration(file);
 
 			for (String key : cfg.getKeys(true)) {
 				if (!key.contains(".userId"))
@@ -246,7 +246,7 @@ public class BotRegister {
 			}
 		} else {
 			File file = new File("plugins/Varo", "registrations.yml");
-			YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+			YamlConfiguration cfg = YamlConfigurationUtil.loadConfiguration(file);
 
 			for (String s : cfg.getKeys(true))
 				cfg.set(s, null);
@@ -258,11 +258,7 @@ public class BotRegister {
 				cfg.set(reg.getUUID() + ".name", reg.getPlayerName() == null ? "null" : reg.getPlayerName());
 			}
 
-			try {
-				cfg.save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			YamlConfigurationUtil.save(cfg, file);
 		}
 	}
 }

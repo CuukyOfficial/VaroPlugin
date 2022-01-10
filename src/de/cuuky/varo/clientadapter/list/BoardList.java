@@ -1,9 +1,10 @@
 package de.cuuky.varo.clientadapter.list;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 
 public abstract class BoardList {
 
@@ -18,18 +19,14 @@ public abstract class BoardList {
 
 	public void update() {
 		this.file = new File(path);
-		this.configuration = YamlConfiguration.loadConfiguration(this.file);
+		this.configuration = YamlConfigurationUtil.loadConfiguration(this.file);
 
 		this.configuration.options().copyDefaults(true);
 
 		updateList();
 
 		if (!file.exists())
-			try {
-				this.configuration.save(this.file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			YamlConfigurationUtil.save(this.configuration, this.file);
 	}
 
 	protected abstract void updateList();

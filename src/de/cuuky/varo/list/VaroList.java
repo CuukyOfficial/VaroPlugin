@@ -1,11 +1,12 @@
 package de.cuuky.varo.list;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 
 public abstract class VaroList {
 
@@ -53,14 +54,12 @@ public abstract class VaroList {
 		config.set(location, null);
 		config.set(location, getAsList());
 
-		try {
-			config.save(file);
-		} catch (IOException e) {}
+		YamlConfigurationUtil.save(config, file);
 	}
 
 	private static void reloadConfig() {
 		file = new File("plugins/Varo/config", "lists.yml");
-		config = YamlConfiguration.loadConfiguration(file);
+		config = YamlConfigurationUtil.loadConfiguration(file);
 	}
 
 	public static ArrayList<VaroList> getLists() {
@@ -80,10 +79,6 @@ public abstract class VaroList {
 			config.set(list.getLocation(), list.getAsList());
 		}
 
-		try {
-			config.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		YamlConfigurationUtil.save(config, file);
 	}
 }

@@ -52,7 +52,7 @@ public class PlayerGUI extends VaroInventory {
                     BukkitUtils.saveTeleport(getPlayer(), target.getStats().getLastLocation());
                 });
 
-        addItem(7, new BuildItem().displayName("§eKisten/Öfen").material(Materials.CHEST)
+        addItem(7, new BuildItem().displayName("§eChests/Furnaces").material(Materials.CHEST)
                         .amount(getFixedSize(target.getStats().getSaveables().size())).build(),
                 (event) -> this.openNext(new PlayerSavableChooseGUI(getPlayer(), target)));
 

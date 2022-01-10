@@ -89,7 +89,7 @@ public class PlayerJoinListener implements Listener {
                 if (VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigSetting.START_AT_PLAYERS.getValueAsInt())
                     Main.getVaroGame().start();
                 else
-                    Bukkit.broadcastMessage(Main.getPrefix() + "Es werden noch " + (ConfigSetting.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size()) + " Spieler zum Start benoetigt!");
+                    Bukkit.broadcastMessage(ConfigMessages.JOIN_PLAYERS_REQUIRED.getValue().replace("%required%", String.valueOf(ConfigSetting.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size())));
             }
 
             if (player.isOp()) {
@@ -100,9 +100,8 @@ public class PlayerJoinListener implements Listener {
 
                     if (result == UpdateResult.UPDATE_AVAILABLE) {
                         if (Main.getVaroGame().getGameState() == GameState.LOBBY)
-                            vplayer.getVersionAdapter().sendTitle("§cUpdate verfuegbar", "Deine Pluginversion ist nicht aktuell!");
-
-                        player.sendMessage("§cUpdate auf Version " + updateVersion + " verfuegbar!§7 Mit §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 kannst du das Update installieren.");
+                            vplayer.getVersionAdapter().sendTitle("§cUpdate available", "You are using an outdated plugin version!");
+                        player.sendMessage("§cVaro update available!§7 Use §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 to update now. New version: " + updateVersion);
                     }
                 }
             }
@@ -125,7 +124,7 @@ public class PlayerJoinListener implements Listener {
             } else if (Main.getVaroGame().getFinaleJoinStart()) {
                 Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_FINALE, vplayer);
                 Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer));
-                vplayer.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
+                vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER);
                 if (!player.isOp())
                     new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
             } else if (!ConfigSetting.PLAY_TIME.isIntActivated()) {

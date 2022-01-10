@@ -1,12 +1,12 @@
 package de.cuuky.varo.serialize;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.serialize.field.FieldLoader;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -41,7 +41,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 		} else {
 			this.file = new File("plugins/Varo", fileName);
 			files.put(fileName, file);
-			this.configuration = YamlConfiguration.loadConfiguration(file);
+			this.configuration = YamlConfigurationUtil.loadConfiguration(file);
 			configs.put(fileName, configuration);
 		}
 	}
@@ -73,11 +73,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	}
 
 	protected void saveFile() {
-		try {
-			configuration.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		YamlConfigurationUtil.save(this.configuration, this.file);
 	}
 
 	public Class<? extends VaroSerializeable> getClazz() {
