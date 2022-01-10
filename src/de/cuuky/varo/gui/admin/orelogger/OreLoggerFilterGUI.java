@@ -102,7 +102,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
                 this.materialFilter.setFilter(this.getPlayer(), Main.getPrefix() + "Please enter a material name to filter for:"));
 
         // Reset material
-        addItem(24 + 9, new BuildItem().material(Material.REDSTONE).displayName(Main.getColorCode() + "Reset Material").build(),
+        addItem(24 + 9, new BuildItem().material(Material.REDSTONE).displayName(ChatColor.RED + "Reset Material").build(),
                 this.materialFilter.resetFilter(this.getPlayer())
         );
 
