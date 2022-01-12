@@ -106,7 +106,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
 
     @Override
     public String getTitle() {
-        return Main.getColorCode() + "OreLogger";
+        return "§6OreLogger";
     }
 
     @Override
