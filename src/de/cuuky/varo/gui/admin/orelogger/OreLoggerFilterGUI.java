@@ -46,14 +46,14 @@ public class OreLoggerFilterGUI extends VaroInventory {
 
                                 if (!Filter.this.contentChecker.test(newContent)) {
                                     String msg = ConfigMessages.LOGGER_FILTER_INVALID_FILTER.getValue(player)
-                                        .replaceAll("%filterName%", Filter.this.name)
-                                        .replaceAll("%content%", newContent);
+                                        .replace("%filterName%", Filter.this.name)
+                                        .replace("%content%", newContent);
                                     player.sendMessage(Main.getPrefix() + msg);
                                 } else {
                                     String msg = ConfigMessages.LOGGER_FILTER_SET_FILTER.getValue(player)
-                                        .replaceAll("%filterName%", Filter.this.name)
-                                        .replaceAll("%newContent%", newContent)
-                                        .replaceAll("%oldContent%", Filter.this.getContent());
+                                        .replace("%filterName%", Filter.this.name)
+                                        .replace("%newContent%", newContent)
+                                        .replace("%oldContent%", Filter.this.getContent());
                                     player.sendMessage(Main.getPrefix() + msg);
 
                                     Filter.this.setContent(newContent);
@@ -73,7 +73,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
 //        private ItemClick resetFilter(VaroPlayer player) {
 //            return click -> {
 //                String msg = ConfigMessages.LOGGER_FILTER_RESET_FILTER.getValue(player)
-//                    .replaceAll("%filterName%", this.name).replaceAll("%oldContent%", this.getContent());
+//                    .replace("%filterName%", this.name).replace("%oldContent%", this.getContent());
 //                player.sendMessage(Main.getPrefix() + msg);
 //
 //                setContent(null);
@@ -102,6 +102,11 @@ public class OreLoggerFilterGUI extends VaroInventory {
     public OreLoggerFilterGUI(Player player) {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
         this.player = VaroPlayer.getPlayer(player);
+    }
+
+    @Override
+    public String getTitle() {
+        return Main.getColorCode() + "OreLogger";
     }
 
     @Override
