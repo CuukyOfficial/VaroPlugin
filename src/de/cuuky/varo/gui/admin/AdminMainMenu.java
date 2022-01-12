@@ -15,12 +15,13 @@ import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
 import de.cuuky.varo.gui.admin.debug.DebugGUI;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 import de.cuuky.varo.gui.admin.game.GameOptionsGUI;
-import de.cuuky.varo.gui.admin.orelogger.OreLoggerListGUI;
+import de.cuuky.varo.gui.admin.orelogger.OreLoggerFilterGUI;
 import de.cuuky.varo.gui.admin.setuphelp.SetupHelpGUI;
 import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.gui.team.TeamChooseGUI;
 import de.cuuky.varo.report.Report;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -82,7 +83,7 @@ public class AdminMainMenu extends VaroInventory {
 
         addItem(40, new BuildItem().displayName("§6OreLogger").itemstack(new ItemStack(Material.DIAMOND_ORE))
                         .amount(getFixedSize(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs().size())).build(),
-                (event) -> this.openNext(new OreLoggerListGUI(getPlayer())));
+                (event) -> this.openNext(new OreLoggerFilterGUI(getPlayer())));
 
         if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
             addItem(this.getUsableSize(), new BuildItem().displayName("§6Debug").itemstack(new ItemStack(Material.BUCKET)).build(),
