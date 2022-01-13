@@ -70,16 +70,6 @@ public class OreLoggerFilterGUI extends VaroInventory {
             };
         }
 
-//        private ItemClick resetFilter(VaroPlayer player) {
-//            return click -> {
-//                String msg = ConfigMessages.LOGGER_FILTER_RESET_FILTER.getValue(player)
-//                    .replace("%filterName%", this.name).replace("%oldContent%", this.getContent());
-//                player.sendMessage(Main.getPrefix() + msg);
-//
-//                setContent(null);
-//            };
-//        }
-
         private void setContent(String content) {
             this.content = content;
         }
@@ -124,23 +114,13 @@ public class OreLoggerFilterGUI extends VaroInventory {
             this.playerFilter.setFilter(this.player,
                 Main.getPrefix() + ConfigMessages.LOGGER_FILTER_PLAYER_FILTER_MESSAGE.getValue(this.player))
         );
-
-        // Reset Player
-//        addItem(20 + 9, new BuildItem().material(Materials.REDSTONE).displayName(ChatColor.RED + "Reset Player").build(),
-//                this.playerFilter.resetFilter(this.player)
-//        );
-
+        
         // Filter material
         addItem(base + 4, new BuildItem().material(Materials.SIGN).displayName(
                     Main.getColorCode() + "Filter Material" + ChatColor.GRAY + " (" + this.materialFilter.getContent() + ")")
             .lore("§7Right-Click to reset").build(),
             this.materialFilter.setFilter(this.player,
                 Main.getPrefix() + ConfigMessages.LOGGER_FILTER_MATERIAL_FILTER_MESSAGE.getValue(this.player)));
-
-        // Reset material
-//        addItem(24 + 9, new BuildItem().material(Materials.REDSTONE).displayName(ChatColor.RED + "Reset Material").build(),
-//                this.materialFilter.resetFilter(this.player)
-//        );
 
         // Open
         addItem(base + 2, new BuildItem().material(Materials.EMERALD).displayName(Main.getColorCode() + "Open").build(),
