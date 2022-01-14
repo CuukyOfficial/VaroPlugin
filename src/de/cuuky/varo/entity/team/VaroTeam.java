@@ -2,8 +2,14 @@ package de.cuuky.varo.entity.team;
 
 import java.util.ArrayList;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
+import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
@@ -198,6 +204,44 @@ public class VaroTeam extends VaroEntity {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+		statChanged();
+	}
+	
+	public void createNameChangeChatHook(VaroPlayer varoPlayer, Runnable callback) {
+		Player player = varoPlayer.getPlayer();
+		Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(player, ConfigMessages.TEAM_RENAME.getValue(varoPlayer), new ChatHookHandler() {
+
+            @Override
+            public boolean onChat(AsyncPlayerChatEvent event) {
+                if (!event.getMessage().matches(VaroTeam.NAME_REGEX)) {
+                	varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_INVALID);
+                    return false;
+                }
+
+                VaroTeam duplicateTeam = VaroTeam.getTeam(event.getMessage());
+                if (duplicateTeam != null) {
+                	varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_DUPLICATE);
+                    return false;
+                }
+                
+                String message = event.getMessage();
+                int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
+				if (message.length() > maxLength) {
+					varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG).replace("%maxLength%", String.valueOf(maxLength));
+					return false;
+				}
+
+                VaroTeam.this.setName(event.getMessage());
+                player.sendMessage(ConfigMessages.TEAM_RENAMED.getValue(varoPlayer).replace("%teamId%", String.valueOf(VaroTeam.this.getId())).replace("%newName%", VaroTeam.this.getName()));
+                if (callback != null)
+                	callback.run();
+                return true;
+            }
+        }));
+	}
+
 	public ArrayList<VaroSaveable> getSaveables() {
 		ArrayList<VaroSaveable> save = new ArrayList<VaroSaveable>();
 		for (VaroPlayer vp : member)
@@ -216,11 +260,6 @@ public class VaroTeam extends VaroEntity {
 
 	public void setLifes(double lifes) {
 		this.lifes = lifes;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-		statChanged();
 	}
 
 	public void statChanged() {

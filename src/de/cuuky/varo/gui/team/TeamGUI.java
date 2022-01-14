@@ -4,6 +4,7 @@ import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.VaroInventory;
 import org.bukkit.Material;
@@ -57,27 +58,7 @@ public class TeamGUI extends VaroInventory {
 
         addItem(3, new BuildItem().displayName("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplay())
                 .itemstack(new ItemStack(Material.DIAMOND_HELMET)).build(), (event) -> {
-            Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team name:", new ChatHookHandler() {
-
-                @Override
-                public boolean onChat(AsyncPlayerChatEvent event) {
-                    if (!event.getMessage().matches(VaroTeam.NAME_REGEX)) {
-                        getPlayer().sendMessage(Main.getPrefix() + "Invalid team name!");
-                        return false;
-                    }
-
-                    VaroTeam otherTeam = VaroTeam.getTeam(event.getMessage());
-                    if (otherTeam != null) {
-                        getPlayer().sendMessage(Main.getPrefix() + "Team name already exists");
-                        return false;
-                    }
-
-                    team.setName(event.getMessage());
-                    getPlayer().sendMessage(Main.getPrefix() + "Team name of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + Main.getColorCode() + team.getName() + "§7'");
-                    open();
-                    return true;
-                }
-            }));
+            team.createNameChangeChatHook(VaroPlayer.getPlayer(this.getPlayer()), this::open);
             this.close();
         });
 

@@ -32,6 +32,7 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
+import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.settings.VaroMenuColor;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -547,8 +548,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			e.printStackTrace();
 		}
 
-		if (isOnline())
+		if (isOnline()) {
 			update();
+			if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+				LobbyItem.giveOrRemoveTeamItems(this);
+		}
 
 		Main.getVaroGame().getTopScores().update();
 	}
