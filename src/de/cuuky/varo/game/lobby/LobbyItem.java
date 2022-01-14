@@ -22,6 +22,10 @@ import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 import de.cuuky.varo.game.state.GameState;
 
 public class LobbyItem {
+	
+	private static final int SLOT_INVITE = 0;
+	private static final int SLOT_LEAVE = 8;
+	private static final int SLOT_RENAME = 4;
 
 	private static List<ItemHook> lobbyItems = new ArrayList<>();
 
@@ -40,7 +44,7 @@ public class LobbyItem {
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
 
 		hookItem(new ItemHook(player, new BuildItem().displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.getValue(varoPlayer)).itemstack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue())
-				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), 0, new ItemHookHandler() {
+				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), SLOT_INVITE, new ItemHookHandler() {
 
 			@Override
 			public void onInteractEntity(PlayerInteractEntityEvent event) {}
@@ -75,13 +79,13 @@ public class LobbyItem {
 		if (varoPlayer.getTeam() == null) {
 			ItemStack air = Materials.AIR.parseItem();
 			Inventory inventory = varoPlayer.getPlayer().getInventory();
-			inventory.setItem(1, air);
-			inventory.setItem(2, air);
+			inventory.setItem(SLOT_LEAVE, air);
+			inventory.setItem(SLOT_RENAME, air);
 			return;
 		}
 		
 		hookItem(new ItemHook(varoPlayer.getPlayer(), new BuildItem().displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_NAME.getValue(varoPlayer)).itemstack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_ITEM.getValue())
-				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), 1, new ItemHookHandler() {
+				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), SLOT_LEAVE, new ItemHookHandler() {
 
 			@Override
 			public void onInteractEntity(PlayerInteractEntityEvent event) {}
@@ -103,7 +107,7 @@ public class LobbyItem {
 		
 		if (ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ENABLED.getValueAsBoolean())
 			hookItem(new ItemHook(varoPlayer.getPlayer(), new BuildItem().displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_NAME.getValue(varoPlayer)).itemstack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ITEM.getValue())
-					.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), 2, new ItemHookHandler() {
+					.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), SLOT_RENAME, new ItemHookHandler() {
 	
 				@Override
 				public void onInteractEntity(PlayerInteractEntityEvent event) {}
