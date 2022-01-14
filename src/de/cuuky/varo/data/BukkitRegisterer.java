@@ -122,7 +122,7 @@ public final class BukkitRegisterer {
 	}
 
 	public static void registerCommands() {
-		registerDynamicCommand(ConfigSetting.COMMAND_VARO_NAME.getValueAsString(), "Hauptbefehl des Plugins", new VaroCommandListener(), ConfigSetting.COMMAND_VARO_ENABLED);
+		registerDynamicCommand(ConfigSetting.COMMAND_VARO_NAME.getValueAsString(), "Hauptbefehl des Plugins", new VaroCommandListener(), ConfigSetting.COMMAND_VARO_ENABLED, "varoplugin");
 		registerDynamicCommand("antixray", "Schaltet einen Schutz vor X-Ray an und aus", new AntiXrayCommand(), ConfigSetting.COMMAND_ANTIXRAY_ENABLED);
 		registerDynamicCommand("broadcast", "Sendet eine Nachricht an den Server", new BroadcastCommand(), ConfigSetting.COMMAND_BROADCAST_ENABLED, "bc");
 		registerDynamicCommand("chatclear", "Leert den Chat", new ChatClearCommand(), ConfigSetting.COMMAND_CHATCLEAR_ENABLED, "cc");
