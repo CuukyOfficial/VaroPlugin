@@ -33,8 +33,8 @@ public class TeamGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new BuildItem().displayName("§cSet teamlives").lore("§7Current§8: §4" + team.getLifes()).itemstack(new ItemStack(Material.DIAMOND)).build(), (event) -> {
-            Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team colorcode:", new ChatHookHandler() {
+        addItem(1, new BuildItem().displayName("§cSet team-lives").lore("§7Current§8: §4" + team.getLifes()).itemstack(new ItemStack(Material.DIAMOND)).build(), (event) -> {
+            Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter team-lives:", new ChatHookHandler() {
 
                 @Override
                 public boolean onChat(AsyncPlayerChatEvent event) {
