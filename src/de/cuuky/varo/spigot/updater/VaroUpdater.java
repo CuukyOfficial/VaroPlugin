@@ -58,6 +58,7 @@ public class VaroUpdater {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
+			Main.getInstance().fail();
 		}
 
 		if (version1.contains("BETA")) return VersionCompareResult.VERSION2GREATER;
@@ -90,7 +91,7 @@ public class VaroUpdater {
 
 	public VaroUpdateResultSet checkForUpdates() {
 		UpdateResult result = UpdateResult.NO_UPDATE;
-		String version, id;
+		String version = "", id = "";
 
 		try {
 			Scanner scanner = new Scanner(new URL(updateLink).openStream());
@@ -119,9 +120,6 @@ public class VaroUpdater {
 		} catch (ParseException | IllegalArgumentException e) {
 			e.getSuppressed();
 			System.out.println(Main.getConsolePrefix() + "Failed to fetch server version!");
-		} finally {
-			version = "";
-			id = "";
 		}
 
 		this.lastResult = new VaroUpdateResultSet(result, version, id);
