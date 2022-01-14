@@ -2,8 +2,6 @@ package de.cuuky.varo.configuration.configurations.language.languages;
 
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.admin.orelogger.OreLoggerFilterGUI;
-import org.bukkit.ChatColor;
 
 public enum LanguageEN implements LoadableMessage {
 
@@ -327,6 +325,8 @@ public enum LanguageEN implements LoadableMessage {
     COMMANDS_WEATHER_THUNDER("varoCommands.weather.thunder", "Changed weather to %colorcode%thunderstorm&7."),
 
     COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Worldspawn set."),
+
+    COMMANDS_DENIED("varoCommands.blockedcommand", "You are not allowed to use this command!"),
 
     SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
     SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),

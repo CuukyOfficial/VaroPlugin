@@ -293,7 +293,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
 
-
 	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7Deine verbleibende Zeit: %formattedCountdown%&7."),
 
 	COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cEs gab einen Fehler mit dem Anti-Xray-System. Bitte überprüfe, deine Serverversion (%version%) auf Spigot basiert."),
@@ -329,6 +328,8 @@ public enum ConfigMessages implements DefaultLanguage {
 	COMMANDS_WEATHER_THUNDER("varoCommands.weather.thunder", "Es %colorcode%gewittert &7nun."),
 
 	COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Weltspawn erfolgreich gesetzt."),
+
+	COMMANDS_DENIED("varoCommands.blockedcommand", "Du darst diesen Befehl nicht benutzen!"),
 
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
