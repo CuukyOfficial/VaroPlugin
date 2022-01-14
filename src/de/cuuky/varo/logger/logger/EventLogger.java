@@ -119,7 +119,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 		message = JavaUtils.replaceAllColors(message);
 
 		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
-		this.queLog(log);
+		this.queueLog(log);
 
 		if (message.contains("%noBot%") || message.contains("%noDiscord%"))
 			return;
