@@ -60,9 +60,9 @@ public class LobbyItem {
 				Player invited = (Player) event.getEntity();
 
 				if (VaroTeamRequest.getByAll(VaroPlayer.getPlayer(invited), varoPlayer) != null)
-					player.performCommand("varo tr accept " + invited.getName());
+					player.performCommand("varoplugin tr accept " + invited.getName());
 				else
-					player.performCommand("varo tr invite " + invited.getName());
+					player.performCommand("varoplugin tr invite " + invited.getName());
 				
 				event.setCancelled(true);
 				player.updateInventory();
@@ -95,7 +95,7 @@ public class LobbyItem {
 				if (Main.getVaroGame().getGameState() != GameState.LOBBY)
 					return;
 
-				varoPlayer.getPlayer().performCommand("varo tr leave");
+				varoPlayer.getPlayer().performCommand("varoplugin tr leave");
 				
 				event.setCancelled(true);
 				varoPlayer.getPlayer().updateInventory();
