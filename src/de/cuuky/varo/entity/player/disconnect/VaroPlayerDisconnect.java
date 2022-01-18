@@ -55,6 +55,7 @@ public class VaroPlayerDisconnect {
 			return false;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(name);
+		vp.getStats().addSessionPlayed();
 		vp.getStats().removeReamainingSession();
 		if (vp.getStats().hasTimeLeft())
 			vp.getStats().removeCountdown();
