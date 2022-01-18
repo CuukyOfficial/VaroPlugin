@@ -500,7 +500,7 @@ public class Stats implements VaroSerializeable {
 		videos.remove(video);
 	}
 
-	public void setBan() {
+	public void removeReamainingSession() {
 		sessions--;
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
