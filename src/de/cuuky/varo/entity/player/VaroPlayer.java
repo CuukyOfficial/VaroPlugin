@@ -19,7 +19,6 @@ import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import de.cuuky.varo.clientadapter.VaroBoardProvider;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.event.BukkitEvent;

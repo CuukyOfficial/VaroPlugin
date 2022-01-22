@@ -1,8 +1,7 @@
-package de.cuuky.varo.clientadapter.list.lists;
+package de.cuuky.varo.entity.player;
 
 import java.util.ArrayList;
 
-import de.cuuky.varo.clientadapter.list.BoardList;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class TablistBoardList extends BoardList {

@@ -1,8 +1,6 @@
-package de.cuuky.varo.clientadapter.list.lists;
+package de.cuuky.varo.entity.player;
 
 import java.util.ArrayList;
-
-import de.cuuky.varo.clientadapter.list.BoardList;
 
 public class ScoreboardBoardList extends BoardList {
 

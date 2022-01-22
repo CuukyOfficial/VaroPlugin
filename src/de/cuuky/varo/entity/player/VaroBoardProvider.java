@@ -1,4 +1,4 @@
-package de.cuuky.varo.clientadapter;
+package de.cuuky.varo.entity.player;
 
 import java.util.ArrayList;
 
@@ -6,11 +6,8 @@ import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.clientadapter.list.lists.ScoreboardBoardList;
-import de.cuuky.varo.clientadapter.list.lists.TablistBoardList;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.team.VaroTeam;
 import org.bukkit.ChatColor;

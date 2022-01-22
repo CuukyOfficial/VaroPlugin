@@ -1,4 +1,4 @@
-package de.cuuky.varo.clientadapter.list;
+package de.cuuky.varo.entity.player;
 
 import java.io.File;
 
