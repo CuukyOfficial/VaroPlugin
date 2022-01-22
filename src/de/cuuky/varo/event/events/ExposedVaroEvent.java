@@ -32,7 +32,7 @@ public class ExposedVaroEvent extends VaroEvent {
 	@Override
 	public void onDisable() {
 		if (type != null)
-			for (Player pl : VersionUtils.getOnlinePlayer())
+			for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
 				pl.removePotionEffect(type);
 
 		scheduler.cancel();

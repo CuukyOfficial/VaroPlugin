@@ -33,8 +33,7 @@ public class VaroStartThread extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		if (VersionUtils.getOnlinePlayer().size() != 0)
-			((Player) VersionUtils.getOnlinePlayer().toArray()[0]).getWorld().setTime(1000);
+		VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 		if (startcountdown != 0)
 			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN).replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown));

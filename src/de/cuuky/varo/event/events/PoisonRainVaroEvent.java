@@ -29,7 +29,7 @@ public class PoisonRainVaroEvent extends VaroEvent {
 		sched = new BukkitRunnable() {
 			@Override
 			public void run() {
-				playerLoop: for (Player p : VersionUtils.getOnlinePlayer()) {
+				playerLoop: for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
 					if (p.getWorld().hasStorm() && !p.getLocation().getBlock().getBiome().toString().contains("SAVANNA")) {
 						for (int i = p.getLocation().getBlockY(); i < p.getWorld().getMaxHeight(); i++)
 							if (!BlockUtils.isAir(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i, p.getLocation().getBlockZ())))

@@ -36,7 +36,7 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 
 		load();
 
-		for (Player player : VersionUtils.getOnlinePlayer())
+		for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers())
 			if (VaroPlayer.getPlayer(player) == null) {
 				VaroPlayer vp = new VaroPlayer(player);
 				vp.register();

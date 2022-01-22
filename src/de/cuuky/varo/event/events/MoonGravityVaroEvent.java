@@ -29,7 +29,7 @@ public class MoonGravityVaroEvent extends VaroEvent {
 			return;
 
 		sched.cancel();
-		for (Player p : VersionUtils.getOnlinePlayer())
+		for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers())
 			p.removePotionEffect(PotionEffectType.getByName("SLOW_FALLING"));
 	}
 
@@ -43,7 +43,7 @@ public class MoonGravityVaroEvent extends VaroEvent {
 		sched = new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (Player p : VersionUtils.getOnlinePlayer())
+				for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers())
 					p.addPotionEffect(new PotionEffect(PotionEffectType.getByName("SLOW_FALLING"), 9999, 1));
 			}
 		}.runTaskTimer(Main.getInstance(), 1L, 100L);
