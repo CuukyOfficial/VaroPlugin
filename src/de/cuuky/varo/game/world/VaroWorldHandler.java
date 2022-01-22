@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
