@@ -116,13 +116,6 @@ public class PlayerJoinListener implements Listener {
             }
         } else {
             MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
-            if (vplayer.getStats().getSessionsPlayed() == 0) {
-                int countdown = massRecording.isEnabled() ? massRecording.getCountdown(vplayer) : vplayer.getStats().getCountdown();
-                if (countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60 && ConfigSetting.PLAY_TIME.getValueAsInt() > 0) {
-                    vplayer.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
-                }
-            }
-
             if (isOutsideOfBorder(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
                 vplayer.saveTeleport(player.getWorld().getSpawnLocation());
                 Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer));
