@@ -44,13 +44,12 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
     protected ItemStack getItemStack(LoggedBlock block) {
         List<String> lore = new ArrayList<>();
         String color = Main.getColorCode();
-        lore.add("§7Block Type: " + color + block.getMaterial());
         lore.add("§7Mined at: " + color + String.format("x:%d y:%d z:%d world: %s", block.getX(), block.getY(), block.getZ(), block.getWorld()));
         lore.add("§7Time mined: " + color + DATE_FORMAT.format(new Date(block.getTimestamp())));
         lore.add("§7Mined by: " + color + block.getName());
         lore.add(" ");
         lore.add(color + "Click to teleport!");
-        return new BuildItem().displayName(color + block.getName())
+        return new BuildItem().displayName(color + block.getMaterial())
             .itemstack(new ItemStack(Material.matchMaterial(block.getMaterial()))).lore(lore).build();
     }
 
