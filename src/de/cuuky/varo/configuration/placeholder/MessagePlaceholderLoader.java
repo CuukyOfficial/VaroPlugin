@@ -39,6 +39,7 @@ public class MessagePlaceholderLoader {
     private void loadMessagePlaceHolder() {
         new VaroGeneralMessagePlaceholder("pluginName", -1, "Ersetzt durch den Plugin-Namen", Main.getInstance().getDescription()::getName);
         new VaroGeneralMessagePlaceholder("pluginAuthor", -1, "Ersetzt durch den Plugin-Macher", () -> Main.getInstance().getDescription().getAuthors().get(0));
+        new VaroGeneralMessagePlaceholder("pluginContributors", -1, "Ersetzt durch den Plugin-Contributor", () -> Main.getContributors());
         new VaroGeneralMessagePlaceholder("pluginVersion", -1, "Ersetzt durch die Plugin-Version", Main.getInstance().getDescription()::getVersion);
         new VaroGeneralMessagePlaceholder("projectname", 10, "Ersetzt durch den Projektnamen", Main::getProjectName);
         new VaroGeneralMessagePlaceholder("colorcode", 10, "Ersetzt durch den Farbcode", Main::getColorCode);

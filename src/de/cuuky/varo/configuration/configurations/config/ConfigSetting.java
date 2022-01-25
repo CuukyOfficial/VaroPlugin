@@ -168,9 +168,10 @@ public enum ConfigSetting implements SectionEntry {
 	MIN_BORDER_SIZE(ConfigSettingSection.BORDER, "minBorderSize", 300, "Wie klein die Border maximal werden kann."),
 
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen koennen.\nOff = 0"),
-	NAMETAG_SPAWN_HEIGHT(ConfigSettingSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch ueber den Spawns\ndie Nametags sein sollen"),
+
 	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
 	NAMETAGS_VISIBLE(ConfigSettingSection.MAIN, "nametags.visible", true, "Ob NameTags sichtbar sein sollen"),
+
 	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviaet auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 
 	NO_DISCONNECT_PING(ConfigSettingSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zaehlt."),
@@ -221,7 +222,9 @@ public enum ConfigSetting implements SectionEntry {
 	SCOREBOARD(ConfigSettingSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),
 	SESSIONS_PER_DAY(ConfigSettingSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulaer betreten duerfen."),
 
-	SET_NAMETAGS_OVER_SPAWN(ConfigSettingSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags ueber den\nSpawns erscheinen sollen"),
+	NAMETAGS_OVER_SPAWN(ConfigSettingSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags ueber den\nSpawns erscheinen sollen"),
+	NAMETAG_SPAWN_HEIGHT(ConfigSettingSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch ueber den Spawns\ndie Nametags sein sollen"),
+
 	SHOW_DISTANCE_TO_BORDER(ConfigSettingSection.BORDER, "showDistanceToBorder", false, "Ob die Distanz zur Border in der\nActionBar angezeigt werden soll."),
 	SHOW_TIME_IN_ACTIONBAR(ConfigSettingSection.OTHER, "showTimeInActionbar", false, "Ob die verbleibende Sessionzeit in\nder Actionbar angezeigt werden soll."),
 	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen koennen."),

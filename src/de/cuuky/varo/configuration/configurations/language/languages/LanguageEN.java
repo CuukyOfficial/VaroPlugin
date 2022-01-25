@@ -129,9 +129,10 @@ public enum LanguageEN implements LoadableMessage {
     SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cThe server has not yet been opened for everyone! %nextLine%&7Try again later!"),
     SERVER_MODT_OPEN("motd.serverOpen", "&aBe now with us in %projectname%&a!\n&7Have fun!"),
 
-    NAMETAG_NORMAL("nametag.normalNametagPrefix", "&7"),
-    NAMETAG_SUFFIX("nametag.normalSuffix", "&c %kills%"),
-    NAMETAG_TEAM_PREFIX("nametag.nametagWithTeam", "%colorcode%%team% &7"),
+    NAMETAG_PREFIX_NO_TEAM("nametag.prefix.noTeam", "&7"),
+	NAMETAG_SUFFIX_NO_TEAM("nametag.prefix.team", "&c %kills%"),
+	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
+	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
     CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
     CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7This furnace belongs to %colorcode%%player%&7!"),

@@ -2,7 +2,6 @@ package de.cuuky.varo.command.varo;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.scoreboard.DisplaySlot;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
@@ -23,22 +22,18 @@ public class ScoreboardCommand extends VaroCommand {
 			return;
 		}
 
-		if (!ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
+		if (!ConfigSetting.SCOREBOARD.getValueAsBoolean() || vp.getScoreboard() == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_DEACTIVATED.getValue(vp));
 			return;
 		}
 
 		if (vp.getStats().isShowScoreboard()) {
-			vp.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 			vp.sendMessage(ConfigMessages.VARO_COMMANDS_SCOREBOARD_DISABLED);
 			vp.getStats().setShowScoreboard(false);
 			vp.getScoreboard().setEnabled(false);
 		} else {
 			vp.getStats().setShowScoreboard(true);
 			vp.getScoreboard().setEnabled(true);
-			vp.getScoreboard().sendScoreBoard();
-			if (vp.getNametag() != null)
-				vp.getNametag().giveAll();
 			vp.sendMessage(ConfigMessages.VARO_COMMANDS_SCOREBOARD_ENABLED);
 		}
 

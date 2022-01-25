@@ -132,9 +132,10 @@ public enum ConfigMessages implements DefaultLanguage {
 	SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cDer Server wurde noch nicht fuer alle geoeffnet! %nextLine%&7Versuche es spaeter erneut!"),
 	SERVER_MODT_OPEN("motd.serverOpen", "&aSei nun bei %projectname% &adabei! \n&7Viel Spass!"),
 
-	NAMETAG_NORMAL("nametag.normalNametagPrefix", "&7"),
-	NAMETAG_SUFFIX("nametag.normalSuffix", "&c %kills%"),
-	NAMETAG_TEAM_PREFIX("nametag.nametagWithTeam", "%colorcode%%team% &7"),
+	NAMETAG_PREFIX_NO_TEAM("nametag.prefix.noTeam", "&7"),
+	NAMETAG_SUFFIX_NO_TEAM("nametag.prefix.team", "&c %kills%"),
+	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
+	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
 	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7Diese Kiste gehoert %colorcode%%player%&7!"),
 	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7Dieser Ofen gehoert %colorcode%%player%&7!"),
