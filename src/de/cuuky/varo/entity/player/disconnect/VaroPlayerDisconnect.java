@@ -55,14 +55,15 @@ public class VaroPlayerDisconnect {
 			return false;
 
 		VaroPlayer vp = VaroPlayer.getPlayer(name);
-		vp.getStats().setBan();
+		vp.getStats().addSessionPlayed();
+		vp.getStats().removeReamainingSession();
 		if (vp.getStats().hasTimeLeft())
 			vp.getStats().removeCountdown();
 
 		if (ConfigSetting.STRIKE_ON_DISCONNECT.getValueAsBoolean())
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
-		new Alert(AlertType.DISCONNECT, vp.getName() + " hat das Spiel zu oft verlassen! Seine Session wurde entfernt.");
+		new Alert(AlertType.DISCONNECT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN, vp);
 		this.remove();

@@ -2,8 +2,6 @@ package de.cuuky.varo.configuration.configurations.language.languages;
 
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.admin.orelogger.OreLoggerFilterGUI;
-import org.bukkit.ChatColor;
 
 public enum LanguageEN implements LoadableMessage {
 
@@ -131,9 +129,10 @@ public enum LanguageEN implements LoadableMessage {
     SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cThe server has not yet been opened for everyone! %nextLine%&7Try again later!"),
     SERVER_MODT_OPEN("motd.serverOpen", "&aBe now with us in %projectname%&a!\n&7Have fun!"),
 
-    NAMETAG_NORMAL("nametag.normalNametagPrefix", "&7"),
-    NAMETAG_SUFFIX("nametag.normalSuffix", "&c %kills%"),
-    NAMETAG_TEAM_PREFIX("nametag.nametagWithTeam", "%colorcode%%team% &7"),
+    NAMETAG_PREFIX_NO_TEAM("nametag.prefix.noTeam", "&7"),
+	NAMETAG_SUFFIX_NO_TEAM("nametag.prefix.team", "&c %kills%"),
+	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
+	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
     CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
     CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7This furnace belongs to %colorcode%%player%&7!"),
@@ -163,16 +162,25 @@ public enum LanguageEN implements LoadableMessage {
     TABLIST_PLAYER_WITHOUT_TEAM("tablist.player.withoutTeam", "&7%player%  &c%kills%"),
     TABLIST_PLAYER_WITHOUT_TEAM_RANK("tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
 
-    TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%colorcode%&lType the team name for you and %invited%:"),
-    TEAMREQUEST_MAX_TEAMNAME_LENGTH("teamrequest.maxTeamnameLength", "&7Your team name must not contain more than %colorcode%%maxLength% &7characters!"),
-    TEAMREQUEST_NO_COLORCODE("teamrequest.noColorCode", "&7Your team name must not contain color codes!"),
-    TEAMREQUEST_INVALID_NAME("teamrequest.invalid", "&7Your team name is invalid."),
+    TEAM_NAME_INVALID("team.name.invalid", "%prefix%&cInvalid team name!"),
+    TEAM_NAME_DUPLICATE("team.name.duplicate", "%prefix%&cThat name is already taken!"),
+    TEAM_NAME_TOO_LONG("team.name.tooLong", "%prefix%&cYour team name must not contain more than %colorcode%%maxLength% &ccharacters!"),
+    TEAM_RENAME("team.rename", "%prefix%%colorcode%&lPlease enter a new name"),
+    TEAM_RENAMED("team.renamed", "%prefix%&7Team %colorcode%%teamId% &7changed their name to %colorcode%%newName%"),
+    
+    TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%prefix%%colorcode%&lPlease enter a team name for you and %invited%:"),
     TEAMREQUEST_PLAYER_NOT_ONLINE("teamrequest.playerNotOnline", "%colorcode%%invitor% is no longer online!"),
     TEAMREQUEST_REVOKED("teamrequest.invationRevoked", "Invitation successfully withdrawn!"),
     TEAMREQUEST_TEAM_FULL("teamrequest.teamIsFull", "%invited% wasn't able to join your team - team member limit reached."),
-    TEAMREQUEST_TEAM_REQUEST_RECIEVED("teamrequest.teamRequestRecieved", "%colorcode%%invitor% &7has invited you to join a team (/varo tr)!"),
+    TEAMREQUEST_TEAM_REQUEST_RECIEVED("teamrequest.teamRequestRecieved", "%colorcode%%invitor% &7has invited you to join their team (/varo tr)!"),
     TEAMREQUEST_INVITED_TEAM("teamrequest.invitedInTeam", "&7You have invited %colorcode%%invited% &7 in the team %colorcode%%team% &7!"),
     TEAMREQUEST_NO_TEAMNAME("teamrequest.noteamname", "&7You still have no team name!"),
+	TEAMREQUEST_LOBBYITEM_INVITE_NAME("teamRequest.items.invite.name", "&6Invite Player"),
+	TEAMREQUEST_LOBBYITEM_INVITE_LORE("teamRequest.items.invite.lore", "&7Hit another player in\n&7order to invite them\n&7to your team"),
+	TEAMREQUEST_LOBBYITEM_LEAVE_NAME("teamRequest.items.leave.name", "&cLeave Team"),
+	TEAMREQUEST_LOBBYITEM_LEAVE_LORE("teamRequest.items.leave.lore", "&7Leave your team forever.\n&7You may never return."),
+	TEAMREQUEST_LOBBYITEM_RENAME_NAME("teamRequest.items.rename.name", "&cRename Team"),
+	TEAMREQUEST_LOBBYITEM_RENAME_LORE("teamRequest.items.rename.lore", "&7Change the name of your team"),
 
     VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode% %category% &7-------"),
     VARO_COMMANDS_HELP_FOOTER("varoCommands.help.footer", "&7------------------------"),
@@ -327,6 +335,8 @@ public enum LanguageEN implements LoadableMessage {
     COMMANDS_WEATHER_THUNDER("varoCommands.weather.thunder", "Changed weather to %colorcode%thunderstorm&7."),
 
     COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Worldspawn set."),
+
+    COMMANDS_DENIED("varoCommands.blockedcommand", "You are not allowed to use this command!"),
 
     SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
     SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn of %colorcode%%player%"),

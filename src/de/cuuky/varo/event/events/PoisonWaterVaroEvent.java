@@ -28,7 +28,7 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 		sched = new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (Player p : VersionUtils.getOnlinePlayer()) {
+				for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
 					if (p.getLocation().getBlock().getType().toString().contains("WATER"))
 						p.damage(0.75);
 				}

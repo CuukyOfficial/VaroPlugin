@@ -162,7 +162,7 @@ public class SpectatorListener implements Listener {
     }
 
     private static boolean shouldCancelSpectatorEvent(Entity interact) {
-        if (!(interact instanceof Player) || !Main.getVaroGame().isRunning())
+        if (!(interact instanceof Player) || !Main.getVaroGame().hasStarted())
             return false;
 
         Player player = (Player) interact;
@@ -171,7 +171,11 @@ public class SpectatorListener implements Listener {
     }
     
     private void checkWorldInteract(Cancellable event, Player player) {
-        if (!event.isCancelled() && Main.getVaroGame().getGameState() == GameState.STARTED && shouldCancelSpectatorEvent(player)) {
+        if (!event.isCancelled() && shouldCancelSpectatorEvent(player)) {
+        	if (!player.isOp()) {
+        		event.setCancelled(true);
+        		return;
+        	}
             for (Entity entity : player.getNearbyEntities(BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE)) {
                 if (!(entity instanceof Player))
                     continue;

@@ -76,7 +76,7 @@ dependencies {
     this.addModularCompile("me.clip:placeholderapi:2.10.10", "placeholderapi", false)
 
     this.addModularInternal('com.github.CuukyOfficial:VaroBanAPI-Client:master-SNAPSHOT', 'banapi', true)
-    this.addModularInternal('com.github.CuukyOfficial:CFW:master-SNAPSHOT', 'CFW', true)
+    this.addModularInternal('com.github.CuukyOfficial:CFW:scoreboard-tab-nametag-SNAPSHOT', 'CFW', true)
 }
 
 boolean checkLib(String filePath) {
@@ -125,7 +125,7 @@ processResources {
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from (sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [name: "Varo"]
-        filter ReplaceTokens, tokens: [version: "4.8.7-BETA-4"]
+        filter ReplaceTokens, tokens: [version: "4.9.0-BETA-1"]
         filter ReplaceTokens, tokens: [author: "Cuuky"]
     }
 }

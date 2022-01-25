@@ -59,7 +59,7 @@ public class SmartLagDetector extends BukkitRunnable {
 	}
 
 	private void warnAdmins(String message) {
-		for (Player player : VersionUtils.getOnlinePlayer()) {
+		for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
 			if (!player.hasPermission("varo.warnperformance"))
 				continue;
 

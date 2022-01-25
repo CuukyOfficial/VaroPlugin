@@ -22,7 +22,7 @@ public class ChatClearCommand implements CommandExecutor {
 		}
 
 		for (int i = 0; i < 100; i++)
-			for (Player pl : VersionUtils.getOnlinePlayer())
+			for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
 				pl.sendMessage("");
 
 		Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_CHATCLEAR_CLEAR.getValue(vp));

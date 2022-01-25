@@ -6,6 +6,8 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
+import de.cuuky.varo.entity.player.stats.Stats;
+
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -19,31 +21,38 @@ public class JoinEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
+		Stats stats = player.getStats();
 		player.setNormalAttackSpeed();
-		if (player.getStats().getFirstTimeJoined() == null)
-			player.getStats().setFirstTimeJoined(new Date());
+		if (stats.getFirstTimeJoined() == null)
+			stats.setFirstTimeJoined(new Date());
 
-		player.getStats().setLastJoined(new Date());
-		player.getStats().setLastLocation(player.getPlayer().getLocation());
+		stats.setLastJoined(new Date());
+		stats.setLastLocation(player.getPlayer().getLocation());
+		
+		if(!stats.isOnlineAfterStart()) {
+			stats.setOnlineAfterStart();
+			player.cleanUpPlayer();
+			player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
+		}
 
 		if (player.getVillager() != null) {
 			player.getVillager().remove();
 			player.setVillager(null);
 		}
 
-		if (player.getStats().isWillClear()) {
-			player.getStats().clearInventory();
+		if (stats.isWillClear()) {
+			stats.clearInventory();
 			player.sendMessage(Main.getPrefix() + "Dein Inventar wurde geleert!");
-			player.getStats().setWillClear(false);
+			stats.setWillClear(false);
 		}
 
-		if (player.getStats().getRestoreBackup() != null) {
-			player.getStats().getRestoreBackup().restoreUpdate(player.getPlayer());
+		if (stats.getRestoreBackup() != null) {
+			stats.getRestoreBackup().restoreUpdate(player.getPlayer());
 			player.sendMessage(Main.getPrefix() + "Dein Inventar wurde wiederhergestellt!");
-			player.getStats().setRestoreBackup(null);
+			stats.setRestoreBackup(null);
 		}
 
-		if (player.getStats().isSpectator() || player.isAdminIgnore()) {
+		if (stats.isSpectator() || player.isAdminIgnore()) {
 			player.setSpectacting();
 			player.sendMessage(Main.getPrefix() + "Da Du §c" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "Spectator bist") + " §7wurdest du in den Zuschauer-Modus gesetzt!");
 		} else {
