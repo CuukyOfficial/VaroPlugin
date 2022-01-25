@@ -318,7 +318,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			this.scoreboard.queueUpdate();
 
 		if (this.player != null) {
-			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean())
+			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 				this.player.setPlayerListName(this.getTablistName());
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
 				Main.getDataManager().getNameTagGroup().update(this.player, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagPrefix(), this.getNametagSuffix());
