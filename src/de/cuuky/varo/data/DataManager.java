@@ -45,6 +45,9 @@ public class DataManager {
 
 	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
+	private ScoreboardConfig scoreboardConfig;
+	private TablistConfig tablistConfig;
+	private NameTagGroup nameTagGroup;
 	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
@@ -55,9 +58,6 @@ public class DataManager {
 	private OutSideTimeChecker outsideTimeChecker;
 	private MySQLClient mysqlClient;
 	private VaroListManager listManager;
-	private ScoreboardConfig scoreboardConfig;
-	private TablistConfig tablistConfig;
-	private NameTagGroup nameTagGroup;
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
@@ -75,6 +75,9 @@ public class DataManager {
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
 		this.libraryLoader = new LibraryLoader();
+		this.scoreboardConfig = new ScoreboardConfig();
+		this.tablistConfig = new TablistConfig();
+		this.nameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
 		new DefaultPresetLoader();
 	}
@@ -91,9 +94,6 @@ public class DataManager {
 		this.outsideTimeChecker = new OutSideTimeChecker();
 		this.mysqlClient = new MySQLClient();
 		this.listManager = new VaroListManager();
-		this.scoreboardConfig = new ScoreboardConfig();
-		this.tablistConfig = new TablistConfig();
-		this.nameTagGroup = new NameTagGroup();
 		this.broadcaster = new Broadcaster();
 		this.dailyTimer = new DailyTimer();
 		this.customCommandManager = new CustomCommandManager();
@@ -192,15 +192,7 @@ public class DataManager {
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
 	}
-
-	public LibraryLoader getLibraryLoader() {
-		return this.libraryLoader;
-	}
-
-	public VaroListManager getListManager() {
-		return this.listManager;
-	}
-
+	
 	public ScoreboardConfig getScoreboardConfig() {
 		return scoreboardConfig;
 	}
@@ -211,6 +203,14 @@ public class DataManager {
 
 	public NameTagGroup getNameTagGroup() {
 		return nameTagGroup;
+	}
+
+	public LibraryLoader getLibraryLoader() {
+		return this.libraryLoader;
+	}
+
+	public VaroListManager getListManager() {
+		return this.listManager;
 	}
 
 	public VaroLoggerManager getVaroLoggerManager() {
