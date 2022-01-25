@@ -3,8 +3,6 @@ package de.cuuky.varo.configuration.configurations.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import de.cuuky.cfw.player.AnimationData;
 import de.cuuky.cfw.player.ScoreboardAnimationData;
 
@@ -18,11 +16,12 @@ public class ScoreboardConfig extends BoardConfig {
 	}
 
 	@Override
+	protected boolean shouldReset() {
+		return this.configuration.contains("header");
+	}
+	
+	@Override
 	protected void load() {
-		// Remove legacy config entries
-		if (this.configuration.contains("header"))
-			this.configuration = new YamlConfiguration();
-		
 		this.configuration.options().header("Die Liste alle Placeholder findest du unter /varo placeholder!");
 
 		ArrayList<String> titleFrames = new ArrayList<>();
@@ -56,10 +55,10 @@ public class ScoreboardConfig extends BoardConfig {
 		secondFrame.add("&7Time&8:");
 		secondFrame.add("%colorcode%%min%&8:%colorcode%%sec%");
 		secondFrame.add("%space%");
-		secondFrame.add("&7Best Teams&8:");
-		secondFrame.add("&71. %colorcode%%topteam-1%");
-		secondFrame.add("&72. %colorcode%%topteam-2%");
-		secondFrame.add("&73. %colorcode%%topteam-3%");
+		secondFrame.add("&7Best Players&8:");
+		secondFrame.add("&71. %colorcode%%topplayer-1%");
+		secondFrame.add("&72. %colorcode%%topplayer-2%");
+		secondFrame.add("&73. %colorcode%%topplayer-3%");
 		secondFrame.add("                   ");
 
 		ArrayList<ArrayList<String>> frames = new ArrayList<>();

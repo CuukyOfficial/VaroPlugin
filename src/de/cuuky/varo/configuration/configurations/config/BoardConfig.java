@@ -14,17 +14,22 @@ public abstract class BoardConfig {
 	public BoardConfig(String path) {
 		this.file = new File(path);
 
-		if (file.exists())
+		boolean exists = file.exists();
+		if (exists)
 			this.configuration = YamlConfigurationUtil.loadConfiguration(this.file);
-		else
+
+		if (!exists || shouldReset()) {
 			this.configuration = new YamlConfiguration();
+			this.configuration.options().copyDefaults(true);
 
-		load();
-		
-		this.configuration.options().copyDefaults(true);
+			load();
 
-		YamlConfigurationUtil.save(this.configuration, this.file);
+			YamlConfigurationUtil.save(this.configuration, this.file);
+		} else 
+			load();
 	}
+
+	protected abstract boolean shouldReset();
 
 	protected abstract void load();
 }
