@@ -172,6 +172,10 @@ public class SpectatorListener implements Listener {
     
     private void checkWorldInteract(Cancellable event, Player player) {
         if (!event.isCancelled() && shouldCancelSpectatorEvent(player)) {
+        	if (!player.isOp()) {
+        		event.setCancelled(true);
+        		return;
+        	}
             for (Entity entity : player.getNearbyEntities(BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE)) {
                 if (!(entity instanceof Player))
                     continue;
