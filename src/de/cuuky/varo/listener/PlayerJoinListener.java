@@ -54,7 +54,12 @@ public class PlayerJoinListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
-		
+
+		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+
+		vplayer.setPlayer(player);
+		vplayer.onEvent(BukkitEventType.JOINED);
+
 		if (player.isOp()) {
 			VaroUpdateResultSet updater = Main.getVaroUpdater().getLastResult();
 			if (updater != null) {
@@ -77,11 +82,6 @@ public class PlayerJoinListener implements Listener {
 				}
 			}
 		}
-
-		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-
-		vplayer.setPlayer(player);
-		vplayer.onEvent(BukkitEventType.JOINED);
 
 		if(vplayer.getStats().isSpectator())
 			VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
