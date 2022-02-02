@@ -18,9 +18,6 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	@VaroSerializeField(path = "detectedAt")
 	private Date detectedAt;
 
-	@VaroSerializeField(path = "duration")
-	private String duration;
-
 	@VaroSerializeField(path = "link")
 	private String link;
 
@@ -34,11 +31,10 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		videos.add(this);
 	}
 
-	public YouTubeVideo(String videoId, String title, String link, String duration) {
+	public YouTubeVideo(String videoId, String title, String link) {
 		this.videoId = videoId;
 		this.title = title;
 		this.link = link;
-		this.duration = duration;
 		this.detectedAt = new Date();
 
 		videos.add(this);
@@ -52,10 +48,6 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 
 	public Date getDetectedAt() {
 		return detectedAt;
-	}
-
-	public String getDuration() {
-		return duration;
 	}
 
 	public String getLink() {

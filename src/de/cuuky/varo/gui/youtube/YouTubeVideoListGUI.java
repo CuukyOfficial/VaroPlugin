@@ -32,7 +32,7 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
                 .displayName("§5" + video.getTitle())
                 .lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm")
                         .format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ?
-                        video.getOwner().getName() : "/"), "§7" + video.getDuration(), "§7Link: " + video.getLink()}).build();
+                        video.getOwner().getName() : "/"), "§7Link: " + video.getLink()}).build();
     }
 
     @Override
