@@ -5,7 +5,8 @@ public enum BukkitEventType {
 	JOINED,
 	KICKED,
 	KILL,
-	KILLED,
+	DEATH,
+	DEATH_NO_LIFES,
 	QUIT,
 	WIN;
 

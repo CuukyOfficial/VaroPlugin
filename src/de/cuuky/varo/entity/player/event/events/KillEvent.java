@@ -1,8 +1,9 @@
 package de.cuuky.varo.entity.player.event.events;
 
-import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -11,12 +12,9 @@ import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 
 public class KillEvent extends BukkitEvent {
-	
-	private Sound deathSound;
 
 	public KillEvent() {
 		super(BukkitEventType.KILL);
-		this.deathSound = Sound.valueOf(ConfigSetting.DEATH_SOUND.getValueAsString());
 	}
 
 	@Override
@@ -24,6 +22,8 @@ public class KillEvent extends BukkitEvent {
 		PlayerHit hit1 = PlayerHit.getHit(player.getPlayer());
 		if (hit1 != null)
 			hit1.over();
+		
+		this.checkHealth(player.getPlayer());
 
 		if (player.getTeam() != null) {
 			Number addNumber = (Number) ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValue(), maxNumber = (Number) ConfigSetting.MAX_TEAM_LIFES.getValue();
@@ -35,10 +35,16 @@ public class KillEvent extends BukkitEvent {
 			}
 		}
 
-		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean())
-			VersionUtils.getVersionAdapter().getOnlinePlayers().forEach(pl -> pl.playSound(pl.getLocation(), this.deathSound, 1, 1));
-
 		player.getStats().addKill();
 		super.onExec(player);
+	}
+
+	private void checkHealth(Player killer) {
+		int healthAdd = ConfigSetting.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
+		if (healthAdd > 0) {
+			double hearts = VersionUtils.getHearts(killer) + healthAdd;
+			killer.setHealth(Math.min(hearts, 20.0));
+			killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
+		}
 	}
 }

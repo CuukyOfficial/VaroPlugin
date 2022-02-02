@@ -1,26 +1,28 @@
 package de.cuuky.varo.entity.player.event.events;
 
-import java.util.Date;
-
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
-import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
-import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 
 public class DeathEvent extends BukkitEvent {
+	
+	private Sound deathSound;
 
 	public DeathEvent() {
-		super(BukkitEventType.KILLED);
+		super(BukkitEventType.DEATH);
+		this.deathSound = Sound.valueOf(ConfigSetting.DEATH_SOUND.getValueAsString());
 	}
 
 	private void dropInventory(VaroInventory inventory, Location location) {
@@ -33,9 +35,21 @@ public class DeathEvent extends BukkitEvent {
 	public void onExec(VaroPlayer player) {
 		player.getStats().addInventoryBackup(new InventoryBackup(player));
 
-		player.getStats().removeCountdown();
-		player.getStats().setDiedAt(new Date());
-		player.getStats().setState(PlayerState.DEAD);
+		Location location = player.isOnline() ? player.getPlayer().getLocation() : player.getStats().getLastLocation();
+		World world = location.getWorld();
+
+		for (int i = 0; i < 3; i++)
+			world.playEffect(location, Effect.MOBSPAWNER_FLAMES, 1);
+
+		if (ConfigSetting.DEATH_LIGHTNING_EFFECT.getValueAsBoolean())
+			world.strikeLightningEffect(location);
+
+		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean())
+			VersionUtils.getVersionAdapter().getOnlinePlayers().forEach(pl -> pl.playSound(pl.getLocation(), this.deathSound, 1, 1));
+
+		for (ItemStack stack : Main.getDataManager().getListManager().getDeathItems().getItems())
+			if (stack.getType() != Material.AIR)
+				world.dropItemNaturally(location, stack);
 
 		if (ConfigSetting.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean())
 			if (player.getStats().getPlayerBackpack() != null)
@@ -44,8 +58,5 @@ public class DeathEvent extends BukkitEvent {
 		if (ConfigSetting.BACKPACK_TEAM_DROP_ON_DEATH.getValueAsBoolean())
 			if (player.getTeam() != null && player.getTeam().isDead() && player.getTeam().getTeamBackPack() != null)
 				dropInventory(player.getTeam().getTeamBackPack(), player.getPlayer().getLocation());
-
-		if (Main.getVaroGame().getGameState() == GameState.STARTED)
-			Main.getVaroGame().getVaroWorldHandler().decreaseBorder(DecreaseReason.DEATH);
 	}
 }
