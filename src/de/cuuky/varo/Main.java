@@ -166,7 +166,6 @@ public class Main extends JavaPlugin {
 			VaroBugreport report = new VaroBugreport();
 			System.out.println(CONSOLE_PREFIX + "Saved Crashreport to " + report.getZipFile().getName());
 		}
-		dataManager.getBanHandler().cancel();
 		Bukkit.getScheduler().cancelTasks(this);
 		dataManager.getVaroLoggerManager().cleanUp();
 

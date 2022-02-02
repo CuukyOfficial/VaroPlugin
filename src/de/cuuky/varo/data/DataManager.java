@@ -11,7 +11,6 @@ import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
-import de.cuuky.varo.ban.VaroPlayerBanHandler;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.command.custom.CustomCommandManager;
@@ -61,7 +60,6 @@ public class DataManager {
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
-	private VaroPlayerBanHandler banHandler;
 	private CustomCommandManager customCommandManager;
 
 	private boolean doSave;
@@ -113,8 +111,6 @@ public class DataManager {
 		VaroUtils.setWorldToTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
-
-		this.banHandler = new VaroPlayerBanHandler();
 
 		this.startAutoSave();
 
@@ -252,8 +248,6 @@ public class DataManager {
 	public JavaPlugin getOwnerInstance() {
 		return this.ownerInstance;
 	}
-
-	public VaroPlayerBanHandler getBanHandler() { return this.banHandler; }
 
 	public CustomCommandManager getCustomCommandManager() { return customCommandManager; }
 }
