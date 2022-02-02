@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.clientadapter.board.CustomBoardType;
 import de.cuuky.cfw.player.NameTagGroup;
 import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.cfw.version.BukkitVersion;
@@ -100,13 +99,6 @@ public class DataManager {
 				&& !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			VersionUtils.setMinecraftServerProperty("announce-player-achievements", false);
 
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG,
-				ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD,
-				ConfigSetting.SCOREBOARD.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST,
-				ConfigSetting.TABLIST.getValueAsBoolean());
-
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
 
@@ -141,13 +133,6 @@ public class DataManager {
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		this.configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
-
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG,
-				ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD,
-				ConfigSetting.SCOREBOARD.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST,
-				ConfigSetting.TABLIST.getValueAsBoolean());
 	}
 
 	public void reloadPlayerClients() {
