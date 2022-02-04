@@ -296,7 +296,7 @@ public enum ConfigSetting implements SectionEntry {
 	
 	// COMMANDS
 	COMMAND_VARO_ENABLED(ConfigSettingSection.COMMANDS, "varo.enabled", true, "Ob /varo aktiviert sein soll"),
-	COMMAND_VARO_NAME(ConfigSettingSection.COMMANDS, "varo.name", "varo", "Ob custom name für  /varo"),
+	COMMAND_VARO_NAME(ConfigSettingSection.COMMANDS, "varo.name", "varo", "Custom name für /varo"),
 	COMMAND_ANTIXRAY_ENABLED(ConfigSettingSection.COMMANDS, "antixray.enabled", true, "Ob /antixray aktiviert sein soll"),
 	COMMAND_BROADCAST_ENABLED(ConfigSettingSection.COMMANDS, "broadcast.enabled", true, "Ob /broadcast aktiviert sein soll"),
 	COMMAND_CHATCLEAR_ENABLED(ConfigSettingSection.COMMANDS, "chatclear.enabled", true, "Ob /chatclear aktiviert sein soll"),
@@ -317,6 +317,8 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_BORDER_ENABLED(ConfigSettingSection.COMMANDS, "border.enabled", true, "Ob /border aktiviert sein soll"),
 	COMMAND_SETSPAWN_ENABLED(ConfigSettingSection.COMMANDS, "setworldspawn.enabled", true, "Ob /setworldspawn aktiviert sein soll"),
 	COMMAND_SPAWN_ENABLED(ConfigSettingSection.COMMANDS, "spawn.enabled", true, "Ob /spawn aktiviert sein soll"),
+	COMMAND_TEAM_ENABLED(ConfigSettingSection.COMMANDS, "team.enabled", true, "Ob /team aktiviert sein soll"),
+	COMMAND_TEAM_NAME(ConfigSettingSection.COMMANDS, "team.name", "team", "Custom name für /team"),
 	COMMAND_WEATHER_ENABLED(ConfigSettingSection.COMMANDS, "weather.enabled", true, "Ob /sun, /rain und /thunder aktiviert sein soll"),
 	COMMAND_PROTECT_ENABLED(ConfigSettingSection.COMMANDS, "protect.enabled", true, "Ob /protect und /unprotect aktiviert sein soll"),
 	COMMAND_COUNTDOWN_ENABLED(ConfigSettingSection.COMMANDS, "countdown.enabled", true, "Ob /countdown aktiviert sein soll"),
