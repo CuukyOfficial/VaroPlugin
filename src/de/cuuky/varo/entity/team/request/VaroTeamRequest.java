@@ -55,18 +55,19 @@ public class VaroTeamRequest {
 			public boolean onChat(AsyncPlayerChatEvent event) {
 				String message = event.getMessage();
 				if (!message.matches(VaroTeam.NAME_REGEX)) {
-					invitor.sendMessage(ConfigMessages.TEAMREQUEST_INVALID_NAME, invitor);
+					invitor.sendMessage(ConfigMessages.TEAM_NAME_INVALID);
 					return false;
 				}
-
-				if (message.contains("&") && !invitor.getPlayer().hasPermission("Varo.teamcolorcode")) {
-					invitor.sendMessage(ConfigMessages.TEAMREQUEST_NO_COLORCODE, invitor);
-					return false;
-				}
+				
+				VaroTeam duplicateTeam = VaroTeam.getTeam(event.getMessage());
+                if (duplicateTeam != null) {
+                	invitor.sendMessage(ConfigMessages.TEAM_NAME_DUPLICATE);
+                    return false;
+                }
 
 				int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
-				if (message.length() > (maxLength) - 1) {
-					invitor.sendMessage(ConfigMessages.TEAMREQUEST_MAX_TEAMNAME_LENGTH, invitor).replace("%maxLength%", String.valueOf(maxLength));
+				if (message.length() > maxLength) {
+					invitor.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG, invitor).replace("%maxLength%", String.valueOf(maxLength));
 					return false;
 				}
 

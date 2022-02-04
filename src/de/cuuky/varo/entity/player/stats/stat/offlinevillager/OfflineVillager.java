@@ -82,9 +82,6 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	public void kill(VaroPlayer killer) {
-		if (zombie != null)
-			zombie.getWorld().strikeLightningEffect(zombie.getLocation());
-
 		remove();
 
 		for (ItemStack it : backup.getAllContents())
@@ -95,7 +92,8 @@ public class OfflineVillager implements VaroSerializeable {
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_KILLED_BY, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName());
 
 		killer.onEvent(BukkitEventType.KILL);
-		vp.onEvent(BukkitEventType.KILLED);
+		this.vp.onEvent(BukkitEventType.DEATH);
+		this.vp.onEvent(BukkitEventType.DEATH_NO_LIFES);
 	}
 
 	public void remove() {

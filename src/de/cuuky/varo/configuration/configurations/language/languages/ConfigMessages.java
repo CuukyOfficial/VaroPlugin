@@ -132,9 +132,10 @@ public enum ConfigMessages implements DefaultLanguage {
 	SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cDer Server wurde noch nicht fuer alle geoeffnet! %nextLine%&7Versuche es spaeter erneut!"),
 	SERVER_MODT_OPEN("motd.serverOpen", "&aSei nun bei %projectname% &adabei! \n&7Viel Spass!"),
 
-	NAMETAG_NORMAL("nametag.normalNametagPrefix", "&7"),
-	NAMETAG_SUFFIX("nametag.normalSuffix", "&c %kills%"),
-	NAMETAG_TEAM_PREFIX("nametag.nametagWithTeam", "%colorcode%%team% &7"),
+	NAMETAG_PREFIX_NO_TEAM("nametag.prefix.noTeam", "&7"),
+	NAMETAG_SUFFIX_NO_TEAM("nametag.prefix.team", "&c %kills%"),
+	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
+	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
 	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7Diese Kiste gehoert %colorcode%%player%&7!"),
 	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7Dieser Ofen gehoert %colorcode%%player%&7!"),
@@ -164,16 +165,25 @@ public enum ConfigMessages implements DefaultLanguage {
 	TABLIST_PLAYER_WITHOUT_TEAM("tablist.player.withoutTeam", "&7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM_RANK("tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
 
-	TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%colorcode%&lGib jetzt den Teamnamen fuer dich und %invited% ein:"),
-	TEAMREQUEST_MAX_TEAMNAME_LENGTH("teamrequest.maxTeamnameLength", "Dein Teamname darf maximal %colorcode%%maxLength% &7Zeichen enthalten!"),
-	TEAMREQUEST_NO_COLORCODE("teamrequest.noColorCode", "Dein Teamname darf keine Farbcodes enthalten!"),
-	TEAMREQUEST_INVALID_NAME("teamrequest.invalid", "Ungültiger Teamname!"),
+	TEAM_NAME_INVALID("team.name.invalid", "%prefix%&cUngültiger Name!"),
+    TEAM_NAME_DUPLICATE("team.name.duplicate", "%prefix%&cDieser Name ist bereits vergeben!"),
+    TEAM_NAME_TOO_LONG("team.name.tooLong", "%prefix%&cDer Name darf nicht mehr als %colorcode%%maxLength% &cZeichen enthalten!"),
+    TEAM_RENAME("team.rename", "%prefix%%colorcode%&lBitte gib einen neuen Teamnamen ein"),
+    TEAM_RENAMED("team.renamed", "%prefix%&7Das Team %colorcode%%teamId% &7hat seinen namen zu %colorcode%%newName% &7geändert"),
+	
+	TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%prefix%%colorcode%&lGib jetzt den Teamnamen für dich und %invited% ein:"),
 	TEAMREQUEST_PLAYER_NOT_ONLINE("teamrequest.playerNotOnline", "%colorcode%%invitor% ist nicht mehr online!"),
 	TEAMREQUEST_REVOKED("teamrequest.invationRevoked", "Einladung erfolgreich zurueckgezogen!"),
 	TEAMREQUEST_TEAM_FULL("teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),
 	TEAMREQUEST_TEAM_REQUEST_RECIEVED("teamrequest.teamRequestRecieved", "%colorcode%%invitor% &7hat dich in ein Team eingeladen (/varo tr)!"),
 	TEAMREQUEST_INVITED_TEAM("teamrequest.invitedInTeam", "&7Du hast %colorcode%%invited% &7in das Team %colorcode%%team% &7eingeladen!"),
 	TEAMREQUEST_NO_TEAMNAME("teamrequest.noteamname", "&7Du hast noch &7keinen &7Teamnamen!"),
+	TEAMREQUEST_LOBBYITEM_INVITE_NAME("teamRequest.items.invite.name", "&6Spieler Einladen"),
+	TEAMREQUEST_LOBBYITEM_INVITE_LORE("teamRequest.items.invite.lore", "&7Schlage einen Spieler um ihn\n&7in dein Team einzuladen"),
+	TEAMREQUEST_LOBBYITEM_LEAVE_NAME("teamRequest.items.leave.name", "&cTeam Verlassen"),
+	TEAMREQUEST_LOBBYITEM_LEAVE_LORE("teamRequest.items.leave.lore", ""),
+	TEAMREQUEST_LOBBYITEM_RENAME_NAME("teamRequest.items.rename.name", "&cTeam Umbenennen"),
+	TEAMREQUEST_LOBBYITEM_RENAME_LORE("teamRequest.items.rename.lore", ""),
 
 	VARO_COMMANDS_HELP_HEADER("varoCommands.help.header", "&7-------- %colorcode%%category% &7-------"),
 	VARO_COMMANDS_HELP_FOOTER("varoCommands.help.footer", "&7------------------------"),
@@ -293,7 +303,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
 	VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Nutze %colorcode%/varo discord verify remove &7ein, um die Verifizierung zu entfernen."),
 
-
 	VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7Deine verbleibende Zeit: %formattedCountdown%&7."),
 
 	COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cEs gab einen Fehler mit dem Anti-Xray-System. Bitte überprüfe, deine Serverversion (%version%) auf Spigot basiert."),
@@ -330,6 +339,8 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	COMMANDS_SETWORLDSPAWN("varoCommands.setworldspawn.setworldspawn", "Weltspawn erfolgreich gesetzt."),
 
+	COMMANDS_DENIED("varoCommands.blockedcommand", "Du darst diesen Befehl nicht benutzen!"),
+
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
 
@@ -338,7 +349,13 @@ public enum ConfigMessages implements DefaultLanguage {
 	MODS_BLOCKED_MODS_BROADCAST("mods.blockedModsBroadcast", "&7Der Spieler %colorcode%%player% &7hat versucht mit folgenden blockierten Mods zu joinen: %colorcode%%mods%"),
 
 	OTHER_CONFIG("other.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
-	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%ping%&7ms");
+	OTHER_PING("other.ping", "&7Dein %colorcode%Ping &7betraegt: %colorcode%%ping%&7ms"),
+
+	LOGGER_FILTER_INVALID_FILTER("blockLoggerFilter.invalidFilter", "&c%filterName% \"%content%\" ist nicht gültig!"),
+	LOGGER_FILTER_SET_FILTER("blockLoggerFilter.setFilter", "&7%filterName% wurde auf %colorcode%%newContent% &7gesetzt (vorher: %oldContent%)."),
+	LOGGER_FILTER_RESET_FILTER("blockLoggerFilter.resetFilter", "&7%filterName% wurde zurückgesetzt (vorher: %oldContent%)."),
+	LOGGER_FILTER_PLAYER_FILTER_MESSAGE("blockLoggerFilter.playerFilterMessage", "&7Bitte gib einen Spielernamen ein:"),
+	LOGGER_FILTER_MATERIAL_FILTER_MESSAGE("blockLoggerFilter.materialFilterMessage", "&7Bitte gib einen Materialnamen ein:");
 
 	private String path, defaultMessage, message;
 

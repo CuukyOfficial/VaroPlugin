@@ -14,7 +14,7 @@ public class ChatLogger extends VaroLogger<ChatLogElement> {
     }
 
     public void println(ChatLogType type, Player player, String recipient, String message) {
-        this.queLog(new ChatLogElement(System.currentTimeMillis(), player.getUniqueId().toString(), player.getName(), type.getName(), recipient, message));
+        this.queueLog(new ChatLogElement(System.currentTimeMillis(), player.getUniqueId().toString(), player.getName(), type.getName(), recipient, message));
     }
     
     public enum ChatLogType {

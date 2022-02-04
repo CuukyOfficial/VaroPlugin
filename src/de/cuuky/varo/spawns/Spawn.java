@@ -95,7 +95,7 @@ public class Spawn implements VaroSerializeable {
     }
     
     private boolean shouldHaveNameTag() {
-    	return !VersionUtils.getVersion().isLowerThan(BukkitVersion.ONE_8) && ConfigSetting.SET_NAMETAGS_OVER_SPAWN.getValueAsBoolean();
+    	return !VersionUtils.getVersion().isLowerThan(BukkitVersion.ONE_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
     }
     
     private Entity createNameTag() {

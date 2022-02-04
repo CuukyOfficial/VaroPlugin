@@ -22,9 +22,12 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
+    public OreLoggerListGUI(Player opener, List<LoggedBlock> blocks) {
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, blocks);
+    }
+
     public OreLoggerListGUI(Player opener) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener,
-                Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs());
+        this(opener, Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs());
     }
 
     @Override
@@ -40,13 +43,14 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
     @Override
     protected ItemStack getItemStack(LoggedBlock block) {
         List<String> lore = new ArrayList<>();
-        lore.add("Block Type: §c" + block.getMaterial());
-        lore.add("Mined at: §c" + String.format("x:%d y:%d z:%d world:%s", block.getX(), block.getY(), block.getZ(), block.getWorld()));
-        lore.add("Time mined: §c" + DATE_FORMAT.format(new Date(block.getTimestamp())));
-        lore.add("Mined by: " + Main.getColorCode() + block.getName());
+        String color = Main.getColorCode();
+        lore.add("§7Mined at: " + color + String.format("x:%d y:%d z:%d world: %s", block.getX(), block.getY(), block.getZ(), block.getWorld()));
+        lore.add("§7Time mined: " + color + DATE_FORMAT.format(new Date(block.getTimestamp())));
+        lore.add("§7Mined by: " + color + block.getName());
         lore.add(" ");
-        lore.add("§cClick to teleport!");
-        return new BuildItem().displayName(block.getName()).itemstack(new ItemStack(Material.matchMaterial(block.getMaterial()))).lore(lore).build();
+        lore.add(color + "Click to teleport!");
+        return new BuildItem().displayName(color + block.getMaterial())
+            .itemstack(new ItemStack(Material.matchMaterial(block.getMaterial()))).lore(lore).build();
     }
 
     @Override

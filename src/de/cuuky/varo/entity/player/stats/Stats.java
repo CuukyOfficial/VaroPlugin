@@ -62,6 +62,8 @@ public class Stats implements VaroSerializeable {
 	@VaroSerializeField(path = "willClear")
 	private boolean willClear;
 
+	@VaroSerializeField(path = "onlineAfterStart")
+	private boolean onlineAfterStart;
 	@VaroSerializeField(path = "firstTimeJoined")
 	private Date firstTimeJoined;
 	@VaroSerializeField(path = "lastJoined")
@@ -181,6 +183,10 @@ public class Stats implements VaroSerializeable {
 		return diedAt;
 	}
 
+	public boolean isOnlineAfterStart() {
+		return onlineAfterStart;
+	}
+
 	public Date getFirstTimeJoined() {
 		return firstTimeJoined;
 	}
@@ -283,7 +289,25 @@ public class Stats implements VaroSerializeable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
-		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUUID(), "§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"), "§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"), "§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed, "§7Countdown§8: " + colorcode + countdown, "§7Kills§8: " + colorcode + kills, "§7WillClearInventory§8: " + colorcode + willClear, "§7ShowScoreboard§8: " + colorcode + showScoreboard, "§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormat(lastLocation).format(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"), "§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"), "§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"), "§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"), "§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"), "§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)), "§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"), "§7YouTubeVideos§8: " + colorcode + (videos == null ? 0 : videos.size()), "§7StrikeAmount§8: " + colorcode + (strikes == null ? 0 : strikes.size()), "§7State§8: " + colorcode + state.getName() };
+		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUUID(),
+				"§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"),
+				"§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"),
+				"§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed,
+				"§7Countdown§8: " + colorcode + countdown,
+				"§7Kills§8: " + colorcode + kills,
+				"§7WillClearInventory§8: " + colorcode + willClear,
+				"§7ShowScoreboard§8: " + colorcode + showScoreboard,
+				"§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormat(lastLocation).format(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"),
+				"§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"),
+				"§7OnlineAfterStart§8: " + colorcode + onlineAfterStart,
+				"§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"),
+				"§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"),
+				"§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"),
+				"§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)),
+				"§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"),
+				"§7YouTubeVideos§8: " + colorcode + (videos == null ? 0 : videos.size()),
+				"§7StrikeAmount§8: " + colorcode + (strikes == null ? 0 : strikes.size()),
+				"§7State§8: " + colorcode + state.getName() };
 	}
 
 	public ArrayList<Strike> getStrikes() {
@@ -423,6 +447,7 @@ public class Stats implements VaroSerializeable {
 		diedAt = null;
 		timeUntilAddSession = null;
 
+		onlineAfterStart = owner.isOnline();
 		firstTimeJoined = new Date();
 		lastJoined = new Date();
 		lastEnemyContact = new Date();
@@ -500,7 +525,7 @@ public class Stats implements VaroSerializeable {
 		videos.remove(video);
 	}
 
-	public void setBan() {
+	public void removeReamainingSession() {
 		sessions--;
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
@@ -514,6 +539,10 @@ public class Stats implements VaroSerializeable {
 
 	public void setDiedAt(Date diedAt) {
 		this.diedAt = diedAt;
+	}
+	
+	public void setOnlineAfterStart() {
+		this.onlineAfterStart = true;
 	}
 
 	public void setFirstTimeJoined(Date firstTimeJoined) {

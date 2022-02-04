@@ -22,41 +22,47 @@ public class YouTubeCheck extends Checker {
 		URLConnection connection;
 		try {
 			connection = new URL(url + "/videos").openConnection();
-			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)	Chrome/70.0.3538.67 Safari/537.36");
+			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0");
 			Scanner scanner = new Scanner(connection.getInputStream());
 
 			while (scanner.hasNextLine())
 				lines.add(scanner.nextLine());
 
 			scanner.close();
-		} catch (Exception ex) {
-			System.out.println(Main.getConsolePrefix() + "Could not load videos for " + player.getName());
+		} catch (Throwable t) {
+			Main.getInstance().getLogger().severe(Main.getConsolePrefix() + "Could not load videos for " + player.getName());
 			new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Could not load videos for " + player.getName());
 			return null;
 		}
 
-		String videoId, videoTitle, link, duration;
 		for (String line : lines) {
-			if (line.contains("yt-lockup-title")) {
+			if (line.startsWith("</script><script src="))
 				try {
-					videoTitle = line.split("title=\"")[1].split("\"")[0];
-					if (!videoTitle.toLowerCase().contains(ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase()))
-						continue;
+					String[] videoSplit = line.split("\"title\"\\:\\{\"runs\"\\:\\[\\{\"text\"\\:\"");
+					for (int i = 1; i < videoSplit.length; i++) {
+						String[] titleSplit = videoSplit[i].split("\"}]", 2);
+	 					String videoTitle = titleSplit[0];
+						if (!videoTitle.toLowerCase().contains(ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase()))
+							continue;
+						
+						if (videoTitle.length() > 200)
+							videoTitle = videoTitle.substring(0, 200);
+						
+						String videoId = titleSplit[1].split("\\{\"url\":\"/watch\\?v=", 2)[1].split("\"")[0];
+						String videoLink = "https://youtube.com/watch?v=" + videoId;
+						
+						Main.getInstance().getLogger().info(String.format("Found video(title: \"%s\", id: \"%s\", link: \"%s\") for player %s", videoTitle, videoId, videoLink, player.getName()));
 
-					videoId = line.split("href=\"")[1].split("\"")[0];
-					link = "https://youtube.com" + videoId;
-					videoId = videoId.replace("/watch?v=", "");
-					duration = line.split("> - ")[1].split("</span>")[0];
-
-					if (player.getStats().hasVideo(videoId))
-						continue;
-
-					videos.add(new YouTubeVideo(videoId, videoTitle, link, duration));
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("AT LINE " + line);
+						//duration = line.split("> - ")[1].split("</span>")[0];
+	
+						if (player.getStats().hasVideo(videoId))
+							continue;
+	
+						videos.add(new YouTubeVideo(videoId, videoTitle, videoLink));
+					}
+				} catch (Throwable t) {
+					t.printStackTrace();
 				}
-			}
 		}
 
 		return videos;
@@ -76,7 +82,7 @@ public class YouTubeCheck extends Checker {
 						new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Die Videos von " + vp.getName() + " konnten nicht geladen werden!");
 						return;
 					}
-					
+
 					if (videos.size() == 0)
 						new Alert(AlertType.NO_YOUTUBE_UPLOAD, vp.getName() + " hat kein Varo Video hochgeladen!");
 

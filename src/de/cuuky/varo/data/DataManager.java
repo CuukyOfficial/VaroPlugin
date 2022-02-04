@@ -1,22 +1,22 @@
 package de.cuuky.varo.data;
 
-import de.cuuky.varo.command.custom.CustomCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.clientadapter.board.CustomBoardType;
+import de.cuuky.cfw.player.NameTagGroup;
 import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
-import de.cuuky.varo.ban.VaroPlayerBanHandler;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
-import de.cuuky.varo.clientadapter.VaroBoardProvider;
+import de.cuuky.varo.command.custom.CustomCommandManager;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.config.ScoreboardConfig;
+import de.cuuky.varo.configuration.configurations.config.TablistConfig;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
 import de.cuuky.varo.data.plugin.LibraryLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -43,6 +43,9 @@ public class DataManager {
 
 	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
+	private ScoreboardConfig scoreboardConfig;
+	private TablistConfig tablistConfig;
+	private NameTagGroup nameTagGroup;
 	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
@@ -56,7 +59,6 @@ public class DataManager {
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
 	private ServerPropertiesReader propertiesReader;
-	private VaroPlayerBanHandler banHandler;
 	private CustomCommandManager customCommandManager;
 
 	private boolean doSave;
@@ -70,13 +72,15 @@ public class DataManager {
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
 		this.libraryLoader = new LibraryLoader();
+		this.scoreboardConfig = new ScoreboardConfig();
+		this.tablistConfig = new TablistConfig();
+		this.nameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
 		new DefaultPresetLoader();
 	}
 
 	public void load() {
 		new MessagePlaceholderLoader();
-		VaroBoardProvider.update();
 		this.propertiesReader = new ServerPropertiesReader();
 		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
@@ -95,19 +99,10 @@ public class DataManager {
 				&& !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
 			VersionUtils.setMinecraftServerProperty("announce-player-achievements", false);
 
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG,
-				ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD,
-				ConfigSetting.SCOREBOARD.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST,
-				ConfigSetting.TABLIST.getValueAsBoolean());
-
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
-
-		this.banHandler = new VaroPlayerBanHandler();
 
 		this.startAutoSave();
 
@@ -138,14 +133,6 @@ public class DataManager {
 		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		this.configHandler.reload();
 		Main.getLanguageManager().loadLanguages();
-		VaroBoardProvider.update();
-
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.NAMETAG,
-				ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.SCOREBOARD,
-				ConfigSetting.SCOREBOARD.getValueAsBoolean());
-		Main.getCuukyFrameWork().getClientAdapterManager().setBoardTypeEnabled(CustomBoardType.TABLIST,
-				ConfigSetting.TABLIST.getValueAsBoolean());
 	}
 
 	public void reloadPlayerClients() {
@@ -185,6 +172,18 @@ public class DataManager {
 
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
+	}
+	
+	public ScoreboardConfig getScoreboardConfig() {
+		return scoreboardConfig;
+	}
+
+	public TablistConfig getTablistConfig() {
+		return tablistConfig;
+	}
+
+	public NameTagGroup getNameTagGroup() {
+		return nameTagGroup;
 	}
 
 	public LibraryLoader getLibraryLoader() {
@@ -234,8 +233,6 @@ public class DataManager {
 	public JavaPlugin getOwnerInstance() {
 		return this.ownerInstance;
 	}
-
-	public VaroPlayerBanHandler getBanHandler() { return this.banHandler; }
 
 	public CustomCommandManager getCustomCommandManager() { return customCommandManager; }
 }

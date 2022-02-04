@@ -28,8 +28,6 @@ public class QuitEvent extends BukkitEvent {
 			player.getStats().removeCountdown();
 
 		player.getStats().setLastLocation(player.getPlayer().getLocation());
-		if (player.getNametag() != null)
-			player.getNametag().remove();
 
 		player.setAdminIgnore(false);
 		player.setPlayer(null);
