@@ -71,7 +71,7 @@ public class Broadcaster {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (VersionUtils.getOnlinePlayer().size() == 0)
+                if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() == 0)
                     return;
 
                 for (String m : getAdMessage())

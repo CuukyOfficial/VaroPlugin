@@ -210,7 +210,7 @@ public class Stats implements VaroSerializeable {
 		if (player.isBanned())
 			result = KickResult.BANNED;
 
-		if (VersionUtils.getOnlinePlayer().size() >= Bukkit.getMaxPlayers())
+		if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() >= Bukkit.getMaxPlayers())
 			result = KickResult.SERVER_FULL;
 
 		if (result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)

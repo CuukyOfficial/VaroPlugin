@@ -81,7 +81,7 @@ public class VaroWorldBorder {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (Player player : VersionUtils.getOnlinePlayer())
+				for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers())
 					distances.put(player, getDistanceToBorder(player));
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), 20, 20);

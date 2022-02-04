@@ -255,7 +255,7 @@ public class Metrics {
 			Method onlinePlayersMethod = Class.forName("org.bukkit.Server").getMethod("getOnlinePlayers");
 			playerAmount = onlinePlayersMethod.getReturnType().equals(Collection.class) ? ((Collection<?>) onlinePlayersMethod.invoke(Bukkit.getServer())).size() : ((Player[]) onlinePlayersMethod.invoke(Bukkit.getServer())).length;
 		} catch (Exception e) {
-			playerAmount = VersionUtils.getOnlinePlayer().size(); // Just use
+			playerAmount = VersionUtils.getVersionAdapter().getOnlinePlayers().size(); // Just use
 																	// the new
 																	// method if
 																	// the
