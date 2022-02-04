@@ -82,9 +82,9 @@ public class DataManager {
 	public void load() {
 		new MessagePlaceholderLoader();
 		this.propertiesReader = new ServerPropertiesReader();
-		this.varoGameHandler = new VaroGameHandler();
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
+		this.varoGameHandler = new VaroGameHandler();
 		this.spawnHandler = new SpawnHandler();
 		this.reportHandler = new ReportHandler();
 		this.alertHandler = new AlertHandler();
