@@ -1,6 +1,7 @@
 package de.cuuky.varo.configuration.configurations.config;
 
-import de.cuuky.varo.game.suro.SuroStart;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 
 import de.cuuky.cfw.version.BukkitVersion;
@@ -9,9 +10,7 @@ import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
-
-import java.util.Arrays;
-import java.util.List;
+import de.cuuky.varo.game.suro.SuroStart;
 
 public enum ConfigSetting implements SectionEntry {
 
