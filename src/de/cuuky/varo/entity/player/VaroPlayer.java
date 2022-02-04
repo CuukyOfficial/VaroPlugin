@@ -752,7 +752,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return spectator;
 	}
 
-	public static ArrayList<VaroPlayer> getVaroPlayer() {
+	public static ArrayList<VaroPlayer> getVaroPlayers() {
 		return varoplayer;
 	}
 }

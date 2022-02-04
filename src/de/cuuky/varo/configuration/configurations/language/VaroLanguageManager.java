@@ -120,7 +120,7 @@ public class VaroLanguageManager extends LanguageManager {
     }
 
     public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace) {
-        ArrayList<CustomLanguagePlayer> players = new ArrayList<>(VaroPlayer.getVaroPlayer());
+        ArrayList<CustomLanguagePlayer> players = new ArrayList<>(VaroPlayer.getVaroPlayers());
         return super.broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
     }
 

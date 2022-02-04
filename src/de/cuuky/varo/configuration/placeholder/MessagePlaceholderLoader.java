@@ -44,7 +44,7 @@ public class MessagePlaceholderLoader {
         new VaroGeneralMessagePlaceholder("projectname", 10, "Ersetzt durch den Projektnamen", Main::getProjectName);
         new VaroGeneralMessagePlaceholder("colorcode", 10, "Ersetzt durch den Farbcode", Main::getColorCode);
         new VaroGeneralMessagePlaceholder("remaining", 1, "Ersetzt durch die Anzahl lebender Spieler", () -> String.valueOf(VaroPlayer.getAlivePlayer().size()));
-        new VaroGeneralMessagePlaceholder("players", 1, "Ersetzt durch die Anzahl aller Spieler", () -> String.valueOf(VaroPlayer.getVaroPlayer().size()));
+        new VaroGeneralMessagePlaceholder("players", 1, "Ersetzt durch die Anzahl aller Spieler", () -> String.valueOf(VaroPlayer.getVaroPlayers().size()));
         new VaroGeneralMessagePlaceholder("online", 1, "Ersetzt durch die Anzahl aller online Spieler", () -> String.valueOf(VersionUtils.getVersionAdapter().getOnlinePlayers().size()));
         new VaroGeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.YEAR));
         new VaroGeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.MONTH));

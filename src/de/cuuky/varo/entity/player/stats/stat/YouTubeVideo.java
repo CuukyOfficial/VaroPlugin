@@ -55,7 +55,7 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	}
 
 	public VaroPlayer getOwner() {
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayers())
 			if (vp.getStats().getVideos().contains(this))
 				return vp;
 

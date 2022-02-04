@@ -137,7 +137,7 @@ public class VaroGame implements VaroSerializeable {
             pl1.cleanUpPlayer();
         }
 
-        for (VaroPlayer pl1 : VaroPlayer.getVaroPlayer())
+        for (VaroPlayer pl1 : VaroPlayer.getVaroPlayers())
             pl1.getStats().loadStartDefaults();
 
         Main.getVaroGame().setFirstTime(true);
@@ -166,7 +166,7 @@ public class VaroGame implements VaroSerializeable {
 				public void run() {
 					// Copy the list to avoid ConcurrentModificationException
 					// This is only executed once anyway so performance doen't really matter
-					for (VaroPlayer player : VaroPlayer.getVaroPlayer().toArray(new VaroPlayer[0]))
+					for (VaroPlayer player : VaroPlayer.getVaroPlayers().toArray(new VaroPlayer[0]))
 						if (player.getStats().getYoutubeLink() != null) {
 							List<YouTubeVideo> videos = YouTubeCheck.loadNewVideos(player);
 							if (videos != null)
@@ -184,7 +184,7 @@ public class VaroGame implements VaroSerializeable {
     }
 
     private void removeAbsentAtStart() {
-        for (VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayer().clone())
+        for (VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayers().clone())
             if (!varoplayer.isOnline())
                 varoplayer.delete();
     }

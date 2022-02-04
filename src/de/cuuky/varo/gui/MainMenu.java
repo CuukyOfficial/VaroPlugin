@@ -60,7 +60,7 @@ public class MainMenu extends VaroInventory {
                         .amount(getFixedSize(VaroPlayer.getPlayer(getPlayer()).getStats().getStrikes().size())).build(),
                 (event) -> this.openNext(new StrikeListGUI(getPlayer(), getPlayer())));
 
-        addItem(16, new BuildSkull().player(getPlayer()).amount(getFixedSize(VaroPlayer.getVaroPlayer().size()))
+        addItem(16, new BuildSkull().player(getPlayer()).amount(getFixedSize(VaroPlayer.getVaroPlayers().size()))
                 .displayName("§7All §aPlayers").build(), (event) ->
                 this.openNext(new PlayerListChooseGUI(getPlayer()))
         );

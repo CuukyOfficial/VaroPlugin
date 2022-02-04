@@ -63,7 +63,7 @@ public class TopScoreList {
 		topPlayer.clear();
 		topTeams.clear();
 
-		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+		for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
 			int kills = player.getStats().getKills();
 
 			if (kills > 0)

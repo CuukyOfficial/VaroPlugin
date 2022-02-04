@@ -83,7 +83,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 		countdowns.clear();
 		timerEnd = false;
 
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
 			Integer[] save = { vp.getId(), vp.getStats().getCountdown() };
 			countdowns.add(save);
 			vp.getStats().setCountdown(vp.getStats().getCountdown() + 60 * ConfigSetting.MASS_RECORDING_TIME.getValueAsInt());

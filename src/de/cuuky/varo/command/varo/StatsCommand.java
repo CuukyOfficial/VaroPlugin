@@ -24,7 +24,7 @@ public class StatsCommand extends VaroCommand {
     private String doCommand(Function<VaroPlayer, Boolean> execute, String[] args, int start) {
         List<VaroPlayer> players = new ArrayList<>();
         if (args[start].equals("@a"))
-            players.addAll(VaroPlayer.getVaroPlayer());
+            players.addAll(VaroPlayer.getVaroPlayers());
         else {
             for (int i = start; i < args.length; i++) {
                 VaroPlayer vp = VaroPlayer.getPlayer(args[i]);

@@ -53,7 +53,7 @@ public class VaroAPIPlayer {
 
 	public static List<VaroAPIPlayer> getVaroPlayers() {
 		ArrayList<VaroAPIPlayer> alive = new ArrayList<VaroAPIPlayer>();
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer())
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayers())
 			alive.add(new VaroAPIPlayer(vp));
 
 		return alive;

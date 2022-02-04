@@ -24,7 +24,7 @@ public class PlayerCommand extends VaroCommand {
 	public PlayerCommand() {
 		super("player", "Verwaltet die Spieler", "varo.player");
 
-		this.listBuilder = new PageableChatBuilder<>(VaroPlayer::getVaroPlayer)
+		this.listBuilder = new PageableChatBuilder<>(VaroPlayer::getVaroPlayers)
 				.messages(new VaroChatListMessages<>(player ->
 						Main.getPrefix() + Main.getColorCode() + "§l" + (player.getId() + 1) + "§7: " + Main.getColorCode() + player.getName(),
 						"/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player list", "List aller Spieler"));
@@ -67,7 +67,7 @@ public class PlayerCommand extends VaroCommand {
 
 		if (args[0].equalsIgnoreCase("reset")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
-				for (VaroPlayer pl : VaroPlayer.getVaroPlayer()) {
+				for (VaroPlayer pl : VaroPlayer.getVaroPlayers()) {
 					if (pl.isOnline())
 						pl.getPlayer().kickPlayer("§cDein Account wurde resettet!\n§7Joine erneut, um dich zu registrieren.");
 					pl.getStats().loadDefaults();
@@ -94,7 +94,7 @@ public class PlayerCommand extends VaroCommand {
 			return;
 		} else if (args[0].equalsIgnoreCase("kill")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
-				for (VaroPlayer pl : VaroPlayer.getVaroPlayer())
+				for (VaroPlayer pl : VaroPlayer.getVaroPlayers())
 					if (pl.isOnline())
 						pl.getPlayer().setHealth(0);
 					else
@@ -121,7 +121,7 @@ public class PlayerCommand extends VaroCommand {
 			return;
 		} else if (args[0].equalsIgnoreCase("remove")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
-				for (VaroPlayer pl : new ArrayList<>(VaroPlayer.getVaroPlayer())) {
+				for (VaroPlayer pl : new ArrayList<>(VaroPlayer.getVaroPlayers())) {
 					if (pl.isOnline())
 						pl.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp));
 
@@ -177,7 +177,7 @@ public class PlayerCommand extends VaroCommand {
 			}
 		} else if (args[0].equalsIgnoreCase("respawn")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
-				for (VaroPlayer pl : VaroPlayer.getVaroPlayer())
+				for (VaroPlayer pl : VaroPlayer.getVaroPlayers())
 					pl.getStats().setState(PlayerState.ALIVE);
 				sender.sendMessage(Main.getPrefix() + "§7Erfolgreich alle Spieler wiederbelebt!");
 				return;

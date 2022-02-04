@@ -48,7 +48,7 @@ public class FinaleCommand extends VaroCommand {
 			Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
 		}
 
-		for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+		for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
 			VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
 			if (player.getPlayer() != null) {
 				if (player.getPlayer().isOnline()) {

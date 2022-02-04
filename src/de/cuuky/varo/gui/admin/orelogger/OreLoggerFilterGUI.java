@@ -140,7 +140,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
     }
 
     private Predicate<String> validVaroPlayerName() {
-        return str -> VaroPlayer.getVaroPlayer().stream().anyMatch(player -> player.getName().equals(str));
+        return str -> VaroPlayer.getVaroPlayers().stream().anyMatch(player -> player.getName().equals(str));
     }
 
     private Predicate<String> validLoggerMaterialName() {

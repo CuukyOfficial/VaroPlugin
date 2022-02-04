@@ -24,7 +24,7 @@ public class SessionCheck extends Checker {
 			preProduceSessions = 0;
 		}
 
-		for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+		for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
 			if (vp.getStats().getCountdown() != ConfigSetting.PLAY_TIME.getValueAsInt() * 60) {
 				if (vp.isOnline())
 					vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));

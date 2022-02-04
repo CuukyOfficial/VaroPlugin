@@ -20,7 +20,7 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
         ALIVE("§aALIVE", Material.POTION, VaroPlayer::getAlivePlayer),
         DEAD("§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial(), VaroPlayer::getDeadPlayer),
         ONLINE("§eONLINE", Material.EMERALD, VaroPlayer::getOnlinePlayer),
-        REGISTERED("§bREGISTERED", Material.BOOK, VaroPlayer::getVaroPlayer),
+        REGISTERED("§bREGISTERED", Material.BOOK, VaroPlayer::getVaroPlayers),
         SPECTATOR("§fSPECTATOR", Materials.REDSTONE.parseMaterial(), VaroPlayer::getSpectator);
 
         private final Material icon;

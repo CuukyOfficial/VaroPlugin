@@ -37,7 +37,7 @@ public class ExportCommand extends VaroCommand {
 			YamlConfiguration yaml = YamlConfigurationUtil.loadConfiguration(file);
 			ArrayList<VaroPlayer> finished = new ArrayList<>();
 
-			for (VaroPlayer player : VaroPlayer.getVaroPlayer()) {
+			for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
 				if (finished.contains(player))
 					continue;
 

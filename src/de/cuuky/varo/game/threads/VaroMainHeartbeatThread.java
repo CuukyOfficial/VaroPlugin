@@ -136,7 +136,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 		}
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
-			for (VaroPlayer vp : VaroPlayer.getVaroPlayer()) {
+			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
 				if (vp.getStats().getTimeUntilAddSession() == null) {
 					continue;
 				}
