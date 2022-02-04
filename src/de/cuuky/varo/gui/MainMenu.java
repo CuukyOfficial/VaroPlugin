@@ -43,30 +43,32 @@ public class MainMenu extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(4, new BuildItem().displayName("§7All §5Events").itemstack(new ItemStack(Material.APPLE)).build(),
+    	addItem(3, new BuildItem().displayName("§bSpawn").itemstack(new ItemStack(Material.EMERALD))
+                .lore(new String[]{new LocationFormat(getPlayer().getWorld().getSpawnLocation())
+                        .format(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z")}).build(),
+	        inventoryClickEvent -> {
+	            if (!getPlayer().hasPermission("varo.teleportSpawn"))
+	                return;
+	
+	            BukkitUtils.saveTeleport(getPlayer(), getPlayer().getWorld().getSpawnLocation());
+        });
+
+        addItem(5, new BuildItem().displayName("§7All §5Events").itemstack(new ItemStack(Material.APPLE)).build(),
                 (event) -> this.openNext(new EventListGUI(getPlayer())));
 
-        addItem(8, new BuildItem().material(Materials.CHEST).displayName("§aItem-Settings").build(),
-                (e) -> this.openNext(new ItemListSelectInventory(getPlayer())));
-
-        addItem(10, new BuildItem().displayName("§bSpawn").itemstack(new ItemStack(Material.EMERALD))
-                        .lore(new String[]{new LocationFormat(getPlayer().getWorld().getSpawnLocation())
-                                .format(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z")}).build(),
-                inventoryClickEvent -> {
-                    if (!getPlayer().hasPermission("varo.teleportSpawn"))
-                        return;
-
-                    BukkitUtils.saveTeleport(getPlayer(), getPlayer().getWorld().getSpawnLocation());
-                });
+        addItem(10, new BuildItem().displayName("§7Your §6Strikes").itemstack(new ItemStack(Material.PAPER))
+                        .amount(getFixedSize(VaroPlayer.getPlayer(getPlayer()).getStats().getStrikes().size())).build(),
+                (event) -> this.openNext(new StrikeListGUI(getPlayer(), getPlayer())));
 
         addItem(16, new BuildSkull().player(getPlayer()).amount(getFixedSize(VaroPlayer.getVaroPlayer().size()))
                 .displayName("§7All §aPlayers").build(), (event) ->
                 this.openNext(new PlayerListChooseGUI(getPlayer()))
         );
 
-        addItem(18, new BuildItem().displayName("§7Your §6Strikes").itemstack(new ItemStack(Material.PAPER))
-                        .amount(getFixedSize(VaroPlayer.getPlayer(getPlayer()).getStats().getStrikes().size())).build(),
-                (event) -> this.openNext(new StrikeListGUI(getPlayer(), getPlayer())));
+        addItem(18, new BuildItem().displayName("§7Your §5Videos").itemstack(new ItemStack(Material.COMPASS))
+                .amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), (event) ->
+                this.openNext(new YouTubeVideoListGUI(getPlayer()))
+        );
 
         addItem(22, new BuildItem().displayName("§7Your §eChests/Furnaces").itemstack(new ItemStack(Material.CHEST))
                 .amount(getFixedSize(VaroSaveable.getSaveable(VaroPlayer.getPlayer(getPlayer())).size())).build(), (event) ->
@@ -83,10 +85,8 @@ public class MainMenu extends VaroInventory {
                 this.openNext(new VaroSettingsMenu(getPlayer()))
         );
 
-        addItem(34, new BuildItem().displayName("§7Your §5Videos").itemstack(new ItemStack(Material.COMPASS))
-                .amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), (event) ->
-                this.openNext(new YouTubeVideoListGUI(getPlayer()))
-        );
+        addItem(34, new BuildItem().material(Materials.ITEM_FRAME).displayName("§aItem-Settings").build(),
+                (e) -> this.openNext(new ItemListSelectInventory(getPlayer())));
 
         if (getPlayer().hasPermission("varo.admin")) {
             addItem(36, new BuildItem().displayName("§cAdmin-Section").lore("§cOnly available to admins")
