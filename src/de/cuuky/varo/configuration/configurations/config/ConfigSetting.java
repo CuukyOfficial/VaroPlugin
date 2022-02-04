@@ -1,5 +1,6 @@
 package de.cuuky.varo.configuration.configurations.config;
 
+import de.cuuky.varo.game.suro.SuroStart;
 import org.bukkit.Bukkit;
 
 import de.cuuky.cfw.version.BukkitVersion;
@@ -8,6 +9,9 @@ import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
+
+import java.util.Arrays;
+import java.util.List;
 
 public enum ConfigSetting implements SectionEntry {
 
@@ -310,7 +314,10 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_PROTECT_ENABLED(ConfigSettingSection.COMMANDS, "protect.enabled", true, "Ob /protect und /unprotect aktiviert sein soll"),
 	COMMAND_COUNTDOWN_ENABLED(ConfigSettingSection.COMMANDS, "countdown.enabled", true, "Ob /countdown aktiviert sein soll"),
 	COMMAND_PERFORMANCE_ENABLED(ConfigSettingSection.COMMANDS, "performance.enabled", true, "Ob /performance aktiviert sein soll"),
-	COMMAND_LANGUAGE_ENABLED(ConfigSettingSection.COMMANDS, "language.enabled", true, "Ob /language aktiviert sein soll");
+	COMMAND_LANGUAGE_ENABLED(ConfigSettingSection.COMMANDS, "language.enabled", true, "Ob /language aktiviert sein soll"),
+
+	// INTRO
+	INTRO_INTRO_LINES(ConfigSettingSection.INTRO, "intro.lines", SuroStart.DEFAULT_TITLES, "Alle Titel für das Suro-Intro");
 
 	private Object defaultValue, value;
 	private String path, description, oldPaths[];
@@ -455,6 +462,15 @@ public enum ConfigSetting implements SectionEntry {
 		}
 
 		return (String) defaultValue;
+	}
+
+	public List getValueAsList() {
+		try {
+			return (List) this.value;
+		} catch (Exception e) {
+			sendFalseCast(List.class);
+		}
+		return (List) this.defaultValue;
 	}
 
 	public boolean isIntActivated() {
