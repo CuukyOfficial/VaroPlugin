@@ -471,13 +471,13 @@ public enum ConfigSetting implements SectionEntry {
 		return (String) defaultValue;
 	}
 
-	public List getValueAsList() {
+	public List<?> getValueAsList() {
 		try {
-			return (List) this.value;
+			return (List<?>) this.value;
 		} catch (Exception e) {
 			sendFalseCast(List.class);
 		}
-		return (List) this.defaultValue;
+		return (List<?>) this.defaultValue;
 	}
 
 	public boolean isIntActivated() {
