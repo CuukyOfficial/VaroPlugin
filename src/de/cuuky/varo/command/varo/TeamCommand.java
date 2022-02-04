@@ -63,8 +63,8 @@ public class TeamCommand extends VaroCommand {
                 return;
             }
 
-            if (!args[1].matches(VaroTeam.NAME_REGEX)) {
-                sender.sendMessage(Main.getPrefix() + "Teamname nicht valide!");
+            if (!args[1].matches(VaroTeam.NAME_REGEX) || args[1].length() > ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt()) {
+                sender.sendMessage(Main.getPrefix() + "Ungültiger Teamname!");
                 return;
             }
 
@@ -148,7 +148,7 @@ public class TeamCommand extends VaroCommand {
                 return;
             }
 
-            if (!args[2].matches(VaroTeam.NAME_REGEX)) {
+            if (!args[2].matches(VaroTeam.NAME_REGEX) || args[2].length() > ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt()) {
                 sender.sendMessage(Main.getPrefix() + "Ungültiger teamname!");
                 return;
             }
