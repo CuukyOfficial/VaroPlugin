@@ -360,10 +360,6 @@ public class Stats implements VaroSerializeable {
 		return result;
 	}
 
-	public ArrayList<YouTubeVideo> getVideos() {
-		return videos;
-	}
-
 	public int getWins() {
 		return wins;
 	}
@@ -386,6 +382,10 @@ public class Stats implements VaroSerializeable {
 				return true;
 
 		return false;
+	}
+
+	public ArrayList<YouTubeVideo> getVideos() {
+		return videos;
 	}
 
 	public boolean isAlive() {
@@ -540,7 +540,7 @@ public class Stats implements VaroSerializeable {
 	public void setDiedAt(Date diedAt) {
 		this.diedAt = diedAt;
 	}
-	
+
 	public void setOnlineAfterStart() {
 		this.onlineAfterStart = true;
 	}
@@ -598,7 +598,7 @@ public class Stats implements VaroSerializeable {
 		this.state = state;
 		if (state == PlayerState.DEAD)
 			this.diedAt = new Date();
-		
+
 		switch (state) {
 		case ALIVE:
 			this.owner.setAlive();
@@ -612,7 +612,7 @@ public class Stats implements VaroSerializeable {
 		default:
 			throw new Error("Unknown playerstate");
 		}
-		
+
 		new WinnerCheck();
 	}
 

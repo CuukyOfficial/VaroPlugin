@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.game.VaroEndEvent;
@@ -20,6 +21,7 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.leaderboard.TopScoreList;
 import de.cuuky.varo.game.lobby.LobbyItem;
@@ -38,6 +40,7 @@ import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
+import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
 import de.cuuky.varo.utils.VaroUtils;
 
 public class VaroGame implements VaroSerializeable {
@@ -92,7 +95,7 @@ public class VaroGame implements VaroSerializeable {
         this.borderDecrease = new BorderDecreaseDayTimer(true);
     }
 
-    public void start() {
+    public void prepareStart() {
         if (hasStarted() || isStarting())
             return;
 
@@ -121,6 +124,56 @@ public class VaroGame implements VaroSerializeable {
 
         this.lastDayTimer = new Date();
         (startThread = new VaroStartThread()).runTaskTimer(Main.getInstance(), 0, 20);
+    }
+    
+    public void start() {
+        for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
+            if (pl1.getStats().isSpectator())
+                continue;
+
+            Player pl = pl1.getPlayer();
+            pl.playSound(pl.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+            pl.setGameMode(GameMode.SURVIVAL);
+            pl1.cleanUpPlayer();
+        }
+
+        for (VaroPlayer pl1 : VaroPlayer.getVaroPlayer())
+            pl1.getStats().loadStartDefaults();
+
+        Main.getVaroGame().setFirstTime(true);
+        Main.getDataManager().getListManager().getStartItems().giveToAll();
+        Main.getVaroGame().setMinuteTimer(new BorderDecreaseMinuteTimer());
+
+        for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
+            world.fillChests();
+
+        if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
+            Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
+            Main.getVaroGame().setProtection(new ProtectionTime());
+        }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                setFirstTime(false);
+            }
+        }.runTaskLater(Main.getInstance(), ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
+        
+        if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean())
+        	new BukkitRunnable() {
+				
+				@Override
+				public void run() {
+					// Copy the list to avoid ConcurrentModificationException
+					// This is only executed once anyway so performance doen't really matter
+					for (VaroPlayer player : VaroPlayer.getVaroPlayer().toArray(new VaroPlayer[0]))
+						if (player.getStats().getYoutubeLink() != null) {
+							List<YouTubeVideo> videos = YouTubeCheck.loadNewVideos(player);
+							if (videos != null)
+								player.getStats().getVideos().addAll(videos);
+						}
+				}
+			}.runTaskAsynchronously(Main.getInstance());
     }
 
     public void abort() {
@@ -215,40 +268,6 @@ public class VaroGame implements VaroSerializeable {
 
     private void startRefreshTimer() {
         (mainThread = new VaroMainHeartbeatThread()).runTaskTimer(Main.getInstance(), 0L, 20L);
-    }
-
-    public void doStartStuff() {
-        for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
-            if (pl1.getStats().isSpectator())
-                continue;
-
-            Player pl = pl1.getPlayer();
-            pl.playSound(pl.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
-            pl.setGameMode(GameMode.SURVIVAL);
-            pl1.cleanUpPlayer();
-        }
-
-        for (VaroPlayer pl1 : VaroPlayer.getVaroPlayer())
-            pl1.getStats().loadStartDefaults();
-
-        Main.getVaroGame().setFirstTime(true);
-        Main.getDataManager().getListManager().getStartItems().giveToAll();
-        Main.getVaroGame().setMinuteTimer(new BorderDecreaseMinuteTimer());
-
-        for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
-            world.fillChests();
-
-        if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-            Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
-            Main.getVaroGame().setProtection(new ProtectionTime());
-        }
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                setFirstTime(false);
-            }
-        }.runTaskLater(Main.getInstance(), ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
     }
 
     public TopScoreList getTopScores() {

@@ -55,7 +55,7 @@ public class SuroStart {
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
 					}
 
-					Main.getVaroGame().doStartStuff();
+					Main.getVaroGame().start();
 					return;
 				}
 

@@ -282,8 +282,8 @@ public enum ConfigSetting implements SectionEntry {
 
 	// YOUTUBE
 	YOUTUBE_ENABLED(ConfigSettingSection.YOUTUBE, "enabled", false, "Checkt jeden Tag bei den Spielern,\ndie einen YouTube Link registriert haben,\nnach den Uploads"),
-	YOUTUBE_SET_OWN_LINK(ConfigSettingSection.YOUTUBE, "setOwnLink", true, "Ob die Spieler sich selbst den\nYouTube-Link per /yt setzen duerfen"),
-	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmuessen, um als Varovideo zu gelten."),
+	YOUTUBE_STRIKE(ConfigSettingSection.YOUTUBE, "strike", false, "Ob ein spieler einen Strike erhalten soll wenn er kein video hochläd"),
+	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmüssen, um als Varo-Video zu gelten."),
 
 	// CUSTOM COMMAND
 	CUSTOMCOMMAND_USEPREFIX(ConfigSettingSection.OTHER, "customCommandUsePrefix", true, "Ob bei allen Custom Commands automatisch\nder Prefix genutzt werden soll."),

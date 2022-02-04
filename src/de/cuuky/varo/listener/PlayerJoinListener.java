@@ -110,7 +110,7 @@ public class PlayerJoinListener implements Listener {
 
 			if (ConfigSetting.START_AT_PLAYERS.isIntActivated()) {
 				if (VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigSetting.START_AT_PLAYERS.getValueAsInt())
-					Main.getVaroGame().start();
+					Main.getVaroGame().prepareStart();
 				else
 					Bukkit.broadcastMessage(ConfigMessages.JOIN_PLAYERS_REQUIRED.getValue().replace("%required%", String.valueOf(ConfigSetting.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size())));
 			}

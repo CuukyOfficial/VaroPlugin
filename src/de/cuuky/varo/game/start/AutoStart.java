@@ -90,7 +90,7 @@ public class AutoStart implements VaroSerializeable {
 				sched.cancel();
 				if (startDelay == StartDelay.GO) {
 					stop();
-					Main.getVaroGame().start();
+					Main.getVaroGame().prepareStart();
 					Bukkit.broadcastMessage(Main.getProjectName() + " §7wird gestartet...");
 					return;
 				}

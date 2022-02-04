@@ -80,7 +80,7 @@ public class VaroStartThread extends BukkitRunnable {
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
 			cancel();
 
-			this.game.doStartStuff();
+			this.game.start();
 
 			game.setStartThread(null);
 			return;
