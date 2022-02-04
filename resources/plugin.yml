@@ -1,6 +1,6 @@
 name: @name@
 author: @author@
-authors: [Korne127, LeStegii, buccy]
+authors: [Korne127, LeStegii, Almighty-Satan]
 version: @version@
 softdepend: [PlaceholderAPI, LabyModAPI, TelegramPlugin, PermissionsEx, LabyModAPI]
 loadbefore: [CuukyFrameWork, JDA]
