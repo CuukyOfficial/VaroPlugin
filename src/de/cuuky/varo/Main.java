@@ -1,6 +1,12 @@
 package de.cuuky.varo;
 
-import de.cuuky.cfw.AdapterCuukyFrameWork;
+import java.io.File;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
 import de.cuuky.cfw.version.ServerSoftware;
@@ -12,17 +18,11 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -37,7 +37,7 @@ public class Main extends JavaPlugin {
 	private static Main instance;
 
 	private static BotLauncher botLauncher;
-	private static AdapterCuukyFrameWork<VaroPlayer> cuukyFrameWork;
+	private static CuukyFrameWork cuukyFrameWork;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
 	private static VaroLanguageManager languageManager;
@@ -109,7 +109,7 @@ public class Main extends JavaPlugin {
 			}
 
 			long dataStamp = System.currentTimeMillis();
-			cuukyFrameWork = new AdapterCuukyFrameWork<>(instance,
+			cuukyFrameWork = new CuukyFrameWork(instance,
 					languageManager = new VaroLanguageManager(Main.this), new VaroInventoryManager(this));
 			dataManager.load();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
@@ -213,7 +213,7 @@ public class Main extends JavaPlugin {
 		return varoGame;
 	}
 
-	public static AdapterCuukyFrameWork<VaroPlayer> getCuukyFrameWork() {
+	public static CuukyFrameWork getCuukyFrameWork() {
 		return cuukyFrameWork;
 	}
 
