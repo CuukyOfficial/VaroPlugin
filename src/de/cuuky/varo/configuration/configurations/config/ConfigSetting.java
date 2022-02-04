@@ -265,9 +265,12 @@ public enum ConfigSetting implements SectionEntry {
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen koennen.\nSehr gute Funktion fuer ODV's."),
 	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.items.enabled", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können", "teamRequest.lobbyItems"),
 	TEAMREQUEST_LOBBYITEM_INVITE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.invite.item", Materials.DIAMOND_SWORD.parseItem(), "Item um andere Spieler in ein Team einzuladen"),
+	TEAMREQUEST_LOBBYITEM_INVITE_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.invite.slot", 0, "Slot des Items um andere Spieler in ein Team einzuladen"),
 	TEAMREQUEST_LOBBYITEM_LEAVE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.leave.item", Materials.REDSTONE.parseItem(), "Item zum Verlassen eines Teams"),
+	TEAMREQUEST_LOBBYITEM_LEAVE_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.leave.slot", 8, "Slot des Items zum Verlassen eines Teams"),
 	TEAMREQUEST_LOBBYITEM_RENAME_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.items.rename.enabled", true, "Ob die spieler in\nder Lobby ein Item haben\nsollen um ihren Teamnamen\nzu ändern"),
 	TEAMREQUEST_LOBBYITEM_RENAME_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.rename.item", Materials.NAME_TAG.parseItem(), "Item zum Umbenennen eines Teams"),
+	TEAMREQUEST_LOBBYITEM_RENAME_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.rename.slot", 4, "Slot des Items zum Umbenennen eines Teams"),
 
 	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots"),
 
