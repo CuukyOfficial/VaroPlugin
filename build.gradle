@@ -1,9 +1,11 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 apply plugin: 'java-library'
-apply plugin: 'java'
+apply plugin: 'maven-publish'
 
-libsDirName = System.getenv("libsDirName") == null ? libsDirName : System.getenv("libsDirName")
+group 'de.varoplugin'
+version '4.9.0-BETA-4'
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 compileJava.options.encoding = 'UTF-8'
@@ -42,7 +44,7 @@ repositories {
     }
 	
 	maven {
-        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        url = 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
 
     maven {
@@ -64,8 +66,8 @@ configurations {
 }
 
 dependencies {
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+	testImplementation('org.junit.jupiter:junit-jupiter-api:5.7.2')
+    testImplementation('org.junit.jupiter:junit-jupiter-engine:5.7.2')
 
     this.addModularImplementation('org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT', 'spigot', false)
     this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
@@ -73,7 +75,7 @@ dependencies {
     this.addModularCompile('com.github.labymod:legacy-labymod-server-api:1.0', 'labymodapi', true)
     this.addModularCompile('net.dv8tion:JDA:4.4.0_351', 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
-    this.addModularCompile("me.clip:placeholderapi:2.10.10", "placeholderapi", false)
+    this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
 
     this.addModularInternal('de.varoplugin:CFW:0.6.5', 'CFW', true)
 }
@@ -104,6 +106,12 @@ void addModularInternal(String repoName, String fileName, boolean changingB) {
 }
 
 jar {
+	if (project.hasProperty('destinationDir'))
+		destinationDir = file(project.property('destinationDir').toString())
+
+	if (project.hasProperty('fileName'))
+		archiveFileName = project.property('fileName').toString()
+
     manifest {
         attributes(
                 'Manifest-Version': '1.0',
@@ -123,9 +131,9 @@ jar {
 processResources {
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from (sourceSets.main.resources.srcDirs) {
-        filter ReplaceTokens, tokens: [name: "Varo"]
-        filter ReplaceTokens, tokens: [version: "4.9.0-BETA-3"]
-        filter ReplaceTokens, tokens: [author: "Cuuky"]
+        filter ReplaceTokens, tokens: [name: 'Varo']
+        filter ReplaceTokens, tokens: [version: project.version]
+        filter ReplaceTokens, tokens: [author: 'Cuuky']
     }
 }
 
@@ -137,4 +145,27 @@ test {
         outputs.upToDateWhen { false }
         showStandardStreams = true
     }
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			
+			pom {
+                name = 'VaroPlugin'
+                url = 'https://varoplugin.de'
+			}
+		}
+	}
+
+	repositories {
+		maven {
+			url 'https://archiva.varoplugin.de/repository/public'
+			credentials {
+                username project.hasProperty('repouser') ? project.property('repouser').toString() : null
+                password project.hasProperty('repopassword') ? project.property('repopassword').toString() : null
+            }
+		}
+	}
 }
