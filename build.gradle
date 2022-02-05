@@ -34,6 +34,10 @@ repositories {
     }
     
     maven {
+    	url 'https://archiva.varoplugin.de/repository/public'
+    }
+    
+    maven {
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
 	
@@ -52,10 +56,6 @@ repositories {
     maven {
         url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
-
-    maven {
-        url 'https://jitpack.io'
-    }
 }
 
 configurations {
@@ -70,12 +70,12 @@ dependencies {
     this.addModularImplementation('org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT', 'spigot', false)
     this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
     this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:6.1.3-SNAPSHOT', 'worldedit', true)
-    this.addModularCompile('com.github.LabyMod:legacy-labymod-server-api:master-SNAPSHOT', 'labymodapi', true)
+    this.addModularCompile('com.github.labymod:legacy-labymod-server-api:1.0', 'labymodapi', true)
     this.addModularCompile('net.dv8tion:JDA:4.4.0_351', 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
     this.addModularCompile("me.clip:placeholderapi:2.10.10", "placeholderapi", false)
 
-    this.addModularInternal('com.github.CuukyOfficial:CFW:scoreboard-tab-nametag-SNAPSHOT', 'CFW', true)
+    this.addModularInternal('de.varoplugin:CFW:0.6.5', 'CFW', true)
 }
 
 boolean checkLib(String filePath) {

@@ -3,8 +3,8 @@ package de.cuuky.varo.configuration.configurations.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuuky.cfw.player.AnimationData;
-import de.cuuky.cfw.player.ScoreboardAnimationData;
+import de.cuuky.cfw.player.hud.AnimationData;
+import de.cuuky.cfw.player.hud.ScoreboardAnimationData;
 
 public class ScoreboardConfig extends BoardConfig {
 

@@ -3,7 +3,7 @@ package de.cuuky.varo.configuration.configurations.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuuky.cfw.player.TablistAnimationData;
+import de.cuuky.cfw.player.hud.TablistAnimationData;
 import de.cuuky.varo.Main;
 
 public class TablistConfig extends BoardConfig {
