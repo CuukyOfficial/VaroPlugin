@@ -253,6 +253,7 @@ public enum ConfigSetting implements SectionEntry {
 	
 	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut, was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 	
+	TEAM_MAX_NAME_LENGTH(ConfigSettingSection.TEAMS, "teamNameLength", 10, "Maximal Laenge eines Teamnamens."),
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
 	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1, "Wie viele Leben ein Team hat", "teamLifes"),
 	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5, "Wie viele Leben ein maximal haben kann"),
@@ -260,7 +261,6 @@ public enum ConfigSetting implements SectionEntry {
 
 	TEAMREQUEST_EXPIRETIME(ConfigSettingSection.TEAMS, "teamRequest.expiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
-	TEAMREQUEST_MAXTEAMNAMELENGTH(ConfigSettingSection.TEAMS, "teamRequest.maxTeamnameLength", 10, "Maximal Laenge eines Teamnamens."),
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen koennen.\nSehr gute Funktion fuer ODV's."),
 	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.items.enabled", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können", "teamRequest.lobbyItems"),
 	TEAMREQUEST_LOBBYITEM_INVITE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.invite.item", Materials.DIAMOND_SWORD.parseItem(), "Item um andere Spieler in ein Team einzuladen"),

@@ -65,7 +65,7 @@ public class VaroTeamRequest {
                     return false;
                 }
 
-				int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
+				int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
 				if (message.length() > maxLength) {
 					invitor.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG, invitor).replace("%maxLength%", String.valueOf(maxLength));
 					return false;

@@ -227,7 +227,7 @@ public class VaroTeam extends VaroEntity {
                 }
                 
                 String message = event.getMessage();
-                int maxLength = ConfigSetting.TEAMREQUEST_MAXTEAMNAMELENGTH.getValueAsInt();
+                int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
 				if (message.length() > maxLength) {
 					varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG).replace("%maxLength%", String.valueOf(maxLength));
 					return false;
