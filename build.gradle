@@ -77,7 +77,7 @@ dependencies {
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
     this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
 
-    this.addModularInternal('de.varoplugin:CFW:0.6.5', 'CFW', true)
+    this.addModularInternal('de.varoplugin:CFW:0.6.6', 'CFW', true)
 }
 
 boolean checkLib(String filePath) {
