@@ -258,6 +258,8 @@ public enum ConfigSetting implements SectionEntry {
 	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1, "Wie viele Leben ein Team hat", "teamLifes"),
 	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5, "Wie viele Leben ein maximal haben kann"),
 	DEATH_LIGHTNING_EFFECT(ConfigSettingSection.DEATH, "deathLightningEffect", true, "Ob beim Tod eines Spielers\nein Blitz-Effekt kommen soll"),
+	DEATH_TIME_ADD(ConfigSettingSection.DEATH, "deathTimeAdd", -1, "Zusätzliche zeit die der Killer\ndurch einen kill bekommt (in Sekunden)"),
+	DEATH_TIME_MIN(ConfigSettingSection.DEATH, "deathTimeMin", 30, "Zeit die der Killer\nnach einem Kill nicht gekickt werden soll (in Sekunden)"),
 
 	TEAMREQUEST_EXPIRETIME(ConfigSettingSection.TEAMS, "teamRequest.expiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
