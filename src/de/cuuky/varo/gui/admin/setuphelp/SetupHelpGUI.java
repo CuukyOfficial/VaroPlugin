@@ -24,36 +24,16 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
         TEAM_SETUP("Team Setup", "Haben sie alle Teams oder Spieler eingetragen? /varo team", Material.DIAMOND_HELMET),
         WORLDSPAWN_SETUP("Worlspawn Setup", "Haben sie den Worldspawn in der Mitte\ngesetzt? /setworldspawn", Material.BEACON);
 
+        private final String name;
+        private final Material icon;
+        private final String[] description;
         private boolean checked;
-        private String[] description;
-        private Material icon;
-        private String name;
 
         SetupCheckList(String name, String description, Material icon) {
             this.name = name;
             this.description = description.split("\n");
             this.icon = icon;
             this.checked = false;
-        }
-
-        public String[] getDescription() {
-            return description;
-        }
-
-        public Material getIcon() {
-            return icon;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isChecked() {
-            return checked;
-        }
-
-        public void setChecked(boolean checked) {
-            this.checked = checked;
         }
     }
 
@@ -66,20 +46,15 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
         return "§eSetup Assistant";
     }
 
-//    @Override
-//    public int getSize() {
-//        return this.getRecommendedSize(0, 9);
-//    }
-
     @Override
     protected ItemStack getItemStack(SetupCheckList check) {
-        return new BuildItem().displayName(Main.getColorCode() + check.getName())
-                .itemstack(new ItemStack(check.isChecked() ? Materials.GUNPOWDER.parseMaterial() : check.getIcon()))
-                .lore(check.getDescription()).build();
+        return new BuildItem().displayName(Main.getColorCode() + check.name)
+                .itemstack(new ItemStack(check.checked ? Materials.GUNPOWDER.parseMaterial() : check.icon))
+                .lore(check.description).build();
     }
 
     @Override
     protected ItemClick getClick(SetupCheckList check) {
-        return (event) -> check.setChecked(!check.isChecked());
+        return (event) -> check.checked = !check.checked;
     }
 }
