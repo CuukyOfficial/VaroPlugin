@@ -629,7 +629,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				LobbyItem.giveOrRemoveTeamItems(this);
 		}
 
-		Main.getVaroGame().getTopScores().update();
+		// Main#getVaroGame may not be initialized yet
+		if (Main.getVaroGame() != null)
+			Main.getVaroGame().getTopScores().update();
 	}
 
 	@Override
