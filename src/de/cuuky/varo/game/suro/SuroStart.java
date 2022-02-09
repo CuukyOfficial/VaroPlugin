@@ -1,5 +1,6 @@
 package de.cuuky.varo.game.suro;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,11 +24,11 @@ public class SuroStart {
 	private BukkitTask sched;
 	private List<String> titles;
 
-	public static final List<String> DEFAULT_TITLES = Arrays.asList(new String[] {"&a%name%", "&6...du bist gestrandet...", "&c...auf einer Insel...", "&6...genau so wie...", "&c%players% weitere Spieler auch!", "&aJa?", "&6dann viel Glueck bei...", "&cMINECRAFT SURO!", "&cWach auf!", "&c10!", "", "", "", "", "&c5!", "&c4!", "&c3!", "&c2!", "&c1!", "&cGO!"});
+	public static final ArrayList<String> DEFAULT_TITLES = new ArrayList<>(Arrays.asList(new String[] {"&a%name%", "&6...du bist gestrandet...", "&c...auf einer Insel...", "&6...genau so wie...", "&c%players% weitere Spieler auch!", "&aJa?", "&6dann viel Glueck bei...", "&cMINECRAFT SURO!", "&cWach auf!", "&c10!", "", "", "", "", "&c5!", "&c4!", "&c3!", "&c2!", "&c1!", "&cGO!"}));
 
 	@SuppressWarnings("unchecked")
 	public SuroStart() {
-		titles = (List<String>) ConfigSetting.INTRO_INTRO_LINES.getValueAsList();
+		titles = (List<String>) ConfigSetting.INTRO_INTRO_LINES.getValue();
 		start(60, 0, false);
 	}
 

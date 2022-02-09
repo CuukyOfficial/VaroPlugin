@@ -47,10 +47,19 @@ public class ConfigCommand extends VaroCommand {
 				if (!entry.getFullPath().equalsIgnoreCase(args[1]))
 					continue;
 
-				Object arg = JavaUtils.getStringObject(args[2]);
-				entry.setValue(arg, true);
+				if (!entry.canParseFromString()) {
+					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_NO_INGAME_SET.getValue(vp));
+					return;
+				}
+				
+				try {
+					entry.setStringValue(args[2], true);
+				} catch(Throwable t) {
+					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ERROR_SET.getValue(vp).replace("%error%", t.getClass() + " " + t.getMessage()));
+					return;
+				}
 
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_SET.getValue(vp).replace("%entry%", entry.getFullPath()).replace("%value%", String.valueOf(arg)));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_ENTRY_SET.getValue(vp).replace("%entry%", entry.getFullPath()).replace("%value%", args[2]));
 				return;
 			}
 

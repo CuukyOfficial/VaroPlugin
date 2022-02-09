@@ -1,7 +1,5 @@
 package de.cuuky.varo.configuration.configurations.config;
 
-import java.util.List;
-
 import org.bukkit.Bukkit;
 
 import de.cuuky.cfw.version.BukkitVersion;
@@ -408,10 +406,25 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	public void setValue(Object value, boolean save) {
+		if (value.getClass() != this.defaultValue.getClass())
+			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + this.defaultValue.getClass().getName() + " for entry " + getFullPath());
+		
 		this.value = value;
 
 		if (save)
 			save();
+	}
+
+	/**
+	 * Parses the argument and sets it as value
+	 * 
+	 * @param value
+	 * @param save
+	 * @throws IllegalArgumentException
+	 * @throws NumberFormatException
+	 */
+	public void setStringValue(String value, boolean save) {
+		this.setValue(this.parseFromString(value), save);
 	}
 
 	public boolean getValueAsBoolean() {
@@ -475,17 +488,38 @@ public enum ConfigSetting implements SectionEntry {
 		return (String) defaultValue;
 	}
 
-	public List<?> getValueAsList() {
-		try {
-			return (List<?>) this.value;
-		} catch (Exception e) {
-			sendFalseCast(List.class);
-		}
-		return (List<?>) this.defaultValue;
-	}
-
 	public boolean isIntActivated() {
 		return getValueAsInt() > -1;
+	}
+
+	public boolean canParseFromString() {
+		Class<?> type = this.defaultValue.getClass();
+		return type == String.class || type == Boolean.class || type == Integer.class || type == Long.class || type == Double.class;
+	}
+	
+	/**
+	 * Parses the argument
+	 * 
+	 * @param input
+	 * @return The value
+	 * @throws IllegalArgumentException
+	 * @throws NumberFormatException
+	 */
+	public Object parseFromString(String input) {
+		switch (this.defaultValue.getClass().getName()) {
+		case "java.lang.String":
+			return input;
+		case "java.lang.Boolean":
+			return input.equalsIgnoreCase("true");
+		case "java.lang.Integer":
+			return Integer.parseInt(input);
+		case "java.lang.Long":
+			return Long.parseLong(input);
+		case "java.lang.Double":
+			return Double.parseDouble(input);
+		default:
+			throw new IllegalArgumentException("Unknown type");
+		}
 	}
 
 	public boolean isReducingPerformance() {

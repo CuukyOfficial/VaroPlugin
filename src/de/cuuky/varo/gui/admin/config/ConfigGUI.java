@@ -1,9 +1,15 @@
 package de.cuuky.varo.gui.admin.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
+
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.cfw.version.types.Sounds;
@@ -11,12 +17,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.VaroListInventory;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConfigGUI extends VaroListInventory<ConfigSetting> {
 
@@ -39,9 +39,9 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
                     getPlayer().sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
                 } else {
                     try {
-                        entry.setValue(JavaUtils.getStringObject(message), true);
-                    } catch (Exception e) {
-                        getPlayer().sendMessage(Main.getPrefix() + e.getMessage());
+                        entry.setStringValue(message, true);
+                    } catch (Throwable t) {
+                        getPlayer().sendMessage(Main.getPrefix() + t.getMessage());
                         return false;
                     }
 
@@ -60,8 +60,11 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
     @Override
     protected ItemClick getClick(ConfigSetting setting) {
         return (event) -> {
-            this.close();
-            this.hookChat(setting);
+        	if (setting.canParseFromString()) {
+	            this.close();
+	            this.hookChat(setting);
+        	} else
+        		this.getPlayer().sendMessage(Main.getPrefix() + "§7Du kannst diese Einstellung nur in der Config Datei ändern!");
         };
     }
 
