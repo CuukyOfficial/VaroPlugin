@@ -1,12 +1,5 @@
 package de.cuuky.varo.entity.player.event.events;
 
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.inventory.ItemStack;
-
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -15,9 +8,15 @@ import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.inventory.ItemStack;
 
 public class DeathEvent extends BukkitEvent {
-	
+
 	private Sound deathSound;
 
 	public DeathEvent() {
@@ -33,11 +32,13 @@ public class DeathEvent extends BukkitEvent {
 
 	@Override
 	public void onExec(VaroPlayer player) {
-		player.getStats().addInventoryBackup(new InventoryBackup(player));
+        Location location;
+        if (player.isOnline()) {
+            player.getStats().addInventoryBackup(new InventoryBackup(player));
+            location = player.getPlayer().getLocation();
+        } else location = player.getStats().getLastLocation();
 
-		Location location = player.isOnline() ? player.getPlayer().getLocation() : player.getStats().getLastLocation();
 		World world = location.getWorld();
-
 		for (int i = 0; i < 3; i++)
 			world.playEffect(location, Effect.MOBSPAWNER_FLAMES, 1);
 
@@ -53,10 +54,10 @@ public class DeathEvent extends BukkitEvent {
 
 		if (ConfigSetting.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean())
 			if (player.getStats().getPlayerBackpack() != null)
-				dropInventory(player.getStats().getPlayerBackpack(), player.getPlayer().getLocation());
+				dropInventory(player.getStats().getPlayerBackpack(), location);
 
 		if (ConfigSetting.BACKPACK_TEAM_DROP_ON_DEATH.getValueAsBoolean())
 			if (player.getTeam() != null && player.getTeam().isDead() && player.getTeam().getTeamBackPack() != null)
-				dropInventory(player.getTeam().getTeamBackPack(), player.getPlayer().getLocation());
+				dropInventory(player.getTeam().getTeamBackPack(), location);
 	}
 }
