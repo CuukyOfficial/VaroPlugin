@@ -42,6 +42,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 		playTime = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		if (game.getGameState() == GameState.STARTED) {
@@ -122,6 +123,9 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 						vp.getVersionAdapter().sendActionbar("§7Distanz zur Border: " + Main.getColorCode() + distance);
 				}
 			}
+			for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone())
+				if(!vp.isAdminIgnore() && vp.getStats().isAlive())
+					vp.getStats().increaseOnlineTime();
 		}
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {

@@ -46,6 +46,10 @@ public class Stats implements VaroSerializeable {
 
 	@VaroSerializeField(path = "countdown")
 	private int countdown;
+	@VaroSerializeField(path = "onlineTime")
+	private int onlineTime;
+	@VaroSerializeField(path = "onlineTimeTotal")
+	private int onlineTimeTotal;
 	@VaroSerializeField(path = "kills")
 	private int kills;
 	@VaroSerializeField(path = "sessions")
@@ -178,6 +182,14 @@ public class Stats implements VaroSerializeable {
 		else
 			return sec + "";
 	}
+	
+	public int getOnlineTime() {
+		return this.onlineTime;
+	}
+	
+	public int getOnlineTimeTotal() {
+		return this.onlineTimeTotal;
+	}
 
 	public Date getDiedAt() {
 		return diedAt;
@@ -294,6 +306,8 @@ public class Stats implements VaroSerializeable {
 				"§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"),
 				"§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed,
 				"§7Countdown§8: " + colorcode + countdown,
+				"§7OnlineTime§8: " + colorcode + this.onlineTime,
+				"§7OnlineTimeTotal§8: " + colorcode + this.onlineTimeTotal,
 				"§7Kills§8: " + colorcode + kills,
 				"§7WillClearInventory§8: " + colorcode + willClear,
 				"§7ShowScoreboard§8: " + colorcode + showScoreboard,
@@ -461,6 +475,8 @@ public class Stats implements VaroSerializeable {
 		}
 		sessionsPlayed = 0;
 		countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		this.onlineTime = 0;
+		this.onlineTimeTotal = 0;
 	}
 
 	@Override
@@ -484,6 +500,7 @@ public class Stats implements VaroSerializeable {
 
 	public void removeCountdown() {
 		this.countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		this.onlineTime = 0;
 	}
 
 	public void removeInventoryBackup(InventoryBackup backup) {
@@ -535,6 +552,19 @@ public class Stats implements VaroSerializeable {
 
 	public void setCountdown(int time) {
 		this.countdown = time;
+	}
+	
+	public void setOnlineTime(int onlineTime) {
+		this.onlineTime = onlineTime;
+	}
+	
+	public void setOnlineTimeTotal(int onlineTimeTotal) {
+		this.onlineTimeTotal = onlineTimeTotal;
+	}
+	
+	public void increaseOnlineTime() {
+		this.onlineTime++;
+		this.onlineTimeTotal++;
 	}
 
 	public void setDiedAt(Date diedAt) {
