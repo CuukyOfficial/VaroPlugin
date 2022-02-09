@@ -157,8 +157,6 @@ public class SpectatorListener implements Listener {
                     VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
                     vp.sendMessage(ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT, vp);
                 }
-        return;
-
     }
 
     private static boolean shouldCancelSpectatorEvent(Entity interact) {
@@ -174,19 +172,7 @@ public class SpectatorListener implements Listener {
         if (!event.isCancelled() && shouldCancelSpectatorEvent(player)) {
         	if (!player.isOp()) {
         		event.setCancelled(true);
-        		return;
         	}
-            for (Entity entity : player.getNearbyEntities(BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE, BLOCK_INTERACT_DISTANCE)) {
-                if (!(entity instanceof Player))
-                    continue;
-
-                VaroPlayer vp = VaroPlayer.getPlayer((Player) entity);
-                if (!vp.getStats().isSpectator()) {
-                    event.setCancelled(true);
-                    player.sendMessage(Main.getPrefix() + "You can't interact with the world in close proximity to another player!");
-                    return;
-                }
-            }
         }
     }
 }
