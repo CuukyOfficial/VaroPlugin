@@ -33,7 +33,6 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
             this.name = name;
             this.description = description.split("\n");
             this.icon = icon;
-            this.checked = false;
         }
     }
 
