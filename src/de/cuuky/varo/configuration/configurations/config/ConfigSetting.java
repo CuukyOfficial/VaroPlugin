@@ -42,12 +42,12 @@ public enum ConfigSetting implements SectionEntry {
 
 	// BACKPACKS
 	BACKPACK_PLAYER_ENABLED(ConfigSettingSection.BACKPACKS, "backpackPlayerEnabled", false, "Wenn dies aktiviert ist, haben Spieler einen eigenen Rucksack,\nauf den sie mit /varo bp zugreifen koennen.\nDieser wird pro Spieler und nicht pro Team gespeichert."),
-	BACKPACK_PLAYER_SIZE(ConfigSettingSection.BACKPACKS, "backpackPlayerSize", 54, "Groesse des Spieler-Rucksacks (Max = 54)"),
+	BACKPACK_PLAYER_SIZE(ConfigSettingSection.BACKPACKS, "backpackPlayerSize", 54, "Groesse des Spieler-Rucksacks (Muss ein Vielfaches von 9 und <=54 sein)"),
 
 	BACKPACK_TEAM_DROP_ON_DEATH(ConfigSettingSection.BACKPACKS, "backpackTeamDropOnDeath", true, "Ob der Inhalt des Team-Rucksacks beim Tod des letzten Teammitglieds gedroppt werden soll."),
 	BACKPACK_TEAM_ENABLED(ConfigSettingSection.BACKPACKS, "backpackTeamEnabled", false, "Wenn dies aktiviert ist, haben Teams einen eigenen Rucksack,\nauf den sie mit /varo bp zugreifen koennen.\nDieser wird pro Team und nicht pro Spieler gespeichert."),
 
-	BACKPACK_TEAM_SIZE(ConfigSettingSection.BACKPACKS, "backpackTeamSize", 54, "Groesse des Team-Rucksacks (Max = 54)"),
+	BACKPACK_TEAM_SIZE(ConfigSettingSection.BACKPACKS, "backpackTeamSize", 54, "Groesse des Team-Rucksacks (Muss ein Vielfaches von 9 und <=54 sein)"),
 	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
 
 	// CHAT
