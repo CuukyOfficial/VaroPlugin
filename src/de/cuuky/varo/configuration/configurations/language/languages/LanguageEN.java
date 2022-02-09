@@ -242,6 +242,8 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_BACKPACK_NOT_ENABLED("varoCommands.backpack.notenabled", "The backpacks are not activated."),
     VARO_COMMANDS_CONFIG_RELOADED("varoCommands.config.reloaded", "&7All %colorcode%lists&7, %colorcode%messages, &7and the %colorcode%config &7have been successfully reloaded."),
     VARO_COMMANDS_CONFIG_HELP_SET("varoCommands.config.helpset", "%colorcode%/varo config &7set <key> <value>"),
+    VARO_COMMANDS_CONFIG_NO_INGAME_SET("varoCommands.config.noimgameset", "%colorcode%This setting can not be changed in game!"),
+	VARO_COMMANDS_CONFIG_ERROR_SET("varoCommands.config.errorset", "%colorcode%An error occurred: %error%"),
     VARO_COMMANDS_CONFIG_HELP_SEARCH("varoCommands.config.helpsearch", "%colorcode%/varo config &7search <key>"),
     VARO_COMMANDS_CONFIG_ENTRY_SET("varoCommands.config.entryset", "&7The entry '%colorcode%%entry%&7' was successfully set to '%colorcode%%value%&7."),
     VARO_COMMANDS_CONFIG_ENTRY_NOT_FOUND("varoCommands.config.entrynotfound", "'&7The entry '%colorcode%%entry%&7' was not found."),
