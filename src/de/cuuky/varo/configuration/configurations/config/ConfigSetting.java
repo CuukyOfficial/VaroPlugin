@@ -177,7 +177,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	NO_DISCONNECT_PING(ConfigSettingSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zaehlt."),
 	NO_KICK_DISTANCE(ConfigSettingSection.OTHER, "noKickDistance", 30, "In welcher Distanz zum Gegner\nein Spieler nicht gekickt wird.\nOff = 0"),
-	NO_SATIATION_REGENERATE(ConfigSettingSection.OFFLINEVILLAGER, "noSatiationRegenerate", false, "Ob Spieler nicht durch Saettigung regenerieren\nkoennen sondern nur durch Gapple etc."),
+	NO_SATIATION_REGENERATE(ConfigSettingSection.OTHER, "noSatiationRegenerate", false, "Ob Spieler nicht durch Saettigung regenerieren\nkoennen sondern nur durch Gapple etc."),
 
 	// OFFLINEVILLAGER
 	OFFLINEVILLAGER(ConfigSettingSection.OFFLINEVILLAGER, "enableOfflineVillager", false, "Ob Villager, welche representativ fuer den Spieler waehrend\nseiner Onlinezeit auf dem Server warten und gekillt werden koennen."),
