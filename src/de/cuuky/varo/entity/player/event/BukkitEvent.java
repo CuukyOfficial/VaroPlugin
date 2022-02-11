@@ -20,8 +20,6 @@ public class BukkitEvent {
 
     protected BukkitEvent(BukkitEventType eventType) {
         this.eventType = eventType;
-
-        events.add(this);
     }
 
     public BukkitEvent(VaroPlayer player, BukkitEventType eventType) {
