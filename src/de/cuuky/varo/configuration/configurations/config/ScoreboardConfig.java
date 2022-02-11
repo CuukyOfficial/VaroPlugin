@@ -37,12 +37,12 @@ public class ScoreboardConfig extends BoardConfig {
 		firstFrame.add("%space%");
 		firstFrame.add("&7Time&8:");
 		firstFrame.add("%colorcode%%min%&8:%colorcode%%sec%");
-		firstFrame.add("%space%");
+		firstFrame.add("                   ");
 		firstFrame.add("&7Online: %colorcode%%online%");
 		firstFrame.add("&7Alive: %colorcode%%remaining%");
 		firstFrame.add("&7Players: %colorcode%%players%");
 		firstFrame.add("&7Strikes: %colorcode%%strikes%");
-		firstFrame.add("                   ");
+		firstFrame.add("%space%");
 
 		ArrayList<String> secondFrame = new ArrayList<>();
 		secondFrame.add("%space%");
@@ -54,12 +54,12 @@ public class ScoreboardConfig extends BoardConfig {
 		secondFrame.add("%space%");
 		secondFrame.add("&7Time&8:");
 		secondFrame.add("%colorcode%%min%&8:%colorcode%%sec%");
-		secondFrame.add("%space%");
+		secondFrame.add("                   ");
 		secondFrame.add("&7Best Players&8:");
 		secondFrame.add("&71. %colorcode%%topplayer-1%");
 		secondFrame.add("&72. %colorcode%%topplayer-2%");
 		secondFrame.add("&73. %colorcode%%topplayer-3%");
-		secondFrame.add("                   ");
+		secondFrame.add("%space%");
 
 		ArrayList<ArrayList<String>> frames = new ArrayList<>();
 		frames.add(firstFrame);
