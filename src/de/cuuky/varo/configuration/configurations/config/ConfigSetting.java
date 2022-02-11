@@ -103,37 +103,37 @@ public enum ConfigSetting implements SectionEntry {
 	// DISCONNECT
 	DISCONNECT_PER_SESSION(ConfigSettingSection.DISCONNECT, "maxDisconnectsPerSessions", 3, "Wie oft ein Spieler pro\nSession maximal disconnecten darf,\nbevor er bestraft wird.Off = -1"),
 	DISCORDBOT_ADD_POKAL_ON_WIN(ConfigSettingSection.DISCORD, "addPokalOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
-	DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
-	DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
+	DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1L, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
+	DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1L, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
 	DISCORDBOT_COMMANDTRIGGER(ConfigSettingSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
 	DISCORDBOT_ENABLED_PRIVILIGES(ConfigSettingSection.DISCORD, "enabledPriviliges", false, "Aktiviere diesen Eintrag nur, wenn\ndu die besonderen Rechte\ndes Discordbots aktiviert hast\n-> Priviliged Gateway Intents\nAktiviere dies, sobald das Plugin meldet\ndass die Nutzer nicht auf dem Discord sind."),
 
 	// DISCORDBOT
 	DISCORDBOT_ENABLED(ConfigSettingSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot fuer Events aktiviert werden soll.\nHinweis: bitte fuer diesen Informationen unten ausfuellen"),
-	DISCORDBOT_EVENT_ALERT(ConfigSettingSection.DISCORD, "eventChannel.alert", -1, "ID's des Channels, wo die Benachrichtigungen gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_BORDER(ConfigSettingSection.DISCORD, "eventChannel.border", -1, "ID's des Channels, wo die Border Veränderungen gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_DEATH(ConfigSettingSection.DISCORD, "eventChannel.death", -1, "ID's des Channels, wo die Tode gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_JOIN_LEAVE(ConfigSettingSection.DISCORD, "eventChannel.joinLeave", -1, "ID's des Channels, wo die Joins/Leaves gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_ALERT(ConfigSettingSection.DISCORD, "eventChannel.alert", -1L, "ID's des Channels, wo die Benachrichtigungen gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_BORDER(ConfigSettingSection.DISCORD, "eventChannel.border", -1L, "ID's des Channels, wo die Border Veränderungen gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_DEATH(ConfigSettingSection.DISCORD, "eventChannel.death", -1L, "ID's des Channels, wo die Tode gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_JOIN_LEAVE(ConfigSettingSection.DISCORD, "eventChannel.joinLeave", -1L, "ID's des Channels, wo die Joins/Leaves gepostet werden.\n-1= EventChannelID wird genutzt"),
 
-	DISCORDBOT_EVENT_KILL(ConfigSettingSection.DISCORD, "eventChannel.kill", -1, "ID's des Channels, wo die Kills gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_STRIKE(ConfigSettingSection.DISCORD, "eventChannel.strike", -1, "ID's des Channels, wo die Strikes gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_WIN(ConfigSettingSection.DISCORD, "eventChannel.win", -1, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENT_YOUTUBE(ConfigSettingSection.DISCORD, "eventChannel.youtube", -1, "ID's des Channels, wo die YT-Videos gepostet werden.\n-1= EventChannelID wird genutzt"),
-	DISCORDBOT_EVENTCHANNELID(ConfigSettingSection.DISCORD, "eventChannelID", -1, "Gib hier die ChannelID des Channels an,\nin welchen der Bot Events posten soll.\nRechtsklick auf den Channel -> 'Copy ChannelID'\nWenn Option nicht vorhanden, schalte\n'developer options' in den Einstellungen von Discord ein."),
+	DISCORDBOT_EVENT_KILL(ConfigSettingSection.DISCORD, "eventChannel.kill", -1L, "ID's des Channels, wo die Kills gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_STRIKE(ConfigSettingSection.DISCORD, "eventChannel.strike", -1L, "ID's des Channels, wo die Strikes gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_WIN(ConfigSettingSection.DISCORD, "eventChannel.win", -1L, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENT_YOUTUBE(ConfigSettingSection.DISCORD, "eventChannel.youtube", -1L, "ID's des Channels, wo die YT-Videos gepostet werden.\n-1= EventChannelID wird genutzt"),
+	DISCORDBOT_EVENTCHANNELID(ConfigSettingSection.DISCORD, "eventChannelID", -1L, "Gib hier die ChannelID des Channels an,\nin welchen der Bot Events posten soll.\nRechtsklick auf den Channel -> 'Copy ChannelID'\nWenn Option nicht vorhanden, schalte\n'developer options' in den Einstellungen von Discord ein."),
 	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127, UeberallGebannt", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 
 	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSettingSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufaellige Farbe haben sollen (nur bei Embeds)"),
 	DISCORDBOT_USE_EMBEDS(ConfigSettingSection.DISCORD, "useEmbeds", true, "Ob die Nachrichten als Embed gesendet werden sollen"),
-	DISCORDBOT_RESULT_CHANNELID(ConfigSettingSection.DISCORD, "resultChannelID", -1, "Gib hier die Channel ID an, in der spaeter\ndie Logs und die Gewinner gepostet werden sollen."),
-	DISCORDBOT_SERVERID(ConfigSettingSection.DISCORD, "serverGuildID", -1, "Gib hier die ServerID deines Servers an.\nHinweis: Vorgangsweise, um die ID zu bekommen wie beim Channel."),
+	DISCORDBOT_RESULT_CHANNELID(ConfigSettingSection.DISCORD, "resultChannelID", -1L, "Gib hier die Channel ID an, in der spaeter\ndie Logs und die Gewinner gepostet werden sollen."),
+	DISCORDBOT_SERVERID(ConfigSettingSection.DISCORD, "serverGuildID", -1L, "Gib hier die ServerID deines Servers an.\nHinweis: Vorgangsweise, um die ID zu bekommen wie beim Channel."),
 
 	DISCORDBOT_SET_TEAM_AS_GROUP(ConfigSettingSection.DISCORD, "setTeamAsGroup", false, "Ob die Spieler, die ein Team bekommen,\ndiesen auch als Gruppe im Discord bekommen sollen."),
 	DISCORDBOT_TOKEN(ConfigSettingSection.DISCORD, "botToken", "ENTER TOKEN HERE", "Gib hier den Token an, welchen du auf\nder Bot Seite und 'create bot user' bekommst."),
 
 	DISCORDBOT_VERIFYSYSTEM(ConfigSettingSection.DISCORD, "verify.enabled", false, "Ob das Verify System aktiviert werden soll.\nDieses laesst die Spieler sich mit Discord-Accounts verbinden."),
 	DISCORDBOT_VERIFYSYSTEM_OPTIONAL(ConfigSettingSection.DISCORD, "verify.optional", false, "Ob das Verify-System optional sein soll\nWenn deaktiviert: Nur verifizierte Spieler koennen\nden Server betreten"),
-	DISCORDBOT_REGISTERCHANNELID(ConfigSettingSection.DISCORD, "verify.registerChannelID", -1, "Gib hier die Channel ID des #verify - Channels\nan, wo sich die User verifizieren koennen."),
+	DISCORDBOT_REGISTERCHANNELID(ConfigSettingSection.DISCORD, "verify.registerChannelID", -1L, "Gib hier die Channel ID des #verify - Channels\nan, wo sich die User verifizieren koennen."),
 	DISCORDBOT_USE_VERIFYSTSTEM_MYSQL(ConfigSettingSection.DISCORD, "verify.mysql.enabled", false, "Ob fuer die Speicherung der BotRegister\neine MySQL Datenbank genutzt werden soll"),
 	DISCORDBOT_VERIFY_DATABASE(ConfigSettingSection.DISCORD, "verify.mysql.database", "DATABASE_HERE", "Datenbank, wo die BotRegister\ngespeichert werden sollen"),
 	DISCORDBOT_VERIFY_HOST(ConfigSettingSection.DISCORD, "verify.mysql.host", "HOST_HERE", "MySQL Host, zu welchem das Plugin sich verbinden soll"),
@@ -275,8 +275,8 @@ public enum ConfigSetting implements SectionEntry {
 
 	// TELEGRAM
 	TELEGRAM_ENABLED(ConfigSettingSection.TELEGRAM, "telegrambotEnabled", false, "Ob der Telegrambot aktiviert werden soll."),
-	TELEGRAM_EVENT_CHAT_ID(ConfigSettingSection.TELEGRAM, "eventChatId", -1, "In diesen Chat werden alle Events gepostet."),
-	TELEGRAM_VIDEOS_CHAT_ID(ConfigSettingSection.TELEGRAM, "videosChatId", -1, "Hier kannst du die ID des Chats angeben, wo\ndie Videos der User gepostet werden sollen."),
+	TELEGRAM_EVENT_CHAT_ID(ConfigSettingSection.TELEGRAM, "eventChatId", -1L, "In diesen Chat werden alle Events gepostet."),
+	TELEGRAM_VIDEOS_CHAT_ID(ConfigSettingSection.TELEGRAM, "videosChatId", -1L, "Hier kannst du die ID des Chats angeben, wo\ndie Videos der User gepostet werden sollen."),
 	TRIGGER_FOR_GLOBAL(ConfigSettingSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmaessig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	UNREGISTERED_PLAYER_JOIN(ConfigSettingSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen duerfen."),
 
@@ -406,9 +406,11 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	public void setValue(Object value, boolean save) {
-		if (value.getClass() != this.defaultValue.getClass())
-			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + this.defaultValue.getClass().getName() + " for entry " + getFullPath());
-		
+		if (value.getClass() != this.defaultValue.getClass()) {
+			if (value.getClass() != Integer.class || this.defaultValue.getClass() != Long.class)
+				throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + this.defaultValue.getClass().getName() + " for entry " + getFullPath());
+		}
+	
 		this.value = value;
 
 		if (save)
