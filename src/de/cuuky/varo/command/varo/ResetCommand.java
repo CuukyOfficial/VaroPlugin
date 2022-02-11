@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -73,15 +72,10 @@ public class ResetCommand extends VaroCommand {
 				Main.getDataManager().setDoSave(false);
 				break;
 			case 3:
-				for (World world : Bukkit.getWorlds()) {
-					world.setAutoSave(false);
-					for (Chunk chunk : world.getLoadedChunks())
-						chunk.unload(false);
-					Bukkit.unloadWorld(world, false);
-
-					toDelete.add(world.getWorldFolder());
-				}
 				VersionUtils.getVersionAdapter().forceClearWorlds();
+				for (World world : Bukkit.getWorlds())
+					if (world.getWorldFolder() != null)
+						toDelete.add(world.getWorldFolder());
 				break;
 			default:
 				sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
