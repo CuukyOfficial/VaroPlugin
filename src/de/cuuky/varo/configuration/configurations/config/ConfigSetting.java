@@ -406,9 +406,11 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	public void setValue(Object value, boolean save) {
-		if (value.getClass() != this.defaultValue.getClass()) {
-			if (value.getClass() != Integer.class || this.defaultValue.getClass() != Long.class)
-				throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + this.defaultValue.getClass().getName() + " for entry " + getFullPath());
+		Class<?> valueClass = value.getClass();
+		Class<?> defaultClass = this.defaultValue.getClass();
+		if (valueClass != defaultClass) {
+			if (!defaultClass.isAssignableFrom(valueClass) && (valueClass != Integer.class || defaultClass != Long.class))
+				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applyable for " + defaultClass.getName() + " for entry " + getFullPath());
 		}
 	
 		this.value = value;
