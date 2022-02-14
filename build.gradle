@@ -36,7 +36,7 @@ repositories {
     }
     
     maven {
-    	url 'https://archiva.varoplugin.de/repository/public'
+    	url 'https://repo.varoplugin.de/repository/maven-public/'
     }
     
     maven {
@@ -161,7 +161,7 @@ publishing {
 
 	repositories {
 		maven {
-			url 'https://archiva.varoplugin.de/repository/public'
+			url 'https://repo.varoplugin.de/repository/maven-releases/'
 			credentials {
                 username project.hasProperty('repouser') ? project.property('repouser').toString() : null
                 password project.hasProperty('repopassword') ? project.property('repopassword').toString() : null
