@@ -27,7 +27,7 @@ public class HealCommand implements CommandExecutor {
 			}
 
 			Player p = (Player) sender;
-			p.setHealth(20);
+			p.setHealth(p.getMaxHealth());
 			p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
 			p.setFoodLevel(20);
             Bukkit.broadcastMessage("§a" + p.getName() + " §7hat sich geheilt!");
@@ -39,7 +39,7 @@ public class HealCommand implements CommandExecutor {
 
 			if (args[0].equalsIgnoreCase("@a")) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					p.setHealth(20);
+					p.setHealth(p.getMaxHealth());
 					p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
 					p.setFoodLevel(20);
 				}
@@ -48,7 +48,7 @@ public class HealCommand implements CommandExecutor {
 			}
 
 			Player p = Bukkit.getPlayerExact(args[0]);
-			p.setHealth(20);
+			p.setHealth(p.getMaxHealth());
 			p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
 			p.setFoodLevel(20);
             Bukkit.broadcastMessage("§a" + p.getName() + " §7wurde von §a" + sender.getName() + "§7 geheilt!");

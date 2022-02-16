@@ -62,7 +62,7 @@ public class KillEvent extends BukkitEvent {
 		int healthAdd = ConfigSetting.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
 		if (healthAdd > 0) {
 			double hearts = VersionUtils.getHearts(killer) + healthAdd;
-			killer.setHealth(Math.min(hearts, 20.0));
+			killer.setHealth(Math.min(hearts, killer.getMaxHealth()));
 			killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
 		}
 	}

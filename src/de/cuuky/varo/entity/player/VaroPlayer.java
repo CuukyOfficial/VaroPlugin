@@ -1,17 +1,5 @@
 package de.cuuky.varo.entity.player;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
@@ -51,6 +39,17 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
@@ -194,7 +193,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	public void cleanUpPlayer() {
-		player.setHealth(20);
+		player.setHealth(player.getMaxHealth());
 		player.setFoodLevel(20);
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(null);
@@ -274,12 +273,12 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 					return;
 
 				VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
-				new Vanish(player.getPlayer());
-				player.getPlayer().setGameMode(GameMode.ADVENTURE);
-				player.getPlayer().setAllowFlight(true);
-				player.getPlayer().setFlying(true);
-				player.getPlayer().setHealth(20);
-				player.getPlayer().setFoodLevel(20);
+				new Vanish(player);
+				player.setGameMode(GameMode.ADVENTURE);
+                player.setAllowFlight(true);
+                player.setFlying(true);
+                player.setHealth(player.getMaxHealth());
+                player.setFoodLevel(20);
 
 				if (!adminIgnore) {
 					player.getInventory().clear();
