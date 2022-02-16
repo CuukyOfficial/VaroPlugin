@@ -72,10 +72,12 @@ public class ResetCommand extends VaroCommand {
 				Main.getDataManager().setDoSave(false);
 				break;
 			case 3:
-				VersionUtils.getVersionAdapter().forceClearWorlds();
 				for (World world : Bukkit.getWorlds())
-					if (world.getWorldFolder() != null)
+					if (world.getWorldFolder() != null) {
+						sender.sendMessage(Main.getPrefix() + "Deleting world " + world.getName());
 						toDelete.add(world.getWorldFolder());
+					}
+				VersionUtils.getVersionAdapter().forceClearWorlds();
 				break;
 			default:
 				sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
