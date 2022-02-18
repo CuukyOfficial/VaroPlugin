@@ -5,14 +5,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.command.defaults.ReloadCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -118,7 +116,7 @@ public final class BukkitRegisterer {
 
 	public static void disableCommand(String command) {
 		commandMap.getCommand(command).unregister(commandMap);
-		((Map<String, Command>) knownCommands).remove(command);
+		knownCommands.remove(command);
 	}
 
 	private static void registerDynamicCommand(String name, String desc, CommandExecutor executor, ConfigSetting configSetting, String... aliases) {
