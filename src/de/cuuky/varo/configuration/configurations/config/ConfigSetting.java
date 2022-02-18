@@ -324,6 +324,7 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_COUNTDOWN_ENABLED(ConfigSettingSection.COMMANDS, "countdown.enabled", true, "Ob /countdown aktiviert sein soll"),
 	COMMAND_PERFORMANCE_ENABLED(ConfigSettingSection.COMMANDS, "performance.enabled", true, "Ob /performance aktiviert sein soll"),
 	COMMAND_LANGUAGE_ENABLED(ConfigSettingSection.COMMANDS, "language.enabled", true, "Ob /language aktiviert sein soll"),
+	COMMAND_BUKKIT_RELOAD_ENABLED(ConfigSettingSection.COMMANDS, "reload.enabled", false, "Ob /reload aktiviert sein soll"),
 
 	// INTRO
 	INTRO_INTRO_LINES(ConfigSettingSection.INTRO, "intro.lines", SuroStart.DEFAULT_TITLES, "Alle Titel für das Suro-Intro");

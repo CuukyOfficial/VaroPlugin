@@ -4,11 +4,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.command.defaults.ReloadCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -83,21 +87,38 @@ import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
 
 public final class BukkitRegisterer {
-	
+
+	// TODO: Find a way to dynamically get the ReloadCommand
+	private static final String[] reloadCommands = { "reload", "rl", "bukkit:reload", "bukkit:rl" };
+
 	private static final SimpleCommandMap commandMap;
+	private static final HashMap<String, Command> knownCommands;
 	private static final Constructor<PluginCommand> pluginCommandConstructor;
 	
 	static {
 		try {
 			Field commandMapField = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+			Field knownCommandsField = SimpleCommandMap.class.getDeclaredField("knownCommands");
 			commandMapField.setAccessible(true);
+			knownCommandsField.setAccessible(true);
 			commandMap = (SimpleCommandMap) commandMapField.get(Bukkit.getServer());
+			knownCommands = (HashMap<String, Command>) knownCommandsField.get(commandMap);
 			
 			pluginCommandConstructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
 			pluginCommandConstructor.setAccessible(true);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException e) {
 			throw new Error(e);
 		}
+	}
+
+	public static void disableReloadCommand() {
+		for (String command : reloadCommands)
+			disableCommand(command);
+	}
+
+	public static void disableCommand(String command) {
+		commandMap.getCommand(command).unregister(commandMap);
+		((Map<String, Command>) knownCommands).remove(command);
 	}
 
 	private static void registerDynamicCommand(String name, String desc, CommandExecutor executor, ConfigSetting configSetting, String... aliases) {

@@ -126,6 +126,10 @@ public class Main extends JavaPlugin {
 
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
+			if (!ConfigSetting.COMMAND_BUKKIT_RELOAD_ENABLED.getValueAsBoolean()) {
+				System.out.println(CONSOLE_PREFIX + "Disabled reload command.");
+				BukkitRegisterer.disableReloadCommand();
+			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 			this.fail();
