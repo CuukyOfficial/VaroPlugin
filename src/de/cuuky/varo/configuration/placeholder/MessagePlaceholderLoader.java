@@ -66,7 +66,7 @@ public class MessagePlaceholderLoader {
 
     private void loadPlayerPlaceholder() {
         new VaroPlayerMessagePlaceholder("distanceToBorder", 1, "Ersetzt durch die Distanz zur Border des Spielers", (player) -> {
-            if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+            if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || Main.getVaroGame() == null)
                 return "0";
 
             return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));
