@@ -275,10 +275,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				VersionUtils.getVersionAdapter().setXpCooldown(player, Integer.MAX_VALUE);
 				new Vanish(player);
 				player.setGameMode(GameMode.ADVENTURE);
-                player.setAllowFlight(true);
-                player.setFlying(true);
-                player.setHealth(player.getMaxHealth());
-                player.setFoodLevel(20);
+				player.setAllowFlight(true);
+				player.setFlying(true);
+				player.setHealth(player.getMaxHealth());
+				player.setFoodLevel(20);
 
 				if (!adminIgnore) {
 					player.getInventory().clear();
@@ -319,30 +319,8 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 				this.player.setPlayerListName(this.getTablistName());
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
-				Main.getDataManager().getNameTagGroup().update(this.player, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagPrefix(), this.getNametagSuffix());
+				Main.getDataManager().getNameTagGroup().update(this.player, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
 		}
-	}
-
-	private String getNametagPrefix() {
-		String prefix = "";
-		if (this.team != null)
-			prefix = ConfigMessages.NAMETAG_PREFIX_TEAM.getValue(null, this);
-		if (this.team == null || prefix.length() > 16)
-			prefix = ConfigMessages.NAMETAG_PREFIX_NO_TEAM.getValue(null, this);
-		if (prefix.length() > 16)
-			prefix = prefix.substring(0, 16);
-		return prefix;
-	}
-
-	private String getNametagSuffix() {
-		String suffix = "";
-		if (this.team != null)
-			suffix = ConfigMessages.NAMETAG_SUFFIX_TEAM.getValue(null, this);
-		if (this.team == null || suffix.length() > 16)
-			suffix = ConfigMessages.NAMETAG_SUFFIX_NO_TEAM.getValue(null, this);
-		if (suffix.length() > 16)
-			suffix = suffix.substring(0, 16);
-		return suffix;
 	}
 
 	private String getTablistName() {
@@ -368,6 +346,35 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			return listname;
 		} else
 			return player.getName();
+	}
+	
+    private String getNametagName() {
+    	int teamId = this.getTeam() != null ? 9998 - this.getTeam().getId() : 9999;
+    	int rankLocation = this.getRank() != null ? 9998 - this.getRank().getTablistLocation() : 9999;
+    	String format = String.format("%04d%04d%.8s", rankLocation, teamId, this.player.getName());
+    	return format;
+    }
+
+	private String getNametagPrefix() {
+		String prefix = "";
+		if (this.team != null)
+			prefix = ConfigMessages.NAMETAG_PREFIX_TEAM.getValue(null, this);
+		if (this.team == null || prefix.length() > 16)
+			prefix = ConfigMessages.NAMETAG_PREFIX_NO_TEAM.getValue(null, this);
+		if (prefix.length() > 16)
+			prefix = prefix.substring(0, 16);
+		return prefix;
+	}
+
+	private String getNametagSuffix() {
+		String suffix = "";
+		if (this.team != null)
+			suffix = ConfigMessages.NAMETAG_SUFFIX_TEAM.getValue(null, this);
+		if (this.team == null || suffix.length() > 16)
+			suffix = ConfigMessages.NAMETAG_SUFFIX_NO_TEAM.getValue(null, this);
+		if (suffix.length() > 16)
+			suffix = suffix.substring(0, 16);
+		return suffix;
 	}
 
 	public void saveTeleport(Location location) {
@@ -540,7 +547,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			}
 
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
-				Main.getDataManager().getNameTagGroup().register(scoreboardInstance, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagPrefix(), this.getNametagSuffix());
+				Main.getDataManager().getNameTagGroup().register(scoreboardInstance, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
 		} else {
 			if (this.scoreboard != null)
 				this.scoreboard.destroy();
