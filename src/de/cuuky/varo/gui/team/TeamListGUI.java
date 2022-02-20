@@ -54,7 +54,7 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
 
     @Override
     protected ItemStack getItemStack(VaroTeam team) {
-        return new BuildItem().displayName(team.getDisplay()).material(Material.DIAMOND_HELMET).build();
+        return new BuildItem().displayName((team.getColorCode() == null ? Main.getColorCode() : "") + team.getDisplay()).material(Material.DIAMOND_HELMET).build();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
 
     @Override
     public String getTitle() {
-        return "§7Choose Team";
+        return "§3Choose Team";
     }
 
     @Override

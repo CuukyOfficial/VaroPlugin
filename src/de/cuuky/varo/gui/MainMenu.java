@@ -19,7 +19,7 @@ import de.cuuky.varo.gui.player.PlayerListChooseGUI;
 import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
 import de.cuuky.varo.gui.settings.VaroSettingsMenu;
 import de.cuuky.varo.gui.strike.StrikeListGUI;
-import de.cuuky.varo.gui.team.TeamChooseGUI;
+import de.cuuky.varo.gui.team.TeamCategoryChooseGUI;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -77,7 +77,7 @@ public class MainMenu extends VaroInventory {
 
         addItem(26, new BuildItem().displayName("§7All §2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
                 .amount(getFixedSize(VaroTeam.getTeams().size())).build(), (event) ->
-                this.openNext(new TeamChooseGUI(getPlayer()))
+                this.openNext(new TeamCategoryChooseGUI(getPlayer()))
         );
 
         addItem(28, new BuildItem().displayName("§5Settings")

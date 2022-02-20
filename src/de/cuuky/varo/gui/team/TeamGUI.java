@@ -24,7 +24,7 @@ public class TeamGUI extends VaroInventory {
 
     @Override
     public String getTitle() {
-        return "§7Team-ID: §2" + this.team.getId();
+        return "§8Team-ID: " + Main.getColorCode() + this.team.getId();
     }
 
     @Override

@@ -7,9 +7,9 @@ import de.cuuky.varo.gui.team.TeamListGUI.TeamGUIType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class TeamChooseGUI extends VaroInventory {
+public class TeamCategoryChooseGUI extends VaroInventory {
 
-    public TeamChooseGUI(Player player) {
+    public TeamCategoryChooseGUI(Player player) {
         super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
     }
 
