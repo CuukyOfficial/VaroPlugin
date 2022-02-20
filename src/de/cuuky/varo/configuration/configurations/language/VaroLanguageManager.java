@@ -79,24 +79,26 @@ public class VaroLanguageManager extends LanguageManager {
     public String replaceMessage(String message, boolean replaceEval) {
         String replaced = message;
 
-        for (int rank : getConvNumbers(replaced, "%topplayer-")) {
-            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-            replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
-        }
+        if (Main.getVaroGame() != null) {
+	        for (int rank : getConvNumbers(replaced, "%topplayer-")) {
+	            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+	            replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
+	        }
 
-        for (int rank : getConvNumbers(replaced, "%topplayerkills-")) {
-            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-            replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
-        }
+	        for (int rank : getConvNumbers(replaced, "%topplayerkills-")) {
+	            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
+	            replaced = replaced.replace("%topplayerkills-" + rank + "%", (player == null ? "0" : String.valueOf(player.getStats().getKills())));
+	        }
 
-        for (int rank : getConvNumbers(replaced, "%topteam-")) {
-            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-            replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
-        }
+	        for (int rank : getConvNumbers(replaced, "%topteam-")) {
+	            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+	            replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
+	        }
 
-        for (int rank : getConvNumbers(replaced, "%topteamkills-")) {
-            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-            replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
+	        for (int rank : getConvNumbers(replaced, "%topteamkills-")) {
+	            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
+	            replaced = replaced.replace("%topteamkills-" + rank + "%", (team == null ? "0" : String.valueOf(team.getKills())));
+	        }
         }
 
         replaced = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaced, MessagePlaceholderType.GENERAL);
