@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -81,7 +80,7 @@ public class VaroPlayerDisconnect {
 	public boolean playerIsDead() {
 		Player player = Bukkit.getPlayerExact(name);
 		if (player != null)
-			if (!player.isDead() && VersionUtils.getHearts(player) != 0)
+			if (!player.isDead() && player.getHealth() != 0)
 				return false;
 
 		return true;

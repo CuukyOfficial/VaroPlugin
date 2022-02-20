@@ -92,7 +92,7 @@ public class MessagePlaceholderLoader {
             return (hours >= 1) ? String.format("%s%02d%s:%s", Main.getColorCode(), hours, ChatColor.GRAY, minsSecs) : minsSecs;
         });
 
-        new VaroPlayerMessagePlaceholder("hearts", 1, "Ersetzt durch die Leben des Spielers", (player) -> player.isOnline() ? String.valueOf(VersionUtils.getHearts(player.getPlayer())) : "0");
+        new VaroPlayerMessagePlaceholder("hearts", 1, "Ersetzt durch die Leben des Spielers", (player) -> player.isOnline() ? Double.toString(player.getPlayer().getHealth()) : "0");
         new VaroPlayerMessagePlaceholder("food", 1, "Ersetzt durch das Foodlevel des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getFoodLevel()) : "0");
         new VaroPlayerMessagePlaceholder("kills", 1, "Ersetzt durch Kills des Spielers", (player) -> String.valueOf(player.getStats().getKills()));
         new VaroPlayerMessagePlaceholder("strikes", 1, "Ersetzt durch die Strikes des Spielers", (player) -> String.valueOf(player.getStats().getStrikes().size()));
