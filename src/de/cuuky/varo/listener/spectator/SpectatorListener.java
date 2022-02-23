@@ -34,8 +34,6 @@ import de.cuuky.varo.vanish.Vanish;
 
 public class SpectatorListener implements Listener {
 
-    private static final int BLOCK_INTERACT_DISTANCE = 60;
-
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         Entity entityDamager = event.getDamager();
