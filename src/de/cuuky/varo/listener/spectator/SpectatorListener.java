@@ -21,6 +21,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.vehicle.VehicleDamageEvent;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
 import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
 import de.cuuky.cfw.version.types.Materials;
@@ -125,9 +127,30 @@ public class SpectatorListener implements Listener {
             event.setCancelled(true);
         else if (vp.isInProtection() && (!vp.isAdminIgnore() && vp.getStats().getState() != PlayerState.SPECTATOR))
             event.setCancelled(true);
-        else if(event.getClickedBlock() == null || event.getClickedBlock().getType() != Materials.OBSIDIAN.parseMaterial() || event.getPlayer().getItemInHand() == null
-        		|| !(event.getPlayer().getItemInHand().getType() == Materials.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == Materials.FIRE_CHARGE.parseMaterial()))
+        else
         	this.checkWorldInteract(event, event.getPlayer());
+    }
+
+    @EventHandler
+    public void onVehicleDamage(VehicleDamageEvent event) {
+    	if (event.getAttacker() instanceof Player) {
+    		Player player = (Player) event.getAttacker();
+    		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !player.isOp())
+                event.setCancelled(true);
+            else
+            	this.checkWorldInteract(event, player);
+    	}
+    }
+
+    @EventHandler
+    public void onVehicleDamage(VehicleEntityCollisionEvent event) {
+    	if (event.getEntity() instanceof Player) {
+    		Player player = (Player) event.getEntity();
+    		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !player.isOp())
+                event.setCancelled(true);
+            else
+            	this.checkWorldInteract(event, player);
+    	}
     }
 
     @EventHandler
