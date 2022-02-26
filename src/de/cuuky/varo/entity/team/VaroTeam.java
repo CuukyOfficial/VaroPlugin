@@ -30,24 +30,24 @@ public class VaroTeam extends VaroEntity {
 		highestNumber = 1;
 	}
 
-	@VaroSerializeField(path = "colorCode")
+	@Serialize("colorCode")
 	private String colorCode;
 
-	@VaroSerializeField(path = "id")
+	@Serialize("id")
 	private int id;
 
-	@VaroSerializeField(path = "lifes")
+	@Serialize("lifes")
 	private double lifes;
 
 	private ArrayList<VaroPlayer> member;
 
-	@VaroSerializeField(path = "memberid")
+	@Serialize("memberid")
 	private ArrayList<Integer> memberid;
 
-	@VaroSerializeField(path = "name")
+	@Serialize("name")
 	private String name;
 
-	@VaroSerializeField(path = "teamBackPack")
+	@Serialize("teamBackPack")
 	private VaroInventory teamBackPack;
 
 	public VaroTeam() {

@@ -18,7 +18,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 

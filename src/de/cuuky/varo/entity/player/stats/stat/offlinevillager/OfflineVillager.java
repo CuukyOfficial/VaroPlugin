@@ -32,10 +32,10 @@ public class OfflineVillager implements VaroSerializeable {
 		Bukkit.getPluginManager().registerEvents(new VillagerListener(), Main.getInstance());
 	}
 
-	@VaroSerializeField(path = "lastInventory")
+	@Serialize("lastInventory")
 	private InventoryBackup backup;
 
-	@VaroSerializeField(path = "villagerLocation")
+	@Serialize("villagerLocation")
 	private Location location;
 
 	private VaroPlayer vp;

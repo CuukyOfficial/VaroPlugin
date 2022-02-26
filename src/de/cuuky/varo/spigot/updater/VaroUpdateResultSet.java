@@ -2,7 +2,7 @@ package de.cuuky.varo.spigot.updater;
 
 public class VaroUpdateResultSet {
 
-	public static enum UpdateResult {
+	public enum UpdateResult {
 
 		FAIL_SPIGOT("Failed to connect to the update servers."),
 		NO_UPDATE("The plugin is up to date!"),
@@ -11,7 +11,7 @@ public class VaroUpdateResultSet {
 
 		private String message;
 
-		private UpdateResult(String message) {
+		UpdateResult(String message) {
 			this.message = message;
 		}
 
@@ -37,7 +37,4 @@ public class VaroUpdateResultSet {
 		return this.versionName;
 	}
 
-	public String getVersionId() {
-		return this.versionId;
-	}
 }

@@ -37,30 +37,29 @@ import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.spawns.sort.PlayerSort;
+import de.cuuky.varo.spawns.PlayerSort;
 import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
 import de.cuuky.varo.utils.VaroUtils;
 
 public class VaroGame implements VaroSerializeable {
 
-    @VaroSerializeField(path = "autostart")
+    @Serialize("autostart")
     private AutoStart autostart;
 
-    @VaroSerializeField(path = "borderDecrease")
+    @Serialize("borderDecrease")
     private BorderDecreaseDayTimer borderDecrease;
 
-    @VaroSerializeField(path = "gamestate")
+    @Serialize("gamestate")
     private GameState gamestate;
 
-    @VaroSerializeField(path = "lastCoordsPost")
+    @Serialize("lastCoordsPost")
     private Date lastCoordsPost;
 
-    @VaroSerializeField(path = "lastDayTimer")
+    @Serialize("lastDayTimer")
     private Date lastDayTimer;
 
-    @VaroSerializeField(path = "lobby")
+    @Serialize("lobby")
     private Location lobby;
 
     private boolean finaleJoinStart, firstTime;

@@ -32,7 +32,6 @@ import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.preset.DefaultPresetLoader;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
-import de.cuuky.varo.spawns.SpawnHandler;
 import de.cuuky.varo.threads.daily.DailyTimer;
 import de.cuuky.varo.utils.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;

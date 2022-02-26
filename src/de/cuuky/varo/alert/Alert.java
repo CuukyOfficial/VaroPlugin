@@ -1,10 +1,10 @@
 package de.cuuky.varo.alert;
 
+import de.cuuky.cfw.configuration.serialization.Serialize;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+
 import java.util.ArrayList;
 import java.util.Date;
-
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class Alert implements VaroSerializeable {
 
@@ -14,19 +14,19 @@ public class Alert implements VaroSerializeable {
 		alerts = new ArrayList<Alert>();
 	}
 
-	@VaroSerializeField(path = "created")
+	@Serialize("created")
 	private Date created;
 
-	@VaroSerializeField(path = "id")
+	@Serialize("id")
 	private int id;
 
-	@VaroSerializeField(path = "message")
+	@Serialize("message")
 	private String message;
 
-	@VaroSerializeField(path = "open")
+	@Serialize("open")
 	private boolean open;
 
-	@VaroSerializeField(path = "type")
+	@Serialize("type")
 	private AlertType type;
 
 	public Alert() {

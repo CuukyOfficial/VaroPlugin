@@ -43,16 +43,16 @@ public class VaroSaveable implements VaroSerializeable {
 
     private static List<VaroSaveable> saveables = new ArrayList<>();
 
-    @VaroSerializeField(path = "id")
+    @Serialize("id")
     private int id;
 
-    @VaroSerializeField(path = "playerId")
+    @Serialize("playerId")
     private int playerId;
 
-    @VaroSerializeField(path = "type")
+    @Serialize("type")
     private SaveableType type;
 
-    @VaroSerializeField(path = "blockLocation")
+    @Serialize("blockLocation")
     private Location blockLocation;
 
     private VaroPlayer player;

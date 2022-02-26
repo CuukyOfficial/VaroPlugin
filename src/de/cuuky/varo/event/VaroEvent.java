@@ -1,23 +1,28 @@
 package de.cuuky.varo.event;
 
-import de.cuuky.varo.Varo;
+import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.VaroElement;
+import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-abstract class VaroEvent implements IVaroEvent {
+public abstract class VaroEvent extends VaroElement {
 
-    protected final Varo varo;
-    private final VaroEventType type;
+    private final String name;
+    private final String displayName;
+    private final Material icon;
+    private final String description;
+
     private final Collection<BukkitTask> tasks;
 
-    VaroEvent(Varo varo, VaroEventType type) {
-        this.varo = varo;
-        this.type = type;
+    public VaroEvent(String name, String displayName, Materials icon, String description) {
+        this.name = name;
+        this.displayName = displayName;
+        this.icon = icon.parseMaterial();
+        this.description = description;
         this.tasks = new LinkedHashSet<>();
-
-        this.onEnable();
     }
 
     abstract void onEnable();
@@ -31,16 +36,11 @@ abstract class VaroEvent implements IVaroEvent {
     public void disable() {
         this.tasks.forEach(BukkitTask::cancel);
         this.onDisable();
-        this.varo.removeEvent(this);
-    }
-
-    @Override
-    public VaroEventType getType() {
-        return this.type;
+        this.varo.removeElement(this);
     }
 
     @Override
     public String toString() {
-        return this.type.getName();
+        return this.name;
     }
 }

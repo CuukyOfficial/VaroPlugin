@@ -11,7 +11,6 @@ import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.Stats;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
 
 public class KillEvent extends BukkitEvent {
 

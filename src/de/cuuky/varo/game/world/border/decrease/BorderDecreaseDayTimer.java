@@ -12,7 +12,7 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class BorderDecreaseDayTimer implements VaroSerializeable {
 
-	@VaroSerializeField(path = "nextDecrease")
+	@Serialize("nextDecrease")
 	private Date nextDecrease;
 
 	public BorderDecreaseDayTimer() {}

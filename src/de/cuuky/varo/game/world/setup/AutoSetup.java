@@ -18,7 +18,7 @@ import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
-import de.cuuky.varo.spawns.spawn.SpawnChecker;
+import de.cuuky.varo.spawns.SpawnChecker;
 
 public class AutoSetup {
 

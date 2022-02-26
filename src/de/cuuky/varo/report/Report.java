@@ -15,19 +15,19 @@ public class Report implements VaroSerializeable {
 		reports = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "id")
+	@Serialize("id")
 	private int id;
 
-	@VaroSerializeField(path = "open")
+	@Serialize("open")
 	private boolean open;
 
-	@VaroSerializeField(path = "reason")
+	@Serialize("reason")
 	private ReportReason reason;
 
-	@VaroSerializeField(path = "reportedId")
+	@Serialize("reportedId")
 	private int reportedId;
 
-	@VaroSerializeField(path = "reporterId")
+	@Serialize("reporterId")
 	private int reporterId;
 
 	private VaroPlayer reporter, reported;

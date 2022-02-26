@@ -30,7 +30,6 @@ import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -39,60 +38,60 @@ import de.cuuky.varo.spawns.Spawn;
 
 public class Stats implements VaroSerializeable {
 
-	@VaroSerializeField(path = "state")
+	@Serialize("state")
 	private PlayerState state;
-	@VaroSerializeField(path = "lastLocation")
+	@Serialize("lastLocation")
 	private Location lastLocation;
 
-	@VaroSerializeField(path = "countdown")
+	@Serialize("countdown")
 	private int countdown;
-	@VaroSerializeField(path = "onlineTime")
+	@Serialize("onlineTime")
 	private int onlineTime;
-	@VaroSerializeField(path = "onlineTimeTotal")
+	@Serialize("onlineTimeTotal")
 	private int onlineTimeTotal;
-	@VaroSerializeField(path = "kills")
+	@Serialize("kills")
 	private int kills;
-	@VaroSerializeField(path = "sessions")
+	@Serialize("sessions")
 	private int sessions;
-	@VaroSerializeField(path = "sessionsPlayed")
+	@Serialize("sessionsPlayed")
 	private int sessionsPlayed;
-	@VaroSerializeField(path = "wins")
+	@Serialize("wins")
 	private int wins;
 
-	@VaroSerializeField(path = "showActionbarTime")
+	@Serialize("showActionbarTime")
 	private boolean showActionbarTime;
-	@VaroSerializeField(path = "showScoreboard")
+	@Serialize("showScoreboard")
 	private boolean showScoreboard;
-	@VaroSerializeField(path = "willClear")
+	@Serialize("willClear")
 	private boolean willClear;
 
-	@VaroSerializeField(path = "onlineAfterStart")
+	@Serialize("onlineAfterStart")
 	private boolean onlineAfterStart;
-	@VaroSerializeField(path = "firstTimeJoined")
+	@Serialize("firstTimeJoined")
 	private Date firstTimeJoined;
-	@VaroSerializeField(path = "lastJoined")
+	@Serialize("lastJoined")
 	private Date lastJoined;
-	@VaroSerializeField(path = "lastEnemyContact")
+	@Serialize("lastEnemyContact")
 	private Date lastEnemyContact;
-	@VaroSerializeField(path = "diedAt")
+	@Serialize("diedAt")
 	private Date diedAt;
-	@VaroSerializeField(path = "timeUntilAddSession")
+	@Serialize("timeUntilAddSession")
 	private Date timeUntilAddSession;
 
-	@VaroSerializeField(path = "playerBackpack")
+	@Serialize("playerBackpack")
 	private VaroInventory playerBackpack;
-	@VaroSerializeField(path = "restoreBackup")
+	@Serialize("restoreBackup")
 	private InventoryBackup restoreBackup;
-	@VaroSerializeField(path = "youtubeLink")
+	@Serialize("youtubeLink")
 	private String youtubeLink;
 
-	@VaroSerializeField(path = "inventoryBackups", arrayClass = InventoryBackup.class)
+	@Serialize("inventoryBackups", arrayClass = InventoryBackup.class)
 	private ArrayList<InventoryBackup> inventoryBackups;
-	@VaroSerializeField(path = "saveables", arrayClass = VaroSaveable.class)
+	@Serialize("saveables", arrayClass = VaroSaveable.class)
 	private ArrayList<VaroSaveable> saveables;
-	@VaroSerializeField(path = "strikes", arrayClass = Strike.class)
+	@Serialize("strikes", arrayClass = Strike.class)
 	private ArrayList<Strike> strikes;
-	@VaroSerializeField(path = "videos", arrayClass = YouTubeVideo.class)
+	@Serialize("videos", arrayClass = YouTubeVideo.class)
 	private ArrayList<YouTubeVideo> videos;
 
 	private VaroPlayer owner;

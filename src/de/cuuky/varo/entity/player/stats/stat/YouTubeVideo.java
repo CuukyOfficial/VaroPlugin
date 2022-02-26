@@ -15,16 +15,16 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		videos = new ArrayList<YouTubeVideo>();
 	}
 
-	@VaroSerializeField(path = "detectedAt")
+	@Serialize("detectedAt")
 	private Date detectedAt;
 
-	@VaroSerializeField(path = "link")
+	@Serialize("link")
 	private String link;
 
-	@VaroSerializeField(path = "title")
+	@Serialize("title")
 	private String title;
 
-	@VaroSerializeField(path = "videoId")
+	@Serialize("videoId")
 	private String videoId;
 
 	public YouTubeVideo() {

@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SmartLagDetector extends BukkitRunnable {
@@ -16,7 +16,7 @@ public class SmartLagDetector extends BukkitRunnable {
 	private boolean ramCleared;
 
 	public SmartLagDetector(JavaPlugin instance) {
-		this.lastTps = new ArrayList<>();
+		this.lastTps = new LinkedList<>();
 
 		new LagCounter().runTaskTimerAsynchronously(instance, 100L, 1L);
 		this.runTaskTimerAsynchronously(instance, 20 * 60, 30);

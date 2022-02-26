@@ -33,7 +33,7 @@ public class ModUtils {
 		String modList = null;
 		modList = getModListString(player);
 
-		ArrayList<String> usedMods = new ArrayList<String>();
+		ArrayList<String> usedMods = new ArrayList<>();
 		for (String mod : Main.getDataManager().getListManager().getBlockedMods().getAsList()) {
 			if (modList.toLowerCase().contains(mod.toLowerCase())) {
 				kickPlayer = true;

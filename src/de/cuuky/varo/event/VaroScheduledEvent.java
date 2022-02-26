@@ -1,14 +1,16 @@
 package de.cuuky.varo.event;
 
-import de.cuuky.varo.Varo;
+import de.cuuky.cfw.configuration.serialization.Serialize;
+import de.cuuky.cfw.version.types.Materials;
 import org.bukkit.scheduler.BukkitRunnable;
 
 abstract class VaroScheduledEvent extends VaroEvent {
 
+    @Serialize("schedule")
     private final int schedule;
 
-    VaroScheduledEvent(Varo varo, VaroEventType type, int schedule) {
-        super(varo, type);
+    VaroScheduledEvent(String name, String displayName, Materials icon, String description, int schedule) {
+        super(name, displayName, icon, description);
 
         this.schedule = schedule;
     }

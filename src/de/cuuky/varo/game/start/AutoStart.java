@@ -18,7 +18,7 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 public class AutoStart implements VaroSerializeable {
 
 	private BukkitTask sched;
-	@VaroSerializeField(path = "start")
+	@Serialize("start")
 	private Date start;
 
 	public AutoStart() {

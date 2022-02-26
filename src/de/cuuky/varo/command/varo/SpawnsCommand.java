@@ -98,7 +98,7 @@ public class SpawnsCommand extends VaroCommand {
             Player player = (Player) sender;
             if (args.length == 1) {
                 Spawn spawn = new Spawn(player.getLocation());
-                player.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getNumber() + " §7erfolgreich erstellt!");
+                player.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getId() + " §7erfolgreich erstellt!");
             } else if (args.length == 2) {
                 int spawnNumber = -1;
                 try {
@@ -113,12 +113,12 @@ public class SpawnsCommand extends VaroCommand {
                 if (spawnNumber != -1) {
                     Spawn oldSpawn = Spawn.getSpawn(spawnNumber);
                     if (oldSpawn != null) {
-                        oldSpawn.delete();
+                        oldSpawn.resetEnvironment();
                         sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + spawnNumber + " §7wurde entfernt, um fuer den neuen Platz zu machen.");
                     }
 
                     Spawn spawn = new Spawn(spawnNumber, player.getLocation());
-                    sender.sendMessage(Main.getPrefix() + "Spawn " + Main.getColorCode() + spawn.getNumber() + " §7gesetzt!");
+                    sender.sendMessage(Main.getPrefix() + "Spawn " + Main.getColorCode() + spawn.getId() + " §7gesetzt!");
                 } else {
                     VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
                     if (varoplayer == null) {
@@ -128,12 +128,12 @@ public class SpawnsCommand extends VaroCommand {
 
                     Spawn oldSpawn = Spawn.getSpawn(varoplayer);
                     if (oldSpawn != null) {
-                        oldSpawn.delete();
-                        sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + oldSpawn.getNumber() + " §7wurde entfernt, um fuer den neuen Platz zu machen.");
+                        oldSpawn.resetEnvironment();
+                        sender.sendMessage(Main.getPrefix() + "Der alte Spawn mit der ID " + Main.getColorCode() + oldSpawn.getId() + " §7wurde entfernt, um fuer den neuen Platz zu machen.");
                     }
 
                     Spawn spawn = new Spawn(varoplayer, player.getLocation());
-                    sender.sendMessage(Main.getPrefix() + "Spielerspawn " + Main.getColorCode() + spawn.getNumber() + " §7fuer den Spieler " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
+                    sender.sendMessage(Main.getPrefix() + "Spielerspawn " + Main.getColorCode() + spawn.getId() + " §7fuer den Spieler " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
                 }
             } else
                 sender.sendMessage(Main.getPrefix() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns set [Zahl/Spieler]");
@@ -150,7 +150,7 @@ public class SpawnsCommand extends VaroCommand {
 
             if (args[1].equalsIgnoreCase("@a")) {
                 for (Spawn spawn : Spawn.getSpawnsClone())
-                    spawn.delete();
+                    spawn.resetEnvironment();
 
                 sender.sendMessage(Main.getPrefix() + "Alle Spawns erfolgreich entfernt!");
                 return;
@@ -175,8 +175,8 @@ public class SpawnsCommand extends VaroCommand {
                     return;
                 }
 
-                spawn.delete();
-                sender.sendMessage(Main.getPrefix() + "Spawn " + Main.getColorCode() + spawn.getNumber() + " §7entfernt!");
+                spawn.resetEnvironment();
+                sender.sendMessage(Main.getPrefix() + "Spawn " + Main.getColorCode() + spawn.getId() + " §7entfernt!");
             } else {
                 VaroPlayer varoplayer = VaroPlayer.getPlayer(args[1]);
                 if (varoplayer == null) {
@@ -192,7 +192,7 @@ public class SpawnsCommand extends VaroCommand {
 
                 sender.sendMessage(Main.getPrefix() + "Spawn von " + Main.getColorCode() + varoplayer.getName() + " §7entfernt!");
             }
-            spawn.delete();
+            spawn.resetEnvironment();
         } else if (args[0].equalsIgnoreCase("player")) {
             if (args.length < 3) {
                 sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns§7 player <Zahl/@a> <set/remove> [Spieler]");
@@ -228,7 +228,7 @@ public class SpawnsCommand extends VaroCommand {
                 }
 
                 spawn.setPlayer(varoplayer);
-                sender.sendMessage(Main.getPrefix() + "Spieler von Spawn " + Main.getColorCode() + spawn.getNumber() + " §7erfolgreich auf " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
+                sender.sendMessage(Main.getPrefix() + "Spieler von Spawn " + Main.getColorCode() + spawn.getId() + " §7erfolgreich auf " + Main.getColorCode() + spawn.getPlayer().getName() + " §7gesetzt!");
             } else if (args[2].equalsIgnoreCase("remove")) {
                 if (args[1].equals("@a")) {
                     for (Spawn spaw : Spawn.getSpawns())
@@ -240,7 +240,7 @@ public class SpawnsCommand extends VaroCommand {
 
                 spawn.setPlayer(null);
 
-                sender.sendMessage(Main.getPrefix() + "Spieler von Spawn " + Main.getColorCode() + spawn.getNumber() + " §7erfolgreich entfernt!");
+                sender.sendMessage(Main.getPrefix() + "Spieler von Spawn " + Main.getColorCode() + spawn.getId() + " §7erfolgreich entfernt!");
             }
 
         } else if (args[0].equalsIgnoreCase("list")) {
@@ -251,7 +251,7 @@ public class SpawnsCommand extends VaroCommand {
 
             sender.sendMessage(Main.getPrefix() + "§lEine Liste aller " + Main.getColorCode() + "§lSpawns§7§l:");
             for (Spawn spawn : Spawn.getSpawns()) {
-                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getNumber() + "§7: ");
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getId() + "§7: ");
                 sender.sendMessage(Main.getPrefix() + "§7Location: " + new LocationFormat(spawn.getLocation()).format("§7X§8: " + Main.getColorCode() + "x §7Y§8: " + Main.getColorCode() + "y §7Z§8: " + Main.getColorCode() + "z §7in " + Main.getColorCode() + "world"));
                 sender.sendMessage(Main.getPrefix() + "§7Spieler: " + Main.getColorCode() + (spawn.getPlayer() != null ? spawn.getPlayer().getName() : "Keinen"));
                 sender.sendMessage(Main.getPrefix());

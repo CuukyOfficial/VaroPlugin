@@ -1,7 +1,7 @@
 package de.cuuky.varo.event;
 
+import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.Varo;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -19,8 +19,9 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private int timer;
 	private boolean timerEnd;
 
-	public MassRecordingVaroEvent(Varo varo) {
-		super(varo, VaroEventType.MASS_RECORDING);
+	public MassRecordingVaroEvent() {
+		super("mass_recording", "§cMass Recording", Materials.DIAMOND_SWORD,
+            "Lässt alle Spieler für eine eingestellte Anzahl an Minuten zusätzlich zu den normalen Folgen auf den Server");
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<>();

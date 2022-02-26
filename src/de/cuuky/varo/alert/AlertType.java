@@ -34,7 +34,7 @@ public enum AlertType implements VaroSerializeable {
 
 	private String name;
 
-	private AlertType(String name) {
+	AlertType(String name) {
 		this.name = name;
 	}
 

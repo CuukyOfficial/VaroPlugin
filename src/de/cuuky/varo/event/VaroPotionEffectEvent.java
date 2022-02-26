@@ -1,7 +1,8 @@
 package de.cuuky.varo.event;
 
+import de.cuuky.cfw.configuration.serialization.Serialize;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Varo;
+import de.cuuky.cfw.version.types.Materials;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -10,13 +11,17 @@ import java.util.function.Consumer;
 
 abstract class VaroPotionEffectEvent extends VaroScheduledEvent {
 
-    protected static final int EFFECT_LENGTH = 60;
+    static final int EFFECT_LENGTH = 60;
 
-    protected final PotionEffectType potionEffectType;
-    protected final int amplifier;
+    @Serialize("effectType")
+    final PotionEffectType potionEffectType;
 
-    VaroPotionEffectEvent(Varo varo, VaroEventType type, PotionEffectType potionEffectType, int amplifier) {
-        super(varo, type, EFFECT_LENGTH);
+    @Serialize("amplifier")
+    final int amplifier;
+
+    VaroPotionEffectEvent(String name, String displayName, Materials icon, String description,
+                          PotionEffectType potionEffectType, int amplifier) {
+        super(name, displayName, icon, description, EFFECT_LENGTH);
 
         this.potionEffectType = potionEffectType;
         this.amplifier = amplifier;
@@ -48,5 +53,11 @@ abstract class VaroPotionEffectEvent extends VaroScheduledEvent {
     @Override
     void onSchedule() {
         this.executeEffect(this::addPotionEffect);
+    }
+
+    @Override
+    protected void registerPolicies() {
+        this.registerPolicy(PotionEffectType.class, this.potionEffectType::getName, PotionEffectType::getByName);
+        super.registerPolicies();
     }
 }

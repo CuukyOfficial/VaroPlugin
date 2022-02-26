@@ -1,13 +1,14 @@
 package de.cuuky.varo.event;
 
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Varo;
+import de.cuuky.cfw.version.types.Materials;
 import org.bukkit.entity.Player;
 
 public class PoisonWaterVaroEvent extends VaroScheduledEvent {
 
-    public PoisonWaterVaroEvent(Varo varo) {
-        super(varo, VaroEventType.POISON_WATER, 20);
+    public PoisonWaterVaroEvent() {
+        super("Poisoned Water", "§b", Materials.WATER_BUCKET,
+            "Bei Kontakt mit Wasser erhält man Schaden", 20);
     }
 
     @Override

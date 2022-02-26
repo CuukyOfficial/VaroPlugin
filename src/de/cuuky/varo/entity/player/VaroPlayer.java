@@ -15,6 +15,7 @@ import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.VaroElement;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
@@ -29,7 +30,6 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.gui.settings.VaroMenuColor;
 import de.cuuky.varo.listener.helper.ChatMessage;
@@ -51,7 +51,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
+public class VaroPlayer implements VaroElement {
 
 	private static ArrayList<VaroPlayer> varoplayer;
 
@@ -59,37 +59,37 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		varoplayer = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "id")
+	@Serialize("id")
 	private int id;
 
-	@VaroSerializeField(path = "name")
+	@Serialize("name")
 	private String name;
 
-	@VaroSerializeField(path = "uuid")
+	@Serialize("uuid")
 	private String uuid;
 
-	@VaroSerializeField(path = "locale")
+	@Serialize("locale")
 	private String locale;
 
-	@VaroSerializeField(path = "adminIgnore")
+	@Serialize("adminIgnore")
 	private boolean adminIgnore = false;
 
-	@VaroSerializeField(path = "villager")
+	@Serialize("villager")
 	private OfflineVillager villager;
 
-	@VaroSerializeField(path = "rank")
+	@Serialize("rank")
 	private Rank rank;
 
-	@VaroSerializeField(path = "stats")
+	@Serialize("stats")
 	private Stats stats;
 
-	@VaroSerializeField(path = "guiFill")
+	@Serialize("guiFill")
 	private VaroMenuColor guiFiller = VaroMenuColor.GRAY;
 
-	@VaroSerializeField(path = "guiSound")
+	@Serialize("guiSound")
 	private String guiSoundName;
 
-	@VaroSerializeField(path = "guiAnimation")
+	@Serialize("guiAnimation")
 	private boolean guiAnimation = true;
 
 	private AnimatedScoreboard scoreboard;

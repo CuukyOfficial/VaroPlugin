@@ -15,13 +15,13 @@ public class Rank implements VaroSerializeable {
 		highestLocation = 1;
 	}
 
-	@VaroSerializeField(path = "colorcode")
+	@Serialize("colorcode")
 	private int colorcode;
 
-	@VaroSerializeField(path = "name")
+	@Serialize("name")
 	private String name;
 
-	@VaroSerializeField(path = "tablistLocation")
+	@Serialize("tablistLocation")
 	private int tablistLocation;
 
 	public Rank() {

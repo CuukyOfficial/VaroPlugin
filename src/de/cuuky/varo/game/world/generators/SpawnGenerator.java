@@ -21,7 +21,7 @@ public class SpawnGenerator {
         this.sideBlockId = sideBlockId;
 
         for (Spawn spawn : Spawn.getSpawnsClone())
-            spawn.delete();
+            spawn.resetEnvironment();
     }
 
     public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {

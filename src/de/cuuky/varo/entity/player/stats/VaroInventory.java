@@ -12,10 +12,10 @@ import java.util.HashMap;
 
 public class VaroInventory implements VaroSerializeable {
 
-	@VaroSerializeField(path = "inventory")
+	@Serialize("inventory")
 	private HashMap<String, ItemStack> inventoryList;
 
-	@VaroSerializeField(path = "size")
+	@Serialize("size")
 	private int size;
 
 	private Inventory inventory;

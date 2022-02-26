@@ -20,23 +20,23 @@ public class InventoryBackup implements VaroSerializeable {
 		allBackups = new ArrayList<>();
 	}
 
-	@VaroSerializeField(path = "date")
+	@Serialize("date")
 	private Date date;
 
-	@VaroSerializeField(path = "contents")
+	@Serialize("contents")
 	private ArrayList<ItemStack> contents;
 
 	@Deprecated
-	@VaroSerializeField(path = "inventory")
+	@Serialize("inventory")
 	private VaroInventory inventory;
 
 	@Deprecated
-	@VaroSerializeField(path = "armor")
+	@Serialize("armor")
 	private ArrayList<ItemStack> armor;
 
 	private VaroPlayer varoplayer;
 
-	@VaroSerializeField(path = "playerId")
+	@Serialize("playerId")
 	private int vpId;
 
 	public InventoryBackup() {
