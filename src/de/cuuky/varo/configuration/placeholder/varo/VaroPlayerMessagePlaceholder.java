@@ -1,7 +1,7 @@
 package de.cuuky.varo.configuration.placeholder.varo;
 
 import de.cuuky.cfw.configuration.placeholder.placeholder.ShortOMP;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 import java.util.function.Function;

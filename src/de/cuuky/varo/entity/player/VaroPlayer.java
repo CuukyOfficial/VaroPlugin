@@ -5,7 +5,6 @@ import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.configuration.serialization.Serialize;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.PlayerVersionAdapter;
-import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.player.hud.AnimatedScoreboard;
 import de.cuuky.cfw.player.hud.AnimatedTablist;
 import de.cuuky.cfw.player.hud.ScoreboardInstance;
@@ -14,10 +13,8 @@ import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.VaroElement;
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -25,7 +22,6 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.Stats;
-import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Rank;
 import de.cuuky.varo.entity.player.stats.stat.offlinevillager.OfflineVillager;
 import de.cuuky.varo.entity.team.VaroTeam;
@@ -33,7 +29,6 @@ import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.gui.settings.VaroMenuColor;
 import de.cuuky.varo.listener.helper.ChatMessage;
-import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -46,7 +41,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class VaroPlayer extends VaroElement {

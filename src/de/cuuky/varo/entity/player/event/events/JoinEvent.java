@@ -1,7 +1,7 @@
 package de.cuuky.varo.entity.player.event.events;
 
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEvent;

@@ -1,8 +1,8 @@
 package de.cuuky.varo.spigot.updater;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.app.Main;
+import de.cuuky.varo.Alert;
+import de.cuuky.varo.AlertType;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;

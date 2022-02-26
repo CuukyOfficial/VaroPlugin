@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import org.bukkit.Bukkit;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

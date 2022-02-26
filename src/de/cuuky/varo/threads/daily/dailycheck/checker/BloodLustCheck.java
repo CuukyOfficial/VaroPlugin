@@ -4,9 +4,9 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.app.Main;
+import de.cuuky.varo.Alert;
+import de.cuuky.varo.AlertType;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;

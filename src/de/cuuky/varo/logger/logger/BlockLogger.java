@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.logger.CachedVaroLogger;
 
 public class BlockLogger extends CachedVaroLogger<LoggedBlock> {

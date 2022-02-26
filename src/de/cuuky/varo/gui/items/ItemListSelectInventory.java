@@ -3,7 +3,7 @@ package de.cuuky.varo.gui.items;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.list.item.ItemList;
 import org.bukkit.entity.Player;

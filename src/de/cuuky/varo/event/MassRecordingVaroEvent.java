@@ -1,7 +1,6 @@
 package de.cuuky.varo.event;
 
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -12,6 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 
+// TODO: Fu*king recode
 public class MassRecordingVaroEvent extends VaroEvent {
 
 	private final ArrayList<Integer[]> countdowns;
@@ -20,8 +20,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private boolean timerEnd;
 
 	public MassRecordingVaroEvent() {
-		super("mass_recording", "§cMass Recording", Materials.DIAMOND_SWORD,
-            "Lässt alle Spieler für eine eingestellte Anzahl an Minuten zusätzlich zu den normalen Folgen auf den Server");
+		super(null);
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<>();

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;

@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public class VaroWorldBorder {
 

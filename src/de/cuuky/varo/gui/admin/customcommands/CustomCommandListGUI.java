@@ -3,7 +3,7 @@ package de.cuuky.varo.gui.admin.customcommands;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.ChatColor;

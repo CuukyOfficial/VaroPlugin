@@ -1,7 +1,7 @@
 package de.cuuky.varo.configuration.placeholder.varo;
 
 import de.cuuky.cfw.configuration.placeholder.placeholder.ShortGMP;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 import java.util.function.Supplier;
 

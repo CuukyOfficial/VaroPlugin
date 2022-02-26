@@ -2,9 +2,11 @@ package de.cuuky.varo;
 
 import de.cuuky.cfw.configuration.serialization.BasicSerializable;
 import de.cuuky.cfw.configuration.serialization.Serialize;
+import de.cuuky.cfw.serialization.CompatibleLocation;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.ServerSoftware;
 import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.varo.app.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -17,18 +19,17 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
-
 // TODO: Maybe move to CFW or other package
-public class VaroNameTag extends BasicSerializable {
+public class NameTag extends BasicSerializable {
 
     @Serialize("location")
-    private Location location;
+    private CompatibleLocation location;
 
     @Serialize("nameTagUuid")
-    private String nameTagUuid;
+    private UUID nameTagUuid;
 
-    public VaroNameTag(Location location, String name) {
-        this.location = location;
+    public NameTag(Location location, String name) {
+        this.location = new CompatibleLocation(location);
         this.initialize(name);
     }
 
@@ -46,14 +47,13 @@ public class VaroNameTag extends BasicSerializable {
             return Optional.empty();
 
         return Arrays.stream(location.getChunk().getEntities()).
-            filter(entity -> this.nameTagUuid.equals(entity.getUniqueId().toString())).findAny();
+            filter(entity -> this.nameTagUuid.equals(entity.getUniqueId())).findAny();
     }
 
-    private Entity createNameTag(String name) {
+    private void createNameTag(String name) {
         Entity armorStand = this.location.getWorld().spawnEntity(this.location, EntityType.ARMOR_STAND);
-        this.nameTagUuid = armorStand.getUniqueId().toString();
+        this.nameTagUuid = armorStand.getUniqueId();
         this.updateNameTag(armorStand, name);
-        return armorStand;
     }
 
     private void updateNameTag(Entity armorStand, String name) {

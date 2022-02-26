@@ -1,6 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.report.ReportGUI;

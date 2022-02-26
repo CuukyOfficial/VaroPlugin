@@ -1,7 +1,7 @@
 package de.cuuky.varo.threads;
 
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;

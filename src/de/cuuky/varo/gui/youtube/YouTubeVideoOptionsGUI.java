@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.youtube;
 
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.VaroInventory;
 import org.bukkit.Material;

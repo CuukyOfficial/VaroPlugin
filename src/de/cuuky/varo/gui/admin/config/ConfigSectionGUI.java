@@ -3,7 +3,7 @@ package de.cuuky.varo.gui.admin.config;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.entity.Player;

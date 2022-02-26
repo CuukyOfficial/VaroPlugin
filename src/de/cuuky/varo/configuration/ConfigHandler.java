@@ -11,7 +11,7 @@ import com.google.common.io.Files;
 
 import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;

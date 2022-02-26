@@ -3,7 +3,7 @@ package de.cuuky.varo.gui;
 import de.cuuky.cfw.hooking.HookManager;
 import de.cuuky.cfw.inventory.AdvancedInventoryManager;
 import de.cuuky.cfw.inventory.list.AdvancedListInventory;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import org.bukkit.entity.Player;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package de.cuuky.varo.configuration.configurations.language.languages;
 import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.cfw.configuration.language.languages.DefaultLanguage;
 import de.cuuky.cfw.player.CustomPlayer;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public enum ConfigMessages implements DefaultLanguage {

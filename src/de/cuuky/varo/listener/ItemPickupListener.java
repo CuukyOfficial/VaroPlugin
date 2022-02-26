@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public class ItemPickupListener implements Listener {
 

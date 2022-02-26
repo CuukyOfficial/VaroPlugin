@@ -3,7 +3,7 @@ package de.cuuky.varo.gui.admin.orelogger;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.logger.logger.LoggedBlock;
 import org.bukkit.Bukkit;

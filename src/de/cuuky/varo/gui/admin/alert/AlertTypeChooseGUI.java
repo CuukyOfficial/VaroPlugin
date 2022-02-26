@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.alert;
 
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.alert.AlertChooseGUI.AlertGUIType;
 import org.bukkit.entity.Player;

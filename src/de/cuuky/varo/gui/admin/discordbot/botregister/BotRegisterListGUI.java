@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.admin.discordbot.botregister;
 
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildSkull;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.gui.VaroAsyncListInventory;
 import org.bukkit.entity.Player;

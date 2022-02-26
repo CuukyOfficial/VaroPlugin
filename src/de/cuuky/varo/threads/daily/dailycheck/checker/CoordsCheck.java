@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.time.DateUtils;
 
 import de.cuuky.cfw.utils.LocationFormat;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;

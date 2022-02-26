@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.team;
 
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.team.TeamListGUI.TeamGUIType;
 import org.bukkit.entity.Player;

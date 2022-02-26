@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class Broadcaster {

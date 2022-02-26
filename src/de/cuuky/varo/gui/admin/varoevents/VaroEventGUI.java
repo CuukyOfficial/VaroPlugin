@@ -3,7 +3,7 @@ package de.cuuky.varo.gui.admin.varoevents;
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.VaroListInventory;

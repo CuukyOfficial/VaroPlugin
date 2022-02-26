@@ -6,7 +6,7 @@ import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.gui.VaroInventory;
 import org.bukkit.ChatColor;

@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.world.VaroWorld;

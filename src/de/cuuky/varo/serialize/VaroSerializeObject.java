@@ -7,7 +7,7 @@ import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.cuuky.cfw.configuration.YamlConfigurationUtil;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.serialize.field.FieldLoader;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.serialize.serializer.VaroDeserializer;

@@ -2,11 +2,11 @@ package de.cuuky.varo.gui.report;
 
 import de.cuuky.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroListInventory;
-import de.cuuky.varo.report.Report;
-import de.cuuky.varo.report.ReportReason;
+import de.cuuky.varo.Report;
+import de.cuuky.varo.ReportReason;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

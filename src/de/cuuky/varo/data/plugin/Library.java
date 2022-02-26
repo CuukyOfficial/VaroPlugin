@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.function.Supplier;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.spigot.FileDownloader;
 

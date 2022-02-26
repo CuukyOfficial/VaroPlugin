@@ -1,12 +1,12 @@
 package de.cuuky.varo.preset;
 
+import de.cuuky.varo.app.Main;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import de.cuuky.varo.Main;
 
 public class DefaultPresetLoader {
 

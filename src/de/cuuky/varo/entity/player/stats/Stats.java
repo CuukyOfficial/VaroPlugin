@@ -15,9 +15,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.app.Main;
+import de.cuuky.varo.Alert;
+import de.cuuky.varo.AlertType;
 import de.cuuky.varo.api.VaroAPI;
 import de.cuuky.varo.api.event.events.player.PlayerStateChangeEvent;
 import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
@@ -32,9 +32,8 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.Spawn;
 
 public class Stats implements VaroSerializeable {
 

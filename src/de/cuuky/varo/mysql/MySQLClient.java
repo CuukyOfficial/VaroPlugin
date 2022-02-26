@@ -1,13 +1,13 @@
 package de.cuuky.varo.mysql;
 
+import de.cuuky.varo.app.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class MySQLClient {
 

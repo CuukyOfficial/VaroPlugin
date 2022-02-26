@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.Random;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.VaroBot;
 import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;

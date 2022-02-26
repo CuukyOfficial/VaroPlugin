@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.cuuky.cfw.player.hud.TablistAnimationData;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public class TablistConfig extends BoardConfig {
 

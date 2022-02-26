@@ -7,7 +7,7 @@ import java.util.List;
 import org.yaml.snakeyaml.scanner.ScannerException;
 
 import de.cuuky.cfw.configuration.YamlConfigurationUtil;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public final class ConfigFailureDetector {
 

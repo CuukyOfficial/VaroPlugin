@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.discordbot.botregister;
 
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.gui.VaroInventory;
 import org.bukkit.Material;

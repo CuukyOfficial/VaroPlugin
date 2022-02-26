@@ -3,7 +3,7 @@ package de.cuuky.varo.api.event;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.api.event.register.VaroListener;
 
 public class EventHandler {

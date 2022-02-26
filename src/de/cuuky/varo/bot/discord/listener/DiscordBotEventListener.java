@@ -2,7 +2,7 @@ package de.cuuky.varo.bot.discord.listener;
 
 import java.awt.Color;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.events.GenericEvent;

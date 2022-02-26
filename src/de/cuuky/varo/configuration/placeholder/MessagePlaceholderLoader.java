@@ -5,7 +5,7 @@ import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.PermissionUtils;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;

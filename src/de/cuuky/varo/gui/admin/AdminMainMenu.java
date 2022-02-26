@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.app.Main;
+import de.cuuky.varo.Alert;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.alert.AlertTypeChooseGUI;
@@ -19,7 +19,7 @@ import de.cuuky.varo.gui.admin.game.GameOptionsGUI;
 import de.cuuky.varo.gui.admin.orelogger.OreLoggerFilterGUI;
 import de.cuuky.varo.gui.admin.setuphelp.SetupHelpGUI;
 import de.cuuky.varo.gui.report.ReportListGUI;
-import de.cuuky.varo.report.Report;
+import de.cuuky.varo.Report;
 
 public class AdminMainMenu extends VaroInventory {
 

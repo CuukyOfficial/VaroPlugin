@@ -4,7 +4,7 @@ import de.cuuky.cfw.inventory.InventoryNotifiable;
 import de.cuuky.cfw.inventory.list.AdvancedEditInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

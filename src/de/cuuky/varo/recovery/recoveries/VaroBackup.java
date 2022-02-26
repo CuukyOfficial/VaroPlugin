@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import de.cuuky.cfw.recovery.FileZipper;
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public class VaroBackup extends FileZipper {
 

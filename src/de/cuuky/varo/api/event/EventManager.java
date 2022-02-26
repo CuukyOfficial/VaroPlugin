@@ -3,7 +3,7 @@ package de.cuuky.varo.api.event;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.api.event.register.VaroEventMethod;
 import de.cuuky.varo.api.event.register.VaroListener;
 

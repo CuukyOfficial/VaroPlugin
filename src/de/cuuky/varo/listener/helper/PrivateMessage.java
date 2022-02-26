@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PrivateMessage {

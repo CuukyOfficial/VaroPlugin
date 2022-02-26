@@ -13,7 +13,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 import de.cuuky.cfw.recovery.FileZipper;
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.threads.LagCounter;
 

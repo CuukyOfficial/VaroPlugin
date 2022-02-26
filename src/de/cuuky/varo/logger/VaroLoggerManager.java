@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.logger.logger.BlockLogger;
 import de.cuuky.varo.logger.logger.ChatLogger;
 import de.cuuky.varo.logger.logger.EventLogger;

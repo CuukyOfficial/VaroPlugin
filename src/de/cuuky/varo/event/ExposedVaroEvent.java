@@ -1,7 +1,5 @@
 package de.cuuky.varo.event;
 
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Varo;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.EntityType;
@@ -18,9 +16,8 @@ public class ExposedVaroEvent extends VaroPotionEffectEvent {
         .withColor(Color.RED, Color.WHITE).withFade(Color.PURPLE)
         .with(FireworkEffect.Type.BURST).trail(false).flicker(true).build();
 
-    public ExposedVaroEvent(Varo varo) {
-        super("Exposed", "§c", Materials.REDSTONE,
-            "Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete", TYPE, 1);
+    public ExposedVaroEvent(EventInformationHolder info) {
+        super(info, TYPE, 1);
     }
 
     @Override

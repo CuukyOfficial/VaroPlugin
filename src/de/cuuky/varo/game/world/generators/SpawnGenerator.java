@@ -7,10 +7,10 @@ import org.bukkit.Material;
 
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.Spawn;
 
 public class SpawnGenerator {
 

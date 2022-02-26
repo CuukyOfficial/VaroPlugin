@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class VaroCancelAble {

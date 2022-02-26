@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class MetricsLoader {

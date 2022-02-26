@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import org.bukkit.Bukkit;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class LibraryLoader {

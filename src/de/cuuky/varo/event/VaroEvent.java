@@ -6,23 +6,31 @@ import de.cuuky.varo.VaroElement;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 public abstract class VaroEvent extends VaroElement {
 
-    private final String name;
-    private final String displayName;
-    private final Material icon;
-    private final String description;
+    // TODO: Make EventBuilder load config stuff and load all these values from config
+    public static final List<EventBuilder> DEFAULT_EVENTS = Arrays.asList(
+        new EventBuilder(ExposedVaroEvent::new).name("exposed").displayName("§cExposed")
+            .icon(Materials.REDSTONE.parseMaterial())
+            .description("Lässt die Spieler auffliegen!\n\n1.9+: Gibt allen 'GLOWING'-Effekt\n<1.9: Spawnt alle 10 Sekunden eine Rakete"),
+        new EventBuilder(MoonGravityVaroEvent::new).name("moon_gravity").displayName("§2Moon Gravity")
+            .icon(Materials.STONE.parseMaterial()).description("Mond-Gravitation\nVorsicht: Ab 1.13 möglich."),
+        new EventBuilder(PoisonRainVaroEvent::new).name("poisonous_rain").displayName("§4Poisonous Rain")
+            .icon(Materials.ARROW.parseMaterial()).description("Regen macht Schaden"),
+        new EventBuilder(PoisonWaterVaroEvent::new).name("poisonous_water").displayName("§bPoisonous Water")
+            .icon(Materials.WATER_BUCKET.parseMaterial()).description("Bei Kontakt mit Wasser erhält man Schaden")
+    );
 
+    private final EventInformationHolder info;
     private final Collection<BukkitTask> tasks;
 
-    public VaroEvent(String name, String displayName, Materials icon, String description) {
-        this.name = name;
-        this.displayName = displayName;
-        this.icon = icon.parseMaterial();
-        this.description = description;
+    public VaroEvent(EventInformationHolder informationHolder) {
+        this.info = informationHolder;
         this.tasks = new LinkedHashSet<>();
     }
 
@@ -47,6 +55,22 @@ public abstract class VaroEvent extends VaroElement {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.info.getName();
+    }
+
+    public String getName() {
+        return this.info.getName();
+    }
+
+    public String getDisplayName() {
+        return this.info.getDisplayName();
+    }
+
+    public Material getIcon() {
+        return this.info.getIcon();
+    }
+
+    public String getDescription() {
+        return this.info.getDescription();
     }
 }

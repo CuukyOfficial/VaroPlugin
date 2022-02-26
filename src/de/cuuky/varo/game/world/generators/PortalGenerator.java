@@ -5,7 +5,7 @@ import org.bukkit.World;
 
 import de.cuuky.cfw.utils.BlockUtils;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public class PortalGenerator {
 

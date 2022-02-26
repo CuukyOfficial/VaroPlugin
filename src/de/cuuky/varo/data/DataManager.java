@@ -1,14 +1,13 @@
 package de.cuuky.varo.data;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.player.hud.NameTagGroup;
 import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.command.custom.CustomCommandManager;
@@ -68,7 +67,7 @@ public class DataManager {
 		this.tablistConfig = new TablistConfig();
 		this.nameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
-		new DefaultPresetLoader();
+        new DefaultPresetLoader();
 	}
 
 	public void load() {
@@ -86,7 +85,7 @@ public class DataManager {
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
 				&& !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
-			VersionUtils.setMinecraftServerProperty("announce-player-achievements", false);
+            VersionUtils.getVersionAdapter().setServerProperty("announce-player-achievements", false);
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();
@@ -151,10 +150,6 @@ public class DataManager {
 		return this.propertiesReader;
 	}
 
-	public Broadcaster getBroadcaster() {
-		return this.broadcaster;
-	}
-
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
 	}
@@ -191,16 +186,8 @@ public class DataManager {
 		return this.outsideTimeChecker;
 	}
 
-	public VaroGameHandler getVaroGameHandler() {
-		return this.varoGameHandler;
-	}
-
 	public DailyTimer getDailyTimer() {
 		return this.dailyTimer;
-	}
-
-	public JavaPlugin getOwnerInstance() {
-		return this.ownerInstance;
 	}
 
 	public CustomCommandManager getCustomCommandManager() { return customCommandManager; }

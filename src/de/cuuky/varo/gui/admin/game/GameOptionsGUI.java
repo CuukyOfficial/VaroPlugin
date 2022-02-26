@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.admin.game;
 
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.utils.ArrayUtils;

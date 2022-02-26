@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.MemorySection;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.serialize.VaroSerializeObject;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;

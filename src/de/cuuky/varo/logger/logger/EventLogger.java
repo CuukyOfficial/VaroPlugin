@@ -1,7 +1,7 @@
 package de.cuuky.varo.logger.logger;
 
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.CachedVaroLogger;

@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.app.Main;
 
 public class ItemDropListener implements Listener {
 

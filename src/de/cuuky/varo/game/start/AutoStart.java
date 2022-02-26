@@ -11,8 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.cuuky.varo.app.Main;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class AutoStart implements VaroSerializeable {
