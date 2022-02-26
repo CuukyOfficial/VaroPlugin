@@ -1,6 +1,7 @@
 package de.cuuky.varo.event;
 
 import de.cuuky.cfw.version.types.Materials;
+import de.cuuky.varo.Varo;
 import de.cuuky.varo.VaroElement;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitTask;
@@ -28,6 +29,11 @@ public abstract class VaroEvent extends VaroElement {
     abstract void onEnable();
 
     abstract void onDisable();
+
+    @Override
+    protected void onInitialize(Varo varo) {
+        this.onEnable();
+    }
 
     protected void registerTask(BukkitTask task) {
         this.tasks.add(task);

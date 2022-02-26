@@ -2,7 +2,7 @@ package de.cuuky.varo.entity.player;
 
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
-import de.cuuky.cfw.player.CustomLanguagePlayer;
+import de.cuuky.cfw.configuration.serialization.Serialize;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.PlayerVersionAdapter;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
@@ -34,8 +34,6 @@ import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.gui.settings.VaroMenuColor;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -51,16 +49,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class VaroPlayer implements VaroElement {
-
-	private static ArrayList<VaroPlayer> varoplayer;
-
-	static {
-		varoplayer = new ArrayList<>();
-	}
-
-	@Serialize("id")
-	private int id;
+public class VaroPlayer extends VaroElement {
 
 	@Serialize("name")
 	private String name;
@@ -101,10 +90,6 @@ public class VaroPlayer implements VaroElement {
 	private Player player;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 	private ChatMessage lastMessage;
-
-	public VaroPlayer() {
-		varoplayer.add(this);
-	}
 
 	public VaroPlayer(Player player) {
 		this.name = player.getName();
@@ -636,127 +621,31 @@ public class VaroPlayer implements VaroElement {
 			Main.getVaroGame().getTopScores().update();
 	}
 
-	@Override
-	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
-		throw new Error("Unimplemented");
-	}
-
-	/**
-	 * @return Returns all alive Players regardless if they are online
-	 */
-	public static ArrayList<VaroPlayer> getAlivePlayer() {
-		ArrayList<VaroPlayer> alive = new ArrayList<>();
-		for (VaroPlayer vp : varoplayer) {
-			if (!vp.getStats().isAlive())
-				continue;
-
-			alive.add(vp);
-		}
-
-		return alive;
-	}
-
-	public static ArrayList<VaroPlayer> getDeadPlayer() {
-		ArrayList<VaroPlayer> dead = new ArrayList<>();
-		for (VaroPlayer vp : varoplayer) {
-			if (vp.getStats().getState() != PlayerState.DEAD)
-				continue;
-
-			dead.add(vp);
-		}
-
-		return dead;
-	}
-
-	public static ArrayList<VaroPlayer> getOnlineAndAlivePlayer() {
-		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for (VaroPlayer vp : varoplayer) {
-			if (!vp.isOnline() || !vp.getStats().isAlive())
-				continue;
-
-			online.add(vp);
-		}
-
-		return online;
-	}
-
-	/**
-	 * @return Returns all online VaroPlayers regardless if they are alive
-	 */
-	public static ArrayList<VaroPlayer> getOnlinePlayer() {
-		ArrayList<VaroPlayer> online = new ArrayList<>();
-		for (VaroPlayer vp : varoplayer) {
-			if (!vp.isOnline())
-				continue;
-
-			online.add(vp);
-		}
-
-		return online;
-	}
-
-	public static VaroPlayer getPlayer(int id) {
-		for (VaroPlayer vp : varoplayer) {
-			if (vp.getId() != id)
-				continue;
-
-			return vp;
-		}
-
-		return null;
-	}
-
-	/**
-	 * @return Returns the varoplayer and sets the name right if the player changed it before
-	 */
-	public static VaroPlayer getPlayer(Player player) {
-		for (VaroPlayer vp : varoplayer) {
-			if (vp.getUUID() != null)
-				if (!vp.getUUID().equals(player.getUniqueId().toString()))
-					continue;
-
-			if (vp.getUUID() == null && player.getName().equalsIgnoreCase(vp.getName()))
-				vp.setUuid(player.getUniqueId().toString());
-			else if (vp.getUUID() == null)
-				continue;
-
-			if (!vp.getName().equals(player.getName())) {
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(null, vp).replace("%newName%", player.getName()));
-				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
-				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
-				vp.setName(player.getName());
-			}
-
-			return vp;
-		}
-
-		return null;
-	}
-
-	public static VaroPlayer getPlayer(String name) {
-		for (VaroPlayer vp : varoplayer) {
-			if (!vp.getName().equalsIgnoreCase(name) && !vp.getUUID().equals(name))
-				continue;
-
-			return vp;
-		}
-
-		return null;
-	}
-
-	public static ArrayList<VaroPlayer> getSpectator() {
-		ArrayList<VaroPlayer> spectator = new ArrayList<>();
-		for (VaroPlayer vp : varoplayer) {
-			if (!vp.getStats().isSpectator())
-				continue;
-
-			spectator.add(vp);
-		}
-
-		return spectator;
-	}
-
-	public static ArrayList<VaroPlayer> getVaroPlayers() {
-		return varoplayer;
-	}
+    // TODO: merge with new system
+//	/**
+//	 * @return Returns the varoplayer and sets the name right if the player changed it before
+//	 */
+//	public static VaroPlayer getPlayer(Player player) {
+//		for (VaroPlayer vp : varoplayer) {
+//			if (vp.getUUID() != null)
+//				if (!vp.getUUID().equals(player.getUniqueId().toString()))
+//					continue;
+//
+//			if (vp.getUUID() == null && player.getName().equalsIgnoreCase(vp.getName()))
+//				vp.setUuid(player.getUniqueId().toString());
+//			else if (vp.getUUID() == null)
+//				continue;
+//
+//			if (!vp.getName().equals(player.getName())) {
+//				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(null, vp).replace("%newName%", player.getName()));
+//				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
+//				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
+//				vp.setName(player.getName());
+//			}
+//
+//			return vp;
+//		}
+//
+//		return null;
+//	}
 }

@@ -9,7 +9,6 @@ import de.cuuky.cfw.utils.ServerPropertiesReader;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.command.custom.CustomCommandManager;
@@ -20,8 +19,6 @@ import de.cuuky.varo.configuration.configurations.config.TablistConfig;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
 import de.cuuky.varo.data.plugin.LibraryLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.VaroPlayerHandler;
-import de.cuuky.varo.entity.team.VaroTeamHandler;
 import de.cuuky.varo.game.VaroGameHandler;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
@@ -30,7 +27,6 @@ import de.cuuky.varo.list.VaroListManager;
 import de.cuuky.varo.logger.VaroLoggerManager;
 import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.preset.DefaultPresetLoader;
-import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.threads.daily.DailyTimer;
 import de.cuuky.varo.utils.OutSideTimeChecker;
@@ -49,11 +45,6 @@ public class DataManager {
 	private NameTagGroup nameTagGroup;
 	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
-	private VaroPlayerHandler varoPlayerHandler;
-	private VaroTeamHandler varoTeamHandler;
-	private SpawnHandler spawnHandler;
-	private ReportHandler reportHandler;
-	private AlertHandler alertHandler;
 	private OutSideTimeChecker outsideTimeChecker;
 	private MySQLClient mysqlClient;
 	private VaroListManager listManager;
@@ -83,14 +74,9 @@ public class DataManager {
 	public void load() {
 		new MessagePlaceholderLoader();
 		this.propertiesReader = new ServerPropertiesReader();
-		this.varoPlayerHandler = new VaroPlayerHandler();
-		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
 		if (Main.getVaroGame().getGameState() == GameState.LOBBY)
 			VaroPlayer.getOnlinePlayer().forEach(LobbyItem::giveOrRemoveTeamItems);
-		this.spawnHandler = new SpawnHandler();
-		this.reportHandler = new ReportHandler();
-		this.alertHandler = new AlertHandler();
 		this.outsideTimeChecker = new OutSideTimeChecker();
 		this.mysqlClient = new MySQLClient();
 		this.listManager = new VaroListManager();
@@ -165,10 +151,6 @@ public class DataManager {
 		return this.propertiesReader;
 	}
 
-	public AlertHandler getAlertHandler() {
-		return this.alertHandler;
-	}
-
 	public Broadcaster getBroadcaster() {
 		return this.broadcaster;
 	}
@@ -209,24 +191,8 @@ public class DataManager {
 		return this.outsideTimeChecker;
 	}
 
-	public ReportHandler getReportHandler() {
-		return this.reportHandler;
-	}
-
-	public SpawnHandler getSpawnHandler() {
-		return this.spawnHandler;
-	}
-
 	public VaroGameHandler getVaroGameHandler() {
 		return this.varoGameHandler;
-	}
-
-	public VaroPlayerHandler getVaroPlayerHandler() {
-		return this.varoPlayerHandler;
-	}
-
-	public VaroTeamHandler getVaroTeamHandler() {
-		return this.varoTeamHandler;
 	}
 
 	public DailyTimer getDailyTimer() {

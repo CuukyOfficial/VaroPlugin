@@ -1,22 +1,12 @@
 package de.cuuky.varo.report;
 
-import java.util.ArrayList;
-
-import de.cuuky.cfw.utils.JavaUtils;
+import de.cuuky.cfw.configuration.serialization.Serialize;
+import de.cuuky.varo.Varo;
+import de.cuuky.varo.VaroElement;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
-public class Report implements VaroSerializeable {
-
-	private static ArrayList<Report> reports;
-
-	static {
-		reports = new ArrayList<>();
-	}
-
-	@Serialize("id")
-	private int id;
+// TODO: Remove or make ReportReason dynamic and remove getters
+public class Report extends VaroElement {
 
 	@Serialize("open")
 	private boolean open;
@@ -32,38 +22,34 @@ public class Report implements VaroSerializeable {
 
 	private VaroPlayer reporter, reported;
 
-	public Report() {
-		reports.add(this);
-	}
-
 	public Report(VaroPlayer reporter, VaroPlayer reported, ReportReason reason) {
 		this.reported = reported;
 		this.reporter = reporter;
+        this.reportedId = reported.getId();
+        this.reporterId = reporter.getId();
 		this.reason = reason;
 		this.open = true;
-		this.id = generateId();
-
-		reports.add(this);
 	}
 
-	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while (getReport(id) != null)
-			generateId();
+    @Override
+    protected void registerPolicies() {
+        this.registerPolicy(ReportReason.class, this.reason::getName, ReportReason::getByName);
+        super.registerPolicies();
+    }
 
-		return id;
-	}
+    @Override
+    protected void onInitialize(Varo varo) {
+        this.reported = varo.getPlayer(reportedId).orElse(null);
+        this.reporter = varo.getPlayer(reporterId).orElse(null);
+    }
 
-	public void close() {
-		this.open = false;
-		reports.remove(this);
-	}
+    @Override
+    public void remove() {
+        this.open = false;
+        super.remove();
+    }
 
-	public int getId() {
-		return id;
-	}
-
-	public ReportReason getReason() {
+    public ReportReason getReason() {
 		return reason;
 	}
 
@@ -77,31 +63,5 @@ public class Report implements VaroSerializeable {
 
 	public boolean isOpen() {
 		return open;
-	}
-
-	@Override
-	public void onDeserializeEnd() {
-		this.reported = VaroPlayer.getPlayer(reportedId);
-		this.reporter = VaroPlayer.getPlayer(reporterId);
-	}
-
-	@Override
-	public void onSerializeStart() {
-		if (reporter != null)
-			this.reporterId = reporter.getId();
-		if (reported != null)
-			this.reportedId = reported.getId();
-	}
-
-	public static Report getReport(int id) {
-		for (Report r : reports)
-			if (r.getId() == id)
-				return r;
-
-		return null;
-	}
-
-	public static ArrayList<Report> getReports() {
-		return reports;
 	}
 }

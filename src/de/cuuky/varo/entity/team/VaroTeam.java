@@ -1,40 +1,28 @@
 package de.cuuky.varo.entity.team;
 
-import java.util.ArrayList;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-
+import de.cuuky.cfw.configuration.serialization.Serialize;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.VaroElement;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.VaroEntity;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class VaroTeam extends VaroEntity {
+import java.util.ArrayList;
+
+public class VaroTeam extends VaroElement {
 
 	public static final String NAME_REGEX = "[a-zA-Z0-9]+";
 
-	private static int highestNumber;
-	private static ArrayList<VaroTeam> teams;
-
-	static {
-		teams = new ArrayList<>();
-		highestNumber = 1;
-	}
-
 	@Serialize("colorCode")
 	private String colorCode;
-
-	@Serialize("id")
-	private int id;
 
 	@Serialize("lifes")
 	private double lifes;
@@ -53,31 +41,16 @@ public class VaroTeam extends VaroEntity {
 	public VaroTeam() {
 		member = new ArrayList<>();
 		teamBackPack = new VaroInventory(ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt());
-		memberid = new ArrayList<Integer>();
+		memberid = new ArrayList<>();
 	}
 
 	public VaroTeam(String name) {
 		this();
 
 		this.name = name;
-		this.id = generateId();
-		this.memberid = new ArrayList<Integer>();
+		this.memberid = new ArrayList<>();
 		
 		loadDefaults();
-
-		// Nametag.refreshAll();
-		if (this.id > highestNumber)
-			highestNumber = id;
-
-		teams.add(this);
-	}
-
-	private int generateId() {
-		int i = teams.size() + 1;
-		while (getTeam(i) != null)
-			i++;
-
-		return i;
 	}
 
 	public void addMember(VaroPlayer vp) {
@@ -266,62 +239,5 @@ public class VaroTeam extends VaroEntity {
 		for (VaroPlayer member : this.member)
 			if (member.isOnline())
 				member.update();
-	}
-
-	public static ArrayList<VaroTeam> getAliveTeams() {
-		ArrayList<VaroTeam> alive = new ArrayList<VaroTeam>();
-		for (VaroTeam team : teams)
-			if (!team.isDead())
-				alive.add(team);
-
-		return alive;
-	}
-
-	public static ArrayList<VaroTeam> getDeadTeams() {
-		ArrayList<VaroTeam> dead = new ArrayList<VaroTeam>();
-		for (VaroTeam team : teams)
-			if (team.isDead())
-				dead.add(team);
-
-		return dead;
-	}
-
-	public static int getHighestNumber() {
-		return highestNumber;
-	}
-
-	public static ArrayList<VaroTeam> getOnlineTeams() {
-		ArrayList<VaroTeam> online = new ArrayList<VaroTeam>();
-		for (VaroTeam team : teams)
-			if (team.isOnline())
-				online.add(team);
-
-		return online;
-	}
-
-	public static VaroTeam getTeam(int id) {
-		for (VaroTeam team : teams) {
-			if (team.getId() != id)
-				continue;
-
-			return team;
-		}
-
-		return null;
-	}
-
-	public static VaroTeam getTeam(String name) {
-		for (VaroTeam team : teams) {
-			if (!team.getName().equals(name) && !String.valueOf(team.getId()).equals(name))
-				continue;
-
-			return team;
-		}
-
-		return null;
-	}
-
-	public static ArrayList<VaroTeam> getTeams() {
-		return teams;
 	}
 }

@@ -1,17 +1,16 @@
 package de.cuuky.varo.game.end;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.game.state.GameState;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class WinnerCheck {
 
@@ -25,7 +24,7 @@ public class WinnerCheck {
 	}
 
 	private void check() {
-		places = new HashMap<Integer, ArrayList<VaroPlayer>>();
+		places = new HashMap<>();
 		ArrayList<VaroPlayer> alive = VaroPlayer.getAlivePlayer();
 		if (!(alive.size() <= ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)
 			return;
@@ -51,13 +50,7 @@ public class WinnerCheck {
 			places.put(1, lastAlive.getTeam().getMember());
 		}
 
-		Map<Date, VaroPlayer> sorted = new TreeMap<Date, VaroPlayer>(new Comparator<Date>() {
-			@Override
-			public int compare(Date d1, Date d2) {
-				return d1.after(d2) ? -1 : 1;
-			}
-		});
-
+		Map<Date, VaroPlayer> sorted = new TreeMap<>(Date::compareTo);
 		for (VaroPlayer vp : VaroPlayer.getDeadPlayer())
 			sorted.put(vp.getStats().getDiedAt(), vp);
 
@@ -67,7 +60,7 @@ public class WinnerCheck {
 				continue;
 
 			if (vp.getTeam() == null) {
-				ArrayList<VaroPlayer> first = new ArrayList<VaroPlayer>();
+				ArrayList<VaroPlayer> first = new ArrayList<>();
 				first.add(vp);
 				places.put(i, first);
 			} else

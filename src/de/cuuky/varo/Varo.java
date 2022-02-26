@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+// TODO: Verify if a collection of a collection should be used here
 public class Varo {
 
     private final JavaPlugin plugin;

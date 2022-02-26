@@ -1,12 +1,12 @@
 package de.cuuky.varo.game.leaderboard;
 
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.VaroTeam;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
 
 public class TopScoreList {
 
@@ -20,27 +20,19 @@ public class TopScoreList {
 		this.topPlayer = new ArrayList<>();
 		this.topTeams = new ArrayList<>();
 
-		playerSort = new Comparator<VaroPlayer>() {
+		playerSort = (o1, o2) -> {
+            if (o1.getStats().getKills() == o2.getStats().getKills())
+                return 0;
 
-			@Override
-			public int compare(VaroPlayer o1, VaroPlayer o2) {
-				if (o1.getStats().getKills() == o2.getStats().getKills())
-					return 0;
+            return o1.getStats().getKills() > o2.getStats().getKills() ? -1 : 1;
+        };
 
-				return o1.getStats().getKills() > o2.getStats().getKills() ? -1 : 1;
-			}
-		};
+		teamSort = (o1, o2) -> {
+            if (o1.getKills() == o2.getKills())
+                return 0;
 
-		teamSort = new Comparator<VaroTeam>() {
-
-			@Override
-			public int compare(VaroTeam o1, VaroTeam o2) {
-				if (o1.getKills() == o2.getKills())
-					return 0;
-
-				return o1.getKills() > o2.getKills() ? -1 : 1;
-			}
-		};
+            return o1.getKills() > o2.getKills() ? -1 : 1;
+        };
 
 		update();
 	}

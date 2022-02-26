@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
+
+// TODO: Maybe move to CFW or other package
 public class VaroNameTag extends BasicSerializable {
 
     @Serialize("location")

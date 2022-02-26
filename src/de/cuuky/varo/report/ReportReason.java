@@ -1,10 +1,11 @@
 package de.cuuky.varo.report;
 
-import org.bukkit.Material;
-
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.Material;
+
+import java.util.Arrays;
 
 public enum ReportReason implements VaroSerializeable {
 
@@ -51,4 +52,7 @@ public enum ReportReason implements VaroSerializeable {
 	@Override
 	public void onSerializeStart() {}
 
+    public static ReportReason getByName(String name) {
+        return Arrays.stream(values()).filter(type -> type.name.equals(name)).findAny().orElse(null);
+    }
 }

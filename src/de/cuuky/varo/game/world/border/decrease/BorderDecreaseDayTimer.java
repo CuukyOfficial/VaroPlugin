@@ -1,21 +1,19 @@
 package de.cuuky.varo.game.world.border.decrease;
 
-import java.util.Date;
-
+import de.cuuky.cfw.configuration.serialization.BasicSerializable;
+import de.cuuky.cfw.configuration.serialization.Serialize;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import java.util.Date;
 
-public class BorderDecreaseDayTimer implements VaroSerializeable {
+public class BorderDecreaseDayTimer extends BasicSerializable {
 
 	@Serialize("nextDecrease")
 	private Date nextDecrease;
-
-	public BorderDecreaseDayTimer() {}
 
 	public BorderDecreaseDayTimer(boolean new1) {
 		if (!ConfigSetting.BORDER_TIME_DAY_DECREASE.getValueAsBoolean() || !Main.getVaroGame().isRunning())
@@ -65,7 +63,4 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 
 		startTimer();
 	}
-
-	@Override
-	public void onSerializeStart() {}
 }

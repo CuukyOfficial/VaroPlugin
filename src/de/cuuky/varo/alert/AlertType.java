@@ -3,6 +3,8 @@ package de.cuuky.varo.alert;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
+import java.util.Arrays;
+
 public enum AlertType implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "BLOODLUST")
@@ -47,4 +49,8 @@ public enum AlertType implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {}
+
+    public static AlertType getByName(String name) {
+        return Arrays.stream(values()).filter(type -> type.name.equals(name)).findAny().orElse(null);
+    }
 }
