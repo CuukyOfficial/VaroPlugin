@@ -1,32 +1,29 @@
-package de.cuuky.varo.event.events;
-
-import java.util.ArrayList;
-
-import org.bukkit.Material;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+package de.cuuky.varo.event;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.Varo;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
-import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
 
 public class MassRecordingVaroEvent extends VaroEvent {
 
-	private ArrayList<Integer[]> countdowns;
+	private final ArrayList<Integer[]> countdowns;
 	private BukkitTask scheduler;
 	private int timer;
-	private boolean timerEnd = false;
+	private boolean timerEnd;
 
-	public MassRecordingVaroEvent() {
-		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Laesst alle Spieler fuer eine Minute zusaetzlich zu den normalen Folgen auf den Server" : "Laesst alle Spieler fuer " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusaetzlich zu den normalen Folgen auf den Server");
+	public MassRecordingVaroEvent(Varo varo) {
+		super(varo, VaroEventType.MASS_RECORDING);
 
 		this.timerEnd = false;
-		this.countdowns = new ArrayList<Integer[]>();
+		this.countdowns = new ArrayList<>();
 	}
 
 	public int getCountdown(VaroPlayer vp) {
@@ -111,7 +108,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 			public void run() {
 				if (timer < 1) {
 					timerEnd = true;
-					setEnabled(false);
+					disable();
 				}
 
 				timer -= 1;

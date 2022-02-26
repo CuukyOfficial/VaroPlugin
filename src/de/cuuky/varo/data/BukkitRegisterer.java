@@ -1,17 +1,5 @@
 package de.cuuky.varo.data;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit.HitListener;
 import de.cuuky.varo.command.VaroCommandListener;
@@ -50,7 +38,6 @@ import de.cuuky.varo.command.essentials.UnprotectCommand;
 import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.event.VaroEventListener;
 import de.cuuky.varo.game.world.listener.VaroWorldListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
@@ -81,6 +68,17 @@ import de.cuuky.varo.listener.saveable.InventoryMoveSavableListener;
 import de.cuuky.varo.listener.saveable.PlayerInteractListener;
 import de.cuuky.varo.listener.saveable.SignChangeListener;
 import de.cuuky.varo.listener.spectator.SpectatorListener;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 public final class BukkitRegisterer {
 	
@@ -186,7 +184,6 @@ public final class BukkitRegisterer {
 		registerEvent(new PlayerCommandPreprocessListener());
 		registerEvent(new SpectatorListener());
 		registerEvent(new PlayerRespawnListener());
-		registerEvent(new VaroEventListener());
 		registerEvent(new VaroWorldListener());
 		registerEvent(new FancyEffectListener());
 		registerEvent(new HitListener());

@@ -1,11 +1,5 @@
 package de.cuuky.varo;
 
-import java.io.File;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
@@ -23,6 +17,11 @@ import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -229,11 +228,7 @@ public class Main extends JavaPlugin {
 		return dataManager;
 	}
 
-	public static void setLanguageManager(VaroLanguageManager languageManager) {
-		Main.languageManager = languageManager;
-	}
-
-	public static VaroLanguageManager getLanguageManager() {
+    public static VaroLanguageManager getLanguageManager() {
 		return languageManager;
 	}
 

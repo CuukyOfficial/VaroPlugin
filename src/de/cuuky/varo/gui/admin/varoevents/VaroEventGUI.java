@@ -5,15 +5,18 @@ import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class VaroEventGUI extends VaroListInventory<VaroEvent> {
+import java.util.Arrays;
+
+public class VaroEventGUI extends VaroListInventory<VaroEventType> {
 
     public VaroEventGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, VaroEvent.getEvents());
+        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Arrays.asList(VaroEventType.values()));
     }
 
     @Override
@@ -27,20 +30,22 @@ public class VaroEventGUI extends VaroListInventory<VaroEvent> {
     }
 
     @Override
-    protected ItemStack getItemStack(VaroEvent event) {
-        return new BuildItem().displayName(event.getEventType().getName())
-                .itemstack(new ItemStack(event.getIcon()))
-                .lore(JavaUtils.combineArrays(new String[]{"§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), ""},
-                        JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build();
+    protected ItemStack getItemStack(VaroEventType type) {
+        boolean enabled = VaroEvent.getEvent(type).isEnabled();
+        return new BuildItem().displayName(type.getName())
+                .itemstack(new ItemStack(type.getMaterial()))
+                .lore(JavaUtils.combineArrays(new String[]{"§7Enabled: " + (enabled ? "§a" : "§c") + enabled, ""},
+                        JavaUtils.addIntoEvery(type.getDescription().split("\n"), "§7", true))).build();
     }
 
     @Override
-    protected ItemClick getClick(VaroEvent event) {
+    protected ItemClick getClick(VaroEventType type) {
         return (e) -> {
             if (Main.getVaroGame().getGameState() != GameState.STARTED) {
                 getPlayer().sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
                 return;
             }
+
 
             event.setEnabled(!event.isEnabled());
         };

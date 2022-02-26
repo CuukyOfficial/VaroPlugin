@@ -19,7 +19,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
-import de.cuuky.varo.event.events.MassRecordingVaroEvent;
+import de.cuuky.varo.event.MassRecordingVaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.world.VaroWorld;
