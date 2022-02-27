@@ -72,12 +72,4 @@ public class BotLauncher {
 			e.printStackTrace();
 		}
 	}
-
-	public VaroDiscordBot getDiscordbot() {
-		return this.discordbot;
-	}
-
-	public VaroTelegramBot getTelegrambot() {
-		return this.telegrambot;
-	}
 }
