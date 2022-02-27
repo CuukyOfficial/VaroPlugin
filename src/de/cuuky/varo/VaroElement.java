@@ -4,8 +4,10 @@ import de.cuuky.cfw.configuration.serialization.BasicSerializable;
 import de.cuuky.cfw.configuration.serialization.Serialize;
 
 import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Function;
 
-public abstract class VaroElement extends BasicSerializable {
+public abstract class VaroElement<> extends BasicSerializable {
 
     protected static final int DEFAULT_ID = -1;
 
@@ -17,6 +19,12 @@ public abstract class VaroElement extends BasicSerializable {
     void initialize(Varo varo) {
         this.varo = varo;
         this.onInitialize(varo);
+
+        this.registerPolicy(UUID.class, UUID::toString, UUID::fromString);
+    }
+
+    protected <P, C> void registerPolicy(Class<C> clazz, Function<C, P> supplier, Function<P, C> consumer) {
+
     }
 
     protected abstract void onInitialize(Varo varo);

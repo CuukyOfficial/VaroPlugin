@@ -1,15 +1,15 @@
 package de.cuuky.varo;
 
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArraySet;
 
-public class VaroElementList<T extends VaroElement> extends LinkedHashSet<T> {
+public class IndexedList<T extends VaroElement> extends CopyOnWriteArraySet<T> {
 
     private int highest;
 
-    public VaroElementList() {}
+    public IndexedList() {}
 
-    public VaroElementList(List<T> copy) {
+    public IndexedList(List<T> copy) {
         super(copy);
     }
 

@@ -1,7 +1,8 @@
 package de.cuuky.varo;
 
+import de.cuuky.cfw.Hologramm;
+import de.cuuky.cfw.configuration.serialization.SerializableLocation;
 import de.cuuky.cfw.configuration.serialization.Serialize;
-import de.cuuky.cfw.serialization.CompatibleLocation;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
@@ -15,10 +16,10 @@ import org.bukkit.Material;
 public class Spawn extends VaroElement {
 
     @Serialize("location")
-    private CompatibleLocation location;
+    private SerializableLocation location;
 
     @Serialize("nameTag")
-    private WorldNameTag nameTag;
+    private Hologramm nameTag;
 
     @Serialize("playerId")
     private int playerId;
@@ -27,7 +28,7 @@ public class Spawn extends VaroElement {
 
     private Spawn(VaroPlayer player, int number, Location location) {
         this.id = number;
-        this.location = new CompatibleLocation(location);
+        this.location = new SerializableLocation(location);
         this.playerId = player != null ? player.getId() : -1;
         this.player = player;
     }
@@ -63,15 +64,9 @@ public class Spawn extends VaroElement {
     private void updateNameTag() {
         String name = this.computeNameTagName();
         if (this.nameTag != null) {
-            this.nameTag.updateNameTag(name);
-        } else this.nameTag = new WorldNameTag(this.location.clone().add(0,
+            this.nameTag.initialize(this.varo.getPlugin(), name);
+        } else this.nameTag = new Hologramm(this.varo.getPlugin(), this.location.clone().add(0,
             ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0), name);
-    }
-
-    @Override
-    protected void registerPolicies() {
-        this.registerPolicy(VaroPlayer.class, this.player != null ? this.player::getId : () -> -1, null);
-        super.registerPolicies();
     }
 
     @Override
