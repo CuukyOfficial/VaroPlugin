@@ -3,10 +3,9 @@ package de.cuuky.varo.event;
 import org.bukkit.Material;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 // TODO: Make this access the config and load the players values by a given event name
-public class EventBuilder implements EventInformationHolder, Supplier<VaroEvent> {
+public class EventBuilder implements EventInformationHolder, EventProvider {
 
     private final Function<EventInformationHolder, VaroEvent> creator;
     protected String name;

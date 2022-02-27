@@ -3,7 +3,9 @@ package de.cuuky.varo;
 import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.event.EventProvider;
 import de.cuuky.varo.event.VaroEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -23,7 +26,7 @@ public class Varo {
 
     private final CuukyFrameWork cuukyFrameWork;
 
-    private final Map<String, Supplier<VaroEvent>> eventTypes;
+    private final Map<String, EventProvider> eventTypes;
 
     private final Collection<VaroPlayer> players;
     private final Collection<VaroTeam> teams;
@@ -31,6 +34,8 @@ public class Varo {
     private final Collection<Report> reports;
     private final Collection<VaroEvent> events;
     private final Collection<Spawn> spawns;
+
+    private GameState state;
 
     public Varo(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -46,6 +51,8 @@ public class Varo {
         this.spawns = this.newElementCollection();
 
         VaroEvent.DEFAULT_EVENTS.forEach(b -> this.registerEvent(b.getName(), b));
+
+        this.state = VaroGameState.LOBBY;
     }
 
     private <T extends VaroElement> Collection<T> newElementCollection() {
@@ -70,6 +77,26 @@ public class Varo {
         return this.getElement(this.players, id);
     }
 
+    public Optional<VaroPlayer> getPlayer(String name) {
+        return this.players.stream().filter(p -> p.getName().equals(name)).findAny();
+    }
+
+    public Optional<VaroPlayer> getPlayer(UUID uuid) {
+        return this.players.stream().filter(p -> p.getUUID().equals(uuid)).findAny();
+    }
+
+    public Optional<VaroPlayer> getPlayer(Player player) {
+        return this.getPlayer(player.getUniqueId());
+    }
+
+    public Stream<VaroPlayer> getPlayers() {
+        return this.players.stream();
+    }
+
+    public Stream<VaroPlayer> getOnlinePlayers() {
+        return this.players.stream().filter(VaroPlayer::isOnline);
+    }
+
     public Optional<VaroTeam> getTeam(int id) {
         return this.getElement(this.teams, id);
     }
@@ -78,7 +105,7 @@ public class Varo {
         return this.getElement(this.events, id);
     }
 
-    public Supplier<VaroEvent> registerEvent(String name, Supplier<VaroEvent> builder) {
+    public Supplier<VaroEvent> registerEvent(String name, EventProvider builder) {
         return this.eventTypes.put(name, builder);
     }
 
