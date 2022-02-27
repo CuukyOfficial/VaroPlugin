@@ -16,8 +16,8 @@ public abstract class PlayerListener implements Listener {
         this.checks = checks;
     }
 
-    protected boolean isActivated() {
-        return this.checks.stream().allMatch(c -> c.test(player));
+    protected boolean isDisabled() {
+        return !this.checks.stream().allMatch(c -> c.test(player));
     }
 
     public boolean isPlayer(VaroPlayer player) {

@@ -17,7 +17,7 @@ public class NoMoveListener extends PlayerListener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!this.isActivated())
+        if (this.isDisabled())
             return;
 
         event.setCancelled(true);

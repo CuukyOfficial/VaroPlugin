@@ -17,7 +17,7 @@ public class NoBuildListener extends PlayerListener {
 
     @EventHandler
     public void onPlayerBuild(BlockBreakEvent event) {
-        if (!this.isActivated())
+        if (this.isDisabled())
             return;
 
         event.setCancelled(true);
