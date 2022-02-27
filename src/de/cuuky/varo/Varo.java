@@ -5,6 +5,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.event.EventProvider;
 import de.cuuky.varo.event.VaroEvent;
+import de.cuuky.varo.exceptions.NoSuchElementException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -69,23 +70,23 @@ public class Varo {
         return in.stream().filter(test).findAny();
     }
 
-    private <T extends VaroElement> Optional<T> getElement(Collection<T> in, int id) {
-        return this.getElement(in, element -> element.getId() == id);
+    private <T extends VaroElement> T getElement(Collection<T> in, int id) {
+        return this.getElement(in, element -> element.getId() == id).orElse(null);
     }
 
-    public Optional<VaroPlayer> getPlayer(int id) {
+    public VaroPlayer getPlayer(int id) {
         return this.getElement(this.players, id);
     }
 
-    public Optional<VaroPlayer> getPlayer(String name) {
-        return this.players.stream().filter(p -> p.getName().equals(name)).findAny();
+    public VaroPlayer getPlayer(String name) {
+        return this.players.stream().filter(p -> p.getName().equals(name)).findAny().orElse(null);
     }
 
-    public Optional<VaroPlayer> getPlayer(UUID uuid) {
-        return this.players.stream().filter(p -> p.getUUID().equals(uuid)).findAny();
+    public VaroPlayer getPlayer(UUID uuid) throws NoSuchElementException {
+        return this.players.stream().filter(p -> p.getRealUUID().equals(uuid)).findAny().orElse(null);
     }
 
-    public Optional<VaroPlayer> getPlayer(Player player) {
+    public VaroPlayer getPlayer(Player player) {
         return this.getPlayer(player.getUniqueId());
     }
 
@@ -97,11 +98,11 @@ public class Varo {
         return this.players.stream().filter(VaroPlayer::isOnline);
     }
 
-    public Optional<VaroTeam> getTeam(int id) {
+    public VaroTeam getTeam(int id) {
         return this.getElement(this.teams, id);
     }
 
-    public Optional<VaroEvent> getEvent(int id) {
+    public VaroEvent getEvent(int id) {
         return this.getElement(this.events, id);
     }
 

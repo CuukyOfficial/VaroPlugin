@@ -37,8 +37,8 @@ public class Report extends VaroElement {
 
     @Override
     protected void onInitialize(Varo varo) {
-        this.reported = varo.getPlayer(reportedId).orElse(null);
-        this.reporter = varo.getPlayer(reporterId).orElse(null);
+        this.reported = varo.getPlayer(reportedId);
+        this.reporter = varo.getPlayer(reporterId);
     }
 
     @Override

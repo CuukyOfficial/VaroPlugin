@@ -5,22 +5,20 @@ import de.cuuky.cfw.serialization.CompatibleLocation;
 import de.cuuky.cfw.version.BukkitVersion;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Varo;
-import de.cuuky.varo.VaroElement;
-import de.cuuky.varo.NameTag;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+// TODO: Implement setEnvironment
 public class Spawn extends VaroElement {
 
     @Serialize("location")
     private CompatibleLocation location;
 
     @Serialize("nameTag")
-    private NameTag nameTag;
+    private WorldNameTag nameTag;
 
     @Serialize("playerId")
     private int playerId;
@@ -66,7 +64,7 @@ public class Spawn extends VaroElement {
         String name = this.computeNameTagName();
         if (this.nameTag != null) {
             this.nameTag.updateNameTag(name);
-        } else this.nameTag = new NameTag(this.location.clone().add(0,
+        } else this.nameTag = new WorldNameTag(this.location.clone().add(0,
             ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0), name);
     }
 
@@ -79,7 +77,7 @@ public class Spawn extends VaroElement {
     @Override
     protected void onInitialize(Varo varo) {
         if (this.playerId != -1)
-            this.player = this.varo.getPlayer(this.playerId).orElse(null);
+            this.player = this.varo.getPlayer(this.playerId);
 
         if (this.nameTagEnabled()) {
             this.updateNameTag();

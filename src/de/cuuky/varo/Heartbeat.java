@@ -1,7 +1,6 @@
 package de.cuuky.varo;
 
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.exceptions.NoSuchPlayerException;
 import de.cuuky.varo.heartbeat.PlayerListener;
 import de.cuuky.varo.heartbeat.PlayerListenerBuilder;
 import org.bukkit.event.EventHandler;
@@ -11,8 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.function.Function;
 
 // Implements Listener itself?
@@ -21,9 +20,9 @@ public abstract class Heartbeat extends BukkitRunnable implements Listener {
     private static final int SCHEDULE = 20;
 
     protected Varo varo;
-    private final List<Listener> listener;
-    private final List<PlayerListener> playerListener;
-    private final List<Function<VaroPlayer, PlayerListener>> playerListenerCreator;
+    private final Collection<Listener> listener;
+    private final Collection<PlayerListener> playerListener;
+    private final Collection<Function<VaroPlayer, PlayerListener>> playerListenerCreator;
 
     public Heartbeat(Varo varo) {
         this.varo = varo;
@@ -76,11 +75,11 @@ public abstract class Heartbeat extends BukkitRunnable implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        this.addListener(this.varo.getPlayer(event.getPlayer()).orElseThrow(NoSuchPlayerException::new));
+        this.addListener(this.varo.getPlayer(event.getPlayer()));
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        this.removeListener(this.varo.getPlayer(event.getPlayer()).orElseThrow(NoSuchPlayerException::new));
+        this.removeListener(this.varo.getPlayer(event.getPlayer()));
     }
 }

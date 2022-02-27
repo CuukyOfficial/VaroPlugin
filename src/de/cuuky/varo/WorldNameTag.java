@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 // TODO: Maybe move to CFW or other package
-public class NameTag extends BasicSerializable {
+public class WorldNameTag extends BasicSerializable {
 
     @Serialize("location")
     private CompatibleLocation location;
@@ -28,7 +28,7 @@ public class NameTag extends BasicSerializable {
     @Serialize("nameTagUuid")
     private UUID nameTagUuid;
 
-    public NameTag(Location location, String name) {
+    public WorldNameTag(Location location, String name) {
         this.location = new CompatibleLocation(location);
         this.initialize(name);
     }
