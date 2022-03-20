@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
-public class TeamCommand implements CommandExecutor {
+public class TeamRequestCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

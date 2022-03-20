@@ -41,7 +41,7 @@ import de.cuuky.varo.command.essentials.SetWorldspawnCommand;
 import de.cuuky.varo.command.essentials.SpawnCommand;
 import de.cuuky.varo.command.essentials.SpeedCommand;
 import de.cuuky.varo.command.essentials.SunCommand;
-import de.cuuky.varo.command.essentials.TeamCommand;
+import de.cuuky.varo.command.essentials.TeamRequestCommand;
 import de.cuuky.varo.command.essentials.ThunderCommand;
 import de.cuuky.varo.command.essentials.UnflyCommand;
 import de.cuuky.varo.command.essentials.UnfreezeCommand;
@@ -151,7 +151,7 @@ public final class BukkitRegisterer {
 		registerDynamicCommand("setworldspawn", "Setzt den Spawn", new SetWorldspawnCommand(), ConfigSetting.COMMAND_SETSPAWN_ENABLED);
 		registerDynamicCommand("spawn", "Zeigt Distanz und Information zum Spawn", new SpawnCommand(), ConfigSetting.COMMAND_SPAWN_ENABLED);
 		registerDynamicCommand("sun", "Wechselt zu schönem Wetter", new SunCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
-		registerDynamicCommand(ConfigSetting.COMMAND_TEAM_NAME.getValueAsString(), "Sendet einem anderen Spieler eine Teamanfrage", new TeamCommand(), ConfigSetting.COMMAND_TEAM_ENABLED);
+		registerDynamicCommand(ConfigSetting.COMMAND_TR_NAME.getValueAsString(), "Sendet einem anderen Spieler eine Teamanfrage", new TeamRequestCommand(), ConfigSetting.COMMAND_TR_ENABLED);
 		registerDynamicCommand("rain", "Wechselt zu Regen", new RainCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
 		registerDynamicCommand("thunder", "Wechselt zu Gewitter", new ThunderCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
 		registerDynamicCommand("protect", "Beschützt Spieler vor Schaden", new ProtectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
