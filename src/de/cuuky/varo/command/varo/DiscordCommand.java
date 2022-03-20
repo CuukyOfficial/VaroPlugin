@@ -88,7 +88,7 @@ public class DiscordCommand extends VaroCommand {
 		} catch (Exception e) {}
 
 		if (args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
-			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
 				return;
 			}
@@ -111,7 +111,7 @@ public class DiscordCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_GETLINK.getValue(vp).replace("%player%", args[1]).replace("%user%", user.getName()).replace("%id%", user.getId()));
 		} else if (args[0].equalsIgnoreCase("unlink")) {
-			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
 				return;
 			}
@@ -133,7 +133,7 @@ public class DiscordCommand extends VaroCommand {
 			if (target != null)
 				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(target)));
 		} else if (args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
-			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+			if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean()) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_SYSTEM_DISABLED.getValue(vp));
 				return;
 			}
@@ -167,7 +167,7 @@ public class DiscordCommand extends VaroCommand {
 			Main.getBotLauncher().getDiscordbot().disconnect();
 			Main.getBotLauncher().getDiscordbot().connect();
 			for (Player pl : Bukkit.getOnlinePlayers())
-				if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
+				if (ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
 					pl.kickPlayer(ConfigMessages.VARO_COMMANDS_DISCORD_VERIFY_ENABLED.getValue(vp));
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_RELOADED.getValue(vp));
 		} else if (args[0].equalsIgnoreCase("settings")) {

@@ -32,14 +32,14 @@ public class PlayerLoginListener implements Listener {
 
 		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
-		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
+		if (ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
 			if(!discordBot.getJda().getGatewayIntents().contains(GatewayIntent.GUILD_MEMBERS)) {
 				event.disallow(Result.KICK_OTHER, "§cPrivileged gateway intents have to be enabled in order to use the discord verify system!\n§cPlease enable them and restart the server!\n\n§7Need help? " + Main.DISCORD_INVITE);
 				return;
 			}
 
 			BotRegister reg = BotRegister.getRegister(event.getPlayer().getUniqueId().toString());
-			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
+			if (!ConfigSetting.DISCORDBOT_VERIFY_OPTIONAL.getValueAsBoolean()) {
 				if (reg == null) {
 					reg = new BotRegister(event.getPlayer().getUniqueId().toString(), true);
 					reg.setPlayerName(event.getPlayer().getName());
@@ -56,7 +56,7 @@ public class PlayerLoginListener implements Listener {
 				try {
 					User user = discordBot.getJda().getUserById(reg.getUserId());
 					if (user == null || !discordBot.getMainGuild().isMember(user)) {
-						if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
+						if (!ConfigSetting.DISCORDBOT_VERIFY_OPTIONAL.getValueAsBoolean()) {
 							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
 							vp.setPlayer(null);
 							return;

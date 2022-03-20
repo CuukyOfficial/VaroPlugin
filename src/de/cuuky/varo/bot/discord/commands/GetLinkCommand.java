@@ -26,7 +26,7 @@ public class GetLinkCommand extends DiscordBotCommand {
 			return;
 		}
 
-		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+		if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean()) {
 			event.getChannel().sendMessage("Das Verifzierungs-System wurde in der Config deaktiviert!").queue();
 			return;
 		}

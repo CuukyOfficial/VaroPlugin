@@ -23,7 +23,7 @@ public class RegisterCommand extends DiscordBotCommand {
 		if (event.getAuthor().isBot() || event.getAuthor().equals(super.getDiscordBot().getJda().getSelfUser()))
 			return;
 
-		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+		if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean()) {
 			getDiscordBot().sendMessage("Das Verify-System ist nicht aktiviert!", "ERROR", Color.RED, event.getTextChannel());
 			return;
 		}

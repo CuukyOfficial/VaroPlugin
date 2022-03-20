@@ -130,7 +130,7 @@ public class BotRegister {
 	}
 
 	private static void kickPlayerLater(Player player, String message) {
-		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean())
+		if (ConfigSetting.DISCORDBOT_VERIFY_OPTIONAL.getValueAsBoolean())
 			return;
 
 		new BukkitRunnable() {
@@ -142,10 +142,10 @@ public class BotRegister {
 	}
 
 	private static void loadAll() {
-		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+		if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean())
 			return;
 
-		if (ConfigSetting.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
+		if (ConfigSetting.DISCORDBOT_VERIFY_MYSQL.getValueAsBoolean()) {
 			if (!Main.getDataManager().getMysqlClient().isConnected()) {
 				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
 				return;
@@ -232,10 +232,10 @@ public class BotRegister {
 	}
 
 	public static void saveAll() {
-		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean())
+		if (!ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean())
 			return;
 
-		if (ConfigSetting.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
+		if (ConfigSetting.DISCORDBOT_VERIFY_MYSQL.getValueAsBoolean()) {
 			if (!Main.getDataManager().getMysqlClient().isConnected())
 				return;
 

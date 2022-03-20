@@ -42,7 +42,7 @@ public class DiscordBotGUI extends VaroInventory {
         });
 
         addItem(7, new BuildItem().displayName("§eBotRegister").itemstack(new ItemStack(Material.BOOK)).build(), (event) -> {
-            if (Main.getBotLauncher().getDiscordbot().isEnabled() || !ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+            if (Main.getBotLauncher().getDiscordbot().isEnabled() || !ConfigSetting.DISCORDBOT_VERIFY.getValueAsBoolean()) {
                 getPlayer().sendMessage(Main.getPrefix() + "Das System ist nicht aktiviert!");
                 return;
             }
