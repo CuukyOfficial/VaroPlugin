@@ -169,7 +169,7 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getPlayer().isOp())
+        if (!event.getPlayer().isOp() && !event.getPlayer().hasPermission("varo.ignorespectatorheight"))
             if (shouldCancelSpectatorEvent(event.getPlayer()))
                 if (event.getTo().getY() < ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt()) {
                     Location tp = event.getFrom();
