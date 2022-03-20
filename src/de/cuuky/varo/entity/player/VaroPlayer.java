@@ -595,11 +595,11 @@ public class VaroPlayer extends VaroElement {
 			if (ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
 				if (Main.getBotLauncher() == null)
 					new BukkitRunnable() {
-					@Override
-					public void run() {
-						updateDiscordTeam(oldTeam);
-					}
-				}.runTaskLaterAsynchronously(Main.getInstance(), 1L);
+						@Override
+						public void run() {
+							updateDiscordTeam(oldTeam);
+						}
+					}.runTaskLaterAsynchronously(Main.getInstance(), 1L);
 				else
 					updateDiscordTeam(oldTeam);
 			}
@@ -607,8 +607,10 @@ public class VaroPlayer extends VaroElement {
 			e.printStackTrace();
 		}
 
-		if (isOnline())
+		if (isOnline()) {
 			update();
+			LobbyItem.giveOrRemoveTeamItems(this);
+		}
 
 		// Main#getVaroGame may not be initialized yet
 		if (Main.getVaroGame() != null)

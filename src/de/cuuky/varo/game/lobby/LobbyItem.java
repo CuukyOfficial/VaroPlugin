@@ -43,7 +43,10 @@ public class LobbyItem {
 				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_SLOT.getValueAsInt(), new ItemHookHandler() {
 
 			@Override
-			public void onInteractEntity(PlayerInteractEntityEvent event) {}
+			public void onInteractEntity(PlayerInteractEntityEvent event) {
+				event.setCancelled(true);
+				event.getPlayer().updateInventory();
+			}
 
 			@Override
 			public void onInteract(PlayerInteractEvent event) {}
@@ -84,7 +87,10 @@ public class LobbyItem {
 				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt(), new ItemHookHandler() {
 
 			@Override
-			public void onInteractEntity(PlayerInteractEntityEvent event) {}
+			public void onInteractEntity(PlayerInteractEntityEvent event) {
+				event.setCancelled(true);
+				event.getPlayer().updateInventory();
+			}
 
 			@Override
 			public void onInteract(PlayerInteractEvent event) {
@@ -106,7 +112,10 @@ public class LobbyItem {
 					.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt(), new ItemHookHandler() {
 	
 				@Override
-				public void onInteractEntity(PlayerInteractEntityEvent event) {}
+				public void onInteractEntity(PlayerInteractEntityEvent event) {
+					event.setCancelled(true);
+					event.getPlayer().updateInventory();
+				}
 	
 				@Override
 				public void onInteract(PlayerInteractEvent event) {
