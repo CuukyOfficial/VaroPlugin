@@ -37,8 +37,6 @@ public class SignChangeListener implements Listener {
 
 		BlockFace attachedFace = VersionUtils.getVersionAdapter().getSignAttachedFace(event.getBlock());
 		
-		System.out.println(attachedFace);
-		
 		if(attachedFace == null)
 			throw new Error("attachedFace should not be null");
 		
