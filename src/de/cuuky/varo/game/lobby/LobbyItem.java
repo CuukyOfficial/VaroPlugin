@@ -34,7 +34,7 @@ public class LobbyItem {
 	}
 
 	public static void giveItems(Player player) {
-		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean())
+		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
 			return;
 		
 		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
@@ -72,7 +72,7 @@ public class LobbyItem {
 	}
 
 	public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean())
+		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
 			return;
 		
 		if (varoPlayer.getTeam() == null) {
