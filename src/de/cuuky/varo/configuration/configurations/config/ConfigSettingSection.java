@@ -1,44 +1,46 @@
 package de.cuuky.varo.configuration.configurations.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Material;
+
+import de.cuuky.cfw.version.BukkitVersion;
+import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
-import org.bukkit.Material;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public enum ConfigSettingSection implements SectionConfiguration {
 
-	ACTIVITY("Activity", Material.FURNACE, "Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen."),
+	ACTIVITY("Activity", Materials.FURNACE.parseMaterial(), "Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen."),
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
-	BACKPACKS("Backpacks", Material.CHEST, "Alle Einstellungen zur Rucksaecken"),
-	BORDER("Border", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
-	// BAN("Ban", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zu Bans vornehmen.\nDas Bannsystem wird von Cuuky geleitet und von allen Varo-Servern genutzt"),
+	BACKPACKS("Backpacks", Materials.ENDER_CHEST.parseMaterial(), "Alle Einstellungen zur Rucksaecken"),
+	BORDER("Border", VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) ? Materials.BARRIER.parseMaterial() : Materials.OAK_FENCE.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
-	COMBATLOG("Combatlog", Material.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
+	COMBATLOG("Combatlog", Materials.DIAMOND_SWORD.parseMaterial(), "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
 	COMMANDS("Commands", Materials.COMMAND_BLOCK.parseMaterial(), "Hier kannst Commands aktivieren oder deaktivieren (Neustart erforderlich)"),
 	DEATH("Death", Materials.SKELETON_SKULL.parseMaterial(), "Hier kannst du Einstellungen zum Tod eines Spielers vornehmen."),
-	DISCONNECT("Disconnect", Material.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
-	DISCORD("Discord", Material.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
+	DISCONNECT("Disconnect", Materials.COAL.parseMaterial(), "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
+	DISCORD("Discord", Materials.DISPENSER.parseMaterial(), "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
 	FINALE("Finale", Materials.END_PORTAL_FRAME.parseMaterial(), "Hier kannst du Einstellungen zum Finale des Projektes vornehmen."),
-//	GUI("Gui", Materials.COMPASS.parseMaterial(), "Hier kannst du Einstellungen zur Gui vornehmen."),
+	INTRO("Intro", Materials.FIREWORK_ROCKET.parseMaterial(), "Hier kannst du Einstellungen zum Intro vornehmen."),
 	JOIN_SYSTEMS("JoinSystems", Materials.RED_BED.parseMaterial(), "Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen."),
-	MAIN("Main", Material.LEVER, "Hier kannst du alle Haupteinstellungen vornehmen."),
-	OFFLINEVILLAGER("OfflineVillager", Materials.EMERALD.parseMaterial(), "Einstellungen zu den OfflineVillagern"),
-	OTHER("Other", Material.REDSTONE, "Hier findest du alle restlichen Einstellungen."),
-	PROTECTIONS("Protections", Material.DIAMOND_CHESTPLATE, "Hier kannst du alle Einstellungen zu Schutzzeiten vornehmen."),
+	MAIN("Main", Materials.LEVER.parseMaterial(), "Hier kannst du alle Haupteinstellungen vornehmen."),
+	OFFLINEVILLAGER("OfflineVillager", Materials.VILLAGER_SPAWN_EGG.parseMaterial(), "Einstellungen zu den OfflineVillagern"),
+	OTHER("Other", Materials.REDSTONE.parseMaterial(), "Hier findest du alle restlichen Einstellungen."),
+	PROTECTIONS("Protections", Materials.DIAMOND_CHESTPLATE.parseMaterial(), "Hier kannst du alle Einstellungen zu Schutzzeiten vornehmen."),
 	REPORT("Report", Materials.REDSTONE_TORCH.parseMaterial(), "Hier kannst du Einstellungen zum Report-System vornehmen."),
 	SERVER_LIST("Serverlist", Materials.SIGN.parseMaterial(), "Hier kannst du die Anzeige des Servers in der Serverliste konfigurieren."),
-	START("Start", Material.ACTIVATOR_RAIL, "Hier kannst du Einstellungen zum Start deines Plugins vornehmen."),
+	START("Start", Materials.ACTIVATOR_RAIL.parseMaterial(), "Hier kannst du Einstellungen zum Start deines Plugins vornehmen."),
 	STRIKE("Strike", Materials.PAPER.parseMaterial(), "Hier kannst du Einstellungen zu den Strikes vornehmen."),
-	TEAMS("Teams", Material.BOOK, "Hier kannst du Einstellungen zu Teams vornehmen."),
-	TELEGRAM("Telegram", Materials.MAP.parseMaterial(), "Alle Einstellungen zum Telegram-Bot."),
-	WORLD("World", Material.GRASS, "Hier kannst du Einstellungen zur Welt vornehmen."),
-	YOUTUBE("YouTube", Material.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen."),
-	TABLIST("TablistSettings", Material.STONE_SWORD, "Hier kannst du Einstellungen zur Tablist vornehmen."),
-	INTRO("Intro", Materials.VILLAGER_SPAWN_EGG.parseMaterial(), "Hier kannst du Einstellungen zum Intro vornehmen.");
+	TABLIST("TablistSettings", Material.PAINTING, "Hier kannst du Einstellungen zur Tablist vornehmen."),
+	TEAMS("Teams", Materials.DIAMOND_HELMET.parseMaterial(), "Hier kannst du Einstellungen zu Teams vornehmen."),
+	TELEGRAM("Telegram", Materials.DROPPER.parseMaterial(), "Alle Einstellungen zum Telegram-Bot."),
+	WORLD("World", Materials.GRASS.parseMaterial(), "Hier kannst du Einstellungen zur Welt vornehmen."),
+	YOUTUBE("YouTube", Materials.MAP.parseMaterial(), "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");
+	
 
 	private String name, description;
 	private Material material;
