@@ -47,7 +47,7 @@ public final class VaroUtils {
 	public static void doRandomTeam(int teamSize) {
 		if (teamSize >= 2) {
 			ArrayList<VaroPlayer> finished = new ArrayList<>();
-			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
+			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
 				if (finished.contains(vp) || vp.getStats().isSpectator() || vp.getTeam() != null)
 					continue;
 
@@ -56,7 +56,7 @@ public final class VaroUtils {
 				finished.add(vp);
 
 				int missingMember = teamSize - 1;
-				for (VaroPlayer othervp : VaroPlayer.getOnlinePlayer()) {
+				for (VaroPlayer othervp : VaroPlayer.getVaroPlayers()) {
 					if (missingMember == 0)
 						break;
 
@@ -80,7 +80,7 @@ public final class VaroUtils {
 					team.addMember(teamPl);
 			}
 		} else if (teamSize == 1) {
-			for (VaroPlayer pl : VaroPlayer.getOnlinePlayer()) {
+			for (VaroPlayer pl : VaroPlayer.getVaroPlayers()) {
 				if (pl.getTeam() != null || pl.getStats().isSpectator())
 					continue;
 
