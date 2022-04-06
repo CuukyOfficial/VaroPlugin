@@ -137,6 +137,11 @@ processResources {
     }
 }
 
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
+
 test {
 	useJUnitPlatform()
 
