@@ -4,7 +4,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 
 group 'de.varoplugin'
-version '4.9.3'
+version '4.9.4'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -131,6 +131,11 @@ processResources {
         filter ReplaceTokens, tokens: [version: project.version]
         filter ReplaceTokens, tokens: [author: 'Cuuky']
     }
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
 }
 
 test {

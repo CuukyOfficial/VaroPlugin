@@ -100,6 +100,10 @@ public class VaroGame implements VaroSerializeable {
 
         new VaroBackup();
         LobbyItem.removeHooks();
+
+        if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
+            removeAbsentAtStart();
+
         if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
             VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
@@ -114,9 +118,6 @@ public class VaroGame implements VaroSerializeable {
             new PlayerSort().sortPlayers();
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
         }
-
-        if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
-            removeAbsentAtStart();
 
         if (minuteTimer != null)
             minuteTimer.remove();
