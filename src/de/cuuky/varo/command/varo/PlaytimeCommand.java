@@ -19,6 +19,6 @@ public class PlaytimeCommand extends VaroCommand {
         if (sender instanceof Player) {
             String msg = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PLAYTIME.getValue(vp, vp);
             vp.sendMessage(msg);
-        } else sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+        } else sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
     }
 }
