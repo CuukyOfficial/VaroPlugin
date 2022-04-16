@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.app.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.items.ItemListInventory;
 import de.cuuky.varo.list.VaroList;
@@ -23,7 +24,7 @@ public class ItemCommand extends VaroCommand {
     @Override
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
         if (vp == null) {
-            sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+            sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
             return;
         }
 

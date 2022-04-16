@@ -17,7 +17,7 @@ public class ActionbarCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (vp == null) {
-			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 			return;
 		}
 

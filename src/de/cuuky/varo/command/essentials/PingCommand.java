@@ -17,7 +17,7 @@ public class PingCommand implements CommandExecutor {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if (args.length == 0) {
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 				return false;
 			}
 

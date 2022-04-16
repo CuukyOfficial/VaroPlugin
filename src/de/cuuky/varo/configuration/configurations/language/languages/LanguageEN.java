@@ -197,16 +197,11 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_ERROR("varoCommands.error.error", "&7An error has occurred!"),
 
     VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport was saved as &c%filename% &7! Please upload this file to our Discord server: " + Main.DISCORD_INVITE),
-    VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD("varoCommands.bugreport.sendtodiscord", "Please send the bug report as FILE manually to the discord in the support, because the upload did not work!"),
     VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION("varoCommands.bugreport.outdatedversion", "You cannot make bug reports from an old plugin version!"),
     VARO_COMMANDS_BUGREPORT_CURRENT_VERSION("varoCommands.bugreport.currentversion", "Current version: &c%version%"),
     VARO_COMMANDS_BUGREPORT_NEWEST_VERSION("varoCommands.bugreport.newestversion", "Latest version: &a%version%"),
     VARO_COMMANDS_BUGREPORT_UPDATE("varoCommands.bugreport.update", "&7Use %colorcode%/varo update &7to update."),
     VARO_COMMANDS_BUGREPORT_COLLECTING_DATA("varoCommands.bugreport.collectingdata", "Data is being collected..."),
-    VARO_COMMANDS_BUGREPORT_UPLOADING("varoCommands.bugreport.uploading", "Uploading bug report..."),
-    VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR("varoCommands.bugreport.uploaderror", "The bug report could not be uploaded!"),
-    VARO_COMMANDS_BUGREPORT_UPLOADED("varoCommands.bugreport.uploaded", "Bugreport has been uploaded to &c%url% &7!"),
-    VARO_COMMANDS_BUGREPORT_CLICK_ME("varoCommands.bugreport.clickme", " &7(&aClick me&7)"),
 
     VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE("varoCommands.abort.notactive", "The start countdown is not active!"),
     VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED("varoCommands.abort.stopped", "Start countdown successfully stopped!"),
@@ -272,6 +267,7 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_CHECKCOMBAT_HELP("varoCommands.checkcombat.help", "%colorcode%/varo checkcombat"),
     VARO_COMMANDS_CHECKCOMBAT_INCOMBAT("varoCommands.checkcombat.incombat", "&7You are currently in %colorcode%combat&7!"),
     VARO_COMMANDS_CHECKCOMBAT_NOTINCOMBAT("varoCommands.checkcombat.notincombat", "&7You are currently %colorcode%not in combat&7!"),
+    VARO_COMMANDS_EPISODES("varoCommands.episodes", "You have already played %colorcode%%episodesPlayedPlus1% &7episode(s). You have %colorcode%%sessions% &7episode(s) left for today"),
     VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7The game is already in the lobby phase!"),
     VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7The games has been restarted."),
     VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboards are disabled."),
@@ -303,7 +299,7 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
     VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Use %colorcode%/varo discord verify remove &7to remove the verification."),
 
-    VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7The rest of your time: %formattedCountdown%&7."),
+    VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7Time remaining: %formattedCountdown%&7."),
 
     COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cAn error occurred while enabling Anti-Xray. Please check if your server version (%version%) is based on spigot."),
     COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Installing Anti-Xray... The server will restart afterwards."),
