@@ -3,13 +3,10 @@ package de.cuuky.varo.command.varo;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.recovery.VaroFileUploader;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
@@ -37,23 +34,5 @@ public class BugreportCommand extends VaroCommand {
 		}
 
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_CREATED.getValue(vp).replace("%filename%", bugreport.getZipFile().getPath().toString()));
-		VaroFileUploader uploader = new VaroFileUploader(bugreport.getZipFile());
-
-
-		if(args.length == 1 && args[0].equalsIgnoreCase("upload")) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADING.getValue(vp));
-			String url = uploader.uploadFile();
-
-			if (url == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR.getValue(vp));
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD.getValue(vp));
-			} else {
-				String message = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPLOADED.getValue(vp).replace("%url%", url);
-				if (vp != null && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
-					vp.getVersionAdapter().sendLinkedMessage(message + ConfigMessages.VARO_COMMANDS_BUGREPORT_CLICK_ME.getValue(vp), url);
-				else
-					sender.sendMessage(message);
-			}
-		}
 	}
 }

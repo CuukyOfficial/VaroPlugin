@@ -197,16 +197,11 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_ERROR("varoCommands.error.error", "&7An error has occurred!"),
 
     VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport was saved as &c%filename% &7! Please upload this file to our Discord server: " + Main.DISCORD_INVITE),
-    VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD("varoCommands.bugreport.sendtodiscord", "Please send the bug report as FILE manually to the discord in the support, because the upload did not work!"),
     VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION("varoCommands.bugreport.outdatedversion", "You cannot make bug reports from an old plugin version!"),
     VARO_COMMANDS_BUGREPORT_CURRENT_VERSION("varoCommands.bugreport.currentversion", "Current version: &c%version%"),
     VARO_COMMANDS_BUGREPORT_NEWEST_VERSION("varoCommands.bugreport.newestversion", "Latest version: &a%version%"),
     VARO_COMMANDS_BUGREPORT_UPDATE("varoCommands.bugreport.update", "&7Use %colorcode%/varo update &7to update."),
     VARO_COMMANDS_BUGREPORT_COLLECTING_DATA("varoCommands.bugreport.collectingdata", "Data is being collected..."),
-    VARO_COMMANDS_BUGREPORT_UPLOADING("varoCommands.bugreport.uploading", "Uploading bug report..."),
-    VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR("varoCommands.bugreport.uploaderror", "The bug report could not be uploaded!"),
-    VARO_COMMANDS_BUGREPORT_UPLOADED("varoCommands.bugreport.uploaded", "Bugreport has been uploaded to &c%url% &7!"),
-    VARO_COMMANDS_BUGREPORT_CLICK_ME("varoCommands.bugreport.clickme", " &7(&aClick me&7)"),
 
     VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE("varoCommands.abort.notactive", "The start countdown is not active!"),
     VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED("varoCommands.abort.stopped", "Start countdown successfully stopped!"),

@@ -199,17 +199,12 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_ERROR_WRONGVERSION("varoCommands.error.wrongVersion", "&7Dieses Feature ist vor der Version %colorcode%%version% &7nicht verfügbar!"),
 	VARO_COMMANDS_ERROR("varoCommands.error.error", "&7Es ist ein Fehler aufgetreten!"),
 
-	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert! Bitte lade die Datei auf unserem Discord hoch: " + Main.DISCORD_INVITE),
-	VARO_COMMANDS_BUGREPORT_SEND_TO_DISCORD("varoCommands.bugreport.sendtodiscord", "Bitte sende den Bugreport als DATEI manuell auf den Discord in den Support, da das Hochladen nicht funktioniert hat!"),
 	VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION("varoCommands.bugreport.outdatedversion", "Du kannst keine Bugreports von einer alten Plugin-Version machen!"),
 	VARO_COMMANDS_BUGREPORT_CURRENT_VERSION("varoCommands.bugreport.currentversion", "Derzeitige Version: &c%version%"),
 	VARO_COMMANDS_BUGREPORT_NEWEST_VERSION("varoCommands.bugreport.newestversion", "Neueste Version: &a%version%"),
 	VARO_COMMANDS_BUGREPORT_UPDATE("varoCommands.bugreport.update", "&7Nutze %colorcode%/varo update &7zum updaten."),
 	VARO_COMMANDS_BUGREPORT_COLLECTING_DATA("varoCommands.bugreport.collectingdata", "Daten werden gesammelt..."),
-	VARO_COMMANDS_BUGREPORT_UPLOADING("varoCommands.bugreport.uploading", "Lade Bugreport hoch..."),
-	VARO_COMMANDS_BUGREPORT_UPLOAD_ERROR("varoCommands.bugreport.uploaderror", "Der Bugreport konnte nicht hochgeladen werden!"),
-	VARO_COMMANDS_BUGREPORT_UPLOADED("varoCommands.bugreport.uploaded", "Bugreport wurde auf &c%url% &7hochgeladen!"),
-	VARO_COMMANDS_BUGREPORT_CLICK_ME("varoCommands.bugreport.clickme", " &7(&aKlick mich&7)"),
+	VARO_COMMANDS_BUGREPORT_CREATED("varoCommands.bugreport.created", "Bugreport wurde unter &c%filename% &7gespeichert! Bitte lade die Datei auf unserem Discord hoch: " + Main.DISCORD_INVITE),
 
 	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE("varoCommands.abort.notactive", "Der Startcountdown ist nicht aktiv!"),
 	VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED("varoCommands.abort.stopped", "Startcountdown erfolgreich gestoppt!"),
