@@ -275,6 +275,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_CHECKCOMBAT_HELP("varoCommands.checkcombat.help", "%colorcode%/varo checkcombat"),
 	VARO_COMMANDS_CHECKCOMBAT_INCOMBAT("varoCommands.checkcombat.incombat", "&7Du bist momentan im %colorcode%Combat&7!"),
 	VARO_COMMANDS_CHECKCOMBAT_NOTINCOMBAT("varoCommands.checkcombat.notincombat", "&7Du bist momentan nicht im %colorcode%Combat&7!"),
+	VARO_COMMANDS_EPISODES("varoCommands.episodes", "Du hast bereits %colorcode%%episodesPlayedPlus1% &7Folge(n) gespielt und kannst heute noch %colorcode%%sessions% &7weitere Folge(n) spielen"),
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7Das Spiel wurde neugestartet."),
 	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboard sind deaktiviert."),

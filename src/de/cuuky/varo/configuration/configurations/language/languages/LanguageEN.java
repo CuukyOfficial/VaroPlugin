@@ -272,6 +272,7 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_CHECKCOMBAT_HELP("varoCommands.checkcombat.help", "%colorcode%/varo checkcombat"),
     VARO_COMMANDS_CHECKCOMBAT_INCOMBAT("varoCommands.checkcombat.incombat", "&7You are currently in %colorcode%combat&7!"),
     VARO_COMMANDS_CHECKCOMBAT_NOTINCOMBAT("varoCommands.checkcombat.notincombat", "&7You are currently %colorcode%not in combat&7!"),
+    VARO_COMMANDS_EPISODES("varoCommands.episodes", "You have already played %colorcode%%episodesPlayedPlus1% &7episode(s). You have %colorcode%%sessions% &7episode(s) left for today"),
     VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7The game is already in the lobby phase!"),
     VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7The games has been restarted."),
     VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboards are disabled."),

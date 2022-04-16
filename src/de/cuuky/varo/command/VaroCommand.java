@@ -51,6 +51,7 @@ public abstract class VaroCommand {
 		new ReviveCommand();
 		new PlaytimeCommand();
 		new CheckCombatCommand();
+		new EpisodesCommand();
 		new CommandCommand();
 		// new TestCommand();
 	}
