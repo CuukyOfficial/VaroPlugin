@@ -49,6 +49,7 @@ import de.cuuky.varo.command.essentials.UnmuteCommand;
 import de.cuuky.varo.command.essentials.UnprotectCommand;
 import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
+import de.cuuky.varo.command.essentials.VaroTimeCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.event.VaroEventListener;
 import de.cuuky.varo.game.world.listener.VaroWorldListener;
@@ -123,10 +124,11 @@ public final class BukkitRegisterer {
 	}
 
 	public static void registerCommands() {
-		registerDynamicCommand(ConfigSetting.COMMAND_VARO_NAME.getValueAsString(), "Hauptbefehl des Plugins", new VaroCommandListener(), ConfigSetting.COMMAND_VARO_ENABLED, "varoplugin");
 		registerDynamicCommand("antixray", "Schaltet einen Schutz vor X-Ray an und aus", new AntiXrayCommand(), ConfigSetting.COMMAND_ANTIXRAY_ENABLED);
+		registerDynamicCommand("border", "Zeigt Infos zur Border", new BorderCommand(), ConfigSetting.COMMAND_BORDER_ENABLED, "setborder");
 		registerDynamicCommand("broadcast", "Sendet eine Nachricht an den Server", new BroadcastCommand(), ConfigSetting.COMMAND_BROADCAST_ENABLED, "bc");
 		registerDynamicCommand("chatclear", "Leert den Chat", new ChatClearCommand(), ConfigSetting.COMMAND_CHATCLEAR_ENABLED, "cc");
+		registerDynamicCommand("countdown", "Startet einen Countdown", new CountdownCommand(), ConfigSetting.COMMAND_COUNTDOWN_ENABLED);
 		registerDynamicCommand("day", "Setzt die Tageszeit auf Tag", new DayCommand(), ConfigSetting.COMMAND_TIME_ENABLED);
 		registerDynamicCommand("fly", "Lässt dich oder einen Spieler fliegen", new FlyCommand(), ConfigSetting.COMMAND_FLY_ENABLED);
 		registerDynamicCommand("freeze", "Lässt einen Spieler einfrieren", new FreezeCommand(), ConfigSetting.COMMAND_FREEZE_ENABLED, "nomove");
@@ -134,30 +136,31 @@ public final class BukkitRegisterer {
 		registerDynamicCommand("heal", "Heilt einen Spieler", new HealCommand(), ConfigSetting.COMMAND_HEAL_ENABLED, "feed");
 		registerDynamicCommand("info", "Zeigt Infos über einen Spieler", new InfoCommand(), ConfigSetting.COMMAND_INFO_ENABLED, "life");
 		registerDynamicCommand("invsee", "Zeigt das Inventar eines anderen Spielers", new InvSeeCommand(), ConfigSetting.COMMAND_INVSEE_ENABLED, "inventorysee");
+		registerDynamicCommand("language", "Changes language of player", new LanguageCommand(), ConfigSetting.COMMAND_LANGUAGE_ENABLED, "lang");
 		registerDynamicCommand("message", "Schreibt einem Spieler eine Nachricht", new MessageCommand(), ConfigSetting.COMMAND_MESSAGE_ENABLED, "msg");
 		registerDynamicCommand("mute", "Mutet einen Spieler", new MuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
 		registerDynamicCommand("night", "Setzt die Tageszeit auf Nacht", new NightCommand(), ConfigSetting.COMMAND_TIME_ENABLED);
+		registerDynamicCommand("performance", "Verbessert die Performance", new PerformanceCommand(), ConfigSetting.COMMAND_PERFORMANCE_ENABLED);
 		registerDynamicCommand("ping", "Zeigt den Ping von dir oder einem Spieler", new PingCommand(), ConfigSetting.COMMAND_PING_ENABLED);
+		registerDynamicCommand("protect", "Beschützt Spieler vor Schaden", new ProtectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
+		registerDynamicCommand("rain", "Wechselt zu Regen", new RainCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
 		registerDynamicCommand("reply", "Antwortet einem Spieler", new ReplyCommand(), ConfigSetting.COMMAND_MESSAGE_ENABLED, "r");
-		registerDynamicCommand("speed", "Setzt die Geschwindigkeit von dir oder einem Spieler", new SpeedCommand(), ConfigSetting.COMMAND_SPEED_ENABLED);
-		registerDynamicCommand("vanish", "Versteckt dich oder einen Spieler vor allen anderen", new VanishCommand(), ConfigSetting.COMMAND_VANISH_ENABLED, "v");
 		registerDynamicCommand("report", "Reporte einen Spieler", new ReportCommand(), ConfigSetting.COMMAND_REPORT_ENABLED);
+		registerDynamicCommand("setworldspawn", "Setzt den Spawn", new SetWorldspawnCommand(), ConfigSetting.COMMAND_SETSPAWN_ENABLED);
+		registerDynamicCommand("spawn", "Zeigt Distanz und Information zum Spawn", new SpawnCommand(), ConfigSetting.COMMAND_SPAWN_ENABLED);
+		registerDynamicCommand("speed", "Setzt die Geschwindigkeit von dir oder einem Spieler", new SpeedCommand(), ConfigSetting.COMMAND_SPEED_ENABLED);
+		registerDynamicCommand("sun", "Wechselt zu schönem Wetter", new SunCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
+		registerDynamicCommand("thunder", "Wechselt zu Gewitter", new ThunderCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
+		registerDynamicCommand(ConfigSetting.COMMAND_TR_NAME.getValueAsString(), "Sendet einem anderen Spieler eine Teamanfrage", new TeamRequestCommand(), ConfigSetting.COMMAND_TR_ENABLED);
 		registerDynamicCommand("unfly", "Lässt dich oder einen Spieler nicht mehr fliegen", new UnflyCommand(), ConfigSetting.COMMAND_FLY_ENABLED);
 		registerDynamicCommand("unfreeze", "Entfriert einen Spieler", new UnfreezeCommand(), ConfigSetting.COMMAND_FREEZE_ENABLED, "move");
 		registerDynamicCommand("unmute", "Entmutet einen Spieler", new UnmuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
 		registerDynamicCommand("unprotect", "Beendet die Beschützung vor Schaden von Spielern", new UnprotectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
 		registerDynamicCommand("usage", "Zeigt die Nutzung des Servers", new UsageCommand(), ConfigSetting.COMMAND_USAGE_ENABLED);
-		registerDynamicCommand("border", "Zeigt Infos zur Border", new BorderCommand(), ConfigSetting.COMMAND_BORDER_ENABLED, "setborder");
-		registerDynamicCommand("setworldspawn", "Setzt den Spawn", new SetWorldspawnCommand(), ConfigSetting.COMMAND_SETSPAWN_ENABLED);
-		registerDynamicCommand("spawn", "Zeigt Distanz und Information zum Spawn", new SpawnCommand(), ConfigSetting.COMMAND_SPAWN_ENABLED);
-		registerDynamicCommand("sun", "Wechselt zu schönem Wetter", new SunCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
-		registerDynamicCommand(ConfigSetting.COMMAND_TR_NAME.getValueAsString(), "Sendet einem anderen Spieler eine Teamanfrage", new TeamRequestCommand(), ConfigSetting.COMMAND_TR_ENABLED);
-		registerDynamicCommand("rain", "Wechselt zu Regen", new RainCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
-		registerDynamicCommand("thunder", "Wechselt zu Gewitter", new ThunderCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);
-		registerDynamicCommand("protect", "Beschützt Spieler vor Schaden", new ProtectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
-		registerDynamicCommand("countdown", "Startet einen Countdown", new CountdownCommand(), ConfigSetting.COMMAND_COUNTDOWN_ENABLED);
-		registerDynamicCommand("performance", "Verbessert die Performance", new PerformanceCommand(), ConfigSetting.COMMAND_PERFORMANCE_ENABLED);
-		registerDynamicCommand("language", "Changes language of player", new LanguageCommand(), ConfigSetting.COMMAND_LANGUAGE_ENABLED, "lang");
+		registerDynamicCommand("vanish", "Versteckt dich oder einen Spieler vor allen anderen", new VanishCommand(), ConfigSetting.COMMAND_VANISH_ENABLED, "v");
+		registerDynamicCommand(ConfigSetting.COMMAND_VARO_NAME.getValueAsString(), "Hauptbefehl des Plugins", new VaroCommandListener(), ConfigSetting.COMMAND_VARO_ENABLED, "varoplugin");
+		registerDynamicCommand("varotime", "Zeigt die verbleibende Session-Zeit an", new VaroTimeCommand(), ConfigSetting.COMMAND_VAROTIME_ENABLED, "vt");
+		
 	}
 
 	public static void registerEvents() {

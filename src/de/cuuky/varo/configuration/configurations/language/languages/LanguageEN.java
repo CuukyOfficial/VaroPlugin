@@ -299,7 +299,7 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_DISCORD_VERIFY_ACCOUNT("varoCommands.discord.account", "&7Account: %colorcode%%account%"),
     VARO_COMMANDS_DISCORD_VERIFY_REMOVE_USAGE("varoCommands.discord.remove.usage", "&7Use %colorcode%/varo discord verify remove &7to remove the verification."),
 
-    VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7The rest of your time: %formattedCountdown%&7."),
+    VARO_COMMANDS_PLAYTIME("varoCommands.playtime", "&7Time remaining: %formattedCountdown%&7."),
 
     COMMANDS_XRAY_ERROR_NOT_AVAIALABLE("varoCommands.xray.errorNotAvailable", "&cAn error occurred while enabling Anti-Xray. Please check if your server version (%version%) is based on spigot."),
     COMMANDS_XRAY_INSTALLING_PLUGIN("varoCommands.xray.installingPlugin", "Installing Anti-Xray... The server will restart afterwards."),
