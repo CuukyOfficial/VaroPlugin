@@ -209,8 +209,9 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE("varoCommands.abort.notactive", "Der Startcountdown ist nicht aktiv!"),
 	VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED("varoCommands.abort.stopped", "Startcountdown erfolgreich gestoppt!"),
 
-	VARO_COMMANDS_ACTIONBAR_ACTIVATED("varoCommands.actionbar.activated", "Du siehst nun die Zeit in der Actionbar!"),
-	VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "Du siehst nun nicht mehr die Zeit in der Actionbar!"),
+	VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "&7Die Actionbar ist deaktiviert!"),
+	VARO_COMMANDS_ACTIONBAR_ENABLED("varoCommands.actionbar.enabled", "Du siehst nun die Actionbar!"),
+	VARO_COMMANDS_ACTIONBAR_DISABLED("varoCommands.actionbar.disabled", "Du siehst nun nicht mehr die Actionbar!"),
 
 	VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autosetup.notsetupyet", "Das AutoSetup wurde noch nicht in der Config eingerichtet!"),
 	VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autosetup.finished", "Der AutoSetup ist fertig."),
@@ -273,7 +274,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_EPISODES("varoCommands.episodes", "Du hast bereits %colorcode%%episodesPlayedPlus1% &7Folge(n) gespielt und kannst heute noch %colorcode%%sessions% &7weitere Folge(n) spielen"),
 	VARO_COMMANDS_RESTART_IN_LOBBY("varoCommands.restart.inlobby", "&7Das Spiel befindet sich bereits in der Lobby-Phase!"),
 	VARO_COMMANDS_RESTART_RESTARTED("varoCommands.restart.restarted", "&7Das Spiel wurde neugestartet."),
-	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Scoreboard sind deaktiviert."),
+	VARO_COMMANDS_SCOREBOARD_DEACTIVATED("varoCommands.scoreboard.deactivated", "&7Das Scoreboard ist deaktiviert."),
 	VARO_COMMANDS_SCOREBOARD_ENABLED("varoCommands.scoreboard.enabled", "&7Du siehst nun das Scoreboard."),
 	VARO_COMMANDS_SCOREBOARD_DISABLED("varoCommands.scoreboard.disabled", "&7Du siehst nun das Scoreboard."),
 	VARO_COMMANDS_SORT_HELP("varoCommands.sort.help", "%colorcode%/varo sort"),

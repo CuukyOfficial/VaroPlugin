@@ -14,6 +14,7 @@ import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.command.custom.CustomCommandManager;
 import de.cuuky.varo.configuration.ConfigHandler;
+import de.cuuky.varo.configuration.configurations.config.ActionbarConfig;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ScoreboardConfig;
 import de.cuuky.varo.configuration.configurations.config.TablistConfig;
@@ -47,6 +48,7 @@ public class DataManager {
 	private ConfigHandler configHandler;
 	private ScoreboardConfig scoreboardConfig;
 	private TablistConfig tablistConfig;
+	private ActionbarConfig actionbarConfig;
 	private NameTagGroup nameTagGroup;
 	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
@@ -76,6 +78,7 @@ public class DataManager {
 		this.libraryLoader = new LibraryLoader();
 		this.scoreboardConfig = new ScoreboardConfig();
 		this.tablistConfig = new TablistConfig();
+		this.actionbarConfig = new ActionbarConfig();
 		this.nameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
 		new DefaultPresetLoader();
@@ -177,13 +180,17 @@ public class DataManager {
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
 	}
-	
+
 	public ScoreboardConfig getScoreboardConfig() {
 		return scoreboardConfig;
 	}
 
 	public TablistConfig getTablistConfig() {
 		return tablistConfig;
+	}
+
+	public ActionbarConfig getActionbarConfig() {
+		return this.actionbarConfig;
 	}
 
 	public NameTagGroup getNameTagGroup() {

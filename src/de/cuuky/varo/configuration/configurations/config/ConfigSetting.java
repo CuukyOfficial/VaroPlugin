@@ -140,7 +140,6 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_VERIFY_PASSWORD(ConfigSettingSection.DISCORD, "verify.mysql.password", "PASSWORD_HERE", "Passwort fuer MySQL Nutzer,\nwelcher auf die Datenbank zugreifen soll"),
 	DISCORDBOT_VERIFY_USER(ConfigSettingSection.DISCORD, "verify.mysql.user", "USER_HERE", "MySQL Nutzer, welcher auf die Datenbank zugreifen soll"),
 
-	DISTANCE_TO_BORDER_REQUIRED(ConfigSettingSection.BORDER, "distanceToBorderRequired", -1, "Die Distanz, die der Spieler haben muss,\ndamit die Distanz angezeigt wird."),
 	DO_DAILY_BACKUPS(ConfigSettingSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),
 
 	DO_RANDOMTEAM_AT_START(ConfigSettingSection.START, "doRandomTeamAtStart", -1, "Groesse der Teams, in die die Teamlosen beim Start eingeordnet werden.\nAusgeschaltet = -1"),
@@ -219,15 +218,15 @@ public enum ConfigSetting implements SectionEntry {
 	// REPORT
 	REPORTSYSTEM_ENABLED(ConfigSettingSection.REPORT, "enabled", true, "Ob das Report-System angeschaltet sein soll."),
 	RESET_SESSION_HOUR(ConfigSettingSection.MAIN, "resetSessionHour", 1, "Um welche Uhrzeit (24h) der Server den\nSpieler neue Sessions etc. gibt"),
+	
 	RESPAWN_PROTECTION(ConfigSettingSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschuetzt sind"),
 	SCOREBOARD(ConfigSettingSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),
+	ACTIONBAR(ConfigSettingSection.MAIN, "actionbar", true, "Ob die Actionbar aktiviert sein soll.\nHinweis: die Actionbar kannst du in\nder actionbar.yml bearbeiten.", true),
 	SESSIONS_PER_DAY(ConfigSettingSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulaer betreten duerfen."),
 
 	NAMETAGS_OVER_SPAWN(ConfigSettingSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags ueber den\nSpawns erscheinen sollen"),
 	NAMETAG_SPAWN_HEIGHT(ConfigSettingSection.WORLD, "nametagSpawnHeight", 3, "Wie hoch ueber den Spawns\ndie Nametags sein sollen"),
 
-	SHOW_DISTANCE_TO_BORDER(ConfigSettingSection.BORDER, "showDistanceToBorder", false, "Ob die Distanz zur Border in der\nActionBar angezeigt werden soll."),
-	SHOW_TIME_IN_ACTIONBAR(ConfigSettingSection.OTHER, "showTimeInActionbar", false, "Ob die verbleibende Sessionzeit in\nder Actionbar angezeigt werden soll."),
 	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen koennen."),
 
 	SPAWN_TELEPORT_JOIN(ConfigSettingSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfuer sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),

@@ -59,8 +59,8 @@ public class Stats implements VaroSerializeable {
 	@VaroSerializeField(path = "wins")
 	private int wins;
 
-	@VaroSerializeField(path = "showActionbarTime")
-	private boolean showActionbarTime;
+	@VaroSerializeField(path = "showActionbar")
+	private boolean showActionbar;
 	@VaroSerializeField(path = "showScoreboard")
 	private boolean showScoreboard;
 	@VaroSerializeField(path = "willClear")
@@ -311,6 +311,7 @@ public class Stats implements VaroSerializeable {
 				"§7Kills§8: " + colorcode + kills,
 				"§7WillClearInventory§8: " + colorcode + willClear,
 				"§7ShowScoreboard§8: " + colorcode + showScoreboard,
+				"§7ShowActionbar§8: " + colorcode + this.showActionbar,
 				"§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormat(lastLocation).format(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"),
 				"§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"),
 				"§7OnlineAfterStart§8: " + colorcode + onlineAfterStart,
@@ -409,8 +410,8 @@ public class Stats implements VaroSerializeable {
 		return false;
 	}
 
-	public boolean isShowActionbarTime() {
-		return showActionbarTime;
+	public boolean isShowActionbar() {
+		return showActionbar;
 	}
 
 	public boolean isShowScoreboard() {
@@ -458,6 +459,7 @@ public class Stats implements VaroSerializeable {
 
 		willClear = false;
 		showScoreboard = true;
+		this.showActionbar = true;
 		diedAt = null;
 		timeUntilAddSession = null;
 
@@ -614,8 +616,8 @@ public class Stats implements VaroSerializeable {
 		this.sessionsPlayed = sessionsPlayed;
 	}
 
-	public void setShowActionbarTime(boolean showActionbarTime) {
-		this.showActionbarTime = showActionbarTime;
+	public void setShowActionbar(boolean showActionbarTime) {
+		this.showActionbar = showActionbarTime;
 	}
 
 	public void setShowScoreboard(boolean showScoreboard) {
