@@ -5,6 +5,8 @@ import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.configuration.serialization.Serialize;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.PlayerVersionAdapter;
+import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
+import de.cuuky.cfw.player.hud.AnimatedActionbar;
 import de.cuuky.cfw.player.hud.AnimatedScoreboard;
 import de.cuuky.cfw.player.hud.AnimatedTablist;
 import de.cuuky.cfw.player.hud.ScoreboardInstance;
@@ -77,6 +79,7 @@ public class VaroPlayer extends VaroElement {
 
 	private AnimatedScoreboard scoreboard;
 	private AnimatedTablist tablist;
+	private AnimatedActionbar actionbar;
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
@@ -293,6 +296,9 @@ public class VaroPlayer extends VaroElement {
 
 		if (this.scoreboard != null)
 			this.scoreboard.queueUpdate();
+		
+		if (this.actionbar != null)
+			this.actionbar.queueUpdate();
 
 		if (this.player != null) {
 			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
@@ -378,6 +384,10 @@ public class VaroPlayer extends VaroElement {
 
 	public AnimatedScoreboard getScoreboard() {
 		return this.scoreboard;
+	}
+	
+	public AnimatedActionbar getActionbar() {
+		return this.actionbar;
 	}
 
 	public PlayerVersionAdapter getVersionAdapter() {
@@ -524,6 +534,16 @@ public class VaroPlayer extends VaroElement {
 				this.tablist.setHeaderEnabled(ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean());
 				this.tablist.setFooterEnabled(ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean());
 			}
+			
+			if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.TABLIST.getValueAsBoolean()) {
+				this.actionbar = new AnimatedActionbar(Main.getInstance(), player, Main.getDataManager().getActionbarConfig().getContent()) {
+					@Override
+					protected String processString(String input) {
+						return VaroPlayer.this.replacePlaceHolders(input);
+					}
+				};
+				this.actionbar.setEnabled(this.stats.isShowActionbar());
+			}
 
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
 				Main.getDataManager().getNameTagGroup().register(scoreboardInstance, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
@@ -532,6 +552,8 @@ public class VaroPlayer extends VaroElement {
 				this.scoreboard.destroy();
 			if (this.tablist != null)
 				this.tablist.destroy();
+			if (this.actionbar != null)
+				this.actionbar.destroy();
 			if(oldPlayer != null)
 				Main.getDataManager().getNameTagGroup().unRegister(oldPlayer);
 

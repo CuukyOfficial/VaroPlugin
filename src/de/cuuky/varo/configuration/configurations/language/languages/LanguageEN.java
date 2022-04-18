@@ -205,9 +205,10 @@ public enum LanguageEN implements LoadableMessage {
 
     VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE("varoCommands.abort.notactive", "The start countdown is not active!"),
     VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED("varoCommands.abort.stopped", "Start countdown successfully stopped!"),
-
-    VARO_COMMANDS_ACTIONBAR_ACTIVATED("varoCommands.actionbar.activated", "You can now see the time in the action bar!"),
-    VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "You can no longer see the time in the action bar!"),
+    
+    VARO_COMMANDS_ACTIONBAR_DEACTIVATED("varoCommands.actionbar.deactivated", "&7The action bar is not enabled on this server!"),
+	VARO_COMMANDS_ACTIONBAR_ENABLED("varoCommands.actionbar.enabled", "You can now see the action bar!"),
+	VARO_COMMANDS_ACTIONBAR_DISABLED("varoCommands.actionbar.disabled", "You can no longer see the action bar!"),
 
     VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET("varoCommands.autosetup.notsetupyet", "The AutoSetup has not yet been set up in the Config!"),
     VARO_COMMANDS_AUTOSETUP_FINISHED("varoCommands.autosetup.finished", "The AutoSetup is finished."),
