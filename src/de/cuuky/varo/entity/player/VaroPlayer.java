@@ -47,6 +47,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -324,7 +325,8 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 				this.player.setPlayerListName(this.getTablistName());
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
-				Main.getDataManager().getNameTagGroup().update(this.player, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
+				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
+				Main.getDataManager().getNameTagGroup().update(this.player, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean() && !this.player.hasPotionEffect(PotionEffectType.INVISIBILITY), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
 		}
 	}
 
