@@ -229,17 +229,6 @@ public class Stats implements VaroSerializeable {
 		if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() >= Bukkit.getMaxPlayers())
 			result = KickResult.SERVER_FULL;
 
-		if (result != KickResult.ALLOW && result != KickResult.MASS_RECORDING_JOIN && result != KickResult.SPECTATOR && result != KickResult.FINALE_JOIN)
-			if (player.hasPermission("varo.alwaysjoin") && ConfigSetting.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean() || !Main.getVaroGame().hasStarted() && player.isOp()) {
-				if (Main.getVaroGame().hasStarted())
-					if (result == KickResult.DEAD || !owner.isRegistered())
-						setState(PlayerState.SPECTATOR);
-					else
-						owner.setAdminIgnore(true);
-
-				result = KickResult.ALLOW;
-			}
-
 		return result;
 	}
 

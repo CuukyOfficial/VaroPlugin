@@ -19,6 +19,7 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
@@ -70,6 +71,20 @@ public class PlayerLoginListener implements Listener {
 		}
 
 		KickResult kickResult = vp.getStats().getKickResult(player);
+
+		if (!kickResult.allowsJoin())
+			if ((player.hasPermission("varo.alwaysjoin") && ConfigSetting.IGNORE_JOINSYSTEMS_AS_OP.getValueAsBoolean()) || (!Main.getVaroGame().hasStarted() && player.isOp())) {
+				if (Main.getVaroGame().hasStarted()) {
+					if (!vp.isRegistered()) {
+						vp.register();
+						vp.getStats().setState(PlayerState.SPECTATOR);
+					} else
+						vp.setAdminIgnore(true);
+				}
+
+				kickResult = KickResult.ALLOW;
+			}
+
 		switch (kickResult) {
 		case NO_PROJECTUSER:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp, vp));
@@ -125,6 +140,8 @@ public class PlayerLoginListener implements Listener {
 		case SERVER_NOT_PUBLISHED:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp, vp));
 			break;
+		case ALLOW:
+		case SPECTATOR:
 		case MASS_RECORDING_JOIN:
 		case FINALE_JOIN:
 		default:
