@@ -557,7 +557,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				this.tablist.setFooterEnabled(ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean());
 			}
 			
-			if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.TABLIST.getValueAsBoolean()) {
+			if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.ACTIONBAR.getValueAsBoolean()) {
 				this.actionbar = new AnimatedActionbar(Main.getInstance(), player, Main.getDataManager().getActionbarConfig().getContent()) {
 					@Override
 					protected String processString(String input) {
