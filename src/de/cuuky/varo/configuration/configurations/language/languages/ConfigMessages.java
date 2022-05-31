@@ -44,9 +44,14 @@ public enum ConfigMessages implements DefaultLanguage {
 	ALERT_WINNER("alerts.BOTS_ALERT.win.player", "%player% hat %projectname% gewonnen! Gratulation!"),
 	ALERT_WINNER_TEAM("alerts.BOTS_ALERT.win.team", "%winnerPlayers% haben %projectname% gewonnen! Gratulation!"),
 
-	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cDu bist noch nicht mit dem Discord authentifiziert!\n&7Um dich zu authentifizieren, schreibe in den #verify -Channel &c'varo verify <Deine ID>' &7auf dem Discord!\nLink zum Discordserver: &c%discordLink%\n&7Deine ID lautet: &c%code%"),
-	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cDein Account ist nicht auf dem Discord!%nextLine%&7Joine dem Discord und versuche es erneut."),
+	BOT_DISCORD_JOIN_NOT_REGISTERED_DISCORD("bot.join.notRegisteredDiscord", "&cDu bist noch nicht mit dem Discord authentifiziert!\n&7Um dich zu authentifizieren, schreibe in den #verify -Channel &c'varo verify <Deine ID>' &7auf dem Discord!\nLink zum Discordserver: &c%discordLink%\n&7Deine ID lautet: &c%code%"),
+	BOT_DISCORD_JOIN_NO_GUILD_MEMBER("bot.join.noGuildMember", "&cDein Account ist nicht auf dem Discord!%nextLine%&7Joine dem Discord und versuche es erneut."),
 
+	BOT_DISCORD_COMMAND_STATUS("bot.discord.command.status", "GameState: %gamestate%\nWhitelist: %whitelist%\nOnline: %online%"),
+	
+	BOT_DISCORD_MODAL_VERIFY_TITLE("bot.discord.modal.title", "Verify"),
+	BOT_DISCORD_MODAL_VERIFY_INPUT_LABEL("bot.discord.modal.inputLabel", "Gebe deinen code ein"),
+	
 	BORDER_MINIMUM_REACHED("border.minimumReached", "&cDie Border hat ihr Minimum erreicht!"),
 	BORDER_DECREASE_DAYS("border.decreaseDays", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s verkleinert. &7Nächste Verkleinerung in &c%days% &7Tagen!"),
 	BORDER_DECREASE_DEATH("border.decreaseDeath", "&7Die Border wird jetzt um &c%size% &7Blöcke mit &c%speed% &7Blöcken/s aufgrund eines Todes verkleinert."),

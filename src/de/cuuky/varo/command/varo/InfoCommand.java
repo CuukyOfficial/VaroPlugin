@@ -35,7 +35,7 @@ public class InfoCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Java-Version§7: " + System.getProperty("java.version"));
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Date§7: " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "License§7: GNU AGPL v3");
-		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Source code§7: https://github.com/CuukyOfficial/VaroPlugin");
+		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Source code§7: " + Main.GITHUB);
 		sender.sendMessage(Main.getPrefix());
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
 	}

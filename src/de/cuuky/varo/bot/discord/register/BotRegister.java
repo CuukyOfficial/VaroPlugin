@@ -75,7 +75,7 @@ public class BotRegister {
 	}
 
 	public String getKickMessage(VaroPlayer vp) {
-		return ConfigMessages.BOTS_DISCORD_NOT_REGISTERED_DISCORD.getValue(vp, vp).replace("%code%", String.valueOf(getCode()));
+		return ConfigMessages.BOT_DISCORD_NOT_REGISTERED_DISCORD.getValue(vp, vp).replace("%code%", String.valueOf(getCode()));
 	}
 
 	public Member getMember() {

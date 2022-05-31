@@ -139,6 +139,10 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_VERIFY_USER(ConfigSettingSection.DISCORD, "verify.mysql.user", "USER_HERE", "MySQL Nutzer, welcher auf die Datenbank zugreifen soll"),
 	DISCORDBOT_VERIFY_PASSWORD(ConfigSettingSection.DISCORD, "verify.mysql.password", "PASSWORD_HERE", "Passwort fuer MySQL Nutzer,\nwelcher auf die Datenbank zugreifen soll"),
 	
+	DISCORDBOT_COMMAND_STATUS_NAME(ConfigSettingSection.DISCORD, "command.status.name", "status", "Name des /status Commands"),
+	DISCORDBOT_COMMAND_STATUS_DESC(ConfigSettingSection.DISCORD, "command.status.desc", "Shows information about the server", "Beschreibung des /status Commands"),
+	DISCORDBOT_COMMAND_VERIFY_NAME(ConfigSettingSection.DISCORD, "command.status.name", "verify", "Name des /verify Commands"),
+	DISCORDBOT_COMMAND_VERIFY_DESC(ConfigSettingSection.DISCORD, "command.status.desc", "Verify your Minecraft account", "Beschreibung des /verify Commands"),
 	//
 
 	DO_DAILY_BACKUPS(ConfigSettingSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),

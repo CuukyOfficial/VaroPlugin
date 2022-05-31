@@ -41,8 +41,13 @@ public enum LanguageEN implements LoadableMessage {
     ALERT_WINNER("alerts.BOTS_ALERT.win.player", "%player% has won %projectname%! Congratulations!"),
     ALERT_WINNER_TEAM("alerts.BOTS_ALERT.win.team", "%winnerPlayers% have won %projectname%! Congratulations!"),
 
-    BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYou are not yet authenticated with the discord!\n&7To authenticate yourself, write in the #verify channel &c'varo verify <Your ID>' &7on the discord!\nLink to the Discordserver: &c%discordLink%\n&7Your ID is: &c%code%"),
-    BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
+    BOT_DISCORD_JOIN_NOT_REGISTERED_DISCORD("bot.join.notRegisteredDiscord", "&cYou are not yet authenticated with the discord!\n&7To authenticate yourself, write in the #verify channel &c'varo verify <Your ID>' &7on the discord!\nLink to the Discordserver: &c%discordLink%\n&7Your ID is: &c%code%"),
+    BOT_DISCORD_JOIN_NO_GUILD_MEMBER("bot.join.noGuildMember", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
+    
+    BOT_DISCORD_COMMAND_STATUS("bot.discord.command.status", "GameState: %gamestate%\nWhitelist: %whitelist%\nOnline: %online%"),
+    
+    BOT_DISCORD_MODAL_VERIFY_TITLE("bot.discord.modal.title", "Verify"),
+	BOT_DISCORD_MODAL_VERIFY_INPUT_LABEL("bot.discord.modal.inputLabel", "Please enter your code"),
 
     BORDER_MINIMUM_REACHED("border.minimumReached", "&cThe Border has reached its minimum!"),
     BORDER_DECREASE_DAYS("border.decreaseDays", "&7The border is now reduced by &c%size% &7blocks with &c%speed% &7blocks/s. &7Next reduction in &c%days% &7days!"),

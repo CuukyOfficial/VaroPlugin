@@ -1,8 +1,6 @@
 package de.cuuky.varo.bot;
 
-import java.awt.Color;
 import java.io.File;
-import java.util.Random;
 
 import de.cuuky.varo.Varo;
 
@@ -14,14 +12,7 @@ public interface Bot {
 	
 	boolean isEnabled();
 
-	void sendFile(String message, File file, BotChannel botChannel);
+	void sendFile(BotChannel botChannel, File file, String fileName);
 
-	void sendMessage(String message, String title, Color color, BotChannel botChannel);
-
-	void sendRawMessage(String message, BotChannel botChannel);
-
-	default Color getRandomColor() {
-		Random random = new Random();
-		return new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
-	}
+	void sendMessage(BotMessage message, BotChannel botChannel);
 }

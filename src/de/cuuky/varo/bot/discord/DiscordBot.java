@@ -1,6 +1,5 @@
 package de.cuuky.varo.bot.discord;
 
-import java.awt.Color;
 import java.io.File;
 import java.util.HashMap;
 import java.util.function.Consumer;
@@ -10,6 +9,8 @@ import de.cuuky.varo.Varo;
 import de.cuuky.varo.app.Main;
 import de.cuuky.varo.bot.Bot;
 import de.cuuky.varo.bot.BotChannel;
+import de.cuuky.varo.bot.BotMessage;
+import de.cuuky.varo.bot.BotMessageComponent;
 import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -23,6 +24,7 @@ import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
@@ -88,50 +90,62 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 	}
 
 	@Override
-	public void sendFile(String message, File file, BotChannel botChannel) {
+	public void sendFile(BotChannel botChannel, File file, String fileName) {
 		if (!isEnabled())
 			return;
 
-		this.getChannel(botChannel, channel -> channel.sendFile(file, message.replace("_", "\\_")).queue());
+		this.getChannel(botChannel, channel -> channel.sendFile(file, fileName).queue());
 	}
 
 	@Override
-	public void sendMessage(String message, String title, Color color, BotChannel botChannel) {
+	public void sendMessage(BotMessage message, BotChannel botChannel) {
 		if (!isEnabled())
 			return;
 
 		this.getChannel(botChannel, channel -> {
 			if (ConfigSetting.DISCORDBOT_EMBEDS_ENABLED.getValueAsBoolean()) {
-				channel.sendMessageEmbeds(this.buildEmbed(message, title, color)).queue();
+				channel.sendMessageEmbeds(this.buildEmbed(message)).queue();
 			} else
-				channel.sendMessage(message).queue();
+				channel.sendMessage(this.buildMessage(message)).queue();
 		});
 	}
 
-	@Override
-	public void sendRawMessage(String message, BotChannel botChannel) {
-		if (!isEnabled())
-			return;
-
-		this.getChannel(botChannel, channel -> {
-			channel.sendMessage(message).queue();
-		});
-	}
-
-	public void reply(String message, String title, Color color, IReplyCallback replyCallback) {
+	public void reply(BotMessage message, IReplyCallback replyCallback) {
 		if (ConfigSetting.DISCORDBOT_EMBEDS_ENABLED.getValueAsBoolean())
-			replyCallback.replyEmbeds(this.buildEmbed(message, title, color)).queue();
+			replyCallback.replyEmbeds(this.buildEmbed(message)).queue();
 		else
-			replyCallback.reply(message).queue();
+			replyCallback.reply(this.buildMessage(message)).queue();
 	}
 
-	private MessageEmbed buildEmbed(String message, String title, Color color) {
-		EmbedBuilder embed = new EmbedBuilder().setDescription(message).setTitle(title);
+	private MessageEmbed buildEmbed(BotMessage message) {
+		EmbedBuilder embed = new EmbedBuilder().setDescription(this.buildText(message.getBody()));
+		String title = this.buildText(message.getTitle());
+		if(!title.isEmpty())
+			embed.setTitle(title);
+
 		if (ConfigSetting.DISCORDBOT_EMBEDS_RANDOM_COLOR.getValueAsBoolean())
-			embed.setColor(this.getRandomColor());
+			embed.setColor(BotMessage.getRandomColor());
 		else
-			embed.setColor(color);
+			embed.setColor(message.getColor());
 		return embed.build();
+	}
+	
+	private String buildMessage(BotMessage message) {
+		StringBuilder stringBuilder = new StringBuilder();
+		String title = this.buildText(message.getTitle());
+		if(!title.isEmpty())
+			stringBuilder.append("**").append(title).append("**\n");
+		String body = this.buildText(message.getTitle());
+		if(!body.isEmpty())
+			stringBuilder.append(body);
+		return stringBuilder.toString();
+	}
+
+	private String buildText(BotMessageComponent... components) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (BotMessageComponent component : components)
+			stringBuilder.append(component.isEscape() ? MarkdownSanitizer.escape(component.getContent()) : component.getContent());
+		return stringBuilder.toString();
 	}
 
 	private long getChannelId(BotChannel botChannel) {

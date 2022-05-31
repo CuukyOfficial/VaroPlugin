@@ -58,7 +58,7 @@ public class PlayerLoginListener implements Listener {
 					User user = discordBot.getJda().getUserById(reg.getUserId());
 					if (user == null || !discordBot.getMainGuild().isMember(user)) {
 						if (!ConfigSetting.DISCORDBOT_VERIFY_OPTIONAL.getValueAsBoolean()) {
-							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
+							event.disallow(Result.KICK_OTHER, ConfigMessages.BOT_DISCORD_NO_SERVER_USER.getValue(vp, vp));
 							vp.setPlayer(null);
 							return;
 						} else
