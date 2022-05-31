@@ -138,6 +138,9 @@ public enum ConfigMessages implements DefaultLanguage {
 	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
 	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
+	PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "Unbekannt"),
+	PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "Unbekannt"),
+
 	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7Diese Kiste gehört %colorcode%%player%&7!"),
 	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7Dieser Ofen gehört %colorcode%%player%&7!"),
 	CHEST_REMOVED_SAVEABLE("chest.removedChest", "&7Du hast diese/n %saveable% %colorcode%erfolgreich &7entfernt!"),

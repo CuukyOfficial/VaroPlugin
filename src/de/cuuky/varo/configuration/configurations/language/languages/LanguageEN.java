@@ -135,6 +135,9 @@ public enum LanguageEN implements LoadableMessage {
 	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
 	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
+    PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "Unknown"),
+    PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "Unknown"),
+
     CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
     CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7This furnace belongs to %colorcode%%player%&7!"),
     CHEST_REMOVED_SAVEABLE("chest.removedChest", "&7You have removed this %saveable% %colorcode%successfully"),
