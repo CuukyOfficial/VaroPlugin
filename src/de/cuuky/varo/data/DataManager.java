@@ -43,7 +43,8 @@ public class DataManager {
 	private ScoreboardConfig scoreboardConfig;
 	private TablistConfig tablistConfig;
 	private ActionbarConfig actionbarConfig;
-	private NameTagGroup nameTagGroup;
+	private NameTagGroup defaultNameTagGroup;
+	private NameTagGroup spectatorNameTagGroup;
 	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
 	private OutSideTimeChecker outsideTimeChecker;
@@ -68,7 +69,8 @@ public class DataManager {
 		this.scoreboardConfig = new ScoreboardConfig();
 		this.tablistConfig = new TablistConfig();
 		this.actionbarConfig = new ActionbarConfig();
-		this.nameTagGroup = new NameTagGroup();
+		this.defaultNameTagGroup = new NameTagGroup();
+		this.spectatorNameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
         new DefaultPresetLoader();
 	}
@@ -169,8 +171,12 @@ public class DataManager {
 		return this.actionbarConfig;
 	}
 
-	public NameTagGroup getNameTagGroup() {
-		return nameTagGroup;
+	public NameTagGroup getDefaultNameTagGroup() {
+		return defaultNameTagGroup;
+	}
+
+	public NameTagGroup getSpectatorNameTagGroup() {
+		return this.spectatorNameTagGroup;
 	}
 
 	public LibraryLoader getLibraryLoader() {

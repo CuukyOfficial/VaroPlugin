@@ -10,11 +10,6 @@ This project probably describes my progress in coding - not the skills I have to
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg"></br>
 
-</br>**Codezeilen:**</br>
-Zeilen: 30.294</br>
-Stand: 31.03.2020</br>
-Version: 3.3.0.1</br></br>
-
 **Libraries:**</br>
 - <a href='https://www.spigotmc.org/'>Spigot/Bukkit</a></br>
 - <a href='https://github.com/CuukyOfficial/CFW/'>CuukyFrameWork</a></br>

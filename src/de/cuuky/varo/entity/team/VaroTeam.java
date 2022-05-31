@@ -3,8 +3,13 @@ package de.cuuky.varo.entity.team;
 import de.cuuky.cfw.configuration.serialization.Serialize;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
+<<<<<<< HEAD
 import de.cuuky.varo.app.Main;
 import de.cuuky.varo.VaroElement;
+=======
+import de.cuuky.cfw.player.hud.NameTagGroup;
+import de.cuuky.varo.Main;
+>>>>>>> refs/remotes/origin/dev-v4
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -38,10 +43,13 @@ public class VaroTeam extends VaroElement {
 	@Serialize("teamBackPack")
 	private VaroInventory teamBackPack;
 
+	private NameTagGroup nameTagGroup;
+
 	public VaroTeam() {
 		member = new ArrayList<>();
 		teamBackPack = new VaroInventory(ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt());
 		memberid = new ArrayList<>();
+		this.nameTagGroup = new NameTagGroup();
 	}
 
 	public VaroTeam(String name) {
@@ -233,6 +241,10 @@ public class VaroTeam extends VaroElement {
 
 	public void setLifes(double lifes) {
 		this.lifes = lifes;
+	}
+
+	public NameTagGroup getNameTagGroup() {
+		return this.nameTagGroup;
 	}
 
 	public void statChanged() {

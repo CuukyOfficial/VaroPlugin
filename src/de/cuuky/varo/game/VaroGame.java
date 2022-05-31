@@ -99,7 +99,6 @@ public class VaroGame implements VaroSerializeable {
             return;
 
         new VaroBackup();
-        LobbyItem.removeHooks();
 
         if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
             removeAbsentAtStart();
@@ -108,6 +107,8 @@ public class VaroGame implements VaroSerializeable {
             VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
         }
+
+        LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
             new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), (int) (VaroPlayer.getAlivePlayer().size() * 0.85), true, null, null);
