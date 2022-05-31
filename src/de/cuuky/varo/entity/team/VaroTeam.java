@@ -7,6 +7,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
+import de.cuuky.cfw.player.hud.NameTagGroup;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -50,10 +51,13 @@ public class VaroTeam extends VaroEntity {
 	@VaroSerializeField(path = "teamBackPack")
 	private VaroInventory teamBackPack;
 
+	private NameTagGroup nameTagGroup;
+
 	public VaroTeam() {
 		member = new ArrayList<>();
 		teamBackPack = new VaroInventory(ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt());
 		memberid = new ArrayList<Integer>();
+		this.nameTagGroup = new NameTagGroup();
 	}
 
 	public VaroTeam(String name) {
@@ -260,6 +264,10 @@ public class VaroTeam extends VaroEntity {
 
 	public void setLifes(double lifes) {
 		this.lifes = lifes;
+	}
+
+	public NameTagGroup getNameTagGroup() {
+		return this.nameTagGroup;
 	}
 
 	public void statChanged() {

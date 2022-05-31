@@ -102,6 +102,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private VaroTeam team;
 	private Sound guiSound = Sounds.CLICK.bukkitSound();
 	private Player player;
+	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 	private ChatMessage lastMessage;
 
@@ -287,6 +288,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 					player.getInventory().clear();
 					player.getInventory().setArmorContents(new ItemStack[] {});
 				}
+
+				unregisterNametag(player, team);
+				registerNametag(scoreboardInstance);
 			}
 		}.runTask(Main.getInstance());
 	}
@@ -307,6 +311,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				Vanish v = Vanish.getVanish(player);
 				if(v != null)
 					v.remove();
+				
+				unregisterNametag(player, team);
+				registerNametag(scoreboardInstance);
 			}
 		}.runTask(Main.getInstance());
 	}
@@ -324,9 +331,26 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (this.player != null) {
 			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
 				this.player.setPlayerListName(this.getTablistName());
-			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
+			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
-				Main.getDataManager().getNameTagGroup().update(this.player, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean() && !this.player.hasPotionEffect(PotionEffectType.INVISIBILITY), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
+				boolean potion = this.player.hasPotionEffect(PotionEffectType.INVISIBILITY);
+				boolean visible = ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean() && !potion;
+				String name = this.getNametagName();
+				String prefix = this.getNametagPrefix();
+				String suffix = this.getNametagSuffix();
+
+				// always update default group
+				Main.getDataManager().getDefaultNameTagGroup().update(this.player, visible, name, prefix, suffix);
+
+				// only update spectator and team groups if necessary
+				if (!ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean()) {
+					if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean())
+						Main.getDataManager().getSpectatorNameTagGroup().update(this.player, true, name, prefix, suffix);
+					if (ConfigSetting.NAMETAGS_VISIBLE_TEAM.getValueAsBoolean())
+						for (VaroTeam team : VaroTeam.getOnlineTeams())
+							team.getNameTagGroup().update(this.player, team == this.team && !potion, name, prefix, suffix);
+				}
+			}
 		}
 	}
 
@@ -533,10 +557,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (player != null) {
 			this.versionAdapter = new PlayerVersionAdapter(player);
 
-			ScoreboardInstance scoreboardInstance = ScoreboardInstance.newInstance(this.getPlayer());
+			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
 
 			if (ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
-				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), scoreboardInstance, Main.getDataManager().getScoreboardConfig().getTitle(), Main.getDataManager().getScoreboardConfig().getScoreboard()) {
+				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, Main.getDataManager().getScoreboardConfig().getTitle(), Main.getDataManager().getScoreboardConfig().getScoreboard()) {
 					@Override
 					protected String processString(String input) {
 						return VaroPlayer.this.replacePlaceHolders(input);
@@ -567,8 +591,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				this.actionbar.setEnabled(this.stats.isShowActionbar());
 			}
 
-			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean())
-				Main.getDataManager().getNameTagGroup().register(scoreboardInstance, ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean(), this.getNametagName(), this.getNametagPrefix(), this.getNametagSuffix());
+			this.registerNametag(this.scoreboardInstance);
 		} else {
 			if (this.scoreboard != null)
 				this.scoreboard.destroy();
@@ -577,12 +600,39 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (this.actionbar != null)
 				this.actionbar.destroy();
 			if(oldPlayer != null)
-				Main.getDataManager().getNameTagGroup().unRegister(oldPlayer);
+				this.unregisterNametag(oldPlayer, this.team);
 
+			this.scoreboardInstance = null;
 			this.versionAdapter = null;
 			this.scoreboard = null;
 			this.tablist = null;
 		}
+	}
+
+	private void registerNametag(ScoreboardInstance scoreboardInstance) {
+		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
+			String name = this.getNametagName();
+			String prefix = this.getNametagPrefix();
+			String suffix = this.getNametagSuffix();
+
+			if (ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean())
+				Main.getDataManager().getDefaultNameTagGroup().register(scoreboardInstance, !this.player.hasPotionEffect(PotionEffectType.INVISIBILITY), name, prefix, suffix);
+			else {
+				if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean() && this.getStats().isSpectator())
+					Main.getDataManager().getSpectatorNameTagGroup().register(scoreboardInstance, true, name, prefix, suffix);
+				else if (ConfigSetting.NAMETAGS_VISIBLE_TEAM.getValueAsBoolean() && this.getTeam() != null)
+					this.getTeam().getNameTagGroup().register(scoreboardInstance, true, name, prefix, suffix);
+				else
+					Main.getDataManager().getDefaultNameTagGroup().register(scoreboardInstance, false, name, prefix, suffix);
+			}
+		}
+	}
+
+	private void unregisterNametag(Player player, VaroTeam team) {
+		Main.getDataManager().getDefaultNameTagGroup().unRegister(player);
+		Main.getDataManager().getSpectatorNameTagGroup().unRegister(player);
+		if (team != null)
+			team.getNameTagGroup().unRegister(player);
 	}
 
 	private String replacePlaceHolders(String input) {
@@ -654,6 +704,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (isOnline()) {
 			update();
 			LobbyItem.giveOrRemoveTeamItems(this);
+			
+			this.unregisterNametag(this.player, oldTeam);
+			this.registerNametag(this.scoreboardInstance);
 		}
 
 		// Main#getVaroGame may not be initialized yet

@@ -171,6 +171,8 @@ public enum ConfigSetting implements SectionEntry {
 
 	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
 	NAMETAGS_VISIBLE(ConfigSettingSection.MAIN, "nametags.visible", true, "Ob NameTags sichtbar sein sollen"),
+	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.MAIN, "nametags.visibleTeam", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible deaktiviert ist"),
+	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.MAIN, "nametags.visibleSpectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible deaktiviert ist"),
 
 	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviaet auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 
