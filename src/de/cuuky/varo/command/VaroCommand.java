@@ -52,6 +52,8 @@ public abstract class VaroCommand {
 		new PlaytimeCommand();
 		new CheckCombatCommand();
 		new CommandCommand();
+		new PauseCommand();
+		new UnpauseCommand();
 		// new TestCommand();
 	}
 

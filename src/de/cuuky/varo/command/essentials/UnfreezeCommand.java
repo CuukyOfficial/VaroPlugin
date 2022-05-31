@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,6 +32,9 @@ public class UnfreezeCommand implements CommandExecutor {
 		if (args[0].equalsIgnoreCase("@a")) {
 			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
 				VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
+				if (ConfigSetting.COMMAND_FREEZE_PAUSE_COUNTDOWN.getValueAsBoolean()) {
+					player.getStats().setCountdownPaused(false);
+				}
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler entfreezed!");
@@ -45,6 +49,10 @@ public class UnfreezeCommand implements CommandExecutor {
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer target = VaroPlayer.getPlayer(player);
 		VaroCancelAble.removeCancelAble(target, CancelAbleType.FREEZE);
+		if (ConfigSetting.COMMAND_FREEZE_PAUSE_COUNTDOWN.getValueAsBoolean()) {
+			target.getStats().setCountdownPaused(false);
+		}
+
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich entfreezed!");
 		return false;
 	}

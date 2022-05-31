@@ -26,6 +26,10 @@ public class VaroAPIStats {
 		return stats.getCountdown();
 	}
 
+	public boolean isCountdownPaused() {
+		return stats.isCountdownPaused();
+	}
+
 	public ArrayList<VaroAPIInventoryBackup> getInventoryBackups() {
 		ArrayList<VaroAPIInventoryBackup> backups = new ArrayList<>();
 		for (InventoryBackup invB : stats.getInventoryBackups())
@@ -65,4 +69,9 @@ public class VaroAPIStats {
 	public void setWillClearInventory(boolean willClear) {
 		stats.setWillClear(willClear);
 	}
+
+	public void setCountdownPaused(boolean paused) {
+		stats.setCountdownPaused(paused);
+	}
+
 }

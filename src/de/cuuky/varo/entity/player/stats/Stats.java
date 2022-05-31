@@ -85,6 +85,8 @@ public class Stats implements VaroSerializeable {
 	private InventoryBackup restoreBackup;
 	@VaroSerializeField(path = "youtubeLink")
 	private String youtubeLink;
+	//@VaroSerializeField(path = "countdownPaused") //(serialize?)
+	private boolean countdownPaused;
 
 	@VaroSerializeField(path = "inventoryBackups", arrayClass = InventoryBackup.class)
 	private ArrayList<InventoryBackup> inventoryBackups;
@@ -414,6 +416,10 @@ public class Stats implements VaroSerializeable {
 		return willClear;
 	}
 
+	public boolean isCountdownPaused() {
+		return countdownPaused;
+	}
+
 	public void loadDefaults() {
 		loadStartDefaults();
 		kills = 0;
@@ -650,4 +656,9 @@ public class Stats implements VaroSerializeable {
 	public void setYoutubeLink(String youtubeLink) {
 		this.youtubeLink = youtubeLink;
 	}
+
+	public void setCountdownPaused(boolean paused) {
+		this.countdownPaused = paused;
+	}
+
 }

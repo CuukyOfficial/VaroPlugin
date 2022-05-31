@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.essentials;
 
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,6 +35,9 @@ public class FreezeCommand implements CommandExecutor {
 					continue;
 				}
 				new VaroCancelAble(CancelAbleType.FREEZE, player);
+				if (ConfigSetting.COMMAND_FREEZE_PAUSE_COUNTDOWN.getValueAsBoolean()) {
+					player.getStats().setCountdownPaused(true);
+				}
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gefreezed!");
@@ -53,6 +57,9 @@ public class FreezeCommand implements CommandExecutor {
 		}
 
 		new VaroCancelAble(CancelAbleType.FREEZE, target);
+		if (ConfigSetting.COMMAND_FREEZE_PAUSE_COUNTDOWN.getValueAsBoolean()) {
+			target.getStats().setCountdownPaused(true);
+		}
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gefreezed!");
 		return false;

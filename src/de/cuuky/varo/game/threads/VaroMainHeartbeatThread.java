@@ -107,7 +107,9 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 						}
 					}
 
-					vp.getStats().setCountdown(countdown);
+					if (!vp.getStats().isCountdownPaused()) {
+						vp.getStats().setCountdown(countdown);
+					}
 				}
 			} else if (showDistanceToBorder && VersionUtils.getVersion() != BukkitVersion.ONE_7) {
 

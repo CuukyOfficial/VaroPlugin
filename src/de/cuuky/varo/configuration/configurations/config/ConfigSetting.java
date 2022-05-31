@@ -303,6 +303,7 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_TIME_ENABLED(ConfigSettingSection.COMMANDS, "time.enabled", true, "Ob /day und /night aktiviert sein soll"),
 	COMMAND_FLY_ENABLED(ConfigSettingSection.COMMANDS, "fly.enabled", true, "Ob /fly und /unfly aktiviert sein soll"),
 	COMMAND_FREEZE_ENABLED(ConfigSettingSection.COMMANDS, "freeze.enabled", true, "Ob /freeze und /unfreeze aktiviert sein soll"),
+	COMMAND_FREEZE_PAUSE_COUNTDOWN(ConfigSettingSection.OTHER, "freezeCommand.pausePlayerCountdown", true, "Ob /freeze den Countdown eines Spielers pausiert"),
 	COMMAND_GAMEMODE_ENABLED(ConfigSettingSection.COMMANDS, "gamemode.enabled", true, "Ob /gamemode aktiviert sein soll"),
 	COMMAND_HEAL_ENABLED(ConfigSettingSection.COMMANDS, "heal.enabled", true, "Ob /heal aktiviert sein soll"),
 	COMMAND_INFO_ENABLED(ConfigSettingSection.COMMANDS, "info.enabled", true, "Ob /info aktiviert sein soll"),
