@@ -82,7 +82,7 @@ public class VaroLanguageManager extends LanguageManager {
         if (Main.getVaroGame() != null) {
 	        for (int rank : getConvNumbers(replaced, "%topplayer-")) {
 	            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(rank);
-	            replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? "-" : player.getName()));
+                replaced = replaced.replace("%topplayer-" + rank + "%", (player == null ? ConfigMessages.PLACEHOLDER_NO_TOP_PLAYER.getValue() : player.getName()));
 	        }
 
 	        for (int rank : getConvNumbers(replaced, "%topplayerkills-")) {
@@ -92,7 +92,7 @@ public class VaroLanguageManager extends LanguageManager {
 
 	        for (int rank : getConvNumbers(replaced, "%topteam-")) {
 	            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(rank);
-	            replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? "-" : team.getName()));
+                replaced = replaced.replace("%topteam-" + rank + "%", (team == null ? ConfigMessages.PLACEHOLDER_NO_TOP_TEAM.getValue() : team.getName()));
 	        }
 
 	        for (int rank : getConvNumbers(replaced, "%topteamkills-")) {

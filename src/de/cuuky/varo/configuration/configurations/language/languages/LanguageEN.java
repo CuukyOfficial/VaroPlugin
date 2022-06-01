@@ -145,6 +145,9 @@ public enum LanguageEN implements LoadableMessage {
     NOPERMISSION_NOT_ALLOWED_CRAFT("nopermission.notAllowedCraft", "&7You may not craft, use or brew that!"),
     NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7You can not fly lower!"),
 
+    PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "-"),
+    PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "-"),
+
     PROTECTION_NO_MOVE_START("protection.noMoveStart", "&7You cannot move until the project has been started."),
     PROTECTION_START("protection.start", "&7The &cProtection time &7starts now and will stop in &c%seconds% &7seconds!"),
     PROTECTION_TIME_OVER("protection.protectionOver", "&7The &cprotection time &7is now over!"),
