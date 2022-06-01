@@ -170,9 +170,9 @@ public enum ConfigSetting implements SectionEntry {
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen koennen.\nOff = 0"),
 
 	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
-	NAMETAGS_VISIBLE(ConfigSettingSection.MAIN, "nametags.visible", true, "Ob NameTags sichtbar sein sollen"),
-	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.MAIN, "nametags.visibleTeam", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible deaktiviert ist"),
-	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.MAIN, "nametags.visibleSpectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible deaktiviert ist"),
+	NAMETAGS_VISIBLE_DEFAULT(ConfigSettingSection.MAIN, "nametags.visible.default", true, "Ob NameTags sichtbar sein sollen"),
+	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.MAIN, "nametags.visible.team", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
+	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.MAIN, "nametags.visible.spectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
 
 	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviaet auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 

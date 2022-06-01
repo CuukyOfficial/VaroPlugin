@@ -334,7 +334,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
 				boolean potion = this.player.hasPotionEffect(PotionEffectType.INVISIBILITY);
-				boolean visible = ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean() && !potion;
+				boolean visible = ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean() && !potion;
 				String name = this.getNametagName();
 				String prefix = this.getNametagPrefix();
 				String suffix = this.getNametagSuffix();
@@ -343,7 +343,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				Main.getDataManager().getDefaultNameTagGroup().update(this.player, visible, name, prefix, suffix);
 
 				// only update spectator and team groups if necessary
-				if (!ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean()) {
+				if (!ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean()) {
 					if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean())
 						Main.getDataManager().getSpectatorNameTagGroup().update(this.player, true, name, prefix, suffix);
 					if (ConfigSetting.NAMETAGS_VISIBLE_TEAM.getValueAsBoolean())
@@ -615,7 +615,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			String prefix = this.getNametagPrefix();
 			String suffix = this.getNametagSuffix();
 
-			if (ConfigSetting.NAMETAGS_VISIBLE.getValueAsBoolean())
+			if (ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean())
 				Main.getDataManager().getDefaultNameTagGroup().register(scoreboardInstance, !this.player.hasPotionEffect(PotionEffectType.INVISIBILITY), name, prefix, suffix);
 			else {
 				if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean() && this.getStats().isSpectator())
