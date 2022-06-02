@@ -28,7 +28,7 @@ public enum VaroGameState implements VaroState {
     }
 
     @Override
-    public VaroPlayerState getDefaultState() {
+    public VaroPlayerState getDefaultPlayerState() {
         return this.defaultState;
     }
 }
