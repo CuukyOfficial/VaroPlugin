@@ -17,7 +17,9 @@ public class VaroGame implements Varo {
     }
 
     private void loadHeartbeat() {
+        if (this.heartbeat != null) this.heartbeat.cancel();
         this.heartbeat = this.state.createHeartbeat();
+        this.heartbeat.initialize(this);
     }
 
     @Override
