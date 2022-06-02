@@ -3,6 +3,7 @@ package de.varoplugin.varo.game;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.event.game.GameStateChangeEvent;
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
+import de.varoplugin.varo.game.player.VaroPlayer;
 
 public class VaroGame implements Varo {
 
@@ -23,6 +24,11 @@ public class VaroGame implements Varo {
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
         this.loadHeartbeat();
+    }
+
+    @Override
+    public boolean register(VaroPlayer player) {
+        return false;
     }
 
     @Override
