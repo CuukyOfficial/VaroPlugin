@@ -8,7 +8,7 @@ public enum DefaultLoginResult implements VaroLoginResult {
 
     ALLOWED((varo, event, player) -> varo.register(player)),
     // Not ideal solution because of ui seperation
-    PLAYER_DEAD(new LoginKick("Player dead", (v, vp) -> new Object[0]));
+    PLAYER_DEAD(new LoginKick("You died!", (v, vp) -> new Object[0]));
 
     private final ResultApplier resultApplier;
 
