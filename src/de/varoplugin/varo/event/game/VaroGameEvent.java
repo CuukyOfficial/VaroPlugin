@@ -1,10 +1,10 @@
 package de.varoplugin.varo.event.game;
 
+import de.varoplugin.varo.event.VaroEvent;
 import de.varoplugin.varo.game.Varo;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public abstract class VaroGameEvent extends Event {
+public abstract class VaroGameEvent extends VaroEvent {
 
     private static final HandlerList handlers = new HandlerList();
 

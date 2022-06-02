@@ -1,19 +1,18 @@
 package de.varoplugin.varo.event.game;
 
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.event.VaroCancelableEvent;
 import de.varoplugin.varo.game.Varo;
 
-public class GameStateChangeEvent extends VaroCancelableEvent {
+public class GameStateChangeEvent extends VaroGameCancelableEvent {
 
-    private final VaroState newState;
+    private final VaroState state;
 
-    public GameStateChangeEvent(Varo varo, VaroState newState) {
+    public GameStateChangeEvent(Varo varo, VaroState state) {
         super(varo);
-        this.newState = newState;
+        this.state = state;
     }
 
-    public VaroState getNewState() {
-        return this.newState;
+    public VaroState getState() {
+        return this.state;
     }
 }

@@ -1,14 +1,13 @@
-package de.varoplugin.varo.event;
+package de.varoplugin.varo.event.game;
 
-import de.varoplugin.varo.event.game.VaroGameEvent;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.Cancellable;
 
-public abstract class VaroCancelableEvent extends VaroGameEvent implements Cancellable {
+public abstract class VaroGameCancelableEvent extends VaroGameEvent implements Cancellable {
 
     private boolean cancelled;
 
-    public VaroCancelableEvent(Varo varo) {
+    public VaroGameCancelableEvent(Varo varo) {
         super(varo);
     }
 

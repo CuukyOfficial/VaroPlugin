@@ -5,6 +5,6 @@ import org.bukkit.plugin.Plugin;
 
 public interface VaroPlugin extends Plugin {
 
-    void callEvent(VaroEvent event);
+    <T extends VaroEvent> T callEvent(T event);
 
 }
