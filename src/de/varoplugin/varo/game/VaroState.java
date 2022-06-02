@@ -7,6 +7,6 @@ public interface VaroState {
 
     Heartbeat createHeartbeat();
 
-    VaroPlayerState getDefaultPlayerState();
+    VaroPlayerState getPlayerState();
 
 }
