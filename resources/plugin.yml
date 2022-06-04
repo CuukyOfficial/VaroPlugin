@@ -5,5 +5,5 @@ version: @version@
 softdepend: [PlaceholderAPI, LabyModAPI, TelegramPlugin, PermissionsEx, LabyModAPI]
 loadbefore: [CuukyFrameWork, JDA]
 api-version: 1.13
-main: de.cuuky.varo.Main
+main: de.varoplugin.varo.VaroLauncher
 website: VaroPlugin.de
