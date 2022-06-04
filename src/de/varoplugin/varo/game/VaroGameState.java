@@ -2,10 +2,14 @@ package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
 import de.varoplugin.varo.game.heartbeat.LobbyHeartbeat;
-import de.varoplugin.varo.game.player.DefaultPlayerState;
-import de.varoplugin.varo.game.player.VaroPlayerState;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * @author CuukyOfficial
@@ -13,17 +17,28 @@ import java.util.function.Supplier;
  */
 public enum VaroGameState implements VaroState {
 
-    LOBBY(LobbyHeartbeat::new, DefaultPlayerState.ALIVE),
-    RUNNING(null, DefaultPlayerState.SPECTATOR),
-    MASS_RECORDING(null, RUNNING.defaultState),
-    FINISHED(null, RUNNING.defaultState);
+    // TODO: Maybe as classes not enums for better expandability
+    LOBBY(LobbyHeartbeat::new),
+    RUNNING(null),
+    MASS_RECORDING(null),
+    FINISHED(null);
+
+    private interface ListenerCreator extends Function<Varo, CancelableListener> {}
+
+    private final Collection<ListenerCreator> DEFAULT_LISTENER = Collections.emptyList();
 
     private final Supplier<Heartbeat> heartbeatSupplier;
-    private final VaroPlayerState defaultState;
+    private final Collection<ListenerCreator> listeners;
 
-    VaroGameState(Supplier<Heartbeat> heartbeatSupplier, VaroPlayerState defaultState) {
+    VaroGameState(Supplier<Heartbeat> heartbeatSupplier, ListenerCreator... listener) {
         this.heartbeatSupplier = heartbeatSupplier;
-        this.defaultState = defaultState;
+        this.listeners = new LinkedList<>(this.DEFAULT_LISTENER);
+        this.listeners.addAll(Arrays.asList(listener));
+    }
+
+    @Override
+    public Collection<CancelableListener> getListeners(Varo varo) {
+        return this.listeners.stream().map(l -> l.apply(varo)).collect(Collectors.toList());
     }
 
     @Override
@@ -31,8 +46,4 @@ public enum VaroGameState implements VaroState {
         return this.heartbeatSupplier.get();
     }
 
-    @Override
-    public VaroPlayerState getPlayerState() {
-        return this.defaultState;
-    }
 }

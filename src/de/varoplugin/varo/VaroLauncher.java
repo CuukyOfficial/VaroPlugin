@@ -2,6 +2,7 @@ package de.varoplugin.varo;
 
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
+import de.varoplugin.varo.api.event.game.VaroGameCancelableEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroGame;
 import de.varoplugin.varo.ui.UIManager;
@@ -58,5 +59,10 @@ public class VaroLauncher extends JavaPlugin implements VaroPlugin {
     public <T extends VaroEvent> T callEvent(T event) {
         this.getServer().getPluginManager().callEvent(event);
         return event;
+    }
+
+    @Override
+    public <T extends VaroGameCancelableEvent> boolean isCancelled(T event) {
+        return this.callEvent(event).isCancelled();
     }
 }

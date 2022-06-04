@@ -3,11 +3,11 @@ package de.varoplugin.varo.api.event.game;
 import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.Varo;
 
-public class GameStateChangeEvent extends VaroGameCancelableEvent {
+public class VaroStateChangeEvent extends VaroGameCancelableEvent {
 
     private final VaroState state;
 
-    public GameStateChangeEvent(Varo varo, VaroState state) {
+    public VaroStateChangeEvent(Varo varo, VaroState state) {
         super(varo);
         this.state = state;
     }

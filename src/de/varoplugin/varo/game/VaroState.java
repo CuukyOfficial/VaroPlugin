@@ -1,7 +1,8 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
-import de.varoplugin.varo.game.player.VaroPlayerState;
+
+import java.util.Collection;
 
 /**
  * @author CuukyOfficial
@@ -11,6 +12,6 @@ public interface VaroState {
 
     Heartbeat createHeartbeat();
 
-    VaroPlayerState getPlayerState();
+    Collection<CancelableListener> getListeners(Varo varo);
 
 }

@@ -1,6 +1,7 @@
 package de.varoplugin.varo.game.player;
 
 import de.varoplugin.varo.game.Varo;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -10,10 +11,16 @@ import java.util.UUID;
  */
 public interface VaroPlayer {
 
-    UUID getUuid();
+    boolean isOnline();
 
     Varo getVaro();
 
+    UUID getUuid();
+
+    boolean setState(VaroPlayerState state);
+
     VaroPlayerState getState();
+
+    Player getPlayer();
 
 }

@@ -10,7 +10,6 @@ public class VaroLoadingStateChangeEvent extends VaroEvent {
     public VaroLoadingStateChangeEvent(VaroLoadingState state, String message) {
         this.state = state;
         this.message = message;
-
     }
 
     public VaroLoadingState getState() {

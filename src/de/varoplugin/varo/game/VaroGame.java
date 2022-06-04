@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
-import de.varoplugin.varo.api.event.game.GameStateChangeEvent;
+import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
 import de.varoplugin.varo.game.player.VaroPlayer;
 
@@ -22,8 +22,8 @@ public class VaroGame implements Varo {
 
     private void loadHeartbeat() {
         if (this.heartbeat != null) this.heartbeat.cancel();
-        this.heartbeat = this.state.createHeartbeat();
-        this.heartbeat.initialize(this);
+        if ((this.heartbeat = this.state.createHeartbeat()) != null)
+            this.heartbeat.initialize(this);
     }
 
     @Override
@@ -44,10 +44,10 @@ public class VaroGame implements Varo {
 
     @Override
     public boolean setState(VaroState state) {
-        GameStateChangeEvent event = new GameStateChangeEvent(this, state);
-        if (this.plugin.callEvent(event).isCancelled()) return false;
+        if (this.plugin.isCancelled(new VaroStateChangeEvent(this, state))) return false;
         this.state = state;
         this.loadHeartbeat();
+        this.state.getListeners(this).forEach(l -> this.plugin.getServer().getPluginManager().registerEvents(l, this.plugin));
         return true;
     }
 
