@@ -116,7 +116,7 @@ jar {
         attributes(
                 'Manifest-Version': '1.0',
                 'Class-Path': '.',
-                'Main-Class': 'de.varoplugin.varo.VaroLauncher',
+                'Main-Class': 'de.varoplugin.varo.RunnableLauncher',
         )
     }
 
