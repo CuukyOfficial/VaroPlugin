@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
  * @author CuukyOfficial
  * @version v0.1
  */
-// TODO: Delete I guess
 public abstract class VaroStateListener extends VaroListener {
 
     private final VaroState state;

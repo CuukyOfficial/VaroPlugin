@@ -25,6 +25,14 @@ public class VaroLauncher extends JavaPlugin implements VaroPlugin {
         this.varo = new VaroGame();
     }
 
+    /**
+     * Thanks bukkit for removing all listeners before the plugin has been disabled
+     */
+    private void updateDisableState(VaroLoadingState state, Object... args) {
+        this.uiManager.printDisableMessage(new VaroLoadingStateChangeEvent(state, state.formatMessage(args)));
+        this.state = state;
+    }
+
     private void updateLoadingState(VaroLoadingState state, Object... args) {
         this.callEvent(new VaroLoadingStateChangeEvent(state, state.formatMessage(args)));
         this.state = state;
@@ -37,21 +45,28 @@ public class VaroLauncher extends JavaPlugin implements VaroPlugin {
     @Override
     public void onEnable() {
         this.uiManager.registerListener();
-        this.updateLoadingState(DefaultLoadingState.INITIALIZING, this.getName(), this.getVersion());
+        this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
         this.varo.initialize(this);
 
         // Init
 
-        this.updateLoadingState(DefaultLoadingState.LOADING_STATS);
+        this.updateLoadingState(StartupState.LOADING_STATS);
 
         // Load stats
 
-        this.updateLoadingState(DefaultLoadingState.FINISHED, this.getName());
+        this.updateLoadingState(StartupState.FINISHED, this.getName());
         super.onEnable();
     }
 
     @Override
     public void onDisable() {
+        this.updateDisableState(ShutdownState.INITIALIZING, this.getName(), this.getVersion());
+
+        this.updateDisableState(ShutdownState.SAVING_STATS, 0);
+
+        // Save stats
+
+        this.updateDisableState(ShutdownState.SUCCESS);
         super.onDisable();
     }
 

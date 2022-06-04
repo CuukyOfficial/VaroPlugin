@@ -4,7 +4,7 @@ package de.varoplugin.varo;
  * @author CuukyOfficial
  * @version v0.1
  */
-public enum DefaultLoadingState implements VaroLoadingState {
+public enum StartupState implements VaroLoadingState {
 
     INITIALIZING("INIT", "Booting up %s v%s..."),
     LOADING_STATS("STATS", "Loading stats..."),
@@ -13,7 +13,7 @@ public enum DefaultLoadingState implements VaroLoadingState {
     private final String name;
     private final String message;
 
-    DefaultLoadingState(String name, String message) {
+    StartupState(String name, String message) {
         this.name = name;
         this.message = message;
     }
