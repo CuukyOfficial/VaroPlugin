@@ -1,6 +1,7 @@
 package de.varoplugin.varo.game.player;
 
 import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.player.state.VaroPlayerState;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

@@ -1,8 +1,5 @@
-package de.varoplugin.varo.game.player.listener;
+package de.varoplugin.varo.game.player;
 
-import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -12,8 +9,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public abstract class VaroPlayerOnlineListener extends VaroPlayerStateListener {
 
-    public VaroPlayerOnlineListener(Varo varo, VaroState state, VaroPlayer player) {
-        super(varo, state, player);
+    public VaroPlayerOnlineListener(VaroPlayer player) {
+        super(player);
+    }
+
+    @Override
+    public boolean shallListen() {
+        return super.shallListen() && this.player.isOnline();
     }
 
     @EventHandler

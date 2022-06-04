@@ -1,6 +1,7 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
+import de.varoplugin.varo.game.heartbeat.RunningHeartbeat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,10 +18,10 @@ import java.util.stream.Collectors;
 public enum VaroGameState implements VaroState {
 
     // TODO: Maybe as classes not enums for better expandability
-    LOBBY(null),
-    RUNNING(null),
-    MASS_RECORDING(null),
-    FINISHED(null);
+    LOBBY,
+    RUNNING(RunningHeartbeat::new),
+    MASS_RECORDING,
+    FINISHED;
 
     private interface ListenerCreator extends Function<Varo, CancelableListener> {}
 
@@ -28,6 +29,10 @@ public enum VaroGameState implements VaroState {
 
     private final Supplier<Heartbeat> heartbeatSupplier;
     private final Collection<ListenerCreator> listeners;
+
+    VaroGameState(ListenerCreator... listener) {
+        this(null, listener);
+    }
 
     VaroGameState(Supplier<Heartbeat> heartbeatSupplier, ListenerCreator... listener) {
         this.heartbeatSupplier = heartbeatSupplier;

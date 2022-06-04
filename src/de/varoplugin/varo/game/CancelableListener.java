@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
  */
 public interface CancelableListener extends Listener {
 
+    boolean shallListen();
+
     default void unregister() {
         HandlerList.unregisterAll(this);
     }

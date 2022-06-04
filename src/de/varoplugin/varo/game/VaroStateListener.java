@@ -17,6 +17,11 @@ public abstract class VaroStateListener extends VaroListener {
         this.state = state;
     }
 
+    @Override
+    public boolean shallListen() {
+        return this.state.equals(this.varo.getState());
+    }
+
     @EventHandler
     public void onGameStateChange(VaroStateChangeEvent event) {
         if (!this.state.equals(event.getState())) this.unregister();

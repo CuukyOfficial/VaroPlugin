@@ -1,12 +1,9 @@
-package de.varoplugin.varo.game.player.listener;
+package de.varoplugin.varo.game.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerStateChangeEvent;
-import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroStateListener;
-import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.player.VaroPlayer;
-import de.varoplugin.varo.game.player.VaroPlayerState;
+import de.varoplugin.varo.game.player.state.VaroPlayerState;
 import org.bukkit.event.EventHandler;
 
 /**
@@ -18,11 +15,16 @@ public abstract class VaroPlayerStateListener extends VaroStateListener {
     private final VaroPlayerState state;
     protected final VaroPlayer player;
 
-    public VaroPlayerStateListener(Varo varo, VaroState state, VaroPlayer player) {
-        super(varo, state);
+    public VaroPlayerStateListener(VaroPlayer player) {
+        super(player.getVaro(), player.getVaro().getState());
 
         this.state = player.getState();
         this.player = player;
+    }
+
+    @Override
+    public boolean shallListen() {
+        return super.shallListen() && this.player.getState().equals(this.state);
     }
 
     @EventHandler

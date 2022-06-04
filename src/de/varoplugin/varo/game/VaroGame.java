@@ -5,6 +5,9 @@ import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
 import de.varoplugin.varo.game.player.VaroPlayer;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * @author CuukyOfficial
  * @version v0.1
@@ -35,6 +38,12 @@ public class VaroGame implements Varo {
     @Override
     public boolean register(VaroPlayer player) {
         return false;
+    }
+
+    @Override
+    public Collection<VaroPlayer> getPlayers() {
+        // TODO: Players
+        return new ArrayList<>();
     }
 
     @Override

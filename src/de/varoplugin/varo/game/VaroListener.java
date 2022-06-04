@@ -4,7 +4,7 @@ package de.varoplugin.varo.game;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroListener implements CancelableListener {
+public abstract class VaroListener implements CancelableListener {
 
     protected final Varo varo;
 
