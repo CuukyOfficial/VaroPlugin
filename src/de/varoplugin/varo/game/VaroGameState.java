@@ -1,7 +1,6 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.game.heartbeat.Heartbeat;
-import de.varoplugin.varo.game.heartbeat.LobbyHeartbeat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 public enum VaroGameState implements VaroState {
 
     // TODO: Maybe as classes not enums for better expandability
-    LOBBY(LobbyHeartbeat::new),
+    LOBBY(null),
     RUNNING(null),
     MASS_RECORDING(null),
     FINISHED(null);
@@ -43,7 +42,7 @@ public enum VaroGameState implements VaroState {
 
     @Override
     public Heartbeat createHeartbeat() {
-        return this.heartbeatSupplier.get();
+        return this.heartbeatSupplier == null ? null : this.heartbeatSupplier.get();
     }
 
 }
