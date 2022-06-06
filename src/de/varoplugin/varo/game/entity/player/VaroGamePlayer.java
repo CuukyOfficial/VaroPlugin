@@ -1,8 +1,9 @@
-package de.varoplugin.varo.game.player;
+package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerStateChangeEvent;
 import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.entity.VaroGameEntity;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -11,9 +12,8 @@ import java.util.UUID;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroGamePlayer implements VaroPlayer {
+public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
 
-    private Varo varo;
     private UUID uuid;
     private VaroPlayerState state;
 
@@ -42,13 +42,18 @@ public class VaroGamePlayer implements VaroPlayer {
 
     @Override
     public void initialize(Varo varo) {
-        this.varo = varo;
-        this.registerListener(this.state);
+        super.initialize(varo);
+        this.registerTasks(this.state);
     }
 
     @Override
-    public void registerListener(VaroPlayerState state) {
+    public void registerTasks(VaroPlayerState state) {
         state.getInfo(this.varo.getState()).getTasks(this).forEach(CancelableTask::register);
+    }
+
+    @Override
+    public boolean canAccessSavings(VaroPlayer player) {
+        return this.equals(player);
     }
 
     @Override
@@ -93,4 +98,5 @@ public class VaroGamePlayer implements VaroPlayer {
     public Player getPlayer() {
         return this.player;
     }
+
 }

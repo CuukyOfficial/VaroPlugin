@@ -1,7 +1,7 @@
 package de.varoplugin.varo.api.event.game.player;
 
-import de.varoplugin.varo.game.player.VaroPlayer;
-import de.varoplugin.varo.game.player.VaroPlayerState;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayerState;
 
 /**
  * @author CuukyOfficial

@@ -3,8 +3,8 @@ package de.varoplugin.varo.game;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
-import de.varoplugin.varo.game.player.VaroGamePlayer;
-import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroGamePlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class VaroGame implements Varo {
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
-        this.registerListener(this.state);
+        this.registerTasks(this.state);
 
         for (Player player : this.getPlugin().getServer().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
@@ -42,7 +42,7 @@ public class VaroGame implements Varo {
     }
 
     @Override
-    public void registerListener(VaroState state) {
+    public void registerTasks(VaroState state) {
         state.getTasks(this).forEach(CancelableTask::register);
     }
 

@@ -1,6 +1,6 @@
-package de.varoplugin.varo.game.player.tasks;
+package de.varoplugin.varo.game.entity.player.tasks;
 
-import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.Location;
 
 // Not sure if this should be a heartbeat task.

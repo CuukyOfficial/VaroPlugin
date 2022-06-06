@@ -1,9 +1,9 @@
-package de.varoplugin.varo.game.player.info;
+package de.varoplugin.varo.game.entity.player.info;
 
 import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.VaroGameState;
-import de.varoplugin.varo.game.player.VaroPlayer;
-import de.varoplugin.varo.game.player.tasks.CountdownTask;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.tasks.CountdownTask;
 import org.bukkit.GameMode;
 
 import java.util.Arrays;

@@ -1,7 +1,7 @@
-package de.varoplugin.varo.game.player;
+package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.player.info.PlayerInfo;
+import de.varoplugin.varo.game.entity.player.info.PlayerInfo;
 
 /**
  * Represents a player state a @{@link VaroPlayer} can be.

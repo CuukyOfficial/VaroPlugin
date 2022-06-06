@@ -1,6 +1,6 @@
-package de.varoplugin.varo.game.player;
+package de.varoplugin.varo.game.entity.player;
 
-import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.entity.VaroEntity;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -11,21 +11,14 @@ import java.util.UUID;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroPlayer {
+public interface VaroPlayer extends VaroEntity {
 
     /**
-     * Initializes the player.
-     *
-     * @param varo The game the player is playing
-     */
-    void initialize(Varo varo);
-
-    /**
-     * Registers the listeners of this state for this player.
+     * Registers the tasks of this state for this player.
      *
      * @param state The state
      */
-    void registerListener(VaroPlayerState state);
+    void registerTasks(VaroPlayerState state);
 
     /**
      * Returns the hashCode of the UUID.
@@ -40,13 +33,6 @@ public interface VaroPlayer {
      * @return If the player is online
      */
     boolean isOnline();
-
-    /**
-     * Returns the game this player is playing.
-     *
-     * @return The Varo
-     */
-    Varo getVaro();
 
     UUID getUuid();
 

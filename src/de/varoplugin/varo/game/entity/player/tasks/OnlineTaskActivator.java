@@ -1,6 +1,6 @@
-package de.varoplugin.varo.game.player.tasks;
+package de.varoplugin.varo.game.entity.player.tasks;
 
-import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;

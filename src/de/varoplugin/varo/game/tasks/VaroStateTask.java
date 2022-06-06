@@ -32,7 +32,7 @@ public abstract class VaroStateTask extends VaroTask {
     public boolean onGameStateChange(VaroStateChangeEvent event) {
         if (!this.state.equals(event.getState())) {
             this.unregister();
-            this.varo.registerListener(event.getState());
+            this.varo.registerTasks(event.getState());
             return true;
         }
         return false;

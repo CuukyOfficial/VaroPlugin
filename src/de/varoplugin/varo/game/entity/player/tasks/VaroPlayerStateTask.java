@@ -1,9 +1,9 @@
-package de.varoplugin.varo.game.player.tasks;
+package de.varoplugin.varo.game.entity.player.tasks;
 
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerStateChangeEvent;
-import de.varoplugin.varo.game.player.VaroPlayer;
-import de.varoplugin.varo.game.player.VaroPlayerState;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayerState;
 import org.bukkit.event.EventHandler;
 
 /**
@@ -23,6 +23,12 @@ public abstract class VaroPlayerStateTask extends VaroPlayerTask {
         this.state = player.getState();
     }
 
+    @Override
+    public synchronized void cancel() throws IllegalStateException {
+        this.player.registerTasks(this.player.getState());
+        super.cancel();
+    }
+
     /**
      * Returns if the task has been cancelled.
      *
@@ -33,7 +39,7 @@ public abstract class VaroPlayerStateTask extends VaroPlayerTask {
     public boolean onPlayerStateChange(VaroPlayerStateChangeEvent event) {
         if (this.player.equals(event.getPlayer()) && !this.state.equals(event.getPlayer().getState())) {
             this.unregister();
-            this.player.registerListener(event.getState());
+            this.player.registerTasks(event.getState());
             return true;
         }
         return false;
@@ -42,7 +48,7 @@ public abstract class VaroPlayerStateTask extends VaroPlayerTask {
     @Override
     public boolean onGameStateChange(VaroStateChangeEvent event) {
         if (super.onGameStateChange(event)) {
-            this.player.registerListener(this.player.getState());
+            this.player.registerTasks(this.player.getState());
             return true;
         }
         return false;

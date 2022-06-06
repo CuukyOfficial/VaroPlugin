@@ -1,10 +1,10 @@
-package de.varoplugin.varo.game.player;
+package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.player.info.AliveEndInfo;
-import de.varoplugin.varo.game.player.info.AliveLobbyInfo;
-import de.varoplugin.varo.game.player.info.AliveRunningInfo;
-import de.varoplugin.varo.game.player.info.PlayerInfo;
+import de.varoplugin.varo.game.entity.player.info.AliveEndInfo;
+import de.varoplugin.varo.game.entity.player.info.AliveLobbyInfo;
+import de.varoplugin.varo.game.entity.player.info.AliveRunningInfo;
+import de.varoplugin.varo.game.entity.player.info.PlayerInfo;
 
 import java.util.Arrays;
 import java.util.HashSet;

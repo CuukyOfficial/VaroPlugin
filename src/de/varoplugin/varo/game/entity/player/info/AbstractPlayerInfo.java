@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.player.info;
+package de.varoplugin.varo.game.entity.player.info;
 
 import de.varoplugin.varo.game.VaroState;
 

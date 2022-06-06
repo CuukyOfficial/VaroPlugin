@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
-import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ public interface Varo {
 
     void initialize(VaroPlugin plugin);
 
-    void registerListener(VaroState state);
+    void registerTasks(VaroState state);
 
     VaroPlayer register(Player player);
 

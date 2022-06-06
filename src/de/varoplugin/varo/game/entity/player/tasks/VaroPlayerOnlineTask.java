@@ -1,7 +1,7 @@
-package de.varoplugin.varo.game.player.tasks;
+package de.varoplugin.varo.game.entity.player.tasks;
 
 import de.varoplugin.varo.game.CancelableTask;
-import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 
 /**
  * Registers a specific varo player task, which only is activated if
