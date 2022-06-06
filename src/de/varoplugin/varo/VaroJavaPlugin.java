@@ -14,13 +14,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @version v0.1
  */
 @SuppressWarnings("unused")
-public class VaroLauncher extends JavaPlugin implements VaroPlugin {
+public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
     private final VaroUIManager uiManager;
     private final Varo varo;
     private VaroLoadingState state;
 
-    public VaroLauncher() {
+    public VaroJavaPlugin() {
         this.uiManager = new UIManager(this);
         this.varo = new VaroGame();
     }
