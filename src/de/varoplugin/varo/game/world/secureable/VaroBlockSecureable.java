@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 public class VaroBlockSecureable implements VaroSecureable {
 
     private final Block block;
+//    private final VaroSecureableType type;
 
     public VaroBlockSecureable(Block block) {
         this.block = block;
@@ -18,6 +19,11 @@ public class VaroBlockSecureable implements VaroSecureable {
     @Override
     public void initialize(Varo varo) {
 
+    }
+
+    @Override
+    public void registerListeners(VaroSecureableType type) {
+//        type.
     }
 
     @Override

@@ -9,8 +9,14 @@ import java.util.Collection;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroSecureableType {
+public enum VaroBlockSecureableType implements VaroSecureableType {
 
-    Collection<CancelableTask> getTasks(VaroState state);
+    FURNACE,
+    CHEST;
 
+    @Override
+    public Collection<CancelableTask> getTasks(VaroState state) {
+//        if ()
+        return null;
+    }
 }
