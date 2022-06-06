@@ -51,7 +51,9 @@ public abstract class VaroTask extends BukkitRunnable implements CancelableTask 
     @Override
     public boolean unregister() {
         if (!this.registered) return false;
-        this.cancel();
+        try {
+            this.cancel();
+        } catch (IllegalStateException ignored) {}
         return CancelableTask.super.unregister();
     }
 }
