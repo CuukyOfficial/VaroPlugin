@@ -24,4 +24,8 @@ public interface VaroSecureable extends VaroGameObject {
 
     Block getBlock();
 
+    SecureableHolder getHolder();
+
+    VaroSecureableType getType();
+
 }
