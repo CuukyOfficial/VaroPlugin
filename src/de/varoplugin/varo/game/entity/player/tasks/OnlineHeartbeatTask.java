@@ -12,13 +12,23 @@ public abstract class OnlineHeartbeatTask extends VaroPlayerOnlineTask {
 
     private static final long HEARTBEAT_SCHEDULE = 20L;
 
-    public OnlineHeartbeatTask(VaroPlayer player) {
+    private final long init;
+    private final long schedule;
+
+    public OnlineHeartbeatTask(VaroPlayer player, long init, long schedule) {
         super(player);
+
+        this.init = init;
+        this.schedule = schedule;
     }
 
-    @Override
+    public OnlineHeartbeatTask(VaroPlayer player) {
+        this(player, HEARTBEAT_SCHEDULE, HEARTBEAT_SCHEDULE);
+    }
+
+        @Override
     protected void schedule() {
-        this.runTaskTimerAsynchronously(this.varo.getPlugin(), HEARTBEAT_SCHEDULE, HEARTBEAT_SCHEDULE);
+        this.runTaskTimerAsynchronously(this.varo.getPlugin(), this.init, this.schedule);
     }
 
     public abstract void run();

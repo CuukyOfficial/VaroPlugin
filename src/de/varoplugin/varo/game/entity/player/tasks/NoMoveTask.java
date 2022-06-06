@@ -15,14 +15,14 @@ public class NoMoveTask extends OnlineHeartbeatTask {
     private Location lastLocation;
 
     public NoMoveTask(VaroPlayer player) {
-        super(player);
+        super(player, 0L, 5L);
     }
 
     @Override
     public void run() {
         Location current = this.player.getPlayer().getLocation();
-        if (this.lastLocation == null || current.getBlockX() != this.lastLocation.getBlockX()
-            || current.getBlockZ() != this.lastLocation.getBlockZ()) {
+        if (this.lastLocation != null && (current.getBlockX() != this.lastLocation.getBlockX()
+            || current.getBlockZ() != this.lastLocation.getBlockZ())) {
             this.player.getPlayer().teleport(this.lastLocation);
         } else {
             this.lastLocation = current.clone();
