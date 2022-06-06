@@ -12,6 +12,13 @@ public interface VaroPlugin extends Plugin {
 
     <T extends VaroEvent> T callEvent(T event);
 
+    /**
+     * Calls the event and returns if the event has been cancelled.
+     *
+     * @param event The event
+     * @param <T> The type of event
+     * @return If the event has been cancelled
+     */
     <T extends VaroGameCancelableEvent> boolean isCancelled(T event);
 
 }

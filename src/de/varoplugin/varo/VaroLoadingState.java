@@ -1,6 +1,8 @@
 package de.varoplugin.varo;
 
 /**
+ * Represents any loading state the plugin can be in while loading.
+ *
  * @author CuukyOfficial
  * @version v0.1
  */
