@@ -16,7 +16,8 @@ public class BlockAccessListener extends SecureableListener {
 
     @EventHandler
     public void onPlayerAccess(PlayerInteractEvent event) {
-        if (!this.secureable.getBlock().equals(event.getClickedBlock())) return;
+        if (!this.secureable.getBlock().equals(event.getClickedBlock())
+            || this.secureable.getHolder().canAccessSavings(this.varo.getPlayer(event.getPlayer()))) return;
         event.setCancelled(true);
     }
 }

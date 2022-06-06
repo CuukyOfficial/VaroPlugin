@@ -13,7 +13,7 @@ import org.bukkit.event.EventPriority;
  */
 public abstract class SecureableListener extends VaroStateTask {
 
-    protected VaroSecureable secureable;
+    protected final VaroSecureable secureable;
 
     public SecureableListener(Varo varo, VaroSecureable secureable) {
         super(varo);
