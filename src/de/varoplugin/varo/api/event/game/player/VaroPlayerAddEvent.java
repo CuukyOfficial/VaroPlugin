@@ -6,9 +6,9 @@ import de.varoplugin.varo.game.player.VaroPlayer;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroPlayerRemoveEvent extends VaroPlayerEvent {
+public class VaroPlayerAddEvent extends VaroPlayerEvent {
 
-    public VaroPlayerRemoveEvent(VaroPlayer player) {
+    public VaroPlayerAddEvent(VaroPlayer player) {
         super(player);
     }
 }

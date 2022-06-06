@@ -1,6 +1,6 @@
-package de.varoplugin.varo.game.player.state;
+package de.varoplugin.varo.game.player.info;
 
-import de.varoplugin.varo.game.CancelableListener;
+import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.VaroGameState;
 import de.varoplugin.varo.game.player.VaroPlayer;
 import org.bukkit.GameMode;
@@ -19,7 +19,7 @@ public class AliveEndInfo extends AbstractPlayerInfo {
 
 
     @Override
-    public List<CancelableListener> getListener(VaroPlayer player) {
+    public List<CancelableTask> getTasks(VaroPlayer player) {
         // TODO: Add end listener
         return null;
     }

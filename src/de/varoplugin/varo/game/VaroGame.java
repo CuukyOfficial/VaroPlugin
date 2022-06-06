@@ -2,11 +2,16 @@ package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
-import de.varoplugin.varo.game.heartbeat.Heartbeat;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
+import de.varoplugin.varo.game.player.VaroGamePlayer;
 import de.varoplugin.varo.game.player.VaroPlayer;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author CuukyOfficial
@@ -17,27 +22,47 @@ public class VaroGame implements Varo {
     private VaroPlugin plugin;
     private VaroState state;
 
-    private Heartbeat heartbeat;
+    private final Set<VaroPlayer> players;
 
     public VaroGame() {
         this.state = VaroGameState.LOBBY;
-    }
-
-    private void loadHeartbeat() {
-        if (this.heartbeat != null) this.heartbeat.cancel();
-        if ((this.heartbeat = this.state.createHeartbeat()) != null)
-            this.heartbeat.initialize(this);
+        this.players = new HashSet<>();
     }
 
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
-        this.loadHeartbeat();
+        this.registerListener(this.state);
+
+        for (Player player : this.getPlugin().getServer().getOnlinePlayers()) {
+            VaroPlayer vp = this.getPlayer(player);
+            if (vp == null) this.register(player);
+            else vp.initialize(this);
+        }
     }
 
     @Override
-    public boolean register(VaroPlayer player) {
-        return false;
+    public void registerListener(VaroState state) {
+        state.getTasks(this).forEach(CancelableTask::register);
+    }
+
+    @Override
+    public VaroPlayer register(Player player) {
+        VaroPlayer vp = new VaroGamePlayer(player);
+        if (this.players.contains(vp) || this.plugin.isCancelled(new VaroPlayerAddEvent(vp))) return null;
+        this.players.add(vp);
+        vp.initialize(this);
+        return vp;
+    }
+
+    @Override
+    public VaroPlayer getPlayer(UUID uuid) {
+        return this.players.stream().filter(player -> player.getUuid().equals(uuid)).findAny().orElse(null);
+    }
+
+    @Override
+    public VaroPlayer getPlayer(Player player) {
+        return this.getPlayer(player.getUniqueId());
     }
 
     @Override
@@ -53,10 +78,8 @@ public class VaroGame implements Varo {
 
     @Override
     public boolean setState(VaroState state) {
-        if (this.plugin.isCancelled(new VaroStateChangeEvent(this, state))) return false;
+        if (this.state == state || this.plugin.isCancelled(new VaroStateChangeEvent(this, state))) return false;
         this.state = state;
-        this.loadHeartbeat();
-        this.state.getListeners(this).forEach(l -> this.plugin.getServer().getPluginManager().registerEvents(l, this.plugin));
         return true;
     }
 

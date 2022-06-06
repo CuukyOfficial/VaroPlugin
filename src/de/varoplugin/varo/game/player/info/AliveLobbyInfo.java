@@ -1,9 +1,9 @@
-package de.varoplugin.varo.game.player.state;
+package de.varoplugin.varo.game.player.info;
 
-import de.varoplugin.varo.game.CancelableListener;
+import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.VaroGameState;
 import de.varoplugin.varo.game.player.VaroPlayer;
-import de.varoplugin.varo.game.player.state.listener.NoMoveListener;
+import de.varoplugin.varo.game.player.tasks.NoMoveTask;
 import org.bukkit.GameMode;
 
 import java.util.Arrays;
@@ -20,8 +20,8 @@ public class AliveLobbyInfo extends AbstractPlayerInfo {
     }
 
     @Override
-    public List<CancelableListener> getListener(VaroPlayer player) {
-        return Arrays.asList(new NoMoveListener(player));
+    public List<CancelableTask> getTasks(VaroPlayer player) {
+        return Arrays.asList(new NoMoveTask(player));
     }
 
     @Override

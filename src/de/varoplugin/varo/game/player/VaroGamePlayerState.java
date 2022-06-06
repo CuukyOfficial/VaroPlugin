@@ -1,12 +1,13 @@
-package de.varoplugin.varo.game.player.state;
+package de.varoplugin.varo.game.player;
 
-import de.varoplugin.varo.game.CancelableListener;
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.player.info.AliveEndInfo;
+import de.varoplugin.varo.game.player.info.AliveLobbyInfo;
+import de.varoplugin.varo.game.player.info.AliveRunningInfo;
+import de.varoplugin.varo.game.player.info.PlayerInfo;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,11 +30,9 @@ public enum VaroGamePlayerState implements VaroPlayerState {
     }
 
     @Override
-    public List<CancelableListener> getListener(VaroState state, VaroPlayer player) {
-        PlayerInfo playerInfo = this.infos.stream().filter(info -> info.getState().equals(state))
+    public PlayerInfo getInfo(VaroState state) {
+        return this.infos.stream().filter(info -> info.getState().equals(state))
             .findAny().orElse(null);
-        if (playerInfo == null) throw new IllegalStateException("Could not find info for state " + state);
-        return playerInfo.getListener(player);
     }
 
     @Override

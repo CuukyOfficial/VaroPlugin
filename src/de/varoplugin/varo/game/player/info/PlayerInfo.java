@@ -1,6 +1,6 @@
-package de.varoplugin.varo.game.player.state;
+package de.varoplugin.varo.game.player.info;
 
-import de.varoplugin.varo.game.CancelableListener;
+import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.player.VaroPlayer;
 import org.bukkit.GameMode;
@@ -8,7 +8,8 @@ import org.bukkit.GameMode;
 import java.util.List;
 
 /**
- * hashCode needs to return the hash of the state.
+ * Provides any info the player currently needs.
+ * The info depends on the current player state and game state.
  *
  * @author CuukyOfficial
  * @version v0.1
@@ -16,7 +17,7 @@ import java.util.List;
 public interface PlayerInfo {
 
     // TODO: Better system. This is not optimal yet.
-    List<CancelableListener> getListener(VaroPlayer player);
+    List<CancelableTask> getTasks(VaroPlayer player);
 
     /**
      * Returns the hashCode of the state this object is providing the info of.

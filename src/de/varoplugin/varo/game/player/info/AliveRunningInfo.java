@@ -1,10 +1,12 @@
-package de.varoplugin.varo.game.player.state;
+package de.varoplugin.varo.game.player.info;
 
-import de.varoplugin.varo.game.CancelableListener;
+import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.VaroGameState;
 import de.varoplugin.varo.game.player.VaroPlayer;
+import de.varoplugin.varo.game.player.tasks.CountdownTask;
 import org.bukkit.GameMode;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,9 +20,9 @@ public class AliveRunningInfo extends AbstractPlayerInfo {
     }
 
     @Override
-    public List<CancelableListener> getListener(VaroPlayer player) {
+    public List<CancelableTask> getTasks(VaroPlayer player) {
         // TODO: Add running listener
-        return null;
+        return Arrays.asList(new CountdownTask(player));
     }
 
     @Override

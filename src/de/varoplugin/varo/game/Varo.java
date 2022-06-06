@@ -2,8 +2,10 @@ package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.game.player.VaroPlayer;
+import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * @author CuukyOfficial
@@ -13,7 +15,13 @@ public interface Varo {
 
     void initialize(VaroPlugin plugin);
 
-    boolean register(VaroPlayer player);
+    void registerListener(VaroState state);
+
+    VaroPlayer register(Player player);
+
+    VaroPlayer getPlayer(UUID uuid);
+
+    VaroPlayer getPlayer(Player player);
 
     Collection<VaroPlayer> getPlayers();
 

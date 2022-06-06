@@ -1,7 +1,5 @@
 package de.varoplugin.varo.game;
 
-import de.varoplugin.varo.game.heartbeat.Heartbeat;
-
 import java.util.Collection;
 
 /**
@@ -10,8 +8,12 @@ import java.util.Collection;
  */
 public interface VaroState {
 
-    Heartbeat createHeartbeat();
-
-    Collection<CancelableListener> getListeners(Varo varo);
+    /**
+     * Returns all the tasks the current game state needs.
+     *
+     * @param varo
+     * @return
+     */
+    Collection<CancelableTask> getTasks(Varo varo);
 
 }
