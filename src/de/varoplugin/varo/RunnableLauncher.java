@@ -12,6 +12,6 @@ import javax.swing.*;
 public class RunnableLauncher {
 
     public static void main(String[] args) {
-        JOptionPane.showMessageDialog(null, "Das Plugin ist kein ausführbares Programm! Bitte ziehe es auf einem Server in den plugins Ordner!\nYou may not execute this plugin, please launch it on a Bukkit server!\n\nNeed help? https://discord.varoplugin.de/\n\nVaro Plugin by Cuuky");
+        JOptionPane.showMessageDialog(null, "You may not execute this plugin as runnable!\n\nNeed help? https://discord.varoplugin.de/\n\nVaro Plugin by Cuuky");
     }
 }
