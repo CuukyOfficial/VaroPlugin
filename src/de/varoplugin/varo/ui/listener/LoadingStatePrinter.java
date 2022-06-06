@@ -14,13 +14,13 @@ import java.util.logging.Level;
  */
 public class LoadingStatePrinter extends UiListener {
 
-    private static final String BANNER = " _     _                  ______  _              _       \n" +
-        "(_)   (_)                (_____ \\| |            (_)      \n" +
-        " _     _ _____  ____ ___  _____) ) | _   _  ____ _ ____  \n" +
-        "| |   | (____ |/ ___) _ \\|  ____/| || | | |/ _  | |  _ \\ \n" +
-        " \\ \\ / // ___ | |  | |_| | |     | || |_| ( (_| | | | | |\n" +
-        "  \\___/ \\_____|_|   \\___/|_|      \\_)____/ \\___ |_|_| |_|\n" +
-        "                                          (_____|        ";
+    private static final String[] BANNER = {" _     _                  ______  _              _       ", 
+        "(_)   (_)                (_____ \\| |            (_)      ", 
+        " _     _ _____  ____ ___  _____) ) | _   _  ____ _ ____  ", 
+        "| |   | (____ |/ ___) _ \\|  ____/| || | | |/ _  | |  _ \\ ", 
+        " \\ \\ / // ___ | |  | |_| | |     | || |_| ( (_| | | | | |", 
+        "  \\___/ \\_____|_|   \\___/|_|      \\_)____/ \\___ |_|_| |_|", 
+        "                                          (_____|        "};
 
     private static final String FORMAT = "%s";
 
@@ -29,7 +29,7 @@ public class LoadingStatePrinter extends UiListener {
     }
 
     private void printBanner() {
-        Arrays.stream(BANNER.split("\\n")).forEach(line -> this.getLogger().log(Level.INFO, line));
+        Arrays.stream(BANNER).forEach(line -> this.getLogger().log(Level.INFO, line));
     }
 
     @EventHandler
