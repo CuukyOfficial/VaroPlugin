@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
  */
 public class VaroBlockSecureable implements VaroSecureable {
 
+    private Varo varo;
     private final Block block;
 //    private final VaroSecureableType type;
 
@@ -18,7 +19,7 @@ public class VaroBlockSecureable implements VaroSecureable {
 
     @Override
     public void initialize(Varo varo) {
-
+        this.varo = varo;
     }
 
     @Override
@@ -29,6 +30,11 @@ public class VaroBlockSecureable implements VaroSecureable {
     @Override
     public int hashCode() {
         return this.block.getLocation().hashCode();
+    }
+
+    @Override
+    public Varo getVaro() {
+        return this.varo;
     }
 
     @Override

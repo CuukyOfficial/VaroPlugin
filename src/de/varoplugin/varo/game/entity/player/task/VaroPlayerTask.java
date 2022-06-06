@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.entity.player.tasks;
+package de.varoplugin.varo.game.entity.player.task;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
 import de.varoplugin.varo.game.tasks.VaroStateTask;

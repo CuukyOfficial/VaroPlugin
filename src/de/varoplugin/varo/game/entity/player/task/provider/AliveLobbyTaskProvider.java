@@ -1,32 +1,26 @@
-package de.varoplugin.varo.game.entity.player.info;
+package de.varoplugin.varo.game.entity.player.task.provider;
 
 import de.varoplugin.varo.game.CancelableTask;
-import de.varoplugin.varo.game.VaroGameState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.task.NoMoveTask;
 import org.bukkit.GameMode;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author CuukyOfficial
  * @version v0.1
  */
-public class AliveEndInfo extends AbstractPlayerInfo {
-
-    public AliveEndInfo() {
-        super(VaroGameState.FINISHED);
-    }
-
+public class AliveLobbyTaskProvider implements VaroPlayerStateTaskProvider {
 
     @Override
     public List<CancelableTask> getTasks(VaroPlayer player) {
-        // TODO: Add end listener
-        return null;
+        return Collections.singletonList(new NoMoveTask(player));
     }
 
     @Override
     public GameMode getGameMode() {
-        // TODO: Customizable
-        return GameMode.SURVIVAL;
+        return GameMode.ADVENTURE;
     }
 }

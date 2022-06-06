@@ -11,6 +11,6 @@ import java.util.Collection;
  */
 public interface VaroSecureableType {
 
-    Collection<CancelableTask> getTasks(VaroState state);
+    Collection<CancelableTask> getTasks(VaroState state, VaroSecureable secureable);
 
 }

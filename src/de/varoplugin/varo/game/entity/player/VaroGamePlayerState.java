@@ -1,14 +1,16 @@
 package de.varoplugin.varo.game.entity.player;
 
+import de.varoplugin.varo.game.VaroGameState;
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.entity.player.info.AliveEndInfo;
-import de.varoplugin.varo.game.entity.player.info.AliveLobbyInfo;
-import de.varoplugin.varo.game.entity.player.info.AliveRunningInfo;
-import de.varoplugin.varo.game.entity.player.info.PlayerInfo;
+import de.varoplugin.varo.game.entity.player.task.provider.AliveEndTaskProvider;
+import de.varoplugin.varo.game.entity.player.task.provider.AliveLobbyTaskProvider;
+import de.varoplugin.varo.game.entity.player.task.provider.AliveRunningTaskProvider;
+import de.varoplugin.varo.game.entity.player.task.provider.VaroPlayerStateTaskProvider;
+import de.varoplugin.varo.util.Pair;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents any default player state.
@@ -16,27 +18,30 @@ import java.util.Set;
  */
 public enum VaroGamePlayerState implements VaroPlayerState {
 
-    ALIVE(new AliveRunningInfo(), new AliveLobbyInfo(), new AliveEndInfo()),
+    ALIVE(new Pair<>(VaroGameState.RUNNING, new AliveRunningTaskProvider()),
+        new Pair<>(VaroGameState.LOBBY, new AliveLobbyTaskProvider()),
+        new Pair<>(VaroGameState.FINISHED, new AliveEndTaskProvider())),
 
     // TODO: Add infos for following player states
     SPECTATOR,
     GAME_MASTER,
     DEAD;
 
-    private final Set<PlayerInfo> infos;
+    private final Map<VaroState, VaroPlayerStateTaskProvider> infos;
 
-    VaroGamePlayerState(PlayerInfo... infos) {
-        this.infos = new HashSet<>(Arrays.asList(infos));
+    @SafeVarargs
+    VaroGamePlayerState(Pair<VaroState, VaroPlayerStateTaskProvider>... infos) {
+        this.infos = new HashMap<>();
+        Arrays.stream(infos).forEach(info -> this.infos.put(info.getKey(), info.getValue()));
     }
 
     @Override
-    public PlayerInfo getInfo(VaroState state) {
-        return this.infos.stream().filter(info -> info.getState().equals(state))
-            .findAny().orElse(null);
+    public VaroPlayerStateTaskProvider getInfo(VaroState state) {
+        return this.infos.getOrDefault(state, null);
     }
 
     @Override
-    public boolean addInfo(PlayerInfo playerInfo) {
-        return this.infos.add(playerInfo);
+    public boolean addInfo(VaroState state, VaroPlayerStateTaskProvider taskProvider) {
+        return this.infos.put(state, taskProvider) == null;
     }
 }

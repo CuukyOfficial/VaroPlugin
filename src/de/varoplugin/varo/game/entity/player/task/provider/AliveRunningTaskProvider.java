@@ -1,28 +1,23 @@
-package de.varoplugin.varo.game.entity.player.info;
+package de.varoplugin.varo.game.entity.player.task.provider;
 
 import de.varoplugin.varo.game.CancelableTask;
-import de.varoplugin.varo.game.VaroGameState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.player.tasks.CountdownTask;
+import de.varoplugin.varo.game.entity.player.task.CountdownTask;
 import org.bukkit.GameMode;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author CuukyOfficial
  * @version v0.1
  */
-public class AliveRunningInfo extends AbstractPlayerInfo {
-
-    public AliveRunningInfo() {
-        super(VaroGameState.RUNNING);
-    }
+public class AliveRunningTaskProvider implements VaroPlayerStateTaskProvider {
 
     @Override
     public List<CancelableTask> getTasks(VaroPlayer player) {
         // TODO: Add running listener
-        return Arrays.asList(new CountdownTask(player));
+        return Collections.singletonList(new CountdownTask(player));
     }
 
     @Override

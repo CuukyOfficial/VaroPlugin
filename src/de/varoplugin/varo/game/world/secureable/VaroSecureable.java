@@ -1,6 +1,7 @@
 package de.varoplugin.varo.game.world.secureable;
 
 import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.VaroGameObject;
 import org.bukkit.block.Block;
 
 // TODO: Add listener for adding secureables.
@@ -8,7 +9,7 @@ import org.bukkit.block.Block;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroSecureable {
+public interface VaroSecureable extends VaroGameObject {
 
     /**
      * Returns the hashCode of the location.
