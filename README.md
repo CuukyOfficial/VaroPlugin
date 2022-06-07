@@ -3,7 +3,7 @@
 
 
 </br>Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
-Das Plugin läuft universal auf den Versionen 1.7.10 - 1.18.x.</br></br>
+Das Plugin läuft universal auf den Versionen 1.7.10 - 1.19.x.</br></br>
 
 **This is a project I started years ago, don't blame me for old code.
 This project probably describes my progress in coding - not the skills I have today.**
