@@ -76,6 +76,7 @@ dependencies {
     this.addModularCompile('net.dv8tion:JDA:4.4.0_351', 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
     this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
+    this.addModularImplementation('me.carleslc.Simple-YAML:Simple-Yaml:1.8', 'Simple-Yaml-1.8', false)
 
     this.addModularInternal('de.varoplugin:CFW:0.6.11-INV-HOTFIX', 'CFW', true)
 }
