@@ -14,13 +14,6 @@ import java.util.UUID;
 public interface VaroPlayer extends VaroEntity {
 
     /**
-     * Registers the tasks of this state for this player.
-     *
-     * @param state The state
-     */
-    void registerTasks(VaroPlayerState state);
-
-    /**
      * Returns the hashCode of the UUID.
      *
      * @return hashCode of the UUID

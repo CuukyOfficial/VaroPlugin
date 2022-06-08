@@ -8,7 +8,7 @@ import de.varoplugin.varo.game.entity.player.VaroPlayer;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class OnlineHeartbeatTask extends VaroPlayerOnlineTask {
+public abstract class OnlineHeartbeatTask extends VaroPlayerTask {
 
     private static final long HEARTBEAT_SCHEDULE = 20L;
 
@@ -28,7 +28,7 @@ public abstract class OnlineHeartbeatTask extends VaroPlayerOnlineTask {
 
         @Override
     protected void schedule() {
-        this.runTaskTimerAsynchronously(this.varo.getPlugin(), this.init, this.schedule);
+        this.createRunnable().runTaskTimerAsynchronously(this.varo.getPlugin(), this.init, this.schedule);
     }
 
     public abstract void run();

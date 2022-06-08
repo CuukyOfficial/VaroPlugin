@@ -32,18 +32,12 @@ public class VaroGame implements Varo {
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
-        this.registerTasks(this.state);
 
         for (Player player : this.getPlugin().getServer().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
             if (vp == null) this.register(player);
             else vp.initialize(this);
         }
-    }
-
-    @Override
-    public void registerTasks(VaroState state) {
-        state.getTasks(this).forEach(CancelableTask::register);
     }
 
     @Override

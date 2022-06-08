@@ -1,6 +1,5 @@
-package de.varoplugin.varo.game;
+package de.varoplugin.varo.game.tasks;
 
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 /**
@@ -9,17 +8,13 @@ import org.bukkit.event.Listener;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface CancelableTask extends Listener {
-
-    boolean isRegistered();
+public interface TaskRegistrable extends Listener {
 
     /**
      * Does not register twice if called twice.
      */
     boolean register();
 
-    default boolean unregister() {
-        HandlerList.unregisterAll(this);
-        return true;
-    }
+    boolean unregister();
+
 }

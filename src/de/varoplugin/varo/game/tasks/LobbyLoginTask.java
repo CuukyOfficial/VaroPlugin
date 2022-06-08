@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerLoginEvent;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class LobbyLoginListener extends VaroStateTask {
+public class LobbyLoginTask extends VaroTask {
 
-    public LobbyLoginListener(Varo varo) {
+    public LobbyLoginTask(Varo varo) {
         super(varo);
     }
 

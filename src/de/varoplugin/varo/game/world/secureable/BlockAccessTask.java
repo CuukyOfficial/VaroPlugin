@@ -8,9 +8,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class BlockAccessListener extends SecureableListener {
+public class BlockAccessTask extends SecureableTask {
 
-    public BlockAccessListener(Varo varo, VaroSecureable secureable) {
+    public BlockAccessTask(Varo varo, VaroSecureable secureable) {
         super(varo, secureable);
     }
 

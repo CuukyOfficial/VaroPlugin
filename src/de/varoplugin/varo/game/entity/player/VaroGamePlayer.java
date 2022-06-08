@@ -1,7 +1,6 @@
 package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerStateChangeEvent;
-import de.varoplugin.varo.game.CancelableTask;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.VaroGameEntity;
 import org.bukkit.entity.Player;
@@ -43,12 +42,6 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
     @Override
     public void initialize(Varo varo) {
         super.initialize(varo);
-        this.registerTasks(this.state);
-    }
-
-    @Override
-    public void registerTasks(VaroPlayerState state) {
-        state.getInfo(this.varo.getState()).getTasks(this).forEach(CancelableTask::register);
     }
 
     @Override

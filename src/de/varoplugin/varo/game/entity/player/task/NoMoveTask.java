@@ -5,21 +5,21 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-// Not sure if this should be a heartbeat task.
 /**
  * Resets the position of the player if he has moved.
  *
  * @author CuukyOfficial
  * @version v0.1
  */
-public class NoMoveListener extends VaroPlayerOnlineTask {
+public class NoMoveTask extends VaroPlayerTask {
 
-    public NoMoveListener(VaroPlayer player) {
+    public NoMoveTask(VaroPlayer player) {
         super(player);
     }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        if (!event.getPlayer().equals(this.player.getPlayer())) return;
         Location current = event.getTo();
         Location last = event.getFrom();
 
