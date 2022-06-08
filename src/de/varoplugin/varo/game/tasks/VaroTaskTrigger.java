@@ -48,7 +48,6 @@ public abstract class VaroTaskTrigger extends VaroListener implements TaskTrigge
 
     @Override
     public boolean addTask(VaroTask task) {
-        this.checkInitialization();
         boolean add = this.tasks.add(task);
         if (this.isRegistered()) task.register(this.varo);
         return add;

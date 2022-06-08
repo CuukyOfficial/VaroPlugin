@@ -19,12 +19,12 @@ public class DefaultTriggerRegisterer implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onGameInitialize(VaroGameInitializedEvent event) {
-        Arrays.stream(DefaultGameTrigger.values()).map(DefaultGameTrigger::getTrigger)
+        Arrays.stream(DefaultGameTrigger.values()).map(DefaultGameTrigger::createTrigger)
             .forEach(t -> t.register(event.getVaro()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
-
+        // TODO: Register player trigger
     }
 }
