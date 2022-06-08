@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.entity.player;
 
 /**
- * Represents any player participant state.
+ * Contains all default participant states.
  */
 public enum VaroGameParticipantState implements VaroParticipantState {
 
