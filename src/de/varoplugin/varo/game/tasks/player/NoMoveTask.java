@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.entity.player.task;
+package de.varoplugin.varo.game.tasks.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.Location;

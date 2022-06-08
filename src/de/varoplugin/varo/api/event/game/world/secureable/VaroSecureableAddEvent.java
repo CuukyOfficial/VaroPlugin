@@ -1,7 +1,7 @@
 package de.varoplugin.varo.api.event.game.world.secureable;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.world.secureable.VaroSecureable;
+import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 
 /**
  * @author CuukyOfficial
@@ -9,7 +9,7 @@ import de.varoplugin.varo.game.world.secureable.VaroSecureable;
  */
 public class VaroSecureableAddEvent extends VaroSecureableEvent {
 
-    public VaroSecureableAddEvent(Varo varo, VaroSecureable secureable) {
+    public VaroSecureableAddEvent(Varo varo, VaroProtectable secureable) {
         super(varo, secureable);
     }
 }
