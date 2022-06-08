@@ -29,9 +29,13 @@ public interface VaroPlayer extends VaroEntity, StatsHolder {
 
     UUID getUuid();
 
-    boolean setState(VaroPlayerState state);
+    boolean setState(VaroParticipantState state);
 
-    VaroPlayerState getState();
+    VaroParticipantState getState();
+
+    boolean setMode(VaroPlayerMode mode);
+
+    VaroPlayerMode getMode();
 
     void setPlayer(Player player);
 

@@ -1,6 +1,9 @@
 package de.varoplugin.varo.game.entity.player;
 
-import de.varoplugin.varo.api.event.game.player.VaroPlayerStateChangeEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerKillsChangeEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.VaroGameEntity;
 import org.bukkit.entity.Player;
@@ -14,7 +17,8 @@ import java.util.UUID;
 public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
 
     private UUID uuid;
-    private VaroPlayerState state;
+    private VaroParticipantState state;
+    private VaroPlayerMode mode;
 
     private int kills;
 
@@ -24,7 +28,8 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
      * For Serialization. Do not use.
      */
     private VaroGamePlayer() {
-        this.state = VaroGamePlayerState.ALIVE;
+        this.state = VaroGameParticipantState.ALIVE;
+        this.mode = VaroGamePlayerMode.NONE;
     }
 
     public VaroGamePlayer(UUID uuid) {
@@ -40,6 +45,7 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
     @Override
     public void initialize(Varo varo) {
         super.initialize(varo);
+        this.getVaro().getPlugin().callEvent(new VaroPlayerInitializedEvent(this));
     }
 
     @Override
@@ -68,16 +74,29 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
     }
 
     @Override
-    public boolean setState(VaroPlayerState state) {
-        if (this.state == state || this.varo.getPlugin().isCancelled(new VaroPlayerStateChangeEvent(this, state)))
+    public boolean setState(VaroParticipantState state) {
+        if (this.state == state || this.varo.getPlugin().isCancelled(new VaroPlayerParticipantStateChangeEvent(this, state)))
             return false;
         this.state = state;
         return true;
     }
 
     @Override
-    public VaroPlayerState getState() {
+    public VaroParticipantState getState() {
         return this.state;
+    }
+
+    @Override
+    public boolean setMode(VaroPlayerMode mode) {
+        if (this.mode == mode || this.varo.getPlugin().isCancelled(new VaroPlayerModeChangeEvent(this, mode)))
+            return false;
+        this.mode = mode;
+        return true;
+    }
+
+    @Override
+    public VaroPlayerMode getMode() {
+        return this.mode;
     }
 
     @Override
@@ -96,9 +115,9 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
     }
 
     @Override
-    public int setKills(int kills) {
-        int oldKills = this.kills;
+    public boolean setKills(int kills) {
+        if (!this.getVaro().getPlugin().isCancelled(new PlayerKillsChangeEvent(this, kills))) return false;
         this.kills = kills;
-        return kills;
+        return true;
     }
 }
