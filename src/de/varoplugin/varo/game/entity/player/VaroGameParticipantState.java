@@ -5,8 +5,8 @@ package de.varoplugin.varo.game.entity.player;
  */
 public enum VaroGameParticipantState implements VaroParticipantState {
 
+    NONE,
     ALIVE,
-    DEAD,
-    NONE
+    DEAD
 
 }

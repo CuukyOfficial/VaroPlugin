@@ -15,7 +15,7 @@ public class LobbyLoginTask extends AbstractVaroTask {
     public void onLobbyLogin(PlayerLoginEvent event) {
         if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) return;
 
-        // TODO: Add register before start config option
+        // TODO: Add register before start config option and make default player state configurable
         this.varo.register(event.getPlayer());
     }
 }
