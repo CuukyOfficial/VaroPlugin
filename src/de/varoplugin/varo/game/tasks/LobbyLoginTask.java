@@ -15,7 +15,7 @@ public class LobbyLoginTask extends VaroTask {
         super(varo);
     }
 
-    /**
+    /*
      * https://www.google.de/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F467811480042142462%2F&psig=AOvVaw0Rauu08g3t5ZWSN9A2-gai&ust=1654608964950000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKC05e_4mPgCFQAAAAAdAAAAABAI
      */
     @EventHandler(priority = EventPriority.HIGH)
