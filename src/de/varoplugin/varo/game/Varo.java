@@ -15,8 +15,6 @@ public interface Varo {
 
     void initialize(VaroPlugin plugin);
 
-    void registerTasks(VaroState state);
-
     VaroPlayer register(Player player);
 
     VaroPlayer getPlayer(UUID uuid);
