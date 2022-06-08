@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.world.secureable;
+package de.varoplugin.varo.game.world.protectable;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 
@@ -8,7 +8,7 @@ import de.varoplugin.varo.game.entity.player.VaroPlayer;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface SecureableHolder extends SecureableContainer {
+public interface ProtectableHolder extends ProtectableContainer {
 
     boolean canAccessSavings(VaroPlayer player);
 

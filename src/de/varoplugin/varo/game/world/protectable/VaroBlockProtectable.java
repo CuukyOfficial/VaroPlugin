@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.world.secureable;
+package de.varoplugin.varo.game.world.protectable;
 
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.block.Block;
@@ -7,15 +7,13 @@ import org.bukkit.block.Block;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroBlockSecureable implements VaroSecureable {
+public class VaroBlockProtectable implements VaroProtectable {
 
     private Varo varo;
-    private final SecureableHolder holder;
+    private final ProtectableHolder holder;
     private final Block block;
-    // TODO: Add type
-//    private final VaroSecureableType type;
 
-    public VaroBlockSecureable(SecureableHolder holder, Block block) {
+    public VaroBlockProtectable(ProtectableHolder holder, Block block) {
         this.block = block;
         this.holder = holder;
     }
@@ -23,11 +21,6 @@ public class VaroBlockSecureable implements VaroSecureable {
     @Override
     public void initialize(Varo varo) {
         this.varo = varo;
-    }
-
-    @Override
-    public void registerListeners(VaroSecureableType type) {
-//        type.
     }
 
     @Override
@@ -46,12 +39,8 @@ public class VaroBlockSecureable implements VaroSecureable {
     }
 
     @Override
-    public SecureableHolder getHolder() {
+    public ProtectableHolder getHolder() {
         return this.holder;
     }
 
-    @Override
-    public VaroSecureableType getType() {
-        return null;
-    }
 }

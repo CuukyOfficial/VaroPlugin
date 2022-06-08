@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.world.secureable;
+package de.varoplugin.varo.game.world.protectable;
 
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroGameObject;
@@ -9,7 +9,7 @@ import org.bukkit.block.Block;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroSecureable extends VaroGameObject {
+public interface VaroProtectable extends VaroGameObject {
 
     /**
      * Returns the hashCode of the location.
@@ -20,12 +20,8 @@ public interface VaroSecureable extends VaroGameObject {
 
     void initialize(Varo varo);
 
-    void registerListeners(VaroSecureableType type);
-
     Block getBlock();
 
-    SecureableHolder getHolder();
-
-    VaroSecureableType getType();
+    ProtectableHolder getHolder();
 
 }
