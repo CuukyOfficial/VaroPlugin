@@ -5,7 +5,7 @@ import org.bukkit.event.HandlerList;
 
 /**
  * Represents any Varo task.
- * Registers itself as a bukkit listener and calls "schedule" on registration.
+ * Registers itself as a bukkit listener.
  *
  * @author CuukyOfficial
  * @version v0.1
@@ -13,17 +13,23 @@ import org.bukkit.event.HandlerList;
 public abstract class VaroListener implements TaskRegistrable {
 
     private boolean registered;
-    protected final Varo varo;
+    protected Varo varo;
 
-    public VaroListener(Varo varo) {
-        this.varo = varo;
+    protected void checkInitialization() {
+        if (!this.isInitialized()) throw new IllegalStateException("Task not initialized");
+    }
+
+    protected boolean isInitialized() {
+        return this.varo != null;
     }
 
     protected void doRegister() {
+        this.checkInitialization();
         this.varo.getPlugin().getServer().getPluginManager().registerEvents(this, this.varo.getPlugin());
     }
 
     protected void doUnregister() {
+        this.checkInitialization();
         HandlerList.unregisterAll(this);
     }
 
@@ -33,8 +39,9 @@ public abstract class VaroListener implements TaskRegistrable {
     }
 
     @Override
-    public boolean register() {
+    public boolean register(Varo varo) {
         if (this.registered) return false;
+        this.varo = varo;
         this.doRegister();
         return (this.registered = true);
     }

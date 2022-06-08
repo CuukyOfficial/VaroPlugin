@@ -21,8 +21,8 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
     private VaroLoadingState state;
 
     public VaroJavaPlugin() {
-        this.uiManager = new UIManager(this);
         this.varo = new VaroGame();
+        this.uiManager = new UIManager(this, varo);
     }
 
     /**
@@ -46,13 +46,15 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
     public void onEnable() {
         this.uiManager.registerListener();
         this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
-        this.varo.initialize(this);
 
         // Init
 
         this.updateLoadingState(StartupState.LOADING_STATS);
 
         // Load stats
+
+        this.updateLoadingState(StartupState.REGISTERING_TASKS);
+        this.varo.initialize(this);
 
         this.updateLoadingState(StartupState.FINISHED, this.getName());
         super.onEnable();

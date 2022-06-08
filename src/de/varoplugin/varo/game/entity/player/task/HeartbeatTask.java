@@ -26,7 +26,7 @@ public abstract class HeartbeatTask extends VaroPlayerTask {
         this(player, HEARTBEAT_SCHEDULE, HEARTBEAT_SCHEDULE);
     }
 
-        @Override
+    @Override
     protected void schedule() {
         this.createRunnable().runTaskTimerAsynchronously(this.varo.getPlugin(), this.init, this.schedule);
     }

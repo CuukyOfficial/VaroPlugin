@@ -7,6 +7,7 @@ package de.varoplugin.varo;
 public enum StartupState implements VaroLoadingState {
 
     INITIALIZING("INIT", "Booting up %s v%s..."),
+    REGISTERING_TASKS("REGISTERING_TASKS", "Registering tasks..."),
     LOADING_STATS("STATS", "Loading stats..."),
     FINISHED("FINISHED", "Finished loading %s");
 

@@ -7,3 +7,6 @@ loadbefore: [CuukyFrameWork, JDA]
 api-version: 1.13
 main: de.varoplugin.varo.VaroJavaPlugin
 website: VaroPlugin.de
+
+commands:
+  Test:

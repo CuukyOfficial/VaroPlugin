@@ -1,5 +1,6 @@
 package de.varoplugin.varo.game.tasks;
 
+import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.Listener;
 
 /**
@@ -15,7 +16,7 @@ public interface TaskRegistrable extends Listener {
     /**
      * Does not register twice if called twice.
      */
-    boolean register();
+    boolean register(Varo varo);
 
     boolean unregister();
 

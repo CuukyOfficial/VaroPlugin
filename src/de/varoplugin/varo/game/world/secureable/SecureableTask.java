@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game.world.secureable;
 
-import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.tasks.VaroTask;
 
 /**
@@ -11,9 +10,7 @@ public abstract class SecureableTask extends VaroTask {
 
     protected final VaroSecureable secureable;
 
-    public SecureableTask(Varo varo, VaroSecureable secureable) {
-        super(varo);
-
+    public SecureableTask(VaroSecureable secureable) {
         this.secureable = secureable;
     }
 }

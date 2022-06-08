@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game.world.secureable;
 
-import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -10,8 +9,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class BlockAccessTask extends SecureableTask {
 
-    public BlockAccessTask(Varo varo, VaroSecureable secureable) {
-        super(varo, secureable);
+    public BlockAccessTask(VaroSecureable secureable) {
+        super(secureable);
     }
 
     @EventHandler

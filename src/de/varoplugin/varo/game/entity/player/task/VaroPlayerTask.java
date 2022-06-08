@@ -12,8 +12,6 @@ public abstract class VaroPlayerTask extends VaroTask {
     protected final VaroPlayer player;
 
     public VaroPlayerTask(VaroPlayer player) {
-        super(player.getVaro());
-
         this.player = player;
     }
 }

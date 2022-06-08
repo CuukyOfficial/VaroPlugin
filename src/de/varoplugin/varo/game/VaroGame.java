@@ -8,8 +8,10 @@ import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,16 +24,19 @@ public class VaroGame implements Varo {
     private VaroPlugin plugin;
     private VaroState state;
 
+    private final List<VaroGameListener> tasks;
     private final Set<VaroPlayer> players;
 
     public VaroGame() {
         this.state = VaroGameState.LOBBY;
         this.players = new HashSet<>();
+        this.tasks = new ArrayList<>(Arrays.asList(VaroGameListener.values()));
     }
 
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
+        this.tasks.stream().map(VaroGameListener::getTrigger).forEach(t -> t.register(this));
 
         for (Player player : this.getPlugin().getServer().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
