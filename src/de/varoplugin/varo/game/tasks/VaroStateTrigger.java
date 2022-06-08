@@ -5,14 +5,16 @@ import de.varoplugin.varo.game.VaroState;
 import org.bukkit.event.EventHandler;
 
 /**
+ * Triggers all tasks if the Varo is in the current state.
+ *
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroStateTrigger extends TaskTrigger {
+public class VaroStateTrigger extends VaroTaskTrigger {
 
     private final VaroState state;
 
-    public VaroStateTrigger(VaroState state, TaskRegistrable... tasks) {
+    public VaroStateTrigger(VaroState state, VaroTask... tasks) {
         super(tasks);
 
         this.state = state;

@@ -1,27 +1,15 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import org.bukkit.entity.Player;
-
-import java.util.Collection;
-import java.util.UUID;
+import de.varoplugin.varo.game.entity.player.VaroPlayerContainer;
 
 /**
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface Varo {
+public interface Varo extends VaroPlayerContainer {
 
     void initialize(VaroPlugin plugin);
-
-    VaroPlayer register(Player player);
-
-    VaroPlayer getPlayer(UUID uuid);
-
-    VaroPlayer getPlayer(Player player);
-
-    Collection<VaroPlayer> getPlayers();
 
     VaroState getState();
 

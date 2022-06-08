@@ -1,43 +1,37 @@
 package de.varoplugin.varo.game.tasks;
 
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.varo.game.Varo;
+import org.bukkit.event.Listener;
 
 /**
- * Represents any Varo task.
+ * Represents tasks that unregister automatically after being registered.
  *
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class VaroTask extends VaroListener implements TaskRegistrable, Runnable {
-
-    private BukkitRunnable runnable;
-
-    protected BukkitRunnable createRunnable() {
-        return this.runnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                VaroTask.this.run();
-            }
-        };
-    }
+public interface VaroTask extends Listener {
 
     /**
-     * Override this to schedule the task
+     * Returns if the task is registered currently.
+     *
+     * @return If the task is registered.
      */
-    protected void schedule() {}
+    boolean isRegistered();
 
-    @Override
-    public void run() {}
+    /**
+     * Registers the task. (Listeners and scheduler)
+     * Does not register twice if called twice.
+     *
+     * @return If the task has been registered.
+     */
+    boolean register(Varo varo);
 
-    @Override
-    protected void doRegister() {
-        super.doRegister();
-        this.schedule();
-    }
+    /**
+     * Unregisters the task.
+     * The task will not register itself.
+     *
+     * @return If the task has been unregistered.
+     */
+    boolean unregister();
 
-    @Override
-    protected void doUnregister() {
-        super.doUnregister();
-        if (this.runnable != null) this.runnable.cancel();
-    }
 }

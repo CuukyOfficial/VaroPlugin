@@ -8,7 +8,7 @@ import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
  */
 public interface VaroUIManager {
 
-    void registerListener();
+    void registerUI();
 
     void printDisableMessage(VaroLoadingStateChangeEvent event);
 

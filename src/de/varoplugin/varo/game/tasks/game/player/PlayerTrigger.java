@@ -1,9 +1,9 @@
-package de.varoplugin.varo.game.tasks.player;
+package de.varoplugin.varo.game.tasks.game.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
 import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.tasks.TaskRegistrable;
+import de.varoplugin.varo.game.tasks.VaroTask;
 import de.varoplugin.varo.game.tasks.VaroStateTrigger;
 import org.bukkit.event.EventHandler;
 
@@ -15,7 +15,7 @@ public abstract class PlayerTrigger extends VaroStateTrigger implements VaroPlay
 
     private VaroPlayer player;
 
-    public PlayerTrigger(VaroState state, TaskRegistrable... tasks) {
+    public PlayerTrigger(VaroState state, VaroTask... tasks) {
         super(state, tasks);
     }
 

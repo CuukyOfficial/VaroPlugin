@@ -11,7 +11,7 @@ public abstract class VaroGameEvent extends VaroEvent {
         this.varo = varo;
     }
 
-    public Varo getGame() {
+    public Varo getVaro() {
         return this.varo;
     }
 }

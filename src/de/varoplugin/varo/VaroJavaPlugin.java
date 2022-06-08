@@ -5,6 +5,7 @@ import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
 import de.varoplugin.varo.api.event.game.VaroGameCancelableEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroGame;
+import de.varoplugin.varo.game.tasks.DefaultTriggerRegisterer;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,7 +45,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
     @Override
     public void onEnable() {
-        this.uiManager.registerListener();
+        this.uiManager.registerUI();
         this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
 
         // Init
@@ -54,6 +55,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
         // Load stats
 
         this.updateLoadingState(StartupState.REGISTERING_TASKS);
+        this.getServer().getPluginManager().registerEvents(new DefaultTriggerRegisterer(), this);
         this.varo.initialize(this);
 
         this.updateLoadingState(StartupState.FINISHED, this.getName());

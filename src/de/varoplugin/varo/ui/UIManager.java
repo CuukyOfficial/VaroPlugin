@@ -29,7 +29,7 @@ public class UIManager implements VaroUIManager {
     }
 
     @Override
-    public void registerListener() {
+    public void registerUI() {
         plugin.getServer().getPluginCommand("test").setExecutor(new TestCommand(this.varo));
         this.listener.forEach(listener -> this.plugin.getServer().getPluginManager().registerEvents(listener, this.plugin));
     }

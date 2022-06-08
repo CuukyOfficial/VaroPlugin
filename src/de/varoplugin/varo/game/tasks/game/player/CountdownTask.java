@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.tasks.player;
+package de.varoplugin.varo.game.tasks.game.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 

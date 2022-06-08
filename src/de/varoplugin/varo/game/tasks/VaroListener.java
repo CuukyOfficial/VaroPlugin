@@ -4,13 +4,12 @@ import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.HandlerList;
 
 /**
- * Represents any Varo task.
- * Registers itself as a bukkit listener.
+ * Represents any Varo listener.
  *
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class VaroListener implements TaskRegistrable {
+public abstract class VaroListener implements VaroTask {
 
     private boolean registered;
     protected Varo varo;
