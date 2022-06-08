@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class TaskTrigger extends VaroListener implements VaroTaskTrigger {
+public abstract class TaskTrigger extends VaroListener implements VaroTaskTrigger {
 
     private final Collection<TaskRegistrable> tasks;
     private final Map<Class<? extends VaroListener>, Supplier<Boolean>> activatedChecks;
@@ -38,7 +38,9 @@ public class TaskTrigger extends VaroListener implements VaroTaskTrigger {
 
     @Override
     public boolean addTask(TaskRegistrable task) {
-        return this.tasks.add(task);
+        boolean add = this.tasks.add(task);
+        if (this.isRegistered()) task.register();
+        return add;
     }
 
     @Override

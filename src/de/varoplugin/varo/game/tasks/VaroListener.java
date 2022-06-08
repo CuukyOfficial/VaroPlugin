@@ -28,6 +28,11 @@ public abstract class VaroListener implements TaskRegistrable {
     }
 
     @Override
+    public boolean isRegistered() {
+        return this.registered;
+    }
+
+    @Override
     public boolean register() {
         if (this.registered) return false;
         this.doRegister();

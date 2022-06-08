@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
  */
 public interface TaskRegistrable extends Listener {
 
+    boolean isRegistered();
+
     /**
      * Does not register twice if called twice.
      */
