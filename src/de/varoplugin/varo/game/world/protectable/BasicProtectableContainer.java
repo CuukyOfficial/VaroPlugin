@@ -18,22 +18,22 @@ public class BasicProtectableContainer implements ProtectableContainer {
     }
 
     @Override
-    public boolean addSecureable(VaroProtectable savable) {
+    public boolean addProtectable(VaroProtectable savable) {
         return this.secureables.add(savable);
     }
 
     @Override
-    public boolean removeSecureable(VaroProtectable savable) {
+    public boolean removeProtectable(VaroProtectable savable) {
         return this.secureables.remove(savable);
     }
 
     @Override
-    public boolean hasSecureable(VaroProtectable secureable) {
+    public boolean hasProtectable(VaroProtectable secureable) {
         return this.secureables.contains(secureable);
     }
 
     @Override
-    public VaroProtectable getSavable(Block block) {
+    public VaroProtectable getProtectable(Block block) {
         return this.secureables.stream().filter(savable -> savable.getBlock().equals(block)).findAny().orElse(null);
     }
 }

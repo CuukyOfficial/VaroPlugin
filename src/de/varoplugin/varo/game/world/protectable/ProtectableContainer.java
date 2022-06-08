@@ -8,12 +8,12 @@ import org.bukkit.block.Block;
  */
 public interface ProtectableContainer {
 
-    boolean addSecureable(VaroProtectable secureable);
+    boolean addProtectable(VaroProtectable protectable);
 
-    boolean removeSecureable(VaroProtectable secureable);
+    boolean removeProtectable(VaroProtectable protectable);
 
-    boolean hasSecureable(VaroProtectable secureable);
+    boolean hasProtectable(VaroProtectable protectable);
 
-    VaroProtectable getSavable(Block block);
+    VaroProtectable getProtectable(Block block);
 
 }
