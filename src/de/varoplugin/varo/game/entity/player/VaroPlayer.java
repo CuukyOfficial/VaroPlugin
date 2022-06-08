@@ -11,7 +11,7 @@ import java.util.UUID;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroPlayer extends VaroEntity {
+public interface VaroPlayer extends VaroEntity, StatsHolder {
 
     /**
      * Returns the hashCode of the UUID.

@@ -16,8 +16,6 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
     private UUID uuid;
     private VaroPlayerState state;
 
-    // TODO: Stats
-    // Stats
     private int kills;
 
     private Player player;
@@ -92,4 +90,15 @@ public class VaroGamePlayer extends VaroGameEntity implements VaroPlayer {
         return this.player;
     }
 
+    @Override
+    public int getKills() {
+        return this.kills;
+    }
+
+    @Override
+    public int setKills(int kills) {
+        int oldKills = this.kills;
+        this.kills = kills;
+        return kills;
+    }
 }
