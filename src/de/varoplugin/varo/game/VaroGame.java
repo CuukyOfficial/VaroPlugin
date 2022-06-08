@@ -6,12 +6,10 @@ import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
 import de.varoplugin.varo.game.entity.player.VaroGamePlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.tasks.TaskTrigger;
-import de.varoplugin.varo.game.tasks.game.DefaultGameTrigger;
+import de.varoplugin.varo.tasks.TaskTrigger;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

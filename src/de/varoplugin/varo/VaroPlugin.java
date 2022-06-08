@@ -1,7 +1,7 @@
 package de.varoplugin.varo;
 
 import de.varoplugin.varo.api.event.VaroEvent;
-import de.varoplugin.varo.api.event.game.VaroGameCancelableEvent;
+import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -19,6 +19,6 @@ public interface VaroPlugin extends Plugin {
      * @param <T> The type of event
      * @return If the event has been cancelled
      */
-    <T extends VaroGameCancelableEvent> boolean isCancelled(T event);
+    <T extends VaroEvent & Cancellable> boolean isCancelled(T event);
 
 }

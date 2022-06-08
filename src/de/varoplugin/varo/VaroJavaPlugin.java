@@ -2,12 +2,12 @@ package de.varoplugin.varo;
 
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
-import de.varoplugin.varo.api.event.game.VaroGameCancelableEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroGame;
-import de.varoplugin.varo.game.tasks.DefaultTriggerRegisterer;
+import de.varoplugin.varo.tasks.TaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
+import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -55,7 +55,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
         // Load stats
 
         this.updateLoadingState(StartupState.REGISTERING_TASKS);
-        this.getServer().getPluginManager().registerEvents(new DefaultTriggerRegisterer(), this);
+        this.getServer().getPluginManager().registerEvents(new TaskRegister(), this);
         this.varo.initialize(this);
 
         this.updateLoadingState(StartupState.FINISHED, this.getName());
@@ -81,7 +81,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
     }
 
     @Override
-    public <T extends VaroGameCancelableEvent> boolean isCancelled(T event) {
+    public <T extends VaroEvent & Cancellable> boolean isCancelled(T event) {
         return this.callEvent(event).isCancelled();
     }
 }

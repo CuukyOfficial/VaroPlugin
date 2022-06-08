@@ -8,6 +8,6 @@ public interface StatsHolder {
 
     int getKills();
 
-    int setKills(int kills);
+    boolean setKills(int kills);
 
 }
