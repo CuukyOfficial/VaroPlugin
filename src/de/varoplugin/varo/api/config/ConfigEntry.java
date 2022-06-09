@@ -12,5 +12,7 @@ public interface ConfigEntry<T> {
 
 	T getValue();
 
-	void setValue(Object value);
+	void setValue(T value);
+	
+	void setValueAsObject(Object value) throws ConfigException;
 }

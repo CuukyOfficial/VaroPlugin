@@ -1,4 +1,4 @@
-package de.varoplugin.varo.config;
+package de.varoplugin.varo.api.config;
 
 public class ConfigException extends Exception {
 
