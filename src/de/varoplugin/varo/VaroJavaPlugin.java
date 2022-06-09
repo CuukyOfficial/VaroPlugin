@@ -3,7 +3,7 @@ package de.varoplugin.varo;
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.VaroGame;
+import de.varoplugin.varo.game.Game;
 import de.varoplugin.varo.tasks.TaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
@@ -22,7 +22,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
     private VaroLoadingState state;
 
     public VaroJavaPlugin() {
-        this.varo = new VaroGame();
+        this.varo = new Game();
         this.uiManager = new UIManager(this, varo);
     }
 

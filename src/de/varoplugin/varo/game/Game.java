@@ -17,14 +17,14 @@ import java.util.UUID;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroGame implements Varo {
+public class Game implements Varo {
 
     private VaroPlugin plugin;
     private VaroState state;
 
     private final Set<VaroPlayer> players;
 
-    public VaroGame() {
+    public Game() {
         this.state = GameState.LOBBY;
         this.players = new HashSet<>();
     }
