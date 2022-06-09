@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class NoMoveTask extends PlayerTask {
+public class NoMoveTask extends AbstractPlayerTask {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {

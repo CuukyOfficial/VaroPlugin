@@ -6,7 +6,7 @@ package de.varoplugin.varo.tasks.game.player;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class HeartbeatTask extends PlayerTask {
+public abstract class HeartbeatTask extends AbstractPlayerTask {
 
     private static final long HEARTBEAT_SCHEDULE = 20L;
 

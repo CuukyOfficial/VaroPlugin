@@ -4,9 +4,9 @@ import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.tasks.VaroTask;
 import de.varoplugin.varo.tasks.VaroTaskTrigger;
 import de.varoplugin.varo.tasks.VaroTriggerHolder;
+import de.varoplugin.varo.tasks.game.VaroStateTrigger;
 import de.varoplugin.varo.tasks.game.player.NoMoveTask;
 import de.varoplugin.varo.tasks.game.player.PlayerOnlineTrigger;
-import de.varoplugin.varo.tasks.game.player.PlayerStateTrigger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  */
 public enum DefaultPlayerTrigger implements VaroTriggerHolder<VaroPlayerTaskInfo> {
 
-    LOBBY_PLAYER(() -> new PlayerStateTrigger<>(GameState.LOBBY, new PlayerOnlineTrigger<>(true)), NoMoveTask::new);
+    LOBBY_ONLINE_PLAYER(() -> new VaroStateTrigger<>(GameState.LOBBY, new PlayerOnlineTrigger<>(true, new NoMoveTask())));
 
     private final DefaultPlayerTrigger parent;
     private final Supplier<VaroTaskTrigger<VaroPlayerTaskInfo>> trigger;
@@ -43,7 +43,7 @@ public enum DefaultPlayerTrigger implements VaroTriggerHolder<VaroPlayerTaskInfo
         this.tasks.stream().map(Supplier::get).forEach(trigger::addTask);
         if (this.parent != null) {
             VaroTaskTrigger<VaroPlayerTaskInfo> pTrigger = this.parent.createTrigger();
-            pTrigger.hook(trigger);
+            pTrigger.addTask(trigger);
             trigger = pTrigger;
         }
         return trigger;

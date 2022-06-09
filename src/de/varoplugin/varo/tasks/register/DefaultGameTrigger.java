@@ -19,10 +19,10 @@ import java.util.function.Supplier;
  */
 public enum DefaultGameTrigger implements VaroTriggerHolder<VaroRegisterInfo> {
 
-    LOBBY_TRIGGER(() -> new VaroStateTrigger<>(GameState.LOBBY), LobbyLoginTask::new),
-    RUNNING_TRIGGER(() -> new VaroStateTrigger<>(GameState.RUNNING), RunningLoginTask::new),
+    LOBBY_TRIGGER(() -> new VaroStateTrigger<>(GameState.LOBBY, new LobbyLoginTask())),
+    RUNNING_TRIGGER(() -> new VaroStateTrigger<>(GameState.RUNNING, new RunningLoginTask())),
     // TODO: Decide whether only the default or all triggers should be added to mass recording
-    MASS_RECORDING_TRIGGER(RUNNING_TRIGGER, () -> new VaroStateTrigger<>(GameState.MASS_RECORDING)),
+    MASS_RECORDING_TRIGGER(RUNNING_TRIGGER.trigger),
     FINISHED_TRIGGER(() -> new VaroStateTrigger<>(GameState.FINISHED));
 
     private final DefaultGameTrigger parent;
@@ -47,7 +47,7 @@ public enum DefaultGameTrigger implements VaroTriggerHolder<VaroRegisterInfo> {
         this.tasks.stream().map(Supplier::get).forEach(trigger::addTask);
         if (this.parent != null) {
             VaroTaskTrigger<VaroRegisterInfo> pTrigger = this.parent.createTrigger();
-            pTrigger.hook(trigger);
+            pTrigger.addTask(trigger);
             trigger = pTrigger;
         }
         return trigger;

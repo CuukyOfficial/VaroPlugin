@@ -10,14 +10,7 @@ import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
  */
 public interface VaroTaskTrigger<I extends VaroRegisterInfo> extends VaroTask<I>, Cloneable {
 
-    boolean isActivated(VaroTriggerCheckType exclude);
-
-    /**
-     * Merges the given trigger into this one.
-     *
-     * @param combine The trigger that will be merged into this
-     */
-     void hook(VaroTaskTrigger<I> combine);
+    boolean shouldEnable();
 
     /**
      * Adds a task to this trigger.

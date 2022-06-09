@@ -3,9 +3,8 @@ package de.varoplugin.varo.tasks.game;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.tasks.AbstractTaskTrigger;
+import de.varoplugin.varo.tasks.VaroTask;
 import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
-import de.varoplugin.varo.tasks.VaroTaskTrigger;
-import de.varoplugin.varo.tasks.VaroTriggerCheckType;
 import org.bukkit.event.EventHandler;
 
 /**
@@ -16,23 +15,23 @@ import org.bukkit.event.EventHandler;
  */
 public class VaroStateTrigger<T extends VaroRegisterInfo> extends AbstractTaskTrigger<T> {
 
-    public enum VaroStateCheck implements VaroTriggerCheckType {
-        STATE_CHECK
-    }
-
     private final VaroState state;
 
     @SafeVarargs
-    public VaroStateTrigger(VaroState state, VaroTaskTrigger<T>... combine) {
-        super(combine);
+    public VaroStateTrigger(VaroState state, VaroTask<T>... children) {
+        super(children);
 
         this.state = state;
-        this.addCheck(VaroStateCheck.STATE_CHECK, () -> this.getInfo().getVaro().getState().equals(state));
+    }
+
+    @Override
+    public boolean shouldEnable() {
+        return this.getInfo().getVaro().getState().equals(this.state);
     }
 
     @EventHandler
     public void onGameStateChange(VaroStateChangeEvent event) {
-        if (!this.state.equals(event.getState())) this.unregisterTasks();
-        else this.registerTasksActivated(VaroStateCheck.STATE_CHECK);
+        if (!event.getState().equals(this.state)) this.unregisterTasks();
+        else this.registerTasks();
     }
 }

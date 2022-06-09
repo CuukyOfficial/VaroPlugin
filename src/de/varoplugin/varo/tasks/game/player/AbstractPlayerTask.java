@@ -7,6 +7,6 @@ import de.varoplugin.varo.tasks.register.VaroPlayerTaskInfo;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class PlayerTask extends AbstractVaroTask<VaroPlayerTaskInfo> implements VaroPlayerTask<VaroPlayerTaskInfo> {
+public abstract class AbstractPlayerTask extends AbstractVaroTask<VaroPlayerTaskInfo> implements VaroPlayerTask<VaroPlayerTaskInfo> {
 
 }
