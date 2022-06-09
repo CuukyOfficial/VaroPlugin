@@ -13,7 +13,8 @@ import java.util.Collection;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends AbstractVaroListener<I> implements VaroTaskTrigger<I> {
+public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends AbstractVaroListener<I>
+    implements VaroTaskTrigger<I> {
 
     private final Collection<VaroTask<I>> tasks;
     private boolean tasksEnabled;
@@ -24,8 +25,13 @@ public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends Ab
     }
 
     @Override
+    public void addTasksTo(VaroTaskTrigger<I> copyInto) {
+        this.tasks.forEach(copyInto::addTask);
+    }
+
+    @Override
     public void addTask(VaroTask<I> task) {
-        boolean add = this.tasks.add(task);
+        this.tasks.add(task);
         if (this.tasksEnabled && this.shouldEnable()) task.register(this.getInfo());
     }
 
@@ -54,10 +60,5 @@ public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends Ab
         this.checkInitialization();
         this.tasks.forEach(VaroTask::unregister);
         this.tasksEnabled = false;
-    }
-
-    @Override
-    public Collection<VaroTask<I>> getTasks() {
-        return new ArrayList<>(this.tasks);
     }
 }

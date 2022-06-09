@@ -11,8 +11,7 @@ import de.varoplugin.varo.tasks.game.VaroStateTrigger;
 import java.util.function.Supplier;
 
 /**
- * @author CuukyOfficial
- * @version v0.1
+ * Contains all default game trigger.
  */
 public enum DefaultGameTrigger implements VaroTriggerHolder<VaroRegisterInfo> {
 
@@ -38,7 +37,7 @@ public enum DefaultGameTrigger implements VaroTriggerHolder<VaroRegisterInfo> {
     @Override
     public VaroTaskTrigger<VaroRegisterInfo> createTrigger() {
         VaroTaskTrigger<VaroRegisterInfo> trigger = this.trigger.get();
-        if (this.copyTasks != null) this.copyTasks.createTrigger().getTasks().forEach(trigger::addTask);
+        if (this.copyTasks != null) trigger.addTasksTo(this.copyTasks.createTrigger());
         return trigger;
     }
 

@@ -2,8 +2,6 @@ package de.varoplugin.varo.tasks;
 
 import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
 
-import java.util.Collection;
-
 /**
  * A task trigger contains tasks and registers them if desired.
  *
@@ -14,6 +12,8 @@ public interface VaroTaskTrigger<I extends VaroRegisterInfo> extends VaroTask<I>
 
     boolean shouldEnable();
 
+    void addTasksTo(VaroTaskTrigger<I> copyInto);
+
     /**
      * Adds a task to this trigger.
      * If this trigger is currently active it will register the task.
@@ -21,8 +21,6 @@ public interface VaroTaskTrigger<I extends VaroRegisterInfo> extends VaroTask<I>
      * @param task The task
      */
     void addTask(VaroTask<I> task);
-
-    Collection<VaroTask<I>> getTasks();
 
     /**
      * Registers all tasks of this trigger.
