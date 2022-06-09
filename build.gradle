@@ -4,7 +4,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 
 group 'de.varoplugin'
-version '4.10.0-BETA-5'
+version '4.10.0-BETA-6'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
