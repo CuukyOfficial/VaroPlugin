@@ -1,7 +1,6 @@
 package de.varoplugin.varo.tasks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,13 +13,13 @@ import java.util.function.Supplier;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class AbstractTaskTrigger extends AbstractVaroListener implements VaroTaskTrigger {
+public abstract class AbstractTaskTrigger<T extends VaroTask> extends AbstractVaroListener implements VaroTaskTrigger<T> {
 
-    private final Collection<VaroTask> tasks;
+    private final Collection<T> tasks;
     private final Map<Class<? extends AbstractVaroListener>, Supplier<Boolean>> activatedChecks;
 
-    public AbstractTaskTrigger(VaroTask... tasks) {
-        this.tasks = new ArrayList<>(Arrays.asList(tasks));
+    public AbstractTaskTrigger() {
+        this.tasks = new ArrayList<>();
         this.activatedChecks = new HashMap<>();
     }
 
@@ -32,6 +31,10 @@ public abstract class AbstractTaskTrigger extends AbstractVaroListener implement
         this.checkInitialization();
         return this.activatedChecks.keySet().stream().filter(aClass -> !aClass.equals(exclude))
             .map(this.activatedChecks::get).allMatch(Supplier::get);
+    }
+
+    protected void register(T task) {
+        task.register(this.varo);
     }
 
     @Override
@@ -47,16 +50,16 @@ public abstract class AbstractTaskTrigger extends AbstractVaroListener implement
     }
 
     @Override
-    public boolean addTask(VaroTask task) {
+    public boolean addTask(T task) {
         boolean add = this.tasks.add(task);
-        if (this.isRegistered()) task.register(this.varo);
+        if (this.isRegistered()) this.register(task);
         return add;
     }
 
     @Override
     public void registerTasks() {
         this.checkInitialization();
-        this.tasks.forEach(t -> t.register(this.varo));
+        this.tasks.forEach(this::register);
     }
 
     @Override

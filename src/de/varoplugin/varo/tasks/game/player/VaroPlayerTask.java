@@ -1,22 +1,26 @@
 package de.varoplugin.varo.tasks.game.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.tasks.AbstractVaroTask;
-import org.bukkit.event.player.PlayerEvent;
+import de.varoplugin.varo.tasks.VaroTask;
 
 /**
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class VaroPlayerTask extends AbstractVaroTask {
+public interface VaroPlayerTask extends VaroTask {
 
-    protected final VaroPlayer player;
-
-    public VaroPlayerTask(VaroPlayer player) {
-        this.player = player;
+    @Override
+    default boolean isInitialized() {
+        return this.getPlayer() != null;
     }
 
-    protected boolean shallIgnore(PlayerEvent event) {
-        return !event.getPlayer().equals(player.getPlayer());
+    default boolean register(VaroPlayer player) {
+        this.setPlayer(player);
+        return this.register(player.getVaro());
     }
+
+    void setPlayer(VaroPlayer player);
+
+    VaroPlayer getPlayer();
+
 }

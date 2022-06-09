@@ -3,11 +3,13 @@ package de.varoplugin.varo.tasks;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
 import de.varoplugin.varo.tasks.game.DefaultGameTrigger;
+import de.varoplugin.varo.tasks.game.player.DefaultPlayerTrigger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 /**
  * Registers all default trigger.
@@ -17,14 +19,17 @@ import java.util.Arrays;
  */
 public class TaskRegister implements Listener {
 
+    private <T extends VaroTaskTrigger<V>, V extends VaroTask> void register(VaroTriggerHolder<T, V>[] holders, Consumer<T> register) {
+        Arrays.stream(holders).map(VaroTriggerHolder::createTrigger).forEach(register);
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onGameInitialize(VaroGameInitializedEvent event) {
-        Arrays.stream(DefaultGameTrigger.values()).map(DefaultGameTrigger::createTrigger)
-            .forEach(t -> t.register(event.getVaro()));
+        this.register(DefaultGameTrigger.values(), t -> t.register(event.getVaro()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
-        // TODO: Register player trigger
+        this.register(DefaultPlayerTrigger.values(), t -> t.register(event.getPlayer()));
     }
 }

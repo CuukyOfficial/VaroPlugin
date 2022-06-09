@@ -12,13 +12,11 @@ import org.bukkit.event.EventHandler;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroStateTrigger extends AbstractTaskTrigger {
+public class VaroStateTrigger<T extends VaroTask> extends AbstractTaskTrigger<T> {
 
     private final VaroState state;
 
-    public VaroStateTrigger(VaroState state, VaroTask... tasks) {
-        super(tasks);
-
+    public VaroStateTrigger(VaroState state) {
         this.state = state;
         this.addCheck(VaroStateTrigger.class, () -> this.varo.getState().equals(state));
     }

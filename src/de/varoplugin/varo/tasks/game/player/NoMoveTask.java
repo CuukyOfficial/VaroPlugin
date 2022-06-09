@@ -1,6 +1,5 @@
 package de.varoplugin.varo.tasks.game.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -11,11 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class NoMoveTask extends VaroPlayerTask {
-
-    public NoMoveTask(VaroPlayer player) {
-        super(player);
-    }
+public class NoMoveTask extends PlayerTask {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {

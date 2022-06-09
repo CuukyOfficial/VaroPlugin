@@ -18,10 +18,6 @@ public abstract class AbstractVaroListener implements VaroTask {
         if (!this.isInitialized()) throw new IllegalStateException("Task not initialized");
     }
 
-    protected boolean isInitialized() {
-        return this.varo != null;
-    }
-
     protected void doRegister() {
         this.checkInitialization();
         this.varo.getPlugin().getServer().getPluginManager().registerEvents(this, this.varo.getPlugin());
@@ -30,6 +26,11 @@ public abstract class AbstractVaroListener implements VaroTask {
     protected void doUnregister() {
         this.checkInitialization();
         HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return this.varo != null;
     }
 
     @Override

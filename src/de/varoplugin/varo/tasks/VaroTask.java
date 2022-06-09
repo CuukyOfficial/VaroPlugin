@@ -11,6 +11,8 @@ import org.bukkit.event.Listener;
  */
 public interface VaroTask extends Listener {
 
+    boolean isInitialized();
+
     /**
      * Returns if the task is registered currently.
      *

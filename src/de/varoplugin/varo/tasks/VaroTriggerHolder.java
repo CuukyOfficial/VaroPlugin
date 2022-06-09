@@ -6,10 +6,10 @@ import java.util.function.Supplier;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroTriggerHolder {
+public interface VaroTriggerHolder<T extends VaroTaskTrigger<V>, V extends VaroTask> {
 
-    VaroTaskTrigger createTrigger();
+    T createTrigger();
 
-    void addTask(Supplier<VaroTask> taskSupplier);
+    void addTask(Supplier<V> taskSupplier);
 
 }
