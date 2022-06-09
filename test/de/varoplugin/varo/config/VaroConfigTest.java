@@ -9,6 +9,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import de.varoplugin.varo.api.config.Config;
 import de.varoplugin.varo.api.config.ConfigCategory;
 import de.varoplugin.varo.api.config.ConfigEntry;
 import de.varoplugin.varo.api.config.ConfigException;
@@ -43,7 +44,7 @@ public class VaroConfigTest {
 
 	@Test
 	public void testDuplicatePaths() throws ConfigException, IOException {
-		VaroConfig config = new VaroConfig(PATH);
+		Config config = new VaroConfig(PATH);
 		config.load();
 		for (ConfigCategory category : config.getConfigEntries().keys()) {
 			Set<String> paths = new HashSet<>();
@@ -51,5 +52,13 @@ public class VaroConfigTest {
 				if (!paths.add(entry.getPath()))
 					fail("Duplicate config entry: " + entry.getPath());
 		}
+	}
+
+	@Test
+	public void testGetEntry() throws ConfigException, IOException {
+		VaroConfig config = new VaroConfig(PATH);
+		config.load();
+		assertEquals(config.scoreboard_title_delay.getValue(),
+				config.getEntry(config.scoreboard_title_delay.getCategory(), config.scoreboard_title_delay.getPath()).getValue());
 	}
 }
