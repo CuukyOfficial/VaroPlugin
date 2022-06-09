@@ -16,23 +16,22 @@ import java.util.Collection;
 public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends AbstractVaroListener<I> implements VaroTaskTrigger<I> {
 
     private final Collection<VaroTask<I>> tasks;
+    private boolean tasksEnabled;
 
     @SafeVarargs
     public AbstractTaskTrigger(VaroTask<I>... children) {
-        this.tasks = new ArrayList<>();
-        this.tasks.addAll(Arrays.asList(children));
+        this.tasks = new ArrayList<>(Arrays.asList(children));
     }
 
     @Override
-    public boolean addTask(VaroTask<I> task) {
+    public void addTask(VaroTask<I> task) {
         boolean add = this.tasks.add(task);
-        if (this.isRegistered() && this.shouldEnable()) task.register(this.getInfo());
-        return add;
+        if (this.tasksEnabled && this.shouldEnable()) task.register(this.getInfo());
     }
 
     @Override
     protected void doRegister() {
-        this.registerTasks();
+        if (this.shouldEnable()) this.registerTasks();
         super.doRegister();
     }
 
@@ -44,14 +43,21 @@ public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends Ab
 
     @Override
     public void registerTasks() {
+        if (this.tasksEnabled) return;
         this.checkInitialization();
-        if (!this.shouldEnable()) return;
         this.tasks.forEach(t -> t.register(this.getInfo()));
+        this.tasksEnabled = true;
     }
 
     @Override
     public void unregisterTasks() {
         this.checkInitialization();
         this.tasks.forEach(VaroTask::unregister);
+        this.tasksEnabled = false;
+    }
+
+    @Override
+    public Collection<VaroTask<I>> getTasks() {
+        return new ArrayList<>(this.tasks);
     }
 }
