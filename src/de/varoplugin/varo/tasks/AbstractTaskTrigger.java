@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class AbstractTaskTrigger extends AbstractVaroListener implements TaskTrigger {
+public abstract class AbstractTaskTrigger extends AbstractVaroListener implements VaroTaskTrigger {
 
     private final Collection<VaroTask> tasks;
     private final Map<Class<? extends AbstractVaroListener>, Supplier<Boolean>> activatedChecks;

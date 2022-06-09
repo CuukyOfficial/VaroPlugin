@@ -1,11 +1,11 @@
 package de.varoplugin.varo.game.entity.player;
 
-import de.varoplugin.varo.api.event.game.player.PlayerKillsChangeEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerKillsChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.VaroGameEntity;
+import de.varoplugin.varo.game.entity.GameEntity;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ import java.util.UUID;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class Player extends VaroGameEntity implements VaroPlayer {
+public class Player extends GameEntity implements VaroPlayer {
 
     private UUID uuid;
     private VaroParticipantState state;
@@ -115,7 +115,7 @@ public class Player extends VaroGameEntity implements VaroPlayer {
 
     @Override
     public boolean setKills(int kills) {
-        if (!this.getVaro().getPlugin().isCancelled(new PlayerKillsChangeEvent(this, kills))) return false;
+        if (!this.getVaro().getPlugin().isCancelled(new VaroPlayerKillsChangeEvent(this, kills))) return false;
         this.kills = kills;
         return true;
     }

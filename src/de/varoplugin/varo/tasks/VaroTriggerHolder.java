@@ -6,9 +6,9 @@ import java.util.function.Supplier;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface TriggerHolder {
+public interface VaroTriggerHolder {
 
-    TaskTrigger createTrigger();
+    VaroTaskTrigger createTrigger();
 
     void addTask(Supplier<VaroTask> taskSupplier);
 

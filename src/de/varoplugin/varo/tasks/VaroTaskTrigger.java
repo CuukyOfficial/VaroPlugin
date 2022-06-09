@@ -6,7 +6,7 @@ package de.varoplugin.varo.tasks;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface TaskTrigger extends VaroTask {
+public interface VaroTaskTrigger extends VaroTask {
 
     /**
      * Adds a task to this trigger.

@@ -12,7 +12,7 @@ import org.bukkit.block.Block;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class VaroGameEntity implements VaroEntity {
+public abstract class GameEntity implements VaroEntity {
 
     private VaroProtectableContainer protectableContainer;
     protected Varo varo;
