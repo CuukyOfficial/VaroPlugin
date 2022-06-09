@@ -1,5 +1,6 @@
 package de.varoplugin.varo.tasks;
 
+import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -8,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  * @author CuukyOfficial
  * @version v0.1
  */
-public abstract class AbstractVaroTask extends AbstractVaroListener implements VaroTask, Runnable {
+public abstract class AbstractVaroTask<I extends VaroRegisterInfo> extends AbstractVaroListener<I> implements VaroTask<I>, Runnable {
 
     private BukkitRunnable runnable;
 

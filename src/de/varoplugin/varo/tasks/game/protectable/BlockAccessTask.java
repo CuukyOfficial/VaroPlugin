@@ -17,7 +17,7 @@ public class BlockAccessTask extends ProtectableTask {
     @EventHandler
     public void onPlayerAccess(PlayerInteractEvent event) {
         if (!this.secureable.getBlock().equals(event.getClickedBlock())
-            || this.secureable.getHolder().canAccessSavings(this.varo.getPlayer(event.getPlayer()))) return;
+            || this.secureable.getHolder().canAccessSavings(this.getInfo().getVaro().getPlayer(event.getPlayer()))) return;
         event.setCancelled(true);
     }
 }

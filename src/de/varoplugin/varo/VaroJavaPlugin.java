@@ -4,7 +4,7 @@ import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.Game;
-import de.varoplugin.varo.tasks.TaskRegister;
+import de.varoplugin.varo.tasks.register.TaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 import org.bukkit.event.Cancellable;

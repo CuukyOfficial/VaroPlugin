@@ -1,15 +1,17 @@
 package de.varoplugin.varo.tasks;
 
+import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
+
 import java.util.function.Supplier;
 
 /**
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroTriggerHolder<T extends VaroTaskTrigger<V>, V extends VaroTask> {
+public interface VaroTriggerHolder<T extends VaroRegisterInfo> {
 
-    T createTrigger();
+    VaroTaskTrigger<T> createTrigger();
 
-    void addTask(Supplier<V> taskSupplier);
+    void addTask(Supplier<VaroTask<T>> taskSupplier);
 
 }

@@ -1,6 +1,6 @@
 package de.varoplugin.varo.tasks;
 
-import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
 import org.bukkit.event.Listener;
 
 /**
@@ -9,14 +9,19 @@ import org.bukkit.event.Listener;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface VaroTask extends Listener {
+public interface VaroTask<T extends VaroRegisterInfo> extends Listener {
 
+    /**
+     * If the task has been initialized.
+     *
+     * @return If the task has been initialized
+     */
     boolean isInitialized();
 
     /**
      * Returns if the task is registered currently.
      *
-     * @return If the task is registered.
+     * @return If the task is registered
      */
     boolean isRegistered();
 
@@ -24,16 +29,18 @@ public interface VaroTask extends Listener {
      * Registers the task. (Listeners and scheduler)
      * Does not register twice if called twice.
      *
-     * @return If the task has been registered.
+     * @return If the task has been registered
      */
-    boolean register(Varo varo);
+    boolean register(T info);
 
     /**
      * Unregisters the task.
      * The task will not register itself.
      *
-     * @return If the task has been unregistered.
+     * @return If the task has been unregistered
      */
     boolean unregister();
+
+    T getInfo();
 
 }

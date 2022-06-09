@@ -24,7 +24,7 @@ public abstract class HeartbeatTask extends PlayerTask {
 
     @Override
     protected void schedule() {
-        this.createRunnable().runTaskTimerAsynchronously(this.varo.getPlugin(), this.init, this.schedule);
+        this.createRunnable().runTaskTimerAsynchronously(this.getInfo().getVaro().getPlugin(), this.init, this.schedule);
     }
 
     public abstract void run();
