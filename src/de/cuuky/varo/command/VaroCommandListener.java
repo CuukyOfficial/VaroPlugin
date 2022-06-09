@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.utils.JavaUtils;
@@ -13,7 +14,11 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
-public class VaroCommandListener implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class VaroCommandListener implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -48,5 +53,28 @@ public class VaroCommandListener implements CommandExecutor {
 
         command.onCommand(sender, player, cmd, label, JavaUtils.removeString(args, 0));
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        if (args.length == 0) return list;
+        if (args.length == 1) {
+            for (VaroCommand tabCommand : VaroCommand.getVaroCommand()) {
+                list.add(tabCommand.getName());
+            }
+        }
+        ArrayList<String> completerList = new ArrayList<>();
+        String curentarg = args[args.length - 1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(curentarg)) {
+                completerList.add(s);
+            }
+        }
+        if (completerList.isEmpty()){
+            return VaroCommand.getCommand(args[0]).onTabComplete(sender, cmd, alias, args);
+        }
+        return completerList;
     }
 }

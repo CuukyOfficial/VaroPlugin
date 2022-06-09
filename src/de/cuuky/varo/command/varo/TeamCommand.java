@@ -1,6 +1,8 @@
 package de.cuuky.varo.command.varo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.command.Command;
@@ -18,11 +20,11 @@ import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.team.TeamGUI;
 
 public class TeamCommand extends VaroCommand {
-
+    private static final String[] subCommands = {"create", "remove", "add", "rename", "colorcode", "list"};
     private PageableChatBuilder<VaroTeam> listBuilder;
 
     public TeamCommand() {
-        super("team", "Hauptcommand fuer das Managen der Teams", "varo.teams", "teams");
+        super("team", "Hauptcommand fuer das Managen der Teams", "varo.teams", subCommands, "teams");
 
         this.listBuilder = new PageableChatBuilder<>(VaroTeam::getTeams)
                 .messages(new VaroChatListMessages<>(team -> {
@@ -224,5 +226,22 @@ public class TeamCommand extends VaroCommand {
         } else
             sender.sendMessage(Main.getPrefix() + "§7Befehl nicht gefunden! " + Main.getColorCode() + "/team");
         return;
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        if (args.length == 2) {
+            List<String> subCommands = Arrays.asList(this.subCommands);
+            list.addAll(subCommands);
+        }
+        ArrayList<String> completerList = new ArrayList<>();
+        String curentarg = args[args.length - 1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(curentarg)) {
+                completerList.add(s);
+            }
+        }
+        return completerList;
     }
 }

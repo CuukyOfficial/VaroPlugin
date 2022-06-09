@@ -1,6 +1,9 @@
 package de.cuuky.varo.command.varo;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,9 +20,9 @@ import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 import net.dv8tion.jda.api.entities.User;
 
 public class DiscordCommand extends VaroCommand {
-
+	private static final String[] subCommands = {"verify", "getLink", "link", "unlink", "bypassRegister", "reload", "shutdown", "sendMessage"};
 	public DiscordCommand() {
-		super("discord", "Der Hauptbefehl fuer den DiscordBot", null);
+		super("discord", "Der Hauptbefehl fuer den DiscordBot", null, subCommands);
 	}
 
 	@Override
@@ -210,5 +213,22 @@ public class DiscordCommand extends VaroCommand {
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "discord"));
 		return;
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

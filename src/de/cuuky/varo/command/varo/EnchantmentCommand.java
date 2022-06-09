@@ -1,5 +1,8 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Material;
@@ -13,20 +16,19 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.list.enchantment.EnchantmentList;
 
 public class EnchantmentCommand extends VaroCommand {
-
+	private static final String[] subCommands = {"list"};
 	public EnchantmentCommand() {
-		super("enchantment", "Einstellungen zu den Verzauberungslisten", "varo.enchantment", "enchantments", "enchant", "enchants");
+		super("enchantment", "Einstellungen zu den Verzauberungslisten", "varo.enchantment", subCommands,  "enchantments", "enchant", "enchants");
 	}
 
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (vp == null) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
+			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
 			return;
 		}
 
@@ -115,5 +117,22 @@ public class EnchantmentCommand extends VaroCommand {
 			} else
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7<enchantmentlist> [Remove / Add / List]");
 		}
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

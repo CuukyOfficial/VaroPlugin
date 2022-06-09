@@ -1,6 +1,9 @@
 package de.cuuky.varo.command.varo;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,9 +16,9 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.preset.PresetLoader;
 
 public class PresetCommand extends VaroCommand {
-
+	private static final String[] subCommands = {"load", "save", "list"};
 	public PresetCommand() {
-		super("preset", "Command fuer die Presets", "varo.preset", "presettings", "presets");
+		super("preset", "Command fuer die Presets", "varo.preset", subCommands, "presettings", "presets");
 	}
 
 	@Override
@@ -62,5 +65,22 @@ public class PresetCommand extends VaroCommand {
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "preset"));
 
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

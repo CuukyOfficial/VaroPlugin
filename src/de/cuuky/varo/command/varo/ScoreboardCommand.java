@@ -9,10 +9,14 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
-public class ScoreboardCommand extends VaroCommand {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+public class ScoreboardCommand extends VaroCommand {
+	private static final String[] subCommands = null;
 	public ScoreboardCommand() {
-		super("scoreboard", "Aktiviert/Deaktiviert das Scoreboard", "varo.scoreboard", "sb");
+		super("scoreboard", "Aktiviert/Deaktiviert das Scoreboard", "varo.scoreboard", subCommands, "sb");
 	}
 
 	@Override
@@ -39,5 +43,22 @@ public class ScoreboardCommand extends VaroCommand {
 
 		if (vp.isOnline())
 			vp.update();
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

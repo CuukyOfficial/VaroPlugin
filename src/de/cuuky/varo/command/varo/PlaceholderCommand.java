@@ -1,5 +1,8 @@
 package de.cuuky.varo.command.varo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import org.bukkit.command.Command;
@@ -18,11 +21,11 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class PlaceholderCommand extends VaroCommand {
-
+    private static final String[] subCommands = {"info", "general", "player"};
     private final PageableChatBuilder<MessagePlaceholder> listBuilder;
 
     public PlaceholderCommand() {
-        super("placeholder", "Zeigt alle Platzhalter fuer messages, scoreboard etc.", "varo.placeholder", "ph");
+        super("placeholder", "Zeigt alle Platzhalter fuer messages, scoreboard etc.", "varo.placeholder", subCommands, "ph");
 
         this.listBuilder = new PageableChatBuilder<MessagePlaceholder>()
                 .messages(new VaroChatListMessages<>(mp ->
@@ -91,5 +94,22 @@ public class PlaceholderCommand extends VaroCommand {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "%topteamkills-<RANK>% §8- §7Ersetzt durch die Kills des Teams, das an RANK auf dem Leaderboard ist");
             sender.sendMessage(Main.getPrefix() + "Zusätzlich werden alle Einstellungen mit %<ConfigEintrag>% ersetzt");
         }
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        if (args.length == 2) {
+            List<String> subCommands = Arrays.asList(this.subCommands);
+            list.addAll(subCommands);
+        }
+        ArrayList<String> completerList = new ArrayList<>();
+        String curentarg = args[args.length - 1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(curentarg)) {
+                completerList.add(s);
+            }
+        }
+        return completerList;
     }
 }

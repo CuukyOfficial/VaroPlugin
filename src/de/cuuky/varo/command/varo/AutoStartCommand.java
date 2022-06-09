@@ -1,8 +1,7 @@
 package de.cuuky.varo.command.varo;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,9 +18,9 @@ public class AutoStartCommand extends VaroCommand {
 	/*
 	 * OLD CODE
 	 */
-
+	private static final String[] subCommands = {"set", "remove", "delay", "info"};
 	public AutoStartCommand() {
-		super("autostart", "Startet das Varo automatisch", "varo.autostart", "as");
+		super("autostart", "Startet das Varo automatisch", "varo.autostart", subCommands, "as");
 	}
 
 	@Override
@@ -122,5 +121,22 @@ public class AutoStartCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "autostart"));
 		return;
 
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

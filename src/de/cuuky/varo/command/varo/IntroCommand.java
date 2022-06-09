@@ -9,12 +9,16 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.suro.SuroStart;
 
-public class IntroCommand extends VaroCommand {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+public class IntroCommand extends VaroCommand {
+	private static final String[] subCommands = null;
 	private SuroStart suroStart;
 
 	public IntroCommand() {
-		super("intro", "Startet das SURO Intro", "varo.intro");
+		super("intro", "Startet das SURO Intro", "varo.intro", subCommands);
 	}
 
 	@Override
@@ -31,5 +35,22 @@ public class IntroCommand extends VaroCommand {
 
 		suroStart = new SuroStart();
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_INTRO_STARTED.getValue(vp));
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

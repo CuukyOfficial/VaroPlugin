@@ -2,6 +2,7 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -19,9 +20,9 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class ResetCommand extends VaroCommand {
-
+	private static final String[] subCommands = {"1", "2", "3"};
 	public ResetCommand() {
-		super("reset", "Setzt ausgewaehlte Teile des Servers zurueck", "varo.reset");
+		super("reset", "Setzt ausgewaehlte Teile des Servers zurueck", "varo.reset", subCommands);
 	}
 
 	@Override
@@ -92,5 +93,22 @@ public class ResetCommand extends VaroCommand {
 
 		if (!success.isEmpty())
 			Bukkit.getServer().shutdown();
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

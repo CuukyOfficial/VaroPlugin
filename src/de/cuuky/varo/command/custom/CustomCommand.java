@@ -9,12 +9,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CustomCommand extends VaroCommand {
     private boolean unused;
     private String output;
 
     public CustomCommand(String trigger, String output, String description, String permission, boolean unused) {
-        super(trigger, description, permission);
+        super(trigger, description, permission, null);
 
         this.output = output;
         this.unused = unused;
@@ -81,5 +85,10 @@ public class CustomCommand extends VaroCommand {
             message = Main.getLanguageManager().replaceMessage(message, vp);
             vp.sendMessage(message);
         } else sender.sendMessage(Main.getConsolePrefix() + "Du musst ein Spieler sein!");
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        return new ArrayList<>();
     }
 }

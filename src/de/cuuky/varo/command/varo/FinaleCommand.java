@@ -17,8 +17,12 @@ import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
-public class FinaleCommand extends VaroCommand {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+public class FinaleCommand extends VaroCommand {
+	private static final String[] subCommands = {"joinStart", "hauptStart", "abort"};
 	private enum FinalState {
 		COUNTDOWN_PHASE,
 		JOIN_PHASE,
@@ -32,7 +36,7 @@ public class FinaleCommand extends VaroCommand {
 	private FinalState status;
 
 	public FinaleCommand() {
-		super("finale", "Hauptcommand fuer das Managen des Finales", "varo.finale");
+		super("finale", "Hauptcommand fuer das Managen des Finales", "varo.finale", subCommands);
 
 		this.status = FinalState.NONE;
 	}
@@ -167,5 +171,22 @@ public class FinaleCommand extends VaroCommand {
 			status = FinalState.JOIN_PHASE;
 			Bukkit.broadcastMessage("§7Der Finale-Start wurde §cabgebrochen§7!");
 		}
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

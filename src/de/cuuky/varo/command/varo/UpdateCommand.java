@@ -2,6 +2,9 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,12 +20,12 @@ import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 public class UpdateCommand extends VaroCommand {
-
+	private static final String[] subCommands = {"normal", "reset"};
 	private String oldFileName;
 	private boolean pluginNameChanged, resetOldDirectory;
 
 	public UpdateCommand() {
-		super("update", "Installiert automatisch die neueste Version", "varo.update");
+		super("update", "Installiert automatisch die neueste Version", "varo.update", subCommands);
 	}
 
 	private void deleteDirectory(File file) {
@@ -121,5 +124,22 @@ public class UpdateCommand extends VaroCommand {
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 		}
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

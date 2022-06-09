@@ -10,10 +10,14 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.spawns.sort.PlayerSort.SortResult;
 
-public class SortCommand extends VaroCommand {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+public class SortCommand extends VaroCommand {
+	private static final String[] subCommands = null;
 	public SortCommand() {
-		super("sort", "Sortiert die Spieler in ihre Loecher", "varo.sort");
+		super("sort", "Sortiert die Spieler in ihre Loecher", "varo.sort", subCommands);
 	}
 
 	@Override
@@ -35,5 +39,22 @@ public class SortCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SORT_NO_SPAWN.getValue(vp));
 			break;
 		}
+	}
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		ArrayList<String> list = new ArrayList<>();
+		if (args.length == 2) {
+			List<String> subCommands = Arrays.asList(this.subCommands);
+			list.addAll(subCommands);
+		}
+		ArrayList<String> completerList = new ArrayList<>();
+		String curentarg = args[args.length - 1].toLowerCase();
+		for (String s : list) {
+			String s1 = s.toLowerCase();
+			if (s1.startsWith(curentarg)) {
+				completerList.add(s);
+			}
+		}
+		return completerList;
 	}
 }

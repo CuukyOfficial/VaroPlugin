@@ -56,13 +56,15 @@ public abstract class VaroCommand {
 	}
 
 	private String[] aliases;
+	private String[] subCommands = null;
 	private String name, permission, description;
 
-	public VaroCommand(String name, String description, String permission, String... aliases) {
+	public VaroCommand(String name, String description, String permission, String[] subCommands, String... aliases) {
 		this.name = name;
 		this.aliases = aliases;
 		this.description = description;
 		this.permission = permission;
+		this.subCommands = subCommands;
 
 		varoCommands.add(this);
 	}
@@ -80,6 +82,8 @@ public abstract class VaroCommand {
 	}
 
 	public abstract void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args);
+
+	public abstract List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args);
 
 	/**
 	 * @param description
@@ -104,6 +108,10 @@ public abstract class VaroCommand {
 	public String getPermission() { return permission; }
 
 	public String[] getAliases() { return aliases; }
+
+	public String[] getSubCommands() {
+		return subCommands;
+	}
 
 	/**
 	 * @param command

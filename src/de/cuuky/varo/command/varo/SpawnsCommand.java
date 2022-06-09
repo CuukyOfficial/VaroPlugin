@@ -9,15 +9,18 @@ import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.Spawn;
 
-public class SpawnsCommand extends VaroCommand {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+public class SpawnsCommand extends VaroCommand {
+    private static final String[] subCommands = { "set", "delete", "player", "list", "generate" };
     public SpawnsCommand() {
-        super("spawns", "Hauptbefehl fuer die Spawns, in welchen die Spieler spawnen", "varo.spawns", "spawnholes", "spawn", "holes");
+        super("spawns", "Hauptbefehl fuer die Spawns, in welchen die Spieler spawnen", "varo.spawns", subCommands, "spawnholes", "spawn", "holes");
     }
 
     @Override
@@ -39,7 +42,7 @@ public class SpawnsCommand extends VaroCommand {
 
         if (args[0].equalsIgnoreCase("generate")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
+                sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
                 return;
             }
 
@@ -259,5 +262,22 @@ public class SpawnsCommand extends VaroCommand {
             }
         } else
             sender.sendMessage(Main.getPrefix() + "Not found! /" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " spawns");
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        if (args.length == 2) {
+            List<String> subCommands = Arrays.asList(this.subCommands);
+            list.addAll(subCommands);
+        }
+        ArrayList<String> completerList = new ArrayList<>();
+        String curentarg = args[args.length - 1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(curentarg)) {
+                completerList.add(s);
+            }
+        }
+        return completerList;
     }
 }
