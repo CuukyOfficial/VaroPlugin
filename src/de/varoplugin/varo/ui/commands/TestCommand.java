@@ -1,7 +1,7 @@
 package de.varoplugin.varo.ui.commands;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.VaroGameState;
+import de.varoplugin.varo.game.GameState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +21,7 @@ public class TestCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        this.varo.setState(VaroGameState.values()[this.index % VaroGameState.values().length]);
+        this.varo.setState(GameState.values()[this.index % GameState.values().length]);
         this.index++;
         sender.sendMessage(this.varo.getState().toString());
         return false;

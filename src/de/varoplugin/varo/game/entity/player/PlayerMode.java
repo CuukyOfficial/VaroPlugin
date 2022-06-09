@@ -3,7 +3,7 @@ package de.varoplugin.varo.game.entity.player;
 /**
  * Contains all default player modes.
  */
-public enum VaroGamePlayerMode implements VaroPlayerMode {
+public enum PlayerMode implements VaroPlayerMode {
 
     NONE,
     SPEC,

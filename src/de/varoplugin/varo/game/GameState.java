@@ -4,7 +4,7 @@ package de.varoplugin.varo.game;
  * @author CuukyOfficial
  * @version v0.1
  */
-public enum VaroGameState implements VaroState {
+public enum GameState implements VaroState {
 
     LOBBY,
     RUNNING,

@@ -1,6 +1,6 @@
 package de.varoplugin.varo.tasks.game;
 
-import de.varoplugin.varo.game.VaroGameState;
+import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.tasks.TriggerHolder;
 import de.varoplugin.varo.tasks.TaskTrigger;
 import de.varoplugin.varo.tasks.VaroTask;
@@ -17,11 +17,11 @@ import java.util.function.Supplier;
  */
 public enum DefaultGameTrigger implements Listener, TriggerHolder {
 
-    LOBBY_TRIGGER(() -> new VaroStateTrigger(VaroGameState.LOBBY), LobbyLoginTask::new),
-    RUNNING_TRIGGER(() -> new VaroStateTrigger(VaroGameState.RUNNING), RunningLoginTask::new),
+    LOBBY_TRIGGER(() -> new VaroStateTrigger(GameState.LOBBY), LobbyLoginTask::new),
+    RUNNING_TRIGGER(() -> new VaroStateTrigger(GameState.RUNNING), RunningLoginTask::new),
     // TODO: Decide whether only the default or all triggers should be added to mass recording
-    MASS_RECORDING_TRIGGER(() -> new VaroStateTrigger(VaroGameState.MASS_RECORDING), RUNNING_TRIGGER),
-    FINISHED_TRIGGER(() -> new VaroStateTrigger(VaroGameState.FINISHED));
+    MASS_RECORDING_TRIGGER(() -> new VaroStateTrigger(GameState.MASS_RECORDING), RUNNING_TRIGGER),
+    FINISHED_TRIGGER(() -> new VaroStateTrigger(GameState.FINISHED));
 
     private final Supplier<TaskTrigger> trigger;
     private final List<Supplier<VaroTask>> tasks;

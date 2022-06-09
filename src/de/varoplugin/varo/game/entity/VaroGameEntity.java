@@ -3,8 +3,8 @@ package de.varoplugin.varo.game.entity;
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableAddEvent;
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.world.protectable.BasicProtectableContainer;
 import de.varoplugin.varo.game.world.protectable.ProtectableContainer;
+import de.varoplugin.varo.game.world.protectable.VaroProtectableContainer;
 import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 import org.bukkit.block.Block;
 
@@ -14,13 +14,13 @@ import org.bukkit.block.Block;
  */
 public abstract class VaroGameEntity implements VaroEntity {
 
-    private ProtectableContainer protectableContainer;
+    private VaroProtectableContainer protectableContainer;
     protected Varo varo;
 
     @Override
     public void initialize(Varo varo) {
         this.varo = varo;
-        this.protectableContainer = new BasicProtectableContainer();
+        this.protectableContainer = new ProtectableContainer();
     }
 
     @Override

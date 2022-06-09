@@ -22,6 +22,6 @@ public interface VaroProtectable extends VaroGameObject {
 
     Block getBlock();
 
-    ProtectableHolder getHolder();
+    VaroProtectableHolder getHolder();
 
 }

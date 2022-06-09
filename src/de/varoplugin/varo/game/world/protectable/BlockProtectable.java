@@ -7,13 +7,13 @@ import org.bukkit.block.Block;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class VaroBlockProtectable implements VaroProtectable {
+public class BlockProtectable implements VaroProtectable {
 
     private Varo varo;
-    private final ProtectableHolder holder;
+    private final VaroProtectableHolder holder;
     private final Block block;
 
-    public VaroBlockProtectable(ProtectableHolder holder, Block block) {
+    public BlockProtectable(VaroProtectableHolder holder, Block block) {
         this.block = block;
         this.holder = holder;
     }
@@ -39,7 +39,7 @@ public class VaroBlockProtectable implements VaroProtectable {
     }
 
     @Override
-    public ProtectableHolder getHolder() {
+    public VaroProtectableHolder getHolder() {
         return this.holder;
     }
 

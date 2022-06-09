@@ -8,7 +8,7 @@ import de.varoplugin.varo.game.entity.player.VaroPlayer;
  * @author CuukyOfficial
  * @version v0.1
  */
-public interface ProtectableHolder extends ProtectableContainer {
+public interface VaroProtectableHolder extends VaroProtectableContainer {
 
     boolean canAccessSavings(VaroPlayer player);
 
