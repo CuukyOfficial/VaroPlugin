@@ -24,7 +24,7 @@ public class PlayerOnlineTrigger<I extends VaroPlayerTaskInfo> extends PlayerTri
 
     @Override
     public boolean shouldEnable() {
-        return this.getInfo().getPlayer().isOnline() == online;
+        return this.getInfo().getPlayer().isOnline() == this.online;
     }
 
     private void checkEvent(PlayerEvent event, boolean change) {
