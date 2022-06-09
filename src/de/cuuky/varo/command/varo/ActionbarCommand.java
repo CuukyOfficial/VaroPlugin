@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -21,16 +22,23 @@ public class ActionbarCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (vp == null) {
-			sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
 			return;
 		}
 
-		if (vp.getStats().isShowActionbarTime()) {
-			vp.getStats().setShowActionbarTime(false);
-			vp.sendMessage(ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED);
+		if (!ConfigSetting.ACTIONBAR.getValueAsBoolean() || vp.getActionbar() == null) {
+			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED.getValue(vp));
+			return;
+		}
+
+		if (vp.getStats().isShowActionbar()) {
+			vp.getStats().setShowActionbar(false);
+			vp.getActionbar().setEnabled(false);
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_DISABLED.getValue(vp));
 		} else {
-			vp.getStats().setShowActionbarTime(true);
-			vp.sendMessage(ConfigMessages.VARO_COMMANDS_ACTIONBAR_ACTIVATED);
+			vp.getStats().setShowActionbar(true);
+			vp.getActionbar().setEnabled(true);
+			vp.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_ENABLED.getValue(vp));
 		}
 	}
 
