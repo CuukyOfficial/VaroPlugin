@@ -32,18 +32,19 @@ public class StrikeCommand extends VaroCommand {
 		if (VaroPlayer.getPlayer(args[0]) != null) {
 			VaroPlayer varoPlayer = VaroPlayer.getPlayer(args[0]);
 
-			String reason = "";
+			StringBuilder reason = new StringBuilder();
 			for (String key : args) {
 				if (key.equals(args[0]))
 					continue;
-				reason += key;
+				reason.append(key);
+				reason.append(" ");
 			}
 
-			if (reason.isEmpty()) {
-				reason = "-";
+			if (reason.length() == 0) {
+				reason = new StringBuilder("-");
 			}
 
-			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
+			Strike strike = new Strike(reason.toString(), varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
 			varoPlayer.getStats().addStrike(strike);
 			sender.sendMessage(Main.getPrefix() + "Du hast " + varoPlayer.getName() + " gestriket!");
 			return;
