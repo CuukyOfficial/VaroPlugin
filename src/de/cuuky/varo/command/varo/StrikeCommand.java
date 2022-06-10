@@ -25,7 +25,7 @@ public class StrikeCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7------ " + Main.getColorCode() + "Strike §7-----");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike §7<Player> [Grund] (Für Leerzeichen _)");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike §7<Player> [Grund]");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike list §7<Player>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " strike remove §7<Player> <StrikeNummer>");
 			sender.sendMessage(Main.getPrefix() + "§7-----------------------");
@@ -46,7 +46,7 @@ public class StrikeCommand extends VaroCommand {
 				reason = "-";
 			}
 
-			Strike strike = new Strike(reason.replace("_", " "), varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
+			Strike strike = new Strike(reason, varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
 			varoPlayer.getStats().addStrike(strike);
 			sender.sendMessage(Main.getPrefix() + "Du hast " + varoPlayer.getName() + " gestriket!");
 			return;
