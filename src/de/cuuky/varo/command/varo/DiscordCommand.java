@@ -217,9 +217,19 @@ public class DiscordCommand extends VaroCommand {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2) {
+		if (args.length == 2 && subCommands != null) {
 			List<String> subCommands = Arrays.asList(this.subCommands);
 			list.addAll(subCommands);
+		}
+		if (args.length == 3 && (args[1].equalsIgnoreCase("getLink") || args[1].equalsIgnoreCase("unLink") || args[1].equalsIgnoreCase("bypassRegister"))) {
+			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+				list.add(vp.getName());
+			}
+		}
+		if (args.length == 4 && args[1].equalsIgnoreCase("bypassRegister")) {
+			String[] subCommands = {"true", "false"};
+			List<String> subCommandsList = Arrays.asList(subCommands);
+			list.addAll(subCommandsList);
 		}
 		ArrayList<String> completerList = new ArrayList<>();
 		String curentarg = args[args.length - 1].toLowerCase();

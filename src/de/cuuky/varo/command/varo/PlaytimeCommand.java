@@ -29,7 +29,7 @@ public class PlaytimeCommand extends VaroCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        if (args.length == 2) {
+        if (args.length == 2 && subCommands != null) {
             List<String> subCommands = Arrays.asList(this.subCommands);
             list.addAll(subCommands);
         }

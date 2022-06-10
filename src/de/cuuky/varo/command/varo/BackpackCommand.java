@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BackpackCommand extends VaroCommand {
-	private static final String[] subCommands = null;
+	private static final String[] subCommands = {"player", "team"};
 	public BackpackCommand() {
 		super("backpack", "Oeffnet das Backpack von dir oder einem Spieler", null, subCommands,  "bp");
 	}
@@ -94,9 +94,18 @@ public class BackpackCommand extends VaroCommand {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2) {
+		if (args.length == 2 && subCommands != null) {
 			List<String> subCommands = Arrays.asList(this.subCommands);
 			list.addAll(subCommands);
+		}
+		if (args.length == 3 && args[1].equalsIgnoreCase("player")) {
+			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+				list.add(vp.getName());
+			}
+		} else if (args.length == 3 && args[1].equalsIgnoreCase("team")) {
+			for (VaroTeam vt : VaroTeam.getTeams()) {
+				list.add(vt.getName());
+			}
 		}
 		ArrayList<String> completerList = new ArrayList<>();
 		String curentarg = args[args.length - 1].toLowerCase();

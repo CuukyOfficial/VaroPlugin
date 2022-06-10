@@ -44,8 +44,9 @@ public class ReviveCommand extends VaroCommand {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		ArrayList<String> list = new ArrayList<>();
 		if (args.length == 2) {
-			List<String> subCommands = Arrays.asList(this.subCommands);
-			list.addAll(subCommands);
+			for (VaroPlayer vp : VaroPlayer.getDeadPlayer()) {
+				list.add(vp.getName());
+			}
 		}
 		ArrayList<String> completerList = new ArrayList<>();
 		String curentarg = args[args.length - 1].toLowerCase();

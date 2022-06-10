@@ -121,9 +121,17 @@ public class EnchantmentCommand extends VaroCommand {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2) {
+		if (args.length == 2 && subCommands != null) {
 			List<String> subCommands = Arrays.asList(this.subCommands);
 			list.addAll(subCommands);
+			for (EnchantmentList et : EnchantmentList.getEnchantmentLists()) {
+				list.add(et.getLocation());
+			}
+		}
+		if (args.length == 3) {
+			String[] subCommands = {"Add", "Remove", "List"};
+			List<String> subCommandsList = Arrays.asList(subCommands);
+			list.addAll(subCommandsList);
 		}
 		ArrayList<String> completerList = new ArrayList<>();
 		String curentarg = args[args.length - 1].toLowerCase();

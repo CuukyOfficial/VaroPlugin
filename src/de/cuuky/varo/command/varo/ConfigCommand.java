@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.cuuky.varo.entity.team.VaroTeam;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
 
 public class ConfigCommand extends VaroCommand {
-	private static final String[] subCommands = {"reload", "refresh", "reset", "menu", "search"};
+	private static final String[] subCommands = {"reload", "set", "reset", "menu", "search"};
 	public ConfigCommand() {
 		super("config", "Hauptbefehl fuer die Config", "varo.config", subCommands,  "configuration");
 	}
@@ -108,9 +109,14 @@ public class ConfigCommand extends VaroCommand {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2) {
+		if (args.length == 2 && subCommands != null) {
 			List<String> subCommands = Arrays.asList(this.subCommands);
 			list.addAll(subCommands);
+		}
+		if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
+			for (ConfigSetting entry : ConfigSetting.values()) {
+				list.add(entry.getFullPath());
+			}
 		}
 		ArrayList<String> completerList = new ArrayList<>();
 		String curentarg = args[args.length - 1].toLowerCase();

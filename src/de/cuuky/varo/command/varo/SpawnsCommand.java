@@ -266,10 +266,50 @@ public class SpawnsCommand extends VaroCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        if (args.length == 2) {
+        if (args.length == 2 && subCommands != null) {
             List<String> subCommands = Arrays.asList(this.subCommands);
             list.addAll(subCommands);
         }
+        if (args.length == 3 && (args[1].equalsIgnoreCase("set") || args[1].equalsIgnoreCase("delete"))) {
+            for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+                list.add(vp.getName());
+            }
+        } else if (args.length == 3 && args[1].equalsIgnoreCase("generate")) {
+            String[] subCommands = {"auto"};
+            List<String> subCommandsList = Arrays.asList(subCommands);
+            list.addAll(subCommandsList);
+        }
+        if (args.length == 4 && args[1].equalsIgnoreCase("generate")) {
+            String[] subCommands = {"team", "player"};
+            List<String> subCommandsList = Arrays.asList(subCommands);
+            list.addAll(subCommandsList);
+        } else if (args.length == 4 && args[1].equalsIgnoreCase("player")) {
+            for (Spawn spawn : Spawn.getSpawns()) {
+                list.add(Integer.toString(spawn.getNumber()));
+            }
+        }
+        if (args.length == 5 && args[1].equalsIgnoreCase("generate")) {
+            for (Materials ms : Materials.values()) {
+                list.add(ms.getName());
+            }
+        } else if (args.length == 5  && args[1].equalsIgnoreCase("player")){
+            String[] subCommands = {"set", "remove"};
+            List<String> subCommandsList = Arrays.asList(subCommands);
+            list.addAll(subCommandsList);
+        }
+        if (args.length == 6 && args[1].equalsIgnoreCase("generate")) {
+            for (Materials ms : Materials.values()) {
+                list.add(ms.getName());
+            }
+        } else if (args.length == 5  && args[1].equalsIgnoreCase("player")){
+            String[] subCommands = {"@a"};
+            List<String> subCommandsList = Arrays.asList(subCommands);
+            list.addAll(subCommandsList);
+            for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+                list.add(vp.getName());
+            }
+        }
+
         ArrayList<String> completerList = new ArrayList<>();
         String curentarg = args[args.length - 1].toLowerCase();
         for (String s : list) {

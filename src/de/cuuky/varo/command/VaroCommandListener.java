@@ -17,6 +17,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class VaroCommandListener implements CommandExecutor, TabCompleter {
 
@@ -58,10 +59,15 @@ public class VaroCommandListener implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        if (args.length == 0) return list;
         if (args.length == 1) {
             for (VaroCommand tabCommand : VaroCommand.getVaroCommand()) {
                 list.add(tabCommand.getName());
+            }
+        }
+        if (args.length >= 2) {
+            List<String> tabComplete = VaroCommand.getCommand(args[0]).onTabComplete(sender, cmd, alias, args);
+            if (tabComplete != null){
+                return tabComplete;
             }
         }
         ArrayList<String> completerList = new ArrayList<>();
@@ -71,9 +77,6 @@ public class VaroCommandListener implements CommandExecutor, TabCompleter {
             if (s1.startsWith(curentarg)) {
                 completerList.add(s);
             }
-        }
-        if (completerList.isEmpty()){
-            return VaroCommand.getCommand(args[0]).onTabComplete(sender, cmd, alias, args);
         }
         return completerList;
     }

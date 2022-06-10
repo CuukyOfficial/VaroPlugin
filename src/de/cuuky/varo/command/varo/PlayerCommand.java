@@ -207,9 +207,34 @@ public class PlayerCommand extends VaroCommand {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2) {
+		if (args.length == 2 && subCommands != null) {
 			List<String> subCommands = Arrays.asList(this.subCommands);
 			list.addAll(subCommands);
+			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+				list.add(vp.getName());
+			}
+		}
+		if (args.length == 3 && (args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("reset"))) {
+			String[] subCommands = {"@a"};
+			List<String> subCommandsList = Arrays.asList(subCommands);
+			list.addAll(subCommandsList);
+			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+				list.add(vp.getName());
+			}
+		} else if (args.length == 3 && args[1].equalsIgnoreCase("respawn")) {
+			String[] subCommands = {"@a"};
+			List<String> subCommandsList = Arrays.asList(subCommands);
+			list.addAll(subCommandsList);
+			for (VaroPlayer vp : VaroPlayer.getDeadPlayer()) {
+				list.add(vp.getName());
+			}
+		} else if (args.length == 3 && args[1].equalsIgnoreCase("kill")) {
+			String[] subCommands = {"@a"};
+			List<String> subCommandsList = Arrays.asList(subCommands);
+			list.addAll(subCommandsList);
+			for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
+				list.add(vp.getName());
+			}
 		}
 		ArrayList<String> completerList = new ArrayList<>();
 		String curentarg = args[args.length - 1].toLowerCase();

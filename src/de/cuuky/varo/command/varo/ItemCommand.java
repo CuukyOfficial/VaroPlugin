@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.list.enchantment.EnchantmentList;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -107,9 +108,17 @@ public class ItemCommand extends VaroCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        if (args.length == 2) {
+        if (args.length == 2 && subCommands != null) {
             List<String> subCommands = Arrays.asList(this.subCommands);
             list.addAll(subCommands);
+            for (ItemList it : ItemList.getItemLists()) {
+                list.add(it.getLocation());
+            }
+        }
+        if (args.length == 3) {
+            String[] subCommands = {"Add", "Remove", "List"};
+            List<String> subCommandsList = Arrays.asList(subCommands);
+            list.addAll(subCommandsList);
         }
         ArrayList<String> completerList = new ArrayList<>();
         String curentarg = args[args.length - 1].toLowerCase();

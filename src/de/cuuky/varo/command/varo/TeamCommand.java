@@ -230,9 +230,31 @@ public class TeamCommand extends VaroCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        if (args.length == 2) {
+        if (args.length == 2 && subCommands != null) {
             List<String> subCommands = Arrays.asList(this.subCommands);
             list.addAll(subCommands);
+            for (VaroTeam vt : VaroTeam.getTeams()) {
+                list.add(vt.getName());
+            }
+        }
+        if (args.length == 3 && (args[1].equalsIgnoreCase("create") || args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("rename ") || args[1].equalsIgnoreCase("colorcode"))) {
+            if (args[1].equalsIgnoreCase("remove")) {
+                String[] subCommands = {"@a"};
+                List<String> subCommandsList = Arrays.asList(subCommands);
+                list.addAll(subCommandsList);
+            }
+            for (VaroTeam vt : VaroTeam.getTeams()) {
+                list.add(vt.getName());
+            }
+        }
+        if (args.length == 4 && args[1].equalsIgnoreCase("add")) {
+            for (VaroPlayer vp : VaroPlayer.getDeadPlayer()) {
+                list.add(vp.getName());
+            }
+        } else if (args.length == 4 && args[1].equalsIgnoreCase("colorcode")) {
+            String[] subCommands = {"remove"};
+            List<String> subCommandsList = Arrays.asList(subCommands);
+            list.addAll(subCommandsList);
         }
         ArrayList<String> completerList = new ArrayList<>();
         String curentarg = args[args.length - 1].toLowerCase();
