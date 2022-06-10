@@ -4,7 +4,7 @@ import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.GamePlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class Game implements Varo {
 
     @Override
     public VaroPlayer register(org.bukkit.entity.Player player) {
-        VaroPlayer vp = new Player(player);
+        VaroPlayer vp = new GamePlayer(player);
         if (this.players.contains(vp) || this.plugin.isCancelled(new VaroPlayerAddEvent(vp))) return null;
         this.players.add(vp);
         vp.initialize(this);
