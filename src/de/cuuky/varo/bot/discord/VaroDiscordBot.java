@@ -153,7 +153,7 @@ public class VaroDiscordBot implements VaroBot {
 				builder.setColor(getRandomColor());
 			builder.addField(title, message.replace("_", "\\_"), true);
 			try {
-				channel.sendMessage(builder.build()).queue();
+				// channel.sendMessage(builder.build()).queue();
 			} catch (PermissionException e) {
 				System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 				System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());
@@ -173,7 +173,7 @@ public class VaroDiscordBot implements VaroBot {
 		builder.setColor(color);
 		builder.addField(title, message.replace("_", "\\_"), true);
 		try {
-			channel.sendMessage(builder.build()).queue();
+			// channel.sendMessage(builder.build()).queue();
 		} catch (PermissionException e) {
 			System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission! MISSING: " + e.getPermission());
 			System.err.println(Main.getConsolePrefix() + "On channel " + channel.getName());

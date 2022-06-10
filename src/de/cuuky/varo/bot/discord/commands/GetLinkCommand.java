@@ -21,7 +21,7 @@ public class GetLinkCommand extends DiscordBotCommand {
 
 	@Override
 	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if (args.length != 1 && event.getMessage().getMentionedUsers().size() == 0) {
+		/* if (args.length != 1 && event.getMessage().getMentionedUsers().size() == 0) {
 			event.getTextChannel().sendMessage("varo getLink <User / MC-Name>").queue();
 			return;
 		}
@@ -50,6 +50,6 @@ public class GetLinkCommand extends DiscordBotCommand {
 			return;
 		}
 
-		getDiscordBot().sendMessage("Der MC-Account von " + user.getAsMention() + " lautet " + reg.getPlayerName() + "!", "GET LINK", Color.BLUE, event.getTextChannel());
+		getDiscordBot().sendMessage("Der MC-Account von " + user.getAsMention() + " lautet " + reg.getPlayerName() + "!", "GET LINK", Color.BLUE, event.getTextChannel());*/
 	}
 }
