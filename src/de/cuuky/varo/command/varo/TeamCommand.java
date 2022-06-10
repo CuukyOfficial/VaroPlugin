@@ -237,7 +237,7 @@ public class TeamCommand extends VaroCommand {
                 list.add(vt.getName());
             }
         }
-        if (args.length == 3 && (args[1].equalsIgnoreCase("create") || args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("rename ") || args[1].equalsIgnoreCase("colorcode"))) {
+        if (args.length == 3 && (args[1].equalsIgnoreCase("create") || args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("rename") || args[1].equalsIgnoreCase("colorcode"))) {
             if (args[1].equalsIgnoreCase("remove")) {
                 String[] subCommands = {"@a"};
                 List<String> subCommandsList = Arrays.asList(subCommands);

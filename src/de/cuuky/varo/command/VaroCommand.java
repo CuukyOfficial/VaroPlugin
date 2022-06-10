@@ -56,7 +56,7 @@ public abstract class VaroCommand {
 	}
 
 	private String[] aliases;
-	private String[] subCommands = null;
+	private String[] subCommands;
 	private String name, permission, description;
 
 	public VaroCommand(String name, String description, String permission, String[] subCommands, String... aliases) {
@@ -98,6 +98,9 @@ public abstract class VaroCommand {
 	}
 
 	public void setPermission(String perm) { this.permission =  perm; }
+	public void setSubCommands(String[] subCommands){
+		this.subCommands = subCommands;
+	}
 
 	public String getDescription() {
 		return description;

@@ -13,9 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReviveCommand extends VaroCommand {
-	private static final String[] subCommands = null;
 	public ReviveCommand() {
-		super("revive", "Belebt einen Spieler wieder", "varo.revive", subCommands, "unkill");
+		super("revive", "Belebt einen Spieler wieder", "varo.revive", null, "unkill");
 	}
 
 	@Override

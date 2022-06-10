@@ -15,9 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BugreportCommand extends VaroCommand {
-	private static final String[] subCommands = null;
 	public BugreportCommand() {
-		super("bugreport", "Hift bei der Fehlersuche und beim Reporten von Bugs", "varo.bug", subCommands,  "bug", "bughelp", "error", "support");
+		super("bugreport", "Hift bei der Fehlersuche und beim Reporten von Bugs", "varo.bug", null,  "bug", "bughelp", "error", "support");
 	}
 
 	@Override
@@ -41,19 +40,6 @@ public class BugreportCommand extends VaroCommand {
 	}
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2 && subCommands != null) {
-			List<String> subCommands = Arrays.asList(this.subCommands);
-			list.addAll(subCommands);
-		}
-		ArrayList<String> completerList = new ArrayList<>();
-		String curentarg = args[args.length - 1].toLowerCase();
-		for (String s : list) {
-			String s1 = s.toLowerCase();
-			if (s1.startsWith(curentarg)) {
-				completerList.add(s);
-			}
-		}
-		return completerList;
+		return new ArrayList<>();
 	}
 }

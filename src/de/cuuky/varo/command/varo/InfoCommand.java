@@ -17,9 +17,8 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 public class InfoCommand extends VaroCommand {
-	private static final String[] subCommands = null;
 	public InfoCommand() {
-		super("info", "Zeigt Info ueber das Plugin & Server", null, subCommands, "plugin", "server", "support");
+		super("info", "Zeigt Info ueber das Plugin & Server", null, null, "plugin", "server", "support");
 	}
 
 	@Override
@@ -44,19 +43,6 @@ public class InfoCommand extends VaroCommand {
 	}
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-		ArrayList<String> list = new ArrayList<>();
-		if (args.length == 2 && subCommands != null) {
-			List<String> subCommands = Arrays.asList(this.subCommands);
-			list.addAll(subCommands);
-		}
-		ArrayList<String> completerList = new ArrayList<>();
-		String curentarg = args[args.length - 1].toLowerCase();
-		for (String s : list) {
-			String s1 = s.toLowerCase();
-			if (s1.startsWith(curentarg)) {
-				completerList.add(s);
-			}
-		}
-		return completerList;
+		return new ArrayList<>();
 	}
 }
