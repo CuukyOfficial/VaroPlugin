@@ -11,7 +11,6 @@ import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BugreportCommand extends VaroCommand {

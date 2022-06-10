@@ -9,7 +9,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ReviveCommand extends VaroCommand {

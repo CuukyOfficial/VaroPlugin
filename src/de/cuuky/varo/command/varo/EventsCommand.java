@@ -10,7 +10,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.varoevents.VaroEventGUI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EventsCommand extends VaroCommand {

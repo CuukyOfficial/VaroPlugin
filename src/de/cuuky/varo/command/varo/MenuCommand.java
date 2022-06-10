@@ -11,7 +11,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.MainMenu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MenuCommand extends VaroCommand {

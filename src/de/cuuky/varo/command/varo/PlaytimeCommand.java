@@ -10,7 +10,6 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlaytimeCommand extends VaroCommand {

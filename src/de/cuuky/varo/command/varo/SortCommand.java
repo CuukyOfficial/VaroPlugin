@@ -11,7 +11,6 @@ import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.spawns.sort.PlayerSort.SortResult;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SortCommand extends VaroCommand {

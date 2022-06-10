@@ -1,7 +1,5 @@
 package de.cuuky.varo.command.varo;
 
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.list.enchantment.EnchantmentList;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.items.ItemListInventory;
 import de.cuuky.varo.list.VaroList;

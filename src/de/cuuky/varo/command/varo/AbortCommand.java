@@ -11,7 +11,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.lobby.LobbyItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AbortCommand extends VaroCommand {

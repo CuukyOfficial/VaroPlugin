@@ -10,7 +10,6 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RestartCommand extends VaroCommand {
