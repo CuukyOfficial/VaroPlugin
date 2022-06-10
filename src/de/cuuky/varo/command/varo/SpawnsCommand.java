@@ -1,5 +1,6 @@
 package de.cuuky.varo.command.varo;
 
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class SpawnsCommand extends VaroCommand {
 
         if (args[0].equalsIgnoreCase("generate")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Main.getPrefix() + "Du musst ein Spieler sein!");
+                sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
                 return;
             }
 
@@ -309,7 +310,6 @@ public class SpawnsCommand extends VaroCommand {
                 list.add(vp.getName());
             }
         }
-
         ArrayList<String> completerList = new ArrayList<>();
         String curentarg = args[args.length - 1].toLowerCase();
         for (String s : list) {
