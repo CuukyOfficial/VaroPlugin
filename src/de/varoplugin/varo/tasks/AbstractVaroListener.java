@@ -1,10 +1,13 @@
 package de.varoplugin.varo.tasks;
 
 import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.server.PluginDisableEvent;
 
 /**
  * Represents any Varo listener.
+ * Unregisters on plugin disable.
  *
  * @author CuukyOfficial
  * @version v0.1
@@ -26,6 +29,12 @@ public abstract class AbstractVaroListener<T extends VaroRegisterInfo> implement
     protected void doUnregister() {
         this.checkInitialization();
         HandlerList.unregisterAll(this);
+    }
+
+    @EventHandler
+    public void onPluginDisable(PluginDisableEvent event) {
+        if (!event.getPlugin().equals(this.info.getVaro().getPlugin())) return;
+        this.unregister();
     }
 
     @Override
