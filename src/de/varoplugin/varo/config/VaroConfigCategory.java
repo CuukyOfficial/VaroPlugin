@@ -9,6 +9,7 @@ public class VaroConfigCategory implements ConfigCategory {
 	private static final String FILE_EXTENSION = ".yml";
 	
 	public static final ConfigCategory MAIN = new VaroConfigCategory("Main", "The main config settings of this plugin"),
+			BOTS = new VaroConfigCategory("Scoreboard", "Discord and Telegram bots"),
 			SCOREBOARD = new VaroConfigCategory("Scoreboard", "Everything scoreboard related");
 	
 	private final String name;

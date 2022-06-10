@@ -17,6 +17,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
+	public static final String WEBSITE = "https://varoplugin.de/";
+	public static final String GITHUB = "https://github.com/CuukyOfficial/VaroPlugin";
+	public static final String DISCORD_INVITE = "https://discord.varoplugin.de/";
+
     private final VaroUIManager uiManager;
     private final Varo varo;
     private VaroLoadingState state;
@@ -83,5 +87,20 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
     @Override
     public <T extends VaroEvent & Cancellable> boolean isCancelled(T event) {
         return this.callEvent(event).isCancelled();
+    }
+    
+    @Override
+    public String getWebsite() {
+    	return WEBSITE;
+    }
+    
+    @Override
+    public String getGithub() {
+    	return GITHUB;
+    }
+    
+    @Override
+    public String getDiscordInvite() {
+    	return DISCORD_INVITE;
     }
 }

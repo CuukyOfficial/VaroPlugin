@@ -21,4 +21,9 @@ public interface VaroPlugin extends Plugin {
      */
     <T extends VaroEvent & Cancellable> boolean isCancelled(T event);
 
+    String getWebsite();
+    
+    String getGithub();
+
+    String getDiscordInvite();
 }

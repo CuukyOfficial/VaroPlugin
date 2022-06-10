@@ -73,7 +73,7 @@ dependencies {
     this.addModularCompile('com.googlecode.json-simple:json-simple:1.1.1', 'gson', false)
     this.addModularCompile('com.sk89q.worldedit:worldedit-bukkit:6.1.3-SNAPSHOT', 'worldedit', true)
     this.addModularCompile('com.github.labymod:legacy-labymod-server-api:1.0', 'labymodapi', true)
-    this.addModularCompile('net.dv8tion:JDA:4.4.0_351', 'jda', false)
+    this.addModularCompile('net.dv8tion:JDA:5.0.0-alpha.12', 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
     this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
     this.addModularImplementation('me.carleslc.Simple-YAML:Simple-Yaml:1.8', 'Simple-Yaml-1.8', false)
