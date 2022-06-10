@@ -1,5 +1,7 @@
 package de.varoplugin.varo.tasks.game;
 
+import de.varoplugin.varo.api.event.game.VaroGameLoginKickEvent;
+import de.varoplugin.varo.game.KickResult;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.tasks.AbstractVaroTask;
 import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
@@ -16,8 +18,10 @@ public class RunningLoginTask extends AbstractVaroTask<VaroRegisterInfo> {
     public void onPlayerLogin(PlayerLoginEvent event) {
         VaroPlayer player = this.getInfo().getVaro().getPlayer(event.getPlayer());
         if (player != null) return;
-        // TODO: Let the UI set the kick message
-        event.setKickMessage("Nah men not now");
-        event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+
+        VaroGameLoginKickEvent loginKickEvent = new VaroGameLoginKickEvent(this.getInfo().getVaro(), event, KickResult.NOT_A_PARTICIPANT);
+        if (!this.getInfo().getVaro().getPlugin().isCancelled(loginKickEvent)) {
+            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+        }
     }
 }

@@ -1,11 +1,12 @@
 package de.varoplugin.varo.game.entity.player;
 
-import de.varoplugin.varo.api.event.game.player.VaroPlayerKillsChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerKillsChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.GameEntity;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class Player extends GameEntity implements VaroPlayer {
+public class GamePlayer extends GameEntity implements VaroPlayer {
 
     private UUID uuid;
     private VaroParticipantState state;
@@ -21,22 +22,22 @@ public class Player extends GameEntity implements VaroPlayer {
 
     private int kills;
 
-    private org.bukkit.entity.Player player;
+    private Player player;
 
     /**
      * For Serialization. Do not use.
      */
-    private Player() {
+    private GamePlayer() {
         this.state = ParticipantState.ALIVE;
         this.mode = PlayerMode.NONE;
     }
 
-    public Player(UUID uuid) {
+    public GamePlayer(UUID uuid) {
         this();
         this.uuid = uuid;
     }
 
-    public Player(org.bukkit.entity.Player player) {
+    public GamePlayer(Player player) {
         this(player.getUniqueId());
         this.player = player;
     }
@@ -99,12 +100,12 @@ public class Player extends GameEntity implements VaroPlayer {
     }
 
     @Override
-    public void setPlayer(org.bukkit.entity.Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
     @Override
-    public org.bukkit.entity.Player getPlayer() {
+    public Player getPlayer() {
         return this.player;
     }
 

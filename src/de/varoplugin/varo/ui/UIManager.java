@@ -1,14 +1,13 @@
 package de.varoplugin.varo.ui;
 
-import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
-import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.VaroLoadingState;
+import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.ui.commands.TestCommand;
 import de.varoplugin.varo.ui.listener.LoadingStatePrinter;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+import de.varoplugin.varo.ui.listener.PlayerKickListener;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author CuukyOfficial
@@ -16,26 +15,21 @@ import java.util.List;
  */
 public class UIManager implements VaroUIManager {
 
-    private final Plugin plugin;
-    private final Varo varo;
-    private final List<Listener> listener;
-    private final LoadingStatePrinter loadingStatePrinter;
+    private final Collection<UiElement> elements;
+    private final VaroLoadingStatePrinter loadingStatePrinter;
 
-    public UIManager(Plugin plugin, Varo varo) {
-        this.plugin = plugin;
-        this.varo = varo;
-        this.loadingStatePrinter = new LoadingStatePrinter(plugin);
-        this.listener = Arrays.asList(this.loadingStatePrinter);
+    public UIManager() {
+        this.loadingStatePrinter = new LoadingStatePrinter();
+        this.elements = Arrays.asList(this.loadingStatePrinter, new PlayerKickListener(), new TestCommand());
     }
 
     @Override
-    public void registerUI() {
-        plugin.getServer().getPluginCommand("test").setExecutor(new TestCommand(this.varo));
-        this.listener.forEach(listener -> this.plugin.getServer().getPluginManager().registerEvents(listener, this.plugin));
+    public void register(VaroPlugin plugin) {
+        this.elements.forEach(element -> element.register(plugin));
     }
 
     @Override
-    public void printDisableMessage(VaroLoadingStateChangeEvent event) {
-        this.loadingStatePrinter.onLoadingStateUpdate(event);
+    public void onLoadingStateUpdate(VaroLoadingState state, Object... format) {
+        this.loadingStatePrinter.onLoadingStateUpdate(state, format);
     }
 }

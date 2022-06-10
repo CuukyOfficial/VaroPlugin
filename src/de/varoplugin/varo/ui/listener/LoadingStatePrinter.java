@@ -1,9 +1,8 @@
 package de.varoplugin.varo.ui.listener;
 
 import de.varoplugin.varo.StartupState;
-import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
-import org.bukkit.event.EventHandler;
-import org.bukkit.plugin.Plugin;
+import de.varoplugin.varo.VaroLoadingState;
+import de.varoplugin.varo.ui.VaroLoadingStatePrinter;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -12,7 +11,7 @@ import java.util.logging.Level;
  * @author CuukyOfficial
  * @version v0.1
  */
-public class LoadingStatePrinter extends UiListener {
+public class LoadingStatePrinter extends UiListener implements VaroLoadingStatePrinter {
 
     private static final String[] BANNER = {" _     _                  ______  _              _       ", 
         "(_)   (_)                (_____ \\| |            (_)      ", 
@@ -24,17 +23,12 @@ public class LoadingStatePrinter extends UiListener {
 
     private static final String FORMAT = "%s";
 
-    public LoadingStatePrinter(Plugin plugin) {
-        super(plugin);
-    }
-
     private void printBanner() {
         Arrays.stream(BANNER).forEach(line -> this.getLogger().log(Level.INFO, line));
     }
 
-    @EventHandler
-    public void onLoadingStateUpdate(VaroLoadingStateChangeEvent event) {
-        if (event.getState().equals(StartupState.values()[0])) this.printBanner();
-        this.getLogger().log(Level.INFO, String.format(FORMAT, event.getMessage()));
+    public void onLoadingStateUpdate(VaroLoadingState state, Object... format) {
+        if (state.equals(StartupState.values()[0])) this.printBanner();
+        this.getLogger().log(Level.INFO, String.format(FORMAT, state.formatMessage(format)));
     }
 }

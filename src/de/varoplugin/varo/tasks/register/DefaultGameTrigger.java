@@ -16,11 +16,11 @@ import java.util.function.Supplier;
 public enum DefaultGameTrigger implements VaroTriggerHolder<VaroRegisterInfo> {
 
     LOBBY_TRIGGER(() -> new VaroStateTrigger<>(GameState.LOBBY, new LobbyLoginTask())),
-    STARTING_TRIGGER(() -> new VaroStateTrigger<>(GameState.STARTING)),
+    STARTING_TRIGGER(() -> new VaroStateTrigger<>(GameState.STARTING, new RunningLoginTask())),
     RUNNING_TRIGGER(() -> new VaroStateTrigger<>(GameState.RUNNING, new RunningLoginTask())),
     // TODO: Decide whether only the default or all triggers should be added to mass recording
     MASS_RECORDING_TRIGGER(DefaultGameTrigger.RUNNING_TRIGGER,  () -> new VaroStateTrigger<>(GameState.MASS_RECORDING)),
-    FINISHED_TRIGGER(() -> new VaroStateTrigger<>(GameState.FINISHED));
+    FINISHED_TRIGGER(() -> new VaroStateTrigger<>(GameState.FINISHED, new RunningLoginTask()));
 
     private final DefaultGameTrigger copyTasks;
     private final Supplier<VaroTaskTrigger<VaroRegisterInfo>> trigger;

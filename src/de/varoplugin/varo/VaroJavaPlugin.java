@@ -1,14 +1,16 @@
 package de.varoplugin.varo;
 
 import de.varoplugin.varo.api.event.VaroEvent;
-import de.varoplugin.varo.api.event.VaroLoadingStateChangeEvent;
-import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.Game;
+import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.tasks.register.TaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 /**
  * @author CuukyOfficial
@@ -21,26 +23,14 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	public static final String GITHUB = "https://github.com/CuukyOfficial/VaroPlugin";
 	public static final String DISCORD_INVITE = "https://discord.varoplugin.de/";
 
-    private final VaroUIManager uiManager;
-    private final Varo varo;
-    private VaroLoadingState state;
+    private static final String CONFIG_PATH = "config";
 
-    public VaroJavaPlugin() {
-        this.varo = new Game();
-        this.uiManager = new UIManager(this, varo);
-    }
-
-    /**
-     * Thanks bukkit for removing all listeners before the plugin has been disabled
-     */
-    private void updateDisableState(VaroLoadingState state, Object... args) {
-        this.uiManager.printDisableMessage(new VaroLoadingStateChangeEvent(state, state.formatMessage(args)));
-        this.state = state;
-    }
+    private VaroUIManager uiManager;
+    private Varo varo;
+    private VaroConfig config;
 
     private void updateLoadingState(VaroLoadingState state, Object... args) {
-        this.callEvent(new VaroLoadingStateChangeEvent(state, state.formatMessage(args)));
-        this.state = state;
+        this.uiManager.onLoadingStateUpdate(state, args);
     }
 
     private String getVersion() {
@@ -49,17 +39,20 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
     @Override
     public void onEnable() {
-        this.uiManager.registerUI();
+        this.uiManager = new UIManager();
+        this.uiManager.register(this);
         this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
 
-        // Init
+        this.config = new VaroConfig(new File(this.getDataFolder(), CONFIG_PATH).getPath());
 
         this.updateLoadingState(StartupState.LOADING_STATS);
 
         // Load stats
 
         this.updateLoadingState(StartupState.REGISTERING_TASKS);
+
         this.getServer().getPluginManager().registerEvents(new TaskRegister(), this);
+        this.varo = new Game();
         this.varo.initialize(this);
 
         this.updateLoadingState(StartupState.FINISHED, this.getName());
@@ -68,14 +61,24 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
     @Override
     public void onDisable() {
-        this.updateDisableState(ShutdownState.INITIALIZING, this.getName(), this.getVersion());
+        this.updateLoadingState(ShutdownState.INITIALIZING, this.getName(), this.getVersion());
 
-        this.updateDisableState(ShutdownState.SAVING_STATS, 0);
+        this.updateLoadingState(ShutdownState.SAVING_STATS, 0);
 
         // Save stats
 
-        this.updateDisableState(ShutdownState.SUCCESS);
+        this.updateLoadingState(ShutdownState.SUCCESS);
         super.onDisable();
+    }
+
+    @Override
+    public VaroConfig getVaroConfig() {
+        return this.config;
+    }
+
+    @Override
+    public Varo getVaro() {
+        return this.varo;
     }
 
     @Override
