@@ -4,7 +4,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 
 group 'de.varoplugin'
-version '5.0'
+version '4.10.0'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -78,7 +78,7 @@ dependencies {
     this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
     this.addModularImplementation('me.carleslc.Simple-YAML:Simple-Yaml:1.8', 'Simple-Yaml-1.8', false)
 
-    this.addModularInternal('de.varoplugin:CFW:0.6.11-INV-HOTFIX', 'CFW', true)
+    this.addModularInternal('de.varoplugin:CFW:0.6.14', 'CFW', true)
 }
 
 boolean checkLib(String filePath) {
@@ -141,6 +141,10 @@ processResources {
 java {
 	withJavadocJar()
 	withSourcesJar()
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
 }
 
 test {
