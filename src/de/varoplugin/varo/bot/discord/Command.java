@@ -1,6 +1,6 @@
 package de.varoplugin.varo.bot.discord;
 
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.varoplugin.varo.api.config.ConfigEntry;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -19,8 +19,8 @@ abstract class Command {
 		this.options = options;
 	}
 
-	Command(ConfigSetting name, ConfigSetting desc, OptionData... options) {
-		this(name.getValueAsString().toLowerCase(), desc.getValueAsString(), options);
+	Command(ConfigEntry<String> name, ConfigEntry<String> desc, OptionData... options) {
+		this(name.getValue(), desc.getValue(), options);
 	}
 
 	abstract void exec(DiscordBot bot, Member member, SlashCommandInteractionEvent event);

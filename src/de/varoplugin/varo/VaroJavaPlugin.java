@@ -1,16 +1,29 @@
 package de.varoplugin.varo;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.event.Cancellable;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import de.varoplugin.varo.api.config.ConfigException;
 import de.varoplugin.varo.api.event.VaroEvent;
+import de.varoplugin.varo.bot.Bot;
+import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
+import de.varoplugin.varo.dependencies.Dependencies;
+import de.varoplugin.varo.dependencies.InvalidSignatureException;
 import de.varoplugin.varo.game.Game;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.tasks.register.TaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
-import org.bukkit.event.Cancellable;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 /**
  * @author CuukyOfficial
@@ -23,87 +36,105 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	public static final String GITHUB = "https://github.com/CuukyOfficial/VaroPlugin";
 	public static final String DISCORD_INVITE = "https://discord.varoplugin.de/";
 
-    private static final String CONFIG_PATH = "config";
+	private static final String CONFIG_PATH = "config";
 
-    private VaroUIManager uiManager;
-    private Varo varo;
-    private VaroConfig config;
+	private VaroUIManager uiManager;
+	private Varo varo;
+	private VaroConfig config;
+	private final List<Bot> bots = new ArrayList<>();
 
-    private void updateLoadingState(VaroLoadingState state, Object... args) {
-        this.uiManager.onLoadingStateUpdate(state, args);
-    }
+	private void updateLoadingState(VaroLoadingState state, Object... args) {
+		this.uiManager.onLoadingStateUpdate(state, args);
+	}
 
-    private String getVersion() {
-        return this.getDescription().getVersion();
-    }
+	private String getVersion() {
+		return this.getDescription().getVersion();
+	}
 
-    @Override
-    public void onEnable() {
-        this.uiManager = new UIManager();
-        this.uiManager.register(this);
-        this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
+	@Override
+	public void onEnable() {
+		this.uiManager = new UIManager();
+		this.uiManager.register(this);
+		this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
 
-        this.config = new VaroConfig(new File(this.getDataFolder(), CONFIG_PATH).getPath());
+		try {
+			// Load Guava (this is only necessary on 1.7)
+			Dependencies.GUAVA.load(this);
+			// Load config (This loads SnakeYAML and Simple-YAML)
+			this.config = new VaroConfig(this, this.getFile(), new File(this.getDataFolder(), CONFIG_PATH).getPath() + "/");
+			this.config.load();
+			// Load additional dependencies (e.g. JDA)
+			Dependencies.loadNeeded(this);
+		} catch (ConfigException | IOException | InvalidSignatureException e) {
+			e.printStackTrace();
+		}
 
-        this.updateLoadingState(StartupState.LOADING_STATS);
+		this.updateLoadingState(StartupState.LOADING_STATS);
 
-        // Load stats
+		// Load stats
 
-        this.updateLoadingState(StartupState.REGISTERING_TASKS);
+		this.updateLoadingState(StartupState.REGISTERING_TASKS);
 
-        this.getServer().getPluginManager().registerEvents(new TaskRegister(), this);
-        this.varo = new Game();
-        this.varo.initialize(this);
+		this.getServer().getPluginManager().registerEvents(new TaskRegister(), this);
+		this.varo = new Game();
+		this.varo.initialize(this);
 
-        this.updateLoadingState(StartupState.FINISHED, this.getName());
-        super.onEnable();
-    }
+		// Load Discord bot
+		if (this.config.bot_discord_enabled.getValue()) {
+			Bot discordBot = new DiscordBot();
+			discordBot.init(this);
+			this.bots.add(discordBot);
+		}
 
-    @Override
-    public void onDisable() {
-        this.updateLoadingState(ShutdownState.INITIALIZING, this.getName(), this.getVersion());
+		this.updateLoadingState(StartupState.FINISHED, this.getName());
+		super.onEnable();
+	}
 
-        this.updateLoadingState(ShutdownState.SAVING_STATS, 0);
+	@Override
+	public void onDisable() {
+		this.updateLoadingState(ShutdownState.INITIALIZING, this.getName(), this.getVersion());
 
-        // Save stats
+		this.updateLoadingState(ShutdownState.SAVING_STATS, 0);
 
-        this.updateLoadingState(ShutdownState.SUCCESS);
-        super.onDisable();
-    }
+		// Save stats
 
-    @Override
-    public VaroConfig getVaroConfig() {
-        return this.config;
-    }
+		this.updateLoadingState(ShutdownState.SUCCESS);
+		super.onDisable();
+	}
 
-    @Override
-    public Varo getVaro() {
-        return this.varo;
-    }
+	@Override
+	public VaroConfig getVaroConfig() {
+		return this.config;
+	}
 
-    @Override
-    public <T extends VaroEvent> T callEvent(T event) {
-        this.getServer().getPluginManager().callEvent(event);
-        return event;
-    }
+	@Override
+	public Varo getVaro() {
+		return this.varo;
+	}
 
-    @Override
-    public <T extends VaroEvent & Cancellable> boolean isCancelled(T event) {
-        return this.callEvent(event).isCancelled();
-    }
-    
-    @Override
-    public String getWebsite() {
-    	return WEBSITE;
-    }
-    
-    @Override
-    public String getGithub() {
-    	return GITHUB;
-    }
-    
-    @Override
-    public String getDiscordInvite() {
-    	return DISCORD_INVITE;
-    }
+	@Override
+	public <T extends VaroEvent> T callEvent(T event) {
+		this.getServer().getPluginManager().callEvent(event);
+		return event;
+	}
+
+	@Override
+	public <T extends VaroEvent & Cancellable> boolean isCancelled(T event) {
+		return this.callEvent(event).isCancelled();
+	}
+
+	@Override
+	public String getWebsite() {
+		return WEBSITE;
+	}
+
+	@Override
+	public String getGithub() {
+		return GITHUB;
+	}
+
+	@Override
+	public String getDiscordInvite() {
+		return DISCORD_INVITE;
+	}
 }

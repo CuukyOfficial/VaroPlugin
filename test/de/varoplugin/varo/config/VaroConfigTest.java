@@ -2,7 +2,6 @@ package de.varoplugin.varo.config;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,19 +18,19 @@ public class VaroConfigTest {
 	private static final String PATH = "build/test/config/";
 
 	@BeforeEach
-	public void deleteConfigs() {
+	public void deleteConfigs() throws ConfigException {
 		new VaroConfig(PATH).delete();
 	}
 
 	@Test
-	public void testVaroDefaultValue() throws ConfigException, IOException {
+	public void testVaroDefaultValue() throws ConfigException {
 		VaroConfig config = new VaroConfig(PATH);
 		config.load();
 		assertEquals(config.scoreboard_enabled.getDefaultValue(), config.scoreboard_enabled.getValue());
 	}
 
 	@Test
-	public void testSave() throws ConfigException, IOException {
+	public void testSave() throws ConfigException {
 		VaroConfig config = new VaroConfig(PATH);
 		config.load();
 		config.offlinemode.setValue(true);
@@ -43,7 +42,7 @@ public class VaroConfigTest {
 	}
 
 	@Test
-	public void testDuplicatePaths() throws ConfigException, IOException {
+	public void testDuplicatePaths() throws ConfigException {
 		Config config = new VaroConfig(PATH);
 		config.load();
 		for (ConfigCategory category : config.getConfigEntries().keys()) {
@@ -55,7 +54,7 @@ public class VaroConfigTest {
 	}
 
 	@Test
-	public void testGetEntry() throws ConfigException, IOException {
+	public void testGetEntry() throws ConfigException {
 		VaroConfig config = new VaroConfig(PATH);
 		config.load();
 		assertEquals(config.scoreboard_title_delay.getValue(),

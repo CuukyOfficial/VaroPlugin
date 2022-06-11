@@ -37,7 +37,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 	@Override
 	public void init(VaroPlugin varo) {
 		this.varo = varo;
-		this.config = null; //TODO
+		this.config = varo.getVaroConfig();
 		
 		if (!this.config.bot_discord_enabled.getValue())
 			return;
@@ -76,7 +76,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 			this.shutdown();
 		}
 
-		varo.getLogger().info("Discord Bot enabled successfully!");
+		varo.getLogger().info("Discord Bot successfully enabled!");
 	}
 
 	@Override

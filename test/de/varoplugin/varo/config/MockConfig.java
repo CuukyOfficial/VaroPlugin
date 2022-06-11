@@ -7,7 +7,7 @@ import java.util.List;
 
 import de.varoplugin.varo.api.config.ConfigEntry;
 
-public class MockConfig extends AbstractConfig {
+public class MockConfig extends ConfigImpl {
 	
 	public static final List<String> LIST = Arrays.asList("ABC", "DEF");
 	
@@ -18,6 +18,10 @@ public class MockConfig extends AbstractConfig {
 	
 	protected MockConfig(String path) {
 		super(path);
+		this.addConfigEntry(this.int_entry);
+		this.addConfigEntry(this.list_entry);
+		// this.addConfigEntry(this.enum_entry);
+		this.addConfigEntry(this.list_entry);
 	}
 	
 	public enum DisappointingMinecraftUpdates {

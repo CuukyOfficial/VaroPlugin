@@ -2,6 +2,7 @@ package de.varoplugin.varo.config;
 
 import java.util.Objects;
 
+import de.varoplugin.varo.VaroJavaPlugin;
 import de.varoplugin.varo.api.config.ConfigCategory;
 
 public class VaroConfigCategory implements ConfigCategory {
@@ -9,7 +10,7 @@ public class VaroConfigCategory implements ConfigCategory {
 	private static final String FILE_EXTENSION = ".yml";
 	
 	public static final ConfigCategory MAIN = new VaroConfigCategory("Main", "The main config settings of this plugin"),
-			BOTS = new VaroConfigCategory("Scoreboard", "Discord and Telegram bots"),
+			BOTS = new VaroConfigCategory("Bot", "Everything regarding the Discord and Telegram bots. Need help? " + VaroJavaPlugin.DISCORD_INVITE),
 			SCOREBOARD = new VaroConfigCategory("Scoreboard", "Everything scoreboard related");
 	
 	private final String name;
