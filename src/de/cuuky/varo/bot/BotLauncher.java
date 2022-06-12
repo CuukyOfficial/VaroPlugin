@@ -36,7 +36,7 @@ public class BotLauncher {
 			discordbot = new VaroDiscordBot();
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			discordbot = null;
-			System.out.println(Main.getConsolePrefix() + "DiscordBot disabled because of missing plugin. Please report this error on our discord " + Main.DISCORD_INVITE);
+			System.out.println(Main.getConsolePrefix() + "The Discord Bot was disabled because a dependency is missing! Please report this error on our discord " + Main.DISCORD_INVITE);
 			e.printStackTrace();
 			return;
 		}
@@ -61,7 +61,7 @@ public class BotLauncher {
 			telegrambot = new VaroTelegramBot();
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			telegrambot = null;
-			System.out.println(Main.getConsolePrefix() + "TelegramBot disabled because of missing plugin. Please report this error on our discord " + Main.DISCORD_INVITE);
+			System.out.println(Main.getConsolePrefix() + "The Telegram Bot was disabled because a dependency is missing! Please report this error on our discord " + Main.DISCORD_INVITE);
 			e.printStackTrace();
 			return;
 		}
