@@ -54,6 +54,7 @@ public class VaroConfig implements Config {
 	public final VaroBoolConfigEntry bot_discord_command_status_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.command.status.enabled", true, "TODO");
 	public final ConfigEntry<String> bot_discord_command_status_name = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.name", "status", "TODO");
 	public final ConfigEntry<String> bot_discord_command_status_desc = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.desc", "TODO", "TODO");
+	public final ConfigEntry<String> bot_discord_command_status_message = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.message", "Whitelist: %whitelist%\nGame-State: %gamestate%\nOnline: %online%", "The message that is sent when a user executes /status");
 
 	public final VaroBoolConfigEntry scoreboard_enabled = new VaroBoolConfigEntry(SCOREBOARD, "scoreboard.enabled", true, "Whether the scoreboard should be enabled (Players may still be able to hide their scoreboard)");
 	public final ConfigEntry<Integer> scoreboard_title_delay = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.title.updatedelay", 100, "The update interval of the title animation");

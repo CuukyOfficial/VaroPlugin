@@ -10,16 +10,18 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 
 class StatusCommand extends Command {
 	
-	private final BotMessageComponent[] messageComponents = BotMessageComponent.splitPlaceholders("//TODO", false, true, "%whitelist%", "%gamestate%", "%online%");
+	private final BotMessageComponent[] messageComponents;
 
 	StatusCommand(VaroConfig config) {
 		super(config.bot_discord_command_status_name, config.bot_discord_command_status_desc);
+
+		this.messageComponents = BotMessageComponent.splitPlaceholders(config.bot_discord_command_status_message.getValue(), false, true, "%whitelist%", "%gamestate%", "%online%");
 	}
 
 	@Override
 	void exec(DiscordBot bot, Member member, SlashCommandInteractionEvent event) {
-		bot.reply(new BotMessage().setBody(BotMessageComponent.replacePlaceholders(this.messageComponents, new String[] { "%whitelist%", "%gamestate%", "%online%"},
-				new String[] { String.valueOf(Bukkit.getServer().hasWhitelist()), "TODO",
-						String.valueOf(Bukkit.getOnlinePlayers().size())})), event);
+		BotMessageComponent[] replaced = BotMessageComponent.replacePlaceholders(this.messageComponents, new String[] { "%whitelist%", "%gamestate%", "%online%"},
+				new String[] { String.valueOf(Bukkit.getServer().hasWhitelist()), "TODO", String.valueOf(Bukkit.getOnlinePlayers().size())});
+		bot.reply(new BotMessage().setBody(replaced), event);
 	}
 }
