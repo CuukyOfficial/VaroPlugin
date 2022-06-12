@@ -1,12 +1,14 @@
 package de.varoplugin.varo.config;
 
-import java.awt.List;
-
 import de.varoplugin.varo.api.config.ConfigCategory;
 import de.varoplugin.varo.api.config.ConfigEntry;
 import de.varoplugin.varo.api.config.ConfigException;
 
+import java.awt.*;
+
 public class ConfigEntryImpl<T> implements ConfigEntry<T> {
+
+    private static final String DESCRIPTION_FOOTER = "\nDefault value: %s (%s)";
 
 	private final ConfigCategory category;
 	private final String path;
@@ -21,11 +23,11 @@ public class ConfigEntryImpl<T> implements ConfigEntry<T> {
 		this.category = category;
 		this.path = path;
 		this.defaultValue = defaultValue;
-		this.description = description;
+		this.description = description + String.format(DESCRIPTION_FOOTER, defaultValue, defaultValue.getClass().getSimpleName());
 	}
 
 	private void checkType(Class<?> type) throws ConfigException {
-		if (this.defaultValue.getClass() != type && (List.class.getClass().isAssignableFrom(this.defaultValue.getClass()) || List.class.getClass().isAssignableFrom(type)))
+		if (this.defaultValue.getClass() != type && (List.class.isAssignableFrom(this.defaultValue.getClass()) || List.class.isAssignableFrom(type)))
 			throw new ConfigException(String.format("Type missmatch! Expected: %s Actual: %s for %s", this.defaultValue.getClass().getName(), type.getName(), this.path));
 	}
 
