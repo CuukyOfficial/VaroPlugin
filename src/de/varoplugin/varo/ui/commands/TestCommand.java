@@ -1,8 +1,9 @@
 package de.varoplugin.varo.ui.commands;
 
-import de.varoplugin.varo.game.GameState;
+import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @author CuukyOfficial
@@ -10,7 +11,7 @@ import org.bukkit.command.CommandSender;
  */
 public class TestCommand extends VaroCommand {
 
-    private int index = 1;
+//    private int index = 1;
 
     public TestCommand() {
         super("test");
@@ -18,9 +19,10 @@ public class TestCommand extends VaroCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        this.getVaro().setState(GameState.values()[this.index % GameState.values().length]);
-        this.index++;
-        sender.sendMessage(this.getVaro().getState().toString());
+        new PlayerChatHookBuilder().player((Player) sender).message("Test").register(this.getVaro().getPlugin());
+//        this.getVaro().setState(GameState.values()[this.index % GameState.values().length]);
+//        this.index++;
+//        sender.sendMessage(this.getVaro().getState().toString());
         return false;
     }
 }

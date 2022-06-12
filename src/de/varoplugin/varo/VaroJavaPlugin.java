@@ -1,17 +1,5 @@
 package de.varoplugin.varo;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.event.Cancellable;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.varoplugin.varo.api.config.ConfigException;
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.bot.Bot;
@@ -24,6 +12,13 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.tasks.register.TaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
+import org.bukkit.event.Cancellable;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CuukyOfficial
@@ -79,6 +74,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		this.varo = new Game();
 		this.varo.initialize(this);
 
+        this.updateLoadingState(StartupState.STARTING_BOTS);
 		// Load Discord bot
 		if (this.config.bot_discord_enabled.getValue()) {
 			Bot discordBot = new DiscordBot();

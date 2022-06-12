@@ -9,6 +9,7 @@ public enum StartupState implements VaroLoadingState {
     INITIALIZING("INIT", "Booting up %s v%s..."),
     REGISTERING_TASKS("REGISTERING_TASKS", "Registering tasks..."),
     LOADING_STATS("STATS", "Loading stats..."),
+    STARTING_BOTS("BOTS", "Starting bots..."),
     FINISHED("FINISHED", "Finished loading %s");
 
     private final String name;
