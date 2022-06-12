@@ -1,7 +1,9 @@
 package de.varoplugin.varo.bot.discord;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -17,11 +19,14 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
@@ -33,22 +38,23 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 	private JDA jda;
 	private long guildId;
 	private final HashMap<String, Long> channelIds = new HashMap<>();
+	private final List<Command> commands = new ArrayList<>();
 
 	@Override
 	public void init(VaroPlugin varo) {
 		this.varo = varo;
 		this.config = varo.getVaroConfig();
-		
+
 		if (!this.config.bot_discord_enabled.getValue())
 			return;
-		
+
 		varo.getLogger().info("Starting Discord Bot...");
-		
+
 		if (this.config.bot_discord_token.getValue().equals(this.config.bot_discord_token.getDefaultValue())) {
 			varo.getLogger().severe("Discord Bot disabled! Missing token!");
 			return;
 		}
-		
+
 		if (this.config.bot_discord_guild.getValue().equals(this.config.bot_discord_guild.getDefaultValue())) {
 			varo.getLogger().severe("Discord Bot disabled! Missing GuildID");
 			return;
@@ -71,10 +77,17 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 			return;
 		}
 
-		if (this.jda.getGuildById(this.guildId) == null) {
+		Guild guild = this.jda.getGuildById(this.guildId);
+		if (guild == null) {
 			varo.getLogger().severe("Invalid GuildID! Disabling Discord Bot...");
 			this.shutdown();
 		}
+
+		this.commands.add(new InfoCommand(varo));
+		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new StatusCommand(this.config)));
+		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new VerifyCommand(this.config)));
+
+		guild.updateCommands().addCommands(this.commands.stream().map(Command::buildCommandData).toArray(CommandData[]::new)).queue();
 
 		varo.getLogger().info("Discord Bot successfully enabled!");
 	}
@@ -130,7 +143,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 			embed.setColor(message.getColor());
 		return embed.build();
 	}
-	
+
 	private String buildMessage(BotMessage message) {
 		StringBuilder stringBuilder = new StringBuilder();
 		String title = this.buildText(message.getTitle());
@@ -159,7 +172,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 		long id = this.getChannelId(botChannel);
 		if (id == -1)
 			return;
-		
+
 		TextChannel channel = this.jda.getTextChannelById(id);
 		if (channel != null) {
 			if (channel.getGuild().getIdLong() == this.guildId)
@@ -172,6 +185,13 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 				this.varo.getLogger().warning("Discord channel belongs to a different guild (id: " + id + ", name: " + botChannel.getPath() + ")");
 		} else
 			this.varo.getLogger().warning("Missing Discord channel (id: " + id + ", name: " + botChannel.getPath() + ")");
+	}
+
+	@Override
+	public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+		for (Command command : this.commands)
+			if (command.getName().equals(event.getName()))
+				command.exec(this, event.getMember(), event);
 	}
 
 	VaroPlugin getVaro() {

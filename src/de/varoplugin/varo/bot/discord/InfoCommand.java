@@ -12,13 +12,13 @@ class InfoCommand extends Command {
 
 	InfoCommand(VaroPlugin plugin) {
 		super("info", "Shows information about this plugin");
-		
-		this.message = plugin.getName() + "\nDiscord: " + plugin.getDiscordInvite() + "\nDownload: " + plugin.getWebsite()
-			+ "\nSource code: " + plugin.getGithub() + "\nLicense: GNU AGPL v3";
+
+		this.message = String.format("**%s v%s**%nDiscord: %s%nDownload: %s%nSource-Code: %s%n License GNU AGPL v3",
+				plugin.getName(), plugin.getDescription().getVersion(), plugin.getDiscordInvite(), plugin.getWebsite(), plugin.getGithub());
 	}
 
 	@Override
 	void exec(DiscordBot bot, Member member, SlashCommandInteractionEvent event) {
-		bot.reply(new BotMessage().setBody(new BotMessageComponent(message, true)), event);
+		bot.reply(new BotMessage().setBody(new BotMessageComponent(message, false)), event);
 	}
 }

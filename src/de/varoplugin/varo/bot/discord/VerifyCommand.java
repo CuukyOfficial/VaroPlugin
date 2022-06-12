@@ -14,7 +14,7 @@ class VerifyCommand extends Command {
 	private final Modal modal;;
 	
 	VerifyCommand(VaroConfig config) {
-		super(config.bot_discord_command_verify_name.getValue(), config.bot_discord_command_verify_desc.getValue());
+		super(config.bot_discord_command_verify_name, config.bot_discord_command_verify_desc);
 		
 		this.modal = Modal.create(VERIFY_MODAL_ID, config.bot_discord_modal_verify_title.getValue()).addActionRow(
 				TextInput.create(VERIFY_MODAL_INPUT_ID, config.bot_discord_modal_verify_input_label.getValue(), TextInputStyle.SHORT).build()).build();

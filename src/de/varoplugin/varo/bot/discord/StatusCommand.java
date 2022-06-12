@@ -13,7 +13,7 @@ class StatusCommand extends Command {
 	private final BotMessageComponent[] messageComponents = BotMessageComponent.splitPlaceholders("//TODO", false, true, "%whitelist%", "%gamestate%", "%online%");
 
 	StatusCommand(VaroConfig config) {
-		super(config.bot_discord_command_status_name.getValue(), config.bot_discord_command_status_desc.getValue());
+		super(config.bot_discord_command_status_name, config.bot_discord_command_status_desc);
 	}
 
 	@Override

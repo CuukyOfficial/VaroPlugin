@@ -27,9 +27,9 @@ public class VaroConfig implements Config {
 	private final List<ConfigEntry<?>> configEntries = new ArrayList<>();
 
 	// These fields do not follow java conventions to improve readability
-	public final ConfigEntry<Boolean> offlinemode = new VaroConfigEntry<>(MAIN, "offlinemode", false, "Whether the server is running in offline mode");
+	public final VaroBoolConfigEntry offlinemode = new VaroBoolConfigEntry(MAIN, "offlinemode", false, "Whether the server is running in offline mode");
 
-	public final ConfigEntry<Boolean> bot_discord_enabled = new VaroConfigEntry<>(BOTS, "bot.discord.enabled", false, "Whether the Discord Bot should be enabled");
+	public final VaroBoolConfigEntry bot_discord_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.enabled", false, "Whether the Discord Bot should be enabled");
 	public final ConfigEntry<String> bot_discord_token = new VaroConfigEntry<>(BOTS, "bot.discord.token", "INSERT BOT TOKEN HERE", "The Bot Token");
 	public final ConfigEntry<Long> bot_discord_guild = new VaroConfigEntry<>(BOTS, "bot.discord.guild", -1L, "TODO");
 	public final ConfigEntry<String> bot_discord_invite = new VaroConfigEntry<>(BOTS, "bot.discord.invite", VaroJavaPlugin.DISCORD_INVITE, "TODO");
@@ -44,23 +44,23 @@ public class VaroConfig implements Config {
 	public final ConfigEntry<Long> bot_discord_channel_win = new VaroConfigEntry<>(BOTS, "bot.discord.channels.win", -1L, "TODO");
 	public final ConfigEntry<Long> bot_discord_channel_youtube = new VaroConfigEntry<>(BOTS, "bot.discord.channels.youtube", -1L, "TODO");
 	public final ConfigEntry<Long> bot_discord_channel_result = new VaroConfigEntry<>(BOTS, "bot.discord.channels.result", -1L, "TODO");
-	public final ConfigEntry<Boolean> bot_discord_embed_enabled = new VaroConfigEntry<>(BOTS, "bot.discord.embed.enabled", true, "TODO");
-	public final ConfigEntry<Boolean> bot_discord_embed_randomcolor = new VaroConfigEntry<>(BOTS, "bot.discord.embed.randomcolor", true, "TODO");
+	public final VaroBoolConfigEntry bot_discord_embed_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.embed.enabled", true, "TODO");
+	public final VaroBoolConfigEntry bot_discord_embed_randomcolor = new VaroBoolConfigEntry(BOTS, "bot.discord.embed.randomcolor", true, "TODO");
 	public final ConfigEntry<String> bot_discord_modal_verify_title = new VaroConfigEntry<>(BOTS, "bot.discord.modal.verify.title", "Verify", "TODO");
 	public final ConfigEntry<String> bot_discord_modal_verify_input_label = new VaroConfigEntry<>(BOTS, "bot.discord.modal.verify.inputlabel", "Code:", "TODO");
-	public final ConfigEntry<Boolean> bot_discord_command_verify_enabled = new VaroConfigEntry<>(BOTS, "bot.discord.command.verify.enabled", true, "TODO");
+	public final VaroBoolConfigEntry bot_discord_command_verify_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.command.verify.enabled", true, "TODO");
 	public final ConfigEntry<String> bot_discord_command_verify_name = new VaroConfigEntry<>(BOTS, "bot.discord.command.verify.name", "verify", "TODO");
 	public final ConfigEntry<String> bot_discord_command_verify_desc = new VaroConfigEntry<>(BOTS, "bot.discord.command.verify.desc", "TODO", "TODO");
-	public final ConfigEntry<Boolean> bot_discord_command_status_enabled = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.enabled", true, "TODO");
+	public final VaroBoolConfigEntry bot_discord_command_status_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.command.status.enabled", true, "TODO");
 	public final ConfigEntry<String> bot_discord_command_status_name = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.name", "status", "TODO");
 	public final ConfigEntry<String> bot_discord_command_status_desc = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.desc", "TODO", "TODO");
 
-	public final ConfigEntry<Boolean> scoreboard_enabled = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.enabled", true, "Whether the scoreboard should be enabled (Players may still be able to hide their scoreboard)");
+	public final VaroBoolConfigEntry scoreboard_enabled = new VaroBoolConfigEntry(SCOREBOARD, "scoreboard.enabled", true, "Whether the scoreboard should be enabled (Players may still be able to hide their scoreboard)");
 	public final ConfigEntry<Integer> scoreboard_title_delay = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.title.updatedelay", 100, "The update interval of the title animation");
 	public final ConfigEntry<Integer> scoreboard_content_delay = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.content.updatedelay", 100, "The update interval of the animation");
 
 	private Config config;
-	
+
 	/**
 	 * This constructor is just for testing
 	 * 
@@ -68,7 +68,7 @@ public class VaroConfig implements Config {
 	 */
 	public VaroConfig(String path) {
 		this.config = new ConfigImpl(path);
-		
+
 		for(ConfigEntry<?> entry : this.configEntries)
 			this.addConfigEntry(entry);
 	}
@@ -78,10 +78,10 @@ public class VaroConfig implements Config {
 			// Download dependencies
 			Dependencies.SIMPLE_YAML.load(plugin);
 			Dependencies.SNAKE_YAML.load(plugin);
-			
+
 			// All classes except for ConfigImpl and SnakeYAML should still be loaded via the class loader of this class (Bukkit's ClassLoader)
 			ClassLoader parentClassLoader = new ClassLoader(this.getClass().getClassLoader()) {
-				
+
 				@Override
 				protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
 					if (name.equals("de.varoplugin.varo.config.ConfigImpl") || name.startsWith("org.yaml.snakeyaml."))
@@ -90,11 +90,11 @@ public class VaroConfig implements Config {
 						return super.loadClass(name, resolve);
 				}
 			};
-			
+
 			// Create URLClassLoader and load the ConfigImpl class using the newly created URLClassLoader
 			URLClassLoader classLoader = new URLClassLoader(new URL[] {Dependencies.SIMPLE_YAML.getUrl(), Dependencies.SNAKE_YAML.getUrl(), pluginFile.toURI().toURL()}, parentClassLoader);
 			Class<?> configClass = (Class<?>) Class.forName("de.varoplugin.varo.config.ConfigImpl", false, classLoader);
-			
+
 			// Create new ConfigImpl instance
 			this.config = (Config) configClass.getConstructor(String.class).newInstance(path);
 		} catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InvalidSignatureException e) {
@@ -138,10 +138,22 @@ public class VaroConfig implements Config {
 
 	private class VaroConfigEntry<T> extends ConfigEntryImpl<T> {
 
-		public VaroConfigEntry(ConfigCategory category, String path, T defaultValue, String description) {
+		private VaroConfigEntry(ConfigCategory category, String path, T defaultValue, String description) {
 			super(category, path, defaultValue, description);
 
 			VaroConfig.this.configEntries.add(this);
+		}
+	}
+
+	public class VaroBoolConfigEntry extends VaroConfigEntry<Boolean> {
+		
+		private VaroBoolConfigEntry(ConfigCategory category, String path, boolean defaultValue, String description) {
+			super(category, path, defaultValue, description);
+		}
+
+		public void ifTrue(Runnable runnable) {
+			if (this.getValue())
+				runnable.run();
 		}
 	}
 }

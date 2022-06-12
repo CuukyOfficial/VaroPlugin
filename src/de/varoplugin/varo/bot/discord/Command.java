@@ -28,4 +28,8 @@ abstract class Command {
 	CommandData buildCommandData() {
 		return Commands.slash(this.name, this.desc).addOptions(this.options).setDefaultEnabled(true);
 	}
+
+	public String getName() {
+		return this.name;
+	}
 }
