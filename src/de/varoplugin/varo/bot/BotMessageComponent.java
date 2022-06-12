@@ -8,15 +8,25 @@ import java.util.regex.Pattern;
 public class BotMessageComponent {
 
 	private final String content;
+	private final boolean placeholder;
 	private final boolean escape;
 
-	public BotMessageComponent(String content, boolean escape) {
+	public BotMessageComponent(String content, boolean placeholder, boolean escape) {
 		this.content = content;
+		this.placeholder = placeholder;
 		this.escape = escape;
+	}
+
+	public BotMessageComponent(String content, boolean escape) {
+		this(content, true, escape);
 	}
 
 	public String getContent() {
 		return this.content;
+	}
+
+	public boolean isPlaceholder() {
+		return this.placeholder;
 	}
 
 	public boolean isEscape() {
@@ -34,11 +44,11 @@ public class BotMessageComponent {
 					components.remove(j);
 					for (int k = 0; k < split.length; k++) {
 						if (k != 0) {
-							components.add(new BotMessageComponent(placecholders[i], escapePlaceholder));
+							components.add(new BotMessageComponent(placecholders[i], true, escapePlaceholder));
 							j++;
 						}
 						if (!split[k].isEmpty()) {
-							components.add(insert + k * 2, new BotMessageComponent(split[k], escapeNonPlaceholder));
+							components.add(insert + k * 2, new BotMessageComponent(split[k], false, escapeNonPlaceholder));
 							if(k != 0)
 								j++;
 						}
@@ -57,10 +67,11 @@ public class BotMessageComponent {
 
 		for (int i = 0; i < placeholders.length; i++)
 			for (int j = 0; j < components.length; j++) {
-				if (components[j].content.equals(placeholders[i]))
-					result[j] = new BotMessageComponent(values[i], components[j].escape);
+				BotMessageComponent component = components[j];
+				if (component.isPlaceholder() && component.content.equals(placeholders[i]))
+					result[j] = new BotMessageComponent(values[i], component.placeholder, component.escape);
 				else if (i == 0)
-					result[j] = components[j];
+					result[j] = component;
 			}
 		return result;
 	}
