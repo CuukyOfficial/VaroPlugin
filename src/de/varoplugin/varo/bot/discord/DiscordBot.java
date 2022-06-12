@@ -149,7 +149,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 		String title = this.buildText(message.getTitle());
 		if(!title.isEmpty())
 			stringBuilder.append("**").append(title).append("**\n");
-		String body = this.buildText(message.getTitle());
+		String body = this.buildText(message.getBody());
 		if(!body.isEmpty())
 			stringBuilder.append(body);
 		return stringBuilder.toString();
@@ -189,9 +189,13 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
 	@Override
 	public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-		for (Command command : this.commands)
-			if (command.getName().equals(event.getName()))
-				command.exec(this, event.getMember(), event);
+		try {
+			for (Command command : this.commands)
+				if (command.getName().equals(event.getName()))
+					command.exec(this, event.getMember(), event);
+		}catch(Throwable t) {
+			this.varo.getLogger().log(Level.WARNING, "Failed to execute Discord command: " + event.getName(), t);
+		}
 	}
 
 	VaroPlugin getVaro() {
