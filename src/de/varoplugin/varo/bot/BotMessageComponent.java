@@ -28,15 +28,20 @@ public class BotMessageComponent {
 
 		for (int i = 0; i < placecholders.length; i++) {
 			for (int j = 0; j < components.size(); j++) {
-				String[] split = components.get(j).content.split(Pattern.quote(placecholders[i]));
+				String[] split = components.get(j).content.split(Pattern.quote(placecholders[i]), -1);
 				int insert = j;
 				if (split.length > 1) {
-					components.remove(i);
+					components.remove(j);
 					for (int k = 0; k < split.length; k++) {
-						if (k != 0)
+						if (k != 0) {
 							components.add(new BotMessageComponent(placecholders[i], escapePlaceholder));
-						if (!split[k].isEmpty())
-							components.add(insert, new BotMessageComponent(split[k], escapeNonPlaceholder));
+							j++;
+						}
+						if (!split[k].isEmpty()) {
+							components.add(insert + k * 2, new BotMessageComponent(split[k], escapeNonPlaceholder));
+							if(k != 0)
+								j++;
+						}
 					}
 				}
 			}
@@ -54,7 +59,7 @@ public class BotMessageComponent {
 			for (int j = 0; j < components.length; j++) {
 				if (components[j].content.equals(placeholders[i]))
 					result[j] = new BotMessageComponent(values[i], components[j].escape);
-				else
+				else if (i == 0)
 					result[j] = components[j];
 			}
 		return result;
