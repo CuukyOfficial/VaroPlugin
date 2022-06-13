@@ -31,7 +31,7 @@ public class ConfigImpl implements Config {
 			for (ConfigCategory category : this.configEntries.keySet()) {
 				YamlFile config = new YamlFile(this.path + category.getFileName());
 				config.options().charset(StandardCharsets.UTF_8);
-				config.createOrLoadWithComments();
+				config.createOrLoad();
 				config.setCommentFormat(YamlCommentFormat.PRETTY);
 
 				boolean changed = false;
