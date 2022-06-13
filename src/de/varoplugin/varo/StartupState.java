@@ -6,7 +6,7 @@ package de.varoplugin.varo;
  */
 public enum StartupState implements VaroLoadingState {
 
-    INITIALIZING("INIT", "Booting up %s v%s..."),
+    INITIALIZING("INIT", null),
     REGISTERING_TASKS("REGISTERING_TASKS", "Registering tasks..."),
     LOADING_STATS("STATS", "Loading stats..."),
     STARTING_BOTS("BOTS", "Starting bots..."),
@@ -18,6 +18,11 @@ public enum StartupState implements VaroLoadingState {
     StartupState(String name, String message) {
         this.name = name;
         this.message = message;
+    }
+
+    @Override
+    public boolean hasMessage() {
+        return this.message != null;
     }
 
     @Override

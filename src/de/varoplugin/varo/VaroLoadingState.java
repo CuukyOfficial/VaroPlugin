@@ -8,6 +8,8 @@ package de.varoplugin.varo;
  */
 public interface VaroLoadingState {
 
+    boolean hasMessage();
+
     String getName();
 
     String formatMessage(Object... args);

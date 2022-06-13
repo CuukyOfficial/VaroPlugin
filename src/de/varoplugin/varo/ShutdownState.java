@@ -6,7 +6,7 @@ package de.varoplugin.varo;
  */
 public enum ShutdownState implements VaroLoadingState {
 
-    INITIALIZING("INIT", "Shutting down %s v%s"),
+    INITIALIZING("INIT", null),
     SAVING_STATS("STATS", "Saving stats of %s players..."),
     SUCCESS("FINISHED", "Saved all data");
 
@@ -16,6 +16,11 @@ public enum ShutdownState implements VaroLoadingState {
     ShutdownState(String name, String message) {
         this.name = name;
         this.message = message;
+    }
+
+    @Override
+    public boolean hasMessage() {
+        return this.message != null;
     }
 
     @Override
