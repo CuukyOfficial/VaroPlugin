@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class ConfigEntryImpl<T> implements ConfigEntry<T> {
 
-    private static final String DESCRIPTION_FOOTER = "\nDefault value: %s (%s)";
+    private static final String DESCRIPTION_DEFAULT_VALUE = "\nDefault value: %s (%s)";
 
 	private final ConfigCategory category;
 	private final String path;
@@ -23,7 +23,7 @@ public class ConfigEntryImpl<T> implements ConfigEntry<T> {
 		this.category = category;
 		this.path = path;
 		this.defaultValue = defaultValue;
-		this.description = description + String.format(DESCRIPTION_FOOTER, defaultValue, defaultValue.getClass().getSimpleName());
+		this.description = description + String.format(DESCRIPTION_DEFAULT_VALUE, defaultValue, defaultValue.getClass().getSimpleName());
 	}
 
 	private void checkType(Class<?> type) throws ConfigException {
