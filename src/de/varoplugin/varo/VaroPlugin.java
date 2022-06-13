@@ -6,15 +6,13 @@ import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+
 /**
  * @author CuukyOfficial
  * @version v0.1
  */
 public interface VaroPlugin extends Plugin {
-
-    VaroConfig getVaroConfig();
-
-    Varo getVaro();
 
     <T extends VaroEvent> T callEvent(T event);
 
@@ -27,8 +25,14 @@ public interface VaroPlugin extends Plugin {
      */
     <T extends VaroEvent & Cancellable> boolean isCancelled(T event);
 
+    File getFile();
+
+    VaroConfig getVaroConfig();
+
+    Varo getVaro();
+
     String getWebsite();
-    
+
     String getGithub();
 
     String getDiscordInvite();

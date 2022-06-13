@@ -99,16 +99,6 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	}
 
 	@Override
-	public VaroConfig getVaroConfig() {
-		return this.config;
-	}
-
-	@Override
-	public Varo getVaro() {
-		return this.varo;
-	}
-
-	@Override
 	public <T extends VaroEvent> T callEvent(T event) {
 		this.getServer().getPluginManager().callEvent(event);
 		return event;
@@ -118,6 +108,21 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	public <T extends VaroEvent & Cancellable> boolean isCancelled(T event) {
 		return this.callEvent(event).isCancelled();
 	}
+
+    @Override
+    public File getFile() {
+        return super.getFile();
+    }
+
+    @Override
+    public VaroConfig getVaroConfig() {
+        return this.config;
+    }
+
+    @Override
+    public Varo getVaro() {
+        return this.varo;
+    }
 
 	@Override
 	public String getWebsite() {
