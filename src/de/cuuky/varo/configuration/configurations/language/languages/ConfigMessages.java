@@ -63,6 +63,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %from% &8» &f%message%"),
 	CHAT_MUTED("chat.muted", "&7Du wurdest gemutet!"),
 	CHAT_WHEN_START("chat.chatOnStart", "&7Du kannst erst ab dem Start wieder schreiben!"),
+	CHAT_SPECTATOR("chat.spectatorChat", "&7Der Chat ist für Spectator deaktiviert!"),
 
 	COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT("combat.inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),

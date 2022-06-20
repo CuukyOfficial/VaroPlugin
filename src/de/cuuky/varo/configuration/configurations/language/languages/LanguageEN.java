@@ -60,6 +60,7 @@ public enum LanguageEN implements LoadableMessage {
     CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
     CHAT_MUTED("chat.muted", "&7You have been muted!"),
     CHAT_WHEN_START("chat.chatOnStart", "&7You can only write again after the start!"),
+    CHAT_SPECTATOR("chat.spectatorChat", "&7Chat is disabled for Spectators!"),
 
     COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7This player is on your team!"),
     COMBAT_IN_FIGHT("combat.inFight", "&7You are now in combat, do &4NOT &7log &7out!"),

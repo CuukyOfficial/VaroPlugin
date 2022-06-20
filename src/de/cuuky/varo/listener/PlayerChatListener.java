@@ -109,6 +109,12 @@ public class PlayerChatListener implements Listener {
 		} else
 			message = message.replace("&", "§");
 
+		if (!ConfigSetting.SPECTATOR_CHAT.getValueAsBoolean() && vp.getStats().isSpectator() && !player.hasPermission("varo.spectatorchat")) {
+			vp.sendMessage(ConfigMessages.CHAT_SPECTATOR);
+			event.setCancelled(true);
+			return;
+		}
+
 		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player, null, message);
 
 		String messageFormat = "";
