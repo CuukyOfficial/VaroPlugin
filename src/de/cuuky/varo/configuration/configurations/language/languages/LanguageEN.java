@@ -155,12 +155,12 @@ public enum LanguageEN implements LoadableMessage {
     PROTECTION_TIME_UPDATE("protection.protectionUpdate", "&7The &cprotection time &7is over in &c%minutes%&7:&c%seconds% &7!"),
     PROTECTION_TIME_RUNNING("protection.timeRunning", "&7The %colorcode%protection time &7 is still running!"),
 
-    SORT_NO_HOLE_FOUND("sort.noHoleFound", "&7No hole could be found for you!"),
-    SORT_NO_HOLE_FOUND_TEAM("sort.noHoleFoundTeam", "&7No hole could be found for you beside your team partners."),
-    SORT_NUMBER_HOLE("sort.numberHoleTeleport", "&7You have been teleported to the hole %colorcode%%number% &7!"),
-    SORT_OWN_HOLE("sort.ownHoleTeleport", "&7You've been put in your hole!"),
-    SORT_SPECTATOR_TELEPORT("sort.spectatorTeleport", "&7You were teleported to spawn because you're a spectator!"),
-    SORT_SORTED("sort.sorted", "&7You have been teleported to the hole %colorcode%%number% &7!"),
+    SORT_NO_HOLE_FOUND("sort.noHoleFound", "&7There is no spawn available for you!"),
+    SORT_NO_HOLE_FOUND_TEAM("sort.noHoleFoundTeam", "&7There is no spawn available for you that's next to your team partner(s)!"),
+    SORT_NUMBER_HOLE("sort.numberHoleTeleport", "&7You've been teleported to spawn %colorcode%%number%&7!"),
+    SORT_OWN_HOLE("sort.ownHoleTeleport", "&7You've been teleported to your spawn!"),
+    SORT_SPECTATOR_TELEPORT("sort.spectatorTeleport", "&7You've been teleported to the world spawn because you're a spectator!"),
+    SORT_SORTED("sort.sorted", "&7You've been teleported to spawn %colorcode%%number%&7!"),
 
     TABLIST_PLAYER_WITH_TEAM("tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
     TABLIST_PLAYER_WITH_TEAM_RANK("tablist.player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
