@@ -46,6 +46,8 @@ public class Stats implements VaroSerializeable {
 
 	@VaroSerializeField(path = "countdown")
 	private int countdown;
+	@VaroSerializeField(path = "sessionTime")
+	private int sessionTime;
 	@VaroSerializeField(path = "onlineTime")
 	private int onlineTime;
 	@VaroSerializeField(path = "onlineTimeTotal")
@@ -182,7 +184,11 @@ public class Stats implements VaroSerializeable {
 		else
 			return sec + "";
 	}
-	
+
+	public int getSessionTime() {
+		return this.sessionTime;
+	}
+
 	public int getOnlineTime() {
 		return this.onlineTime;
 	}
@@ -295,6 +301,7 @@ public class Stats implements VaroSerializeable {
 				"§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"),
 				"§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed,
 				"§7Countdown§8: " + colorcode + countdown,
+				"§7SessionTime§8: " + colorcode + this.sessionTime,
 				"§7OnlineTime§8: " + colorcode + this.onlineTime,
 				"§7OnlineTimeTotal§8: " + colorcode + this.onlineTimeTotal,
 				"§7Kills§8: " + colorcode + kills,
@@ -466,6 +473,7 @@ public class Stats implements VaroSerializeable {
 		}
 		sessionsPlayed = 0;
 		countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		this.sessionTime = 0;
 		this.onlineTime = 0;
 		this.onlineTimeTotal = 0;
 	}
@@ -535,6 +543,7 @@ public class Stats implements VaroSerializeable {
 
 	public void removeReamainingSession() {
 		sessions--;
+		this.sessionTime = 0;
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
 			timeUntilAddSession = DateUtils.addHours(new Date(), ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt());
@@ -545,6 +554,10 @@ public class Stats implements VaroSerializeable {
 		this.countdown = time;
 	}
 	
+	public void setSessionTime(int sessionTime) {
+		this.sessionTime = sessionTime;
+	}
+
 	public void setOnlineTime(int onlineTime) {
 		this.onlineTime = onlineTime;
 	}
@@ -554,6 +567,7 @@ public class Stats implements VaroSerializeable {
 	}
 	
 	public void increaseOnlineTime() {
+		this.sessionTime++;
 		this.onlineTime++;
 		this.onlineTimeTotal++;
 	}
