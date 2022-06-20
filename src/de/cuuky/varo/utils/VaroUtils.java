@@ -47,19 +47,20 @@ public final class VaroUtils {
 	}
 
 	public static void doRandomTeam(int teamSize) {
+		int maxNameLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
         List<VaroPlayer> random = VaroPlayer.getVaroPlayers().stream()
             .filter(pl -> pl.getTeam() == null && !pl.getStats().isSpectator()).collect(Collectors.toList());
         Collections.shuffle(random);
 
         for (int i = 0; i < random.size(); i += teamSize) {
-            int actualSize = Math.min(i + teamSize, random.size() - 1);
+            int actualSize = Math.min(i + teamSize, random.size());
             Collection<VaroPlayer> member = random.subList(i, actualSize);
-            if (actualSize < teamSize)
+            if (member.size() < teamSize)
                 member.forEach(m -> m.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER));
 
             // name
             String name = member.stream().map(m -> m.getName()
-                .substring(0, m.getName().length() / actualSize)).collect(Collectors.joining());
+                .substring(0, Math.min(m.getName().length(), maxNameLength / member.size()))).collect(Collectors.joining());
 
             // add
             VaroTeam team = new VaroTeam(name);
