@@ -1,17 +1,20 @@
 package de.cuuky.varo.utils;
 
-import java.util.ArrayList;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public final class VaroUtils {
 
@@ -26,7 +29,7 @@ public final class VaroUtils {
 
 		worldToTimeID = new BukkitRunnable() {
 
-			int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
+			final int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
 
 			@Override
 			public void run() {
@@ -45,42 +48,44 @@ public final class VaroUtils {
 	}
 
 	public static void doRandomTeam(int teamSize) {
-		if (teamSize >= 2) {
-			ArrayList<VaroPlayer> finished = new ArrayList<>();
-			for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+        List<VaroPlayer> random = new ArrayList<>(VaroPlayer.getVaroPlayers());
+        Collections.shuffle(random);
+        if (teamSize >= 2) {
+			Set<VaroPlayer> finished = new HashSet<>();
+			for (VaroPlayer vp : random) {
 				if (finished.contains(vp) || vp.getStats().isSpectator() || vp.getTeam() != null)
 					continue;
 
-				ArrayList<VaroPlayer> teamMember = new ArrayList<>();
+				List<VaroPlayer> teamMember = new ArrayList<>();
 				teamMember.add(vp);
 				finished.add(vp);
 
 				int missingMember = teamSize - 1;
-				for (VaroPlayer othervp : VaroPlayer.getVaroPlayers()) {
+				for (VaroPlayer mate : random) {
 					if (missingMember == 0)
 						break;
 
-					if (finished.contains(othervp) || othervp.getStats().isSpectator() || othervp.getTeam() != null)
+					if (finished.contains(mate) || mate.getStats().isSpectator() || mate.getTeam() != null)
 						continue;
 
-					teamMember.add(othervp);
-					finished.add(othervp);
+					teamMember.add(mate);
+					finished.add(mate);
 					missingMember--;
 				}
 
 				if (teamMember.size() != teamSize)
 					vp.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER);
 
-				String teamName = "";
+				StringBuilder teamName = new StringBuilder();
 				for (VaroPlayer teamPl : teamMember)
-					teamName = teamName + teamPl.getName().substring(0, teamPl.getName().length() / teamSize);
+					teamName.append(teamPl.getName(), 0, teamPl.getName().length() / teamSize);
 
-				VaroTeam team = new VaroTeam(teamName);
+				VaroTeam team = new VaroTeam(teamName.toString());
 				for (VaroPlayer teamPl : teamMember)
 					team.addMember(teamPl);
 			}
 		} else if (teamSize == 1) {
-			for (VaroPlayer pl : VaroPlayer.getVaroPlayers()) {
+			for (VaroPlayer pl : random) {
 				if (pl.getTeam() != null || pl.getStats().isSpectator())
 					continue;
 
