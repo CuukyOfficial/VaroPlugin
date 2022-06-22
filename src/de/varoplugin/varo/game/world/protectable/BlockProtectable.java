@@ -3,10 +3,6 @@ package de.varoplugin.varo.game.world.protectable;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.block.Block;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class BlockProtectable implements VaroProtectable {
 
     private Varo varo;

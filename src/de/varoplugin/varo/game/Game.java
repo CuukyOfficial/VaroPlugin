@@ -13,10 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class Game implements Varo {
 
     private VaroPlugin plugin;

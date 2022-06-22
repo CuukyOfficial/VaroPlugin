@@ -6,10 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class LobbyLoginTask extends AbstractVaroTask<VaroRegisterInfo> {
 
     @EventHandler(priority = EventPriority.HIGH)

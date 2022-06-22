@@ -3,10 +3,6 @@ package de.varoplugin.varo.api.event.game.player;
 import de.varoplugin.varo.api.event.game.VaroGameEvent;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class VaroPlayerEvent extends VaroGameEvent {
 
     private final VaroPlayer player;

@@ -10,10 +10,6 @@ import de.varoplugin.varo.tasks.game.player.PlayerOnlineTrigger;
 
 import java.util.function.Supplier;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public enum DefaultPlayerTrigger implements VaroTriggerHolder<VaroPlayerTaskInfo> {
 
     LOBBY_ONLINE_PLAYER(() -> new VaroStateTrigger<>(GameState.LOBBY, new PlayerOnlineTrigger<>(true, new NoMoveTask())));

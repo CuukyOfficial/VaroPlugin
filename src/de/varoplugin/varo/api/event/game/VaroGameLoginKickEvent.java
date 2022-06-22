@@ -4,10 +4,6 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroKickResult;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class VaroGameLoginKickEvent extends VaroGameCancelableEvent {
 
     private final PlayerLoginEvent loginEvent;

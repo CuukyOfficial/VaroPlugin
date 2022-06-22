@@ -9,9 +9,6 @@ import org.bukkit.event.EventHandler;
 /**
  * Triggers all player specific tasks.
  * Unregisters the task on player remove.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public abstract class PlayerTrigger<I extends VaroPlayerTaskInfo> extends AbstractTaskTrigger<I> implements VaroPlayerTrigger<I> {
 

@@ -2,9 +2,6 @@ package de.varoplugin.varo.tasks.game.player;
 
 /**
  * Represents a heartbeat which schedules async at a given interval.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public abstract class HeartbeatTask extends AbstractPlayerTask {
 

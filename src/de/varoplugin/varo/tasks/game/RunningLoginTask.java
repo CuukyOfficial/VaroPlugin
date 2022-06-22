@@ -8,10 +8,6 @@ import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class RunningLoginTask extends AbstractVaroTask<VaroRegisterInfo> {
 
     @EventHandler

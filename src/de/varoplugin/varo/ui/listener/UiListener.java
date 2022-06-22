@@ -7,10 +7,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Logger;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 abstract class UiListener implements UiElement, Listener {
 
     private Plugin plugin;

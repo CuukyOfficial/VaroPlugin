@@ -9,9 +9,6 @@ import java.util.Collection;
 /**
  * Triggers tasks.
  * Destroys itself.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public abstract class AbstractTaskTrigger<I extends VaroRegisterInfo> extends AbstractVaroListener<I>
     implements VaroTaskTrigger<I> {

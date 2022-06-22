@@ -10,10 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class GamePlayer extends GameEntity implements VaroPlayer {
 
     private UUID uuid;

@@ -5,9 +5,6 @@ import org.bukkit.event.Listener;
 
 /**
  * Represents tasks that unregister automatically after being registered.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public interface VaroTask<T extends VaroRegisterInfo> extends Listener {
 

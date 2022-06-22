@@ -11,10 +11,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class LoadingStatePrinter extends UiListener implements VaroLoadingStatePrinter {
 
     private static final String BANNER_LOCATION = "banner.txt";

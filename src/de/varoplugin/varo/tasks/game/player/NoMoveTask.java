@@ -6,9 +6,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * Resets the position of the player if he has moved.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public class NoMoveTask extends AbstractPlayerTask {
 

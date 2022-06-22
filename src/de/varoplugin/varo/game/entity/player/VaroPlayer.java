@@ -7,9 +7,6 @@ import java.util.UUID;
 
 /**
  * Represents a player playing a Varo.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public interface VaroPlayer extends VaroEntity, StatsHolder {
 

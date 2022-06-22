@@ -9,9 +9,6 @@ import org.bukkit.event.EventHandler;
 
 /**
  * Triggers all tasks if the Varo is in the current state.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public class VaroStateTrigger<T extends VaroRegisterInfo> extends AbstractTaskTrigger<T> {
 

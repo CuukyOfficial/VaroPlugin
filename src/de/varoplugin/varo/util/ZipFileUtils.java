@@ -1,15 +1,11 @@
 package de.varoplugin.varo.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 // TODO: Move to CFW?
 public final class ZipFileUtils {
 
@@ -17,7 +13,7 @@ public final class ZipFileUtils {
     }
 
     public static String readFileFromZip(File file, String path) throws IOException {
-        ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
+        ZipInputStream zip = new ZipInputStream(Files.newInputStream(file.toPath()));
 
         ZipEntry e;
         while ((e = zip.getNextEntry()) != null) {

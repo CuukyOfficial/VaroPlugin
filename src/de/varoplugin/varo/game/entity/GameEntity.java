@@ -8,10 +8,6 @@ import de.varoplugin.varo.game.world.protectable.VaroProtectableContainer;
 import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 import org.bukkit.block.Block;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public abstract class GameEntity implements VaroEntity {
 
     private VaroProtectableContainer protectableContainer;

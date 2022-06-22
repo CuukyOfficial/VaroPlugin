@@ -9,10 +9,6 @@ import de.varoplugin.varo.ui.listener.PlayerKickListener;
 import java.util.Arrays;
 import java.util.Collection;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class UIManager implements VaroUIManager {
 
     private final Collection<UiElement> elements;

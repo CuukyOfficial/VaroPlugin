@@ -4,10 +4,6 @@ import de.varoplugin.varo.tasks.VaroTask;
 import de.varoplugin.varo.tasks.register.VaroPlayerTaskInfo;
 import org.bukkit.event.player.PlayerEvent;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public interface VaroPlayerTask<I extends VaroPlayerTaskInfo> extends VaroTask<I> {
 
     default boolean shallIgnore(PlayerEvent event) {

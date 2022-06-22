@@ -8,9 +8,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 /**
  * Represents any Varo listener.
  * Unregisters on plugin disable.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public abstract class AbstractVaroListener<T extends VaroRegisterInfo> implements VaroTask<T> {
 

@@ -5,10 +5,6 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.ui.UiElement;
 import org.bukkit.command.CommandExecutor;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 // ONLY FOR TESTS
 public abstract class VaroCommand implements UiElement, CommandExecutor {
 

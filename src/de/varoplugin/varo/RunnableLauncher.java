@@ -5,9 +5,6 @@ import javax.swing.*;
 /**
  * For letting the user know if launched as
  * application that this is not an executable program.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public class RunnableLauncher {
 

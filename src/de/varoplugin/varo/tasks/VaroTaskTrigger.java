@@ -4,9 +4,6 @@ import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
 
 /**
  * A task trigger contains tasks and registers them if desired.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public interface VaroTaskTrigger<I extends VaroRegisterInfo> extends VaroTask<I>, Cloneable {
 

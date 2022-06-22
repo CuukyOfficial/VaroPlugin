@@ -7,10 +7,6 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class PlayerOnlineTrigger<I extends VaroPlayerTaskInfo> extends PlayerTrigger<I> {
 
     private final boolean online;

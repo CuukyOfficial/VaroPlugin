@@ -20,10 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 

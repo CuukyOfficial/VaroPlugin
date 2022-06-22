@@ -4,10 +4,6 @@ import de.varoplugin.varo.api.event.game.VaroGameCancelableEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public abstract class VaroProtectableEvent extends VaroGameCancelableEvent {
 
     protected final VaroProtectable protectable;

@@ -11,10 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class TestCommand extends VaroCommand implements Listener {
 
 //    private int index = 1;

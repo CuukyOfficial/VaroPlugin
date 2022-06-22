@@ -4,10 +4,6 @@ import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class BlockAccessTask extends ProtectableTask {
 
     public BlockAccessTask(VaroProtectable secureable) {

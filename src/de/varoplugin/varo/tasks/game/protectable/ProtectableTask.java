@@ -2,12 +2,10 @@ package de.varoplugin.varo.tasks.game.protectable;
 
 import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 import de.varoplugin.varo.tasks.AbstractVaroTask;
+import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
-public abstract class ProtectableTask extends AbstractVaroTask {
+// TODO: Extend task
+public abstract class ProtectableTask extends AbstractVaroTask<VaroRegisterInfo> {
 
     protected final VaroProtectable secureable;
 

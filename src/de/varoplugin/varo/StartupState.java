@@ -1,9 +1,5 @@
 package de.varoplugin.varo;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public enum StartupState implements VaroLoadingState {
 
     INITIALIZING("INIT", null),

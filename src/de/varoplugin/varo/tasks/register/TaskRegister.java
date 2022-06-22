@@ -11,9 +11,6 @@ import java.util.Arrays;
 
 /**
  * Registers all default trigger.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public class TaskRegister implements Listener {
 

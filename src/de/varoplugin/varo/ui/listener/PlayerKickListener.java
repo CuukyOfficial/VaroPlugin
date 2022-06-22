@@ -7,10 +7,6 @@ import org.bukkit.event.EventHandler;
 
 import java.util.Arrays;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class PlayerKickListener extends UiListener {
 
     private enum KickMessages {

@@ -5,9 +5,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Represents any Varo task.
- *
- * @author CuukyOfficial
- * @version v0.1
  */
 public abstract class AbstractVaroTask<I extends VaroRegisterInfo> extends AbstractVaroListener<I> implements VaroTask<I>, Runnable {
 

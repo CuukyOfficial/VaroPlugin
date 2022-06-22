@@ -5,10 +5,6 @@ import org.bukkit.block.Block;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author CuukyOfficial
- * @version v0.1
- */
 public class ProtectableContainer implements VaroProtectableContainer {
 
     protected final Set<VaroProtectable> secureables;
