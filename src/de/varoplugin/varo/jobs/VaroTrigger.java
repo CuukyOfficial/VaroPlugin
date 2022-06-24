@@ -1,15 +1,13 @@
-package de.varoplugin.varo.tasks;
-
-import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
+package de.varoplugin.varo.jobs;
 
 /**
  * A task trigger contains tasks and registers them if desired.
  */
-public interface VaroTaskTrigger<I extends VaroRegisterInfo> extends VaroTask<I>, Cloneable {
+public interface VaroTrigger extends VaroJob, Cloneable {
 
     boolean shouldEnable();
 
-    void addTasksTo(VaroTaskTrigger<I> copyInto);
+    void addJobsTo(VaroTrigger copyInto);
 
     /**
      * Adds a task to this trigger.
@@ -17,16 +15,16 @@ public interface VaroTaskTrigger<I extends VaroRegisterInfo> extends VaroTask<I>
      *
      * @param task The task
      */
-    void addTask(VaroTask<I> task);
+    void addJob(VaroJob task);
 
     /**
      * Registers all tasks of this trigger.
      */
-    void registerTasks();
+    void registerJobs();
 
     /**
      * Unregisters all tasks of this trigger.
      */
-    void unregisterTasks();
+    void unregisterJobs();
 
 }

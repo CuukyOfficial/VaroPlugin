@@ -1,32 +1,31 @@
-package de.varoplugin.varo.tasks.game.player;
+package de.varoplugin.varo.jobs.game.player;
 
-import de.varoplugin.varo.tasks.VaroTask;
-import de.varoplugin.varo.tasks.register.VaroPlayerTaskInfo;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.jobs.VaroJob;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class PlayerOnlineTrigger<I extends VaroPlayerTaskInfo> extends PlayerTrigger<I> {
+public class PlayerOnlineTrigger extends PlayerTrigger {
 
     private final boolean online;
 
-    @SafeVarargs
-    public PlayerOnlineTrigger(boolean online, VaroTask<I>... tasks) {
-        super(tasks);
+    public PlayerOnlineTrigger(VaroPlayer player, boolean online, VaroJob... tasks) {
+        super(player, tasks);
 
         this.online = online;
     }
 
     @Override
     public boolean shouldEnable() {
-        return this.getInfo().getPlayer().isOnline() == this.online;
+        return this.getPlayer().isOnline() == this.online;
     }
 
     private void checkEvent(PlayerEvent event, boolean change) {
-        if (this.shallIgnore(event)) return;
-        if (this.online == change) this.registerTasks();
-        else this.unregisterTasks();
+        if (!this.getPlayer().getUuid().equals(event.getPlayer().getUniqueId())) return;
+        if (this.online == change) this.registerJobs();
+        else this.unregisterJobs();
     }
 
     @EventHandler

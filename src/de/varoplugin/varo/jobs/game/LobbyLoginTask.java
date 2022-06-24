@@ -1,18 +1,17 @@
-package de.varoplugin.varo.tasks.game;
+package de.varoplugin.varo.jobs.game;
 
-import de.varoplugin.varo.tasks.AbstractVaroTask;
-import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
+import de.varoplugin.varo.jobs.AbstractVaroListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class LobbyLoginTask extends AbstractVaroTask<VaroRegisterInfo> {
+public class LobbyLoginTask extends AbstractVaroListener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onLobbyLogin(PlayerLoginEvent event) {
         if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) return;
 
         // TODO: Add register before start config option and make default player state configurable
-        this.getInfo().getVaro().register(event.getPlayer());
+        this.getVaro().register(event.getPlayer());
     }
 }

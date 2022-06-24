@@ -1,12 +1,11 @@
-package de.varoplugin.varo.tasks;
+package de.varoplugin.varo.jobs;
 
-import de.varoplugin.varo.tasks.register.VaroRegisterInfo;
-import org.bukkit.event.Listener;
+import de.varoplugin.varo.game.Varo;
 
 /**
  * Represents tasks that unregister automatically after being registered.
  */
-public interface VaroTask<T extends VaroRegisterInfo> extends Listener {
+public interface VaroJob {
 
     /**
      * If the task has been initialized.
@@ -28,7 +27,7 @@ public interface VaroTask<T extends VaroRegisterInfo> extends Listener {
      *
      * @return If the task has been registered
      */
-    boolean register(T info);
+    boolean register(Varo varo);
 
     /**
      * Unregisters the task.
@@ -38,6 +37,6 @@ public interface VaroTask<T extends VaroRegisterInfo> extends Listener {
      */
     boolean unregister();
 
-    T getInfo();
+    Varo getVaro();
 
 }
