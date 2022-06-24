@@ -86,9 +86,12 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	public void onDisable() {
 		this.updateLoadingState(ShutdownState.INITIALIZING, this.getName(), this.getVersion());
 
-		this.updateLoadingState(ShutdownState.SAVING_STATS, 0);
+        this.updateLoadingState(ShutdownState.STOPPING_BOTS, this.bots.size());
+        this.bots.forEach(Bot::shutdown);
 
-		// Save stats
+        this.updateLoadingState(ShutdownState.SAVING_STATS, 0);
+
+        // Save stats
 
 		this.updateLoadingState(ShutdownState.SUCCESS);
 		super.onDisable();

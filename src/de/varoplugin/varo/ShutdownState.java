@@ -3,6 +3,7 @@ package de.varoplugin.varo;
 public enum ShutdownState implements VaroLoadingState {
 
     INITIALIZING("INIT", null),
+    STOPPING_BOTS("BOTS", "Shutting down %s bots..."),
     SAVING_STATS("STATS", "Saving stats of %s players..."),
     SUCCESS("FINISHED", "Saved all data");
 
