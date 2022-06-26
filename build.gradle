@@ -87,7 +87,8 @@ dependencies {
     this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
     this.addModularImplementation("me.carleslc.Simple-YAML:Simple-Yaml:${SimpleYaml_version}", 'simple-yaml', false)
 
-    this.addModularInternal('de.varoplugin:CFW:0.6.14', 'CFW', true)
+    this.addModularInternal('de.varoplugin:CFW:1.0.0', 'CFW', true)
+    this.addModularInternal('de.varoplugin:CFW:0.6.14', 'CFW-legacy', true)
 }
 
 boolean checkLib(String filePath) {
@@ -150,11 +151,11 @@ processResources {
 task copySource(type: Copy) {
 	from (sourceSets.main.java.srcDirs) {
 		filter ReplaceTokens, tokens: [JDA_version: JDA_version + '-withDependencies-no-opus']
-        filter ReplaceTokens, tokens: [JDA_hash: JDA_sha512]
+        filter ReplaceTokens, tokens: [JDA_hash: JDA_sha512.decodeHex().encodeBase64().toString()]
         filter ReplaceTokens, tokens: [SimpleYaml_version: SimpleYaml_version]
-        filter ReplaceTokens, tokens: [SimpleYaml_hash: SimpleYaml_sha512]
+        filter ReplaceTokens, tokens: [SimpleYaml_hash: SimpleYaml_sha512.decodeHex().encodeBase64().toString()]
         filter ReplaceTokens, tokens: [SnakeYaml_version: SnakeYaml_version]
-        filter ReplaceTokens, tokens: [SnakeYaml_hash: SnakeYaml_sha512]
+        filter ReplaceTokens, tokens: [SnakeYaml_hash: SnakeYaml_sha512.decodeHex().encodeBase64().toString()]
 	}
 	into "${buildDir}/${tmpSrcFolder}"
 }

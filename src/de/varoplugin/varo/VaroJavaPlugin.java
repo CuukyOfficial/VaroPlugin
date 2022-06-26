@@ -1,24 +1,21 @@
 package de.varoplugin.varo;
 
-import de.varoplugin.varo.api.config.ConfigException;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.event.Cancellable;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.dependencies.Dependencies;
-import de.varoplugin.varo.dependencies.InvalidSignatureException;
 import de.varoplugin.varo.game.Game;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.jobs.register.JobRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
-import org.bukkit.event.Cancellable;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
@@ -56,7 +53,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 			this.config.load();
 			// Load additional dependencies (e.g. JDA)
 			Dependencies.loadNeeded(this);
-		} catch (ConfigException | IOException | InvalidSignatureException e) {
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 

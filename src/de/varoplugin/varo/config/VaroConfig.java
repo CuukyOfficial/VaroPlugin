@@ -3,8 +3,6 @@ package de.varoplugin.varo.config;
 import static de.varoplugin.varo.config.VaroConfigCategory.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -13,14 +11,13 @@ import java.util.logging.Level;
 
 import com.google.common.collect.Multimap;
 
+import de.varoplugin.varo.Dependencies;
 import de.varoplugin.varo.VaroJavaPlugin;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.config.Config;
 import de.varoplugin.varo.api.config.ConfigCategory;
 import de.varoplugin.varo.api.config.ConfigEntry;
 import de.varoplugin.varo.api.config.ConfigException;
-import de.varoplugin.varo.dependencies.Dependencies;
-import de.varoplugin.varo.dependencies.InvalidSignatureException;
 
 public class VaroConfig implements Config {
 
@@ -98,8 +95,8 @@ public class VaroConfig implements Config {
 
 			// Create new ConfigImpl instance
 			this.config = (Config) configClass.getConstructor(String.class).newInstance(path);
-		} catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InvalidSignatureException e) {
-			plugin.getLogger().log(Level.SEVERE, "Unable to load config", e);
+		} catch (Throwable t) {
+			plugin.getLogger().log(Level.SEVERE, "Unable to load config", t);
 			return;
 		}
 
