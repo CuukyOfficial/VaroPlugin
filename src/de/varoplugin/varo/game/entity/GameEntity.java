@@ -1,35 +1,36 @@
 package de.varoplugin.varo.game.entity;
 
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableAddEvent;
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
-import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.GameObject;
 import de.varoplugin.varo.game.world.protectable.ProtectableContainer;
-import de.varoplugin.varo.game.world.protectable.VaroProtectableContainer;
 import de.varoplugin.varo.game.world.protectable.VaroProtectable;
+import de.varoplugin.varo.game.world.protectable.VaroProtectableContainer;
 import org.bukkit.block.Block;
 
-public abstract class GameEntity implements VaroEntity {
+import java.util.UUID;
 
-    private VaroProtectableContainer protectableContainer;
-    protected Varo varo;
+public abstract class GameEntity extends GameObject implements VaroEntity {
 
-    @Override
-    public void initialize(Varo varo) {
-        this.varo = varo;
+    private final VaroProtectableContainer protectableContainer;
+
+    public GameEntity(UUID uuid) {
+        super(uuid);
+
+        this.protectableContainer = new ProtectableContainer();
+    }
+
+    public GameEntity() {
+        super();
+
         this.protectableContainer = new ProtectableContainer();
     }
 
     @Override
     public boolean addProtectable(VaroProtectable secureable) {
-        if (this.hasProtectable(secureable) || this.varo.getPlugin().isCancelled(new VaroProtectableAddEvent(this.varo, secureable)))
-            return false;
         return this.protectableContainer.addProtectable(secureable);
     }
 
     @Override
     public boolean removeProtectable(VaroProtectable secureable) {
-        if (!this.hasProtectable(secureable) || this.varo.getPlugin().isCancelled(new VaroProtectableRemoveEvent(this.varo, secureable)))
-            return false;
         return this.protectableContainer.removeProtectable(secureable);
     }
 

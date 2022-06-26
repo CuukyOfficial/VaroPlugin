@@ -1,7 +1,7 @@
 package de.varoplugin.varo.ui.listener;
 
 import de.varoplugin.varo.api.event.game.VaroGameLoginKickEvent;
-import de.varoplugin.varo.game.KickResult;
+import de.varoplugin.varo.game.GameKickResult;
 import de.varoplugin.varo.game.VaroKickResult;
 import org.bukkit.event.EventHandler;
 
@@ -12,7 +12,7 @@ public class PlayerKickListener extends UiListener {
     private enum KickMessages {
 
         // TODO: Use language system
-        NOT_A_PARTICIPANT(KickResult.NOT_A_PARTICIPANT, "You are not registered in this Varo!");
+        NOT_A_PARTICIPANT(GameKickResult.NOT_A_PARTICIPANT, "You are not registered in this Varo!");
 
         private final VaroKickResult result;
         private final String message;

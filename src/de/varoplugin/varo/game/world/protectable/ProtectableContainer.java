@@ -1,11 +1,14 @@
 package de.varoplugin.varo.game.world.protectable;
 
+import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableAddEvent;
+import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
+import de.varoplugin.varo.game.GameObject;
 import org.bukkit.block.Block;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class ProtectableContainer implements VaroProtectableContainer {
+public class ProtectableContainer extends GameObject implements VaroProtectableContainer {
 
     protected final Set<VaroProtectable> secureables;
 
@@ -14,13 +17,19 @@ public class ProtectableContainer implements VaroProtectableContainer {
     }
 
     @Override
-    public boolean addProtectable(VaroProtectable savable) {
-        return this.secureables.add(savable);
+    public boolean addProtectable(VaroProtectable secureable) {
+        if (this.secureables.contains(secureable)) return false;
+        if (this.getVaro().getPlugin().isCancelled(new VaroProtectableAddEvent(this.getVaro(), secureable)))
+            return false;
+        return this.secureables.add(secureable);
     }
 
     @Override
-    public boolean removeProtectable(VaroProtectable savable) {
-        return this.secureables.remove(savable);
+    public boolean removeProtectable(VaroProtectable secureable) {
+        if (!this.secureables.contains(secureable)) return false;
+        if (this.getVaro().getPlugin().isCancelled(new VaroProtectableRemoveEvent(this.getVaro(), secureable)))
+            return false;
+        return this.secureables.remove(secureable);
     }
 
     @Override

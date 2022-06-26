@@ -6,6 +6,7 @@ import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
 import de.varoplugin.varo.game.entity.player.GamePlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class Game implements Varo {
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
 
-        for (org.bukkit.entity.Player player : this.getPlugin().getServer().getOnlinePlayers()) {
+        for (Player player : this.getPlugin().getServer().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
             if (vp == null) this.register(player);
             else vp.initialize(this);
@@ -38,7 +39,7 @@ public class Game implements Varo {
     }
 
     @Override
-    public VaroPlayer register(org.bukkit.entity.Player player) {
+    public VaroPlayer register(Player player) {
         VaroPlayer vp = new GamePlayer(player);
         if (this.players.contains(vp) || this.plugin.isCancelled(new VaroPlayerAddEvent(vp))) return null;
         this.players.add(vp);
@@ -52,14 +53,13 @@ public class Game implements Varo {
     }
 
     @Override
-    public VaroPlayer getPlayer(org.bukkit.entity.Player player) {
+    public VaroPlayer getPlayer(Player player) {
         return this.getPlayer(player.getUniqueId());
     }
 
     @Override
     public Collection<VaroPlayer> getPlayers() {
-        // TODO: Players
-        return new ArrayList<>();
+        return new ArrayList<>(this.players);
     }
 
     @Override

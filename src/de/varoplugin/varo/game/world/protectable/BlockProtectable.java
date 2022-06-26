@@ -1,11 +1,10 @@
 package de.varoplugin.varo.game.world.protectable;
 
-import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.GameObject;
 import org.bukkit.block.Block;
 
-public class BlockProtectable implements VaroProtectable {
+public class BlockProtectable extends GameObject implements VaroProtectable {
 
-    private Varo varo;
     private final VaroProtectableHolder holder;
     private final Block block;
 
@@ -15,18 +14,8 @@ public class BlockProtectable implements VaroProtectable {
     }
 
     @Override
-    public void initialize(Varo varo) {
-        this.varo = varo;
-    }
-
-    @Override
     public int hashCode() {
         return this.block.getLocation().hashCode();
-    }
-
-    @Override
-    public Varo getVaro() {
-        return this.varo;
     }
 
     @Override
@@ -38,5 +27,4 @@ public class BlockProtectable implements VaroProtectable {
     public VaroProtectableHolder getHolder() {
         return this.holder;
     }
-
 }

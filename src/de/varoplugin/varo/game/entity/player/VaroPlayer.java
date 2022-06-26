@@ -1,14 +1,13 @@
 package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.game.entity.VaroEntity;
+import de.varoplugin.varo.game.entity.team.VaroTeamable;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 /**
  * Represents a player playing a Varo.
  */
-public interface VaroPlayer extends VaroEntity, StatsHolder {
+public interface VaroPlayer extends VaroEntity, VaroTeamable, StatsHolder {
 
     /**
      * Returns the hashCode of the UUID.
@@ -23,8 +22,6 @@ public interface VaroPlayer extends VaroEntity, StatsHolder {
      * @return If the player is online
      */
     boolean isOnline();
-
-    UUID getUuid();
 
     boolean setState(VaroParticipantState state);
 

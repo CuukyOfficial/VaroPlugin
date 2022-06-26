@@ -13,6 +13,11 @@ public interface VaroPlayerContainer {
 
     VaroPlayer getPlayer(Player player);
 
+    /**
+     * Returns a copied version of the varo player collection.
+     *
+     * @return A collection containing all players
+     */
     Collection<VaroPlayer> getPlayers();
 
 }
