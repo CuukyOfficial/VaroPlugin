@@ -9,11 +9,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 /**
  * Resets the position of the player if he has moved.
  */
-public class NoMoveTask extends AbstractVaroListener {
+public class NoMoveListener extends AbstractVaroListener {
 
     private final VaroPlayer player;
 
-    public NoMoveTask(VaroPlayer player) {
+    public NoMoveListener(VaroPlayer player) {
         this.player = player;
     }
 

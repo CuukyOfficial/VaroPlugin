@@ -2,7 +2,7 @@ package de.varoplugin.varo.jobs.register;
 
 import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.jobs.VaroTrigger;
-import de.varoplugin.varo.jobs.game.LobbyLoginTask;
+import de.varoplugin.varo.jobs.game.LobbyLoginListener;
 import de.varoplugin.varo.jobs.game.RunningLoginListener;
 import de.varoplugin.varo.jobs.game.VaroStateTrigger;
 
@@ -11,24 +11,24 @@ import java.util.function.Supplier;
 /**
  * Contains all default game trigger.
  */
-public enum DefaultGameTrigger {
+public enum DefaultGameJobs {
 
-    LOBBY_TRIGGER(() -> new VaroStateTrigger(GameState.LOBBY, new LobbyLoginTask())),
+    LOBBY_TRIGGER(() -> new VaroStateTrigger(GameState.LOBBY, new LobbyLoginListener())),
     STARTING_TRIGGER(() -> new VaroStateTrigger(GameState.STARTING, new RunningLoginListener())),
     RUNNING_TRIGGER(() -> new VaroStateTrigger(GameState.RUNNING, new RunningLoginListener())),
     // TODO: Decide whether only the default or all triggers should be added to mass recording
-    MASS_RECORDING_TRIGGER(DefaultGameTrigger.RUNNING_TRIGGER,  () -> new VaroStateTrigger(GameState.MASS_RECORDING)),
+    MASS_RECORDING_TRIGGER(DefaultGameJobs.RUNNING_TRIGGER,  () -> new VaroStateTrigger(GameState.MASS_RECORDING)),
     FINISHED_TRIGGER(() -> new VaroStateTrigger(GameState.FINISHED, new RunningLoginListener()));
 
-    private final DefaultGameTrigger copyTasks;
+    private final DefaultGameJobs copyTasks;
     private final Supplier<VaroTrigger> trigger;
 
-    DefaultGameTrigger(DefaultGameTrigger copyTasks, Supplier<VaroTrigger> trigger) {
+    DefaultGameJobs(DefaultGameJobs copyTasks, Supplier<VaroTrigger> trigger) {
         this.copyTasks = copyTasks;
         this.trigger = trigger;
     }
 
-    DefaultGameTrigger(Supplier<VaroTrigger> trigger) {
+    DefaultGameJobs(Supplier<VaroTrigger> trigger) {
         this(null, trigger);
     }
 

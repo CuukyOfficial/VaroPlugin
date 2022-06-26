@@ -14,7 +14,7 @@ import java.util.function.Function;
 /**
  * Registers all default trigger.
  */
-public class TaskRegister implements Listener {
+public class JobRegister implements Listener {
 
     private <T> void register(T[] holders, Function<T, VaroJob> creator, Varo varo) {
         Arrays.stream(holders).map(creator).forEach(t -> t.register(varo));
@@ -22,11 +22,11 @@ public class TaskRegister implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onGameInitialize(VaroGameInitializedEvent event) {
-        this.register(DefaultGameTrigger.values(), DefaultGameTrigger::createTrigger, event.getVaro());
+        this.register(DefaultGameJobs.values(), DefaultGameJobs::createTrigger, event.getVaro());
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
-        this.register(DefaultPlayerTrigger.values(), t -> t.createTrigger(event.getPlayer()), event.getVaro());
+        this.register(DefaultPlayerJobs.values(), t -> t.createTrigger(event.getPlayer()), event.getVaro());
     }
 }

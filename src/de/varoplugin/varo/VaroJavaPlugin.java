@@ -9,7 +9,7 @@ import de.varoplugin.varo.dependencies.Dependencies;
 import de.varoplugin.varo.dependencies.InvalidSignatureException;
 import de.varoplugin.varo.game.Game;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.jobs.register.TaskRegister;
+import de.varoplugin.varo.jobs.register.JobRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 import org.bukkit.event.Cancellable;
@@ -66,7 +66,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
 
-		this.getServer().getPluginManager().registerEvents(new TaskRegister(), this);
+		this.getServer().getPluginManager().registerEvents(new JobRegister(), this);
 		this.varo = new Game();
 		this.varo.initialize(this);
 

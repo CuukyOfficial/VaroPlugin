@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class LobbyLoginTask extends AbstractVaroListener {
+public class LobbyLoginListener extends AbstractVaroListener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onLobbyLogin(PlayerLoginEvent event) {

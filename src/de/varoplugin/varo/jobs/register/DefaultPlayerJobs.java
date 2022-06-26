@@ -4,18 +4,18 @@ import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.jobs.VaroTrigger;
 import de.varoplugin.varo.jobs.game.VaroStateTrigger;
-import de.varoplugin.varo.jobs.game.player.NoMoveTask;
+import de.varoplugin.varo.jobs.game.player.NoMoveListener;
 import de.varoplugin.varo.jobs.game.player.PlayerOnlineTrigger;
 
 import java.util.function.Function;
 
-public enum DefaultPlayerTrigger {
+public enum DefaultPlayerJobs {
 
-    LOBBY_ONLINE_PLAYER((player) -> new VaroStateTrigger(GameState.LOBBY, new PlayerOnlineTrigger(player, true, new NoMoveTask(player))));
+    LOBBY_ONLINE_PLAYER((player) -> new VaroStateTrigger(GameState.LOBBY, new PlayerOnlineTrigger(player, true, new NoMoveListener(player))));
 
     private final Function<VaroPlayer, VaroTrigger> trigger;
 
-    DefaultPlayerTrigger(Function<VaroPlayer, VaroTrigger> trigger) {
+    DefaultPlayerJobs(Function<VaroPlayer, VaroTrigger> trigger) {
         this.trigger = trigger;
     }
 
