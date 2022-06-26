@@ -2,43 +2,45 @@ package de.varoplugin.varo.game.world.protectable;
 
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableAddEvent;
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
-import de.varoplugin.varo.game.GameObject;
+import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.util.map.HashUniqueIdMap;
+import de.varoplugin.varo.util.map.UniqueIdMap;
 import org.bukkit.block.Block;
 
-import java.util.HashSet;
-import java.util.Set;
+public class ProtectableContainer implements VaroProtectableContainer {
 
-public class ProtectableContainer extends GameObject implements VaroProtectableContainer {
+    private final Varo varo;
+    private final UniqueIdMap<VaroProtectable> protectables;
 
-    protected final Set<VaroProtectable> secureables;
-
-    public ProtectableContainer() {
-        this.secureables = new HashSet<>();
+    public ProtectableContainer(Varo varo) {
+        this.varo = varo;
+        this.protectables = new HashUniqueIdMap<>();
     }
 
     @Override
-    public boolean addProtectable(VaroProtectable secureable) {
-        if (this.secureables.contains(secureable)) return false;
-        if (this.getVaro().getPlugin().isCancelled(new VaroProtectableAddEvent(this.getVaro(), secureable)))
+    public boolean addProtectable(VaroProtectable protectable) {
+        if (this.protectables.contains(protectable)) return false;
+        if (this.varo.getPlugin().isCancelled(new VaroProtectableAddEvent(protectable)))
             return false;
-        return this.secureables.add(secureable);
+        protectable.initialize(this.varo);
+        return this.protectables.add(protectable);
     }
 
     @Override
     public boolean removeProtectable(VaroProtectable secureable) {
-        if (!this.secureables.contains(secureable)) return false;
-        if (this.getVaro().getPlugin().isCancelled(new VaroProtectableRemoveEvent(this.getVaro(), secureable)))
+        if (!this.protectables.contains(secureable)) return false;
+        if (this.varo.getPlugin().isCancelled(new VaroProtectableRemoveEvent(secureable)))
             return false;
-        return this.secureables.remove(secureable);
+        return this.protectables.remove(secureable);
     }
 
     @Override
     public boolean hasProtectable(VaroProtectable secureable) {
-        return this.secureables.contains(secureable);
+        return this.protectables.contains(secureable);
     }
 
     @Override
     public VaroProtectable getProtectable(Block block) {
-        return this.secureables.stream().filter(savable -> savable.getBlock().equals(block)).findAny().orElse(null);
+        return this.protectables.stream().filter(savable -> savable.getBlock().equals(block)).findAny().orElse(null);
     }
 }

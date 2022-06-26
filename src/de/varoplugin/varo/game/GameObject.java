@@ -21,13 +21,13 @@ public abstract class GameObject implements VaroGameObject {
     }
 
     @Override
-    public int hashCode() {
-        return this.uuid.hashCode();
+    public Varo getVaro() {
+        return this.varo;
     }
 
     @Override
-    public Varo getVaro() {
-        return this.varo;
+    public int hashCode() {
+        return this.uuid.hashCode();
     }
 
     @Override

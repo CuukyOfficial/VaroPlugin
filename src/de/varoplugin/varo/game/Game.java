@@ -3,15 +3,12 @@ package de.varoplugin.varo.game;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
-import de.varoplugin.varo.game.entity.player.GamePlayer;
+import de.varoplugin.varo.game.entity.player.GamePlayerContainer;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayerContainer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 public class Game implements Varo {
@@ -19,11 +16,11 @@ public class Game implements Varo {
     private VaroPlugin plugin;
     private VaroState state;
 
-    private final Set<VaroPlayer> players;
+    private final VaroPlayerContainer players;
 
     public Game() {
         this.state = GameState.LOBBY;
-        this.players = new HashSet<>();
+        this.players = new GamePlayerContainer(this);
     }
 
     @Override
@@ -40,16 +37,12 @@ public class Game implements Varo {
 
     @Override
     public VaroPlayer register(Player player) {
-        VaroPlayer vp = new GamePlayer(player);
-        if (this.players.contains(vp) || this.plugin.isCancelled(new VaroPlayerAddEvent(vp))) return null;
-        this.players.add(vp);
-        vp.initialize(this);
-        return vp;
+        return this.players.register(player);
     }
 
     @Override
     public VaroPlayer getPlayer(UUID uuid) {
-        return this.players.stream().filter(player -> player.getUuid().equals(uuid)).findAny().orElse(null);
+        return this.players.getPlayer(uuid);
     }
 
     @Override
@@ -59,7 +52,7 @@ public class Game implements Varo {
 
     @Override
     public Collection<VaroPlayer> getPlayers() {
-        return new ArrayList<>(this.players);
+        return this.players.getPlayers();
     }
 
     @Override

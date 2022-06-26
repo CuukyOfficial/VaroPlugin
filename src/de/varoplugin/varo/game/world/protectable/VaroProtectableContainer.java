@@ -1,9 +1,8 @@
 package de.varoplugin.varo.game.world.protectable;
 
-import de.varoplugin.varo.game.VaroGameObject;
 import org.bukkit.block.Block;
 
-public interface VaroProtectableContainer extends VaroGameObject {
+public interface VaroProtectableContainer {
 
     boolean addProtectable(VaroProtectable protectable);
 

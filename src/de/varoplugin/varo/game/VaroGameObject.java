@@ -1,13 +1,11 @@
 package de.varoplugin.varo.game;
 
-import java.util.UUID;
+import de.varoplugin.varo.util.map.UniqueObject;
 
-public interface VaroGameObject {
+public interface VaroGameObject extends UniqueObject {
 
     void initialize(Varo varo);
 
     Varo getVaro();
-
-    UUID getUuid();
 
 }

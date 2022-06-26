@@ -15,6 +15,4 @@ public interface VaroStrikable extends VaroGameObject {
 
     Location getLocation();
 
-    String getName();
-
 }
