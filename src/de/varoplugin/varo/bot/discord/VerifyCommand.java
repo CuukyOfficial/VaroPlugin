@@ -11,8 +11,8 @@ class VerifyCommand extends Command {
 	
 	private static final String VERIFY_MODAL_ID = "varo::verify";
 	private static final String VERIFY_MODAL_INPUT_ID = "varo::verify::code";
-	private final Modal modal;;
-	
+	private final Modal modal;
+
 	VerifyCommand(VaroConfig config) {
 		super(config.bot_discord_command_verify_name, config.bot_discord_command_verify_desc);
 		

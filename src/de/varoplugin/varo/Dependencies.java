@@ -1,7 +1,13 @@
 package de.varoplugin.varo;
 
+import de.varoplugin.cfw.dependencies.Dependency;
+import de.varoplugin.cfw.dependencies.JarDependency;
+import de.varoplugin.cfw.dependencies.NoInitDependency;
+import de.varoplugin.varo.api.config.ConfigEntry;
+import de.varoplugin.varo.config.VaroConfig;
+import org.bukkit.plugin.Plugin;
+
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,15 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.logging.Level;
-
-import org.bukkit.plugin.Plugin;
-
-import de.varoplugin.cfw.dependencies.Dependency;
-import de.varoplugin.cfw.dependencies.InvalidSignatureException;
-import de.varoplugin.cfw.dependencies.JarDependency;
-import de.varoplugin.cfw.dependencies.NoInitDependency;
-import de.varoplugin.varo.api.config.ConfigEntry;
-import de.varoplugin.varo.config.VaroConfig;
 
 public class Dependencies {
 
@@ -40,7 +37,7 @@ public class Dependencies {
 				new ConfigEntryPolicy("net.dv8tion.jda.api.JDABuilder", config -> config.bot_discord_enabled)));
 	}
 
-	public static void loadNeeded(VaroPlugin varo) throws IOException, InvalidSignatureException {
+	public static void loadNeeded(VaroPlugin varo) {
 		for (Dependency lib : OPTIONAL_DEPENDENCIES)
 			try {
 				lib.load(varo);
@@ -93,7 +90,7 @@ public class Dependencies {
 		}
 	}
 
-	private static interface LoadPolicy {
+	private interface LoadPolicy {
 		boolean shouldLoad(VaroConfig config);
 	}
 
@@ -119,7 +116,7 @@ public class Dependencies {
 
 	private static class ConfigEntriesPolicy extends ClassPolicy {
 
-		private Function<VaroConfig, ConfigEntry<Boolean>[]> configEntryGetter;
+		private final Function<VaroConfig, ConfigEntry<Boolean>[]> configEntryGetter;
 
 		private ConfigEntriesPolicy(String className, Function<VaroConfig, ConfigEntry<Boolean>[]> configEntriesGetter) {
 			super(className);

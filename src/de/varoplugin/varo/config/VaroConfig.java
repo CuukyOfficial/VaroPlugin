@@ -1,6 +1,13 @@
 package de.varoplugin.varo.config;
 
-import static de.varoplugin.varo.config.VaroConfigCategory.*;
+import com.google.common.collect.Multimap;
+import de.varoplugin.varo.Dependencies;
+import de.varoplugin.varo.VaroJavaPlugin;
+import de.varoplugin.varo.VaroPlugin;
+import de.varoplugin.varo.api.config.Config;
+import de.varoplugin.varo.api.config.ConfigCategory;
+import de.varoplugin.varo.api.config.ConfigEntry;
+import de.varoplugin.varo.api.config.ConfigException;
 
 import java.io.File;
 import java.net.URL;
@@ -9,15 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import com.google.common.collect.Multimap;
-
-import de.varoplugin.varo.Dependencies;
-import de.varoplugin.varo.VaroJavaPlugin;
-import de.varoplugin.varo.VaroPlugin;
-import de.varoplugin.varo.api.config.Config;
-import de.varoplugin.varo.api.config.ConfigCategory;
-import de.varoplugin.varo.api.config.ConfigEntry;
-import de.varoplugin.varo.api.config.ConfigException;
+import static de.varoplugin.varo.config.VaroConfigCategory.*;
 
 public class VaroConfig implements Config {
 
@@ -91,7 +90,7 @@ public class VaroConfig implements Config {
 
 			// Create URLClassLoader and load the ConfigImpl class using the newly created URLClassLoader
 			URLClassLoader classLoader = new URLClassLoader(new URL[] {Dependencies.SIMPLE_YAML.getUrl(), Dependencies.SNAKE_YAML.getUrl(), pluginFile.toURI().toURL()}, parentClassLoader);
-			Class<?> configClass = (Class<?>) Class.forName("de.varoplugin.varo.config.ConfigImpl", false, classLoader);
+			Class<?> configClass = Class.forName("de.varoplugin.varo.config.ConfigImpl", false, classLoader);
 
 			// Create new ConfigImpl instance
 			this.config = (Config) configClass.getConstructor(String.class).newInstance(path);

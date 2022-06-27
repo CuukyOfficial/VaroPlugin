@@ -1,12 +1,5 @@
 package de.varoplugin.varo.bot.discord;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.logging.Level;
-
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.BotChannel;
@@ -28,6 +21,13 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.utils.MarkdownSanitizer;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.logging.Level;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
 
@@ -163,9 +163,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 	}
 
 	private long getChannelId(BotChannel botChannel) {
-		return this.channelIds.computeIfAbsent(botChannel.getPath(), path -> {
-			return (long) config.getEntry(VaroConfigCategory.BOTS, CONFIG_PATH_PREFIX + path).getValue();
-		});
+		return this.channelIds.computeIfAbsent(botChannel.getPath(), path -> (long) config.getEntry(VaroConfigCategory.BOTS, CONFIG_PATH_PREFIX + path).getValue());
 	}
 
 	private void getChannel(BotChannel botChannel, Consumer<TextChannel> callback) {
