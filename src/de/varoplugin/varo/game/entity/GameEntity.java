@@ -1,6 +1,7 @@
 package de.varoplugin.varo.game.entity;
 
 import de.varoplugin.varo.game.GameObject;
+import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.world.protectable.ProtectableContainer;
 import de.varoplugin.varo.game.world.protectable.VaroProtectable;
 import de.varoplugin.varo.game.world.protectable.VaroProtectableContainer;
@@ -10,18 +11,19 @@ import java.util.UUID;
 
 public abstract class GameEntity extends GameObject implements VaroEntity {
 
-    private final VaroProtectableContainer protectableContainer;
+    private VaroProtectableContainer protectableContainer;
 
     public GameEntity(UUID uuid) {
         super(uuid);
-
-        this.protectableContainer = new ProtectableContainer();
     }
 
     public GameEntity() {
         super();
+    }
 
-        this.protectableContainer = new ProtectableContainer();
+    @Override
+    public void initialize(Varo varo) {
+        if (this.protectableContainer != null) this.protectableContainer = new ProtectableContainer(varo);
     }
 
     @Override
