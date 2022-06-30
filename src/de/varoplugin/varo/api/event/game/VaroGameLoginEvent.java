@@ -4,20 +4,20 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroKickResult;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class VaroGameLoginKickEvent extends VaroGameCancelableEvent {
+public class VaroGameLoginEvent extends VaroGameEvent {
 
-    private final PlayerLoginEvent loginEvent;
+    private final PlayerLoginEvent source;
     private final VaroKickResult result;
 
-    public VaroGameLoginKickEvent(Varo varo, PlayerLoginEvent loginEvent, VaroKickResult result) {
+    public VaroGameLoginEvent(Varo varo, PlayerLoginEvent loginEvent, VaroKickResult result) {
         super(varo);
 
-        this.loginEvent = loginEvent;
+        this.source = loginEvent;
         this.result = result;
     }
 
-    public PlayerLoginEvent getLoginEvent() {
-        return this.loginEvent;
+    public PlayerLoginEvent getSource() {
+        return this.source;
     }
 
     public VaroKickResult getResult() {

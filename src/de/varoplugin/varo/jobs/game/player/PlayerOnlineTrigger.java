@@ -28,7 +28,7 @@ public class PlayerOnlineTrigger extends PlayerTrigger {
         else this.unregisterJobs();
     }
 
-    @EventHandler
+    @EventHandler()
     public void onPlayerJoin(PlayerJoinEvent event) {
         this.checkEvent(event, true);
     }

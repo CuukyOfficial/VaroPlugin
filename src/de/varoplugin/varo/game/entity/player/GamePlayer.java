@@ -55,6 +55,11 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
+    public boolean isPlayer(Player player) {
+        return player.getUniqueId().equals(this.getUuid());
+    }
+
+    @Override
     public boolean setState(VaroParticipantState state) {
         if (this.state == state || this.getVaro().getPlugin().isCancelled(new VaroPlayerParticipantStateChangeEvent(this, state)))
             return false;

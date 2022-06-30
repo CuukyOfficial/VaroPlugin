@@ -23,6 +23,8 @@ public interface VaroPlayer extends VaroEntity, VaroTeamable, StatsHolder {
      */
     boolean isOnline();
 
+    boolean isPlayer(Player player);
+
     boolean setState(VaroParticipantState state);
 
     VaroParticipantState getState();

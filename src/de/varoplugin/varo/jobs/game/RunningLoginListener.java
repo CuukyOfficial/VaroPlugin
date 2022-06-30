@@ -1,21 +1,24 @@
 package de.varoplugin.varo.jobs.game;
 
-import de.varoplugin.varo.api.event.game.VaroGameLoginKickEvent;
+import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
 import de.varoplugin.varo.game.GameKickResult;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.VaroKickResult;
 import de.varoplugin.varo.jobs.AbstractVaroListener;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 public class RunningLoginListener extends AbstractVaroListener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerLogin(PlayerLoginEvent event) {
-        VaroPlayer player = this.getVaro().getPlayer(event.getPlayer());
-        if (player != null) return;
+        if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) return;
+        VaroKickResult result = this.getVaro().getPlayer(event.getPlayer()) == null ? GameKickResult.NOT_A_PARTICIPANT :
+                GameKickResult.ALLOWED;
 
-        VaroGameLoginKickEvent loginKickEvent = new VaroGameLoginKickEvent(this.getVaro(), event, GameKickResult.NOT_A_PARTICIPANT);
-        if (!this.getVaro().getPlugin().isCancelled(loginKickEvent)) {
+        VaroGameLoginEvent loginKickEvent = new VaroGameLoginEvent(this.getVaro(), event, result);
+        this.getVaro().getPlugin().callEvent(loginKickEvent);
+        if (loginKickEvent.getResult() != GameKickResult.ALLOWED) {
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
         }
     }

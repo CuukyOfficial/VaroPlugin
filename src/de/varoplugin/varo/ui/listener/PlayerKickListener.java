@@ -1,8 +1,10 @@
 package de.varoplugin.varo.ui.listener;
 
-import de.varoplugin.varo.api.event.game.VaroGameLoginKickEvent;
+import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerLoginEvent;
 import de.varoplugin.varo.game.GameKickResult;
 import de.varoplugin.varo.game.VaroKickResult;
+import de.varoplugin.varo.game.entity.player.GamePlayerKickResult;
 import org.bukkit.event.EventHandler;
 
 import java.util.Arrays;
@@ -32,9 +34,16 @@ public class PlayerKickListener extends UiListener {
     }
 
     @EventHandler
-    public void onGamePlayerKick(VaroGameLoginKickEvent event) {
+    public void onVaroPlayerKick(VaroPlayerLoginEvent event) {
+        if (event.getResult() == GamePlayerKickResult.PLAYER_DEAD) {
+            event.getSource().setKickMessage("You are dead!");
+        }
+     }
+
+    @EventHandler
+    public void onGamePlayerKick(VaroGameLoginEvent event) {
         KickMessages message = KickMessages.getMessage(event.getResult());
         if (message == null) return;
-        event.getLoginEvent().setKickMessage(message.getMessage());
+        event.getSource().setKickMessage(message.getMessage());
     }
 }
