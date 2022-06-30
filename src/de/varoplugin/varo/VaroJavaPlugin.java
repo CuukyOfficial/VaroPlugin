@@ -1,21 +1,23 @@
 package de.varoplugin.varo;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.event.Cancellable;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.Game;
+import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.jobs.register.JobRegister;
+import de.varoplugin.varo.jobslegacy.register.JobRegister;
+import de.varoplugin.varo.task.factory.GameTriggerBuilder;
+import de.varoplugin.varo.task.factory.VaroTriggerBuilder;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
+import org.bukkit.event.Cancellable;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
@@ -44,6 +46,9 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		this.uiManager = new UIManager();
 		this.uiManager.register(this);
 		this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
+
+		VaroTriggerBuilder builder = new GameTriggerBuilder();
+		builder.or(GameState.LOBBY).build();
 
 		try {
 			// Load Guava (this is only necessary on 1.7)
