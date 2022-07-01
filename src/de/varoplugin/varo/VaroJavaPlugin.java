@@ -5,11 +5,7 @@ import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.Game;
-import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.jobslegacy.register.JobRegister;
-import de.varoplugin.varo.task.factory.GameTriggerBuilder;
-import de.varoplugin.varo.task.factory.VaroTriggerBuilder;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 import org.bukkit.event.Cancellable;
@@ -47,9 +43,6 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		this.uiManager.register(this);
 		this.updateLoadingState(StartupState.INITIALIZING, this.getName(), this.getVersion());
 
-		VaroTriggerBuilder builder = new GameTriggerBuilder();
-		builder.or(GameState.LOBBY).build();
-
 		try {
 			// Load Guava (this is only necessary on 1.7)
 			Dependencies.GUAVA.load(this);
@@ -68,7 +61,6 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
 
-		this.getServer().getPluginManager().registerEvents(new JobRegister(), this);
 		this.varo = new Game();
 		this.varo.initialize(this);
 

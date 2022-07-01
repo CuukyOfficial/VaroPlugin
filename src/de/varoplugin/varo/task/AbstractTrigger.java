@@ -1,60 +1,42 @@
 package de.varoplugin.varo.task;
 
 import de.varoplugin.varo.game.Varo;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class AbstractTrigger extends AbstractListener implements VaroTrigger {
-    private final Set<VaroRegistrable> registrations;
-    private final boolean match;
-    private Varo varo;
+public abstract class AbstractTrigger extends AbstractTriggerParent implements Listener {
 
-    public AbstractTrigger(boolean match) {
-        this.registrations = new HashSet<>();
-        this.match = match;
-    }
+    private final Varo varo;
 
-    protected boolean shallRegister(boolean shouldRegister) {
-        return shouldRegister == this.match;
-    }
-
-    protected void registerChildren() {
-        this.registrations.forEach(registrable -> registrable.register(this.varo));
-    }
-
-    protected void deregisterChildren() {
-        this.registrations.forEach(registrable -> registrable.register(varo));
-    }
-
-    @Override
-    public void register(Varo varo) {
+    protected AbstractTrigger(Varo varo, boolean match, Set<VaroTrigger> children, Set<VaroRegistrable> registrations) {
+        super(match, children, registrations);
         this.varo = varo;
-        super.register(varo);
-        this.registrations.forEach(registrable -> registrable.register(varo));
+    }
+
+    public AbstractTrigger(Varo varo, boolean match) {
+        this(varo, match, new HashSet<>(), new HashSet<>());
+    }
+
+    public AbstractTrigger(Varo varo) {
+        this(varo, true);
     }
 
     @Override
-    public void deregister() {
-        this.varo = null;
-        super.deregister();
-        this.registrations.forEach(VaroRegistrable::deregister);
-        this.registrations.forEach(VaroRegistrable::destroy);
+    public void activate() {
+        super.activate();
+        this.varo.getPlugin().getServer().getPluginManager().registerEvents(this, this.varo.getPlugin());
     }
 
     @Override
-    public void destroy() {
-        this.deregister();
+    public void deactivate() {
+        super.deactivate();
+        HandlerList.unregisterAll(this);
     }
 
-    @Override
     public Varo getVaro() {
         return this.varo;
-    }
-
-    @Override
-    public void addChildren(VaroRegistrable... registrable) {
-        this.registrations.addAll(Arrays.asList(registrable));
     }
 }

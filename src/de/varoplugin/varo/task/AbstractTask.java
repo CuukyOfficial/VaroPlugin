@@ -1,11 +1,8 @@
-package de.varoplugin.varo.jobslegacy;
+package de.varoplugin.varo.task;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-/**
- * Represents any Varo task.
- */
-public abstract class AbstractVaroTask extends AbstractVaroJob implements Runnable {
+public abstract class AbstractTask implements VaroRegistrable, Runnable {
 
     private BukkitRunnable runnable;
 
@@ -13,7 +10,7 @@ public abstract class AbstractVaroTask extends AbstractVaroJob implements Runnab
         return this.runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                AbstractVaroTask.this.run();
+                AbstractTask.this.run();
             }
         };
     }
@@ -21,12 +18,18 @@ public abstract class AbstractVaroTask extends AbstractVaroJob implements Runnab
     protected abstract void schedule(BukkitRunnable runnable);
 
     @Override
-    protected void doRegister() {
+    public void register() {
         this.schedule(this.runnable = this.createRunnable());
     }
 
     @Override
-    protected void doUnregister() {
-        if (this.runnable != null) this.runnable.cancel();
+    public void deregister() {
+        this.runnable.cancel();
+        this.runnable = null;
+    }
+
+    @Override
+    public boolean isRegistered() {
+        return this.runnable != null;
     }
 }

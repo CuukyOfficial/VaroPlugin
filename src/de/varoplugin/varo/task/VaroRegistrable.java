@@ -4,12 +4,14 @@ import de.varoplugin.varo.game.Varo;
 
 public interface VaroRegistrable {
 
-    void register(Varo varo);
+    void register();
 
     void deregister();
 
-    void destroy();
+    boolean isRegistered();
 
     Varo getVaro();
+
+    VaroRegistrable deepClone();
 
 }

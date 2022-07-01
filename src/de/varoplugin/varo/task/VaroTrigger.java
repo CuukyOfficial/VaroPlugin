@@ -1,7 +1,17 @@
 package de.varoplugin.varo.task;
 
-public interface VaroTrigger extends VaroRegistrable, VaroListener {
+public interface VaroTrigger {
 
-    void addChildren(VaroRegistrable... registrable);
+    void activate();
+
+    void deactivate();
+
+    boolean isActivated();
+
+    void addChildren(VaroTrigger... children);
+
+    void register(VaroRegistrable... register);
+
+    VaroTrigger deepClone();
 
 }

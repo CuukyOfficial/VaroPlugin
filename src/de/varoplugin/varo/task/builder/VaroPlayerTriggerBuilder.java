@@ -1,10 +1,11 @@
-package de.varoplugin.varo.task.factory;
+package de.varoplugin.varo.task.builder;
 
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
 import de.varoplugin.varo.task.VaroTrigger;
 
-public interface VaroPlayerTriggerBuilder extends TriggerFactory {
+public interface VaroPlayerTriggerBuilder extends TriggerBuilder<VaroPlayer> {
 
     VaroPlayerTriggerBuilder or(VaroParticipantState state);
 
@@ -12,9 +13,9 @@ public interface VaroPlayerTriggerBuilder extends TriggerFactory {
 
     VaroPlayerTriggerBuilder or(boolean online);
 
-    VaroPlayerTriggerBuilder and(VaroTrigger trigger);
+    @Override
+    VaroPlayerTriggerBuilder or(VaroTrigger trigger);
 
     @Override
-    VaroPlayerTriggerBuilder and(TriggerFactory factory);
-
+    VaroPlayerTriggerBuilder and(VaroTrigger... trigger);
 }
