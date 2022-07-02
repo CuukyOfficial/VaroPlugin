@@ -16,7 +16,7 @@ public class StartingUiTask extends AbstractExecutable {
     @Override
     protected void schedule(BukkitRunnable runnable) {
         runnable.runTaskTimer(this.getVaro().getPlugin(), 20, 20);
-        this.countdown = 30;
+        this.countdown = this.getVaro().getPlugin().getVaroConfig().start_countdown.getValue();
     }
 
     @Override

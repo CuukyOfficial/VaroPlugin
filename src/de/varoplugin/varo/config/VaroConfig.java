@@ -56,6 +56,8 @@ public class VaroConfig implements Config {
 	public final ConfigEntry<Integer> scoreboard_title_delay = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.title.updatedelay", 100, "The update interval of the title animation");
 	public final ConfigEntry<Integer> scoreboard_content_delay = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.content.updatedelay", 100, "The update interval of the animation");
 
+	public final ConfigEntry<Integer> start_countdown = new VaroConfigEntry<>(MAIN, "main.startCountdown", 30, "The start countdown");
+
 	private Config config;
 
 	/**
