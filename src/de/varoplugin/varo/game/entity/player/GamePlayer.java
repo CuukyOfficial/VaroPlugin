@@ -6,6 +6,7 @@ import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.GameEntity;
+import de.varoplugin.varo.game.entity.VaroEntity;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
 import org.bukkit.entity.Player;
 
@@ -45,8 +46,8 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
-    public boolean canAccessSavings(VaroPlayer player) {
-        return this.equals(player);
+    public boolean canAccessSavings(VaroEntity player) {
+        return this.getUuid().equals(player.getUuid());
     }
 
     @Override

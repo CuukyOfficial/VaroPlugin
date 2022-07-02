@@ -24,7 +24,7 @@ public abstract class GameEntity extends GameObject implements VaroEntity {
     @Override
     public void initialize(Varo varo) {
         super.initialize(varo);
-        if (this.protectableContainer != null) this.protectableContainer = new ProtectableContainer(varo);
+        if (this.protectableContainer == null) this.protectableContainer = new ProtectableContainer(varo);
     }
 
     @Override

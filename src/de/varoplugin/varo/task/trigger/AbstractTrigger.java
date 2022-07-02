@@ -37,12 +37,13 @@ public abstract class AbstractTrigger implements VaroTrigger {
     }
 
     private boolean isEnabled() {
-        return this.isActivated() && this.isTriggered() == this.match;
+        return this.isActivated() && (this.isTriggered() == this.match);
     }
 
     protected boolean giveToChildren(VaroTask... registrable) {
         if (this.children.size() == 0) return false;
-        this.children.forEach(c -> Arrays.stream(registrable).map(VaroTask::clone).forEach(c::register));
+        this.children.iterator().next().register(registrable);
+        this.children.stream().skip(1).forEach(c -> Arrays.stream(registrable).map(VaroTask::clone).forEach(c::register));
         return true;
     }
 

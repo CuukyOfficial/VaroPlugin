@@ -40,7 +40,8 @@ public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
     @Override
     public VaroTrigger build(B build) {
         List<VaroTrigger> layer = this.layerTrigger.stream().map(trigger -> trigger.apply(build)).collect(Collectors.toList());
-        layer.forEach(t -> this.children.forEach(c -> t.addChildren(c.clone())));
+        layer.get(0).addChildren(this.children.toArray(new VaroTrigger[0]));
+        layer.stream().skip(1).forEach(t -> this.children.forEach(c -> t.addChildren(c.clone())));
 
         if (layer.size() == 0) return null;
         else if (layer.size() == 1) return layer.get(0);
