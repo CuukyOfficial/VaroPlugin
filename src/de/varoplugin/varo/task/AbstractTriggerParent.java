@@ -12,6 +12,7 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
     private Set<VaroRegistrable> registrations;
     private boolean match;
     private boolean activated;
+    private boolean enabled;
 
     public AbstractTriggerParent(boolean match) {
         this.match = match;
@@ -38,20 +39,25 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
     }
 
     protected void triggerIf(boolean trigger) {
-        if (trigger == this.match) this.activateChildren();
-        else this.deactivateChildren();
+        if (trigger == this.match) {
+            if (!this.enabled) this.activateChildren();
+            this.enabled = true;
+        } else {
+            if (this.enabled) this.deactivateChildren();
+            this.enabled = false;
+        }
     }
 
     protected abstract boolean isTriggered();
 
     protected void activateChildren() {
-        this.children.forEach(VaroTrigger::activate);
-        this.registrations.forEach(VaroRegistrable::register);
+        this.children.stream().filter(c -> !c.isActivated()).forEach(VaroTrigger::activate);
+        this.registrations.stream().filter(r -> !r.isRegistered()).forEach(VaroRegistrable::register);
     }
 
     protected void deactivateChildren() {
-        this.children.forEach(VaroTrigger::deactivate);
-        this.registrations.forEach(VaroRegistrable::deregister);
+        this.children.stream().filter(VaroTrigger::isActivated).forEach(VaroTrigger::deactivate);
+        this.registrations.stream().filter(VaroRegistrable::isRegistered).forEach(VaroRegistrable::deregister);
     }
 
     /**
@@ -74,12 +80,14 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
     @Override
     public void activate() {
         this.activated = true;
-        if (this.isEnabled()) this.activateChildren();
+        this.enabled = this.isEnabled();
+        if (this.enabled) this.activateChildren();
     }
 
     @Override
     public void deactivate() {
         this.activated = false;
+        this.enabled = false;
         this.deactivateChildren();
     }
 
@@ -91,13 +99,13 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
     @Override
     public void addChildren(VaroTrigger... children) {
         this.children.addAll(Arrays.asList(children));
-        if (this.isEnabled()) Arrays.stream(children).forEach(VaroTrigger::activate);
+        if (this.enabled) Arrays.stream(children).filter(c -> !c.isActivated()).forEach(VaroTrigger::activate);
     }
 
     @Override
     public void register(VaroRegistrable... register) {
         if (this.giveToChildren(register)) return;
         this.registrations.addAll(Arrays.asList(register));
-        if (this.isEnabled()) Arrays.stream(register).forEach(VaroRegistrable::register);
+        if (this.enabled) Arrays.stream(register).filter(c -> !c.isRegistered()).forEach(VaroRegistrable::register);
     }
 }
