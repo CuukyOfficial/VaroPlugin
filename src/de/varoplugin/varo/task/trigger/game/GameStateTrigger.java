@@ -1,13 +1,13 @@
-package de.varoplugin.varo.task.game;
+package de.varoplugin.varo.task.trigger.game;
 
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.task.AbstractTrigger;
-import de.varoplugin.varo.task.VaroTrigger;
+import de.varoplugin.varo.task.trigger.AbstractListenedTrigger;
+import de.varoplugin.varo.task.trigger.VaroTrigger;
 import org.bukkit.event.EventHandler;
 
-public class GameStateTrigger extends AbstractTrigger {
+public class GameStateTrigger extends AbstractListenedTrigger {
 
     private VaroState state;
 

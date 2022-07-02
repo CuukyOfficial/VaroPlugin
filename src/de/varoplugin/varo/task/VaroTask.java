@@ -1,5 +1,17 @@
 package de.varoplugin.varo.task;
 
-public interface VaroTask extends VaroRegistrable, Runnable {
+import de.varoplugin.varo.game.Varo;
+
+public interface VaroTask extends Cloneable {
+
+    void register();
+
+    void deregister();
+
+    boolean isRegistered();
+
+    Varo getVaro();
+
+    VaroTask clone();
 
 }

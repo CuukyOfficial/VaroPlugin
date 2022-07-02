@@ -4,7 +4,7 @@ import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-public abstract class AbstractListener implements VaroRegistrable, Listener {
+public abstract class AbstractListener implements VaroTask, Listener {
 
     private Varo varo;
     private boolean registered;
@@ -35,7 +35,7 @@ public abstract class AbstractListener implements VaroRegistrable, Listener {
     }
 
     @Override
-    public VaroRegistrable clone() {
+    public VaroTask clone() {
         try {
             AbstractListener listener = (AbstractListener) super.clone();
             listener.varo = this.varo;

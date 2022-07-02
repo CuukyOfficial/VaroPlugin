@@ -1,9 +1,9 @@
-package de.varoplugin.varo.task.builder;
+package de.varoplugin.varo.task.trigger.builder;
 
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.task.VaroTrigger;
-import de.varoplugin.varo.task.game.GameStateTrigger;
+import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.task.trigger.game.GameStateTrigger;
 
 public class VaroTriggerBuilder extends AbstractTriggerBuilder<Varo> implements TriggerBuilder<Varo> {
 

@@ -1,19 +1,19 @@
-package de.varoplugin.varo.task;
+package de.varoplugin.varo.task.trigger;
 
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-public abstract class AbstractTrigger extends AbstractTriggerParent implements Listener {
+public abstract class AbstractListenedTrigger extends AbstractTrigger implements Listener {
 
     private Varo varo;
 
-    public AbstractTrigger(Varo varo, boolean match) {
+    public AbstractListenedTrigger(Varo varo, boolean match) {
         super(match);
         this.varo = varo;
     }
 
-    public AbstractTrigger(Varo varo) {
+    public AbstractListenedTrigger(Varo varo) {
         this(varo, true);
     }
 
@@ -31,7 +31,7 @@ public abstract class AbstractTrigger extends AbstractTriggerParent implements L
 
     @Override
     public VaroTrigger clone() {
-        AbstractTrigger trigger = (AbstractTrigger) super.clone();
+        AbstractListenedTrigger trigger = (AbstractListenedTrigger) super.clone();
         trigger.varo = this.varo;
         return trigger;
     }

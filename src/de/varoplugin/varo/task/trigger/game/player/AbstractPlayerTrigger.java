@@ -1,10 +1,10 @@
-package de.varoplugin.varo.task.game.player;
+package de.varoplugin.varo.task.trigger.game.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.task.AbstractTrigger;
-import de.varoplugin.varo.task.VaroTrigger;
+import de.varoplugin.varo.task.trigger.AbstractListenedTrigger;
+import de.varoplugin.varo.task.trigger.VaroTrigger;
 
-public abstract class AbstractPlayerTrigger extends AbstractTrigger {
+public abstract class AbstractPlayerTrigger extends AbstractListenedTrigger {
 
     private VaroPlayer player;
 

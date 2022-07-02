@@ -3,12 +3,12 @@ package de.varoplugin.varo.task;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public abstract class AbstractTask implements VaroRegistrable, Runnable {
+public abstract class AbstractExecutable implements VaroTask, Runnable {
 
     private BukkitRunnable runnable;
     private Varo varo;
 
-    public AbstractTask(Varo varo) {
+    public AbstractExecutable(Varo varo) {
         this.varo = varo;
     }
 
@@ -16,7 +16,7 @@ public abstract class AbstractTask implements VaroRegistrable, Runnable {
         return this.runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                AbstractTask.this.run();
+                AbstractExecutable.this.run();
             }
         };
     }
@@ -45,9 +45,9 @@ public abstract class AbstractTask implements VaroRegistrable, Runnable {
     }
 
     @Override
-    public VaroRegistrable clone() {
+    public VaroTask clone() {
         try {
-            AbstractTask task = (AbstractTask) super.clone();
+            AbstractExecutable task = (AbstractExecutable) super.clone();
             task.varo = this.varo;
             return task;
         } catch (CloneNotSupportedException e) {

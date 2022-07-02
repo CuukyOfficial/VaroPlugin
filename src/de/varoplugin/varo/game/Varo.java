@@ -1,9 +1,10 @@
 package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
+import de.varoplugin.varo.data.VaroDataGame;
 import de.varoplugin.varo.game.entity.player.VaroPlayerContainer;
 
-public interface Varo extends VaroPlayerContainer {
+public interface Varo extends VaroPlayerContainer, VaroDataGame {
 
     void initialize(VaroPlugin plugin);
 

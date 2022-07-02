@@ -1,11 +1,11 @@
 package de.varoplugin.varo.task.game.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.task.AbstractTask;
-import de.varoplugin.varo.task.VaroRegistrable;
+import de.varoplugin.varo.task.AbstractExecutable;
+import de.varoplugin.varo.task.VaroTask;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class SpamPlayerTask extends AbstractTask {
+public class SpamPlayerTask extends AbstractExecutable {
 
     private VaroPlayer player;
 
@@ -25,7 +25,7 @@ public class SpamPlayerTask extends AbstractTask {
     }
 
     @Override
-    public VaroRegistrable clone() {
+    public VaroTask clone() {
         SpamPlayerTask task = (SpamPlayerTask) super.clone();
         task.player = this.player;
         return task;

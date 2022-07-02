@@ -1,9 +1,9 @@
-package de.varoplugin.varo.task.game.player;
+package de.varoplugin.varo.task.trigger.game.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
-import de.varoplugin.varo.task.VaroTrigger;
+import de.varoplugin.varo.task.trigger.VaroTrigger;
 import org.bukkit.event.EventHandler;
 
 public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {

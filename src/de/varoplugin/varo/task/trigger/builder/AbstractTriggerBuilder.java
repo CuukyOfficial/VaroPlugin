@@ -1,6 +1,6 @@
-package de.varoplugin.varo.task.builder;
+package de.varoplugin.varo.task.trigger.builder;
 
-import de.varoplugin.varo.task.VaroTrigger;
+import de.varoplugin.varo.task.trigger.VaroTrigger;
 
 import java.util.Arrays;
 import java.util.LinkedList;
