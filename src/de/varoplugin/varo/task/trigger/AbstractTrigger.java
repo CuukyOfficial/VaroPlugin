@@ -72,7 +72,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
     @EventHandler
     public void onPluginDisable(PluginDisableEvent event) {
         if (!event.getPlugin().equals(this.plugin)) return;
-        this.destroy();
+        if (!this.wasDestroyed()) this.destroy();
     }
 
     @EventHandler
@@ -99,12 +99,17 @@ public abstract class AbstractTrigger implements VaroTrigger {
 
     @Override
     public void destroy() {
-        if (this.isActivated()) this.deactivate();
+        if (this.activated) this.deactivate();
         this.children.forEach(VaroTrigger::destroy);
         this.tasks.stream().filter(VaroTask::isRegistered).forEach(VaroTask::deregister);
         this.children = null;
         this.tasks = null;
         this.plugin.getServer().getPluginManager().callEvent(new TriggerDestroyEvent(this));
+    }
+
+    @Override
+    public boolean wasDestroyed() {
+        return this.children == null && this.tasks == null;
     }
 
     @Override

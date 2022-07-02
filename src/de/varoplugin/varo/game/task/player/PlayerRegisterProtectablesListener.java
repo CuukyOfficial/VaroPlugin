@@ -22,7 +22,6 @@ public class PlayerRegisterProtectablesListener extends AbstractPlayerListener {
             throw new Error("attachedFace should not be null");
 
         Block attached = event.getBlock().getRelative(attachedFace);
-        System.out.println("SIGN CHANGE");
         this.getPlayer().addProtectable(new BlockProtectable(this.getPlayer(), attached));
     }
 }

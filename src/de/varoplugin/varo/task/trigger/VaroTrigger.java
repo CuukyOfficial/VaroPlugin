@@ -17,6 +17,8 @@ public interface VaroTrigger extends Cloneable, Listener {
 
     void destroy();
 
+    boolean wasDestroyed();
+
     VaroTrigger clone();
 
 }
