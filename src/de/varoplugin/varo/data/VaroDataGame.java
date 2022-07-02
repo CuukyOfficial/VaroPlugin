@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "Varo")
 public interface VaroDataGame {
 
-    void setState();
+    boolean setState(VaroState state);
 
     @Column(name = "state")
     VaroState getState();

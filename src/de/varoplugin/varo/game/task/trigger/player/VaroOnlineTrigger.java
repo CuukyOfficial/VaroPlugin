@@ -1,4 +1,4 @@
-package de.varoplugin.varo.task.trigger.game.player;
+package de.varoplugin.varo.game.task.trigger.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.task.trigger.VaroTrigger;

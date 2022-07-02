@@ -1,6 +1,7 @@
 package de.varoplugin.varo.task.trigger.builder;
 
 import de.varoplugin.varo.task.trigger.VaroTrigger;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,8 +13,10 @@ public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
 
     private final List<Function<B, VaroTrigger>> layerTrigger;
     private final List<VaroTrigger> children;
+    private final Plugin plugin;
 
-    public AbstractTriggerBuilder() {
+    public AbstractTriggerBuilder(Plugin plugin) {
+        this.plugin = plugin;
         this.layerTrigger = new LinkedList<>();
         this.children = new LinkedList<>();
     }
@@ -42,7 +45,7 @@ public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
         if (layer.size() == 0) return null;
         else if (layer.size() == 1) return layer.get(0);
 
-        VaroTrigger bitch = new BitchTrigger();
+        VaroTrigger bitch = new BitchTrigger(this.plugin);
         layer.forEach(bitch::addChildren);
         return bitch;
     }

@@ -1,14 +1,21 @@
-package de.varoplugin.varo.task.trigger.builder;
+package de.varoplugin.varo.game.task.trigger.builder;
 
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
 import de.varoplugin.varo.task.trigger.VaroTrigger;
-import de.varoplugin.varo.task.trigger.game.player.VaroOnlineTrigger;
-import de.varoplugin.varo.task.trigger.game.player.VaroParticipantStateTrigger;
-import de.varoplugin.varo.task.trigger.game.player.VaroPlayerModeTrigger;
+import de.varoplugin.varo.game.task.trigger.player.VaroOnlineTrigger;
+import de.varoplugin.varo.game.task.trigger.player.VaroParticipantStateTrigger;
+import de.varoplugin.varo.game.task.trigger.player.VaroPlayerModeTrigger;
+import de.varoplugin.varo.task.trigger.builder.AbstractTriggerBuilder;
+import de.varoplugin.varo.task.trigger.builder.TriggerBuilder;
+import org.bukkit.plugin.Plugin;
 
 public class VaroPlayerTriggerBuilder extends AbstractTriggerBuilder<VaroPlayer> implements TriggerBuilder<VaroPlayer> {
+
+    public VaroPlayerTriggerBuilder(Plugin plugin) {
+        super(plugin);
+    }
 
     public VaroPlayerTriggerBuilder or(VaroParticipantState state) {
         super.orTrigger(vp -> new VaroParticipantStateTrigger(vp, state));

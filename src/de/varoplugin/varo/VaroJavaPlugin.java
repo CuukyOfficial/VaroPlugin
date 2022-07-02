@@ -6,7 +6,7 @@ import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.Game;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.task.register.DefaultTaskRegister;
+import de.varoplugin.varo.game.task.register.DefaultTaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 import org.bukkit.event.Cancellable;
@@ -61,7 +61,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		// Load stats
 
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
-		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(), this);
+		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(this), this);
 
 		this.varo = new Game();
 		this.varo.initialize(this);

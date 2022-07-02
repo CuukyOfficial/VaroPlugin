@@ -1,4 +1,4 @@
-package de.varoplugin.varo.task.game;
+package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.task.AbstractListener;

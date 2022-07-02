@@ -2,6 +2,7 @@ package de.varoplugin.varo.task.trigger.builder;
 
 import de.varoplugin.varo.task.trigger.AbstractTrigger;
 import de.varoplugin.varo.task.trigger.VaroTrigger;
+import org.bukkit.plugin.Plugin;
 
 /**
  * Oh, yeah I'm going to do whatever you want from me
@@ -10,8 +11,8 @@ import de.varoplugin.varo.task.trigger.VaroTrigger;
  */
 public class BitchTrigger extends AbstractTrigger implements VaroTrigger {
 
-    public BitchTrigger() {
-        super(true);
+    public BitchTrigger(Plugin plugin) {
+        super(plugin, true);
     }
 
     @Override

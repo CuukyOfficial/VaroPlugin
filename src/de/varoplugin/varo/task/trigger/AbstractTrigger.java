@@ -1,6 +1,11 @@
 package de.varoplugin.varo.task.trigger;
 
+import de.varoplugin.varo.api.event.TriggerDestroyEvent;
 import de.varoplugin.varo.task.VaroTask;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,13 +14,15 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractTrigger implements VaroTrigger {
 
+    private Plugin plugin;
     private Set<VaroTrigger> children;
     private Set<VaroTask> tasks;
     private boolean match;
     private boolean activated;
     private boolean enabled;
 
-    public AbstractTrigger(boolean match) {
+    public AbstractTrigger(Plugin plugin, boolean match) {
+        this.plugin = plugin;
         this.match = match;
         this.children = new HashSet<>();
         this.tasks = new HashSet<>();
@@ -35,7 +42,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
 
     protected boolean giveToChildren(VaroTask... registrable) {
         if (this.children.size() == 0) return false;
-        this.children.forEach(c -> c.register(registrable));
+        this.children.forEach(c -> Arrays.stream(registrable).map(VaroTask::clone).forEach(c::register));
         return true;
     }
 
@@ -61,21 +68,16 @@ public abstract class AbstractTrigger implements VaroTrigger {
         this.tasks.stream().filter(VaroTask::isRegistered).forEach(VaroTask::deregister);
     }
 
-    /**
-     * Clone activated state?
-     * @return Cloned
-     */
-    @Override
-    public VaroTrigger clone() {
-        try {
-            AbstractTrigger trigger = (AbstractTrigger) super.clone();
-            trigger.children = this.getChildrenCloned();
-            trigger.tasks = this.getTasksCloned();
-            trigger.match = this.match;
-            return trigger;
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+    @EventHandler
+    public void onPluginDisable(PluginDisableEvent event) {
+        if (!event.getPlugin().equals(this.plugin)) return;
+        this.destroy();
+    }
+
+    @EventHandler
+    public void onTriggerDestroy(TriggerDestroyEvent event) {
+        if (!this.children.remove(event.getTrigger())) return;
+        if (this.children.isEmpty() && this.tasks.isEmpty()) this.destroy();
     }
 
     @Override
@@ -83,6 +85,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
         this.activated = true;
         this.enabled = this.isEnabled();
         if (this.enabled) this.activateChildren();
+        this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 
     @Override
@@ -90,6 +93,17 @@ public abstract class AbstractTrigger implements VaroTrigger {
         this.activated = false;
         this.enabled = false;
         this.deactivateChildren();
+        HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public void destroy() {
+        if (this.isActivated()) this.deactivate();
+        this.children.forEach(VaroTrigger::destroy);
+        this.tasks.stream().filter(VaroTask::isRegistered).forEach(VaroTask::deregister);
+        this.children = null;
+        this.tasks = null;
+        this.plugin.getServer().getPluginManager().callEvent(new TriggerDestroyEvent(this));
     }
 
     @Override
@@ -108,5 +122,24 @@ public abstract class AbstractTrigger implements VaroTrigger {
         if (this.giveToChildren(tasks)) return;
         this.tasks.addAll(Arrays.asList(tasks));
         if (this.enabled) Arrays.stream(tasks).filter(c -> !c.isRegistered()).forEach(VaroTask::register);
+    }
+
+    /**
+     * Clone activated state?
+     *
+     * @return Cloned
+     */
+    @Override
+    public VaroTrigger clone() {
+        try {
+            AbstractTrigger trigger = (AbstractTrigger) super.clone();
+            trigger.plugin = this.plugin;
+            trigger.children = this.getChildrenCloned();
+            trigger.tasks = this.getTasksCloned();
+            trigger.match = this.match;
+            return trigger;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

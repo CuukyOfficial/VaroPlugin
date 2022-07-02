@@ -1,4 +1,4 @@
-package de.varoplugin.varo.task.game;
+package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
 import de.varoplugin.varo.game.GameKickResult;
