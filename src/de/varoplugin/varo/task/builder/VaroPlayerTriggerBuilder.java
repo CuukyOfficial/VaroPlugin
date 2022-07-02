@@ -4,18 +4,36 @@ import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
 import de.varoplugin.varo.task.VaroTrigger;
+import de.varoplugin.varo.task.game.player.VaroOnlineTrigger;
+import de.varoplugin.varo.task.game.player.VaroParticipantStateTrigger;
+import de.varoplugin.varo.task.game.player.VaroPlayerModeTrigger;
 
-public interface VaroPlayerTriggerBuilder extends TriggerBuilder<VaroPlayer> {
+public class VaroPlayerTriggerBuilder extends AbstractTriggerBuilder<VaroPlayer> implements TriggerBuilder<VaroPlayer> {
 
-    VaroPlayerTriggerBuilder or(VaroParticipantState state);
+    public VaroPlayerTriggerBuilder or(VaroParticipantState state) {
+        super.orTrigger(vp -> new VaroParticipantStateTrigger(vp, state));
+        return this;
+    }
 
-    VaroPlayerTriggerBuilder or(VaroPlayerMode mode);
+    public VaroPlayerTriggerBuilder or(VaroPlayerMode mode) {
+        super.orTrigger(vp -> new VaroPlayerModeTrigger(vp, mode));
+        return this;
+    }
 
-    VaroPlayerTriggerBuilder or(boolean online);
+    public VaroPlayerTriggerBuilder or(boolean online) {
+        super.orTrigger(vp -> new VaroOnlineTrigger(vp, online));
+        return this;
+    }
 
     @Override
-    VaroPlayerTriggerBuilder or(VaroTrigger trigger);
+    public VaroPlayerTriggerBuilder or(VaroTrigger trigger) {
+        super.or(trigger);
+        return this;
+    }
 
     @Override
-    VaroPlayerTriggerBuilder and(VaroTrigger... trigger);
+    public VaroPlayerTriggerBuilder and(VaroTrigger... trigger) {
+        super.and(trigger);
+        return this;
+    }
 }

@@ -32,4 +32,13 @@ public abstract class AbstractTask implements VaroRegistrable, Runnable {
     public boolean isRegistered() {
         return this.runnable != null;
     }
+
+    @Override
+    public VaroRegistrable clone() {
+        try {
+            return (AbstractTask) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

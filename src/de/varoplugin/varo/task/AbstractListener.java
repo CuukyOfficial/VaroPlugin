@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 
 public abstract class AbstractListener implements VaroRegistrable, Listener {
 
-    private final Varo varo;
+    private Varo varo;
     private boolean registered;
 
     public AbstractListener(Varo varo) {
@@ -32,5 +32,16 @@ public abstract class AbstractListener implements VaroRegistrable, Listener {
 
     public Varo getVaro() {
         return this.varo;
+    }
+
+    @Override
+    public VaroRegistrable clone() {
+        try {
+            AbstractListener listener = (AbstractListener) super.clone();
+            listener.varo = this.varo;
+            return listener;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

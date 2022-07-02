@@ -24,7 +24,7 @@ public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
 
     @Override
     public TriggerBuilder<B> or(VaroTrigger trigger) {
-        this.layerTrigger.add(b -> trigger.deepClone());
+        this.layerTrigger.add(b -> trigger.clone());
         return this;
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
     @Override
     public VaroTrigger build(B build) {
         List<VaroTrigger> layer = this.layerTrigger.stream().map(trigger -> trigger.apply(build)).collect(Collectors.toList());
-        layer.forEach(t -> this.children.forEach(c -> t.addChildren(c.deepClone())));
+        layer.forEach(t -> this.children.forEach(c -> t.addChildren(c.clone())));
 
         if (layer.size() == 0) return null;
         else if (layer.size() == 1) return layer.get(0);
@@ -45,5 +45,12 @@ public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
         VaroTrigger bitch = new BitchTrigger();
         layer.forEach(bitch::addChildren);
         return bitch;
+    }
+
+    @Override
+    public VaroTrigger complete(B buildInfo) {
+        VaroTrigger built = this.build(buildInfo);
+        built.activate();
+        return built;
     }
 }

@@ -9,7 +9,13 @@ import java.util.Set;
 
 public abstract class AbstractTrigger extends AbstractTriggerParent implements Listener {
 
-    private final Varo varo;
+    private Varo varo;
+
+    /**
+     * Cloning
+     */
+    protected AbstractTrigger() {
+    }
 
     protected AbstractTrigger(Varo varo, boolean match, Set<VaroTrigger> children, Set<VaroRegistrable> registrations) {
         super(match, children, registrations);
@@ -34,6 +40,13 @@ public abstract class AbstractTrigger extends AbstractTriggerParent implements L
     public void deactivate() {
         super.deactivate();
         HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public VaroTrigger clone() {
+        AbstractTrigger trigger = (AbstractTrigger) super.clone();
+        trigger.varo = this.varo;
+        return trigger;
     }
 
     public Varo getVaro() {

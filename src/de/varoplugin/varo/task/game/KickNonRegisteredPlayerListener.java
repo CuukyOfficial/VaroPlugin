@@ -5,14 +5,13 @@ import de.varoplugin.varo.game.GameKickResult;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroKickResult;
 import de.varoplugin.varo.task.AbstractListener;
-import de.varoplugin.varo.task.VaroRegistrable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class RunningLoginListener extends AbstractListener {
+public class KickNonRegisteredPlayerListener extends AbstractListener {
 
-    public RunningLoginListener(Varo varo) {
+    public KickNonRegisteredPlayerListener(Varo varo) {
         super(varo);
     }
 
@@ -27,10 +26,5 @@ public class RunningLoginListener extends AbstractListener {
         if (loginKickEvent.getResult() != GameKickResult.ALLOWED) {
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
         }
-    }
-
-    @Override
-    public VaroRegistrable deepClone() {
-        return new RunningLoginListener(this.getVaro());
     }
 }

@@ -2,14 +2,13 @@ package de.varoplugin.varo.task.game;
 
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.task.AbstractListener;
-import de.varoplugin.varo.task.VaroRegistrable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class LobbyLoginListener extends AbstractListener {
+public class RegisterPlayerListener extends AbstractListener {
 
-    public LobbyLoginListener(Varo varo) {
+    public RegisterPlayerListener(Varo varo) {
         super(varo);
     }
 
@@ -19,10 +18,5 @@ public class LobbyLoginListener extends AbstractListener {
 
         // TODO: Add register before start config option and make default player state configurable
         this.getVaro().register(event.getPlayer());
-    }
-
-    @Override
-    public VaroRegistrable deepClone() {
-        return new LobbyLoginListener(this.getVaro());
     }
 }

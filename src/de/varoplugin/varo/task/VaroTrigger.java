@@ -1,6 +1,6 @@
 package de.varoplugin.varo.task;
 
-public interface VaroTrigger {
+public interface VaroTrigger extends Cloneable {
 
     void activate();
 
@@ -12,6 +12,12 @@ public interface VaroTrigger {
 
     void register(VaroRegistrable... register);
 
-    VaroTrigger deepClone();
+    /**
+     * Deep clone.
+     *
+     * @return Deep cloned copy
+     */
+    VaroTrigger clone();
+//    VaroTrigger deepClone();
 
 }

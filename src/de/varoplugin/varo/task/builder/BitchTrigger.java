@@ -15,12 +15,7 @@ public class BitchTrigger extends AbstractTriggerParent implements VaroTrigger {
     }
 
     @Override
-    protected boolean shouldTrigger() {
+    protected boolean isTriggered() {
         return true;
-    }
-
-    @Override
-    public VaroTrigger deepClone() {
-        return new BitchTrigger();
     }
 }

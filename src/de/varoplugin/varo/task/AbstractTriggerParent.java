@@ -8,10 +8,16 @@ import java.util.stream.Collectors;
 public abstract class AbstractTriggerParent implements VaroTrigger {
 
     // TODO: Only activate children if not already activated and vice versa?
-    private final Set<VaroTrigger> children;
-    private final Set<VaroRegistrable> registrations;
-    private final boolean match;
+    private Set<VaroTrigger> children;
+    private Set<VaroRegistrable> registrations;
+    private boolean match;
     private boolean activated;
+
+    /**
+     * Cloning
+     */
+    protected AbstractTriggerParent() {
+    }
 
     protected AbstractTriggerParent(boolean match, Set<VaroTrigger> children, Set<VaroRegistrable> registrations) {
         this.match = match;
@@ -23,8 +29,16 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
         this(match, new HashSet<>(), new HashSet<>());
     }
 
+    private Set<VaroTrigger> getChildrenCloned() {
+        return this.children.stream().map(VaroTrigger::clone).collect(Collectors.toSet());
+    }
+
+    private Set<VaroRegistrable> getRegistrationsCloned() {
+        return this.registrations.stream().map(VaroRegistrable::clone).collect(Collectors.toSet());
+    }
+
     private boolean isEnabled() {
-        return this.isActivated() && this.shouldTrigger() == this.match;
+        return this.isActivated() && this.isTriggered() == this.match;
     }
 
     protected boolean giveToChildren(VaroRegistrable... registrable) {
@@ -33,12 +47,12 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
         return true;
     }
 
-    protected void shouldTrigger(boolean shouldRegister) {
-        if (shouldRegister == this.match) this.activateChildren();
+    protected void triggerIf(boolean trigger) {
+        if (trigger == this.match) this.activateChildren();
         else this.deactivateChildren();
     }
 
-    protected abstract boolean shouldTrigger();
+    protected abstract boolean isTriggered();
 
     protected void activateChildren() {
         this.children.forEach(VaroTrigger::activate);
@@ -50,12 +64,21 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
         this.registrations.forEach(VaroRegistrable::deregister);
     }
 
-    protected Set<VaroTrigger> getSubTriggerCloned() {
-        return this.children.stream().map(VaroTrigger::deepClone).collect(Collectors.toSet());
-    }
-
-    protected Set<VaroRegistrable> getRegistrationsCloned() {
-        return this.registrations.stream().map(VaroRegistrable::deepClone).collect(Collectors.toSet());
+    /**
+     * Clone activated state?
+     * @return Cloned
+     */
+    @Override
+    public VaroTrigger clone() {
+        try {
+            AbstractTriggerParent trigger = (AbstractTriggerParent) super.clone();
+            trigger.children = this.getChildrenCloned();
+            trigger.registrations = this.getRegistrationsCloned();
+            trigger.match = this.match;
+            return trigger;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -86,9 +109,5 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
         if (this.giveToChildren(register)) return;
         this.registrations.addAll(Arrays.asList(register));
         if (this.isEnabled()) Arrays.stream(register).forEach(VaroRegistrable::register);
-    }
-
-    public boolean isMatch() {
-        return this.match;
     }
 }

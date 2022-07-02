@@ -2,7 +2,7 @@ package de.varoplugin.varo.task;
 
 import de.varoplugin.varo.game.Varo;
 
-public interface VaroRegistrable {
+public interface VaroRegistrable extends Cloneable {
 
     void register();
 
@@ -12,6 +12,6 @@ public interface VaroRegistrable {
 
     Varo getVaro();
 
-    VaroRegistrable deepClone();
+    VaroRegistrable clone();
 
 }
