@@ -10,12 +10,6 @@ public class VaroParticipantStateTrigger extends AbstractPlayerTrigger {
 
     private VaroParticipantState state;
 
-    /**
-     * Cloning
-     */
-    protected VaroParticipantStateTrigger() {
-    }
-
     public VaroParticipantStateTrigger(VaroPlayer player, VaroParticipantState state, boolean match) {
         super(player, match);
         this.state = state;

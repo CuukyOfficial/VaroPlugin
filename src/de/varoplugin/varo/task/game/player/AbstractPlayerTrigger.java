@@ -8,9 +8,6 @@ public abstract class AbstractPlayerTrigger extends AbstractTrigger {
 
     private VaroPlayer player;
 
-    protected AbstractPlayerTrigger() {
-    }
-
     public AbstractPlayerTrigger(VaroPlayer player, boolean match) {
         super(player.getVaro(), match);
         this.player = player;

@@ -4,26 +4,13 @@ import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public abstract class AbstractTrigger extends AbstractTriggerParent implements Listener {
 
     private Varo varo;
 
-    /**
-     * Cloning
-     */
-    protected AbstractTrigger() {
-    }
-
-    protected AbstractTrigger(Varo varo, boolean match, Set<VaroTrigger> children, Set<VaroRegistrable> registrations) {
-        super(match, children, registrations);
-        this.varo = varo;
-    }
-
     public AbstractTrigger(Varo varo, boolean match) {
-        this(varo, match, new HashSet<>(), new HashSet<>());
+        super(match);
+        this.varo = varo;
     }
 
     public AbstractTrigger(Varo varo) {

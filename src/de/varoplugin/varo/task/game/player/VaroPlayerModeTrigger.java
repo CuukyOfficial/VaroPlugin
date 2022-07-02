@@ -10,12 +10,6 @@ public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {
 
     private VaroPlayerMode mode;
 
-    /**
-     * Cloning
-     */
-    protected VaroPlayerModeTrigger() {
-    }
-
     public VaroPlayerModeTrigger(VaroPlayer player, VaroPlayerMode mode, boolean match) {
         super(player, match);
         this.mode = mode;

@@ -13,20 +13,10 @@ public abstract class AbstractTriggerParent implements VaroTrigger {
     private boolean match;
     private boolean activated;
 
-    /**
-     * Cloning
-     */
-    protected AbstractTriggerParent() {
-    }
-
-    protected AbstractTriggerParent(boolean match, Set<VaroTrigger> children, Set<VaroRegistrable> registrations) {
-        this.match = match;
-        this.children = children;
-        this.registrations = registrations;
-    }
-
     public AbstractTriggerParent(boolean match) {
-        this(match, new HashSet<>(), new HashSet<>());
+        this.match = match;
+        this.children = new HashSet<>();
+        this.registrations = new HashSet<>();
     }
 
     private Set<VaroTrigger> getChildrenCloned() {

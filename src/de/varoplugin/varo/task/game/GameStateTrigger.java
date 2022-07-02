@@ -11,17 +11,13 @@ public class GameStateTrigger extends AbstractTrigger {
 
     private VaroState state;
 
-    protected GameStateTrigger() {
-    }
-
     public GameStateTrigger(Varo varo, VaroState state, boolean match) {
         super(varo, match);
         this.state = state;
     }
 
     public GameStateTrigger(Varo varo, VaroState state) {
-        super(varo);
-        this.state = state;
+        this(varo, state, true);
     }
 
     @Override
