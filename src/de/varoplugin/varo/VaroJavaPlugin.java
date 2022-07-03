@@ -61,7 +61,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		// Load stats
 
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
-		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(this), this);
+		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(), this);
 
 		this.varo = new Game();
 		this.varo.initialize(this);

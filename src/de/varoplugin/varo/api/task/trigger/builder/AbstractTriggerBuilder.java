@@ -1,63 +1,69 @@
 package de.varoplugin.varo.api.task.trigger.builder;
 
 import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.game.task.trigger.builder.VaroTriggerBuilder;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
-public abstract class AbstractTriggerBuilder<B> implements TriggerBuilder<B> {
+public abstract class AbstractTriggerBuilder implements TriggerBuilder {
 
-    private final List<Function<B, VaroTrigger>> layerTrigger;
-    private final List<VaroTrigger> children;
+    private final Set<VaroTrigger> when;
+    private final Set<VaroTrigger> children;
     private final Plugin plugin;
-
-    private VaroTrigger buildHead(B buildInfo) {
-        List<VaroTrigger> layer = this.layerTrigger.stream().map(trigger -> trigger.apply(buildInfo)).collect(Collectors.toList());
-        if (layer.size() == 0) return null;
-        else if (layer.size() == 1) return layer.get(0);
-
-        VaroTrigger bitch = new BitchTrigger(this.plugin);
-        layer.forEach(bitch::addChildren);
-        return bitch;
-    }
 
     public AbstractTriggerBuilder(Plugin plugin) {
         this.plugin = plugin;
-        this.layerTrigger = new LinkedList<>();
-        this.children = new LinkedList<>();
+        this.when = new HashSet<>();
+        this.children = new HashSet<>();
     }
 
-    protected void orTrigger(Function<B, VaroTrigger> triggerFunction) {
-        this.layerTrigger.add(triggerFunction);
+    private VaroTrigger buildHead() {
+        if (this.when.size() == 0) return null;
+        else if (this.when.size() == 1) return this.when.iterator().next();
+
+        VaroTrigger bitch = new BitchTrigger(this.plugin);
+        this.when.forEach(bitch::addChildren);
+        return bitch;
     }
 
     @Override
-    public TriggerBuilder<B> or(VaroTrigger trigger) {
-        this.layerTrigger.add(b -> trigger.clone());
+    public TriggerBuilder when(VaroTrigger trigger) {
+        this.when.add(trigger);
         return this;
     }
 
     @Override
-    public TriggerBuilder<B> and(VaroTrigger... trigger) {
+    public TriggerBuilder when(VaroTriggerBuilder when) {
+        this.when(when.build());
+        return this;
+    }
+
+    @Override
+    public TriggerBuilder and(VaroTrigger... trigger) {
         this.children.addAll(Arrays.asList(trigger));
         return this;
     }
 
     @Override
-    public VaroTrigger build(B build) {
-        VaroTrigger head = this.buildHead(build);
+    public TriggerBuilder and(VaroTriggerBuilder and) {
+        this.children.add(and.build());
+        return this;
+    }
+
+    @Override
+    public VaroTrigger build() {
+        VaroTrigger head = this.buildHead();
         if (head == null) return null;
         head.addChildren(this.children.toArray(new VaroTrigger[0]));
         return head;
     }
 
     @Override
-    public VaroTrigger complete(B buildInfo) {
-        VaroTrigger built = this.build(buildInfo);
+    public VaroTrigger complete() {
+        VaroTrigger built = this.build();
         built.activate();
         return built;
     }

@@ -6,33 +6,44 @@ import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 import de.varoplugin.varo.game.task.trigger.GameStateTrigger;
 import de.varoplugin.varo.api.task.trigger.builder.AbstractTriggerBuilder;
 import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
-import org.bukkit.plugin.Plugin;
 
-public class VaroTriggerBuilder extends AbstractTriggerBuilder<Varo> implements TriggerBuilder<Varo> {
+import java.util.function.Consumer;
 
-    public VaroTriggerBuilder(Plugin plugin) {
-        super(plugin);
+public class VaroTriggerBuilder extends AbstractTriggerBuilder implements TriggerBuilder {
+
+    private final Varo varo;
+
+    public VaroTriggerBuilder(Varo varo) {
+        super(varo.getPlugin());
+        this.varo = varo;
     }
 
-    public VaroTriggerBuilder or(VaroState state) {
-        this.orTrigger(varo -> new GameStateTrigger(varo, state));
+    public VaroTriggerBuilder when(VaroState state) {
+        this.when(new GameStateTrigger(this.varo, state));
         return this;
     }
 
-    public VaroTriggerBuilder orNot(VaroState state) {
-        this.orTrigger(varo -> new GameStateTrigger(varo, state, false));
+    public VaroTriggerBuilder whenNot(VaroState state) {
+        this.when(new GameStateTrigger(this.varo, state, false));
         return this;
     }
 
     @Override
-    public VaroTriggerBuilder or(VaroTrigger trigger) {
-        super.or(trigger);
+    public VaroTriggerBuilder when(VaroTrigger trigger) {
+        super.when(trigger);
         return this;
     }
 
     @Override
     public VaroTriggerBuilder and(VaroTrigger... triggers) {
         super.and(triggers);
+        return this;
+    }
+
+    public VaroTriggerBuilder and(Consumer<VaroTriggerBuilder> and) {
+        VaroTriggerBuilder vtb = new VaroTriggerBuilder(this.varo);
+        and.accept(vtb);
+        this.and(vtb);
         return this;
     }
 }
