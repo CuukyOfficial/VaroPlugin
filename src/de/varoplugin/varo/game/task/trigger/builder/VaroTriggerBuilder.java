@@ -2,10 +2,10 @@ package de.varoplugin.varo.game.task.trigger.builder;
 
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 import de.varoplugin.varo.game.task.trigger.GameStateTrigger;
-import de.varoplugin.varo.task.trigger.builder.AbstractTriggerBuilder;
-import de.varoplugin.varo.task.trigger.builder.TriggerBuilder;
+import de.varoplugin.varo.api.task.trigger.builder.AbstractTriggerBuilder;
+import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import org.bukkit.plugin.Plugin;
 
 public class VaroTriggerBuilder extends AbstractTriggerBuilder<Varo> implements TriggerBuilder<Varo> {

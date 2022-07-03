@@ -1,6 +1,6 @@
-package de.varoplugin.varo.task.trigger;
+package de.varoplugin.varo.api.task.trigger;
 
-import de.varoplugin.varo.task.VaroTask;
+import de.varoplugin.varo.api.task.VaroTask;
 import org.bukkit.event.Listener;
 
 public interface VaroTrigger extends Cloneable, Listener {

@@ -1,8 +1,8 @@
 package de.varoplugin.varo.game.task.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.task.AbstractListener;
-import de.varoplugin.varo.task.VaroTask;
+import de.varoplugin.varo.api.task.AbstractListener;
+import de.varoplugin.varo.api.task.VaroTask;
 
 public class AbstractPlayerListener extends AbstractListener {
 

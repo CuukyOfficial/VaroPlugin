@@ -3,12 +3,12 @@ package de.varoplugin.varo.game.task.trigger.builder;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
-import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 import de.varoplugin.varo.game.task.trigger.player.VaroOnlineTrigger;
 import de.varoplugin.varo.game.task.trigger.player.VaroParticipantStateTrigger;
 import de.varoplugin.varo.game.task.trigger.player.VaroPlayerModeTrigger;
-import de.varoplugin.varo.task.trigger.builder.AbstractTriggerBuilder;
-import de.varoplugin.varo.task.trigger.builder.TriggerBuilder;
+import de.varoplugin.varo.api.task.trigger.builder.AbstractTriggerBuilder;
+import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import org.bukkit.plugin.Plugin;
 
 public class VaroPlayerTriggerBuilder extends AbstractTriggerBuilder<VaroPlayer> implements TriggerBuilder<VaroPlayer> {

@@ -1,8 +1,8 @@
 package de.varoplugin.varo.game.task.trigger;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.task.trigger.AbstractTrigger;
-import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.AbstractTrigger;
+import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 
 public abstract class GameTrigger extends AbstractTrigger {
 

@@ -1,4 +1,4 @@
-package de.varoplugin.varo.task;
+package de.varoplugin.varo.api.task;
 
 import de.varoplugin.varo.game.Varo;
 

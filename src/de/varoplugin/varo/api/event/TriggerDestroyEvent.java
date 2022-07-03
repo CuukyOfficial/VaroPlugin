@@ -1,6 +1,6 @@
 package de.varoplugin.varo.api.event;
 
-import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 
 public class TriggerDestroyEvent extends VaroEvent {
 

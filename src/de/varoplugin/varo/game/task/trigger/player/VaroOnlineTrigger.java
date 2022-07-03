@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;

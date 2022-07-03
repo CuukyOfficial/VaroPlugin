@@ -2,7 +2,7 @@ package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.task.AbstractExecutable;
+import de.varoplugin.varo.api.task.AbstractExecutable;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class StartingTask extends AbstractExecutable {

@@ -1,7 +1,7 @@
-package de.varoplugin.varo.task.trigger.builder;
+package de.varoplugin.varo.api.task.trigger.builder;
 
-import de.varoplugin.varo.task.trigger.AbstractTrigger;
-import de.varoplugin.varo.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.AbstractTrigger;
+import de.varoplugin.varo.api.task.trigger.VaroTrigger;
 import org.bukkit.plugin.Plugin;
 
 /**

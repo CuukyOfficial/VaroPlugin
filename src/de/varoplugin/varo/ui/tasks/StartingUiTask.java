@@ -1,7 +1,7 @@
 package de.varoplugin.varo.ui.tasks;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.task.AbstractExecutable;
+import de.varoplugin.varo.api.task.AbstractExecutable;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
