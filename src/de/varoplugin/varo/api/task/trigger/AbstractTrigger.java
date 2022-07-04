@@ -77,6 +77,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
 
     @EventHandler
     public void onTriggerDestroy(TriggerDestroyEvent event) {
+        if (this.wasDestroyed()) return;
         if (!this.children.remove(event.getTrigger())) return;
         if (this.children.isEmpty() && this.tasks.isEmpty()) this.destroy();
     }
