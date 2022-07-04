@@ -16,10 +16,12 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
 
     private VaroParticipantState state;
     private VaroPlayerMode mode;
+    private VaroTeam team;
 
     private int kills;
 
     private Player player;
+    private String name;
 
     /**
      * For Serialization. Do not use.
@@ -37,6 +39,7 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     public GamePlayer(Player player) {
         this(player.getUniqueId());
         this.player = player;
+        this.name = player.getName();
     }
 
     @Override
@@ -97,6 +100,11 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
     public int getKills() {
         return this.kills;
     }
@@ -109,7 +117,17 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
+    public boolean hasTeam() {
+        return this.team != null;
+    }
+
+    @Override
+    public void setTeam(VaroTeam team) {
+        this.team = team;
+    }
+
+    @Override
     public VaroTeam getTeam() {
-        return null;
+        return this.team;
     }
 }

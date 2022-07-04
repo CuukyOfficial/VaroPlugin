@@ -1,15 +1,12 @@
 package de.varoplugin.varo.game.world.protectable;
 
+import de.varoplugin.varo.game.VaroGameObject;
 import de.varoplugin.varo.game.entity.VaroEntity;
-
-import java.util.UUID;
 
 /**
  * Represents an object which can save chests.
  */
-public interface VaroProtectableHolder extends VaroProtectableContainer {
-
-    UUID getUuid();
+public interface VaroProtectableHolder extends VaroProtectableContainer, VaroGameObject {
 
     boolean canAccessSavings(VaroEntity player);
 

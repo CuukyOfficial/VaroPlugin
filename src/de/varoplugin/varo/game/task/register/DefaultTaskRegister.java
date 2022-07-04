@@ -6,6 +6,7 @@ import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitia
 import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.task.KickNonRegisteredPlayerListener;
+import de.varoplugin.varo.game.task.RandomPlayerTask;
 import de.varoplugin.varo.game.task.RegisterPlayerListener;
 import de.varoplugin.varo.game.task.StartingTask;
 import de.varoplugin.varo.game.task.player.NoMoveListener;
@@ -31,6 +32,10 @@ public class DefaultTaskRegister implements Listener {
 
         new VaroTriggerBuilder(event.getVaro()).when(GameState.STARTING).complete().register(
                 new StartingTask(event.getVaro())
+        );
+
+        new VaroTriggerBuilder(event.getVaro()).when(GameState.RUNNING).complete().register(
+                new RandomPlayerTask(event.getVaro(), 2) // TODO: Team size config entry and trigger for config entry
         );
     }
 

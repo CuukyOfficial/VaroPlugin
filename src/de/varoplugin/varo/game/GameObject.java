@@ -31,6 +31,12 @@ public abstract class GameObject implements VaroGameObject {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (!o.getClass().equals(this.getClass())) return false;
+        return ((GameObject) o).getUuid().equals(this.uuid);
+    }
+
+    @Override
     public UUID getUuid() {
         return this.uuid;
     }

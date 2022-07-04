@@ -5,4 +5,6 @@ import de.varoplugin.varo.game.world.protectable.VaroProtectableHolder;
 
 public interface VaroEntity extends VaroGameObject, VaroProtectableHolder {
 
+    String getName();
+
 }
