@@ -1,5 +1,6 @@
 package de.varoplugin.varo.game.entity.team;
 
+import de.varoplugin.varo.api.event.game.team.VaroTeamMemberAddEvent;
 import de.varoplugin.varo.game.entity.GameEntity;
 import de.varoplugin.varo.game.entity.VaroEntity;
 
@@ -21,6 +22,7 @@ public class GameTeam extends GameEntity implements VaroTeam {
 
     @Override
     public boolean addMember(VaroTeamable teamable) {
+        if (this.members.contains(teamable) || !this.getVaro().getPlugin().isCancelled(new VaroTeamMemberAddEvent(this, teamable))) return false;
         teamable.setTeam(this);
         return this.members.add(teamable);
     }

@@ -41,6 +41,7 @@ public class RandomPlayerTask extends AbstractTask {
 
             // add
             VaroTeam team = new GameTeam(name);
+            this.getVaro().addTeam(team);
             member.forEach(team::addMember);
         }
     }

@@ -6,6 +6,9 @@ import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.game.entity.player.GamePlayerContainer;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerContainer;
+import de.varoplugin.varo.game.entity.team.VaroTeam;
+import de.varoplugin.varo.util.map.HashUniqueIdMap;
+import de.varoplugin.varo.util.map.UniqueIdMap;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -17,10 +20,12 @@ public class Game implements Varo {
     private VaroState state;
 
     private final VaroPlayerContainer players;
+    private final UniqueIdMap<VaroTeam> teams;
 
     public Game() {
         this.state = GameState.LOBBY;
         this.players = new GamePlayerContainer(this);
+        this.teams = new HashUniqueIdMap<>();
     }
 
     @Override
@@ -65,6 +70,12 @@ public class Game implements Varo {
         if (this.state == state || this.plugin.isCancelled(new VaroStateChangeEvent(this, state))) return false;
         this.state = state;
         return true;
+    }
+
+    @Override
+    public boolean addTeam(VaroTeam team) {
+        team.initialize(this);
+        return this.teams.add(team);
     }
 
     @Override
