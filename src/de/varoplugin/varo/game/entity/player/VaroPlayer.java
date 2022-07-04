@@ -2,12 +2,13 @@ package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.game.entity.VaroEntity;
 import de.varoplugin.varo.game.entity.team.VaroTeamable;
+import de.varoplugin.varo.game.strike.VaroStrikable;
 import org.bukkit.entity.Player;
 
 /**
  * Represents a player playing a Varo.
  */
-public interface VaroPlayer extends VaroEntity, VaroTeamable, StatsHolder {
+public interface VaroPlayer extends VaroEntity, VaroTeamable, StatsHolder, VaroStrikable {
 
     /**
      * Returns the hashCode of the UUID.
