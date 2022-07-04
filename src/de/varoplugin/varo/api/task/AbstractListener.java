@@ -4,44 +4,19 @@ import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-public abstract class AbstractListener implements VaroTask, Listener {
-
-    private Varo varo;
-    private boolean registered;
+public abstract class AbstractListener extends AbstractTask implements VaroTask, Listener {
 
     public AbstractListener(Varo varo) {
-        this.varo = varo;
+        super(varo);
     }
 
     @Override
-    public void register() {
-        this.registered = true;
-        this.varo.getPlugin().getServer().getPluginManager().registerEvents(this, this.varo.getPlugin());
+    public void onEnable() {
+        this.getVaro().getPlugin().getServer().getPluginManager().registerEvents(this, this.getVaro().getPlugin());
     }
 
     @Override
-    public void deregister() {
-        this.registered = false;
+    public void onDisable() {
         HandlerList.unregisterAll(this);
-    }
-
-    @Override
-    public boolean isRegistered() {
-        return this.registered;
-    }
-
-    public Varo getVaro() {
-        return this.varo;
-    }
-
-    @Override
-    public VaroTask clone() {
-        try {
-            AbstractListener listener = (AbstractListener) super.clone();
-            listener.varo = this.varo;
-            return listener;
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

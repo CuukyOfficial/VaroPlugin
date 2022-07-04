@@ -61,12 +61,12 @@ public abstract class AbstractTrigger implements VaroTrigger {
 
     protected void activateChildren() {
         this.children.stream().filter(c -> !c.isActivated()).forEach(VaroTrigger::activate);
-        this.tasks.stream().filter(r -> !r.isRegistered()).forEach(VaroTask::register);
+        this.tasks.stream().filter(r -> !r.isEnabled()).forEach(VaroTask::enable);
     }
 
     protected void deactivateChildren() {
         this.children.stream().filter(VaroTrigger::isActivated).forEach(VaroTrigger::deactivate);
-        this.tasks.stream().filter(VaroTask::isRegistered).forEach(VaroTask::deregister);
+        this.tasks.stream().filter(VaroTask::isEnabled).forEach(VaroTask::disable);
     }
 
     @EventHandler
@@ -101,7 +101,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
     public void destroy() {
         if (this.activated) this.deactivate();
         this.children.forEach(VaroTrigger::destroy);
-        this.tasks.stream().filter(VaroTask::isRegistered).forEach(VaroTask::deregister);
+        this.tasks.stream().filter(VaroTask::isEnabled).forEach(VaroTask::disable);
         this.children = null;
         this.tasks = null;
         this.plugin.getServer().getPluginManager().callEvent(new TriggerDestroyEvent(this));
@@ -127,7 +127,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
     public void register(VaroTask... tasks) {
         if (this.giveToChildren(tasks)) return;
         this.tasks.addAll(Arrays.asList(tasks));
-        if (this.enabled) Arrays.stream(tasks).filter(c -> !c.isRegistered()).forEach(VaroTask::register);
+        if (this.enabled) Arrays.stream(tasks).filter(c -> !c.isEnabled()).forEach(VaroTask::enable);
     }
 
     /**

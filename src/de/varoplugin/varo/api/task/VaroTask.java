@@ -4,11 +4,11 @@ import de.varoplugin.varo.game.Varo;
 
 public interface VaroTask extends Cloneable {
 
-    void register();
+    void enable();
 
-    void deregister();
+    void disable();
 
-    boolean isRegistered();
+    boolean isEnabled();
 
     Varo getVaro();
 
