@@ -34,7 +34,7 @@ public class DefaultTaskRegister implements Listener {
                 new StartingTask(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.RUNNING)
+        new VaroTriggerBuilder(event.getVaro()).when(GameState.STARTING)
                 .and(event.getVaro().getPlugin().getVaroConfig().random_team_at_start).complete().register(
                 new RandomPlayerTask(event.getVaro(), 2) // TODO: Team size config entry and trigger for config entry
         );
