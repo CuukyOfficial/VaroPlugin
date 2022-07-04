@@ -103,7 +103,7 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
 
     @Override
     public boolean setKills(int kills) {
-        if (!this.getVaro().getPlugin().isCancelled(new VaroPlayerKillsChangeEvent(this, kills))) return false;
+        if (this.kills == kills || !this.getVaro().getPlugin().isCancelled(new VaroPlayerKillsChangeEvent(this, kills))) return false;
         this.kills = kills;
         return true;
     }
