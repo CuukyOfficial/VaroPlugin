@@ -28,7 +28,7 @@ public class TestCommand extends VaroCommand implements Listener {
 //        new PlayerChatHookBuilder().player((Player) sender).message("Test").register(this.getVaro().getPlugin());
         this.getVaro().setState(GameState.values()[this.index % GameState.values().length]);
         this.index++;
-        sender.sendMessage(this.getVaro().getState().toString());
+//        sender.sendMessage(this.getVaro().getState().toString());
         return false;
     }
 }

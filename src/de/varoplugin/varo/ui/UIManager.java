@@ -16,7 +16,7 @@ public class UIManager implements VaroUIManager {
     public UIManager() {
         this.loadingStatePrinter = new LoadingStatePrinter();
         this.elements = Arrays.asList(this.loadingStatePrinter, new PlayerKickListener(), new DefaultUiTasks(),
-                new GameStartPrinter(), new PlayerAddProtectablePrinter(), new TeamMemberAddPrinter(), new TestCommand());
+                new GameStateChangePrinter(), new PlayerAddProtectablePrinter(), new TeamMemberAddPrinter(), new TestCommand());
     }
 
     @Override

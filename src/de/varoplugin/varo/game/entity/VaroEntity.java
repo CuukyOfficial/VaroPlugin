@@ -7,4 +7,6 @@ public interface VaroEntity extends VaroGameObject, ProtectableHolder {
 
     String getName();
 
+    boolean isAlive();
+
 }

@@ -27,6 +27,11 @@ public class GameTeam extends GameEntity implements VaroTeam {
     }
 
     @Override
+    public boolean isAlive() {
+        return this.members.stream().allMatch(VaroTeamable::isAlive);
+    }
+
+    @Override
     public boolean addMember(VaroTeamable teamable) {
         if (this.members.contains(teamable) || !this.getVaro().getPlugin().isCancelled(new VaroTeamMemberAddEvent(this, teamable))) return false;
         teamable.setTeam(this);

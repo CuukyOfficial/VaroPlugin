@@ -4,6 +4,8 @@ import de.varoplugin.varo.game.VaroGameObject;
 
 public interface VaroTeamable extends VaroGameObject {
 
+    boolean isAlive();
+
     boolean hasTeam();
 
     void setTeam(VaroTeam team);

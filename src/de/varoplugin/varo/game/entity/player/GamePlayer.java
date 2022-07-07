@@ -78,6 +78,11 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
+    public boolean isAlive() {
+        return this.state == ParticipantState.ALIVE;
+    }
+
+    @Override
     public boolean isPlayer(Player player) {
         return player.getUniqueId().equals(this.getUuid());
     }

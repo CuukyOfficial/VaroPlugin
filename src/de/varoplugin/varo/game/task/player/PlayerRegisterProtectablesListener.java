@@ -6,6 +6,7 @@ import de.varoplugin.varo.game.world.protectable.BlockProtectable;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.SignChangeEvent;
 
 public class PlayerRegisterProtectablesListener extends AbstractPlayerListener {
@@ -14,7 +15,7 @@ public class PlayerRegisterProtectablesListener extends AbstractPlayerListener {
         super(player);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onSignChange(SignChangeEvent event) {
         BlockFace attachedFace = VersionUtils.getVersionAdapter().getSignAttachedFace(event.getBlock());
 

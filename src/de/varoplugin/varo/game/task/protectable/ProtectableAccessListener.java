@@ -2,6 +2,7 @@ package de.varoplugin.varo.game.task.protectable;
 
 import de.varoplugin.varo.game.world.protectable.Protectable;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ProtectableAccessListener extends AbstractProtectableListener{
@@ -10,7 +11,7 @@ public class ProtectableAccessListener extends AbstractProtectableListener{
         super(protectable);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null) return;
         if (!this.getProtectable().getBlock().equals(event.getClickedBlock())) return;
