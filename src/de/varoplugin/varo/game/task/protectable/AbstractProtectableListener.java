@@ -1,19 +1,19 @@
 package de.varoplugin.varo.game.task.protectable;
 
-import de.varoplugin.varo.game.world.protectable.VaroProtectable;
+import de.varoplugin.varo.game.world.protectable.Protectable;
 import de.varoplugin.varo.api.task.AbstractListener;
 import de.varoplugin.varo.api.task.VaroTask;
 
 public abstract class AbstractProtectableListener extends AbstractListener {
 
-    private VaroProtectable protectable;
+    private Protectable protectable;
 
-    public AbstractProtectableListener(VaroProtectable protectable) {
+    public AbstractProtectableListener(Protectable protectable) {
         super(protectable.getVaro());
         this.protectable = protectable;
     }
 
-    public VaroProtectable getProtectable() {
+    public Protectable getProtectable() {
         return this.protectable;
     }
 

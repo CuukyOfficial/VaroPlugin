@@ -1,9 +1,8 @@
 package de.varoplugin.varo.game.strike;
 
-import de.varoplugin.varo.game.entity.VaroEntity;
 import org.bukkit.Location;
 
-public interface VaroStrikable extends VaroEntity {
+public interface VaroStrikable {
 
     boolean strike(VaroStrike strike);
 

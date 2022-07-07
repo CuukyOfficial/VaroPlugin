@@ -2,19 +2,19 @@ package de.varoplugin.varo.game.task.trigger;
 
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
 import de.varoplugin.varo.api.task.trigger.VaroTrigger;
-import de.varoplugin.varo.game.world.protectable.VaroProtectable;
+import de.varoplugin.varo.game.world.protectable.Protectable;
 import org.bukkit.event.EventHandler;
 
 public class ProtectableTrigger extends GameTrigger {
 
-    private VaroProtectable protectable;
+    private Protectable protectable;
 
-    public ProtectableTrigger(VaroProtectable protectable, boolean match) {
+    public ProtectableTrigger(Protectable protectable, boolean match) {
         super(protectable.getVaro(), match);
         this.protectable = protectable;
     }
 
-    public ProtectableTrigger(VaroProtectable protectable) {
+    public ProtectableTrigger(Protectable protectable) {
         this(protectable, true);
     }
 

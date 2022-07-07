@@ -1,12 +1,12 @@
 package de.varoplugin.varo.game.task.protectable;
 
-import de.varoplugin.varo.game.world.protectable.VaroProtectable;
+import de.varoplugin.varo.game.world.protectable.Protectable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ProtectableAccessListener extends AbstractProtectableListener{
 
-    public ProtectableAccessListener(VaroProtectable protectable) {
+    public ProtectableAccessListener(Protectable protectable) {
         super(protectable);
     }
 

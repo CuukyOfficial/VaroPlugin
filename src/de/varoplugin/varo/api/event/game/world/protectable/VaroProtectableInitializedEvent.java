@@ -1,10 +1,10 @@
 package de.varoplugin.varo.api.event.game.world.protectable;
 
-import de.varoplugin.varo.game.world.protectable.VaroProtectable;
+import de.varoplugin.varo.game.world.protectable.Protectable;
 
 public class VaroProtectableInitializedEvent extends VaroProtectableEvent {
 
-    public VaroProtectableInitializedEvent(VaroProtectable protectable) {
+    public VaroProtectableInitializedEvent(Protectable protectable) {
         super(protectable);
     }
 }

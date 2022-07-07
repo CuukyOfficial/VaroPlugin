@@ -6,8 +6,9 @@ import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.GameEntity;
-import de.varoplugin.varo.game.entity.VaroEntity;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
+import de.varoplugin.varo.game.strike.VaroStrike;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -49,13 +50,31 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
-    public boolean canAccessSavings(VaroEntity player) {
-        return this.getUuid().equals(player.getUuid());
+    public boolean strike(VaroStrike strike) {
+        // TODO: Implement
+        return false;
+    }
+
+    @Override
+    public void kill() {
+        // TODO: Implement
     }
 
     @Override
     public boolean isOnline() {
         return this.player != null;
+    }
+
+    @Override
+    public boolean clearInventory() {
+        // TODO: Implement
+        return false;
+    }
+
+    @Override
+    public Location getLocation() {
+        // TODO: Implement
+        return null;
     }
 
     @Override

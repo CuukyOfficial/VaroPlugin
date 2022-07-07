@@ -5,12 +5,12 @@ import de.varoplugin.varo.game.GameObject;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.block.Block;
 
-public class BlockProtectable extends GameObject implements VaroProtectable {
+public class BlockProtectable extends GameObject implements Protectable {
 
-    private final VaroProtectableHolder holder;
+    private final ProtectableHolder holder;
     private final Block block;
 
-    public BlockProtectable(VaroProtectableHolder holder, Block block) {
+    public BlockProtectable(ProtectableHolder holder, Block block) {
         this.block = block;
         this.holder = holder;
     }
@@ -32,7 +32,7 @@ public class BlockProtectable extends GameObject implements VaroProtectable {
     }
 
     @Override
-    public VaroProtectableHolder getHolder() {
+    public ProtectableHolder getHolder() {
         return this.holder;
     }
 }
