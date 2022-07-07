@@ -6,9 +6,7 @@ import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitia
 import de.varoplugin.varo.game.GameState;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.task.*;
-import de.varoplugin.varo.game.task.player.NoMoveListener;
-import de.varoplugin.varo.game.task.player.PlayerDeathListener;
-import de.varoplugin.varo.game.task.player.PlayerRegisterProtectablesListener;
+import de.varoplugin.varo.game.task.player.*;
 import de.varoplugin.varo.game.task.protectable.ProtectableAccessListener;
 import de.varoplugin.varo.game.task.trigger.ProtectableTrigger;
 import de.varoplugin.varo.game.task.trigger.builder.VaroPlayerTriggerBuilder;
@@ -48,10 +46,12 @@ public class DefaultTaskRegister implements Listener {
                 new NoMoveListener(event.getPlayer())
         );
 
-        new VaroPlayerTriggerBuilder(event.getPlayer()).when(GameState.RUNNING).when(GameState.MASS_RECORDING).vp(
-                b -> b.when(ParticipantState.ALIVE).and(true)
-        ).complete().register(
-                new PlayerDeathListener(event.getPlayer()), new PlayerRegisterProtectablesListener(event.getPlayer()));
+        new VaroPlayerTriggerBuilder(event.getPlayer()).when(GameState.RUNNING).when(GameState.MASS_RECORDING).andVp(
+                b -> b.when(ParticipantState.ALIVE).and(true)).complete().register(
+                new CountdownTask(event.getPlayer()),
+                new PlayerInGameJoinListener(event.getPlayer()),
+                new PlayerKillOnDeathListener(event.getPlayer()),
+                new PlayerRegisterProtectablesListener(event.getPlayer()));
     }
 
     @EventHandler

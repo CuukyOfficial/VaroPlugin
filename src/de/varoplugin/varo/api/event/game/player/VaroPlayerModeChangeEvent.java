@@ -5,11 +5,15 @@ import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
 
 public class VaroPlayerModeChangeEvent extends VaroPlayerCancelableEvent {
 
-    private final VaroPlayerMode mode;
+    private VaroPlayerMode mode;
 
     public VaroPlayerModeChangeEvent(VaroPlayer player, VaroPlayerMode mode) {
         super(player);
 
+        this.mode = mode;
+    }
+
+    public void setMode(VaroPlayerMode mode) {
         this.mode = mode;
     }
 

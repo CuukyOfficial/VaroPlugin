@@ -1,9 +1,6 @@
 package de.varoplugin.varo.game.entity.player;
 
-import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerKillsChangeEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
+import de.varoplugin.varo.api.event.game.player.*;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.GameEntity;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
@@ -19,6 +16,7 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     private VaroPlayerMode mode;
     private VaroTeam team;
 
+    private int countdown;
     private int kills;
 
     private Player player;
@@ -35,6 +33,7 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
         super(uuid);
         this.state = ParticipantState.ALIVE;
         this.mode = PlayerMode.NONE;
+        this.countdown = 300; // TODO: Configure and centralize
     }
 
     public GamePlayer(Player player) {
@@ -58,6 +57,19 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     @Override
     public void kill() {
         // TODO: Implement
+    }
+
+    @Override
+    public void setCountdown(int countdown) {
+        if (this.countdown == countdown) return;
+        VaroPlayerCountdownChangeEvent event = new VaroPlayerCountdownChangeEvent(this, countdown);
+        if (this.getVaro().getPlugin().isCancelled(event)) return;
+        this.countdown = event.getCountdown();
+    }
+
+    @Override
+    public int getCountdown() {
+        return this.countdown;
     }
 
     @Override
@@ -89,9 +101,10 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
 
     @Override
     public boolean setState(VaroParticipantState state) {
-        if (this.state == state || this.getVaro().getPlugin().isCancelled(new VaroPlayerParticipantStateChangeEvent(this, state)))
-            return false;
-        this.state = state;
+        if (this.state == state) return false;
+        VaroPlayerParticipantStateChangeEvent event = new VaroPlayerParticipantStateChangeEvent(this, state);
+        if (this.getVaro().getPlugin().isCancelled(event)) return false;
+        this.state = event.getState();
         return true;
     }
 
@@ -102,9 +115,10 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
 
     @Override
     public boolean setMode(VaroPlayerMode mode) {
-        if (this.mode == mode || this.getVaro().getPlugin().isCancelled(new VaroPlayerModeChangeEvent(this, mode)))
-            return false;
-        this.mode = mode;
+        if (this.mode == mode) return false;
+        VaroPlayerModeChangeEvent event = new VaroPlayerModeChangeEvent(this, mode);
+        if (this.getVaro().getPlugin().isCancelled(event)) return false;
+        this.mode = event.getMode();
         return true;
     }
 
@@ -135,8 +149,10 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
 
     @Override
     public boolean setKills(int kills) {
-        if (this.kills == kills || !this.getVaro().getPlugin().isCancelled(new VaroPlayerKillsChangeEvent(this, kills))) return false;
-        this.kills = kills;
+        if (this.kills == kills) return false;
+        VaroPlayerKillsChangeEvent event = new VaroPlayerKillsChangeEvent(this, kills);
+        if (this.getVaro().getPlugin().isCancelled(event)) return false;
+        this.kills = event.getKills();
         return true;
     }
 

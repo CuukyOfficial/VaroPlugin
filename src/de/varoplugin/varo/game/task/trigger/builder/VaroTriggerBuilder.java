@@ -42,7 +42,7 @@ public class VaroTriggerBuilder extends AbstractTriggerBuilder implements Trigge
         return (VaroTriggerBuilder) super.and(new VaroConfigTrigger(this.varo, entry));
     }
 
-    public VaroTriggerBuilder and(Consumer<VaroTriggerBuilder> and) {
+    public VaroTriggerBuilder andTb(Consumer<VaroTriggerBuilder> and) {
         VaroTriggerBuilder vtb = new VaroTriggerBuilder(this.varo);
         and.accept(vtb);
         return (VaroTriggerBuilder) this.and(vtb);

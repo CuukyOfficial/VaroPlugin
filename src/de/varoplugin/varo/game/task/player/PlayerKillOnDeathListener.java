@@ -6,9 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class PlayerDeathListener extends AbstractPlayerListener {
+public class PlayerKillOnDeathListener extends AbstractPlayerListener {
 
-    public PlayerDeathListener(VaroPlayer player) {
+    public PlayerKillOnDeathListener(VaroPlayer player) {
         super(player);
     }
 

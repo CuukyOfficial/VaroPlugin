@@ -57,7 +57,7 @@ public class VaroPlayerTriggerBuilder extends VaroTriggerBuilder implements Trig
         return (VaroPlayerTriggerBuilder) super.and(and);
     }
 
-    public VaroPlayerTriggerBuilder vp(Consumer<VaroPlayerTriggerBuilder> and) {
+    public VaroPlayerTriggerBuilder andVp(Consumer<VaroPlayerTriggerBuilder> and) {
         VaroPlayerTriggerBuilder varoPlayerTriggerBuilder = new VaroPlayerTriggerBuilder(this.player);
         and.accept(varoPlayerTriggerBuilder);
         return this.and(varoPlayerTriggerBuilder);

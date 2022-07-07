@@ -17,6 +17,10 @@ public interface VaroPlayer extends VaroEntity, VaroTeamable, StatsHolder, VaroS
      */
     int hashCode();
 
+    void setCountdown(int countdown);
+
+    int getCountdown();
+
     /**
      * Returns if the player is online.
      *
