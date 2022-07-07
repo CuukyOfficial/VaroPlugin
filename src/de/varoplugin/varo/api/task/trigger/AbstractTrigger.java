@@ -10,6 +10,8 @@ import org.bukkit.plugin.Plugin;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class AbstractTrigger implements VaroTrigger {
@@ -40,10 +42,11 @@ public abstract class AbstractTrigger implements VaroTrigger {
         return this.isActivated() && (this.isTriggered() == this.match);
     }
 
-    protected boolean giveToChildren(VaroTask... registrable) {
+    @SafeVarargs
+    protected final <T> boolean giveToChildren(BiConsumer<VaroTrigger, T> adder, Function<T, T> clone, T... registrable) {
         if (this.children.size() == 0) return false;
-        this.children.iterator().next().register(registrable);
-        this.children.stream().skip(1).forEach(c -> Arrays.stream(registrable).map(VaroTask::clone).forEach(c::register));
+        Arrays.stream(registrable).forEach(reg -> adder.accept(this.children.iterator().next(), reg));
+        this.children.stream().skip(1).forEach(c -> Arrays.stream(registrable).map(clone).forEach(r -> adder.accept(c, r)));
         return true;
     }
 
@@ -120,13 +123,14 @@ public abstract class AbstractTrigger implements VaroTrigger {
 
     @Override
     public void addChildren(VaroTrigger... children) {
+        if (this.giveToChildren(VaroTrigger::addChildren, VaroTrigger::clone, children)) return;
         this.children.addAll(Arrays.asList(children));
         if (this.enabled) Arrays.stream(children).filter(c -> !c.isActivated()).forEach(VaroTrigger::activate);
     }
 
     @Override
     public void register(VaroTask... tasks) {
-        if (this.giveToChildren(tasks)) return;
+        if (this.giveToChildren(VaroTrigger::register, VaroTask::clone, tasks)) return;
         this.tasks.addAll(Arrays.asList(tasks));
         if (this.enabled) Arrays.stream(tasks).filter(c -> !c.isEnabled()).forEach(VaroTask::enable);
     }

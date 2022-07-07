@@ -25,7 +25,7 @@ public abstract class AbstractTriggerBuilder implements TriggerBuilder {
         else if (this.when.size() == 1) return this.when.iterator().next();
 
         VaroTrigger bitch = new BitchTrigger(this.plugin);
-        this.when.forEach(bitch::addChildren);
+        bitch.addChildren(this.when.toArray(new VaroTrigger[0]));
         return bitch;
     }
 
