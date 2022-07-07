@@ -13,9 +13,8 @@ import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
 import org.bukkit.entity.Player;
 
-import java.util.Collection;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Game implements Varo {
 
@@ -69,8 +68,8 @@ public class Game implements Varo {
     }
 
     @Override
-    public Collection<VaroPlayer> getPlayers() {
-        return this.players.stream().collect(Collectors.toList());
+    public Stream<VaroPlayer> getPlayers() {
+        return this.players.stream();
     }
 
     @Override
@@ -89,6 +88,11 @@ public class Game implements Varo {
     public boolean addTeam(VaroTeam team) {
         team.initialize(this);
         return this.teams.add(team);
+    }
+
+    @Override
+    public Stream<VaroTeam> getTeams() {
+        return this.teams.stream();
     }
 
     @Override

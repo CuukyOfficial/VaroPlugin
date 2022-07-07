@@ -25,7 +25,7 @@ public class RandomPlayerTask extends AbstractTask {
     private void doRandomTeam() {
 //        int maxNameLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
         int maxNameLength = 16;
-        List<VaroPlayer> random = this.getVaro().getPlayers().stream()
+        List<VaroPlayer> random = this.getVaro().getPlayers()
                 .filter(pl -> pl.getTeam() == null && pl.getMode() == PlayerMode.NONE && pl.getState() == ParticipantState.ALIVE).collect(Collectors.toList());
         Collections.shuffle(random);
 

@@ -2,8 +2,8 @@ package de.varoplugin.varo.game.entity.player;
 
 import org.bukkit.entity.Player;
 
-import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public interface VaroPlayerContainer {
 
@@ -20,6 +20,6 @@ public interface VaroPlayerContainer {
      *
      * @return A collection containing all players
      */
-    Collection<VaroPlayer> getPlayers();
+    Stream<VaroPlayer> getPlayers();
 
 }
