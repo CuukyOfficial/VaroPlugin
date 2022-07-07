@@ -9,6 +9,8 @@ public interface VaroPlayerContainer {
 
     VaroPlayer register(Player player);
 
+    boolean remove(VaroPlayer player);
+
     VaroPlayer getPlayer(UUID uuid);
 
     VaroPlayer getPlayer(Player player);

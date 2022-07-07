@@ -1,9 +1,11 @@
 package de.varoplugin.varo.game;
 
+import de.cuuky.cfw.version.VersionUtils;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
+import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
 import de.varoplugin.varo.game.entity.player.GamePlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
@@ -30,15 +32,15 @@ public class Game implements Varo {
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
+        if (this.players == null) this.players = new HashUniqueIdMap<>();
+        if (this.teams == null) this.teams = new HashUniqueIdMap<>();
 
-        for (Player player : this.getPlugin().getServer().getOnlinePlayers()) {
+        for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
             if (vp == null) this.register(player);
             else vp.initialize(this);
         }
         this.plugin.callEvent(new VaroGameInitializedEvent(this));
-        if (this.players == null) this.players = new HashUniqueIdMap<>();
-        if (this.teams == null) this.teams = new HashUniqueIdMap<>();
     }
 
     @Override
@@ -48,6 +50,12 @@ public class Game implements Varo {
         this.players.add(vp);
         vp.initialize(this);
         return vp;
+    }
+
+    @Override
+    public boolean remove(VaroPlayer player) {
+        if (!this.players.contains(player) || this.plugin.isCancelled(new VaroPlayerRemoveEvent(this, player))) return false;
+        return this.players.remove(player);
     }
 
     @Override
