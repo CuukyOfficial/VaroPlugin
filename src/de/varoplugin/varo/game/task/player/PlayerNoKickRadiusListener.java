@@ -27,7 +27,7 @@ public class PlayerNoKickRadiusListener extends AbstractPlayerListener {
             if (entity.getType() != EntityType.PLAYER) return;
             VaroPlayer other = this.getVaro().getPlayer(entity.getUniqueId());
             if (other.getTeam() != this.getPlayer().getTeam()) {
-                // TODO: Added event
+                // TODO: Add event
                 event.setCountdown(this.checkCountdown);
             }
         }
