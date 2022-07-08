@@ -23,19 +23,19 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
 
     @Override
     public IVaroPlayerTriggerBuilder when(VaroParticipantState state) {
-        this.internal.when(new VaroParticipantStateTrigger(VaroPlayerTriggerBuilder.this.player, state));
+        this.internal.when(new VaroParticipantStateTrigger(this.player, state));
         return this;
     }
 
     @Override
     public IVaroPlayerTriggerBuilder when(VaroPlayerMode mode) {
-        this.internal.when(new VaroPlayerModeTrigger(VaroPlayerTriggerBuilder.this.player, mode));
+        this.internal.when(new VaroPlayerModeTrigger(this.player, mode));
         return this;
     }
 
     @Override
     public IVaroPlayerTriggerBuilder when(boolean online) {
-        this.internal.when(new VaroOnlineTrigger(VaroPlayerTriggerBuilder.this.player, online));
+        this.internal.when(new VaroOnlineTrigger(this.player, online));
         return this;
     }
 

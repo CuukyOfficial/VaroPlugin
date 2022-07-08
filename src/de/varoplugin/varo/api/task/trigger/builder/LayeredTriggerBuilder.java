@@ -56,10 +56,7 @@ public class LayeredTriggerBuilder implements TriggerBuilder {
         int i;
         for (i = start; i < this.triggers.size(); i++) {
             triggers.add(this.triggers.get(i));
-            if (this.layers.containsKey(i + 1)) {
-                child = this.layers.get(i);
-                break;
-            }
+            if ((child = this.layers.get(i + 1)) != null) break;
         }
         VaroTrigger head = this.buildHead(triggers);
         if (head != null && child != null) head.addChildren(child.build());

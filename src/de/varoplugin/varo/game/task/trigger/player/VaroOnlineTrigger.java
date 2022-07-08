@@ -19,14 +19,28 @@ public class VaroOnlineTrigger extends AbstractPlayerTrigger {
         this(player, online, true);
     }
 
+    @Override
+    public void activate() {
+        System.out.println("ACTIVATE");
+        super.activate();
+    }
+
+    @Override
+    public void deactivate() {
+        System.out.println("DEACTIVATE");
+        super.deactivate();
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        System.out.println("JOIN");
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
         this.triggerIf(this.online);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+        System.out.println("QUIT");
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
         this.triggerIf(!this.online);
     }
