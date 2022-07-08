@@ -1,7 +1,6 @@
 package de.varoplugin.varo.api.task.trigger.builder;
 
 import de.varoplugin.varo.api.task.trigger.VaroTrigger;
-import de.varoplugin.varo.game.task.trigger.builder.VaroTriggerBuilder;
 
 public interface TriggerBuilder {
 
@@ -11,10 +10,14 @@ public interface TriggerBuilder {
 
     TriggerBuilder when(VaroTrigger when);
 
-    TriggerBuilder when(VaroTriggerBuilder when);
+    TriggerBuilder when(TriggerBuilder when);
 
-    TriggerBuilder and(VaroTrigger... and);
+    TriggerBuilder and(VaroTrigger and);
 
-    TriggerBuilder and(VaroTriggerBuilder and);
+    TriggerBuilder and(TriggerBuilder and);
+
+    TriggerBuilder down();
+
+    TriggerBuilder ground();
 
 }

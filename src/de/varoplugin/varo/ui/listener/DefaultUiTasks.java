@@ -20,7 +20,7 @@ public class DefaultUiTasks extends UiListener {
 
     @EventHandler
     public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
-        new VaroPlayerTriggerBuilder(event.getPlayer()).when(GameState.RUNNING).when(GameState.MASS_RECORDING).andVp(
-                b -> b.when(ParticipantState.ALIVE).and(true)).complete().register(new PlayerShowCountdownTask(event.getPlayer()));
+        new VaroPlayerTriggerBuilder(event.getPlayer()).when(GameState.RUNNING).when(GameState.MASS_RECORDING)
+                .and(ParticipantState.ALIVE).and(true).complete().register(new PlayerShowCountdownTask(event.getPlayer()));
     }
 }
