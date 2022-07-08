@@ -33,7 +33,6 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
         super(uuid);
         this.state = ParticipantState.ALIVE;
         this.mode = PlayerMode.NONE;
-        this.countdown = 300; // TODO: Configure and centralize
     }
 
     public GamePlayer(Player player) {

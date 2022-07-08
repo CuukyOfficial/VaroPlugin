@@ -9,6 +9,12 @@ public class CountdownTask extends AbstractHeartbeatTask {
     }
 
     @Override
+    public void onEnable() {
+        if (this.getPlayer().getCountdown() <= 0) this.getPlayer().setCountdown(300); // TODO: Configurable
+        super.onEnable();
+    }
+
+    @Override
     public void run() {
         this.getPlayer().setCountdown(this.getPlayer().getCountdown() - 1);
         if (this.getPlayer().getCountdown() == 0) {
