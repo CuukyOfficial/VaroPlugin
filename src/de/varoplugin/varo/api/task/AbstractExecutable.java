@@ -12,7 +12,7 @@ public abstract class AbstractExecutable extends AbstractTask implements VaroTas
     }
 
     private BukkitRunnable createRunnable() {
-        return this.runnable = new BukkitRunnable() {
+        return new BukkitRunnable() {
             @Override
             public void run() {
                 AbstractExecutable.this.run();

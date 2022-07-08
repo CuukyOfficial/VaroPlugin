@@ -47,7 +47,7 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
 
     @Override
     public IVaroPlayerTriggerBuilder and(boolean online) {
-        this.internal.and(new VaroOnlineTrigger(VaroPlayerTriggerBuilder.this.player, online));
+        this.internal.and(new VaroOnlineTrigger(this.player, online));
         return this;
     }
 

@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -19,28 +19,14 @@ public class VaroOnlineTrigger extends AbstractPlayerTrigger {
         this(player, online, true);
     }
 
-    @Override
-    public void activate() {
-        System.out.println("ACTIVATE");
-        super.activate();
-    }
-
-    @Override
-    public void deactivate() {
-        System.out.println("DEACTIVATE");
-        super.deactivate();
-    }
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        System.out.println("JOIN");
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
         this.triggerIf(this.online);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        System.out.println("QUIT");
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
         this.triggerIf(!this.online);
     }
