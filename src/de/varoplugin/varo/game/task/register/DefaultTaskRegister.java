@@ -49,6 +49,7 @@ public class DefaultTaskRegister implements Listener {
         new VaroPlayerTriggerBuilder(event.getPlayer()).when(GameState.RUNNING).when(GameState.MASS_RECORDING).andVp(
                 b -> b.when(ParticipantState.ALIVE).and(true)).complete().register(
                 new CountdownTask(event.getPlayer()),
+                new PlayerNoKickRadiusListener(event.getPlayer()),
                 new PlayerInGameJoinListener(event.getPlayer()),
                 new PlayerKillOnDeathListener(event.getPlayer()),
                 new PlayerRegisterProtectablesListener(event.getPlayer()));
