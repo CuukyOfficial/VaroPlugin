@@ -5,7 +5,7 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.team.GameTeam;
+import de.varoplugin.varo.game.entity.team.VaroTeamImpl;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
 
 import java.util.Collection;
@@ -40,7 +40,7 @@ public class RandomPlayerTask extends AbstractTask {
                     .substring(0, Math.min(m.getName().length(), maxNameLength / member.size()))).collect(Collectors.joining());
 
             // add
-            VaroTeam team = new GameTeam(name);
+            VaroTeam team = new VaroTeamImpl(name);
             this.getVaro().addTeam(team);
             member.forEach(team::addMember);
         }

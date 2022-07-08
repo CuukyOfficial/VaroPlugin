@@ -1,11 +1,11 @@
 package de.varoplugin.varo.game.world.protectable;
 
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitializedEvent;
-import de.varoplugin.varo.game.GameObject;
+import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.block.Block;
 
-public class BlockProtectable extends GameObject implements Protectable {
+public class BlockProtectable extends UniqueGameObject implements Protectable {
 
     private final ProtectableHolder holder;
     private final Block block;

@@ -2,15 +2,15 @@ package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.api.event.game.player.*;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.GameEntity;
+import de.varoplugin.varo.game.entity.VaroEntityImpl;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
-import de.varoplugin.varo.game.strike.VaroStrike;
+import de.varoplugin.varo.game.strike.Strike;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class GamePlayer extends GameEntity implements VaroPlayer {
+public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
 
     private VaroParticipantState state;
     private VaroPlayerMode mode;
@@ -25,17 +25,17 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     /**
      * For Serialization. Do not use.
      */
-    private GamePlayer() {
+    private VaroPlayerImpl() {
         super(null);
     }
 
-    public GamePlayer(UUID uuid) {
+    public VaroPlayerImpl(UUID uuid) {
         super(uuid);
         this.state = ParticipantState.ALIVE;
         this.mode = PlayerMode.NONE;
     }
 
-    public GamePlayer(Player player) {
+    public VaroPlayerImpl(Player player) {
         this(player.getUniqueId());
         this.player = player;
         this.name = player.getName();
@@ -48,7 +48,7 @@ public class GamePlayer extends GameEntity implements VaroPlayer {
     }
 
     @Override
-    public boolean strike(VaroStrike strike) {
+    public boolean strike(Strike strike) {
         // TODO: Implement
         return false;
     }

@@ -1,10 +1,10 @@
 package de.varoplugin.varo.api.event.game.strike;
 
-import de.varoplugin.varo.game.strike.VaroStrike;
+import de.varoplugin.varo.game.strike.Strike;
 
 public class VaroStrikeRemoveEvent extends StrikeCancelableEvent {
 
-    public VaroStrikeRemoveEvent(VaroStrike strike) {
+    public VaroStrikeRemoveEvent(Strike strike) {
         super(strike);
     }
 }

@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task;
 
-import de.varoplugin.varo.game.GameState;
+import de.varoplugin.varo.game.DefaultState;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.api.task.AbstractExecutable;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,6 +22,6 @@ public class StartingTask extends AbstractExecutable {
     @Override
     public void run() {
         this.countdown--;
-        if (this.countdown == 0) this.getVaro().setState(GameState.RUNNING);
+        if (this.countdown == 0) this.getVaro().setState(DefaultState.RUNNING);
     }
 }

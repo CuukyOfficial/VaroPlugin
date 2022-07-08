@@ -2,9 +2,8 @@ package de.varoplugin.varo.ui.listener;
 
 import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerLoginEvent;
-import de.varoplugin.varo.game.GameKickResult;
+import de.varoplugin.varo.game.DefaultKickResult;
 import de.varoplugin.varo.game.VaroKickResult;
-import de.varoplugin.varo.game.entity.player.GamePlayerKickResult;
 import org.bukkit.event.EventHandler;
 
 import java.util.Arrays;
@@ -14,7 +13,7 @@ public class PlayerKickListener extends UiListener {
     private enum KickMessages {
 
         // TODO: Use language system
-        NOT_A_PARTICIPANT(GameKickResult.NOT_A_PARTICIPANT, "You are not registered in this Varo!");
+        NOT_A_PARTICIPANT(DefaultKickResult.NOT_A_PARTICIPANT, "You are not registered in this Varo!");
 
         private final VaroKickResult result;
         private final String message;
@@ -35,7 +34,7 @@ public class PlayerKickListener extends UiListener {
 
     @EventHandler
     public void onVaroPlayerKick(VaroPlayerLoginEvent event) {
-        if (event.getResult() == GamePlayerKickResult.PLAYER_DEAD) {
+        if (event.getResult() == de.varoplugin.varo.game.entity.player.DefaultKickResult.PLAYER_DEAD) {
             event.getSource().setKickMessage("You are dead!");
         }
      }

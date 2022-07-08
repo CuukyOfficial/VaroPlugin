@@ -2,16 +2,16 @@ package de.varoplugin.varo.game;
 
 import java.util.UUID;
 
-public abstract class GameObject implements VaroGameObject {
+public abstract class UniqueGameObject implements VaroGameObject {
 
     private final UUID uuid;
     private Varo varo;
 
-    public GameObject() {
+    public UniqueGameObject() {
         this(UUID.randomUUID());
     }
 
-    public GameObject(UUID uuid) {
+    public UniqueGameObject(UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -33,7 +33,7 @@ public abstract class GameObject implements VaroGameObject {
     @Override
     public boolean equals(Object o) {
         if (!o.getClass().equals(this.getClass())) return false;
-        return ((GameObject) o).getUuid().equals(this.uuid);
+        return ((UniqueGameObject) o).getUuid().equals(this.uuid);
     }
 
     @Override

@@ -2,9 +2,9 @@ package de.varoplugin.varo.game.strike;
 
 import org.bukkit.Location;
 
-public interface VaroStrikable {
+public interface Strikable {
 
-    boolean strike(VaroStrike strike);
+    boolean strike(Strike strike);
 
     void kill();
 

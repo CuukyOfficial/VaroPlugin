@@ -2,7 +2,7 @@ package de.varoplugin.varo.game.entity;
 
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableAddEvent;
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
-import de.varoplugin.varo.game.GameObject;
+import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.world.protectable.Protectable;
 import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
@@ -12,15 +12,15 @@ import org.bukkit.block.Block;
 
 import java.util.UUID;
 
-public abstract class GameEntity extends GameObject implements VaroEntity {
+public abstract class VaroEntityImpl extends UniqueGameObject implements VaroEntity {
 
     private UniqueIdMap<Protectable> protectables;
 
-    public GameEntity(UUID uuid) {
+    public VaroEntityImpl(UUID uuid) {
         super(uuid);
     }
 
-    public GameEntity() {
+    public VaroEntityImpl() {
         super();
     }
 

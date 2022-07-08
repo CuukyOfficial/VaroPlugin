@@ -2,7 +2,7 @@ package de.varoplugin.varo.game.entity.team;
 
 import de.varoplugin.varo.api.event.game.team.VaroTeamMemberAddEvent;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.GameEntity;
+import de.varoplugin.varo.game.entity.VaroEntityImpl;
 import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
 
 import java.util.Collection;
@@ -10,12 +10,12 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-public class GameTeam extends GameEntity implements VaroTeam {
+public class VaroTeamImpl extends VaroEntityImpl implements VaroTeam {
 
     private Set<VaroTeamable> members;
     private String name;
 
-    public GameTeam(String name) {
+    public VaroTeamImpl(String name) {
         super();
         this.name = name;
     }

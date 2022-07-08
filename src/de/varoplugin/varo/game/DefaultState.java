@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game;
 
-public enum GameState implements VaroState {
+public enum DefaultState implements VaroState {
 
     LOBBY,
     STARTING,

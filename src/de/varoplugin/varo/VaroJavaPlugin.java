@@ -4,7 +4,7 @@ import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.game.Game;
+import de.varoplugin.varo.game.VaroImpl;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.task.register.DefaultTaskRegister;
 import de.varoplugin.varo.ui.UIManager;
@@ -63,7 +63,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
 		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(), this);
 
-		this.varo = new Game();
+		this.varo = new VaroImpl();
 		this.varo.initialize(this);
 
         this.updateLoadingState(StartupState.STARTING_BOTS);

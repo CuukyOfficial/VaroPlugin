@@ -2,18 +2,18 @@ package de.varoplugin.varo.game.strike;
 
 import de.varoplugin.varo.api.event.game.strike.VaroStrikeExecuteEvent;
 import de.varoplugin.varo.api.event.game.strike.VaroStrikeInitializedEvent;
-import de.varoplugin.varo.game.GameObject;
+import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.Listener;
 
-public class GameStrike extends GameObject implements VaroStrike, Listener {
+public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
 
-    private final VaroStrikeType type;
+    private final StrikeType type;
     private final VaroPlayer target;
     private boolean executed;
 
-    public GameStrike(VaroPlayer target, VaroStrikeType type) {
+    public StrikeImpl(VaroPlayer target, StrikeType type) {
         this.target = target;
         this.type = type;
     }
@@ -30,7 +30,7 @@ public class GameStrike extends GameObject implements VaroStrike, Listener {
     }
 
     @Override
-    public VaroStrikeType getType() {
+    public StrikeType getType() {
         return this.type;
     }
 

@@ -1,18 +1,18 @@
 package de.varoplugin.varo.api.event.game.strike;
 
 import de.varoplugin.varo.api.event.game.VaroGameEvent;
-import de.varoplugin.varo.game.strike.VaroStrike;
+import de.varoplugin.varo.game.strike.Strike;
 
 public abstract class StrikeEvent extends VaroGameEvent {
 
-    private final VaroStrike strike;
+    private final Strike strike;
 
-    public StrikeEvent(VaroStrike strike) {
+    public StrikeEvent(Strike strike) {
         super(strike.getTarget().getVaro());
         this.strike = strike;
     }
 
-    public VaroStrike getStrike() {
+    public Strike getStrike() {
         return this.strike;
     }
 }

@@ -3,7 +3,7 @@ package de.varoplugin.varo.game.task.register;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitializedEvent;
-import de.varoplugin.varo.game.GameState;
+import de.varoplugin.varo.game.DefaultState;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.task.*;
 import de.varoplugin.varo.game.task.player.*;
@@ -18,23 +18,23 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onGameInitialize(VaroGameInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.LOBBY).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).complete().register(
                 new RegisterPlayerListener(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).whenNot(GameState.LOBBY).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).whenNot(DefaultState.LOBBY).complete().register(
                 new KickNonRegisteredPlayerListener(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.STARTING).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.STARTING).complete().register(
                 new StartingTask(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.RUNNING).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.RUNNING).complete().register(
                 new EndGameListener(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.STARTING)
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.STARTING)
                 .and(event.getVaro().getPlugin().getVaroConfig().random_team_at_start).complete().register(
                 new RandomPlayerTask(event.getVaro(), 2) // TODO: Team size config entry and trigger for config entry
         );
@@ -42,11 +42,11 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.LOBBY).when(GameState.STARTING).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).when(DefaultState.STARTING).complete().register(
                 new NoMoveListener(event.getPlayer())
         );
 
-        new VaroPlayerTriggerBuilder(event.getPlayer()).when(GameState.RUNNING).when(GameState.MASS_RECORDING)
+        new VaroPlayerTriggerBuilder(event.getPlayer()).when(DefaultState.RUNNING).when(DefaultState.MASS_RECORDING)
                 .and(ParticipantState.ALIVE).and(true).complete().register(
                 new CountdownTask(event.getPlayer()),
                 new PlayerNoKickRadiusListener(event.getPlayer()),
@@ -57,7 +57,7 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onProtectableInitialize(VaroProtectableInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(GameState.RUNNING).when(GameState.MASS_RECORDING)
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.RUNNING).when(DefaultState.MASS_RECORDING)
                 .and(new ProtectableTrigger(event.getProtectable())).complete().register(
                 new ProtectableAccessListener(event.getProtectable())
         );
