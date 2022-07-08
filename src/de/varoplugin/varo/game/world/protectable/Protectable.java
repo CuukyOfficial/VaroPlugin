@@ -4,7 +4,6 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroGameObject;
 import org.bukkit.block.Block;
 
-// TODO: Add listener for adding secureables.
 public interface Protectable extends VaroGameObject {
 
     /**
