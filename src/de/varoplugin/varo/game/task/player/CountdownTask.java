@@ -17,7 +17,7 @@ public class CountdownTask extends AbstractHeartbeatTask {
     @Override
     public void run() {
         this.getPlayer().setCountdown(this.getPlayer().getCountdown() - 1);
-        if (this.getPlayer().getCountdown() == 0) {
+        if (this.getPlayer().getCountdown() <= 0) {
             // TODO: Add VaroPlayer#kick method with kickReason enum
             this.getPlayer().getPlayer().kickPlayer("Your session is over!");
         }

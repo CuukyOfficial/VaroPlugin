@@ -14,6 +14,5 @@ public class PlayerInGameJoinListener extends AbstractPlayerListener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
-        if (this.getPlayer().getCountdown() == 0) this.getPlayer().setCountdown(300); // TODO: Configurable
     }
 }
