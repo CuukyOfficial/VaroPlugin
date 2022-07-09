@@ -1,10 +1,10 @@
 package de.varoplugin.varo.game.task.player;
 
+import de.varoplugin.varo.api.task.Task;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.api.task.AbstractListener;
-import de.varoplugin.varo.api.task.VaroTask;
+import de.varoplugin.varo.game.task.VaroListenerTask;
 
-public abstract class AbstractPlayerListener extends AbstractListener {
+public abstract class AbstractPlayerListener extends VaroListenerTask {
 
     private VaroPlayer player;
 
@@ -18,7 +18,7 @@ public abstract class AbstractPlayerListener extends AbstractListener {
     }
 
     @Override
-    public VaroTask clone() {
+    public Task clone() {
         AbstractPlayerListener listener = (AbstractPlayerListener) super.clone();
         listener.player = this.player;
         return listener;

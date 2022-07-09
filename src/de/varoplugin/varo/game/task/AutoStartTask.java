@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game.task;
 
-import de.varoplugin.varo.api.task.AbstractExecutable;
 import de.varoplugin.varo.game.DefaultState;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -8,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class AutoStartTask extends AbstractExecutable {
+public class AutoStartTask extends VaroScheduledTask {
 
     public AutoStartTask(Varo varo) {
         super(varo);

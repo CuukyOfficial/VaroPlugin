@@ -1,7 +1,7 @@
 package de.varoplugin.varo.api.task.trigger.builder;
 
-import de.varoplugin.varo.api.task.trigger.AbstractTrigger;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.ParentTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -9,7 +9,7 @@ import org.bukkit.plugin.Plugin;
  * Parsing all infos to the child nodes like a good tree node, daddy :)
  * Give me all the data >.<
  */
-public class BitchTrigger extends AbstractTrigger implements VaroTrigger {
+public class BitchTrigger extends ParentTrigger implements Trigger {
 
     public BitchTrigger(Plugin plugin) {
         super(plugin, true);

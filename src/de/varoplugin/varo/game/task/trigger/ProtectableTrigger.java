@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.task.trigger;
 
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.world.protectable.Protectable;
 import org.bukkit.event.EventHandler;
 
@@ -29,7 +29,7 @@ public class ProtectableTrigger extends GameTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         ProtectableTrigger trigger = (ProtectableTrigger) super.clone();
         trigger.protectable = protectable;
         return trigger;

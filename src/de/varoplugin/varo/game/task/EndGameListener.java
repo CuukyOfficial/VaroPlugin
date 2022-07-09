@@ -1,7 +1,6 @@
 package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
-import de.varoplugin.varo.api.task.AbstractListener;
 import de.varoplugin.varo.game.DefaultState;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
@@ -13,7 +12,7 @@ import org.bukkit.event.EventPriority;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EndGameListener extends AbstractListener {
+public class EndGameListener extends VaroListenerTask {
 
     public EndGameListener(Varo varo) {
         super(varo);

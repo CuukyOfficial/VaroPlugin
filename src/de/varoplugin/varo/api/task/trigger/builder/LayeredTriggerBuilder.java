@@ -1,6 +1,6 @@
 package de.varoplugin.varo.api.task.trigger.builder;
 
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.util.Pair;
 import org.bukkit.plugin.Plugin;
 
@@ -9,7 +9,7 @@ import java.util.*;
 public class LayeredTriggerBuilder implements TriggerBuilder {
 
     private final Plugin plugin;
-    private final List<VaroTrigger> triggers;
+    private final List<Trigger> triggers;
     private final Map<Integer, LayeredTriggerBuilder> layers;
     private int y;
 
@@ -38,36 +38,36 @@ public class LayeredTriggerBuilder implements TriggerBuilder {
         return next;
     }
 
-    private VaroTrigger buildHead(Set<VaroTrigger> triggers) {
-        VaroTrigger head;
+    private Trigger buildHead(Set<Trigger> triggers) {
+        Trigger head;
         if (triggers.isEmpty()) return null;
         else if (triggers.size() == 1) {
             head = this.triggers.get(0);
         } else {
             head = new BitchTrigger(this.plugin);
-            head.addChildren(triggers.toArray(new VaroTrigger[0]));
+            head.addChildren(triggers.toArray(new Trigger[0]));
         }
         return head;
     }
 
-    private Pair<VaroTrigger, Integer> buildHead(int start) {
-        Set<VaroTrigger> triggers = new HashSet<>();
+    private Pair<Trigger, Integer> buildHead(int start) {
+        Set<Trigger> triggers = new HashSet<>();
         LayeredTriggerBuilder child = null;
         int i;
         for (i = start; i < this.triggers.size(); i++) {
             triggers.add(this.triggers.get(i));
             if ((child = this.layers.get(i + 1)) != null) break;
         }
-        VaroTrigger head = this.buildHead(triggers);
+        Trigger head = this.buildHead(triggers);
         if (head != null && child != null) head.addChildren(child.build());
         return new Pair<>(head, i);
     }
 
     @Override
-    public VaroTrigger build() {
-        Set<VaroTrigger> heads = new HashSet<>();
+    public Trigger build() {
+        Set<Trigger> heads = new HashSet<>();
         for (int i = 0; i < this.triggers.size(); i++) {
-            Pair<VaroTrigger, Integer> head = this.buildHead(i);
+            Pair<Trigger, Integer> head = this.buildHead(i);
             if (head.getKey() != null) heads.add(head.getKey());
             i = head.getValue();
         }
@@ -75,14 +75,14 @@ public class LayeredTriggerBuilder implements TriggerBuilder {
     }
 
     @Override
-    public VaroTrigger complete() {
-        VaroTrigger built = this.build();
+    public Trigger complete() {
+        Trigger built = this.build();
         built.activate();
         return built;
     }
 
     @Override
-    public TriggerBuilder when(VaroTrigger when) {
+    public TriggerBuilder when(Trigger when) {
         TriggerBuilder next = this.findNext();
         if (next != this) next.when(when);
         else this.triggers.add(when);
@@ -95,7 +95,7 @@ public class LayeredTriggerBuilder implements TriggerBuilder {
     }
 
     @Override
-    public TriggerBuilder and(VaroTrigger and) {
+    public TriggerBuilder and(Trigger and) {
         this.y++;
         LayeredTriggerBuilder next = this.findNext();
         next.when(and);

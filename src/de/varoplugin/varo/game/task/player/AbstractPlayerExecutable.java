@@ -1,10 +1,10 @@
 package de.varoplugin.varo.game.task.player;
 
-import de.varoplugin.varo.api.task.AbstractExecutable;
-import de.varoplugin.varo.api.task.VaroTask;
+import de.varoplugin.varo.api.task.Task;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.task.VaroScheduledTask;
 
-public abstract class AbstractPlayerExecutable extends AbstractExecutable {
+public abstract class AbstractPlayerExecutable extends VaroScheduledTask {
 
     private VaroPlayer player;
 
@@ -18,7 +18,7 @@ public abstract class AbstractPlayerExecutable extends AbstractExecutable {
     }
 
     @Override
-    public VaroTask clone() {
+    public Task clone() {
         AbstractPlayerExecutable task = (AbstractPlayerExecutable) super.clone();
         task.player = this.player;
         return task;

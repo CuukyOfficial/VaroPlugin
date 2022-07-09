@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -37,7 +37,7 @@ public class VaroOnlineTrigger extends AbstractPlayerTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         VaroOnlineTrigger trigger = (VaroOnlineTrigger) super.clone();
         trigger.online = this.online;
         return trigger;

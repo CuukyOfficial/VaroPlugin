@@ -7,16 +7,16 @@ import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
-import de.varoplugin.varo.game.entity.player.VaroPlayerImpl;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.VaroPlayerImpl;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
 import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.Calendar;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class VaroImpl implements Varo {
@@ -27,6 +27,7 @@ public class VaroImpl implements Varo {
 
     private UniqueIdMap<VaroTeam> teams;
     private UniqueIdMap<VaroPlayer> players;
+    private Set<Location> itemChestLocations;
 
     public VaroImpl() {
         this.state = DefaultState.LOBBY;
@@ -37,6 +38,7 @@ public class VaroImpl implements Varo {
         this.plugin = plugin;
         if (this.players == null) this.players = new HashUniqueIdMap<>();
         if (this.teams == null) this.teams = new HashUniqueIdMap<>();
+        if (this.itemChestLocations == null) this.itemChestLocations = new HashSet<>();
 
         for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
@@ -115,5 +117,15 @@ public class VaroImpl implements Varo {
     @Override
     public Calendar getAutoStart() {
         return this.autoStart;
+    }
+
+    @Override
+    public void addItemChests(Collection<Block> location) {
+        location.stream().map(Block::getLocation).forEach(this.itemChestLocations::add);
+    }
+
+    @Override
+    public Stream<Location> getItemChestLocations() {
+        return this.itemChestLocations.stream();
     }
 }

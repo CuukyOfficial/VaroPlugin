@@ -1,14 +1,14 @@
 package de.varoplugin.varo.api.task;
 
-import de.varoplugin.varo.game.Varo;
+import org.bukkit.plugin.Plugin;
 
-public abstract class AbstractTask implements VaroTask {
+public abstract class RunnableTask implements Task {
 
-    private Varo varo;
+    private Plugin plugin;
     private boolean registered;
 
-    public AbstractTask(Varo varo) {
-        this.varo = varo;
+    public RunnableTask(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     protected abstract void onEnable();
@@ -33,15 +33,15 @@ public abstract class AbstractTask implements VaroTask {
     }
 
     @Override
-    public Varo getVaro() {
-        return this.varo;
+    public Plugin getPlugin() {
+        return this.plugin;
     }
 
     @Override
-    public VaroTask clone() {
+    public Task clone() {
         try {
-            AbstractTask task = (AbstractTask) super.clone();
-            task.varo = this.varo;
+            RunnableTask task = (RunnableTask) super.clone();
+            task.plugin = this.plugin;
             return task;
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);

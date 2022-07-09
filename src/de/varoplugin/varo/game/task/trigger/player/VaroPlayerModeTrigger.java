@@ -3,7 +3,7 @@ package de.varoplugin.varo.game.task.trigger.player;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import org.bukkit.event.EventHandler;
 
 public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {
@@ -31,7 +31,7 @@ public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         VaroPlayerModeTrigger trigger = (VaroPlayerModeTrigger) super.clone();
         trigger.mode = this.mode;
         return trigger;

@@ -1,7 +1,7 @@
 package de.varoplugin.varo.api.task.trigger;
 
-import de.varoplugin.varo.api.event.TriggerDestroyEvent;
-import de.varoplugin.varo.api.task.VaroTask;
+import de.varoplugin.varo.api.task.trigger.event.TriggerDestroyEvent;
+import de.varoplugin.varo.api.task.Task;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.server.PluginDisableEvent;
@@ -14,28 +14,28 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class AbstractTrigger implements VaroTrigger {
+public abstract class ParentTrigger implements Trigger {
 
     private Plugin plugin;
-    private Set<VaroTrigger> children;
-    private Set<VaroTask> tasks;
+    private Set<Trigger> children;
+    private Set<Task> tasks;
     private boolean match;
     private boolean activated;
     private boolean enabled;
 
-    public AbstractTrigger(Plugin plugin, boolean match) {
+    public ParentTrigger(Plugin plugin, boolean match) {
         this.plugin = plugin;
         this.match = match;
         this.children = new HashSet<>();
         this.tasks = new HashSet<>();
     }
 
-    private Set<VaroTrigger> getChildrenCloned() {
-        return this.children.stream().map(VaroTrigger::clone).collect(Collectors.toSet());
+    private Set<Trigger> getChildrenCloned() {
+        return this.children.stream().map(Trigger::clone).collect(Collectors.toSet());
     }
 
-    private Set<VaroTask> getTasksCloned() {
-        return this.tasks.stream().map(VaroTask::clone).collect(Collectors.toSet());
+    private Set<Task> getTasksCloned() {
+        return this.tasks.stream().map(Task::clone).collect(Collectors.toSet());
     }
 
     private boolean isEnabled() {
@@ -43,7 +43,7 @@ public abstract class AbstractTrigger implements VaroTrigger {
     }
 
     @SafeVarargs
-    protected final <T> boolean giveToChildren(BiConsumer<VaroTrigger, T> adder, Function<T, T> clone, T... registrable) {
+    protected final <T> boolean giveToChildren(BiConsumer<Trigger, T> adder, Function<T, T> clone, T... registrable) {
         if (this.children.size() == 0) return false;
         Arrays.stream(registrable).forEach(reg -> adder.accept(this.children.iterator().next(), reg));
         this.children.stream().skip(1).forEach(c -> Arrays.stream(registrable).map(clone).forEach(r -> adder.accept(c, r)));
@@ -63,13 +63,13 @@ public abstract class AbstractTrigger implements VaroTrigger {
     protected abstract boolean isTriggered();
 
     protected void activateChildren() {
-        this.children.stream().filter(c -> !c.isActivated()).forEach(VaroTrigger::activate);
-        this.tasks.stream().filter(r -> !r.isEnabled()).forEach(VaroTask::enable);
+        this.children.stream().filter(c -> !c.isActivated()).forEach(Trigger::activate);
+        this.tasks.stream().filter(r -> !r.isEnabled()).forEach(Task::enable);
     }
 
     protected void deactivateChildren() {
-        this.children.stream().filter(VaroTrigger::isActivated).forEach(VaroTrigger::deactivate);
-        this.tasks.stream().filter(VaroTask::isEnabled).forEach(VaroTask::disable);
+        this.children.stream().filter(Trigger::isActivated).forEach(Trigger::deactivate);
+        this.tasks.stream().filter(Task::isEnabled).forEach(Task::disable);
     }
 
     @EventHandler
@@ -104,8 +104,8 @@ public abstract class AbstractTrigger implements VaroTrigger {
     @Override
     public void destroy() {
         if (this.activated) this.deactivate();
-        this.children.forEach(VaroTrigger::destroy);
-        this.tasks.stream().filter(VaroTask::isEnabled).forEach(VaroTask::disable);
+        this.children.forEach(Trigger::destroy);
+        this.tasks.stream().filter(Task::isEnabled).forEach(Task::disable);
         this.children = null;
         this.tasks = null;
         this.plugin.getServer().getPluginManager().callEvent(new TriggerDestroyEvent(this));
@@ -122,17 +122,17 @@ public abstract class AbstractTrigger implements VaroTrigger {
     }
 
     @Override
-    public void addChildren(VaroTrigger... children) {
-        if (this.giveToChildren(VaroTrigger::addChildren, VaroTrigger::clone, children)) return;
+    public void addChildren(Trigger... children) {
+        if (this.giveToChildren(Trigger::addChildren, Trigger::clone, children)) return;
         this.children.addAll(Arrays.asList(children));
-        if (this.enabled) Arrays.stream(children).filter(c -> !c.isActivated()).forEach(VaroTrigger::activate);
+        if (this.enabled) Arrays.stream(children).filter(c -> !c.isActivated()).forEach(Trigger::activate);
     }
 
     @Override
-    public void register(VaroTask... tasks) {
-        if (this.giveToChildren(VaroTrigger::register, VaroTask::clone, tasks)) return;
+    public void register(Task... tasks) {
+        if (this.giveToChildren(Trigger::register, Task::clone, tasks)) return;
         this.tasks.addAll(Arrays.asList(tasks));
-        if (this.enabled) Arrays.stream(tasks).filter(c -> !c.isEnabled()).forEach(VaroTask::enable);
+        if (this.enabled) Arrays.stream(tasks).filter(c -> !c.isEnabled()).forEach(Task::enable);
     }
 
     /**
@@ -141,9 +141,9 @@ public abstract class AbstractTrigger implements VaroTrigger {
      * @return Cloned
      */
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         try {
-            AbstractTrigger trigger = (AbstractTrigger) super.clone();
+            ParentTrigger trigger = (ParentTrigger) super.clone();
             trigger.plugin = this.plugin;
             trigger.children = this.getChildrenCloned();
             trigger.tasks = this.getTasksCloned();

@@ -1,18 +1,18 @@
 package de.varoplugin.varo.api.task.trigger.builder;
 
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 
 public interface TriggerBuilder {
 
-    VaroTrigger build();
+    Trigger build();
 
-    VaroTrigger complete();
+    Trigger complete();
 
-    TriggerBuilder when(VaroTrigger when);
+    TriggerBuilder when(Trigger when);
 
     TriggerBuilder when(TriggerBuilder when);
 
-    TriggerBuilder and(VaroTrigger and);
+    TriggerBuilder and(Trigger and);
 
     TriggerBuilder and(TriggerBuilder and);
 

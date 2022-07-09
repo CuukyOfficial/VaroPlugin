@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
@@ -31,7 +31,7 @@ public class VaroParticipantStateTrigger extends AbstractPlayerTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         VaroParticipantStateTrigger trigger = (VaroParticipantStateTrigger) super.clone();
         trigger.state = this.state;
         return trigger;

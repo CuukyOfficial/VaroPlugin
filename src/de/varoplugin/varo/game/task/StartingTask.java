@@ -2,10 +2,9 @@ package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.game.DefaultState;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.api.task.AbstractExecutable;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class StartingTask extends AbstractExecutable {
+public class StartingTask extends VaroScheduledTask {
 
     private int countdown;
 

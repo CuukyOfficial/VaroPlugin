@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger.builder;
 
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.VaroState;
@@ -64,17 +64,17 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
     }
 
     @Override
-    public VaroTrigger build() {
+    public Trigger build() {
         return this.internal.build();
     }
 
     @Override
-    public VaroTrigger complete() {
+    public Trigger complete() {
         return this.internal.complete();
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder when(VaroTrigger trigger) {
+    public IVaroPlayerTriggerBuilder when(Trigger trigger) {
         this.internal.when(trigger);
         return this;
     }
@@ -92,7 +92,7 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder and(VaroTrigger triggers) {
+    public IVaroPlayerTriggerBuilder and(Trigger triggers) {
         this.internal.and(triggers);
         return this;
     }

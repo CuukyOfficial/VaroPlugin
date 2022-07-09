@@ -4,12 +4,11 @@ import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
 import de.varoplugin.varo.game.DefaultKickResult;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroKickResult;
-import de.varoplugin.varo.api.task.AbstractListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class KickNonRegisteredPlayerListener extends AbstractListener {
+public class KickNonRegisteredPlayerListener extends VaroListenerTask {
 
     public KickNonRegisteredPlayerListener(Varo varo) {
         super(varo);

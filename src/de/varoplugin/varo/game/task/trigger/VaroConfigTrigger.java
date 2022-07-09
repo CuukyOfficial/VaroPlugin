@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger;
 
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.Varo;
 
@@ -25,7 +25,7 @@ public class VaroConfigTrigger extends GameTrigger {
     // TODO: Varo config entry change event
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         VaroConfigTrigger trigger = (VaroConfigTrigger) super.clone();
         trigger.entry = this.entry;
         return trigger;

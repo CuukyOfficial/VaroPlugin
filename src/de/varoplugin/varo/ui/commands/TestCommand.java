@@ -4,9 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 public class TestCommand extends VaroCommand implements Listener {
 
 //    private int index = 1;
@@ -25,16 +22,20 @@ public class TestCommand extends VaroCommand implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        // Itemhook test
 //        this.diamondClicker.complete((Player) sender, this.getVaro().getPlugin());
 
-        Calendar now = new GregorianCalendar();
-        now.add(Calendar.SECOND, 5);
-        this.getVaro().setAutoStart(now);
+        // AutoStart test
+//        Calendar now = new GregorianCalendar();
+//        now.add(Calendar.SECOND, 5);
+//        this.getVaro().setAutoStart(now);
 
+        // ChatHook test
 //        new PlayerChatHookBuilder().player((Player) sender).message("Test").register(this.getVaro().getPlugin());
+
+        // Cycle gamestate
 //        this.getVaro().setState(DefaultState.values()[this.index % DefaultState.values().length]);
 //        this.index++;
-//        sender.sendMessage(this.getVaro().getState().toString());
         return false;
     }
 }

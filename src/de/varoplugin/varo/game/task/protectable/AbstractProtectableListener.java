@@ -1,10 +1,10 @@
 package de.varoplugin.varo.game.task.protectable;
 
+import de.varoplugin.varo.api.task.Task;
+import de.varoplugin.varo.game.task.VaroListenerTask;
 import de.varoplugin.varo.game.world.protectable.Protectable;
-import de.varoplugin.varo.api.task.AbstractListener;
-import de.varoplugin.varo.api.task.VaroTask;
 
-public abstract class AbstractProtectableListener extends AbstractListener {
+public abstract class AbstractProtectableListener extends VaroListenerTask {
 
     private Protectable protectable;
 
@@ -18,7 +18,7 @@ public abstract class AbstractProtectableListener extends AbstractListener {
     }
 
     @Override
-    public VaroTask clone() {
+    public Task clone() {
         AbstractProtectableListener listener = (AbstractProtectableListener) super.clone();
         listener.protectable = this.protectable;
         return listener;

@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger.builder;
 
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.VaroState;
@@ -13,13 +13,13 @@ public interface IVaroTriggerBuilder extends TriggerBuilder {
     IVaroTriggerBuilder whenNot(VaroState state);
 
     @Override
-    VaroTrigger build();
+    Trigger build();
 
     @Override
-    VaroTrigger complete();
+    Trigger complete();
 
     @Override
-    IVaroTriggerBuilder when(VaroTrigger trigger);
+    IVaroTriggerBuilder when(Trigger trigger);
 
     @Override
     TriggerBuilder when(TriggerBuilder when);
@@ -27,7 +27,7 @@ public interface IVaroTriggerBuilder extends TriggerBuilder {
     IVaroTriggerBuilder and(VaroConfig.VaroBoolConfigEntry entry);
 
     @Override
-    IVaroTriggerBuilder and(VaroTrigger triggers);
+    IVaroTriggerBuilder and(Trigger triggers);
 
     @Override
     IVaroTriggerBuilder and(TriggerBuilder and);

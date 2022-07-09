@@ -1,19 +1,18 @@
 package de.varoplugin.varo.game.task;
 
-import de.varoplugin.varo.api.task.AbstractTask;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.team.VaroTeamImpl;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
+import de.varoplugin.varo.game.entity.team.VaroTeamImpl;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RandomPlayerTask extends AbstractTask {
+public class RandomPlayerTask extends VaroRunnableTask {
 
     private final int teamSize;
 

@@ -1,21 +1,21 @@
 package de.varoplugin.varo.api.task;
 
-import de.varoplugin.varo.game.Varo;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public abstract class AbstractExecutable extends AbstractTask implements VaroTask, Runnable {
+public abstract class ScheduledTask extends RunnableTask implements Task, Runnable {
 
     private BukkitRunnable runnable;
 
-    public AbstractExecutable(Varo varo) {
-       super(varo);
+    public ScheduledTask(Plugin plugin) {
+       super(plugin);
     }
 
     private BukkitRunnable createRunnable() {
         return new BukkitRunnable() {
             @Override
             public void run() {
-                AbstractExecutable.this.run();
+                ScheduledTask.this.run();
             }
         };
     }

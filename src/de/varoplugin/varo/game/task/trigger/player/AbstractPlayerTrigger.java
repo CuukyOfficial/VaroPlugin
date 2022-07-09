@@ -2,7 +2,7 @@ package de.varoplugin.varo.game.task.trigger.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.task.trigger.GameTrigger;
 import org.bukkit.event.EventHandler;
 
@@ -26,7 +26,7 @@ public abstract class AbstractPlayerTrigger extends GameTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         AbstractPlayerTrigger trigger = (AbstractPlayerTrigger) super.clone();
         trigger.player = this.player;
         return trigger;

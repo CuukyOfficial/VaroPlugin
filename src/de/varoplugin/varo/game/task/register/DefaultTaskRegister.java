@@ -35,7 +35,8 @@ public class DefaultTaskRegister implements Listener {
         );
 
         new VaroTriggerBuilder(event.getVaro()).when(DefaultState.RUNNING).complete().register(
-                new EndGameListener(event.getVaro())
+                new EndGameListener(event.getVaro()),
+                new FillChestsTask(event.getVaro())
         );
 
         new VaroTriggerBuilder(event.getVaro()).when(DefaultState.STARTING)

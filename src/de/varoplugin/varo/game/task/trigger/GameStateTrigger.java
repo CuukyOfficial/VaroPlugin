@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.task.trigger;
 
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.VaroState;
 import org.bukkit.event.EventHandler;
@@ -30,7 +30,7 @@ public class GameStateTrigger extends GameTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         GameStateTrigger trigger = (GameStateTrigger) super.clone();
         trigger.state = state;
         return trigger;

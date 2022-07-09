@@ -1,10 +1,10 @@
 package de.varoplugin.varo.game.task.trigger;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.api.task.trigger.AbstractTrigger;
-import de.varoplugin.varo.api.task.trigger.VaroTrigger;
+import de.varoplugin.varo.api.task.trigger.ParentTrigger;
+import de.varoplugin.varo.api.task.trigger.Trigger;
 
-public abstract class GameTrigger extends AbstractTrigger {
+public abstract class GameTrigger extends ParentTrigger {
 
     private Varo varo;
 
@@ -18,7 +18,7 @@ public abstract class GameTrigger extends AbstractTrigger {
     }
 
     @Override
-    public VaroTrigger clone() {
+    public Trigger clone() {
         GameTrigger trigger = (GameTrigger) super.clone();
         trigger.varo = this.varo;
         return trigger;

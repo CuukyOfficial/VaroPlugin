@@ -1,12 +1,11 @@
 package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.api.task.AbstractListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class RegisterPlayerListener extends AbstractListener {
+public class RegisterPlayerListener extends VaroListenerTask {
 
     public RegisterPlayerListener(Varo varo) {
         super(varo);
