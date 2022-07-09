@@ -8,6 +8,7 @@ import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.task.*;
 import de.varoplugin.varo.game.task.player.*;
 import de.varoplugin.varo.game.task.protectable.ProtectableAccessListener;
+import de.varoplugin.varo.game.task.trigger.AutoStartTrigger;
 import de.varoplugin.varo.game.task.trigger.ProtectableTrigger;
 import de.varoplugin.varo.game.task.trigger.builder.VaroPlayerTriggerBuilder;
 import de.varoplugin.varo.game.task.trigger.builder.VaroTriggerBuilder;
@@ -21,6 +22,9 @@ public class DefaultTaskRegister implements Listener {
         new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).complete().register(
                 new RegisterPlayerListener(event.getVaro())
         );
+
+        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).and(new AutoStartTrigger(event.getVaro()))
+                .complete().register(new AutoStartTask(event.getVaro()));
 
         new VaroTriggerBuilder(event.getVaro()).whenNot(DefaultState.LOBBY).complete().register(
                 new KickNonRegisteredPlayerListener(event.getVaro())

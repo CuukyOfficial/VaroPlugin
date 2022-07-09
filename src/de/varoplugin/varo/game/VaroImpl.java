@@ -2,6 +2,7 @@ package de.varoplugin.varo.game;
 
 import de.cuuky.cfw.version.VersionUtils;
 import de.varoplugin.varo.VaroPlugin;
+import de.varoplugin.varo.api.event.game.VaroAutoStartChangedEvent;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
@@ -13,6 +14,8 @@ import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
 import org.bukkit.entity.Player;
 
+import java.util.Calendar;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -20,6 +23,7 @@ public class VaroImpl implements Varo {
 
     private VaroPlugin plugin;
     private VaroState state;
+    private Calendar autoStart;
 
     private UniqueIdMap<VaroTeam> teams;
     private UniqueIdMap<VaroPlayer> players;
@@ -100,4 +104,16 @@ public class VaroImpl implements Varo {
         return this.plugin;
     }
 
+    @Override
+    public boolean setAutoStart(Calendar calendar) {
+        if (Objects.equals(calendar, this.autoStart)) return false;
+        this.autoStart = calendar;
+        this.plugin.callEvent(new VaroAutoStartChangedEvent(this, calendar));
+        return true;
+    }
+
+    @Override
+    public Calendar getAutoStart() {
+        return this.autoStart;
+    }
 }
