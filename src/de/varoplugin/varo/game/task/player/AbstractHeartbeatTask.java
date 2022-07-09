@@ -5,12 +5,27 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class AbstractHeartbeatTask extends AbstractPlayerExecutable {
 
-    public AbstractHeartbeatTask(VaroPlayer player) {
+    private static final long HEARTBEAT = 20L;
+
+    private final boolean sync;
+
+    public AbstractHeartbeatTask(VaroPlayer player, boolean sync) {
         super(player);
+        this.sync = sync;
+    }
+
+    protected void runSynchronized(Runnable runnable) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }.runTask(this.getPlugin());
     }
 
     @Override
     protected void schedule(BukkitRunnable runnable) {
-        runnable.runTaskTimer(this.getVaro().getPlugin(), 20L, 20L);
+        if (this.sync) runnable.runTaskTimer(this.getPlugin(), HEARTBEAT, HEARTBEAT);
+        else runnable.runTaskTimerAsynchronously(this.getPlugin(), HEARTBEAT, HEARTBEAT);
     }
 }

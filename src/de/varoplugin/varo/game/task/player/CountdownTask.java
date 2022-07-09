@@ -5,7 +5,7 @@ import de.varoplugin.varo.game.entity.player.VaroPlayer;
 public class CountdownTask extends AbstractHeartbeatTask {
 
     public CountdownTask(VaroPlayer player) {
-        super(player);
+        super(player, false);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class CountdownTask extends AbstractHeartbeatTask {
         this.getPlayer().setCountdown(this.getPlayer().getCountdown() - 1);
         if (this.getPlayer().getCountdown() <= 0) {
             // TODO: Add VaroPlayer#kick method with kickReason enum
-            this.getPlayer().getPlayer().kickPlayer("Your session is over!");
+            this.runSynchronized(() -> this.getPlayer().getPlayer().kickPlayer("Your session is over!"));
         }
     }
 }
