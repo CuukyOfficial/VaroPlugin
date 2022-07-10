@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.task.trigger.builder;
 
 import de.varoplugin.varo.api.task.trigger.Trigger;
-import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
+import de.varoplugin.varo.api.task.trigger.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.State;
 import de.varoplugin.varo.game.entity.player.ParticipantState;

@@ -1,7 +1,5 @@
-package de.varoplugin.varo.api.task.trigger.builder;
+package de.varoplugin.varo.api.task.trigger;
 
-import de.varoplugin.varo.api.task.trigger.ParentTrigger;
-import de.varoplugin.varo.api.task.trigger.Trigger;
 import org.bukkit.plugin.Plugin;
 
 /**

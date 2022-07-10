@@ -1,6 +1,5 @@
 package de.varoplugin.varo.api.task.trigger;
 
-import de.varoplugin.varo.api.task.trigger.event.TriggerDestroyEvent;
 import de.varoplugin.varo.api.task.Task;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;

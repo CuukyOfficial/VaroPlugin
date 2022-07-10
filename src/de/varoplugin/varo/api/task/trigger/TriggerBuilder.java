@@ -1,6 +1,4 @@
-package de.varoplugin.varo.api.task.trigger.builder;
-
-import de.varoplugin.varo.api.task.trigger.Trigger;
+package de.varoplugin.varo.api.task.trigger;
 
 public interface TriggerBuilder {
 

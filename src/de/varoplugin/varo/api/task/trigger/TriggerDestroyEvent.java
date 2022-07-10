@@ -1,4 +1,4 @@
-package de.varoplugin.varo.api.task.trigger.event;
+package de.varoplugin.varo.api.task.trigger;
 
 import de.varoplugin.varo.api.task.trigger.Trigger;
 import org.bukkit.event.Event;
