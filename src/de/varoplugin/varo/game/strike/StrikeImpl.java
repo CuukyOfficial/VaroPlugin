@@ -12,12 +12,11 @@ import java.util.UUID;
 public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
 
     private final StrikeType type;
-    private final Player target;
+    private Player target;
     private boolean executed;
 
-    StrikeImpl(UUID uuid, Player target, StrikeType type) {
+    StrikeImpl(UUID uuid, StrikeType type) {
         super(uuid);
-        this.target = target;
         this.type = type;
     }
 
@@ -25,6 +24,11 @@ public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
     public void initialize(Varo varo) {
         super.initialize(varo);
         varo.getPlugin().callEvent(new StrikeInitializedEvent(this));
+    }
+
+    @Override
+    public void setTarget(Player target) {
+        this.target = target;
     }
 
     @Override

@@ -44,6 +44,7 @@ public class PlayerImpl extends EntityImpl implements Player {
 
     @Override
     public boolean strike(Strike strike) {
+        strike.setTarget(this);
         // TODO: Implement
         return false;
     }
