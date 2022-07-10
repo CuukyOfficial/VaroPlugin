@@ -7,8 +7,8 @@ import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
+import de.varoplugin.varo.game.entity.player.EmptyPlayerFactory;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.player.VaroPlayerImpl;
 import de.varoplugin.varo.game.entity.team.VaroTeam;
 import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
@@ -50,7 +50,7 @@ public class VaroImpl implements Varo {
 
     @Override
     public VaroPlayer register(Player player) {
-        VaroPlayer vp = new VaroPlayerImpl(player);
+        VaroPlayer vp = new EmptyPlayerFactory().player(player).create();
         if (this.players.contains(vp) || this.plugin.isCancelled(new VaroPlayerAddEvent(this, vp))) return null;
         this.players.add(vp);
         vp.initialize(this);

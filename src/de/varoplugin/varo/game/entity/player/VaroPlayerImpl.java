@@ -29,16 +29,12 @@ public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
         super(null);
     }
 
-    public VaroPlayerImpl(UUID uuid) {
+    VaroPlayerImpl(UUID uuid, String name, Player player, VaroParticipantState state, VaroPlayerMode mode) {
         super(uuid);
-        this.state = ParticipantState.ALIVE;
-        this.mode = PlayerMode.NONE;
-    }
-
-    public VaroPlayerImpl(Player player) {
-        this(player.getUniqueId());
+        this.name = name;
         this.player = player;
-        this.name = player.getName();
+        this.state = state;
+        this.mode = mode;
     }
 
     @Override
