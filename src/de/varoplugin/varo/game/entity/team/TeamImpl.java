@@ -7,7 +7,7 @@ import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
 
 import java.util.*;
 
-public class TeamImpl extends EntityImpl implements Team {
+final class TeamImpl extends EntityImpl implements Team {
 
     private String name;
     private Set<Teamable> members;

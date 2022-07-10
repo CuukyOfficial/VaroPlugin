@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 
 import java.util.UUID;
 
-public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
+final class StrikeImpl extends UniqueGameObject implements Strike, Listener {
 
     private final StrikeType type;
     private Player target;

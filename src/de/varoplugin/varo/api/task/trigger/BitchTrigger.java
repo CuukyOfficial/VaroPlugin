@@ -7,7 +7,7 @@ import org.bukkit.plugin.Plugin;
  * Parsing all infos to the child nodes like a good tree node, daddy :)
  * Give me all the data >.<
  */
-public class BitchTrigger extends ParentTrigger implements Trigger {
+class BitchTrigger extends ParentTrigger implements Trigger {
 
     public BitchTrigger(Plugin plugin) {
         super(plugin, true);

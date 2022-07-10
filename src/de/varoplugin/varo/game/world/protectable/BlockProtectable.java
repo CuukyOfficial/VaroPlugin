@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 
 import java.util.UUID;
 
-public class BlockProtectable extends UniqueGameObject implements Protectable {
+final class BlockProtectable extends UniqueGameObject implements Protectable {
 
     private final Block block;
     private ProtectableHolder holder;

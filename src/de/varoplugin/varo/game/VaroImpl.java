@@ -19,7 +19,7 @@ import org.bukkit.block.Block;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class VaroImpl implements Varo {
+final class VaroImpl implements Varo {
 
     private VaroPlugin plugin;
     private State state;

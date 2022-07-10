@@ -9,7 +9,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class PlayerImpl extends EntityImpl implements Player {
+final class PlayerImpl extends EntityImpl implements Player {
 
     private ParticipantState state;
     private PlayerMode mode;
