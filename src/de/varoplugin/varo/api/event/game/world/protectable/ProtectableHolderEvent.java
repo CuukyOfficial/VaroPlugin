@@ -3,11 +3,11 @@ package de.varoplugin.varo.api.event.game.world.protectable;
 import de.varoplugin.varo.game.world.protectable.Protectable;
 import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
 
-public class VaroProtectableHolderEvent extends VaroProtectableEvent {
+public class ProtectableHolderEvent extends ProtectableEvent {
 
     private final ProtectableHolder holder;
 
-    public VaroProtectableHolderEvent(ProtectableHolder holder, Protectable protectable) {
+    public ProtectableHolderEvent(ProtectableHolder holder, Protectable protectable) {
         super(protectable);
         this.holder = holder;
     }

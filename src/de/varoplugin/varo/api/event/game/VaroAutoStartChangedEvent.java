@@ -4,7 +4,7 @@ import de.varoplugin.varo.game.Varo;
 
 import java.util.Calendar;
 
-public class VaroAutoStartChangedEvent extends VaroGameCancelableEvent {
+public class VaroAutoStartChangedEvent extends VaroCancelableEvent {
 
     private final Calendar newAutoStart;
 

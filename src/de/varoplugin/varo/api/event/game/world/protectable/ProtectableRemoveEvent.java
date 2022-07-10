@@ -3,9 +3,9 @@ package de.varoplugin.varo.api.event.game.world.protectable;
 import de.varoplugin.varo.game.world.protectable.Protectable;
 import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
 
-public class VaroProtectableRemoveEvent extends VaroProtectableHolderEvent {
+public class ProtectableRemoveEvent extends ProtectableHolderEvent {
 
-    public VaroProtectableRemoveEvent(ProtectableHolder holder, Protectable protectable) {
+    public ProtectableRemoveEvent(ProtectableHolder holder, Protectable protectable) {
         super(holder, protectable);
     }
 }

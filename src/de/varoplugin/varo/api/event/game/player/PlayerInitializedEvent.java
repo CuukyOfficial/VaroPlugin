@@ -2,9 +2,9 @@ package de.varoplugin.varo.api.event.game.player;
 
 import de.varoplugin.varo.game.entity.player.Player;
 
-public class VaroPlayerInitializedEvent extends VaroPlayerEvent {
+public class PlayerInitializedEvent extends PlayerEvent {
 
-    public VaroPlayerInitializedEvent(Player player) {
+    public PlayerInitializedEvent(Player player) {
         super(player);
     }
 }

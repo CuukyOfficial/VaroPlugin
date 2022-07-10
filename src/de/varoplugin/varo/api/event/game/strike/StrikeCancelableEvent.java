@@ -3,7 +3,7 @@ package de.varoplugin.varo.api.event.game.strike;
 import de.varoplugin.varo.game.strike.Strike;
 import org.bukkit.event.Cancellable;
 
-public abstract class StrikeCancelableEvent extends StrikeEvent implements Cancellable {
+public abstract class StrikeCancelableEvent extends AbstractStrikeEvent implements Cancellable {
 
     private boolean cancelled;
 

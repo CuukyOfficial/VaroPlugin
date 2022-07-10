@@ -3,10 +3,10 @@ package de.varoplugin.varo.game;
 import de.cuuky.cfw.version.VersionUtils;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroAutoStartChangedEvent;
-import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
+import de.varoplugin.varo.api.event.game.VaroInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerAddEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerAddEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerRemoveEvent;
 import de.varoplugin.varo.game.entity.player.EmptyPlayerFactory;
 import de.varoplugin.varo.game.entity.player.Player;
 import de.varoplugin.varo.game.entity.team.Team;
@@ -45,13 +45,13 @@ public class VaroImpl implements Varo {
             if (vp == null) this.register(player);
             else vp.initialize(this);
         }
-        this.plugin.callEvent(new VaroGameInitializedEvent(this));
+        this.plugin.callEvent(new VaroInitializedEvent(this));
     }
 
     @Override
     public Player register(org.bukkit.entity.Player player) {
         Player vp = new EmptyPlayerFactory().player(player).create();
-        if (this.players.contains(vp) || this.plugin.isCancelled(new VaroPlayerAddEvent(this, vp))) return null;
+        if (this.players.contains(vp) || this.plugin.isCancelled(new PlayerAddEvent(this, vp))) return null;
         this.players.add(vp);
         vp.initialize(this);
         return vp;
@@ -59,7 +59,7 @@ public class VaroImpl implements Varo {
 
     @Override
     public boolean remove(Player player) {
-        if (!this.players.contains(player) || this.plugin.isCancelled(new VaroPlayerRemoveEvent(this, player))) return false;
+        if (!this.players.contains(player) || this.plugin.isCancelled(new PlayerRemoveEvent(this, player))) return false;
         return this.players.remove(player);
     }
 

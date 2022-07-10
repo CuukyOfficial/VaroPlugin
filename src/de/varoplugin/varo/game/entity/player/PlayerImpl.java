@@ -39,7 +39,7 @@ public class PlayerImpl extends EntityImpl implements Player {
     @Override
     public void initialize(Varo varo) {
         super.initialize(varo);
-        varo.getPlugin().callEvent(new VaroPlayerInitializedEvent(this));
+        varo.getPlugin().callEvent(new PlayerInitializedEvent(this));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PlayerImpl extends EntityImpl implements Player {
     @Override
     public void setCountdown(int countdown) {
         if (this.countdown == countdown) return;
-        VaroPlayerCountdownChangeEvent event = new VaroPlayerCountdownChangeEvent(this, countdown);
+        PlayerCountdownChangeEvent event = new PlayerCountdownChangeEvent(this, countdown);
         if (this.getVaro().getPlugin().isCancelled(event)) return;
         this.countdown = event.getCountdown();
     }
@@ -96,7 +96,7 @@ public class PlayerImpl extends EntityImpl implements Player {
     @Override
     public boolean setState(ParticipantState state) {
         if (this.state == state) return false;
-        VaroPlayerParticipantStateChangeEvent event = new VaroPlayerParticipantStateChangeEvent(this, state);
+        PlayerParticipantStateChangeEvent event = new PlayerParticipantStateChangeEvent(this, state);
         if (this.getVaro().getPlugin().isCancelled(event)) return false;
         this.state = event.getState();
         return true;
@@ -110,7 +110,7 @@ public class PlayerImpl extends EntityImpl implements Player {
     @Override
     public boolean setMode(PlayerMode mode) {
         if (this.mode == mode) return false;
-        VaroPlayerModeChangeEvent event = new VaroPlayerModeChangeEvent(this, mode);
+        PlayerModeChangeEvent event = new PlayerModeChangeEvent(this, mode);
         if (this.getVaro().getPlugin().isCancelled(event)) return false;
         this.mode = event.getMode();
         return true;
@@ -144,7 +144,7 @@ public class PlayerImpl extends EntityImpl implements Player {
     @Override
     public boolean setKills(int kills) {
         if (this.kills == kills) return false;
-        VaroPlayerKillsChangeEvent event = new VaroPlayerKillsChangeEvent(this, kills);
+        PlayerKillsChangeEvent event = new PlayerKillsChangeEvent(this, kills);
         if (this.getVaro().getPlugin().isCancelled(event)) return false;
         this.kills = event.getKills();
         return true;

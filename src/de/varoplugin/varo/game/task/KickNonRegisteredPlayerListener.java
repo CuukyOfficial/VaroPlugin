@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task;
 
-import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
+import de.varoplugin.varo.api.event.game.VaroPlayerLoginEvent;
 import de.varoplugin.varo.game.VaroKickResult;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.KickResult;
@@ -20,7 +20,7 @@ public class KickNonRegisteredPlayerListener extends VaroListenerTask {
         KickResult result = this.getVaro().getPlayer(event.getPlayer()) == null ? VaroKickResult.NOT_A_PARTICIPANT :
                 VaroKickResult.ALLOWED;
 
-        VaroGameLoginEvent loginKickEvent = new VaroGameLoginEvent(this.getVaro(), event, result);
+        VaroPlayerLoginEvent loginKickEvent = new VaroPlayerLoginEvent(this.getVaro(), event, result);
         this.getVaro().getPlugin().callEvent(loginKickEvent);
         if (loginKickEvent.getResult() != VaroKickResult.ALLOWED) {
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);

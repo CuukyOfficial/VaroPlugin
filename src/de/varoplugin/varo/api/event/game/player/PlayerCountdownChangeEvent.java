@@ -2,11 +2,11 @@ package de.varoplugin.varo.api.event.game.player;
 
 import de.varoplugin.varo.game.entity.player.Player;
 
-public class VaroPlayerCountdownChangeEvent extends VaroPlayerCancelableEvent {
+public class PlayerCountdownChangeEvent extends PlayerCancelableEvent {
 
     private int countdown;
 
-    public VaroPlayerCountdownChangeEvent(Player player, int countdown) {
+    public PlayerCountdownChangeEvent(Player player, int countdown) {
         super(player);
         this.countdown = countdown;
     }

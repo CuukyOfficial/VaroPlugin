@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
-import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerRemoveEvent;
 import de.varoplugin.varo.game.entity.player.Player;
 import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.task.trigger.GameTrigger;
@@ -16,7 +16,7 @@ public abstract class AbstractPlayerTrigger extends GameTrigger {
     }
 
     @EventHandler
-    public void onPlayerRemove(VaroPlayerRemoveEvent event) {
+    public void onPlayerRemove(PlayerRemoveEvent event) {
         if (!this.player.equals(event.getPlayer())) return;
         this.deactivate();
     }

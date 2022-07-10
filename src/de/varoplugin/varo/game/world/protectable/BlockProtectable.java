@@ -1,16 +1,19 @@
 package de.varoplugin.varo.game.world.protectable;
 
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitializedEvent;
+import de.varoplugin.varo.api.event.game.world.protectable.ProtectableInitializedEvent;
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.block.Block;
+
+import java.util.UUID;
 
 public class BlockProtectable extends UniqueGameObject implements Protectable {
 
     private final ProtectableHolder holder;
     private final Block block;
 
-    public BlockProtectable(ProtectableHolder holder, Block block) {
+    public BlockProtectable(UUID uuid, ProtectableHolder holder, Block block) {
+        super(uuid);
         this.block = block;
         this.holder = holder;
     }
@@ -18,7 +21,7 @@ public class BlockProtectable extends UniqueGameObject implements Protectable {
     @Override
     public void initialize(Varo varo) {
         super.initialize(varo);
-        varo.getPlugin().callEvent(new VaroProtectableInitializedEvent(this));
+        varo.getPlugin().callEvent(new ProtectableInitializedEvent(this));
     }
 
     @Override

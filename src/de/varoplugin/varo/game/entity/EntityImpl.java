@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.entity;
 
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableAddEvent;
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
+import de.varoplugin.varo.api.event.game.world.protectable.ProtectableAddEvent;
+import de.varoplugin.varo.api.event.game.world.protectable.ProtectableRemoveEvent;
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.world.protectable.Protectable;
@@ -29,7 +29,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
     @Override
     public boolean addProtectable(Protectable protectable) {
         if (this.protectables.contains(protectable)) return false;
-        if (this.getVaro().getPlugin().isCancelled(new VaroProtectableAddEvent(this, protectable)))
+        if (this.getVaro().getPlugin().isCancelled(new ProtectableAddEvent(this, protectable)))
             return false;
         protectable.initialize(this.getVaro());
         return this.protectables.add(protectable);
@@ -38,7 +38,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
     @Override
     public boolean removeProtectable(Protectable secureable) {
         if (!this.protectables.contains(secureable)) return false;
-        if (this.getVaro().getPlugin().isCancelled(new VaroProtectableRemoveEvent(this, secureable)))
+        if (this.getVaro().getPlugin().isCancelled(new ProtectableRemoveEvent(this, secureable)))
             return false;
         return this.protectables.remove(secureable);
     }

@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
-import de.varoplugin.varo.api.event.game.player.VaroPlayerModeChangeEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerModeChangeEvent;
 import de.varoplugin.varo.game.entity.player.Player;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
 import de.varoplugin.varo.api.task.trigger.Trigger;
@@ -25,7 +25,7 @@ public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {
     }
 
     @EventHandler
-    public void onPlayerStateChange(VaroPlayerModeChangeEvent event) {
+    public void onPlayerStateChange(PlayerModeChangeEvent event) {
         if (!this.getPlayer().equals(event.getPlayer())) return;
         this.triggerIf(event.getMode().equals(this.mode));
     }

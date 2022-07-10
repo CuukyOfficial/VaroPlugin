@@ -1,8 +1,8 @@
 package de.varoplugin.varo.game.task.register;
 
-import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
-import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitializedEvent;
+import de.varoplugin.varo.api.event.game.VaroInitializedEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerInitializedEvent;
+import de.varoplugin.varo.api.event.game.world.protectable.ProtectableInitializedEvent;
 import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.task.*;
@@ -18,7 +18,7 @@ import org.bukkit.event.Listener;
 public class DefaultTaskRegister implements Listener {
 
     @EventHandler
-    public void onGameInitialize(VaroGameInitializedEvent event) {
+    public void onGameInitialize(VaroInitializedEvent event) {
         new VaroTriggerBuilder(event.getVaro()).when(VaroState.LOBBY).complete().register(
                 new RegisterPlayerListener(event.getVaro())
         );
@@ -46,7 +46,7 @@ public class DefaultTaskRegister implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
+    public void onPlayerInitialize(PlayerInitializedEvent event) {
         new VaroTriggerBuilder(event.getVaro()).when(VaroState.LOBBY).when(VaroState.STARTING).complete().register(
                 new NoMoveListener(event.getPlayer())
         );
@@ -61,7 +61,7 @@ public class DefaultTaskRegister implements Listener {
     }
 
     @EventHandler
-    public void onProtectableInitialize(VaroProtectableInitializedEvent event) {
+    public void onProtectableInitialize(ProtectableInitializedEvent event) {
         new VaroTriggerBuilder(event.getVaro()).when(VaroState.RUNNING).when(VaroState.MASS_RECORDING)
                 .and(new ProtectableTrigger(event.getProtectable())).complete().register(
                 new ProtectableAccessListener(event.getProtectable())

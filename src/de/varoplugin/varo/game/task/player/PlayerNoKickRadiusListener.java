@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.player;
 
-import de.varoplugin.varo.api.event.game.player.VaroPlayerCountdownChangeEvent;
+import de.varoplugin.varo.api.event.game.player.PlayerCountdownChangeEvent;
 import de.varoplugin.varo.game.entity.player.Player;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -20,7 +20,7 @@ public class PlayerNoKickRadiusListener extends AbstractPlayerListener {
     }
 
     @EventHandler
-    public void onPlayerKick(VaroPlayerCountdownChangeEvent event) {
+    public void onPlayerKick(PlayerCountdownChangeEvent event) {
         if (!event.getPlayer().equals(this.getPlayer()) || event.getCountdown() >= this.checkCountdown) return;
 
         for (Entity entity : event.getPlayer().getPlayer().getNearbyEntities(this.checkRadius, this.checkRadius, this.checkRadius)) {

@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.entity.team;
 
-import de.varoplugin.varo.api.event.game.team.VaroTeamMemberAddEvent;
+import de.varoplugin.varo.api.event.game.team.TeamMemberAddEvent;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.EntityImpl;
 import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
@@ -32,7 +32,7 @@ public class TeamImpl extends EntityImpl implements Team {
 
     @Override
     public boolean addMember(Teamable teamable) {
-        if (this.members.contains(teamable) || !this.getVaro().getPlugin().isCancelled(new VaroTeamMemberAddEvent(this, teamable))) return false;
+        if (this.members.contains(teamable) || !this.getVaro().getPlugin().isCancelled(new TeamMemberAddEvent(this, teamable))) return false;
         return this.members.add(teamable);
     }
 

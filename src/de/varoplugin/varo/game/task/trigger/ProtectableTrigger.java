@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.task.trigger;
 
-import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableRemoveEvent;
+import de.varoplugin.varo.api.event.game.world.protectable.ProtectableRemoveEvent;
 import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.world.protectable.Protectable;
 import org.bukkit.event.EventHandler;
@@ -19,7 +19,7 @@ public class ProtectableTrigger extends GameTrigger {
     }
 
     @EventHandler
-    public void onProtectableRemove(VaroProtectableRemoveEvent event) {
+    public void onProtectableRemove(ProtectableRemoveEvent event) {
         if (event.getProtectable().equals(this.protectable)) this.destroy();
     }
 

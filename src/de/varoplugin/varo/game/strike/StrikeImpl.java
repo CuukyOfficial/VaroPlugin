@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.strike;
 
-import de.varoplugin.varo.api.event.game.strike.VaroStrikeExecuteEvent;
-import de.varoplugin.varo.api.event.game.strike.VaroStrikeInitializedEvent;
+import de.varoplugin.varo.api.event.game.strike.StrikeExecuteEvent;
+import de.varoplugin.varo.api.event.game.strike.StrikeInitializedEvent;
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.Player;
@@ -24,7 +24,7 @@ public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
     @Override
     public void initialize(Varo varo) {
         super.initialize(varo);
-        varo.getPlugin().callEvent(new VaroStrikeInitializedEvent(this));
+        varo.getPlugin().callEvent(new StrikeInitializedEvent(this));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
 
     @Override
     public void execute() {
-        if (this.executed || !this.getVaro().getPlugin().isCancelled(new VaroStrikeExecuteEvent(this))) return;
+        if (this.executed || !this.getVaro().getPlugin().isCancelled(new StrikeExecuteEvent(this))) return;
         this.executed = true;
     }
 

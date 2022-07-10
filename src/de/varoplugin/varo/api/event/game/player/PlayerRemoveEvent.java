@@ -3,9 +3,9 @@ package de.varoplugin.varo.api.event.game.player;
 import de.varoplugin.varo.game.entity.player.Player;
 import de.varoplugin.varo.game.entity.player.PlayerContainer;
 
-public class VaroPlayerAddEvent extends VaroPlayerContainerEvent {
+public class PlayerRemoveEvent extends PlayerContainerEvent {
 
-    public VaroPlayerAddEvent(PlayerContainer container, Player player) {
+    public PlayerRemoveEvent(PlayerContainer container, Player player) {
         super(container, player);
     }
 }
