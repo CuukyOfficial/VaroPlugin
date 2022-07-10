@@ -9,13 +9,12 @@ import java.util.UUID;
 
 public class BlockProtectable extends UniqueGameObject implements Protectable {
 
-    private final ProtectableHolder holder;
     private final Block block;
+    private ProtectableHolder holder;
 
-    public BlockProtectable(UUID uuid, ProtectableHolder holder, Block block) {
+    BlockProtectable(UUID uuid, Block block) {
         super(uuid);
         this.block = block;
-        this.holder = holder;
     }
 
     @Override
@@ -32,6 +31,11 @@ public class BlockProtectable extends UniqueGameObject implements Protectable {
     @Override
     public Block getBlock() {
         return this.block;
+    }
+
+    @Override
+    public void setHolder(ProtectableHolder holder) {
+        this.holder = holder;
     }
 
     @Override

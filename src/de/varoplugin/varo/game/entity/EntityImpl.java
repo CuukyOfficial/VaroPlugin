@@ -31,6 +31,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
         if (this.protectables.contains(protectable)) return false;
         if (this.getVaro().getPlugin().isCancelled(new ProtectableAddEvent(this, protectable)))
             return false;
+        protectable.setHolder(this);
         protectable.initialize(this.getVaro());
         return this.protectables.add(protectable);
     }
@@ -40,6 +41,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
         if (!this.protectables.contains(secureable)) return false;
         if (this.getVaro().getPlugin().isCancelled(new ProtectableRemoveEvent(this, secureable)))
             return false;
+        secureable.setHolder(null);
         return this.protectables.remove(secureable);
     }
 
