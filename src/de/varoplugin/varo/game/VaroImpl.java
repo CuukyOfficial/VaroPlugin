@@ -29,8 +29,8 @@ public class VaroImpl implements Varo {
     private final UniqueIdMap<Player> players;
     private final Set<Location> itemChestLocations;
 
-    public VaroImpl() {
-        this.state = VaroState.LOBBY;
+    VaroImpl(State state) {
+        this.state = state;
         this.teams = new HashUniqueIdMap<>();
         this.players = new HashUniqueIdMap<>();
         this.itemChestLocations = new HashSet<>();
