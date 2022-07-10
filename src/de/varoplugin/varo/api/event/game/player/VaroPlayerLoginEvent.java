@@ -1,15 +1,15 @@
 package de.varoplugin.varo.api.event.game.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.player.VaroPlayerKickResult;
+import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.PlayerKickResult;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 public class VaroPlayerLoginEvent extends VaroPlayerEvent {
 
     private final PlayerLoginEvent source;
-    private final VaroPlayerKickResult result;
+    private final PlayerKickResult result;
 
-    public VaroPlayerLoginEvent(VaroPlayer player, PlayerLoginEvent loginEvent, VaroPlayerKickResult result) {
+    public VaroPlayerLoginEvent(Player player, PlayerLoginEvent loginEvent, PlayerKickResult result) {
         super(player);
         this.result = result;
         this.source = loginEvent;
@@ -19,7 +19,7 @@ public class VaroPlayerLoginEvent extends VaroPlayerEvent {
         return this.source;
     }
 
-    public VaroPlayerKickResult getResult() {
+    public PlayerKickResult getResult() {
         return this.result;
     }
 }

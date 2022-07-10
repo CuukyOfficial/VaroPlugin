@@ -5,7 +5,7 @@ import de.varoplugin.varo.api.task.trigger.builder.LayeredTriggerBuilder;
 import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.VaroState;
+import de.varoplugin.varo.game.State;
 import de.varoplugin.varo.game.task.trigger.GameStateTrigger;
 import de.varoplugin.varo.game.task.trigger.VaroConfigTrigger;
 
@@ -20,14 +20,14 @@ public class VaroTriggerBuilder implements IVaroTriggerBuilder {
     }
 
     @Override
-    public IVaroTriggerBuilder when(VaroState state) {
+    public IVaroTriggerBuilder when(State state) {
         this.internal.when(new GameStateTrigger(this.varo, state));
         return this;
     }
 
     // TODO: Remove?
     @Override
-    public IVaroTriggerBuilder whenNot(VaroState state) {
+    public IVaroTriggerBuilder whenNot(State state) {
         return this.when(new GameStateTrigger(this.varo, state, false));
     }
 

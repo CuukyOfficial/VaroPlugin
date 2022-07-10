@@ -3,8 +3,8 @@ package de.varoplugin.varo.game.task.register;
 import de.varoplugin.varo.api.event.game.VaroGameInitializedEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerInitializedEvent;
 import de.varoplugin.varo.api.event.game.world.protectable.VaroProtectableInitializedEvent;
-import de.varoplugin.varo.game.DefaultState;
-import de.varoplugin.varo.game.entity.player.ParticipantState;
+import de.varoplugin.varo.game.VaroState;
+import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.task.*;
 import de.varoplugin.varo.game.task.player.*;
 import de.varoplugin.varo.game.task.protectable.ProtectableAccessListener;
@@ -19,27 +19,27 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onGameInitialize(VaroGameInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.LOBBY).complete().register(
                 new RegisterPlayerListener(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).and(new AutoStartTrigger(event.getVaro()))
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.LOBBY).and(new AutoStartTrigger(event.getVaro()))
                 .complete().register(new AutoStartTask(event.getVaro()));
 
-        new VaroTriggerBuilder(event.getVaro()).whenNot(DefaultState.LOBBY).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).whenNot(VaroState.LOBBY).complete().register(
                 new KickNonRegisteredPlayerListener(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.STARTING).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.STARTING).complete().register(
                 new StartingTask(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.RUNNING).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.RUNNING).complete().register(
                 new EndGameListener(event.getVaro()),
                 new FillChestsTask(event.getVaro())
         );
 
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.STARTING)
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.STARTING)
                 .and(event.getVaro().getPlugin().getVaroConfig().random_team_at_start).complete().register(
                 new RandomPlayerTask(event.getVaro(), 2) // TODO: Team size config entry and trigger for config entry
         );
@@ -47,12 +47,12 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onPlayerInitialize(VaroPlayerInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.LOBBY).when(DefaultState.STARTING).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.LOBBY).when(VaroState.STARTING).complete().register(
                 new NoMoveListener(event.getPlayer())
         );
 
-        new VaroPlayerTriggerBuilder(event.getPlayer()).when(DefaultState.RUNNING).when(DefaultState.MASS_RECORDING)
-                .and(ParticipantState.ALIVE).and(true).complete().register(
+        new VaroPlayerTriggerBuilder(event.getPlayer()).when(VaroState.RUNNING).when(VaroState.MASS_RECORDING)
+                .and(VaroParticipantState.ALIVE).and(true).complete().register(
                 new CountdownTask(event.getPlayer()),
                 new PlayerNoKickRadiusListener(event.getPlayer()),
                 new PlayerInGameJoinListener(event.getPlayer()),
@@ -62,7 +62,7 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onProtectableInitialize(VaroProtectableInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(DefaultState.RUNNING).when(DefaultState.MASS_RECORDING)
+        new VaroTriggerBuilder(event.getVaro()).when(VaroState.RUNNING).when(VaroState.MASS_RECORDING)
                 .and(new ProtectableTrigger(event.getProtectable())).complete().register(
                 new ProtectableAccessListener(event.getProtectable())
         );

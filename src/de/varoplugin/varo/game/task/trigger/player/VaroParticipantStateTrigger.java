@@ -2,20 +2,20 @@ package de.varoplugin.varo.game.task.trigger.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
 import de.varoplugin.varo.api.task.trigger.Trigger;
-import de.varoplugin.varo.game.entity.player.VaroParticipantState;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.ParticipantState;
+import de.varoplugin.varo.game.entity.player.Player;
 import org.bukkit.event.EventHandler;
 
 public class VaroParticipantStateTrigger extends AbstractPlayerTrigger {
 
-    private VaroParticipantState state;
+    private ParticipantState state;
 
-    public VaroParticipantStateTrigger(VaroPlayer player, VaroParticipantState state, boolean match) {
+    public VaroParticipantStateTrigger(Player player, ParticipantState state, boolean match) {
         super(player, match);
         this.state = state;
     }
 
-    public VaroParticipantStateTrigger(VaroPlayer player, VaroParticipantState state) {
+    public VaroParticipantStateTrigger(Player player, ParticipantState state) {
         this(player, state, true);
     }
 

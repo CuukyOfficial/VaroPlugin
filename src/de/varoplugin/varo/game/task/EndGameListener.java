@@ -1,11 +1,11 @@
 package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerParticipantStateChangeEvent;
-import de.varoplugin.varo.game.DefaultState;
+import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.player.ParticipantState;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.team.VaroTeam;
+import de.varoplugin.varo.game.entity.player.VaroParticipantState;
+import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.team.Team;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
@@ -18,19 +18,19 @@ public class EndGameListener extends VaroListenerTask {
         super(varo);
     }
 
-    private boolean isOver(VaroPlayer exclude) {
-        List<VaroPlayer> alivePlayers = this.getVaro().getPlayers().filter(vp
+    private boolean isOver(Player exclude) {
+        List<Player> alivePlayers = this.getVaro().getPlayers().filter(vp
                 -> !exclude.equals(vp) && vp.isAlive()).collect(Collectors.toList());
         if (alivePlayers.size() <= 1) return true;
-        VaroTeam team = alivePlayers.get(0).getTeam();
+        Team team = alivePlayers.get(0).getTeam();
         return alivePlayers.stream().allMatch(vp -> vp.getTeam() == team);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPlayerStateChange(VaroPlayerParticipantStateChangeEvent event) {
-        if (event.getState() != ParticipantState.DEAD) return;
+        if (event.getState() != VaroParticipantState.DEAD) return;
         if (!this.isOver(event.getPlayer())) return;
 
-        this.getVaro().setState(DefaultState.FINISHED);
+        this.getVaro().setState(VaroState.FINISHED);
     }
 }

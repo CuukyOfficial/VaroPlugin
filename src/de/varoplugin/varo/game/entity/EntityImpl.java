@@ -12,16 +12,12 @@ import org.bukkit.block.Block;
 
 import java.util.UUID;
 
-public abstract class VaroEntityImpl extends UniqueGameObject implements VaroEntity {
+public abstract class EntityImpl extends UniqueGameObject implements Entity {
 
     private UniqueIdMap<Protectable> protectables;
 
-    public VaroEntityImpl(UUID uuid) {
+    public EntityImpl(UUID uuid) {
         super(uuid);
-    }
-
-    public VaroEntityImpl() {
-        super();
     }
 
     @Override

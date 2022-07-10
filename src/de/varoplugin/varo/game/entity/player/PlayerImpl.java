@@ -2,34 +2,33 @@ package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.api.event.game.player.*;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.VaroEntityImpl;
-import de.varoplugin.varo.game.entity.team.VaroTeam;
+import de.varoplugin.varo.game.entity.EntityImpl;
+import de.varoplugin.varo.game.entity.team.Team;
 import de.varoplugin.varo.game.strike.Strike;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
+public class PlayerImpl extends EntityImpl implements Player {
 
-    private VaroParticipantState state;
-    private VaroPlayerMode mode;
-    private VaroTeam team;
+    private ParticipantState state;
+    private PlayerMode mode;
+    private Team team;
 
     private int countdown;
     private int kills;
 
-    private Player player;
+    private org.bukkit.entity.Player player;
     private String name;
 
     /**
      * For Serialization. Do not use.
      */
-    private VaroPlayerImpl() {
+    private PlayerImpl() {
         super(null);
     }
 
-    VaroPlayerImpl(UUID uuid, String name, Player player, VaroParticipantState state, VaroPlayerMode mode) {
+    PlayerImpl(UUID uuid, String name, org.bukkit.entity.Player player, ParticipantState state, PlayerMode mode) {
         super(uuid);
         this.name = name;
         this.player = player;
@@ -86,16 +85,16 @@ public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
 
     @Override
     public boolean isAlive() {
-        return this.state == ParticipantState.ALIVE;
+        return this.state == VaroParticipantState.ALIVE;
     }
 
     @Override
-    public boolean isPlayer(Player player) {
+    public boolean isPlayer(org.bukkit.entity.Player player) {
         return player.getUniqueId().equals(this.getUuid());
     }
 
     @Override
-    public boolean setState(VaroParticipantState state) {
+    public boolean setState(ParticipantState state) {
         if (this.state == state) return false;
         VaroPlayerParticipantStateChangeEvent event = new VaroPlayerParticipantStateChangeEvent(this, state);
         if (this.getVaro().getPlugin().isCancelled(event)) return false;
@@ -104,12 +103,12 @@ public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
     }
 
     @Override
-    public VaroParticipantState getState() {
+    public ParticipantState getState() {
         return this.state;
     }
 
     @Override
-    public boolean setMode(VaroPlayerMode mode) {
+    public boolean setMode(PlayerMode mode) {
         if (this.mode == mode) return false;
         VaroPlayerModeChangeEvent event = new VaroPlayerModeChangeEvent(this, mode);
         if (this.getVaro().getPlugin().isCancelled(event)) return false;
@@ -118,17 +117,17 @@ public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
     }
 
     @Override
-    public VaroPlayerMode getMode() {
+    public PlayerMode getMode() {
         return this.mode;
     }
 
     @Override
-    public void setPlayer(Player player) {
+    public void setPlayer(org.bukkit.entity.Player player) {
         this.player = player;
     }
 
     @Override
-    public Player getPlayer() {
+    public org.bukkit.entity.Player getPlayer() {
         return this.player;
     }
 
@@ -157,12 +156,12 @@ public class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
     }
 
     @Override
-    public void setTeam(VaroTeam team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 
     @Override
-    public VaroTeam getTeam() {
+    public Team getTeam() {
         return this.team;
     }
 }

@@ -3,25 +3,25 @@ package de.varoplugin.varo.game.task.trigger.builder;
 import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.entity.player.VaroParticipantState;
-import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
+import de.varoplugin.varo.game.State;
+import de.varoplugin.varo.game.entity.player.ParticipantState;
+import de.varoplugin.varo.game.entity.player.PlayerMode;
 
 public interface IVaroPlayerTriggerBuilder extends IVaroTriggerBuilder {
 
-    IVaroPlayerTriggerBuilder when(VaroParticipantState state);
+    IVaroPlayerTriggerBuilder when(ParticipantState state);
 
-    IVaroPlayerTriggerBuilder when(VaroPlayerMode mode);
+    IVaroPlayerTriggerBuilder when(PlayerMode mode);
 
     IVaroPlayerTriggerBuilder when(boolean online);
 
     IVaroPlayerTriggerBuilder and(boolean online);
 
-    IVaroPlayerTriggerBuilder when(VaroState state);
+    IVaroPlayerTriggerBuilder when(State state);
 
-    IVaroPlayerTriggerBuilder whenNot(VaroState state);
+    IVaroPlayerTriggerBuilder whenNot(State state);
 
-    IVaroPlayerTriggerBuilder and(VaroParticipantState alive);
+    IVaroPlayerTriggerBuilder and(ParticipantState alive);
 
     Trigger build();
 

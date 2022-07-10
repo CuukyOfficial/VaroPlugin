@@ -1,11 +1,11 @@
 package de.varoplugin.varo.game.strike;
 
-import de.varoplugin.varo.game.VaroGameObject;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.VaroObject;
+import de.varoplugin.varo.game.entity.player.Player;
 
-public interface Strike extends VaroGameObject {
+public interface Strike extends VaroObject {
 
-    VaroPlayer getTarget();
+    Player getTarget();
 
     StrikeType getType();
 

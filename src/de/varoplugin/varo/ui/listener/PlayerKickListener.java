@@ -2,8 +2,8 @@ package de.varoplugin.varo.ui.listener;
 
 import de.varoplugin.varo.api.event.game.VaroGameLoginEvent;
 import de.varoplugin.varo.api.event.game.player.VaroPlayerLoginEvent;
-import de.varoplugin.varo.game.DefaultKickResult;
 import de.varoplugin.varo.game.VaroKickResult;
+import de.varoplugin.varo.game.KickResult;
 import org.bukkit.event.EventHandler;
 
 import java.util.Arrays;
@@ -13,12 +13,12 @@ public class PlayerKickListener extends UiListener {
     private enum KickMessages {
 
         // TODO: Use language system
-        NOT_A_PARTICIPANT(DefaultKickResult.NOT_A_PARTICIPANT, "You are not registered in this Varo!");
+        NOT_A_PARTICIPANT(VaroKickResult.NOT_A_PARTICIPANT, "You are not registered in this Varo!");
 
-        private final VaroKickResult result;
+        private final KickResult result;
         private final String message;
 
-        KickMessages(VaroKickResult result, String message) {
+        KickMessages(KickResult result, String message) {
             this.result = result;
             this.message = message;
         }
@@ -27,7 +27,7 @@ public class PlayerKickListener extends UiListener {
             return this.message;
         }
 
-        public static KickMessages getMessage(VaroKickResult result) {
+        public static KickMessages getMessage(KickResult result) {
             return Arrays.stream(values()).filter(m -> m.result.equals(result)).findAny().orElse(null);
         }
     }

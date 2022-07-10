@@ -1,5 +1,11 @@
 package de.varoplugin.varo.game;
 
-public interface VaroState {
+public enum VaroState implements State {
+
+    LOBBY,
+    STARTING,
+    RUNNING,
+    MASS_RECORDING,
+    FINISHED
 
 }

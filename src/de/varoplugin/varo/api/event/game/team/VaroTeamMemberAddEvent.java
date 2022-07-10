@@ -1,18 +1,18 @@
 package de.varoplugin.varo.api.event.game.team;
 
-import de.varoplugin.varo.game.entity.team.VaroTeam;
-import de.varoplugin.varo.game.entity.team.VaroTeamable;
+import de.varoplugin.varo.game.entity.team.Team;
+import de.varoplugin.varo.game.entity.team.Teamable;
 
 public class VaroTeamMemberAddEvent extends VaroTeamEvent {
 
-    private final VaroTeamable teamable;
+    private final Teamable teamable;
 
-    public VaroTeamMemberAddEvent(VaroTeam team, VaroTeamable teamable) {
+    public VaroTeamMemberAddEvent(Team team, Teamable teamable) {
         super(team);
         this.teamable = teamable;
     }
 
-    public VaroTeamable getMember() {
+    public Teamable getMember() {
         return this.teamable;
     }
 }

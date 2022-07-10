@@ -1,12 +1,12 @@
 package de.varoplugin.varo.ui.listener;
 
 import de.cuuky.cfw.version.VersionUtils;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.Player;
 import de.varoplugin.varo.game.task.player.AbstractHeartbeatTask;
 
 public class PlayerShowCountdownTask extends AbstractHeartbeatTask {
 
-    public PlayerShowCountdownTask(VaroPlayer player) {
+    public PlayerShowCountdownTask(Player player) {
         super(player, false);
     }
 

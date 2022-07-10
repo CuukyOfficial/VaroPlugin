@@ -1,6 +1,6 @@
 package de.varoplugin.varo.data;
 
-import de.varoplugin.varo.game.VaroState;
+import de.varoplugin.varo.game.State;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +10,9 @@ import javax.persistence.Table;
 @Table(name = "Varo")
 public interface VaroDataGame {
 
-    boolean setState(VaroState state);
+    boolean setState(State state);
 
     @Column(name = "state")
-    VaroState getState();
+    State getState();
 
 }

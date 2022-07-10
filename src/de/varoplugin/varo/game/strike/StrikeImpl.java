@@ -4,16 +4,19 @@ import de.varoplugin.varo.api.event.game.strike.VaroStrikeExecuteEvent;
 import de.varoplugin.varo.api.event.game.strike.VaroStrikeInitializedEvent;
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.Player;
 import org.bukkit.event.Listener;
+
+import java.util.UUID;
 
 public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
 
     private final StrikeType type;
-    private final VaroPlayer target;
+    private final Player target;
     private boolean executed;
 
-    public StrikeImpl(VaroPlayer target, StrikeType type) {
+    StrikeImpl(UUID uuid, Player target, StrikeType type) {
+        super(uuid);
         this.target = target;
         this.type = type;
     }
@@ -25,7 +28,7 @@ public class StrikeImpl extends UniqueGameObject implements Strike, Listener {
     }
 
     @Override
-    public VaroPlayer getTarget() {
+    public Player getTarget() {
         return this.target;
     }
 

@@ -1,11 +1,11 @@
 package de.varoplugin.varo.api.event.game.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.player.VaroPlayerContainer;
+import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.PlayerContainer;
 
 public class VaroPlayerAddEvent extends VaroPlayerContainerEvent {
 
-    public VaroPlayerAddEvent(VaroPlayerContainer container, VaroPlayer player) {
+    public VaroPlayerAddEvent(PlayerContainer container, Player player) {
         super(container, player);
     }
 }

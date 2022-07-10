@@ -1,23 +1,23 @@
 package de.varoplugin.varo.api.event.game.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
+import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.PlayerMode;
 
 public class VaroPlayerModeChangeEvent extends VaroPlayerCancelableEvent {
 
-    private VaroPlayerMode mode;
+    private PlayerMode mode;
 
-    public VaroPlayerModeChangeEvent(VaroPlayer player, VaroPlayerMode mode) {
+    public VaroPlayerModeChangeEvent(Player player, PlayerMode mode) {
         super(player);
 
         this.mode = mode;
     }
 
-    public void setMode(VaroPlayerMode mode) {
+    public void setMode(PlayerMode mode) {
         this.mode = mode;
     }
 
-    public VaroPlayerMode getMode() {
+    public PlayerMode getMode() {
         return this.mode;
     }
 }

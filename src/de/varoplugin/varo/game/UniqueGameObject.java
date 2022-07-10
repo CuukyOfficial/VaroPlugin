@@ -2,14 +2,10 @@ package de.varoplugin.varo.game;
 
 import java.util.UUID;
 
-public abstract class UniqueGameObject implements VaroGameObject {
+public abstract class UniqueGameObject implements VaroObject {
 
     private final UUID uuid;
     private Varo varo;
-
-    public UniqueGameObject() {
-        this(UUID.randomUUID());
-    }
 
     public UniqueGameObject(UUID uuid) {
         this.uuid = uuid;

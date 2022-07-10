@@ -1,8 +1,12 @@
 package de.varoplugin.varo.game.entity.player;
 
 /**
- * Represents a player state a @{@link VaroPlayer} can be.
+ * Contains all default participant states.
  */
-public interface VaroParticipantState {
+public enum VaroParticipantState implements ParticipantState {
+
+    NONE,
+    ALIVE,
+    DEAD
 
 }

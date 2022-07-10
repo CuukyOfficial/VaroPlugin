@@ -1,12 +1,13 @@
 package de.varoplugin.varo.ui.commands;
 
+import de.varoplugin.varo.game.VaroState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 
 public class TestCommand extends VaroCommand implements Listener {
 
-//    private int index = 1;
+    private int index = 1;
 
 //    private final ItemHookBuilder diamondClicker = new PlayerItemHookBuilder().item(new ItemStack(Material.DIAMOND_SWORD))
 //        .subscribe(HookItemInteractEvent.class, this::removeOnClick);
@@ -34,8 +35,8 @@ public class TestCommand extends VaroCommand implements Listener {
 //        new PlayerChatHookBuilder().player((Player) sender).message("Test").register(this.getVaro().getPlugin());
 
         // Cycle gamestate
-//        this.getVaro().setState(DefaultState.values()[this.index % DefaultState.values().length]);
-//        this.index++;
+        this.getVaro().setState(VaroState.values()[this.index % VaroState.values().length]);
+        this.index++;
         return false;
     }
 }

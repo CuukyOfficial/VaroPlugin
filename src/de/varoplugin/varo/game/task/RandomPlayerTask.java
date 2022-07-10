@@ -1,11 +1,11 @@
 package de.varoplugin.varo.game.task;
 
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.player.ParticipantState;
-import de.varoplugin.varo.game.entity.player.PlayerMode;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.team.VaroTeam;
-import de.varoplugin.varo.game.entity.team.VaroTeamImpl;
+import de.varoplugin.varo.game.entity.player.VaroParticipantState;
+import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
+import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.team.EmptyTeamFactory;
+import de.varoplugin.varo.game.entity.team.Team;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,24 +24,24 @@ public class RandomPlayerTask extends VaroRunnableTask {
     private void doRandomTeam() {
 //        int maxNameLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
         int maxNameLength = 16;
-        List<VaroPlayer> random = this.getVaro().getPlayers()
-                .filter(pl -> pl.getTeam() != null && pl.getMode() == PlayerMode.NONE && pl.getState() == ParticipantState.ALIVE).collect(Collectors.toList());
+        List<Player> random = this.getVaro().getPlayers()
+                .filter(pl -> pl.getTeam() != null && pl.getMode() == VaroPlayerMode.NONE && pl.getState() == VaroParticipantState.ALIVE).collect(Collectors.toList());
         Collections.shuffle(random);
 
         for (int i = 0; i < random.size(); i += this.teamSize) {
             int actualSize = Math.min(i + this.teamSize, random.size());
-            Collection<VaroPlayer> member = random.subList(i, actualSize);
+            Collection<Player> members = random.subList(i, actualSize);
 //            if (member.size() < this.teamSize) // TODO: Event
 //                member.forEach(m -> m.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER));
 
             // name
-            String name = member.stream().map(m -> m.getName()
-                    .substring(0, Math.min(m.getName().length(), maxNameLength / member.size()))).collect(Collectors.joining());
+            String name = members.stream().map(m -> m.getName()
+                    .substring(0, Math.min(m.getName().length(), maxNameLength / members.size()))).collect(Collectors.joining());
 
             // add
-            VaroTeam team = new VaroTeamImpl(name);
+            Team team = new EmptyTeamFactory().name(name).create();
             this.getVaro().addTeam(team);
-            member.forEach(team::addMember);
+            members.forEach(member -> this.getVaro().addTeamMember(team, member));
         }
     }
 

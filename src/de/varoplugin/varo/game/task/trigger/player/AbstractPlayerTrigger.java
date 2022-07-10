@@ -1,16 +1,16 @@
 package de.varoplugin.varo.game.task.trigger.player;
 
 import de.varoplugin.varo.api.event.game.player.VaroPlayerRemoveEvent;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.Player;
 import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.game.task.trigger.GameTrigger;
 import org.bukkit.event.EventHandler;
 
 public abstract class AbstractPlayerTrigger extends GameTrigger {
 
-    private VaroPlayer player;
+    private Player player;
 
-    public AbstractPlayerTrigger(VaroPlayer player, boolean match) {
+    public AbstractPlayerTrigger(Player player, boolean match) {
         super(player.getVaro(), match);
         this.player = player;
     }
@@ -21,7 +21,7 @@ public abstract class AbstractPlayerTrigger extends GameTrigger {
         this.deactivate();
     }
 
-    public VaroPlayer getPlayer() {
+    public Player getPlayer() {
         return this.player;
     }
 

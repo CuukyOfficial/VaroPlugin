@@ -3,32 +3,32 @@ package de.varoplugin.varo.game.task.trigger.builder;
 import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.api.task.trigger.builder.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.entity.player.VaroParticipantState;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
+import de.varoplugin.varo.game.State;
+import de.varoplugin.varo.game.entity.player.ParticipantState;
+import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.PlayerMode;
 import de.varoplugin.varo.game.task.trigger.player.VaroOnlineTrigger;
 import de.varoplugin.varo.game.task.trigger.player.VaroParticipantStateTrigger;
 import de.varoplugin.varo.game.task.trigger.player.VaroPlayerModeTrigger;
 
 public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
 
-    private final VaroPlayer player;
+    private final Player player;
     private final IVaroTriggerBuilder internal;
 
-    public VaroPlayerTriggerBuilder(VaroPlayer player) {
+    public VaroPlayerTriggerBuilder(Player player) {
         this.internal = new VaroTriggerBuilder(player.getVaro());
         this.player = player;
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder when(VaroParticipantState state) {
+    public IVaroPlayerTriggerBuilder when(ParticipantState state) {
         this.internal.when(new VaroParticipantStateTrigger(this.player, state));
         return this;
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder when(VaroPlayerMode mode) {
+    public IVaroPlayerTriggerBuilder when(PlayerMode mode) {
         this.internal.when(new VaroPlayerModeTrigger(this.player, mode));
         return this;
     }
@@ -40,7 +40,7 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder and(VaroParticipantState alive) {
+    public IVaroPlayerTriggerBuilder and(ParticipantState alive) {
         this.internal.and(new VaroParticipantStateTrigger(this.player, alive));
         return this;
     }
@@ -52,13 +52,13 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder when(VaroState state) {
+    public IVaroPlayerTriggerBuilder when(State state) {
         this.internal.when(state);
         return this;
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder whenNot(VaroState state) {
+    public IVaroPlayerTriggerBuilder whenNot(State state) {
         this.internal.whenNot(state);
         return this;
     }

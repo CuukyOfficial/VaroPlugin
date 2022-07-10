@@ -1,5 +1,7 @@
 package de.varoplugin.varo.game;
 
-public interface VaroKickResult {
+public enum VaroKickResult implements KickResult {
 
+    NOT_A_PARTICIPANT,
+    ALLOWED
 }

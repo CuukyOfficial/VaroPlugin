@@ -1,12 +1,12 @@
 package de.varoplugin.varo.api.event.game.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.Player;
 
 public class VaroPlayerKillsChangeEvent extends VaroPlayerCancelableEvent {
 
     private int kills;
 
-    public VaroPlayerKillsChangeEvent(VaroPlayer player, int kills) {
+    public VaroPlayerKillsChangeEvent(Player player, int kills) {
         super(player);
 
         this.kills = kills;

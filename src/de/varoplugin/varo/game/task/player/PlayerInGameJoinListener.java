@@ -1,13 +1,13 @@
 package de.varoplugin.varo.game.task.player;
 
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.entity.player.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerInGameJoinListener extends AbstractPlayerListener {
 
-    public PlayerInGameJoinListener(VaroPlayer player) {
+    public PlayerInGameJoinListener(Player player) {
         super(player);
     }
 

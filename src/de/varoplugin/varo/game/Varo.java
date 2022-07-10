@@ -2,17 +2,17 @@ package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.data.VaroDataGame;
-import de.varoplugin.varo.game.entity.player.VaroPlayerContainer;
-import de.varoplugin.varo.game.entity.team.VaroTeamContainer;
+import de.varoplugin.varo.game.entity.player.PlayerContainer;
+import de.varoplugin.varo.game.entity.team.TeamContainer;
 import de.varoplugin.varo.game.world.ItemChestContainer;
 
-public interface Varo extends VaroPlayerContainer, VaroTeamContainer, AutoStartable, ItemChestContainer, VaroDataGame {
+public interface Varo extends PlayerContainer, TeamContainer, AutoStartable, ItemChestContainer, VaroDataGame {
 
     void initialize(VaroPlugin plugin);
 
-    VaroState getState();
+    State getState();
 
-    boolean setState(VaroState state);
+    boolean setState(State state);
 
     VaroPlugin getPlugin();
 
