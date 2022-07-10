@@ -34,7 +34,7 @@ public class PlayerKickListener extends UiListener {
 
     @EventHandler
     public void onVaroPlayerKick(VaroPlayerLoginEvent event) {
-        if (event.getResult() == de.varoplugin.varo.game.entity.player.DefaultKickResult.PLAYER_DEAD) {
+        if (event.getResult() == de.varoplugin.varo.game.entity.player.VaroKickResult.PLAYER_DEAD) {
             event.getSource().setKickMessage("You are dead!");
         }
      }

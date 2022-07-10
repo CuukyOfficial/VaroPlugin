@@ -1,6 +1,6 @@
 package de.varoplugin.varo.game.entity.player;
 
-public enum DefaultKickResult implements PlayerKickResult {
+public enum VaroKickResult implements PlayerKickResult {
 
     PLAYER_DEAD,
     ALLOWED
