@@ -81,7 +81,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 				language.load(new File(this.getDataFolder(), LANGUAGE_PATH + "/" + language.getName() + ".yml"));
 			}
 			this.languages = languages;
-			this.messages = new Messages(languages, defaultLanguage, globalPlaceholders, this.config.minimessage.getValue(), placeholderApiSupport);
+			this.messages = new Messages(languages, defaultLanguage, globalPlaceholders, placeholderApiSupport);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

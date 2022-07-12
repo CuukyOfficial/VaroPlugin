@@ -18,7 +18,7 @@ public class Messages {
 	public final TranslatableMessageComponent hello_world = new VaroMessage("hello.world", "placeholder");
 	public final Translatable<MessageComponent[]> arrayTest = new VaroMessageArray("arraytest");
 
-	public Messages(Language[] languages, int defaultLanguage, Map<String, GlobalPlaceholder> globalPlaceholders, boolean minimessages, boolean papi) {
+	public Messages(Language[] languages, int defaultLanguage, Map<String, GlobalPlaceholder> globalPlaceholders, boolean papi) {
 		this.messages.forEach(message -> message.init(languages, defaultLanguage, globalPlaceholders, papi));
 	}
 	
