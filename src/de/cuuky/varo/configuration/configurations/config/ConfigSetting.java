@@ -12,7 +12,7 @@ import de.cuuky.varo.game.suro.SuroStart;
 
 public enum ConfigSetting implements SectionEntry {
 
-	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "teamLife.addOnKill", -1, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler toetet.", "addTeamLifesOnKill"),
+	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "teamLife.addOnKill", -1D, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler toetet.", "addTeamLifesOnKill"),
 	ALWAYS_TIME(ConfigSettingSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000", true),
 	ALWAYS_TIME_USE_AFTER_START(ConfigSettingSection.WORLD, "alwaysTimeUseAfterStart", false, "Ob die Zeit auch stehen bleiben soll,\nwenn das Projekt gestartet wurde."),
 	AUTOSETUP_BORDER(ConfigSettingSection.AUTOSETUP, "border", 2000, "Wie gross die Border beim\nAutoSetup gesetzt werden soll"),
@@ -168,6 +168,7 @@ public enum ConfigSetting implements SectionEntry {
 	MIN_BORDER_SIZE(ConfigSettingSection.BORDER, "minBorderSize", 300, "Wie klein die Border maximal werden kann."),
 
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen koennen.\nOff = 0"),
+	SPECTATOR_CHAT(ConfigSettingSection.OTHER, "spectatorChat", false, "Ob Spectator in den Chat schreiben können"),
 
 	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
 	NAMETAGS_VISIBLE_DEFAULT(ConfigSettingSection.MAIN, "nametags.visible.default", true, "Ob NameTags sichtbar sein sollen"),
@@ -411,7 +412,7 @@ public enum ConfigSetting implements SectionEntry {
 		Class<?> valueClass = value.getClass();
 		Class<?> defaultClass = this.defaultValue.getClass();
 		if (valueClass != defaultClass) {
-			if (!defaultClass.isAssignableFrom(valueClass) && (valueClass != Integer.class || defaultClass != Long.class))
+			if (!defaultClass.isAssignableFrom(valueClass) && (valueClass != Integer.class || defaultClass != Long.class) && (valueClass != Integer.class || defaultClass != Double.class))
 				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applyable for " + defaultClass.getName() + " for entry " + getFullPath());
 		}
 	

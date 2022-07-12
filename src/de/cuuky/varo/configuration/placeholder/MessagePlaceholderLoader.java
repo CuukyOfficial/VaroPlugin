@@ -77,12 +77,15 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("hour", 1, "Ersetzt durch die verbleibenden Stunden der aktuellen Session des Spielers", (player) -> ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : String.format("%02d", player.getStats().getCountdown() / 3600));
         new VaroPlayerMessagePlaceholder("min", 1, "Ersetzt durch die verbleibenden Minuten der aktuellen Session des Spielers", (player) -> ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : String.format("%02d", (player.getStats().getCountdown() / 60) % 60));
         new VaroPlayerMessagePlaceholder("sec", 1, "Ersetzt durch die verbleibenden Sekunden der aktuellen Session des Spielers", (player) -> ConfigSetting.PLAY_TIME.getValueAsInt() < 1 ? "-" : String.format("%02d", player.getStats().getCountdown() % 60));
+        new VaroPlayerMessagePlaceholder("sessionTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Spielers in dieser Session", (player) -> String.format("%02d", player.getStats().getSessionTime() / 3600));
+        new VaroPlayerMessagePlaceholder("sessionTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers in dieser Session", (player) -> String.format("%02d", (player.getStats().getSessionTime() / 60) % 60));
+        new VaroPlayerMessagePlaceholder("sessionTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Spielers in dieser Session", (player) -> String.format("%02d", player.getStats().getSessionTime() % 60));
         new VaroPlayerMessagePlaceholder("onlineTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Spielers", (player) -> String.format("%02d", player.getStats().getOnlineTime() / 3600));
         new VaroPlayerMessagePlaceholder("onlineTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers", (player) -> String.format("%02d", (player.getStats().getOnlineTime() / 60) % 60));
         new VaroPlayerMessagePlaceholder("onlineTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Spielers", (player) -> String.format("%02d", player.getStats().getOnlineTime() % 60));
-        new VaroPlayerMessagePlaceholder("onlineTimeTotalHour", 1, "Ersetzt durch die Stunden der Spielzeit des Spielers", (player) -> String.format("%02d", player.getStats().getOnlineTimeTotal() / 3600));
-        new VaroPlayerMessagePlaceholder("onlineTimeTotalMin", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers", (player) -> String.format("%02d", (player.getStats().getOnlineTimeTotal() / 60) % 60));
-        new VaroPlayerMessagePlaceholder("onlineTimeTotalSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Spielers", (player) -> String.format("%02d", player.getStats().getOnlineTimeTotal() % 60));
+        new VaroPlayerMessagePlaceholder("onlineTimeTotalHour", 1, "Ersetzt durch die Stunden der gesamten Spielzeit des Spielers", (player) -> String.format("%02d", player.getStats().getOnlineTimeTotal() / 3600));
+        new VaroPlayerMessagePlaceholder("onlineTimeTotalMin", 1, "Ersetzt durch die Minuten der gesamten Spielzeit des Spielers", (player) -> String.format("%02d", (player.getStats().getOnlineTimeTotal() / 60) % 60));
+        new VaroPlayerMessagePlaceholder("onlineTimeTotalSec", 1, "Ersetzt durch die Sekunden der gesamten Spielzeit des Spielers", (player) -> String.format("%02d", player.getStats().getOnlineTimeTotal() % 60));
         
         new VaroPlayerMessagePlaceholder("formattedCountdown", 1, "Ersetzt durch den formatierten Countdown des Spielers.", (player) -> {
             int secs = player.getStats().getCountdown();
