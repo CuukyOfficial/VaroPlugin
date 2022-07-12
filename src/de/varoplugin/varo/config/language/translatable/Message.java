@@ -7,12 +7,15 @@ import org.bukkit.entity.Player;
 
 import de.varoplugin.varo.config.language.Language;
 import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
+import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMessageComponent;
+import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMessageComponentAdapter;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 
 public class Message extends GenericTranslatable<String> implements TranslatableMessageComponent {
 
 	private CompositeMessageComponent[] translations;
 	private int defaultTranslation;
+	private MiniMessageTranslatableMessageComponent miniComponent;
 
 	public Message(String path, String... localPlaceholderNames) {
 		super(path, localPlaceholderNames);
@@ -40,7 +43,7 @@ public class Message extends GenericTranslatable<String> implements Translatable
 	public String value(Player player, Object... localPlaceholders) {
 		return this.translations[this.defaultTranslation].value(player, localPlaceholders);
 	}
-	
+
 	@Override
 	public String value(Language language) {
 		return this.translations[language.getId()].value();
@@ -54,5 +57,15 @@ public class Message extends GenericTranslatable<String> implements Translatable
 	@Override
 	public String value(Language language, Player player,  Object... localPlaceholders) {
 		return this.translations[language.getId()].value(player, localPlaceholders);
+	}
+
+	@Override
+	public boolean shouldEscape() {
+		return false;
+	}
+
+	@Override
+	public MiniMessageTranslatableMessageComponent miniMessage() {
+		return this.miniComponent == null ? this.miniComponent = new MiniMessageTranslatableMessageComponentAdapter(this.translations, this.defaultTranslation) : this.miniComponent;
 	}
 }

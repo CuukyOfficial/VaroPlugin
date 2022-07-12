@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 import de.varoplugin.varo.config.language.component.MessageComponent;
 
 public class LocalPlaceholder implements MessageComponent {
-	
+
 	private final String name;
 	private final int id;
-	
+
 	public LocalPlaceholder(String name, int id) {
 		this.name = name;
 		this.id = id;
@@ -29,4 +29,8 @@ public class LocalPlaceholder implements MessageComponent {
 		return localPlaceholders[this.id].toString();
 	}
 
+	@Override
+	public boolean shouldEscape() {
+		return true;
+	}
 }

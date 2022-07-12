@@ -6,9 +6,9 @@ import de.varoplugin.varo.config.language.component.MessageComponent;
 import me.clip.placeholderapi.PlaceholderAPI;
 
 public class ExternalPlaceholderApiPlaceholder implements MessageComponent {
-	
+
 	private String name;
-	
+
 	public ExternalPlaceholderApiPlaceholder(String name) {
 		this.name = name;
 	}
@@ -26,5 +26,10 @@ public class ExternalPlaceholderApiPlaceholder implements MessageComponent {
 	@Override
 	public String value(Player player, Object... localPlaceholders) {
 		return PlaceholderAPI.setPlaceholders(player, this.name);
+	}
+
+	@Override
+	public boolean shouldEscape() {
+		return true;
 	}
 }

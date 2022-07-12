@@ -10,18 +10,20 @@ import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
 
+import de.varoplugin.varo.config.language.minimessage.MiniMessageCompositeMessageComponentAdapter;
+import de.varoplugin.varo.config.language.minimessage.MiniMessageMessageComponent;
 import de.varoplugin.varo.config.language.placeholder.ExternalPlaceholderApiPlaceholder;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.config.language.placeholder.LocalPlaceholder;
 import me.clip.placeholderapi.PlaceholderAPI;
 
-public class CompositeMessageComponent implements MessageComponent {
+public class CompositeMessageComponent implements ExtendedMessageComponent {
 
 	// Have fun ;)
 	private static final Pattern REGEX = Pattern.compile("(?:((?:\\\\%|[^%\\\\])*)(?:%)((?:(?:\\\\%|[^%\\\\])*))(?:%)((?:\\\\%|[^%\\\\])*))|(.+)");
 
-
 	private MessageComponent[] components;
+	private MiniMessageMessageComponent miniComponent;
 
 	public CompositeMessageComponent(String translation, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
 		this.components = processString(translation, localPlaceholders, globalPlaceholders, placeholderApiSupport);
@@ -75,5 +77,15 @@ public class CompositeMessageComponent implements MessageComponent {
 			return new ExternalPlaceholderApiPlaceholder(withPercent);
 
 		return new SimpleMessageComponent(name);
+	}
+
+	@Override
+	public boolean shouldEscape() {
+		return false;
+	}
+
+	@Override
+	public MiniMessageMessageComponent miniMessage() {
+		return this.miniComponent == null ? this.miniComponent = new MiniMessageCompositeMessageComponentAdapter(this.components) : this.miniComponent;
 	}
 }

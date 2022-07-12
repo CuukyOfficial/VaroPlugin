@@ -12,4 +12,9 @@ abstract class GenericGlobalPlaceholder implements GlobalPlaceholder {
 	public String getName() {
 		return this.name;
 	}
+
+	@Override
+	public boolean shouldEscape() {
+		return true;
+	}
 }
