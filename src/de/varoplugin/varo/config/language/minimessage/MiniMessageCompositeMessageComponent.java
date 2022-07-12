@@ -9,13 +9,13 @@ import de.varoplugin.varo.config.language.component.MessageComponent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-public class MiniMessageCompositeMessageComponentAdapter implements MiniMessageMessageComponent {
+public class MiniMessageCompositeMessageComponent implements MiniMessageMessageComponent {
 
 	private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
 	private final MessageComponent[] components;
 
-	public MiniMessageCompositeMessageComponentAdapter(MessageComponent[] components) {
+	public MiniMessageCompositeMessageComponent(MessageComponent[] components) {
 		this.components = components;
 	}
 

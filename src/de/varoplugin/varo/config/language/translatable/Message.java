@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import de.varoplugin.varo.config.language.Language;
 import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
 import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMessageComponent;
-import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMessageComponentAdapter;
+import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMessageComponentImpl;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 
 public class Message extends GenericTranslatable<String> implements TranslatableMessageComponent {
@@ -66,6 +66,6 @@ public class Message extends GenericTranslatable<String> implements Translatable
 
 	@Override
 	public MiniMessageTranslatableMessageComponent miniMessage() {
-		return this.miniComponent == null ? this.miniComponent = new MiniMessageTranslatableMessageComponentAdapter(this.translations, this.defaultTranslation) : this.miniComponent;
+		return this.miniComponent == null ? this.miniComponent = new MiniMessageTranslatableMessageComponentImpl(this.translations, this.defaultTranslation) : this.miniComponent;
 	}
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.config.language.minimessage.MiniMessageCompositeMessageComponentAdapter;
+import de.varoplugin.varo.config.language.minimessage.MiniMessageCompositeMessageComponent;
 import de.varoplugin.varo.config.language.minimessage.MiniMessageMessageComponent;
 import de.varoplugin.varo.config.language.placeholder.ExternalPlaceholderApiPlaceholder;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
@@ -86,6 +86,6 @@ public class CompositeMessageComponent implements ExtendedMessageComponent {
 
 	@Override
 	public MiniMessageMessageComponent miniMessage() {
-		return this.miniComponent == null ? this.miniComponent = new MiniMessageCompositeMessageComponentAdapter(this.components) : this.miniComponent;
+		return this.miniComponent == null ? this.miniComponent = new MiniMessageCompositeMessageComponent(this.components) : this.miniComponent;
 	}
 }

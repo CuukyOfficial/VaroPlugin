@@ -6,12 +6,12 @@ import de.varoplugin.varo.config.language.Language;
 import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
 import net.kyori.adventure.text.Component;
 
-public class MiniMessageTranslatableMessageComponentAdapter implements MiniMessageTranslatableMessageComponent {
+public class MiniMessageTranslatableMessageComponentImpl implements MiniMessageTranslatableMessageComponent {
 
 	private final CompositeMessageComponent[] translations;
 	private final int defaultTranslation;
 
-	public MiniMessageTranslatableMessageComponentAdapter(CompositeMessageComponent[] translations, int defaultTranslation) {
+	public MiniMessageTranslatableMessageComponentImpl(CompositeMessageComponent[] translations, int defaultTranslation) {
 		this.translations = translations;
 		this.defaultTranslation = defaultTranslation;
 	}
