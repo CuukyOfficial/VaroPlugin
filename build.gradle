@@ -84,7 +84,9 @@ dependencies {
     this.addModularCompile('com.github.labymod:legacy-labymod-server-api:1.0', 'labymodapi', true)
     this.addModularCompile("net.dv8tion:JDA:${JDA_version}", 'jda', false)
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
-    this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
+    this.addModularCompile('me.clip:placeholderapi:2.11.1', 'placeholderapi', false)
+    this.addModularCompile('net.kyori:adventure-text-minimessage:4.11.0', 'minimessage', false)
+    this.addModularCompile('net.kyori:adventure-platform-bukkit:4.1.1', 'adventure-platform', false)
     this.addModularImplementation("me.carleslc.Simple-YAML:Simple-Yaml:${SimpleYaml_version}", 'simple-yaml', false)
 
     this.addModularInternal('de.varoplugin:CFW:1.0.0', 'CFW', true)

@@ -1,7 +1,9 @@
 package de.varoplugin.varo;
 
+import de.varoplugin.varo.api.config.language.Language;
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.config.VaroConfig;
+import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.Plugin;
@@ -24,6 +26,10 @@ public interface VaroPlugin extends Plugin {
     File getFile();
 
     VaroConfig getVaroConfig();
+    
+    Language[] getLanguages();
+    
+    Messages getMessages();
 
     Varo getVaro();
 

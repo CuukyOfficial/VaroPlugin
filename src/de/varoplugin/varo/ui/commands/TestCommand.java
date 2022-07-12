@@ -1,5 +1,7 @@
 package de.varoplugin.varo.ui.commands;
 
+import de.varoplugin.varo.VaroJavaPlugin;
+import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.VaroState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,8 +37,14 @@ public class TestCommand extends VaroCommand implements Listener {
 //        new PlayerChatHookBuilder().player((Player) sender).message("Test").register(this.getVaro().getPlugin());
 
         // Cycle gamestate
-        this.getVaro().setState(VaroState.values()[this.index % VaroState.values().length]);
-        this.index++;
+        // this.getVaro().setState(VaroState.values()[this.index % VaroState.values().length]);
+        // this.index++;
+    	
+    	Messages messages = this.getVaro().getPlugin().getMessages();
+    	sender.sendMessage(messages.hello_world.value("This is a local placeholder"));
+    	sender.sendMessage(this.getVaro().getPlugin().getMessages().arrayTest.value()[0].value());
+    	sender.sendMessage(this.getVaro().getPlugin().getMessages().arrayTest.value()[1].value());
+    	
         return false;
     }
 }

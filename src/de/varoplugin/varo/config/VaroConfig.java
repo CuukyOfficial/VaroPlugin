@@ -1,29 +1,25 @@
 package de.varoplugin.varo.config;
 
-import com.google.common.collect.Multimap;
-import de.varoplugin.varo.Dependencies;
-import de.varoplugin.varo.VaroJavaPlugin;
-import de.varoplugin.varo.VaroPlugin;
-import de.varoplugin.varo.api.config.Config;
-import de.varoplugin.varo.api.config.ConfigCategory;
-import de.varoplugin.varo.api.config.ConfigEntry;
-import de.varoplugin.varo.api.config.ConfigException;
-
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
 import static de.varoplugin.varo.config.VaroConfigCategory.*;
 
-public class VaroConfig implements Config {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-	private final List<ConfigEntry<?>> configEntries = new ArrayList<>();
+import de.varoplugin.varo.VaroJavaPlugin;
+import de.varoplugin.varo.VaroPlugin;
+import de.varoplugin.varo.api.config.ConfigCategory;
+import de.varoplugin.varo.api.config.ConfigEntry;
+
+public class VaroConfig extends ClassLoaderConfig {
+
+	final List<ConfigEntry<?>> configEntries = new ArrayList<>();
 
 	// These fields do not follow java conventions to improve readability
 	public final VaroBoolConfigEntry offlinemode = new VaroBoolConfigEntry(MAIN, "offlinemode", false, "Whether the server is running in offline mode");
+	public final ConfigEntry<String> defaultlanguage = new VaroConfigEntry<>(MAIN, "defaultlang", "en", "The default language");
+	public final VaroBoolConfigEntry placeholderapi = new VaroBoolConfigEntry(MAIN, "placeholderapi", false, "Whether PlaceholderAPI support is enabled. An external plugin is required");
+	public final VaroBoolConfigEntry minimessage = new VaroBoolConfigEntry(MAIN, "minimessage", false, "Whether MiniMessage support is enabled. An external plugin is required");
 
 	public final VaroBoolConfigEntry bot_discord_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.enabled", false, "Whether the Discord Bot should be enabled");
 	public final ConfigEntry<String> bot_discord_token = new VaroConfigEntry<>(BOTS, "bot.discord.token", "INSERT BOT TOKEN HERE", "The Bot Token");
@@ -59,86 +55,30 @@ public class VaroConfig implements Config {
 	public final ConfigEntry<Integer> start_countdown = new VaroConfigEntry<>(MAIN, "main.startCountdown", 30, "The start countdown");
 	public final VaroBoolConfigEntry random_team_at_start = new VaroBoolConfigEntry(MAIN, "main.start.randomTeam", false, "TODO");
 
-	private Config config;
-
 	/**
 	 * This constructor is just for testing
 	 * 
-	 * @param path
+	 * @param path The file path
 	 */
 	public VaroConfig(String path) {
-		this.config = new ConfigImpl(path);
+		super(path);
 
 		for(ConfigEntry<?> entry : this.configEntries)
 			this.addConfigEntry(entry);
 	}
-
+	
 	public VaroConfig(VaroPlugin plugin, File pluginFile, String path) {
-		try {
-			// Download dependencies
-			Dependencies.SIMPLE_YAML.load(plugin);
-			Dependencies.SNAKE_YAML.load(plugin);
-
-			// All classes except for ConfigImpl and SnakeYAML should still be loaded via the class loader of this class (Bukkit's ClassLoader)
-			ClassLoader parentClassLoader = new ClassLoader(this.getClass().getClassLoader()) {
-
-				@Override
-				protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-					if (name.equals("de.varoplugin.varo.config.ConfigImpl") || name.startsWith("org.yaml.snakeyaml."))
-						throw new ClassNotFoundException();
-					else
-						return super.loadClass(name, resolve);
-				}
-			};
-
-			// Create URLClassLoader and load the ConfigImpl class using the newly created URLClassLoader
-			URLClassLoader classLoader = new URLClassLoader(new URL[] {Dependencies.SIMPLE_YAML.getUrl(), Dependencies.SNAKE_YAML.getUrl(), pluginFile.toURI().toURL()}, parentClassLoader);
-			Class<?> configClass = Class.forName("de.varoplugin.varo.config.ConfigImpl", false, classLoader);
-
-			// Create new ConfigImpl instance
-			this.config = (Config) configClass.getConstructor(String.class).newInstance(path);
-		} catch (Throwable t) {
-			plugin.getLogger().log(Level.SEVERE, "Unable to load config", t);
-			return;
-		}
+		super(plugin, pluginFile, path);
 
 		for(ConfigEntry<?> entry : this.configEntries)
 			this.addConfigEntry(entry);
 	}
 
-	@Override
-	public void load() throws ConfigException {
-		this.config.load();
-	}
-
-	@Override
-	public void dump() throws ConfigException {
-		this.config.dump();
-	}
-
-	@Override
-	public void delete() throws ConfigException {
-		this.config.delete();
-	}
-
-	@Override
-	public void addConfigEntry(ConfigEntry<?> configEntry) {
-		this.config.addConfigEntry(configEntry);
-	}
-
-	@Override
-	public Multimap<ConfigCategory, ConfigEntry<?>> getConfigEntries() {
-		return this.config.getConfigEntries();
-	}
-
-	@Override
-	public ConfigEntry<?> getEntry(ConfigCategory category, String path) {
-		return this.config.getEntry(category, path);
-	}
+	
 
 	private class VaroConfigEntry<T> extends ConfigEntryImpl<T> {
 
-		private VaroConfigEntry(ConfigCategory category, String path, T defaultValue, String description) {
+		VaroConfigEntry(ConfigCategory category, String path, T defaultValue, String description) {
 			super(category, path, defaultValue, description);
 
 			VaroConfig.this.configEntries.add(this);
@@ -147,7 +87,7 @@ public class VaroConfig implements Config {
 
 	public class VaroBoolConfigEntry extends VaroConfigEntry<Boolean> {
 		
-		private VaroBoolConfigEntry(ConfigCategory category, String path, boolean defaultValue, String description) {
+		VaroBoolConfigEntry(ConfigCategory category, String path, boolean defaultValue, String description) {
 			super(category, path, defaultValue, description);
 		}
 
