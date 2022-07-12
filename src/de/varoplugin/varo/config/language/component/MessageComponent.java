@@ -1,4 +1,4 @@
-package de.varoplugin.varo.api.config.language.components;
+package de.varoplugin.varo.config.language.component;
 
 import org.bukkit.entity.Player;
 

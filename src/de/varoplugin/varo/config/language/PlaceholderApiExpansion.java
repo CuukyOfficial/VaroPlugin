@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PlaceholderApiExpansion extends PlaceholderExpansion {

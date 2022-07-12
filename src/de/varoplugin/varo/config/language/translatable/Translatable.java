@@ -1,10 +1,10 @@
-package de.varoplugin.varo.api.config.language.translatables;
+package de.varoplugin.varo.config.language.translatable;
 
 import java.util.Map;
 
-import de.varoplugin.varo.api.config.language.Language;
-import de.varoplugin.varo.api.config.language.LanguageContainer;
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.Language;
+import de.varoplugin.varo.config.language.LanguageContainer;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 
 public interface Translatable<T> {
 

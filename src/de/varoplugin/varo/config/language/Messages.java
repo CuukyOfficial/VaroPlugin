@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.varoplugin.varo.api.config.language.Language;
-import de.varoplugin.varo.api.config.language.components.MessageComponent;
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
-import de.varoplugin.varo.api.config.language.translatables.Message;
-import de.varoplugin.varo.api.config.language.translatables.Translatable;
-import de.varoplugin.varo.api.config.language.translatables.TranslatableMessageArray;
-import de.varoplugin.varo.api.config.language.translatables.TranslatableMessageComponent;
+import de.varoplugin.varo.config.language.component.MessageComponent;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.translatable.Message;
+import de.varoplugin.varo.config.language.translatable.Translatable;
+import de.varoplugin.varo.config.language.translatable.TranslatableMessageArray;
+import de.varoplugin.varo.config.language.translatable.TranslatableMessageComponent;
 
 public class Messages {
 

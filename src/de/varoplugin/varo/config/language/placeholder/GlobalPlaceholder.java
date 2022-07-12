@@ -1,6 +1,6 @@
-package de.varoplugin.varo.api.config.language.placeholder;
+package de.varoplugin.varo.config.language.placeholder;
 
-import de.varoplugin.varo.api.config.language.components.MessageComponent;
+import de.varoplugin.varo.config.language.component.MessageComponent;
 
 public interface GlobalPlaceholder extends MessageComponent {
 

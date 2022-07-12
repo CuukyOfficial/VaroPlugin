@@ -1,10 +1,10 @@
-package de.varoplugin.varo.api.config.language.translatables;
+package de.varoplugin.varo.config.language.translatable;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.api.config.language.Language;
-import de.varoplugin.varo.api.config.language.LanguageContainer;
-import de.varoplugin.varo.api.config.language.components.MessageComponent;
+import de.varoplugin.varo.config.language.Language;
+import de.varoplugin.varo.config.language.LanguageContainer;
+import de.varoplugin.varo.config.language.component.MessageComponent;
 
 public interface TranslatableMessageComponent extends Translatable<String>, MessageComponent {
 

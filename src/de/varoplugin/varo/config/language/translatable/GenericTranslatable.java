@@ -1,4 +1,4 @@
-package de.varoplugin.varo.api.config.language.translatables;
+package de.varoplugin.varo.config.language.translatable;
 
 public abstract class GenericTranslatable<T> implements Translatable<T> {
 

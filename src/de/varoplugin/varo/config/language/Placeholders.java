@@ -7,8 +7,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import de.varoplugin.varo.VaroPlugin;
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
-import de.varoplugin.varo.api.config.language.placeholder.StaticPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.StaticPlaceholder;
 
 public class Placeholders {
 

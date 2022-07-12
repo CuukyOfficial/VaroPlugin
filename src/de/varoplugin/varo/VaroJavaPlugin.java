@@ -1,18 +1,18 @@
 package de.varoplugin.varo;
 
 import de.cuuky.varo.logger.VaroLoggerManager;
-import de.varoplugin.varo.api.config.language.AbstractLanguage;
-import de.varoplugin.varo.api.config.language.Language;
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.discord.DiscordBot;
 import de.varoplugin.varo.config.VaroConfig;
+import de.varoplugin.varo.config.language.AbstractLanguage;
 import de.varoplugin.varo.config.language.EnglishLanguage;
 import de.varoplugin.varo.config.language.GermanLanguage;
+import de.varoplugin.varo.config.language.Language;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.config.language.PlaceholderApiExpansion;
 import de.varoplugin.varo.config.language.Placeholders;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.game.EmptyVaroBuilder;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.task.register.DefaultTaskRegister;

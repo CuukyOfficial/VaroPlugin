@@ -1,8 +1,8 @@
-package de.varoplugin.varo.api.config.language.placeholder;
+package de.varoplugin.varo.config.language.placeholder;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.api.config.language.components.MessageComponent;
+import de.varoplugin.varo.config.language.component.MessageComponent;
 import me.clip.placeholderapi.PlaceholderAPI;
 
 public class ExternalPlaceholderApiPlaceholder implements MessageComponent {

@@ -1,10 +1,5 @@
 package de.varoplugin.varo.config.language;
 
-import de.varoplugin.varo.api.config.language.AbstractLanguage;
-import de.varoplugin.varo.api.config.language.StringArrayTranslation;
-import de.varoplugin.varo.api.config.language.StringTranslation;
-import de.varoplugin.varo.api.config.language.Translation;
-
 public class GermanLanguage extends AbstractLanguage {
 	
 	private static final String NAME = "de";

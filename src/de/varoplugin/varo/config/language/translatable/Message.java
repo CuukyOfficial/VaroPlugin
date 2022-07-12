@@ -1,13 +1,13 @@
-package de.varoplugin.varo.api.config.language.translatables;
+package de.varoplugin.varo.config.language.translatable;
 
 import java.util.Arrays;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.api.config.language.Language;
-import de.varoplugin.varo.api.config.language.components.CompositeMessageComponent;
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.Language;
+import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 
 public class Message extends GenericTranslatable<String> implements TranslatableMessageComponent {
 

@@ -1,4 +1,4 @@
-package de.varoplugin.varo.api.config.language;
+package de.varoplugin.varo.config.language;
 
 import java.io.File;
 import java.io.IOException;

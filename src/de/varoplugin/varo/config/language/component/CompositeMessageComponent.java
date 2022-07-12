@@ -1,4 +1,4 @@
-package de.varoplugin.varo.api.config.language.components;
+package de.varoplugin.varo.config.language.component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.api.config.language.placeholder.ExternalPlaceholderApiPlaceholder;
-import de.varoplugin.varo.api.config.language.placeholder.GlobalPlaceholder;
-import de.varoplugin.varo.api.config.language.placeholder.LocalPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.ExternalPlaceholderApiPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.LocalPlaceholder;
 import me.clip.placeholderapi.PlaceholderAPI;
 
 public class CompositeMessageComponent implements MessageComponent {

@@ -9,9 +9,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import de.varoplugin.varo.api.config.language.AbstractLanguage;
-import de.varoplugin.varo.api.config.language.Language;
-import de.varoplugin.varo.api.config.language.translatables.Translatable;
+import de.varoplugin.varo.config.language.translatable.Translatable;
 
 public class MessageTest {
 
