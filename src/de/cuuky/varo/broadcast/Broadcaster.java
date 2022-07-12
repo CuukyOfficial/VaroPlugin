@@ -37,9 +37,11 @@ public class Broadcaster {
 		this.messages = new ArrayList<>();
 
 		File file = new File("plugins/Varo/config", "broadcasts.yml");
-		YamlConfiguration cfg = YamlConfigurationUtil.loadConfiguration(file);
 
+		YamlConfiguration cfg;
 		if (!file.exists()) {
+			cfg = new YamlConfiguration();
+
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
 			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewaehlt werden.");
@@ -47,9 +49,9 @@ public class Broadcaster {
 			if (!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
 			cfg.options().copyDefaults(true);
-
 			YamlConfigurationUtil.save(cfg, file);
-		}
+		} else
+			cfg = YamlConfigurationUtil.loadConfiguration(file);
 
 		messages.addAll(cfg.getStringList("messages"));
 	}
