@@ -25,8 +25,12 @@ public class Message extends GenericTranslatable<String> implements Translatable
 	public void init(Language[] languages, int defaultTranslation, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
 		this.defaultTranslation = defaultTranslation;
 		this.translations = Arrays.stream(languages)
-				.map(language -> new CompositeMessageComponent((String) language.getTranslation(this.getPath()).value(), this.getPlaceholderNames(), globalPlaceholders, placeholderApiSupport))
+				.map(language -> this.createCompositeMessageComponent((String) language.getTranslation(this.getPath()).value(), this.getPlaceholderNames(), globalPlaceholders, placeholderApiSupport))
 				.toArray(CompositeMessageComponent[]::new);
+	}
+	
+	protected CompositeMessageComponent createCompositeMessageComponent(String translation, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
+		return new CompositeMessageComponent(translation, localPlaceholders, globalPlaceholders, placeholderApiSupport);
 	}
 
 	@Override

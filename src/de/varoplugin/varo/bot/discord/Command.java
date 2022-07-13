@@ -3,6 +3,7 @@ package de.varoplugin.varo.bot.discord;
 import de.varoplugin.varo.api.config.ConfigEntry;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -26,7 +27,7 @@ abstract class Command {
 	abstract void exec(DiscordBot bot, Member member, SlashCommandInteractionEvent event);
 
 	CommandData buildCommandData() {
-		return Commands.slash(this.name, this.desc).addOptions(this.options).setDefaultEnabled(true);
+		return Commands.slash(this.name, this.desc).addOptions(this.options).setDefaultPermissions(DefaultMemberPermissions.ENABLED);
 	}
 
 	public String getName() {

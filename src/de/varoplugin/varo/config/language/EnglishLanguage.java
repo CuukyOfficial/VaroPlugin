@@ -10,8 +10,10 @@ public class EnglishLanguage extends AbstractLanguage {
 	
 	private static Translation<?>[] getDefaultValues() {
 		return new Translation<?>[] {
-			new StringTranslation("hello.world", "Hello World"),
-			new StringArrayTranslation("arraytest", "en_val0", "en_val1")
+			new StringTranslation("bot.discord.command.status.title", ""),
+			new StringTranslation("bot.discord.command.status.body", "Whitelist: %whitelist%\nGame-State: %gamestate%\nOnline: %online%"),
+			new StringTranslation("bot.discord.modal.verify.title", "Verify"),
+			new StringTranslation("bot.discord.modal.verify.inputlabel", "Code:")
 		};
 	}
 }

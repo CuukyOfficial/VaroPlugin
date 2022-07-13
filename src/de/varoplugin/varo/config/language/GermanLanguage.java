@@ -10,8 +10,10 @@ public class GermanLanguage extends AbstractLanguage {
 	
 	private static Translation<?>[] getDefaultValues() {
 		return new Translation<?>[] {
-			new StringTranslation("hello.world", "SPRICH DEUTSCH DU HURENSOHN!!!"),
-			new StringArrayTranslation("arraytest", "de_val0", "de_val1")
+			new StringTranslation("bot.discord.command.status.title", ""),
+			new StringTranslation("bot.discord.command.status.body", "Whitelist: %whitelist%\nGame-State: %gamestate%\nOnline: %online%"),
+			new StringTranslation("bot.discord.modal.verify.title", "Verify"),
+			new StringTranslation("bot.discord.modal.verify.inputlabel", "Code:")
 		};
 	}
 }

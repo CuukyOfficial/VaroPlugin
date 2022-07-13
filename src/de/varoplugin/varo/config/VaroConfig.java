@@ -23,7 +23,7 @@ public class VaroConfig extends ClassLoaderConfig {
 
 	public final VaroBoolConfigEntry bot_discord_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.enabled", false, "Whether the Discord Bot should be enabled");
 	public final ConfigEntry<String> bot_discord_token = new VaroConfigEntry<>(BOTS, "bot.discord.token", "INSERT BOT TOKEN HERE", "The Bot Token");
-	public final ConfigEntry<Long> bot_discord_guild = new VaroConfigEntry<>(BOTS, "bot.discord.guild", -1L, "TODO");
+	public final ConfigEntry<Long> bot_discord_guild = new VaroConfigEntry<>(BOTS, "bot.discord.guild", -1L, "Your guild id");
 	public final ConfigEntry<String> bot_discord_invite = new VaroConfigEntry<>(BOTS, "bot.discord.invite", VaroJavaPlugin.DISCORD_INVITE, "TODO");
 	public final ConfigEntry<String> bot_discord_status = new VaroConfigEntry<>(BOTS, "bot.discord.status", VaroJavaPlugin.WEBSITE, "TODO");
 	public final ConfigEntry<Long> bot_discord_channel_alert = new VaroConfigEntry<>(BOTS, "bot.discord.channels.alert", -1L, "TODO");
@@ -38,15 +38,12 @@ public class VaroConfig extends ClassLoaderConfig {
 	public final ConfigEntry<Long> bot_discord_channel_result = new VaroConfigEntry<>(BOTS, "bot.discord.channels.result", -1L, "TODO");
 	public final VaroBoolConfigEntry bot_discord_embed_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.embed.enabled", true, "TODO");
 	public final VaroBoolConfigEntry bot_discord_embed_randomcolor = new VaroBoolConfigEntry(BOTS, "bot.discord.embed.randomcolor", true, "TODO");
-	public final ConfigEntry<String> bot_discord_modal_verify_title = new VaroConfigEntry<>(BOTS, "bot.discord.modal.verify.title", "Verify", "TODO");
-	public final ConfigEntry<String> bot_discord_modal_verify_input_label = new VaroConfigEntry<>(BOTS, "bot.discord.modal.verify.inputlabel", "Code:", "TODO");
 	public final VaroBoolConfigEntry bot_discord_command_verify_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.command.verify.enabled", true, "TODO");
 	public final ConfigEntry<String> bot_discord_command_verify_name = new VaroConfigEntry<>(BOTS, "bot.discord.command.verify.name", "verify", "TODO");
 	public final ConfigEntry<String> bot_discord_command_verify_desc = new VaroConfigEntry<>(BOTS, "bot.discord.command.verify.desc", "TODO", "TODO");
 	public final VaroBoolConfigEntry bot_discord_command_status_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.command.status.enabled", true, "TODO");
 	public final ConfigEntry<String> bot_discord_command_status_name = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.name", "status", "TODO");
 	public final ConfigEntry<String> bot_discord_command_status_desc = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.desc", "TODO", "TODO");
-	public final ConfigEntry<String> bot_discord_command_status_message = new VaroConfigEntry<>(BOTS, "bot.discord.command.status.message", "Whitelist: %whitelist%\nGame-State: %gamestate%\nOnline: %online%", "The message that is sent when a user executes /status");
 
 	public final VaroBoolConfigEntry scoreboard_enabled = new VaroBoolConfigEntry(SCOREBOARD, "scoreboard.enabled", true, "Whether the scoreboard should be enabled (Players may still be able to hide their scoreboard)");
 	public final ConfigEntry<Integer> scoreboard_title_delay = new VaroConfigEntry<>(SCOREBOARD, "scoreboard.title.updatedelay", 100, "The update interval of the title animation");

@@ -1,12 +1,19 @@
 package de.varoplugin.varo.bot.discord;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+
 import de.varoplugin.varo.VaroPlugin;
+import de.varoplugin.varo.api.config.ConfigEntry;
 import de.varoplugin.varo.bot.Bot;
-import de.varoplugin.varo.bot.BotChannel;
-import de.varoplugin.varo.bot.BotMessage;
-import de.varoplugin.varo.bot.BotMessageComponent;
 import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.config.VaroConfigCategory;
+import de.varoplugin.varo.config.language.Messages;
+import de.varoplugin.varo.config.language.translatable.TranslatableMessageComponent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,30 +27,21 @@ import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.utils.MarkdownSanitizer;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.logging.Level;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
 
-	private static final String CONFIG_PATH_PREFIX = "bot.discord.channels.";
-
 	private VaroPlugin varo;
 	private VaroConfig config;
+	private Messages messages;
 	private JDA jda;
 	private long guildId;
-	private final HashMap<String, Long> channelIds = new HashMap<>();
 	private final List<Command> commands = new ArrayList<>();
 
 	@Override
 	public void init(VaroPlugin varo) {
 		this.varo = varo;
 		this.config = varo.getVaroConfig();
+		this.messages = varo.getMessages();
 
 		if (!this.config.bot_discord_enabled.getValue())
 			return;
@@ -85,7 +83,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
 		this.commands.add(new InfoCommand(varo));
 		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new StatusCommand(this.config)));
-		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new VerifyCommand(this.config)));
+		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new VerifyCommand(this.config, this.messages)));
 
 		guild.updateCommands().addCommands(this.commands.stream().map(Command::buildCommandData).toArray(CommandData[]::new)).queue();
 
@@ -103,86 +101,68 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 		return this.jda != null;
 	}
 
-	@Override
-	public void sendFile(BotChannel botChannel, File file, String fileName) {
+	public void sendMessage(ConfigEntry<Long> channel, TranslatableMessageComponent body, TranslatableMessageComponent title, Object... bodyPlaceholders) {
 		if (!isEnabled())
 			return;
 
-		this.getChannel(botChannel, channel -> channel.sendFile(file, fileName).queue());
-	}
-
-	@Override
-	public void sendMessage(BotMessage message, BotChannel botChannel) {
-		if (!isEnabled())
-			return;
-
-		this.getChannel(botChannel, channel -> {
+		this.getChannel(channel, textChannel -> {
 			if (this.config.bot_discord_embed_enabled.getValue()) {
-				channel.sendMessageEmbeds(this.buildEmbed(message)).queue();
+				textChannel.sendMessageEmbeds(this.buildEmbed(body.value(bodyPlaceholders), title.value())).queue();
 			} else
-				channel.sendMessage(this.buildMessage(message)).queue();
+				textChannel.sendMessage(this.buildMessage(body.value(bodyPlaceholders), title.value())).queue();
 		});
 	}
 
-	public void reply(BotMessage message, IReplyCallback replyCallback) {
+	public void reply(IReplyCallback replyCallback, TranslatableMessageComponent body, TranslatableMessageComponent title, Object... bodyPlaceholders) {
+		this.reply(replyCallback, body.value(bodyPlaceholders), title.value());
+	}
+	
+	public void reply(IReplyCallback replyCallback, String body, String title) {
 		if (this.config.bot_discord_embed_enabled.getValue())
-			replyCallback.replyEmbeds(this.buildEmbed(message)).queue();
+			replyCallback.replyEmbeds(this.buildEmbed(body, title)).queue();
 		else
-			replyCallback.reply(this.buildMessage(message)).queue();
+			replyCallback.reply(this.buildMessage(body, title)).queue();
 	}
 
-	private MessageEmbed buildEmbed(BotMessage message) {
-		EmbedBuilder embed = new EmbedBuilder().setDescription(this.buildText(message.getBody()));
-		String title = this.buildText(message.getTitle());
+	private MessageEmbed buildEmbed(String body, String title) {
+		EmbedBuilder embed = new EmbedBuilder().setDescription(body);
 		if(!title.isEmpty())
 			embed.setTitle(title);
 
-		if (this.config.bot_discord_embed_randomcolor.getValue())
-			embed.setColor(BotMessage.getRandomColor());
-		else
-			embed.setColor(message.getColor());
+		if (this.config.bot_discord_embed_randomcolor.getValue()) {
+			Random random = ThreadLocalRandom.current();
+			embed.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat()));
+		} else
+			embed.setColor(Color.CYAN);
 		return embed.build();
 	}
 
-	private String buildMessage(BotMessage message) {
+	private String buildMessage(String body, String title) {
 		StringBuilder stringBuilder = new StringBuilder();
-		String title = this.buildText(message.getTitle());
 		if(!title.isEmpty())
 			stringBuilder.append("**").append(title).append("**\n");
-		String body = this.buildText(message.getBody());
 		if(!body.isEmpty())
 			stringBuilder.append(body);
 		return stringBuilder.toString();
 	}
 
-	private String buildText(BotMessageComponent... components) {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (BotMessageComponent component : components)
-			stringBuilder.append(component.isEscape() ? MarkdownSanitizer.escape(component.getContent()) : component.getContent());
-		return stringBuilder.toString();
-	}
-
-	private long getChannelId(BotChannel botChannel) {
-		return this.channelIds.computeIfAbsent(botChannel.getPath(), path -> (long) config.getEntry(VaroConfigCategory.BOTS, CONFIG_PATH_PREFIX + path).getValue());
-	}
-
-	private void getChannel(BotChannel botChannel, Consumer<TextChannel> callback) {
-		long id = this.getChannelId(botChannel);
+	private void getChannel(ConfigEntry<Long> channel, Consumer<TextChannel> callback) {
+		long id = channel.getValue();
 		if (id == -1)
 			return;
 
-		TextChannel channel = this.jda.getTextChannelById(id);
-		if (channel != null) {
-			if (channel.getGuild().getIdLong() == this.guildId)
+		TextChannel textChannel = this.jda.getTextChannelById(id);
+		if (textChannel != null) {
+			if (textChannel.getGuild().getIdLong() == this.guildId)
 				try {
-					callback.accept(channel);
+					callback.accept(textChannel);
 				} catch (InsufficientPermissionException e) {
-					this.varo.getLogger().warning("The Discord bot is unable to interact with a channel because of a missing permission: " + e.getPermission());
+					this.varo.getLogger().warning("The Discord bot is unable to interact with a channel because of missing permissions: " + e.getPermission());
 				}
 			else
-				this.varo.getLogger().warning("Discord channel belongs to a different guild (id: " + id + ", name: " + botChannel.getPath() + ")");
+				this.varo.getLogger().warning("Discord channel belongs to a different guild (id: " + id + ", name: " + channel.getPath() + ")");
 		} else
-			this.varo.getLogger().warning("Missing Discord channel (id: " + id + ", name: " + botChannel.getPath() + ")");
+			this.varo.getLogger().warning("Missing Discord channel (id: " + id + ", name: " + channel.getPath() + ")");
 	}
 
 	@Override
@@ -196,7 +176,15 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 		}
 	}
 
-	VaroPlugin getVaro() {
+	VaroPlugin varo() {
 		return this.varo;
+	}
+	
+	VaroConfig config() {
+		return this.config();
+	}
+	
+	Messages messages() {
+		return this.messages;
 	}
 }

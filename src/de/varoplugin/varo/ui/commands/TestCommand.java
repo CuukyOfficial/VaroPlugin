@@ -1,11 +1,5 @@
 package de.varoplugin.varo.ui.commands;
 
-import de.varoplugin.varo.VaroJavaPlugin;
-import de.varoplugin.varo.config.language.Messages;
-import de.varoplugin.varo.game.VaroState;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -43,10 +37,10 @@ public class TestCommand extends VaroCommand implements Listener {
         // this.getVaro().setState(VaroState.values()[this.index % VaroState.values().length]);
         // this.index++;
     	
-    	Messages messages = this.getVaro().getPlugin().getMessages();
-    	sender.sendMessage(messages.hello_world.value("This is a local placeholder"));
-    	sender.sendMessage(this.getVaro().getPlugin().getMessages().arrayTest.value()[0].value());
-    	sender.sendMessage(this.getVaro().getPlugin().getMessages().arrayTest.value()[1].value());
+    	// Messages messages = this.getVaro().getPlugin().getMessages();
+    	// sender.sendMessage(messages.hello_world.value("This is a local placeholder"));
+    	// sender.sendMessage(this.getVaro().getPlugin().getMessages().arrayTest.value()[0].value());
+    	// sender.sendMessage(this.getVaro().getPlugin().getMessages().arrayTest.value()[1].value());
     	
     	// MiniMessage test
     	// Audience audience = BukkitAudiences.create(this.getVaro().getPlugin()).sender(sender);

@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 public class CompositeMessageComponent implements ExtendedMessageComponent {
 
 	// Have fun ;)
-	private static final Pattern REGEX = Pattern.compile("(?:((?:\\\\%|[^%\\\\])*)(?:%)((?:(?:\\\\%|[^%\\\\])*))(?:%)((?:\\\\%|[^%\\\\])*))|(.+)");
+	private static final Pattern REGEX = Pattern.compile("(?:((?:\\\\%|[^%])*)(?:%)((?:(?:\\\\%|[^%\\\\])*))(?:%)((?:\\\\%|[^%\\\\])*))|(.+)");
 
-	private final MessageComponent[] components;
+	protected final MessageComponent[] components;
 	private MiniMessageMessageComponent miniComponent;
 
 	public CompositeMessageComponent(String translation, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
-		this.components = processString(translation, localPlaceholders, globalPlaceholders, placeholderApiSupport);
+		this.components = this.processString(translation, localPlaceholders, globalPlaceholders, placeholderApiSupport);
 	}
 
 	@Override
@@ -43,7 +43,17 @@ public class CompositeMessageComponent implements ExtendedMessageComponent {
 		return Arrays.stream(this.components).map(component -> component.value(player, localPlaceholders)).collect(Collectors.joining());
 	}
 
-	protected static MessageComponent[] processString(String input, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
+	@Override
+	public boolean shouldEscape() {
+		return false;
+	}
+
+	@Override
+	public MiniMessageMessageComponent miniMessage() {
+		return this.miniComponent == null ? this.miniComponent = new MiniMessageCompositeMessageComponent(this.components) : this.miniComponent;
+	}
+
+	protected MessageComponent[] processString(String input, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
 		List<MessageComponent> components = new ArrayList<>();
 		Matcher matcher = REGEX.matcher(input);
 		while (matcher.find()) {
@@ -52,19 +62,23 @@ public class CompositeMessageComponent implements ExtendedMessageComponent {
 				if (group != null) {
 					if (i == 2)
 						// Placeholder
-						components.add(resolvePlaceholder(group, localPlaceholders, globalPlaceholders, placeholderApiSupport));
+						components.add(this.processComponent(this.resolvePlaceholder(group, localPlaceholders, globalPlaceholders, placeholderApiSupport)));
 					else
 						// Not a placeholder
-						components.add(new SimpleMessageComponent(group));
+						components.add(this.processComponent(new SimpleMessageComponent(group)));
 				}
 			}
 		}
 		return components.toArray(new MessageComponent[0]);
 	}
 
-	protected static MessageComponent resolvePlaceholder(String name, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
+	protected MessageComponent processComponent(MessageComponent component) {
+		return component;
+	}
+
+	protected MessageComponent resolvePlaceholder(String name, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
 		for (int i = 0; i < localPlaceholders.length; i++)
-			if (localPlaceholders[i].equals(name))
+			if (localPlaceholders[i].equalsIgnoreCase(name))
 				return new LocalPlaceholder(name, i);
 
 		GlobalPlaceholder globalPlaceholder = globalPlaceholders.get(name);
@@ -76,15 +90,5 @@ public class CompositeMessageComponent implements ExtendedMessageComponent {
 			return new ExternalPlaceholderApiPlaceholder(withPercent);
 
 		return new SimpleMessageComponent(name);
-	}
-
-	@Override
-	public boolean shouldEscape() {
-		return false;
-	}
-
-	@Override
-	public MiniMessageMessageComponent miniMessage() {
-		return this.miniComponent == null ? this.miniComponent = new MiniMessageCompositeMessageComponent(this.components) : this.miniComponent;
 	}
 }

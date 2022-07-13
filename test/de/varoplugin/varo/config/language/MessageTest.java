@@ -19,7 +19,7 @@ public class MessageTest {
 	@BeforeAll
 	public static void init() {
 		languages = new AbstractLanguage[] { new EnglishLanguage(0) };
-		messages = new Messages(languages, 0, new HashMap<>(), false, false);
+		messages = new Messages(languages, 0, new HashMap<>(), false);
 	}
 
 	@Test

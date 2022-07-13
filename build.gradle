@@ -67,8 +67,8 @@ configurations {
     implementation.extendsFrom(internalLibs)
 }
 
-def JDA_version = '5.0.0-alpha.12'
-def JDA_sha512 = 'daef57d9536338685143d0c058dff451eb7ca7d807a04f1cc320c762f5eb65fd120677650de6ac4579893fcec58d21dc68559a1dbf9239b2a2d7333ed85e3a14'
+def JDA_version = '5.0.0-alpha.13'
+def JDA_sha512 = '39f03935594cd1368fb6a7c0d4de5876683e9c88eecde6ad20c7b037e7f845c1720909151530127b51f714761d7e14c52baab47015625626a938701f01c24f7f'
 def SimpleYaml_version = '1.8'
 def SimpleYaml_sha512 = '041d3b34ca5a588afcd9381fd7eb6092acdad188f83013879640cb221092b34d56fbb9f7956c7919888efc88faf14489b88661701ffd33d3abc637f610042c4e'
 def SnakeYaml_version = '1.30'
