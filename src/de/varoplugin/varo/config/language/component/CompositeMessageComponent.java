@@ -1,5 +1,13 @@
 package de.varoplugin.varo.config.language.component;
 
+import de.varoplugin.varo.config.language.minimessage.MiniMessageCompositeMessageComponent;
+import de.varoplugin.varo.config.language.minimessage.MiniMessageMessageComponent;
+import de.varoplugin.varo.config.language.placeholder.ExternalPlaceholderApiPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
+import de.varoplugin.varo.config.language.placeholder.LocalPlaceholder;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,21 +16,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.bukkit.entity.Player;
-
-import de.varoplugin.varo.config.language.minimessage.MiniMessageCompositeMessageComponent;
-import de.varoplugin.varo.config.language.minimessage.MiniMessageMessageComponent;
-import de.varoplugin.varo.config.language.placeholder.ExternalPlaceholderApiPlaceholder;
-import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
-import de.varoplugin.varo.config.language.placeholder.LocalPlaceholder;
-import me.clip.placeholderapi.PlaceholderAPI;
-
 public class CompositeMessageComponent implements ExtendedMessageComponent {
 
 	// Have fun ;)
 	private static final Pattern REGEX = Pattern.compile("(?:((?:\\\\%|[^%\\\\])*)(?:%)((?:(?:\\\\%|[^%\\\\])*))(?:%)((?:\\\\%|[^%\\\\])*))|(.+)");
 
-	private MessageComponent[] components;
+	private final MessageComponent[] components;
 	private MiniMessageMessageComponent miniComponent;
 
 	public CompositeMessageComponent(String translation, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
@@ -60,7 +59,7 @@ public class CompositeMessageComponent implements ExtendedMessageComponent {
 				}
 			}
 		}
-		return components.toArray(new MessageComponent[components.size()]);
+		return components.toArray(new MessageComponent[0]);
 	}
 
 	protected static MessageComponent resolvePlaceholder(String name, String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {

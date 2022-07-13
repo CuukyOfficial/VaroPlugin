@@ -7,7 +7,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 
 public class ExternalPlaceholderApiPlaceholder implements MessageComponent {
 
-	private String name;
+	private final String name;
 
 	public ExternalPlaceholderApiPlaceholder(String name) {
 		this.name = name;
