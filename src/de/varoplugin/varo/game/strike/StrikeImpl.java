@@ -5,11 +5,10 @@ import de.varoplugin.varo.api.event.game.strike.StrikeInitializedEvent;
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.Player;
-import org.bukkit.event.Listener;
 
 import java.util.UUID;
 
-final class StrikeImpl extends UniqueGameObject implements Strike, Listener {
+final class StrikeImpl extends UniqueGameObject implements Strike {
 
     private final StrikeType type;
     private Player target;
