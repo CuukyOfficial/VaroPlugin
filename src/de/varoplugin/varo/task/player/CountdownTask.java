@@ -1,10 +1,10 @@
 package de.varoplugin.varo.task.player;
 
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 
 public class CountdownTask extends AbstractHeartbeatTask {
 
-    public CountdownTask(Player player) {
+    public CountdownTask(VaroPlayer player) {
         super(player, false);
     }
 

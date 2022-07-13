@@ -1,6 +1,6 @@
 package de.varoplugin.varo.task.player;
 
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class AbstractHeartbeatTask extends AbstractPlayerExecutable {
@@ -9,7 +9,7 @@ public abstract class AbstractHeartbeatTask extends AbstractPlayerExecutable {
 
     private final boolean sync;
 
-    public AbstractHeartbeatTask(Player player, boolean sync) {
+    public AbstractHeartbeatTask(VaroPlayer player, boolean sync) {
         super(player);
         this.sync = sync;
     }

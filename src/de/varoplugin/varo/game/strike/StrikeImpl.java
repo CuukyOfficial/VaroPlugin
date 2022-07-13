@@ -4,14 +4,14 @@ import de.varoplugin.varo.api.event.game.strike.StrikeExecuteEvent;
 import de.varoplugin.varo.api.event.game.strike.StrikeInitializedEvent;
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 
 import java.util.UUID;
 
 final class StrikeImpl extends UniqueGameObject implements Strike {
 
     private final StrikeType type;
-    private Player target;
+    private VaroPlayer target;
     private boolean executed;
 
     StrikeImpl(UUID uuid, StrikeType type) {
@@ -26,12 +26,12 @@ final class StrikeImpl extends UniqueGameObject implements Strike {
     }
 
     @Override
-    public void setTarget(Player target) {
+    public void setTarget(VaroPlayer target) {
         this.target = target;
     }
 
     @Override
-    public Player getTarget() {
+    public VaroPlayer getTarget() {
         return this.target;
     }
 

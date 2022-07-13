@@ -63,8 +63,8 @@ public class EmptyPlayerFactory implements PlayerFactory {
     }
 
     @Override
-    public Player create() {
+    public VaroPlayer create() {
         if (this.uuid == null || this.name == null) throw new IllegalArgumentException("No name or uuid provided");
-        return new PlayerImpl(this.uuid, this.name, this.player, this.state, this.mode);
+        return new VaroPlayerImpl(this.uuid, this.name, this.player, this.state, this.mode);
     }
 }

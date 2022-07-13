@@ -18,8 +18,8 @@ public interface PlayerFactory {
 
     /**
      * May take some time because of Mojang server request.
-     * @return New @{@link Player}
+     * @return New @{@link VaroPlayer}
      */
-    Player create();
+    VaroPlayer create();
 
 }

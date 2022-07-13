@@ -9,7 +9,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-final class PlayerImpl extends EntityImpl implements Player {
+final class VaroPlayerImpl extends EntityImpl implements VaroPlayer {
 
     private ParticipantState state;
     private PlayerMode mode;
@@ -24,11 +24,11 @@ final class PlayerImpl extends EntityImpl implements Player {
     /**
      * For Serialization. Do not use.
      */
-    private PlayerImpl() {
+    private VaroPlayerImpl() {
         super(null);
     }
 
-    PlayerImpl(UUID uuid, String name, org.bukkit.entity.Player player, ParticipantState state, PlayerMode mode) {
+    VaroPlayerImpl(UUID uuid, String name, org.bukkit.entity.Player player, ParticipantState state, PlayerMode mode) {
         super(uuid);
         this.name = name;
         this.player = player;

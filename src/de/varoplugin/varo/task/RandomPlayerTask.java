@@ -3,7 +3,7 @@ package de.varoplugin.varo.task;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.team.EmptyTeamFactory;
 import de.varoplugin.varo.game.entity.team.Team;
 
@@ -24,13 +24,13 @@ public class RandomPlayerTask extends VaroRunnableTask {
     private void doRandomTeam() {
 //        int maxNameLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
         int maxNameLength = 16;
-        List<Player> random = this.getVaro().getPlayers()
+        List<VaroPlayer> random = this.getVaro().getPlayers()
                 .filter(pl -> pl.getTeam() != null && pl.getMode() == VaroPlayerMode.NONE && pl.getState() == VaroParticipantState.ALIVE).collect(Collectors.toList());
         Collections.shuffle(random);
 
         for (int i = 0; i < random.size(); i += this.teamSize) {
             int actualSize = Math.min(i + this.teamSize, random.size());
-            Collection<Player> members = random.subList(i, actualSize);
+            Collection<VaroPlayer> members = random.subList(i, actualSize);
 //            if (member.size() < this.teamSize) // TODO: Event
 //                member.forEach(m -> m.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER));
 

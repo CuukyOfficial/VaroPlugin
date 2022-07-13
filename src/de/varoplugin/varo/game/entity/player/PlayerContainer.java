@@ -5,14 +5,14 @@ import java.util.stream.Stream;
 
 public interface PlayerContainer {
 
-    Player register(org.bukkit.entity.Player player);
+    VaroPlayer register(org.bukkit.entity.Player player);
 
-    boolean remove(Player player);
+    boolean remove(VaroPlayer player);
 
-    Player getPlayer(UUID uuid);
+    VaroPlayer getPlayer(UUID uuid);
 
-    Player getPlayer(org.bukkit.entity.Player player);
+    VaroPlayer getPlayer(org.bukkit.entity.Player player);
 
-    Stream<Player> getPlayers();
+    Stream<VaroPlayer> getPlayers();
 
 }

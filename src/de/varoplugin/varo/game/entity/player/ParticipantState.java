@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.entity.player;
 
 /**
- * Represents a player state a @{@link Player} can be.
+ * Represents a player state a @{@link VaroPlayer} can be.
  */
 public interface ParticipantState {
 

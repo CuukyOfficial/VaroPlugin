@@ -1,7 +1,7 @@
 package de.varoplugin.varo.task.trigger.player;
 
 import de.varoplugin.varo.api.task.trigger.Trigger;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -10,12 +10,12 @@ public class VaroOnlineTrigger extends AbstractPlayerTrigger {
 
     private Boolean online;
 
-    public VaroOnlineTrigger(Player player, Boolean online, boolean match) {
+    public VaroOnlineTrigger(VaroPlayer player, Boolean online, boolean match) {
         super(player, match);
         this.online = online;
     }
 
-    public VaroOnlineTrigger(Player player, Boolean online) {
+    public VaroOnlineTrigger(VaroPlayer player, Boolean online) {
         this(player, online, true);
     }
 

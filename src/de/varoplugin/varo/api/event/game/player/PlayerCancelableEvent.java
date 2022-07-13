@@ -1,13 +1,13 @@
 package de.varoplugin.varo.api.event.game.player;
 
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.Cancellable;
 
 public class PlayerCancelableEvent extends PlayerEvent implements Cancellable {
 
     private boolean cancelled;
 
-    public PlayerCancelableEvent(Player player) {
+    public PlayerCancelableEvent(VaroPlayer player) {
         super(player);
     }
 

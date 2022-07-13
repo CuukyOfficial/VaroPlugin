@@ -7,7 +7,7 @@ import de.varoplugin.varo.game.strike.Strikable;
 /**
  * Represents a player playing a Varo.
  */
-public interface Player extends Entity, Teamable, StatsHolder, Strikable {
+public interface VaroPlayer extends Entity, Teamable, StatsHolder, Strikable {
 
     /**
      * Returns the hashCode of the UUID.

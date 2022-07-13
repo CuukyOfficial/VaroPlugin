@@ -8,7 +8,7 @@ import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.PlayerAddEvent;
 import de.varoplugin.varo.api.event.game.player.PlayerRemoveEvent;
 import de.varoplugin.varo.game.entity.player.EmptyPlayerFactory;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.team.Team;
 import de.varoplugin.varo.game.entity.team.Teamable;
 import de.varoplugin.varo.util.map.HashUniqueIdMap;
@@ -26,7 +26,7 @@ final class VaroImpl implements Varo {
     private Calendar autoStart;
 
     private final UniqueIdMap<Team> teams;
-    private final UniqueIdMap<Player> players;
+    private final UniqueIdMap<VaroPlayer> players;
     private final Set<Location> itemChestLocations;
 
     VaroImpl(State state) {
@@ -41,7 +41,7 @@ final class VaroImpl implements Varo {
         this.plugin = plugin;
 
         for (org.bukkit.entity.Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
-            Player vp = this.getPlayer(player);
+            VaroPlayer vp = this.getPlayer(player);
             if (vp == null) this.register(player);
             else vp.initialize(this);
         }
@@ -49,8 +49,8 @@ final class VaroImpl implements Varo {
     }
 
     @Override
-    public Player register(org.bukkit.entity.Player player) {
-        Player vp = new EmptyPlayerFactory().player(player).create();
+    public VaroPlayer register(org.bukkit.entity.Player player) {
+        VaroPlayer vp = new EmptyPlayerFactory().player(player).create();
         if (this.players.contains(vp) || this.plugin.isCancelled(new PlayerAddEvent(this, vp))) return null;
         this.players.add(vp);
         vp.initialize(this);
@@ -58,23 +58,23 @@ final class VaroImpl implements Varo {
     }
 
     @Override
-    public boolean remove(Player player) {
+    public boolean remove(VaroPlayer player) {
         if (!this.players.contains(player) || this.plugin.isCancelled(new PlayerRemoveEvent(this, player))) return false;
         return this.players.remove(player);
     }
 
     @Override
-    public Player getPlayer(UUID uuid) {
+    public VaroPlayer getPlayer(UUID uuid) {
         return this.players.stream().filter(player -> player.getUuid().equals(uuid)).findAny().orElse(null);
     }
 
     @Override
-    public Player getPlayer(org.bukkit.entity.Player player) {
+    public VaroPlayer getPlayer(org.bukkit.entity.Player player) {
         return this.getPlayer(player.getUniqueId());
     }
 
     @Override
-    public Stream<Player> getPlayers() {
+    public Stream<VaroPlayer> getPlayers() {
         return this.players.stream();
     }
 

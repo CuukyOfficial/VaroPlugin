@@ -5,7 +5,7 @@ import de.varoplugin.varo.api.task.trigger.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.State;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
 import de.varoplugin.varo.task.trigger.player.VaroOnlineTrigger;
 import de.varoplugin.varo.task.trigger.player.VaroParticipantStateTrigger;
@@ -13,10 +13,10 @@ import de.varoplugin.varo.task.trigger.player.VaroPlayerModeTrigger;
 
 public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
 
-    private final Player player;
+    private final VaroPlayer player;
     private final IVaroTriggerBuilder internal;
 
-    public VaroPlayerTriggerBuilder(Player player) {
+    public VaroPlayerTriggerBuilder(VaroPlayer player) {
         this.internal = new VaroTriggerBuilder(player.getVaro());
         this.player = player;
     }

@@ -1,7 +1,7 @@
 package de.varoplugin.varo.task.player;
 
 import de.cuuky.cfw.version.VersionUtils;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.world.protectable.EmptyProtectableFactory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -11,7 +11,7 @@ import org.bukkit.event.block.SignChangeEvent;
 
 public class PlayerRegisterProtectablesListener extends AbstractPlayerListener {
 
-    public PlayerRegisterProtectablesListener(Player player) {
+    public PlayerRegisterProtectablesListener(VaroPlayer player) {
         super(player);
     }
 

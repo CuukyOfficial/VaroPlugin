@@ -1,6 +1,6 @@
 package de.varoplugin.varo.task.player;
 
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class NoMoveListener extends AbstractPlayerListener {
 
-    public NoMoveListener(Player player) {
+    public NoMoveListener(VaroPlayer player) {
         super(player);
     }
 

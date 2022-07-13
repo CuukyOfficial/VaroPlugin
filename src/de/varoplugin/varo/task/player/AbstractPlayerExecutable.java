@@ -1,19 +1,19 @@
 package de.varoplugin.varo.task.player;
 
 import de.varoplugin.varo.api.task.Task;
-import de.varoplugin.varo.game.entity.player.Player;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.task.VaroScheduledTask;
 
 public abstract class AbstractPlayerExecutable extends VaroScheduledTask {
 
-    private Player player;
+    private VaroPlayer player;
 
-    public AbstractPlayerExecutable(Player player) {
+    public AbstractPlayerExecutable(VaroPlayer player) {
         super(player.getVaro());
         this.player = player;
     }
 
-    public Player getPlayer() {
+    public VaroPlayer getPlayer() {
         return this.player;
     }
 
