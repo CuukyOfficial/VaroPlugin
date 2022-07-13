@@ -8,26 +8,28 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class VaroOnlineTrigger extends AbstractPlayerTrigger {
 
-    private boolean online;
+    private Boolean online;
 
-    public VaroOnlineTrigger(Player player, boolean online, boolean match) {
+    public VaroOnlineTrigger(Player player, Boolean online, boolean match) {
         super(player, match);
         this.online = online;
     }
 
-    public VaroOnlineTrigger(Player player, boolean online) {
+    public VaroOnlineTrigger(Player player, Boolean online) {
         this(player, online, true);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
+        if (this.online == null) this.triggerIf(true);
         this.triggerIf(this.online);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
+        if (this.online == null) this.triggerIf(true);
         this.triggerIf(!this.online);
     }
 

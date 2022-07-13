@@ -27,6 +27,7 @@ public class VaroParticipantStateTrigger extends AbstractPlayerTrigger {
     @EventHandler
     public void onPlayerStateChange(PlayerParticipantStateChangeEvent event) {
         if (!this.getPlayer().equals(event.getPlayer())) return;
+        if (this.state == null) this.triggerIf(true);
         this.triggerIf(event.getState().equals(this.state));
     }
 

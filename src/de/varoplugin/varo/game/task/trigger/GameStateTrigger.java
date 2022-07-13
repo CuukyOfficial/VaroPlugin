@@ -26,6 +26,7 @@ public class GameStateTrigger extends GameTrigger {
 
     @EventHandler
     public void onGameStateChange(VaroStateChangeEvent event) {
+        if (this.state == null) this.triggerIf(true);
         this.triggerIf(this.state == event.getState());
     }
 

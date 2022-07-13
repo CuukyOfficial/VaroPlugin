@@ -13,9 +13,9 @@ public interface IVaroPlayerTriggerBuilder extends IVaroTriggerBuilder {
 
     IVaroPlayerTriggerBuilder when(PlayerMode mode);
 
-    IVaroPlayerTriggerBuilder when(boolean online);
+    IVaroPlayerTriggerBuilder when(Boolean online);
 
-    IVaroPlayerTriggerBuilder and(boolean online);
+    IVaroPlayerTriggerBuilder and(Boolean online);
 
     IVaroPlayerTriggerBuilder when(State state);
 

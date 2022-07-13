@@ -27,6 +27,7 @@ public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {
     @EventHandler
     public void onPlayerStateChange(PlayerModeChangeEvent event) {
         if (!this.getPlayer().equals(event.getPlayer())) return;
+        if (this.mode == null) this.triggerIf(true);
         this.triggerIf(event.getMode().equals(this.mode));
     }
 
