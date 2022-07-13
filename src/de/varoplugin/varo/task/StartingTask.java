@@ -1,15 +1,14 @@
-package de.varoplugin.varo.ui.tasks;
+package de.varoplugin.varo.task;
 
+import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.task.VaroScheduledTask;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class StartingUiTask extends VaroScheduledTask {
+public class StartingTask extends VaroScheduledTask {
 
     private int countdown;
 
-    public StartingUiTask(Varo varo) {
+    public StartingTask(Varo varo) {
         super(varo);
     }
 
@@ -21,6 +20,7 @@ public class StartingUiTask extends VaroScheduledTask {
 
     @Override
     public void run() {
-        Bukkit.getServer().broadcastMessage(String.valueOf(this.countdown--));
+        this.countdown--;
+        if (this.countdown == 0) this.getVaro().setState(VaroState.RUNNING);
     }
 }

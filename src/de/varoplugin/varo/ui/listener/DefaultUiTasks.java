@@ -4,8 +4,8 @@ import de.varoplugin.varo.api.event.game.VaroInitializedEvent;
 import de.varoplugin.varo.api.event.game.player.PlayerInitializedEvent;
 import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
-import de.varoplugin.varo.game.task.trigger.builder.VaroPlayerTriggerBuilder;
-import de.varoplugin.varo.game.task.trigger.builder.VaroTriggerBuilder;
+import de.varoplugin.varo.task.trigger.builder.VaroPlayerTriggerBuilder;
+import de.varoplugin.varo.task.trigger.builder.VaroTriggerBuilder;
 import de.varoplugin.varo.ui.tasks.StartingUiTask;
 import org.bukkit.event.EventHandler;
 

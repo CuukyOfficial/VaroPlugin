@@ -1,6 +1,5 @@
 package de.varoplugin.varo;
 
-import de.cuuky.varo.logger.VaroLoggerManager;
 import de.varoplugin.varo.api.event.VaroEvent;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.bot.discord.DiscordBot;
@@ -15,7 +14,7 @@ import de.varoplugin.varo.config.language.Placeholders;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.game.EmptyVaroBuilder;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.task.register.DefaultTaskRegister;
+import de.varoplugin.varo.task.register.DefaultTaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
 
@@ -25,10 +24,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
