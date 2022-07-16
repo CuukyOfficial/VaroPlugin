@@ -1,4 +1,4 @@
-package de.varoplugin.varo.game.entity.player;
+package de.varoplugin.varo.game.entity;
 
 public interface StatsHolder {
 

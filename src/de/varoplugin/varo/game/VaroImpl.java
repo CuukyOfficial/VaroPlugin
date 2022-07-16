@@ -7,7 +7,7 @@ import de.varoplugin.varo.api.event.game.VaroInitializedEvent;
 import de.varoplugin.varo.api.event.game.VaroStateChangeEvent;
 import de.varoplugin.varo.api.event.game.player.PlayerAddEvent;
 import de.varoplugin.varo.api.event.game.player.PlayerRemoveEvent;
-import de.varoplugin.varo.game.entity.player.EmptyPlayerFactory;
+import de.varoplugin.varo.game.entity.player.EmptyPlayerBuilder;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.team.Team;
 import de.varoplugin.varo.game.entity.team.Teamable;
@@ -50,7 +50,7 @@ final class VaroImpl implements Varo {
 
     @Override
     public VaroPlayer register(org.bukkit.entity.Player player) {
-        VaroPlayer vp = new EmptyPlayerFactory().player(player).create();
+        VaroPlayer vp = new EmptyPlayerBuilder().player(player).create();
         if (this.players.contains(vp) || this.plugin.isCancelled(new PlayerAddEvent(this, vp))) return null;
         this.players.add(vp);
         vp.initialize(this);

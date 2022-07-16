@@ -10,7 +10,7 @@ import java.util.UUID;
 final class BlockProtectable extends UniqueGameObject implements Protectable {
 
     private final Block block;
-    private ProtectableHolder holder;
+    private ProtectableOwner owner;
 
     BlockProtectable(UUID uuid, Block block) {
         super(uuid);
@@ -34,12 +34,12 @@ final class BlockProtectable extends UniqueGameObject implements Protectable {
     }
 
     @Override
-    public void setHolder(ProtectableHolder holder) {
-        this.holder = holder;
+    public void setOwner(ProtectableOwner owner) {
+        this.owner = owner;
     }
 
     @Override
-    public ProtectableHolder getHolder() {
-        return this.holder;
+    public ProtectableOwner getOwner() {
+        return this.owner;
     }
 }

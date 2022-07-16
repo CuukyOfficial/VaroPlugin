@@ -2,12 +2,12 @@ package de.varoplugin.varo.game.entity.team;
 
 import de.varoplugin.varo.api.event.game.team.TeamMemberAddEvent;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.EntityImpl;
-import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
+import de.varoplugin.varo.game.entity.VaroEntityImpl;
+import de.varoplugin.varo.game.world.protectable.ProtectableOwner;
 
 import java.util.*;
 
-final class TeamImpl extends EntityImpl implements Team {
+final class TeamImpl extends VaroEntityImpl implements Team {
 
     private String name;
     private Set<Teamable> members;
@@ -42,7 +42,7 @@ final class TeamImpl extends EntityImpl implements Team {
     }
 
     @Override
-    public boolean canAccessSavings(ProtectableHolder holder) {
+    public boolean canAccessSavings(ProtectableOwner holder) {
         return this.members.stream().anyMatch(p -> p.getUuid().equals(holder.getUuid()));
     }
 

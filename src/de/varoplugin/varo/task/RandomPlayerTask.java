@@ -4,7 +4,7 @@ import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayerMode;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.entity.team.EmptyTeamFactory;
+import de.varoplugin.varo.game.entity.team.EmptyTeamBuilder;
 import de.varoplugin.varo.game.entity.team.Team;
 
 import java.util.Collection;
@@ -39,7 +39,7 @@ public class RandomPlayerTask extends VaroRunnableTask {
                     .substring(0, Math.min(m.getName().length(), maxNameLength / members.size()))).collect(Collectors.joining());
 
             // add
-            Team team = new EmptyTeamFactory().name(name).create();
+            Team team = new EmptyTeamBuilder().name(name).create();
             this.getVaro().addTeam(team);
             members.forEach(member -> this.getVaro().addTeamMember(team, member));
         }

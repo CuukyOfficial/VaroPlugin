@@ -3,19 +3,19 @@ package de.varoplugin.varo.game.strike;
 import java.util.Objects;
 import java.util.UUID;
 
-public class EmptyStrikeFactory implements StrikeFactory {
+public class EmptyStrikeBuilder implements StrikeBuilder {
 
     private UUID uuid;
     private StrikeType type;
 
     @Override
-    public StrikeFactory uuid(UUID uuid) {
+    public StrikeBuilder uuid(UUID uuid) {
         this.uuid = Objects.requireNonNull(uuid);
         return this;
     }
 
     @Override
-    public StrikeFactory type(StrikeType type) {
+    public StrikeBuilder type(StrikeType type) {
         this.type = Objects.requireNonNull(type);
         return this;
     }

@@ -5,18 +5,18 @@ import de.varoplugin.varo.api.event.game.world.protectable.ProtectableRemoveEven
 import de.varoplugin.varo.game.UniqueGameObject;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.world.protectable.Protectable;
-import de.varoplugin.varo.game.world.protectable.ProtectableHolder;
+import de.varoplugin.varo.game.world.protectable.ProtectableOwner;
 import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
 import org.bukkit.block.Block;
 
 import java.util.UUID;
 
-public abstract class EntityImpl extends UniqueGameObject implements Entity {
+public abstract class VaroEntityImpl extends UniqueGameObject implements VaroEntity {
 
     private UniqueIdMap<Protectable> protectables;
 
-    public EntityImpl(UUID uuid) {
+    public VaroEntityImpl(UUID uuid) {
         super(uuid);
     }
 
@@ -31,7 +31,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
         if (this.protectables.contains(protectable)) return false;
         if (this.getVaro().getPlugin().isCancelled(new ProtectableAddEvent(this, protectable)))
             return false;
-        protectable.setHolder(this);
+        protectable.setOwner(this);
         protectable.initialize(this.getVaro());
         return this.protectables.add(protectable);
     }
@@ -41,7 +41,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
         if (!this.protectables.contains(secureable)) return false;
         if (this.getVaro().getPlugin().isCancelled(new ProtectableRemoveEvent(this, secureable)))
             return false;
-        secureable.setHolder(null);
+        secureable.setOwner(null);
         return this.protectables.remove(secureable);
     }
 
@@ -51,7 +51,7 @@ public abstract class EntityImpl extends UniqueGameObject implements Entity {
     }
 
     @Override
-    public boolean canAccessSavings(ProtectableHolder holder) {
+    public boolean canAccessSavings(ProtectableOwner holder) {
         return this.getUuid().equals(holder.getUuid());
     }
 

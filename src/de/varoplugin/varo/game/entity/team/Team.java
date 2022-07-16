@@ -1,10 +1,10 @@
 package de.varoplugin.varo.game.entity.team;
 
-import de.varoplugin.varo.game.entity.Entity;
+import de.varoplugin.varo.game.entity.VaroEntity;
 
 import java.util.Collection;
 
-public interface Team extends Entity {
+public interface Team extends VaroEntity {
 
     void setName(String name);
 

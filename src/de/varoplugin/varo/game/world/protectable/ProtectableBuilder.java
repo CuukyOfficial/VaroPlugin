@@ -4,11 +4,11 @@ import org.bukkit.block.Block;
 
 import java.util.UUID;
 
-public interface ProtectableFactory {
+public interface ProtectableBuilder {
 
-    ProtectableFactory uuid(UUID uuid);
+    ProtectableBuilder uuid(UUID uuid);
 
-    ProtectableFactory block(Block block);
+    ProtectableBuilder block(Block block);
 
     Protectable create();
 

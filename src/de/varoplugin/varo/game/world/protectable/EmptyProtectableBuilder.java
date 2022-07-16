@@ -5,19 +5,19 @@ import org.bukkit.block.Block;
 import java.util.Objects;
 import java.util.UUID;
 
-public class EmptyProtectableFactory implements ProtectableFactory {
+public class EmptyProtectableBuilder implements ProtectableBuilder {
 
     private UUID uuid;
     private Block block;
 
     @Override
-    public ProtectableFactory uuid(UUID uuid) {
+    public ProtectableBuilder uuid(UUID uuid) {
         this.uuid = Objects.requireNonNull(uuid);
         return this;
     }
 
     @Override
-    public ProtectableFactory block(Block block) {
+    public ProtectableBuilder block(Block block) {
         this.block = Objects.requireNonNull(block);
         return this;
     }

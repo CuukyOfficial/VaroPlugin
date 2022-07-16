@@ -1,13 +1,16 @@
 package de.varoplugin.varo.game.entity.player;
 
-import de.varoplugin.varo.game.entity.Entity;
+import de.varoplugin.varo.game.entity.VaroEntity;
+import de.varoplugin.varo.game.entity.StatsHolder;
+import de.varoplugin.varo.game.entity.player.session.SessionHolder;
 import de.varoplugin.varo.game.entity.team.Teamable;
 import de.varoplugin.varo.game.strike.Strikable;
+import org.bukkit.entity.Player;
 
 /**
  * Represents a player playing a Varo.
  */
-public interface VaroPlayer extends Entity, Teamable, StatsHolder, Strikable {
+public interface VaroPlayer extends VaroEntity, Teamable, StatsHolder, Strikable, SessionHolder {
 
     /**
      * Returns the hashCode of the UUID.
@@ -27,7 +30,7 @@ public interface VaroPlayer extends Entity, Teamable, StatsHolder, Strikable {
      */
     boolean isOnline();
 
-    boolean isPlayer(org.bukkit.entity.Player player);
+    boolean isPlayer(Player player);
 
     boolean setState(ParticipantState state);
 
@@ -37,8 +40,8 @@ public interface VaroPlayer extends Entity, Teamable, StatsHolder, Strikable {
 
     PlayerMode getMode();
 
-    void setPlayer(org.bukkit.entity.Player player);
+    void setPlayer(Player player);
 
-    org.bukkit.entity.Player getPlayer();
+    Player getPlayer();
 
 }

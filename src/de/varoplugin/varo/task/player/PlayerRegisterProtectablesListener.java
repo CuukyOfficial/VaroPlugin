@@ -2,7 +2,7 @@ package de.varoplugin.varo.task.player;
 
 import de.cuuky.cfw.version.VersionUtils;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.world.protectable.EmptyProtectableFactory;
+import de.varoplugin.varo.game.world.protectable.EmptyProtectableBuilder;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -23,6 +23,6 @@ public class PlayerRegisterProtectablesListener extends AbstractPlayerListener {
             throw new Error("attachedFace should not be null");
 
         Block attached = event.getBlock().getRelative(attachedFace);
-        this.getPlayer().addProtectable(new EmptyProtectableFactory().block(attached).create());
+        this.getPlayer().addProtectable(new EmptyProtectableBuilder().block(attached).create());
     }
 }

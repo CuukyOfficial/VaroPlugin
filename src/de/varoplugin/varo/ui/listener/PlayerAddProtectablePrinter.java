@@ -10,7 +10,7 @@ public class PlayerAddProtectablePrinter extends UiListener {
     @EventHandler
     public void onProtectableAdd(ProtectableAddEvent event) {
         // Won't work for anything other than a player
-        Bukkit.getPlayer(event.getProtectable().getHolder().getUuid()).sendMessage("Block saved");
+        Bukkit.getPlayer(event.getProtectable().getOwner().getUuid()).sendMessage("Block saved");
 
         for (int i = 0; i < 6; i++)
             event.getProtectable().getBlock().getWorld().playEffect(

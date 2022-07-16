@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * Represents an object which can save chests.
  */
-public interface ProtectableHolder {
+public interface ProtectableOwner {
 
     UUID getUuid();
 
@@ -19,6 +19,6 @@ public interface ProtectableHolder {
 
     Protectable getProtectable(Block block);
 
-    boolean canAccessSavings(ProtectableHolder player);
+    boolean canAccessSavings(ProtectableOwner player);
 
 }

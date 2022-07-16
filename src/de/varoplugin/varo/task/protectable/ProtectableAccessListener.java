@@ -15,7 +15,7 @@ public class ProtectableAccessListener extends AbstractProtectableListener{
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null) return;
         if (!this.getProtectable().getBlock().equals(event.getClickedBlock())) return;
-        if (this.getProtectable().getHolder().canAccessSavings(this.getVaro().getPlayer(event.getPlayer()))) return;
+        if (this.getProtectable().getOwner().canAccessSavings(this.getVaro().getPlayer(event.getPlayer()))) return;
 
         event.setCancelled(true);
     }

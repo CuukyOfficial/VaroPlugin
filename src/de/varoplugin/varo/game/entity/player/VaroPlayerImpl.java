@@ -2,38 +2,37 @@ package de.varoplugin.varo.game.entity.player;
 
 import de.varoplugin.varo.api.event.game.player.*;
 import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.game.entity.EntityImpl;
+import de.varoplugin.varo.game.entity.VaroEntityImpl;
+import de.varoplugin.varo.game.entity.player.session.Session;
 import de.varoplugin.varo.game.entity.team.Team;
 import de.varoplugin.varo.game.strike.Strike;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.UUID;
+import java.util.stream.Stream;
 
-final class VaroPlayerImpl extends EntityImpl implements VaroPlayer {
+final class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
 
     private ParticipantState state;
     private PlayerMode mode;
     private Team team;
+    private Player player;
+    private String name;
 
     private int countdown;
     private int kills;
+    private Collection<Session> sessions;
 
-    private org.bukkit.entity.Player player;
-    private String name;
-
-    /**
-     * For Serialization. Do not use.
-     */
-    private VaroPlayerImpl() {
-        super(null);
-    }
-
-    VaroPlayerImpl(UUID uuid, String name, org.bukkit.entity.Player player, ParticipantState state, PlayerMode mode) {
+    VaroPlayerImpl(UUID uuid, String name, Player player, ParticipantState state, PlayerMode mode) {
         super(uuid);
         this.name = name;
         this.player = player;
         this.state = state;
         this.mode = mode;
+        this.sessions = new HashSet<>();
     }
 
     @Override
@@ -90,7 +89,7 @@ final class VaroPlayerImpl extends EntityImpl implements VaroPlayer {
     }
 
     @Override
-    public boolean isPlayer(org.bukkit.entity.Player player) {
+    public boolean isPlayer(Player player) {
         return player.getUniqueId().equals(this.getUuid());
     }
 
@@ -128,7 +127,17 @@ final class VaroPlayerImpl extends EntityImpl implements VaroPlayer {
     }
 
     @Override
-    public org.bukkit.entity.Player getPlayer() {
+    public void addSession(Session session) {
+        this.sessions.add(session);
+    }
+
+    @Override
+    public Stream<Session> getSessions() {
+        return this.sessions.stream();
+    }
+
+    @Override
+    public Player getPlayer() {
         return this.player;
     }
 

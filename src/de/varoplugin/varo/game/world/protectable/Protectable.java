@@ -17,8 +17,8 @@ public interface Protectable extends VaroObject {
 
     Block getBlock();
 
-    void setHolder(ProtectableHolder holder);
+    void setOwner(ProtectableOwner owner);
 
-    ProtectableHolder getHolder();
+    ProtectableOwner getOwner();
 
 }
