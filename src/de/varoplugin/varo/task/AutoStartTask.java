@@ -1,6 +1,5 @@
 package de.varoplugin.varo.task;
 
-import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.Varo;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -24,6 +23,6 @@ public class AutoStartTask extends VaroScheduledTask {
     @Override
     public void run() {
         this.getVaro().setAutoStart(null);
-        this.getVaro().setState(VaroState.STARTING);
+        this.getVaro().nextState();
     }
 }

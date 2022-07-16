@@ -9,6 +9,8 @@ import de.varoplugin.varo.game.State;
 import de.varoplugin.varo.task.trigger.GameStateTrigger;
 import de.varoplugin.varo.task.trigger.VaroConfigTrigger;
 
+import java.util.function.Predicate;
+
 public class VaroTriggerBuilder implements IVaroTriggerBuilder {
 
     private final TriggerBuilder internal;
@@ -25,10 +27,10 @@ public class VaroTriggerBuilder implements IVaroTriggerBuilder {
         return this;
     }
 
-    // TODO: Remove?
     @Override
-    public IVaroTriggerBuilder whenNot(State state) {
-        return this.when(new GameStateTrigger(this.varo, state, false));
+    public IVaroTriggerBuilder when(Predicate<State> allowed) {
+        this.varo.getStates().filter(allowed).forEach(this::when);
+        return this;
     }
 
     @Override

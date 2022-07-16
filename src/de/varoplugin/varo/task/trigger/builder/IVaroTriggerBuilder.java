@@ -5,12 +5,13 @@ import de.varoplugin.varo.api.task.trigger.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.State;
 
+import java.util.function.Predicate;
+
 public interface IVaroTriggerBuilder extends TriggerBuilder {
 
     IVaroTriggerBuilder when(State state);
 
-    // TODO: Remove?
-    IVaroTriggerBuilder whenNot(State state);
+    IVaroTriggerBuilder when(Predicate<State> allowed);
 
     @Override
     Trigger build();

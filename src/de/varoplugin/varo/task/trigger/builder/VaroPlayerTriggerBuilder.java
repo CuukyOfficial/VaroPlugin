@@ -11,6 +11,8 @@ import de.varoplugin.varo.task.trigger.player.VaroOnlineTrigger;
 import de.varoplugin.varo.task.trigger.player.VaroParticipantStateTrigger;
 import de.varoplugin.varo.task.trigger.player.VaroPlayerModeTrigger;
 
+import java.util.function.Predicate;
+
 public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
 
     private final VaroPlayer player;
@@ -58,8 +60,8 @@ public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder whenNot(State state) {
-        this.internal.whenNot(state);
+    public IVaroTriggerBuilder when(Predicate<State> allowed) {
+        this.internal.when(allowed);
         return this;
     }
 

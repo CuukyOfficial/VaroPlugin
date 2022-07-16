@@ -7,6 +7,8 @@ import de.varoplugin.varo.game.State;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
 
+import java.util.function.Predicate;
+
 public interface IVaroPlayerTriggerBuilder extends IVaroTriggerBuilder {
 
     IVaroPlayerTriggerBuilder when(ParticipantState state);
@@ -19,7 +21,7 @@ public interface IVaroPlayerTriggerBuilder extends IVaroTriggerBuilder {
 
     IVaroPlayerTriggerBuilder when(State state);
 
-    IVaroPlayerTriggerBuilder whenNot(State state);
+    IVaroTriggerBuilder when(Predicate<State> allowed);
 
     IVaroPlayerTriggerBuilder and(ParticipantState alive);
 

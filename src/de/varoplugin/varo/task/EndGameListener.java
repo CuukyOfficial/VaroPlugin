@@ -1,7 +1,6 @@
 package de.varoplugin.varo.task;
 
 import de.varoplugin.varo.api.event.game.player.PlayerParticipantStateChangeEvent;
-import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.game.Varo;
 import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
@@ -31,6 +30,6 @@ public class EndGameListener extends VaroListenerTask {
         if (event.getState() != VaroParticipantState.DEAD) return;
         if (!this.isOver(event.getPlayer())) return;
 
-        this.getVaro().setState(VaroState.FINISHED);
+        this.getVaro().nextState();
     }
 }

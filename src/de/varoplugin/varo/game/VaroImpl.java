@@ -22,18 +22,34 @@ import java.util.stream.Stream;
 final class VaroImpl implements Varo {
 
     private VaroPlugin plugin;
-    private State state;
+    private State current;
     private Calendar autoStart;
 
     private final UniqueIdMap<Team> teams;
     private final UniqueIdMap<VaroPlayer> players;
     private final Set<Location> itemChestLocations;
+    private final Collection<State> availableStates;
 
-    VaroImpl(State state) {
-        this.state = state;
+    VaroImpl(Collection<State> availableStates) {
+        this.availableStates = availableStates;
         this.teams = new HashUniqueIdMap<>();
         this.players = new HashUniqueIdMap<>();
         this.itemChestLocations = new HashSet<>();
+        this.current = this.getFirstState();
+    }
+
+    private Optional<State> optionalState(int start) {
+        return this.availableStates.stream().filter(i -> i.getPriority() > start)
+                .min(Comparator.comparingInt(State::getPriority));
+    }
+
+    private State getFirstState() {
+        // TODO: Own exception
+        return this.optionalState(Integer.MIN_VALUE).orElseThrow(NullPointerException::new);
+    }
+
+    private State getNextState(int start) {
+        return this.optionalState(start).orElse(this.getFirstState());
     }
 
     @Override
@@ -80,14 +96,24 @@ final class VaroImpl implements Varo {
 
     @Override
     public State getState() {
-        return this.state;
+        return this.current;
+    }
+
+    @Override
+    public void nextState() {
+        this.current = this.getNextState(this.current.getPriority());
     }
 
     @Override
     public boolean setState(State state) {
-        if (this.state == state || this.plugin.isCancelled(new VaroStateChangeEvent(this, state))) return false;
-        this.state = state;
+        if (this.current == state || this.plugin.isCancelled(new VaroStateChangeEvent(this, state))) return false;
+        this.current = state;
         return true;
+    }
+
+    @Override
+    public Stream<State> getStates() {
+        return this.availableStates.stream();
     }
 
     @Override

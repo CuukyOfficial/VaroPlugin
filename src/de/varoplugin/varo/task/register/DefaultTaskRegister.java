@@ -26,7 +26,7 @@ public class DefaultTaskRegister implements Listener {
         new VaroTriggerBuilder(event.getVaro()).when(VaroState.LOBBY).and(new AutoStartTrigger(event.getVaro()))
                 .complete().register(new AutoStartTask(event.getVaro()));
 
-        new VaroTriggerBuilder(event.getVaro()).whenNot(VaroState.LOBBY).complete().register(
+        new VaroTriggerBuilder(event.getVaro()).when(v -> !v.allowsNonRegistered()).complete().register(
                 new KickNonRegisteredPlayerListener(event.getVaro())
         );
 

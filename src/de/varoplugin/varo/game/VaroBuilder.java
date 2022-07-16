@@ -1,8 +1,10 @@
 package de.varoplugin.varo.game;
 
+import java.util.Collection;
+
 public interface VaroBuilder {
 
-    VaroBuilder state(State state);
+    VaroBuilder states(Collection<State> state);
 
     Varo create();
 }

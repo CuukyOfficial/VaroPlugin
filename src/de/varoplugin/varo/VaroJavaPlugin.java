@@ -13,7 +13,9 @@ import de.varoplugin.varo.config.language.PlaceholderApiExpansion;
 import de.varoplugin.varo.config.language.Placeholders;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.game.EmptyVaroBuilder;
+import de.varoplugin.varo.game.State;
 import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.game.VaroState;
 import de.varoplugin.varo.task.register.DefaultTaskRegister;
 import de.varoplugin.varo.ui.UIManager;
 import de.varoplugin.varo.ui.VaroUIManager;
@@ -23,9 +25,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
@@ -43,6 +43,13 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	private Language[] languages;
 	private Messages messages;
 	private final List<Bot> bots = new ArrayList<>();
+	// TODO: External states
+	private final Collection<State> states;
+
+	public VaroJavaPlugin() {
+		this.states = new HashSet<>();
+		this.states.addAll(Arrays.asList(VaroState.values()));
+	}
 
 	private void updateLoadingState(VaroLoadingState state, Object... args) {
 		this.uiManager.onLoadingStateUpdate(state, args);
@@ -90,7 +97,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
 		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(), this);
 
-		this.varo = new EmptyVaroBuilder().create();
+		this.varo = new EmptyVaroBuilder().states(this.states).create();
 		this.varo.initialize(this);
 
 		this.updateLoadingState(StartupState.STARTING_BOTS);
