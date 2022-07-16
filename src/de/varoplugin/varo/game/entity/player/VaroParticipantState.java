@@ -5,8 +5,18 @@ package de.varoplugin.varo.game.entity.player;
  */
 public enum VaroParticipantState implements ParticipantState {
 
-    NONE,
-    ALIVE,
-    DEAD
+    NONE(false),
+    ALIVE(true),
+    DEAD(false);
 
+    private final boolean sessions;
+
+    VaroParticipantState(boolean sessions) {
+        this.sessions = sessions;
+    }
+
+    @Override
+    public boolean allowsSessions() {
+        return this.sessions;
+    }
 }

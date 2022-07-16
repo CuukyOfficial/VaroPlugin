@@ -5,8 +5,18 @@ package de.varoplugin.varo.game.entity.player;
  */
 public enum VaroPlayerMode implements PlayerMode {
 
-    NONE,
-    SPEC,
-    GAME_MASTER
+    NONE(true),
+    SPEC(false),
+    GAME_MASTER(false);
 
+    private final boolean countsSessions;
+
+    VaroPlayerMode(boolean countsSessions) {
+        this.countsSessions = countsSessions;
+    }
+
+    @Override
+    public boolean countsSessions() {
+        return this.countsSessions;
+    }
 }

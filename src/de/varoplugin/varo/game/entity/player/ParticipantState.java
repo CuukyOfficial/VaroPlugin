@@ -5,4 +5,6 @@ package de.varoplugin.varo.game.entity.player;
  */
 public interface ParticipantState {
 
+    boolean allowsSessions();
+
 }
