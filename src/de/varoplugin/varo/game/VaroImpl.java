@@ -55,7 +55,7 @@ final class VaroImpl implements Varo {
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
-        this.current = this.getFirstState();
+        this.current = this.current == null ? this.getFirstState() : this.current;
 
         for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
