@@ -1,6 +1,8 @@
 package de.varoplugin.varo.task.trigger.player;
 
 import de.varoplugin.varo.api.task.trigger.Trigger;
+import de.varoplugin.varo.game.entity.player.OnlineState;
+import de.varoplugin.varo.game.entity.player.VaroOnlineState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -8,40 +10,40 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class VaroOnlineTrigger extends AbstractPlayerTrigger {
 
-    private Boolean online;
+    private OnlineState state;
 
-    private VaroOnlineTrigger(VaroPlayer player, Boolean online, boolean match) {
+    private VaroOnlineTrigger(VaroPlayer player, OnlineState state, boolean match) {
         super(player, match);
-        this.online = online;
+        this.state = state;
     }
 
-    public VaroOnlineTrigger(VaroPlayer player, Boolean online) {
-        this(player, online, true);
+    public VaroOnlineTrigger(VaroPlayer player, OnlineState state) {
+        this(player, state, true);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
-        if (this.online == null) this.triggerIf(true);
-        this.triggerIf(this.online);
+        if (this.state == null) this.triggerIf(true);
+        this.triggerIf(this.state.asBoolean());
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (!this.getPlayer().isPlayer(event.getPlayer())) return;
-        if (this.online == null) this.triggerIf(true);
-        this.triggerIf(!this.online);
+        if (this.state == null) this.triggerIf(true);
+        this.triggerIf(!this.state.asBoolean());
     }
 
     @Override
     protected boolean isTriggered() {
-        return this.getPlayer().isOnline() == this.online;
+        return VaroOnlineState.parse(this.getPlayer().isOnline()).equals(this.state);
     }
 
     @Override
     public Trigger clone() {
         VaroOnlineTrigger trigger = (VaroOnlineTrigger) super.clone();
-        trigger.online = this.online;
+        trigger.state = this.state;
         return trigger;
     }
 }

@@ -21,13 +21,13 @@ public class VaroTriggerBuilder implements IVaroTriggerBuilder {
         this.varo = varo;
     }
 
-    private void when(State state) {
+    private void whenState(State state) {
         this.internal.when(new GameStateTrigger(this.varo, state));
     }
 
     @Override
-    public IVaroTriggerBuilder when(Predicate<State> allowed) {
-        this.varo.getStates().filter(allowed).forEach(this::when);
+    public IVaroTriggerBuilder whenState(Predicate<State> allowed) {
+        this.varo.getStates().filter(allowed).forEach(this::whenState);
         return this;
     }
 

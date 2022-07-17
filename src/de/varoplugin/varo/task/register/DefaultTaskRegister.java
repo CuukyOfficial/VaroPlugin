@@ -5,10 +5,7 @@ import de.varoplugin.varo.api.event.game.player.PlayerInitializedEvent;
 import de.varoplugin.varo.api.event.game.world.protectable.ProtectableInitializedEvent;
 import de.varoplugin.varo.api.task.Task;
 import de.varoplugin.varo.game.State;
-import de.varoplugin.varo.game.VaroState;
-import de.varoplugin.varo.game.entity.player.VaroParticipantState;
 import de.varoplugin.varo.task.*;
-import de.varoplugin.varo.task.player.*;
 import de.varoplugin.varo.task.protectable.ProtectableAccessListener;
 import de.varoplugin.varo.task.trigger.AutoStartTrigger;
 import de.varoplugin.varo.task.trigger.ProtectableTrigger;
@@ -23,7 +20,7 @@ import java.util.function.Predicate;
 public class DefaultTaskRegister implements Listener {
 
     private void stateBuilder(VaroInitializedEvent event, Predicate<State> test, Task... tasks) {
-        new VaroTriggerBuilder(event.getVaro()).when(test).complete().register(tasks);
+        new VaroTriggerBuilder(event.getVaro()).whenState(test).complete().register(tasks);
     }
 
     private IVaroPlayerTriggerBuilder playerBuilder(PlayerInitializedEvent event) {
@@ -32,7 +29,7 @@ public class DefaultTaskRegister implements Listener {
 
     @EventHandler
     public void onGameInitialize(VaroInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(State::allowsStart).and(new AutoStartTrigger(event.getVaro()))
+        new VaroTriggerBuilder(event.getVaro()).whenState(State::allowsStart).and(new AutoStartTrigger(event.getVaro()))
                 .complete().register(new AutoStartTask(event.getVaro()));
 
         // Merge register listener?
@@ -42,7 +39,7 @@ public class DefaultTaskRegister implements Listener {
         this.stateBuilder(event, State::canFillChests, new FillChestsTask(event.getVaro()));
         this.stateBuilder(event, State::canFinish, new EndGameListener(event.getVaro()));
 
-        new VaroTriggerBuilder(event.getVaro()).when(State::canDoRandomTeam)
+        new VaroTriggerBuilder(event.getVaro()).whenState(State::canDoRandomTeam)
                 .and(event.getVaro().getPlugin().getVaroConfig().random_team_at_start).complete().register(
                         new RandomPlayerTask(event.getVaro(), 2)); // TODO: Team size config entry and trigger for config entry
     }
@@ -51,18 +48,18 @@ public class DefaultTaskRegister implements Listener {
     public void onPlayerInitialize(PlayerInitializedEvent event) {
 //        this.builder(event.getVaro(), v -> !v.allowsPlayerMovement(), new NoMoveListener(event.getPlayer()));
 
-        new VaroPlayerTriggerBuilder(event.getPlayer()).when(VaroState.RUNNING).when(VaroState.MASS_RECORDING)
-                .and(VaroParticipantState.ALIVE).and(true).complete().register(
-                        new CountdownTask(event.getPlayer()),
-                        new PlayerNoKickRadiusListener(event.getPlayer()),
-                        new PlayerInGameJoinListener(event.getPlayer()),
-                        new PlayerKillOnDeathListener(event.getPlayer()),
-                        new PlayerRegisterProtectablesListener(event.getPlayer()));
+//        new VaroPlayerTriggerBuilder(event.getPlayer()).when(VaroState.RUNNING).when(VaroState.MASS_RECORDING)
+//                .and(VaroParticipantState.ALIVE).and(true).complete().register(
+//                        new CountdownTask(event.getPlayer()),
+//                        new PlayerNoKickRadiusListener(event.getPlayer()),
+//                        new PlayerInGameJoinListener(event.getPlayer()),
+//                        new PlayerKillOnDeathListener(event.getPlayer()),
+//                        new PlayerRegisterProtectablesListener(event.getPlayer()));
     }
 
     @EventHandler
     public void onProtectableInitialize(ProtectableInitializedEvent event) {
-        new VaroTriggerBuilder(event.getVaro()).when(State::blocksProtectableAccess)
+        new VaroTriggerBuilder(event.getVaro()).whenState(State::blocksProtectableAccess)
                 .and(new ProtectableTrigger(event.getProtectable())).complete().register(
                         new ProtectableAccessListener(event.getProtectable()));
     }

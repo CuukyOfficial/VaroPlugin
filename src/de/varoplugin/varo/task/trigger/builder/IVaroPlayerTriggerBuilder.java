@@ -4,6 +4,7 @@ import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.api.task.trigger.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.State;
+import de.varoplugin.varo.game.entity.player.OnlineState;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
 
@@ -11,19 +12,17 @@ import java.util.function.Predicate;
 
 public interface IVaroPlayerTriggerBuilder extends IVaroTriggerBuilder {
 
-    IVaroPlayerTriggerBuilder when(ParticipantState state);
+    IVaroPlayerTriggerBuilder whenPState(Predicate<ParticipantState> state);
 
-    IVaroPlayerTriggerBuilder when(PlayerMode mode);
+    IVaroPlayerTriggerBuilder whenMode(Predicate<PlayerMode> mode);
 
-    IVaroPlayerTriggerBuilder when(Boolean online);
+    IVaroPlayerTriggerBuilder whenOnline(Predicate<OnlineState> online);
 
-    IVaroPlayerTriggerBuilder and(Boolean online);
+    IVaroPlayerTriggerBuilder andOnline(Predicate<OnlineState> online);
 
-    IVaroPlayerTriggerBuilder when(State state);
+    IVaroPlayerTriggerBuilder andPState(Predicate<ParticipantState> alive);
 
-    IVaroTriggerBuilder when(Predicate<State> allowed);
-
-    IVaroPlayerTriggerBuilder and(ParticipantState alive);
+    IVaroPlayerTriggerBuilder whenState(Predicate<State> allowed);
 
     Trigger build();
 

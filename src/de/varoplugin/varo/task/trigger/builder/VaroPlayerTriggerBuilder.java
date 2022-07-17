@@ -4,6 +4,7 @@ import de.varoplugin.varo.api.task.trigger.Trigger;
 import de.varoplugin.varo.api.task.trigger.TriggerBuilder;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.game.State;
+import de.varoplugin.varo.game.entity.player.OnlineState;
 import de.varoplugin.varo.game.entity.player.ParticipantState;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.game.entity.player.PlayerMode;
@@ -12,56 +13,83 @@ import de.varoplugin.varo.task.trigger.player.VaroParticipantStateTrigger;
 import de.varoplugin.varo.task.trigger.player.VaroPlayerModeTrigger;
 
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class VaroPlayerTriggerBuilder implements IVaroPlayerTriggerBuilder {
 
     private final VaroPlayer player;
     private final IVaroTriggerBuilder internal;
 
+    private Stream<ParticipantState> getParticipantStates() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    private Stream<PlayerMode> getModes() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    private Stream<OnlineState> getOnlineStates() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     public VaroPlayerTriggerBuilder(VaroPlayer player) {
         this.internal = new VaroTriggerBuilder(player.getVaro());
         this.player = player;
     }
 
-    @Override
-    public IVaroPlayerTriggerBuilder when(ParticipantState state) {
+    private void when(ParticipantState state) {
         this.internal.when(new VaroParticipantStateTrigger(this.player, state));
-        return this;
     }
 
-    @Override
-    public IVaroPlayerTriggerBuilder when(PlayerMode mode) {
+    private void when(PlayerMode mode) {
         this.internal.when(new VaroPlayerModeTrigger(this.player, mode));
-        return this;
     }
 
-    @Override
-    public IVaroPlayerTriggerBuilder when(Boolean online) {
+    private void when(OnlineState online) {
         this.internal.when(new VaroOnlineTrigger(this.player, online));
-        return this;
     }
 
-    @Override
-    public IVaroPlayerTriggerBuilder and(ParticipantState alive) {
+    private void and(ParticipantState alive) {
         this.internal.and(new VaroParticipantStateTrigger(this.player, alive));
-        return this;
     }
 
-    @Override
-    public IVaroPlayerTriggerBuilder and(Boolean online) {
+    private void and(OnlineState online) {
         this.internal.and(new VaroOnlineTrigger(this.player, online));
+    }
+
+    @Override
+    public IVaroPlayerTriggerBuilder whenPState(Predicate<ParticipantState> state) {
+        this.getParticipantStates().filter(state).forEach(this::when);
         return this;
     }
 
     @Override
-    public IVaroPlayerTriggerBuilder when(State state) {
-        this.internal.when(state);
+    public IVaroPlayerTriggerBuilder whenMode(Predicate<PlayerMode> mode) {
+        this.getModes().filter(mode).forEach(this::when);
         return this;
     }
 
     @Override
-    public IVaroTriggerBuilder when(Predicate<State> allowed) {
-        this.internal.when(allowed);
+    public IVaroPlayerTriggerBuilder whenOnline(Predicate<OnlineState> online) {
+        this.getOnlineStates().filter(online).forEach(this::when);
+        return this;
+    }
+
+    @Override
+    public IVaroPlayerTriggerBuilder andOnline(Predicate<OnlineState> online) {
+        this.getOnlineStates().filter(online).forEach(this::and);
+        return this;
+    }
+
+    @Override
+    public IVaroPlayerTriggerBuilder andPState(Predicate<ParticipantState> alive) {
+        this.getParticipantStates().filter(alive).forEach(this::and);
+        return this;
+    }
+
+    @Override
+    public IVaroPlayerTriggerBuilder whenState(Predicate<State> allowed) {
+        this.internal.whenState(allowed);
         return this;
     }
 

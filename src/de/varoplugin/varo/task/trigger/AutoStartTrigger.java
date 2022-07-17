@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 
 public class AutoStartTrigger extends GameTrigger {
 
-    private AutoStartTrigger(Varo varo) {
+    public AutoStartTrigger(Varo varo) {
         super(varo, true);
     }
 

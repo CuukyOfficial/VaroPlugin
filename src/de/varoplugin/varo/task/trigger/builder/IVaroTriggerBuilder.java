@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 public interface IVaroTriggerBuilder extends TriggerBuilder {
 
-    IVaroTriggerBuilder when(Predicate<State> allowed);
+    IVaroTriggerBuilder whenState(Predicate<State> allowed);
 
     IVaroTriggerBuilder and(VaroConfig.VaroBoolConfigEntry entry);
 
