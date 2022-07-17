@@ -10,7 +10,7 @@ public class VaroOnlineTrigger extends AbstractPlayerTrigger {
 
     private Boolean online;
 
-    public VaroOnlineTrigger(VaroPlayer player, Boolean online, boolean match) {
+    private VaroOnlineTrigger(VaroPlayer player, Boolean online, boolean match) {
         super(player, match);
         this.online = online;
     }

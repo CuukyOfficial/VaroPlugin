@@ -10,7 +10,7 @@ public class GameStateTrigger extends GameTrigger {
 
     private State state;
 
-    public GameStateTrigger(Varo varo, State state, boolean match) {
+    private GameStateTrigger(Varo varo, State state, boolean match) {
         super(varo, match);
         this.state = state;
     }

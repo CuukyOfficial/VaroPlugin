@@ -10,7 +10,7 @@ public class VaroPlayerModeTrigger extends AbstractPlayerTrigger {
 
     private PlayerMode mode;
 
-    public VaroPlayerModeTrigger(VaroPlayer player, PlayerMode mode, boolean match) {
+    private VaroPlayerModeTrigger(VaroPlayer player, PlayerMode mode, boolean match) {
         super(player, match);
         this.mode = mode;
     }

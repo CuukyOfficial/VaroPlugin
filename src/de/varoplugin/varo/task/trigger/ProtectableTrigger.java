@@ -9,7 +9,7 @@ public class ProtectableTrigger extends GameTrigger {
 
     private Protectable protectable;
 
-    public ProtectableTrigger(Protectable protectable, boolean match) {
+    private ProtectableTrigger(Protectable protectable, boolean match) {
         super(protectable.getVaro(), match);
         this.protectable = protectable;
     }

@@ -10,7 +10,7 @@ public class VaroParticipantStateTrigger extends AbstractPlayerTrigger {
 
     private ParticipantState state;
 
-    public VaroParticipantStateTrigger(VaroPlayer player, ParticipantState state, boolean match) {
+    private VaroParticipantStateTrigger(VaroPlayer player, ParticipantState state, boolean match) {
         super(player, match);
         this.state = state;
     }

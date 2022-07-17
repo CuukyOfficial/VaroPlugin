@@ -8,7 +8,7 @@ public class VaroConfigTrigger extends GameTrigger {
 
     private VaroConfig.VaroBoolConfigEntry entry;
 
-    public VaroConfigTrigger(Varo varo, VaroConfig.VaroBoolConfigEntry entry, boolean match) {
+    private VaroConfigTrigger(Varo varo, VaroConfig.VaroBoolConfigEntry entry, boolean match) {
         super(varo, match);
         this.entry = entry;
     }
