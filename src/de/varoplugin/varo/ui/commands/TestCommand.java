@@ -6,8 +6,6 @@ import org.bukkit.event.Listener;
 
 public class TestCommand extends VaroCommand implements Listener {
 
-    private int index = 1;
-
 //    private final ItemHookBuilder diamondClicker = new PlayerItemHookBuilder().item(new ItemStack(Material.DIAMOND_SWORD))
 //        .subscribe(HookItemInteractEvent.class, this::removeOnClick);
 
@@ -33,9 +31,8 @@ public class TestCommand extends VaroCommand implements Listener {
         // ChatHook test
 //        new PlayerChatHookBuilder().player((Player) sender).message("Test").register(this.getVaro().getPlugin());
 
-        // Cycle gamestate
-        // this.getVaro().setState(VaroState.values()[this.index % VaroState.values().length]);
-        // this.index++;
+//         Cycle gamestate
+         this.getVaro().nextState();
     	
     	// Messages messages = this.getVaro().getPlugin().getMessages();
     	// sender.sendMessage(messages.hello_world.value("This is a local placeholder"));
