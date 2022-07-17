@@ -20,11 +20,11 @@ final class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
     private PlayerMode mode;
     private Team team;
     private Player player;
-    private String name;
+    private final String name;
 
     private int countdown;
     private int kills;
-    private Collection<Session> sessions;
+    private final Collection<Session> sessions;
 
     VaroPlayerImpl(UUID uuid, String name, Player player, ParticipantState state, PlayerMode mode) {
         super(uuid);
@@ -124,6 +124,16 @@ final class VaroPlayerImpl extends VaroEntityImpl implements VaroPlayer {
     @Override
     public void setPlayer(org.bukkit.entity.Player player) {
         this.player = player;
+    }
+
+    @Override
+    public Session getCurrentSession() {
+        return this.sessions.stream().filter(s -> s.getFinish() == null).findAny().orElse(null);
+    }
+
+    @Override
+    public void endSession() {
+        // TODO: Implement
     }
 
     @Override
