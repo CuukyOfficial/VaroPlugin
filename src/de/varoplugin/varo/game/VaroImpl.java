@@ -15,6 +15,7 @@ import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -35,7 +36,6 @@ final class VaroImpl implements Varo {
         this.teams = new HashUniqueIdMap<>();
         this.players = new HashUniqueIdMap<>();
         this.itemChestLocations = new HashSet<>();
-        this.current = this.getFirstState();
     }
 
     private Optional<State> optionalState(int start) {
@@ -55,8 +55,9 @@ final class VaroImpl implements Varo {
     @Override
     public void initialize(VaroPlugin plugin) {
         this.plugin = plugin;
+        this.current = this.getFirstState();
 
-        for (org.bukkit.entity.Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
+        for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
             VaroPlayer vp = this.getPlayer(player);
             if (vp == null) this.register(player);
             else vp.initialize(this);
@@ -65,7 +66,7 @@ final class VaroImpl implements Varo {
     }
 
     @Override
-    public VaroPlayer register(org.bukkit.entity.Player player) {
+    public VaroPlayer register(Player player) {
         VaroPlayer vp = new EmptyPlayerBuilder().player(player).create();
         if (this.players.contains(vp) || this.plugin.isCancelled(new PlayerAddEvent(this, vp))) return null;
         this.players.add(vp);

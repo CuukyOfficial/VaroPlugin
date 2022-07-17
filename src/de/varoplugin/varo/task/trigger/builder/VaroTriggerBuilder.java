@@ -21,10 +21,8 @@ public class VaroTriggerBuilder implements IVaroTriggerBuilder {
         this.varo = varo;
     }
 
-    @Override
-    public IVaroTriggerBuilder when(State state) {
+    private void when(State state) {
         this.internal.when(new GameStateTrigger(this.varo, state));
-        return this;
     }
 
     @Override

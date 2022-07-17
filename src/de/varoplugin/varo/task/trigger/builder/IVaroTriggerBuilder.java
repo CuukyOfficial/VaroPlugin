@@ -9,9 +9,9 @@ import java.util.function.Predicate;
 
 public interface IVaroTriggerBuilder extends TriggerBuilder {
 
-    IVaroTriggerBuilder when(State state);
-
     IVaroTriggerBuilder when(Predicate<State> allowed);
+
+    IVaroTriggerBuilder and(VaroConfig.VaroBoolConfigEntry entry);
 
     @Override
     Trigger build();
@@ -24,8 +24,6 @@ public interface IVaroTriggerBuilder extends TriggerBuilder {
 
     @Override
     TriggerBuilder when(TriggerBuilder when);
-
-    IVaroTriggerBuilder and(VaroConfig.VaroBoolConfigEntry entry);
 
     @Override
     IVaroTriggerBuilder and(Trigger triggers);
