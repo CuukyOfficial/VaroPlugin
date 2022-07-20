@@ -1,6 +1,20 @@
 package de.varoplugin.varo.game;
 
-import de.cuuky.cfw.version.VersionUtils;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Stream;
+
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+
+import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.event.game.VaroAutoStartChangedEvent;
 import de.varoplugin.varo.api.event.game.VaroInitializedEvent;
@@ -13,12 +27,6 @@ import de.varoplugin.varo.game.entity.team.Team;
 import de.varoplugin.varo.game.entity.team.Teamable;
 import de.varoplugin.varo.util.map.HashUniqueIdMap;
 import de.varoplugin.varo.util.map.UniqueIdMap;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-
-import java.util.*;
-import java.util.stream.Stream;
 
 final class VaroImpl implements Varo {
 

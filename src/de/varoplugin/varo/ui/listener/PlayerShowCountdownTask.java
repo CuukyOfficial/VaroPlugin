@@ -1,6 +1,6 @@
 package de.varoplugin.varo.ui.listener;
 
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.game.entity.player.VaroPlayer;
 import de.varoplugin.varo.task.player.AbstractHeartbeatTask;
 

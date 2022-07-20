@@ -1,13 +1,14 @@
 package de.varoplugin.varo.task.player;
 
-import de.cuuky.cfw.version.VersionUtils;
-import de.varoplugin.varo.game.entity.player.VaroPlayer;
-import de.varoplugin.varo.game.world.protectable.EmptyProtectableBuilder;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.SignChangeEvent;
+
+import de.varoplugin.cfw.version.VersionUtils;
+import de.varoplugin.varo.game.entity.player.VaroPlayer;
+import de.varoplugin.varo.game.world.protectable.EmptyProtectableBuilder;
 
 public class PlayerRegisterProtectablesListener extends AbstractPlayerListener {
 
