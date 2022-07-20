@@ -67,7 +67,7 @@ public class ConfigImpl implements Config {
 		YamlFile config = new YamlFile(this.path + category.getFileName());
 		config.options().charset(StandardCharsets.UTF_8);
 		config.options().quoteStyleDefaults().setQuoteStyle(String.class, QuoteStyle.DOUBLE);
-		config.createNewFile();
+		config.createNewFile(true);
 		config.setCommentFormat(YamlCommentFormat.PRETTY);
 		config.options().header(category.getDescription());
 

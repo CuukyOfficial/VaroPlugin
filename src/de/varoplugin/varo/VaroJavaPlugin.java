@@ -68,13 +68,14 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 
 		try {
 			// Load Guava (this is only necessary on 1.7)
-			Dependencies.GUAVA.load(this);
+			// Dependencies.GUAVA.load(this);
 			// Load config (This loads SnakeYAML and Simple-YAML)
 			Dependencies.SIMPLE_YAML.load(this);
 			Dependencies.SNAKE_YAML.load(this);
 			this.config = new VaroConfig(this, this.getFile(), new File(this.getDataFolder(), CONFIG_PATH).getPath() + "/");
 			this.config.load();
 			// Load additional dependencies (e.g. JDA)
+			Dependencies.ORMLITE_JDBC.load(this);
 			Dependencies.loadNeeded(this);
 
 			// Load Messages
@@ -102,7 +103,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 		try {
 			this.connectionSource = ConnectionSourceFactory.newConnectionSource(this.config);
 		} catch (Throwable t) {
-			this.getLogger().log(Level.SEVERE, "Unable to jdbc connection source", t);
+			this.getLogger().log(Level.SEVERE, "Unable to create jdbc connection source", t);
 			return;
 		}
 

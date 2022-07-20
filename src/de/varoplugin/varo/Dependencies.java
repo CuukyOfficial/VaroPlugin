@@ -1,93 +1,108 @@
 package de.varoplugin.varo;
 
-import de.varoplugin.cfw.dependencies.Dependency;
-import de.varoplugin.cfw.dependencies.JarDependency;
-import de.varoplugin.cfw.dependencies.NoInitDependency;
-import de.varoplugin.varo.api.config.ConfigEntry;
-import de.varoplugin.varo.config.VaroConfig;
-import org.bukkit.plugin.Plugin;
-
-import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
 import java.util.function.Function;
 import java.util.logging.Level;
 
+import org.bukkit.plugin.Plugin;
+
+import de.varoplugin.cfw.dependencies.Dependency;
+import de.varoplugin.cfw.dependencies.JarDependency;
+import de.varoplugin.cfw.dependencies.NoInitDependency;
+import de.varoplugin.varo.api.config.ConfigEntry;
+import de.varoplugin.varo.config.VaroConfig;
+
 public class Dependencies {
 
-	protected static final String LIB_FOLDER = "plugins/Varo/libs";
+	protected static final String LIB_FOLDER = "plugins/VaroPlugin/libs";
 
 	private static final String MAVEN_CENTERAL = "https://repo1.maven.org/maven2/";
+	private static final String SONATYPE_OSS = "https://s01.oss.sonatype.org/content/repositories/snapshots/";
 	private static final String VAROPLUGIN_NEXUS = "https://repo.varoplugin.de/repository/maven-public/";
 
-	public final static Dependency GUAVA = new VaroDependency(new JarDependency("Guava-19.0", LIB_FOLDER,
-			MAVEN_CENTERAL + "com/google/guava/guava/19.0/guava-19.0.jar", ""), new ClassPolicy("com.google.common.hash.Hashing"));
-	public final static Dependency SIMPLE_YAML = new VaroDependency(new NoInitDependency("SimpleYAML-@SimpleYaml_version@", LIB_FOLDER,
-			VAROPLUGIN_NEXUS + "me/carleslc/Simple-YAML/Simple-Yaml/@SimpleYaml_version@/Simple-Yaml-@SimpleYaml_version@.jar", "@SimpleYaml_hash@"));
-	public final static Dependency SNAKE_YAML = new VaroDependency(new NoInitDependency("SnakeYAML-@SnakeYaml_version@", LIB_FOLDER,
-			MAVEN_CENTERAL + "org/yaml/snakeyaml/@SnakeYaml_version@/snakeyaml-@SnakeYaml_version@.jar", "@SnakeYaml_hash@"));
+	private static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
 
-	private static final Collection<Dependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
+	//public final static Dependency GUAVA = new VaroDependency("guava", new ClassPolicy("com.google.common.hash.Hashing"));
+
+	public final static VaroDependency SIMPLE_YAML = new VaroDependency("Simple-Yaml", VAROPLUGIN_NEXUS, NoInitDependency::new);
+	public final static VaroDependency SNAKE_YAML = new VaroDependency("snakeyaml", MAVEN_CENTERAL, NoInitDependency::new);
+	public static final VaroDependency ORMLITE_JDBC = new VaroDependency("ormlite-jdbc", MAVEN_CENTERAL, JarDependency::new);
+
+	private static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
 
 	static {
-		OPTIONAL_DEPENDENCIES.add(new VaroDependency(new JarDependency("JDA-@JDA_version@", LIB_FOLDER, VAROPLUGIN_NEXUS + "net/dv8tion/JDA/@JDA_version@/JDA-@JDA_version@.jar", "@JDA_hash@"),
-				new ConfigEntryPolicy("net.dv8tion.jda.api.JDABuilder", config -> config.bot_discord_enabled)));
+		OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, new ConfigEntryPolicy("net.dv8tion.jda.api.JDA", config -> config.bot_discord_enabled)));
+		OPTIONAL_DEPENDENCIES.add(new VaroDependency("h2", MAVEN_CENTERAL, JarDependency::new, config -> config.db_type.getValue().equals("h2")));
+		OPTIONAL_DEPENDENCIES.add(new VaroDependency("adventure-text-minimessage", SONATYPE_OSS, JarDependency::new, new ConfigEntryPolicy("net.kyori.adventure.text.minimessage.MiniMessage", config -> config.minimessage)));
+		OPTIONAL_DEPENDENCIES.add(new VaroDependency("adventure-platform-bukkit", SONATYPE_OSS, JarDependency::new, new ConfigEntryPolicy("me.clip.placeholderapi.libs.kyori.adventure.platform.bukkit.BukkitAudiences", config -> config.minimessage)));
 	}
 
 	public static void loadNeeded(VaroPlugin varo) {
-		for (Dependency lib : OPTIONAL_DEPENDENCIES)
+		for (VaroDependency lib : OPTIONAL_DEPENDENCIES)
 			try {
 				lib.load(varo);
 			} catch (Throwable e) {
-				varo.getLogger().log(Level.SEVERE, "Unable to load dependency " + lib.getName(), e);
+				varo.getLogger().log(Level.SEVERE, "Unable to load dependency", e);
 			}
 	}
 
-	private static class VaroDependency implements Dependency {
+	public static class VaroDependency {
 
-		private final Dependency dependency;
+		private final Dependency[] dependencies;
 		private final LoadPolicy loadPolicy;
 
-		private VaroDependency(Dependency dependency, LoadPolicy loadPolicy) {
-			this.dependency = dependency;
+		private VaroDependency(String name, String repo, DependencySupplier supplier, LoadPolicy loadPolicy) {
 			this.loadPolicy = loadPolicy;
+			// TODO this should be cleaned up and optimized
+			List<Dependency> dependencies = new ArrayList<>();
+			try (Scanner scanner = new Scanner(DEPENDENCY_FILE.openStream())) {
+				while (scanner.hasNextLine()) {
+					String line = scanner.nextLine();
+					String[] split = line.split(":");
+					if (split.length != 5)
+						throw new Error();
+					if (split[0].equals(name))
+						dependencies.add(supplier.get(split[2] + "-" + split[3], LIB_FOLDER, repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (dependencies.isEmpty())
+				throw new Error("Missing dependency information for " + name);
+			this.dependencies = dependencies.toArray(new Dependency[dependencies.size()]);
 		}
 
-		private VaroDependency(Dependency dependency) {
-			this.dependency = dependency;
-			this.loadPolicy = config -> true;
+		private VaroDependency(String name, String repo, DependencySupplier supplier) {
+			this(name, repo, supplier, config -> true);
 		}
 
-		@Override
 		public void load(Plugin plugin) throws Throwable {
-			if(loadPolicy.shouldLoad(((VaroPlugin) plugin).getVaroConfig())) {
-				plugin.getLogger().info("Loading " + this.getName());
-				this.dependency.load(plugin);
+			if (this.loadPolicy.shouldLoad(((VaroPlugin) plugin).getVaroConfig())) {
+				for (Dependency dependency : this.dependencies) {
+					plugin.getLogger().info("Loading " + dependency.getName());
+					dependency.load(plugin);
+				}
 			}
 		}
 
-		@Override
-		public String getName() {
-			return this.dependency.getName();
+		public URL[] getUrls() throws MalformedURLException {
+			URL[] urls = new URL[this.dependencies.length];
+			for (int i = 0; i < urls.length; i++)
+				urls[i] = this.dependencies[i].getUrl();
+			return urls;
 		}
+	}
 
-		@Override
-		public File getFile() {
-			return this.dependency.getFile();
-		}
-
-		@Override
-		public URL getUrl() throws MalformedURLException {
-			return this.dependency.getUrl();
-		}
-
-		@Override
-		public boolean isLoaded() {
-			return this.dependency.isLoaded();
-		}
+	@FunctionalInterface
+	private interface DependencySupplier {
+		Dependency get(String name, String folder, String link, String hash);
 	}
 
 	private interface LoadPolicy {

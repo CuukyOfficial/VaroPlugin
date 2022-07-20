@@ -3,7 +3,9 @@ package de.varoplugin.varo.config;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.logging.Level;
+import java.util.stream.Stream;
 
 import com.google.common.collect.Multimap;
 
@@ -44,7 +46,7 @@ public class ClassLoaderConfig implements Config {
 				};
 
 				// Create URLClassLoader and load the ConfigImpl class using the newly created URLClassLoader
-				URLClassLoader classLoader = new URLClassLoader(new URL[] {Dependencies.SIMPLE_YAML.getUrl(), Dependencies.SNAKE_YAML.getUrl(), pluginFile.toURI().toURL()}, parentClassLoader);
+				URLClassLoader classLoader = new URLClassLoader(Stream.concat(Arrays.stream(Dependencies.SIMPLE_YAML.getUrls()), Stream.concat(Arrays.stream(Dependencies.SNAKE_YAML.getUrls()), Stream.of(pluginFile.toURI().toURL()))).toArray(URL[]::new), parentClassLoader);
 				configClass = Class.forName("de.varoplugin.varo.config.ConfigImpl", false, classLoader);
 			}
 

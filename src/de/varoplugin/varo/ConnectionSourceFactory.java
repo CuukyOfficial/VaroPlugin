@@ -15,7 +15,7 @@ public final class ConnectionSourceFactory {
 	public static ConnectionSource newConnectionSource(VaroConfig config) throws SQLException {
 		switch(config.db_type.getValue()) {
 		case "h2": 
-			return new JdbcPooledConnectionSource("jdbc:h2:./plugins/Varo/h2/stats");
+			return new JdbcPooledConnectionSource("jdbc:h2:./plugins/VaroPlugin/h2/stats");
 		case "mysql":
 			return new JdbcPooledConnectionSource("jdbc:mysql://" + config.db_mysql_url.getValue(), config.db_mysql_user.getValue(), config.db_mysql_password.getValue());
 		default:
