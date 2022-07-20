@@ -6,7 +6,6 @@ import java.util.Random;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
-import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -49,7 +48,6 @@ public class VaroDiscordBot implements VaroBot {
 			jda = builder.build();
 			System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
 			jda.awaitReady();
-			jda.addEventListener(new DiscordBotEventListener());
 		} catch (Throwable t) {
 			t.printStackTrace();
 			System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");

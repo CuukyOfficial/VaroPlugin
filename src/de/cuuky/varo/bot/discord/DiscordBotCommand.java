@@ -3,15 +3,6 @@ package de.cuuky.varo.bot.discord;
 import java.util.ArrayList;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.discord.commands.GetLinkCommand;
-import de.cuuky.varo.bot.discord.commands.HelpCommand;
-import de.cuuky.varo.bot.discord.commands.InfoCommand;
-import de.cuuky.varo.bot.discord.commands.OnlineCommand;
-import de.cuuky.varo.bot.discord.commands.RegisterCommand;
-import de.cuuky.varo.bot.discord.commands.RegisteredCommand;
-import de.cuuky.varo.bot.discord.commands.RemainingCommand;
-import de.cuuky.varo.bot.discord.commands.ServerCommand;
-import de.cuuky.varo.bot.discord.commands.ShutdownCommand;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class DiscordBotCommand {
@@ -24,16 +15,6 @@ public abstract class DiscordBotCommand {
 
 	static {
 		commands = new ArrayList<>();
-
-		new HelpCommand();
-		new InfoCommand();
-		new ServerCommand();
-		new RemainingCommand();
-		new OnlineCommand();
-		new RegisteredCommand();
-		new RegisterCommand();
-		new ShutdownCommand();
-		new GetLinkCommand();
 	}
 
 	private String[] aliases;
