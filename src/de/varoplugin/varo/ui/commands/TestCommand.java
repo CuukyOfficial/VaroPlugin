@@ -33,6 +33,7 @@ public class TestCommand extends VaroCommand implements Listener {
 
 //         Cycle gamestate
          this.getVaro().nextState();
+         sender.sendMessage(this.getVaro().getState().toString());
     	
     	// Messages messages = this.getVaro().getPlugin().getMessages();
     	// sender.sendMessage(messages.hello_world.value("This is a local placeholder"));

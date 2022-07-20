@@ -1,16 +1,22 @@
 package de.varoplugin.varo.ui.tasks;
 
-import de.varoplugin.varo.game.Varo;
-import de.varoplugin.varo.task.VaroScheduledTask;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class StartingUiTask extends VaroScheduledTask {
+import de.varoplugin.varo.config.language.component.MessageComponent;
+import de.varoplugin.varo.game.Varo;
+import de.varoplugin.varo.task.VaroScheduledTask;
 
+public class StartingUiTask extends VaroScheduledTask {
+	
+	private final Map<Integer, MessageComponent> messages;
     private int countdown;
 
     public StartingUiTask(Varo varo) {
         super(varo);
+        this.messages = this.getVaro().getPlugin().getMessages().start_countdown.value();
     }
 
     @Override
@@ -21,6 +27,10 @@ public class StartingUiTask extends VaroScheduledTask {
 
     @Override
     public void run() {
-        Bukkit.getServer().broadcastMessage(String.valueOf(this.countdown--));
+    	MessageComponent message = this.messages.get(this.countdown);
+    	if (message != null)
+    		Bukkit.getServer().broadcastMessage(message.value(this.countdown));
+        
+        this.countdown--;
     }
 }

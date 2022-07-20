@@ -3,7 +3,7 @@ package de.varoplugin.varo.api.task;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public abstract class ScheduledTask extends RunnableTask implements Task, Runnable {
+public abstract class ScheduledTask extends RunnableTask implements Runnable {
 
     private BukkitRunnable runnable;
 

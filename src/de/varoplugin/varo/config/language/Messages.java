@@ -12,6 +12,7 @@ import de.varoplugin.varo.config.language.translatable.Message;
 import de.varoplugin.varo.config.language.translatable.Translatable;
 import de.varoplugin.varo.config.language.translatable.TranslatableMessageArray;
 import de.varoplugin.varo.config.language.translatable.TranslatableMessageComponent;
+import de.varoplugin.varo.config.language.translatable.TranslatableMessageMap;
 
 public class Messages {
 
@@ -25,6 +26,8 @@ public class Messages {
 	public final DiscordBotMessageEmbed bot_discord_command_verify_alreadyverified = new VaroDiscordBotEmbed("bot.discord.command.verify.alreadyverified");
 	public final TranslatableMessageComponent bot_discord_modal_verify_title = new VaroMessage("bot.discord.modal.verify.title");
 	public final TranslatableMessageComponent bot_discord_modal_verify_inputlabel = new VaroMessage("bot.discord.modal.verify.inputlabel");
+	
+	public final TranslatableMessageMap<Integer> start_countdown = new VaroMessageIntMap("start.countdownmessages", "startcountdown");
 
 	public Messages(Language[] languages, int defaultLanguage, Map<String, GlobalPlaceholder> globalPlaceholders, boolean papi) {
 		this.messages.forEach(message -> message.init(languages, defaultLanguage, globalPlaceholders, papi));
@@ -43,6 +46,13 @@ public class Messages {
 
 	private class VaroMessageArray extends TranslatableMessageArray {
 		private VaroMessageArray(String path, String... localPlaceholderNames) {
+			super(path, localPlaceholderNames);
+			Messages.this.getMessages().add(this);
+		}
+	}
+	
+	private class VaroMessageIntMap extends TranslatableMessageMap<Integer> {
+		private VaroMessageIntMap(String path, String... localPlaceholderNames) {
 			super(path, localPlaceholderNames);
 			Messages.this.getMessages().add(this);
 		}

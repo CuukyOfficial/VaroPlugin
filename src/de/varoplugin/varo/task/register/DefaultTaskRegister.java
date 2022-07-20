@@ -40,7 +40,7 @@ public class DefaultTaskRegister implements Listener {
         this.stateBuilder(event, State::canFinish, new EndGameListener(event.getVaro()));
 
         new VaroTriggerBuilder(event.getVaro()).whenState(State::canDoRandomTeam)
-                .and(event.getVaro().getPlugin().getVaroConfig().random_team_at_start).complete().register(
+                .and(event.getVaro().getPlugin().getVaroConfig().start_randomteam).complete().register(
                         new RandomPlayerTask(event.getVaro(), 2)); // TODO: Team size config entry and trigger for config entry
     }
 

@@ -10,6 +10,7 @@ public class VaroConfigCategory implements ConfigCategory {
 	private static final String FILE_EXTENSION = ".yml";
 	
 	public static final ConfigCategory MAIN = new VaroConfigCategory("Main", "The main config settings of this plugin"),
+			START = new VaroConfigCategory("Start", "Everytging start related"),
 			BOTS = new VaroConfigCategory("Bot", "Everything regarding the Discord and Telegram bots. Need help? " + VaroJavaPlugin.DISCORD_INVITE),
 			SCOREBOARD = new VaroConfigCategory("Scoreboard", "Everything scoreboard related");
 	

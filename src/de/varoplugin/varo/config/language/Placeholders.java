@@ -23,6 +23,7 @@ public class Placeholders {
 				new StaticPlaceholder("heart", "♥"),
 				new StaticPlaceholder("newline", "\n"),
 				new StaticPlaceholder("null", ""),
+				new StaticPlaceholder("projectname", varo.getVaroConfig().projectname.getValue()),
 				new StaticPlaceholder("discord", varo.getVaroConfig().bot_discord_invite.getValue())
 		}).collect(Collectors.toMap(GlobalPlaceholder::getName, Function.identity())));
 	}
