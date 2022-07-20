@@ -20,12 +20,20 @@ public class VaroConfig extends ClassLoaderConfig {
 	public final ConfigEntry<String> defaultlanguage = new VaroConfigEntry<>(MAIN, "defaultlang", "en", "The default language");
 	public final VaroBoolConfigEntry placeholderapi = new VaroBoolConfigEntry(MAIN, "placeholderapi", false, "Whether PlaceholderAPI support is enabled. An external plugin is required");
 	public final VaroBoolConfigEntry minimessage = new VaroBoolConfigEntry(MAIN, "minimessage", false, "Whether MiniMessage support is enabled. An external plugin is required");
+	public final ConfigEntry<String> db_type = new VaroConfigEntry<>(MAIN, "db.type", "h2", "TODO");
+	public final VaroBoolConfigEntry db_h2_inmemory = new VaroBoolConfigEntry(MAIN, "db.h2.inmemory", false, "DO NOT ACTIVATE THIS UNLESS YOU'RE A DEVELOPER AND ABSOLUTELY KNOW WHAT IT DOES");
+	public final ConfigEntry<String> db_mysql_url = new VaroConfigEntry<>(MAIN, "db.mysql.url", "localhost:3306", "TODO");
+	public final ConfigEntry<String> db_mysql_user = new VaroConfigEntry<>(MAIN, "db.mysql.user", "root", "TODO");
+	public final ConfigEntry<String> db_mysql_password = new VaroConfigEntry<>(MAIN, "db.mysql.password", "1234", "TODO");
 
 	public final VaroBoolConfigEntry bot_discord_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.enabled", false, "Whether the Discord Bot should be enabled");
 	public final ConfigEntry<String> bot_discord_token = new VaroConfigEntry<>(BOTS, "bot.discord.token", "INSERT BOT TOKEN HERE", "The Bot Token");
 	public final ConfigEntry<Long> bot_discord_guild = new VaroConfigEntry<>(BOTS, "bot.discord.guild", -1L, "Your guild id");
 	public final ConfigEntry<String> bot_discord_invite = new VaroConfigEntry<>(BOTS, "bot.discord.invite", VaroJavaPlugin.DISCORD_INVITE, "TODO");
 	public final ConfigEntry<String> bot_discord_status = new VaroConfigEntry<>(BOTS, "bot.discord.status", VaroJavaPlugin.WEBSITE, "TODO");
+	public final VaroBoolConfigEntry bot_discord_verify_enabled = new VaroBoolConfigEntry(BOTS, "bot.discord.verify.enabled", true, "TODO");
+	public final VaroBoolConfigEntry bot_discord_verify_optional = new VaroBoolConfigEntry(BOTS, "bot.discord.verify.optional", true, "TODO");
+	public final VaroBoolConfigEntry bot_discord_verify_checkmember = new VaroBoolConfigEntry(BOTS, "bot.discord.verify.checkmember", true, "Check whether the player is still a Discord member");
 	public final ConfigEntry<Long> bot_discord_channel_alert = new VaroConfigEntry<>(BOTS, "bot.discord.channels.alert", -1L, "TODO");
 	public final ConfigEntry<Long> bot_discord_channel_border = new VaroConfigEntry<>(BOTS, "bot.discord.channels.border", -1L, "TODO");
 	public final ConfigEntry<Long> bot_discord_channel_death = new VaroConfigEntry<>(BOTS, "bot.discord.channels.death", -1L, "TODO");
@@ -63,7 +71,7 @@ public class VaroConfig extends ClassLoaderConfig {
 		for(ConfigEntry<?> entry : this.configEntries)
 			this.addConfigEntry(entry);
 	}
-	
+
 	public VaroConfig(VaroPlugin plugin, File pluginFile, String path) {
 		super(plugin, pluginFile, path);
 
@@ -71,7 +79,7 @@ public class VaroConfig extends ClassLoaderConfig {
 			this.addConfigEntry(entry);
 	}
 
-	
+
 
 	private class VaroConfigEntry<T> extends ConfigEntryImpl<T> {
 
@@ -83,7 +91,7 @@ public class VaroConfig extends ClassLoaderConfig {
 	}
 
 	public class VaroBoolConfigEntry extends VaroConfigEntry<Boolean> {
-		
+
 		VaroBoolConfigEntry(ConfigCategory category, String path, boolean defaultValue, String description) {
 			super(category, path, defaultValue, description);
 		}

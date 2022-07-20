@@ -1,6 +1,7 @@
 package de.varoplugin.varo.bot.discord;
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,12 +9,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.varoplugin.varo.VaroPlugin;
 import de.varoplugin.varo.api.config.ConfigEntry;
 import de.varoplugin.varo.bot.Bot;
 import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.config.language.Messages;
-import de.varoplugin.varo.config.language.translatable.TranslatableMessageComponent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -22,9 +25,11 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
@@ -35,6 +40,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 	private Messages messages;
 	private JDA jda;
 	private long guildId;
+	private VerifyManager verifyManager;
 	private final List<Command> commands = new ArrayList<>();
 
 	@Override
@@ -60,6 +66,16 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
 		this.guildId = this.config.bot_discord_guild.getValue();
 
+		if (varo.getVaroConfig().bot_discord_verify_enabled.getValue()) {
+			try {
+				this.verifyManager = new VerifyManager(varo, this, varo.getConnectionSource());
+			} catch (SQLException e) {
+				varo.getLogger().log(Level.SEVERE, "Unable to init VerifyManager", e);
+				return;
+			}
+			Bukkit.getPluginManager().registerEvents(this.verifyManager, varo);
+		}
+
 		JDABuilder builder = JDABuilder.createDefault(this.config.bot_discord_token.getValue());
 		builder.setActivity(Activity.playing(this.config.bot_discord_status.getValue()));
 		builder.setStatus(OnlineStatus.ONLINE);
@@ -83,7 +99,8 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
 		this.commands.add(new InfoCommand(varo));
 		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new StatusCommand(this.config)));
-		this.config.bot_discord_command_status_enabled.ifTrue(() -> this.commands.add(new VerifyCommand(this.config, this.messages)));
+		if (this.config.bot_discord_command_status_enabled.getValue() && this.config.bot_discord_verify_enabled.getValue())
+			this.commands.add(new VerifyCommand(this.config, this.messages));
 
 		guild.updateCommands().addCommands(this.commands.stream().map(Command::buildCommandData).toArray(CommandData[]::new)).queue();
 
@@ -101,22 +118,33 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 		return this.jda != null;
 	}
 
-	public void sendMessage(ConfigEntry<Long> channel, TranslatableMessageComponent body, TranslatableMessageComponent title, Object... bodyPlaceholders) {
+	public void sendMessage(ConfigEntry<Long> channel, DiscordBotMessageEmbed message, Object... localPlaceholders) {
 		if (!isEnabled())
 			return;
 
 		this.getChannel(channel, textChannel -> {
 			if (this.config.bot_discord_embed_enabled.getValue()) {
-				textChannel.sendMessageEmbeds(this.buildEmbed(body.value(bodyPlaceholders), title.value())).queue();
+				textChannel.sendMessageEmbeds(this.buildEmbed(message.body().value(localPlaceholders), message.title().value(localPlaceholders))).queue();
 			} else
-				textChannel.sendMessage(this.buildMessage(body.value(bodyPlaceholders), title.value())).queue();
+				textChannel.sendMessage(this.buildMessage(message.body().value(localPlaceholders), message.title().value(localPlaceholders))).queue();
 		});
 	}
 
-	public void reply(IReplyCallback replyCallback, TranslatableMessageComponent body, TranslatableMessageComponent title, Object... bodyPlaceholders) {
-		this.reply(replyCallback, body.value(bodyPlaceholders), title.value());
+	public void sendMessage(InteractionHook interactionHook, DiscordBotMessageEmbed message, Object... localPlaceholders) {
+		this.sendMessage(interactionHook, message.body().value(localPlaceholders), message.title().value(localPlaceholders));
 	}
-	
+
+	public void sendMessage(InteractionHook interactionHook, String body, String title) {
+		if (this.config.bot_discord_embed_enabled.getValue())
+			interactionHook.sendMessageEmbeds(this.buildEmbed(body, title)).queue();
+		else
+			interactionHook.sendMessage(this.buildMessage(body, title)).queue();
+	}
+
+	public void reply(IReplyCallback replyCallback, DiscordBotMessageEmbed message, Object... localPlaceholders) {
+		this.reply(replyCallback, message.body().value(localPlaceholders), message.title().value(localPlaceholders));
+	}
+
 	public void reply(IReplyCallback replyCallback, String body, String title) {
 		if (this.config.bot_discord_embed_enabled.getValue())
 			replyCallback.replyEmbeds(this.buildEmbed(body, title)).queue();
@@ -176,15 +204,45 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 		}
 	}
 
+	@Override
+	public void onModalInteraction(ModalInteractionEvent event) {
+		if (event.getModalId().equals(VerifyCommand.VERIFY_MODAL_ID)) {
+			event.deferReply().queue();
+			new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					try {
+						if (DiscordBot.this.verifyManager.isVerified(event.getUser().getIdLong())) {
+							DiscordBot.this.sendMessage(event.getHook(), DiscordBot.this.varo.getMessages().bot_discord_command_verify_alreadyverified);
+							return;
+						}
+						if (!DiscordBot.this.verifyManager.tryVerify(event.getUser().getIdLong(), event.getValue(VerifyCommand.VERIFY_MODAL_INPUT_ID).getAsString())) {
+							DiscordBot.this.sendMessage(event.getHook(), DiscordBot.this.varo.getMessages().bot_discord_command_verify_fail);
+							return;
+						}
+						DiscordBot.this.sendMessage(event.getHook(), DiscordBot.this.varo.getMessages().bot_discord_command_verify_success);
+					} catch (SQLException e) {
+						DiscordBot.this.varo.getLogger().log(Level.SEVERE, "Unable to verify player", e);
+					}
+				}
+			}.runTaskAsynchronously(this.varo);
+		}
+	}
+
 	VaroPlugin varo() {
 		return this.varo;
 	}
-	
+
 	VaroConfig config() {
 		return this.config();
 	}
-	
+
 	Messages messages() {
 		return this.messages;
+	}
+	
+	Guild getGuild() {
+		return this.jda.getGuildById(this.guildId);
 	}
 }

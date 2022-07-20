@@ -8,6 +8,8 @@ import de.varoplugin.varo.game.Varo;
 import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.Plugin;
 
+import com.j256.ormlite.support.ConnectionSource;
+
 import java.io.File;
 
 public interface VaroPlugin extends Plugin {
@@ -30,6 +32,8 @@ public interface VaroPlugin extends Plugin {
     Language[] getLanguages();
     
     Messages getMessages();
+    
+    ConnectionSource getConnectionSource();
 
     Varo getVaro();
 

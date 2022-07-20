@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.varoplugin.varo.bot.discord.CompositeDiscordBotMessageComponent;
+import de.varoplugin.varo.bot.discord.DiscordBotMessageEmbed;
 import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.config.language.translatable.Message;
@@ -16,10 +17,14 @@ public class Messages {
 
 	private final List<Translatable<?>> messages = new ArrayList<>();
 
-	public final TranslatableMessageComponent bot_discord_command_status_title = new VaroDiscordBotMessage("bot.discord.command.status.title");
-	public final TranslatableMessageComponent bot_discord_command_status_body = new VaroDiscordBotMessage("bot.discord.command.status.body", "whitelist", "gamestate", "online");
-	public final TranslatableMessageComponent bot_discord_modal_verify_title = new VaroDiscordBotMessage("bot.discord.modal.verify.title");
-	public final TranslatableMessageComponent bot_discord_modal_verify_inputlabel = new VaroDiscordBotMessage("bot.discord.modal.verify.inputlabel");
+	public final TranslatableMessageComponent bot_discord_notverified = new VaroMessage("bot.discord.notverified", "code");
+	public final TranslatableMessageComponent bot_discord_notmember = new VaroMessage("bot.discord.member");
+	public final DiscordBotMessageEmbed bot_discord_command_status = new VaroDiscordBotEmbed("bot.discord.command.status", "whitelist", "gamestate", "online");
+	public final DiscordBotMessageEmbed bot_discord_command_verify_fail = new VaroDiscordBotEmbed("bot.discord.command.verify.fail");
+	public final DiscordBotMessageEmbed bot_discord_command_verify_success = new VaroDiscordBotEmbed("bot.discord.command.verify.success");
+	public final DiscordBotMessageEmbed bot_discord_command_verify_alreadyverified = new VaroDiscordBotEmbed("bot.discord.command.verify.alreadyverified");
+	public final TranslatableMessageComponent bot_discord_modal_verify_title = new VaroMessage("bot.discord.modal.verify.title");
+	public final TranslatableMessageComponent bot_discord_modal_verify_inputlabel = new VaroMessage("bot.discord.modal.verify.inputlabel");
 
 	public Messages(Language[] languages, int defaultLanguage, Map<String, GlobalPlaceholder> globalPlaceholders, boolean papi) {
 		this.messages.forEach(message -> message.init(languages, defaultLanguage, globalPlaceholders, papi));
@@ -41,6 +46,19 @@ public class Messages {
 			super(path, localPlaceholderNames);
 			Messages.this.getMessages().add(this);
 		}
+	}
+	
+	private class VaroDiscordBotEmbed extends DiscordBotMessageEmbed {
+
+		public VaroDiscordBotEmbed(String path, String... localPlaceholderNames) {
+			super(path, localPlaceholderNames);
+		}
+
+		@Override
+		protected TranslatableMessageComponent createMessageComponent(String path, String... localPlaceholderNames) {
+			return new VaroDiscordBotMessage(path, localPlaceholderNames);
+		}
+		
 	}
 
 	private class VaroDiscordBotMessage extends Message {

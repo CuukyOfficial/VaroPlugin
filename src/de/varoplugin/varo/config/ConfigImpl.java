@@ -7,8 +7,9 @@ import java.util.Collection;
 
 import org.simpleyaml.configuration.comments.format.YamlCommentFormat;
 import org.simpleyaml.configuration.file.YamlFile;
+import org.simpleyaml.configuration.implementation.api.QuoteStyle;
 
-import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import de.varoplugin.varo.api.config.Config;
@@ -18,7 +19,7 @@ import de.varoplugin.varo.api.config.ConfigException;
 
 public class ConfigImpl implements Config {
 
-	private final Multimap<ConfigCategory, ConfigEntry<?>> configEntries = LinkedHashMultimap.create();
+	private final Multimap<ConfigCategory, ConfigEntry<?>> configEntries = HashMultimap.create();
 	private final String path;
 
 	public ConfigImpl(String path) {
@@ -31,6 +32,7 @@ public class ConfigImpl implements Config {
 			for (ConfigCategory category : this.configEntries.keySet()) {
 				YamlFile config = new YamlFile(this.path + category.getFileName());
 				config.options().charset(StandardCharsets.UTF_8);
+				config.options().quoteStyleDefaults().setQuoteStyle(String.class, QuoteStyle.DOUBLE);
 				config.createOrLoad();
 				config.setCommentFormat(YamlCommentFormat.PRETTY);
 
@@ -54,30 +56,34 @@ public class ConfigImpl implements Config {
 				}
 
 				if (changed)
-					config.save();
+					this.dump(category);
 			}
 		} catch (IOException e) {
 			throw new ConfigException(e);
 		}
 	}
 
+	private void dump(ConfigCategory category) throws IOException {
+		YamlFile config = new YamlFile(this.path + category.getFileName());
+		config.options().charset(StandardCharsets.UTF_8);
+		config.options().quoteStyleDefaults().setQuoteStyle(String.class, QuoteStyle.DOUBLE);
+		config.createNewFile();
+		config.setCommentFormat(YamlCommentFormat.PRETTY);
+		config.options().header(category.getDescription());
+
+		for (ConfigEntry<?> entry : this.configEntries.get(category)) {
+			config.path(entry.getPath()).set(entry.getValue());
+			config.setComment(entry.getPath(), entry.getDescription());
+		}
+
+		config.save();
+	}
+
 	@Override
 	public void dump() throws ConfigException {
 		try {
-			for (ConfigCategory category : this.configEntries.keySet()) {
-				YamlFile config = new YamlFile(this.path + category.getFileName());
-				config.options().charset(StandardCharsets.UTF_8);
-				config.createNewFile();
-				config.setCommentFormat(YamlCommentFormat.PRETTY);
-				config.options().header(category.getDescription());
-
-				for (ConfigEntry<?> entry : this.configEntries.get(category)) {
-					config.path(entry.getPath()).set(entry.getValue());
-					config.setComment(entry.getPath(), entry.getDescription());
-				}
-
-				config.save();
-			}
+			for (ConfigCategory category : this.configEntries.keySet())
+				this.dump(category);
 		} catch (IOException e) {
 			throw new ConfigException(e);
 		}

@@ -10,8 +10,8 @@ import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 
 class VerifyCommand extends Command {
 	
-	private static final String VERIFY_MODAL_ID = "varo::verify";
-	private static final String VERIFY_MODAL_INPUT_ID = "varo::verify::code";
+	public static final String VERIFY_MODAL_ID = "varo::verify";
+	public static final String VERIFY_MODAL_INPUT_ID = "varo::verify::code";
 	private final Modal modal;
 
 	VerifyCommand(VaroConfig config, Messages messages) {

@@ -14,7 +14,6 @@ class StatusCommand extends Command {
 
 	@Override
 	void exec(DiscordBot bot, Member member, SlashCommandInteractionEvent event) {
-		bot.reply(event, bot.messages().bot_discord_command_status_body, bot.messages().bot_discord_command_status_title,
-				Bukkit.getServer().hasWhitelist(), "TODO", Bukkit.getOnlinePlayers().size());
+		bot.reply(event, bot.messages().bot_discord_command_status, Bukkit.getServer().hasWhitelist(), "TODO", Bukkit.getOnlinePlayers().size());
 	}
 }

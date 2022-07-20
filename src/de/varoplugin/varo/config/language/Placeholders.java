@@ -19,10 +19,11 @@ public class Placeholders {
 				new StaticPlaceholder("plugin", varo.getDescription().getName()),
 				new StaticPlaceholder("website", varo.getWebsite()),
 				new StaticPlaceholder("github", varo.getGithub()),
-				new StaticPlaceholder("discord", varo.getDiscordInvite()),
+				new StaticPlaceholder("plugindiscord", varo.getDiscordInvite()),
 				new StaticPlaceholder("heart", "♥"),
 				new StaticPlaceholder("newline", "\n"),
-				new StaticPlaceholder("null", "")
+				new StaticPlaceholder("null", ""),
+				new StaticPlaceholder("discord", varo.getVaroConfig().bot_discord_invite.getValue())
 		}).collect(Collectors.toMap(GlobalPlaceholder::getName, Function.identity())));
 	}
 }

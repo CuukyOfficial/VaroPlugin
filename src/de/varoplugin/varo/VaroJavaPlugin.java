@@ -24,8 +24,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.j256.ormlite.support.ConnectionSource;
+
 import java.io.File;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
 
 @SuppressWarnings("unused")
 public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
@@ -42,6 +46,7 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	private VaroConfig config;
 	private Language[] languages;
 	private Messages messages;
+	private ConnectionSource connectionSource;
 	private final List<Bot> bots = new ArrayList<>();
 	// TODO: External states
 	private final Collection<State> states;
@@ -86,13 +91,20 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 			}
 			this.languages = languages;
 			this.messages = new Messages(languages, defaultLanguage, globalPlaceholders, placeholderApiSupport);
-		} catch (Throwable e) {
-			e.printStackTrace();
+		} catch (Throwable t) {
+			this.getLogger().log(Level.SEVERE, "Unable to load config", t);
+			return;
 		}
 
 		this.updateLoadingState(StartupState.LOADING_STATS);
 
 		// Load stats
+		try {
+			this.connectionSource = ConnectionSourceFactory.newConnectionSource(this.config);
+		} catch (Throwable t) {
+			this.getLogger().log(Level.SEVERE, "Unable to jdbc connection source", t);
+			return;
+		}
 
 		this.updateLoadingState(StartupState.REGISTERING_TASKS);
 		this.getServer().getPluginManager().registerEvents(new DefaultTaskRegister(), this);
@@ -156,6 +168,11 @@ public class VaroJavaPlugin extends JavaPlugin implements VaroPlugin {
 	@Override
 	public Messages getMessages() {
 		return this.messages;
+	}
+	
+	@Override
+	public ConnectionSource getConnectionSource() {
+		return this.connectionSource;
 	}
 
 	@Override
