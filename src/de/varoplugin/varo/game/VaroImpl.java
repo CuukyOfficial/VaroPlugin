@@ -102,7 +102,7 @@ final class VaroImpl implements Varo {
 
     @Override
     public void nextState() {
-        this.current = this.getNextState(this.current.getPriority());
+        this.setState(this.getNextState(this.current.getPriority()));
     }
 
     @Override
