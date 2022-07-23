@@ -74,7 +74,7 @@ public enum LanguageEN implements LoadableMessage {
 
     DEATH_DEAD("death.killMessage", "&c%player% &7has died. &7Reason: &c%reason%"),
     DEATH_KILLED_BY("death.killed", "%colorcode%%player% &7was killed by &c%killer% &7!"),
-    DEATH_LIFE_LOST("death.teamLifeLost", "%player% now still has %colorcode%%teamLifes% &7team lives left!"),
+    DEATH_LIFE_LOST("death.teamLifeLost", "%colorcode%%player% &7now still has %colorcode%%teamLifes% &7team lives left!"),
     DEATH_RESPAWN_PROTECTION("death.respawnProtection", "&c%player% now has one life less and is invulnerable for %seconds% seconds!"),
     DEATH_RESPAWN_PROTECTION_OVER("death.respawnProtectionOver", "&c%player% is now vulnerable again!"),
     DEATH_KILL_LIFE_ADD("death.killLifeAdd", "&7Your team got a team life because of a kill!"),

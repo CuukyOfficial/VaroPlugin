@@ -77,7 +77,7 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	DEATH_DEAD("death.killMessage", "&c%player% &7ist gestorben. &7Grund: &c%reason%"),
 	DEATH_KILLED_BY("death.killed", "%colorcode%%player% &7wurde von &c%killer% &7getötet!"),
-	DEATH_LIFE_LOST("death.teamLifeLost", "%player% hat nun noch %colorcode%%teamLifes% &7Teamleben!"),
+	DEATH_LIFE_LOST("death.teamLifeLost", "%colorcode%%player% &7hat nun noch %colorcode%%teamLifes% &7Teamleben!"),
 	DEATH_RESPAWN_PROTECTION("death.respawnProtection", "&c%player% hat nun ein Leben weniger und ist für %seconds% unverwundbar!"),
 	DEATH_RESPAWN_PROTECTION_OVER("death.respawnProtectionOver", "&c%player% ist nun wieder verwundbar!"),
 	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "Dein Team hat aufgrund eines Kills ein Teamleben erhalten!"),
