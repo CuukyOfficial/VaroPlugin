@@ -122,7 +122,7 @@ public class VaroTeam extends VaroEntity {
 	}
 
 	public void loadDefaults() {
-		this.lifes = ConfigSetting.TEAM_LIFES.getValueAsInt();
+		this.lifes = ConfigSetting.TEAM_LIFES.getValueAsDouble();
 	}
 
 	@Override
