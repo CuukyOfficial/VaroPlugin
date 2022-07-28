@@ -22,16 +22,6 @@ java {
 tasks.compileJava { options.encoding = "UTF-8" }
 tasks.javadoc { options.encoding = "UTF-8" }
 
-sourceSets {
-    main {
-        java { srcDirs("src") }
-        resources { srcDirs("resources") }
-    }
-    test {
-        java { srcDirs("test") }
-    }
-}
-
 repositories {
     mavenCentral()
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
