@@ -16,13 +16,3 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package de.varoplugin.varo.game.entity.player;
-
-/**
- * Represents a player state a @{@link VaroPlayer} can be.
- */
-public interface ParticipantState {
-
-    boolean allowsSessions();
-
-}
