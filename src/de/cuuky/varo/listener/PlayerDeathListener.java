@@ -51,7 +51,7 @@ public class PlayerDeathListener implements Listener {
             if (hit != null)
                 hit.over();
 
-            if (deadP.getTeam() == null || deadP.getTeam().getLifes() - 1D < -0.00000001D) {
+            if (deadP.getTeam() == null || deadP.getTeam().getLifes() - 2D < -0.00000001D) {
                 String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
                 if (killerPlayer == null) {
                     Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
