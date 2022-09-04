@@ -54,7 +54,7 @@ dependencies {
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:6.1.3-SNAPSHOT")
     compileOnly("com.github.labymod:legacy-labymod-server-api:1.0")
     compileOnly("me.clip:placeholderapi:2.11.1")
-    runtimeDownload("net.dv8tion:JDA:5.0.0-alpha.16") {
+    runtimeDownload("net.dv8tion:JDA:5.0.0-alpha.18") {
         exclude(module = "opus-java")
     }
     runtimeDownload("net.kyori:adventure-text-minimessage:4.11.0")
@@ -64,12 +64,8 @@ dependencies {
     runtimeDownload("com.j256.ormlite:ormlite-jdbc:6.1")
     runtimeDownload("com.h2database:h2:2.1.214")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-
-    // Legacy
-    compileOnly("de.varoplugin:CFW:0.6.14")
-    compileOnly("com.github.pengrad:java-telegram-bot-api:5.4.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
 
 tasks.jar {
