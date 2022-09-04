@@ -18,28 +18,27 @@
 
 package de.varoplugin.varo.config.language;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class IntStringMapTranslation extends GenericTranslation<Map<Integer, String>> {
+public class StringArray2Translation extends GenericTranslation<String[][]> {
 
-	public IntStringMapTranslation(String path, Map<Integer, String> value) {
+	public StringArray2Translation(String path, String[]... value) {
 		super(path, value);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void loadValue(YamlConfiguration yaml) {
-		Map<Integer, String> map = new HashMap<>();
-		yaml.getConfigurationSection(this.path()).getValues(false).entrySet().forEach(entry -> map.put(Integer.parseInt(entry.getKey()), entry.getValue().toString()));
-		this.value = Collections.unmodifiableMap(map);
+		this.value = ((List<List<String>>) yaml.getConfigurationSection(this.path()).getList(this.path())).stream()
+				.map(list -> list.toArray(new String[list.size()])).toArray(String[][]::new);
 	}
 
 	@Override
 	public void saveValue(YamlConfiguration yaml) {
-		yaml.createSection(this.path(), this.value);
+		yaml.set(this.path(), Arrays.asList(this.value));
 	}
 
 }

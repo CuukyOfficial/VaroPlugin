@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 package de.varoplugin.varo.config.language;
 
@@ -54,7 +54,11 @@ public class EnglishLanguage extends AbstractLanguage {
 			new StringTranslation("bot.discord.modal.verify.title", "Verify"),
 			new StringTranslation("bot.discord.modal.verify.inputlabel", "Code:"),
 
-			new IntStringMapTranslation("start.countdownmessages", intro)
+			new IntStringMapTranslation("start.countdownmessages", intro),
+
+			new StringArrayTranslation("scoreboard.header", "%projectname%"),
+			new StringArray2Translation("scoreboard.body", new String[] {"", "§7Team§8:", "%colorcode%%team%", "", "§7Kills§8:", "%colorcode%%kills%", "", "§7Time§8:", "%colorcode%%min%§8:%colorcode%%sec%", "                   ", "§7Online: %colorcode%%online%", "§7Alive: %colorcode%%remaining%", "§7Players: %colorcode%%players%", "§7Strikes: %colorcode%%strikes%", ""},
+					new String[] {"", "§7Team§8:", "%colorcode%%team%", "", "§7Kills§8:", "%colorcode%%kills%", "", "§7Time§8:", "%colorcode%%min%§8:%colorcode%%sec%", "                   ", "§7Best Players§8:", "§71. %colorcode%%topplayer-1%", "§72. %colorcode%%topplayer-2%", "§73. %colorcode%%topplayer-3%", ""})
 		};
 	}
 }

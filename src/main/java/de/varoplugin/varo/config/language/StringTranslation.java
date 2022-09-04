@@ -14,39 +14,25 @@
  * 
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 package de.varoplugin.varo.config.language;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class StringTranslation implements Translation<String> {
-	
-	private final String path;
-	private String value;
-	
+public class StringTranslation extends GenericTranslation<String> {
+
 	public StringTranslation(String path, String value) {
-		this.path = path;
-		this.value = value;
-	}
-
-	@Override
-	public String path() {
-		return this.path;
-	}
-
-	@Override
-	public String value() {
-		return this.value;
+		super(path, value);
 	}
 
 	@Override
 	public void loadValue(YamlConfiguration yaml) {
-		this.value = yaml.getString(this.path);
+		this.value = yaml.getString(this.path());
 	}
 
 	@Override
 	public void saveValue(YamlConfiguration yaml) {
-		yaml.set(this.path, this.value);
+		yaml.set(this.path(), this.value);
 	}
 }

@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 package de.varoplugin.varo.config.language;
 
@@ -28,9 +28,10 @@ import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 import de.varoplugin.varo.config.language.translatable.Message;
 import de.varoplugin.varo.config.language.translatable.Translatable;
-import de.varoplugin.varo.config.language.translatable.TranslatableMessageArray;
+import de.varoplugin.varo.config.language.translatable.MessageArray;
+import de.varoplugin.varo.config.language.translatable.MessageArray2;
 import de.varoplugin.varo.config.language.translatable.TranslatableMessageComponent;
-import de.varoplugin.varo.config.language.translatable.TranslatableMessageMap;
+import de.varoplugin.varo.config.language.translatable.MessageMap;
 
 public class Messages {
 
@@ -44,8 +45,11 @@ public class Messages {
 	public final DiscordBotMessageEmbed bot_discord_command_verify_alreadyverified = new VaroDiscordBotEmbed("bot.discord.command.verify.alreadyverified");
 	public final TranslatableMessageComponent bot_discord_modal_verify_title = new VaroMessage("bot.discord.modal.verify.title");
 	public final TranslatableMessageComponent bot_discord_modal_verify_inputlabel = new VaroMessage("bot.discord.modal.verify.inputlabel");
-	
-	public final TranslatableMessageMap<Integer> start_countdown = new VaroMessageIntMap("start.countdownmessages", "startcountdown");
+
+	public final MessageMap<Integer> start_countdown = new VaroMessageIntMap("start.countdownmessages", "startcountdown");
+
+	public final MessageArray scoreboard_header = new VaroMessageArray("scoreboard.header");
+	public final MessageArray2 scoreboard_body = new VaroMessageArray2("scoreboard.body");
 
 	public Messages(Language[] languages, int defaultLanguage, Map<String, GlobalPlaceholder> globalPlaceholders, boolean papi) {
 		this.messages.forEach(message -> message.init(languages, defaultLanguage, globalPlaceholders, papi));
@@ -62,20 +66,27 @@ public class Messages {
 		}
 	}
 
-	private class VaroMessageArray extends TranslatableMessageArray {
+	private class VaroMessageArray extends MessageArray {
 		private VaroMessageArray(String path, String... localPlaceholderNames) {
 			super(path, localPlaceholderNames);
 			Messages.this.getMessages().add(this);
 		}
 	}
-	
-	private class VaroMessageIntMap extends TranslatableMessageMap<Integer> {
+
+	private class VaroMessageArray2 extends MessageArray2 {
+		private VaroMessageArray2(String path, String... localPlaceholderNames) {
+			super(path, localPlaceholderNames);
+			Messages.this.getMessages().add(this);
+		}
+	}
+
+	private class VaroMessageIntMap extends MessageMap<Integer> {
 		private VaroMessageIntMap(String path, String... localPlaceholderNames) {
 			super(path, localPlaceholderNames);
 			Messages.this.getMessages().add(this);
 		}
 	}
-	
+
 	private class VaroDiscordBotEmbed extends DiscordBotMessageEmbed {
 
 		public VaroDiscordBotEmbed(String path, String... localPlaceholderNames) {
@@ -86,7 +97,7 @@ public class Messages {
 		protected TranslatableMessageComponent createMessageComponent(String path, String... localPlaceholderNames) {
 			return new VaroDiscordBotMessage(path, localPlaceholderNames);
 		}
-		
+
 	}
 
 	private class VaroDiscordBotMessage extends Message {
@@ -94,7 +105,7 @@ public class Messages {
 			super(path, localPlaceholderNames);
 			Messages.this.getMessages().add(this);
 		}
-		
+
 		@Override
 		protected CompositeMessageComponent createCompositeMessageComponent(String translation,
 				String[] localPlaceholders, Map<String, GlobalPlaceholder> globalPlaceholders,

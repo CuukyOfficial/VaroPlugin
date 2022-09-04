@@ -29,10 +29,8 @@ import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMes
 import de.varoplugin.varo.config.language.minimessage.MiniMessageTranslatableMessageComponentImpl;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 
-public class Message extends GenericTranslatable<String> implements TranslatableMessageComponent {
+public class Message extends GenericTranslatable<String, CompositeMessageComponent> implements TranslatableMessageComponent {
 
-	private CompositeMessageComponent[] translations;
-	private int defaultTranslation;
 	private MiniMessageTranslatableMessageComponent miniComponent;
 
 	public Message(String path, String... localPlaceholderNames) {
@@ -41,7 +39,7 @@ public class Message extends GenericTranslatable<String> implements Translatable
 
 	@Override
 	public void init(Language[] languages, int defaultTranslation, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
-		this.defaultTranslation = defaultTranslation;
+		super.init(languages, defaultTranslation, globalPlaceholders, placeholderApiSupport);
 		this.translations = Arrays.stream(languages)
 				.map(language -> this.createCompositeMessageComponent((String) language.getTranslation(this.getPath()).value(), this.getPlaceholderNames(), globalPlaceholders, placeholderApiSupport))
 				.toArray(CompositeMessageComponent[]::new);
@@ -53,17 +51,17 @@ public class Message extends GenericTranslatable<String> implements Translatable
 
 	@Override
 	public String value() {
-		return this.translations[this.defaultTranslation].value();
+		return this.translations[this.getDefaultTranslation()].value();
 	}
 
 	@Override
 	public String value(Object... placeholders) {
-		return this.translations[this.defaultTranslation].value(placeholders);
+		return this.translations[this.getDefaultTranslation()].value(placeholders);
 	}
 
 	@Override
 	public String value(Player player, Object... localPlaceholders) {
-		return this.translations[this.defaultTranslation].value(player, localPlaceholders);
+		return this.translations[this.getDefaultTranslation()].value(player, localPlaceholders);
 	}
 
 	@Override
@@ -88,6 +86,6 @@ public class Message extends GenericTranslatable<String> implements Translatable
 
 	@Override
 	public MiniMessageTranslatableMessageComponent miniMessage() {
-		return this.miniComponent == null ? this.miniComponent = new MiniMessageTranslatableMessageComponentImpl(this.translations, this.defaultTranslation) : this.miniComponent;
+		return this.miniComponent == null ? this.miniComponent = new MiniMessageTranslatableMessageComponentImpl(this.translations, this.getDefaultTranslation()) : this.miniComponent;
 	}
 }

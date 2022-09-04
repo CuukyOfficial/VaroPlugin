@@ -14,43 +14,30 @@
  * 
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+*/
 
 package de.varoplugin.varo.config.language.translatable;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import de.varoplugin.varo.config.language.Language;
+import de.varoplugin.varo.config.language.component.CompositeMessageComponent;
+import de.varoplugin.varo.config.language.component.MessageComponent;
 import de.varoplugin.varo.config.language.placeholder.GlobalPlaceholder;
 
-public abstract class GenericTranslatable<T, U> implements Translatable<T> {
+public class MessageArray extends GenericTranslatableCollection<MessageComponent[]> {
 
-	private final String path;
-	private final String[] localPlaceholderNames;
-	protected U[] translations;
-	private int defaultTranslation;
-
-	public GenericTranslatable(String path, String... localPlaceholderNames) {
-		this.path = path;
-		this.localPlaceholderNames = localPlaceholderNames;
+	public MessageArray(String path, String... localPlaceholderNames) {
+		super(path, localPlaceholderNames);
 	}
 
 	@Override
 	public void init(Language[] languages, int defaultTranslation, Map<String, GlobalPlaceholder> globalPlaceholders, boolean placeholderApiSupport) {
-		this.defaultTranslation = defaultTranslation;
-	}
-
-	@Override
-	public String getPath() {
-		return this.path;
-	}
-
-	@Override
-	public String[] getPlaceholderNames() {
-		return this.localPlaceholderNames;
-	}
-	
-	protected int getDefaultTranslation() {
-		return this.defaultTranslation;
+		super.init(languages, defaultTranslation, globalPlaceholders, placeholderApiSupport);
+		this.translations = Arrays.stream(languages)
+				.map(language -> (String[]) language.getTranslation(this.getPath()).value())
+				.map(translations -> Arrays.stream(translations).map(translation -> new CompositeMessageComponent(translation, this.getPlaceholderNames(), globalPlaceholders, placeholderApiSupport)).toArray(CompositeMessageComponent[]::new))
+				.toArray(CompositeMessageComponent[][]::new);
 	}
 }
