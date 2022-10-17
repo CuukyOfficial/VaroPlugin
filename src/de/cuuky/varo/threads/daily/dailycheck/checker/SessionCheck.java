@@ -4,6 +4,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.threads.daily.dailycheck.Checker;
@@ -12,6 +13,8 @@ public class SessionCheck extends Checker {
 
 	@Override
 	public void check() {
+		VaroPlayerDisconnect.clearDisconnects();
+
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
 			return;
 		}

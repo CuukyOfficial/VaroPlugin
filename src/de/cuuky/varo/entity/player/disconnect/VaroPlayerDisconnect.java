@@ -125,6 +125,13 @@ public class VaroPlayerDisconnect {
 		return null;
 	}
 
+	public static void clearDisconnects() {
+		disconnects.clear();
+		for (BukkitTask task : scheds.values())
+			task.cancel();
+		scheds.clear();
+	}
+
 	public static void joinedAgain(String playerName) {
 		if (!scheds.containsKey(playerName))
 			return;
