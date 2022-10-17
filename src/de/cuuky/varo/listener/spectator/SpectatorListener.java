@@ -190,7 +190,7 @@ public class SpectatorListener implements Listener {
     }
     
     private void checkWorldInteract(Cancellable event, Player player) {
-        if (!event.isCancelled() && shouldCancelSpectatorEvent(player) && !player.isOp())
+        if (!event.isCancelled() && shouldCancelSpectatorEvent(player) && (!player.isOp() || player.getGameMode() != GameMode.CREATIVE ))
         	event.setCancelled(true);
     }
 }
