@@ -120,6 +120,7 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("team", 1, "Ersetzt durch den Teamname des Spielers", (player) -> player.getTeam() != null ? player.getTeam().getDisplay() : "-");
         new VaroPlayerMessagePlaceholder("teamID", 1, "Ersetzt durch die TeamID des Spielers", (player) -> player.getTeam() != null ? String.valueOf(player.getTeam().getId()) : "-");
         new VaroPlayerMessagePlaceholder("rank", 1, "Ersetzt durch den Rangnamen des Spielers", (player) -> player.getRank() != null ? player.getRank().getDisplay() : "-");
+        new VaroPlayerMessagePlaceholder("episodesPlayed", 1, "Ersetzt durch die gespielten Episoden des Spielers", (player) -> String.valueOf(player.getStats().getSessionsPlayed()));
         new VaroPlayerMessagePlaceholder("episodesPlayedPlus1", 1, "Ersetzt durch die gespielten Episoden+1 des Spielers", (player) -> String.valueOf(player.getStats().getSessionsPlayed() + 1));
         new VaroPlayerMessagePlaceholder("sessions", 1, "Ersetzt durch die Sessions des Spielers", (player) -> String.valueOf(player.getStats().getSessions()));
         new VaroPlayerMessagePlaceholder("remainingDisconnects", 1, "Ersetzt durch die Disconnects der Session des Spielers", (player) -> String.valueOf(VaroPlayerDisconnect.getDisconnect(player.getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(player.getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt()));
