@@ -24,7 +24,7 @@ public enum KickResult {
 	}
 
 	private KickResult(boolean allowsJoin) {
-		this.allowsJoin = false;
+		this.allowsJoin = allowsJoin;
 	}
 
 	public boolean allowsJoin() {
