@@ -499,6 +499,7 @@ public class Stats implements VaroSerializeable {
 
 	public void removeCountdown() {
 		this.countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		this.sessionTime = 0;
 		this.onlineTime = 0;
 	}
 
