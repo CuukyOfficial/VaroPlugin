@@ -116,16 +116,16 @@ public class FinaleCommand extends VaroCommand {
 
 			return;
 		} else if (args[0].equalsIgnoreCase("hauptstart") || args[0].equalsIgnoreCase("mainstart")) {
-			if (status == FinalState.NONE) {
-				sender.sendMessage(Main.getPrefix() + "Der Join-Start wurde noch nicht aktiviert. Dies muss vor dem Hauptstart geschehen.");
-				return;
-			} else if (status == FinalState.COUNTDOWN_PHASE) {
+			if (status == FinalState.COUNTDOWN_PHASE) {
 				sender.sendMessage(Main.getPrefix() + "Der Finale-Countdown laeuft bereits.");
 				return;
 			} else if (status == FinalState.STARTED) {
 				sender.sendMessage(Main.getPrefix() + "Das Finale wurde bereits gestartet.");
 				return;
 			}
+
+			Main.getVaroGame().setFinaleJoinStart(true);
+			ConfigSetting.PLAY_TIME.setValue(-1, true);
 
 			countdown = 0;
 			if (args.length != 1) {
@@ -136,6 +136,10 @@ public class FinaleCommand extends VaroCommand {
 				}
 			}
 			if (countdown != 0) {
+				for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
+					if (!player.getPlayer().isOp())
+						new VaroCancelAble(CancelAbleType.FREEZE, player);
+
 				status = FinalState.COUNTDOWN_PHASE;
 				startScheduler = new BukkitRunnable() {
 					@Override
