@@ -132,8 +132,8 @@ public enum LanguageEN implements LoadableMessage {
     SERVER_MODT_OPEN("motd.serverOpen", "&aBe now with us in %projectname%&a!\n&7Have fun!"),
 
     NAMETAG_PREFIX_NO_TEAM("nametag.prefix.noTeam", "&7"),
-	NAMETAG_SUFFIX_NO_TEAM("nametag.prefix.team", "&c %kills%"),
-	NAMETAG_PREFIX_TEAM("nametag.suffix.noTeam", "%colorcode%%team% &7"),
+	NAMETAG_PREFIX_TEAM("nametag.prefix.team", "%colorcode%%team% &7"),
+	NAMETAG_SUFFIX_NO_TEAM("nametag.suffix.noTeam", "&c %kills%"),
 	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
     CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7This chest belongs to %colorcode%%player%&7!"),
