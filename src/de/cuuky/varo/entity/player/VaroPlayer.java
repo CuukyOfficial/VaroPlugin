@@ -113,7 +113,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	public VaroPlayer(Player player) {
 		this.name = player.getName();
 		this.uuid = player.getUniqueId().toString();
-		this.player = player;
 		this.id = generateId();
 
 		this.stats = new Stats(this);
