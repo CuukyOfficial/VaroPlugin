@@ -29,7 +29,7 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
-import de.cuuky.varo.utils.ModUtils;
+import de.cuuky.varo.utils.MagmaUtils;
 
 public class PlayerJoinListener implements Listener {
 
@@ -89,8 +89,8 @@ public class PlayerJoinListener implements Listener {
 			VersionUtils.getVersionAdapter().setXpCooldown(player, 0);
 
 		event.setJoinMessage(null);
-		if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA)
-			ModUtils.checkForIllegalMods(player);
+		if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA_1_12)
+			MagmaUtils.checkForIllegalMods(player);
 
 		if (ConfigSetting.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
 			PermissionSendListener.addCheck(player);
