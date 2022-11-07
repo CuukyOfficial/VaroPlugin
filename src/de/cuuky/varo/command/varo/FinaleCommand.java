@@ -17,6 +17,7 @@ import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
+// This file is absolute garbage but I'm to lazy to fix it
 public class FinaleCommand extends VaroCommand {
 
 	private enum FinalState {
@@ -110,7 +111,7 @@ public class FinaleCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es koennen nun alle zum Finale joinen.");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Es wird empfohlen, mindestens 5 Minuten zu warten, bis das Finale gestartet wird.");
-			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale hauptStart§7 werden alle Spieler, die nicht online sind, getoetet.");
+			sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Starten mit §7§l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale hauptStart§7 werden alle Spieler, die nicht online sind, getötet.");
 
 			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "Man kann nun zum Finale joinen!");
 
@@ -124,17 +125,25 @@ public class FinaleCommand extends VaroCommand {
 				return;
 			}
 
+			this.countdown = 0;
+			if (args.length == 1) {
+				sender.sendMessage(Main.getPrefix() + "§c§lWARNUNG: §cBeim Start werden alle Spieler die nicht online sind getötet. Zum Abbrechen nutze §7§l/"  + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale abort");
+				this.countdown = 120;
+			} else if (args.length == 2) {
+				try {
+					this.countdown = Integer.parseUnsignedInt(args[1]);
+				} catch (NumberFormatException e) {
+					sender.sendMessage(Main.getPrefix() + "§cUngültiger Countdown!");
+					return;
+				}
+			} else {
+				sender.sendMessage(Main.getPrefix() + "§cUngültige Argumente!");
+				return;
+			}
+
 			Main.getVaroGame().setFinaleJoinStart(true);
 			ConfigSetting.PLAY_TIME.setValue(-1, true);
 
-			countdown = 0;
-			if (args.length != 1) {
-				try {
-					countdown = Integer.parseInt(args[1]);
-				} catch (NumberFormatException e) {
-					countdown = 0;
-				}
-			}
 			if (countdown != 0) {
 				for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
 					if (!player.getPlayer().isOp())
