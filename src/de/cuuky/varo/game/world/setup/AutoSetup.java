@@ -36,18 +36,18 @@ public class AutoSetup {
         task = new BukkitRunnable() {
             @Override
             public void run() {
-                setupPlugin();
+                searchTerrain();
             }
         }.runTaskTimer(Main.getInstance(), 1L, 1L);
     }
 
-    private void setupPlugin() {
+    private void searchTerrain() {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain (" + x + ", " + z + ")... (" + world.getWorld().getName() + ")");
         long time = System.currentTimeMillis();
         while (System.currentTimeMillis() - time <= 3000) {
             if (SpawnChecker.checkSpawns(world.getWorld(), x, z, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
                 task.cancel();
-                this.setupSpawn(world);
+                startSetup();
                 return;
             } else {
                 world.getWorld().getChunkAt(x, z).unload();
@@ -57,9 +57,19 @@ public class AutoSetup {
         }
     }
 
-    private void setupSpawn(VaroWorld world) {
+    private void startSetup() {
         Location middle = new Location(world.getWorld(), x, world.getWorld().getMaxHeight(), z);
 
+        setupPortal();
+        setupLobby();
+        setupBorder(middle);
+        setupSpawns(middle);
+
+        System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
+        this.onFinish.run();
+    }
+
+    private void setupPortal() {
         portal:
         if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up the portal...");
@@ -72,7 +82,9 @@ public class AutoSetup {
 
             new PortalGenerator(world.getWorld(), x, z, width, height);
         }
+    }
 
+    private void setupLobby() {
         if (ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
@@ -85,12 +97,16 @@ public class AutoSetup {
 
             Main.getVaroGame().setLobby(lobby);
         }
+    }
 
+    private void setupBorder(Location middle) {
         if (ConfigSetting.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
             world.getVaroBorder().setBorderCenter(middle);
             Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.AUTOSETUP_BORDER.getValueAsInt(), 0, null);
         }
+    }
 
+    private void setupSpawns(Location middle) {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
         int yPos = world.getWorld().getMaxHeight();
         while (BlockUtils.isAir(new Location(world.getWorld(), x, yPos, z).getBlock()))
@@ -112,8 +128,5 @@ public class AutoSetup {
 
             new AutoStart(start);
         }
-
-        System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
-        this.onFinish.run();
     }
 }
