@@ -70,14 +70,13 @@ public class AutoSetup {
     }
 
     private void setupPortal() {
-        portal:
         if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up the portal...");
             int width = ConfigSetting.AUTOSETUP_PORTAL_WIDTH.getValueAsInt(), height = ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
 
             if (width < 4 || height < 5) {
                 System.out.println(Main.getConsolePrefix() + "AutoSetup: The size of the portal is too small!");
-                break portal;
+                return;
             }
 
             new PortalGenerator(world.getWorld(), x, z, width, height);
