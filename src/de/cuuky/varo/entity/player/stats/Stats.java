@@ -428,6 +428,7 @@ public class Stats implements VaroSerializeable {
 		youtubeLink = null;
 		wins = 0;
 		state = PlayerState.ALIVE;
+		onlineAfterStart = false;
 
 		removeTeamAndRank();
 
