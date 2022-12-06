@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -88,7 +89,7 @@ public class AutoSetup {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
             File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
-            Location lobby = new Location(world.getWorld(), x, world.getWorld().getMaxHeight() - 50, z);
+            Location lobby = getLobbyLocation(world.getWorld(), x, z);
             if (!file.exists())
                 new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_SIZE.getValueAsInt());
             else
@@ -107,9 +108,7 @@ public class AutoSetup {
 
     private void setupSpawns(Location middle) {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
-        int yPos = world.getWorld().getMaxHeight();
-        while (BlockUtils.isAir(new Location(world.getWorld(), x, yPos, z).getBlock()))
-            yPos--;
+        int yPos = getGroundHeight(world.getWorld(), x, z);
 
         middle.getWorld().setSpawnLocation(x, yPos, z);
         new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
@@ -128,4 +127,40 @@ public class AutoSetup {
             new AutoStart(start);
         }
     }
+
+    private Location getLobbyLocation(World world, long x, long z) {
+        return new Location(world, x, getLobbyHeight(world, x, z), z);
+    }
+
+    private int getLobbyHeight(World world, long x, long z) {
+        int heightSetting = ConfigSetting.AUTOSETUP_LOBBY_SNAP_OFFSET.getValueAsInt();
+        LobbySnap snapSetting = LobbySnap.valueOf(ConfigSetting.AUTOSETUP_LOBBY_SNAP.getValueAsString());
+
+        switch (snapSetting) {
+            case GROUND:
+                return getGroundHeight(world, x, z) + heightSetting;
+            case ABSOLUTE:
+                return heightSetting;
+            default:
+            case MAX_HEIGHT:
+                return world.getMaxHeight() - heightSetting;
+        }
+    }
+
+    private int getGroundHeight(World world, long x, long z) {
+        int groundHeight = world.getMaxHeight();
+
+        while (BlockUtils.isAir(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
+            groundHeight--;
+        }
+
+        return groundHeight;
+    }
+
+    public enum LobbySnap {
+        ABSOLUTE,
+        GROUND,
+        MAX_HEIGHT
+    }
+
 }
