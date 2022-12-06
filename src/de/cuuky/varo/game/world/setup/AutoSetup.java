@@ -65,6 +65,7 @@ public class AutoSetup {
         setupLobby();
         setupBorder(middle);
         setupSpawns(middle);
+        setupAutoStart();
 
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
         this.onFinish.run();
@@ -112,7 +113,9 @@ public class AutoSetup {
 
         middle.getWorld().setSpawnLocation(x, yPos, z);
         new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+    }
 
+    private void setupAutoStart(){
         if (ConfigSetting.AUTOSETUP_TIME_HOUR.isIntActivated() && ConfigSetting.AUTOSETUP_TIME_MINUTE.isIntActivated()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up AutoStart...");
             Calendar start = new GregorianCalendar();
