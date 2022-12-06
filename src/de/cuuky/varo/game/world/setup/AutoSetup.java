@@ -91,7 +91,7 @@ public class AutoSetup {
             File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
             Location lobby = getLobbyLocation(world.getWorld(), x, z);
             if (!file.exists())
-                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_SIZE.getValueAsInt());
+                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GEN_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GEN_SIZE.getValueAsInt());
             else
                 new LobbyGenerator(lobby, file);
 

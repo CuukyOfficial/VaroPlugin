@@ -24,8 +24,8 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_LOBBY_SNAP(ConfigSettingSection.AUTOSETUP, "lobby.snap", AutoSetup.LobbySnap.MAX_HEIGHT.name(), "Naeherungsweise von welcher Position auf der Y-Achse\ndie Lobby gespawnt werden soll\n\nMoegliche Werte: GROUND, MAX_HEIGHT, ABSOLUTE"),
 	AUTOSETUP_LOBBY_SNAP_OFFSET(ConfigSettingSection.AUTOSETUP, "lobby.snapOffset", 50, "Wie weit von ihrem Snap-Punkt entfernt\ndie Lobby gespawnt werden soll"),
 	AUTOSETUP_LOBBY_SCHEMATIC(ConfigSettingSection.AUTOSETUP, "lobby.schematic", "plugins/Varo/schematics/lobby.schematic", "Schreibe hier den Pfad deiner Lobby-Schematic\nhin, die gepastet werden soll.\nHinweis: WorldEdit benoetigt"),
-	AUTOSETUP_LOBBY_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.height", 10, "Wand-Hoehe der Lobby, die gespawnt werden soll"),
-	AUTOSETUP_LOBBY_SIZE(ConfigSettingSection.AUTOSETUP, "lobby.size", 25, "Groesse der Lobby, die gespawnt werden soll"),
+	AUTOSETUP_LOBBY_GEN_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.gen.height", 10, "Wand-Hoehe der Lobby, die generiert werden soll"),
+	AUTOSETUP_LOBBY_GEN_SIZE(ConfigSettingSection.AUTOSETUP, "lobby.gen.size", 25, "Groesse der Lobby, die generiert werden soll"),
 
 	AUTOSETUP_PORTAL_ENABLED(ConfigSettingSection.AUTOSETUP, "portal.enabled", true, "Ob ein Portal gespawnt werden soll"),
 	AUTOSETUP_PORTAL_HEIGHT(ConfigSettingSection.AUTOSETUP, "portal.height", 5, "Hoehe des gespawnten Portals"),
