@@ -144,9 +144,10 @@ public class AutoSetup {
                 return getGroundHeight(world, x, z) + heightSetting;
             case ABSOLUTE:
                 return heightSetting;
-            default:
             case MAX_HEIGHT:
                 return world.getMaxHeight() - heightSetting;
+            default:
+                throw new UnsupportedOperationException("This LobbySnap value is currently not implemented!");
         }
     }
 
