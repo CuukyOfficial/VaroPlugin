@@ -131,11 +131,11 @@ public class AutoSetup {
         }
     }
 
-    private Location getLobbyLocation(World world, long x, long z) {
+    private Location getLobbyLocation(World world, int x, int z) {
         return new Location(world, x, getLobbyHeight(world, x, z), z);
     }
 
-    private int getLobbyHeight(World world, long x, long z) {
+    private int getLobbyHeight(World world, int x, int z) {
         int heightSetting = ConfigSetting.AUTOSETUP_LOBBY_SNAP_OFFSET.getValueAsInt();
         LobbySnap snapSetting = LobbySnap.valueOf(ConfigSetting.AUTOSETUP_LOBBY_SNAP.getValueAsString());
 
@@ -151,7 +151,7 @@ public class AutoSetup {
         }
     }
 
-    private int getGroundHeight(World world, long x, long z) {
+    private int getGroundHeight(World world, int x, int z) {
         int groundHeight = world.getMaxHeight();
 
         while (BlockUtils.isAir(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
