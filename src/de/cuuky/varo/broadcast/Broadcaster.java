@@ -27,7 +27,7 @@ public class Broadcaster {
 
 		loadMessages();
 
-		if (!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
+		if (!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated() || this.messages.isEmpty())
 			return;
 
 		starteSchedule();
