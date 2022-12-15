@@ -379,9 +379,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 	
     private String getNametagName() {
-    	int teamId = this.getTeam() != null ? 9998 - this.getTeam().getId() : 9999;
     	int rankLocation = this.getRank() != null ? 9998 - this.getRank().getTablistLocation() : 9999;
-    	String format = String.format("%04d%04d%.8s", rankLocation, teamId, this.player.getName());
+    	String teamName = this.team != null ? this.team.getName() : "zzzzzzzz";
+    	String format = String.format("%04d%-8s%.4s", rankLocation, teamName, this.player.getName()).replace(' ', 'z').toLowerCase();
     	return format;
     }
 

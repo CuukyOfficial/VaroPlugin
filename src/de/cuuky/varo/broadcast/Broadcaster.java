@@ -27,7 +27,7 @@ public class Broadcaster {
 
 		loadMessages();
 
-		if (!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
+		if (!ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated() || this.messages.isEmpty())
 			return;
 
 		starteSchedule();
@@ -62,7 +62,7 @@ public class Broadcaster {
 
 			@Override
 			public void run() {
-				int random = new Random().nextInt(((messages.size() - 1) - 0) + 1) + 0;
+				int random = new Random().nextInt(messages.size());
 				Bukkit.broadcastMessage(Main.getLanguageManager().replaceMessage(messages.get(random)));
 			}
 		}.runTaskTimer(Main.getInstance(), interval, interval);
