@@ -136,16 +136,15 @@ public class AutoSetup {
     }
 
     private int getLobbyHeight(World world, int x, int z) {
-        int heightSetting = ConfigSetting.AUTOSETUP_LOBBY_SNAP_OFFSET.getValueAsInt();
-        LobbySnap snapSetting = LobbySnap.valueOf(ConfigSetting.AUTOSETUP_LOBBY_SNAP.getValueAsString());
+        LobbySnap snapSetting = LobbySnap.valueOf(ConfigSetting.AUTOSETUP_LOBBY_SNAP_TYPE.getValueAsString());
 
         switch (snapSetting) {
             case GROUND:
-                return getGroundHeight(world, x, z) + heightSetting;
+                return getGroundHeight(world, x, z) + ConfigSetting.AUTOSETUP_LOBBY_SNAP_GROUND_OFFSET.getValueAsInt();
             case ABSOLUTE:
-                return heightSetting;
+                return ConfigSetting.AUTOSETUP_LOBBY_SNAP_ABSOLUTE_YPOS.getValueAsInt();
             case MAX_HEIGHT:
-                return world.getMaxHeight() - heightSetting;
+                return world.getMaxHeight() - ConfigSetting.AUTOSETUP_LOBBY_SNAP_MAX_HEIGHT_OFFSET.getValueAsInt();
             default:
                 throw new UnsupportedOperationException("This LobbySnap value is currently not implemented!");
         }
