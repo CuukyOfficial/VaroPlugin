@@ -90,7 +90,16 @@ public class AutoSetup {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
             File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
-            Location lobby = getLobbyLocation(world.getWorld(), x, z);
+
+            Location lobby;
+            try {
+                lobby = getLobbyLocation(world.getWorld(), x, z);
+            } catch (IllegalArgumentException ex) {
+                System.out.println(Main.getConsolePrefix() + "AutoSetup: The config value for lobby.snap.type is invalid!");
+                ex.printStackTrace();
+                return;
+            }
+
             if (!file.exists())
                 new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GEN_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GEN_SIZE.getValueAsInt());
             else
@@ -115,7 +124,7 @@ public class AutoSetup {
         new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
     }
 
-    private void setupAutoStart(){
+    private void setupAutoStart() {
         if (ConfigSetting.AUTOSETUP_TIME_HOUR.isIntActivated() && ConfigSetting.AUTOSETUP_TIME_MINUTE.isIntActivated()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up AutoStart...");
             Calendar start = new GregorianCalendar();
