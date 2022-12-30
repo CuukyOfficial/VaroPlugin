@@ -89,8 +89,6 @@ public class AutoSetup {
         if (ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
-            File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
-
             Location lobby;
             try {
                 lobby = getLobbyLocation(world.getWorld(), x, z);
@@ -100,10 +98,12 @@ public class AutoSetup {
                 return;
             }
 
-            if (!file.exists())
-                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GEN_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GEN_SIZE.getValueAsInt());
-            else
-                new LobbyGenerator(lobby, file);
+            File schematicFile = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString());
+            if (ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean() && schematicFile.exists()) {
+                new LobbyGenerator(lobby, schematicFile);
+            } else {
+                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
+            }
 
             Main.getVaroGame().setLobby(lobby);
         }
