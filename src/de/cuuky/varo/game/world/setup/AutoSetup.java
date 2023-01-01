@@ -99,9 +99,11 @@ public class AutoSetup {
             }
 
             File schematicFile = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString());
-            if (ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean() && schematicFile.exists()) {
+            boolean schematicEnabled = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean();
+            if (schematicEnabled && schematicFile.exists()) {
                 new LobbyGenerator(lobby, schematicFile);
             } else {
+                if (schematicEnabled) System.out.println(Main.getConsolePrefix() + "AutoSetup: Die angegebene schematic Datei existiert nicht! Fallback zu Lobbygenerierung.");
                 new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
             }
 
