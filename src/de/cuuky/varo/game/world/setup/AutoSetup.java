@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -64,6 +65,7 @@ public class AutoSetup {
         setupLobby();
         setupBorder(middle);
         setupSpawns(middle);
+        setupAutoStart();
 
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
         this.onFinish.run();
@@ -87,12 +89,23 @@ public class AutoSetup {
         if (ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
-            File file = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC.getValueAsString());
-            Location lobby = new Location(world.getWorld(), x, world.getWorld().getMaxHeight() - 50, z);
-            if (!file.exists())
-                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_SIZE.getValueAsInt());
-            else
-                new LobbyGenerator(lobby, file);
+            Location lobby;
+            try {
+                lobby = getLobbyLocation(world.getWorld(), x, z);
+            } catch (IllegalArgumentException ex) {
+                System.out.println(Main.getConsolePrefix() + "AutoSetup: The config value for lobby.snap.type is invalid!");
+                ex.printStackTrace();
+                return;
+            }
+
+            File schematicFile = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString());
+            boolean schematicEnabled = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean();
+            if (schematicEnabled && schematicFile.exists()) {
+                new LobbyGenerator(lobby, schematicFile);
+            } else {
+                if (schematicEnabled) System.out.println(Main.getConsolePrefix() + "AutoSetup: Die angegebene schematic Datei existiert nicht! Fallback zu Lobbygenerierung.");
+                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
+            }
 
             Main.getVaroGame().setLobby(lobby);
         }
@@ -107,13 +120,13 @@ public class AutoSetup {
 
     private void setupSpawns(Location middle) {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
-        int yPos = world.getWorld().getMaxHeight();
-        while (BlockUtils.isAir(new Location(world.getWorld(), x, yPos, z).getBlock()))
-            yPos--;
+        int yPos = getGroundHeight(world.getWorld(), x, z);
 
         middle.getWorld().setSpawnLocation(x, yPos, z);
         new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+    }
 
+    private void setupAutoStart() {
         if (ConfigSetting.AUTOSETUP_TIME_HOUR.isIntActivated() && ConfigSetting.AUTOSETUP_TIME_MINUTE.isIntActivated()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up AutoStart...");
             Calendar start = new GregorianCalendar();
@@ -128,4 +141,40 @@ public class AutoSetup {
             new AutoStart(start);
         }
     }
+
+    private Location getLobbyLocation(World world, int x, int z) {
+        return new Location(world, x, getLobbyHeight(world, x, z), z);
+    }
+
+    private int getLobbyHeight(World world, int x, int z) {
+        LobbySnap snapSetting = LobbySnap.valueOf(ConfigSetting.AUTOSETUP_LOBBY_SNAP_TYPE.getValueAsString());
+
+        switch (snapSetting) {
+            case GROUND:
+                return getGroundHeight(world, x, z) + ConfigSetting.AUTOSETUP_LOBBY_SNAP_GROUND_OFFSET.getValueAsInt();
+            case ABSOLUTE:
+                return ConfigSetting.AUTOSETUP_LOBBY_SNAP_ABSOLUTE_YPOS.getValueAsInt();
+            case MAX_HEIGHT:
+                return world.getMaxHeight() - ConfigSetting.AUTOSETUP_LOBBY_SNAP_MAX_HEIGHT_OFFSET.getValueAsInt();
+            default:
+                throw new UnsupportedOperationException("This LobbySnap value is currently not implemented!");
+        }
+    }
+
+    private int getGroundHeight(World world, int x, int z) {
+        int groundHeight = world.getMaxHeight();
+
+        while (BlockUtils.isAir(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
+            groundHeight--;
+        }
+
+        return groundHeight;
+    }
+
+    public enum LobbySnap {
+        ABSOLUTE,
+        GROUND,
+        MAX_HEIGHT
+    }
+
 }

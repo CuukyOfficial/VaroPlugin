@@ -1,5 +1,6 @@
 package de.cuuky.varo.configuration.configurations.config;
 
+import de.cuuky.varo.game.world.setup.AutoSetup;
 import org.bukkit.Bukkit;
 
 import de.cuuky.cfw.version.BukkitVersion;
@@ -20,9 +21,14 @@ public enum ConfigSetting implements SectionEntry {
 	// AUTOSETUP
 	AUTOSETUP_ENABLED(ConfigSettingSection.AUTOSETUP, "enabled", false, "Wenn Autosetup aktiviert ist, werden beim\nStart des Servers alle Spawns automatisch gesetzt und\noptional ein Autostart eingerichtet."),
 	AUTOSETUP_LOBBY_ENABLED(ConfigSettingSection.AUTOSETUP, "lobby.enabled", true, "Ob eine Lobby beim AutoSetup gespawnt werden soll"),
-	AUTOSETUP_LOBBY_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.height", 10, "Hoehe der Lobby, die gespawnt werden soll"),
-	AUTOSETUP_LOBBY_SCHEMATIC(ConfigSettingSection.AUTOSETUP, "lobby.schematic", "plugins/Varo/schematics/lobby.schematic", "Schreibe hier den Pfad deiner Lobby-Schematic\nhin, die gepastet werden soll.\nHinweis: WorldEdit benoetigt"),
-	AUTOSETUP_LOBBY_SIZE(ConfigSettingSection.AUTOSETUP, "lobby.size", 25, "Groesse der Lobby, die gespawnt werden soll"),
+	AUTOSETUP_LOBBY_SNAP_TYPE(ConfigSettingSection.AUTOSETUP, "lobby.snap.type", AutoSetup.LobbySnap.MAX_HEIGHT.name(), "Naeherungsweise von welcher Position auf der Y-Achse\ndie Lobby gespawnt werden soll\n\nMoegliche Werte: GROUND, MAX_HEIGHT, ABSOLUTE"),
+	AUTOSETUP_LOBBY_SNAP_GROUND_OFFSET(ConfigSettingSection.AUTOSETUP, "lobby.snap.ground.offset", 0, "Wie weit über dem Boden\ndie Lobby gespawnt werden soll.\n\nWird genutzt, wenn lobby.snap.type = GROUND"),
+	AUTOSETUP_LOBBY_SNAP_MAX_HEIGHT_OFFSET(ConfigSettingSection.AUTOSETUP, "lobby.snap.maxHeight.offset", 50, "Wie weit unter der maximalen Höhe\ndie Lobby gespawnt werden soll.\n\nWird genutzt, wenn lobby.snap.type = MAX_HEIGHT"),
+	AUTOSETUP_LOBBY_SNAP_ABSOLUTE_YPOS(ConfigSettingSection.AUTOSETUP, "lobby.snap.absolute.ypos", 64, "Auf welcher Y-Koordinate\ndie Lobby gespawnt werden soll.\n\nWird genutzt, wenn lobby.snap.type = ABSOLUTE"),
+	AUTOSETUP_LOBBY_SCHEMATIC_ENABLED(ConfigSettingSection.AUTOSETUP, "lobby.schematic.enabled", false, "Wenn diese Option aktiviert ist, wird die Lobby\nanhand der angegeben Schematic gespawnt.\nAndernfalls wird die Lobby generiert.\n\nHinweis: WorldEdit benoetigt"),
+	AUTOSETUP_LOBBY_SCHEMATIC_FILE(ConfigSettingSection.AUTOSETUP, "lobby.schematic.file", "plugins/Varo/schematics/lobby.schematic", "Schreibe hier den Pfad deiner Lobby-Schematic\nhin, die gepastet werden soll."),
+	AUTOSETUP_LOBBY_GENERATED_HEIGHT(ConfigSettingSection.AUTOSETUP, "lobby.generated.height", 10, "Wand-Hoehe der Lobby, die generiert werden soll"),
+	AUTOSETUP_LOBBY_GENERATED_SIZE(ConfigSettingSection.AUTOSETUP, "lobby.generated.width", 25, "Breite der Lobby, die generiert werden soll"),
 
 	AUTOSETUP_PORTAL_ENABLED(ConfigSettingSection.AUTOSETUP, "portal.enabled", true, "Ob ein Portal gespawnt werden soll"),
 	AUTOSETUP_PORTAL_HEIGHT(ConfigSettingSection.AUTOSETUP, "portal.height", 5, "Hoehe des gespawnten Portals"),
