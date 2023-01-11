@@ -21,7 +21,7 @@ public enum ConfigSetting implements SectionEntry {
 	// AUTOSETUP
 	AUTOSETUP_ENABLED(ConfigSettingSection.AUTOSETUP, "enabled", false, "Wenn Autosetup aktiviert ist, werden beim\nStart des Servers alle Spawns automatisch gesetzt und\noptional ein Autostart eingerichtet."),
 	AUTOSETUP_LOBBY_ENABLED(ConfigSettingSection.AUTOSETUP, "lobby.enabled", true, "Ob eine Lobby beim AutoSetup gespawnt werden soll"),
-	AUTOSETUP_LOBBY_SNAP_TYPE(ConfigSettingSection.AUTOSETUP, "lobby.snap.type", AutoSetup.LobbySnap.MAX_HEIGHT.name(), "Naeherungsweise von welcher Position auf der Y-Achse\ndie Lobby gespawnt werden soll\n\nMoegliche Werte: GROUND, MAX_HEIGHT, ABSOLUTE"),
+	AUTOSETUP_LOBBY_SNAP_TYPE(ConfigSettingSection.AUTOSETUP, "lobby.snap.type", AutoSetup.LobbySnap.MAX_HEIGHT, "Naeherungsweise von welcher Position auf der Y-Achse\ndie Lobby gespawnt werden soll\n\nMoegliche Werte: GROUND, MAX_HEIGHT, ABSOLUTE"),
 	AUTOSETUP_LOBBY_SNAP_GROUND_OFFSET(ConfigSettingSection.AUTOSETUP, "lobby.snap.ground.offset", 0, "Wie weit über dem Boden\ndie Lobby gespawnt werden soll.\n\nWird genutzt, wenn lobby.snap.type = GROUND"),
 	AUTOSETUP_LOBBY_SNAP_MAX_HEIGHT_OFFSET(ConfigSettingSection.AUTOSETUP, "lobby.snap.maxHeight.offset", 50, "Wie weit unter der maximalen Höhe\ndie Lobby gespawnt werden soll.\n\nWird genutzt, wenn lobby.snap.type = MAX_HEIGHT"),
 	AUTOSETUP_LOBBY_SNAP_ABSOLUTE_YPOS(ConfigSettingSection.AUTOSETUP, "lobby.snap.absolute.ypos", 64, "Auf welcher Y-Koordinate\ndie Lobby gespawnt werden soll.\n\nWird genutzt, wenn lobby.snap.type = ABSOLUTE"),
@@ -101,7 +101,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	// DEATH
 	DEATH_SOUND_ENABLED(ConfigSettingSection.DEATH, "deathSound.enabled", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
-	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", Sounds.WITHER_IDLE.bukkitSound().name(), "Sound der abgespielt werden soll", true),
+	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", Sounds.WITHER_IDLE, "Sound der abgespielt werden soll", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 	DISABLE_LABYMOD_FUNCTIONS(ConfigSettingSection.OTHER, "disableLabyModFunctions", false, "Ob die Addons von LabyMod beim Spieler\ndeaktviert werden sollen.\nFuer diese Funktion wird dieses Plugin automatisch installiert:\nhttps://www.spigotmc.org/resources/52423/"),
@@ -418,7 +418,10 @@ public enum ConfigSetting implements SectionEntry {
 		Class<?> valueClass = value.getClass();
 		Class<?> defaultClass = this.defaultValue.getClass();
 		if (valueClass != defaultClass) {
-			if (!defaultClass.isAssignableFrom(valueClass) && (valueClass != Integer.class || defaultClass != Long.class) && (valueClass != Integer.class || defaultClass != Double.class))
+			if (!defaultClass.isAssignableFrom(valueClass)
+			        && (valueClass != Integer.class || defaultClass != Long.class)
+			        && (valueClass != Integer.class || defaultClass != Double.class)
+			        && (valueClass != String.class || !Enum.class.isAssignableFrom(defaultClass)))
 				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applyable for " + defaultClass.getName() + " for entry " + getFullPath());
 		}
 	
@@ -488,6 +491,16 @@ public enum ConfigSetting implements SectionEntry {
 		return (long) defaultValue;
 	}
 
+	public Enum<?> getValueAsEnum() {
+        try {
+            return (Enum<?>) this.value;
+        } catch (ClassCastException e) {
+           this.sendFalseCast(Enum.class);
+        }
+
+        return (Enum<?>) this.defaultValue;
+    }
+
 	public String getValueAsString() {
 		if (this.value instanceof String)
 			return ((String) (this.value)).replace("&", "§");
@@ -507,7 +520,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	public boolean canParseFromString() {
 		Class<?> type = this.defaultValue.getClass();
-		return type == String.class || type == Boolean.class || type == Integer.class || type == Long.class || type == Double.class;
+		return type == String.class || type == Boolean.class || type == Integer.class || type == Long.class || type == Double.class || Enum.class.isAssignableFrom(type);
 	}
 	
 	/**
@@ -518,8 +531,10 @@ public enum ConfigSetting implements SectionEntry {
 	 * @throws IllegalArgumentException
 	 * @throws NumberFormatException
 	 */
-	public Object parseFromString(String input) {
-		switch (this.defaultValue.getClass().getName()) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Object parseFromString(String input) {
+        Class defaultValueClass = this.defaultValue.getClass();
+		switch (defaultValueClass.getName()) {
 		case "java.lang.String":
 			return input;
 		case "java.lang.Boolean":
@@ -531,6 +546,9 @@ public enum ConfigSetting implements SectionEntry {
 		case "java.lang.Double":
 			return Double.parseDouble(input);
 		default:
+		    if (Enum.class.isAssignableFrom(defaultValueClass))
+		        return Enum.valueOf(defaultValueClass, input);
+
 			throw new IllegalArgumentException("Unknown type");
 		}
 	}

@@ -89,14 +89,7 @@ public class AutoSetup {
         if (ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
             System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
 
-            Location lobby;
-            try {
-                lobby = getLobbyLocation(world.getWorld(), x, z);
-            } catch (IllegalArgumentException ex) {
-                System.out.println(Main.getConsolePrefix() + "AutoSetup: The config value for lobby.snap.type is invalid!");
-                ex.printStackTrace();
-                return;
-            }
+            Location lobby = getLobbyLocation(world.getWorld(), x, z);
 
             File schematicFile = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString());
             boolean schematicEnabled = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean();
@@ -147,7 +140,7 @@ public class AutoSetup {
     }
 
     private int getLobbyHeight(World world, int x, int z) {
-        LobbySnap snapSetting = LobbySnap.valueOf(ConfigSetting.AUTOSETUP_LOBBY_SNAP_TYPE.getValueAsString());
+        LobbySnap snapSetting = (LobbySnap) ConfigSetting.AUTOSETUP_LOBBY_SNAP_TYPE.getValueAsEnum();
 
         switch (snapSetting) {
             case GROUND:

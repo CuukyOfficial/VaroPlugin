@@ -1,6 +1,7 @@
 package de.cuuky.varo.entity.player.event.events;
 
 import de.cuuky.cfw.version.VersionUtils;
+import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -35,7 +36,7 @@ public class DeathEvent extends AbstractDeathEvent {
 
 		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean())
 			VersionUtils.getVersionAdapter().getOnlinePlayers().forEach(pl -> pl.playSound(pl.getLocation(),
-                Sound.valueOf(ConfigSetting.DEATH_SOUND.getValueAsString()), 1, 1));
+                Sound.valueOf(((Sounds) ConfigSetting.DEATH_SOUND.getValueAsEnum()).bukkitSound().name()), 1, 1));
 
         this.dropInventory(Main.getDataManager().getListManager().getDeathItems().getItems().toArray(new ItemStack[0]), location);
 	}

@@ -77,7 +77,10 @@ public class ConfigHandler {
 							continue;
 	
 						System.out.println(Main.getConsolePrefix() + "Found legacy configuration entry '" + oldPath + "', got value and renamed it to '" + entry.getPath() + "'!");
-						entry.setValue(config.get(oldPath));
+						if (config.isString(oldPath))
+						    entry.setStringValue(config.getString(oldPath), false);
+						else
+						    entry.setValue(config.get(oldPath));
 						config.addDefault(entry.getPath(), entry.getValue());
 						old = true;
 						break;
@@ -85,7 +88,10 @@ public class ConfigHandler {
 	
 					if (!old) {
 						config.addDefault(entry.getPath(), entry.getDefaultValue());
-						entry.setValue(config.get(entry.getPath()));
+						if (config.isString(entry.getPath()))
+						    entry.setStringValue(config.getString(entry.getPath()), false);
+						else
+						    entry.setValue(config.get(entry.getPath()));
 					}
 				}catch(IllegalArgumentException e) {
 					e.printStackTrace();

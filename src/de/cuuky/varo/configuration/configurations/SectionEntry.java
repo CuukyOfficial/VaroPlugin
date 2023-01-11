@@ -2,20 +2,21 @@ package de.cuuky.varo.configuration.configurations;
 
 public interface SectionEntry {
 
-	public Object getDefaultValue();
+    Object getDefaultValue();
 
-	public Object getValue();
+    Object getValue();
 
-	public String getPath();
+    String getPath();
 
-	public String getFullPath();
+    String getFullPath();
 
-	public String[] getDescription();
+    String[] getDescription();
 
-	public void setValue(Object value);
+    void setStringValue(String value, boolean save);
 
-	public SectionConfiguration getSection();
-	
-	public String[] getOldPaths();
+    void setValue(Object value);
 
+    SectionConfiguration getSection();
+
+    String[] getOldPaths();
 }
