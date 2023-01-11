@@ -363,10 +363,10 @@ public enum ConfigSetting implements SectionEntry {
 
 	private void sendFalseCast(Class<?> failedToCast) {
 		if (value instanceof Integer && failedToCast.equals(Long.class) || value instanceof Long && failedToCast.equals(Integer.class))
-			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
+			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applicable for " + failedToCast.getName() + " for entry " + getFullPath());
 
 		try {
-			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applyable for " + failedToCast.getName() + " for entry " + getFullPath());
+			throw new IllegalArgumentException("'" + value + "' (" + value.getClass().getName() + ") is not applicable for " + failedToCast.getName() + " for entry " + getFullPath());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -422,7 +422,7 @@ public enum ConfigSetting implements SectionEntry {
 			        && (valueClass != Integer.class || defaultClass != Long.class)
 			        && (valueClass != Integer.class || defaultClass != Double.class)
 			        && (valueClass != String.class || !Enum.class.isAssignableFrom(defaultClass)))
-				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applyable for " + defaultClass.getName() + " for entry " + getFullPath());
+				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applicable for " + defaultClass.getName() + " for entry " + getFullPath());
 		}
 	
 		this.value = value;
