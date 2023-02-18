@@ -4,7 +4,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 
 group 'de.varoplugin'
-version '4.11.5'
+version '4.11.6'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -77,7 +77,7 @@ dependencies {
     this.addModularCompile('com.github.pengrad:java-telegram-bot-api:5.4.0', 'telegramapi', false)
     this.addModularCompile('me.clip:placeholderapi:2.10.10', 'placeholderapi', false)
 
-    this.addModularInternal('de.varoplugin:CFW:0.6.17', 'CFW', true)
+    this.addModularInternal('de.varoplugin:CFW:0.6.18', 'CFW', true)
 }
 
 boolean checkLib(String filePath) {
