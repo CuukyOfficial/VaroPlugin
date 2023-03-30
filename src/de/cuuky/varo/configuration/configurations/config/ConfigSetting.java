@@ -385,6 +385,11 @@ public enum ConfigSetting implements SectionEntry {
 	}
 
 	@Override
+    public Object getDefaultValueToWrite() {
+        return Enum.class.isAssignableFrom(this.defaultValue.getClass()) ? ((Enum<?>) this.defaultValue).name() : this.defaultValue;
+    }
+
+	@Override
 	public String[] getDescription() {
 		return description.split("\n");
 	}
@@ -408,6 +413,11 @@ public enum ConfigSetting implements SectionEntry {
 	public Object getValue() {
 		return this.value;
 	}
+
+	@Override
+    public Object getValueToWrite() {
+        return Enum.class.isAssignableFrom(this.defaultValue.getClass()) ? ((Enum<?>) this.value).name() : this.value;
+    }
 
 	@Override
 	public String[] getOldPaths() {

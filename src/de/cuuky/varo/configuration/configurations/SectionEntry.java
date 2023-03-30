@@ -4,7 +4,11 @@ public interface SectionEntry {
 
     Object getDefaultValue();
 
+    Object getDefaultValueToWrite();
+
     Object getValue();
+
+    Object getValueToWrite();
 
     String getPath();
 

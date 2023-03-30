@@ -81,13 +81,13 @@ public class ConfigHandler {
 						    entry.setStringValue(config.getString(oldPath), false);
 						else
 						    entry.setValue(config.get(oldPath));
-						config.addDefault(entry.getPath(), entry.getValue());
+						config.addDefault(entry.getPath(), entry.getValueToWrite());
 						old = true;
 						break;
 					}
 	
 					if (!old) {
-						config.addDefault(entry.getPath(), entry.getDefaultValue());
+						config.addDefault(entry.getPath(), entry.getDefaultValueToWrite());
 						if (config.isString(entry.getPath()))
 						    entry.setStringValue(config.getString(entry.getPath()), false);
 						else
@@ -155,7 +155,7 @@ public class ConfigHandler {
 					continue;
 
 				entry.setValue(config.get(entry.getFullPath()));
-				sectionConfig.set(entry.getPath(), entry.getValue());
+				sectionConfig.set(entry.getPath(), entry.getValueToWrite());
 			}
 			YamlConfigurationUtil.save(sectionConfig, sectionFile);
 		}
@@ -169,7 +169,7 @@ public class ConfigHandler {
 
 	public void saveValue(SectionEntry entry) {
 		YamlConfiguration config = configurations.get(entry.getSection().getFolder() + "/" + entry.getSection().getName());
-		config.set(entry.getPath(), entry.getValue());
+		config.set(entry.getPath(), entry.getValueToWrite());
 
 		saveFile(config, files.get(entry.getSection().getFolder() + "/" + entry.getSection().getName()));
 	}
@@ -193,7 +193,7 @@ public class ConfigHandler {
 				break;
 
 			String description = JavaUtils.getArgsToString(entry.getDescription(), "\n  ");
-			desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValue() + "\r\n";
+			desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValueToWrite() + "\r\n";
 		}
 
 		return header + desc + "-------------------------\n";
