@@ -51,6 +51,7 @@ repositories {
 
 val internal: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
+    isTransitive = false
 }
 
 val runtimeDownload: Configuration by configurations.creating {
@@ -84,11 +85,28 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
+val createDependenciesFile = tasks.register("createDependenciesFile") {
+    mustRunAfter(tasks.getByName("compileJava"))
+    doLast {
+        val dependenciesFile = file("${buildDir}/dependencies.txt")
+        val writer = dependenciesFile.bufferedWriter(charset = StandardCharsets.UTF_8)
+        runtimeDownload.resolvedConfiguration.firstLevelModuleDependencies.forEach {resolvedDependency ->
+            resolvedDependency.allModuleArtifacts.forEach {
+                writer.write("${resolvedDependency.moduleName}:${it.moduleVersion}:${it.file.sha512().base64()}")
+                writer.newLine()
+            }
+        }
+        writer.close()
+    }
+}
+
 tasks.jar {
     if (project.hasProperty("destinationDir"))
         destinationDirectory.set(file(project.property("destinationDir").toString()))
     if (project.hasProperty("fileName"))
         archiveFileName.set(project.property("fileName").toString())
+
+    dependsOn(createDependenciesFile)
 
     manifest {
         attributes(Pair("Manifest-Version", "1.0"), Pair("Class-Path", "."), Pair("Main-Class", "de.varoplugin.varo.RunnableLauncher"))
@@ -97,16 +115,7 @@ tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(internal.map { if (it.isDirectory) it else zipTree(it) })
 
-    val dependenciesFile = file("${buildDir}/dependencies.txt")
-    val writer = dependenciesFile.bufferedWriter(charset = StandardCharsets.UTF_8)
-    runtimeDownload.resolvedConfiguration.firstLevelModuleDependencies.forEach {resolvedDependency ->
-        resolvedDependency.allModuleArtifacts.forEach {
-            writer.write("${resolvedDependency.moduleName}:${it.moduleVersion}:${it.file.sha512().base64()}")
-            writer.newLine()
-        }
-    }
-    writer.close()
-    from(dependenciesFile)
+    from(file("${buildDir}/dependencies.txt"))
 }
 
 tasks.test {
