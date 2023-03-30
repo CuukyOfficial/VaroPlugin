@@ -1,7 +1,7 @@
-name: @name@
-author: @author@
+name: ${name}
+author: Cuuky
 authors: [Korne127, LeStegii, Almighty-Satan]
-version: @version@
+version: ${version}
 softdepend: [PlaceholderAPI, LabyModAPI, PermissionsEx, Multiverse-Core]
 loadbefore: [CuukyFrameWork]
 api-version: 1.13
