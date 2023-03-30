@@ -85,7 +85,7 @@ public class DiscordCommand extends VaroCommand {
 		BotRegister reg = null;
 		try {
 			reg = BotRegister.getBotRegisterByPlayerName(args[1]);
-		} catch (Exception e) {}
+		} catch (Exception e) {} // wtf
 
 		if (args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
@@ -97,6 +97,11 @@ public class DiscordCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_DISCORDBOT_DISABLED.getValue(vp));
 				return;
 			}
+
+			if (args.length != 2) {
+                sender.sendMessage(Main.getPrefix() + "§7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord link <Spieler>");
+                return;
+            }
 
 			if (reg == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_UNKNOWN_PLAYER.getValue(vp).replace("%player%", args[1]));
@@ -121,6 +126,11 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
+			if (args.length != 2) {
+                sender.sendMessage(Main.getPrefix() + "§7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord unlink <Spieler>");
+                return;
+            }
+
 			if (reg == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_UNKNOWN_PLAYER.getValue(vp).replace("%player%", args[1]));
 				return;
@@ -143,13 +153,13 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
+			if (args.length != 3) {
+                sender.sendMessage(Main.getPrefix() + "§7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord bypass <Spieler> <true/false>");
+                return;
+            }
+
 			if (reg == null) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_UNKNOWN_PLAYER.getValue(vp).replace("%player%", args[1]));
-				return;
-			}
-
-			if (args.length != 3) {
-				sender.sendMessage(Main.getPrefix() + "§7/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord bypass <Spieler> <true/false>");
 				return;
 			}
 
