@@ -15,7 +15,6 @@ import org.bukkit.plugin.Plugin;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit.HitListener;
 import de.cuuky.varo.command.VaroCommandListener;
-import de.cuuky.varo.command.essentials.AntiXrayCommand;
 import de.cuuky.varo.command.essentials.BorderCommand;
 import de.cuuky.varo.command.essentials.BroadcastCommand;
 import de.cuuky.varo.command.essentials.ChatClearCommand;
@@ -124,7 +123,6 @@ public final class BukkitRegisterer {
 	}
 
 	public static void registerCommands() {
-		registerDynamicCommand("antixray", "Schaltet einen Schutz vor X-Ray an und aus", new AntiXrayCommand(), ConfigSetting.COMMAND_ANTIXRAY_ENABLED);
 		registerDynamicCommand("border", "Zeigt Infos zur Border", new BorderCommand(), ConfigSetting.COMMAND_BORDER_ENABLED, "setborder");
 		registerDynamicCommand("broadcast", "Sendet eine Nachricht an den Server", new BroadcastCommand(), ConfigSetting.COMMAND_BROADCAST_ENABLED, "bc");
 		registerDynamicCommand("chatclear", "Leert den Chat", new ChatClearCommand(), ConfigSetting.COMMAND_CHATCLEAR_ENABLED, "cc");
