@@ -10,17 +10,6 @@ This project probably describes my progress in coding - not the skills I have to
 
 <img src="https://bstats.org/signatures/bukkit/Varo.svg"></br>
 
-**Libraries:**</br>
-- <a href='https://www.spigotmc.org/'>Spigot/Bukkit</a></br>
-- <a href='https://github.com/CuukyOfficial/CFW/'>CuukyFrameWork</a></br>
-- <a href='https://github.com/DV8FromTheWorld/JDA'>JDA</a>
-- <a href='https://github.com/google/gson'>GSON</a>
-- <a href='https://github.com/google/guava'>Guava</a>
-- <a href='https://github.com/pengrad/java-telegram-bot-api'>Java Telegram Bot API</a>
-- <a href='https://www.spigotmc.org/resources/labymod-server-api.52423/'>LabyMod Server API</a>
-- <a href='https://dev.bukkit.org/projects/worldedit'>Worldedit</a>
-- <a href='https://www.spigotmc.org/resources/placeholderapi.6245/'>PlaceholderAPI</a>
-
 </br>Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/CONTRIBUTING.md'>Richtlinien zum Programmieren</a> beachten!</br>
 </br>
 
