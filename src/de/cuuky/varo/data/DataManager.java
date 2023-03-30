@@ -19,7 +19,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ScoreboardConfig;
 import de.cuuky.varo.configuration.configurations.config.TablistConfig;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
-import de.cuuky.varo.data.plugin.LibraryLoader;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.VaroPlayerHandler;
 import de.cuuky.varo.entity.team.VaroTeamHandler;
@@ -51,7 +50,6 @@ public class DataManager {
 	private ActionbarConfig actionbarConfig;
 	private NameTagGroup defaultNameTagGroup;
 	private NameTagGroup spectatorNameTagGroup;
-	private LibraryLoader libraryLoader;
 	private VaroGameHandler varoGameHandler;
 	private VaroPlayerHandler varoPlayerHandler;
 	private VaroTeamHandler varoTeamHandler;
@@ -76,7 +74,7 @@ public class DataManager {
 
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
-		this.libraryLoader = new LibraryLoader();
+		Dependencies.loadNeeded(this.ownerInstance);
 		this.scoreboardConfig = new ScoreboardConfig();
 		this.tablistConfig = new TablistConfig();
 		this.actionbarConfig = new ActionbarConfig();
@@ -201,10 +199,6 @@ public class DataManager {
 
 	public NameTagGroup getSpectatorNameTagGroup() {
 		return this.spectatorNameTagGroup;
-	}
-
-	public LibraryLoader getLibraryLoader() {
-		return this.libraryLoader;
 	}
 
 	public VaroListManager getListManager() {

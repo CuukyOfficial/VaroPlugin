@@ -67,7 +67,8 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 }
 
 dependencies {
-    modularInternal("de.varoplugin:CFW:0.6.18", "CFW")
+    modularInternal("de.varoplugin:CFW:0.6.18", "CFW-legacy")
+    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-1", "CFW")
 
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
@@ -76,6 +77,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.10.10")
 
     runtimeDownload("com.google.code.gson:gson:2.10.1")
+    runtimeDownload("com.google.guava:guava:19.0")
     runtimeDownload("net.dv8tion:JDA:4.4.0_352") {
         exclude(module = "opus-java")
     }
