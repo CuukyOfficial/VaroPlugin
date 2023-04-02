@@ -1,5 +1,7 @@
 package de.cuuky.varo.listener.lists;
 
+import java.util.Map.Entry;
+
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.list.enchantment.lists.BlockedEnchantments;
 
 public class BlockedEnchantmentsListener implements Listener {
 
@@ -23,13 +26,16 @@ public class BlockedEnchantmentsListener implements Listener {
 		if (event.getItem() == null)
 			return;
 
-		for (Enchantment enc : event.getEnchantsToAdd().keySet())
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
-				event.setCancelled(true);
-				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
-				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
-				return;
-			}
+		BlockedEnchantments blockedEnchantments = Main.getDataManager().getListManager().getBlockedEnchantments();
+		for (Entry<Enchantment, Integer> enchantment : event.getEnchantsToAdd().entrySet())
+			if (blockedEnchantments.isBlocked(enchantment.getKey(), enchantment.getValue()))
+				event.getEnchantsToAdd().remove(enchantment.getKey());
+		
+		if (event.getEnchantsToAdd().isEmpty()) {
+		    event.setCancelled(true);
+            VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
+            event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
+		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
