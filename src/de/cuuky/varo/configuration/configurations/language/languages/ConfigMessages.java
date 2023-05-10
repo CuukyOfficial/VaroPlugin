@@ -24,7 +24,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	ALERT_FIRST_STRIKE_NEVER_ONLINE("alerts.BOTS_ALERT.firstStrikeNeverOnline", "%player% hat nun einen Strike. Der Strike wurde von %striker% gegeben. Begründung: %reason%\nDer Spieler war noch nicht online und wird an den Spawn-Koordinaten spawnen: %pos%!"),
 	ALERT_GAME_STARTED("alerts.BOTS_ALERT.gameStarted", "%projectname% wurde gestartet!"),
 	ALERT_GENERAL_STRIKE("alerts.BOTS_ALERT.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Der Strike wurde von %striker% gegeben. Begründung: %reason%"),
-	ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% &7hat den Server zum Finale betreten."),
+	ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% hat den Server zum Finale betreten."),
 	ALERT_KICKED_PLAYER("alerts.BOTS_ALERT.kickedPlayer", "%player% wurde gekickt!"),
 	ALERT_SESSIONS_ENDED("alerts.BOTS_ALERT.sessionsEnded", "%player%'s Session wurde beendet, da der Spieltag vorrüber ist!"),
 	ALERT_NEW_SESSIONS("alerts.BOTS_ALERT.newSessions", "Es wurden %newSessions% neue Folgen an die Spieler gegeben!"),

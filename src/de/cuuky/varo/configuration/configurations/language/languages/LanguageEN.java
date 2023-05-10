@@ -21,7 +21,7 @@ public enum LanguageEN implements LoadableMessage {
     ALERT_FIRST_STRIKE_NEVER_ONLINE("alerts.BOTS_ALERT.firstStrikeNeverOnline", "%player% now has a strike. The strike was given by %striker%. Reason: %reason%\nThe player was not online yet and will spawn at the spawn coordinates: %pos%!"),
     ALERT_GAME_STARTED("alerts.BOTS_ALERT.gameStarted", "%projectname% has started!"),
     ALERT_GENERAL_STRIKE("alerts.BOTS_ALERT.generalStrike", "%player% now has %strikeNumber% strikes! The strike was given by %striker%. Reason: %reason%"),
-    ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% &7has entered the server to participate in the final"),
+    ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% has entered the server to participate in the final"),
     ALERT_KICKED_PLAYER("alerts.BOTS_ALERT.kickedPlayer", "%player% has been kicked!"),
     ALERT_SESSIONS_ENDED("alerts.BOTS_ALERT.sessionsEnded", "Due to end of a day, %player%'s session has been endet!"),
     ALERT_NEW_SESSIONS("alerts.BOTS_ALERT.newSessions", "There were %newSessions% new sessions given to the players!"),
