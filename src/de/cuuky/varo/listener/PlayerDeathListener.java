@@ -51,14 +51,14 @@ public class PlayerDeathListener implements Listener {
             if (hit != null)
                 hit.over();
 
+            String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
             if (deadP.getTeam() == null || deadP.getTeam().getLifes() - 2D < -0.00000001D) {
-                String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
                 if (killerPlayer == null) {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DISCORD_DEATH.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
-                    Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_DEAD, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause);
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_OTHER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
+                    Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_OTHER, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause);
                 } else {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DISCORD_KILL.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())));
-                    Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_KILLED_BY, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills()));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())));
+                    Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_PLAYER, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills()));
                 }
 
                 deadP.onEvent(BukkitEventType.DEATH_NO_LIFES);
@@ -93,7 +93,13 @@ public class PlayerDeathListener implements Listener {
                 }
 
                 deadP.getTeam().setLifes(deadP.getTeam().getLifes() - 1);
-                Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_LIFE_LOST, deadP);
+                if (killerPlayer == null) {
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_LIFE_OTHER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
+                    Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_LIFE_OTHER, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause);
+                } else {
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DEATH_LIFE_PLAYER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())));
+                    Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_LIFE_PLAYER, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills()));
+                }
             }
         }
     }
