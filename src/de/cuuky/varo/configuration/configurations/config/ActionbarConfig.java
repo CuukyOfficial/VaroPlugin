@@ -2,8 +2,9 @@ package de.cuuky.varo.configuration.configurations.config;
 
 import java.util.ArrayList;
 
-import de.cuuky.cfw.player.hud.AnimationData;
 import de.cuuky.varo.Main;
+import de.varoplugin.cfw.player.hud.AnimationData;
+import de.varoplugin.cfw.player.hud.UnmodifiableAnimationData;
 
 public class ActionbarConfig extends BoardConfig {
 
@@ -29,7 +30,7 @@ public class ActionbarConfig extends BoardConfig {
 		this.configuration.addDefault("updatedelay", 100);
 		this.configuration.addDefault("content", titleFrames);
 
-		this.content = new AnimationData<>(this.configuration.getInt("updatedelay"), this.configuration.getStringList("content").toArray(new String[0]));
+		this.content = new UnmodifiableAnimationData<>(this.configuration.getInt("updatedelay"), this.configuration.getStringList("content").toArray(new String[0]));
 	}
 
 	public AnimationData<String> getContent() {

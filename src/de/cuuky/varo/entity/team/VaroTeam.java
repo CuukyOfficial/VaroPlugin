@@ -7,7 +7,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.player.hud.NameTagGroup;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -18,6 +17,7 @@ import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.varoplugin.cfw.player.hud.NameTagGroup;
 
 public class VaroTeam extends VaroEntity {
 
