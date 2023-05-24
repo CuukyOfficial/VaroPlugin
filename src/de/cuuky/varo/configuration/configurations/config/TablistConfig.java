@@ -75,6 +75,6 @@ public class TablistConfig extends BoardConfig {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private static AnimationData<String> toAnimationData(int delay, List<?> list) {
-        return new UnmodifiableAnimationData<>(delay, list.stream().map(l -> String.join("\n", (Iterable) l)).toArray(String[]::new));
+        return new UnmodifiableAnimationData<>(delay, (String[]) list.stream().map(l -> String.join("\n", (Iterable) l)).toArray(String[]::new));
     }
 }
