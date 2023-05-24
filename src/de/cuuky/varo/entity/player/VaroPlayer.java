@@ -1,15 +1,24 @@
 package de.cuuky.varo.entity.player;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.PlayerVersionAdapter;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
-import de.cuuky.cfw.player.hud.AnimatedActionbar;
-import de.cuuky.cfw.player.hud.AnimatedScoreboard;
-import de.cuuky.cfw.player.hud.AnimatedTablist;
-import de.cuuky.cfw.player.hud.ScoreboardInstance;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.BukkitVersion;
@@ -38,20 +47,12 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
+import de.varoplugin.cfw.player.hud.AnimatedActionbar;
+import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
+import de.varoplugin.cfw.player.hud.AnimatedTablist;
+import de.varoplugin.cfw.player.hud.ScoreboardInstance;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
@@ -569,7 +570,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			}
 
 			if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.TABLIST.getValueAsBoolean() && (ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean() || ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean())) {
-				this.tablist = new AnimatedTablist(Main.getInstance(), this, Main.getDataManager().getTablistConfig().getHeader(), Main.getDataManager().getTablistConfig().getFooter()){
+				this.tablist = new AnimatedTablist(Main.getInstance(), this.getPlayer(), Main.getDataManager().getTablistConfig().getHeader(), Main.getDataManager().getTablistConfig().getFooter()) {
 					@Override
 					protected String processString(String input) {
 						return VaroPlayer.this.replacePlaceHolders(input);

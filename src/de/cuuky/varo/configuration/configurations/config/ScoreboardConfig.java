@@ -3,13 +3,13 @@ package de.cuuky.varo.configuration.configurations.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuuky.cfw.player.hud.AnimationData;
-import de.cuuky.cfw.player.hud.ScoreboardAnimationData;
+import de.varoplugin.cfw.player.hud.AnimationData;
+import de.varoplugin.cfw.player.hud.UnmodifiableAnimationData;
 
 public class ScoreboardConfig extends BoardConfig {
 
 	private AnimationData<String> title;
-	private ScoreboardAnimationData scoreboard;
+	private AnimationData<String[]> scoreboard;
 
 	public ScoreboardConfig() {
 		super("plugins/Varo/config/scoreboard.yml");
@@ -70,17 +70,29 @@ public class ScoreboardConfig extends BoardConfig {
 		this.configuration.addDefault("scoreboard.updatedelay", 100);
 		this.configuration.addDefault("scoreboard.content", frames);
 
-		this.title = new AnimationData<>(this.configuration.getInt("title.updatedelay"), this.configuration.getStringList("title.content").toArray(new String[0]));
-		@SuppressWarnings("unchecked")
-		List<List<String>> configFrames = (List<List<String>>) this.configuration.getList("scoreboard.content");
-		this.scoreboard = new ScoreboardAnimationData(this.configuration.getInt("scoreboard.updatedelay"), configFrames.stream().map(frame -> frame.toArray(new String[0])).toArray(String[][]::new));
+		this.title = new UnmodifiableAnimationData<>(this.configuration.getInt("title.updatedelay"), this.configuration.getStringList("title.content").toArray(new String[0]));
+		this.scoreboard = toAnimationData(this.configuration.getInt("scoreboard.updatedelay"), this.configuration.getList("scoreboard.content"));
 	}
 
 	public AnimationData<String> getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public ScoreboardAnimationData getScoreboard() {
-		return scoreboard;
+	public AnimationData<String[]> getScoreboard() {
+		return this.scoreboard;
+	}
+	
+	private static AnimationData<String[]> toAnimationData(int delay, List<?> frames) {
+	    return new UnmodifiableAnimationData<>(delay, frames.stream().map(f -> {
+	        String[] frameArray = ((List<?>) f).toArray(new String[0]);
+	        
+	        String space = "";
+	        for (int i = 0; i < frameArray.length; i++)
+	            if (frameArray[i].equals("%space%")) {
+	                space += " ";
+	                frameArray[i] = space;
+	            }
+	        return frameArray;
+	    }).toArray(String[][]::new));
 	}
 }
