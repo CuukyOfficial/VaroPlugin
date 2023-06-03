@@ -1,22 +1,8 @@
 package de.cuuky.varo.game;
 
-import java.awt.Color;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import de.cuuky.varo.api.VaroAPI;
-import de.cuuky.varo.api.event.events.game.VaroEndEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.api.game.VaroEndEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -41,7 +27,21 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
+import de.cuuky.varo.utils.EventUtils;
 import de.cuuky.varo.utils.VaroUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -186,13 +186,13 @@ public class VaroGame implements VaroSerializeable {
     }
 
     private void removeAbsentAtStart() {
-        for (VaroPlayer varoplayer : (ArrayList<VaroPlayer>) VaroPlayer.getVaroPlayers().clone())
+        for (VaroPlayer varoplayer : new LinkedList<>(VaroPlayer.getVaroPlayers()))
             if (!varoplayer.isOnline())
                 varoplayer.delete();
     }
 
     public void end(WinnerCheck check) {
-        if (VaroAPI.getEventManager().executeEvent(new VaroEndEvent(this)))
+        if (EventUtils.callEvent(new VaroEndEvent(this, check)))
             return;
 
         this.gamestate = GameState.END;
@@ -218,20 +218,20 @@ public class VaroGame implements VaroSerializeable {
             if (won == null)
                 break;
 
-            String names = "";
+            StringBuilder names = new StringBuilder();
             for (VaroPlayer vp : won)
-                names = names + (!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : " & ") + vp.getName()));
-            names = names + (won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
+                names.append(!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : " & ") + vp.getName()));
+            names.append(won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
             switch (i) {
                 case 1:
-                    first = names;
+                    first = names.toString();
                     break;
                 case 2:
-                    second = names;
+                    second = names.toString();
                     break;
                 case 3:
-                    third = names;
+                    third = names.toString();
                     break;
             }
         }

@@ -1,27 +1,13 @@
 package de.cuuky.varo.entity.player.stats;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.api.VaroAPI;
-import de.cuuky.varo.api.event.events.player.PlayerStateChangeEvent;
-import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeReceiveEvent;
-import de.cuuky.varo.api.event.events.player.strike.PlayerStrikeRemoveEvent;
+import de.cuuky.varo.api.player.PlayerStateChangeEvent;
+import de.cuuky.varo.api.player.strike.PlayerStrikeReceiveEvent;
+import de.cuuky.varo.api.player.strike.PlayerStrikeRemoveEvent;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -36,6 +22,19 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.utils.EventUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Stats implements VaroSerializeable {
 
@@ -127,7 +126,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void addStrike(Strike strike) {
-		if (VaroAPI.getEventManager().executeEvent(new PlayerStrikeReceiveEvent(strike)))
+		if (EventUtils.callEvent(new PlayerStrikeReceiveEvent(strike)))
 			return;
 
 		this.strikes.add(strike);
@@ -514,7 +513,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeStrike(Strike strike) {
-		if (VaroAPI.getEventManager().executeEvent(new PlayerStrikeRemoveEvent(strike)))
+		if (EventUtils.callEvent(new PlayerStrikeRemoveEvent(strike)))
 			return;
 
 		int strikeNumber = strike.getStrikeNumber();
@@ -630,7 +629,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void setState(PlayerState state) {
-		if (VaroAPI.getEventManager().executeEvent(new PlayerStateChangeEvent(owner, state))) return;
+		if (EventUtils.callEvent(new PlayerStateChangeEvent(owner, state))) return;
 
 		this.state = state;
 		if (state == PlayerState.DEAD)
