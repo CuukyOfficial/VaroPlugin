@@ -9,8 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
-import de.cuuky.cfw.version.ServerSoftware;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
@@ -81,10 +81,6 @@ public class Main extends JavaPlugin {
 				+ VersionUtils.getVersion().getIdentifier() + ")");
 		System.out.println(
 				CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
-
-		if (VersionUtils.getServerSoftware() != ServerSoftware.UNKNOWN)
-			System.out
-					.println(CONSOLE_PREFIX + "	Forge-Support: " + VersionUtils.getServerSoftware().hasModSupport());
 
 		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT) {
 			System.out.println(CONSOLE_PREFIX

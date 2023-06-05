@@ -6,7 +6,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;

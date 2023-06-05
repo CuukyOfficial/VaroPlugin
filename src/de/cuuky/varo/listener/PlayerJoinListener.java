@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.ServerSoftware;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -34,7 +34,7 @@ import de.cuuky.varo.utils.MagmaUtils;
 public class PlayerJoinListener implements Listener {
 
 	private boolean isOutsideOfBorder(Player p) {
-		if (VersionUtils.getVersion() == BukkitVersion.ONE_7)
+		if (VersionUtils.getVersion() == ServerVersion.ONE_7)
 			return false;
 
 		try {

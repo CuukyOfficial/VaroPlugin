@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
@@ -30,7 +30,7 @@ public class VaroWorldHandler {
             if (!world.equals(mainVaroWorld.getWorld()))
                 addWorld(world);
 
-        if (VersionUtils.getVersion() == BukkitVersion.ONE_8)
+        if (VersionUtils.getVersion() == ServerVersion.ONE_8)
             disableWorldDownloader();
     }
 
@@ -49,12 +49,12 @@ public class VaroWorldHandler {
         VaroWorld vworld = new VaroWorld(world);
         this.worlds.add(vworld);
 
-        if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
             vworld.getVaroBorder().setBorderSize(getBorderSize(), 0);
     }
 
     public void decreaseBorder(DecreaseReason reason) {
-        if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || !reason.isEnabled())
+        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) || !reason.isEnabled())
             return;
 
         BorderDecrease decr = new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed());
@@ -63,7 +63,7 @@ public class VaroWorldHandler {
     }
 
     public void setBorderSize(double size, long time, World world) {
-        if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
             return;
 
         if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
@@ -87,7 +87,7 @@ public class VaroWorldHandler {
         if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
             return getBorderSize();
         else {
-            if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+            if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
                 return 0;
 
             VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
@@ -96,7 +96,7 @@ public class VaroWorldHandler {
     }
 
     public double getBorderSize() {
-        if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
             return 0;
 
         return this.mainVaroWorld.getVaroBorder().getBorderSize();

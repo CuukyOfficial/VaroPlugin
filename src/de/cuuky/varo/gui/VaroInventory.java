@@ -2,8 +2,8 @@ package de.cuuky.varo.gui;
 
 import de.cuuky.cfw.inventory.AdvancedInventory;
 import de.cuuky.cfw.inventory.AdvancedInventoryManager;
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import org.bukkit.entity.Player;
 
@@ -22,7 +22,7 @@ public abstract class VaroInventory extends AdvancedInventory {
     }
 
     protected int getFixedSize(int size) {
-        if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_8)) return (size < 1 ? 1 : (Math.min(size, 64)));
+        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_8)) return (size < 1 ? 1 : (Math.min(size, 64)));
         else return size;
     }
 }

@@ -1,6 +1,6 @@
 package de.cuuky.varo.entity.player.event.events;
 
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;

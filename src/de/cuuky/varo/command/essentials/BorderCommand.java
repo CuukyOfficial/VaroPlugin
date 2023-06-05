@@ -1,7 +1,7 @@
 package de.cuuky.varo.command.essentials;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -17,7 +17,7 @@ public class BorderCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
-        if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
             sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_WRONGVERSION.getValue(vp).replace("%version%", "1.8"));
             return false;
         }

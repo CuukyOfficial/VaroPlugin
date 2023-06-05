@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.bukkit.Material;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
@@ -17,7 +17,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	ACTIVITY("Activity", Materials.FURNACE.parseMaterial(), "Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen."),
 	AUTOSETUP("Autosetup", Materials.CLOCK.parseMaterial(), "Hier kannst das Autosetup einstellen!"),
 	BACKPACKS("Backpacks", Materials.ENDER_CHEST.parseMaterial(), "Alle Einstellungen zur Rucksaecken"),
-	BORDER("Border", VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) ? Materials.BARRIER.parseMaterial() : Materials.OAK_FENCE.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
+	BORDER("Border", VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) ? Materials.BARRIER.parseMaterial() : Materials.OAK_FENCE.parseMaterial(), "Hier kannst du Einstellungen zur Border vornehmen."),
 	CHAT("Chat", Materials.WRITABLE_BOOK.parseMaterial(), "Hier kannst du Einstellungen zum Chat vornehmen"),
 	COMBATLOG("Combatlog", Materials.DIAMOND_SWORD.parseMaterial(), "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
 	COMMANDS("Commands", Materials.COMMAND_BLOCK.parseMaterial(), "Hier kannst Commands aktivieren oder deaktivieren (Neustart erforderlich)"),

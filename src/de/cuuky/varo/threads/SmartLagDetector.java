@@ -1,6 +1,6 @@
 package de.cuuky.varo.threads;
 
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -7,8 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -62,7 +62,7 @@ public class GamemodeCommand implements CommandExecutor {
 				gm = GameMode.ADVENTURE;
 				break;
 			case 3:
-				if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+				if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
 					sender.sendMessage(Main.getPrefix() + "Nicht verfuegbar vor der 1.8!");
 					return false;
 				}

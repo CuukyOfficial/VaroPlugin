@@ -10,8 +10,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 
 public class VaroWorldBorder {
@@ -19,7 +19,7 @@ public class VaroWorldBorder {
 	private static Method setCenterMethod, getCenterMethod, setSizeMethod, getSizeMethod;
 
 	static {
-		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7)) {
+		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
 			try {
 				Class<?> borderClass = Class.forName("org.bukkit.WorldBorder");
 
@@ -38,7 +38,7 @@ public class VaroWorldBorder {
 	private HashMap<Player, Double> distances;
 
 	public VaroWorldBorder(World world) {
-		if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+		if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
 			return;
 
 		this.world = world;

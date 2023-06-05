@@ -1,6 +1,6 @@
 package de.cuuky.varo.list.item.lists;
 
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.list.item.ItemList;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package de.cuuky.varo.entity.player;
 
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.entity.player.stats.Stats;
 import de.cuuky.varo.entity.player.stats.VaroInventory;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;

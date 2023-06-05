@@ -5,8 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.cfw.utils.ServerPropertiesReader;
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -103,8 +103,8 @@ public class DataManager {
 		this.customCommandManager = new CustomCommandManager();
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
-				&& !VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_11))
-			VersionUtils.setMinecraftServerProperty("announce-player-achievements", false);
+				&& !VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
+			VersionUtils.getVersionAdapter().setServerProperty("announce-player-achievements", false);
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.setWorldToTime();

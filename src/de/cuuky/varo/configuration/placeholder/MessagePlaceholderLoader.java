@@ -3,8 +3,8 @@ package de.cuuky.varo.configuration.placeholder;
 import de.cuuky.cfw.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.PermissionUtils;
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
@@ -66,7 +66,7 @@ public class MessagePlaceholderLoader {
 
     private void loadPlayerPlaceholder() {
         new VaroPlayerMessagePlaceholder("distanceToBorder", 1, "Ersetzt durch die Distanz zur Border des Spielers", (player) -> {
-            if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) || Main.getVaroGame() == null)
+            if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) || Main.getVaroGame() == null)
                 return "0";
 
             return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));

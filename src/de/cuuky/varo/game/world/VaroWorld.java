@@ -1,8 +1,8 @@
 package de.cuuky.varo.game.world;
 
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.world.border.VaroWorldBorder;
@@ -29,7 +29,7 @@ public class VaroWorld {
 			world.setGameRuleValue("announce-player-achievements", "false");
 		}
 
-		if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
 			this.varoWorldBorder = new VaroWorldBorder(world);
 	}
 

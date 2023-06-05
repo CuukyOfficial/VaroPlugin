@@ -21,8 +21,8 @@ import de.cuuky.cfw.player.PlayerVersionAdapter;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -328,7 +328,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			this.actionbar.queueUpdate();
 
 		if (this.player != null) {
-			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7))
+			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
 				this.player.setPlayerListName(this.getTablistName());
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
@@ -370,7 +370,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				}
 			}
 
-			if (BukkitVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) && listname.length() > 16)
+			if (ServerVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) && listname.length() > 16)
 				listname = listname.substring(0, 16);
 
 			return listname;
@@ -568,7 +568,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				this.scoreboard.setEnabled(this.stats.isShowScoreboard());
 			}
 
-			if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.TABLIST.getValueAsBoolean() && (ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean() || ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean())) {
+			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.TABLIST.getValueAsBoolean() && (ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean() || ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean())) {
 				this.tablist = new AnimatedTablist(Main.getInstance(), this.getPlayer(), Main.getDataManager().getTablistConfig().getHeader(), Main.getDataManager().getTablistConfig().getFooter()) {
 					@Override
 					protected String processString(String input) {
@@ -580,7 +580,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				this.tablist.setFooterEnabled(ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean());
 			}
 			
-			if (VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_7) && ConfigSetting.ACTIONBAR.getValueAsBoolean()) {
+			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.ACTIONBAR.getValueAsBoolean()) {
 				this.actionbar = new AnimatedActionbar(Main.getInstance(), player, Main.getDataManager().getActionbarConfig().getContent()) {
 					@Override
 					protected String processString(String input) {

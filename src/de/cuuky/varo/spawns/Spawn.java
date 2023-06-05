@@ -14,9 +14,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.ServerSoftware;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -95,7 +95,7 @@ public class Spawn implements VaroSerializeable {
     }
     
     private boolean shouldHaveNameTag() {
-    	return !VersionUtils.getVersion().isLowerThan(BukkitVersion.ONE_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
+    	return !VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
     }
     
     private Entity createNameTag() {
@@ -107,7 +107,7 @@ public class Spawn implements VaroSerializeable {
     }
     
     private void updateNameTag(Entity armorStand) {
-    	VersionUtils.getVersionAdapter().setArmorstandAttributes(armorStand,
+    	VersionUtils.getVersionAdapter().setArmorStandAttributes(armorStand,
                 false, true, false, this.computeNameTagName());
     }
     
@@ -121,7 +121,7 @@ public class Spawn implements VaroSerializeable {
     }
 
     private Optional<Entity> findNameTag() {
-    	if (this.nametagUuid == null || VersionUtils.getVersion().isLowerThan(BukkitVersion.ONE_8))
+    	if (this.nametagUuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_8))
     		return Optional.empty();
     	
     	String uuid = this.nametagUuid.toString();
@@ -167,7 +167,7 @@ public class Spawn implements VaroSerializeable {
         }
         // legacy support end
 
-        if (VersionUtils.getServerSoftware() == ServerSoftware.PAPER && VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_16))
+        if (VersionUtils.getServerSoftware() == ServerSoftware.PAPER && VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_16))
         	// temporary paper 1.17+ workaround
         	try {
 				Method forceLoadMethod = Chunk.class.getMethod("setForceLoaded", boolean.class);

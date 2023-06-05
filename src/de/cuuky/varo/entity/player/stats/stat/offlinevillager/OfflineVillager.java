@@ -12,8 +12,8 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.version.BukkitVersion;
-import de.cuuky.cfw.version.VersionUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -67,12 +67,12 @@ public class OfflineVillager implements VaroSerializeable {
 				if (location.getWorld().getDifficulty() == Difficulty.PEACEFUL)
 					location.getWorld().setDifficulty(Difficulty.EASY);
 
-				EntityType type = VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
+				EntityType type = VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
 				zombie = (Zombie) location.getWorld().spawnEntity(location, type);
 				zombie.setCustomName("§c" + vp.getName());
 				zombie.setCustomNameVisible(true);
 
-				if (!VersionUtils.getVersion().isHigherThan(BukkitVersion.ONE_9))
+				if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_9))
 					zombie.setVillager(true);
 
 				freezeVillager();
