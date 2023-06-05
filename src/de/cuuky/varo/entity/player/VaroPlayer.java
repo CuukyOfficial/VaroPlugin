@@ -75,7 +75,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private String locale;
 
 	@VaroSerializeField(path = "adminIgnore")
-	private boolean adminIgnore = false;
+	private boolean adminIgnore;
 
 	@VaroSerializeField(path = "villager")
 	private OfflineVillager villager;
@@ -123,7 +123,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		this.name = playerName;
 		this.uuid = uuid;
 
-		this.adminIgnore = false;
 		this.id = generateId();
 
 		varoplayer.add(this);
