@@ -86,7 +86,7 @@ public class Main extends JavaPlugin {
 			System.out.println(CONSOLE_PREFIX
 					+ "	It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
 			System.out.println(
-					CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://getbukkit.org/download/spigot).");
+					CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://papermc.io/).");
 		}
 		System.out.println(CONSOLE_PREFIX);
 		
