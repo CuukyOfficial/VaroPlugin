@@ -11,6 +11,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.utils.ArrayUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -71,6 +72,10 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     private void addLeftClickable(Predicate<Object> objectPredicate, Consumer<StatType> leftClick, int offset) {
         this.applyToTypes(objectPredicate, s -> this.addItem(index, this.getItemStack(s), (event) -> {
             if (event.isLeftClick()) {
+                if (s == StatType.ADMIN_IGNORE && Main.getVaroGame().getGameState() == GameState.LOBBY) {
+                    event.getWhoClicked().sendMessage(Main.getPrefix() + "§cAdmin-ignore cannot be enabled before the game has started!");
+                    return;
+                }
                 leftClick.accept(s);
             } else this.openReset(s);
         }), offset);

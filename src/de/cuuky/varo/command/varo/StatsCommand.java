@@ -14,6 +14,7 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.game.state.GameState;
 
 public class StatsCommand extends VaroCommand {
 
@@ -100,6 +101,11 @@ public class StatsCommand extends VaroCommand {
             if (type == null) {
                 sender.sendMessage(
                     Main.getPrefix() + "Stat '" + Main.getColorCode() + args[1] + "§7' konnte nicht gefunden werden!");
+                return;
+            }
+
+            if (type == StatType.ADMIN_IGNORE && Main.getVaroGame().getGameState() == GameState.LOBBY) {
+                sender.sendMessage(Main.getPrefix() + "§cAdmin-ignore cannot be enabled before the game has started!");
                 return;
             }
 
