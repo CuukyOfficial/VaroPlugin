@@ -39,58 +39,61 @@ public class ResetCommand extends VaroCommand {
 		if (sender instanceof Player)
 			new ConfirmInventory(Main.getCuukyFrameWork().getAdvancedInventoryManager(), vp.getPlayer(), "§4Reset server?", (result) -> {
 				if (!result) return;
-				this.resetServer(sender, args);
+				this.resetServer(args);
 			});
 		else
-			this.resetServer(sender, args);
+			this.resetServer(args);
 	}
 
-	private void resetServer(CommandSender sender, String[] args) {
-		for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
+	private void resetServer(String[] args) {
+		for (Player pl : Bukkit.getOnlinePlayers())
 			pl.kickPlayer("§cRESET");
 
-		Main.getDataManager().save();
-		List<Integer> success = new ArrayList<>();
-		List<File> toDelete = new ArrayList<>();
-		for (String arg : args) {
-			int mod;
-			try {
-				mod = Integer.parseInt(arg);
-			} catch (NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + arg + " ist keine Zahl!");
-				continue;
-			}
+		// Wait to ensure the players are actually disconnected
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+		    Main.getDataManager().save();
+	        List<Integer> success = new ArrayList<>();
+	        List<File> toDelete = new ArrayList<>();
+	        for (String arg : args) {
+	            int mod;
+	            try {
+	                mod = Integer.parseInt(arg);
+	            } catch (NumberFormatException e) {
+	                Bukkit.getConsoleSender().sendMessage(Main.getPrefix() + arg + " ist keine Zahl!");
+	                continue;
+	            }
 
-			switch (mod) {
-			case 1:
-				toDelete.add(new File("plugins/Varo/"));
-				Main.getDataManager().setDoSave(false);
-				break;
-			case 2:
-				toDelete.add(new File("plugins/Varo/logs/"));
-				toDelete.add(new File("plugins/Varo/stats/"));
-				Main.getDataManager().setDoSave(false);
-				break;
-			case 3:
-				for (World world : Bukkit.getWorlds())
-					if (world.getWorldFolder() != null) {
-						sender.sendMessage(Main.getPrefix() + "Deleting world " + world.getName());
-						toDelete.add(world.getWorldFolder());
-					}
-				VersionUtils.getVersionAdapter().forceClearWorlds();
-				break;
-			default:
-				sender.sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
-				break;
-			}
+	            switch (mod) {
+	            case 1:
+	                toDelete.add(new File("plugins/Varo/"));
+	                Main.getDataManager().setDoSave(false);
+	                break;
+	            case 2:
+	                toDelete.add(new File("plugins/Varo/logs/"));
+	                toDelete.add(new File("plugins/Varo/stats/"));
+	                Main.getDataManager().setDoSave(false);
+	                break;
+	            case 3:
+	                for (World world : Bukkit.getWorlds())
+	                    if (world.getWorldFolder() != null) {
+	                        Bukkit.getConsoleSender().sendMessage(Main.getPrefix() + "Deleting world " + world.getName());
+	                        toDelete.add(world.getWorldFolder());
+	                    }
+	                VersionUtils.getVersionAdapter().forceClearWorlds();
+	                break;
+	            default:
+	                Bukkit.getConsoleSender().sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
+	                break;
+	            }
 
-			success.add(mod);
-		}
-		
-		for (File file : toDelete)
-			JavaUtils.deleteDirectory(file);
+	            success.add(mod);
+	        }
+	        
+	        for (File file : toDelete)
+	            JavaUtils.deleteDirectory(file);
 
-		if (!success.isEmpty())
-			Bukkit.getServer().shutdown();
+	        if (!success.isEmpty())
+	            Bukkit.getServer().shutdown();
+		}, 1);
 	}
 }
