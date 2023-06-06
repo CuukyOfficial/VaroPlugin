@@ -38,7 +38,6 @@ public class Dependencies {
     protected static final String LIB_FOLDER = "plugins/Varo/libs";
 
     private static final String MAVEN_CENTERAL = "https://repo1.maven.org/maven2/";
-    private static final String DV8_REPO = "https://m2.dv8tion.net/releases/";
 
     private static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
 
@@ -77,11 +76,8 @@ public class Dependencies {
                     String[] split = line.split(":");
                     if (split.length != 5)
                         throw new Error();
-                    String _repo = repo; // TODO this is a hack, but JDA will be updated to v5 soon(tm)
-                    if (split[2].equals("JDA"))
-                        _repo = DV8_REPO;
                     if (split[0].equals(name))
-                        dependencies.add(supplier.get(split[2] + "-" + split[3], LIB_FOLDER, _repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
+                        dependencies.add(supplier.get(split[2] + "-" + split[3], LIB_FOLDER, repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

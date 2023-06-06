@@ -5,65 +5,54 @@ import java.awt.Color;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class RegisterCommand extends DiscordBotCommand {
 
-	/*
-	 * OLD CODE
-	 */
+    /*
+     * OLD CODE
+     */
 
-	public RegisterCommand() {
-		super("register", new String[] { "verify", "link" }, "Registriert dich per Code mit dem Discordbot");
-	}
+    public RegisterCommand() {
+        super("verify", "Registriert dich per Code mit dem Discordbot", new OptionData(OptionType.STRING, "code", "Your verify code", true));
+    }
 
-	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if (event.getAuthor().isBot() || event.getAuthor().equals(super.getDiscordBot().getJda().getSelfUser()))
-			return;
+    @Override
+    public void onExecute(SlashCommandInteraction event) {
+        if (event.getUser().isBot())
+            return;
 
-		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-			getDiscordBot().sendMessage("Das Verify-System ist nicht aktiviert!", "ERROR", Color.RED, event.getTextChannel());
-			return;
-		}
+        if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+            getDiscordBot().replyError("Verify is disabled!", event);
+            return;
+        }
 
-		if (super.getDiscordBot().getRegisterChannel() != null)
-			if (super.getDiscordBot().getRegisterChannel().getIdLong() != event.getTextChannel().getIdLong()) {
-				getDiscordBot().sendMessage("Bitte nutze den " + super.getDiscordBot().getRegisterChannel().getAsMention() + " Channel zum verifizieren, " + event.getAuthor().getAsMention() + "!", "ERROR", Color.RED, event.getTextChannel());
-				return;
-			}
+        String codeString = event.getOption("code").getAsString();
 
-		TextChannel channel = event.getTextChannel();
+        int code;
+        try {
+            code = Integer.valueOf(codeString);
+        } catch (NumberFormatException e) {
+            getDiscordBot().replyError("Invalid code!", event);
+            return;
+        }
 
-		if (args.length == 0) {
-			getDiscordBot().sendMessage("Usage: '" + ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
-			return;
-		}
+        for (BotRegister reg : BotRegister.getBotRegister())
+            if (reg.isActive() && reg.getUserId() == event.getUser().getIdLong()) {
+                getDiscordBot().replyError("Discord Account already verified!", event);
+                return;
+            }
 
-		int code;
-		try {
-			code = Integer.valueOf(args[0]);
-		} catch (Exception e) {
-			getDiscordBot().sendMessage("Usage: '" + ConfigSetting.DISCORDBOT_COMMANDTRIGGER.getValueAsString() + "verify <Code>' " + event.getAuthor().getAsMention(), "ERROR", Color.RED, event.getTextChannel());
-			return;
-		}
-
-		for (BotRegister reg : BotRegister.getBotRegister())
-			if (reg.isActive() && reg.getUserId() == event.getAuthor().getIdLong()) {
-				channel.sendMessage("Discord Account already used! " + event.getAuthor().getAsMention()).queue();
-				return;
-			}
-
-		for (BotRegister reg : BotRegister.getBotRegister()) {
-			if (reg.getCode() == code && !reg.isActive()) {
-				reg.setUserId(Long.valueOf(event.getAuthor().getId()));
-				getDiscordBot().sendMessage("Discord Account '" + event.getAuthor().getAsMention() + "' successfully linked with the MC-Account '" + reg.getPlayerName() + "'!", "SUCCESS", Color.GREEN, event.getTextChannel());
-				reg.setCode(reg.generateCode());
-				return;
-			}
-		}
-
-		getDiscordBot().sendMessage("Code not found!", "ERROR", Color.RED, event.getTextChannel());
-	}
+        for (BotRegister reg : BotRegister.getBotRegister()) {
+            if (reg.getCode() == code && !reg.isActive()) {
+                reg.setUserId(Long.valueOf(event.getUser().getId()));
+                getDiscordBot().reply("Discord Account '" + event.getUser().getAsMention() + "' successfully linked with the MC-Account '" + reg.getPlayerName() + "'!", "Success", Color.GREEN, event);
+                reg.setCode(reg.generateCode());
+                return;
+            }
+        }
+        getDiscordBot().replyError("Invalid code!", event);
+    }
 }

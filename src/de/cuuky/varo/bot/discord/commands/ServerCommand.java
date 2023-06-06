@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ServerCommand extends DiscordBotCommand {
 
@@ -15,11 +15,11 @@ public class ServerCommand extends DiscordBotCommand {
 	 */
 
 	public ServerCommand() {
-		super("server", new String[] { "status", "whitelist" }, "Zeigt Infos und Status des Servers");
+		super("status", "Zeigt Infos und Status des Servers");
 	}
 
 	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
-		getDiscordBot().sendMessage("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Main.getVaroGame().getGameState().toString(), "SERVER INFO", Color.BLUE, event.getTextChannel());
+	public void onExecute(SlashCommandInteraction event) {
+	    getDiscordBot().reply("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Main.getVaroGame().getGameState().toString(), "Server Info", Color.BLUE, event);
 	}
 }

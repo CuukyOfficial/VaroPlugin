@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class RemainingCommand extends DiscordBotCommand {
 
@@ -13,17 +13,12 @@ public class RemainingCommand extends DiscordBotCommand {
 	 */
 
 	public RemainingCommand() {
-		super("remaining", new String[] { "remainingplayers", "alive" }, "Zeigt alle verbleibenden Spieler an");
+		super("alive", "Zeigt alle verbleibenden Spieler an");
 	}
 
 	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if (VaroPlayer.getAlivePlayer().size() == 0) {
-			getDiscordBot().sendMessage("Es sind keine Spieler am leben!", "ERROR", Color.RED, event.getTextChannel());
-			return;
-		}
-
-		String players = "";
+	public void onExecute(SlashCommandInteraction event) {
+	    String players = "";
 		for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
 			if (players.equals(""))
 				players = vp.getName();
@@ -31,6 +26,6 @@ public class RemainingCommand extends DiscordBotCommand {
 				players = players + ", " + vp.getName();
 		}
 
-		getDiscordBot().sendRawMessage("ALIVE (" + VaroPlayer.getAlivePlayer().size() + ") \n\n" + players, event.getTextChannel());
+		getDiscordBot().reply(players, "Alive (" + VaroPlayer.getAlivePlayer().size() + ")", Color.BLUE, event);
 	}
 }

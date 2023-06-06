@@ -1,55 +1,56 @@
 package de.cuuky.varo.bot.discord.commands;
 
 import java.awt.Color;
+import java.util.List;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class GetLinkCommand extends DiscordBotCommand {
 
-	/*
-	 * OLD CODE
-	 */
+    /*
+     * OLD CODE
+     */
 
-	public GetLinkCommand() {
-		super("getLink", new String[] { "getVerify" }, "Gibt den verlinkten MC-Account des Spielers zurueck.");
-	}
+    public GetLinkCommand() {
+        super("lookup", "Gibt den verlinkten MC-Account des Spielers zurück.", new OptionData(OptionType.STRING, "user", "The user/mc-name", true));
+    }
 
-	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if (args.length != 1 && event.getMessage().getMentionedUsers().size() == 0) {
-			event.getTextChannel().sendMessage("varo getLink <User / MC-Name>").queue();
-			return;
-		}
+    @Override
+    public void onExecute(SlashCommandInteraction event) {
+        if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
+            event.getChannel().sendMessage("").queue();
+            getDiscordBot().replyError("Das Verifzierungs-System wurde in der Config deaktiviert!", event);
+            return;
+        }
 
-		if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-			event.getChannel().sendMessage("Das Verifzierungs-System wurde in der Config deaktiviert!").queue();
-			return;
-		}
+        OptionMapping option = event.getOption("user");
+        List<User> mentionedUsers = option.getMentions().getUsers();
 
-		BotRegister reg = null;
-		if (event.getMessage().getMentionedUsers().size() != 0)
-			BotRegister.getRegister(event.getMessage().getMentionedUsers().get(0));
-		else
-			try {
-				reg = BotRegister.getRegister(super.getDiscordBot().getJda().getUsersByName(args[0], true).get(0));
-			} catch (Exception e) {}
+        User user;
+        if (mentionedUsers.size() != 0) {
+            user = mentionedUsers.get(0);
+        } else {
+            user = super.getDiscordBot().getJda().getUserById(option.getAsString());
+            if (user == null) {
+                getDiscordBot().replyError("User fuer diesen Spieler nicht gefunden!", event);
+                return;
+            }
+        }
 
-		if (reg == null) {
-			event.getChannel().sendMessage(Main.getPrefix() + "Der Spieler " + args[0] + " hat den Server noch nie betreten!").queue();
-			return;
-		}
+        BotRegister reg = BotRegister.getRegister(user);
 
-		User user = super.getDiscordBot().getJda().getUserById(reg.getUserId());
-		if (user == null) {
-			event.getChannel().sendMessage(Main.getPrefix() + "User fuer diesen Spieler nicht gefunden!").queue();
-			return;
-		}
+        if (reg == null) {
+            getDiscordBot().replyError("Dieser Spieler ist nicht verifiziert!", event);
+            return;
+        }
 
-		getDiscordBot().sendMessage("Der MC-Account von " + user.getAsMention() + " lautet " + reg.getPlayerName() + "!", "GET LINK", Color.BLUE, event.getTextChannel());
-	}
+        getDiscordBot().reply("Der MC-Account von " + user.getAsMention() + " lautet " + reg.getPlayerName() + "!", "Lookup", Color.BLUE, event);
+    }
 }

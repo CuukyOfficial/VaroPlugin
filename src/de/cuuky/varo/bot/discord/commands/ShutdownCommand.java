@@ -1,5 +1,7 @@
 package de.cuuky.varo.bot.discord.commands;
 
+import java.awt.Color;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -7,53 +9,44 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.bot.discord.register.BotRegister;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ShutdownCommand extends DiscordBotCommand {
 
-	/*
-	 * OLD CODE
-	 */
+    /*
+     * OLD CODE
+     */
 
-	public ShutdownCommand() {
-		super("shutdown", new String[] { "disconnect" }, "Faehrt den Bot herunter.");
-	}
+    public ShutdownCommand() {
+        super("shutdown", "Fährt den Bot herunter.");
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
-		try {
-			if (BotRegister.getRegister(event.getAuthor()) == null) {
-				event.getTextChannel().sendMessage("Du musst mit dem Bot authentifiziert sein!").queue();
-				return;
-			}
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onExecute(SlashCommandInteraction event) {
+        BotRegister reg = BotRegister.getRegister(event.getUser());
+        if (reg == null) {
+            getDiscordBot().replyError("Du musst mit dem Bot authentifiziert sein!", event);
+            return;
+        }
 
-			BotRegister reg = BotRegister.getRegister(event.getAuthor());
-			try {
-				if (Bukkit.getOfflinePlayer(reg.getPlayerName()) == null) {
-					event.getTextChannel().sendMessage("Spieler nicht gefunden!").queue();
-					return;
-				}
-			} catch (NullPointerException e) {
-				return;
-			}
+        OfflinePlayer player = Bukkit.getOfflinePlayer(reg.getPlayerName());
+        if (player == null) {
+            getDiscordBot().replyError("Spieler nicht gefunden!", event);
+            return;
+        }
 
-			OfflinePlayer player = Bukkit.getOfflinePlayer(reg.getPlayerName());
-			if (!player.isOp()) {
-				event.getTextChannel().sendMessage("Dazu bist du nicht berechtigt!").queue();
-				return;
-			}
+        if (!player.isOp()) {
+            getDiscordBot().replyError("Dazu bist du nicht berechtigt!", event);
+            return;
+        }
 
-			event.getTextChannel().sendMessage("Bye, bye.").queue();
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					getDiscordBot().disconnect();
-				}
-			}.runTaskLater(Main.getInstance(), 20L);
-		} catch (Exception e) {
-			super.getDiscordBot().disconnect();
-		}
-	}
-
+        getDiscordBot().reply("Shutting down", "Success", Color.GREEN, event);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                getDiscordBot().disconnect();
+            }
+        }.runTaskLater(Main.getInstance(), 20L);
+    }
 }

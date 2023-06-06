@@ -111,7 +111,6 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_ADD_POKAL_ON_WIN(ConfigSettingSection.DISCORD, "addPokalOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
 	DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1L, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
 	DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1L, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
-	DISCORDBOT_COMMANDTRIGGER(ConfigSettingSection.DISCORD, "commandTrigger", "!varo ", "Stelle hier ein, womit man die\nVaro Commands Triggern kann.\nBeispiel: '!varo remaining'"),
 	DISCORDBOT_ENABLED_PRIVILIGES(ConfigSettingSection.DISCORD, "enabledPriviliges", false, "Aktiviere diesen Eintrag nur, wenn\ndu die besonderen Rechte\ndes Discordbots aktiviert hast\n-> Priviliged Gateway Intents\nAktiviere dies, sobald das Plugin meldet\ndass die Nutzer nicht auf dem Discord sind."),
 
 	// DISCORDBOT
@@ -139,7 +138,6 @@ public enum ConfigSetting implements SectionEntry {
 
 	DISCORDBOT_VERIFYSYSTEM(ConfigSettingSection.DISCORD, "verify.enabled", false, "Ob das Verify System aktiviert werden soll.\nDieses laesst die Spieler sich mit Discord-Accounts verbinden."),
 	DISCORDBOT_VERIFYSYSTEM_OPTIONAL(ConfigSettingSection.DISCORD, "verify.optional", false, "Ob das Verify-System optional sein soll\nWenn deaktiviert: Nur verifizierte Spieler koennen\nden Server betreten"),
-	DISCORDBOT_REGISTERCHANNELID(ConfigSettingSection.DISCORD, "verify.registerChannelID", -1L, "Gib hier die Channel ID des #verify - Channels\nan, wo sich die User verifizieren koennen."),
 	DISCORDBOT_USE_VERIFYSTSTEM_MYSQL(ConfigSettingSection.DISCORD, "verify.mysql.enabled", false, "Ob fuer die Speicherung der BotRegister\neine MySQL Datenbank genutzt werden soll"),
 	DISCORDBOT_VERIFY_DATABASE(ConfigSettingSection.DISCORD, "verify.mysql.database", "DATABASE_HERE", "Datenbank, wo die BotRegister\ngespeichert werden sollen"),
 	DISCORDBOT_VERIFY_HOST(ConfigSettingSection.DISCORD, "verify.mysql.host", "HOST_HERE", "MySQL Host, zu welchem das Plugin sich verbinden soll"),
@@ -449,6 +447,7 @@ public enum ConfigSetting implements SectionEntry {
 	 * @throws IllegalArgumentException
 	 * @throws NumberFormatException
 	 */
+	@Override
 	public void setStringValue(String value, boolean save) {
 		this.setValue(this.parseFromString(value), save);
 	}

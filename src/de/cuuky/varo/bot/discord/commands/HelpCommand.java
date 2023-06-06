@@ -1,7 +1,9 @@
 package de.cuuky.varo.bot.discord.commands;
 
+import java.awt.Color;
+
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class HelpCommand extends DiscordBotCommand {
 
@@ -10,23 +12,16 @@ public class HelpCommand extends DiscordBotCommand {
 	 */
 
 	public HelpCommand() {
-		super("help", new String[] { "commands" }, "Zeigt alle Befehle des DiscordBots an");
+		super("help", "Zeigt alle Befehle des DiscordBots an");
 	}
 
 	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
+	public void onExecute(SlashCommandInteraction event) {
 		StringBuilder cmds = new StringBuilder();
-		for (DiscordBotCommand cmd : DiscordBotCommand.getCommands()) {
-			StringBuilder aliases = new StringBuilder();
-			for (String a : cmd.getAliases())
-				if (aliases.toString().equals(""))
-					aliases = new StringBuilder(a);
-				else
-					aliases.append(", ").append(a);
-			cmds.append("\n").append(cmd.getName()).append(":\n").append("  Aliases: ").append(aliases).append("\n  Description: ").append(cmd.getDescription());
-		}
-
-		super.getDiscordBot().sendRawMessage("``` Hier eine Übersicht aller Commands: " + cmds + "```", event.getTextChannel());
+		cmds.append("```Hier eine Übersicht aller Commands: ");
+		for (DiscordBotCommand cmd : DiscordBotCommand.getCommands())
+			cmds.append("\n\n").append(cmd.getName()).append(":\n  Description: ").append(cmd.getDescription());
+		cmds.append("```");
+		getDiscordBot().reply(cmds.toString(), "Help", Color.BLUE, event);
 	}
-
 }

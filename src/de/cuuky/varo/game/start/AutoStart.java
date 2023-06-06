@@ -1,5 +1,6 @@
 package de.cuuky.varo.game.start;
 
+import java.awt.Color;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,11 +69,10 @@ public class AutoStart implements VaroSerializeable {
 
 	private void postMessage(String message) {
 		if (Main.getBotLauncher().getDiscordbot() != null && Main.getBotLauncher().getDiscordbot().isEnabled() && Main.getBotLauncher().getDiscordbot().getAnnouncementChannel() != null)
-			Main.getBotLauncher().getDiscordbot().sendRawMessage(JavaUtils.replaceAllColors(message) + " " + Main.getBotLauncher().getDiscordbot().getMentionRole(), Main.getBotLauncher().getDiscordbot().getAnnouncementChannel());
+			Main.getBotLauncher().getDiscordbot().sendMessage(JavaUtils.replaceAllColors(message) + " " + Main.getBotLauncher().getDiscordbot().getMentionRole(), "Autostart", Color.BLUE, Main.getBotLauncher().getDiscordbot().getAnnouncementChannel());
 		Bukkit.broadcastMessage(message);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void start() {
 		if (new Date().after(start)) {
 			stop();

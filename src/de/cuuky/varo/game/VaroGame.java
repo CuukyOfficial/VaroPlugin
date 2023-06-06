@@ -252,7 +252,7 @@ public class VaroGame implements VaroSerializeable {
             if (Main.getBotLauncher().getDiscordbot().getResultChannel() != null) {
                 File file = new File("plugins/Varo/logs", "logs.yml");
                 if (file.exists())
-                    db.sendFile("Die Logs des Projektes", file, Main.getBotLauncher().getDiscordbot().getResultChannel());
+                    db.sendMessage("Die Logs des Projektes", "Logs", file, Color.BLUE, Main.getBotLauncher().getDiscordbot().getResultChannel());
             }
         }
 

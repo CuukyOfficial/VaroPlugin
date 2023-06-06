@@ -6,7 +6,7 @@ import org.bukkit.GameMode;
 
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class OnlineCommand extends DiscordBotCommand {
 
@@ -15,17 +15,12 @@ public class OnlineCommand extends DiscordBotCommand {
 	 */
 
 	public OnlineCommand() {
-		super("online", new String[] { "onlineplayers" }, "Zeigt alle Spieler an, die online sind");
+		super("online", "Zeigt alle Spieler an, die online sind");
 	}
 
 	@Override
-	public void onEnable(String[] args, MessageReceivedEvent event) {
-		if (VaroPlayer.getOnlinePlayer().size() == 0) {
-			getDiscordBot().sendMessage("Es sind keine Spieler online!", "ERROR", Color.RED, event.getTextChannel());
-			return;
-		}
-
-		String players = "";
+	public void onExecute(SlashCommandInteraction event) {
+	    String players = "";
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 			if (vp.getPlayer().getGameMode() != GameMode.SURVIVAL)
 				continue;
@@ -36,6 +31,6 @@ public class OnlineCommand extends DiscordBotCommand {
 				players = players + ", " + vp.getName();
 		}
 
-		getDiscordBot().sendRawMessage("ONLINE (" + VaroPlayer.getOnlinePlayer().size() + ") \n\n" + players, event.getTextChannel());
+		getDiscordBot().reply(players, "Online (" + VaroPlayer.getOnlinePlayer().size() + ")", Color.BLUE, event);
 	}
 }

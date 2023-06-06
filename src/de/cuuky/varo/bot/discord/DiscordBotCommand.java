@@ -1,6 +1,7 @@
 package de.cuuky.varo.bot.discord;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.commands.GetLinkCommand;
@@ -12,61 +13,62 @@ import de.cuuky.varo.bot.discord.commands.RegisteredCommand;
 import de.cuuky.varo.bot.discord.commands.RemainingCommand;
 import de.cuuky.varo.bot.discord.commands.ServerCommand;
 import de.cuuky.varo.bot.discord.commands.ShutdownCommand;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public abstract class DiscordBotCommand {
 
-	/*
-	 * OLD CODE
-	 */
+    /*
+     * OLD CODE
+     */
 
-	private static ArrayList<DiscordBotCommand> commands;
+    private static List<DiscordBotCommand> commands;
 
-	static {
-		commands = new ArrayList<>();
+    static {
+        commands = new ArrayList<>();
 
-		new HelpCommand();
-		new InfoCommand();
-		new ServerCommand();
-		new RemainingCommand();
-		new OnlineCommand();
-		new RegisteredCommand();
-		new RegisterCommand();
-		new ShutdownCommand();
-		new GetLinkCommand();
-	}
+        new HelpCommand();
+        new InfoCommand();
+        new ServerCommand();
+        new RemainingCommand();
+        new OnlineCommand();
+        new RegisteredCommand();
+        new RegisterCommand();
+        new ShutdownCommand();
+        new GetLinkCommand();
+    }
 
-	private String[] aliases;
-	private String desc;
-	private String name;
+    private final String name;
+    private final String desc;
+    private final OptionData[] options;
 
-	public DiscordBotCommand(String name, String[] aliases, String description) {
-		this.name = name;
-		this.desc = description;
-		this.aliases = aliases;
+    public DiscordBotCommand(String name, String description, OptionData... options) {
+        this.name = name;
+        this.desc = description;
+        this.options = options;
 
-		commands.add(this);
-	}
+        commands.add(this);
+    }
 
-	public String[] getAliases() {
-		return this.aliases;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public String getDescription() {
-		return this.desc;
-	}
+    public OptionData[] getOptions() {
+        return this.options;
+    }
 
-	public VaroDiscordBot getDiscordBot() {
-		return Main.getBotLauncher().getDiscordbot();
-	}
+    public String getDescription() {
+        return this.desc;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public VaroDiscordBot getDiscordBot() {
+        return Main.getBotLauncher().getDiscordbot();
+    }
 
-	public abstract void onEnable(String[] args, MessageReceivedEvent event);
+    public abstract void onExecute(SlashCommandInteraction event);
 
-	public static ArrayList<DiscordBotCommand> getCommands() {
-		return commands;
-	}
+    public static List<DiscordBotCommand> getCommands() {
+        return commands;
+    }
 }
