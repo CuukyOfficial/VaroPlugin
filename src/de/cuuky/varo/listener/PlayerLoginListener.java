@@ -21,6 +21,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.KickResult;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class PlayerLoginListener implements Listener {
@@ -55,8 +56,8 @@ public class PlayerLoginListener implements Listener {
 			if (reg != null) {
 				reg.setPlayerName(event.getPlayer().getName());
 				try {
-					User user = discordBot.getJda().getUserById(reg.getUserId());
-					if (user == null || !discordBot.getMainGuild().isMember(user)) {
+					UserSnowflake userSnowflake = User.fromId(reg.getUserId());
+					if (userSnowflake == null || !discordBot.getMainGuild().isMember(userSnowflake)) {
 						if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
 							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
 							vp.setPlayer(null);

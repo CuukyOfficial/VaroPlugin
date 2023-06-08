@@ -53,6 +53,8 @@ import de.varoplugin.cfw.player.hud.AnimatedTablist;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 
 public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
 
@@ -151,10 +153,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (member == null)
 			return;
 
+		UserSnowflake userSnowflake = User.fromId(member.getIdLong());
 		if (oldTeam != null) {
 			if (db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
 				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
-				db.getMainGuild().removeRoleFromMember(member, role).complete();
+				db.getMainGuild().removeRoleFromMember(userSnowflake, role).complete();
 			}
 		}
 
@@ -163,7 +166,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			if (role == null)
 				role = db.getMainGuild().createCopyOfRole(db.getMainGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
 
-			db.getMainGuild().addRoleToMember(member, role).complete();
+			db.getMainGuild().addRoleToMember(userSnowflake, role).complete();
 		}
 	}
 

@@ -201,15 +201,15 @@ public class VaroDiscordBot implements VaroBot {
         return jda.getRoleById(pingRole).getAsMention();
     }
 
-    public GuildMessageChannel getAnnouncementChannel() {
+    public MessageChannel getAnnouncementChannel() {
         return jda.getTextChannelById(announcementChannel);
     }
 
-    public GuildMessageChannel getEventChannel() {
+    public MessageChannel getEventChannel() {
         return jda.getTextChannelById(eventChannel);
     }
 
-    public GuildMessageChannel getResultChannel() {
+    public MessageChannel getResultChannel() {
         return jda.getTextChannelById(resultChannel);
     }
 
