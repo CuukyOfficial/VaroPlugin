@@ -81,6 +81,7 @@ public class Main extends JavaPlugin {
 				+ VersionUtils.getVersion().getIdentifier() + ")");
 		System.out.println(
 				CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
+		System.out.println(CONSOLE_PREFIX + "Forge-Support: " + VersionUtils.hasForgeSupport());
 
 		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT) {
 			System.out.println(CONSOLE_PREFIX
