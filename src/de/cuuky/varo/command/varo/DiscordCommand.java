@@ -212,7 +212,7 @@ public class DiscordCommand extends VaroCommand {
 					message = message + " " + ar;
 			}
 			
-			if (!Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()))
+			if (!Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong()))
 			    sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL.getValue(vp));
 			return;
 		} else
