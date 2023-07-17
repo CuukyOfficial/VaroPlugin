@@ -79,7 +79,7 @@ public class VaroDiscordBot implements VaroBot {
 
     private void loadChannel() {
         try {
-            announcementChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
+            announcementChannel = jda.getChannelById(GuildMessageChannel.class, ConfigSetting.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong()).getIdLong();
 
             if (announcementChannel == -1)
                 System.err.println(Main.getConsolePrefix() + "Could not load announcement-channel");
@@ -88,13 +88,13 @@ public class VaroDiscordBot implements VaroBot {
         }
 
         try {
-            eventChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
+            eventChannel = jda.getChannelById(GuildMessageChannel.class, ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong()).getIdLong();
         } catch (ClassCastException | IllegalArgumentException | NullPointerException e) {
             System.err.println(Main.getConsolePrefix() + "Could not load event-channel");
         }
 
         try {
-            resultChannel = jda.getTextChannelById(ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
+            resultChannel = jda.getChannelById(GuildMessageChannel.class, ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()).getIdLong();
 
             if (resultChannel == -1)
                 System.err.println(Main.getConsolePrefix() + "Could not load result-channel");
@@ -163,7 +163,7 @@ public class VaroDiscordBot implements VaroBot {
     public void sendMessage(String message, String title, Color color, long channelid) {
         GuildMessageChannel channel = null;
         try {
-            channel = jda.getTextChannelById(channelid);
+            channel = jda.getChannelById(GuildMessageChannel.class, channelid);
         } catch (Exception e) {
             System.err.println(Main.getConsolePrefix() + "Failed to print discord message!");
             return;
@@ -202,15 +202,15 @@ public class VaroDiscordBot implements VaroBot {
     }
 
     public MessageChannel getAnnouncementChannel() {
-        return jda.getTextChannelById(announcementChannel);
+        return jda.getChannelById(GuildMessageChannel.class, announcementChannel);
     }
 
     public MessageChannel getEventChannel() {
-        return jda.getTextChannelById(eventChannel);
+        return jda.getChannelById(GuildMessageChannel.class, eventChannel);
     }
 
     public MessageChannel getResultChannel() {
-        return jda.getTextChannelById(resultChannel);
+        return jda.getChannelById(GuildMessageChannel.class, resultChannel);
     }
 
     public Guild getMainGuild() {
