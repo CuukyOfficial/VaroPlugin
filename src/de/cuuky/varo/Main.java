@@ -1,10 +1,15 @@
 package de.cuuky.varo;
 
 import java.io.File;
+import java.io.InputStream;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.google.common.io.BaseEncoding;
 
 import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
@@ -96,6 +101,8 @@ public class Main extends JavaPlugin {
 		
 		System.out.println(CONSOLE_PREFIX);
 
+		System.out.println(CONSOLE_PREFIX + "SHA1SUM: " + this.calcChecksum());
+
 		if (this.failed)
 			return;
 
@@ -170,6 +177,20 @@ public class Main extends JavaPlugin {
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
 		super.onDisable();
+	}
+
+	private String calcChecksum() {
+	    try {
+    	    MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            try (InputStream inputStream = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().toURL().openStream(); DigestInputStream digestInputStream = new DigestInputStream(inputStream, messageDigest)) {
+                byte[] buffer = new byte[4096];
+                while (digestInputStream.read(buffer) == buffer.length);
+                return BaseEncoding.base16().lowerCase().encode(messageDigest.digest());
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return "Unknown";
 	}
 
 	public UUID getUUID(String name) throws Exception {
