@@ -213,6 +213,15 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public KickResult getKickResult(Player player) {
+	    if (player.isBanned())
+            return KickResult.BANNED;
+
+        if (Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
+            return KickResult.SERVER_NOT_PUBLISHED;
+        
+        if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() >= Bukkit.getMaxPlayers())
+            return KickResult.SERVER_FULL;
+	    
 		KickResult result = KickResult.ALLOW;
 		if (Main.getVaroGame().hasStarted()) {
 			if (owner.isRegistered())
@@ -226,15 +235,6 @@ public class Stats implements VaroSerializeable {
 			if (Main.getVaroGame().isStarting() && Spawn.getSpawn(owner) == null)
 				result = KickResult.NO_PROJECTUSER;
 		}
-
-		if (Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
-			result = KickResult.SERVER_NOT_PUBLISHED;
-
-		if (player.isBanned())
-			result = KickResult.BANNED;
-
-		if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() >= Bukkit.getMaxPlayers())
-			result = KickResult.SERVER_FULL;
 
 		return result;
 	}
