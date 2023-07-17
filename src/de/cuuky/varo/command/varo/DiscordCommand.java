@@ -202,11 +202,6 @@ public class DiscordCommand extends VaroCommand {
 				return;
 			}
 
-			if (Main.getBotLauncher().getDiscordbot().getEventChannel() == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL.getValue(vp));
-				return;
-			}
-
 			String message = "";
 			for (String ar : args) {
 				if (ar.equals(args[0]))
@@ -216,8 +211,10 @@ public class DiscordCommand extends VaroCommand {
 				else
 					message = message + " " + ar;
 			}
-
-			Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, Main.getBotLauncher().getDiscordbot().getEventChannel());
+			
+			if (!Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong()))
+			    sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL.getValue(vp));
+			return;
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "discord"));
 		return;

@@ -51,6 +51,7 @@ import de.varoplugin.cfw.player.hud.AnimatedActionbar;
 import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
 import de.varoplugin.cfw.player.hud.AnimatedTablist;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
@@ -153,20 +154,24 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (member == null)
 			return;
 
+		Guild guild = db.getMainGuild();
+		if (guild == null)
+		    return;
+		
 		UserSnowflake userSnowflake = User.fromId(member.getIdLong());
 		if (oldTeam != null) {
-			if (db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
-				Role role = db.getMainGuild().getRolesByName("#" + oldTeam.getName(), true).get(0);
-				db.getMainGuild().removeRoleFromMember(userSnowflake, role).complete();
+			if (guild.getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
+				Role role = guild.getRolesByName("#" + oldTeam.getName(), true).get(0);
+				guild.removeRoleFromMember(userSnowflake, role).complete();
 			}
 		}
 
 		if (this.team != null) {
-			Role role = db.getMainGuild().getRolesByName("#" + team.getName(), true).size() > 0 ? db.getMainGuild().getRolesByName("#" + team.getName(), true).get(0) : null;
+			Role role = guild.getRolesByName("#" + team.getName(), true).size() > 0 ? guild.getRolesByName("#" + team.getName(), true).get(0) : null;
 			if (role == null)
-				role = db.getMainGuild().createCopyOfRole(db.getMainGuild().getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
+				role = guild.createCopyOfRole(guild.getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
 
-			db.getMainGuild().addRoleToMember(userSnowflake, role).complete();
+			guild.addRoleToMember(userSnowflake, role).complete();
 		}
 	}
 

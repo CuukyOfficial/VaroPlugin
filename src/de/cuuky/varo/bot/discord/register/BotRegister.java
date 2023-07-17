@@ -17,6 +17,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
@@ -80,7 +81,10 @@ public class BotRegister {
 
 	public Member getMember() {
 		try {
-			return Main.getBotLauncher().getDiscordbot().getMainGuild().getMemberById(this.userId);
+		    Guild guild = Main.getBotLauncher().getDiscordbot().getMainGuild();
+		    if (guild == null)
+		        return null;
+		    return guild.getMemberById(this.userId);
 		} catch (Exception e) {
 			return null;
 		}

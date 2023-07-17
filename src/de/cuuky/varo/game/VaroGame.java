@@ -244,16 +244,14 @@ public class VaroGame implements VaroSerializeable {
             Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN).replace("%player%", first);
         }
 
+        long resultChannelId = ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong();
         VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
-        if (db != null && db.isEnabled()) {
-            if (db.getResultChannel() != null && db.isEnabled())
-                db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glueckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, Main.getBotLauncher().getDiscordbot().getResultChannel());
+        if (db != null && db.isEnabled() && resultChannelId != 0 && resultChannelId != -1) {
+            db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glueckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, resultChannelId);
 
-            if (Main.getBotLauncher().getDiscordbot().getResultChannel() != null) {
-                File file = new File("plugins/Varo/logs", "logs.yml");
-                if (file.exists())
-                    db.sendMessage("Die Logs des Projektes", "Logs", file, Color.BLUE, Main.getBotLauncher().getDiscordbot().getResultChannel());
-            }
+            File file = new File("plugins/Varo/logs", "logs.yml");
+            if (file.exists())
+                db.sendMessage("Die Logs des Projektes", "Logs", file, Color.BLUE, resultChannelId);
         }
 
         if (ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
