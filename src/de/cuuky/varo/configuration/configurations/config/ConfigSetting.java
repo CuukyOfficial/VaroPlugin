@@ -285,6 +285,7 @@ public enum ConfigSetting implements SectionEntry {
 	TELEGRAM_VIDEOS_CHAT_ID(ConfigSettingSection.TELEGRAM, "videosChatId", -1L, "Hier kannst du die ID des Chats angeben, wo\ndie Videos der User gepostet werden sollen."),
 	TRIGGER_FOR_GLOBAL(ConfigSettingSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmaessig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	UNREGISTERED_PLAYER_JOIN(ConfigSettingSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen duerfen."),
+	UNREGISTERED_PLAYER_JOIN_DURING_GAME(ConfigSettingSection.MAIN, "unregisteredPlayerJoinDuringGame", false, "Ob unregistrierte Spieler wärend des Projektes nachträglich joinen dürfen."),
 
 	// YOUTUBE
 	YOUTUBE_ENABLED(ConfigSettingSection.YOUTUBE, "enabled", false, "Checkt jeden Tag bei den Spielern,\ndie einen YouTube Link registriert haben,\nnach den Uploads"),
