@@ -47,7 +47,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 			if (idEntry == null)
 				return -1;
 
-			return idEntry.getValueAsLong() != -1 ? idEntry.getValueAsLong() : ConfigSetting.DISCORDBOT_EVENTCHANNELID.getValueAsLong();
+			return idEntry.getValueAsLong() != -1 ? idEntry.getValueAsLong() : ConfigSetting.DISCORDBOT_EVENT_CHANNELID.getValueAsLong();
 		}
 
 		public static LogType getType(String s) {
