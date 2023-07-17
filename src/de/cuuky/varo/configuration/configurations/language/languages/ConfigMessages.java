@@ -302,7 +302,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_DISCORD_RELOADED("varoCommands.discord.reloaded", "&7Der Discordbot wurde &aerfolgreich &7neu geladen."),
 	VARO_COMMANDS_DISCORD_SHUTDOWN("varoCommands.discord.shutdown", "&7Der Discordbot wurde &aerfolgreich &7heruntergefahren."),
 	VARO_COMMANDS_DISCORD_BOT_OFFLINE("varoCommands.discord.botoffline", "&7Der Discordbot ist nicht online!"),
-	VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL("varoCommands.discord.noeventchannel", "&7Dem Bot wurde keine Event-Channel gegeben."),
+	VARO_COMMANDS_DISCORD_NO_EVENT_CHANNEL("varoCommands.discord.noeventchannel", "&7Dem Bot wurde kein Event-Channel gegeben."),
 	VARO_COMMANDS_DISCORD_VERIFY_ENABLED("varoCommands.discord.verifyenabled", "&7Das Verifysystem wurde aktiviert."),
 	VARO_COMMANDS_DISCORD_DISCORD_MESSAGE_TITLE("varoCommands.discord.discordmessagetitle", "MESSAGE"),
 	VARO_COMMANDS_DISCORD_BYPASS_ACTIVE("varoCommands.discord.bypassactive", "&7%player% umgeht nun das Verifysystem."),
