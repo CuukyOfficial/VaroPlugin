@@ -77,7 +77,7 @@ dependencies {
 
     runtimeDownload("com.google.code.gson:gson:2.10.1")
     runtimeDownload("com.google.guava:guava:19.0")
-    runtimeDownload("net.dv8tion:JDA:5.0.0-beta.10") {
+    runtimeDownload("net.dv8tion:JDA:5.0.0-beta.12") {
         exclude(module = "opus-java")
     }
     runtimeDownload("com.github.pengrad:java-telegram-bot-api:5.4.0")
