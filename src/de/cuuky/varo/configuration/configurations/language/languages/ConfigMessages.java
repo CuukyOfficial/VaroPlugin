@@ -262,6 +262,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED("varoCommands.intro.gamealreadystarted", "&7Das Spiel wurde bereits gestartet!"),
 	VARO_COMMANDS_INTRO_STARTED("varoCommands.intro.started", "&7Und los geht's!"),
 	VARO_COMMANDS_PRESET_NOT_FOUND("varoCommands.preset.notfound", "Das Preset %colorcode%%preset% &7wurde nicht gefunden."),
+	VARO_COMMANDS_PRESET_PATH_TRAVERSAL("varoCommands.preset.pathtraversal", "Presets dürfen sich nur im &3presets&7-Order befinden."),
 	VARO_COMMANDS_PRESET_LOADED("varoCommands.preset.loaded", "Das Preset %colorcode%%preset% &7wurde &aerfolgreich &7geladen."),
 	VARO_COMMANDS_PRESET_SAVED("varoCommands.preset.saved", "Die aktuellen Einstellungen wurden &aerfolgreich &7als Preset %colorcode%%preset% &7gespeichert."),
 	VARO_COMMANDS_PRESET_LIST("varoCommands.preset.list", "&lListe aller Presets:"),
