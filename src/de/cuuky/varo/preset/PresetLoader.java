@@ -11,7 +11,7 @@ public class PresetLoader {
 	private final File configDir;
 
 	public PresetLoader(String name) {
-		this.file = new File("plugins/Varo/presets/" + name);
+		this.file = new File("plugins/Varo/presets/", name);
 		this.configDir = new File("plugins/Varo/config/");
 	}
 
