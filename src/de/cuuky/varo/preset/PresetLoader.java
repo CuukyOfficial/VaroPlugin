@@ -20,7 +20,7 @@ public class PresetLoader {
 	}
 
 	private boolean copy(File from, File to) {
-		if (!Paths.get(file.getPath()).normalize().startsWith(PRESET_PATH))
+		if (!Paths.get(file.getPath()).normalize().startsWith(PRESET_PATH) || Paths.get(file.getPath()).normalize().equals(PRESET_PATH))
 			return false;
 
 		if (!to.exists())
