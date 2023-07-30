@@ -41,10 +41,12 @@ public class PresetCommand extends VaroCommand {
 				return;
 			}
 
-			loader.loadSettings();
-			Main.getDataManager().reloadConfig();
-			Main.getDataManager().reloadPlayerClients();
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LOADED.getValue(vp).replace("%preset%", args[1]));
+			if (loader.loadSettings()) {
+				Main.getDataManager().reloadConfig();
+				Main.getDataManager().reloadPlayerClients();
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LOADED.getValue(vp).replace("%preset%", args[1]));
+			} else
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_PATH_TRAVERSAL.getValue(vp).replace("%preset%", args[1]));
 		} else if (args[0].equalsIgnoreCase("save")) {
 			if (args.length != 2) {
 				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_HELP_SAVE.getValue(vp));
@@ -52,8 +54,10 @@ public class PresetCommand extends VaroCommand {
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
-			loader.copyCurrentSettingsTo();
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_SAVED.getValue(vp).replace("%preset%", args[1]));
+			if (loader.copyCurrentSettingsTo())
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_SAVED.getValue(vp).replace("%preset%", args[1]));
+			else
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_PATH_TRAVERSAL.getValue(vp).replace("%preset%", args[1]));
 		} else if (args[0].equalsIgnoreCase("list")) {
 			File file = new File("plugins/Varo/presets");
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LIST.getValue(vp));
