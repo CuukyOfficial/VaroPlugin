@@ -2,20 +2,27 @@ package de.cuuky.varo.preset;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.google.common.io.Files;
 
 public class PresetLoader {
 
+	private static final Path PRESET_PATH = Paths.get("plugins/Varo/presets/");
+
 	private final File file;
 	private final File configDir;
 
 	public PresetLoader(String name) {
-		this.file = new File("plugins/Varo/presets/" + name);
+		this.file = new File("plugins/Varo/presets/", name);
 		this.configDir = new File("plugins/Varo/config/");
 	}
 
-	private void copy(File from, File to) {
+	private boolean copy(File from, File to) {
+		if (!Paths.get(file.getPath()).normalize().startsWith(PRESET_PATH) || Paths.get(file.getPath()).normalize().equals(PRESET_PATH))
+			return false;
+
 		if (!to.exists())
 			to.mkdirs();
 
@@ -28,16 +35,18 @@ public class PresetLoader {
 				Files.copy(config, toFile);
 			} catch (IOException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return true;
 	}
 
-	public void copyCurrentSettingsTo() {
-		this.copy(this.configDir, file);
+	public boolean copyCurrentSettingsTo() {
+		return this.copy(this.configDir, file);
 	}
 
-	public void loadSettings() {
-		this.copy(file, this.configDir);
+	public boolean loadSettings() {
+		return this.copy(file, this.configDir);
 	}
 
 	public File getFile() {

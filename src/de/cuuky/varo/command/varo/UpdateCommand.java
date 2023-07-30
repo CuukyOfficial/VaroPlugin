@@ -39,7 +39,7 @@ public class UpdateCommand extends VaroCommand {
 	private void update(CommandSender sender, VaroUpdateResultSet resultSet) {
 		// Step 1: Download new Version
 		try {
-			FileDownloader fd = new FileDownloader("http://api.spiget.org/v2/resources/" + Main.getResourceId() + "/download", "plugins/update/" + this.oldFileName);
+			FileDownloader fd = new FileDownloader("https://api.spiget.org/v2/resources/" + Main.getResourceId() + "/download", "plugins/update/" + this.oldFileName);
 
 			sender.sendMessage(Main.getPrefix() + "Starte Download...");
 
