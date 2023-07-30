@@ -110,7 +110,7 @@ tasks.jar {
     dependsOn(createDependenciesFile)
 
     manifest {
-        attributes(Pair("Manifest-Version", "1.0"), Pair("Class-Path", "."), Pair("Main-Class", "de.varoplugin.varo.RunnableLauncher"))
+        attributes(Pair("Manifest-Version", "1.0"), Pair("Class-Path", "."), Pair("Main-Class", "de.cuuky.varo.MainLauncher"))
     }
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
