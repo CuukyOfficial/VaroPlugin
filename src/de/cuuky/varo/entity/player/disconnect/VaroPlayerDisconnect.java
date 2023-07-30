@@ -2,12 +2,14 @@ package de.cuuky.varo.entity.player.disconnect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import de.cuuky.cfw.player.PlayerVersionAdapter;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -34,16 +36,23 @@ public class VaroPlayerDisconnect {
 	}
 
 	private int amount;
-	private String name;
+	private UUID uuid;
 
 	public VaroPlayerDisconnect(Player player) {
-		this.name = player.getName();
+		this.uuid = player.getUniqueId();
 
 		disconnects.add(this);
 	}
 
 	public void addDisconnect() {
-		if (VaroPlayer.getPlayer(name).getVersionAdapter().getPing() >= ConfigSetting.NO_DISCONNECT_PING.getValueAsInt() || playerIsDead())
+	    VaroPlayer varoPlayer = VaroPlayer.getPlayer(uuid.toString());
+	    if (varoPlayer != null) {
+	        PlayerVersionAdapter versionAdapter = varoPlayer.getVersionAdapter();
+	        if (versionAdapter != null && varoPlayer.getVersionAdapter().getPing() >= ConfigSetting.NO_DISCONNECT_PING.getValueAsInt())
+	            return;
+	    }
+
+		if (playerIsDead())
 			return;
 
 		amount++;
@@ -53,7 +62,10 @@ public class VaroPlayerDisconnect {
 		if (amount <= ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt())
 			return false;
 
-		VaroPlayer vp = VaroPlayer.getPlayer(name);
+		VaroPlayer vp = VaroPlayer.getPlayer(uuid.toString());
+		if (vp == null)
+		    return false;
+
 		vp.getStats().addSessionPlayed();
 		vp.getStats().removeReamainingSession();
 		if (vp.getStats().hasTimeLeft())
@@ -73,12 +85,8 @@ public class VaroPlayerDisconnect {
 		return this.amount;
 	}
 
-	public String getPlayer() {
-		return this.name;
-	}
-
 	public boolean playerIsDead() {
-		Player player = Bukkit.getPlayerExact(name);
+		Player player = Bukkit.getPlayer(uuid);
 		if (player != null)
 			if (!player.isDead() && player.getHealth() != 0)
 				return false;
@@ -119,7 +127,7 @@ public class VaroPlayerDisconnect {
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {
 		for (VaroPlayerDisconnect disconnect : disconnects)
-			if (disconnect.getPlayer().equals(p.getName()))
+			if (disconnect.uuid.equals(p.getUniqueId()))
 				return disconnect;
 
 		return null;
