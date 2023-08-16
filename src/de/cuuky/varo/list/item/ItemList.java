@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -78,6 +79,7 @@ public abstract class ItemList extends VaroList {
 	}
 
 	public boolean addItem(ItemStack item) {
+	    Objects.requireNonNull(item);
 		if (this.maxSize > 0 && this.items.size() >= this.maxSize) return false;
 		this.processItem(item, this.items::add);
 		return true;
@@ -98,12 +100,14 @@ public abstract class ItemList extends VaroList {
 
 	@Override
 	public void onLoad(List<?> list) {
-		for (Object id : list) {
-			try {
-				ItemStack c = (ItemStack) id;
-				items.add(c);
-			} catch (Exception e) {
-			}
+		for (Object object : list) {
+		    if (object != null)
+    			try {
+    				ItemStack itemStack = (ItemStack) object;
+    				items.add(itemStack);
+    			} catch (Exception e) {
+    			    e.printStackTrace();
+    			}
 		}
 	}
 
