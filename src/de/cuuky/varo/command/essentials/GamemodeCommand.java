@@ -69,10 +69,11 @@ public class GamemodeCommand implements CommandExecutor {
 	                return false;
 	            }
 			} catch (NumberFormatException e) {
-			    gm = GameMode.valueOf(args[0].toUpperCase());
-			    if (gm == null) {
+			    try {
+			        gm = GameMode.valueOf(args[0].toUpperCase());
+			    } catch (IllegalArgumentException e0) {
 			        sender.sendMessage(Main.getPrefix() + "§7Du hast keinen gültigen Gamemode angegeben!");
-			        return false;
+                    return false;
 			    }
 			}
 
