@@ -42,37 +42,38 @@ public class GamemodeCommand implements CommandExecutor {
 				}
 			}
 
-			int mode = 0;
-			try {
-				mode = Integer.valueOf(args[0]);
-			} catch (Exception e) {
-				sender.sendMessage(Main.getPrefix() + "§7Du hast keinen gueltigen Gamemode angegeben!");
-				return false;
-			}
-
 			GameMode gm;
-			switch (mode) {
-			case 0:
-				gm = GameMode.SURVIVAL;
-				break;
-			case 1:
-				gm = GameMode.CREATIVE;
-				break;
-			case 2:
-				gm = GameMode.ADVENTURE;
-				break;
-			case 3:
-				if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
-					sender.sendMessage(Main.getPrefix() + "Nicht verfuegbar vor der 1.8!");
-					return false;
-				}
+			try {
+			    int mode = Integer.valueOf(args[0]);
 
-				gm = GameMode.valueOf("SPECTATOR"); // Damit keine IDE Fehler
-				// bei 1.7 kommen
-				break;
-			default:
-				sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
-				return false;
+	            switch (mode) {
+	            case 0:
+	                gm = GameMode.SURVIVAL;
+	                break;
+	            case 1:
+	                gm = GameMode.CREATIVE;
+	                break;
+	            case 2:
+	                gm = GameMode.ADVENTURE;
+	                break;
+	            case 3:
+	                if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
+	                    sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
+	                    return false;
+	                }
+
+	                gm = GameMode.SPECTATOR;
+	                break;
+	            default:
+	                sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
+	                return false;
+	            }
+			} catch (NumberFormatException e) {
+			    gm = GameMode.valueOf(args[0].toUpperCase());
+			    if (gm == null) {
+			        sender.sendMessage(Main.getPrefix() + "§7Du hast keinen gültigen Gamemode angegeben!");
+			        return false;
+			    }
 			}
 
 			if (player != null) {
