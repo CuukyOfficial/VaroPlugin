@@ -22,7 +22,7 @@ public class PlayerCommand extends VaroCommand {
 	private PageableChatBuilder<VaroPlayer> listBuilder;
 
 	public PlayerCommand() {
-		super("player", "Verwaltet die Spieler", "varo.player");
+		super("player", "Verwaltet die Spieler", "varo.player", "players");
 
 		this.listBuilder = new PageableChatBuilder<>(VaroPlayer::getVaroPlayers)
 				.messages(new VaroChatListMessages<>(player ->
