@@ -38,15 +38,15 @@ public class KillEvent extends BukkitEvent {
 			}
 		}
 		
-		if (!VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
+		if (ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			// Adding time during a mass recording may or may not break something
 			int timeAdded = 0;
 			if (ConfigSetting.DEATH_TIME_ADD.isIntActivated())
 				timeAdded = ConfigSetting.DEATH_TIME_ADD.getValueAsInt();
-			
+
 			if (ConfigSetting.DEATH_TIME_MIN.isIntActivated() && stats.getCountdown() + timeAdded < ConfigSetting.DEATH_TIME_MIN.getValueAsInt())
 				timeAdded = ConfigSetting.DEATH_TIME_MIN.getValueAsInt() - stats.getCountdown();
-			
+
 			if (timeAdded > 0) {
 				stats.setCountdown(timeAdded + stats.getCountdown());
 				player.sendMessage(Main.getPrefix() + ConfigMessages.DEATH_KILL_TIME_ADD.getValue(player).replace("%timeAdded%", String.valueOf(timeAdded)));
