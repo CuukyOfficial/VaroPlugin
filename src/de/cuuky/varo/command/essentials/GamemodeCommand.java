@@ -65,7 +65,10 @@ public class GamemodeCommand implements CommandExecutor {
 	                gm = GameMode.SPECTATOR;
 	                break;
 	            default:
-	                sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
+	                if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+	                    sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
+	                else
+	                    sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-2 betragen!");
 	                return false;
 	            }
 			} catch (NumberFormatException e) {
