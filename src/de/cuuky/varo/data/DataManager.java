@@ -107,7 +107,7 @@ public class DataManager {
 			VersionUtils.getVersionAdapter().setServerProperty("announce-player-achievements", false);
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
-		VaroUtils.setWorldToTime();
+		VaroUtils.updateWorldTime();
 
 		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
 

@@ -18,7 +18,6 @@ import de.cuuky.varo.threads.daily.dailycheck.checker.NoJoinCheck;
 import de.cuuky.varo.threads.daily.dailycheck.checker.SessionCheck;
 import de.cuuky.varo.threads.daily.dailycheck.checker.StrikePostCheck;
 import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
-import de.cuuky.varo.utils.VaroUtils;
 
 public final class DailyTimer {
 
@@ -55,7 +54,6 @@ public final class DailyTimer {
 	}
 
 	private void startTimer() {
-		VaroUtils.setWorldToTime();
 		if (Main.getVaroGame().getGameState() == GameState.STARTED && Main.getVaroGame().getLastDayTimer() != null) {
 			Date date = Main.getVaroGame().getLastDayTimer();
 			for (int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {

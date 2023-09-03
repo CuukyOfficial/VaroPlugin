@@ -91,7 +91,7 @@ public class VaroGame implements VaroSerializeable {
 
         this.varoWorldHandler = new VaroWorldHandler();
 
-        this.gamestate = GameState.LOBBY;
+        this.setGamestate(GameState.LOBBY);
         this.borderDecrease = new BorderDecreaseDayTimer(true);
     }
 
@@ -195,7 +195,7 @@ public class VaroGame implements VaroSerializeable {
         if (EventUtils.callEvent(new VaroEndEvent(this, check)))
             return;
 
-        this.gamestate = GameState.END;
+        this.setGamestate(GameState.END);
 
         for (VaroPlayer vp : check.getPlaces().get(1)) {
             if (!vp.isOnline())
@@ -348,6 +348,7 @@ public class VaroGame implements VaroSerializeable {
 
     public void setGamestate(GameState gamestate) {
         this.gamestate = gamestate;
+        VaroUtils.updateWorldTime();
     }
 
     public void setLastCoordsPost(Date lastCoordsPost) {

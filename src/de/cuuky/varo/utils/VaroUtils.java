@@ -1,49 +1,36 @@
 package de.cuuky.varo.utils;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.team.VaroTeam;
+
 public final class VaroUtils {
+    
+    private static final String GAMERULE_DO_DAYLIGHT_CYCLE = "doDaylightCycle";
+	
+	public static void updateWorldTime() {
+	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
 
-	private static BukkitTask worldToTimeID;
-
-	public static void setWorldToTime() {
-		if (!ConfigSetting.ALWAYS_TIME.isIntActivated())
-			return;
-
-		if (worldToTimeID != null)
-			worldToTimeID.cancel();
-
-		worldToTimeID = new BukkitRunnable() {
-
-			final int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
-
-			@Override
-			public void run() {
-				if (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()) {
-					worldToTimeID.cancel();
-					return;
-				}
-
-				for (World world : Bukkit.getWorlds()) {
-					world.setTime(time);
-					world.setThundering(false);
-					world.setStorm(false);
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 0, 40);
+	    for (World world : Bukkit.getWorlds())
+	        if (!ConfigSetting.ALWAYS_TIME.isIntActivated() || (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()))
+	            world.setGameRuleValue(GAMERULE_DO_DAYLIGHT_CYCLE, "true");
+	        else {
+	            world.setGameRuleValue(GAMERULE_DO_DAYLIGHT_CYCLE, "false");
+	            if (world.getTime() != time)
+	                world.setTime(time);
+	            world.setStorm(false);
+	            world.setThundering(false);
+	        }
 	}
 
 	public static void doRandomTeam(int teamSize) {

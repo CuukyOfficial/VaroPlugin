@@ -71,6 +71,7 @@ import de.cuuky.varo.listener.PlayerRegenerateListener;
 import de.cuuky.varo.listener.PlayerRespawnListener;
 import de.cuuky.varo.listener.PlayerTeleportListener;
 import de.cuuky.varo.listener.ServerListPingListener;
+import de.cuuky.varo.listener.WeatherChangeListener;
 import de.cuuky.varo.listener.lists.BlockedEnchantmentsListener;
 import de.cuuky.varo.listener.lists.BlockedItemsListener;
 import de.cuuky.varo.listener.logging.DestroyedBlocksListener;
@@ -194,5 +195,6 @@ public final class BukkitRegisterer {
 		registerEvent(new InventoryMoveListener());
 		registerEvent(new ItemDropListener());
 		registerEvent(new ItemPickupListener());
+		registerEvent(new WeatherChangeListener());
 	}
 }
