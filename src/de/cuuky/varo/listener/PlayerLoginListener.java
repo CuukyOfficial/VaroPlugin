@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
@@ -26,6 +27,13 @@ import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class PlayerLoginListener implements Listener {
+    
+    @EventHandler(priority = EventPriority.LOW)
+    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
+        BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(event.getName());
+        if (entry != null)
+            event.disallow(org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ConfigMessages.JOIN_KICK_BANNED.getValue().replace("%reason%", entry.getReason()));
+    }
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerLogin(PlayerLoginEvent event) {
@@ -91,14 +99,6 @@ public class PlayerLoginListener implements Listener {
 		switch (kickResult) {
 		case NO_PROJECTUSER:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp, vp));
-			break;
-		case BANNED:
-			for (BanEntry entry : Bukkit.getBanList(Type.NAME).getBanEntries()) {
-				if (entry.getTarget().equals(player.getName())) {
-					event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_BANNED.getValue(vp, vp).replace("%reason%", entry.getReason()));
-					break;
-				}
-			}
 			break;
 		case DEAD:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.DEATH_KICK_DEAD.getValue(vp));

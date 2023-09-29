@@ -3,7 +3,6 @@ package de.cuuky.varo.entity.player.stats;
 public enum KickResult {
 
 	ALLOW(true),
-	BANNED,
 	DEAD,
 	FINALE_JOIN(true),
 	MASS_RECORDING_JOIN(true),

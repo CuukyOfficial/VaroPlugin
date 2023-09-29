@@ -214,9 +214,6 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public KickResult getKickResult(Player player) {
-	    if (player.isBanned())
-            return KickResult.BANNED;
-
         if (Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
             return KickResult.SERVER_NOT_PUBLISHED;
         
