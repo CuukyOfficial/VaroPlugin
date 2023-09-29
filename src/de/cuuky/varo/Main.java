@@ -15,6 +15,7 @@ import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
 import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
@@ -101,7 +102,8 @@ public class Main extends JavaPlugin {
 		
 		System.out.println(CONSOLE_PREFIX);
 
-		System.out.println(CONSOLE_PREFIX + "SHA1SUM: " + this.calcChecksum());
+		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+		    System.out.println(CONSOLE_PREFIX + "SHA1SUM: " + this.calcChecksum());
 
 		if (this.failed)
 			return;
