@@ -42,7 +42,7 @@ public class VaroDiscordBot implements VaroBot {
     public void connect() {
         System.out.println(Main.getConsolePrefix() + "Activating discord bot... (Errors might appear - don't mind them)");
         JDABuilder builder = JDABuilder.createLight(ConfigSetting.DISCORDBOT_TOKEN.getValueAsString());
-        builder.setActivity(Activity.playing(ConfigSetting.DISCORDBOT_GAMESTATE.getValueAsString()));
+        builder.setActivity(Activity.customStatus(ConfigSetting.DISCORDBOT_GAMESTATE.getValueAsString()));
         builder.setAutoReconnect(true);
         builder.setRequestTimeoutRetry(true);
         builder.setStatus(OnlineStatus.ONLINE);
