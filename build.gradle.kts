@@ -76,14 +76,13 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.10.10")
 
     runtimeDownload("com.google.code.gson:gson:2.10.1")
-    runtimeDownload("com.google.guava:guava:19.0")
-    runtimeDownload("net.dv8tion:JDA:5.0.0-beta.12") {
+    runtimeDownload("net.dv8tion:JDA:5.0.0-beta.14") {
         exclude(module = "opus-java")
     }
-    runtimeDownload("com.github.pengrad:java-telegram-bot-api:5.4.0")
+    runtimeDownload("com.github.pengrad:java-telegram-bot-api:6.9.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 }
 
 val createDependenciesFile = tasks.register("createDependenciesFile") {
