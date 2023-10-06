@@ -169,7 +169,8 @@ public class VaroDiscordBot implements VaroBot {
                 builder.setColor(color);
             else
                 builder.setColor(getRandomColor());
-            builder.addField(title, escapedMessage, true);
+            builder.setTitle(title);
+            builder.setDescription(escapedMessage);
             action.replyEmbeds(builder.build()).queue();
         } else
             action.reply(escapedMessage).queue();
