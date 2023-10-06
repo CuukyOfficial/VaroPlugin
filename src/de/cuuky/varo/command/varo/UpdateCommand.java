@@ -18,58 +18,8 @@ import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 public class UpdateCommand extends VaroCommand {
 
-	private String oldFileName;
-	private boolean pluginNameChanged, resetOldDirectory;
-
 	public UpdateCommand() {
 		super("update", "Installiert automatisch die neueste Version", "varo.update");
-	}
-
-	private void deleteDirectory(File file) {
-		for (File listFile : file.listFiles()) {
-			if (listFile.isDirectory())
-				deleteDirectory(listFile);
-
-			listFile.delete();
-		}
-
-		file.delete();
-	}
-
-	private void update(CommandSender sender, VaroUpdateResultSet resultSet) {
-		// Step 1: Download new Version
-		try {
-			FileDownloader fd = new FileDownloader("https://api.spiget.org/v2/resources/" + Main.getResourceId() + "/download", "plugins/update/" + this.oldFileName);
-
-			sender.sendMessage(Main.getPrefix() + "Starte Download...");
-
-			fd.startDownload();
-		} catch (Exception e) {
-			sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
-			sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
-			System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
-			System.out.println("---------- Stack Trace ----------");
-			e.printStackTrace();
-			System.out.println("---------- Stack Trace ----------");
-			return;
-		}
-
-		sender.sendMessage(Main.getPrefix() + "Update erfolgreich installiert");
-
-		// Step 2: Deleting old directory if wanted
-		if (resetOldDirectory) {
-			System.out.println("Das Verzeichnis der alten Pluginversion wird geloescht.");
-			File directory = new File("plugins/Varo/");
-			deleteDirectory(directory);
-		}
-//
-//		// Step 3: Deleting old Version if existing
-//		if (this.pluginNameChanged) {
-//			System.out.println("Da sich der Pluginname veraendert hat, wird die alte Pluginversion geloescht.");
-//			File oldPlugin = new File("plugins/" + this.oldFileName);
-//		}
-
-		Bukkit.getServer().shutdown();
 	}
 
 	@Override
@@ -83,23 +33,33 @@ public class UpdateCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
 				sender.sendMessage("");
 				sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update normal §7- Updated die Version, aber behaelt alle Daten");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update reset §7- Updated die Version und loescht alle Daten");
-				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geaendert haben sollte, musst du manuell updaten.");
-			} else {
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update normal §7- Updated die Version, aber behält alle Daten");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update reset §7- Updated die Version und löscht alle Daten");
+				sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geändert haben sollte, musst du manuell updaten.");
+			} else if (result == UpdateResult.MAJOR_UPDATE_AVAILABLE) {
+                sender.sendMessage(Main.getPrefix() + "§c Es existiert eine neuere Version: " + updateVersion);
+                sender.sendMessage("");
+                sender.sendMessage(Main.getPrefix() + "§7§lUpdate Befehle:");
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update reset §7- Updated die Version und löscht alle Daten");
+                sender.sendMessage(Main.getPrefix() + "§cWichtig: §7Der Updater spiget.org hat manchmal eine alte Version als Download. Falls sich nach dem Update die Version nicht geändert haben sollte, musst du manuell updaten.");
+            } else {
 				sender.sendMessage(Main.getPrefix() + "Es wurde keine neue Version gefunden. Sollte dies ein Fehler sein, aktualisiere manuell.");
 			}
 			return;
 		}
 
+		boolean resetOldDirectory = false;
 		if (args[0].equalsIgnoreCase("normal")) {
+		    if (result == UpdateResult.MAJOR_UPDATE_AVAILABLE) {
+		        sender.sendMessage(Main.getPrefix() + "§cDieser Befehl ist für dieses Update nicht verfügbar! Nutze §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update reset §r§cum alle Daten zu löschen.");
+		        return;
+		    }
 			resetOldDirectory = false;
 		} else if (args[0].equalsIgnoreCase("reset")) {
 			resetOldDirectory = true;
 		}
 
-		this.pluginNameChanged = false;
-		this.oldFileName = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
+		String oldFileName = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
 
 		try {
 			oldFileName = URLDecoder.decode(oldFileName, "UTF-8");
@@ -107,19 +67,57 @@ public class UpdateCommand extends VaroCommand {
 			oldFileName = oldFileName.replace("%20", " ");
 		}
 
-		if (!this.oldFileName.equals(Main.getInstance().getDescription().getName() + ".jar"))
-			this.pluginNameChanged = true;
-
 		Main.getDataManager().setDoSave(false);
 
-		if (result == UpdateResult.UPDATE_AVAILABLE) {
+		if (result == UpdateResult.UPDATE_AVAILABLE || result == UpdateResult.MAJOR_UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
 			sender.sendMessage(Main.getPrefix() + "§7Backup wird erstellt...");
 			new VaroBackup();
 			sender.sendMessage(Main.getPrefix() + "§7Unter Umstaenden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
-			update(sender, resultSet);
+			update(sender, oldFileName, resetOldDirectory);
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 		}
 	}
+	
+	private static void update(CommandSender sender, String oldFileName, boolean resetOldDirectory) {
+        // Step 1: Download new Version
+        try {
+            FileDownloader fd = new FileDownloader("https://api.spiget.org/v2/resources/" + Main.getResourceId() + "/download", "plugins/update/" + oldFileName);
+
+            sender.sendMessage(Main.getPrefix() + "Starte Download...");
+
+            fd.startDownload();
+        } catch (Exception e) {
+            sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
+            sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
+            System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
+            System.out.println("---------- Stack Trace ----------");
+            e.printStackTrace();
+            System.out.println("---------- Stack Trace ----------");
+            return;
+        }
+
+        sender.sendMessage(Main.getPrefix() + "Update erfolgreich installiert");
+
+        // Step 2: Deleting old directory if wanted
+        if (resetOldDirectory) {
+            System.out.println("Das Verzeichnis der alten Pluginversion wird geloescht.");
+            File directory = new File("plugins/Varo/");
+            deleteDirectory(directory);
+        }
+
+        Bukkit.getServer().shutdown();
+    }
+
+	private static void deleteDirectory(File file) {
+        for (File listFile : file.listFiles()) {
+            if (listFile.isDirectory())
+                deleteDirectory(listFile);
+
+            listFile.delete();
+        }
+
+        file.delete();
+    }
 }

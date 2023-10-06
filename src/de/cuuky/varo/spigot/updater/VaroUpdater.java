@@ -18,12 +18,6 @@ import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 public class VaroUpdater {
 
-	private enum VersionCompareResult {
-		VERSION1GREATER,
-		VERSION2GREATER,
-		VERSIONS_EQUAL;
-	}
-
 	private static final String UPDATE_LINK = "https://api.spiget.org/v2/resources/%version%/versions/latest";
 
 	private VaroUpdateResultSet lastResult;
@@ -38,35 +32,6 @@ public class VaroUpdater {
 		this.finishHook = finishedHook;
 
 		checkUpdate();
-	}
-
-	private VersionCompareResult compareVersions(String version1, String version2) {
-		try {
-			String version1Use = version1.split("-BETA")[0], version2Use = version2.split("-BETA")[0];
-			if (!version1Use.matches("[0-9]+(\\.[0-9]+)*")
-					|| !version2Use.matches("[0-9]+(\\.[0-9]+)*"))
-				throw new IllegalArgumentException("Invalid version format");
-
-			String[] version1Parts = version1Use.split("\\.");
-			String[] version2Parts = version2Use.split("\\.");
-
-			for (int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
-				int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
-				int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
-				if (version1Part < version2Part)
-					return VersionCompareResult.VERSION2GREATER;
-				if (version1Part > version2Part)
-					return VersionCompareResult.VERSION1GREATER;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
-			Main.getInstance().fail();
-		}
-
-		if (version1.contains("BETA")) return VersionCompareResult.VERSION2GREATER;
-		if (version2.contains("BETA")) return VersionCompareResult.VERSION1GREATER;
-		return VersionCompareResult.VERSIONS_EQUAL;
 	}
 
 	private void checkUpdate() {
@@ -90,6 +55,8 @@ public class VaroUpdater {
 
 		if (lastResult.getUpdateResult() == UpdateResult.UPDATE_AVAILABLE)
 			new Alert(AlertType.UPDATE_AVAILABLE, "§cA newer version of the plugin ( " + lastResult.getVersionName() + ") is available!\n§7Usually you can update without any loss of data\nwe recommend you reading the update logs anyway!");
+		if (lastResult.getUpdateResult() == UpdateResult.MAJOR_UPDATE_AVAILABLE)
+            new Alert(AlertType.UPDATE_AVAILABLE, "§cA newer version of the plugin ( " + lastResult.getVersionName() + ") is available!\nUpdating to this version will reset all stats and configs!");
 	}
 
 	public VaroUpdateResultSet checkForUpdates() {
@@ -100,17 +67,7 @@ public class VaroUpdater {
 			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(reader);
 			version = scannerJSON.get("name").toString();
 			id = scannerJSON.get("id").toString();
-			switch (compareVersions(version, this.currentVersion)) {
-			case VERSION1GREATER:
-				result = UpdateResult.UPDATE_AVAILABLE;
-				break;
-			case VERSIONS_EQUAL:
-				result = UpdateResult.NO_UPDATE;
-				break;
-			case VERSION2GREATER:
-				result = UpdateResult.TEST_BUILD;
-				break;
-			}
+			result = VaroUpdater.compareVersions(this.resourceId, version, this.currentVersion);
 		} catch (IOException e) {
 			result = UpdateResult.FAIL_SPIGOT;
 		} catch (ParseException | IllegalArgumentException e) {
@@ -133,4 +90,34 @@ public class VaroUpdater {
 	public int getResourceId() {
 		return this.resourceId;
 	}
+
+	private static UpdateResult compareVersions(int resourceId, String otherVersion, String currentVersion) {
+        try {
+            String version1Use = otherVersion.split("-BETA")[0], version2Use = currentVersion.split("-BETA")[0];
+            if (!version1Use.matches("[0-9]+(\\.[0-9]+)*")
+                    || !version2Use.matches("[0-9]+(\\.[0-9]+)*"))
+                throw new IllegalArgumentException("Invalid version format");
+
+            String[] version1Parts = version1Use.split("\\.");
+            String[] version2Parts = version2Use.split("\\.");
+
+            for (int i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
+                int version1Part = i < version1Parts.length ? Integer.parseInt(version1Parts[i]) : 0;
+                int version2Part = i < version2Parts.length ? Integer.parseInt(version2Parts[i]) : 0;
+                if (version1Part < version2Part)
+                    return UpdateResult.TEST_BUILD;
+                if (version1Part > version2Part) {
+                    return i == 0 ? UpdateResult.MAJOR_UPDATE_AVAILABLE : UpdateResult.UPDATE_AVAILABLE;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
+            Main.getInstance().fail();
+        }
+
+        if (currentVersion.contains("BETA"))
+            return UpdateResult.UPDATE_AVAILABLE;
+        return UpdateResult.NO_UPDATE;
+    }
 }

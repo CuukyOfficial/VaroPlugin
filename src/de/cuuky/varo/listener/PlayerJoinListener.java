@@ -70,8 +70,13 @@ public class PlayerJoinListener implements Listener {
 				case UPDATE_AVAILABLE:
 					if (Main.getVaroGame().getGameState() == GameState.LOBBY)
 						vplayer.getVersionAdapter().sendTitle("§cUpdate available", "You are using an outdated plugin version!");
-					player.sendMessage(Main.getPrefix() + "§cVaro update available!§7 Use §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 to update now. New version: " + updateVersion);
+					player.sendMessage(Main.getPrefix() + "§cVaro update available! §7Use §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 to update now. New version: " + updateVersion);
 					break;
+				case MAJOR_UPDATE_AVAILABLE:
+                    if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+                        vplayer.getVersionAdapter().sendTitle("§cMajor Update available", "You are using an outdated plugin version!");
+                    player.sendMessage(Main.getPrefix() + "§cVaro update available! Updating to this version will reset all stats and configs! §7Use §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 to update now. New version: " + updateVersion + "\n§7Need help? Join our Discord for support: §e" + Main.DISCORD_INVITE);
+                    break;
 				case TEST_BUILD:
 					if (Main.getVaroGame().getGameState() == GameState.LOBBY)
 						vplayer.getVersionAdapter().sendTitle("§cTEST-BUILD", "");
