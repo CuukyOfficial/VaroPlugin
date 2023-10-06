@@ -30,7 +30,6 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 public class VaroDiscordBot implements VaroBot {
 
     private JDA jda;
-    private long eventChannel, announcementChannel, resultChannel;
     private String pingRole;
 
     private Color getRandomColor() {
