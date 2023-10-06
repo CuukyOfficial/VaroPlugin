@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import de.cuuky.cfw.configuration.YamlConfigurationUtil;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.varo.command.VaroCommand;
 
 public class CustomCommandManager {

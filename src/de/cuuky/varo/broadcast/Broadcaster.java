@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.configuration.YamlConfigurationUtil;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;

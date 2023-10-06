@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import de.cuuky.cfw.configuration.YamlConfigurationUtil;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 
 public abstract class VaroList {
 

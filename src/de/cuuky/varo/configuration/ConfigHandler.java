@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.google.common.io.Files;
 
-import de.cuuky.cfw.configuration.YamlConfigurationUtil;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
