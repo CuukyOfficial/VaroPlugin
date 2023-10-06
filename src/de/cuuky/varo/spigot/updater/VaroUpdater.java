@@ -1,17 +1,20 @@
 package de.cuuky.varo.spigot.updater;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
-import de.cuuky.varo.alert.AlertType;
-import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Scanner;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 
 public class VaroUpdater {
 
@@ -93,15 +96,8 @@ public class VaroUpdater {
 		UpdateResult result = UpdateResult.NO_UPDATE;
 		String version = "", id = "";
 
-		try {
-			Scanner scanner = new Scanner(new URL(updateLink).openStream());
-			String all = "";
-			while (scanner.hasNextLine()) {
-				all += scanner.nextLine();
-			}
-			scanner.close();
-
-			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(all);
+		try(InputStream inputStream = new URL(updateLink).openStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+			JSONObject scannerJSON = (JSONObject) JSONValue.parseWithException(reader);
 			version = scannerJSON.get("name").toString();
 			id = scannerJSON.get("id").toString();
 			switch (compareVersions(version, this.currentVersion)) {
