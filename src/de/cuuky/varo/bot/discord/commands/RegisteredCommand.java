@@ -16,13 +16,16 @@ public class RegisteredCommand extends DiscordBotCommand {
 	 */
 
 	public RegisteredCommand() {
-		super("participants", "Zeigt alle registrierten Spieler an");
+		super("participants", "Zeigt alle registrierten Spieler an (ohne Spectator)");
 	}
 
 	@Override
 	public void onExecute(SlashCommandInteraction event) {
 		StringBuilder players = new StringBuilder();
         for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
+            if (vp.getStats().isSpectator())
+                continue;
+
             if (players.length() >= (ConfigSetting.DISCORDBOT_USE_EMBEDS.getValueAsBoolean() ? MessageEmbed.DESCRIPTION_MAX_LENGTH : Message.MAX_CONTENT_LENGTH) - 23) {
                 players.append(", ...");
                 break;
