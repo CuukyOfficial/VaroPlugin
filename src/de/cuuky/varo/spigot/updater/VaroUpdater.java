@@ -92,8 +92,10 @@ public class VaroUpdater {
 	}
 
 	private static UpdateResult compareVersions(int resourceId, String otherVersion, String currentVersion) {
+	    String otherVersionLower = otherVersion.toLowerCase();
+	    String currentVersionLower = currentVersion.toLowerCase();
         try {
-            String version1Use = otherVersion.split("-BETA")[0], version2Use = currentVersion.split("-BETA")[0];
+            String version1Use = otherVersionLower.split("-")[0], version2Use = currentVersionLower.split("-")[0];
             if (!version1Use.matches("[0-9]+(\\.[0-9]+)*")
                     || !version2Use.matches("[0-9]+(\\.[0-9]+)*"))
                 throw new IllegalArgumentException("Invalid version format");
@@ -116,7 +118,7 @@ public class VaroUpdater {
             Main.getInstance().fail();
         }
 
-        if (currentVersion.contains("BETA"))
+        if (currentVersionLower.contains("alpha") || currentVersionLower.contains("beta"))
             return UpdateResult.UPDATE_AVAILABLE;
         return UpdateResult.NO_UPDATE;
     }
