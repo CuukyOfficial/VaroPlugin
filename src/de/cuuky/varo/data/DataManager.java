@@ -4,9 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.utils.ServerPropertiesReader;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -36,6 +33,8 @@ import de.cuuky.varo.threads.daily.DailyTimer;
 import de.cuuky.varo.utils.OutSideTimeChecker;
 import de.cuuky.varo.utils.VaroUtils;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class DataManager {
 
@@ -61,7 +60,6 @@ public class DataManager {
 	private VaroListManager listManager;
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
-	private ServerPropertiesReader propertiesReader;
 	private CustomCommandManager customCommandManager;
 
 	private boolean doSave;
@@ -86,7 +84,6 @@ public class DataManager {
 
 	public void load() {
 		new MessagePlaceholderLoader();
-		this.propertiesReader = new ServerPropertiesReader();
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
@@ -163,10 +160,6 @@ public class DataManager {
 
 	public void setDoSave(boolean doSave) {
 		this.doSave = doSave;
-	}
-
-	public ServerPropertiesReader getPropertiesReader() {
-		return this.propertiesReader;
 	}
 
 	public AlertHandler getAlertHandler() {

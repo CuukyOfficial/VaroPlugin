@@ -20,7 +20,7 @@ public class VaroWorldHandler {
     private ArrayList<VaroWorld> worlds;
 
     public VaroWorldHandler() {
-        World mainworld = Bukkit.getWorld(Main.getDataManager().getPropertiesReader().getConfiguration().get("level-name"));
+        World mainworld = Bukkit.getWorld(VersionUtils.getVersionAdapter().getServerProperties().getProperty("level-name"));
         this.mainVaroWorld = new VaroWorld(mainworld);
 
         this.worlds = new ArrayList<>();
