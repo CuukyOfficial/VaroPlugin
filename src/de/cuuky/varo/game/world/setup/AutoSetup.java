@@ -14,6 +14,7 @@ import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.game.world.generators.LobbyGenerator;
@@ -114,7 +115,8 @@ public class AutoSetup {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
 
         middle.getWorld().setSpawnLocation(x, 0, z);
-        new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+        int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.min(10, (int) (VaroPlayer.getAlivePlayer().size() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
+        new SpawnGenerator(middle, radius, ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
     }
 
     private void setupAutoStart() {

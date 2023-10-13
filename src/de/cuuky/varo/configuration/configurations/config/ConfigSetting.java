@@ -36,7 +36,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	AUTOSETUP_SPAWNS_AMOUNT(ConfigSettingSection.AUTOSETUP, "spawns.amount", 40, "Zu welcher Anzahl die Loecher\ngeneriert werden sollen"),
 	AUTOSETUP_SPAWNS_BLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.block.material", "STONE_BRICK_SLAB", "Welche Block-ID der Halftstep am Spawn haben soll"),
-	AUTOSETUP_SPAWNS_RADIUS(ConfigSettingSection.AUTOSETUP, "spawns.radius", 30, "In welchem Radius die Loecher\ngeneriert werden sollen"),
+	AUTOSETUP_SPAWNS_RADIUS(ConfigSettingSection.AUTOSETUP, "spawns.radius", -1, "In welchem Radius die Löcher\ngeneriert werden sollen\n-1 wählt automatisch einen passenden radius"),
 	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_13) ? "GRASS_BLOCK" : "GRASS", "Welche Block-ID der Block,\nden man abbaut haben soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
