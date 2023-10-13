@@ -108,7 +108,7 @@ public class SpawnGenerator {
             double x = radius * Math.cos(beta);
             double z = radius * Math.sin(beta);
 
-            Location loc = middle.clone().add(x, 0, z);
+            Location loc = middle.clone().add(x, middle.getWorld().getMaxHeight() - 1, z);
             locs.add(loc);
         }
 
