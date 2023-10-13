@@ -1,7 +1,5 @@
 package de.cuuky.varo.game.world.generators;
 
-import java.util.ArrayList;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -39,26 +37,26 @@ public class SpawnGenerator {
     public SpawnGenerator(Location location, int radius, boolean withTeams, String blockId, String sideBlockId) {
         this(blockId, sideBlockId);
 
-        ArrayList<Location> locations = generateSpawns(location, radius, VaroPlayer.getAlivePlayer().size());
+        Location[] locations = generateSpawns(location, radius, VaroPlayer.getAlivePlayer().size());
         int i = 0;
 
         if (withTeams) {
             for (VaroTeam team : VaroTeam.getTeams()) {
                 for (VaroPlayer player : team.getMember()) {
-                    if (!player.getStats().isAlive() || i >= locations.size())
+                    if (!player.getStats().isAlive() || i >= locations.length)
                         continue;
 
-                    new Spawn(player, this.setSpawnAt(locations.get(i)));
+                    new Spawn(player, this.setSpawnAt(locations[i]));
                     i++;
                 }
             }
         }
 
         for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
-            if (Spawn.getSpawn(player) != null || i >= locations.size())
+            if (Spawn.getSpawn(player) != null || i >= locations.length)
                 continue;
 
-            new Spawn(player, this.setSpawnAt(locations.get(i)));
+            new Spawn(player, this.setSpawnAt(locations[i]));
             i++;
         }
     }
@@ -97,21 +95,19 @@ public class SpawnGenerator {
         return newLoc.getBlock().getLocation().add(0.5, -1, 0.5);
     }
 
-    private ArrayList<Location> generateSpawns(Location middle, double radius, int amount) {
-        double alpha = (2 * Math.PI) / amount;
+    private Location[] generateSpawns(Location middle, double radius, int amount) {
+        double alpha = (2.0 * Math.PI) / amount;
 
-        ArrayList<Location> locs = new ArrayList<>();
-
-        for (int count = 0; count != amount; count++) {
-            double beta = alpha * count;
+        Location[] locations = new Location[amount];
+        for (int i = 0; i < amount; i++) {
+            double beta = alpha * i;
 
             double x = radius * Math.cos(beta);
             double z = radius * Math.sin(beta);
 
-            Location loc = middle.clone().add(x, middle.getWorld().getMaxHeight() - 1, z);
-            locs.add(loc);
+            locations[i] = middle.clone().add(x, middle.getWorld().getMaxHeight() - 1, z);
         }
 
-        return locs;
+        return locations;
     }
 }

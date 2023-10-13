@@ -50,11 +50,10 @@ public class AutoSetup {
                 task.cancel();
                 startSetup();
                 return;
-            } else {
-                world.getWorld().getChunkAt(x, z).unload();
-                this.x += 100;
-                this.z += 100;
             }
+            world.getWorld().getChunkAt(x, z).unload();
+            this.x += 100;
+            this.z += 100;
         }
     }
 
@@ -113,9 +112,8 @@ public class AutoSetup {
 
     private void setupSpawns(Location middle) {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
-        int yPos = getGroundHeight(world.getWorld(), x, z);
 
-        middle.getWorld().setSpawnLocation(x, yPos, z);
+        middle.getWorld().setSpawnLocation(x, 0, z);
         new SpawnGenerator(middle, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
     }
 
