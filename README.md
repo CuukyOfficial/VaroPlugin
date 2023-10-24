@@ -19,7 +19,7 @@ This project probably describes my progress in coding - not the skills I have to
     <td><a href='https://www.paypal.me/Cuuky'><img src="https://images.ctfassets.net/k4kk06v59kf0/1B9DpTnsBuQAu60wCIemGK/c164faa3862e39b23ef49b4adaf127dd/paypalWide.svg" height=100px></a></td>
     <td><a href='https://www.youtube.com/channel/UCkVjKrNb8w_C8Zp8nmPtpPg'><img src="https://lh3.googleusercontent.com/lMoItBgdPPVDJsNOVtP26EKHePkwBg-PkuY9NOrc-fumRtTFP4XhpUNk_22syN4Datc" height=100px></a></td>
     <td><a href="https://www.spigotmc.org/resources/71075/"><img src="https://static.spigotmc.org/img/spigot.png" height=100px></a></td>
-    <td><a href="https://VaroPlugin.de/docs/"><img src="https://img.icons8.com/ios/500/google-docs.png" height=100px></a></td>
+    <td><a href="https://docs.varoplugin.de/"><img src="https://img.icons8.com/ios/500/google-docs.png" height=100px></a></td>
     <td><a href="https://discord.varoPlugin.de/"><img src="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico" height=100px></a></td>
   </tr>
   <tr>
