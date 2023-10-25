@@ -1,4 +1,4 @@
-# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRÄGEN WEGNEHMEN!
+# WARNUNG: DIE RICHTIGE CONFIG BEFINDET SICH UNTEN, NICHT DIE '#' VOR DEN EINTRï¿½GEN WEGNEHMEN!
 #  Hier ist die Beschreibung der Config:
 # ----------- Main -----------
 # Beschreibung: Hier kannst du alle Haupteinstellungen vornehmen.
@@ -10,7 +10,7 @@
 #  nametags:
 #   Ob das Plugin die Nametags ueber
 #   den Koepfen der Spieler veraendern soll.
-#   Hinweis: du kannst diese in der messages.yml einstellen.
+#   Hinweis: du kannst diese in den Language-Dateien einstellen.
 #   Default-Value: true
 # 
 #  playTime:

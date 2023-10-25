@@ -93,7 +93,7 @@ public enum ConfigSetting implements SectionEntry {
 	CATCH_UP_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "catchUpSessions", false, "NUR FÜR ERSTES JOIN SYSTEM\nStellt ein, ob man verpasste Folgen nachholen darf."),
 
 	// SERVERLIST
-	CHANGE_MOTD(ConfigSettingSection.SERVER_LIST, "changeMotd", true, "Ob das Plugin die Motd veraendern soll.\nHinweis: du kannst die Motd in der messages.yml aendern."),
+	CHANGE_MOTD(ConfigSettingSection.SERVER_LIST, "changeMotd", true, "Ob das Plugin die Motd veraendern soll.\nHinweis: du kannst die Motd in den Language-Dateien ändern."),
 	CHAT_TRIGGER(ConfigSettingSection.TEAMS, "chatTrigger", "#", "Definiert den Buchstaben am Anfang einer\nNachricht, der den Teamchat ausloest."),
 
 	// COMBATLOG
@@ -174,7 +174,7 @@ public enum ConfigSetting implements SectionEntry {
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen koennen.\nOff = 0"),
 	SPECTATOR_CHAT(ConfigSettingSection.OTHER, "spectatorChat", false, "Ob Spectator in den Chat schreiben können"),
 
-	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in der messages.yml einstellen.", true),
+	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in den Language-Dateien einstellen.", true),
 	NAMETAGS_VISIBLE_DEFAULT(ConfigSettingSection.MAIN, "nametags.visible.default", true, "Ob NameTags sichtbar sein sollen"),
 	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.MAIN, "nametags.visible.team", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
 	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.MAIN, "nametags.visible.spectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
