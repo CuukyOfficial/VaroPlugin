@@ -2,7 +2,7 @@ name: ${name}
 author: Cuuky
 authors: [Korne127, LeStegii, Almighty-Satan]
 version: ${version}
-softdepend: [PlaceholderAPI, PermissionsEx, Multiverse-Core]
+softdepend: [PlaceholderAPI, PermissionsEx, Multiverse-Core, WorldEdit]
 loadbefore: [CuukyFrameWork]
 api-version: 1.13
 main: de.cuuky.varo.Main
