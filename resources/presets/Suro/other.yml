@@ -20,20 +20,6 @@
 #   Ob Advancements deaktiviert werden sollen [1.12+]
 #   Default-Value: true
 # 
-#  disableLabyModFunctions:
-#   Ob die Addons von LabyMod beim Spieler
-#   deaktviert werden sollen.
-#   Fuer diese Funktion wird dieses Plugin benoetigt:
-#   https://www.spigotmc.org/resources/52423/
-#   Default-Value: false
-# 
-#  kickLabyModPlayer:
-#   Ob Spieler, die LabyMod nutzen,
-#   gekickt werden sollen.
-#   Fuer diese Funktion wird dieses Plugin benoetigt:
-#   https://www.spigotmc.org/resources/52423/
-#   Default-Value: false
-# 
 #  minimalSpectatorHeight:
 #   Wie tief die Spectator maximal fliegen koennen.
 #   Off = 0
@@ -44,12 +30,6 @@
 #   ein Spieler nicht gekickt wird.
 #   Off = 0
 #   Default-Value: 30
-# 
-#  onlyLabyModPlayer:
-#   Ob nur Spieler mit LabyMod joinen duerfen.
-#   Fuer diese Funktion wird dieses Plugin benoetigt:
-#   https://www.spigotmc.org/resources/52423/
-#   Default-Value: false
 # 
 #  playerChestLimit:
 #   Wie viele Chests ein Team
@@ -76,11 +56,8 @@
 broadcastIntervalInSeconds: -1
 debugOptions: false
 blockAdvancements: true
-disableLabyModFunctions: false
-kickLabyModPlayer: false
 minimalSpectatorHeight: 70
 noKickDistance: 30
-onlyLabyModPlayer: false
 playerChestLimit: 0
 playerFurnaceLimit: 0
 removeHitDelay: false

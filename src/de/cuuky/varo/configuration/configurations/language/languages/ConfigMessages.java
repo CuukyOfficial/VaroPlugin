@@ -130,9 +130,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	KICK_TOO_MANY_STRIKES("kick.tooManyStrikes", "&7Du hast zu viele Strikes bekommen und wurdest daher aus dem Projekt %projectname% &7entfernt."),
 	KICK_COMMAND("kick.kick", "%colorcode%%player% &7wurde gekick.kickt!"),
 
-	LABYMOD_DISABLED("labymod.labyModDisabled", "&7Alle deine LabyMod Funktionen wurden deaktiviert!"),
-	LABYMOD_KICK("labymod.labyMod", "&cLabyMod isn't allowed on this server."),
-
 	SERVER_MODT_CANT_JOIN_HOURS("motd.cantJoinHours", "&cDu kannst nur zwischen &4%minHour% &cund &4%maxHour%&c Uhr joinen! %nextLine%&7Versuche es später erneut! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
 	SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cDer Server wurde noch nicht für alle geöffnet! %nextLine%&7Versuche es später erneut!"),
 	SERVER_MODT_OPEN("motd.serverOpen", "&aSei nun bei %projectname% &adabei! \n&7Viel Spass!"),

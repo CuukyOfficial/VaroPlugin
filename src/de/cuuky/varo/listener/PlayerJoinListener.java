@@ -97,9 +97,6 @@ public class PlayerJoinListener implements Listener {
 		if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA_1_12)
 			MagmaUtils.checkForIllegalMods(player);
 
-		if (ConfigSetting.ONLY_LABYMOD_PLAYER.getValueAsBoolean())
-			PermissionSendListener.addCheck(player);
-
 		if (Main.getVaroGame().getGameState() == GameState.LOBBY) {
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[]{});

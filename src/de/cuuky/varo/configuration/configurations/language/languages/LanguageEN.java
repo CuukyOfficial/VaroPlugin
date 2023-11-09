@@ -127,9 +127,6 @@ public enum LanguageEN implements LoadableMessage {
     KICK_TOO_MANY_STRIKES("kick.tooManyStrikes", "&7You got too many strikes and were therefore removed from the project %projectname%"),
     KICK_COMMAND("kick.kick", "%colorcode%%player% &7was kicked!"),
 
-    LABYMOD_DISABLED("labymod.labyModDisabled", "&7All your LabyMod functions have been deactivated!"),
-    LABYMOD_KICK("labymod.labyMod", "&cLabyMod isn't allowed on this server."),
-
     SERVER_MODT_CANT_JOIN_HOURS("motd.cantJoinHours", "&cYou can only join between &4%minHour% &cand &4%maxHour%&c o'clock! %nextLine%&7Please try again later! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
     SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cThe server has not yet been opened for everyone! %nextLine%&7Try again later!"),
     SERVER_MODT_OPEN("motd.serverOpen", "&aBe now with us in %projectname%&a!\n&7Have fun!"),
