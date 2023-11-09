@@ -71,7 +71,7 @@ dependencies {
 
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:6.1.3-SNAPSHOT")
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
     compileOnly("com.github.labymod:legacy-labymod-server-api:1.0")
     compileOnly("me.clip:placeholderapi:2.10.10")
 

@@ -31,13 +31,12 @@ public class LobbyGenerator {
 	private Location last;
 
 	public LobbyGenerator(Location loc, File file) {
-		try {
-			new SchematicLoader(file).paste(loc);
-		} catch (Error e) {
-			System.out.println(Main.getConsolePrefix() + "Du brauchst WorldEdit, um den SchematicLoader zu nutzen!");
-			return;
+	    SchematicLoader schematicLoader = SchematicLoader.getInstance();
+		if (schematicLoader == null) {
+		    System.out.println(Main.getConsolePrefix() + "Du brauchst WorldEdit, um den SchematicLoader zu nutzen!");
+		    return;
 		}
-
+		schematicLoader.paste(file, loc);
 		System.out.println(Main.getConsolePrefix() + "Autosetup: Loaded schematic " + file.getName());
 	}
 
