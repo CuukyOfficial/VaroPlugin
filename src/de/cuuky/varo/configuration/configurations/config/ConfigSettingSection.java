@@ -38,7 +38,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	TABLIST("TablistSettings", Material.PAINTING, "Hier kannst du Einstellungen zur Tablist vornehmen."),
 	TEAMS("Teams", Materials.DIAMOND_HELMET.parseMaterial(), "Hier kannst du Einstellungen zu Teams vornehmen."),
 	TELEGRAM("Telegram", Materials.DROPPER.parseMaterial(), "Alle Einstellungen zum Telegram-Bot."),
-	WORLD("World", Materials.GRASS.parseMaterial(), "Hier kannst du Einstellungen zur Welt vornehmen."),
+	WORLD("World", Materials.GRASS_BLOCK.parseMaterial(), "Hier kannst du Einstellungen zur Welt vornehmen."),
 	YOUTUBE("YouTube", Materials.MAP.parseMaterial(), "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");
 	
 
