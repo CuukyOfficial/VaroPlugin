@@ -21,6 +21,7 @@ import de.cuuky.varo.game.world.VaroWorldHandler;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
+import de.cuuky.varo.game.world.setup.AutoSetup;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -112,8 +113,7 @@ public class VaroGame implements VaroSerializeable {
         LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-            int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.max(10, (int) (VaroPlayer.getAlivePlayer().size() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
-            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), radius, true, ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
             Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
         }
 

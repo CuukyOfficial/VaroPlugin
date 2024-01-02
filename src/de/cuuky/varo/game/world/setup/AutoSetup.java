@@ -46,7 +46,7 @@ public class AutoSetup {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain (" + x + ", " + z + ")... (" + world.getWorld().getName() + ")");
         long time = System.currentTimeMillis();
         while (System.currentTimeMillis() - time <= 3000) {
-            if (SpawnChecker.checkSpawns(world.getWorld(), x, z, ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
+            if (SpawnChecker.checkSpawns(world.getWorld(), x, z, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
                 task.cancel();
                 startSetup();
                 return;
@@ -114,8 +114,7 @@ public class AutoSetup {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
 
         middle.getWorld().setSpawnLocation(x, 0, z);
-        int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.max(10, (int) (ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
-        new SpawnGenerator(middle, radius, ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+        new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
     }
 
     private void setupAutoStart() {
@@ -169,4 +168,7 @@ public class AutoSetup {
         MAX_HEIGHT
     }
 
+    public static int getSpawnRadius(int amount) {
+        return ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.max(10, (int) (amount * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
+    }
 }
