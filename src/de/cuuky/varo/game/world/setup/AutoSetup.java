@@ -10,17 +10,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.cfw.utils.BlockUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class AutoSetup {
 
@@ -115,7 +114,7 @@ public class AutoSetup {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
 
         middle.getWorld().setSpawnLocation(x, 0, z);
-        int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.min(10, (int) (VaroPlayer.getAlivePlayer().size() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
+        int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.max(10, (int) (ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
         new SpawnGenerator(middle, radius, ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
     }
 

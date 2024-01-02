@@ -112,7 +112,7 @@ public class VaroGame implements VaroSerializeable {
         LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-            int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.min(10, (int) (VaroPlayer.getAlivePlayer().size() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
+            int radius = ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt() == -1 ? Math.max(10, (int) (VaroPlayer.getAlivePlayer().size() * 0.85)) : ConfigSetting.AUTOSETUP_SPAWNS_RADIUS.getValueAsInt();
             new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), radius, true, ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
             Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
         }
