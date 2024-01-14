@@ -78,6 +78,9 @@ dependencies {
     runtimeDownload("net.dv8tion:JDA:5.0.0-beta.19") {
         exclude(module = "opus-java")
     }
+    runtimeDownload("org.slf4j:slf4j-simple:1.7.36") {
+        exclude(module = "slf4j-api")
+    }
     runtimeDownload("com.github.pengrad:java-telegram-bot-api:6.9.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
