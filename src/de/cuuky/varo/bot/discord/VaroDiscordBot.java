@@ -84,7 +84,7 @@ public class VaroDiscordBot implements VaroBot {
         if (roleId != 0 && roleId != -1) {
             Role role = jda.getRoleById(roleId);
 
-            if (pingRole != null) {
+            if (role != null) {
                 this.pingRole = role.getAsMention();
                 return;
             }
