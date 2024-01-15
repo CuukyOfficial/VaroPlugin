@@ -64,7 +64,7 @@ public class PlayerQuitListener implements Listener {
 					}
 				}
 
-				VaroPlayerDisconnect.disconnected(vplayer.getName());
+				VaroPlayerDisconnect.disconnected(vplayer);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME, vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer));
 				vplayer.onEvent(BukkitEventType.QUIT);

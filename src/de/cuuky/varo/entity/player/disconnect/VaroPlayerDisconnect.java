@@ -27,13 +27,8 @@ public class VaroPlayerDisconnect {
 	 * OLD CODE
 	 */
 
-	private static ArrayList<VaroPlayerDisconnect> disconnects;
-	private static HashMap<String, BukkitTask> scheds;
-
-	static {
-		disconnects = new ArrayList<>();
-		scheds = new HashMap<>();
-	}
+	private static ArrayList<VaroPlayerDisconnect> disconnects = new ArrayList<>();
+	private static HashMap<UUID, BukkitTask> scheds = new HashMap<>();
 
 	private final UUID uuid;
 	private int amount;
@@ -108,26 +103,22 @@ public class VaroPlayerDisconnect {
 		disconnects.remove(this);
 	}
 
-	public static void disconnected(String playerName) {
+	public static void disconnected(VaroPlayer vp) {
 		if (!ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
 		if (Main.getVaroGame().getGameState() != GameState.STARTED)
 			return;
 
-		if (!VaroPlayer.getPlayer(playerName).getStats().isAlive())
+		if (!vp.getStats().isAlive())
 			return;
 
-		scheds.put(playerName, new BukkitRunnable() {
+		scheds.put(vp.getRealUUID(), new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (Bukkit.getPlayerExact(playerName) != null)
+				if (Main.getVaroGame().getGameState() != GameState.STARTED || vp.isOnline())
 					return;
 
-				if (Main.getVaroGame().getGameState() != GameState.STARTED)
-					return;
-
-				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
@@ -154,11 +145,9 @@ public class VaroPlayerDisconnect {
 	    VaroPlayerDisconnect disconnect = getDisconnect(player);
 	    if (disconnect != null)
 	        disconnect.setKick(false);
-
-		if (!scheds.containsKey(player.getName()))
-			return;
-
-		scheds.get(player.getName()).cancel();
-		scheds.remove(player.getName());
+	    
+		BukkitTask scheduler = scheds.remove(player.getUniqueId());
+		if (scheduler != null)
+		    scheduler.cancel();
 	}
 }

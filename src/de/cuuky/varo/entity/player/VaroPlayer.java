@@ -818,6 +818,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return null;
 	}
 
+	// This has to be one of the worst methods in the entire plugin. But it's called so often that I don't feel like fixing it.
+	// 'name' can either be the actual name of a player or their UUID (as string format!!!). It should just accept a UUID!!! DON'T USE NAMES TO IDENTIFY A PLAYER!!!
+	// Also why tf does this use continue instead of just returning the player immediately
 	public static VaroPlayer getPlayer(String name) {
 		for (VaroPlayer vp : varoplayer) {
 			if (!vp.getName().equalsIgnoreCase(name) && !vp.getUUID().equals(name))
