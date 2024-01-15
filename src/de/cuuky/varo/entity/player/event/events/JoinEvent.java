@@ -61,6 +61,6 @@ public class JoinEvent extends BukkitEvent {
 				pl1.showPlayer(player.getPlayer());
 		}
 
-		VaroPlayerDisconnect.joinedAgain(player.getName());
+		VaroPlayerDisconnect.joinedAgain(player.getPlayer());
 	}
 }

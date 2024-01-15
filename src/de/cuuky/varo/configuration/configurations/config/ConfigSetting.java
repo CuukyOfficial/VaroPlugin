@@ -108,6 +108,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCONNECT_PER_SESSION(ConfigSettingSection.DISCONNECT, "maxDisconnectsPerSessions", 3, "Wie oft ein Spieler pro\nSession maximal disconnecten darf,\nbevor er bestraft wird.Off = -1"),
 	BAN_AFTER_DISCONNECT_MINUTES(ConfigSettingSection.DISCONNECT, "banAfterDisconnectMinutes", -1, "Wenn ein Spieler disconnected,\nob er nach dieser Anzahl an Minuten entfernt werden soll.\nOff = -1"),
 	NO_DISCONNECT_PING(ConfigSettingSection.DISCONNECT, "noDisconnectPing", 200, "Ab welchem Ping ein Disconnect\nnicht mehr als einer zaehlt."),
+	DISCONNECT_IGNORE_KICK(ConfigSettingSection.DISCONNECT, "ignoreKick", false, "Ob ein Disconnect ignoriert werden\nsoll wenn der Spieler gekickt wurde."),
 
 	// DISCORDBOT
 	DISCORDBOT_ENABLED(ConfigSettingSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot fuer Events aktiviert werden soll.\nHinweis: bitte fuer diesen Informationen unten ausfuellen"),

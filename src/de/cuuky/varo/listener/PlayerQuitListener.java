@@ -2,7 +2,9 @@ package de.cuuky.varo.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
@@ -72,5 +74,16 @@ public class PlayerQuitListener implements Listener {
 
 		vplayer.onEvent(BukkitEventType.QUIT);
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_MESSAGE, vplayer);
+	}
+	
+	@EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerKick(PlayerKickEvent event) {
+	    if (event.isCancelled() || !ConfigSetting.DISCONNECT_IGNORE_KICK.getValueAsBoolean())
+	        return;
+	    Player player = event.getPlayer();
+	    VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
+	    if (dc == null)
+	        dc = new VaroPlayerDisconnect(player);
+	    dc.setKick(true);
 	}
 }

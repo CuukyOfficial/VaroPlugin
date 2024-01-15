@@ -35,8 +35,9 @@ public class VaroPlayerDisconnect {
 		scheds = new HashMap<>();
 	}
 
+	private final UUID uuid;
 	private int amount;
-	private UUID uuid;
+	private boolean kick;
 
 	public VaroPlayerDisconnect(Player player) {
 		this.uuid = player.getUniqueId();
@@ -45,6 +46,11 @@ public class VaroPlayerDisconnect {
 	}
 
 	public void addDisconnect() {
+	    if (this.kick) {
+	        this.kick = false;
+	        return;
+	    }
+
 	    VaroPlayer varoPlayer = VaroPlayer.getPlayer(uuid.toString());
 	    if (varoPlayer != null) {
 	        PlayerVersionAdapter versionAdapter = varoPlayer.getVersionAdapter();
@@ -84,6 +90,10 @@ public class VaroPlayerDisconnect {
 	public int getDisconnects() {
 		return this.amount;
 	}
+
+	public void setKick(boolean kick) {
+        this.kick = kick;
+    }
 
 	public boolean playerIsDead() {
 		Player player = Bukkit.getPlayer(uuid);
@@ -140,11 +150,15 @@ public class VaroPlayerDisconnect {
 		scheds.clear();
 	}
 
-	public static void joinedAgain(String playerName) {
-		if (!scheds.containsKey(playerName))
+	public static void joinedAgain(Player player) {
+	    VaroPlayerDisconnect disconnect = getDisconnect(player);
+	    if (disconnect != null)
+	        disconnect.setKick(false);
+
+		if (!scheds.containsKey(player.getName()))
 			return;
 
-		scheds.get(playerName).cancel();
-		scheds.remove(playerName);
+		scheds.get(player.getName()).cancel();
+		scheds.remove(player.getName());
 	}
 }
