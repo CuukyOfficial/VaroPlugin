@@ -1,10 +1,11 @@
 package de.cuuky.varo.logger.logger;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.CachedVaroLogger;
+
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
@@ -116,7 +117,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 	}
 
 	public void println(LogType type, String message) {
-		message = JavaUtils.replaceAllColors(message);
+		message = ChatColor.stripColor(message.replace("&", "§"));
 
 		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
 		this.queueLog(log);
