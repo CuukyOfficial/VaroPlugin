@@ -32,7 +32,7 @@ public class DebugGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(10, new BuildItem().displayName("§cTrigger Event").material(Materials.SIGN).lore("§7Fuehrt ein Event aus, um den DiscordBot,", "TelegramBot, Config etc. zu testen").build(), (event) -> {
+        addItem(10, new BuildItem().displayName("§cTrigger Event").material(Materials.SIGN).lore("§7Fuehrt ein Event aus, um den DiscordBot,", "§7TelegramBot, Config etc. zu testen").build(), (event) -> {
             Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Enter Event Message:", new ChatHookHandler() {
 
                 @Override
