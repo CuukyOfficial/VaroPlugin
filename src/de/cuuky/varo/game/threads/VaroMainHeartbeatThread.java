@@ -64,7 +64,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 						continue;
 
-					int countdown = vp.getStats().getCountdown() - 1;
+					int countdown = Math.max(vp.getStats().getCountdown() - 1, 0);
 
 					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
 						Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER, vp);
