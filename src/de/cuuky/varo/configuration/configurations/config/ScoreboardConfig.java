@@ -36,7 +36,7 @@ public class ScoreboardConfig extends BoardConfig {
 		firstFrame.add("%colorcode%%kills%");
 		firstFrame.add("%space%");
 		firstFrame.add("&7Time&8:");
-		firstFrame.add("%colorcode%%min%&8:%colorcode%%sec%");
+		firstFrame.add("%colorcode%%hour%&8:%colorcode%%min%&8:%colorcode%%sec%");
 		firstFrame.add("                   ");
 		firstFrame.add("&7Online: %colorcode%%online%");
 		firstFrame.add("&7Alive: %colorcode%%remaining%");
@@ -53,7 +53,7 @@ public class ScoreboardConfig extends BoardConfig {
 		secondFrame.add("%colorcode%%kills%");
 		secondFrame.add("%space%");
 		secondFrame.add("&7Time&8:");
-		secondFrame.add("%colorcode%%min%&8:%colorcode%%sec%");
+		secondFrame.add("%colorcode%%hour%&8:%colorcode%%min%&8:%colorcode%%sec%");
 		secondFrame.add("                   ");
 		secondFrame.add("&7Best Players&8:");
 		secondFrame.add("&71. %colorcode%%topplayer-1%");
