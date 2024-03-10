@@ -33,7 +33,7 @@ public final class DailyTimer {
 		checker.add(new CoordsCheck());
 		checker.add(new StrikePostCheck());
 
-		startTimer();
+		startTimer(0L);
 	}
 
 	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
@@ -42,18 +42,18 @@ public final class DailyTimer {
 	}
 
 	@SuppressWarnings("deprecation")
-	private static long getNextReset() {
+	private static long getNextReset(long offset) {
 		Date reset = new Date();
 		reset.setMinutes(0);
 		reset.setSeconds(0);
-		Date current = new Date();
+		Date current = new Date(System.currentTimeMillis() + offset);
 		reset.setHours(ConfigSetting.RESET_SESSION_HOUR.getValueAsInt());
 		if (reset.before(current))
 			reset = DateUtils.addDays(reset, 1);
 		return (reset.getTime() - current.getTime()) / 1000;
 	}
 
-	private void startTimer() {
+	private void startTimer(long offset) {
 		if (Main.getVaroGame().getGameState() == GameState.STARTED && Main.getVaroGame().getLastDayTimer() != null) {
 			Date date = Main.getVaroGame().getLastDayTimer();
 			for (int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
@@ -83,14 +83,9 @@ public final class DailyTimer {
 					e.printStackTrace();
 				}
 
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						startTimer();
-					}
-				}.runTaskLaterAsynchronously(Main.getInstance(), 100L);
+				startTimer(6L * 60L * 60L * 1000L);
 			}
-		}.runTaskLater(Main.getInstance(), getNextReset() * 20);
+		}.runTaskLater(Main.getInstance(), getNextReset(offset) * 20);
 	}
 
 	public void doDailyChecks() {
