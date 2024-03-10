@@ -205,7 +205,7 @@ public enum ConfigSetting implements SectionEntry {
 	// FINALE
 	PLAYER_SPECTATE_IN_FINALE(ConfigSettingSection.FINALE, "playerSpectateInFinale", true, "Ob die toten Spieler waehrend des Finales spectaten duerfen."),
 	POST_COORDS_DAYS(ConfigSettingSection.ACTIVITY, "postCoordsDays", -1, "Postet nach den genannten Tagen\nvon allen Spielern die Koordinatenum die Uhrzeit,\num der auch Sessions etc. geprueft werden"),
-	PRE_PRODUCE_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "preProduceSessions", 3, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusaetzlich zu\nden Regulaeren vorproduzieren darf."),
+	PRE_PRODUCE_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "preProduceSessions", 0, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusaetzlich zu\nden Regulaeren vorproduzieren darf."),
 
 	// MAIN
 	PREFIX(ConfigSettingSection.MAIN, "prefix", "&7[&3Varo&7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
