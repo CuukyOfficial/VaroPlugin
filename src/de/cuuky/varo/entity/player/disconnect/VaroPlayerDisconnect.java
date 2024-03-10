@@ -1,6 +1,5 @@
 package de.cuuky.varo.entity.player.disconnect;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class VaroPlayerDisconnect {
 	 * OLD CODE
 	 */
 
-	private static ArrayList<VaroPlayerDisconnect> disconnects = new ArrayList<>();
+	private static HashMap<UUID, VaroPlayerDisconnect> disconnects = new HashMap<>();
 	private static HashMap<UUID, BukkitTask> scheds = new HashMap<>();
 
 	private final UUID uuid;
@@ -37,7 +36,7 @@ public class VaroPlayerDisconnect {
 	public VaroPlayerDisconnect(Player player) {
 		this.uuid = player.getUniqueId();
 
-		disconnects.add(this);
+		disconnects.put(this.uuid, this);
 	}
 
 	public void addDisconnect() {
@@ -100,7 +99,7 @@ public class VaroPlayerDisconnect {
 	}
 
 	public void remove() {
-		disconnects.remove(this);
+		disconnects.remove(this.uuid);
 	}
 
 	public static void disconnected(VaroPlayer vp) {
@@ -127,11 +126,7 @@ public class VaroPlayerDisconnect {
 	}
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {
-		for (VaroPlayerDisconnect disconnect : disconnects)
-			if (disconnect.uuid.equals(p.getUniqueId()))
-				return disconnect;
-
-		return null;
+		return disconnects.get(p.getUniqueId());
 	}
 
 	public static void clearDisconnects() {
