@@ -133,15 +133,15 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_SERVERID(ConfigSettingSection.DISCORD, "serverGuildID", -1L, "Gib hier die ServerID deines Servers an.\nHinweis: Vorgangsweise, um die ID zu bekommen wie beim Channel."),
 
 	DISCORDBOT_SET_TEAM_AS_GROUP(ConfigSettingSection.DISCORD, "setTeamAsGroup", false, "Ob die Spieler, die ein Team bekommen,\ndiesen auch als Gruppe im Discord bekommen sollen."),
-	DISCORDBOT_TOKEN(ConfigSettingSection.DISCORD, "botToken", "ENTER TOKEN HERE", "Gib hier den Token an, welchen du auf\nder Bot Seite und 'create bot user' bekommst."),
+	DISCORDBOT_TOKEN(ConfigSettingSection.DISCORD, "botToken", "ENTER TOKEN HERE", "Gib hier den Token an, welchen du auf\nder Bot Seite und 'create bot user' bekommst.", false, true),
 
 	DISCORDBOT_VERIFYSYSTEM(ConfigSettingSection.DISCORD, "verify.enabled", false, "Ob das Verify System aktiviert werden soll.\nDieses laesst die Spieler sich mit Discord-Accounts verbinden."),
 	DISCORDBOT_VERIFYSYSTEM_OPTIONAL(ConfigSettingSection.DISCORD, "verify.optional", false, "Ob das Verify-System optional sein soll\nWenn deaktiviert: Nur verifizierte Spieler koennen\nden Server betreten"),
 	DISCORDBOT_USE_VERIFYSTSTEM_MYSQL(ConfigSettingSection.DISCORD, "verify.mysql.enabled", false, "Ob fuer die Speicherung der BotRegister\neine MySQL Datenbank genutzt werden soll"),
-	DISCORDBOT_VERIFY_DATABASE(ConfigSettingSection.DISCORD, "verify.mysql.database", "DATABASE_HERE", "Datenbank, wo die BotRegister\ngespeichert werden sollen"),
-	DISCORDBOT_VERIFY_HOST(ConfigSettingSection.DISCORD, "verify.mysql.host", "HOST_HERE", "MySQL Host, zu welchem das Plugin sich verbinden soll"),
-	DISCORDBOT_VERIFY_PASSWORD(ConfigSettingSection.DISCORD, "verify.mysql.password", "PASSWORD_HERE", "Passwort fuer MySQL Nutzer,\nwelcher auf die Datenbank zugreifen soll"),
-	DISCORDBOT_VERIFY_USER(ConfigSettingSection.DISCORD, "verify.mysql.user", "USER_HERE", "MySQL Nutzer, welcher auf die Datenbank zugreifen soll"),
+	DISCORDBOT_VERIFY_DATABASE(ConfigSettingSection.DISCORD, "verify.mysql.database", "DATABASE_HERE", "Datenbank, wo die BotRegister\ngespeichert werden sollen", false, true),
+	DISCORDBOT_VERIFY_HOST(ConfigSettingSection.DISCORD, "verify.mysql.host", "HOST_HERE", "MySQL Host, zu welchem das Plugin sich verbinden soll", false, true),
+	DISCORDBOT_VERIFY_PASSWORD(ConfigSettingSection.DISCORD, "verify.mysql.password", "PASSWORD_HERE", "Passwort fuer MySQL Nutzer,\nwelcher auf die Datenbank zugreifen soll", false, true),
+	DISCORDBOT_VERIFY_USER(ConfigSettingSection.DISCORD, "verify.mysql.user", "USER_HERE", "MySQL Nutzer, welcher auf die Datenbank zugreifen soll", false, true),
 
 	DO_DAILY_BACKUPS(ConfigSettingSection.MAIN, "dailyBackups", true, "Es werden immer Backups um 'ResetHour' gemacht."),
 
@@ -274,7 +274,7 @@ public enum ConfigSetting implements SectionEntry {
 	TEAMREQUEST_LOBBYITEM_RENAME_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.rename.item", Materials.NAME_TAG.parseItem(), "Item zum Umbenennen eines Teams"),
 	TEAMREQUEST_LOBBYITEM_RENAME_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.rename.slot", 4, "Slot des Items zum Umbenennen eines Teams"),
 
-	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots"),
+	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots", false, true),
 
 	// TELEGRAM
 	TELEGRAM_ENABLED(ConfigSettingSection.TELEGRAM, "telegrambotEnabled", false, "Ob der Telegrambot aktiviert werden soll."),
@@ -337,6 +337,7 @@ public enum ConfigSetting implements SectionEntry {
 	private String path, description, oldPaths[];
 	private ConfigSettingSection section;
 	private boolean reducesPerformance;
+	private boolean sensitive;
 
 	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description, String... oldPaths) {
 		this.section = section;
@@ -352,6 +353,12 @@ public enum ConfigSetting implements SectionEntry {
 
 		this.reducesPerformance = reducesPerformance;
 	}
+	
+	private ConfigSetting(ConfigSettingSection section, String path, Object value, String description, boolean reducesPerformance, boolean sensitive) {
+        this(section, path, value, description, reducesPerformance);
+
+        this.sensitive = sensitive;
+    }
 
 	private void save() {
 		Main.getDataManager().getConfigHandler().saveValue(this);
@@ -563,6 +570,10 @@ public enum ConfigSetting implements SectionEntry {
 	public boolean isReducingPerformance() {
 		return this.reducesPerformance;
 	}
+	
+	public boolean isSensitive() {
+        return this.sensitive;
+    }
 
 	public static ConfigSetting getEntryByPath(String path) {
 		for (ConfigSetting entry : ConfigSetting.values()) {

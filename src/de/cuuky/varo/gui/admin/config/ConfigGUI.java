@@ -60,7 +60,7 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
     @Override
     protected ItemClick getClick(ConfigSetting setting) {
         return (event) -> {
-        	if (setting.canParseFromString()) {
+        	if (setting.canParseFromString() && !setting.isSensitive()) {
 	            this.close();
 	            this.hookChat(setting);
         	} else
@@ -74,8 +74,10 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
         for (String strin : setting.getDescription())
             lore.add(Main.getColorCode() + strin);
 
-        lore.add(" ");
-        lore.add("Value: " + setting.getValue());
+        if (!setting.isSensitive()) {
+            lore.add(" ");
+            lore.add("Value: " + setting.getValue());
+        }
         return new BuildItem().displayName("§7" + setting.getPath())
                 .material(Materials.SIGN).lore(lore).build();
     }

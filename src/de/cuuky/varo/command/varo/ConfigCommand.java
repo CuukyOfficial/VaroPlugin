@@ -47,7 +47,7 @@ public class ConfigCommand extends VaroCommand {
 				if (!entry.getFullPath().equalsIgnoreCase(args[1]))
 					continue;
 
-				if (!entry.canParseFromString()) {
+				if (!entry.canParseFromString() || entry.isSensitive()) {
 					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_NO_INGAME_SET.getValue(vp));
 					return;
 				}

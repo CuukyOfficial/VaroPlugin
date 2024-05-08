@@ -61,7 +61,8 @@ public class MessagePlaceholderLoader {
         new VaroGeneralMessagePlaceholder("null", -1, "Ersetzt durch nichts", () -> "");
 
         for (ConfigSetting setting : ConfigSetting.values())
-            new VaroGeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " "), () -> String.valueOf(setting.getValue()).replace("&", "§"));
+            if (!setting.isSensitive())
+                new VaroGeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " "), () -> String.valueOf(setting.getValue()).replace("&", "§"));
     }
 
     private void loadPlayerPlaceholder() {
