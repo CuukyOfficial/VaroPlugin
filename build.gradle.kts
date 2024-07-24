@@ -41,6 +41,7 @@ sourceSets {
 
 repositories {
     mavenCentral()
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.varoplugin.de/repository/maven-public/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -72,7 +73,7 @@ dependencies {
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
-    compileOnly("me.clip:placeholderapi:2.10.10")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 
     runtimeDownload("com.google.code.gson:gson:2.10.1")
     runtimeDownload("net.dv8tion:JDA:5.0.0-beta.21") {
