@@ -48,6 +48,7 @@ public class Main extends JavaPlugin {
 	private static VaroUpdater varoUpdater;
 	private static VaroLanguageManager languageManager;
 	private static VaroGame varoGame;
+	private static boolean enabled;
 
 	private boolean failed;
 
@@ -140,6 +141,7 @@ public class Main extends JavaPlugin {
 		if (this.failed)
 			return;
 
+		enabled = true;
 		System.out.println(CONSOLE_PREFIX + "Enabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		System.out.println(CONSOLE_PREFIX + " ");
 		System.out.println(CONSOLE_PREFIX + "--------------------------------");
@@ -280,7 +282,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static boolean isBootedUp() {
-		return dataManager != null;
+		return enabled;
 	}
 
 	public static Main getInstance() {
