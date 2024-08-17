@@ -626,12 +626,10 @@ public class Stats implements VaroSerializeable {
 		this.showScoreboard = showScoreboard;
 	}
 
-	public void setState(PlayerState state) {
+	public void setState(PlayerState state, boolean skipSpectator) {
 		if (EventUtils.callEvent(new PlayerStateChangeEvent(owner, state))) return;
 
 		this.state = state;
-		if (state == PlayerState.DEAD)
-			this.diedAt = new Date();
 
 		switch (state) {
 		case ALIVE:
@@ -641,13 +639,18 @@ public class Stats implements VaroSerializeable {
 			this.diedAt = new Date();
 			break;
 		case SPECTATOR:
-			this.owner.setSpectacting();
+		    if (!skipSpectator)
+		        this.owner.setSpectacting();
 			break;
 		default:
 			throw new Error("Unknown playerstate");
 		}
 
 		new WinnerCheck();
+	}
+	
+	public void setState(PlayerState state) {
+	    this.setState(state, false);
 	}
 
 	public void setTimeUntilAddSession(Date timeUntilNewSession) {
