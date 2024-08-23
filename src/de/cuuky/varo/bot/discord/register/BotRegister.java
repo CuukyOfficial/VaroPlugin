@@ -1,6 +1,7 @@
 package de.cuuky.varo.bot.discord.register;
 
 import java.io.File;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -245,8 +246,18 @@ public class BotRegister {
 
 			Main.getDataManager().getMysqlClient().update("TRUNCATE TABLE " + TABLE + ";");
 
-			for (final BotRegister reg : register) {
-				Main.getDataManager().getMysqlClient().update("INSERT INTO " + TABLE + " (uuid, userid, code, bypass, name) VALUES ('" + reg.getUUID() + "', " + (reg.getUserId() != -1 ? reg.getUserId() : "null") + ", " + reg.getCode() + ", " + reg.isBypass() + ", '" + (reg.getPlayerName() == null ? "null" : reg.getPlayerName()) + "');");
+			try (PreparedStatement preparedStatement = Main.getDataManager().getMysqlClient().prepareStatement("INSERT INTO " + TABLE + " (uuid, userid, code, bypass, name) VALUES (?, ?, ?, ?, ?)")) {
+    			for (final BotRegister reg : register) {
+    			    preparedStatement.setString(1, reg.getUUID());
+    			    preparedStatement.setLong(2, reg.getUserId() != -1 ? reg.getUserId() : null);
+    			    preparedStatement.setInt(3, reg.getCode());
+    			    preparedStatement.setBoolean(4, reg.isBypass());
+    			    preparedStatement.setString(5, reg.getPlayerName());
+    			    preparedStatement.addBatch();
+    			}
+    			preparedStatement.executeBatch();
+			} catch (SQLException e) {
+			    e.printStackTrace();
 			}
 		} else {
 			File file = new File("plugins/Varo", "registrations.yml");

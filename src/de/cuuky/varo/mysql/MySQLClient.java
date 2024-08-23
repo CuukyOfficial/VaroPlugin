@@ -2,6 +2,7 @@ package de.cuuky.varo.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -78,6 +79,17 @@ public class MySQLClient {
 			System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
 			connect();
 		}
+	}
+	
+	public PreparedStatement prepareStatement(String query) throws SQLException {
+	    try {
+	        return connection.prepareStatement(query);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
+	        connect();
+	        return connection.prepareStatement(query);
+	    }
 	}
 
 	public boolean isConnected() {
