@@ -26,6 +26,7 @@ import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.FileUpload;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.internal.utils.JDALogger;
 
 public class VaroDiscordBot implements VaroBot {
 
@@ -40,6 +41,7 @@ public class VaroDiscordBot implements VaroBot {
     @Override
     public void connect() {
         System.out.println(Main.getConsolePrefix() + "Activating discord bot...");
+        JDALogger.setFallbackLoggerEnabled(false);
         JDABuilder builder = JDABuilder.createLight(ConfigSetting.DISCORDBOT_TOKEN.getValueAsString());
         builder.setActivity(Activity.customStatus(ConfigSetting.DISCORDBOT_GAMESTATE.getValueAsString()));
         builder.setAutoReconnect(true);

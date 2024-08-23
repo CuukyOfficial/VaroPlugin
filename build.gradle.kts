@@ -76,10 +76,10 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     runtimeDownload("com.google.code.gson:gson:2.10.1")
-    runtimeDownload("net.dv8tion:JDA:5.0.0-beta.21") {
+    runtimeDownload("net.dv8tion:JDA:5.1.0") {
         exclude(module = "opus-java")
     }
-    runtimeDownload("org.slf4j:slf4j-simple:1.7.36") {
+    runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
         exclude(module = "slf4j-api")
     }
     runtimeDownload("com.github.pengrad:java-telegram-bot-api:6.9.0")
