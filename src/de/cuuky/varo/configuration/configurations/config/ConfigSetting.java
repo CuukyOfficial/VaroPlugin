@@ -132,6 +132,7 @@ public enum ConfigSetting implements SectionEntry {
 	
 	DISCORDBOT_MESSAGE_RANDOM_COLOR(ConfigSettingSection.DISCORD, "randomMessageColor", false, "Ob die Nachrichten eine zufaellige Farbe haben sollen (nur bei Embeds)"),
 	DISCORDBOT_USE_EMBEDS(ConfigSettingSection.DISCORD, "useEmbeds", true, "Ob die Nachrichten als Embed gesendet werden sollen"),
+	DISCORDBOT_SHOW_PLAYER_HEADS(ConfigSettingSection.DISCORD, "showPlayerHeads", true, "Nutzt die Minotar API (https://minotar.net/) um in einigen Nachrichten die Köpfe von Spielern anzuzeigen.\nFunktioniert nur mit Embeds."),
 	DISCORDBOT_RESULT_CHANNELID(ConfigSettingSection.DISCORD, "resultChannelID", -1L, "Gib hier die Channel ID an, in der spaeter\ndie Logs und die Gewinner gepostet werden sollen."),
 	DISCORDBOT_SERVERID(ConfigSettingSection.DISCORD, "serverGuildID", -1L, "Gib hier die ServerID deines Servers an.\nHinweis: Vorgangsweise, um die ID zu bekommen wie beim Channel."),
 

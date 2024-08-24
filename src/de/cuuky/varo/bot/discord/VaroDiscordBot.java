@@ -162,7 +162,7 @@ public class VaroDiscordBot implements VaroBot {
         return this.sendMessage(message, title, null, color, channelId);
     }
 
-    public void reply(String message, String title, Color color, IReplyCallback action) {
+    public void reply(String message, String title, String author, String authorUrl, String authorIconUrl, Color color, IReplyCallback action) {
         String escapedMessage = message.replace("_", "\\_");
 
         if (ConfigSetting.DISCORDBOT_USE_EMBEDS.getValueAsBoolean()) {
@@ -171,11 +171,19 @@ public class VaroDiscordBot implements VaroBot {
                 builder.setColor(color);
             else
                 builder.setColor(getRandomColor());
-            builder.setTitle(title);
+            if (title != null)
+                builder.setTitle(title);
+            if (author != null) {
+                builder.setAuthor(author, authorUrl, authorIconUrl);
+            }
             builder.setDescription(escapedMessage);
             action.replyEmbeds(builder.build()).queue();
         } else
             action.reply(escapedMessage).queue();
+    }
+    
+    public void reply(String message, String title, Color color, IReplyCallback action) {
+        this.reply(message, title, null, null, null, color, action);
     }
 
     public void replyError(String message, IReplyCallback action) {

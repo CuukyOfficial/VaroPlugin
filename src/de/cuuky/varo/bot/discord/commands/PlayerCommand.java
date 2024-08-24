@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.text.SimpleDateFormat;
 
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.Stats;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -45,16 +46,16 @@ public class PlayerCommand extends DiscordBotCommand {
 
         StringBuilder text = new StringBuilder();
         if (player.getTeam() != null)
-            text.append("Team: ").append(player.getTeam().getName()).append("\n");
-        text.append("Sessions played: ").append(stats.getSessionsPlayed());
-        text.append("\nKills: ").append(stats.getKills());
-        text.append("\nStrikes: ").append(stats.getStrikes() != null ? stats.getStrikes().size() : "0");
+            text.append("**Team**: ").append(player.getTeam().getName()).append("\n");
+        text.append("**Sessions played**: ").append(stats.getSessionsPlayed());
+        text.append("\n**Kills**: ").append(stats.getKills());
+        text.append("\n**Strikes**: ").append(stats.getStrikes() != null ? stats.getStrikes().size() : "0");
         if (stats.getDiedAt() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-            text.append("\nDeath: ").append(dateFormat.format(stats.getDiedAt()));
+            text.append("\n**Death**: ").append(dateFormat.format(stats.getDiedAt()));
         }
         if (stats.getYoutubeLink() != null)
-            text.append("\nYoutube: ").append(stats.getYoutubeLink());
-        getDiscordBot().reply(text.toString(), player.getName(), Color.BLUE, event);
+            text.append("\n**Youtube**: ").append(stats.getYoutubeLink());
+        getDiscordBot().reply(text.toString(), null, player.getName(), null, ConfigSetting.DISCORDBOT_SHOW_PLAYER_HEADS.getValueAsBoolean() ? "https://minotar.net/helm/" + player.getUUID() + "/32.png".replace("-", "") : null, Color.BLUE, event);
     }
 }
