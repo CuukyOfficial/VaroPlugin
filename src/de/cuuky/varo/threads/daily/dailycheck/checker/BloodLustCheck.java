@@ -30,9 +30,9 @@ public class BloodLustCheck extends Checker {
 				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekaempft!");
 				if (strike) {
 					player.getStats().addStrike(new Strike("Es wurde fuer zu viele Tage nicht gekaempft.", player, "CONSOLE"));
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(null, player).replace("%days%", String.valueOf(days)));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(null, player).replace("%days%", String.valueOf(days)), player.getRealUUID());
 				} else
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(null, player).replace("%days%", String.valueOf(days)));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(null, player).replace("%days%", String.valueOf(days)), player.getRealUUID());
 			}
 		}
 	}

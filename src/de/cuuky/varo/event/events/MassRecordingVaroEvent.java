@@ -97,7 +97,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
 		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			vp.getStats().addSessionPlayed();
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.");
+			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, vp.getName() + " ist auf dem Server und nimmt an der Massenaufnahme teil.", vp.getRealUUID());
 		}
 
 		timer = ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() * 60;

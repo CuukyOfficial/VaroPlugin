@@ -54,10 +54,10 @@ public class PlayerDeathListener implements Listener {
             String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
             if (deadP.getTeam() == null || deadP.getTeam().getLifes() - 2D < -0.00000001D) {
                 if (killerPlayer == null) {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_OTHER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_OTHER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause), deadP.getRealUUID());
                     Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_OTHER, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause);
                 } else {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())), deadP.getRealUUID());
                     Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_PLAYER, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills()));
                 }
 
@@ -93,10 +93,10 @@ public class PlayerDeathListener implements Listener {
 
                 deadP.getTeam().setLifes(deadP.getTeam().getLifes() - 1);
                 if (killerPlayer == null) {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_LIFE_OTHER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_LIFE_OTHER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause), deadP.getRealUUID());
                     Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_LIFE_OTHER, deadP).replace("%death%", deadPlayer.getName()).replace("%reason%", cause);
                 } else {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DEATH_LIFE_PLAYER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.KILL, ConfigMessages.ALERT_DEATH_LIFE_PLAYER.getValue(null, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills())), deadP.getRealUUID());
                     Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_LIFE_PLAYER, deadP).replace("%death%", deadPlayer.getName()).replace("%killer%", killerPlayer.getName()).replace("%killerkills%", String.valueOf(killer.getStats().getKills()));
                 }
             }

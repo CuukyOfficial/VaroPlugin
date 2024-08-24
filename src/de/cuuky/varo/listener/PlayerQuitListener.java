@@ -38,7 +38,7 @@ public class PlayerQuitListener implements Listener {
 			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && ConfigSetting.PLAY_TIME.isIntActivated()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
 				if (vplayer.getStats().getState() != PlayerState.DEAD)
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer), vplayer.getRealUUID());
 				return;
 			}
 
@@ -66,7 +66,7 @@ public class PlayerQuitListener implements Listener {
 
 				VaroPlayerDisconnect.disconnected(vplayer);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer), vplayer.getRealUUID());
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}

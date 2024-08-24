@@ -114,7 +114,7 @@ public class VaroDiscordBot implements VaroBot {
         jda = null;
     }
 
-    private boolean sendMessage(String message, String title, File file, Color color, MessageChannel channel) {
+    private boolean sendMessage(String message, String title, String author, String authorUrl, String authorIconUrl, File file, Color color, MessageChannel channel) {
         String escapedMessage = message.replace("_", "\\_");
         try {
             MessageCreateAction action;
@@ -124,7 +124,12 @@ public class VaroDiscordBot implements VaroBot {
                     builder.setColor(color);
                 else
                     builder.setColor(getRandomColor());
-                builder.addField(title, escapedMessage, true);
+                if (title != null)
+                    builder.setTitle(title);
+                if (author != null) {
+                    builder.setAuthor(author, authorUrl, authorIconUrl);
+                }
+                builder.setDescription(escapedMessage);
                 action = channel.sendMessageEmbeds(builder.build());
             } else
                 action = channel.sendMessage(escapedMessage);
@@ -140,7 +145,7 @@ public class VaroDiscordBot implements VaroBot {
         }
     }
 
-    public boolean sendMessage(String message, String title, File file, Color color, long channelId) {
+    public boolean sendMessage(String message, String title, String author, String authorUrl, String authorIconUrl, File file, Color color, long channelId) {
         if (channelId == 0 && channelId == -1)
             return false;
         
@@ -155,7 +160,11 @@ public class VaroDiscordBot implements VaroBot {
             System.err.println(String.format("%sFailed to find discord channel %d", Main.getConsolePrefix(), channelId));
             return false;
         }
-        return this.sendMessage(message, title, file, color, channel);
+        return this.sendMessage(message, title, author, authorUrl, authorIconUrl, file, color, channel);
+    }
+    
+    public boolean sendMessage(String message, String title, File file, Color color, long channelId) {
+        return this.sendMessage(message, title, null, null, null, file, color, channelId);
     }
 
     public boolean sendMessage(String message, String title, Color color, long channelId) {

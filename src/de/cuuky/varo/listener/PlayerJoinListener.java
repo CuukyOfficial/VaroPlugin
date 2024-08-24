@@ -120,20 +120,20 @@ public class PlayerJoinListener implements Listener {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
 			if (isOutsideOfBorder(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				vplayer.saveTeleport(player.getWorld().getSpawnLocation());
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer), vplayer.getRealUUID());
 			}
 
 			if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_SPECTATOR, vplayer);
 			} else if (Main.getVaroGame().getFinaleJoinStart()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_FINALE, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer), vplayer.getRealUUID());
 				vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER);
 				if (!player.isOp())
 					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
 			} else if (!ConfigSetting.PLAY_TIME.isIntActivated()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MESSAGE, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer), vplayer.getRealUUID());
 			} else if (massRecording.isEnabled()) {
 				if (massRecording.getCountdown(vplayer) == ConfigSetting.PLAY_TIME.getValueAsInt() * 60)
 					vplayer.getStats().setCountdown(massRecording.getTimer());
@@ -143,7 +143,7 @@ public class PlayerJoinListener implements Listener {
 				if (!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MASS_RECORDING, vplayer);
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(null, vplayer));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(null, vplayer), vplayer.getRealUUID());
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
 					new BukkitRunnable() {
@@ -155,14 +155,14 @@ public class PlayerJoinListener implements Listener {
 					}.runTaskLater(Main.getInstance(), ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME, vplayer);
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer), vplayer.getRealUUID());
 				}
 			} else if (!vplayer.getStats().hasTimeLeft()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_TIME, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(null, vplayer), vplayer.getRealUUID());
 			} else {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer), vplayer.getRealUUID());
 			}
 			return;
 		}

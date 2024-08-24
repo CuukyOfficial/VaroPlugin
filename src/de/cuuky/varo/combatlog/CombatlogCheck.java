@@ -51,9 +51,9 @@ public class CombatlogCheck {
         new Alert(AlertType.COMBATLOG, vp.getName() + " hat sich im Kampf ausgeloggt!");
         if (ConfigSetting.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
             vp.getStats().addStrike(new Strike("CombatLog", vp, "CONSOLE"));
-            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(null, vp));
+            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG_STRIKE.getValue(null, vp), vp.getRealUUID());
         } else
-            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(null, vp));
+            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_COMBAT_LOG.getValue(null, vp), vp.getRealUUID());
 
         Main.getLanguageManager().broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT, vp);
     }

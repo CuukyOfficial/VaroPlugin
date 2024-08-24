@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventLogger extends CachedVaroLogger<String> {
@@ -60,7 +61,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 		}
 	}
 
-	private List<Object[]> queue;
+	private List<Object[]> queue; // wtf
 
 	public EventLogger(String name) {
 		super(name, String.class);
@@ -77,7 +78,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 					return;
 
 				for (Object[] msg : queue) {
-					sendToDiscord((LogType) msg[0], (String) msg[1]);
+					sendToDiscord((LogType) msg[0], (String) msg[1], (UUID) msg[2]);
 					sendToTelegram((LogType) msg[0], (String) msg[1]);
 					queue.remove(msg);
 				}
@@ -85,12 +86,12 @@ public class EventLogger extends CachedVaroLogger<String> {
 		}.runTaskTimer(Main.getInstance(), 20L, 20L);
 	}
 
-	private boolean sendToDiscord(LogType type, String msg) {
+	private boolean sendToDiscord(LogType type, String msg, UUID playerUuid) {
 		if (Main.getBotLauncher().getDiscordbot() == null)
 			return true;
 
 		try {
-			Main.getBotLauncher().getDiscordbot().sendMessage(msg, type.getName(), type.getColor(), type.getPostChannel());
+			Main.getBotLauncher().getDiscordbot().sendMessage(msg, null, type.getName(), null, playerUuid != null && ConfigSetting.DISCORDBOT_SHOW_PLAYER_HEADS.getValueAsBoolean() ? "https://minotar.net/helm/" + playerUuid.toString() + "/32.png".replace("-", "") : null, null, type.getColor(), type.getPostChannel());
 			return true;
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return true;
@@ -116,21 +117,25 @@ public class EventLogger extends CachedVaroLogger<String> {
 		}
 	}
 
+	public void println(LogType type, String message, UUID playerUuid) {
+        message = ChatColor.stripColor(message.replace("&", "§"));
+
+        String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
+        this.queueLog(log);
+
+        if (message.contains("%noBot%") || message.contains("%noDiscord%"))
+            return;
+
+        if (Main.getBotLauncher() == null) {
+            queue.add(new Object[] { type, message, playerUuid });
+            return;
+        }
+
+        sendToDiscord(type, message, playerUuid);
+        sendToTelegram(type, message);
+    }
+
 	public void println(LogType type, String message) {
-		message = ChatColor.stripColor(message.replace("&", "§"));
-
-		String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
-		this.queueLog(log);
-
-		if (message.contains("%noBot%") || message.contains("%noDiscord%"))
-			return;
-
-		if (Main.getBotLauncher() == null) {
-			queue.add(new Object[] { type, message });
-			return;
-		}
-
-		sendToDiscord(type, message);
-		sendToTelegram(type, message);
+		this.println(type, message, null);
 	}
 }

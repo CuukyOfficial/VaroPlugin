@@ -139,7 +139,7 @@ public class Stats implements VaroSerializeable {
 	public void addVideo(YouTubeVideo video) {
 		videos.add(video);
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink(), owner.getRealUUID());
 	}
 
 	public void addWin() {
