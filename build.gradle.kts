@@ -75,6 +75,7 @@ dependencies {
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
     compileOnly("me.clip:placeholderapi:2.11.6")
 
+	runtimeDownload("com.github.cryptomorin:XSeries:11.2.1")
     runtimeDownload("com.google.code.gson:gson:2.10.1")
     runtimeDownload("net.dv8tion:JDA:5.1.0") {
         exclude(module = "opus-java")

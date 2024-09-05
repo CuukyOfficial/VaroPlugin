@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.discordbot.botregister;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class BotRegisterListGUI extends VaroAsyncListInventory<BotRegister> {
 
     public BotRegisterListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, BotRegister.getBotRegister());
+        super(Main.getInventoryManager(), player, BotRegister.getBotRegister());
     }
 
     @Override

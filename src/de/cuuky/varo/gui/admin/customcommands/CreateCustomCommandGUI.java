@@ -1,21 +1,22 @@
 package de.cuuky.varo.gui.admin.customcommands;
 
+import java.util.Locale;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import java.util.Locale;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 
 public class CreateCustomCommandGUI extends VaroInventory {
 
@@ -27,13 +28,13 @@ public class CreateCustomCommandGUI extends VaroInventory {
     private boolean unused = false;
 
     public CreateCustomCommandGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.permission = "null";
     }
 
     public CreateCustomCommandGUI(Player player, CustomCommand command) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.command = command;
         this.name = command.getName();

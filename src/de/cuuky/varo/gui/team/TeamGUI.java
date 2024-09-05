@@ -17,7 +17,7 @@ public class TeamGUI extends VaroInventory {
     private final VaroTeam team;
 
     public TeamGUI(Player player, VaroTeam team) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.team = team;
     }

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class CustomCommandMenuGUI extends VaroInventory {
     public CustomCommandMenuGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override

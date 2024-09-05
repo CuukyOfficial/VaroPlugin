@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.youtube;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     public YouTubeVideoListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, YouTubeVideo.getVideos());
+        super(Main.getInventoryManager(), player, YouTubeVideo.getVideos());
     }
 
     @Override

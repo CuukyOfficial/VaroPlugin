@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.player;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -59,7 +59,7 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
     private final PlayerGUIType type;
 
     public PlayerListGUI(Player player, PlayerGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
+        super(Main.getInventoryManager(), player, type.getList());
 
         this.showStats = player.hasPermission("varo.viewStats");
         this.type = type;

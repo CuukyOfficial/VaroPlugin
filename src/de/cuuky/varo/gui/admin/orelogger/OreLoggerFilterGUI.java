@@ -2,7 +2,7 @@ package de.cuuky.varo.gui.admin.orelogger;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -90,7 +90,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
         materialFilter = new Filter("Material Filter", this.validLoggerMaterialName());
 
     public OreLoggerFilterGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
         this.player = VaroPlayer.getPlayer(player);
     }
 

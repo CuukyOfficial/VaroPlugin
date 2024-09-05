@@ -13,7 +13,7 @@ public class ReportPickGUI extends VaroInventory {
     private final VaroPlayer player;
 
     public ReportPickGUI(VaroPlayer player, Report report) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player.getPlayer());
+        super(Main.getInventoryManager(), player.getPlayer());
 
         this.report = report;
         this.player = player;

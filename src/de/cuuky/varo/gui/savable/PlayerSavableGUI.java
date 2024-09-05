@@ -12,7 +12,7 @@ public class PlayerSavableGUI extends VaroInventory {
     private final VaroSaveable savable;
 
     public PlayerSavableGUI(Player player, VaroSaveable savable) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.savable = savable;
     }

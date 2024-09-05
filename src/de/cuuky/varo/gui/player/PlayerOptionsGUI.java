@@ -1,10 +1,15 @@
 package de.cuuky.varo.gui.player;
 
+import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
+
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.inventory.page.AdvancedInfiniteInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -13,13 +18,9 @@ import de.cuuky.varo.entity.player.stats.StatType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.utils.ArrayUtils;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
+import de.varoplugin.cfw.inventory.page.AdvancedInfiniteInventory;
 
 public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
 
@@ -27,7 +28,7 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     private int index;
 
     public PlayerOptionsGUI(Player opener, VaroPlayer target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener);
+        super(Main.getInventoryManager(), opener);
 
         this.target = target;
     }

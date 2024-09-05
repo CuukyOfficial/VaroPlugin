@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.report;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -16,7 +16,7 @@ import java.util.List;
 public class ReportListGUI extends VaroListInventory<Report> {
 
     public ReportListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Report.getReports());
+        super(Main.getInventoryManager(), player, Report.getReports());
     }
 
     @Override

@@ -13,7 +13,7 @@ public class BotRegisterGUI extends VaroInventory {
     private final BotRegister register;
 
     public BotRegisterGUI(Player player, BotRegister register) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.register = register;
     }

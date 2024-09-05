@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui.admin.inventory;
 
-import de.cuuky.cfw.inventory.InventoryNotifiable;
-import de.cuuky.cfw.inventory.list.AdvancedEditInventory;
+import de.varoplugin.cfw.inventory.InventoryNotifiable;
+import de.varoplugin.cfw.inventory.list.AdvancedEditInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -17,7 +17,7 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
     private final InventoryBackup backup;
 
     public InventoryBackupShowGUI(Player player, InventoryBackup backup) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.backup = backup;
     }

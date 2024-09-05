@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerListChooseGUI extends VaroInventory {
 
     public PlayerListChooseGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override

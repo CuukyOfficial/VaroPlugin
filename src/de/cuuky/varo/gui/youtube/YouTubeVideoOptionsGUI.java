@@ -13,7 +13,7 @@ public class YouTubeVideoOptionsGUI extends VaroInventory {
     private YouTubeVideo video;
 
     public YouTubeVideoOptionsGUI(Player player, YouTubeVideo video) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.video = video;
     }

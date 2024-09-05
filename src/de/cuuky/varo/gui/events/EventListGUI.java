@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.events;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class EventListGUI extends VaroListInventory<String> {
 
     public EventListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player,
+        super(Main.getInventoryManager(), player,
             Main.getDataManager().getVaroLoggerManager().getEventLogger().getLogs());
     }
 

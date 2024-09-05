@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class AlertTypeChooseGUI extends VaroInventory {
 
     public AlertTypeChooseGUI(Player opener) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener);
+        super(Main.getInventoryManager(), opener);
     }
 
     @Override

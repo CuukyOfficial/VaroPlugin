@@ -44,6 +44,7 @@ public class Dependencies {
     private static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
 
     static {
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.cryptomorin.xseries.XMaterial")));
         OPTIONAL_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.gson.JsonElement")));
         OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("net.dv8tion.jda.api.JDA")));
         OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("org.slf4j.impl.SimpleLogger")));

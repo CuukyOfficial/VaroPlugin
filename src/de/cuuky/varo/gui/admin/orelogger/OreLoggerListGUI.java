@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.orelogger;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
@@ -23,7 +23,7 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     public OreLoggerListGUI(Player opener, List<LoggedBlock> blocks) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, blocks);
+        super(Main.getInventoryManager(), opener, blocks);
     }
 
     public OreLoggerListGUI(Player opener) {

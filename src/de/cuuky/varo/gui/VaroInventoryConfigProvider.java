@@ -1,8 +1,8 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.cfw.inventory.*;
-import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
-import de.cuuky.cfw.inventory.inserter.DirectInserter;
+import de.varoplugin.cfw.inventory.*;
+import de.varoplugin.cfw.inventory.inserter.AnimatedClosingInserter;
+import de.varoplugin.cfw.inventory.inserter.DirectInserter;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.settings.VaroMenuColor;

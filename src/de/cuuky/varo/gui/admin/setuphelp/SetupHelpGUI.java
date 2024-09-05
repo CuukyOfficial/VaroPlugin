@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.setuphelp;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -37,7 +37,7 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
     }
 
     public SetupHelpGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Arrays.asList(SetupCheckList.values()));
+        super(Main.getInventoryManager(), player, Arrays.asList(SetupCheckList.values()));
     }
 
     @Override

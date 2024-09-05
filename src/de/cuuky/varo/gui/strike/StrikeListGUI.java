@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.strike;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 public class StrikeListGUI extends VaroListInventory<Strike> {
 
     public StrikeListGUI(Player player, Player target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, VaroPlayer.getPlayer(target).getStats().getStrikes());
+        super(Main.getInventoryManager(), player, VaroPlayer.getPlayer(target).getStats().getStrikes());
     }
 
     @Override

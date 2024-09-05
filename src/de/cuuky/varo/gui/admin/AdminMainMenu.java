@@ -24,7 +24,7 @@ import de.cuuky.varo.report.Report;
 public class AdminMainMenu extends VaroInventory {
 
     public AdminMainMenu(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override

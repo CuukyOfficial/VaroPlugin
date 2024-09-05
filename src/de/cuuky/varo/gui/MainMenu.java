@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.cfw.inventory.Info;
+import de.varoplugin.cfw.inventory.Info;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.utils.item.BuildItem;
@@ -28,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
 public class MainMenu extends VaroInventory {
 
     public MainMenu(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override

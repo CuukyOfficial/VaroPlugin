@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.cfw.version.types.Sounds;
@@ -23,7 +23,7 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
     private ConfigSettingSection section;
 
     public ConfigGUI(Player opener, ConfigSettingSection section) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, section.getEntries());
+        super(Main.getInventoryManager(), opener, section.getEntries());
 
         this.section = section;
     }

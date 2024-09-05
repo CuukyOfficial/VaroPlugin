@@ -12,7 +12,7 @@ public class VaroSettingsMenu extends VaroInventory {
     private final VaroPlayer player;
 
     public VaroSettingsMenu(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.player = VaroPlayer.getPlayer(player);
     }

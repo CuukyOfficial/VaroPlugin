@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.alert;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -46,7 +46,7 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
     }
 
     public AlertChooseGUI(Player player, AlertGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
+        super(Main.getInventoryManager(), player, type.getList());
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 public class DiscordBotGUI extends VaroInventory {
 
     public DiscordBotGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override

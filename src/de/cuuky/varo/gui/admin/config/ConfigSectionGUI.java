@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.config;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
 
     public ConfigSectionGUI(Player opener) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, Arrays.asList(ConfigSettingSection.values()));
+        super(Main.getInventoryManager(), opener, Arrays.asList(ConfigSettingSection.values()));
     }
 
     @Override

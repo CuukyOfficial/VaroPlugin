@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.team;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -47,7 +47,7 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
     private TeamGUIType type;
 
     public TeamListGUI(Player player, TeamGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
+        super(Main.getInventoryManager(), player, type.getList());
 
         this.type = type;
     }

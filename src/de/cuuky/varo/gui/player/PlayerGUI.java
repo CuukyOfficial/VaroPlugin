@@ -1,6 +1,9 @@
 package de.cuuky.varo.gui.player;
 
-import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.utils.item.BuildItem;
@@ -10,16 +13,14 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
 import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 
 public class PlayerGUI extends VaroInventory {
 
     private final VaroPlayer target;
 
     public PlayerGUI(Player player, VaroPlayer target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.target = target;
     }

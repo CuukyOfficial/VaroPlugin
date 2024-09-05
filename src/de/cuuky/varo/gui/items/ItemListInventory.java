@@ -1,8 +1,8 @@
 package de.cuuky.varo.gui.items;
 
-import de.cuuky.cfw.inventory.Info;
-import de.cuuky.cfw.inventory.InventoryNotifiable;
-import de.cuuky.cfw.inventory.list.AdvancedEditListInventory;
+import de.varoplugin.cfw.inventory.Info;
+import de.varoplugin.cfw.inventory.InventoryNotifiable;
+import de.varoplugin.cfw.inventory.list.AdvancedEditListInventory;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -16,7 +16,7 @@ public class ItemListInventory extends AdvancedEditListInventory implements Inve
     private final ItemList list;
 
     public ItemListInventory(Player player, ItemList list) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, list.getItems());
+        super(Main.getInventoryManager(), player, list.getItems());
 
         this.list = list;
     }

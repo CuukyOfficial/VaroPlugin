@@ -14,7 +14,7 @@ public class AlertOptionGUI extends VaroInventory {
     private Alert alert;
 
     public AlertOptionGUI(Player player, Alert alert) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.alert = alert;
     }

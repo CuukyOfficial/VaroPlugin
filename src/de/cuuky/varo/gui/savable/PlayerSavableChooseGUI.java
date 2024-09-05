@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.savable;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.LocationFormat;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerSavableChooseGUI extends VaroListInventory<VaroSaveable> {
 
     public PlayerSavableChooseGUI(Player opener, VaroPlayer target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, target.getStats().getSaveables());
+        super(Main.getInventoryManager(), opener, target.getStats().getSaveables());
     }
 
     @Override

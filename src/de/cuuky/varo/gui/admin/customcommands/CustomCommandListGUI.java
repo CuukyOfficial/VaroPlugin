@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.customcommands;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildSkull;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
 
     public CustomCommandListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Main.getDataManager().getCustomCommandManager().getCommands());
+        super(Main.getInventoryManager(), player, Main.getDataManager().getCustomCommandManager().getCommands());
     }
 
     @Override

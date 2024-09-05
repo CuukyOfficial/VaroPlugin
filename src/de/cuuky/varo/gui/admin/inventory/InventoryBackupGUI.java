@@ -14,7 +14,7 @@ public class InventoryBackupGUI extends VaroInventory {
     private final InventoryBackup backup;
 
     public InventoryBackupGUI(Player player, InventoryBackup backup) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.backup = backup;
     }

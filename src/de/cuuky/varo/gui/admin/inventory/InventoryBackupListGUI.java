@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.inventory;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -17,7 +17,7 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
     private final VaroPlayer target;
 
     public InventoryBackupListGUI(Player opener, VaroPlayer target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, target.getStats().getInventoryBackups());
+        super(Main.getInventoryManager(), opener, target.getStats().getInventoryBackups());
 
         this.target = target;
     }

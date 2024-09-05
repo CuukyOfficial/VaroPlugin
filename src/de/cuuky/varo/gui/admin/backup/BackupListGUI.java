@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.admin.backup;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroListInventory;
@@ -18,7 +18,7 @@ import java.util.List;
 public class BackupListGUI extends VaroListInventory<VaroBackup> {
 
     public BackupListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, VaroBackup.getBackups());
+        super(Main.getInventoryManager(), player, VaroBackup.getBackups());
     }
 
     private String getCurrentDate() {

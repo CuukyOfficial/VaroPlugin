@@ -49,7 +49,7 @@ public class TeamRequestCommand extends VaroCommand {
 				return;
 			}
 
-			new VaroColorMenu(Main.getCuukyFrameWork().getAdvancedInventoryManager(), (Player) sender, varoMenuColor -> {
+			new VaroColorMenu(Main.getInventoryManager(), (Player) sender, varoMenuColor -> {
 				player.getTeam().setColorCode(varoMenuColor.getColorCode());
 				sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + player.getTeam().getDisplay() + " §7erfolgreich geaendert!");
 			}, true);

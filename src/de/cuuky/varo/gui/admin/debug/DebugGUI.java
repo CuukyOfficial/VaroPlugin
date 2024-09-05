@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 public class DebugGUI extends VaroInventory {
 
     public DebugGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override

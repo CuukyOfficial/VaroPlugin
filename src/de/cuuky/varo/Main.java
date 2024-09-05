@@ -44,6 +44,7 @@ public class Main extends JavaPlugin {
 
 	private static BotLauncher botLauncher;
 	private static CuukyFrameWork cuukyFrameWork;
+	private static VaroInventoryManager inventoryManager;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
 	private static VaroLanguageManager languageManager;
@@ -117,7 +118,8 @@ public class Main extends JavaPlugin {
 
 			long dataStamp = System.currentTimeMillis();
 			cuukyFrameWork = new CuukyFrameWork(instance,
-					languageManager = new VaroLanguageManager(Main.this), new VaroInventoryManager(this));
+					languageManager = new VaroLanguageManager(Main.this));
+			inventoryManager = new VaroInventoryManager(this);
 			dataManager.load();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
@@ -238,6 +240,10 @@ public class Main extends JavaPlugin {
 	public static CuukyFrameWork getCuukyFrameWork() {
 		return cuukyFrameWork;
 	}
+	
+	public static VaroInventoryManager getInventoryManager() {
+        return inventoryManager;
+    }
 
 	public static VaroUpdater getVaroUpdater() {
 		return varoUpdater;

@@ -1,6 +1,6 @@
 package de.cuuky.varo.gui.report;
 
-import de.cuuky.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -19,7 +19,7 @@ public class ReportGUI extends VaroListInventory<ReportReason> {
     private final VaroPlayer reported, reporter;
 
     public ReportGUI(Player player, VaroPlayer reported) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, Arrays.asList(ReportReason.values()));
+        super(Main.getInventoryManager(), player, Arrays.asList(ReportReason.values()));
 
         this.reporter = VaroPlayer.getPlayer(player);
         this.reported = reported;
