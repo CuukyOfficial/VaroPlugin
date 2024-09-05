@@ -91,7 +91,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 			return true;
 
 		try {
-			Main.getBotLauncher().getDiscordbot().sendMessage(msg, null, type.getName(), null, playerUuid != null && ConfigSetting.DISCORDBOT_SHOW_PLAYER_HEADS.getValueAsBoolean() ? "https://minotar.net/helm/" + playerUuid.toString() + "/32.png".replace("-", "") : null, null, type.getColor(), type.getPostChannel());
+			Main.getBotLauncher().getDiscordbot().sendMessage(msg, type.getName(), null, playerUuid != null && ConfigSetting.DISCORDBOT_SHOW_PLAYER_HEADS.getValueAsBoolean() ? "https://minotar.net/helm/" + playerUuid.toString() + "/32.png".replace("-", "") : null, null, type.getColor(), type.getPostChannel());
 			return true;
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return true;

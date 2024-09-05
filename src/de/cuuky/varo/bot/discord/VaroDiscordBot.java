@@ -114,7 +114,7 @@ public class VaroDiscordBot implements VaroBot {
         jda = null;
     }
 
-    private boolean sendMessage(String message, String title, String author, String authorUrl, String authorIconUrl, File file, Color color, MessageChannel channel) {
+    private boolean sendMessage(String message, String author, String authorUrl, String authorIconUrl, File file, Color color, MessageChannel channel) {
         String escapedMessage = message.replace("_", "\\_");
         try {
             MessageCreateAction action;
@@ -124,11 +124,8 @@ public class VaroDiscordBot implements VaroBot {
                     builder.setColor(color);
                 else
                     builder.setColor(getRandomColor());
-                if (title != null)
-                    builder.setTitle(title);
-                if (author != null) {
+                if (author != null)
                     builder.setAuthor(author, authorUrl, authorIconUrl);
-                }
                 builder.setDescription(escapedMessage);
                 action = channel.sendMessageEmbeds(builder.build());
             } else
@@ -145,7 +142,7 @@ public class VaroDiscordBot implements VaroBot {
         }
     }
 
-    public boolean sendMessage(String message, String title, String author, String authorUrl, String authorIconUrl, File file, Color color, long channelId) {
+    public boolean sendMessage(String message, String author, String authorUrl, String authorIconUrl, File file, Color color, long channelId) {
         if (channelId == 0 && channelId == -1)
             return false;
         
@@ -160,18 +157,18 @@ public class VaroDiscordBot implements VaroBot {
             System.err.println(String.format("%sFailed to find discord channel %d", Main.getConsolePrefix(), channelId));
             return false;
         }
-        return this.sendMessage(message, title, author, authorUrl, authorIconUrl, file, color, channel);
+        return this.sendMessage(message, author, authorUrl, authorIconUrl, file, color, channel);
     }
     
-    public boolean sendMessage(String message, String title, File file, Color color, long channelId) {
-        return this.sendMessage(message, title, null, null, null, file, color, channelId);
+    public boolean sendMessage(String message, String author, File file, Color color, long channelId) {
+        return this.sendMessage(message, author, null, null, file, color, channelId);
     }
 
-    public boolean sendMessage(String message, String title, Color color, long channelId) {
-        return this.sendMessage(message, title, null, color, channelId);
+    public boolean sendMessage(String message, String author, Color color, long channelId) {
+        return this.sendMessage(message, author, null, color, channelId);
     }
 
-    public void reply(String message, String title, String author, String authorUrl, String authorIconUrl, Color color, IReplyCallback action) {
+    public void reply(String message, String author, String authorUrl, String authorIconUrl, Color color, IReplyCallback action) {
         String escapedMessage = message.replace("_", "\\_");
 
         if (ConfigSetting.DISCORDBOT_USE_EMBEDS.getValueAsBoolean()) {
@@ -180,19 +177,16 @@ public class VaroDiscordBot implements VaroBot {
                 builder.setColor(color);
             else
                 builder.setColor(getRandomColor());
-            if (title != null)
-                builder.setTitle(title);
-            if (author != null) {
+            if (author != null)
                 builder.setAuthor(author, authorUrl, authorIconUrl);
-            }
             builder.setDescription(escapedMessage);
             action.replyEmbeds(builder.build()).queue();
         } else
             action.reply(escapedMessage).queue();
     }
     
-    public void reply(String message, String title, Color color, IReplyCallback action) {
-        this.reply(message, title, null, null, null, color, action);
+    public void reply(String message, String author, Color color, IReplyCallback action) {
+        this.reply(message, author, null, null, color, action);
     }
 
     public void replyError(String message, IReplyCallback action) {

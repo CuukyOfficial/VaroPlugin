@@ -56,6 +56,6 @@ public class PlayerCommand extends DiscordBotCommand {
         }
         if (stats.getYoutubeLink() != null)
             text.append("\n**Youtube**: ").append(stats.getYoutubeLink());
-        getDiscordBot().reply(text.toString(), null, player.getName(), null, ConfigSetting.DISCORDBOT_SHOW_PLAYER_HEADS.getValueAsBoolean() ? "https://minotar.net/helm/" + player.getUUID() + "/32.png".replace("-", "") : null, Color.BLUE, event);
+        getDiscordBot().reply(text.toString(), player.getName(), null, ConfigSetting.DISCORDBOT_SHOW_PLAYER_HEADS.getValueAsBoolean() ? "https://minotar.net/helm/" + player.getUUID() + "/32.png".replace("-", "") : null, Color.BLUE, event);
     }
 }
