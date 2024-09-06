@@ -63,6 +63,9 @@ public class VaroGame implements VaroSerializeable {
 
     @VaroSerializeField(path = "lobby")
     private Location lobby;
+    
+    @VaroSerializeField(path = "projectTime")
+    private long projectTime;
 
     private boolean finaleJoinStart, firstTime;
     private VaroMainHeartbeatThread mainThread;
@@ -122,6 +125,8 @@ public class VaroGame implements VaroSerializeable {
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
         }
 
+        this.setProjectTime(0L);
+        
         if (minuteTimer != null)
             minuteTimer.remove();
 
@@ -305,6 +310,14 @@ public class VaroGame implements VaroSerializeable {
 
     public Location getLobby() {
         return lobby;
+    }
+    
+    public long getProjectTime() {
+        return this.projectTime;
+    }
+    
+    public void setProjectTime(long projectTime) {
+        this.projectTime = projectTime;
     }
 
     public ProtectionTime getProtection() {

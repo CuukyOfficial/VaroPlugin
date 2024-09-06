@@ -94,6 +94,8 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 			for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone())
 				if(!vp.isAdminIgnore() && vp.getStats().isAlive())
 					vp.getStats().increaseOnlineTime();
+			
+			this.game.setProjectTime(this.game.getProjectTime() + 1L);
 		}
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
