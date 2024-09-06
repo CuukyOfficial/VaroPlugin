@@ -1,6 +1,8 @@
 package de.cuuky.varo.command.essentials;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -8,7 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 
 public class MessageCommand implements CommandExecutor {
@@ -40,7 +41,7 @@ public class MessageCommand implements CommandExecutor {
 			return false;
 		}
 
-		String message = JavaUtils.getArgsToString(JavaUtils.removeString(args, 0), " ");
+		String message = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
 		to.sendMessage(Main.getColorCode() + sender.getName() + " §8-> §7Dir§8: §f" + message);
 		sender.sendMessage("§7Du §8-> " + Main.getColorCode() + to.getName() + "§8: §f" + message);
 		if (MessageCommand.lastChat.containsKey(to.getName()))

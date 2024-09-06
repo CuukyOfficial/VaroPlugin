@@ -1,6 +1,6 @@
 package de.cuuky.varo.entity.player.stats.stat.inventory;
 
-import de.cuuky.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.utils.JavaUtils;
 import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;

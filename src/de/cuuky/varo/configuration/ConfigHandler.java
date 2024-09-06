@@ -9,13 +9,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.google.common.io.Files;
 
-import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionConfiguration;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 
 public class ConfigHandler {
 
@@ -192,7 +191,7 @@ public class ConfigHandler {
 			if (entry.getDescription() == null)
 				break;
 
-			String description = JavaUtils.getArgsToString(entry.getDescription(), "\n  ");
+			String description = String.join("\n  ", entry.getDescription());
 			desc = desc + "\r\n" + " " + entry.getPath() + ":\n  " + description + "\n  Default-Value: " + entry.getDefaultValueToWrite() + "\r\n";
 		}
 

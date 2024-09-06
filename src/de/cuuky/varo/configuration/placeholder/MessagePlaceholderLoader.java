@@ -1,21 +1,21 @@
 package de.cuuky.varo.configuration.placeholder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.stream.Collectors;
+
+import org.bukkit.ChatColor;
+
 import de.cuuky.cfw.configuration.placeholder.placeholder.util.DateInfo;
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.PermissionUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
-import org.bukkit.ChatColor;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.stream.Collectors;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class MessagePlaceholderLoader {
 
@@ -65,7 +65,7 @@ public class MessagePlaceholderLoader {
 
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
-                new VaroGeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " "), () -> String.valueOf(setting.getValue()).replace("&", "§"));
+                new VaroGeneralMessagePlaceholder(setting.getPath(), 10, String.join(" ", setting.getDescription()), () -> String.valueOf(setting.getValue()).replace("&", "§"));
     }
 
     private void loadPlayerPlaceholder() {

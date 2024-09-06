@@ -10,12 +10,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
+import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.VersionUtils;
 
 public class ResetCommand extends VaroCommand {

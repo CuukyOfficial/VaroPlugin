@@ -1,6 +1,6 @@
 package de.cuuky.varo.game.world;
 
-import de.cuuky.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;

@@ -1,14 +1,15 @@
 package de.cuuky.varo.command;
 
-import de.cuuky.varo.command.custom.CustomCommand;
+import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -35,7 +36,7 @@ public class VaroCommandListener implements CommandExecutor {
         if (command instanceof CustomCommand && ((CustomCommand) command).isUnused()) {
             if (sender.hasPermission("varo.useCustoms")) {
                 sender.sendMessage(player == null ? Main.getConsolePrefix() : Main.getPrefix() + ChatColor.GRAY + "Dieser Command ist " + Main.getColorCode() + "deaktiviert" + ChatColor.GRAY + ",  aber du kannst ihn\n" + Main.getPrefix() + "benutzen:");
-                command.onCommand(sender, player, cmd, label, JavaUtils.removeString(args, 0));
+                command.onCommand(sender, player, cmd, label, Arrays.copyOfRange(args, 1, args.length));
             } else
                 sender.sendMessage(Main.getPrefix() + "§7Kommando '" + Main.getColorCode() + args[0] + "§7' nicht gefunden!");
             return false;
@@ -46,7 +47,7 @@ public class VaroCommandListener implements CommandExecutor {
             return false;
         }
 
-        command.onCommand(sender, player, cmd, label, JavaUtils.removeString(args, 0));
+        command.onCommand(sender, player, cmd, label, Arrays.copyOfRange(args, 1, args.length));
         return true;
     }
 }

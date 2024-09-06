@@ -2,13 +2,17 @@ package de.cuuky.varo.recovery.recoveries;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.cuuky.cfw.recovery.FileZipper;
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 
 public class VaroBackup extends FileZipper {
+    
+    private static final DateFormat DATE_FROMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
 	private static ArrayList<VaroBackup> backups;
 
@@ -23,7 +27,7 @@ public class VaroBackup extends FileZipper {
 	}
 
 	public VaroBackup() {
-		super(new File("plugins/Varo/backups/" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
+		super(new File("plugins/Varo/backups/" + newFileName()));
 
 		Main.getDataManager().save();
 
@@ -49,6 +53,10 @@ public class VaroBackup extends FileZipper {
 	public void delete() {
 		zipFile.delete();
 		backups.remove(this);
+	}
+	
+	public static String newFileName() {
+        return DATE_FROMAT.format(new Date()) + ".zip";
 	}
 
 	private static void loadBackups() {

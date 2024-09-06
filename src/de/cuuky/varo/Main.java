@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,11 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.io.BaseEncoding;
 
 import de.cuuky.cfw.CuukyFrameWork;
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.UUIDUtils;
-import de.varoplugin.cfw.version.ServerSoftware;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
@@ -24,11 +21,15 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
+import de.cuuky.varo.data.Dependencies;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
+import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class Main extends JavaPlugin {
 
@@ -98,6 +99,8 @@ public class Main extends JavaPlugin {
 					CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://papermc.io/).");
 		}
 		System.out.println(CONSOLE_PREFIX);
+		
+		Dependencies.loadRequired(this);
 		
 		dataManager = new DataManager(this);
 		dataManager.preLoad();
@@ -275,8 +278,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getContributors() {
-		return JavaUtils.getArgsToString(
-				JavaUtils.removeString(JavaUtils.arrayToCollection(instance.getDescription().getAuthors()), 0), ", ");
+		return instance.getDescription().getAuthors().stream().skip(1).collect(Collectors.joining(", "));
 	}
 
 	public static String getPrefix() {

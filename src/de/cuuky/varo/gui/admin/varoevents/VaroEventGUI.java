@@ -1,12 +1,15 @@
 package de.cuuky.varo.gui.admin.varoevents;
 
 import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.utils.JavaUtils;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.VaroListInventory;
+
+import java.util.Arrays;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,7 +34,7 @@ public class VaroEventGUI extends VaroListInventory<VaroEvent> {
         return new BuildItem().displayName(event.getEventType().getName())
                 .itemstack(new ItemStack(event.getIcon()))
                 .lore(JavaUtils.combineArrays(new String[]{"§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), ""},
-                        JavaUtils.addIntoEvery(event.getDescription().split("\n"), "§7", true))).build();
+                        Arrays.stream(event.getDescription().split("\n")).map(s -> "§7" + s).toArray(String[]::new))).build();
     }
 
     @Override

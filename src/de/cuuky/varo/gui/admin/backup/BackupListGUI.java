@@ -1,31 +1,22 @@
 package de.cuuky.varo.gui.admin.backup;
 
-import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.VaroListInventory;
-import de.cuuky.varo.recovery.recoveries.VaroBackup;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import de.cuuky.cfw.utils.item.BuildItem;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.gui.VaroListInventory;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
+import de.varoplugin.cfw.inventory.ItemClick;
 
 public class BackupListGUI extends VaroListInventory<VaroBackup> {
 
     public BackupListGUI(Player player) {
         super(Main.getInventoryManager(), player, VaroBackup.getBackups());
-    }
-
-    private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        Date date = new Date();
-
-        return dateFormat.format(date);
     }
 
     @Override
@@ -50,7 +41,7 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
         super.refreshContent();
         addItem(this.getSize() - 1, new BuildItem().displayName("§aCreate Backup")
                 .itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
-            if (VaroBackup.getBackup(getCurrentDate()) != null) {
+            if (VaroBackup.getBackup(VaroBackup.newFileName()) != null) {
                 getPlayer().sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
                 return;
             }

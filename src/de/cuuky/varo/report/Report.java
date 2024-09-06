@@ -2,7 +2,7 @@ package de.cuuky.varo.report;
 
 import java.util.ArrayList;
 
-import de.cuuky.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.utils.JavaUtils;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;

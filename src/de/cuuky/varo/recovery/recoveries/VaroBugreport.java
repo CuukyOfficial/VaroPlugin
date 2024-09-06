@@ -2,6 +2,7 @@ package de.cuuky.varo.recovery.recoveries;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,12 +13,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 import de.cuuky.cfw.recovery.FileZipper;
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.threads.LagCounter;
 
 public class VaroBugreport extends FileZipper {
+    
+    private static final DateFormat DATE_FROMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
 	private static List<String> exeptions;
 
@@ -31,7 +33,7 @@ public class VaroBugreport extends FileZipper {
 	private boolean failed;
 
 	public VaroBugreport() {
-		super(new File("plugins/Varo/bugreports/bugreport-" + JavaUtils.getCurrentDateAsFileable() + ".zip"));
+		super(new File("plugins/Varo/bugreports/bugreport-" + DATE_FROMAT.format(new Date()) + ".zip"));
 
 		boolean fileInit = Main.getDataManager() != null && Main.getDataManager().getConfigHandler() != null;
 		if (fileInit) {
