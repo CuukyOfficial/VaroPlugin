@@ -1,12 +1,11 @@
 package de.cuuky.varo.game.threads;
 
-import de.cuuky.varo.utils.EventUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.game.VaroStartEvent;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -15,6 +14,8 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.utils.EventUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class VaroStartThread extends BukkitRunnable {
 
@@ -55,7 +56,7 @@ public class VaroStartThread extends BukkitRunnable {
 					continue;
 
 				Player pl = vp.getPlayer();
-				pl.playSound(pl.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
+				pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
 
 				String countdownString = String.valueOf(startcountdown);
 				String title = ConfigMessages.GAME_VARO_START_TITLE.getValue(vp).replace("%countdown%", countdownString);

@@ -7,16 +7,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
 import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.varoplugin.cfw.inventory.ItemClick;
 import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
 
 public class ConfigGUI extends VaroListInventory<ConfigSetting> {
 
@@ -45,7 +46,7 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
                         return false;
                     }
 
-                    getPlayer().playSound(getPlayer().getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
+                    getPlayer().playSound(getPlayer().getLocation(), XSound.BLOCK_ANVIL_LAND.parseSound(), 1, 1);
                     getPlayer().sendMessage(Main.getPrefix() + "§7'§a" + entry.getPath() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
                 }
 

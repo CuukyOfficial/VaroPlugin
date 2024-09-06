@@ -13,7 +13,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -56,7 +57,7 @@ public class BlockPlaceListener implements Listener {
 				if (saveable.canModify(player)) {
 					new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
 					player.sendMessage(ConfigMessages.CHEST_SAVED_CHEST);
-					p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+					p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
 					p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 					return;
 				}

@@ -5,7 +5,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -38,7 +39,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 			border.setBorderCenter(p.getLocation());
 		
 		p.sendMessage(Main.getPrefix() + Main.getColorCode() + ConfigMessages.COMMANDS_SETWORLDSPAWN.getValue(vp));
-		p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
+		p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
 		return false;
 	}
 }

@@ -1,15 +1,16 @@
 package de.cuuky.varo.configuration.configurations.config;
 
-import de.cuuky.varo.game.world.setup.AutoSetup;
 import org.bukkit.Bukkit;
 
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.game.suro.SuroStart;
+import de.cuuky.varo.game.world.setup.AutoSetup;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public enum ConfigSetting implements SectionEntry {
 
@@ -100,7 +101,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	// DEATH
 	DEATH_SOUND_ENABLED(ConfigSettingSection.DEATH, "deathSound.enabled", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
-	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", Sounds.WITHER_IDLE, "Sound der abgespielt werden soll", true),
+	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", XSound.ENTITY_WITHER_AMBIENT.parseSound(), "Sound der abgespielt werden soll", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 

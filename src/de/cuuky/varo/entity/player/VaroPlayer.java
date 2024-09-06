@@ -13,6 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
@@ -20,9 +22,6 @@ import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.cfw.utils.JavaUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -51,6 +50,8 @@ import de.varoplugin.cfw.player.hud.AnimatedActionbar;
 import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
 import de.varoplugin.cfw.player.hud.AnimatedTablist;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -104,7 +105,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
-	private Sound guiSound = Sounds.CLICK.bukkitSound();
+	private Sound guiSound = XSound.UI_BUTTON_CLICK.parseSound();
 	private Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;

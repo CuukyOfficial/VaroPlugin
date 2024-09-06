@@ -1,6 +1,21 @@
 package de.cuuky.varo.game;
 
-import de.cuuky.cfw.version.types.Sounds;
+import java.awt.Color;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.game.VaroEndEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
@@ -30,19 +45,6 @@ import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
 import de.cuuky.varo.utils.EventUtils;
 import de.cuuky.varo.utils.VaroUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -140,7 +142,7 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player pl = pl1.getPlayer();
-            pl.playSound(pl.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
             pl.setGameMode(GameMode.SURVIVAL);
             pl1.cleanUpPlayer();
         }

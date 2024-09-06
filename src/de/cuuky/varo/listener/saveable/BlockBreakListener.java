@@ -11,7 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -46,7 +47,7 @@ public class BlockBreakListener implements Listener {
 
 		if (saveable.canModify(varoPlayer)) {
 			varoPlayer.sendMessage(ConfigMessages.CHEST_REMOVED_SAVEABLE).replace("%saveable%", block.getState() instanceof Chest ? "Chest" : "Furnace");
-			player.playSound(player.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
+			player.playSound(player.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
 			for (int i = 0; i < 3; i++)
 				player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
 			saveable.remove();

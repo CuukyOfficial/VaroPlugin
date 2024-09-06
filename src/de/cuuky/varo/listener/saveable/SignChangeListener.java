@@ -15,14 +15,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
 
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class SignChangeListener implements Listener {
 
@@ -89,7 +90,7 @@ public class SignChangeListener implements Listener {
 			event.setLine(1, "§lSavedChest");
 			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
 			event.setLine(3, "§8--------------");
-			p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+			p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
@@ -132,7 +133,7 @@ public class SignChangeListener implements Listener {
 			event.setLine(1, "§lSavedFurnace");
 			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
 			event.setLine(3, "§8--------------");
-			p.playSound(furnace.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+			p.playSound(furnace.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNACE, furnace.getBlock().getLocation(), player);
