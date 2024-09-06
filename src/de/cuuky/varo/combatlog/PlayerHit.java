@@ -1,10 +1,11 @@
 package de.cuuky.varo.combatlog;
 
-import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.varoplugin.cfw.utils.EventUtils;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,7 +28,7 @@ public class PlayerHit {
 
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onHit(EntityDamageByEntityEvent event) {
-			Player damager = new EntityDamageByEntityUtil(event).getDamager();
+			Player damager = EventUtils.getDamager(event);
 			if (!(event.getEntity() instanceof Player) || damager == null)
 				return;
 
