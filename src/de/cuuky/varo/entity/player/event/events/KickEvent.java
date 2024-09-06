@@ -22,7 +22,7 @@ public class KickEvent extends BukkitEvent {
 
 		player.getStats().removeCountdown();
 
-		VaroPlayerDisconnect disconnect = VaroPlayerDisconnect.getDisconnect(player.getPlayer());
+		VaroPlayerDisconnect disconnect = VaroPlayerDisconnect.getDisconnect(player.getRealUUID());
 		if (disconnect != null)
 		    disconnect.remove();
 	}

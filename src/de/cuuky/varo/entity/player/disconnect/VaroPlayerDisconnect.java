@@ -124,9 +124,13 @@ public class VaroPlayerDisconnect {
 			}
 		}.runTaskLater(Main.getInstance(), (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
 	}
+	
+	public static VaroPlayerDisconnect getDisconnect(UUID uuid) {
+        return disconnects.get(uuid);
+    }
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {
-		return disconnects.get(p.getUniqueId());
+		return getDisconnect(p.getUniqueId());
 	}
 
 	public static void clearDisconnects() {
