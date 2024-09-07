@@ -2,9 +2,10 @@ package de.cuuky.varo.event.events;
 
 import java.util.ArrayList;
 
-import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -23,7 +24,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 	private boolean timerEnd = false;
 
 	public MassRecordingVaroEvent() {
-		super(VaroEventType.MASS_RECORDING, Material.DIAMOND_SWORD, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Laesst alle Spieler fuer eine Minute zusaetzlich zu den normalen Folgen auf den Server" : "Laesst alle Spieler fuer " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusaetzlich zu den normalen Folgen auf den Server");
+		super(VaroEventType.MASS_RECORDING, XMaterial.DIAMOND_SWORD, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Laesst alle Spieler fuer eine Minute zusaetzlich zu den normalen Folgen auf den Server" : "Laesst alle Spieler fuer " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten zusaetzlich zu den normalen Folgen auf den Server");
 
 		this.timerEnd = false;
 		this.countdowns = new ArrayList<Integer[]>();

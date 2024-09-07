@@ -5,11 +5,11 @@ import java.util.Arrays;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.utils.item.BuildItem;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
 
@@ -19,8 +19,7 @@ public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
 
     @Override
     protected ItemStack getItemStack(ConfigSettingSection section) {
-        return new BuildItem().displayName("§7" + section.getName())
-                .material(section.getMaterial()).deleteDamageAnnotation()
+        return ItemBuilder.material(section.getMaterial()).displayName("§7" + section.getName()).deleteDamageAnnotation()
                 .lore(String.join("\n" + Main.getColorCode(), (Main.getColorCode() + section.getDescription()).split("\n"))).build();
     }
 

@@ -10,20 +10,20 @@ import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.ServerSoftware;
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class Spawn implements VaroSerializeable {
 
@@ -141,11 +141,11 @@ public class Spawn implements VaroSerializeable {
     }
 
     public void delete() {
-        location.getBlock().setType(Materials.GRASS_BLOCK.parseMaterial());
-        location.clone().add(1, 1, 0).getBlock().setType(Material.AIR);
-        location.clone().add(-1, 1, 0).getBlock().setType(Material.AIR);
-        location.clone().add(0, 1, 1).getBlock().setType(Material.AIR);
-        location.clone().add(0, 1, -1).getBlock().setType(Material.AIR);
+        location.getBlock().setType(XMaterial.GRASS_BLOCK.parseMaterial());
+        location.clone().add(1, 1, 0).getBlock().setType(XMaterial.AIR.parseMaterial());
+        location.clone().add(-1, 1, 0).getBlock().setType(XMaterial.AIR.parseMaterial());
+        location.clone().add(0, 1, 1).getBlock().setType(XMaterial.AIR.parseMaterial());
+        location.clone().add(0, 1, -1).getBlock().setType(XMaterial.AIR.parseMaterial());
 
         remove();
     }

@@ -1,12 +1,15 @@
 package de.cuuky.varo.gui.admin.discordbot.botregister;
 
-import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildSkull;
+import java.util.UUID;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.gui.VaroAsyncListInventory;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class BotRegisterListGUI extends VaroAsyncListInventory<BotRegister> {
 
@@ -16,7 +19,7 @@ public class BotRegisterListGUI extends VaroAsyncListInventory<BotRegister> {
 
     @Override
     protected ItemStack getItemStack(BotRegister register) {
-        return new BuildSkull().player(register.getPlayerName())
+        return ItemBuilder.skull(UUID.fromString(register.getUUID()))
                 .lore("§7Player Name: " + Main.getColorCode() + register.getUUID(),
                         "§7Player Name: " + Main.getColorCode() + register.getPlayerName(),
                         "§7Is Bypassing: " + Main.getColorCode() + register.isBypass(),

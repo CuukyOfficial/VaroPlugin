@@ -2,26 +2,27 @@ package de.cuuky.varo.report;
 
 import org.bukkit.Material;
 
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public enum ReportReason implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "CHAT")
-	CHAT("Chat", Materials.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhaelt."),
+	CHAT("Chat", XMaterial.OAK_WOOD.parseMaterial(), "Benutze dies, falls jemand sich gegen die Chatregeln verhaelt."),
 
 	@VaroSerializeField(enumValue = "HACKING")
-	HACKING("Hacking", Materials.TNT.parseMaterial(), "Benutze dies, falls jemand hackt oder exploited."),
+	HACKING("Hacking", XMaterial.TNT.parseMaterial(), "Benutze dies, falls jemand hackt oder exploited."),
 
 	@VaroSerializeField(enumValue = "TEAMING")
-	TEAMING("Teaming", Materials.DIRT.parseMaterial(), "Benutze dies, falls Personen aus unterschiedlichen Teams teamen."),
+	TEAMING("Teaming", XMaterial.DIRT.parseMaterial(), "Benutze dies, falls Personen aus unterschiedlichen Teams teamen."),
 
 	@VaroSerializeField(enumValue = "TROLLING")
-	TROLLING("Trolling", Materials.BLACK_WOOL.parseMaterial(), "Benutze dies, falls jemand trollt."),
+	TROLLING("Trolling", XMaterial.BLACK_WOOL.parseMaterial(), "Benutze dies, falls jemand trollt."),
 
 	@VaroSerializeField(enumValue = "XRAY")
-	XRAY("Xray", Materials.STONE.parseMaterial(), "Benutze dies, falls jemand Xray benutzt.");
+	XRAY("Xray", XMaterial.STONE.parseMaterial(), "Benutze dies, falls jemand Xray benutzt.");
 
 	private String description;
 	private Material material;

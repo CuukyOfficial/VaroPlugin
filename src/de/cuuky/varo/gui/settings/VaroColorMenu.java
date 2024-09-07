@@ -1,15 +1,16 @@
 package de.cuuky.varo.gui.settings;
 
-import de.varoplugin.cfw.inventory.AdvancedInventoryManager;
-import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.gui.VaroListInventory;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.AdvancedInventoryManager;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
 
@@ -35,7 +36,7 @@ public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
 
     @Override
     protected ItemStack getItemStack(VaroMenuColor varoMenuColor) {
-        return new BuildItem().itemstack(varoMenuColor.getColorPane())
+        return ItemBuilder.itemStack(varoMenuColor.getColorPane())
                 .displayName((varoMenuColor.getColorCode() != null ? varoMenuColor.getColorCode() : "§f")
                         + varoMenuColor.name()).build();
     }

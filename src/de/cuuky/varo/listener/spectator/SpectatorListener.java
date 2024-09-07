@@ -24,8 +24,8 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
-import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -33,6 +33,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.vanish.Vanish;
+import de.varoplugin.cfw.utils.EventUtils;
 
 public class SpectatorListener implements Listener {
 
@@ -65,7 +66,7 @@ public class SpectatorListener implements Listener {
         }
 
         if (!event.isCancelled()) {
-            Player damager = new EntityDamageByEntityUtil(event).getDamager();
+            Player damager = EventUtils.getDamager(event);
             if (damager != null)
             	this.checkWorldInteract(event, damager);
         }
@@ -73,8 +74,8 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-    	if(event.getBlock() == null || event.getBlock().getType() != Materials.FIRE.parseMaterial() || event.getPlayer().getItemInHand() == null
-        		|| !(event.getPlayer().getItemInHand().getType() == Materials.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == Materials.FIRE_CHARGE.parseMaterial()))
+    	if(event.getBlock() == null || event.getBlock().getType() != XMaterial.FIRE.parseMaterial() || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == XMaterial.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == XMaterial.FIRE_CHARGE.parseMaterial()))
     		this.checkWorldInteract(event, event.getPlayer());
     }
 

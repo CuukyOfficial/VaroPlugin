@@ -1,16 +1,18 @@
 package de.cuuky.varo.gui.admin.inventory;
 
-import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
+import java.text.SimpleDateFormat;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.gui.VaroListInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.text.SimpleDateFormat;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
 
@@ -34,8 +36,8 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
 
     @Override
     protected ItemStack getItemStack(InventoryBackup backup) {
-        return new BuildItem().displayName(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
-                .format(backup.getDate())).itemstack(new ItemStack(Material.BOOK)).build();
+        return ItemBuilder.material(XMaterial.BOOK).displayName(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
+                .format(backup.getDate())).build();
     }
 
     @Override
@@ -47,7 +49,7 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
     public void refreshContent() {
         super.refreshContent();
 
-        addItem(this.getSize() - 2, new BuildItem().displayName("§aCreate Backup").itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
+        addItem(this.getSize() - 2, ItemBuilder.material(XMaterial.EMERALD).displayName("§aCreate Backup").build(), (event) -> {
             if (!target.isOnline()) {
                 getPlayer().sendMessage(Main.getPrefix() + "Dieser Spieler ist nicht online!");
                 return;

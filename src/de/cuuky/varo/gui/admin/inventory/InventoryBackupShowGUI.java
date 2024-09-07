@@ -1,16 +1,18 @@
 package de.cuuky.varo.gui.admin.inventory;
 
-import de.varoplugin.cfw.inventory.InventoryNotifiable;
-import de.varoplugin.cfw.inventory.list.AdvancedEditInventory;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.Collection;
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
+import de.varoplugin.cfw.inventory.InventoryNotifiable;
+import de.varoplugin.cfw.inventory.list.AdvancedEditInventory;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class InventoryBackupShowGUI extends AdvancedEditInventory implements InventoryNotifiable {
 
@@ -65,7 +67,7 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
     @Override
     public void refreshContent() {
         super.refreshContent();
-        this.addItem(this.getUsableSize(), new BuildItem().material(Materials.SIGN).displayName("§aTipp!")
+        this.addItem(this.getUsableSize(), ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§aTipp!")
                 .lore("§7Du kannst in dem Feld über mir die Rüstung platzieren!", "",
                         "§7Starte dafür über mir mit den Schuhen",
                         "§7und danach jeweils einen nach rechts die",

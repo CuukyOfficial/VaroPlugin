@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.cfw.utils.BlockUtils;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.game.start.AutoStart;
@@ -18,6 +20,7 @@ import de.cuuky.varo.game.world.generators.LobbyGenerator;
 import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
+import de.cuuky.varo.utils.VaroUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 
@@ -111,10 +114,15 @@ public class AutoSetup {
     }
 
     private void setupSpawns(Location middle) {
-        System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting the spawns...");
+        System.out.println(Main.getConsolePrefix() + "AutoSetup: Setting the spawns...");
 
         middle.getWorld().setSpawnLocation(x, 0, z);
-        new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
+        
+        XMaterial blockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString()).orElse(null);
+        XMaterial sideBlockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString()).orElse(null);
+        if (blockMaterial == null || sideBlockMaterial == null)
+            Bukkit.broadcastMessage(Main.getPrefix() + "§cBlock-IDs der Spawns existieren nicht!");
+        new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), blockMaterial, sideBlockMaterial);
     }
 
     private void setupAutoStart() {
@@ -155,7 +163,7 @@ public class AutoSetup {
     private int getGroundHeight(World world, int x, int z) {
         int groundHeight = world.getMaxHeight();
 
-        while (BlockUtils.isAir(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
+        while (VaroUtils.isNotSolidTerrain(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
             groundHeight--;
         }
 

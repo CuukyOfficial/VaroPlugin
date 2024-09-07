@@ -1,12 +1,13 @@
 package de.cuuky.varo.gui.youtube;
 
-import de.cuuky.cfw.utils.item.BuildItem;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class YouTubeVideoOptionsGUI extends VaroInventory {
 
@@ -30,12 +31,12 @@ public class YouTubeVideoOptionsGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(11, new BuildItem().displayName("§aOpen").itemstack(new ItemStack(Material.PAPER)).build(), (event) -> {
+        addItem(11, ItemBuilder.material(XMaterial.PAPER).displayName("§aOpen").build(), (event) -> {
             getPlayer().sendMessage(Main.getPrefix() + "Link:");
             getPlayer().sendMessage(Main.getPrefix() + video.getLink());
         });
 
-        addItem(15, new BuildItem().displayName("§cRemove").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
+        addItem(15, ItemBuilder.material(XMaterial.REDSTONE).displayName("§cRemove").build(), (event) -> {
             video.remove();
             this.back();
         });

@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 
-import de.cuuky.cfw.configuration.placeholder.placeholder.util.DateInfo;
 import de.cuuky.cfw.utils.PermissionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -27,7 +26,7 @@ public class MessagePlaceholderLoader {
         loadPlayerPlaceholder();
     }
 
-    private String getLastDateRefresh(int index) {
+    private String getLastDateRefresh(int index) { // TODO remove this shit
         if (lastDateRefresh == null || lastDateRefreshTime + 900 <= System.currentTimeMillis()) {
             lastDateRefreshTime = System.currentTimeMillis();
             lastDateRefresh = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss").format(new Date()).split(",");
@@ -46,12 +45,12 @@ public class MessagePlaceholderLoader {
         new VaroGeneralMessagePlaceholder("remaining", 1, "Ersetzt durch die Anzahl lebender Spieler", () -> String.valueOf(VaroPlayer.getAlivePlayer().size()));
         new VaroGeneralMessagePlaceholder("players", 1, "Ersetzt durch die Anzahl aller Spieler", () -> String.valueOf(VaroPlayer.getVaroPlayers().size()));
         new VaroGeneralMessagePlaceholder("online", 1, "Ersetzt durch die Anzahl aller online Spieler", () -> String.valueOf(VersionUtils.getVersionAdapter().getOnlinePlayers().size()));
-        new VaroGeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.YEAR));
-        new VaroGeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.MONTH));
-        new VaroGeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.DAY));
-        new VaroGeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.HOUR));
-        new VaroGeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.MINUTES));
-        new VaroGeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.SECONDS));
+        new VaroGeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit", () -> getLastDateRefresh(0));
+        new VaroGeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit", () -> getLastDateRefresh(1));
+        new VaroGeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit", () -> getLastDateRefresh(2));
+        new VaroGeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit", () -> getLastDateRefresh(3));
+        new VaroGeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit", () -> getLastDateRefresh(4));
+        new VaroGeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit", () -> getLastDateRefresh(5));
         new VaroGeneralMessagePlaceholder("projectTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Projektes", () -> String.format("%02d", Main.getVaroGame().getProjectTime() / 3600));
         new VaroGeneralMessagePlaceholder("projectTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Projektes", () -> String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60));
         new VaroGeneralMessagePlaceholder("projectTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Projektes", () -> String.format("%02d", Main.getVaroGame().getProjectTime() % 60));
@@ -108,13 +107,13 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("teamAlive", 1, "Ersetzt durch den Wahrheitswert, ob das Team lebt", (player) -> {
             if (player.getTeam() != null)
                 return String.valueOf(player.getTeam().getMember().stream().anyMatch(p -> !p.equals(player) && p.getStats().isAlive()));
-            else return "-";
+            return "-";
         });
 
         new VaroPlayerMessagePlaceholder("teamMates", 1, "Ersetzt durch eine Liste der Mitspieler", (player) -> {
             if (player.getTeam() != null)
                 return player.getTeam().getMember().stream().filter(p -> !p.equals(player)).map(VaroPlayer::getName).collect(Collectors.joining(", "));
-            else return "-";
+            return "-";
         });
 
         new VaroPlayerMessagePlaceholder("player", 1, "Ersetzt durch den Namen des Spielers", VaroPlayer::getName);

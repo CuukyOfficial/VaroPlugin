@@ -1,53 +1,55 @@
 package de.cuuky.varo.gui.settings;
 
-import de.cuuky.cfw.version.types.Materials;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
-import org.bukkit.inventory.ItemStack;
 
 public enum VaroMenuColor implements VaroSerializeable {
 
     @VaroSerializeField(enumValue = "GRAY")
-    GRAY(Materials.GRAY_STAINED_GLASS_PANE.parseItem(), "§7"),
+    GRAY(XMaterial.GRAY_STAINED_GLASS_PANE.parseItem(), "§7"),
 
     @VaroSerializeField(enumValue = "WHITE")
-    WHITE(Materials.WHITE_STAINED_GLASS_PANE.parseItem(), "§f"),
+    WHITE(XMaterial.WHITE_STAINED_GLASS_PANE.parseItem(), "§f"),
 
     @VaroSerializeField(enumValue = "BROWN")
-    BROWN(Materials.BROWN_STAINED_GLASS_PANE.parseItem(), null),
+    BROWN(XMaterial.BROWN_STAINED_GLASS_PANE.parseItem(), null),
 
     @VaroSerializeField(enumValue = "BLACK")
-    BLACK(Materials.BLACK_STAINED_GLASS_PANE.parseItem(), "§0"),
+    BLACK(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem(), "§0"),
 
     @VaroSerializeField(enumValue = "RED")
-    RED(Materials.RED_STAINED_GLASS_PANE.parseItem(), "§4"),
+    RED(XMaterial.RED_STAINED_GLASS_PANE.parseItem(), "§4"),
 
     @VaroSerializeField(enumValue = "GREEN")
-    GREEN(Materials.GREEN_STAINED_GLASS_PANE.parseItem(), "§2"),
+    GREEN(XMaterial.GREEN_STAINED_GLASS_PANE.parseItem(), "§2"),
 
     @VaroSerializeField(enumValue = "BLUE")
-    BLUE(Materials.BLUE_STAINED_GLASS_PANE.parseItem(), "§1"),
+    BLUE(XMaterial.BLUE_STAINED_GLASS_PANE.parseItem(), "§1"),
 
     @VaroSerializeField(enumValue = "YELLOW")
-    YELLOW(Materials.YELLOW_STAINED_GLASS_PANE.parseItem(), "§e"),
+    YELLOW(XMaterial.YELLOW_STAINED_GLASS_PANE.parseItem(), "§e"),
 
     @VaroSerializeField(enumValue = "MAGENTA")
-    MAGENTA(Materials.MAGENTA_STAINED_GLASS_PANE.parseItem(), "§d"),
+    MAGENTA(XMaterial.MAGENTA_STAINED_GLASS_PANE.parseItem(), "§d"),
 
     @VaroSerializeField(enumValue = "ORANGE")
-    ORANGE(Materials.ORANGE_STAINED_GLASS_PANE.parseItem(), "§6"),
+    ORANGE(XMaterial.ORANGE_STAINED_GLASS_PANE.parseItem(), "§6"),
 
     @VaroSerializeField(enumValue = "PINK")
-    PINK(Materials.PINK_STAINED_GLASS_PANE.parseItem(), null),
+    PINK(XMaterial.PINK_STAINED_GLASS_PANE.parseItem(), null),
 
     @VaroSerializeField(enumValue = "PURPLE")
-    PURPLE(Materials.PURPLE_STAINED_GLASS_PANE.parseItem(), "§5"),
+    PURPLE(XMaterial.PURPLE_STAINED_GLASS_PANE.parseItem(), "§5"),
 
     @VaroSerializeField(enumValue = "LIME")
-    LIME(Materials.LIME_STAINED_GLASS_PANE.parseItem(), "§a"),
+    LIME(XMaterial.LIME_STAINED_GLASS_PANE.parseItem(), "§a"),
 
     @VaroSerializeField(enumValue = "CYAN")
-    CYAN(Materials.CYAN_STAINED_GLASS_PANE.parseItem(), "§b");
+    CYAN(XMaterial.CYAN_STAINED_GLASS_PANE.parseItem(), "§b");
 
     private final String colorCode;
     private final ItemStack colorPane;

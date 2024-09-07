@@ -1,13 +1,13 @@
 package de.cuuky.varo.gui.admin.alert;
 
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class AlertOptionGUI extends VaroInventory {
 
@@ -31,8 +31,7 @@ public class AlertOptionGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(4, new BuildItem().displayName(alert.isOpen() ? "§cClose" : "§aOpen")
-                        .itemstack(new ItemStack(alert.isOpen() ? Materials.REDSTONE.parseMaterial() : Material.EMERALD)).build(),
+        addItem(4, ItemBuilder.material(alert.isOpen() ? XMaterial.REDSTONE : XMaterial.EMERALD).displayName(alert.isOpen() ? "§cClose" : "§aOpen").build(),
                 (event) -> alert.switchOpenState());
     }
 }

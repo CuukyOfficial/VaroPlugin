@@ -5,7 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class SpawnChecker {
@@ -27,7 +28,7 @@ public class SpawnChecker {
 			int y = world.getMaxHeight();
 			Material type;
 			while (!(type = world.getBlockAt(xPos + (int) x, y, zPos + (int) z).getType()).isSolid()) {
-				if (type == Material.WATER || type == Materials.WATER.parseMaterial() || type == Material.LAVA || type == Materials.LAVA.parseMaterial() || type.name().contains("LEAVES") || type.name().contains("WOOD"))
+				if (type == XMaterial.WATER.parseMaterial()  || type == XMaterial.LAVA.parseMaterial() || type.name().contains("LEAVES") || type.name().contains("WOOD"))
 					return false;
 
 				y--;

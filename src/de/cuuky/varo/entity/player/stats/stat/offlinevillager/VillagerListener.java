@@ -8,10 +8,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import de.cuuky.cfw.utils.listener.EntityDamageByEntityUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.varoplugin.cfw.utils.EventUtils;
 
 public class VillagerListener implements Listener {
 
@@ -36,7 +36,7 @@ public class VillagerListener implements Listener {
 		if (vill == null)
 			return;
 
-		Player damager = new EntityDamageByEntityUtil(event).getDamager();
+		Player damager = EventUtils.getDamager(event);
 		if (damager == null)
 			return;
 

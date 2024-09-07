@@ -1,12 +1,13 @@
 package de.cuuky.varo.gui.admin.discordbot.botregister;
 
-import de.cuuky.cfw.utils.item.BuildItem;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class BotRegisterGUI extends VaroInventory {
 
@@ -30,16 +31,16 @@ public class BotRegisterGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, new BuildItem().displayName("§4Delete").itemstack(new ItemStack(Material.REDSTONE)).build(), (event) -> {
+        addItem(1, ItemBuilder.material(XMaterial.REDSTONE).displayName("§4Delete").build(), (event) -> {
             register.delete();
             this.back();
         });
 
-        addItem(4, new BuildItem().displayName("§cUnregister").itemstack(new ItemStack(Material.COAL)).build(),
+        addItem(4, ItemBuilder.material(XMaterial.COAL).displayName("§cUnregister").build(),
                 (event) -> register.setUserId(-1));
 
-        addItem(7, new BuildItem().displayName((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass")
-                        .itemstack(new ItemStack(register.isBypass() ? Material.ANVIL : Material.EMERALD)).build(),
+        addItem(7, ItemBuilder.material(register.isBypass() ? XMaterial.ANVIL : XMaterial.EMERALD)
+                .displayName((register.isBypass() ? "§cRemove" : "§aAllow") + " §7Bypass").build(),
                 (event) -> register.setBypass(!register.isBypass()));
     }
 }

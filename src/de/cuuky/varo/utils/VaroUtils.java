@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -53,5 +55,10 @@ public final class VaroUtils {
             VaroTeam team = new VaroTeam(name);
             member.forEach(team::addMember);
         }
+	}
+	
+	public static boolean isNotSolidTerrain(Block block) {
+	    Material material = block.getType();
+	    return !material.isSolid() && !material.isOccluding();
 	}
 }

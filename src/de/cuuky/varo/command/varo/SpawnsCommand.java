@@ -4,8 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.LocationFormat;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -13,6 +13,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.Spawn;
+import de.varoplugin.cfw.location.SimpleLocationFormat;
 
 public class SpawnsCommand extends VaroCommand {
 
@@ -48,17 +49,20 @@ public class SpawnsCommand extends VaroCommand {
                 return;
             }
 
-            String material = null;
-            if (args.length >= 4)
-                material = args[3];
+            XMaterial material = null;
+            if (args.length >= 4) {
+                if ((material = XMaterial.matchXMaterial(args[3]).orElse(null)) == null) {
+                    sender.sendMessage(Main.getPrefix() + "'" + args[3] + "' existiert nicht!");
+                    return;
+                }
+            }
 
-            String sideBlockMaterial = null;
-            if (args.length >= 5)
-                sideBlockMaterial = args[4];
-
-            if (material != null && Materials.fromString(material) == null || sideBlockMaterial != null && Materials.fromString(sideBlockMaterial) == null ) {
-                sender.sendMessage(Main.getPrefix() + "ID's der Blöcke nicht gefunden!");
-                return;
+            XMaterial sideBlockMaterial = null;
+            if (args.length >= 5) {
+                if ((material = XMaterial.matchXMaterial(args[4]).orElse(null)) == null) {
+                    sender.sendMessage(Main.getPrefix() + "'" + args[4] + "' existiert nicht!");
+                    return;
+                }
             }
 
             try {
@@ -253,7 +257,7 @@ public class SpawnsCommand extends VaroCommand {
             sender.sendMessage(Main.getPrefix() + "§lEine Liste aller " + Main.getColorCode() + "§lSpawns§7§l:");
             for (Spawn spawn : Spawn.getSpawns()) {
                 sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Spawn " + spawn.getNumber() + "§7: ");
-                sender.sendMessage(Main.getPrefix() + "§7Location: " + new LocationFormat(spawn.getLocation()).format("§7X§8: " + Main.getColorCode() + "x §7Y§8: " + Main.getColorCode() + "y §7Z§8: " + Main.getColorCode() + "z §7in " + Main.getColorCode() + "world"));
+                sender.sendMessage(Main.getPrefix() + "§7Location: " + new SimpleLocationFormat("§7X§8: " + Main.getColorCode() + "x §7Y§8: " + Main.getColorCode() + "y §7Z§8: " + Main.getColorCode() + "z §7in " + Main.getColorCode() + "world").format(spawn.getLocation()));
                 sender.sendMessage(Main.getPrefix() + "§7Spieler: " + Main.getColorCode() + (spawn.getPlayer() != null ? spawn.getPlayer().getName() : "Keinen"));
                 sender.sendMessage(Main.getPrefix());
             }

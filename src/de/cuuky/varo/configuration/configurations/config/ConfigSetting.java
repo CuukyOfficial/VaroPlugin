@@ -2,15 +2,13 @@ package de.cuuky.varo.configuration.configurations.config;
 
 import org.bukkit.Bukkit;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
 
-import de.cuuky.cfw.version.types.Materials;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.game.suro.SuroStart;
 import de.cuuky.varo.game.world.setup.AutoSetup;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 
 public enum ConfigSetting implements SectionEntry {
 
@@ -36,9 +34,9 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_PORTAL_WIDTH(ConfigSettingSection.AUTOSETUP, "portal.width", 4, "Breite des gespawnten Portals"),
 
 	AUTOSETUP_SPAWNS_AMOUNT(ConfigSettingSection.AUTOSETUP, "spawns.amount", 40, "Zu welcher Anzahl die Loecher\ngeneriert werden sollen"),
-	AUTOSETUP_SPAWNS_BLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.block.material", "STONE_BRICK_SLAB", "Welche Block-ID der Halftstep am Spawn haben soll"),
+	AUTOSETUP_SPAWNS_BLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.block.material", XMaterial.STONE_BRICK_SLAB.parseMaterial(), "Welche Block-ID der Halftstep am Spawn haben soll"),
 	AUTOSETUP_SPAWNS_RADIUS(ConfigSettingSection.AUTOSETUP, "spawns.radius", -1, "In welchem Radius die Löcher\ngeneriert werden sollen\n-1 wählt automatisch einen passenden radius"),
-	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_13) ? "GRASS_BLOCK" : "GRASS", "Welche Block-ID der Block,\nden man abbaut haben soll"),
+	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", XMaterial.GRASS_BLOCK.parseMaterial(), "Welche Block-ID der Block,\nden man abbaut haben soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
 	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP, "spawnGeneratorYTolerance", 8, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
@@ -271,12 +269,12 @@ public enum ConfigSetting implements SectionEntry {
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen koennen.\nSehr gute Funktion fuer ODV's."),
 	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.items.enabled", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können", "teamRequest.lobbyItems"),
-	TEAMREQUEST_LOBBYITEM_INVITE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.invite.item", Materials.DIAMOND_SWORD.parseItem(), "Item um andere Spieler in ein Team einzuladen"),
+	TEAMREQUEST_LOBBYITEM_INVITE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.invite.item", XMaterial.DIAMOND_SWORD.parseItem(), "Item um andere Spieler in ein Team einzuladen"),
 	TEAMREQUEST_LOBBYITEM_INVITE_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.invite.slot", 0, "Slot des Items um andere Spieler in ein Team einzuladen"),
-	TEAMREQUEST_LOBBYITEM_LEAVE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.leave.item", Materials.REDSTONE.parseItem(), "Item zum Verlassen eines Teams"),
+	TEAMREQUEST_LOBBYITEM_LEAVE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.leave.item", XMaterial.REDSTONE.parseItem(), "Item zum Verlassen eines Teams"),
 	TEAMREQUEST_LOBBYITEM_LEAVE_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.leave.slot", 8, "Slot des Items zum Verlassen eines Teams"),
 	TEAMREQUEST_LOBBYITEM_RENAME_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.items.rename.enabled", true, "Ob die spieler in\nder Lobby ein Item haben\nsollen um ihren Teamnamen\nzu ändern"),
-	TEAMREQUEST_LOBBYITEM_RENAME_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.rename.item", Materials.NAME_TAG.parseItem(), "Item zum Umbenennen eines Teams"),
+	TEAMREQUEST_LOBBYITEM_RENAME_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.rename.item", XMaterial.NAME_TAG.parseItem(), "Item zum Umbenennen eines Teams"),
 	TEAMREQUEST_LOBBYITEM_RENAME_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.rename.slot", 4, "Slot des Items zum Umbenennen eines Teams"),
 
 	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots", false, true),

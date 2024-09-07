@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -13,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.io.BaseEncoding;
 
 import de.cuuky.cfw.CuukyFrameWork;
-import de.cuuky.cfw.utils.UUIDUtils;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
@@ -27,6 +25,8 @@ import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.recovery.recoveries.VaroBugreport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
+import de.varoplugin.cfw.utils.PlayerProfileUtils;
+import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -202,11 +202,6 @@ public class Main extends JavaPlugin {
         return "Unknown";
 	}
 
-	public UUID getUUID(String name) throws Exception {
-		return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? UUIDUtils.getUUID(name)
-				: UUIDUtils.getCrackedUUID(name);
-	}
-
 	public void fail() {
 		this.failed = true;
 		Bukkit.getPluginManager().disablePlugin(this);
@@ -288,6 +283,10 @@ public class Main extends JavaPlugin {
 	public static String getProjectName() {
 		return getColorCode() + ConfigSetting.PROJECT_NAME.getValueAsString();
 	}
+	
+	public static PlayerLookup lookupPlayer(String name) {
+        return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? PlayerProfileUtils.getOrFetchByName(name) : PlayerProfileUtils.getCrackedByName(name);
+    }
 
 	public static boolean isBootedUp() {
 		return enabled;

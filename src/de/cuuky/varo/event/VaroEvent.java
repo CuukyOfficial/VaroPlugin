@@ -2,9 +2,10 @@ package de.cuuky.varo.event;
 
 import java.util.ArrayList;
 
-import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.events.ExposedVaroEvent;
@@ -14,7 +15,7 @@ import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
 import de.cuuky.varo.game.state.GameState;
 
-public class VaroEvent {
+public abstract class VaroEvent {
 
 	private static ArrayList<VaroEvent> events;
 
@@ -30,10 +31,10 @@ public class VaroEvent {
 
 	private VaroEventType eventType;
 	private String description;
-	private Material icon;
+	private XMaterial icon;
 	protected boolean enabled;
 
-	public VaroEvent(VaroEventType eventType, Material icon, String description) {
+	public VaroEvent(VaroEventType eventType, XMaterial icon, String description) {
 		this.eventType = eventType;
 		this.icon = icon;
 		this.description = description;
@@ -46,7 +47,7 @@ public class VaroEvent {
 		return description;
 	}
 
-	public Material getIcon() {
+	public XMaterial getIcon() {
 		return icon;
 	}
 

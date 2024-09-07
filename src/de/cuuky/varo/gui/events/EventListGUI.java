@@ -1,12 +1,14 @@
 package de.cuuky.varo.gui.events;
 
-import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.VaroListInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class EventListGUI extends VaroListInventory<String> {
 
@@ -29,8 +31,7 @@ public class EventListGUI extends VaroListInventory<String> {
     protected ItemStack getItemStack(String string) {
         String[] line = string.split("] ");
         String lore = "§c" + line[0].replace("[", "");
-        return new BuildItem().displayName("§7" + line[1].replaceAll("&[0-9]", ""))
-            .material(Materials.SIGN).lore(lore).build();
+        return ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§7" + line[1].replaceAll("&[0-9]", "")).lore(lore).build();
     }
 
     @Override

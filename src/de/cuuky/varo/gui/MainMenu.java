@@ -1,11 +1,9 @@
 package de.cuuky.varo.gui;
 
-import de.varoplugin.cfw.inventory.Info;
-import de.cuuky.cfw.utils.BukkitUtils;
-import de.cuuky.cfw.utils.LocationFormat;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.utils.item.BuildSkull;
-import de.cuuky.cfw.version.types.Materials;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -21,9 +19,10 @@ import de.cuuky.varo.gui.settings.VaroSettingsMenu;
 import de.cuuky.varo.gui.strike.StrikeListGUI;
 import de.cuuky.varo.gui.team.TeamCategoryChooseGUI;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.inventory.Info;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.location.SimpleLocationFormat;
+import de.varoplugin.cfw.player.SafeTeleport;
 
 public class MainMenu extends VaroInventory {
 
@@ -43,60 +42,56 @@ public class MainMenu extends VaroInventory {
 
     @Override
     public void refreshContent() {
-    	addItem(3, new BuildItem().displayName("§bSpawn").itemstack(new ItemStack(Material.EMERALD))
-                .lore(new String[]{new LocationFormat(getPlayer().getWorld().getSpawnLocation())
-                        .format(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z")}).build(),
+    	addItem(3, ItemBuilder.material(XMaterial.EMERALD).displayName("§bSpawn")
+                .lore(new String[]{new SimpleLocationFormat(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z").format(getPlayer().getWorld().getSpawnLocation())}).build(),
 	        inventoryClickEvent -> {
 	            if (!getPlayer().hasPermission("varo.teleportSpawn"))
 	                return;
 	
-	            BukkitUtils.saveTeleport(getPlayer(), getPlayer().getWorld().getSpawnLocation());
+	            SafeTeleport.tp(getPlayer(), getPlayer().getWorld().getSpawnLocation());
         });
 
-        addItem(5, new BuildItem().displayName("§7All §5Events").itemstack(new ItemStack(Material.APPLE)).build(),
+        addItem(5, ItemBuilder.material(XMaterial.APPLE).displayName("§7All §5Events").build(),
                 (event) -> this.openNext(new EventListGUI(getPlayer())));
 
-        addItem(10, new BuildItem().displayName("§7Your §6Strikes").itemstack(new ItemStack(Material.PAPER))
+        addItem(10, ItemBuilder.material(XMaterial.PAPER).displayName("§7Your §6Strikes")
                         .amount(getFixedSize(VaroPlayer.getPlayer(getPlayer()).getStats().getStrikes().size())).build(),
                 (event) -> this.openNext(new StrikeListGUI(getPlayer(), getPlayer())));
 
-        addItem(16, new BuildSkull().player(getPlayer()).amount(getFixedSize(VaroPlayer.getVaroPlayers().size()))
+        addItem(16, ItemBuilder.skull(getPlayer()).amount(getFixedSize(VaroPlayer.getVaroPlayers().size()))
                 .displayName("§7All §aPlayers").build(), (event) ->
                 this.openNext(new PlayerListChooseGUI(getPlayer()))
         );
 
-        addItem(18, new BuildItem().displayName("§7Your §5Videos").itemstack(new ItemStack(Material.COMPASS))
+        addItem(18, ItemBuilder.material(XMaterial.COMPASS).displayName("§7Your §5Videos")
                 .amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), (event) ->
                 this.openNext(new YouTubeVideoListGUI(getPlayer()))
         );
 
-        addItem(22, new BuildItem().displayName("§7Your §eChests/Furnaces").itemstack(new ItemStack(Material.CHEST))
+        addItem(22, ItemBuilder.material(XMaterial.CHEST).displayName("§7Your §eChests/Furnaces")
                 .amount(getFixedSize(VaroSaveable.getSaveable(VaroPlayer.getPlayer(getPlayer())).size())).build(), (event) ->
                 this.openNext(new PlayerSavableChooseGUI(getPlayer(), VaroPlayer.getPlayer(getPlayer())))
         );
 
-        addItem(26, new BuildItem().displayName("§7All §2Teams").itemstack(new ItemStack(Material.DIAMOND_HELMET))
+        addItem(26, ItemBuilder.material(XMaterial.DIAMOND_HELMET).displayName("§7All §2Teams")
                 .amount(getFixedSize(VaroTeam.getTeams().size())).build(), (event) ->
                 this.openNext(new TeamCategoryChooseGUI(getPlayer()))
         );
 
-        addItem(28, new BuildItem().displayName("§5Settings")
-                .itemstack(Materials.CRAFTING_TABLE.parseItem()).build(), (event) ->
+        addItem(28, ItemBuilder.material(XMaterial.CRAFTING_TABLE).displayName("§5Settings").build(), (event) ->
                 this.openNext(new VaroSettingsMenu(getPlayer()))
         );
 
-        addItem(34, new BuildItem().material(Materials.ITEM_FRAME).displayName("§aItem-Settings").build(),
+        addItem(34, ItemBuilder.material(XMaterial.ITEM_FRAME).displayName("§aItem-Settings").build(),
                 (e) -> this.openNext(new ItemListSelectInventory(getPlayer())));
 
         if (getPlayer().hasPermission("varo.admin")) {
-            addItem(36, new BuildItem().displayName("§cAdmin-Section").lore("§cOnly available to admins")
-                    .itemstack(new ItemStack(Materials.OAK_FENCE_GATE.parseMaterial())).build(), (event) ->
+            addItem(36, ItemBuilder.material(XMaterial.OAK_FENCE_GATE).displayName("§cAdmin-Section").lore("§cOnly available to admins").build(), (event) ->
                     this.openNext(new AdminMainMenu(getPlayer()))
             );
         }
 
         if (ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
-            addItem(this.getInfo(Info.SIZE) - 1, new BuildItem().displayName("§5Info")
-                    .itemstack(new ItemStack(Materials.MAP.parseMaterial())).build(), (event) -> sendInfo());
+            addItem(this.getInfo(Info.SIZE) - 1, ItemBuilder.material(XMaterial.MAP).displayName("§5Info").build(), (event) -> sendInfo());
     }
 }

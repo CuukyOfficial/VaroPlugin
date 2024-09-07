@@ -1,16 +1,20 @@
 package de.cuuky.varo.gui.admin.game;
 
-import de.cuuky.cfw.utils.LocationFormat;
-import de.cuuky.cfw.utils.item.BuildItem;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.utils.ArrayUtils;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.location.LocationFormat;
+import de.varoplugin.cfw.location.SimpleLocationFormat;
 
 public class GameOptionsGUI extends VaroInventory {
+    
+    private static final LocationFormat LOCATION_FORMAT = new SimpleLocationFormat("x, y, z in world");
 
     public GameOptionsGUI(Player player) {
         super(Main.getInventoryManager(), player);
@@ -28,20 +32,16 @@ public class GameOptionsGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(10, new BuildItem().displayName("§aChange GameState")
-                        .itemstack(new ItemStack(Material.EMERALD))
+        addItem(10, ItemBuilder.material(XMaterial.EMERALD).displayName("§aChange GameState")
                         .lore(new String[]{"§7Current: §c" + Main.getVaroGame().getGameState().getName()}).build(),
                 (event) -> Main.getVaroGame().setGamestate(ArrayUtils.getNext(Main.getVaroGame().getGameState(), GameState.values())));
 
-        addItem(16, new BuildItem().displayName("§bSet Lobby Location")
-                        .itemstack(new ItemStack(Material.DIAMOND_BLOCK))
-                        .lore(new String[]{"§7Current: " + (Main.getVaroGame().getLobby() != null ? new LocationFormat(Main.getVaroGame().getLobby())
-                                .format("x, y, z in world") : "§c-")}).build(),
+        addItem(16, ItemBuilder.material(XMaterial.DIAMOND_BLOCK).displayName("§bSet Lobby Location")
+                        .lore(new String[]{"§7Current: " + (Main.getVaroGame().getLobby() != null ? LOCATION_FORMAT.format(Main.getVaroGame().getLobby()) : "§c-")}).build(),
                 (event) -> Main.getVaroGame().setLobby(getPlayer().getLocation()));
 
-        addItem(13, new BuildItem().displayName("§2Set World Spawn")
-                        .itemstack(new ItemStack(Material.BEACON))
-                        .lore(new String[]{"§7Current: " + (getPlayer().getWorld().getSpawnLocation() != null ? new LocationFormat(getPlayer().getWorld().getSpawnLocation()).format("x, y, z in world") : "§c-")})
+        addItem(13, ItemBuilder.material(XMaterial.BEACON).displayName("§2Set World Spawn")
+                        .lore(new String[]{"§7Current: " + (getPlayer().getWorld().getSpawnLocation() != null ? LOCATION_FORMAT.format(getPlayer().getWorld().getSpawnLocation()) : "§c-")})
                         .build(),
                 (event) -> getPlayer().getWorld().setSpawnLocation(getPlayer().getLocation().getBlockX(), getPlayer().getLocation().getBlockY(), getPlayer().getLocation().getBlockZ()));
     }

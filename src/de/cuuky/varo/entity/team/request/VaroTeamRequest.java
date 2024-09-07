@@ -1,17 +1,17 @@
 package de.cuuky.varo.entity.team.request;
 
-import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
-import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
+import java.util.ArrayList;
+
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.util.ArrayList;
+import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
+import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 
 public class VaroTeamRequest {
 
@@ -49,32 +49,29 @@ public class VaroTeamRequest {
 	}
 
 	private void sendChatHook() {
-		Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(invitor.getPlayer(), Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue(invitor).replace("%invited%", invited.getName()), new ChatHookHandler() {
+		new PlayerChatHookBuilder().message(Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue(invitor).replace("%invited%", invited.getName()))
+        .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
+            String message = hookEvent.getMessage();
+            if (!message.matches(VaroTeam.NAME_REGEX)) {
+                invitor.sendMessage(ConfigMessages.TEAM_NAME_INVALID);
+                return;
+            }
+            
+            VaroTeam duplicateTeam = VaroTeam.getTeam(message);
+            if (duplicateTeam != null) {
+                invitor.sendMessage(ConfigMessages.TEAM_NAME_DUPLICATE);
+                return;
+            }
 
-			@Override
-			public boolean onChat(AsyncPlayerChatEvent event) {
-				String message = event.getMessage();
-				if (!message.matches(VaroTeam.NAME_REGEX)) {
-					invitor.sendMessage(ConfigMessages.TEAM_NAME_INVALID);
-					return false;
-				}
-				
-				VaroTeam duplicateTeam = VaroTeam.getTeam(event.getMessage());
-                if (duplicateTeam != null) {
-                	invitor.sendMessage(ConfigMessages.TEAM_NAME_DUPLICATE);
-                    return false;
-                }
+            int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
+            if (message.length() > maxLength) {
+                invitor.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG, invitor).replace("%maxLength%", String.valueOf(maxLength));
+                return;
+            }
 
-				int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
-				if (message.length() > maxLength) {
-					invitor.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG, invitor).replace("%maxLength%", String.valueOf(maxLength));
-					return false;
-				}
-
-				addToTeam(invitor.getTeam() == null ? new VaroTeam(message) : invitor.getTeam());
-				return true;
-			}
-		}));
+            hookEvent.getHook().unregister();
+            addToTeam(invitor.getTeam() == null ? new VaroTeam(message) : invitor.getTeam());
+        }).complete(invitor.getPlayer(), Main.getInstance());
 	}
 
 	private void startSched() {

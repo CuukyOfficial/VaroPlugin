@@ -1,15 +1,17 @@
 package de.cuuky.varo.gui.items;
 
-import de.varoplugin.cfw.inventory.Info;
-import de.varoplugin.cfw.inventory.InventoryNotifiable;
-import de.varoplugin.cfw.inventory.list.AdvancedEditListInventory;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.list.item.ItemList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.list.item.ItemList;
+import de.varoplugin.cfw.inventory.Info;
+import de.varoplugin.cfw.inventory.InventoryNotifiable;
+import de.varoplugin.cfw.inventory.list.AdvancedEditListInventory;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class ItemListInventory extends AdvancedEditListInventory implements InventoryNotifiable {
 
@@ -60,9 +62,9 @@ public class ItemListInventory extends AdvancedEditListInventory implements Inve
     public void refreshContent() {
         super.refreshContent();
         if (this.hasWritePermission()) {
-            this.addItem(this.getUsableSize() + 1, new BuildItem().material(Materials.SIGN).displayName("§aTipp!")
+            this.addItem(this.getUsableSize() + 1, ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§aTipp!")
                     .lore("", "§7Nur du als Admin kannst diese", "§7Listen bearbeiten!").build());
-//            this.addItem(this.getUsableSize() + 7, new BuildItem().material(Materials.EMERALD).displayName("§2Save")
+//            this.addItem(this.getUsableSize() + 7, ItemBuilder.material(XMaterial.EMERALD).displayName("§2Save")
 //                    .lore("§7Speichere das Inventar", "§7(Beim Schließen des Inventars wird automatisch gespeichert)")
 //                    .build(), (e) -> {
 //                this.save();

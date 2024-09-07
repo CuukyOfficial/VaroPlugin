@@ -1,17 +1,19 @@
 package de.cuuky.varo.gui.report;
 
-import de.varoplugin.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.report.Report;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class ReportListGUI extends VaroListInventory<Report> {
 
@@ -36,7 +38,7 @@ public class ReportListGUI extends VaroListInventory<Report> {
         lore.add("§7Reason: §c" + report.getReason().getName());
         lore.add("§7Reported: §c" + (report.getReported() != null ? report.getReported().getName() : "-Deleted-"));
         lore.add("§7By: §c" + (report.getReporter() != null ? report.getReported().getName() : "-Deleted-"));
-        return new BuildItem().displayName("§7" + report.getReported().getName()).itemstack(new ItemStack(Material.PAPER)).lore(lore).build();
+        return ItemBuilder.material(XMaterial.PAPER).displayName("§7" + report.getReported().getName()).lore(lore).build();
     }
 
     @Override

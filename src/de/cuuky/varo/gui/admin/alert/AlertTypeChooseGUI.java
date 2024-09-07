@@ -1,11 +1,11 @@
 package de.cuuky.varo.gui.admin.alert;
 
-import de.cuuky.cfw.utils.item.BuildItem;
+import org.bukkit.entity.Player;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.alert.AlertChooseGUI.AlertGUIType;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class AlertTypeChooseGUI extends VaroInventory {
 
@@ -27,8 +27,7 @@ public class AlertTypeChooseGUI extends VaroInventory {
     public void refreshContent() {
         int i = 11;
         for (AlertGUIType type : AlertGUIType.values()) {
-            addItem(i, new BuildItem().displayName(type.getTypeName())
-                            .itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(),
+            addItem(i, ItemBuilder.material(type.getIcon()).displayName(type.getTypeName()).amount(getFixedSize(type.getList().size())).build(),
                     (event) -> this.openNext(new AlertChooseGUI(getPlayer(), type)));
             i += 2;
         }

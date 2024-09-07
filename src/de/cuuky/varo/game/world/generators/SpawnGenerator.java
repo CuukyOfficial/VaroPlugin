@@ -1,29 +1,31 @@
 package de.cuuky.varo.game.world.generators;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 
-import de.cuuky.cfw.utils.BlockUtils;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XBlock;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.utils.VaroUtils;
 
 public class SpawnGenerator {
 
-    private final String blockId, sideBlockId;
+    private final XMaterial blockMaterial, sideBlockMaterial;
 
-    private SpawnGenerator(String blockId, String sideBlockId) {
-        this.blockId = blockId;
-        this.sideBlockId = sideBlockId;
+    private SpawnGenerator(XMaterial blockMaterial, XMaterial sideBlockMaterial) {
+        this.blockMaterial = blockMaterial == null ? XMaterial.STONE_BRICK_SLAB : blockMaterial;
+        this.sideBlockMaterial = sideBlockMaterial == null ? XMaterial.GRASS_BLOCK : sideBlockMaterial;
 
         for (Spawn spawn : Spawn.getSpawnsClone())
             spawn.delete();
     }
 
-    public SpawnGenerator(Location location, int radius, int amount, String blockId, String sideBlockId) {
-        this(blockId, sideBlockId);
+    public SpawnGenerator(Location location, int radius, int amount, XMaterial blockMaterial, XMaterial sideBlockId) {
+        this(blockMaterial, sideBlockId);
 
         int i = 0;
         for (Location loc : generateSpawns(location, radius, amount)) {
@@ -34,8 +36,8 @@ public class SpawnGenerator {
         }
     }
 
-    public SpawnGenerator(Location location, int radius, boolean withTeams, String blockId, String sideBlockId) {
-        this(blockId, sideBlockId);
+    public SpawnGenerator(Location location, int radius, boolean withTeams, XMaterial blockMaterial, XMaterial sideBlockMaterial) {
+        this(blockMaterial, sideBlockMaterial);
 
         Location[] locations = generateSpawns(location, radius, VaroPlayer.getAlivePlayer().size());
         int i = 0;
@@ -61,38 +63,36 @@ public class SpawnGenerator {
         }
     }
 
-    private Location searchNext(Location newLoc, int add, boolean needsAir) {
-        newLoc = newLoc.clone();
-        while (BlockUtils.isAir(newLoc.clone().add(0, add, 0).getBlock()) != needsAir)
-            newLoc = newLoc.add(0, add, 0);
+    private Location searchNext(Location location, int add, boolean needsAir) {
+        Location newLocation = location.clone();
+        while (VaroUtils.isNotSolidTerrain(newLocation.clone().add(0, add, 0).getBlock()) != needsAir)
+            newLocation = newLocation.add(0, add, 0);
 
         if (add > 0)
-            newLoc.add(0, 1, 0);
+            newLocation.add(0, 1, 0);
 
-        return newLoc;
+        return newLocation;
     }
 
-    private Location setSpawnAt(Location newLoc) {
-        if (BlockUtils.isAir(newLoc.getBlock()))
-            newLoc = this.searchNext(newLoc, -1, false);
-        else
-            newLoc = this.searchNext(newLoc, 1, true);
+    private Location setSpawnAt(Location location) {
+        final Location location0 = VaroUtils.isNotSolidTerrain(location.getBlock()) ? this.searchNext(location, -1, false) : this.searchNext(location, 1, true);
 
-        newLoc.clone().add(0, -1, 0).getBlock().setType(Material.AIR);
-        Materials xmat = blockId != null && !blockId.isEmpty() ? Materials.fromString(blockId) : Materials.STONE_BRICK_SLAB;
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(1, 0, 0).getBlock(), xmat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, 0, 1).getBlock(), xmat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(-1, 0, 0).getBlock(), xmat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, 0, -1).getBlock(), xmat);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+            XBlock.setType(location0.clone().add(0, -1, 0).getBlock(), XMaterial.AIR);
+            
+            XBlock.setType(location0.clone().add(1, 0, 0).getBlock(), blockMaterial);
+            XBlock.setType(location0.clone().add(0, 0, 1).getBlock(), blockMaterial);
+            XBlock.setType(location0.clone().add(-1, 0, 0).getBlock(), blockMaterial);
+            XBlock.setType(location0.clone().add(0, 0, -1).getBlock(), blockMaterial);
 
-        Materials mat = sideBlockId != null && !sideBlockId.isEmpty() ? Materials.fromString(sideBlockId) : Materials.GRASS_BLOCK;
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, -2, 0).getBlock(), mat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(1, -1, 0).getBlock(), mat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, -1, 1).getBlock(), mat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(-1, -1, 0).getBlock(), mat);
-        BlockUtils.setBlockDelayed(Main.getInstance(), newLoc.clone().add(0, -1, -1).getBlock(), mat);
+            XBlock.setType(location0.clone().add(0, -2, 0).getBlock(), sideBlockMaterial);
+            XBlock.setType(location0.clone().add(1, -1, 0).getBlock(), sideBlockMaterial);
+            XBlock.setType(location0.clone().add(0, -1, 1).getBlock(), sideBlockMaterial);
+            XBlock.setType(location0.clone().add(-1, -1, 0).getBlock(), sideBlockMaterial);
+            XBlock.setType(location0.clone().add(0, -1, -1).getBlock(), sideBlockMaterial);
+        }, 1);
 
-        return newLoc.getBlock().getLocation().add(0.5, -1, 0.5);
+        return location.getBlock().getLocation().add(0.5, -1, 0.5);
     }
 
     private Location[] generateSpawns(Location middle, double radius, int amount) {

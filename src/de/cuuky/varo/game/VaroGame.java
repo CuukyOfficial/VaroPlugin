@@ -14,6 +14,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
@@ -112,14 +113,19 @@ public class VaroGame implements VaroSerializeable {
 
         if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
             VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
-            Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
+            Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufälligen Teampartner erhalten!");
         }
 
         LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
-            Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
+            XMaterial blockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString()).orElse(null);
+            XMaterial sideBlockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString()).orElse(null);
+            if (blockMaterial == null || sideBlockMaterial == null)
+                Bukkit.broadcastMessage(Main.getPrefix() + "§cBlock-IDs der Spawns existieren nicht!");
+            
+            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, blockMaterial, sideBlockMaterial);
+            Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
         }
 
         if (ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {

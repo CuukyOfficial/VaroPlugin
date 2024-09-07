@@ -20,7 +20,6 @@ import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
-import de.cuuky.cfw.utils.BukkitUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -45,6 +44,7 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
+import de.varoplugin.cfw.player.SafeTeleport;
 import de.varoplugin.cfw.player.hud.AnimatedActionbar;
 import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
 import de.varoplugin.cfw.player.hud.AnimatedTablist;
@@ -417,7 +417,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	public void saveTeleport(Location location) {
-		BukkitUtils.saveTeleport(this.player, location);
+		SafeTeleport.tp(this.player, location);
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
@@ -724,7 +724,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	@Override
 	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
-		throw new Error("Unimplemented");
+		throw new UnsupportedOperationException();
 	}
 
 	/**
