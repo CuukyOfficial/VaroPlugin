@@ -10,11 +10,11 @@ import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.VaroAsyncListInventory;
+import de.cuuky.varo.gui.VaroPlayerAsyncListInventory;
 import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.item.ItemBuilder;
 
-public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
+public class PlayerListGUI extends VaroPlayerAsyncListInventory<VaroPlayer> {
 
     public enum PlayerGUIType {
 
@@ -76,7 +76,7 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
 
     @Override
     protected ItemStack getItemStack(VaroPlayer player) {
-        return ItemBuilder.skull(player.getUUID()).displayName(Main.getColorCode() + player.getName())
+        return ItemBuilder.skull(player.getName()).displayName(Main.getColorCode() + player.getName())
                 .lore((showStats ? player.getStats().getStatsListed() : null)).build();
     }
 
