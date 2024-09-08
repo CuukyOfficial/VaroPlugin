@@ -71,8 +71,9 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
             lore.add(Main.getColorCode() + strin);
 
         if (!setting.isSensitive()) {
+            Object value = setting.getValue();
             lore.add(" ");
-            lore.add("Value: " + setting.getValue());
+            lore.add("Value: " + (value instanceof Enum<?> ? ((Enum<?>) value).name() : value));
         }
         return ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§7" + setting.getPath()).lore(lore).build();
     }
