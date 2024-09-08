@@ -74,6 +74,7 @@ dependencies {
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
     compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("net.luckperms:api:5.4")
 
 	runtimeDownload("com.github.cryptomorin:XSeries:11.2.1")
     runtimeDownload("com.google.code.gson:gson:2.10.1")

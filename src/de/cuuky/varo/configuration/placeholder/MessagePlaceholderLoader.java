@@ -13,6 +13,7 @@ import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholde
 import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
+import de.cuuky.varo.utils.VaroUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 
@@ -136,6 +137,7 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("playerLocX", 1, "Ersetzt durch die X-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockX()) : "0");
         new VaroPlayerMessagePlaceholder("playerLocY", 1, "Ersetzt durch die Y-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockY()) : "0");
         new VaroPlayerMessagePlaceholder("playerLocZ", 1, "Ersetzt durch die Z-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockZ()) : "0");
-        new VaroPlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers", PermissionUtils::getLuckPermsPrefix);
+        new VaroPlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers", VaroUtils::getLuckPermsPrefix);
+        new VaroPlayerMessagePlaceholder("lpSuffix", 10, "Ersetzt durch den LuckPerms-Suffix des Spielers", VaroUtils::getLuckPermsPrefix);
     }
 }

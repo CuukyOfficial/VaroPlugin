@@ -9,16 +9,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.UserManager;
 
 public final class VaroUtils {
     
     private static final String GAMERULE_DO_DAYLIGHT_CYCLE = "doDaylightCycle";
+    
+    private static Object luckPermsUserManager;
 	
 	public static void updateWorldTime() {
 	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
@@ -61,4 +66,27 @@ public final class VaroUtils {
 	    Material material = block.getType();
 	    return !material.isSolid() && !material.isOccluding();
 	}
+	
+	private static Object getLuckPermsPlayerAdapter() {
+	    if (luckPermsUserManager != null)
+	        return luckPermsUserManager;
+	    RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+	    return provider != null ? luckPermsUserManager = provider.getProvider().getUserManager() : null;
+	}
+	
+	public static String getLuckPermsPrefix(VaroPlayer player) {
+        UserManager luckPerms = (UserManager) getLuckPermsPlayerAdapter();
+	    if (luckPerms == null)
+	        return "";
+	    String prefix = luckPerms.getUser(player.getRealUUID()).getCachedData().getMetaData().getPrefix();
+	    return prefix == null ? "" : prefix;
+	}
+
+	public static String getLuckPermsSuffix(VaroPlayer player) {
+	    UserManager luckPerms = (UserManager) getLuckPermsPlayerAdapter();
+        if (luckPerms == null)
+            return "";
+        String suffix = luckPerms.getUser(player.getRealUUID()).getCachedData().getMetaData().getSuffix();
+        return suffix == null ? "" : suffix;
+    }
 }
