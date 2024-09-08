@@ -259,6 +259,7 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED("varoCommands.intro.gamealreadystarted", "&7The game has already been started!"),
     VARO_COMMANDS_INTRO_STARTED("varoCommands.intro.started", "&7And here we go!"),
     VARO_COMMANDS_PRESET_NOT_FOUND("varoCommands.preset.notfound", "The preset %colorcode%%preset% &7was not found."),
+    VARO_COMMANDS_PRESET_PATH_TRAVERSAL("varoCommands.preset.pathtraversal", "Presets must be located inside the &3presets &7folder."),
     VARO_COMMANDS_PRESET_LOADED("varoCommands.preset.loaded", "The preset %colorcode%%preset% &7was &asuccessfully &7loaded."),
     VARO_COMMANDS_PRESET_SAVED("varoCommands.preset.saved", "The current settings were &asuccessfully &7saved as preset %colorcode%%preset% &7."),
     VARO_COMMANDS_PRESET_LIST("varoCommands.preset.list", "&lList of all presets:"),
