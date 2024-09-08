@@ -22,7 +22,7 @@ import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.data.Dependencies;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
-import de.cuuky.varo.recovery.recoveries.VaroBugreport;
+import de.cuuky.varo.recovery.recoveries.BugReport;
 import de.cuuky.varo.spigot.updater.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
@@ -176,8 +176,11 @@ public class Main extends JavaPlugin {
             VersionUtils.getVersionAdapter().getOnlinePlayers()
                 .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
         } else {
-			VaroBugreport report = new VaroBugreport();
-			System.out.println(CONSOLE_PREFIX + "Saved Crashreport to " + report.getZipFile().getName());
+			File bugReport = BugReport.createBugReport();
+			if (bugReport != null)
+			    System.out.println(CONSOLE_PREFIX + "Saved crash-report to " + bugReport.getAbsolutePath());
+			else
+			    System.out.println(CONSOLE_PREFIX + "Unable to create crash-report");
 		}
 		Bukkit.getScheduler().cancelTasks(this);
 		dataManager.getVaroLoggerManager().cleanUp();
