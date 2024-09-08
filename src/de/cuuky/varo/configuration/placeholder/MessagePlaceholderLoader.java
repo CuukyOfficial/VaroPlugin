@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 
-import de.cuuky.cfw.utils.PermissionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
@@ -129,7 +128,6 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("sessions", 1, "Ersetzt durch die Sessions des Spielers", (player) -> String.valueOf(player.getStats().getSessions()));
         new VaroPlayerMessagePlaceholder("remainingDisconnects", 1, "Ersetzt durch die Disconnects der Session des Spielers", (player) -> String.valueOf(VaroPlayerDisconnect.getDisconnect(player.getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(player.getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt()));
         new VaroPlayerMessagePlaceholder("ping", 1, "Ersetzt durch den Ping des Spielers", (player) -> String.valueOf(player.getVersionAdapter().getPing()));
-        new VaroPlayerMessagePlaceholder("pexPrefix", 10, "Ersetzt durch den Pex-Prefix des Spielers", PermissionUtils::getPermissionsExPrefix);
         new VaroPlayerMessagePlaceholder("worldSpawnX", 1, "Ersetzt durch die X-Koord des Spawns der Welt", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockX()) : "0");
         new VaroPlayerMessagePlaceholder("worldSpawnY", 1, "Ersetzt durch die Y-Koord des Spawns der Welt", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockY()) : "0");
         new VaroPlayerMessagePlaceholder("worldSpawnZ", 1, "Ersetzt durch die Z-Koord des Spawns der Welt", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockZ()) : "0");
