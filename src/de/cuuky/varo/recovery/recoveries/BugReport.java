@@ -21,12 +21,12 @@ public class BugReport {
     private static final DateFormat DATE_FROMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     private static final String[] INCLUDED_PATHS = new String[] {
-            "logs",
+            "logs/",
             "server.properties",
-            "plugins/Varo/config",
-            "plugins/Varo/languages",
+            "plugins/Varo/config/",
+            "plugins/Varo/languages/",
             "plugins/Varo/logs/logs.varolog2",
-            "plugins/Varo/stats",
+            "plugins/Varo/stats/",
     };
 
     public static File createBugReport() {
@@ -42,7 +42,7 @@ public class BugReport {
             }
 
         File zipFile = new File("plugins/Varo/bugreports/bugreport-" + DATE_FROMAT.format(new Date()) + ".zip");
-        boolean success = ZipUtil.zip(zipFile, new File("."),
+        boolean success = ZipUtil.zip(zipFile, new File("").getAbsoluteFile(),
                 path -> Arrays.stream(INCLUDED_PATHS).anyMatch(s -> path.startsWith(s)));
 
         redactedValues.forEach((entry, value) -> entry.setValue(value, true));

@@ -30,16 +30,16 @@ import java.util.zip.ZipOutputStream;
 public class ZipUtil {
 
     public static boolean zip(File zipFile, File folder, Predicate<String> includeCallback) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
-                ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream, StandardCharsets.UTF_8)) {
+        try {
             if (!zipFile.exists()) {
                 if (!zipFile.getParentFile().exists())
                     zipFile.getParentFile().mkdirs();
                 zipFile.createNewFile();
             }
-
-            zip(zipOutputStream, null, folder, includeCallback);
-
+            try (FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
+                    ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream, StandardCharsets.UTF_8)) {
+                zip(zipOutputStream, null, folder, includeCallback);
+            }
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,15 +48,15 @@ public class ZipUtil {
     }
 
     private static void zip(ZipOutputStream zipOutputStream, String path, File file, Predicate<String> includeCallback) throws IOException {
-        String newPath = path == null ? file.getName() : path + "/" + file.getName();
-        if (!includeCallback.test(newPath))
-            return;
-
         if (file.isDirectory())
             for (File child : file.listFiles())
-                zip(zipOutputStream, newPath, child, includeCallback);
+                zip(zipOutputStream, path == null ? "" : path + file.getName() + "/", child, includeCallback);
         else if (file.isFile()) {
-            ZipEntry zipEntry = new ZipEntry(newPath);
+            String filePath = path == null ? file.getName() : path + file.getName();
+            if (!includeCallback.test(filePath))
+                return;
+
+            ZipEntry zipEntry = new ZipEntry(filePath);
             zipOutputStream.putNextEntry(zipEntry);
             Files.copy(file.toPath(), zipOutputStream);
             zipOutputStream.closeEntry();
