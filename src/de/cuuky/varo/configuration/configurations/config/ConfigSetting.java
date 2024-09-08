@@ -34,9 +34,9 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_PORTAL_WIDTH(ConfigSettingSection.AUTOSETUP, "portal.width", 4, "Breite des gespawnten Portals"),
 
 	AUTOSETUP_SPAWNS_AMOUNT(ConfigSettingSection.AUTOSETUP, "spawns.amount", 40, "Zu welcher Anzahl die Loecher\ngeneriert werden sollen"),
-	AUTOSETUP_SPAWNS_BLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.block.material", XMaterial.STONE_BRICK_SLAB.parseMaterial(), "Welche Block-ID der Halftstep am Spawn haben soll"),
+	AUTOSETUP_SPAWNS_BLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.block.material", XMaterial.STONE_BRICK_SLAB, "Welche Block-ID der Halftstep am Spawn haben soll"),
 	AUTOSETUP_SPAWNS_RADIUS(ConfigSettingSection.AUTOSETUP, "spawns.radius", -1, "In welchem Radius die Löcher\ngeneriert werden sollen\n-1 wählt automatisch einen passenden radius"),
-	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", XMaterial.GRASS_BLOCK.parseMaterial(), "Welche Block-ID der Block,\nden man abbaut haben soll"),
+	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", XMaterial.GRASS_BLOCK, "Welche Block-ID der Block,\nden man abbaut haben soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
 	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP, "spawnGeneratorYTolerance", 8, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
@@ -562,6 +562,8 @@ public enum ConfigSetting implements SectionEntry {
 			return Long.parseLong(input);
 		case "java.lang.Double":
 			return Double.parseDouble(input);
+		case "com.cryptomorin.xseries.XMaterial":
+		    return XMaterial.matchXMaterial(input).orElseThrow(() -> new IllegalArgumentException("Unknown material: " + input));
 		default:
 		    if (Enum.class.isAssignableFrom(defaultValueClass))
 		        return Enum.valueOf(defaultValueClass, input);

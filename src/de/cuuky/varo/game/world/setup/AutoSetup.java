@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -117,12 +116,9 @@ public class AutoSetup {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: Setting the spawns...");
 
         middle.getWorld().setSpawnLocation(x, 0, z);
-        
-        XMaterial blockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString()).orElse(null);
-        XMaterial sideBlockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString()).orElse(null);
-        if (blockMaterial == null || sideBlockMaterial == null)
-            Bukkit.broadcastMessage(Main.getPrefix() + "§cBlock-IDs der Spawns existieren nicht!");
-        new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(), blockMaterial, sideBlockMaterial);
+
+        new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()),ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(),
+                (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
     }
 
     private void setupAutoStart() {

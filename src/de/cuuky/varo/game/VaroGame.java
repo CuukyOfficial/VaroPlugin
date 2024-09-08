@@ -119,12 +119,7 @@ public class VaroGame implements VaroSerializeable {
         LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-            XMaterial blockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString()).orElse(null);
-            XMaterial sideBlockMaterial = XMaterial.matchXMaterial(ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString()).orElse(null);
-            if (blockMaterial == null || sideBlockMaterial == null)
-                Bukkit.broadcastMessage(Main.getPrefix() + "§cBlock-IDs der Spawns existieren nicht!");
-            
-            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, blockMaterial, sideBlockMaterial);
+            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
             Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
         }
 
