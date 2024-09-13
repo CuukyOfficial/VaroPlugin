@@ -45,6 +45,7 @@ public class Dependencies {
     private static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
 
     static {
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.cryptomorin.xseries.XMaterial")));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.gson.JsonElement")));
 
