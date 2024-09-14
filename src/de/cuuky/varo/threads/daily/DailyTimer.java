@@ -56,39 +56,39 @@ public final class DailyTimer {
 	private void startTimer(long offset) {
 		if (Main.getVaroGame().getGameState() == GameState.STARTED && Main.getVaroGame().getLastDayTimer() != null) {
 			Date date = Main.getVaroGame().getLastDayTimer();
-			for (int i = 0; i < getDateDiff(date, new Date(), TimeUnit.DAYS); i++) {
-				if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
-					System.out.println("DAILY RECTIFY");
-
+			long dateDiff = getDateDiff(date, new Date(), TimeUnit.DAYS);
+			for (long i = 0; i < dateDiff; i++) {
+			    System.out.println(Main.getConsolePrefix() + "Catching up with daily tasks...");
 				doDailyChecks();
 			}
 
 			Main.getVaroGame().setLastDayTimer(new Date());
 		}
 
+		long nextTaskSeconds = getNextReset(offset);
+		System.out.println(Main.getConsolePrefix() + "Next daily task: " + nextTaskSeconds);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				try {
+				    System.out.println(Main.getConsolePrefix() + "Running daily timer...");
+				    
 					new VaroBackup();
 					Main.getVaroGame().setLastDayTimer(new Date());
 
-					if (Main.getVaroGame().getGameState() == GameState.STARTED) {
-						if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
-							System.out.println("DAILY");
-
+					if (Main.getVaroGame().getGameState() == GameState.STARTED)
 						doDailyChecks();
-					}
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
 
 				startTimer(6L * 60L * 60L * 1000L);
 			}
-		}.runTaskLater(Main.getInstance(), getNextReset(offset) * 20);
+		}.runTaskLater(Main.getInstance(), nextTaskSeconds * 20L);
 	}
 
 	public void doDailyChecks() {
+	    System.out.println(Main.getConsolePrefix() + "Running daily checks...");
 		for (Checker checkers : checker) {
 			try {
 				checkers.check();
