@@ -168,7 +168,7 @@ public class PlayerCommand extends VaroCommand {
                     continue;
 				}
 
-				new VaroPlayer(arg, lookup.toString());
+				new VaroPlayer(arg, lookup.getUuid().toString());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " §7wurde erfolgreich zu " + Main.getColorCode() + Main.getProjectName() + " §7hinzugefuegt!");
 			}
 		} else if (args[0].equalsIgnoreCase("respawn")) {

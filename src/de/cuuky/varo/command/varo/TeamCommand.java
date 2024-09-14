@@ -106,7 +106,7 @@ public class TeamCommand extends VaroCommand {
                         continue;
                     }
 
-                    varoplayer = new VaroPlayer(arg, lookup.toString());
+                    varoplayer = new VaroPlayer(arg, lookup.getUuid().toString());
                 }
 
                 team.addMember(varoplayer);
@@ -184,7 +184,7 @@ public class TeamCommand extends VaroCommand {
                     return;
                 }
 
-                varoplayer = new VaroPlayer(args[2], lookup.toString());
+                varoplayer = new VaroPlayer(args[2], lookup.getUuid().toString());
             }
 
             if (varoplayer.getTeam() != null) {
