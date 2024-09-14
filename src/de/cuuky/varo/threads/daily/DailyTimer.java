@@ -92,8 +92,8 @@ public final class DailyTimer {
 		for (Checker checkers : checker) {
 			try {
 				checkers.check();
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (Throwable t) {
+				t.printStackTrace();
 				continue;
 			}
 		}
