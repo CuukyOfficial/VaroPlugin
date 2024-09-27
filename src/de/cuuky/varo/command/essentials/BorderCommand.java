@@ -1,16 +1,18 @@
 package de.cuuky.varo.command.essentials;
 
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Sounds;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.world.VaroWorldHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XSound;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.game.world.VaroWorldHandler;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class BorderCommand implements CommandExecutor {
 
@@ -62,7 +64,7 @@ public class BorderCommand implements CommandExecutor {
 
             sender.sendMessage(Main.getPrefix() + ConfigMessages.BORDER_COMMAND_SET_BORDER.getValue(vp).replace("%size%", String.valueOf(borderSize)));
             if (p != null)
-                p.playSound(p.getLocation(), Sounds.NOTE_BASS_DRUM.bukkitSound(), 1, 1);
+                p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
         } else
             sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
         return false;

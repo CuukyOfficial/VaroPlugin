@@ -88,7 +88,7 @@ public class OfflineVillager implements VaroSerializeable {
 			if (it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()));
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()), vp.getRealUUID());
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_PLAYER, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName());
 
 		killer.onEvent(BukkitEventType.KILL);

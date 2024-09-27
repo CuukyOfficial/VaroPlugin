@@ -1,22 +1,23 @@
 package de.cuuky.varo.event.events;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.cfw.utils.BlockUtils;
-import de.varoplugin.cfw.version.VersionUtils;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
+import de.cuuky.varo.utils.VaroUtils;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class PoisonRainVaroEvent extends VaroEvent {
 
 	private BukkitTask sched;
 
 	public PoisonRainVaroEvent() {
-		super(VaroEventType.POISON_RAIN, Material.ARROW, "Regen macht Schaden");
+		super(VaroEventType.POISON_RAIN, XMaterial.ARROW, "Regen macht Schaden");
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class PoisonRainVaroEvent extends VaroEvent {
 				playerLoop: for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers()) {
 					if (p.getWorld().hasStorm() && !p.getLocation().getBlock().getBiome().toString().contains("SAVANNA")) {
 						for (int i = p.getLocation().getBlockY(); i < p.getWorld().getMaxHeight(); i++)
-							if (!BlockUtils.isAir(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i, p.getLocation().getBlockZ())))
+							if (!VaroUtils.isNotSolidTerrain(p.getWorld().getBlockAt(p.getLocation().getBlockX(), i, p.getLocation().getBlockZ())))
 								continue playerLoop;
 
 						p.damage(0.75);

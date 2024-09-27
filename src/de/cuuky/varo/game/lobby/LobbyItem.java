@@ -10,131 +10,123 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.hooking.hooks.item.ItemHook;
-import de.cuuky.cfw.hooking.hooks.item.ItemHookHandler;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
 import de.cuuky.varo.game.state.GameState;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.player.hook.item.HookItemHitEvent;
+import de.varoplugin.cfw.player.hook.item.HookItemInteractEntityEvent;
+import de.varoplugin.cfw.player.hook.item.HookItemInteractEvent;
+import de.varoplugin.cfw.player.hook.item.ItemHook;
+import de.varoplugin.cfw.player.hook.item.ItemHookBuilder;
+import de.varoplugin.cfw.player.hook.item.PlayerItemHookBuilder;
 
 public class LobbyItem {
 
-	private static List<ItemHook> lobbyItems = new ArrayList<>();
+    private static List<ItemHook> lobbyItems = new ArrayList<>();
 
-	private static void hookItem(ItemHook hook) {
-		lobbyItems.add(hook);
-		Main.getCuukyFrameWork().getHookManager().registerHook(hook);
+    private static void hookItem(Player player, ItemHookBuilder hookBuilder) {
+        hookBuilder.droppable(false).movable(false);
 
-		hook.setDragable(false);
-		hook.setDropable(false);
-	}
+        ItemHook hook = hookBuilder.complete(player, Main.getInstance());
+        lobbyItems.add(hook);
+    }
 
-	public static void giveItems(Player player) {
-		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
-			return;
-		
-		VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
+    public static void giveItems(Player player) {
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
+            return;
 
-		hookItem(new ItemHook(player, new BuildItem().displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.getValue(varoPlayer)).itemstack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue())
-				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_SLOT.getValueAsInt(), new ItemHookHandler() {
+        VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
 
-			@Override
-			public void onInteractEntity(PlayerInteractEntityEvent event) {
-				event.setCancelled(true);
-				event.getPlayer().updateInventory();
-			}
+        hookItem(player, new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.getValue(varoPlayer))
+                .lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_SLOT.getValueAsInt())
+                .subscribe(HookItemInteractEntityEvent.class, hookEvent -> {
+                    PlayerInteractEntityEvent event = hookEvent.getSource();
 
-			@Override
-			public void onInteract(PlayerInteractEvent event) {}
+                    event.setCancelled(true);
+                    event.getPlayer().updateInventory();
+                })
+                .subscribe(HookItemHitEvent.class, hookEvent -> {
+                    EntityDamageByEntityEvent event = hookEvent.getSource();
 
-			@Override
-			public void onEntityHit(EntityDamageByEntityEvent event) {
-				if (Main.getVaroGame().getGameState() != GameState.LOBBY)
-					return;
+                    if (Main.getVaroGame().getGameState() != GameState.LOBBY)
+                        return;
 
-				Player invited = (Player) event.getEntity();
+                    Player invited = (Player) event.getEntity();
 
-				if (VaroTeamRequest.getByAll(VaroPlayer.getPlayer(invited), varoPlayer) != null)
-					player.performCommand("varoplugin tr accept " + invited.getName());
-				else
-					player.performCommand("varoplugin tr invite " + invited.getName());
-				
-				event.setCancelled(true);
-				player.updateInventory();
-			}
-		}));
-		
-		giveOrRemoveTeamItems(varoPlayer);
-	}
+                    if (VaroTeamRequest.getByAll(VaroPlayer.getPlayer(invited), varoPlayer) != null)
+                        player.performCommand("varoplugin tr accept " + invited.getName());
+                    else
+                        player.performCommand("varoplugin tr invite " + invited.getName());
 
-	public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
-			return;
-		
-		if (varoPlayer.getTeam() == null) {
-			ItemStack air = Materials.AIR.parseItem();
-			Inventory inventory = varoPlayer.getPlayer().getInventory();
-			inventory.setItem(ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt(), air);
-			inventory.setItem(ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt(), air);
-			return;
-		}
-		
-		hookItem(new ItemHook(varoPlayer.getPlayer(), new BuildItem().displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_NAME.getValue(varoPlayer)).itemstack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_ITEM.getValue())
-				.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt(), new ItemHookHandler() {
+                    event.setCancelled(true);
+                    player.updateInventory();
+                }));
+    }
 
-			@Override
-			public void onInteractEntity(PlayerInteractEntityEvent event) {
-				event.setCancelled(true);
-				event.getPlayer().updateInventory();
-			}
+    public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
+            return;
 
-			@Override
-			public void onInteract(PlayerInteractEvent event) {
-				if (Main.getVaroGame().getGameState() != GameState.LOBBY)
-					return;
+        if (varoPlayer.getTeam() == null) {
+            ItemStack air = XMaterial.AIR.parseItem();
+            Inventory inventory = varoPlayer.getPlayer().getInventory();
+            inventory.setItem(ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt(), air);
+            inventory.setItem(ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt(), air);
+            return;
+        }
 
-				varoPlayer.getPlayer().performCommand("varoplugin tr leave");
-				
-				event.setCancelled(true);
-				varoPlayer.getPlayer().updateInventory();
-			}
+        hookItem(varoPlayer.getPlayer(), new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_NAME.getValue(varoPlayer))
+                .lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt())
+                .subscribe(HookItemInteractEntityEvent.class, hookEvent -> {
+                    PlayerInteractEntityEvent event = hookEvent.getSource();
 
-			@Override
-			public void onEntityHit(EntityDamageByEntityEvent event) {}
-		}));
-		
-		if (ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ENABLED.getValueAsBoolean())
-			hookItem(new ItemHook(varoPlayer.getPlayer(), new BuildItem().displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_NAME.getValue(varoPlayer)).itemstack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ITEM.getValue())
-					.lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build(), ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt(), new ItemHookHandler() {
-	
-				@Override
-				public void onInteractEntity(PlayerInteractEntityEvent event) {
-					event.setCancelled(true);
-					event.getPlayer().updateInventory();
-				}
-	
-				@Override
-				public void onInteract(PlayerInteractEvent event) {
-					if (Main.getVaroGame().getGameState() != GameState.LOBBY)
-						return;
+                    event.setCancelled(true);
+                    event.getPlayer().updateInventory();
+                })
+                .subscribe(HookItemInteractEvent.class, hookEvent -> {
+                    PlayerInteractEvent event = hookEvent.getSource();
 
-					if (varoPlayer.getTeam() != null)
-						varoPlayer.getTeam().createNameChangeChatHook(varoPlayer, null);
+                    if (Main.getVaroGame().getGameState() != GameState.LOBBY) {
+                        event.setCancelled(true);
+                        return;
+                    }
 
-					event.setCancelled(true);
-					varoPlayer.getPlayer().updateInventory();
-				}
-	
-				@Override
-				public void onEntityHit(EntityDamageByEntityEvent event) {}
-			}));
-	}
+                    varoPlayer.getPlayer().performCommand("varoplugin tr leave");
 
-	public static void removeHooks() {
-		lobbyItems.forEach(ItemHook::unregister);
-	}
+                    event.setCancelled(true);
+                    varoPlayer.getPlayer().updateInventory();
+                }));
+
+        if (ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ENABLED.getValueAsBoolean())
+            hookItem(varoPlayer.getPlayer(), new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_NAME.getValue(varoPlayer))
+                    .lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt())
+                    .subscribe(HookItemInteractEntityEvent.class, hookEvent -> {
+                        PlayerInteractEntityEvent event = hookEvent.getSource();
+
+                        event.setCancelled(true);
+                        event.getPlayer().updateInventory();
+                    })
+                    .subscribe(HookItemInteractEvent.class, hookEvent -> {
+                        PlayerInteractEvent event = hookEvent.getSource();
+
+                        if (Main.getVaroGame().getGameState() != GameState.LOBBY)
+                            return;
+
+                        if (varoPlayer.getTeam() != null)
+                            varoPlayer.getTeam().createNameChangeChatHook(varoPlayer, null);
+
+                        event.setCancelled(true);
+                        varoPlayer.getPlayer().updateInventory();
+                    }));
+    }
+
+    public static void removeHooks() {
+        lobbyItems.forEach(ItemHook::unregister);
+    }
 }

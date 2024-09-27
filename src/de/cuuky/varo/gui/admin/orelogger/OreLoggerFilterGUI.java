@@ -1,22 +1,23 @@
 package de.cuuky.varo.gui.admin.orelogger;
 
-import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
-import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.logger.logger.LoggedBlock;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
+import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 
 public class OreLoggerFilterGUI extends VaroInventory {
 
@@ -38,32 +39,27 @@ public class OreLoggerFilterGUI extends VaroInventory {
                 if (click.isRightClick()) {
                     setContent(null);
                 } else {
-                    Main.getCuukyFrameWork().getHookManager().registerHook(
-                        new ChatHook(player.getPlayer(), message, new ChatHookHandler() {
-                            @Override
-                            public boolean onChat(AsyncPlayerChatEvent event) {
-                                String newContent = event.getMessage();
+                    new PlayerChatHookBuilder().message(message).subscribe(ChatHookTriggerEvent.class, hookEvent -> {
+                        String newContent = hookEvent.getMessage();
 
-                                if (!Filter.this.contentChecker.test(newContent)) {
-                                    String msg = ConfigMessages.LOGGER_FILTER_INVALID_FILTER.getValue(player)
-                                        .replace("%filterName%", Filter.this.name)
-                                        .replace("%content%", newContent);
-                                    player.sendMessage(Main.getPrefix() + msg);
-                                } else {
-                                    String msg = ConfigMessages.LOGGER_FILTER_SET_FILTER.getValue(player)
-                                        .replace("%filterName%", Filter.this.name)
-                                        .replace("%newContent%", newContent)
-                                        .replace("%oldContent%", Filter.this.getContent());
-                                    player.sendMessage(Main.getPrefix() + msg);
+                        if (!Filter.this.contentChecker.test(newContent)) {
+                            String msg = ConfigMessages.LOGGER_FILTER_INVALID_FILTER.getValue(player)
+                                .replace("%filterName%", Filter.this.name)
+                                .replace("%content%", newContent);
+                            player.sendMessage(Main.getPrefix() + msg);
+                        } else {
+                            String msg = ConfigMessages.LOGGER_FILTER_SET_FILTER.getValue(player)
+                                .replace("%filterName%", Filter.this.name)
+                                .replace("%newContent%", newContent)
+                                .replace("%oldContent%", Filter.this.getContent());
+                            player.sendMessage(Main.getPrefix() + msg);
 
-                                    Filter.this.setContent(newContent);
-                                }
+                            Filter.this.setContent(newContent);
+                        }
 
-                                OreLoggerFilterGUI.this.open();
-                                return true;
-                            }
-                        })
-                    );
+                        OreLoggerFilterGUI.this.open();
+                        hookEvent.getHook().unregister();
+                    }).complete(player.getPlayer(), Main.getInstance());
 
                     OreLoggerFilterGUI.this.close();
                 }
@@ -90,7 +86,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
         materialFilter = new Filter("Material Filter", this.validLoggerMaterialName());
 
     public OreLoggerFilterGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
         this.player = VaroPlayer.getPlayer(player);
     }
 
@@ -108,7 +104,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
     public void refreshContent() {
         // Filter player
         int base = 11;
-        addItem(base, new BuildItem().material(Materials.SIGN).displayName(
+        addItem(base, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(
                     Main.getColorCode() + "Filter Player " + ChatColor.GRAY + "(" + this.playerFilter.getContent() + ")")
                 .lore("§7Right-Click to reset").build(),
             this.playerFilter.setFilter(this.player,
@@ -116,14 +112,14 @@ public class OreLoggerFilterGUI extends VaroInventory {
         );
         
         // Filter material
-        addItem(base + 4, new BuildItem().material(Materials.SIGN).displayName(
+        addItem(base + 4, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(
                     Main.getColorCode() + "Filter Material" + ChatColor.GRAY + " (" + this.materialFilter.getContent() + ")")
             .lore("§7Right-Click to reset").build(),
             this.materialFilter.setFilter(this.player,
                 Main.getPrefix() + ConfigMessages.LOGGER_FILTER_MATERIAL_FILTER_MESSAGE.getValue(this.player)));
 
         // Open
-        addItem(base + 2, new BuildItem().material(Materials.EMERALD).displayName(Main.getColorCode() + "Open").build(),
+        addItem(base + 2, ItemBuilder.material(XMaterial.EMERALD).displayName(Main.getColorCode() + "Open").build(),
             click -> OreLoggerFilterGUI.this.openFiltered(this.playerFilter.getContentRaw(),
                 this.materialFilter.getContentRaw())
         );

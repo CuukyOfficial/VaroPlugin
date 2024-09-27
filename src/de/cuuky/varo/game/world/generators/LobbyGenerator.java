@@ -2,30 +2,32 @@ package de.cuuky.varo.game.world.generators;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Location;
 
-import de.cuuky.cfw.utils.BlockUtils;
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XBlock;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.world.schematic.SchematicLoader;
+import de.varoplugin.cfw.utils.JavaUtils;
 
 public class LobbyGenerator {
 
-	private static ArrayList<Materials> glassTypes;
+	private static List<XMaterial> glassTypes;
 
 	static {
 		glassTypes = new ArrayList<>();
 
-		glassTypes.add(Materials.ORANGE_STAINED_GLASS);
-		glassTypes.add(Materials.MAGENTA_STAINED_GLASS);
-		glassTypes.add(Materials.LIGHT_BLUE_STAINED_GLASS);
-		glassTypes.add(Materials.YELLOW_STAINED_GLASS);
-		glassTypes.add(Materials.LIME_STAINED_GLASS);
-		glassTypes.add(Materials.PINK_STAINED_GLASS);
-		glassTypes.add(Materials.CYAN_STAINED_GLASS);
-		glassTypes.add(Materials.PURPLE_STAINED_GLASS);
+		glassTypes.add(XMaterial.ORANGE_STAINED_GLASS);
+		glassTypes.add(XMaterial.MAGENTA_STAINED_GLASS);
+		glassTypes.add(XMaterial.LIGHT_BLUE_STAINED_GLASS);
+		glassTypes.add(XMaterial.YELLOW_STAINED_GLASS);
+		glassTypes.add(XMaterial.LIME_STAINED_GLASS);
+		glassTypes.add(XMaterial.PINK_STAINED_GLASS);
+		glassTypes.add(XMaterial.CYAN_STAINED_GLASS);
+		glassTypes.add(XMaterial.PURPLE_STAINED_GLASS);
 	}
 
 	private Location last;
@@ -63,6 +65,7 @@ public class LobbyGenerator {
 		for (int x = bottomBlockX; x <= topBlockX; x++)
 			for (int y = bottomBlockY; y <= topBlockY; y++)
 				for (int z = bottomBlockZ; z <= topBlockZ; z++)
-					BlockUtils.setBlock(to.getWorld().getBlockAt(x, y, z), glassTypes.get(JavaUtils.randomInt(0, glassTypes.size() - 1)));
+				    XBlock.setType(to.getWorld().getBlockAt(x, y, z), glassTypes.get(JavaUtils.randomInt(0, glassTypes.size() - 1)), true);
+		
 	}
 }

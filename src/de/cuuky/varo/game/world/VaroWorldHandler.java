@@ -39,7 +39,7 @@ public class VaroWorldHandler {
             if (player.hasPermission("varo.worlddownloader"))
                 return;
 
-            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, player.getName() + " nutzt einen WorldDownloader!");
+            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, player.getName() + " nutzt einen WorldDownloader!", player.getUniqueId());
             Bukkit.broadcastMessage("§4" + player.getName() + " nutzt einen WorldDownloader!");
             player.kickPlayer("§4WorldDownloader sind bei Varos untersagt");
         });

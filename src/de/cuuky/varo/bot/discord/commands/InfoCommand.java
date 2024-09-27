@@ -18,7 +18,7 @@ public class InfoCommand extends DiscordBotCommand {
 
     @Override
     public void onExecute(SlashCommandInteraction event) {
-        getDiscordBot().reply("Version: " + Main.getInstance().getDescription().getVersion() + "\n  Link: " + Main.DISCORD_INVITE, Main.getPluginName(), Color.BLUE, event);
+        getDiscordBot().reply("**Version**: " + Main.getInstance().getDescription().getVersion() + "\n**Link**: " + Main.DISCORD_INVITE, Main.getPluginName(), Color.BLUE, event);
     }
 
 }

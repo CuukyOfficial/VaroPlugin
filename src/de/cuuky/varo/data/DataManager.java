@@ -72,7 +72,7 @@ public class DataManager {
 
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
-		Dependencies.loadNeeded(this.ownerInstance);
+		Dependencies.loadOptional(this.ownerInstance);
 		this.scoreboardConfig = new ScoreboardConfig();
 		this.tablistConfig = new TablistConfig();
 		this.actionbarConfig = new ActionbarConfig();

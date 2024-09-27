@@ -1,21 +1,20 @@
 package de.cuuky.varo.configuration.placeholder;
 
-import de.cuuky.cfw.configuration.placeholder.placeholder.util.DateInfo;
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.utils.PermissionUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.stream.Collectors;
+
+import org.bukkit.ChatColor;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
 import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
-import org.bukkit.ChatColor;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.stream.Collectors;
+import de.cuuky.varo.utils.VaroUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class MessagePlaceholderLoader {
 
@@ -27,7 +26,7 @@ public class MessagePlaceholderLoader {
         loadPlayerPlaceholder();
     }
 
-    private String getLastDateRefresh(int index) {
+    private String getLastDateRefresh(int index) { // TODO remove this shit
         if (lastDateRefresh == null || lastDateRefreshTime + 900 <= System.currentTimeMillis()) {
             lastDateRefreshTime = System.currentTimeMillis();
             lastDateRefresh = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss").format(new Date()).split(",");
@@ -46,12 +45,15 @@ public class MessagePlaceholderLoader {
         new VaroGeneralMessagePlaceholder("remaining", 1, "Ersetzt durch die Anzahl lebender Spieler", () -> String.valueOf(VaroPlayer.getAlivePlayer().size()));
         new VaroGeneralMessagePlaceholder("players", 1, "Ersetzt durch die Anzahl aller Spieler", () -> String.valueOf(VaroPlayer.getVaroPlayers().size()));
         new VaroGeneralMessagePlaceholder("online", 1, "Ersetzt durch die Anzahl aller online Spieler", () -> String.valueOf(VersionUtils.getVersionAdapter().getOnlinePlayers().size()));
-        new VaroGeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.YEAR));
-        new VaroGeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.MONTH));
-        new VaroGeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.DAY));
-        new VaroGeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.HOUR));
-        new VaroGeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.MINUTES));
-        new VaroGeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit", () -> getLastDateRefresh(DateInfo.SECONDS));
+        new VaroGeneralMessagePlaceholder("currYear", 1, "Ersetzt durch das Jahr der jetzigen Zeit", () -> getLastDateRefresh(0));
+        new VaroGeneralMessagePlaceholder("currMonth", 1, "Ersetzt durch den Monat der jetzigen Zeit", () -> getLastDateRefresh(1));
+        new VaroGeneralMessagePlaceholder("currDay", 1, "Ersetzt durch den Tag der jetzigen Zeit", () -> getLastDateRefresh(2));
+        new VaroGeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit", () -> getLastDateRefresh(3));
+        new VaroGeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit", () -> getLastDateRefresh(4));
+        new VaroGeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit", () -> getLastDateRefresh(5));
+        new VaroGeneralMessagePlaceholder("projectTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Projektes", () -> String.format("%02d", Main.getVaroGame().getProjectTime() / 3600));
+        new VaroGeneralMessagePlaceholder("projectTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Projektes", () -> String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60));
+        new VaroGeneralMessagePlaceholder("projectTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Projektes", () -> String.format("%02d", Main.getVaroGame().getProjectTime() % 60));
         new VaroGeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse", () -> !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)));
         new VaroGeneralMessagePlaceholder("discordLink", 20, "Ersetzt durch den DiscordLink aus der Config", ConfigSetting.DISCORDBOT_INVITELINK::getValueAsString);
         new VaroGeneralMessagePlaceholder("protectionTime", 5, "Ersetzt durch die Schutzzeit aus der Config", () -> String.valueOf(ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt()));
@@ -62,7 +64,7 @@ public class MessagePlaceholderLoader {
 
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
-                new VaroGeneralMessagePlaceholder(setting.getPath(), 10, JavaUtils.getArgsToString(setting.getDescription(), " "), () -> String.valueOf(setting.getValue()).replace("&", "§"));
+                new VaroGeneralMessagePlaceholder(setting.getPath(), 10, String.join(" ", setting.getDescription()), () -> String.valueOf(setting.getValue()).replace("&", "§"));
     }
 
     private void loadPlayerPlaceholder() {
@@ -105,13 +107,13 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("teamAlive", 1, "Ersetzt durch den Wahrheitswert, ob das Team lebt", (player) -> {
             if (player.getTeam() != null)
                 return String.valueOf(player.getTeam().getMember().stream().anyMatch(p -> !p.equals(player) && p.getStats().isAlive()));
-            else return "-";
+            return "-";
         });
 
         new VaroPlayerMessagePlaceholder("teamMates", 1, "Ersetzt durch eine Liste der Mitspieler", (player) -> {
             if (player.getTeam() != null)
                 return player.getTeam().getMember().stream().filter(p -> !p.equals(player)).map(VaroPlayer::getName).collect(Collectors.joining(", "));
-            else return "-";
+            return "-";
         });
 
         new VaroPlayerMessagePlaceholder("player", 1, "Ersetzt durch den Namen des Spielers", VaroPlayer::getName);
@@ -126,7 +128,6 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("sessions", 1, "Ersetzt durch die Sessions des Spielers", (player) -> String.valueOf(player.getStats().getSessions()));
         new VaroPlayerMessagePlaceholder("remainingDisconnects", 1, "Ersetzt durch die Disconnects der Session des Spielers", (player) -> String.valueOf(VaroPlayerDisconnect.getDisconnect(player.getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(player.getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt()));
         new VaroPlayerMessagePlaceholder("ping", 1, "Ersetzt durch den Ping des Spielers", (player) -> String.valueOf(player.getVersionAdapter().getPing()));
-        new VaroPlayerMessagePlaceholder("pexPrefix", 10, "Ersetzt durch den Pex-Prefix des Spielers", PermissionUtils::getPermissionsExPrefix);
         new VaroPlayerMessagePlaceholder("worldSpawnX", 1, "Ersetzt durch die X-Koord des Spawns der Welt", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockX()) : "0");
         new VaroPlayerMessagePlaceholder("worldSpawnY", 1, "Ersetzt durch die Y-Koord des Spawns der Welt", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockY()) : "0");
         new VaroPlayerMessagePlaceholder("worldSpawnZ", 1, "Ersetzt durch die Z-Koord des Spawns der Welt", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getWorld().getSpawnLocation().getBlockZ()) : "0");
@@ -134,6 +135,7 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("playerLocX", 1, "Ersetzt durch die X-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockX()) : "0");
         new VaroPlayerMessagePlaceholder("playerLocY", 1, "Ersetzt durch die Y-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockY()) : "0");
         new VaroPlayerMessagePlaceholder("playerLocZ", 1, "Ersetzt durch die Z-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockZ()) : "0");
-        new VaroPlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers", PermissionUtils::getLuckPermsPrefix);
+        new VaroPlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers", VaroUtils::getLuckPermsPrefix);
+        new VaroPlayerMessagePlaceholder("lpSuffix", 10, "Ersetzt durch den LuckPerms-Suffix des Spielers", VaroUtils::getLuckPermsPrefix);
     }
 }

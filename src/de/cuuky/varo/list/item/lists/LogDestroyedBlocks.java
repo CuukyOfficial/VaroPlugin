@@ -3,7 +3,8 @@ package de.cuuky.varo.list.item.lists;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.list.item.ItemList;
 
 public class LogDestroyedBlocks extends ItemList {
@@ -14,9 +15,9 @@ public class LogDestroyedBlocks extends ItemList {
 	
 	@Override
 	public void loadDefaultValues() {
-		this.addItem(Materials.DIAMOND_ORE.parseItem());
-		this.addItem(Materials.LAPIS_ORE.parseItem());
-		this.addItem(Materials.GOLD_ORE.parseItem());
+		this.addItem(XMaterial.DIAMOND_ORE.parseItem());
+		this.addItem(XMaterial.LAPIS_ORE.parseItem());
+		this.addItem(XMaterial.GOLD_ORE.parseItem());
 	}
 
 	public boolean shallLog(Block block) {

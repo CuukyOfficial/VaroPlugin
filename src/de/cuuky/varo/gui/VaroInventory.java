@@ -1,7 +1,7 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.cfw.inventory.AdvancedInventory;
-import de.cuuky.cfw.inventory.AdvancedInventoryManager;
+import de.varoplugin.cfw.inventory.AdvancedInventory;
+import de.varoplugin.cfw.inventory.AdvancedInventoryManager;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;

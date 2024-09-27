@@ -1,6 +1,7 @@
 package de.cuuky.varo.list.item.lists;
 
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.list.item.ItemList;
 
 public class ChestItems extends ItemList {
@@ -11,13 +12,13 @@ public class ChestItems extends ItemList {
 	
 	@Override
 	public void loadDefaultValues() {
-		this.addItem(Materials.WOODEN_AXE.parseItem());
-		this.addItem(Materials.SUGAR_CANE.parseItem());
-		this.addItem(Materials.APPLE.parseItem());
-		this.addItem(Materials.PORKCHOP.parseItem());
-		this.addItem(Materials.OAK_WOOD.parseItem());
-		this.addItem(Materials.STICK.parseItem());
-		this.addItem(Materials.COBBLESTONE.parseItem());
-		this.addItem(Materials.SAND.parseItem());
+		this.addItem(XMaterial.WOODEN_AXE.parseItem());
+		this.addItem(XMaterial.SUGAR_CANE.parseItem());
+		this.addItem(XMaterial.APPLE.parseItem());
+		this.addItem(XMaterial.PORKCHOP.parseItem());
+		this.addItem(XMaterial.OAK_WOOD.parseItem());
+		this.addItem(XMaterial.STICK.parseItem());
+		this.addItem(XMaterial.COBBLESTONE.parseItem());
+		this.addItem(XMaterial.SAND.parseItem());
 	}
 }

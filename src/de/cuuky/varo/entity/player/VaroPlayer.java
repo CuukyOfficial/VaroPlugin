@@ -13,16 +13,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
-import de.cuuky.cfw.utils.BukkitUtils;
-import de.cuuky.cfw.utils.JavaUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Sounds;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -47,10 +44,14 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.vanish.Vanish;
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
+import de.varoplugin.cfw.player.SafeTeleport;
 import de.varoplugin.cfw.player.hud.AnimatedActionbar;
 import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
 import de.varoplugin.cfw.player.hud.AnimatedTablist;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import de.varoplugin.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -104,7 +105,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
-	private Sound guiSound = Sounds.CLICK.bukkitSound();
+	private Sound guiSound = XSound.UI_BUTTON_CLICK.parseSound();
 	private Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
@@ -416,7 +417,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	public void saveTeleport(Location location) {
-		BukkitUtils.saveTeleport(this.player, location);
+		SafeTeleport.tp(this.player, location);
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
@@ -723,7 +724,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	@Override
 	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
-		throw new Error("Unimplemented");
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -806,7 +807,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				continue;
 
 			if (!vp.getName().equals(player.getName())) {
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(null, vp).replace("%newName%", player.getName()));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SWITCHED_NAME.getValue(null, vp).replace("%newName%", player.getName()), player.getUniqueId());
 				Bukkit.broadcastMessage("§c" + vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				new Alert(AlertType.NAME_SWITCH, vp.getName() + " §7hat seinen Namen gewechselt und ist nun unter §c" + player.getName() + " §7bekannt!");
 				vp.setName(player.getName());
@@ -818,6 +819,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return null;
 	}
 
+	// This has to be one of the worst methods in the entire plugin. But it's called so often that I don't feel like fixing it.
+	// 'name' can either be the actual name of a player or their UUID (as string format!!!). It should just accept a UUID!!! DON'T USE NAMES TO IDENTIFY A PLAYER!!!
+	// Also why tf does this use continue instead of just returning the player immediately
 	public static VaroPlayer getPlayer(String name) {
 		for (VaroPlayer vp : varoplayer) {
 			if (!vp.getName().equalsIgnoreCase(name) && !vp.getUUID().equals(name))

@@ -1,25 +1,26 @@
 package de.cuuky.varo.gui.player;
 
-import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
-import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.inventory.page.AdvancedInfiniteInventory;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.StatType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.utils.ArrayUtils;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
+import de.varoplugin.cfw.inventory.page.AdvancedInfiniteInventory;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
+import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 
 public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
 
@@ -27,7 +28,7 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     private int index;
 
     public PlayerOptionsGUI(Player opener, VaroPlayer target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener);
+        super(Main.getInventoryManager(), opener);
 
         this.target = target;
     }
@@ -35,27 +36,20 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     private ItemClick getClick(StatType statType) {
         return (event) -> {
             if (event.isLeftClick()) {
-                Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(),
-                    Main.getPrefix() + "Enter new " + Main.getColorCode() + statType.name() +
-                        "§7: §8('!cancel' to cancel)", new ChatHookHandler() {
-
-                    @Override
-                    public boolean onChat(AsyncPlayerChatEvent event) {
-                        if (event.getMessage().equalsIgnoreCase("!cancel")) {
-                            open();
-                            return true;
-                        }
-
-                        boolean success = statType.execute(event.getMessage(), target);
-                        if (success) {
-                            open();
-                        } else {
-                            getPlayer().sendMessage(
-                                Main.getPrefix() + "Konnte nicht gesetzt werden! Versuche es erneut:");
-                        }
-                        return success;
+                new PlayerChatHookBuilder().message(Main.getPrefix() + "Enter new " + Main.getColorCode() + statType.name() + "§7: §8('!cancel' to cancel)")
+                .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
+                    if (hookEvent.getMessage().equalsIgnoreCase("!cancel")) {
+                        open();
+                        hookEvent.getHook().unregister();
+                        return;
                     }
-                }));
+
+                    if (statType.execute(hookEvent.getMessage(), target)) {
+                        open();
+                        hookEvent.getHook().unregister();
+                    } else
+                        getPlayer().sendMessage( Main.getPrefix() + "Konnte nicht gesetzt werden! Versuche es erneut:");
+                }).complete(getPlayer(), Main.getInstance());
                 this.close();
             } else if (event.isRightClick())
                 this.openReset(statType);
@@ -82,9 +76,9 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     }
 
     private ItemStack getItemStack(StatType statType) {
-        return new BuildItem().itemstack(statType.getIcon()).displayName(statType.getDisplayName())
-            .lore("§7Current: " + Main.getColorCode() + statType.get(this.target),
-                "", "§7Left-Click to change value", "§7Right-Click to reset").deleteDamageAnnotation().build();
+        return ItemBuilder.material(statType.getIcon()).displayName(statType.getDisplayName())
+                .lore("§7Current: " + Main.getColorCode() + statType.get(this.target),
+                        "", "§7Left-Click to change value", "§7Right-Click to reset").deleteDamageAnnotation().build();
     }
 
     private void openReset(StatType type) {
@@ -112,19 +106,19 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     public void refreshContent() {
         this.index = 0;
         this.applyToTypes(i -> i instanceof Integer, s -> {
-            this.addItem(index, new BuildItem().material(Materials.ROSE_RED).displayName("§c-").build(),
-                (e) -> s.execute(((int) s.get(this.target)) - 1, this.target));
+            this.addItem(index, ItemBuilder.material(XMaterial.RED_DYE).displayName("§c-").build(),
+                    (e) -> s.execute(((int) s.get(this.target)) - 1, this.target));
             this.addItem(index + 4, this.getItemStack(s), this.getClick(s));
-            this.addItem(index + 8, new BuildItem().material(Materials.CACTUS_GREEN).displayName("§a+").build(),
-                (e) -> s.execute(((int) s.get(this.target)) + 1, this.target));
+            this.addItem(index + 8, ItemBuilder.material(XMaterial.GREEN_DYE).displayName("§a+").build(),
+                    (e) -> s.execute(((int) s.get(this.target)) + 1, this.target));
         }, 9);
         this.index += 9;
 
         this.addLeftClickable(b -> b instanceof Boolean, s -> s.execute(!((Boolean) s.get(this.target)), this.target), 2);
         this.addLeftClickable(b -> b instanceof PlayerState,
-            s -> s.execute(ArrayUtils.getNext(s.get(this.target), PlayerState.values()), this.target), 2);
+                s -> s.execute(ArrayUtils.getNext(s.get(this.target), PlayerState.values()), this.target), 2);
 
         this.applyToTypes(i -> !(i instanceof Integer) && !(i instanceof Boolean) && !(i instanceof PlayerState),
-            s -> this.addItem(index, this.getItemStack(s), this.getClick(s)), 2);
+                s -> this.addItem(index, this.getItemStack(s), this.getClick(s)), 2);
     }
 }

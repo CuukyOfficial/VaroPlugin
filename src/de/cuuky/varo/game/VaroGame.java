@@ -1,6 +1,22 @@
 package de.cuuky.varo.game;
 
-import de.cuuky.cfw.version.types.Sounds;
+import java.awt.Color;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.game.VaroEndEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
@@ -30,19 +46,6 @@ import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
 import de.cuuky.varo.utils.EventUtils;
 import de.cuuky.varo.utils.VaroUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -63,6 +66,9 @@ public class VaroGame implements VaroSerializeable {
 
     @VaroSerializeField(path = "lobby")
     private Location lobby;
+    
+    @VaroSerializeField(path = "projectTime")
+    private long projectTime;
 
     private boolean finaleJoinStart, firstTime;
     private VaroMainHeartbeatThread mainThread;
@@ -107,14 +113,14 @@ public class VaroGame implements VaroSerializeable {
 
         if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
             VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
-            Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufaelligen Teampartner erhalten!");
+            Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufälligen Teampartner erhalten!");
         }
 
         LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
-            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsString(), ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsString());
-            Bukkit.broadcastMessage(Main.getPrefix() + "Die Loecher fuer den Spawn wurden generiert!");
+            new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
+            Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
         }
 
         if (ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {
@@ -122,6 +128,8 @@ public class VaroGame implements VaroSerializeable {
             Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
         }
 
+        this.setProjectTime(0L);
+        
         if (minuteTimer != null)
             minuteTimer.remove();
 
@@ -135,7 +143,7 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player pl = pl1.getPlayer();
-            pl.playSound(pl.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
             pl.setGameMode(GameMode.SURVIVAL);
             pl1.cleanUpPlayer();
         }
@@ -305,6 +313,14 @@ public class VaroGame implements VaroSerializeable {
 
     public Location getLobby() {
         return lobby;
+    }
+    
+    public long getProjectTime() {
+        return this.projectTime;
+    }
+    
+    public void setProjectTime(long projectTime) {
+        this.projectTime = projectTime;
     }
 
     public ProtectionTime getProtection() {

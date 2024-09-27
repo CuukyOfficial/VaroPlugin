@@ -46,7 +46,7 @@ public class TopScoreList {
 	}
 
 	public VaroPlayer getPlayer(int rank) {
-		if (rank - 1 < topPlayer.size())
+		if (rank >= 1 && rank - 1 < topPlayer.size())
 			return (VaroPlayer) topPlayer.toArray()[rank - 1];
 		else
 			return null;

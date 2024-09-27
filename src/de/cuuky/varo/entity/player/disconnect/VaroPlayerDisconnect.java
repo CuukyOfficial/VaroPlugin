@@ -1,6 +1,5 @@
 package de.cuuky.varo.entity.player.disconnect;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -27,24 +26,25 @@ public class VaroPlayerDisconnect {
 	 * OLD CODE
 	 */
 
-	private static ArrayList<VaroPlayerDisconnect> disconnects;
-	private static HashMap<String, BukkitTask> scheds;
+	private static HashMap<UUID, VaroPlayerDisconnect> disconnects = new HashMap<>();
+	private static HashMap<UUID, BukkitTask> scheds = new HashMap<>();
 
-	static {
-		disconnects = new ArrayList<>();
-		scheds = new HashMap<>();
-	}
-
+	private final UUID uuid;
 	private int amount;
-	private UUID uuid;
+	private boolean kick;
 
 	public VaroPlayerDisconnect(Player player) {
 		this.uuid = player.getUniqueId();
 
-		disconnects.add(this);
+		disconnects.put(this.uuid, this);
 	}
 
 	public void addDisconnect() {
+	    if (this.kick) {
+	        this.kick = false;
+	        return;
+	    }
+
 	    VaroPlayer varoPlayer = VaroPlayer.getPlayer(uuid.toString());
 	    if (varoPlayer != null) {
 	        PlayerVersionAdapter versionAdapter = varoPlayer.getVersionAdapter();
@@ -75,7 +75,7 @@ public class VaroPlayerDisconnect {
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
 		new Alert(AlertType.DISCONNECT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp), vp.getRealUUID());
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN, vp);
 		this.remove();
 		return true;
@@ -84,6 +84,10 @@ public class VaroPlayerDisconnect {
 	public int getDisconnects() {
 		return this.amount;
 	}
+
+	public void setKick(boolean kick) {
+        this.kick = kick;
+    }
 
 	public boolean playerIsDead() {
 		Player player = Bukkit.getPlayer(uuid);
@@ -95,42 +99,38 @@ public class VaroPlayerDisconnect {
 	}
 
 	public void remove() {
-		disconnects.remove(this);
+		disconnects.remove(this.uuid);
 	}
 
-	public static void disconnected(String playerName) {
+	public static void disconnected(VaroPlayer vp) {
 		if (!ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
 		if (Main.getVaroGame().getGameState() != GameState.STARTED)
 			return;
 
-		if (!VaroPlayer.getPlayer(playerName).getStats().isAlive())
+		if (!vp.getStats().isAlive())
 			return;
 
-		scheds.put(playerName, new BukkitRunnable() {
+		scheds.put(vp.getRealUUID(), new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (Bukkit.getPlayerExact(playerName) != null)
+				if (Main.getVaroGame().getGameState() != GameState.STARTED || vp.isOnline())
 					return;
 
-				if (Main.getVaroGame().getGameState() != GameState.STARTED)
-					return;
-
-				VaroPlayer vp = VaroPlayer.getPlayer(playerName);
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
 			}
 		}.runTaskLater(Main.getInstance(), (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
 	}
+	
+	public static VaroPlayerDisconnect getDisconnect(UUID uuid) {
+        return disconnects.get(uuid);
+    }
 
 	public static VaroPlayerDisconnect getDisconnect(Player p) {
-		for (VaroPlayerDisconnect disconnect : disconnects)
-			if (disconnect.uuid.equals(p.getUniqueId()))
-				return disconnect;
-
-		return null;
+		return getDisconnect(p.getUniqueId());
 	}
 
 	public static void clearDisconnects() {
@@ -140,11 +140,13 @@ public class VaroPlayerDisconnect {
 		scheds.clear();
 	}
 
-	public static void joinedAgain(String playerName) {
-		if (!scheds.containsKey(playerName))
-			return;
-
-		scheds.get(playerName).cancel();
-		scheds.remove(playerName);
+	public static void joinedAgain(Player player) {
+	    VaroPlayerDisconnect disconnect = getDisconnect(player);
+	    if (disconnect != null)
+	        disconnect.setKick(false);
+	    
+		BukkitTask scheduler = scheds.remove(player.getUniqueId());
+		if (scheduler != null)
+		    scheduler.cancel();
 	}
 }

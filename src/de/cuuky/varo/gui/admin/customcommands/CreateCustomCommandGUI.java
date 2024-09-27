@@ -1,21 +1,22 @@
 package de.cuuky.varo.gui.admin.customcommands;
 
-import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
-import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.inventory.confirm.ConfirmInventory;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.command.custom.CustomCommand;
-import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-
 import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.command.custom.CustomCommand;
+import de.cuuky.varo.gui.VaroInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
+import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 
 public class CreateCustomCommandGUI extends VaroInventory {
 
@@ -27,13 +28,13 @@ public class CreateCustomCommandGUI extends VaroInventory {
     private boolean unused = false;
 
     public CreateCustomCommandGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.permission = "null";
     }
 
     public CreateCustomCommandGUI(Player player, CustomCommand command) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.command = command;
         this.name = command.getName();
@@ -49,21 +50,17 @@ public class CreateCustomCommandGUI extends VaroInventory {
 
     private ItemClick getInput(String current, String inputName, Consumer<String> resultReceiver, Function<String, String> checker) {
         return (event) -> {
-            Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(),
-                    "§7Gib den/die " + inputName + " ein:", new ChatHookHandler() {
+            new PlayerChatHookBuilder().message("§7Gib den/die " + inputName + " ein:").subscribe(ChatHookTriggerEvent.class, hookEvent -> {
+                String result = checker.apply(hookEvent.getMessage());
+                if (result == null)
+                    return;
 
-                @Override
-                public boolean onChat(AsyncPlayerChatEvent event) {
-                    String result = checker.apply(event.getMessage());
-                    if (result == null) return false;
-
-                    resultReceiver.accept(result);
-                    getPlayer().sendMessage(Main.getPrefix() + ChatColor.GRAY + "Der/Die " + inputName + " wurde auf '" + Main.getColorCode() + result + "§7' gesetzt");
-                    unsaved = !current.equals(result);
-                    open();
-                    return true;
-                }
-            }));
+                resultReceiver.accept(result);
+                getPlayer().sendMessage(Main.getPrefix() + ChatColor.GRAY + "Der/Die " + inputName + " wurde auf '" + Main.getColorCode() + result + "§7' gesetzt");
+                unsaved = !current.equals(result);
+                open();
+                hookEvent.getHook().unregister();
+            }).complete(getPlayer(), Main.getInstance());
             this.close();
         };
     }
@@ -80,8 +77,7 @@ public class CreateCustomCommandGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(9, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Edit Name").lore(new String[]{this.name})
-                .itemstack(Materials.SIGN.parseItem()).build(),
+        addItem(9, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(ChatColor.DARK_PURPLE + "Edit Name").lore(new String[]{this.name}).build(),
                 this.getInput(this.name, "Command Name", (String x) -> this.name = x, (result) -> {
                     result = result.toLowerCase(Locale.ROOT);
                     if (Main.getDataManager().getCustomCommandManager().isIllegalCommand(result)) {
@@ -94,21 +90,19 @@ public class CreateCustomCommandGUI extends VaroInventory {
                 })
         );
 
-        addItem(11, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Edit Output").lore(this.output)
-                .itemstack(Materials.SIGN.parseItem()).build(),
+        addItem(11, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(ChatColor.DARK_PURPLE + "Edit Output").lore(this.output).build(),
                 this.getInput(this.output,"Command Output", (String x) -> this.output = x)
         );
 
-        addItem(13, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Edit Description").lore(this.description)
-                .itemstack(Materials.SIGN.parseItem()).build(), this.getInput(this.description, "Command Description", (String x) -> this.description = x)
+        addItem(13, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(ChatColor.DARK_PURPLE + "Edit Description").lore(this.description).build(), 
+                this.getInput(this.description, "Command Description", (String x) -> this.description = x)
         );
 
-        addItem(15, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Edit Permission").lore(this.permission)
-                .itemstack(Materials.SIGN.parseItem()).build(), this.getInput(this.permission, "Command Permission", (String x) -> this.permission = x)
+        addItem(15, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(ChatColor.DARK_PURPLE + "Edit Permission").lore(this.permission).build(),
+                this.getInput(this.permission, "Command Permission", (String x) -> this.permission = x)
         );
 
-        addItem(17, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Set Unused").lore(String.valueOf(this.unused))
-                .itemstack(Materials.SIGN.parseItem()).build(),
+        addItem(17, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(ChatColor.DARK_PURPLE + "Set Unused").lore(String.valueOf(this.unused)).build(),
                 this.getInput(String.valueOf(this.unused), "Unused State", (String x) -> this.unused = Boolean.parseBoolean(x), (result) -> {
                     result = result.toLowerCase(Locale.ROOT);
                     if (!result.equals("true") && !result.equals("false")) {
@@ -119,8 +113,7 @@ public class CreateCustomCommandGUI extends VaroInventory {
                 })
         );
 
-        addItem(9 * 4 - 1, new BuildItem().displayName(ChatColor.DARK_PURPLE + "Save")
-                .itemstack(Materials.EMERALD.parseItem()).build(), (event) -> {
+        addItem(9 * 4 - 1, ItemBuilder.material(XMaterial.EMERALD).displayName(ChatColor.DARK_PURPLE + "Save").build(), (event) -> {
 
             if (!this.isReady()) {
                 event.getWhoClicked().sendMessage(Main.getPrefix() + "Bitte ändere den Namen!");
@@ -151,8 +144,8 @@ public class CreateCustomCommandGUI extends VaroInventory {
             }));
         });
 
-        addItem(3 * 9, new BuildItem().displayName((this.command != null) ? ChatColor.RED + "Delete" : "")
-                .itemstack((this.command != null) ? Materials.BUCKET.parseItem() : Materials.GRAY_STAINED_GLASS_PANE.parseItem()).build(), (event) -> {
+        addItem(3 * 9, ItemBuilder.material(this.command != null ? XMaterial.BUCKET : XMaterial.GRAY_STAINED_GLASS_PANE)
+                .displayName((this.command != null) ? ChatColor.RED + "Delete" : "").build(), (event) -> {
             if (this.command != null) {
                 this.openNext(new ConfirmInventory(this, "§7Delete?", (accept) -> {
                     if (accept) {

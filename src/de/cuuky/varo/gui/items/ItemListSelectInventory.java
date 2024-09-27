@@ -1,18 +1,20 @@
 package de.cuuky.varo.gui.items;
 
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.cuuky.varo.list.item.ItemList;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class ItemListSelectInventory extends VaroListInventory<ItemList> {
 
     public ItemListSelectInventory(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, ItemList.getItemLists());
+        super(Main.getInventoryManager(), player, ItemList.getItemLists());
     }
 
     private boolean hasWritePermission() {
@@ -21,7 +23,7 @@ public class ItemListSelectInventory extends VaroListInventory<ItemList> {
 
     @Override
     protected ItemStack getItemStack(ItemList itemList) {
-        return new BuildItem().material(Materials.CHEST).displayName(Main.getColorCode() + itemList.getLocation())
+        return ItemBuilder.material(XMaterial.CHEST).displayName(Main.getColorCode() + itemList.getLocation())
                 .lore(this.hasWritePermission() && !itemList.isPublic() ? "§7Nur für Admins einsehbar" : null).build();
     }
 

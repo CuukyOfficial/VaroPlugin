@@ -6,11 +6,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class MoonGravityVaroEvent extends VaroEvent {
 
@@ -18,7 +19,7 @@ public class MoonGravityVaroEvent extends VaroEvent {
 	private PotionEffectType type;
 
 	public MoonGravityVaroEvent() {
-		super(VaroEventType.MOON_GRAVITY, Materials.STONE.parseMaterial(), "Mond-Gravitation\nVorsicht: Ab 1.13 moeglich.");
+		super(VaroEventType.MOON_GRAVITY, XMaterial.STONE, "Mond-Gravitation\nVorsicht: Ab 1.13 moeglich.");
 
 		type = PotionEffectType.getByName("SLOW_FALLING");
 	}

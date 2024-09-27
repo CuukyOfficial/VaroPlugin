@@ -20,6 +20,6 @@ public class ServerCommand extends DiscordBotCommand {
 
 	@Override
 	public void onExecute(SlashCommandInteraction event) {
-	    getDiscordBot().reply("IP: " + Bukkit.getServer().getIp() + ":" + Bukkit.getServer().getPort() + "\n  Whitelist: " + Bukkit.getServer().hasWhitelist() + "\n  GameState: " + Main.getVaroGame().getGameState().toString(), "Server Info", Color.BLUE, event);
+	    getDiscordBot().reply("**Whitelist**: " + Bukkit.getServer().hasWhitelist() + "\n**GameState**: " + Main.getVaroGame().getGameState().toString(), "Server Info", Color.BLUE, event);
 	}
 }

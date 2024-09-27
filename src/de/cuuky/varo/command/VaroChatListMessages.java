@@ -1,7 +1,7 @@
 package de.cuuky.varo.command;
 
-import de.cuuky.cfw.utils.chat.DefaultChatMessageSupplier;
-import de.cuuky.cfw.utils.chat.PageableChat;
+import de.varoplugin.cfw.chat.DefaultChatMessageSupplier;
+import de.varoplugin.cfw.chat.PageableChat;
 import de.cuuky.varo.Main;
 
 import java.util.function.Function;

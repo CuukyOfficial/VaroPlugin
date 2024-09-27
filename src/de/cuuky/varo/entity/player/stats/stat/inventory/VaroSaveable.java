@@ -1,30 +1,32 @@
 package de.cuuky.varo.entity.player.stats.stat.inventory;
 
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.cfw.utils.JavaUtils;
 
 public class VaroSaveable implements VaroSerializeable {
 
     public static enum SaveableType implements VaroSerializeable {
         @VaroSerializeField(enumValue = "CHEST")
-        CHEST(Materials.CHEST),
+        CHEST(XMaterial.CHEST),
 
         @VaroSerializeField(enumValue = "FURNACE")
-        FURNACE(Materials.FURNACE);
+        FURNACE(XMaterial.FURNACE);
 
-        private Materials material;
+        private XMaterial material;
 
-        SaveableType(Materials material) {
+        SaveableType(XMaterial material) {
             this.material = material;
         }
 
@@ -36,7 +38,7 @@ public class VaroSaveable implements VaroSerializeable {
         public void onSerializeStart() {
         }
 
-        public Materials getMaterial() {
+        public XMaterial getMaterial() {
             return material;
         }
     }

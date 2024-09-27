@@ -9,7 +9,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -40,7 +40,7 @@ public class MagmaUtils {
 				usedMods.add(mod);
 			}
 			if (kickPlayer) {
-				String illegalMods = JavaUtils.getArgsToString(usedMods, ConfigMessages.MODS_BLOCKED_MODLIST_SPLIT.getValue() + Main.getColorCode());
+				String illegalMods = String.join(ConfigMessages.MODS_BLOCKED_MODLIST_SPLIT.getValue() + Main.getColorCode(), usedMods);
 				if (!player.hasPermission("varo.alwaysjoin")) {
 					player.kickPlayer(Main.getPrefix() + ConfigMessages.MODS_BLOCKED_MODS_KICK.getValue(VaroPlayer.getPlayer(player)).replace("%mods%", illegalMods));
 				}

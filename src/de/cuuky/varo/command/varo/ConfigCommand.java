@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -99,7 +98,7 @@ public class ConfigCommand extends VaroCommand {
 
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_TITLE.getValue(vp));
 			for (ConfigSetting setting : foundSettings)
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT.getValue(vp).replace("%entry%", setting.getFullPath().toString()).replace("%description%", JavaUtils.getArgsToString(setting.getDescription(), " ")));
+				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_SEARCH_LIST_FORMAT.getValue(vp).replace("%entry%", setting.getFullPath().toString()).replace("%description%", String.join(" ", setting.getDescription())));
 		} else
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "config"));
 	}

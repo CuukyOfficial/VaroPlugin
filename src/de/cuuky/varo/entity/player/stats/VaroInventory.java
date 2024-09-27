@@ -1,14 +1,14 @@
 package de.cuuky.varo.entity.player.stats;
 
-import de.cuuky.cfw.utils.JavaUtils;
-import de.cuuky.varo.serialize.identifier.VaroSerializeField;
-import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
+import de.cuuky.varo.serialize.identifier.VaroSerializeField;
+import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 
 public class VaroInventory implements VaroSerializeable {
 
@@ -24,7 +24,12 @@ public class VaroInventory implements VaroSerializeable {
 
 	public VaroInventory(int size) {
 		inventoryList = new HashMap<>();
-		this.size = 54 < size ? 54 : (size < 9 ? 9 : JavaUtils.getNextToNine(size));
+		if (size >= 54)
+		    this.size = 54;
+		else if (size < 9)
+		    this.size = 9;
+		else
+		    this.size = Math.min(54, (size % 9 == 0 ? 0 : (9 - (size % 9))) + size);
 
 		createInventory();
 	}

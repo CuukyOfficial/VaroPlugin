@@ -6,7 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 
 public class ReplyCommand implements CommandExecutor {
@@ -33,7 +32,7 @@ public class ReplyCommand implements CommandExecutor {
 			return false;
 		}
 
-		String message = JavaUtils.getArgsToString(args, " ");
+		String message = String.join(" ", args);
 		to.sendMessage(Main.getColorCode() + sender.getName() + " §8-> §7Dir§8: §f" + message);
 		sender.sendMessage("§7Du §8-> " + Main.getColorCode() + to.getName() + "§8: §f" + message);
 		if (MessageCommand.lastChat.containsKey(to.getName()))

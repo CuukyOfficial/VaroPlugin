@@ -1,18 +1,20 @@
 package de.cuuky.varo.gui.settings;
 
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.entity.Player;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class VaroSettingsMenu extends VaroInventory {
 
     private final VaroPlayer player;
 
     public VaroSettingsMenu(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.player = VaroPlayer.getPlayer(player);
     }
@@ -21,6 +23,7 @@ public class VaroSettingsMenu extends VaroInventory {
         return obj != null ? obj.toString() : "/";
     }
 
+    @Override
     public String getTitle() {
         return Main.getColorCode() + "Settings";
     }
@@ -32,23 +35,21 @@ public class VaroSettingsMenu extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        this.addItem(this.getCenter() - 2, new BuildItem().displayName("§fColor")
-                .lore(Main.getColorCode() + this.stringify(this.player.getGuiFiller()), "", "§7Right click to remove")
-                .material(Materials.LIME_DYE).build(), (event) -> {
+        this.addItem(this.getCenter() - 2, ItemBuilder.material(XMaterial.LIME_DYE).displayName("§fColor")
+                .lore(Main.getColorCode() + this.stringify(this.player.getGuiFiller()), "", "§7Right click to remove").build(), (event) -> {
             if (event.isRightClick()) this.player.setGuiFiller(null);
             else
                 this.openNext(new VaroColorMenu(getManager(), getPlayer(), this.player::setGuiFiller));
         });
 
-        this.addItem(this.getCenter(), new BuildItem().displayName("§fSound")
-                .lore(Main.getColorCode() + this.stringify(this.player.getGuiSound()), "", "§7Right click to remove")
-                .material(Materials.NOTE_BLOCK).build(), (event) -> {
+        this.addItem(this.getCenter(), ItemBuilder.material(XMaterial.NOTE_BLOCK).displayName("§fSound")
+                .lore(Main.getColorCode() + this.stringify(this.player.getGuiSound()), "", "§7Right click to remove").build(), (event) -> {
             if (event.isRightClick()) this.player.setGuiSound(null);
             else this.openNext(new VaroSoundMenu(getManager(), getPlayer(), this.player::setGuiSound));
         });
 
-        this.addItem(this.getCenter() + 2, new BuildItem().displayName("§fAnimation")
-                        .material(Materials.EMERALD).lore(Main.getColorCode() + this.player.hasGuiAnimation()).build(),
+        this.addItem(this.getCenter() + 2, ItemBuilder.material(XMaterial.EMERALD).displayName("§fAnimation")
+                .lore(Main.getColorCode() + this.player.hasGuiAnimation()).build(),
                 (event) -> this.player.setGuiAnimation(!this.player.hasGuiAnimation()));
     }
 }

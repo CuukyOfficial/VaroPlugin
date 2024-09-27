@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.cfw.utils.JavaUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -70,7 +70,7 @@ public class AutoStart implements VaroSerializeable {
 
 	private void postMessage(String message) {
 		if (Main.getBotLauncher().getDiscordbot() != null && Main.getBotLauncher().getDiscordbot().isEnabled())
-			Main.getBotLauncher().getDiscordbot().sendMessage(JavaUtils.replaceAllColors(message) + " " + Main.getBotLauncher().getDiscordbot().getMentionRole(), "Autostart", Color.BLUE, ConfigSetting.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong());
+			Main.getBotLauncher().getDiscordbot().sendMessage(ChatColor.stripColor(message.replace("&", "§")) + " " + Main.getBotLauncher().getDiscordbot().getMentionRole(), "Autostart", Color.BLUE, ConfigSetting.DISCORDBOT_ANNOUNCEMENT_CHANNELID.getValueAsLong());
 		Bukkit.broadcastMessage(message);
 	}
 

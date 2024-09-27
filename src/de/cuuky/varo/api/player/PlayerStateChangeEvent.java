@@ -1,9 +1,13 @@
 package de.cuuky.varo.api.player;
 
+import org.bukkit.event.HandlerList;
+
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 
 public class PlayerStateChangeEvent extends VaroPlayerEvent {
+    
+    private static final HandlerList handlers = new HandlerList();
 
 	private final PlayerState state;
 
@@ -16,4 +20,13 @@ public class PlayerStateChangeEvent extends VaroPlayerEvent {
 	public PlayerState getState() {
 		return this.state;
 	}
+	
+	@Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+    
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }

@@ -10,7 +10,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -49,7 +50,7 @@ public class SuroStart {
 					Main.getVaroGame().setGamestate(GameState.STARTED);
 
 					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-						vp.getPlayer().playSound(vp.getPlayer().getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1, 1);
+						vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.FREEZE);
 						VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);

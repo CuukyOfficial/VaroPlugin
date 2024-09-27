@@ -1,18 +1,19 @@
 package de.cuuky.varo.spawns.sort;
 
-import de.cuuky.cfw.utils.BukkitUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.spawns.Spawn;
+import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.List;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.spawns.Spawn;
+import de.varoplugin.cfw.player.SafeTeleport;
 
 public class PlayerSort {
 
@@ -43,7 +44,7 @@ public class PlayerSort {
                 }
 
                 Player player = (Player) toTeleport.keySet().toArray()[index];
-                BukkitUtils.saveTeleport(player, toTeleport.get(player));
+                SafeTeleport.tp(player, toTeleport.get(player));
                 index++;
             }
         }.runTaskTimer(Main.getInstance(), 0, 1);

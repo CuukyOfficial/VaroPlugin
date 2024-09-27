@@ -1,11 +1,12 @@
 package de.cuuky.varo.gui.report;
 
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.report.Report;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class ReportPickGUI extends VaroInventory {
 
@@ -13,7 +14,7 @@ public class ReportPickGUI extends VaroInventory {
     private final VaroPlayer player;
 
     public ReportPickGUI(VaroPlayer player, Report report) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player.getPlayer());
+        super(Main.getInventoryManager(), player.getPlayer());
 
         this.report = report;
         this.player = player;
@@ -31,7 +32,7 @@ public class ReportPickGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(11, new BuildItem().displayName("§5Teleport").material(Materials.ENDER_PEARL).build(), (event) -> {
+        addItem(11, ItemBuilder.material(XMaterial.ENDER_PEARL).displayName("§5Teleport").build(), (event) -> {
             if (report.getReported().isOnline()) {
                 player.saveTeleport(report.getReported().getPlayer().getLocation());
                 player.sendMessage(Main.getPrefix() + "§7Du wurdest zum reporteten Spieler teleportiert!");
@@ -39,7 +40,7 @@ public class ReportPickGUI extends VaroInventory {
                 player.sendMessage(Main.getPrefix() + "§7Der reportete Spieler ist nicht mehr online!");
         });
 
-        addItem(15, new BuildItem().displayName("§cClose").material(Materials.ROSE_RED).build(), (event) -> {
+        addItem(15, ItemBuilder.material(XMaterial.RED_DYE).displayName("§cClose").build(), (event) -> {
             player.sendMessage(Main.getPrefix() + "§7Du hast den Report §c" + report.getId() + " §7geschlossen");
             report.close();
             back();

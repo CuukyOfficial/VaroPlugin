@@ -2,7 +2,8 @@ package de.cuuky.varo.list.item.lists;
 
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.list.item.ItemList;
 
 public class BlockedItems extends ItemList {
@@ -13,7 +14,7 @@ public class BlockedItems extends ItemList {
 	
 	@Override
 	public void loadDefaultValues() {
-		this.addItem(Materials.AIR.parseItem());
+		this.addItem(XMaterial.AIR.parseItem());
 	}
 
 	public boolean isBlocked(ItemStack itemstack) {

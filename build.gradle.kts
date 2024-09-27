@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.varoplugin"
-version = "4.17.5"
+version = "4.18.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -68,16 +68,22 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 
 dependencies {
     modularInternal("de.varoplugin:CFW:0.6.19", "CFW-legacy")
-    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-7", "CFW")
+    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-14", "CFW")
 
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
-    compileOnly("me.clip:placeholderapi:2.10.10")
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("net.luckperms:api:5.4")
 
+	runtimeDownload("com.github.cryptomorin:XSeries:11.2.1")
+	runtimeDownload("com.google.guava:guava:33.3.0-jre")
     runtimeDownload("com.google.code.gson:gson:2.10.1")
-    runtimeDownload("net.dv8tion:JDA:5.0.0-beta.19") {
+    runtimeDownload("net.dv8tion:JDA:5.1.0") {
         exclude(module = "opus-java")
+    }
+    runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
+        exclude(module = "slf4j-api")
     }
     runtimeDownload("com.github.pengrad:java-telegram-bot-api:6.9.0")
 

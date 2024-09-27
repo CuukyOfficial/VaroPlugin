@@ -1,31 +1,23 @@
 package de.cuuky.varo.gui.admin.backup;
 
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.VaroListInventory;
-import de.cuuky.varo.recovery.recoveries.VaroBackup;
-import org.bukkit.Material;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.gui.VaroListInventory;
+import de.cuuky.varo.recovery.recoveries.VaroBackup;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class BackupListGUI extends VaroListInventory<VaroBackup> {
 
     public BackupListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, VaroBackup.getBackups());
-    }
-
-    private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        Date date = new Date();
-
-        return dateFormat.format(date);
+        super(Main.getInventoryManager(), player, VaroBackup.getBackups());
     }
 
     @Override
@@ -35,9 +27,7 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
         String[] split1 = backup.getZipFile().getName().split("_");
         lore.add("Year: " + split1[0].split("-")[0] + ", Month: " + split1[0].split("-")[1] + ", Day: " + split1[0].split("-")[2]);
         lore.add("Hour: " + split1[1].split("-")[0] + ", Minute: " + split1[1].split("-")[1] + ", Second: " + split1[1].split("-")[2].replace(".zip", ""));
-        return new BuildItem()
-                .displayName("§7" + backup.getZipFile().getName().replace(".zip", ""))
-                .itemstack(new ItemStack(Material.DISPENSER)).lore(lore).build();
+        return ItemBuilder.material(XMaterial.DISPENSER).displayName("§7" + backup.getZipFile().getName().replace(".zip", "")).lore(lore).build();
     }
 
     @Override
@@ -48,9 +38,8 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
     @Override
     public void refreshContent() {
         super.refreshContent();
-        addItem(this.getSize() - 1, new BuildItem().displayName("§aCreate Backup")
-                .itemstack(new ItemStack(Material.EMERALD)).build(), (event) -> {
-            if (VaroBackup.getBackup(getCurrentDate()) != null) {
+        addItem(this.getSize() - 1, ItemBuilder.material(XMaterial.EMERALD).displayName("§aCreate Backup").build(), (event) -> {
+            if (VaroBackup.getBackup(VaroBackup.newFileName()) != null) {
                 getPlayer().sendMessage(Main.getPrefix() + "Warte kurz, bevor du ein neues Backup erstellen kannst.");
                 return;
             }

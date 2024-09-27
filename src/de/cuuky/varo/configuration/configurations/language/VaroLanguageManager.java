@@ -9,6 +9,7 @@ import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.PlaceholderAPIAdapter.VaroPlaceholderExpansion;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.configuration.configurations.language.languages.LanguageEN;
 import de.cuuky.varo.entity.player.VaroPlayer;
@@ -27,8 +28,10 @@ public class VaroLanguageManager extends LanguageManager {
     public VaroLanguageManager(JavaPlugin instance) {
         super(PATH_DIR, FALLBACK_LANGUAGE, instance);
 
-        if (instance.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
+        if (instance.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             this.placeholderAPIAdapter = new PlaceholderAPIAdapter();
+            new VaroPlaceholderExpansion().register();
+        }
 
         loadLanguages();
     }
@@ -115,8 +118,12 @@ public class VaroLanguageManager extends LanguageManager {
     }
 
     public String replaceMessage(String message, CustomPlayer player) {
+        return replaceMessage(message, player, true);
+    }
+    
+    public String replaceMessage(String message, CustomPlayer player, boolean replacePapi) {
         message = Main.getCuukyFrameWork().getPlaceholderManager().replacePlaceholders(replaceMessage(message, false), MessagePlaceholderType.OBJECT, player);
-        if (this.placeholderAPIAdapter != null && player instanceof VaroPlayer)
+        if (replacePapi && this.placeholderAPIAdapter != null && player instanceof VaroPlayer)
             return this.placeholderAPIAdapter.setPlayerPlaceholders(message, (VaroPlayer) player);
         return message;
     }

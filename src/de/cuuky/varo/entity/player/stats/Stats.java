@@ -1,7 +1,18 @@
 package de.cuuky.varo.entity.player.stats;
 
-import de.cuuky.cfw.utils.LocationFormat;
-import de.varoplugin.cfw.version.VersionUtils;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -24,18 +35,8 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.utils.EventUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import de.varoplugin.cfw.location.SimpleLocationFormat;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class Stats implements VaroSerializeable {
 
@@ -139,7 +140,7 @@ public class Stats implements VaroSerializeable {
 	public void addVideo(YouTubeVideo video) {
 		videos.add(video);
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink());
+		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink(), owner.getRealUUID());
 	}
 
 	public void addWin() {
@@ -305,7 +306,7 @@ public class Stats implements VaroSerializeable {
 				"§7WillClearInventory§8: " + colorcode + willClear,
 				"§7ShowScoreboard§8: " + colorcode + showScoreboard,
 				"§7ShowActionbar§8: " + colorcode + this.showActionbar,
-				"§7LastLocation§8: " + colorcode + (lastLocation != null ? new LocationFormat(lastLocation).format(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world") : "/"),
+				"§7LastLocation§8: " + colorcode + (lastLocation != null ? new SimpleLocationFormat(colorcode + "x§7, " + colorcode + "y§7, " + colorcode + "z§7 in " + colorcode + "world").format(lastLocation) : "/"),
 				"§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"),
 				"§7OnlineAfterStart§8: " + colorcode + onlineAfterStart,
 				"§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"),
@@ -626,12 +627,10 @@ public class Stats implements VaroSerializeable {
 		this.showScoreboard = showScoreboard;
 	}
 
-	public void setState(PlayerState state) {
+	public void setState(PlayerState state, boolean skipSpectator) {
 		if (EventUtils.callEvent(new PlayerStateChangeEvent(owner, state))) return;
 
 		this.state = state;
-		if (state == PlayerState.DEAD)
-			this.diedAt = new Date();
 
 		switch (state) {
 		case ALIVE:
@@ -641,13 +640,18 @@ public class Stats implements VaroSerializeable {
 			this.diedAt = new Date();
 			break;
 		case SPECTATOR:
-			this.owner.setSpectacting();
+		    if (!skipSpectator)
+		        this.owner.setSpectacting();
 			break;
 		default:
 			throw new Error("Unknown playerstate");
 		}
 
 		new WinnerCheck();
+	}
+	
+	public void setState(PlayerState state) {
+	    this.setState(state, false);
 	}
 
 	public void setTimeUntilAddSession(Date timeUntilNewSession) {

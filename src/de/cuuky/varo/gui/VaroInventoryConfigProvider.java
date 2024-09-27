@@ -1,17 +1,22 @@
 package de.cuuky.varo.gui;
 
-import de.cuuky.cfw.inventory.*;
-import de.cuuky.cfw.inventory.inserter.AnimatedClosingInserter;
-import de.cuuky.cfw.inventory.inserter.DirectInserter;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.settings.VaroMenuColor;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.settings.VaroMenuColor;
+import de.varoplugin.cfw.inventory.AdvancedInventory;
+import de.varoplugin.cfw.inventory.Info;
+import de.varoplugin.cfw.inventory.InfoProvider;
+import de.varoplugin.cfw.inventory.ItemInserter;
+import de.varoplugin.cfw.inventory.PrioritisedInfo;
+import de.varoplugin.cfw.inventory.inserter.AnimatedClosingInserter;
+import de.varoplugin.cfw.inventory.inserter.DirectInserter;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class VaroInventoryConfigProvider implements InfoProvider {
 
@@ -49,7 +54,7 @@ public class VaroInventoryConfigProvider implements InfoProvider {
     @Override
     public ItemStack getFillerStack() {
         VaroMenuColor color = this.player.getGuiFiller();
-        return color != null ? new BuildItem().itemstack(color.getColorPane()).displayName("§f").build() : null;
+        return color != null ? ItemBuilder.itemStack(color.getColorPane()).displayName("§f").build() : null;
     }
 
     @Override

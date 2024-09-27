@@ -46,7 +46,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	ALERT_WINNER("alerts.BOTS_ALERT.win.player", "%player% hat %projectname% gewonnen! Gratulation!"),
 	ALERT_WINNER_TEAM("alerts.BOTS_ALERT.win.team", "%winnerPlayers% haben %projectname% gewonnen! Gratulation!"),
 
-	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cDu bist noch nicht mit dem Discord authentifiziert!\n&7Um dich zu authentifizieren, schreibe in den #verify -Channel &c'varo verify <Deine ID>' &7auf dem Discord!\nLink zum Discordserver: &c%discordLink%\n&7Deine ID lautet: &c%code%"),
+	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cDu bist noch nicht mit Discord verifiziert!\n&7Nutze &c/verify %code% &7um dich auf unserem Discord zu verifizieren!\nLink zum Discord: &c%discordLink%"),
 	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cDein Account ist nicht auf dem Discord!%nextLine%&7Joine dem Discord und versuche es erneut."),
 
 	BORDER_MINIMUM_REACHED("border.minimumReached", "&cDie Border hat ihr Minimum erreicht!"),

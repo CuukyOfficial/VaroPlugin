@@ -1,6 +1,7 @@
 package de.cuuky.varo.entity.player.event.events;
 
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.entity.player.event.BukkitEvent;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 
@@ -20,5 +21,9 @@ public class KickEvent extends BukkitEvent {
 		}
 
 		player.getStats().removeCountdown();
+
+		VaroPlayerDisconnect disconnect = VaroPlayerDisconnect.getDisconnect(player.getRealUUID());
+		if (disconnect != null)
+		    disconnect.remove();
 	}
 }

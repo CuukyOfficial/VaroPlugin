@@ -2,7 +2,9 @@ package de.cuuky.varo.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
@@ -36,7 +38,7 @@ public class PlayerQuitListener implements Listener {
 			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && ConfigSetting.PLAY_TIME.isIntActivated()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
 				if (vplayer.getStats().getState() != PlayerState.DEAD)
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer));
+					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer), vplayer.getRealUUID());
 				return;
 			}
 
@@ -62,9 +64,9 @@ public class PlayerQuitListener implements Listener {
 					}
 				}
 
-				VaroPlayerDisconnect.disconnected(vplayer.getName());
+				VaroPlayerDisconnect.disconnected(vplayer);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer), vplayer.getRealUUID());
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}
@@ -72,5 +74,16 @@ public class PlayerQuitListener implements Listener {
 
 		vplayer.onEvent(BukkitEventType.QUIT);
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_MESSAGE, vplayer);
+	}
+	
+	@EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerKick(PlayerKickEvent event) {
+	    if (event.isCancelled() || !ConfigSetting.DISCONNECT_IGNORE_KICK.getValueAsBoolean())
+	        return;
+	    Player player = event.getPlayer();
+	    VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
+	    if (dc == null)
+	        dc = new VaroPlayerDisconnect(player);
+	    dc.setKick(true);
 	}
 }

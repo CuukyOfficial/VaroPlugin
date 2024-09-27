@@ -33,7 +33,7 @@ public class SessionCheck extends Checker {
 					vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 
 				vp.onEvent(BukkitEventType.KICKED);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SESSIONS_ENDED.getValue(null, vp));
+				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SESSIONS_ENDED.getValue(null, vp), vp.getRealUUID());
 			}
 
 			vp.getStats().setSessions(vp.getStats().getSessions() + normalSessions);

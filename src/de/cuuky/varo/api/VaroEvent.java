@@ -2,11 +2,8 @@ package de.cuuky.varo.api;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 
-public class VaroEvent extends Event implements Cancellable {
-
-	private static final HandlerList handlers = new HandlerList();
+public abstract class VaroEvent extends Event implements Cancellable {
 
 	private boolean cancelled;
 
@@ -18,10 +15,5 @@ public class VaroEvent extends Event implements Cancellable {
 	@Override
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
 	}
 }

@@ -8,6 +8,7 @@ import de.cuuky.varo.bot.discord.commands.GetLinkCommand;
 import de.cuuky.varo.bot.discord.commands.HelpCommand;
 import de.cuuky.varo.bot.discord.commands.InfoCommand;
 import de.cuuky.varo.bot.discord.commands.OnlineCommand;
+import de.cuuky.varo.bot.discord.commands.PlayerCommand;
 import de.cuuky.varo.bot.discord.commands.RegisterCommand;
 import de.cuuky.varo.bot.discord.commands.RegisteredCommand;
 import de.cuuky.varo.bot.discord.commands.RemainingCommand;
@@ -36,6 +37,7 @@ public abstract class DiscordBotCommand {
         new RegisterCommand();
         new ShutdownCommand();
         new GetLinkCommand();
+        new PlayerCommand();
     }
 
     private final String name;

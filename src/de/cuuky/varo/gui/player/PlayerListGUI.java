@@ -1,39 +1,40 @@
 package de.cuuky.varo.gui.player;
 
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildSkull;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.gui.VaroAsyncListInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.List;
 import java.util.function.Supplier;
 
-public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.gui.VaroPlayerAsyncListInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
+
+public class PlayerListGUI extends VaroPlayerAsyncListInventory<VaroPlayer> {
 
     public enum PlayerGUIType {
 
-        ALIVE("§aALIVE", Material.POTION, VaroPlayer::getAlivePlayer),
-        DEAD("§4DEAD", Materials.SKELETON_SKULL_17.parseMaterial(), VaroPlayer::getDeadPlayer),
-        ONLINE("§eONLINE", Material.EMERALD, VaroPlayer::getOnlinePlayer),
-        REGISTERED("§bREGISTERED", Material.BOOK, VaroPlayer::getVaroPlayers),
-        SPECTATOR("§fSPECTATOR", Materials.REDSTONE.parseMaterial(), VaroPlayer::getSpectator);
+        ALIVE("§aALIVE", XMaterial.POTION, VaroPlayer::getAlivePlayer),
+        DEAD("§4DEAD", XMaterial.SKELETON_SKULL, VaroPlayer::getDeadPlayer),
+        ONLINE("§eONLINE", XMaterial.EMERALD, VaroPlayer::getOnlinePlayer),
+        REGISTERED("§bREGISTERED", XMaterial.BOOK, VaroPlayer::getVaroPlayers),
+        SPECTATOR("§fSPECTATOR", XMaterial.REDSTONE, VaroPlayer::getSpectator);
 
-        private final Material icon;
+        private final XMaterial icon;
         private final String typeName;
         private final Supplier<List<VaroPlayer>> playerSupplier;
 
-        PlayerGUIType(String typeName, Material icon, Supplier<List<VaroPlayer>> playerSupplier) {
+        PlayerGUIType(String typeName, XMaterial icon, Supplier<List<VaroPlayer>> playerSupplier) {
             this.typeName = typeName;
             this.icon = icon;
             this.playerSupplier = playerSupplier;
         }
 
-        public Material getIcon() {
+        public XMaterial getIcon() {
             return icon;
         }
 
@@ -56,13 +57,11 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
 
     private final boolean showStats;
 
-    private final PlayerGUIType type;
 
     public PlayerListGUI(Player player, PlayerGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
+        super(Main.getInventoryManager(), player, type.getList());
 
         this.showStats = player.hasPermission("varo.viewStats");
-        this.type = type;
     }
 
     @Override
@@ -77,8 +76,8 @@ public class PlayerListGUI extends VaroAsyncListInventory<VaroPlayer> {
 
     @Override
     protected ItemStack getItemStack(VaroPlayer player) {
-        return new BuildSkull().displayName(Main.getColorCode() + player.getName())
-                .player(player.getName()).lore((showStats ? player.getStats().getStatsListed() : null)).build();
+        return ItemBuilder.skull(player.getName()).displayName(Main.getColorCode() + player.getName())
+                .lore((showStats ? player.getStats().getStatsListed() : null)).build();
     }
 
     @Override

@@ -43,7 +43,7 @@ public enum LanguageEN implements LoadableMessage {
     ALERT_WINNER("alerts.BOTS_ALERT.win.player", "%player% has won %projectname%! Congratulations!"),
     ALERT_WINNER_TEAM("alerts.BOTS_ALERT.win.team", "%winnerPlayers% have won %projectname%! Congratulations!"),
 
-    BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYou are not yet authenticated with the discord!\n&7To authenticate yourself, write in the #verify channel &c'varo verify <Your ID>' &7on the discord!\nLink to the Discordserver: &c%discordLink%\n&7Your ID is: &c%code%"),
+    BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYour account is not verified!\n&7Please use &c/verify %code% &7to verify your Discord account!\nLink: &c%discordLink%"),
     BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
 
     BORDER_MINIMUM_REACHED("border.minimumReached", "&cThe Border has reached its minimum!"),
@@ -259,6 +259,7 @@ public enum LanguageEN implements LoadableMessage {
     VARO_COMMANDS_INTRO_GAME_ALREADY_STARTED("varoCommands.intro.gamealreadystarted", "&7The game has already been started!"),
     VARO_COMMANDS_INTRO_STARTED("varoCommands.intro.started", "&7And here we go!"),
     VARO_COMMANDS_PRESET_NOT_FOUND("varoCommands.preset.notfound", "The preset %colorcode%%preset% &7was not found."),
+    VARO_COMMANDS_PRESET_PATH_TRAVERSAL("varoCommands.preset.pathtraversal", "Presets must be located inside the &3presets &7folder."),
     VARO_COMMANDS_PRESET_LOADED("varoCommands.preset.loaded", "The preset %colorcode%%preset% &7was &asuccessfully &7loaded."),
     VARO_COMMANDS_PRESET_SAVED("varoCommands.preset.saved", "The current settings were &asuccessfully &7saved as preset %colorcode%%preset% &7."),
     VARO_COMMANDS_PRESET_LIST("varoCommands.preset.list", "&lList of all presets:"),

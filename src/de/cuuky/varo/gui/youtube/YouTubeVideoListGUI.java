@@ -1,19 +1,22 @@
 package de.cuuky.varo.gui.youtube;
 
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildSkull;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
-import de.cuuky.varo.gui.VaroListInventory;
+import java.text.SimpleDateFormat;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.SimpleDateFormat;
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
+import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     public YouTubeVideoListGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, YouTubeVideo.getVideos());
+        super(Main.getInventoryManager(), player, YouTubeVideo.getVideos());
     }
 
     @Override
@@ -28,8 +31,8 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     @Override
     protected ItemStack getItemStack(YouTubeVideo video) {
-        return new BuildSkull().player(video.getOwner() != null ? video.getOwner().getName() : "UNKNOWN")
-                .displayName("§5" + video.getTitle())
+        ItemBuilder itemBuilder = video.getOwner() != null ? ItemBuilder.skull(video.getOwner().getRealUUID()) : ItemBuilder.material(XMaterial.SKELETON_SKULL);
+        return itemBuilder.displayName("§5" + video.getTitle())
                 .lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm")
                         .format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ?
                         video.getOwner().getName() : "/"), "§7Link: " + video.getLink()}).build();

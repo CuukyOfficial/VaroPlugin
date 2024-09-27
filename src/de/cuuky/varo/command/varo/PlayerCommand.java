@@ -6,8 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.UUIDUtils;
-import de.cuuky.cfw.utils.chat.PageableChatBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
@@ -16,6 +14,9 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.gui.player.PlayerGUI;
+import de.varoplugin.cfw.chat.PageableChatBuilder;
+import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
+import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
 
 public class PlayerCommand extends VaroCommand {
 
@@ -156,23 +157,18 @@ public class PlayerCommand extends VaroCommand {
 					continue;
 				}
 
-				String uuid;
-				try {
-					uuid = Main.getInstance().getUUID(arg).toString();
-				} catch (Exception e) {
-					sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
-					String newName;
-					try {
-						newName = UUIDUtils.getNamesChanged(arg);
-						sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hiess, hat sich in §7" + newName + " §cumbenannt.");
-						sender.sendMessage(Main.getPrefix() + "Benutze \"/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team add\", um diese Person einem Team hinzuzufuegen.");
-					} catch (Exception f) {
-						sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
-					}
-					continue;
+				PlayerLookup lookup = Main.lookupPlayer(arg);
+				if (lookup.getResult() == Result.UNKNOWN_PLAYER) {
+				    sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
+                    continue;
+				}
+				if (lookup.getResult() != Result.SUCCESS) {
+				    lookup.getException().printStackTrace();
+				    sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden, da ein Fehler aufgetreten ist.");
+                    continue;
 				}
 
-				new VaroPlayer(arg, uuid);
+				new VaroPlayer(arg, lookup.getUuid().toString());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + arg + " §7wurde erfolgreich zu " + Main.getColorCode() + Main.getProjectName() + " §7hinzugefuegt!");
 			}
 		} else if (args[0].equalsIgnoreCase("respawn")) {

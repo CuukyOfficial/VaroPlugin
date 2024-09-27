@@ -1,16 +1,16 @@
 package de.cuuky.varo.gui.team;
 
-import de.cuuky.cfw.utils.item.BuildItem;
+import org.bukkit.entity.Player;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.team.TeamListGUI.TeamGUIType;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class TeamCategoryChooseGUI extends VaroInventory {
 
     public TeamCategoryChooseGUI(Player player) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
     }
 
     @Override
@@ -27,8 +27,7 @@ public class TeamCategoryChooseGUI extends VaroInventory {
     public void refreshContent() {
         int i = 10;
         for (TeamGUIType type : TeamGUIType.values()) {
-            addItem(i, new BuildItem().displayName(type.getTypeName())
-                    .itemstack(new ItemStack(type.getIcon())).amount(getFixedSize(type.getList().size())).build(), (event) ->
+            addItem(i, ItemBuilder.material(type.getIcon()).displayName(type.getTypeName()).amount(getFixedSize(type.getList().size())).build(), (event) ->
                     this.openNext(new TeamListGUI(getPlayer(), type))
             );
             i += 2;

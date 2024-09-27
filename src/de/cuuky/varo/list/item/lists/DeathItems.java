@@ -1,6 +1,7 @@
 package de.cuuky.varo.list.item.lists;
 
-import de.cuuky.cfw.version.types.Materials;
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.list.item.ItemList;
 
 public class DeathItems extends ItemList {
@@ -11,6 +12,6 @@ public class DeathItems extends ItemList {
 
 	@Override
 	public void loadDefaultValues() {
-		this.getItems().add(Materials.AIR.parseItem());
+		this.getItems().add(XMaterial.AIR.parseItem());
 	}
 }

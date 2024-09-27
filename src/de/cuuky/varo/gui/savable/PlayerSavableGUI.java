@@ -1,18 +1,20 @@
 package de.cuuky.varo.gui.savable;
 
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
+import org.bukkit.entity.Player;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.gui.VaroInventory;
-import org.bukkit.entity.Player;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class PlayerSavableGUI extends VaroInventory {
 
     private final VaroSaveable savable;
 
     public PlayerSavableGUI(Player player, VaroSaveable savable) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player);
+        super(Main.getInventoryManager(), player);
 
         this.savable = savable;
     }
@@ -30,10 +32,10 @@ public class PlayerSavableGUI extends VaroInventory {
     @Override
     public void refreshContent() {
         if (getPlayer().hasPermission("varo.setup"))
-            addItem(this.getUsableSize(), new BuildItem().displayName("§bTeleport").material(Materials.ENDER_PEARL).build(),
+            addItem(this.getUsableSize(), ItemBuilder.material(XMaterial.ENDER_PEARL).displayName("§bTeleport").build(),
                     (event) -> getPlayer().teleport(savable.getBlock().getLocation()));
 
-        addItem(this.getCenter(), new BuildItem().displayName("§cDelete").material(Materials.ROSE_RED).build(), (event) -> {
+        addItem(this.getCenter(), ItemBuilder.material(XMaterial.RED_DYE).displayName("§cDelete").build(), (event) -> {
             savable.remove();
             this.back();
         });

@@ -1,21 +1,23 @@
 package de.cuuky.varo.gui.savable;
 
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.LocationFormat;
-import de.cuuky.cfw.utils.item.BuildItem;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.cuuky.varo.gui.VaroListInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.location.SimpleLocationFormat;
 
 public class PlayerSavableChooseGUI extends VaroListInventory<VaroSaveable> {
 
     public PlayerSavableChooseGUI(Player opener, VaroPlayer target) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, target.getStats().getSaveables());
+        super(Main.getInventoryManager(), opener, target.getStats().getSaveables());
     }
 
     @Override
@@ -30,10 +32,8 @@ public class PlayerSavableChooseGUI extends VaroListInventory<VaroSaveable> {
 
     @Override
     protected ItemStack getItemStack(VaroSaveable savable) {
-        return new BuildItem().displayName(Main.getColorCode() + savable.getId())
-                .itemstack(new ItemStack(savable.getType() == SaveableType.CHEST ? Material.CHEST : Material.FURNACE))
-                .lore("§7Location§8: " + new LocationFormat(savable.getBlock().getLocation())
-                        .format(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world"))
+        return ItemBuilder.material(savable.getType() == SaveableType.CHEST ? XMaterial.CHEST : XMaterial.FURNACE).displayName(Main.getColorCode() + savable.getId())
+                .lore("§7Location§8: " + new SimpleLocationFormat(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world").format(savable.getBlock().getLocation()))
                 .build();
     }
 

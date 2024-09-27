@@ -1,16 +1,18 @@
 package de.cuuky.varo.gui.settings;
 
-import de.cuuky.cfw.inventory.AdvancedInventoryManager;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.gui.VaroListInventory;
+import java.util.Arrays;
+import java.util.function.Consumer;
+
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.AdvancedInventoryManager;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class VaroSoundMenu extends VaroListInventory<Sound> {
 
@@ -29,7 +31,7 @@ public class VaroSoundMenu extends VaroListInventory<Sound> {
 
     @Override
     protected ItemStack getItemStack(Sound sound) {
-        return new BuildItem().material(Materials.NOTE_BLOCK).displayName("§f" + sound.name()).build();
+        return ItemBuilder.material(XMaterial.NOTE_BLOCK).displayName("§f" + sound.name()).build();
     }
 
     @Override

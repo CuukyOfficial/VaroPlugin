@@ -7,8 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.utils.UUIDUtils;
-import de.cuuky.cfw.utils.chat.PageableChatBuilder;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
@@ -16,6 +14,9 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.team.TeamGUI;
+import de.varoplugin.cfw.chat.PageableChatBuilder;
+import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
+import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
 
 public class TeamCommand extends VaroCommand {
 
@@ -94,23 +95,18 @@ public class TeamCommand extends VaroCommand {
 
                 VaroPlayer varoplayer = VaroPlayer.getPlayer(arg);
                 if (varoplayer == null) {
-                    String uuid;
-                    try {
-                        uuid = Main.getInstance().getUUID(arg).toString();
-                    } catch (Exception e) {
+                    PlayerLookup lookup = Main.lookupPlayer(arg);
+                    if (lookup.getResult() == Result.UNKNOWN_PLAYER) {
                         sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden.");
-                        String newName;
-                        try {
-                            newName = UUIDUtils.getNamesChanged(arg);
-                            sender.sendMessage(Main.getPrefix() + "§cEin Spieler, der in den letzten 30 Tagen " + arg + " hiess, hat sich in §7" + newName + " §cumbenannt.");
-                            sender.sendMessage(Main.getPrefix() + "Benutze \"/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team add\", um diese Person einem Team hinzuzufuegen.");
-                        } catch (Exception f) {
-                            sender.sendMessage(Main.getPrefix() + "§cIn den letzten 30 Tagen gab es keinen Spieler mit diesem Namen.");
-                        }
+                        continue;
+                    }
+                    if (lookup.getResult() != Result.SUCCESS) {
+                        lookup.getException().printStackTrace();
+                        sender.sendMessage(Main.getPrefix() + "§c" + arg + " wurde nicht gefunden, da ein Fehler aufgetreten ist.");
                         continue;
                     }
 
-                    varoplayer = new VaroPlayer(arg, uuid);
+                    varoplayer = new VaroPlayer(arg, lookup.getUuid().toString());
                 }
 
                 team.addMember(varoplayer);
@@ -177,15 +173,18 @@ public class TeamCommand extends VaroCommand {
             }
 
             if (varoplayer == null) {
-                String uuid = null;
-                try {
-                    uuid = Main.getInstance().getUUID(args[2]).toString();
-                } catch (Exception e) {
-                    sender.sendMessage(Main.getPrefix() + args[2] + " besitzt keinen Minecraft-Account!");
+                PlayerLookup lookup = Main.lookupPlayer(args[2]);
+                if (lookup.getResult() == Result.UNKNOWN_PLAYER) {
+                    sender.sendMessage(Main.getPrefix() + "§c" + args[2] + " wurde nicht gefunden.");
+                    return;
+                }
+                if (lookup.getResult() != Result.SUCCESS) {
+                    lookup.getException().printStackTrace();
+                    sender.sendMessage(Main.getPrefix() + "§c" + args[2] + " wurde nicht gefunden, da ein Fehler aufgetreten ist.");
                     return;
                 }
 
-                varoplayer = new VaroPlayer(args[2], uuid);
+                varoplayer = new VaroPlayer(args[2], lookup.getUuid().toString());
             }
 
             if (varoplayer.getTeam() != null) {

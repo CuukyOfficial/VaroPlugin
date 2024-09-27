@@ -1,37 +1,38 @@
 package de.cuuky.varo.gui.team;
 
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.team.VaroTeam;
-import de.cuuky.varo.gui.VaroListInventory;
-import org.bukkit.Material;
+import java.util.List;
+import java.util.function.Supplier;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-import java.util.function.Supplier;
+import com.cryptomorin.xseries.XMaterial;
+
+import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
 
 public class TeamListGUI extends VaroListInventory<VaroTeam> {
 
     public enum TeamGUIType {
-        ALIVE("§aALIVE", Material.POTION, VaroTeam::getAliveTeams),
-        DEAD("§4DEAD", Materials.REDSTONE.parseMaterial(), VaroTeam::getDeadTeams),
-        ONLINE("§eONLINE", Material.EMERALD, VaroTeam::getOnlineTeams),
-        REGISTERED("§bREGISTERED", Material.BOOK, VaroTeam::getTeams);
+        ALIVE("§aALIVE", XMaterial.POTION, VaroTeam::getAliveTeams),
+        DEAD("§4DEAD", XMaterial.REDSTONE, VaroTeam::getDeadTeams),
+        ONLINE("§eONLINE", XMaterial.EMERALD, VaroTeam::getOnlineTeams),
+        REGISTERED("§bREGISTERED", XMaterial.BOOK, VaroTeam::getTeams);
 
-        private final Material icon;
+        private final XMaterial icon;
         private final String typeName;
         private final Supplier<List<VaroTeam>> teamSupplier;
 
-        TeamGUIType(String typeName, Material icon, Supplier<List<VaroTeam>> teamSupplier) {
+        TeamGUIType(String typeName, XMaterial icon, Supplier<List<VaroTeam>> teamSupplier) {
             this.typeName = typeName;
             this.icon = icon;
             this.teamSupplier = teamSupplier;
         }
 
-        public Material getIcon() {
+        public XMaterial getIcon() {
             return icon;
         }
 
@@ -44,17 +45,13 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
         }
     }
 
-    private TeamGUIType type;
-
     public TeamListGUI(Player player, TeamGUIType type) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), player, type.getList());
-
-        this.type = type;
+        super(Main.getInventoryManager(), player, type.getList());
     }
 
     @Override
     protected ItemStack getItemStack(VaroTeam team) {
-        return new BuildItem().displayName((team.getColorCode() == null ? Main.getColorCode() : "") + team.getDisplay()).material(Material.DIAMOND_HELMET).build();
+        return ItemBuilder.material(XMaterial.DIAMOND_HELMET).displayName((team.getColorCode() == null ? Main.getColorCode() : "") + team.getDisplay()).build();
     }
 
     @Override

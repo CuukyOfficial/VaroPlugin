@@ -4,55 +4,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.cfw.hooking.hooks.chat.ChatHook;
-import de.cuuky.cfw.hooking.hooks.chat.ChatHookHandler;
-import de.cuuky.cfw.inventory.ItemClick;
-import de.cuuky.cfw.utils.item.BuildItem;
-import de.cuuky.cfw.version.types.Materials;
-import de.cuuky.cfw.version.types.Sounds;
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ConfigSettingSection;
 import de.cuuky.varo.gui.VaroListInventory;
+import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
+import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 
 public class ConfigGUI extends VaroListInventory<ConfigSetting> {
 
     private ConfigSettingSection section;
 
     public ConfigGUI(Player opener, ConfigSettingSection section) {
-        super(Main.getCuukyFrameWork().getAdvancedInventoryManager(), opener, section.getEntries());
+        super(Main.getInventoryManager(), opener, section.getEntries());
 
         this.section = section;
     }
 
     private void hookChat(ConfigSetting entry) {
-        Main.getCuukyFrameWork().getHookManager().registerHook(new ChatHook(getPlayer(), "§7Gib einen Wert ein fuer "
-                + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):", new ChatHookHandler() {
-
-            @Override
-            public boolean onChat(AsyncPlayerChatEvent event) {
-                String message = event.getMessage();
-                if (message.equalsIgnoreCase("cancel")) {
-                    getPlayer().sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
-                } else {
-                    try {
-                        entry.setStringValue(message, true);
-                    } catch (Throwable t) {
-                        getPlayer().sendMessage(Main.getPrefix() + t.getMessage());
-                        return false;
-                    }
-
-                    getPlayer().playSound(getPlayer().getLocation(), Sounds.ANVIL_LAND.bukkitSound(), 1, 1);
-                    getPlayer().sendMessage(Main.getPrefix() + "§7'§a" + entry.getPath() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
+        new PlayerChatHookBuilder().message("§7Gib einen Wert ein fuer " + Main.getColorCode() + entry.getPath() + " §8(§7Aktuell: §a" + entry.getValue() + "§8):")
+        .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
+            String message = hookEvent.getMessage();
+            if (message.equalsIgnoreCase("cancel")) {
+                getPlayer().sendMessage(Main.getPrefix() + "§7Aktion erfolgreich abgebrochen!");
+            } else {
+                try {
+                    entry.setStringValue(message, true);
+                } catch (Throwable t) {
+                    getPlayer().sendMessage(Main.getPrefix() + t.getMessage());
+                    return;
                 }
 
-                open();
-                return true;
+                getPlayer().playSound(getPlayer().getLocation(), XSound.BLOCK_ANVIL_LAND.parseSound(), 1, 1);
+                getPlayer().sendMessage(Main.getPrefix() + "§7'§a" + entry.getPath() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
             }
-        }));
+
+            open();
+            hookEvent.getHook().unregister();
+        }).complete(getPlayer(), Main.getInstance());
         this.close();
         getPlayer().sendMessage(Main.getPrefix() + "§7Gib zum Abbruch §ccancel§7 ein.");
     }
@@ -75,11 +71,11 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
             lore.add(Main.getColorCode() + strin);
 
         if (!setting.isSensitive()) {
+            Object value = setting.getValue();
             lore.add(" ");
-            lore.add("Value: " + setting.getValue());
+            lore.add("Value: " + (value instanceof Enum<?> ? ((Enum<?>) value).name() : value));
         }
-        return new BuildItem().displayName("§7" + setting.getPath())
-                .material(Materials.SIGN).lore(lore).build();
+        return ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§7" + setting.getPath()).lore(lore).build();
     }
 
     @Override
