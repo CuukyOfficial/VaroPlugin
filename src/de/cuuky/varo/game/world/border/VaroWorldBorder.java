@@ -2,7 +2,6 @@ package de.cuuky.varo.game.world.border;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Location;
@@ -62,7 +61,9 @@ public class VaroWorldBorder {
 		double size = getBorderSize() / 2;
 		double dx = Math.abs(playerLoc.getX() - center.getX()) - size;
 		double dz = Math.abs(playerLoc.getZ() - center.getZ()) - size;
-		return Math.abs(Math.max(dx, dz));
+		if (dx <= 0 || dz <= 0)
+		    return Math.abs(Math.max(dx, dz));
+        return Math.sqrt(dx * dx + dz * dz);
 	}
 
 	private void startCalculating() {
