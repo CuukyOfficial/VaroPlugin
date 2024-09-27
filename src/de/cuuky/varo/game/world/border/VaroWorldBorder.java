@@ -58,23 +58,11 @@ public class VaroWorldBorder {
 
 	private double getDistanceToBorder(Player player) {
 		Location playerLoc = player.getLocation();
-
 		Location center = getCenter();
 		double size = getBorderSize() / 2;
-
-		ArrayList<Double> distanceArray = new ArrayList<>();
-		double playerDifferenceX = playerLoc.getX() - center.getX();
-		double playerDifferenceZ = playerLoc.getZ() - center.getZ();
-		distanceArray.add(Math.abs(playerDifferenceX + size));
-		distanceArray.add(Math.abs(playerDifferenceX - size));
-		distanceArray.add(Math.abs(playerDifferenceZ + size));
-		distanceArray.add(Math.abs(playerDifferenceZ - size));
-		double nearest = Double.MAX_VALUE;
-		for (double distance : distanceArray)
-			if (distance < nearest)
-				nearest = distance;
-
-		return Math.round(nearest);
+		double dx = Math.abs(playerLoc.getX() - center.getX()) - size;
+		double dz = Math.abs(playerLoc.getZ() - center.getZ()) - size;
+		return Math.abs(Math.max(dx, dz));
 	}
 
 	private void startCalculating() {
