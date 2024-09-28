@@ -115,7 +115,10 @@ public class AutoSetup {
     private void setupSpawns(Location middle) {
         System.out.println(Main.getConsolePrefix() + "AutoSetup: Setting the spawns...");
 
-        middle.getWorld().setSpawnLocation(x, 0, z);
+        int y = this.getGroundHeight(middle.getWorld(), this.x, this.z);
+        if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean())
+            y += ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
+        middle.getWorld().setSpawnLocation(this.x, y, this.z);
 
         new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()),ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(),
                 (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
