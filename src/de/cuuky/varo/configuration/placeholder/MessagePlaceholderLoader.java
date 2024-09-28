@@ -13,7 +13,6 @@ import de.cuuky.varo.configuration.placeholder.varo.VaroPlayerMessagePlaceholder
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.disconnect.VaroPlayerDisconnect;
 import de.cuuky.varo.utils.VaroUtils;
-import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 
 public class MessagePlaceholderLoader {
@@ -69,10 +68,10 @@ public class MessagePlaceholderLoader {
 
     private void loadPlayerPlaceholder() {
         new VaroPlayerMessagePlaceholder("distanceToBorder", 1, "Ersetzt durch die Distanz zur Border des Spielers", (player) -> {
-            if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) || Main.getVaroGame() == null)
+            if (Main.getVaroGame() == null)
                 return "0";
 
-            return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getBorderDistanceTo(player.getPlayer()));
+            return String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getPlayer().getWorld()).getVaroBorder().getDistance(player.getPlayer()));
         });
 
         new VaroPlayerMessagePlaceholder("seconds", 1, "Ersetzt durch den Countdown des Spielers", (player) -> String.valueOf(player.getStats().getCountdown()));

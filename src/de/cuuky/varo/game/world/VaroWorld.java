@@ -1,11 +1,8 @@
 package de.cuuky.varo.game.world;
 
-import de.varoplugin.cfw.utils.JavaUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.game.world.border.VaroWorldBorder;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -13,13 +10,19 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.game.world.border.DefaultVaroBorder;
+import de.cuuky.varo.game.world.border.NopVaroBorder;
+import de.cuuky.varo.game.world.border.VaroBorder;
+import de.varoplugin.cfw.utils.JavaUtils;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class VaroWorld {
 
 	private World world;
-	private VaroWorldBorder varoWorldBorder;
+	private VaroBorder varoWorldBorder;
 
 	public VaroWorld(World world) {
 		this.world = world;
@@ -30,7 +33,9 @@ public class VaroWorld {
 		}
 
 		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
-			this.varoWorldBorder = new VaroWorldBorder(world);
+			this.varoWorldBorder = new DefaultVaroBorder(world);
+		else 
+		    this.varoWorldBorder = new NopVaroBorder(world);
 	}
 
 	private List<Block> getBlocksBetweenPoints(Location l1, Location l2) {
@@ -87,7 +92,7 @@ public class VaroWorld {
 		return this.world;
 	}
 
-	public VaroWorldBorder getVaroBorder() {
+	public VaroBorder getVaroBorder() {
 		return this.varoWorldBorder;
 	}
 }

@@ -1,29 +1,33 @@
 package de.cuuky.varo.game.world;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
 import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class VaroWorldHandler {
 
-    private VaroWorld mainVaroWorld;
-    private ArrayList<VaroWorld> worlds;
+    private final VaroWorld mainVaroWorld;
+    private final ArrayList<VaroWorld> worlds = new ArrayList<>();
+    private final Queue<BorderDecrease> borderDecreases = new LinkedList<>();
+    private BorderDecrease activeBorderDecrease;
 
     public VaroWorldHandler() {
         World mainworld = Bukkit.getWorld(VersionUtils.getVersionAdapter().getServerProperties().getProperty("level-name"));
         this.mainVaroWorld = new VaroWorld(mainworld);
 
-        this.worlds = new ArrayList<>();
         this.worlds.add(mainVaroWorld);
 
         for (World world : Bukkit.getWorlds())
@@ -49,29 +53,67 @@ public class VaroWorldHandler {
         VaroWorld vworld = new VaroWorld(world);
         this.worlds.add(vworld);
 
-        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
-            vworld.getVaroBorder().setBorderSize(getBorderSize(), 0);
+        if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+            vworld.getVaroBorder().setSize(getBorderSize(), 0);
     }
 
     public void decreaseBorder(DecreaseReason reason) {
-        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) || !reason.isEnabled())
+        if (!reason.isEnabled())
             return;
 
-        BorderDecrease decr = new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed());
-        decr.setStartHook(() -> reason.postBroadcast());
-        decr.setFinishHook(() -> reason.postAlert());
+        if (!isBorderMinimumSize()) {
+            this.borderDecreases.add(new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed(), reason));
+            runBorderCheck();
+        }
+    }
+    
+    private boolean isBorderMinimumSize() {
+        return this.getBorderSize() <= ConfigSetting.MIN_BORDER_SIZE.getValueAsInt();
+    }
+    
+    private void runBorderCheck() {
+        if (this.activeBorderDecrease != null || this.borderDecreases.isEmpty())
+            return;
+        this.activeBorderDecrease = this.borderDecreases.poll();
+        this.activeBorderDecrease.getReason().postBroadcast();
+        
+        double size = this.getBorderSize();
+        double newSize = Math.max(size - this.activeBorderDecrease.getAmount(), ConfigSetting.MIN_BORDER_SIZE.getValueAsInt());
+        double diff = Math.abs(size - newSize);
+        long time = (long) (diff / this.activeBorderDecrease.getSpeed());
+        this.setBorderSize(newSize, time, null);
+        
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            this.activeBorderDecrease.getReason().postAlert();
+            this.activeBorderDecrease = null;
+
+            if (this.isBorderMinimumSize()) {
+                Main.getLanguageManager().broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED);
+                this.borderDecreases.clear();
+            } else
+                this.runBorderCheck();
+        }, time * 20L);
+    }
+    
+    public double getBorderSize(World world) {
+        if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+            return getBorderSize();
+
+        VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
+        return vworld.getVaroBorder().getSize();
+    }
+
+    public double getBorderSize() {
+        return this.mainVaroWorld.getVaroBorder().getSize();
     }
 
     public void setBorderSize(double size, long time, World world) {
-        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
-            return;
-
         if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
             for (VaroWorld vworld : worlds)
-                vworld.getVaroBorder().setBorderSize(size, time);
+                vworld.getVaroBorder().setSize(size, time);
         else {
             VaroWorld vworld = world != null ? getVaroWorld(world) : mainVaroWorld;
-            vworld.getVaroBorder().setBorderSize(size, time);
+            vworld.getVaroBorder().setSize(size, time);
         }
     }
 
@@ -80,26 +122,7 @@ public class VaroWorldHandler {
             if (vworld.getWorld().equals(world))
                 return vworld;
 
-        throw new NullPointerException("Couldn't find VaroWorld for " + world.getName());
-    }
-
-    public double getBorderSize(World world) {
-        if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
-            return getBorderSize();
-        else {
-            if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
-                return 0;
-
-            VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
-            return vworld.getVaroBorder().getBorderSize();
-        }
-    }
-
-    public double getBorderSize() {
-        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
-            return 0;
-
-        return this.mainVaroWorld.getVaroBorder().getBorderSize();
+        throw new IllegalArgumentException("Couldn't find VaroWorld " + world.getName());
     }
 
     public ArrayList<VaroWorld> getWorlds() {

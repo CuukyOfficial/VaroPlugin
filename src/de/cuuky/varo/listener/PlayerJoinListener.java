@@ -1,7 +1,6 @@
 package de.cuuky.varo.listener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +8,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.ServerSoftware;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
@@ -22,7 +18,6 @@ import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.game.world.VaroWorld;
 import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -30,25 +25,10 @@ import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.utils.MagmaUtils;
+import de.varoplugin.cfw.version.ServerSoftware;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class PlayerJoinListener implements Listener {
-
-	private boolean isOutsideOfBorder(Player p) {
-		if (VersionUtils.getVersion() == ServerVersion.ONE_7)
-			return false;
-
-		try {
-			Location loc = p.getLocation();
-			VaroWorld world = Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld());
-			double size = world.getVaroBorder().getBorderSize() / 2;
-			Location center = world.getVaroBorder().getCenter();
-			double x = loc.getX() - center.getX(), z = loc.getZ() - center.getZ();
-			return ((x > size || (-x) > size) || (z > size || (-z) > size));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
@@ -118,7 +98,7 @@ public class PlayerJoinListener implements Listener {
 			}
 		} else {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
-			if (isOutsideOfBorder(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
+			if (Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getWorld()).getVaroBorder().isOutside(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				vplayer.saveTeleport(player.getWorld().getSpawnLocation());
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer), vplayer.getRealUUID());
 			}

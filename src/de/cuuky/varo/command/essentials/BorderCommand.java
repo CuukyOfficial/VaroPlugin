@@ -25,9 +25,9 @@ public class BorderCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_SIZE.getValue(vp).replace("%size%", String.valueOf((sender instanceof Player ? Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderSize() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getVaroBorder().getBorderSize()))));
+            sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_SIZE.getValue(vp).replace("%size%", String.valueOf((sender instanceof Player ? Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getSize() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getVaroBorder().getSize()))));
             if (sender instanceof Player)
-                sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_DISTANCE.getValue(vp).replace("%distance%", String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getBorderDistanceTo((Player) sender))));
+                sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_DISTANCE.getValue(vp).replace("%distance%", String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(((Player) sender).getWorld()).getVaroBorder().getDistance((Player) sender))));
             if (sender.hasPermission("varo.setup")) {
                 sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_BORDER_USAGE.getValue(vp));
             }
@@ -38,7 +38,7 @@ public class BorderCommand implements CommandExecutor {
 
             if (args[0].equalsIgnoreCase("center")) {
                 if (p != null) {
-                    worldHandler.getVaroWorld(p.getWorld()).getVaroBorder().setBorderCenter(p.getLocation());
+                    worldHandler.getVaroWorld(p.getWorld()).getVaroBorder().setCenter(p.getLocation());
                     p.sendMessage(Main.getPrefix() + "Zentrum der Border gesetzt!");
                 } else sender.sendMessage("Only for players!");
                 return true;

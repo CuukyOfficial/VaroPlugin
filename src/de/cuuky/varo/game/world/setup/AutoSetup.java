@@ -20,8 +20,6 @@ import de.cuuky.varo.game.world.generators.PortalGenerator;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.spawns.spawn.SpawnChecker;
 import de.cuuky.varo.utils.VaroUtils;
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 
 public class AutoSetup {
 
@@ -106,8 +104,8 @@ public class AutoSetup {
     }
 
     private void setupBorder(Location middle) {
-        if (ConfigSetting.AUTOSETUP_BORDER.isIntActivated() && VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
-            world.getVaroBorder().setBorderCenter(middle);
+        if (ConfigSetting.AUTOSETUP_BORDER.isIntActivated()) {
+            world.getVaroBorder().setCenter(middle);
             Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.AUTOSETUP_BORDER.getValueAsInt(), 0, null);
         }
     }
