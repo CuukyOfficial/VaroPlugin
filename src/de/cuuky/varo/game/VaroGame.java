@@ -53,7 +53,7 @@ public class VaroGame implements VaroSerializeable {
     private AutoStart autostart;
 
     @VaroSerializeField(path = "borderDecrease")
-    private BorderDecreaseDayTimer borderDecrease;
+    private BorderDecreaseDayTimer borderDayTimer;
 
     @VaroSerializeField(path = "gamestate")
     private GameState gamestate;
@@ -73,7 +73,7 @@ public class VaroGame implements VaroSerializeable {
     private boolean finaleJoinStart, firstTime;
     private VaroMainHeartbeatThread mainThread;
     private VaroStartThread startThread;
-    private BorderDecreaseMinuteTimer minuteTimer;
+    private BorderDecreaseMinuteTimer borderMinuteTimer;
     private ProtectionTime protection;
     private VaroWorldHandler varoWorldHandler;
     private TopScoreList topScores;
@@ -99,7 +99,7 @@ public class VaroGame implements VaroSerializeable {
         this.varoWorldHandler = new VaroWorldHandler();
 
         this.setGamestate(GameState.LOBBY);
-        this.borderDecrease = new BorderDecreaseDayTimer(true);
+        this.borderDayTimer = new BorderDecreaseDayTimer(true);
     }
 
     public void prepareStart() {
@@ -130,8 +130,8 @@ public class VaroGame implements VaroSerializeable {
 
         this.setProjectTime(0L);
         
-        if (minuteTimer != null)
-            minuteTimer.remove();
+        if (borderMinuteTimer != null)
+            borderMinuteTimer.remove();
 
         this.lastDayTimer = new Date();
         (startThread = new VaroStartThread()).runTaskTimer(Main.getInstance(), 0, 20);
@@ -153,7 +153,7 @@ public class VaroGame implements VaroSerializeable {
 
         Main.getVaroGame().setFirstTime(true);
         Main.getDataManager().getListManager().getStartItems().giveToAll();
-        Main.getVaroGame().setMinuteTimer(new BorderDecreaseMinuteTimer());
+        Main.getVaroGame().setBorderMinuteTimer(new BorderDecreaseMinuteTimer());
 
         for (VaroWorld world : Main.getVaroGame().getVaroWorldHandler().getWorlds())
             world.fillChests();
@@ -351,12 +351,12 @@ public class VaroGame implements VaroSerializeable {
         this.autostart = autoStart;
     }
 
-    public void setBorderDecrease(BorderDecreaseDayTimer borderDecrease) {
-        this.borderDecrease = borderDecrease;
+    public void setBorderDayTimer(BorderDecreaseDayTimer dayTimer) {
+        this.borderDayTimer = dayTimer;
     }
 
-    public void setMinuteTimer(BorderDecreaseMinuteTimer minuteTimer) {
-        this.minuteTimer = minuteTimer;
+    public void setBorderMinuteTimer(BorderDecreaseMinuteTimer minuteTimer) {
+        this.borderMinuteTimer = minuteTimer;
     }
 
     public void setFinaleJoinStart(boolean finaleJoinStart) {
@@ -391,7 +391,7 @@ public class VaroGame implements VaroSerializeable {
     @Override
     public void onDeserializeEnd() {
         if (gamestate == GameState.STARTED)
-            minuteTimer = new BorderDecreaseMinuteTimer();
+            borderMinuteTimer = new BorderDecreaseMinuteTimer();
 
         startRefreshTimer();
         loadVariables();

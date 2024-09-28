@@ -23,7 +23,7 @@ public class BorderDecreaseDayTimer implements VaroSerializeable {
 
 		generateNextDecrease();
 		startTimer();
-		Main.getVaroGame().setBorderDecrease(this);
+		Main.getVaroGame().setBorderDayTimer(this);
 	}
 
 	private void generateNextDecrease() {
