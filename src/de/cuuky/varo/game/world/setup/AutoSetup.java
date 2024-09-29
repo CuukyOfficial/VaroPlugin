@@ -62,10 +62,10 @@ public class AutoSetup {
     private void startSetup() {
         Location middle = new Location(world.getWorld(), x, world.getWorld().getMaxHeight(), z);
 
+        setupSpawns(middle);
         setupPortal();
         setupLobby();
         setupBorder(middle);
-        setupSpawns(middle);
         setupAutoStart();
 
         System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
