@@ -92,7 +92,7 @@ public class SpawnGenerator {
             XBlock.setType(location0.clone().add(0, -1, -1).getBlock(), sideBlockMaterial);
         }, 1);
 
-        return location.getBlock().getLocation().add(0.5, -1, 0.5);
+        return location0.getBlock().getLocation().add(0.5, -1, 0.5);
     }
 
     private Location[] generateSpawns(Location middle, double radius, int amount) {
