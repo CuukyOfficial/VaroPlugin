@@ -24,13 +24,13 @@ public class PortalGenerator {
 	            for (int x = 1; x < width - 1; x++)
 	                XBlock.setType(world.getBlockAt(xPos - offset + x, yPos0 + y, zPos), XMaterial.NETHER_PORTAL, false);
 
-	            XBlock.setType(world.getBlockAt(xPos - offset, yPos0 + y, zPos), XMaterial.OBSIDIAN);
-	            XBlock.setType(world.getBlockAt(xPos - offset + width - 1, yPos0 + y, zPos), XMaterial.OBSIDIAN);
+	            XBlock.setType(world.getBlockAt(xPos - offset, yPos0 + y, zPos), XMaterial.OBSIDIAN, false);
+	            XBlock.setType(world.getBlockAt(xPos - offset + width - 1, yPos0 + y, zPos), XMaterial.OBSIDIAN, false);
 	        }
 
 	        for (int x = 0; x < width; x++) {
-	            XBlock.setType(world.getBlockAt(xPos - offset + x, yPos0, zPos), XMaterial.OBSIDIAN);
-	            XBlock.setType(world.getBlockAt(xPos - offset + x, yPos0 + height - 1, zPos), XMaterial.OBSIDIAN);
+	            XBlock.setType(world.getBlockAt(xPos - offset + x, yPos0, zPos), XMaterial.OBSIDIAN, false);
+	            XBlock.setType(world.getBlockAt(xPos - offset + x, yPos0 + height - 1, zPos), XMaterial.OBSIDIAN, false);
 	        }
 		}, 1);
 	}
