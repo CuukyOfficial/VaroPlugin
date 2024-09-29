@@ -14,7 +14,7 @@ public class PortalGenerator {
 
 	public PortalGenerator(World world, int xPos, int zPos, int width, int height) {
 		int yPos = world.getMaxHeight();
-		while (VaroUtils.isNotSolidTerrain(new Location(world, xPos, yPos, zPos).getBlock()))
+		while (VaroUtils.isNotSolidTerrainOrLiquid(new Location(world, xPos, yPos, zPos).getBlock()))
 			yPos--;
 
 		final int yPos0 = yPos;

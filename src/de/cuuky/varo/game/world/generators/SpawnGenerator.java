@@ -65,7 +65,7 @@ public class SpawnGenerator {
 
     private Location searchNext(Location location, int add, boolean needsAir) {
         Location newLocation = location.clone();
-        while (VaroUtils.isNotSolidTerrain(newLocation.clone().add(0, add, 0).getBlock()) != needsAir)
+        while (VaroUtils.isNotSolidTerrainOrLiquid(newLocation.clone().add(0, add, 0).getBlock()) != needsAir)
             newLocation = newLocation.add(0, add, 0);
 
         if (add > 0)
@@ -75,9 +75,10 @@ public class SpawnGenerator {
     }
 
     private Location setSpawnAt(Location location) {
-        final Location location0 = VaroUtils.isNotSolidTerrain(location.getBlock()) ? this.searchNext(location, -1, false) : this.searchNext(location, 1, true);
+        final Location location0 = VaroUtils.isNotSolidTerrainOrLiquid(location.getBlock()) ? this.searchNext(location, -1, false) : this.searchNext(location, 1, true);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+            XBlock.setType(location0.getBlock(), XMaterial.AIR);
             XBlock.setType(location0.clone().add(0, -1, 0).getBlock(), XMaterial.AIR);
             
             XBlock.setType(location0.clone().add(1, 0, 0).getBlock(), blockMaterial);

@@ -67,6 +67,10 @@ public final class VaroUtils {
 	    return !material.isSolid() && !material.isOccluding();
 	}
 	
+	public static boolean isNotSolidTerrainOrLiquid(Block block) {
+        return isNotSolidTerrain(block) && !block.isLiquid();
+    }
+
 	private static Object getLuckPermsPlayerAdapter() {
 	    if (luckPermsUserManager != null)
 	        return luckPermsUserManager;

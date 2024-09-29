@@ -162,7 +162,7 @@ public class AutoSetup {
     private int getGroundHeight(World world, int x, int z) {
         int groundHeight = world.getMaxHeight();
 
-        while (VaroUtils.isNotSolidTerrain(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
+        while (VaroUtils.isNotSolidTerrainOrLiquid(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {
             groundHeight--;
         }
 
