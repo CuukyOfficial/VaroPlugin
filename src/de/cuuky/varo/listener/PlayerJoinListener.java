@@ -105,7 +105,7 @@ public class PlayerJoinListener implements Listener {
 
 			if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_SPECTATOR, vplayer);
-			} else if (Main.getVaroGame().getFinaleJoinStart()) {
+			} else if (Main.getVaroGame().isFinaleJoin()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_FINALE, vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer), vplayer.getRealUUID());
 				vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER);

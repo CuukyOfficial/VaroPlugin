@@ -16,7 +16,7 @@ public class PlayerTeleportListener implements Listener {
 	    VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
 		if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.NETHER_PORTAL)) {
 			if (event.getFrom().getWorld().getEnvironment() == World.Environment.NORMAL && event.getTo().getWorld().getEnvironment() == World.Environment.NETHER) {
-			    if (!event.getPlayer().isOp() && !Main.getVaroGame().hasStarted()) {
+			    if (!event.getPlayer().isOp() && (!Main.getVaroGame().hasStarted() || (!ConfigSetting.FINALE_ALLOW_NETHER.getValueAsBoolean() && Main.getVaroGame().isFinale()))) {
 			        event.setCancelled(true);
 			        return;
 			    }

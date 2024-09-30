@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
@@ -23,6 +24,7 @@ import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.game.end.WinnerCheck;
 import de.cuuky.varo.game.leaderboard.TopScoreList;
@@ -38,6 +40,8 @@ import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.game.world.setup.AutoSetup;
+import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -70,7 +74,11 @@ public class VaroGame implements VaroSerializeable {
     @VaroSerializeField(path = "projectTime")
     private long projectTime;
 
-    private boolean finaleJoinStart, firstTime;
+    private FinalState finaleState = FinalState.NONE;
+    private BukkitTask finaleStartScheduler;
+    private int finaleCountdown;
+    
+    private boolean firstTime;
     private VaroMainHeartbeatThread mainThread;
     private VaroStartThread startThread;
     private BorderDecreaseMinuteTimer borderMinuteTimer;
@@ -279,6 +287,88 @@ public class VaroGame implements VaroSerializeable {
         (mainThread = new VaroMainHeartbeatThread()).runTaskTimer(Main.getInstance(), 0L, 20L);
     }
 
+    private void startFinale0() { // TODO rename this
+        this.finaleState = FinalState.STARTED;
+
+        Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
+        if (ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
+            Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
+            Main.getVaroGame().setProtection(new ProtectionTime(ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt()));
+        } else {
+            Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
+        }
+
+        for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
+            VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
+            if (player.getPlayer() != null) {
+                if (player.getPlayer().isOnline()) {
+                    player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
+                    continue;
+                }
+            }
+            if (ConfigSetting.PLAYER_SPECTATE_IN_FINALE.getValueAsBoolean()) {
+                player.getStats().setState(PlayerState.SPECTATOR);
+            } else {
+                player.getStats().setState(PlayerState.DEAD);
+            }
+        }
+
+        Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
+
+        int playerNumber = VaroPlayer.getOnlinePlayer().size();
+        Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
+    }
+
+    public void startFinale(int countdown) {
+        ConfigSetting.PLAY_TIME.setValue(-1, true); // TODO wtf is this???
+        
+        if (countdown != 0) {
+            for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
+                if (!player.getPlayer().isOp())
+                    new VaroCancelAble(CancelAbleType.FREEZE, player);
+
+            this.finaleState = FinalState.COUNTDOWN_PHASE;
+            this.finaleCountdown = countdown;
+            this.finaleStartScheduler = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (VaroGame.this.finaleCountdown != 0) {
+                        Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + VaroGame.this.finaleCountdown + " Sekunden!");
+                    } else {
+                        VaroGame.this.startFinale0();
+                        VaroGame.this.finaleStartScheduler.cancel();
+                    }
+                    VaroGame.this.finaleCountdown--;
+                }
+            }.runTaskTimer(Main.getInstance(), 0L, 20L);
+        } else {
+            this.startFinale0();
+        }
+    }
+
+    public void startFinaleJoin() {
+        for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer()) {
+            Player pl = player.getPlayer();
+            if (pl.isOp()) {
+                continue;
+            }
+
+            new VaroCancelAble(CancelAbleType.FREEZE, player);
+
+            if (pl.isOnline())
+                player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
+        }
+
+        this.finaleState = FinalState.JOIN_PHASE;
+        ConfigSetting.PLAY_TIME.setValue(-1, true); // TODO wtf
+    }
+
+    public void abortFinaleStart() {
+        if (this.finaleStartScheduler != null)
+            this.finaleStartScheduler.cancel();
+        this.finaleState = FinalState.JOIN_PHASE;
+    }
+
     public TopScoreList getTopScores() {
         return this.topScores;
     }
@@ -295,8 +385,16 @@ public class VaroGame implements VaroSerializeable {
         this.startThread = startThread;
     }
 
-    public boolean getFinaleJoinStart() {
-        return finaleJoinStart;
+    public FinalState getFinaleState() {
+        return this.finaleState;
+    }
+
+    public boolean isFinale() {
+        return this.finaleState == FinalState.STARTED;
+    }
+
+    public boolean isFinaleJoin() {
+        return this.finaleState == FinalState.JOIN_PHASE || this.finaleState == FinalState.COUNTDOWN_PHASE;
     }
 
     public GameState getGameState() {
@@ -359,10 +457,6 @@ public class VaroGame implements VaroSerializeable {
         this.borderMinuteTimer = minuteTimer;
     }
 
-    public void setFinaleJoinStart(boolean finaleJoinStart) {
-        this.finaleJoinStart = finaleJoinStart;
-    }
-
     public void setGamestate(GameState gamestate) {
         this.gamestate = gamestate;
         VaroUtils.updateWorldTime();
@@ -401,5 +495,12 @@ public class VaroGame implements VaroSerializeable {
 
     @Override
     public void onSerializeStart() {
+    }
+    
+    public enum FinalState {
+        COUNTDOWN_PHASE,
+        JOIN_PHASE,
+        NONE,
+        STARTED
     }
 }

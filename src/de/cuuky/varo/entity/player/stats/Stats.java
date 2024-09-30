@@ -347,7 +347,7 @@ public class Stats implements VaroSerializeable {
 		if (VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 
-		if (Main.getVaroGame().getFinaleJoinStart()) {
+		if (Main.getVaroGame().isFinaleJoin()) {
 			result = KickResult.FINALE_JOIN;
 		}
 
