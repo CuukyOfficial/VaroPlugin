@@ -1,10 +1,12 @@
 package de.cuuky.varo.threads.daily;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
@@ -32,7 +34,7 @@ public final class DailyTimer {
 		checker.add(new YouTubeCheck());
 		checker.add(new CoordsCheck());
 		checker.add(new StrikePostCheck());
-
+		
 		startTimer(0L);
 	}
 
@@ -41,16 +43,14 @@ public final class DailyTimer {
 		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 
-	@SuppressWarnings("deprecation")
 	private static long getNextReset(long offset) {
-		Date reset = new Date();
-		reset.setMinutes(0);
-		reset.setSeconds(0);
-		Date current = new Date(System.currentTimeMillis() + offset);
-		reset.setHours(ConfigSetting.RESET_SESSION_HOUR.getValueAsInt());
-		if (reset.before(current))
-			reset = DateUtils.addDays(reset, 1);
-		return (reset.getTime() - current.getTime()) / 1000;
+	    ZoneOffset zone = OffsetDateTime.now().getOffset();
+	    LocalDateTime reset = LocalDateTime.now().withHour(ConfigSetting.RESET_SESSION_HOUR.getValueAsInt()).withMinute(0).withSecond(0).withNano(0);
+		long resetTime = reset.toInstant(zone).toEpochMilli();
+	    long time = System.currentTimeMillis();
+		if (resetTime <= (time + offset))
+		    resetTime = reset.plusDays(1).toInstant(zone).toEpochMilli();
+		return (resetTime - time) / 1000L;
 	}
 
 	private void startTimer(long offset) {
