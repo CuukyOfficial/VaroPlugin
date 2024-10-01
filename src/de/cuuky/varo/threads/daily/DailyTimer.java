@@ -1,8 +1,6 @@
 package de.cuuky.varo.threads.daily;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -44,12 +42,11 @@ public final class DailyTimer {
 	}
 
 	private static long getNextReset(long offset) {
-	    ZoneOffset zone = OffsetDateTime.now().getOffset();
-	    LocalDateTime reset = LocalDateTime.now().withHour(ConfigSetting.RESET_SESSION_HOUR.getValueAsInt()).withMinute(0).withSecond(0).withNano(0);
-		long resetTime = reset.toInstant(zone).toEpochMilli();
+	    OffsetDateTime reset = OffsetDateTime.now().withHour(ConfigSetting.RESET_SESSION_HOUR.getValueAsInt()).withMinute(0).withSecond(0).withNano(0);
+		long resetTime = reset.toInstant().toEpochMilli();
 	    long time = System.currentTimeMillis();
 		if (resetTime <= (time + offset))
-		    resetTime = reset.plusDays(1).toInstant(zone).toEpochMilli();
+		    resetTime = reset.plusDays(1).toInstant().toEpochMilli();
 		return (resetTime - time) / 1000L;
 	}
 
