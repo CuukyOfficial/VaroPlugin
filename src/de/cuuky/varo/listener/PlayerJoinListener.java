@@ -115,10 +115,7 @@ public class PlayerJoinListener implements Listener {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MESSAGE, vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer), vplayer.getRealUUID());
 			} else if (massRecording.isEnabled()) {
-				if (massRecording.getCountdown(vplayer) == ConfigSetting.PLAY_TIME.getValueAsInt() * 60)
-					vplayer.getStats().setCountdown(massRecording.getTimer());
-				else
-					vplayer.getStats().setCountdown(massRecording.getCountdown(vplayer) + massRecording.getTimer());
+				vplayer.getStats().setCountdown(massRecording.getTimer());
 
 				if (!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
