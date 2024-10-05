@@ -41,27 +41,27 @@ public final class VaroUtils {
 	}
 
 	public static void doRandomTeam(int teamSize) {
-		int maxNameLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
         List<VaroPlayer> random = VaroPlayer.getVaroPlayers().stream()
             .filter(pl -> pl.getTeam() == null && !pl.getStats().isSpectator()).collect(Collectors.toList());
         Collections.shuffle(random);
 
         for (int i = 0; i < random.size(); i += teamSize) {
             int actualSize = Math.min(i + teamSize, random.size());
-            Collection<VaroPlayer> member = random.subList(i, actualSize);
-            if (member.size() < teamSize)
-                member.forEach(m -> m.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER));
-
-            // name
-            String name = member.stream().map(m -> m.getName()
-                .substring(0, Math.min(m.getName().length(), maxNameLength / member.size()))).collect(Collectors.joining());
+            Collection<VaroPlayer> members = random.subList(i, actualSize);
+            if (members.size() < teamSize)
+                members.forEach(m -> m.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER));
 
             // add
-            VaroTeam team = new VaroTeam(name);
-            member.forEach(team::addMember);
+            VaroTeam team = new VaroTeam(getRandomTeamName(members));
+            members.forEach(team::addMember);
         }
 	}
 	
+	public static String getRandomTeamName(Collection<VaroPlayer> members) {
+	    int maxNameLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
+	    return members.stream().map(m -> m.getName().substring(0, Math.min(m.getName().length(), maxNameLength / members.size()))).collect(Collectors.joining());
+	}
+
 	public static boolean isNotSolidTerrain(Block block) {
 	    Material material = block.getType();
 	    return !material.isSolid() && !material.isOccluding();

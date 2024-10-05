@@ -270,6 +270,7 @@ public enum ConfigSetting implements SectionEntry {
 	TEAMREQUEST_EXPIRETIME(ConfigSettingSection.TEAMS, "teamRequest.expiretime", 30, "Die Zeit in Sekunden, nachdem eine Teamanfrage ablaufen soll."),
 	TEAMREQUEST_MAXTEAMMEMBERS(ConfigSettingSection.TEAMS, "teamRequest.maxTeamMembers", 2, "Anzahl an Teammitglieder pro Team."),
 	TEAMREQUEST_ENABLED(ConfigSettingSection.TEAMS, "teamRequest.enabled", false, "Ob Spieler sich gegenseitig in Teams\nmit /tr einladen koennen.\nSehr gute Funktion fuer ODV's."),
+	TEAMREQUEST_RANDOM_NAME(ConfigSettingSection.TEAMS, "teamRequest.randomName", false, "Ob ein zufälliger Teamname festgelegt werden soll."),
 	TEAMREQUEST_LOBBYITEMS(ConfigSettingSection.TEAMS, "teamRequest.items.enabled", true, "Ob die Spieler Items in\nder Lobby erhalten sollen,\nwomit sie sich einladen können", "teamRequest.lobbyItems"),
 	TEAMREQUEST_LOBBYITEM_INVITE_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.invite.item", XMaterial.DIAMOND_SWORD.parseItem(), "Item um andere Spieler in ein Team einzuladen"),
 	TEAMREQUEST_LOBBYITEM_INVITE_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.invite.slot", 0, "Slot des Items um andere Spieler in ein Team einzuladen"),
