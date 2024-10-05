@@ -11,11 +11,13 @@ import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.alert.AlertTypeChooseGUI;
 import de.cuuky.varo.gui.admin.backup.BackupListGUI;
 import de.cuuky.varo.gui.admin.config.ConfigSectionGUI;
+import de.cuuky.varo.gui.admin.customcommands.CustomCommandMenuGUI;
 import de.cuuky.varo.gui.admin.debug.DebugGUI;
 import de.cuuky.varo.gui.admin.discordbot.DiscordBotGUI;
 import de.cuuky.varo.gui.admin.game.GameOptionsGUI;
 import de.cuuky.varo.gui.admin.orelogger.OreLoggerFilterGUI;
 import de.cuuky.varo.gui.admin.setuphelp.SetupHelpGUI;
+import de.cuuky.varo.gui.admin.varoevents.VaroEventGUI;
 import de.cuuky.varo.gui.report.ReportListGUI;
 import de.cuuky.varo.report.Report;
 import de.varoplugin.cfw.item.ItemBuilder;
@@ -38,13 +40,19 @@ public class AdminMainMenu extends VaroInventory {
 
     @Override
     public void refreshContent() {
+        addItem(2, ItemBuilder.material(XMaterial.FIREWORK_ROCKET).displayName("§6Events").build(),
+                (event) -> this.openNext(new VaroEventGUI(this.getPlayer())));
+        
         addItem(4, ItemBuilder.material(XMaterial.ENDER_EYE).displayName("§eSetup Assistant").build(),
                 (event) -> this.openNext(new SetupHelpGUI(getPlayer())));
+        
+        addItem(6, ItemBuilder.material(XMaterial.COMMAND_BLOCK).displayName("§cCustom Commands").build(),
+                (event) -> this.openNext(new CustomCommandMenuGUI(this.getPlayer())));
 
         addItem(10, ItemBuilder.material(XMaterial.BOOK).displayName("§cAlerts").amount(getFixedSize(Alert.getOpenAlerts().size())).build(),
                 (event) -> this.openNext(new AlertTypeChooseGUI(getPlayer())));
 
-        addItem(16, ItemBuilder.material(XMaterial.TRIPWIRE_HOOK).displayName("§cConfig").build(),
+        addItem(16, ItemBuilder.material(XMaterial.STICKY_PISTON).displayName("§cConfig").build(),
                 (event) -> this.openNext(new ConfigSectionGUI(getPlayer())));
 
         addItem(18, ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§4Reports").amount(getFixedSize(Report.getReports().size())).build(),
@@ -54,7 +62,7 @@ public class AdminMainMenu extends VaroInventory {
                 (event) -> this.openNext(new BackupListGUI(getPlayer())));
 
         addItem(26, ItemBuilder.material(Main.getBotLauncher().getDiscordbot() != null ? XMaterial.ANVIL : XMaterial.GUNPOWDER)
-                .displayName("§1DiscordBot").build(),
+                .displayName("§bDiscordBot").build(),
                 (event) -> {
                     if (Main.getBotLauncher().getDiscordbot() == null) {
                         getPlayer().sendMessage(Main.getPrefix() + "Der DiscordBot wurde nicht aktiviert.");

@@ -16,7 +16,7 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 	private BukkitTask sched;
 
 	public PoisonWaterVaroEvent() {
-		super(VaroEventType.POISON_WATER, XMaterial.WATER_BUCKET, "Bei Kontakt mit Wasser erhaelt man Schaden");
+		super(VaroEventType.POISON_WATER, XMaterial.WATER_BUCKET, "Bei Kontakt mit Wasser erhält man Schaden");
 	}
 
 	@Override
