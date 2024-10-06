@@ -26,6 +26,12 @@ public class InventoryBackup implements VaroSerializeable {
 	@VaroSerializeField(path = "contents")
 	private ArrayList<ItemStack> contents;
 
+	@VaroSerializeField(path = "exp")
+	private double exp; // TODO this is a double because the serializer does not like floats for some reason
+
+	@VaroSerializeField(path = "expLevel")
+    private int expLevel;
+
 	@Deprecated
 	@VaroSerializeField(path = "inventory")
 	private VaroInventory inventory;
@@ -50,12 +56,15 @@ public class InventoryBackup implements VaroSerializeable {
 		this.clear(vp.getPlayer().getInventory().getContents().length == 36 ? 40 : vp.getPlayer().getInventory().getContents().length);
 
 		if (vp.isOnline())
-			addUpdate(vp.getPlayer());
+			populate(vp.getPlayer());
 
 		allBackups.add(this);
 	}
 
-	public void addUpdate(Player player) {
+	private void populate(Player player) {
+	    this.exp = player.getExp();
+	    this.expLevel = player.getLevel();
+	    
 		ItemStack[] contents = player.getInventory().getContents();
 		for (int i = 0; i < contents.length; i++)
 			this.contents.set(i, contents[i]);
@@ -66,10 +75,20 @@ public class InventoryBackup implements VaroSerializeable {
 				this.contents.set(i + 36, armor[i]);
 		}
 	}
+	
+	public void restore(Player player) {
+	    player.setExp(this.getExp());
+	    player.setLevel(this.getExpLevel());
+        player.getInventory().clear();
 
-	public ItemStack[] getArmor() {
-		return new ItemStack[] {this.contents.get(36), this.contents.get(37), this.contents.get(38), this.contents.get(39)};
-	}
+        for (int i = 0; i < player.getInventory().getContents().length; i++)
+            player.getInventory().setItem(i, this.contents.get(i));
+
+        if (player.getInventory().getContents().length == 36)
+            player.getInventory().setArmorContents(this.getArmor());
+
+        player.updateInventory();
+    }
 
 	public Date getDate() {
 		return date;
@@ -79,15 +98,25 @@ public class InventoryBackup implements VaroSerializeable {
 		return this.contents.toArray(new ItemStack[this.contents.size()]);
 	}
 
+	private ItemStack[] getArmor() {
+        return new ItemStack[] {this.contents.get(36), this.contents.get(37), this.contents.get(38), this.contents.get(39)};
+    }
+
 	public void setItem(int index, ItemStack stack) {
 		this.contents.set(index, stack);
 	}
 
-	public void clear() {
-		this.clear(this.contents.size());
-	}
+	public float getExp() {
+        return (float) this.exp;
+    }
 
-	public void clear(int size) {
+	public int getExpLevel() {
+        return this.expLevel;
+    }
+
+	private void clear(int size) {
+	    this.exp = 0;
+	    this.expLevel = 0;
 		for (int i = 0; i < size; i++)
 			if (i < this.contents.size())
 				this.contents.set(i, new ItemStack(Material.AIR));
@@ -126,18 +155,6 @@ public class InventoryBackup implements VaroSerializeable {
 
 	public void remove() {
 		allBackups.remove(this);
-	}
-
-	public void restoreUpdate(Player player) {
-		player.getInventory().clear();
-
-		for (int i = 0; i < player.getInventory().getContents().length; i++)
-			player.getInventory().setItem(i, this.contents.get(i));
-
-		if (player.getInventory().getContents().length == 36)
-			player.getInventory().setArmorContents(this.getArmor());
-
-		player.updateInventory();
 	}
 
 	public static ArrayList<InventoryBackup> getAllBackups() {

@@ -3,6 +3,7 @@ package de.cuuky.varo.gui.admin.inventory;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,12 +24,6 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
 
         this.backup = backup;
     }
-
-//    @Override
-//    protected ItemStack getStack(int i) {
-//        ItemStack[] content = this.backup.getAllContents();
-//        return content.length <= i ? null : this.backup.getAllContents()[i];
-//    }
 
     @Override
     public String getTitle() {
@@ -57,10 +52,12 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
 
     @Override
     public void onClose() {
-        this.backup.clear();
         for (int i = 0; i < this.backup.getAllContents().length; i++) {
             ItemStack item = getInventory().getItem(i);
-            if (item != null) this.backup.setItem(i, item);
+            if (item != null)
+                this.backup.setItem(i, item);
+            else
+                this.backup.setItem(i, new ItemStack(Material.AIR));
         }
     }
 
@@ -72,5 +69,7 @@ public class InventoryBackupShowGUI extends AdvancedEditInventory implements Inv
                         "§7Starte dafür über mir mit den Schuhen",
                         "§7und danach jeweils einen nach rechts die",
                         "§7Hose, den Brustpanzer und den Helm!").build());
+        this.addItem(this.getSize() - 1, ItemBuilder.material(XMaterial.EXPERIENCE_BOTTLE).displayName("§2Experience")
+                .amount(this.backup.getExpLevel()).build());
     }
 }

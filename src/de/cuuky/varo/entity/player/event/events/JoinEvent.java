@@ -47,7 +47,7 @@ public class JoinEvent extends BukkitEvent {
 		}
 
 		if (stats.getRestoreBackup() != null) {
-			stats.getRestoreBackup().restoreUpdate(player.getPlayer());
+			stats.getRestoreBackup().restore(player.getPlayer());
 			player.sendMessage(Main.getPrefix() + "Dein Inventar wurde wiederhergestellt!");
 			stats.setRestoreBackup(null);
 		}

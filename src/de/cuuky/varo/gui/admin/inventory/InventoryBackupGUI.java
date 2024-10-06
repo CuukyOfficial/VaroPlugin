@@ -41,7 +41,7 @@ public class InventoryBackupGUI extends VaroInventory {
                 return;
             }
 
-            backup.restoreUpdate(backup.getVaroPlayer().getPlayer());
+            backup.restore(backup.getVaroPlayer().getPlayer());
             getPlayer().sendMessage(Main.getPrefix() + "Inventar wurde wiederhergestellt!");
         });
 

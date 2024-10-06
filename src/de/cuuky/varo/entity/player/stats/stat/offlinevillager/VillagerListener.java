@@ -62,6 +62,8 @@ public class VillagerListener implements Listener {
 		if (vill == null)
 			return;
 
+		event.setDroppedExp(0);
+		event.getDrops().clear();
 		vill.kill(VaroPlayer.getPlayer(event.getEntity().getKiller()));
 	}
 

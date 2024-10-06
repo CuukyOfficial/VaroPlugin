@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -87,6 +88,8 @@ public class OfflineVillager implements VaroSerializeable {
 		for (ItemStack it : backup.getAllContents())
 			if (it != null && it.getType() != Material.AIR)
 				location.getWorld().dropItemNaturally(location, it);
+		int exp = Math.min(this.backup.getExpLevel() * 7, 100); // See EntityHuman#getExpValue (1.8.8)
+		((ExperienceOrb) this.location.getWorld().spawnEntity(this.location, EntityType.EXPERIENCE_ORB)).setExperience(exp);
 
 		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()), vp.getRealUUID());
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_PLAYER, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName());
