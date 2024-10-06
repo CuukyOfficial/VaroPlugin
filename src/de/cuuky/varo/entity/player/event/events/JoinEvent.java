@@ -46,7 +46,7 @@ public class JoinEvent extends BukkitEvent {
 			stats.setWillClear(false);
 		}
 
-		if (stats.getRestoreBackup() != null) {
+		if (Main.getVaroGame().hasStarted() && stats.getRestoreBackup() != null) {
 			stats.getRestoreBackup().restore(player.getPlayer());
 			player.sendMessage(Main.getPrefix() + "Dein Inventar wurde wiederhergestellt!");
 			stats.setRestoreBackup(null);

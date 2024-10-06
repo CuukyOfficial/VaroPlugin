@@ -35,6 +35,11 @@ public class InventoryBackupGUI extends VaroInventory {
                 (event) -> this.openNext(new InventoryBackupShowGUI(getPlayer(), backup)));
 
         addItem(4, ItemBuilder.material(XMaterial.EMERALD).displayName("§2Restore").build(), (event) -> {
+            if (!Main.getVaroGame().hasStarted()) {
+                getPlayer().sendMessage(Main.getPrefix() + "§cDas Projekt wurde noch nicht gestartet!");
+                return;
+            }
+
             if (!backup.getVaroPlayer().isOnline()) {
                 backup.getVaroPlayer().getStats().setRestoreBackup(backup);
                 getPlayer().sendMessage(Main.getPrefix() + "Inventar wird beim naechsten Betreten wiederhergestellt!");
