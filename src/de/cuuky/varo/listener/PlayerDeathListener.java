@@ -13,8 +13,8 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 
 public class PlayerDeathListener implements Listener {
@@ -90,7 +90,7 @@ public class PlayerDeathListener implements Listener {
                 }
             } else {
                 if (ConfigSetting.RESPAWN_PROTECTION.isIntActivated()) {
-                    VaroCancelAble prot = new VaroCancelAble(CancelAbleType.PROTECTION, deadP, ConfigSetting.RESPAWN_PROTECTION.getValueAsInt());
+                    VaroCancelable prot = new VaroCancelable(CancelableType.PROTECTION, deadP, ConfigSetting.RESPAWN_PROTECTION.getValueAsInt());
                     Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION, deadP).replace("%seconds%", String.valueOf(ConfigSetting.RESPAWN_PROTECTION.getValueAsInt()));
                     prot.setTimerHook(() -> Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_RESPAWN_PROTECTION_OVER, deadP));
                 }

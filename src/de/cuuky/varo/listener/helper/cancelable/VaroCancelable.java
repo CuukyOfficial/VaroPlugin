@@ -7,9 +7,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.VaroPlayer;
 
-public class VaroCancelAble {
+// TODO this belongs in the trash and should be replaced by a system that is able to freeze/mute/protect all players at once
+public class VaroCancelable {
 
-	private static ArrayList<VaroCancelAble> cancelables;
+	private static ArrayList<VaroCancelable> cancelables;
 
 	static {
 		cancelables = new ArrayList<>();
@@ -17,9 +18,9 @@ public class VaroCancelAble {
 
 	protected VaroPlayer player;
 	protected Runnable timerHook;
-	protected CancelAbleType type;
+	protected CancelableType type;
 
-	public VaroCancelAble(CancelAbleType type, VaroPlayer player) {
+	public VaroCancelable(CancelableType type, VaroPlayer player) {
 		this.player = player;
 		this.type = type;
 
@@ -28,7 +29,7 @@ public class VaroCancelAble {
 		cancelables.add(this);
 	}
 
-	public VaroCancelAble(CancelAbleType type, VaroPlayer player, int time) {
+	public VaroCancelable(CancelableType type, VaroPlayer player, int time) {
 		this.player = player;
 		this.type = type;
 
@@ -43,7 +44,7 @@ public class VaroCancelAble {
 	}
 
 	private void removeOld() {
-		removeCancelAble(player, type);
+		removeCancelable(player, type);
 	}
 
 	private void schedule(int time) {
@@ -60,7 +61,7 @@ public class VaroCancelAble {
 		return player;
 	}
 
-	public CancelAbleType getType() {
+	public CancelableType getType() {
 		return type;
 	}
 
@@ -68,17 +69,17 @@ public class VaroCancelAble {
 		this.timerHook = runnable;
 	}
 
-	public static VaroCancelAble getCancelAble(VaroPlayer player, CancelAbleType type) {
-		for (VaroCancelAble able : cancelables)
+	public static VaroCancelable getCancelable(VaroPlayer player, CancelableType type) {
+		for (VaroCancelable able : cancelables)
 			if (able.getPlayer().equals(player) && able.getType().equals(type))
 				return able;
 
 		return null;
 	}
 
-	public static void removeCancelAble(VaroPlayer player, CancelAbleType type) {
+	public static void removeCancelable(VaroPlayer player, CancelableType type) {
 		for (int i = 0; i < cancelables.size(); i++) {
-			VaroCancelAble able = cancelables.get(i);
+			VaroCancelable able = cancelables.get(i);
 			if (able.getPlayer().equals(player) && able.getType().equals(type)) {
 				able.remove();
 				i--;

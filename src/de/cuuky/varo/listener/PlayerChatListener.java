@@ -11,8 +11,8 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.listener.helper.TeamChat;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PlayerChatListener implements Listener {
@@ -81,7 +81,7 @@ public class PlayerChatListener implements Listener {
 			}
 		}
 
-		if (VaroCancelAble.getCancelAble(vp, CancelAbleType.MUTE) != null) {
+		if (VaroCancelable.getCancelable(vp, CancelableType.MUTE) != null) {
 			vp.sendMessage(ConfigMessages.CHAT_MUTED);
 			event.setCancelled(true);
 			return;

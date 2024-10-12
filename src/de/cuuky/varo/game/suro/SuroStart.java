@@ -17,8 +17,8 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 
 public class SuroStart {
 
@@ -52,9 +52,9 @@ public class SuroStart {
 					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 						vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
-						VaroCancelAble.removeCancelAble(vp, CancelAbleType.FREEZE);
-						VaroCancelAble.removeCancelAble(vp, CancelAbleType.MUTE);
-						VaroCancelAble.removeCancelAble(vp, CancelAbleType.PROTECTION);
+						VaroCancelable.removeCancelable(vp, CancelableType.FREEZE);
+						VaroCancelable.removeCancelable(vp, CancelableType.MUTE);
+						VaroCancelable.removeCancelable(vp, CancelableType.PROTECTION);
 					}
 
 					Main.getVaroGame().start();
@@ -62,9 +62,9 @@ public class SuroStart {
 				}
 
 				for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-					new VaroCancelAble(CancelAbleType.FREEZE, vp);
-					new VaroCancelAble(CancelAbleType.MUTE, vp);
-					new VaroCancelAble(CancelAbleType.PROTECTION, vp);
+					new VaroCancelable(CancelableType.FREEZE, vp);
+					new VaroCancelable(CancelableType.MUTE, vp);
+					new VaroCancelable(CancelableType.PROTECTION, vp);
 
 					vp.cleanUpPlayer();
 					vp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));

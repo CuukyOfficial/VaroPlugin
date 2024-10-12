@@ -12,8 +12,8 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.varoplugin.cfw.utils.EventUtils;
 
 public class EntityDamageByEntityListener implements Listener {
@@ -42,7 +42,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 		}
 
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelAble.getCancelAble(vp, CancelAbleType.PROTECTION) != null || vp.isInProtection()) {
+		if (Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelable.getCancelable(vp, CancelableType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}
@@ -50,7 +50,7 @@ public class EntityDamageByEntityListener implements Listener {
 		if (ConfigSetting.FRIENDLYFIRE.getValueAsBoolean() || damager == null)
 			return;
 
-		if (VaroCancelAble.getCancelAble(vDamager, CancelAbleType.PROTECTION) != null || vDamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
+		if (VaroCancelable.getCancelable(vDamager, CancelableType.PROTECTION) != null || vDamager.isInProtection() && !Main.getVaroGame().isFirstTime()) {
 			event.setCancelled(true);
 			return;
 		}

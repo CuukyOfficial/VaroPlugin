@@ -18,8 +18,8 @@ import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.game.lobby.LobbyItem;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.updater.VaroUpdateResultSet;
@@ -110,7 +110,7 @@ public class PlayerJoinListener implements Listener {
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer), vplayer.getRealUUID());
 				vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER);
 				if (!player.isOp())
-					new VaroCancelAble(CancelAbleType.FREEZE, vplayer);
+					new VaroCancelable(CancelableType.FREEZE, vplayer);
 			} else if (!ConfigSetting.PLAY_TIME.isIntActivated()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MESSAGE, vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer), vplayer.getRealUUID());

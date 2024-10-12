@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 
 public class FreezeCommand implements CommandExecutor {
 
@@ -33,7 +33,7 @@ public class FreezeCommand implements CommandExecutor {
 				if (player.getPlayer().isOp()) {
 					continue;
 				}
-				new VaroCancelAble(CancelAbleType.FREEZE, player);
+				new VaroCancelable(CancelableType.FREEZE, player);
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gefreezed!");
@@ -52,7 +52,7 @@ public class FreezeCommand implements CommandExecutor {
 			return false;
 		}
 
-		new VaroCancelAble(CancelAbleType.FREEZE, target);
+		new VaroCancelable(CancelableType.FREEZE, target);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gefreezed!");
 		return false;

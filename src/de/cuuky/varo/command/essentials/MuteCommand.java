@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 
 public class MuteCommand implements CommandExecutor {
 
@@ -33,7 +33,7 @@ public class MuteCommand implements CommandExecutor {
 				if (player.getPlayer().isOp()) {
 					continue;
 				}
-				new VaroCancelAble(CancelAbleType.MUTE, player);
+				new VaroCancelable(CancelableType.MUTE, player);
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler gemuted!");
@@ -52,7 +52,7 @@ public class MuteCommand implements CommandExecutor {
 		}
 
 		VaroPlayer target = VaroPlayer.getPlayer(player);
-		new VaroCancelAble(CancelAbleType.MUTE, target);
+		new VaroCancelable(CancelableType.MUTE, target);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich gemuted!");
 		return false;

@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 
 public class UnprotectCommand implements CommandExecutor {
 
@@ -30,7 +30,7 @@ public class UnprotectCommand implements CommandExecutor {
 
 		if (args[0].equalsIgnoreCase("@a")) {
 			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				VaroCancelAble.removeCancelAble(player, CancelAbleType.PROTECTION);
+				VaroCancelable.removeCancelable(player, CancelableType.PROTECTION);
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler unprotected!");
@@ -44,7 +44,7 @@ public class UnprotectCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer target = VaroPlayer.getPlayer(player);
-		VaroCancelAble.removeCancelAble(target, CancelAbleType.PROTECTION);
+		VaroCancelable.removeCancelable(target, CancelableType.PROTECTION);
 
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich unprotected!");
 		return false;

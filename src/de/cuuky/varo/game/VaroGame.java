@@ -40,8 +40,8 @@ import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.cuuky.varo.game.world.generators.SpawnGenerator;
 import de.cuuky.varo.game.world.setup.AutoSetup;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -299,7 +299,7 @@ public class VaroGame implements VaroSerializeable {
         }
 
         for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
-            VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
+            VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
             if (player.getPlayer() != null) {
                 if (player.getPlayer().isOnline()) {
                     player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
@@ -325,7 +325,7 @@ public class VaroGame implements VaroSerializeable {
         if (countdown != 0) {
             for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
                 if (!player.getPlayer().isOp())
-                    new VaroCancelAble(CancelAbleType.FREEZE, player);
+                    new VaroCancelable(CancelableType.FREEZE, player);
 
             this.finaleState = FinalState.COUNTDOWN_PHASE;
             this.finaleCountdown = countdown;
@@ -353,7 +353,7 @@ public class VaroGame implements VaroSerializeable {
                 continue;
             }
 
-            new VaroCancelAble(CancelAbleType.FREEZE, player);
+            new VaroCancelable(CancelableType.FREEZE, player);
 
             if (pl.isOnline())
                 player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");

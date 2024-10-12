@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 
 public class UnfreezeCommand implements CommandExecutor {
 
@@ -30,7 +30,7 @@ public class UnfreezeCommand implements CommandExecutor {
 
 		if (args[0].equalsIgnoreCase("@a")) {
 			for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-				VaroCancelAble.removeCancelAble(player, CancelAbleType.FREEZE);
+				VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Erfolgreich alle Spieler entfreezed!");
@@ -44,7 +44,7 @@ public class UnfreezeCommand implements CommandExecutor {
 
 		Player player = Bukkit.getPlayerExact(args[0]);
 		VaroPlayer target = VaroPlayer.getPlayer(player);
-		VaroCancelAble.removeCancelAble(target, CancelAbleType.FREEZE);
+		VaroCancelable.removeCancelable(target, CancelableType.FREEZE);
 		sender.sendMessage(Main.getPrefix() + "§7" + args[0] + " §7erfolgreich entfreezed!");
 		return false;
 	}

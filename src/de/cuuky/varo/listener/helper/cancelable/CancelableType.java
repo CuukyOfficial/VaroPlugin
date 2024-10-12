@@ -1,6 +1,6 @@
 package de.cuuky.varo.listener.helper.cancelable;
 
-public enum CancelAbleType {
+public enum CancelableType {
 
 	FREEZE,
 	MUTE,

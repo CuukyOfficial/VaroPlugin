@@ -12,8 +12,8 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.state.GameState;
-import de.cuuky.varo.listener.helper.cancelable.CancelAbleType;
-import de.cuuky.varo.listener.helper.cancelable.VaroCancelAble;
+import de.cuuky.varo.listener.helper.cancelable.CancelableType;
+import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 
 public class PlayerMoveListener implements Listener {
 
@@ -28,7 +28,7 @@ public class PlayerMoveListener implements Listener {
 		Player player = event.getPlayer();
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
 
-		if (VaroCancelAble.getCancelAble(vp, CancelAbleType.FREEZE) != null || Main.getVaroGame().isStarting() && !vp.getStats().isSpectator()) {
+		if (VaroCancelable.getCancelable(vp, CancelableType.FREEZE) != null || Main.getVaroGame().isStarting() && !vp.getStats().isSpectator()) {
 			event.setTo(from);
 			return;
 		}
