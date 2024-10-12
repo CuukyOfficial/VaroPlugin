@@ -94,6 +94,7 @@ public enum LanguageEN implements LoadableMessage {
     JOIN_PLAYERS_REQUIRED("joinmessage.requiredplayers", "%prefix%Es werden noch %required% Spieler zum Start benoetigt!"),
     JOIN_FINALE("joinmessage.finale", "%prefix%&a%player% &7has entered the server for the final."),
     JOIN_FINALE_PLAYER("joinmessage.finaleplayer", "%prefix%The finale is about to begin! All players have been freezed."),
+    JOIN_FINALE_PLAYER_NO_FREEZE("joinmessage.finaleplayerNoFreeze", "%prefix%The finale is about to begin!"),
     JOIN_MASS_RECORDING("joinmessage.massrecording", "%prefix%&a%player% &7has entered the server in mass recording and is vulnerable in %colorcode%%protectionTime% &7seconds!"),
     JOIN_NO_MOVE_IN_PROTECTION("joinmessage.notMoveinProtection", "&7You cannot move while you still are in the %colorcode%protection time&7!"),
     JOIN_PROTECTION_OVER("joinmessage.joinProtectionOver", "%prefix%&a%player% &7is now vulnerable!"),

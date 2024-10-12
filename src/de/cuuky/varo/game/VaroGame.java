@@ -299,7 +299,8 @@ public class VaroGame implements VaroSerializeable {
         }
 
         for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
-            VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
+            if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean())
+                VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
             if (player.getPlayer() != null) {
                 if (player.getPlayer().isOnline()) {
                     player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
@@ -323,9 +324,11 @@ public class VaroGame implements VaroSerializeable {
         ConfigSetting.PLAY_TIME.setValue(-1, true); // TODO wtf is this???
         
         if (countdown != 0) {
-            for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
-                if (!player.getPlayer().isOp())
-                    new VaroCancelable(CancelableType.FREEZE, player);
+            if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
+                for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
+                    if (!player.getPlayer().isOp())
+                        new VaroCancelable(CancelableType.FREEZE, player);
+            }
 
             this.finaleState = FinalState.COUNTDOWN_PHASE;
             this.finaleCountdown = countdown;
@@ -347,17 +350,13 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void startFinaleJoin() {
-        for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer()) {
-            Player pl = player.getPlayer();
-            if (pl.isOp()) {
-                continue;
-            }
-
-            new VaroCancelable(CancelableType.FREEZE, player);
-
-            if (pl.isOnline())
-                player.sendMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed.");
-        }
+        if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
+            for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
+                if (!player.getPlayer().isOp())
+                    new VaroCancelable(CancelableType.FREEZE, player);
+            Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Start wurden alle gefreezed.");
+        } else
+            Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale beginnt bald.");
 
         this.finaleState = FinalState.JOIN_PHASE;
         ConfigSetting.PLAY_TIME.setValue(-1, true); // TODO wtf

@@ -97,6 +97,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	JOIN_PLAYERS_REQUIRED("joinmessage.requiredplayers", "%prefix%Es werden noch %required% Spieler zum Start benötigt!"),
 	JOIN_FINALE("joinmessage.finale", "%prefix%&a%player% &7hat den Server zum Finale betreten."),
 	JOIN_FINALE_PLAYER("joinmessage.finaleplayer", "%prefix%Das Finale beginnt bald. Bis zum Finalestart wurden alle gefreezed."),
+	JOIN_FINALE_PLAYER_NO_FREEZE("joinmessage.finaleplayerNoFreeze", "%prefix%Das Finale beginnt bald."),
 	JOIN_MASS_RECORDING("joinmessage.massrecording", "%prefix%&a%player% &7hat den Server in der Massenaufnahme betreten und ist in %colorcode%%protectionTime% &7Sekunden angreifbar!"),
 	JOIN_NO_MOVE_IN_PROTECTION("joinmessage.notMoveinProtection", "&7Du kannst dich nicht bewegen, solange du noch in der %colorcode%Schutzzeit &7bist!"),
 	JOIN_PROTECTION_OVER("joinmessage.joinProtectionOver", "%prefix%&a%player% &7ist nun angreifbar!"),

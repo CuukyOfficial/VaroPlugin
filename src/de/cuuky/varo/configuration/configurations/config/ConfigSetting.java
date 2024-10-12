@@ -206,6 +206,7 @@ public enum ConfigSetting implements SectionEntry {
 	// FINALE
 	PLAYER_SPECTATE_IN_FINALE(ConfigSettingSection.FINALE, "playerSpectateInFinale", true, "Ob die toten Spieler waehrend des Finales spectaten duerfen."),
 	FINALE_ALLOW_NETHER(ConfigSettingSection.FINALE, "allowNether", false, "Ob Spieler während des Finales den Nether betreteb dürfen."),
+	FINALE_FREEZE(ConfigSettingSection.FINALE, "freeze", true, "Ob Spieler während des Starts gefreezed werden sollen."),
 	
 	POST_COORDS_DAYS(ConfigSettingSection.ACTIVITY, "postCoordsDays", -1, "Postet nach den genannten Tagen\nvon allen Spielern die Koordinatenum die Uhrzeit,\num der auch Sessions etc. geprueft werden"),
 	PRE_PRODUCE_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "preProduceSessions", 0, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusaetzlich zu\nden Regulaeren vorproduzieren darf."),
