@@ -21,7 +21,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 		BORDER("BORDER", Color.GREEN, ConfigSetting.DISCORDBOT_EVENT_BORDER),
 		DEATH("DEATH", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_DEATH),
 		JOIN_LEAVE("JOIN/LEAVE", Color.CYAN, ConfigSetting.DISCORDBOT_EVENT_JOIN_LEAVE),
-		KILL("KILL", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_KILL),
+		KILL("DEATH", Color.BLACK, ConfigSetting.DISCORDBOT_EVENT_KILL),
 		LOG("LOG", Color.RED, null),
 		STRIKE("STRIKE", Color.YELLOW, ConfigSetting.DISCORDBOT_EVENT_STRIKE),
 		WIN("WIN", Color.MAGENTA, ConfigSetting.DISCORDBOT_EVENT_WIN),
@@ -50,14 +50,6 @@ public class EventLogger extends CachedVaroLogger<String> {
 				return -1;
 
 			return idEntry.getValueAsLong() != -1 ? idEntry.getValueAsLong() : ConfigSetting.DISCORDBOT_EVENT_CHANNELID.getValueAsLong();
-		}
-
-		public static LogType getType(String s) {
-			for (LogType type : values())
-				if (type.getName().equalsIgnoreCase(s))
-					return type;
-
-			return null;
 		}
 	}
 
