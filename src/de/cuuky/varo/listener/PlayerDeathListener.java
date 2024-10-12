@@ -73,6 +73,10 @@ public class PlayerDeathListener implements Listener {
                             public void run() {
                             	if (!deadP.getStats().isAlive()) {
 	                                deadP.getStats().setState(PlayerState.DEAD);
+
+	                                if (!deadP.isOnline())
+	                                    return;
+
 	                                kickDeadPlayer(deadP, killer);
 	                                Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_DELAY_OVER, deadP);
                             	}
