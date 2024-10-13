@@ -67,12 +67,12 @@ public class InventoryBackup implements VaroSerializeable {
 	    
 		ItemStack[] contents = player.getInventory().getContents();
 		for (int i = 0; i < contents.length; i++)
-			this.contents.set(i, contents[i]);
+			this.setItem(i, contents[i]);
 
 		if (player.getInventory().getContents().length == 36) {
 			ItemStack[] armor = player.getInventory().getArmorContents();
 			for(int i = 0; i < 4; i++)
-				this.contents.set(i + 36, armor[i]);
+				this.setItem(i + 36, armor[i]);
 		}
 	}
 	
@@ -82,7 +82,7 @@ public class InventoryBackup implements VaroSerializeable {
         player.getInventory().clear();
 
         for (int i = 0; i < player.getInventory().getContents().length; i++)
-            player.getInventory().setItem(i, this.contents.get(i));
+            player.getInventory().setItem(i, this.getItem(i));
 
         if (player.getInventory().getContents().length == 36)
             player.getInventory().setArmorContents(this.getArmor());
@@ -95,15 +95,19 @@ public class InventoryBackup implements VaroSerializeable {
 	}
 
 	public ItemStack[] getAllContents() {
-		return this.contents.toArray(new ItemStack[this.contents.size()]);
+	    return this.contents.stream().map(ItemStack::new).toArray(ItemStack[]::new);
 	}
 
 	private ItemStack[] getArmor() {
-        return new ItemStack[] {this.contents.get(36), this.contents.get(37), this.contents.get(38), this.contents.get(39)};
+        return new ItemStack[] {this.getItem(36), this.getItem(37), this.getItem(38), this.getItem(39)};
     }
+	
+	private ItemStack getItem(int index) {
+	    return new ItemStack(this.contents.get(index));
+	}
 
 	public void setItem(int index, ItemStack stack) {
-		this.contents.set(index, stack);
+		this.contents.set(index, stack == null ? new ItemStack(Material.AIR) : new ItemStack(stack));
 	}
 
 	public float getExp() {
