@@ -126,7 +126,8 @@ public class StatsCommand extends VaroCommand {
                 if (!args[0].equalsIgnoreCase("remove")) {
                     if (!type.execute(toSet, target)) {
                         sender.sendMessage(Main.getPrefix() + "§7Der Wert '" + Main.getColorCode() + toSet +
-                            "§7' §7konnte nicht fuer " + this + " gesetzt werden!");
+                            "§7' §7konnte nicht für " + target.getName() + " gesetzt werden!");
+                        return false;
                     }
                 } else type.remove(target);
                 return true;
