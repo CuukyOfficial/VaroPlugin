@@ -38,7 +38,7 @@ public class KillEvent extends BukkitEvent {
 			}
 		}
 		
-		if (ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
+		if (Main.getVaroGame().isPlayTimeLimited() && stats.getCountdown() >= 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			// Adding time during a mass recording may or may not break something
 			int timeAdded = 0;
 			if (ConfigSetting.DEATH_TIME_ADD.isIntActivated())

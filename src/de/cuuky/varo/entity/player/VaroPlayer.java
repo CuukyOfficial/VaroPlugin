@@ -494,9 +494,8 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	public boolean isInProtection() {
 		if (VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;
-		} else {
-			return ConfigSetting.PLAY_TIME.isIntActivated() && stats.getCountdown() >= (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() && Main.getVaroGame().isRunning() && !Main.getVaroGame().isFirstTime() && ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() && !isAdminIgnore();
 		}
+        return Main.getVaroGame().isPlayTimeLimited() && stats.getCountdown() >= (Main.getVaroGame().getPlayTime() * 60) - ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() && Main.getVaroGame().isRunning() && !Main.getVaroGame().isFirstTime() && ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() && !isAdminIgnore();
 	}
 
 	public boolean isMassRecordingKick() {

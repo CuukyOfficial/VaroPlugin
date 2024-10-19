@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
@@ -13,7 +14,7 @@ import de.cuuky.varo.entity.player.stats.stat.Rank;
 public enum StatType {
 
     ADMIN_IGNORE("adminignore", "§4Admin-Ignore", XMaterial.BOOK, (value, vp) -> vp.setAdminIgnore(Boolean.parseBoolean(value)), VaroPlayer::isAdminIgnore, (vp) -> vp.setAdminIgnore(false)),
-    COUNTDOWN("countdown","§bCountdown", XMaterial.OAK_SIGN, (value, vp) -> vp.getStats().setCountdown(Integer.parseInt(value)), vp -> vp.getStats().getCountdown(), (vp) -> vp.getStats().setCountdown(ConfigSetting.PLAY_TIME.getValueAsInt() * 60)),
+    COUNTDOWN("countdown","§bCountdown", XMaterial.OAK_SIGN, (value, vp) -> vp.getStats().setCountdown(Integer.parseInt(value)), vp -> vp.getStats().getCountdown(), (vp) -> vp.getStats().setCountdown(Main.getVaroGame().getPlayTime() * 60)),
     EPISODES_PLAYED("episodesplayed","§5Episodes played", XMaterial.BLAZE_POWDER, (value, vp) -> vp.getStats().setSessionsPlayed(Integer.parseInt(value)), vp -> vp.getStats().getSessionsPlayed(), (vp) -> vp.getStats().setSessionsPlayed(0)),
     KILLS("kills","§4Kills", XMaterial.DIAMOND_SWORD, (value, vp) -> vp.getStats().setKills(Integer.parseInt(value)), vp -> vp.getStats().getKills(), (vp) -> vp.getStats().setKills(0)),
     PLAYER_STATE("playerstate","§6Player State", XMaterial.GOLDEN_APPLE, (value, vp) -> vp.getStats().setState(PlayerState.valueOf(value)), vp -> vp.getStats().getState(), (vp) -> vp.getStats().setState(PlayerState.ALIVE)),

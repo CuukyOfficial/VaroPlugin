@@ -378,11 +378,11 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public boolean hasFullTime() {
-		return countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		return countdown == Main.getVaroGame().getPlayTime() * 60;
 	}
 
 	public boolean hasTimeLeft() {
-		return (this.countdown >= 1) && this.countdown != ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		return (this.countdown >= 1) && this.countdown != Main.getVaroGame().getPlayTime() * 60;
 	}
 
 	public boolean hasVideo(String videoId) {
@@ -471,7 +471,7 @@ public class Stats implements VaroSerializeable {
 			sessions += ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt();
 		}
 		sessionsPlayed = 0;
-		countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		countdown = Main.getVaroGame().getPlayTime() * 60;
 		this.sessionTime = 0;
 		this.onlineTime = 0;
 		this.onlineTimeTotal = 0;
@@ -497,7 +497,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeCountdown() {
-		this.countdown = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		this.countdown = Main.getVaroGame().getPlayTime() * 60;
 		this.sessionTime = 0;
 		this.onlineTime = 0;
 	}

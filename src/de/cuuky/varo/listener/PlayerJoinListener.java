@@ -114,7 +114,7 @@ public class PlayerJoinListener implements Listener {
     					new VaroCancelable(CancelableType.FREEZE, vplayer);
 				} else
 				    vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER_NO_FREEZE);
-			} else if (!ConfigSetting.PLAY_TIME.isIntActivated()) {
+			} else if (!Main.getVaroGame().isPlayTimeLimited()) {
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MESSAGE, vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer), vplayer.getRealUUID());
 			} else if (massRecording.isEnabled()) {

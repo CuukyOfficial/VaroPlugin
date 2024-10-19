@@ -44,7 +44,7 @@ public class Broadcaster {
 
 			ArrayList<String> sb = new ArrayList<>();
 			sb.add("&7Testnachricht Nummer 1");
-			sb.add("&7Du kannst hier unendlich viele Nachrichten einfuegen, die dann Random ausgewaehlt werden.");
+			sb.add("&7Du kannst hier unendlich viele Nachrichten einfügen, die dann Random ausgewählt werden.");
 
 			if (!cfg.contains("messages"))
 				cfg.addDefault("messages", sb);
@@ -69,7 +69,7 @@ public class Broadcaster {
 	}
 
 	private void startPluginAd() {
-		int delay = (ConfigSetting.PLAY_TIME.getValueAsInt() * 60) > 0 ? (((ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - 30) > 0 ? ((ConfigSetting.PLAY_TIME.getValueAsInt() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
+		int delay = (Main.getVaroGame().getPlayTime() * 60) > 0 ? (((Main.getVaroGame().getPlayTime() * 60) - 30) > 0 ? ((Main.getVaroGame().getPlayTime() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -85,7 +85,7 @@ public class Broadcaster {
 	private static String[] getAdMessage() {
 		String[] messages = new String[] { "", "", "" };
 		messages[0] = "&7-----------------------------------------";
-		messages[1] = "&7Du moechtest auch ein &5(OneDay)Varo &7veranstalten? Link zum Plugin: " + Main.DISCORD_INVITE;
+		messages[1] = "&7Du möchtest auch ein &5(OneDay)Varo &7veranstalten? Link zum Plugin: " + Main.DISCORD_INVITE;
 		messages[2] = "&7-----------------------------------------";
 		return messages;
 	}

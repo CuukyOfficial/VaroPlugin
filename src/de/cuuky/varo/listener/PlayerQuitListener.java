@@ -35,7 +35,7 @@ public class PlayerQuitListener implements Listener {
 
 		if (Main.getVaroGame().getGameState() == GameState.STARTED) {
 			// IF THEY WERE KICKED OR DEAD
-			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && ConfigSetting.PLAY_TIME.isIntActivated()) {
+			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && Main.getVaroGame().isPlayTimeLimited()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
 				if (vplayer.getStats().getState() != PlayerState.DEAD)
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer), vplayer.getRealUUID());
@@ -51,7 +51,7 @@ public class PlayerQuitListener implements Listener {
 			}
 
 			// CHECK DISCONNECTS
-			if (vplayer.getStats().hasTimeLeft() || !ConfigSetting.PLAY_TIME.isIntActivated()) {
+			if (vplayer.getStats().hasTimeLeft() || !Main.getVaroGame().isPlayTimeLimited()) {
 				if (ConfigSetting.DISCONNECT_PER_SESSION.isIntActivated()) {
 					VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
 					if (dc == null)

@@ -176,7 +176,7 @@ public class VaroGame implements VaroSerializeable {
             public void run() {
                 setFirstTime(false);
             }
-        }.runTaskLater(Main.getInstance(), ConfigSetting.PLAY_TIME.getValueAsInt() * 60 * 20);
+        }.runTaskLater(Main.getInstance(), this.getPlayTime() * 60 * 20); // TODO this does not work when PLAY_TIME is -1
         
         if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean())
         	new BukkitRunnable() {
@@ -321,8 +321,6 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void startFinale(int countdown) {
-        ConfigSetting.PLAY_TIME.setValue(-1, true); // TODO wtf is this???
-        
         if (countdown != 0) {
             if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
                 for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
@@ -359,7 +357,6 @@ public class VaroGame implements VaroSerializeable {
             Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale beginnt bald.");
 
         this.finaleState = FinalState.JOIN_PHASE;
-        ConfigSetting.PLAY_TIME.setValue(-1, true); // TODO wtf
     }
 
     public void abortFinaleStart() {
@@ -438,6 +435,14 @@ public class VaroGame implements VaroSerializeable {
 
     public boolean isStarting() {
         return startThread != null;
+    }
+    
+    public int getPlayTime() {
+        return this.isFinale() || this.isFinaleJoin() ? -1 : ConfigSetting.PLAY_TIME.getValueAsInt();
+    }
+
+    public boolean isPlayTimeLimited() {
+        return this.getPlayTime() >= 1;
     }
 
     public VaroWorldHandler getVaroWorldHandler() {

@@ -29,10 +29,10 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 		loadVariables();
 	}
 
-	public void loadVariables() {
+	public void loadVariables() { // TODO remove this (?)
 		protectionTime = ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt();
 		noKickDistance = ConfigSetting.NO_KICK_DISTANCE.getValueAsInt();
-		playTime = ConfigSetting.PLAY_TIME.getValueAsInt() * 60;
+		playTime = Main.getVaroGame().getPlayTime() * 60;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -59,14 +59,14 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 
 			}
 
-			if (ConfigSetting.PLAY_TIME.isIntActivated()) {
+			if (Main.getVaroGame().isPlayTimeLimited()) {
 				for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
 					if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 						continue;
 
 					int countdown = Math.max(vp.getStats().getCountdown() - 1, 0);
 
-					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
+					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) // TODO this does not work when playTime is set to -1
 						Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER, vp);
 
 					if (countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
@@ -99,7 +99,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 		}
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			if (game.getGameState() == GameState.LOBBY) {
+			if (game.getGameState() == GameState.LOBBY) { // TODO why tf is this executed every tick???
 				vp.getStats().setCountdown(playTime);
 				vp.setAdminIgnore(false);
 				if (vp.getStats().getState() == PlayerState.DEAD)

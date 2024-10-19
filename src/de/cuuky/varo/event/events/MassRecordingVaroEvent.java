@@ -87,9 +87,9 @@ public class MassRecordingVaroEvent extends VaroEvent {
             }
 
             if (!vp.getStats().isSpectator() && !vp.isAdminIgnore()) {
-                int countdown = this.countdowns.getOrDefault(vp, ConfigSetting.PLAY_TIME.getValueAsInt() * 60);
+                int countdown = this.countdowns.getOrDefault(vp, Main.getVaroGame().getPlayTime() * 60); // TODO does not work when playTime is -1
                 vp.getStats().setCountdown(countdown);
-                if (countdown == ConfigSetting.PLAY_TIME.getValueAsInt() * 60) {
+                if (countdown == Main.getVaroGame().getPlayTime() * 60) {
                     if (vp.isOnline()) {
                         if (!vp.canBeKicked(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())) {
                             vp.getStats().setSessions(vp.getStats().getSessions() + 1);
