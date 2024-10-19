@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.BaseEncoding;
@@ -286,6 +287,14 @@ public class Main extends JavaPlugin {
 	public static String getProjectName() {
 		return getColorCode() + ConfigSetting.PROJECT_NAME.getValueAsString();
 	}
+	
+	public static void sendPluginInfo(Player player) {
+        player.sendMessage(Main.getPrefix() + Main.getColorCode() + "§l" + Main.getPluginName());
+        player.sendMessage(Main.getPrefix() + "§7Version: " + Main.getColorCode() + Main.getInstance().getDescription().getVersion());
+        player.sendMessage(Main.getPrefix() + "§7Discord-Server: " + Main.getColorCode() + Main.DISCORD_INVITE);
+        player.sendMessage(Main.getPrefix() + "§7This software is licensed under the GNU AGPL v3 license");
+        player.sendMessage(Main.getPrefix() + "§7Source code: https://github.com/CuukyOfficial/VaroPlugin");
+    }
 	
 	public static PlayerLookup lookupPlayer(String name) {
         return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? PlayerProfileUtils.getOrFetchByName(name) : PlayerProfileUtils.getCrackedByName(name);

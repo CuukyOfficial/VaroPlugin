@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
@@ -91,7 +90,6 @@ public class MainMenu extends VaroInventory {
             );
         }
 
-        if (ConfigSetting.SUPPORT_PLUGIN_ADS.getValueAsBoolean())
-            addItem(this.getInfo(Info.SIZE) - 1, ItemBuilder.material(XMaterial.MAP).displayName("§5Info").build(), (event) -> sendInfo());
+        addItem(this.getInfo(Info.SIZE) - 1, ItemBuilder.material(XMaterial.MAP).displayName("§5About").build(), (event) -> Main.sendPluginInfo(this.getPlayer()));
     }
 }

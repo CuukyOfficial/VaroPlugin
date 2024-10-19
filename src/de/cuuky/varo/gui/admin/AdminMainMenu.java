@@ -83,8 +83,5 @@ public class AdminMainMenu extends VaroInventory {
         if (ConfigSetting.DEBUG_OPTIONS.getValueAsBoolean())
             addItem(this.getUsableSize(), ItemBuilder.material(XMaterial.BUCKET).displayName("§6Debug").build(),
                     (event) -> this.openNext(new DebugGUI(getPlayer())));
-
-        addItem(this.getSize() - 1, ItemBuilder.material(XMaterial.MAP).displayName("§5Info").build(),
-                (event) -> this.sendInfo());
     }
 }
