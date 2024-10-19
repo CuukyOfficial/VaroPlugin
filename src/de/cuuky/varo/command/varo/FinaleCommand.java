@@ -77,7 +77,7 @@ public class FinaleCommand extends VaroCommand {
 				return;
 			}
 
-			Main.getVaroGame().startFinale(countdown);
+			Main.getVaroGame().startFinaleCountdown(countdown);
 			return;
 		} else if (args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("abbruch") || args[0].equalsIgnoreCase("abbrechen") || args[0].equalsIgnoreCase("stop")) {
 			switch (Main.getVaroGame().getFinaleState()) {

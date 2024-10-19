@@ -287,7 +287,7 @@ public class VaroGame implements VaroSerializeable {
         (mainThread = new VaroMainHeartbeatThread()).runTaskTimer(Main.getInstance(), 0L, 20L);
     }
 
-    private void startFinale0() { // TODO rename this
+    private void startFinale() {
         this.finaleState = FinalState.STARTED;
 
         Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
@@ -320,7 +320,7 @@ public class VaroGame implements VaroSerializeable {
         Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
     }
 
-    public void startFinale(int countdown) {
+    public void startFinaleCountdown(int countdown) {
         if (countdown != 0) {
             if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
                 for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
@@ -336,14 +336,14 @@ public class VaroGame implements VaroSerializeable {
                     if (VaroGame.this.finaleCountdown != 0) {
                         Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + VaroGame.this.finaleCountdown + " Sekunden!");
                     } else {
-                        VaroGame.this.startFinale0();
+                        VaroGame.this.startFinale();
                         VaroGame.this.finaleStartScheduler.cancel();
                     }
                     VaroGame.this.finaleCountdown--;
                 }
             }.runTaskTimer(Main.getInstance(), 0L, 20L);
         } else {
-            this.startFinale0();
+            this.startFinale();
         }
     }
 
