@@ -15,8 +15,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.cryptomorin.xseries.XSound;
 
+import de.cuuky.cfw.configuration.language.LanguageManager;
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
+import de.cuuky.cfw.configuration.placeholder.MessagePlaceholderManager;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
 import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
@@ -525,12 +527,31 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		this.player.sendMessage(message);
 	}
 
+	// Copied from legacy CFW
+	@Override
+	public MessageHolder sendTranslatedMessage(LoadableMessage message, CustomPlayer replace, MessagePlaceholderManager placeholder, LanguageManager languageManager) {
+        MessageHolder holder = new MessageHolder(placeholder);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (getPlayer() == null)
+                    return;
+
+                String playerMessage = holder.getReplaced(languageManager.getMessage(message.getPath(), getLocale()), (replace != null ? replace : VaroPlayer.this));
+                if (!playerMessage.isEmpty())
+                    getPlayer().sendMessage(playerMessage);
+            }
+        }.runTaskLater(placeholder.getOwnerInstance(), 1L);
+
+        return holder;
+    }
+	
 	public MessageHolder sendMessage(LoadableMessage message) {
-		return super.sendTranslatedMessage(message, null, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
+		return sendTranslatedMessage(message, null, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
 	}
 
 	public MessageHolder sendMessage(LoadableMessage message, CustomPlayer replacement) {
-		return super.sendTranslatedMessage(message, replacement, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
+		return sendTranslatedMessage(message, replacement, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
 	}
 
 	public void setAdminIgnore(boolean adminIgnore) {

@@ -4,6 +4,7 @@ import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.cfw.configuration.language.LanguageManager;
 import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
 import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
+import de.cuuky.cfw.configuration.placeholder.MessagePlaceholderManager;
 import de.cuuky.cfw.configuration.placeholder.placeholder.type.MessagePlaceholderType;
 import de.cuuky.cfw.player.CustomLanguagePlayer;
 import de.cuuky.cfw.player.CustomPlayer;
@@ -15,6 +16,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.LanguageEN;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.VaroTeam;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,9 +130,32 @@ public class VaroLanguageManager extends LanguageManager {
         return message;
     }
 
+    // Copied from legacy CFW
+    @Override
+    public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace, MessagePlaceholderManager placeholderManager, ArrayList<CustomLanguagePlayer> players) {
+        MessageHolder holder = new MessageHolder(placeholderManager);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                String consoleMessage = holder.getReplaced(getMessage(message.getPath(), getDefaultLanguage().getName()), replace);
+                if (!consoleMessage.isEmpty())
+                    ownerInstance.getServer().getConsoleSender().sendMessage(consoleMessage);
+                for (CustomLanguagePlayer player : players)
+                    if (player.getPlayer() != null) {
+                        String playerMessage = holder.getReplaced(getMessage(message.getPath(), ((CustomPlayer) player).getLocale()), replace != null ? replace : (CustomPlayer) player);
+                        if (!playerMessage.isEmpty())
+                            player.getPlayer().sendMessage(playerMessage);
+                    }
+            }
+        }.runTaskLater(ownerInstance, 1L);
+
+        return holder;
+    }
+    
     public MessageHolder broadcastMessage(LoadableMessage message, CustomPlayer replace) {
         ArrayList<CustomLanguagePlayer> players = new ArrayList<>(VaroPlayer.getVaroPlayers());
-        return super.broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
+        
+        return broadcastMessage(message, replace, Main.getCuukyFrameWork().getPlaceholderManager(), players);
     }
 
     public MessageHolder broadcastMessage(LoadableMessage message) {
