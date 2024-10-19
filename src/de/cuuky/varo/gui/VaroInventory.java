@@ -21,8 +21,9 @@ public abstract class VaroInventory extends AdvancedInventory {
         getPlayer().sendMessage(Main.getPrefix() + "§7Source code: https://github.com/CuukyOfficial/VaroPlugin");
     }
 
-    protected int getFixedSize(int size) {
-        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_8)) return (size < 1 ? 1 : (Math.min(size, 64)));
-        else return size;
+    public static int getFixedSize(int size) {
+        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_8))
+            return size < 1 ? 1 : (Math.min(size, 64));
+        return size;
     }
 }
