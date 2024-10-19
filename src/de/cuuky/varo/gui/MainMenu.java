@@ -90,6 +90,9 @@ public class MainMenu extends VaroInventory {
             );
         }
 
-        addItem(this.getInfo(Info.SIZE) - 1, ItemBuilder.material(XMaterial.MAP).displayName("§5About").build(), (event) -> Main.sendPluginInfo(this.getPlayer()));
+        addItem(this.getInfo(Info.SIZE) - 1, ItemBuilder.material(XMaterial.MAP).displayName("§5About").build(), (event) -> {
+            Main.sendPluginInfo(this.getPlayer());
+            this.close();
+        });
     }
 }
