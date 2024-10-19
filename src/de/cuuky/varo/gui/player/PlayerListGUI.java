@@ -76,7 +76,7 @@ public class PlayerListGUI extends VaroPlayerAsyncListInventory<VaroPlayer> {
 
     @Override
     protected ItemStack getItemStack(VaroPlayer player) {
-        return ItemBuilder.skull(player.getName()).displayName(Main.getColorCode() + player.getName())
+        return ItemBuilder.skull(player.getName()).displayName("§3" + player.getName())
                 .lore((showStats ? player.getStats().getStatsListed() : null)).build();
     }
 

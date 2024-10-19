@@ -16,8 +16,12 @@ import de.varoplugin.cfw.item.ItemBuilder;
 
 public class StrikeListGUI extends VaroListInventory<Strike> {
 
+    public StrikeListGUI(Player player, VaroPlayer target) {
+        super(Main.getInventoryManager(), player, target.getStats().getStrikes());
+    }
+
     public StrikeListGUI(Player player, Player target) {
-        super(Main.getInventoryManager(), player, VaroPlayer.getPlayer(target).getStats().getStrikes());
+        this(player, VaroPlayer.getPlayer(target));
     }
 
     @Override

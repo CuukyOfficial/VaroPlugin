@@ -62,7 +62,7 @@ public class MainMenu extends VaroInventory {
                 this.openNext(new PlayerListChooseGUI(getPlayer()))
         );
 
-        addItem(18, ItemBuilder.material(XMaterial.COMPASS).displayName("§7Your §5Videos")
+        addItem(18, ItemBuilder.material(XMaterial.COMPASS).displayName("§7Your §5Videos") // TODO this is ALL videos, not "Your Videos"
                 .amount(getFixedSize(YouTubeVideo.getVideos().size())).build(), (event) ->
                 this.openNext(new YouTubeVideoListGUI(getPlayer()))
         );

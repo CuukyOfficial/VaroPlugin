@@ -1,6 +1,7 @@
 package de.cuuky.varo.gui.youtube;
 
 import java.text.SimpleDateFormat;
+import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.varoplugin.cfw.inventory.ItemClick;
@@ -17,6 +19,10 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     public YouTubeVideoListGUI(Player player) {
         super(Main.getInventoryManager(), player, YouTubeVideo.getVideos());
+    }
+
+    public YouTubeVideoListGUI(Player player, VaroPlayer target) {
+        super(Main.getInventoryManager(), player, YouTubeVideo.getVideos().stream().filter(video -> video.getOwner() == target).collect(Collectors.toList()));
     }
 
     @Override
