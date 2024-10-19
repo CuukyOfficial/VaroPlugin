@@ -50,9 +50,9 @@ public class MessagePlaceholderLoader {
         new VaroGeneralMessagePlaceholder("currHour", 1, "Ersetzt durch die Stunde der jetzigen Zeit", () -> getLastDateRefresh(3));
         new VaroGeneralMessagePlaceholder("currMin", 1, "Ersetzt durch die Minute der jetzigen Zeit", () -> getLastDateRefresh(4));
         new VaroGeneralMessagePlaceholder("currSec", 1, "Ersetzt durch die Sekunden der jetzigen Zeit", () -> getLastDateRefresh(5));
-        new VaroGeneralMessagePlaceholder("projectTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Projektes", () -> String.format("%02d", Main.getVaroGame().getProjectTime() / 3600));
-        new VaroGeneralMessagePlaceholder("projectTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Projektes", () -> String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60));
-        new VaroGeneralMessagePlaceholder("projectTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Projektes", () -> String.format("%02d", Main.getVaroGame().getProjectTime() % 60));
+        new VaroGeneralMessagePlaceholder("projectTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Projektes", () -> Main.getVaroGame() == null ? "-" : String.format("%02d", Main.getVaroGame().getProjectTime() / 3600));
+        new VaroGeneralMessagePlaceholder("projectTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Projektes", () -> Main.getVaroGame() == null ? "-" : String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60));
+        new VaroGeneralMessagePlaceholder("projectTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Projektes", () -> Main.getVaroGame() == null ? "-" : String.format("%02d", Main.getVaroGame().getProjectTime() % 60));
         new VaroGeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse", () -> !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)));
         new VaroGeneralMessagePlaceholder("discordLink", 20, "Ersetzt durch den DiscordLink aus der Config", ConfigSetting.DISCORDBOT_INVITELINK::getValueAsString);
         new VaroGeneralMessagePlaceholder("protectionTime", 5, "Ersetzt durch die Schutzzeit aus der Config", () -> String.valueOf(ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt()));
@@ -76,9 +76,9 @@ public class MessagePlaceholderLoader {
 
         new VaroPlayerMessagePlaceholder("seconds", 1, "Ersetzt durch den Countdown des Spielers", (player) -> String.valueOf(player.getStats().getCountdown()));
         new VaroPlayerMessagePlaceholder("countdown", 1, "Ersetzt durch den Countdown des Spielers", (player) -> String.valueOf(player.getStats().getCountdown()));
-        new VaroPlayerMessagePlaceholder("hour", 1, "Ersetzt durch die verbleibenden Stunden der aktuellen Session des Spielers", (player) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", player.getStats().getCountdown() / 3600));
-        new VaroPlayerMessagePlaceholder("min", 1, "Ersetzt durch die verbleibenden Minuten der aktuellen Session des Spielers", (player) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (player.getStats().getCountdown() / 60) % 60));
-        new VaroPlayerMessagePlaceholder("sec", 1, "Ersetzt durch die verbleibenden Sekunden der aktuellen Session des Spielers", (player) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", player.getStats().getCountdown() % 60));
+        new VaroPlayerMessagePlaceholder("hour", 1, "Ersetzt durch die verbleibenden Stunden der aktuellen Session des Spielers", (player) -> Main.getVaroGame() == null || !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", player.getStats().getCountdown() / 3600));
+        new VaroPlayerMessagePlaceholder("min", 1, "Ersetzt durch die verbleibenden Minuten der aktuellen Session des Spielers", (player) -> Main.getVaroGame() == null || !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (player.getStats().getCountdown() / 60) % 60));
+        new VaroPlayerMessagePlaceholder("sec", 1, "Ersetzt durch die verbleibenden Sekunden der aktuellen Session des Spielers", (player) -> Main.getVaroGame() == null || !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", player.getStats().getCountdown() % 60));
         new VaroPlayerMessagePlaceholder("sessionTimeHour", 1, "Ersetzt durch die Stunden der Spielzeit des Spielers in dieser Session", (player) -> String.format("%02d", player.getStats().getSessionTime() / 3600));
         new VaroPlayerMessagePlaceholder("sessionTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Spielers in dieser Session", (player) -> String.format("%02d", (player.getStats().getSessionTime() / 60) % 60));
         new VaroPlayerMessagePlaceholder("sessionTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Spielers in dieser Session", (player) -> String.format("%02d", player.getStats().getSessionTime() % 60));
