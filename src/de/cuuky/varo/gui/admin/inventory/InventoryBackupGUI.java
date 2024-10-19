@@ -7,6 +7,7 @@ import com.cryptomorin.xseries.XMaterial;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.gui.VaroInventory;
+import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 
 public class InventoryBackupGUI extends VaroInventory {
@@ -51,8 +52,11 @@ public class InventoryBackupGUI extends VaroInventory {
         });
 
         addItem(7, ItemBuilder.material(XMaterial.REDSTONE).displayName("§cRemove").build(), (event) -> {
-            backup.getVaroPlayer().getStats().removeInventoryBackup(backup);
-            this.back();
+            this.openNext(new ConfirmInventory(this, "§4Remove inventory backup?", (result) -> {
+                if (result)
+                    this.backup.getVaroPlayer().getStats().removeInventoryBackup(this.backup);
+                this.back();
+            }));
         });
     }
 }
