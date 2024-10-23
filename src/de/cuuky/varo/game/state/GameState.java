@@ -6,26 +6,16 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 public enum GameState implements VaroSerializeable {
 
 	@VaroSerializeField(enumValue = "LOBBY")
-	LOBBY("LOBBY"),
+	LOBBY,
 
-	@VaroSerializeField(enumValue = "STARTED")
-	STARTED("STARTED"), // TODO Rename this
+	@VaroSerializeField(enumValue = "STARTED") // TODO Rename this in major version upgrade
+	STARTED,
 	
 	@VaroSerializeField(enumValue = "FINALE")
-    FINALE("STARTED"),
+    FINALE,
 
 	@VaroSerializeField(enumValue = "END")
-	END("END");
-
-	private String name;
-
-	private GameState(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
+	END;
 
 	@Override
 	public void onDeserializeEnd() {}
@@ -35,6 +25,6 @@ public enum GameState implements VaroSerializeable {
 
 	@Override
 	public String toString() {
-		return name;
+		return this.name();
 	}
 }
