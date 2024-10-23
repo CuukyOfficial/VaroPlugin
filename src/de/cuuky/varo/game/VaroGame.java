@@ -146,6 +146,8 @@ public class VaroGame implements VaroSerializeable {
     }
     
     public void start() {
+        this.setGamestate(GameState.STARTED);
+
         for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
             if (pl1.getStats().isSpectator())
                 continue;
@@ -200,6 +202,11 @@ public class VaroGame implements VaroSerializeable {
         Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
 
         startThread = null;
+    }
+    
+    public void restart() {
+        this.setGamestate(GameState.LOBBY);
+        // TODO maybe reset some stuff ???
     }
 
     private void removeAbsentAtStart() {
@@ -385,6 +392,11 @@ public class VaroGame implements VaroSerializeable {
         return gamestate;
     }
     
+    private void setGamestate(GameState gamestate) {
+        this.gamestate = gamestate;
+        VaroUtils.updateWorldTime();
+    }
+    
     public boolean hasStarted() {
         return gamestate != GameState.LOBBY;
     }
@@ -463,11 +475,6 @@ public class VaroGame implements VaroSerializeable {
 
     public void setBorderMinuteTimer(BorderDecreaseMinuteTimer minuteTimer) {
         this.borderMinuteTimer = minuteTimer;
-    }
-
-    public void setGamestate(GameState gamestate) {
-        this.gamestate = gamestate;
-        VaroUtils.updateWorldTime();
     }
 
     public void setLastCoordsPost(Date lastCoordsPost) {

@@ -12,7 +12,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.VaroGame;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.utils.EventUtils;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -73,7 +72,6 @@ public class VaroStartThread extends BukkitRunnable {
 				return;
 			}
 
-			Main.getVaroGame().setGamestate(GameState.STARTED);
 			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
@@ -83,7 +81,7 @@ public class VaroStartThread extends BukkitRunnable {
 
 			this.game.start();
 
-			game.setStartThread(null);
+			this.game.setStartThread(null);
 			return;
 		}
 

@@ -7,7 +7,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.state.GameState;
 
 public class RestartCommand extends VaroCommand {
 
@@ -22,7 +21,7 @@ public class RestartCommand extends VaroCommand {
 			return;
 		}
 
-		Main.getVaroGame().setGamestate(GameState.LOBBY);
+		Main.getVaroGame().restart();
 		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RESTART_RESTARTED.getValue(vp));
 	}
 
