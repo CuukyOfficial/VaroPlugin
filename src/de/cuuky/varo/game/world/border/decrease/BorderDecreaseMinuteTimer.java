@@ -26,7 +26,7 @@ public class BorderDecreaseMinuteTimer {
 		decreaseScheduler = new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (Main.getVaroGame().getGameState() != GameState.STARTED && !Main.getVaroGame().isStarting() || !DecreaseReason.TIME_MINUTES.isEnabled()) {
+				if (!Main.getVaroGame().isRunning() && !Main.getVaroGame().isStarting() || !DecreaseReason.TIME_MINUTES.isEnabled()) {
 					remove();
 					return;
 				}

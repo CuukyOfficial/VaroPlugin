@@ -17,7 +17,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.team.request.VaroTeamRequest;
-import de.cuuky.varo.game.state.GameState;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.item.HookItemHitEvent;
 import de.varoplugin.cfw.player.hook.item.HookItemInteractEntityEvent;
@@ -38,7 +37,7 @@ public class LobbyItem {
     }
 
     public static void giveItems(Player player) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
             return;
 
         VaroPlayer varoPlayer = VaroPlayer.getPlayer(player);
@@ -54,7 +53,7 @@ public class LobbyItem {
                 .subscribe(HookItemHitEvent.class, hookEvent -> {
                     EntityDamageByEntityEvent event = hookEvent.getSource();
 
-                    if (Main.getVaroGame().getGameState() != GameState.LOBBY)
+                    if (Main.getVaroGame().hasStarted())
                         return;
 
                     Player invited = (Player) event.getEntity();
@@ -70,7 +69,7 @@ public class LobbyItem {
     }
 
     public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().getGameState() != GameState.LOBBY)
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
             return;
 
         if (varoPlayer.getTeam() == null) {
@@ -92,7 +91,7 @@ public class LobbyItem {
                 .subscribe(HookItemInteractEvent.class, hookEvent -> {
                     PlayerInteractEvent event = hookEvent.getSource();
 
-                    if (Main.getVaroGame().getGameState() != GameState.LOBBY) {
+                    if (Main.getVaroGame().hasStarted()) {
                         event.setCancelled(true);
                         return;
                     }
@@ -115,7 +114,7 @@ public class LobbyItem {
                     .subscribe(HookItemInteractEvent.class, hookEvent -> {
                         PlayerInteractEvent event = hookEvent.getSource();
 
-                        if (Main.getVaroGame().getGameState() != GameState.LOBBY)
+                        if (Main.getVaroGame().hasStarted())
                             return;
 
                         if (varoPlayer.getTeam() != null)

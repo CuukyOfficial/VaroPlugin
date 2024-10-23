@@ -29,7 +29,6 @@ import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.end.WinnerCheck;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
@@ -223,7 +222,7 @@ public class Stats implements VaroSerializeable {
 	    
 		KickResult result = KickResult.ALLOW;
 		if (Main.getVaroGame().hasStarted()) {
-			if ((ConfigSetting.UNREGISTERED_PLAYER_JOIN_DURING_GAME.getValueAsBoolean() && Main.getVaroGame().getGameState() != GameState.END) || this.owner.isRegistered())
+			if ((ConfigSetting.UNREGISTERED_PLAYER_JOIN_DURING_GAME.getValueAsBoolean() && !Main.getVaroGame().hasEnded()) || this.owner.isRegistered())
 				result = getVaroKickResult();
 			else
 				result = KickResult.NO_PROJECTUSER;

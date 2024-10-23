@@ -33,7 +33,7 @@ public class PlayerQuitListener implements Listener {
 			return;
 		}
 
-		if (Main.getVaroGame().getGameState() == GameState.STARTED) {
+		if (Main.getVaroGame().isRunning()) {
 			// IF THEY WERE KICKED OR DEAD
 			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && Main.getVaroGame().isPlayTimeLimited()) {
 				vplayer.onEvent(BukkitEventType.QUIT);

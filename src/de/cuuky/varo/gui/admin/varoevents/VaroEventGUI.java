@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.event.VaroEvent;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.gui.VaroListInventory;
 import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.item.ItemBuilder;
@@ -39,7 +38,7 @@ public class VaroEventGUI extends VaroListInventory<VaroEvent> {
     @Override
     protected ItemClick getClick(VaroEvent event) {
         return (e) -> {
-            if (Main.getVaroGame().getGameState() != GameState.STARTED) {
+            if (!Main.getVaroGame().isRunning()) {
                 getPlayer().sendMessage(Main.getPrefix() + "Spiel wurde noch nicht gestartet!");
                 return;
             }

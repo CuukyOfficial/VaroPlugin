@@ -16,7 +16,6 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
 
@@ -106,7 +105,7 @@ public class VaroPlayerDisconnect {
 		if (!ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.isIntActivated())
 			return;
 
-		if (Main.getVaroGame().getGameState() != GameState.STARTED)
+		if (!Main.getVaroGame().isRunning())
 			return;
 
 		if (!vp.getStats().isAlive())
@@ -115,7 +114,7 @@ public class VaroPlayerDisconnect {
 		scheds.put(vp.getRealUUID(), new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (Main.getVaroGame().getGameState() != GameState.STARTED || vp.isOnline())
+				if (!Main.getVaroGame().isRunning() || vp.isOnline())
 					return;
 
 				vp.getStats().removeCountdown();

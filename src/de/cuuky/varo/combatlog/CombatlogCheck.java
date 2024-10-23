@@ -1,5 +1,7 @@
 package de.cuuky.varo.combatlog;
 
+import org.bukkit.entity.Player;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -9,9 +11,7 @@ import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.entity.player.stats.stat.Strike;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
-import org.bukkit.entity.Player;
 
 public class CombatlogCheck {
 
@@ -29,7 +29,7 @@ public class CombatlogCheck {
     }
 
     private void check() {
-        if (Main.getVaroGame().getGameState() != GameState.STARTED || (hit = PlayerHit.getHit(player)) == null)
+        if (!Main.getVaroGame().isRunning() || (hit = PlayerHit.getHit(player)) == null)
             return;
 
         if (!vp.getStats().isAlive() || vp.isAdminIgnore())

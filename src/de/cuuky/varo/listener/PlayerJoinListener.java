@@ -48,17 +48,17 @@ public class PlayerJoinListener implements Listener {
 
 				switch (result) {
 				case UPDATE_AVAILABLE:
-					if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+					if (!Main.getVaroGame().hasStarted())
 						vplayer.getVersionAdapter().sendTitle("§cUpdate available", "You are using an outdated plugin version!");
 					player.sendMessage(Main.getPrefix() + "§cVaro update available! §7Use §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 to update now. New version: " + updateVersion);
 					break;
 				case MAJOR_UPDATE_AVAILABLE:
-                    if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+                    if (!Main.getVaroGame().hasStarted())
                         vplayer.getVersionAdapter().sendTitle("§cMajor Update available", "You are using an outdated plugin version!");
                     player.sendMessage(Main.getPrefix() + "§cVaro update available! Updating to this version will reset all stats and configs! §7Use §l/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " update§7 to update now. New version: " + updateVersion + "\n§7Need help? Join our Discord for support: §e" + Main.DISCORD_INVITE);
                     break;
 				case TEST_BUILD:
-					if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+					if (!Main.getVaroGame().hasStarted())
 						vplayer.getVersionAdapter().sendTitle("§cTEST-BUILD", "");
 					player.sendMessage(Main.getPrefix() + "§cYou are running a test build! This version may be unstable! Please check our discord reguarly for updates " + Main.DISCORD_INVITE);
 					break;
@@ -77,7 +77,7 @@ public class PlayerJoinListener implements Listener {
 		if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA_1_12)
 			MagmaUtils.checkForIllegalMods(player);
 
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY) {
+		if (!Main.getVaroGame().hasStarted()) {
 			player.getInventory().clear();
 			player.getInventory().setArmorContents(new ItemStack[]{});
 			player.updateInventory();

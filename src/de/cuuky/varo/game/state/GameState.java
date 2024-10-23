@@ -9,7 +9,10 @@ public enum GameState implements VaroSerializeable {
 	LOBBY("LOBBY"),
 
 	@VaroSerializeField(enumValue = "STARTED")
-	STARTED("STARTED"),
+	STARTED("STARTED"), // TODO Rename this
+	
+	@VaroSerializeField(enumValue = "FINALE")
+    FINALE("STARTED"),
 
 	@VaroSerializeField(enumValue = "END")
 	END("END");

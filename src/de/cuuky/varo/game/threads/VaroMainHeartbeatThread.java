@@ -16,12 +16,11 @@ import de.cuuky.varo.entity.player.stats.stat.PlayerState;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.VaroGame;
-import de.cuuky.varo.game.state.GameState;
 
 public class VaroMainHeartbeatThread extends BukkitRunnable {
 
 	private int protectionTime, noKickDistance, playTime;
-	private VaroGame game;
+	private final VaroGame game;
 
 	public VaroMainHeartbeatThread() {
 		this.game = Main.getVaroGame();
@@ -38,7 +37,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		if (game.getGameState() == GameState.STARTED) {
+		if (this.game.isRunning()) {
 			if (ConfigSetting.KICK_AT_SERVER_CLOSE.getValueAsBoolean()) {
 				int secondsToClose = (int) TimeUnit.SECONDS.convert(Main.getDataManager().getOutsideTimeChecker().getDate2().getTime().getTime() - new Date().getTime(), TimeUnit.MILLISECONDS);
 				if (secondsToClose % 60 == 0) {
@@ -99,7 +98,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 		}
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-			if (game.getGameState() == GameState.LOBBY) { // TODO why tf is this executed every tick???
+			if (!this.game.hasStarted()) { // TODO why tf is this executed every tick???
 				vp.getStats().setCountdown(playTime);
 				vp.setAdminIgnore(false);
 				if (vp.getStats().getState() == PlayerState.DEAD)

@@ -87,7 +87,7 @@ public class DataManager {
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+		if (!Main.getVaroGame().hasStarted())
 			VaroPlayer.getOnlinePlayer().forEach(LobbyItem::giveOrRemoveTeamItems);
 		this.spawnHandler = new SpawnHandler();
 		this.reportHandler = new ReportHandler();

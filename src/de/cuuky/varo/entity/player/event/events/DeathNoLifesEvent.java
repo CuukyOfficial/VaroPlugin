@@ -24,7 +24,7 @@ public class DeathNoLifesEvent extends AbstractDeathEvent {
 		player.getStats().setDiedAt(new Date());
 		player.getStats().setState(PlayerState.DEAD);
 
-		if (Main.getVaroGame().getGameState() == GameState.STARTED)
+		if (Main.getVaroGame().isRunning())
 			Main.getVaroGame().getVaroWorldHandler().decreaseBorder(DecreaseReason.DEATH);
 
         if (ConfigSetting.BACKPACK_PLAYER_DROP_ON_DEATH.getValueAsBoolean())

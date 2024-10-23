@@ -92,7 +92,7 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onEntityTarget(EntityTargetLivingEntityEvent event) {
-        if (Main.getVaroGame().getGameState() == GameState.LOBBY)
+        if (!Main.getVaroGame().hasStarted())
             event.setCancelled(true);
 
         if (shouldCancelSpectatorEvent(event.getTarget())) {
@@ -116,7 +116,7 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
-        if (Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp())
             event.setCancelled(true);
         else this.checkWorldInteract(event, event.getPlayer());
     }
@@ -136,7 +136,7 @@ public class SpectatorListener implements Listener {
     public void onVehicleDamage(VehicleDamageEvent event) {
     	if (event.getAttacker() instanceof Player) {
     		Player player = (Player) event.getAttacker();
-    		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !player.isOp())
+    		if (!Main.getVaroGame().hasStarted() && !player.isOp())
                 event.setCancelled(true);
             else
             	this.checkWorldInteract(event, player);
@@ -147,7 +147,7 @@ public class SpectatorListener implements Listener {
     public void onVehicleDamage(VehicleEntityCollisionEvent event) {
     	if (event.getEntity() instanceof Player) {
     		Player player = (Player) event.getEntity();
-    		if (Main.getVaroGame().getGameState() == GameState.LOBBY && !player.isOp())
+    		if (!Main.getVaroGame().hasStarted() && !player.isOp())
                 event.setCancelled(true);
             else
             	this.checkWorldInteract(event, player);
@@ -156,14 +156,14 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerPickupItemEvent event) {
-        if (Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp())
             event.setCancelled(true);
         else this.checkWorldInteract(event, event.getPlayer());
     }
 
     @EventHandler
     public void onItemPickup(PlayerDropItemEvent event) {
-        if (Main.getVaroGame().getGameState() == GameState.LOBBY && !event.getPlayer().isOp())
+        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp())
             event.setCancelled(true);
         else this.checkWorldInteract(event, event.getPlayer());
     }

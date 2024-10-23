@@ -18,7 +18,7 @@ public class WinnerCheck {
 	private HashMap<Integer, ArrayList<VaroPlayer>> places;
 
 	public WinnerCheck() {
-		if (Main.getVaroGame().getGameState() != GameState.STARTED)
+		if (!Main.getVaroGame().isRunning())
 			return;
 
 		check();

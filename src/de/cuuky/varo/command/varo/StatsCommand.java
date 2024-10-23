@@ -104,7 +104,7 @@ public class StatsCommand extends VaroCommand {
                 return;
             }
 
-            if (type == StatType.ADMIN_IGNORE && Main.getVaroGame().getGameState() == GameState.LOBBY) {
+            if (type == StatType.ADMIN_IGNORE && !Main.getVaroGame().hasStarted()) {
                 sender.sendMessage(Main.getPrefix() + "§cAdmin-ignore cannot be enabled before the game has started!");
                 return;
             }

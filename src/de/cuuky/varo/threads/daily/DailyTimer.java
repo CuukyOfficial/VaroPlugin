@@ -51,7 +51,7 @@ public final class DailyTimer {
 	}
 
 	private void startTimer(long offset) {
-		if (Main.getVaroGame().getGameState() == GameState.STARTED && Main.getVaroGame().getLastDayTimer() != null) {
+		if (Main.getVaroGame().isRunning() && Main.getVaroGame().getLastDayTimer() != null) {
 			Date date = Main.getVaroGame().getLastDayTimer();
 			long dateDiff = getDateDiff(date, new Date(), TimeUnit.DAYS);
 			for (long i = 0; i < dateDiff; i++) {
@@ -73,7 +73,7 @@ public final class DailyTimer {
 					new VaroBackup();
 					Main.getVaroGame().setLastDayTimer(new Date());
 
-					if (Main.getVaroGame().getGameState() == GameState.STARTED)
+					if (Main.getVaroGame().isRunning())
 						doDailyChecks();
 				} catch (Throwable e) {
 					e.printStackTrace();

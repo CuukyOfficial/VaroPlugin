@@ -11,7 +11,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.varoplugin.cfw.utils.EventUtils;
@@ -28,7 +27,7 @@ public class EntityDamageByEntityListener implements Listener {
 		if (!(event.getEntity() instanceof Player))
 			return;
 
-		if (Main.getVaroGame().getGameState() == GameState.END)
+		if (Main.getVaroGame().hasEnded())
 			return;
 
 		Player p = (Player) event.getEntity(), damager = EventUtils.getDamager(event);
@@ -42,7 +41,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 		}
 
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY || VaroCancelable.getCancelable(vp, CancelableType.PROTECTION) != null || vp.isInProtection()) {
+		if (!Main.getVaroGame().hasStarted() || VaroCancelable.getCancelable(vp, CancelableType.PROTECTION) != null || vp.isInProtection()) {
 			event.setCancelled(true);
 			return;
 		}

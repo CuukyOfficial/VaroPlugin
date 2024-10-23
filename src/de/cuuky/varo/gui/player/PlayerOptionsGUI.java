@@ -66,7 +66,7 @@ public class PlayerOptionsGUI extends AdvancedInfiniteInventory {
     private void addLeftClickable(Predicate<Object> objectPredicate, Consumer<StatType> leftClick, int offset) {
         this.applyToTypes(objectPredicate, s -> this.addItem(index, this.getItemStack(s), (event) -> {
             if (event.isLeftClick()) {
-                if (s == StatType.ADMIN_IGNORE && Main.getVaroGame().getGameState() == GameState.LOBBY) {
+                if (s == StatType.ADMIN_IGNORE && !Main.getVaroGame().hasStarted()) {
                     event.getWhoClicked().sendMessage(Main.getPrefix() + "§cAdmin-ignore cannot be enabled before the game has started!");
                     return;
                 }

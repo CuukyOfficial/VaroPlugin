@@ -33,14 +33,14 @@ public class PlayerMoveListener implements Listener {
 			return;
 		}
 
-		if (Main.getVaroGame().getGameState() == GameState.LOBBY) {
+		if (!Main.getVaroGame().hasStarted()) {
 			if (ConfigSetting.CAN_MOVE_BEFORE_START.getValueAsBoolean() || player.isOp() || player.getGameMode() == GameMode.CREATIVE)
 				return;
 
 			event.setTo(from);
 			vp.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START);
 			return;
-		} else if (Main.getVaroGame().getGameState() == GameState.STARTED) {
+		} else if (Main.getVaroGame().isRunning()) {
 			if (vp.getStats().isSpectator() || ConfigSetting.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || vp.isAdminIgnore())
 				return;
 

@@ -74,7 +74,7 @@ public class VaroGame implements VaroSerializeable {
     @VaroSerializeField(path = "projectTime")
     private long projectTime;
 
-    private FinalState finaleState = FinalState.NONE;
+    private boolean finaleJoin;
     private BukkitTask finaleStartScheduler;
     private int finaleCountdown;
     
@@ -288,7 +288,7 @@ public class VaroGame implements VaroSerializeable {
     }
 
     private void startFinale() {
-        this.finaleState = FinalState.STARTED;
+        this.setGamestate(GameState.FINALE);
 
         Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
         if (ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
@@ -328,7 +328,7 @@ public class VaroGame implements VaroSerializeable {
                         new VaroCancelable(CancelableType.FREEZE, player);
             }
 
-            this.finaleState = FinalState.COUNTDOWN_PHASE;
+            this.finaleJoin = true;
             this.finaleCountdown = countdown;
             this.finaleStartScheduler = new BukkitRunnable() {
                 @Override
@@ -356,13 +356,13 @@ public class VaroGame implements VaroSerializeable {
         } else
             Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale beginnt bald.");
 
-        this.finaleState = FinalState.JOIN_PHASE;
+        this.finaleJoin = true;
     }
 
     public void abortFinaleStart() {
         if (this.finaleStartScheduler != null)
             this.finaleStartScheduler.cancel();
-        this.finaleState = FinalState.JOIN_PHASE;
+        this.finaleJoin = true;
     }
 
     public TopScoreList getTopScores() {
@@ -381,20 +381,32 @@ public class VaroGame implements VaroSerializeable {
         this.startThread = startThread;
     }
 
-    public FinalState getFinaleState() {
-        return this.finaleState;
+    public GameState getGameState() {
+        return gamestate;
     }
-
+    
+    public boolean hasStarted() {
+        return gamestate != GameState.LOBBY;
+    }
+    
+    public boolean isRunning() {
+        return this.gamestate == GameState.STARTED || this.gamestate == GameState.FINALE;
+    }
+    
     public boolean isFinale() {
-        return this.finaleState == FinalState.STARTED;
+        return this.gamestate == GameState.FINALE;
+    }
+    
+    public boolean hasEnded() {
+        return this.gamestate == GameState.END;
     }
 
     public boolean isFinaleJoin() {
-        return this.finaleState == FinalState.JOIN_PHASE || this.finaleState == FinalState.COUNTDOWN_PHASE;
+        return this.finaleJoin;
     }
 
-    public GameState getGameState() {
-        return gamestate;
+    public boolean isFinaleCountdown() {
+        return this.finaleStartScheduler != null;
     }
 
     public Date getLastCoordsPost() {
@@ -421,16 +433,8 @@ public class VaroGame implements VaroSerializeable {
         return protection;
     }
 
-    public boolean hasStarted() {
-        return gamestate != GameState.LOBBY;
-    }
-
     public boolean isFirstTime() {
         return firstTime;
-    }
-
-    public boolean isRunning() {
-        return gamestate == GameState.STARTED;
     }
 
     public boolean isStarting() {
@@ -499,12 +503,5 @@ public class VaroGame implements VaroSerializeable {
 
     @Override
     public void onSerializeStart() {
-    }
-    
-    public enum FinalState {
-        COUNTDOWN_PHASE,
-        JOIN_PHASE,
-        NONE,
-        STARTED
     }
 }
