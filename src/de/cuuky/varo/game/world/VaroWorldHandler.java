@@ -26,6 +26,7 @@ public class VaroWorldHandler {
 
     public VaroWorldHandler() {
         World mainworld = Bukkit.getWorld(VersionUtils.getVersionAdapter().getServerProperties().getProperty("level-name"));
+        fixWorldSpawn(mainworld);
         this.mainVaroWorld = new VaroWorld(mainworld);
 
         this.worlds.add(mainVaroWorld);
@@ -135,5 +136,12 @@ public class VaroWorldHandler {
 
     public Location getTeleportLocation() {
         return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : this.mainVaroWorld.getWorld().getSpawnLocation();
+    }
+
+    private static void fixWorldSpawn(World world) {
+        Location location = world.getSpawnLocation();
+        while (location.getBlock().getType().isSolid() || location.getBlock().isLiquid())
+            location.add(0, 1, 0);
+        world.setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 }
