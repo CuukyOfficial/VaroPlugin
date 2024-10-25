@@ -369,7 +369,10 @@ public class VaroGame implements VaroSerializeable {
     public void abortFinaleStart() {
         if (this.finaleStartScheduler != null)
             this.finaleStartScheduler.cancel();
-        this.finaleJoin = true;
+        for (VaroPlayer player : VaroPlayer.getVaroPlayers())
+            if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean())
+                VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
+        this.finaleJoin = false;
     }
 
     public TopScoreList getTopScores() {

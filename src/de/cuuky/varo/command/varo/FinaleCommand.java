@@ -85,11 +85,6 @@ public class FinaleCommand extends VaroCommand {
                 return;
             }
 
-            if (!Main.getVaroGame().isFinaleCountdown()) {
-                sender.sendMessage(Main.getPrefix() + "Es gibt keinen Countdown zum Abbrechen.");
-                return;
-            }
-
             Main.getVaroGame().abortFinaleStart();
             Bukkit.broadcastMessage("§7Der Finale-Start wurde §cabgebrochen§7!");
         }
