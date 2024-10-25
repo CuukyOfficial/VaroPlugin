@@ -16,7 +16,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.entity.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.utils.JavaUtils;
-import de.varoplugin.cfw.version.VersionUtils;
 
 public class ResetCommand extends VaroCommand {
 
@@ -80,7 +79,6 @@ public class ResetCommand extends VaroCommand {
 	                        Bukkit.getConsoleSender().sendMessage(Main.getPrefix() + "Deleting world " + world.getName());
 	                        toDelete.add(world.getWorldFolder());
 	                    }
-	                VersionUtils.getVersionAdapter().forceClearWorlds();
 	                break;
 	            default:
 	                Bukkit.getConsoleSender().sendMessage(Main.getPrefix() + "Modifier §c" + arg + " §7nicht gefunden!");
@@ -90,8 +88,10 @@ public class ResetCommand extends VaroCommand {
 	            success.add(mod);
 	        }
 	        
-	        for (File file : toDelete)
-	            JavaUtils.deleteDirectory(file);
+	        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+	            for (File file : toDelete)
+	                JavaUtils.deleteDirectory(file);
+            }));
 
 	        if (!success.isEmpty())
 	            Bukkit.getServer().shutdown();
