@@ -74,6 +74,7 @@ public class ResetCommand extends VaroCommand {
 	                Main.getDataManager().setDoSave(false);
 	                break;
 	            case 3:
+	                Main.getVaroGame().setLobby(null);
 	                for (World world : Bukkit.getWorlds())
 	                    if (world.getWorldFolder() != null) {
 	                        Bukkit.getConsoleSender().sendMessage(Main.getPrefix() + "Deleting world " + world.getName());
