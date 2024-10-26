@@ -57,7 +57,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
 
         Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT EINE MINUTE!" : "DIE MASSENAUFNAHME WURDE GESTARTET UND DAUERT " + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " MINUTEN!");
         for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-            vp.getVersionAdapter().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle koennen fuer eine Minute joinen." : "Alle koennen fuer" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
+            vp.getVersionAdapter().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle können für eine Minute joinen." : "Alle können für" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 
         scheduler = new BukkitRunnable() {
             @Override
