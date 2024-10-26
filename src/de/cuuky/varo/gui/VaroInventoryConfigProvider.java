@@ -7,8 +7,8 @@ import java.util.function.Consumer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.settings.VaroMenuColor;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.AdvancedInventory;
 import de.varoplugin.cfw.inventory.Info;
 import de.varoplugin.cfw.inventory.InfoProvider;

@@ -9,15 +9,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.recovery.recoveries.VaroBackup;
-import de.cuuky.varo.threads.daily.dailycheck.Checker;
-import de.cuuky.varo.threads.daily.dailycheck.checker.BloodLustCheck;
-import de.cuuky.varo.threads.daily.dailycheck.checker.CoordsCheck;
-import de.cuuky.varo.threads.daily.dailycheck.checker.NoJoinCheck;
-import de.cuuky.varo.threads.daily.dailycheck.checker.SessionCheck;
-import de.cuuky.varo.threads.daily.dailycheck.checker.StrikePostCheck;
-import de.cuuky.varo.threads.daily.dailycheck.checker.YouTubeCheck;
+import de.cuuky.varo.threads.daily.checks.BloodLustCheck;
+import de.cuuky.varo.threads.daily.checks.CoordsCheck;
+import de.cuuky.varo.threads.daily.checks.NoJoinCheck;
+import de.cuuky.varo.threads.daily.checks.SessionCheck;
+import de.cuuky.varo.threads.daily.checks.StrikePostCheck;
+import de.cuuky.varo.threads.daily.checks.YouTubeCheck;
 
 public final class DailyTimer {
 

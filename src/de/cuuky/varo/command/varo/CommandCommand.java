@@ -15,9 +15,9 @@ import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.command.custom.CustomCommandManager;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.admin.customcommands.CreateCustomCommandGUI;
 import de.cuuky.varo.gui.admin.customcommands.CustomCommandMenuGUI;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class CommandCommand extends VaroCommand {
 

@@ -7,9 +7,9 @@ import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
+import de.cuuky.varo.team.VaroTeam;
 import de.cuuky.varo.utils.VaroUtils;
 
 public class SpawnGenerator {

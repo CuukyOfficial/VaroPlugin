@@ -3,8 +3,8 @@ package de.cuuky.varo.bot.discord.commands;
 import java.awt.Color;
 import java.util.List;
 
+import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;

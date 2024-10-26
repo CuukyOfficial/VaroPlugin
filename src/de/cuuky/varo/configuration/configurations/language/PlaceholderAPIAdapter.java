@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 

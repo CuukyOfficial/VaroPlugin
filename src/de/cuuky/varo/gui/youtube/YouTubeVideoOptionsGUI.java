@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.stats.stat.YouTubeVideo;
 import de.cuuky.varo.gui.VaroInventory;
+import de.cuuky.varo.player.stats.stat.YouTubeVideo;
 import de.varoplugin.cfw.item.ItemBuilder;
 
 public class YouTubeVideoOptionsGUI extends VaroInventory {

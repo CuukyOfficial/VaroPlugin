@@ -11,11 +11,11 @@ import com.cryptomorin.xseries.XMaterial;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.event.BukkitEventType;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.event.BukkitEventType;
 
 public class MassRecordingVaroEvent extends VaroEvent {
 

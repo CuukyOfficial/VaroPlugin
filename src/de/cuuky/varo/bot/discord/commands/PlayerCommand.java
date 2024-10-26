@@ -23,8 +23,8 @@ import java.text.SimpleDateFormat;
 
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.Stats;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.stats.Stats;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;

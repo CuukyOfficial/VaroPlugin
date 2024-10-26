@@ -6,7 +6,6 @@ import java.util.Random;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
-import de.cuuky.varo.bot.discord.listener.DiscordBotEventListener;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;

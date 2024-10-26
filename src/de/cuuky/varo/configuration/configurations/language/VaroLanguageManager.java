@@ -13,8 +13,9 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.PlaceholderAPIAdapter.VaroPlaceholderExpansion;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.configuration.configurations.language.languages.LanguageEN;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.team.VaroTeam;
+
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 

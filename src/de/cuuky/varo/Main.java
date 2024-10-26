@@ -24,7 +24,7 @@ import de.cuuky.varo.data.Dependencies;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.recovery.recoveries.BugReport;
-import de.cuuky.varo.spigot.updater.VaroUpdater;
+import de.cuuky.varo.spigot.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;

@@ -7,8 +7,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
-import de.cuuky.varo.bot.discord.register.BotRegister;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ShutdownCommand extends DiscordBotCommand {

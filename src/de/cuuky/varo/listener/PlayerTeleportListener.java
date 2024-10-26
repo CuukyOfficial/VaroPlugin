@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class PlayerTeleportListener implements Listener {
 

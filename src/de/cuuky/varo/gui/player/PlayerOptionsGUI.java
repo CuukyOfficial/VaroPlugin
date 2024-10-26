@@ -10,10 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.StatType;
-import de.cuuky.varo.entity.player.stats.stat.PlayerState;
-import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.game.GameState;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.stats.StatType;
+import de.cuuky.varo.player.stats.stat.PlayerState;
 import de.cuuky.varo.utils.ArrayUtils;
 import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;

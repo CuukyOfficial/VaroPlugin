@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroPlayerAsyncListInventory;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.item.ItemBuilder;
 

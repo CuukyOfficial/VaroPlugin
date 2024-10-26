@@ -20,9 +20,9 @@ import com.cryptomorin.xseries.XSound;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.varoplugin.cfw.version.VersionUtils;
 
 public class SignChangeListener implements Listener {

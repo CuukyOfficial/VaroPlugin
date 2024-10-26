@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.team.VaroTeam;
 import de.cuuky.varo.gui.VaroInventory;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.team.VaroTeam;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;

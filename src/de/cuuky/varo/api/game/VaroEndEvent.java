@@ -4,7 +4,7 @@ import org.bukkit.event.HandlerList;
 
 import de.cuuky.varo.api.VaroEvent;
 import de.cuuky.varo.game.VaroGame;
-import de.cuuky.varo.game.end.WinnerCheck;
+import de.cuuky.varo.game.WinnerCheck;
 
 public class VaroEndEvent extends VaroEvent {
     

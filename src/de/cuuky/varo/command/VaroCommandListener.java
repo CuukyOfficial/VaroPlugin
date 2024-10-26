@@ -12,7 +12,7 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class VaroCommandListener implements CommandExecutor {
 

@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.gui.VaroInventory;
+import de.cuuky.varo.player.stats.stat.inventory.InventoryBackup;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 

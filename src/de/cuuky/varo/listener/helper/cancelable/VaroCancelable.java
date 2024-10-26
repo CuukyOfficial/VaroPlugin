@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 
 // TODO this belongs in the trash and should be replaced by a system that is able to freeze/mute/protect all players at once
 public class VaroCancelable {

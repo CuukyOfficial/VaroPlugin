@@ -18,7 +18,7 @@ import com.cryptomorin.xseries.XMaterial;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.cfw.version.ServerSoftware;

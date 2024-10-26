@@ -3,8 +3,8 @@ package de.cuuky.varo.gui.report;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
+import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.report.Report;
 import de.varoplugin.cfw.item.ItemBuilder;
 

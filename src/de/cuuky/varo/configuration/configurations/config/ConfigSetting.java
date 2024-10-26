@@ -7,8 +7,8 @@ import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
-import de.cuuky.varo.game.suro.SuroStart;
-import de.cuuky.varo.game.world.setup.AutoSetup;
+import de.cuuky.varo.game.start.SuroStart;
+import de.cuuky.varo.game.world.AutoSetup;
 
 public enum ConfigSetting implements SectionEntry {
 

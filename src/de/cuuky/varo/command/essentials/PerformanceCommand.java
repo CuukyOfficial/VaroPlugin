@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.threads.LagCounter;
 
 public class PerformanceCommand implements CommandExecutor {

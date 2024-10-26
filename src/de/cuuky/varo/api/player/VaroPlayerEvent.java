@@ -3,7 +3,7 @@ package de.cuuky.varo.api.player;
 import org.bukkit.event.HandlerList;
 
 import de.cuuky.varo.api.VaroEvent;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class VaroPlayerEvent extends VaroEvent {
     

@@ -6,10 +6,10 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.cuuky.varo.gui.VaroListInventory;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
+import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
 import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.location.SimpleLocationFormat;

@@ -11,9 +11,9 @@ import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.logger.logger.LoggedBlock;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;

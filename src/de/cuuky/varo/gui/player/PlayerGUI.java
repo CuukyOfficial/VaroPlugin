@@ -5,12 +5,12 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.gui.admin.inventory.InventoryBackupListGUI;
 import de.cuuky.varo.gui.savable.PlayerSavableChooseGUI;
 import de.cuuky.varo.gui.strike.StrikeListGUI;
 import de.cuuky.varo.gui.youtube.YouTubeVideoListGUI;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.location.LocationFormat;

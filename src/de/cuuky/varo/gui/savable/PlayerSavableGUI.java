@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.gui.VaroInventory;
+import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
 import de.varoplugin.cfw.item.ItemBuilder;
 
 public class PlayerSavableGUI extends VaroInventory {

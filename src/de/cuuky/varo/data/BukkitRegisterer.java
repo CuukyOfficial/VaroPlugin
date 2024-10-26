@@ -51,7 +51,7 @@ import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.command.essentials.VaroTimeCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.event.VaroEventListener;
-import de.cuuky.varo.game.world.listener.VaroWorldListener;
+import de.cuuky.varo.game.world.VaroWorldListener;
 import de.cuuky.varo.listener.EntityDamageByEntityListener;
 import de.cuuky.varo.listener.EntityDamageListener;
 import de.cuuky.varo.listener.FancyEffectListener;

@@ -7,7 +7,6 @@ import com.cryptomorin.xseries.XMaterial;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.gui.VaroInventory;
-import de.cuuky.varo.gui.admin.discordbot.botregister.BotRegisterListGUI;
 import de.varoplugin.cfw.item.ItemBuilder;
 
 public class DiscordBotGUI extends VaroInventory {

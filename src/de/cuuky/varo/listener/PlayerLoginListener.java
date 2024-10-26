@@ -14,13 +14,13 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
-import de.cuuky.varo.bot.discord.register.BotRegister;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
-import de.cuuky.varo.entity.player.stats.KickResult;
-import de.cuuky.varo.entity.player.stats.stat.PlayerState;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.stats.KickResult;
+import de.cuuky.varo.player.stats.stat.PlayerState;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.UserSnowflake;

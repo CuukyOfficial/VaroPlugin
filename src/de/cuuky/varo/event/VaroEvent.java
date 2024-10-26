@@ -13,7 +13,7 @@ import de.cuuky.varo.event.events.MassRecordingVaroEvent;
 import de.cuuky.varo.event.events.MoonGravityVaroEvent;
 import de.cuuky.varo.event.events.PoisonRainVaroEvent;
 import de.cuuky.varo.event.events.PoisonWaterVaroEvent;
-import de.cuuky.varo.game.state.GameState;
+import de.cuuky.varo.game.GameState;
 
 public abstract class VaroEvent {
 

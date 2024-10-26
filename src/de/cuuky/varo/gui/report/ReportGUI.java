@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.gui.VaroListInventory;
+import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.report.Report;
 import de.cuuky.varo.report.ReportReason;
 import de.varoplugin.cfw.inventory.ItemClick;

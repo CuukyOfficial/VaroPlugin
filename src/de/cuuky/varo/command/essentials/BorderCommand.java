@@ -9,8 +9,8 @@ import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.game.world.VaroWorldHandler;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 

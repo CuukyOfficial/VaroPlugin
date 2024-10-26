@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import de.cuuky.varo.bot.discord.DiscordBotCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;

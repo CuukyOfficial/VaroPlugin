@@ -10,9 +10,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.utils.EventUtils;
 
 public class EntityDamageByEntityListener implements Listener {

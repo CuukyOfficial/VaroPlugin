@@ -2,8 +2,8 @@ package de.cuuky.varo.listener.helper;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class TeamChat {
 

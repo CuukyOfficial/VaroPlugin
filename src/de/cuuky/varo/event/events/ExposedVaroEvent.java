@@ -14,9 +14,9 @@ import org.bukkit.scheduler.BukkitTask;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
+import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.version.VersionUtils;
 
 public class ExposedVaroEvent extends VaroEvent {

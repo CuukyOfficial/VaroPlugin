@@ -2,7 +2,6 @@ package de.cuuky.varo.game;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.game.start.AutoStart;
-import de.cuuky.varo.game.state.GameState;
 import de.cuuky.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.cuuky.varo.serialize.VaroSerializeObject;
 

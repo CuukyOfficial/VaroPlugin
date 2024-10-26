@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.varo.Main;
-import de.cuuky.varo.entity.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class LanguageCommand implements CommandExecutor {
 
