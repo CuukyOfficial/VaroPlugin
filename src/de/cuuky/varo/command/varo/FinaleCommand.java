@@ -18,11 +18,18 @@ public class FinaleCommand extends VaroCommand {
 
     @Override
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-        if (args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart") && !args[0].equalsIgnoreCase("abort") && !args[0].equalsIgnoreCase("abbruch") && !!args[0].equalsIgnoreCase("abbrechen") && !!args[0].equalsIgnoreCase("stop"))) {
+        if (args.length == 0 || (!args[0].equalsIgnoreCase("joinstart") && !args[0].equalsIgnoreCase("hauptstart")
+                && !args[0].equalsIgnoreCase("mainstart") && !args[0].equalsIgnoreCase("abort") && !args[0].equalsIgnoreCase("abbruch")
+                && !args[0].equalsIgnoreCase("abbrechen") && !args[0].equalsIgnoreCase("stop"))) {
             sender.sendMessage(Main.getPrefix() + Main.getProjectName() + " §7Finale Befehle:");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale joinStart");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale hauptStart [Countdown]");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " finale abort");
+            return;
+        }
+
+        if (!Main.getVaroGame().isRunning()) {
+            sender.sendMessage(Main.getPrefix() + "Das Spiel wurde noch nicht gestartet.");
             return;
         }
 
@@ -82,6 +89,10 @@ public class FinaleCommand extends VaroCommand {
         } else if (args[0].equalsIgnoreCase("abort") || args[0].equalsIgnoreCase("abbruch") || args[0].equalsIgnoreCase("abbrechen") || args[0].equalsIgnoreCase("stop")) {
             if (Main.getVaroGame().isFinale()) {
                 sender.sendMessage(Main.getPrefix() + "Das Finale wurde bereits gestartet.");
+                return;
+            }
+            if (!Main.getVaroGame().isFinaleJoin()) {
+                sender.sendMessage(Main.getPrefix() + "Der Finale-Start wurde noch nicht aktiviert.");
                 return;
             }
 

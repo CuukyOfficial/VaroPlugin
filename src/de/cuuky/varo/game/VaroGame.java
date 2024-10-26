@@ -70,14 +70,14 @@ public class VaroGame implements VaroSerializeable {
 
     @VaroSerializeField(path = "lobby")
     private Location lobby;
-    
+
     @VaroSerializeField(path = "projectTime")
     private long projectTime;
 
     private boolean finaleJoin;
     private BukkitTask finaleStartScheduler;
     private int finaleCountdown;
-    
+
     private boolean firstTime;
     private VaroMainHeartbeatThread mainThread;
     private VaroStartThread startThread;
@@ -137,14 +137,14 @@ public class VaroGame implements VaroSerializeable {
         }
 
         this.setProjectTime(0L);
-        
+
         if (borderMinuteTimer != null)
             borderMinuteTimer.remove();
 
         this.lastDayTimer = new Date();
         (startThread = new VaroStartThread()).runTaskTimer(Main.getInstance(), 0, 20);
     }
-    
+
     public void start() {
         this.setGamestate(GameState.STARTED);
 
@@ -179,22 +179,22 @@ public class VaroGame implements VaroSerializeable {
                 setFirstTime(false);
             }
         }.runTaskLater(Main.getInstance(), this.getPlayTime() * 60 * 20); // TODO this does not work when PLAY_TIME is -1
-        
+
         if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean())
-        	new BukkitRunnable() {
-				
-				@Override
-				public void run() {
-					// Copy the list to avoid ConcurrentModificationException
-					// This is only executed once anyway so performance doen't really matter
-					for (VaroPlayer player : VaroPlayer.getVaroPlayers().toArray(new VaroPlayer[0]))
-						if (player.getStats().getYoutubeLink() != null) {
-							List<YouTubeVideo> videos = YouTubeCheck.loadNewVideos(player);
-							if (videos != null)
-								player.getStats().getVideos().addAll(videos);
-						}
-				}
-			}.runTaskAsynchronously(Main.getInstance());
+            new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                // Copy the list to avoid ConcurrentModificationException
+                // This is only executed once anyway so performance doen't really matter
+                for (VaroPlayer player : VaroPlayer.getVaroPlayers().toArray(new VaroPlayer[0]))
+                    if (player.getStats().getYoutubeLink() != null) {
+                        List<YouTubeVideo> videos = YouTubeCheck.loadNewVideos(player);
+                        if (videos != null)
+                            player.getStats().getVideos().addAll(videos);
+                    }
+            }
+        }.runTaskAsynchronously(Main.getInstance());
     }
 
     public void abort() {
@@ -203,7 +203,7 @@ public class VaroGame implements VaroSerializeable {
 
         startThread = null;
     }
-    
+
     public void restart() {
         this.setGamestate(GameState.LOBBY);
         // TODO maybe reset some stuff ???
@@ -295,6 +295,9 @@ public class VaroGame implements VaroSerializeable {
     }
 
     private void startFinale() {
+        if (!this.isRunning() || this.isFinale())
+            throw new IllegalStateException(this.getGameState().name());
+
         this.setGamestate(GameState.FINALE);
 
         Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
@@ -328,6 +331,12 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void startFinaleCountdown(int countdown) {
+        if (!this.isRunning() || this.isFinale())
+            throw new IllegalStateException(this.getGameState().name());
+
+        if (this.finaleStartScheduler != null)
+            throw new IllegalStateException();
+
         if (countdown != 0) {
             if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
                 for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
@@ -340,6 +349,11 @@ public class VaroGame implements VaroSerializeable {
             this.finaleStartScheduler = new BukkitRunnable() {
                 @Override
                 public void run() {
+                    if (!VaroGame.this.isRunning() || VaroGame.this.isFinale() || VaroGame.this.finaleStartScheduler == null) {
+                        abortFinaleStart();
+                        return;
+                    }
+
                     if (VaroGame.this.finaleCountdown != 0) {
                         Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + VaroGame.this.finaleCountdown + " Sekunden!");
                     } else {
@@ -355,6 +369,9 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void startFinaleJoin() {
+        if (!this.isRunning() || this.isFinale())
+            throw new IllegalStateException(this.getGameState().name());
+
         if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
             for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
                 if (!player.getPlayer().isOp())
@@ -367,8 +384,10 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void abortFinaleStart() {
-        if (this.finaleStartScheduler != null)
+        if (this.finaleStartScheduler != null) {
             this.finaleStartScheduler.cancel();
+            this.finaleStartScheduler = null;
+        }
         for (VaroPlayer player : VaroPlayer.getVaroPlayers())
             if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean())
                 VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
@@ -394,24 +413,24 @@ public class VaroGame implements VaroSerializeable {
     public GameState getGameState() {
         return gamestate;
     }
-    
+
     private void setGamestate(GameState gamestate) {
         this.gamestate = gamestate;
         VaroUtils.updateWorldTime();
     }
-    
+
     public boolean hasStarted() {
         return gamestate != GameState.LOBBY;
     }
-    
+
     public boolean isRunning() {
         return this.gamestate == GameState.STARTED || this.gamestate == GameState.FINALE;
     }
-    
+
     public boolean isFinale() {
         return this.gamestate == GameState.FINALE;
     }
-    
+
     public boolean hasEnded() {
         return this.gamestate == GameState.END;
     }
@@ -435,11 +454,11 @@ public class VaroGame implements VaroSerializeable {
     public Location getLobby() {
         return lobby;
     }
-    
+
     public long getProjectTime() {
         return this.projectTime;
     }
-    
+
     public void setProjectTime(long projectTime) {
         this.projectTime = projectTime;
     }
@@ -455,7 +474,7 @@ public class VaroGame implements VaroSerializeable {
     public boolean isStarting() {
         return startThread != null;
     }
-    
+
     public int getPlayTime() {
         return this.isFinale() || this.isFinaleJoin() ? -1 : ConfigSetting.PLAY_TIME.getValueAsInt();
     }
