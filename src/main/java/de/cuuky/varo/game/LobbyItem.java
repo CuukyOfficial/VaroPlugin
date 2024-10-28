@@ -66,6 +66,8 @@ public class LobbyItem {
                     event.setCancelled(true);
                     player.updateInventory();
                 }));
+
+        giveOrRemoveTeamItems(varoPlayer);
     }
 
     public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
