@@ -15,7 +15,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.config.ScoreboardConfig;
 import de.cuuky.varo.configuration.configurations.config.TablistConfig;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.game.LobbyItem;
 import de.cuuky.varo.game.VaroGameHandler;
 import de.cuuky.varo.list.VaroList;
@@ -88,7 +87,7 @@ public class DataManager {
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
 		if (!Main.getVaroGame().hasStarted())
-			VaroPlayer.getOnlinePlayer().forEach(LobbyItem::giveOrRemoveTeamItems);
+			VaroPlayer.getOnlinePlayer().forEach(LobbyItem::giveItems);
 		this.spawnHandler = new SpawnHandler();
 		this.reportHandler = new ReportHandler();
 		this.alertHandler = new AlertHandler();
