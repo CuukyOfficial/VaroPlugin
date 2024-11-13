@@ -8,8 +8,8 @@ import org.bukkit.command.CommandSender;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.data.BugReport;
 import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.recovery.recoveries.BugReport;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
 
 public class BugreportCommand extends VaroCommand {

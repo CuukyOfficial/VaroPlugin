@@ -34,7 +34,6 @@ public class ConfigCommand extends VaroCommand {
 
 		if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
 			Main.getDataManager().reloadConfig();
-			Main.getDataManager().reloadPlayerClients();
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_CONFIG_RELOADED.getValue(vp));
 		} else if (args[0].equalsIgnoreCase("set")) {
 			if (args.length != 3) {

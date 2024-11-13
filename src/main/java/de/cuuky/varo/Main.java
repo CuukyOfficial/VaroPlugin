@@ -18,12 +18,12 @@ import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
+import de.cuuky.varo.data.BugReport;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
 import de.cuuky.varo.data.Dependencies;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
-import de.cuuky.varo.recovery.recoveries.BugReport;
 import de.cuuky.varo.spigot.VaroUpdater;
 import de.cuuky.varo.threads.SmartLagDetector;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
@@ -164,7 +164,7 @@ public class Main extends JavaPlugin {
 
 		if (dataManager != null && !this.failed) {
 			System.out.println(CONSOLE_PREFIX + "Saving data...");
-			dataManager.save();
+			dataManager.saveSync();
 		}
 
 		if (botLauncher != null && (botLauncher.getDiscordbot() != null || botLauncher.getTelegrambot() != null)) {

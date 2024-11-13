@@ -11,7 +11,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.player.VaroPlayer;
-import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.spigot.FileDownloader;
 import de.cuuky.varo.spigot.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
@@ -72,9 +71,18 @@ public class UpdateCommand extends VaroCommand {
 		if (result == UpdateResult.UPDATE_AVAILABLE || result == UpdateResult.MAJOR_UPDATE_AVAILABLE) {
 			sender.sendMessage(Main.getPrefix() + "§7Update wird installiert...");
 			sender.sendMessage(Main.getPrefix() + "§7Backup wird erstellt...");
-			new VaroBackup();
-			sender.sendMessage(Main.getPrefix() + "§7Unter Umstaenden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
-			update(sender, oldFileName, resetOldDirectory);
+			
+			String _oldFileName = oldFileName;
+			boolean _resetOldDirectory = resetOldDirectory;
+			Main.getDataManager().createBackup(backup -> {
+			    if (backup == null) {
+			        sender.sendMessage(Main.getPrefix() + "§cFehler beim erstellen des Backups");
+			        return;
+			    }
+
+			    sender.sendMessage(Main.getPrefix() + "§7Unter Umstaenden wird nicht die neuste Version heruntergeladen, sollte dies der Fall sein, installieren die neue Version bitte manuell.");
+	            update(sender, _oldFileName, _resetOldDirectory);
+			});
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7Das Plugin ist bereits auf dem neuesten Stand!");
 		}

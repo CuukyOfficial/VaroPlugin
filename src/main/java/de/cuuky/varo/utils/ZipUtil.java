@@ -19,17 +19,26 @@
 package de.cuuky.varo.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
 
-    public static boolean zip(File zipFile, File folder, Predicate<String> includeCallback) {
+    public static boolean zip(File zipFile, File source) {
+        return zip(zipFile, source, __ -> true);
+    }
+
+    public static boolean zip(File zipFile, File source, Predicate<String> includeCallback) {
         try {
             if (!zipFile.exists()) {
                 if (!zipFile.getParentFile().exists())
@@ -38,7 +47,7 @@ public class ZipUtil {
             }
             try (FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
                     ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream, StandardCharsets.UTF_8)) {
-                zip(zipOutputStream, null, folder, includeCallback);
+                zip(zipOutputStream, null, source, includeCallback);
             }
             return true;
         } catch (IOException e) {
@@ -63,4 +72,41 @@ public class ZipUtil {
         }
     }
 
+    public static boolean unzip(File zipFile, File destination) {
+        return unzip(zipFile, destination, __ -> true);
+    }
+
+    public static boolean unzip(File zipFile, File destination, Predicate<String> includeCallback) {
+        try {
+            Path destinationPath = Paths.get(destination.getPath()).normalize();
+            try (FileInputStream fileInputStream = new FileInputStream(zipFile);
+                    ZipInputStream zipInputStream = new ZipInputStream(fileInputStream, StandardCharsets.UTF_8)) {
+                ZipEntry entry;
+                while ((entry = zipInputStream.getNextEntry()) != null) {
+                    if (!includeCallback.test(entry.getName()))
+                        continue;
+
+                    File file = new File(destination, entry.getName());
+                    if (!Paths.get(file.getPath()).normalize().startsWith(destinationPath))
+                        return false;
+
+                    if (entry.isDirectory()) {
+                        if (!file.exists())
+                            file.mkdirs();
+                    } else {
+                        File parent = file.getParentFile();
+                        if (!parent.exists())
+                            parent.mkdirs();
+                        if (!file.exists())
+                            file.createNewFile();
+                        Files.copy(zipInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

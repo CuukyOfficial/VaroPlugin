@@ -9,8 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.game.GameState;
-import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.threads.daily.checks.BloodLustCheck;
 import de.cuuky.varo.threads.daily.checks.CoordsCheck;
 import de.cuuky.varo.threads.daily.checks.NoJoinCheck;
@@ -69,7 +67,7 @@ public final class DailyTimer {
 				try {
 				    System.out.println(Main.getConsolePrefix() + "Running daily timer...");
 				    
-					new VaroBackup();
+					Main.getDataManager().createBackup(null);
 					Main.getVaroGame().setLastDayTimer(new Date());
 
 					if (Main.getVaroGame().isRunning())

@@ -1,4 +1,4 @@
-package de.cuuky.varo.recovery.recoveries;
+package de.cuuky.varo.data;
 
 import java.io.File;
 import java.text.DateFormat;

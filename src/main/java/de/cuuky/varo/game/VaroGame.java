@@ -37,7 +37,6 @@ import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.PlayerState;
 import de.cuuky.varo.player.stats.stat.YouTubeVideo;
-import de.cuuky.varo.recovery.recoveries.VaroBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.cuuky.varo.spawns.sort.PlayerSort;
@@ -108,7 +107,7 @@ public class VaroGame implements VaroSerializeable {
         if (hasStarted() || isStarting())
             return;
 
-        new VaroBackup();
+        Main.getDataManager().createBackup(null);
 
         if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
             removeAbsentAtStart();

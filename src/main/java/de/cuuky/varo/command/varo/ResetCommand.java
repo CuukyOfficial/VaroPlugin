@@ -50,7 +50,7 @@ public class ResetCommand extends VaroCommand {
 
 		// Wait to ensure the players are actually disconnected
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-		    Main.getDataManager().save();
+		    Main.getDataManager().saveSync();
 	        List<Integer> success = new ArrayList<>();
 	        List<File> toDelete = new ArrayList<>();
 	        for (String arg : args) {
