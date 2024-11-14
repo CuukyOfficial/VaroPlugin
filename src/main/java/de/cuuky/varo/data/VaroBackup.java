@@ -8,7 +8,7 @@ import java.util.Date;
 
 import de.cuuky.varo.utils.ZipUtil;
 
-public class VaroBackup {
+public class VaroBackup implements Comparable<VaroBackup> {
     
     static final String BACKUP_DIRECTORY = "plugins/Varo/backups";
     
@@ -62,4 +62,9 @@ public class VaroBackup {
 	private static boolean includeCallback(String path) {
 	    return Arrays.stream(INCLUDED_PATHS).anyMatch(path::startsWith);
 	}
+
+    @Override
+    public int compareTo(VaroBackup o) {
+        return o.displayName.compareTo(this.displayName);
+    }
 }

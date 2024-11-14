@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
@@ -65,7 +67,7 @@ public class DataManager {
 	private Broadcaster broadcaster;
 	private DailyTimer dailyTimer;
 	private CustomCommandManager customCommandManager;
-	private final List<VaroBackup> backups = new ArrayList<>();
+	private final SortedSet<VaroBackup> backups = new TreeSet<>();
 
 	private boolean doSave;
 
