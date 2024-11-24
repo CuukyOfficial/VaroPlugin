@@ -1,0 +1,20 @@
+game:
+  start:
+    countdown: "<projectname>§7 starts in <colorcode><start-countdown>§7 second<if_eq:1:<start-countdown>::s>!"
+
+player:
+  join:
+    broadcast: "<prefix>§a<name>§7 has entered the server!"
+    required: "<prefix><num-required> more players are required to start!"
+    finale: "<prefix>§a<name>§7 has entered the server for the finale!"
+    protection: "<prefix>§a<name>§7 has entered the server and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
+    protectionEnd: "<prefix>§a<name>§7 is now vulnerable!"
+    spectator: "<prefix>§a<name>§7 has entered the server as a spectator!"
+    massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
+    remainingTime: "<prefix>§a<name>§7 left the server too early and has <colorcode><seconds>§7 seconds left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
+  moveProtection: "<prefix>You cannot move until your <colorcode>protection§7 has expired!"
+    
+finale:
+  start:
+    freeze: "<prefix>The finale is about to begin! All players have been freezed!"
+    noFreeze: "<prefix>The finale is about to begin!"

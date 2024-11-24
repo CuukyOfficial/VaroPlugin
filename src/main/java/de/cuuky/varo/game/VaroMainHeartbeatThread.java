@@ -8,6 +8,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
@@ -65,7 +66,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					int countdown = Math.max(vp.getStats().getCountdown() - 1, 0);
 
 					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) // TODO this does not work when playTime is set to -1
-						Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER, vp);
+						Messages.PLAYER_JOIN_PROTECTION_END.broadcast(vp);
 
 					if (countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
 						if (countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {

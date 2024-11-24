@@ -1,6 +1,7 @@
 package de.cuuky.varo.data;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ import de.cuuky.varo.alert.AlertHandler;
 import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.command.custom.CustomCommandManager;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ActionbarConfig;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -41,6 +43,8 @@ import de.cuuky.varo.utils.VaroUtils;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
+import io.github.almightysatan.slams.InvalidTypeException;
+import io.github.almightysatan.slams.MissingTranslationException;
 
 public class DataManager {
 
@@ -107,6 +111,12 @@ public class DataManager {
 		this.customCommandManager = new CustomCommandManager();
 		
 		this.loadBackups();
+		
+		try {
+            Messages.load();
+        } catch (MissingTranslationException | InvalidTypeException | IOException e) {
+            e.printStackTrace(); // TODO
+        }
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
 				&& !VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))

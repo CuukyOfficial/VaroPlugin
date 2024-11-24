@@ -8,9 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.player.VaroPlayer;
@@ -46,7 +46,7 @@ public class PlayerMoveListener implements Listener {
 
 			if (vp.isInProtection()) {
 				event.setTo(from);
-				vp.sendMessage(ConfigMessages.JOIN_NO_MOVE_IN_PROTECTION);
+				Messages.PLAYER_MOVE_PROTECTION.send(vp);
 				return;
 			}
 		}

@@ -8,12 +8,14 @@ import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.game.VaroStartEvent;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.utils.EventUtils;
 import de.varoplugin.cfw.version.VersionUtils;
+import io.github.almightysatan.slams.Placeholder;
 
 public class VaroStartThread extends BukkitRunnable {
 
@@ -35,7 +37,7 @@ public class VaroStartThread extends BukkitRunnable {
 		VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 		if (startcountdown != 0)
-			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_START_COUNTDOWN).replace("%countdown%", startcountdown == 1 ? "einer" : String.valueOf(startcountdown));
+		    Messages.GAME_START_COUNTDOWN.broadcast(Placeholder.constant("start-countdown", String.valueOf(this.startcountdown)));
 
 		if (startcountdown == ConfigSetting.STARTCOUNTDOWN.getValueAsInt() || startcountdown == 1) {
 			for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {

@@ -9,12 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.game.LobbyItem;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
@@ -27,6 +27,7 @@ import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.utils.MagmaUtils;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.VersionUtils;
+import io.github.almightysatan.slams.Placeholder;
 
 public class PlayerJoinListener implements Listener {
 
@@ -94,7 +95,7 @@ public class PlayerJoinListener implements Listener {
 				if (VaroPlayer.getOnlineAndAlivePlayer().size() >= ConfigSetting.START_AT_PLAYERS.getValueAsInt())
 					Main.getVaroGame().prepareStart();
 				else
-					Bukkit.broadcastMessage(ConfigMessages.JOIN_PLAYERS_REQUIRED.getValue().replace("%required%", String.valueOf(ConfigSetting.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size())));
+				    Messages.PLAYER_JOIN_REQUIRED.broadcast(Placeholder.constant("num-required", String.valueOf(ConfigSetting.START_AT_PLAYERS.getValueAsInt() - VaroPlayer.getOnlineAndAlivePlayer().size())));
 			}
 		} else {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
@@ -104,25 +105,25 @@ public class PlayerJoinListener implements Listener {
 			}
 
 			if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_SPECTATOR, vplayer);
+			    Messages.PLAYER_JOIN_SPECTATOR.broadcast(vplayer);
 			} else if (Main.getVaroGame().isFinaleJoin()) {
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_FINALE, vplayer);
+				Messages.PLAYER_JOIN_FINALE.broadcast(vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer), vplayer.getRealUUID());
 				if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
-    				vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER);
+				    Messages.FINALE_START_FREEZE.send(vplayer);
     				if (!player.isOp())
     					new VaroCancelable(CancelableType.FREEZE, vplayer);
 				} else
-				    vplayer.sendMessage(ConfigMessages.JOIN_FINALE_PLAYER_NO_FREEZE);
+				    Messages.FINALE_START_NOFREEZE.send(vplayer);
 			} else if (!Main.getVaroGame().isPlayTimeLimited()) {
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MESSAGE, vplayer);
+			    Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer), vplayer.getRealUUID());
 			} else if (massRecording.isEnabled()) {
 				vplayer.getStats().setCountdown(massRecording.getTimer());
 
 				if (!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MASS_RECORDING, vplayer);
+					Messages.PLAYER_JOIN_MASS_RECORDING.broadcast(vplayer);
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(null, vplayer), vplayer.getRealUUID());
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
@@ -130,23 +131,23 @@ public class PlayerJoinListener implements Listener {
 						@Override
 						public void run() {
 							vplayer.setinMassProtectionTime(false);
-							Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_OVER, vplayer);
+							Messages.PLAYER_JOIN_PROTECTION_END.broadcast(vplayer);
 						}
 					}.runTaskLater(Main.getInstance(), ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME, vplayer);
+				    Messages.PLAYER_JOIN_REMAINING_TIME.broadcast(vplayer);
 					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer), vplayer.getRealUUID());
 				}
 			} else if (!vplayer.getStats().hasTimeLeft()) {
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_PROTECTION_TIME, vplayer);
+			    Messages.PLAYER_JOIN_PROTECTION.broadcast(vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(null, vplayer), vplayer.getRealUUID());
 			} else {
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_WITH_REMAINING_TIME, vplayer);
+			    Messages.PLAYER_JOIN_REMAINING_TIME.broadcast(vplayer);
 				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer), vplayer.getRealUUID());
 			}
 			return;
 		}
 
-		Main.getLanguageManager().broadcastMessage(ConfigMessages.JOIN_MESSAGE, vplayer);
+		Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
 	}
 }
