@@ -30,7 +30,7 @@ import de.cuuky.varo.logger.VaroLoggerManager;
 import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerHandler;
-import de.cuuky.varo.preset.DefaultPresetLoader;
+import de.cuuky.varo.preset.PresetLoader;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
@@ -86,7 +86,7 @@ public class DataManager {
 		this.defaultNameTagGroup = new NameTagGroup();
 		this.spectatorNameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
-		new DefaultPresetLoader();
+		PresetLoader.copyDefaultPresets();
 	}
 
 	public void load() {
