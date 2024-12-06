@@ -59,7 +59,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.luckperms:api:5.4")
 
-	runtimeDownload("com.github.cryptomorin:XSeries:11.3.0")
+	runtimeDownload("com.github.cryptomorin:XSeries:12.0.0")
 	runtimeDownload("com.google.guava:guava:33.3.0-jre")
     runtimeDownload("com.google.code.gson:gson:2.10.1")
     runtimeDownload("net.dv8tion:JDA:5.2.1") {
