@@ -2,37 +2,27 @@ package de.cuuky.varo.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.listener.helper.ChatMessage;
 import de.cuuky.varo.listener.helper.TeamChat;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 import de.cuuky.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 
 public class PlayerChatListener implements Listener {
 	
 	private static final String AD_REGEX = "(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.](d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v|t\\s*o)).*";
 	private static final String AD_REGEX_AGRESSIVE = "(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v|t\\s*o)).*";
 
-	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
-		if (vp.getStats().getYoutubeLink() == null) {
-			event.setCancelled(false);
-			event.setFormat(msg);
-			return;
-		}
-
-		for (VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
-			vpo.getVersionAdapter().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
-		event.setCancelled(true);
-	}
-
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		if (event.isCancelled())
 			return;
@@ -82,7 +72,7 @@ public class PlayerChatListener implements Listener {
 		}
 
 		if (VaroCancelable.getCancelable(vp, CancelableType.MUTE) != null) {
-			vp.sendMessage(ConfigMessages.CHAT_MUTED);
+			Messages.CHAT_MUTED.send(vp);
 			event.setCancelled(true);
 			return;
 		}
@@ -102,7 +92,7 @@ public class PlayerChatListener implements Listener {
 			}
 
 			if (!Main.getVaroGame().hasStarted() && !ConfigSetting.CAN_CHAT_BEFORE_START.getValueAsBoolean()) {
-				vp.sendMessage(ConfigMessages.CHAT_WHEN_START);
+				Messages.CHAT_START.send(vp);
 				event.setCancelled(true);
 				return;
 			}
@@ -110,28 +100,14 @@ public class PlayerChatListener implements Listener {
 			message = message.replace("&", "§");
 
 		if (!ConfigSetting.SPECTATOR_CHAT.getValueAsBoolean() && vp.getStats().isSpectator() && !player.hasPermission("varo.spectatorchat")) {
-			vp.sendMessage(ConfigMessages.CHAT_SPECTATOR);
+			Messages.CHAT_SPECTATOR.send(vp);
 			event.setCancelled(true);
 			return;
 		}
 
 		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player, null, message);
 
-		String messageFormat = "";
-		if (vp.getTeam() != null) {
-			if (vp.getRank() == null) {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM.getValue(null, vp);
-			} else {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITH_TEAM_RANK.getValue(null, vp);
-			}
-		} else {
-			if (vp.getRank() == null) {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM.getValue(null, vp);
-			} else {
-				messageFormat = ConfigMessages.CHAT_PLAYER_WITHOUT_TEAM_RANK.getValue(null, vp);
-			}
-		}
-
-		sendMessageToAll(messageFormat.replace("%message%", message), vp, event);
+		event.setCancelled(true);
+        Messages.CHAT_DEFAULT.broadcast(vp, Placeholder.constant("message", message), vp.getStats().getYoutubeLink());
 	}
 }

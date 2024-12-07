@@ -1,9 +1,10 @@
 package de.cuuky.varo.listener.helper;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.logger.logger.ChatLogger.ChatLogType;
 import de.cuuky.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 
 public class TeamChat {
 
@@ -17,7 +18,7 @@ public class TeamChat {
 		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.TEAM_CHAT, player.getPlayer(), "#" + player.getTeam().getName(), message);
 		for (VaroPlayer pl : player.getTeam().getMember()) {
 			if (!pl.isOnline()) continue;
-			pl.sendMessage(ConfigMessages.CHAT_TEAMCHAT_FORMAT).replace("%message%", message).replace("%from%", player.getName());
+			Messages.CHAT_TEAM.send(pl, player, Placeholder.constant("message", message));
 		}
 	}
 }

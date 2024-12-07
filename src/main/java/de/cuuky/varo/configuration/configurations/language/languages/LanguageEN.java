@@ -54,16 +54,6 @@ public enum LanguageEN implements LoadableMessage {
     BORDER_DISTANCE("border.distanceToBorder", "&7Distance to border: %colorcode%%size% &7blocks"),
     BORDER_COMMAND_SET_BORDER("border.borderSet", "&7The border was set to %colorcode%%size% &7!"),
 
-    CHAT_PLAYER_WITH_TEAM("chat.format.withTeam", "%colorcode%%team% &8| &7%player% &8» &f%message%"),
-    CHAT_PLAYER_WITH_TEAM_RANK("chat.format.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player% &8» &f%message%"),
-    CHAT_PLAYER_WITHOUT_TEAM("chat.format.withoutTeam", "&7%player% &8» &f%message%"),
-    CHAT_PLAYER_WITHOUT_TEAM_RANK("chat.format.withoutTeamWithRank", "&7%rank% &8| &7%player% &8» &f%message%"),
-
-    CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %player% &8» &f%message%"),
-    CHAT_MUTED("chat.muted", "&7You have been muted!"),
-    CHAT_WHEN_START("chat.chatOnStart", "&7You can only write again after the start!"),
-    CHAT_SPECTATOR("chat.spectatorChat", "&7Chat is disabled for Spectators!"),
-
     COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7This player is on your team!"),
     COMBAT_IN_FIGHT("combat.inFight", "&7You are now in combat, do &4NOT &7log &7out!"),
     COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7has left the server during a fight!"),

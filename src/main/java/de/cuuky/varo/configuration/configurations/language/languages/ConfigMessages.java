@@ -57,16 +57,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	BORDER_DISTANCE("border.distanceToBorder", "&7Distanz zur Border: %colorcode%%size% &7Blöcke"),
 	BORDER_COMMAND_SET_BORDER("border.borderSet", "&7Die Border wurde auf %colorcode%%size% &7gesetzt!"),
 
-	CHAT_PLAYER_WITH_TEAM("chat.format.withTeam", "%colorcode%%team% &8| &7%player% &8» &f%message%"),
-	CHAT_PLAYER_WITH_TEAM_RANK("chat.format.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player% &8» &f%message%"),
-	CHAT_PLAYER_WITHOUT_TEAM("chat.format.withoutTeam", "&7%player% &8» &f%message%"),
-	CHAT_PLAYER_WITHOUT_TEAM_RANK("chat.format.withoutTeamWithRank", "&7%rank% &8| &7%player% &8» &f%message%"),
-
-	CHAT_TEAMCHAT_FORMAT("chat.teamchatFormat", "&7[%team%&7] %from% &8» &f%message%"),
-	CHAT_MUTED("chat.muted", "&7Du wurdest gemutet!"),
-	CHAT_WHEN_START("chat.chatOnStart", "&7Du kannst erst ab dem Start wieder schreiben!"),
-	CHAT_SPECTATOR("chat.spectatorChat", "&7Der Chat ist für Spectator deaktiviert!"),
-
 	COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT("combat.inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),
 	COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7hat den Server während eines Kampfes verlassen!"),
