@@ -27,6 +27,7 @@ import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
@@ -50,6 +51,7 @@ import de.varoplugin.cfw.player.SafeTeleport;
 import de.varoplugin.cfw.player.hud.AnimatedActionbar;
 import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
 import de.varoplugin.cfw.player.hud.AnimatedTablist;
+import de.varoplugin.cfw.player.hud.AnimationData;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.ServerVersion;
@@ -588,12 +590,39 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
 
 			if (ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
-				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, Main.getDataManager().getScoreboardConfig().getTitle(), Main.getDataManager().getScoreboardConfig().getScoreboard()) {
-					@Override
-					protected String processString(String input) {
-						return VaroPlayer.this.replacePlaceHolders(input);
-					}
-				};
+				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, new AnimationData<String>() {
+                    
+                    @Override
+                    public int getNumFrames() {
+                        return Messages.PLAYER_SCOREBOARD_TITLE.size(VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public String getFrame(int index) {
+                        return Messages.PLAYER_SCOREBOARD_TITLE.value(index, VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public int getDelay() {
+                        return Main.getDataManager().getScoreboardConfig().getTitle().getDelay(); // TODO
+                    }
+                }, new AnimationData<String[]>() {
+                    
+                    @Override
+                    public int getNumFrames() {
+                        return Messages.PLAYER_SCOREBOARD_CONTENT.size(VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public String[] getFrame(int index) {
+                        return Messages.PLAYER_SCOREBOARD_CONTENT.value(index, VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public int getDelay() {
+                        return Main.getDataManager().getScoreboardConfig().getScoreboard().getDelay(); // TODO
+                    }
+                });
 				this.scoreboard.setEnabled(this.stats.isShowScoreboard());
 			}
 
@@ -663,6 +692,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			team.getNameTagGroup().unRegister(player);
 	}
 
+	@Deprecated
 	private String replacePlaceHolders(String input) {
 		return Main.getLanguageManager().replaceMessage(input, VaroPlayer.this);
 	}

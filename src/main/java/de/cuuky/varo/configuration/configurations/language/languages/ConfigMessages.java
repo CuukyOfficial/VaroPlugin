@@ -137,8 +137,8 @@ public enum ConfigMessages implements DefaultLanguage {
 	NOPERMISSION_NOT_ALLOWED_CRAFT("nopermission.notAllowedCraft", "&7Das darfst du nicht craften, benutzen oder brauen!"),
 	NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7Niedriger darfst du nicht fliegen!"),
 
-	PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "-"),
-	PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "-"),
+	PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "-"), // TODO delete this
+	PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "-"), // TODO delete this
 
 	PROTECTION_NO_MOVE_START("protection.noMoveStart", "&7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
 	PROTECTION_START("protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),

@@ -18,6 +18,7 @@
 
 package de.cuuky.varo.config.language;
 
+import java.util.Collections;
 import java.util.function.Function;
 
 import de.cuuky.varo.Main;
@@ -40,8 +41,8 @@ public final class Placeholders {
                 .constant("projectname", Main.getProjectName())
                 .constant("colorcode", Main.getColorCode())
                 .constant("discord", ConfigSetting.DISCORDBOT_INVITELINK.getValueAsString())
-                .variable("registered", () -> "TODO")
-                .variable("remaining", () -> "TODO")
+                .variable("players", () -> "TODO")
+                .variable("alive", () -> "TODO")
                 .variable("online", () -> "TODO")
                 .variable("project-hour", () -> String.format("%02d", Main.getVaroGame().getProjectTime() / 3600))
                 .variable("project-minute", () -> String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60))
@@ -52,9 +53,26 @@ public final class Placeholders {
                 .variable("spawn-y", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockY()))
                 .variable("spawn-z", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockZ()))
                 .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
+//                .withArgs("top-player", args -> {
+//                    if (args.size() != 2) return "INVALID_ARGS";
+//                    try {
+//                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(Integer.parseInt(args.get(0)));
+//                        return player.;
+//                    } catch (NumberFormatException e) {
+//                        return "INVALID_ARGS";
+//                    }
+//                })
                 // Misc
                 .constant("heart", "♥")
                 .constant("newline", "\n")
+                .withArgs("padding", args -> {
+                    if (args.size() != 1) return "INVALID_ARGS";
+                    try {
+                        return String.join("", Collections.nCopies(Integer.parseInt(args.get(0)), " "));
+                    } catch (NumberFormatException e) {
+                        return "INVALID_ARGS";
+                    }
+                })
                 .variable("year", () -> "TODO")
                 .variable("month", () -> "TODO")
                 .variable("day", () -> "TODO")
@@ -77,6 +95,11 @@ public final class Placeholders {
         builder.contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-");
         builder.contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-");
         builder.contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-");
+        builder.contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()));
+        builder.contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()));
+        builder.contextual("countdown-hour", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() / 3600));
+        builder.contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (ctx.getPlayer().getStats().getCountdown() / 60) % 60));
+        builder.contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() % 60));
         builder.namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
             onlineBuilder.contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()));
             onlineBuilder.contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()));

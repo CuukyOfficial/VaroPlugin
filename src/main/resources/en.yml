@@ -13,6 +13,41 @@ player:
     massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
     remainingTime: "<prefix>§a<name>§7 left the server too early and has <colorcode><seconds>§7 seconds left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
   moveProtection: "<prefix>You cannot move until your <colorcode>protection§7 has expired!"
+  scoreboard:
+    title:
+      - "<projectname>"
+    content:
+      - - "<padding:19>"
+        - "§7Team§8:"
+        - "<colorcode><team>"
+        - "<padding:1>"
+        - "§7Kills§8:"
+        - "<colorcode><kills>"
+        - "<padding:2>"
+        - "§7Time§8:"
+        - "<colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+        - "<padding:3>"
+        - "§7Online§8: <colorcode><online>"
+        - "§7Alive§8: <colorcode><alive>"
+        - "§7Players§8: <colorcode><players>"
+        - "§7Strikes§8: <colorcode><strikes>"
+        - "<padding:4>"
+      - - "<padding:19>"
+        - "§7Team§8:"
+        - "<colorcode><team>"
+        - "<padding:1>"
+        - "§7Kills§8:"
+        - "<colorcode><kills>"
+        - "<padding:2>"
+        - "§7Time§8:"
+        - "<colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+        - "<padding:3>"
+        - "§7Best Players§8:"
+        - "§71. <colorcode><top-player:1>"
+        - "§72. <colorcode><top-player:2>"
+        - "§73. <colorcode><top-player:3>"
+        - "<padding:4>"
+
     
 finale:
   start:
