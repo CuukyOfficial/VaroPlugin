@@ -39,6 +39,7 @@ public final class Placeholders {
                 .constant("varo-discord", Main.DISCORD_INVITE)
                 // Project
                 .constant("projectname", Main.getProjectName())
+                .constant("prefix", Main.getPrefix())
                 .constant("colorcode", Main.getColorCode())
                 .constant("discord", ConfigSetting.DISCORDBOT_INVITELINK.getValueAsString())
                 .variable("players", () -> "TODO")
@@ -89,9 +90,9 @@ public final class Placeholders {
 
     private static void addPlayerPlaceholders(PlaceholderResolver.Builder builder) {
         builder.contextual("name", PlayerContext.class, (ctx) -> ctx.getPlayer().getName())
+        .contextual("displayname", PlayerContext.class, (ctx) -> ctx.getPlayer().getDisplayName())
         .contextual("uuid", PlayerContext.class, (ctx) -> ctx.getPlayer().getUUID())
         .contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()))
-        .contextual("prefix", PlayerContext.class, (ctx) -> ctx.getPlayer().getPrefix())
         .contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-")
         .contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-")
         .contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-")

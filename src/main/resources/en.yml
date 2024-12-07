@@ -3,6 +3,7 @@ game:
     countdown: "<projectname>§7 starts in <colorcode><start-countdown>§7 second<if_eq:1:<start-countdown>::s>!"
 
 player:
+  displayname: "<if_ne:<rank>:-:§7<rank> §8| :><if_ne:<team>:-:<colorcode><team> §8| :>§7<name>"
   join:
     broadcast: "<prefix>§a<name>§7 has entered the server!"
     required: "<prefix><num-required> more players are required to start!"
@@ -72,7 +73,7 @@ player:
         - " "
         - "§7------------------------"
 chat:
-  default: "<if_ne:<rank>:-:§7<rank> §8| :><if_ne:<team>:-:<colorcode><team> §8| :>§7<name> §8» §f<message>"
+  default: "<displayname> §8» §f<message>"
   team: "§7[<team>§7] <name> §8» §f<message>"
   muted: "§7You have been muted!"
   spectator: "§7Chat is disabled for spectators!"

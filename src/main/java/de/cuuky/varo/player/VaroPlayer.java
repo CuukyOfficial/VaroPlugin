@@ -270,6 +270,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		varoplayer.add(this);
 	}
 
+	@Deprecated
 	public String getPrefix() {
 		String pr = "";
 		if (team != null)
@@ -438,6 +439,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getDisplayName() {
+	    return Messages.PLAYER_DISPLAYNAME.value(this);
 	}
 
 	public AnimatedScoreboard getScoreboard() {

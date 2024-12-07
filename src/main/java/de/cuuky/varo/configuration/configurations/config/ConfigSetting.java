@@ -207,7 +207,7 @@ public enum ConfigSetting implements SectionEntry {
 	PRE_PRODUCE_SESSIONS(ConfigSettingSection.JOIN_SYSTEMS, "preProduceSessions", 0, "FÜR BEIDE JOIN SYSTEME\nStellt ein, wie viele Folgen der Spieler zusaetzlich zu\nden Regulaeren vorproduzieren darf."),
 
 	// MAIN
-	PREFIX(ConfigSettingSection.MAIN, "prefix", "&7[&3Varo&7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
+	PREFIX(ConfigSettingSection.MAIN, "prefix", "§7[§3Varo§7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
 	PROJECT_NAME(ConfigSettingSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
 	PROJECTNAME_COLORCODE(ConfigSettingSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Massgebende,\nder ueberall im Projekt verwendet wird.."),
 	MAIN_LANGUAGE(ConfigSettingSection.MAIN, "language.main", "de_de", "Alle Sprachentypen hier zu finden: https://minecraft-el.gamepedia.com/Language"),

@@ -44,6 +44,8 @@ public final class Messages {
     private static final Slams SLAMS = Slams.create(DEFAULT_LANGUAGE);
     private static final PlaceholderResolver PLACEHOLDERS = Placeholders.getPlaceholders();
 
+    public static final VaroMessage PLAYER_DISPLAYNAME = message("player.displayname");
+    
     public static final VaroMessage PLAYER_JOIN_BROADCAST = message("player.join.broadcast");
     public static final VaroMessage PLAYER_JOIN_REQUIRED = message("player.join.required");
     public static final VaroMessage PLAYER_JOIN_FINALE = message("player.join.finale");
@@ -126,6 +128,11 @@ public final class Messages {
             public void send(VaroPlayer subject) {
                 subject.sendMessage(message.value(new PlayerContext(subject)));
             }
+            
+            @Override
+            public String value(VaroPlayer subject) {
+                return message.value(new PlayerContext(subject));
+            }
         };
     }
 
@@ -183,6 +190,8 @@ public final class Messages {
         void send(VaroPlayer recipient, VaroPlayer subject);
         void send(VaroPlayer subject, PlaceholderResolver placeholders);
         void send(VaroPlayer subject);
+        
+        String value(VaroPlayer subject);
     }
 
     public interface VaroMessageArray {
