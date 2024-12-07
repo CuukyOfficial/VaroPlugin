@@ -22,7 +22,7 @@ public class ActionbarCommand extends VaroCommand {
 			return;
 		}
 		
-		if (!ConfigSetting.ACTIONBAR.getValueAsBoolean() || vp.getActionbar() == null) {
+		if (!ConfigSetting.ACTIONBAR_ENABLED.getValueAsBoolean() || vp.getActionbar() == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ACTIONBAR_DEACTIVATED.getValue(vp));
 			return;
 		}

@@ -55,6 +55,9 @@ public final class Messages {
 
     public static final VaroMessageArray PLAYER_SCOREBOARD_TITLE = array("player.scoreboard.title");
     public static final VaroMessageArray2d PLAYER_SCOREBOARD_CONTENT = array2d("player.scoreboard.content");
+    public static final VaroMessageArray PLAYER_ACTIONBAR = array("player.actionbar");
+    public static final VaroMessageArray2d PLAYER_TABLIST_HEADER = array2d("player.tablist.header");
+    public static final VaroMessageArray2d PLAYER_TABLIST_FOOTER = array2d("player.tablist.footer");
 
     public static final VaroMessage FINALE_START_FREEZE = message("finale.start.freeze");
     public static final VaroMessage FINALE_START_NOFREEZE = message("finale.start.noFreeze");

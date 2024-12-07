@@ -88,23 +88,25 @@ public final class Placeholders {
     }
 
     private static void addPlayerPlaceholders(PlaceholderResolver.Builder builder) {
-        builder.contextual("name", PlayerContext.class, (ctx) -> ctx.getPlayer().getName());
-        builder.contextual("uuid", PlayerContext.class, (ctx) -> ctx.getPlayer().getUUID());
-        builder.contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()));
-        builder.contextual("prefix", PlayerContext.class, (ctx) -> ctx.getPlayer().getPrefix());
-        builder.contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-");
-        builder.contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-");
-        builder.contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-");
-        builder.contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()));
-        builder.contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()));
-        builder.contextual("countdown-hour", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() / 3600));
-        builder.contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (ctx.getPlayer().getStats().getCountdown() / 60) % 60));
-        builder.contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() % 60));
-        builder.namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
-            onlineBuilder.contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()));
-            onlineBuilder.contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()));
-            onlineBuilder.contextual("z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockZ()));
-            onlineBuilder.contextual("world", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getName());
+        builder.contextual("name", PlayerContext.class, (ctx) -> ctx.getPlayer().getName())
+        .contextual("uuid", PlayerContext.class, (ctx) -> ctx.getPlayer().getUUID())
+        .contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()))
+        .contextual("prefix", PlayerContext.class, (ctx) -> ctx.getPlayer().getPrefix())
+        .contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-")
+        .contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-")
+        .contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-")
+        .contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()))
+        .contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()))
+        .contextual("countdown-hour", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() / 3600))
+        .contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (ctx.getPlayer().getStats().getCountdown() / 60) % 60))
+        .contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() % 60))
+
+        .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
+            onlineBuilder.contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
+            .contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()))
+            .contextual("z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockZ()))
+            .contextual("world", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getName())
+            .contextual("distance-to-border", OnlinePlayerContext.class, ctx -> String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(ctx.getPlayer().getWorld()).getVaroBorder().getDistance(ctx.getPlayer())));
         });
     }
 }

@@ -387,8 +387,8 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 				listname = listname.substring(0, 16);
 
 			return listname;
-		} else
-			return player.getName();
+		}
+        return player.getName();
 	}
 	
     private String getNametagName() {
@@ -589,7 +589,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
 
-			if (ConfigSetting.SCOREBOARD.getValueAsBoolean()) {
+			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean()) {
 				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, new AnimationData<String>() {
                     
                     @Override
@@ -604,7 +604,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
                     
                     @Override
                     public int getDelay() {
-                        return Main.getDataManager().getScoreboardConfig().getTitle().getDelay(); // TODO
+                        return ConfigSetting.SCOREBOARD_TITLE_UPDATEDELAY.getValueAsInt();
                     }
                 }, new AnimationData<String[]>() {
                     
@@ -620,31 +620,69 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
                     
                     @Override
                     public int getDelay() {
-                        return Main.getDataManager().getScoreboardConfig().getScoreboard().getDelay(); // TODO
+                        return ConfigSetting.SCOREBOARD_BODY_UPDATEDELAY.getValueAsInt();
                     }
                 });
 				this.scoreboard.setEnabled(this.stats.isShowScoreboard());
 			}
 
-			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.TABLIST.getValueAsBoolean() && (ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean() || ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean())) {
-				this.tablist = new AnimatedTablist(Main.getInstance(), this.getPlayer(), Main.getDataManager().getTablistConfig().getHeader(), Main.getDataManager().getTablistConfig().getFooter()) {
-					@Override
-					protected String processString(String input) {
-						return VaroPlayer.this.replacePlaceHolders(input);
-					}
-				};
+			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.TABLIST_ENABLED.getValueAsBoolean() && (ConfigSetting.TABLIST_HEADER_ENABLED.getValueAsBoolean() || ConfigSetting.TABLIST_FOOTER_ENABLED.getValueAsBoolean())) {
+				this.tablist = new AnimatedTablist(Main.getInstance(), this.getPlayer(), new AnimationData<String>() {
+                    
+				    @Override
+                    public int getNumFrames() {
+                        return Messages.PLAYER_TABLIST_HEADER.size(VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public String getFrame(int index) {
+                        return String.join("\n", Messages.PLAYER_TABLIST_HEADER.value(index, VaroPlayer.this)); // TODO this should not be done on every update
+                    }
+                    
+                    @Override
+                    public int getDelay() {
+                        return ConfigSetting.TABLIST_HEADER_UPDATEDELAY.getValueAsInt();
+                    }
+                }, new AnimationData<String>() {
+                    
+                    @Override
+                    public int getNumFrames() {
+                        return Messages.PLAYER_TABLIST_FOOTER.size(VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public String getFrame(int index) {
+                        return String.join("\n", Messages.PLAYER_TABLIST_FOOTER.value(index, VaroPlayer.this)); // TODO this should not be done on every update
+                    }
+                    
+                    @Override
+                    public int getDelay() {
+                        return ConfigSetting.TABLIST_FOOTER_UPDATEDELAY.getValueAsInt();
+                    }
+                });
 
-				this.tablist.setHeaderEnabled(ConfigSetting.TABLIST_USE_HEADER.getValueAsBoolean());
-				this.tablist.setFooterEnabled(ConfigSetting.TABLIST_USE_FOOTER.getValueAsBoolean());
+				this.tablist.setHeaderEnabled(ConfigSetting.TABLIST_HEADER_ENABLED.getValueAsBoolean());
+				this.tablist.setFooterEnabled(ConfigSetting.TABLIST_FOOTER_ENABLED.getValueAsBoolean());
 			}
 			
-			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.ACTIONBAR.getValueAsBoolean()) {
-				this.actionbar = new AnimatedActionbar(Main.getInstance(), player, Main.getDataManager().getActionbarConfig().getContent()) {
-					@Override
-					protected String processString(String input) {
-						return VaroPlayer.this.replacePlaceHolders(input);
-					}
-				};
+			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.ACTIONBAR_ENABLED.getValueAsBoolean()) {
+				this.actionbar = new AnimatedActionbar(Main.getInstance(), player, new AnimationData<String>() {
+                    
+				    @Override
+                    public int getNumFrames() {
+                        return Messages.PLAYER_ACTIONBAR.size(VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public String getFrame(int index) {
+                        return Messages.PLAYER_ACTIONBAR.value(index, VaroPlayer.this);
+                    }
+                    
+                    @Override
+                    public int getDelay() {
+                        return ConfigSetting.ACTIONBAR_UPDATEDELAY.getValueAsInt();
+                    }
+                });
 				this.actionbar.setEnabled(this.stats.isShowActionbar());
 			}
 
@@ -690,11 +728,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		Main.getDataManager().getSpectatorNameTagGroup().unRegister(player);
 		if (team != null)
 			team.getNameTagGroup().unRegister(player);
-	}
-
-	@Deprecated
-	private String replacePlaceHolders(String input) {
-		return Main.getLanguageManager().replaceMessage(input, VaroPlayer.this);
 	}
 
 	public void setRank(Rank rank) {

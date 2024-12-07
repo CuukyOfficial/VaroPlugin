@@ -175,11 +175,6 @@ public enum ConfigSetting implements SectionEntry {
 	MINIMAL_SPECTATOR_HEIGHT(ConfigSettingSection.OTHER, "minimalSpectatorHeight", 70, "Wie tief die Spectator maximal fliegen koennen.\nOff = 0"),
 	SPECTATOR_CHAT(ConfigSettingSection.OTHER, "spectatorChat", false, "Ob Spectator in den Chat schreiben können"),
 
-	NAMETAGS_ENABLED(ConfigSettingSection.MAIN, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in den Language-Dateien einstellen.", true),
-	NAMETAGS_VISIBLE_DEFAULT(ConfigSettingSection.MAIN, "nametags.visible.default", true, "Ob NameTags sichtbar sein sollen"),
-	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.MAIN, "nametags.visible.team", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
-	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.MAIN, "nametags.visible.spectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
-
 	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviaet auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 
 	NO_KICK_DISTANCE(ConfigSettingSection.OTHER, "noKickDistance", 30, "In welcher Distanz zum Gegner\nein Spieler nicht gekickt wird.\nOff = 0"),
@@ -230,8 +225,6 @@ public enum ConfigSetting implements SectionEntry {
 	RESET_SESSION_HOUR(ConfigSettingSection.MAIN, "resetSessionHour", 1, "Um welche Uhrzeit (24h) der Server den\nSpieler neue Sessions etc. gibt"),
 	
 	RESPAWN_PROTECTION(ConfigSettingSection.DEATH, "respawnProtection", 120, "Wie lange in Sekunden Spieler\nnach Respawn geschuetzt sind"),
-	SCOREBOARD(ConfigSettingSection.MAIN, "scoreboard", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder scoreboard.yml bearbeiten.", true),
-	ACTIONBAR(ConfigSettingSection.MAIN, "actionbar", true, "Ob die Actionbar aktiviert sein soll.\nHinweis: die Actionbar kannst du in\nder actionbar.yml bearbeiten.", true),
 	SESSIONS_PER_DAY(ConfigSettingSection.JOIN_SYSTEMS, "sessionsPerDay", 1, "ERSTES JOIN SYSTEM\nStellt ein, wie oft Spieler am Tag\nden Server regulaer betreten duerfen."),
 
 	NAMETAGS_OVER_SPAWN(ConfigSettingSection.WORLD, "setNameTagOverSpawn", true, "Ob Nametags ueber den\nSpawns erscheinen sollen"),
@@ -299,11 +292,22 @@ public enum ConfigSetting implements SectionEntry {
 	// CUSTOM COMMAND
 	CUSTOMCOMMAND_USEPREFIX(ConfigSettingSection.OTHER, "customCommandUsePrefix", true, "Ob bei allen Custom Commands automatisch\nder Prefix genutzt werden soll."),
 
-	// TABLIST
-	TABLIST(ConfigSettingSection.TABLIST, "tablist", true, "Ob das Plugin die Tablist modfizieren soll\nMuss aktiviert sein, um folgende Einstellungen\nvorzunehmen.", true),
-	TABLIST_USE_HEADER(ConfigSettingSection.TABLIST, "useHeader", true, "Ob die Tablist einen Header haben soll.\nErfordert config reload und ggf. rejoin."),
-	TABLIST_USE_FOOTER(ConfigSettingSection.TABLIST, "useFooter", true, "Ob die Tablist einen Footer haben soll.\nErfordert config reload und ggf. rejoin."), // enable: config reload
-	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen."),
+	// HUD
+	TABLIST_ENABLED(ConfigSettingSection.HUD, "tablist.enabled", true, "Ob das Plugin die Tablist modfizieren soll\nMuss aktiviert sein, um folgende Einstellungen\nvorzunehmen.", true),
+	TABLIST_HEADER_ENABLED(ConfigSettingSection.HUD, "tablist.header.enabled", true, "Ob die Tablist einen Header haben soll.\nErfordert config reload und ggf. rejoin."),
+	TABLIST_HEADER_UPDATEDELAY(ConfigSettingSection.HUD, "tablist.header.updatedelay", 10, "Das Intervall in Ticks mit dem der Header der Tablist aktualisiert werden soll."),
+	TABLIST_FOOTER_ENABLED(ConfigSettingSection.HUD, "tablist.footer.enabled", true, "Ob die Tablist einen Footer haben soll.\nErfordert config reload und ggf. rejoin."), // enable: config reload
+	TABLIST_FOOTER_UPDATEDELAY(ConfigSettingSection.HUD, "tablist.footer.updatedelay", 0, "Das Intervall in Ticks mit dem der Footer der Tablist aktualisiert werden soll."),
+	TABLIST_CHANGE_NAMES(ConfigSettingSection.HUD, "tablist.changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen."),
+	NAMETAGS_ENABLED(ConfigSettingSection.HUD, "nametags.enabled", true, "Ob das Plugin die Nametags ueber\nden Koepfen der Spieler veraendern soll.\nHinweis: du kannst diese in den Language-Dateien einstellen.", true),
+	NAMETAGS_VISIBLE_DEFAULT(ConfigSettingSection.HUD, "nametags.visible.default", true, "Ob NameTags sichtbar sein sollen"),
+	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.HUD, "nametags.visible.team", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
+	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.HUD, "nametags.visible.spectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
+	SCOREBOARD_ENABLED(ConfigSettingSection.HUD, "scoreboard.enabled", true, "Ob das Scoreboard aktiviert sein soll.\nHinweis: das Scoreboard kannst du in\nder Language-Datei bearbeiten.", true),
+	SCOREBOARD_TITLE_UPDATEDELAY(ConfigSettingSection.HUD, "scoreboard.title.updatedelay", 0, "Das Intervall in Ticks in mit dem der Titel des Scoreboards aktualisiert werden soll."),
+	SCOREBOARD_BODY_UPDATEDELAY(ConfigSettingSection.HUD, "scoreboard.body.updatedelay", 100, "Das Intervall in Ticks mit dem das Scoreboards aktualisiert werden soll."),
+	ACTIONBAR_ENABLED(ConfigSettingSection.HUD, "actionbar.enabled", true, "Ob die Actionbar aktiviert sein soll.\nHinweis: die Actionbar kannst du in\nder Language-Datei bearbeiten.", true),
+	ACTIONBAR_UPDATEDELAY(ConfigSettingSection.HUD, "actionbar.updatedelay", 100, "Das Intervall in Ticks mit dem die Actionbar aktualisiert werden soll."),
 	
 	// COMMANDS
 	COMMAND_ANTIXRAY_ENABLED(ConfigSettingSection.COMMANDS, "antixray.enabled", true, "Ob /antixray aktiviert sein soll"),

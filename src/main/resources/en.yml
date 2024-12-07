@@ -47,8 +47,31 @@ player:
         - "§72. <colorcode><top-player:2>"
         - "§73. <colorcode><top-player:3>"
         - "<padding:4>"
-
-    
+  actionbar:
+    - "§7Distance to border: <colorcode><distance-to-border>"
+    - "§7Check out our Discord <colorcode><varo-discord>"
+  tablist:
+    header:
+      - - " "
+        - "§7Oo    <projectname>    §7oO"
+        - " "
+      - - " "
+        - "§7oO    <projectname>    §7Oo"
+        - " "
+    footer:
+      - - "§7------------------------"
+        - " "
+        - "§7Varo Plugin"
+        - "§7v.<colorcode><varo-version> §7by <colorcode>Cuuky"
+        - " "
+        - "§7Discord"
+        - "<colorcode><varo-discord>"
+        - " "
+        - "<colorcode><day>§7.<colorcode><month>§7.<colorcode><year>"
+        - "<colorcode><hour>§7:<colorcode><minute>§7:<colorcode><second>"
+        - " "
+        - "§7------------------------"
+  
 finale:
   start:
     freeze: "<prefix>The finale is about to begin! All players have been freezed!"

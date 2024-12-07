@@ -22,7 +22,7 @@ public class ScoreboardCommand extends VaroCommand {
 			return;
 		}
 
-		if (!ConfigSetting.SCOREBOARD.getValueAsBoolean() || vp.getScoreboard() == null) {
+		if (!ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean() || vp.getScoreboard() == null) {
 			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_SCOREBOARD_DEACTIVATED.getValue(vp));
 			return;
 		}

@@ -19,10 +19,7 @@ import de.cuuky.varo.broadcast.Broadcaster;
 import de.cuuky.varo.command.custom.CustomCommandManager;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.ConfigHandler;
-import de.cuuky.varo.configuration.configurations.config.ActionbarConfig;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.config.ScoreboardConfig;
-import de.cuuky.varo.configuration.configurations.config.TablistConfig;
 import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
 import de.cuuky.varo.game.LobbyItem;
 import de.cuuky.varo.game.VaroGameHandler;
@@ -54,9 +51,6 @@ public class DataManager {
 
 	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
-	private ScoreboardConfig scoreboardConfig;
-	private TablistConfig tablistConfig;
-	private ActionbarConfig actionbarConfig;
 	private NameTagGroup defaultNameTagGroup;
 	private NameTagGroup spectatorNameTagGroup;
 	private VaroGameHandler varoGameHandler;
@@ -84,9 +78,6 @@ public class DataManager {
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
 		Dependencies.loadOptional(this.instance);
-		this.scoreboardConfig = new ScoreboardConfig();
-		this.tablistConfig = new TablistConfig();
-		this.actionbarConfig = new ActionbarConfig();
 		this.defaultNameTagGroup = new NameTagGroup();
 		this.spectatorNameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
@@ -226,18 +217,6 @@ public class DataManager {
 
 	public ConfigHandler getConfigHandler() {
 		return this.configHandler;
-	}
-
-	public ScoreboardConfig getScoreboardConfig() {
-		return scoreboardConfig;
-	}
-
-	public TablistConfig getTablistConfig() {
-		return tablistConfig;
-	}
-
-	public ActionbarConfig getActionbarConfig() {
-		return this.actionbarConfig;
 	}
 
 	public NameTagGroup getDefaultNameTagGroup() {
