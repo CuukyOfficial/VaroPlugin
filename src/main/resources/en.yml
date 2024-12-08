@@ -83,3 +83,65 @@ finale:
   start:
     freeze: "<prefix>The finale is about to begin! All players have been freezed!"
     noFreeze: "<prefix>The finale is about to begin!"
+
+alert:
+  disconnectTooOften: "<name> left the game too often! Their episode has now expired prematurely!"
+  strike:
+    noBloodlust: "<name> has not fought for <no-join-days> days! Therefore <name> has now received a strike!"
+    noJoin: "<name> has not been online for <no-join-days> days! Therefore <name> has now received a strike!"
+  noJoin: "<name> has not been online for <no-join-days> days, exceeding the allowed limit!"
+  noBloodlust: "<name> has now not fought for <bloodlust-days> days, exceeding the allowed limit!"
+
+log:
+  death:
+    eliminated:
+      player: "<name> was killed by <killer-name>!"
+      other: "<name> died. Reason: <death-reason>"
+    teamLifeLost:
+      player: "<name> was killed by <killer-name>! They now have <team-lives> life/lives left!"
+      other: "<name> died! They now have <team-lives> life/lives left! Reason: <death-reason>"
+  strike:
+      combatlog: "<name> logged out during battle and has therefore received a strike!"
+      general: "<name> now has <strike-num> strikes! The strike was given by <strike-operator>. Reason: <strike-reason>"
+      firstNeverOnline: |-
+        <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
+        The player has not joined yet and will spawn at the spawn coordinates: <strike-location>!
+      first: |-
+        <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
+        Here are their current coordinates: <strike-location>!
+      second: |-
+        <name> now has two strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
+        Their inventory has been cleared!
+      third: |-
+        <name> now has three strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
+        <name> has now been removed from <projectname>!
+  borderDecrease:
+    days: "The border size was decreased by <border-decrease-size>. Next decrease in <border-decrease-time> days!"
+    minutes: "The border size was decreased by <border-decrease-size>. Next decrease in <border-decrease-time> minutes!"
+    death: "The border size was decreased by <border-decrease-size> due to the death of a player!"
+  teleportedToMiddle: "<name> was teleported to the center!"
+  combatlog: "<name> has logged out during battle!"
+  gameStarted: "<projectname> has started!"
+  playerJoinNormal: "<name> has joined the game!"
+  newSessions: <new-sessions> new sessions were given to players!
+  switchedName: "<name> has changed their name and is now known as <new-name>!"
+  newSessionsForAll: Everybody received <new-sessions> new sessions!
+  finale: "<name> has entered the server to participate in the finale"
+  playerJoinMassrec: "<name> has entered the server during mass recording and is now playing their <episode>th episode."
+  win:
+    player: "<winner> has won <projectname>! Congratulations!"
+    team: "<winner> have won <projectname>! Congratulations!"
+  sessionsEnded: "<name>'s episode has ended!"
+  playerQuit: "<name> left the game!"
+  kickedPlayer: "<name> has been kicked!"
+  playerReconnect: "<name> left the game early and rejoined! Remaining time: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+  playerQuitToEarly: "<name> has left the game early! Remaining time: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+  playerJoined: "<name> has entered the server and is now playing their <episode>th episode!"
+
+border:
+  decrease:
+    days: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s. §7Next reduction in §c<border-decrease-time> §7days!"
+    minutes: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s. §7Next reduction in §c<border-decrease-time> §7minutes!"
+    death: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s due to a death."
+    minuteUpdate: "<prefix>§7The border will shrink in §c<border-decrease-minutes>§8:§c<border-decrease-seconds>"
+  minimum: "<prefix>§cThe Border has reached its minimum!"

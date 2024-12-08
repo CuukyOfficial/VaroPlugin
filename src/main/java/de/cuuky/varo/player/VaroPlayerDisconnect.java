@@ -9,11 +9,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.stats.stat.PlayerState;
 import de.cuuky.varo.player.stats.stat.Strike;
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
@@ -72,8 +71,7 @@ public class VaroPlayerDisconnect {
 		if (ConfigSetting.STRIKE_ON_DISCONNECT.getValueAsBoolean())
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
-		new Alert(AlertType.DISCONNECT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp));
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_DISCONNECT_TOO_OFTEN.getValue(null, vp), vp.getRealUUID());
+		Messages.ALERT_DISCONNECT_TOO_OFTEN.alert(AlertType.DISCONNECT, vp);
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN, vp);
 		this.remove();
 		return true;

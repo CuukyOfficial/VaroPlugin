@@ -16,6 +16,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Contexts;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
@@ -91,7 +93,7 @@ public class OfflineVillager implements VaroSerializeable {
 		int exp = Math.min(this.backup.getExpLevel() * 7, 100); // See EntityHuman#getExpValue (1.8.8)
 		((ExperienceOrb) this.location.getWorld().spawnEntity(this.location, EntityType.EXPERIENCE_ORB)).setExperience(exp);
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.DEATH, ConfigMessages.ALERT_DEATH_ELIMINATED_PLAYER.getValue(vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName()), vp.getRealUUID());
+		Messages.LOG_DEATH_ELIMINATED_PLAYER.log(LogType.KILL, new Contexts.KillContext(this.vp, killer));
 		Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_PLAYER, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName());
 
 		killer.onEvent(BukkitEventType.KILL);

@@ -77,7 +77,7 @@ public class VaroStartThread extends BukkitRunnable {
 
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
 			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_VARO_START);
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_GAME_STARTED.getValue());
+			Messages.LOG_GAME_STARTED.log(LogType.LOG);
 			cancel();
 
 			this.game.start();

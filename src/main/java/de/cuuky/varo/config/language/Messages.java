@@ -23,7 +23,11 @@ import java.io.IOException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import de.cuuky.varo.alert.Alert;
+import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.language.Contexts.PlayerContext;
+import de.cuuky.varo.config.language.Contexts.VaroContext;
+import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.version.VersionUtils;
 import io.github.almightysatan.jaskl.Resource;
@@ -43,6 +47,49 @@ public final class Messages {
     static final String DEFAULT_LANGUAGE = "en";
     private static final Slams SLAMS = Slams.create(DEFAULT_LANGUAGE);
     private static final PlaceholderResolver PLACEHOLDERS = Placeholders.getPlaceholders();
+
+    public static final VaroMessage ALERT_DISCONNECT_TOO_OFTEN = message("alert.disconnectTooOften");
+    public static final VaroMessage ALERT_STRIKE_NO_BLOODLUST = message("alert.strike.noBloodlust");
+    public static final VaroMessage ALERT_STRIKE_NOT_JOIN = message("alert.strike.noJoin");
+    public static final VaroMessage ALERT_NO_BLOODLUST = message("alert.noBloodlust");
+    public static final VaroMessage ALERT_NOT_JOIN = message("alert.noJoin");
+    
+    public static final VaroMessage LOG_BORDER_DECREASED_DEATH = message("log.borderDecrease.death");
+    public static final VaroMessage LOG_BORDER_DECREASED_TIME_DAYS = message("log.borderDecrease.days");
+    public static final VaroMessage LOG_BORDER_DECREASED_TIME_MINUTE = message("log.borderDecrease.minutes");
+    public static final VaroMessage LOG_COMBAT_LOG = message("log.combatlog");
+    public static final VaroMessage LOG_DEATH_ELIMINATED_OTHER = message("log.death.eliminated.other");
+    public static final VaroMessage LOG_DEATH_ELIMINATED_PLAYER = message("log.death.eliminated.player");
+    public static final VaroMessage LOG_DEATH_LIFE_OTHER = message("log.death.teamLifeLost.other");
+    public static final VaroMessage LOG_DEATH_LIFE_PLAYER = message("log.death.teamLifeLost.player");
+    public static final VaroMessage LOG_GAME_STARTED = message("log.gameStarted");
+    public static final VaroMessage LOG_JOIN_FINALE = message("log.finale");
+    public static final VaroMessage LOG_KICKED_PLAYER = message("log.kickedPlayer");
+    public static final VaroMessage LOG_SESSIONS_ENDED = message("log.sessionsEnded");
+    public static final VaroMessage LOG_STRIKE_GENERAL = message("log.strike.general");
+    public static final VaroMessage LOG_STRIKE_COMBAT_LOG = message("log.strike.combatlog");
+    public static final VaroMessage LOG_STRIKE_FIRST_NEVER_ONLINE = message("log.strike.firstNeverOnline");
+    public static final VaroMessage LOG_STRIKE_FIRST = message("log.strike.first");
+    public static final VaroMessage LOG_STRIKE_SECOND = message("log.strike.second");
+    public static final VaroMessage LOG_STRIKE_THRID = message("log.strike.third");
+    public static final VaroMessage LOG_NEW_SESSIONS = message("log.newSessions");
+    public static final VaroMessage LOG_NEW_SESSIONS_FOR_ALL = message("log.newSessionsForAll");
+    public static final VaroMessage LOG_PLAYER_DC_TO_EARLY = message("log.playerQuitToEarly");
+    public static final VaroMessage LOG_PLAYER_JOIN_MASSREC = message("log.playerJoinMassrec");
+    public static final VaroMessage LOG_PLAYER_JOIN_NORMAL = message("log.playerJoinNormal");
+    public static final VaroMessage LOG_PLAYER_JOINED = message("log.playerJoined");
+    public static final VaroMessage LOG_PLAYER_QUIT = message("log.playerQuit");
+    public static final VaroMessage LOG_PLAYER_RECONNECT = message("log.playerReconnect");
+    public static final VaroMessage LOG_SWITCHED_NAME = message("log.switchedName");
+    public static final VaroMessage LOG_TELEPORTED_TO_MIDDLE = message("log.teleportedToMiddle");
+    public static final VaroMessage LOG_WINNER = message("log.win.player");
+    public static final VaroMessage LOG_WINNER_TEAM = message("log.win.team");
+    
+    public static final VaroMessage BORDER_DECREASE_DEATH = message("border.decrease.death");
+    public static final VaroMessage BORDER_DECREASE_DAYS = message("border.decrease.days");
+    public static final VaroMessage BORDER_DECREASE_MINUTES = message("border.decrease.minutes");
+    public static final VaroMessage BORDER_MINUTE_TIME_UPDATE = message("border.decrease.minuteUpdate");
+    public static final VaroMessage BORDER_MINIMUM_REACHED = message("border.minimum");
 
     public static final VaroMessage PLAYER_DISPLAYNAME = message("player.displayname");
     
@@ -82,6 +129,11 @@ public final class Messages {
         StandaloneMessage message = StandaloneMessage.of(key, SLAMS, PLACEHOLDERS);
         return new VaroMessage() {
             @Override
+            public void broadcast(VaroContext context) {
+                Bukkit.broadcastMessage(message.value(context));
+            }
+            
+            @Override
             public void broadcast(VaroPlayer subject, PlaceholderResolver placeholders, String link) {
                 if (link == null || link.isEmpty()) {
                     this.broadcast(subject, placeholders);
@@ -108,6 +160,16 @@ public final class Messages {
             public void broadcast(PlaceholderResolver placeholders) {
                 Bukkit.broadcastMessage(message.value(null, placeholders));
             }
+            
+            @Override
+            public void broadcast() {
+                Bukkit.broadcastMessage(message.value());
+            }
+            
+            @Override
+            public void send(VaroPlayer recipient, VaroContext context) {
+                recipient.sendMessage(message.value(context));
+            }
 
             @Override
             public void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders) {
@@ -132,6 +194,55 @@ public final class Messages {
             @Override
             public String value(VaroPlayer subject) {
                 return message.value(new PlayerContext(subject));
+            }
+            
+            @Override
+            public void log(LogType type, VaroContext context, PlaceholderResolver placeholders) {
+                // TODO
+                // Main.getDataManager().getVaroLoggerManager().getEventLogger().println();
+            }
+            
+            @Override
+            public void log(LogType type, VaroContext context) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void log(LogType type, VaroPlayer subject, PlaceholderResolver placeholders) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void log(LogType type, VaroPlayer subject) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void log(LogType type, PlaceholderResolver placeholders) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void log(LogType type) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void alert(AlertType type, VaroPlayer subject, PlaceholderResolver placeholders) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void alert(AlertType type, VaroPlayer subject) {
+                String value = message.value(new PlayerContext(subject));
+                new Alert(type, value);
+                // TODO log
             }
         };
     }
@@ -181,17 +292,30 @@ public final class Messages {
     }
 
     public interface VaroMessage {
+        void broadcast(VaroContext context);
         void broadcast(VaroPlayer subject, PlaceholderResolver placeholders, String link);
         void broadcast(VaroPlayer subject, PlaceholderResolver placeholders);
         void broadcast(VaroPlayer subject);
         void broadcast(PlaceholderResolver placeholders);
+        void broadcast();
 
+        void send(VaroPlayer recipient, VaroContext context);
         void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders);
         void send(VaroPlayer recipient, VaroPlayer subject);
         void send(VaroPlayer subject, PlaceholderResolver placeholders);
         void send(VaroPlayer subject);
         
-        String value(VaroPlayer subject);
+        void log(LogType type, VaroContext context, PlaceholderResolver placeholders);
+        void log(LogType type, VaroContext context);
+        void log(LogType type, VaroPlayer subject, PlaceholderResolver placeholders);
+        void log(LogType type, VaroPlayer subject);
+        void log(LogType type, PlaceholderResolver placeholders);
+        void log(LogType type);
+        
+        void alert(AlertType type, VaroPlayer subject, PlaceholderResolver placeholders);
+        void alert(AlertType type, VaroPlayer subject);
+        
+        String value(VaroPlayer subject); // TODO remove this?
     }
 
     public interface VaroMessageArray {

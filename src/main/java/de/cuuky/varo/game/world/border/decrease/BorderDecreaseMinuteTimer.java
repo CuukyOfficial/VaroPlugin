@@ -4,9 +4,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.game.GameState;
+import io.github.almightysatan.slams.Placeholder;
+import io.github.almightysatan.slams.PlaceholderResolver;
 
 public class BorderDecreaseMinuteTimer {
 
@@ -35,8 +36,8 @@ public class BorderDecreaseMinuteTimer {
 					Main.getVaroGame().getVaroWorldHandler().decreaseBorder(DecreaseReason.TIME_MINUTES);
 					secondsPassed = timer;
 				} else if (secondsPassed % ConfigSetting.BORDER_TIME_MINUTE_BC_INTERVAL.getValueAsInt() == 0 && secondsPassed != timer)
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.BORDER_MINUTE_TIME_UPDATE).replace("%minutes%", getCountdownMin(secondsPassed)).replace("%seconds%", getCountdownSec(secondsPassed)).replace("%size%", String.valueOf(ConfigSetting.BORDER_TIME_MINUTE_DECREASE_SIZE.getValueAsInt()));
-
+					Messages.BORDER_MINUTE_TIME_UPDATE.broadcast(PlaceholderResolver.of(Placeholder.constant("border-decrease-minutes", getCountdownMin(secondsPassed)), Placeholder.constant("border-decrease-seconds", getCountdownSec(secondsPassed))));
+				
 				secondsPassed--;
 			}
 		}.runTaskTimer(Main.getInstance(), 20L, 20L);
@@ -47,8 +48,7 @@ public class BorderDecreaseMinuteTimer {
 
 		if (min < 10)
 			return "0" + min;
-		else
-			return min + "";
+        return min + "";
 	}
 
 	private String getCountdownSec(int sec) {
@@ -56,8 +56,7 @@ public class BorderDecreaseMinuteTimer {
 
 		if (sec < 10)
 			return "0" + sec;
-		else
-			return sec + "";
+        return sec + "";
 	}
 
 	public void remove() {

@@ -11,7 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.event.events.MassRecordingVaroEvent;
@@ -101,14 +100,14 @@ public class PlayerJoinListener implements Listener {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
 			if (Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getWorld()).getVaroBorder().isOutside(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
 				vplayer.saveTeleport(player.getWorld().getSpawnLocation());
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_TELEPORTED_TO_MIDDLE.getValue(null, vplayer), vplayer.getRealUUID());
+				Messages.LOG_TELEPORTED_TO_MIDDLE.log(LogType.JOIN_LEAVE, vplayer);
 			}
 
 			if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 			    Messages.PLAYER_JOIN_SPECTATOR.broadcast(vplayer);
 			} else if (Main.getVaroGame().isFinaleJoin()) {
 				Messages.PLAYER_JOIN_FINALE.broadcast(vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_JOIN_FINALE.getValue(null, vplayer), vplayer.getRealUUID());
+				Messages.LOG_JOIN_FINALE.log(LogType.JOIN_LEAVE, vplayer);
 				if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
 				    Messages.FINALE_START_FREEZE.send(vplayer);
     				if (!player.isOp())
@@ -117,14 +116,14 @@ public class PlayerJoinListener implements Listener {
 				    Messages.FINALE_START_NOFREEZE.send(vplayer);
 			} else if (!Main.getVaroGame().isPlayTimeLimited()) {
 			    Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_NORMAL.getValue(null, vplayer), vplayer.getRealUUID());
+			    Messages.LOG_PLAYER_JOIN_NORMAL.log(LogType.JOIN_LEAVE, vplayer);
 			} else if (massRecording.isEnabled()) {
 				vplayer.getStats().setCountdown(massRecording.getTimer());
 
 				if (!vplayer.getalreadyHadMassProtectionTime()) {
 					vplayer.getStats().addSessionPlayed();
 					Messages.PLAYER_JOIN_MASS_RECORDING.broadcast(vplayer);
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOIN_MASSREC.getValue(null, vplayer), vplayer.getRealUUID());
+					Messages.LOG_PLAYER_JOIN_MASSREC.log(LogType.JOIN_LEAVE, vplayer);
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
 					new BukkitRunnable() {
@@ -136,14 +135,14 @@ public class PlayerJoinListener implements Listener {
 					}.runTaskLater(Main.getInstance(), ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() * 20);
 				} else {
 				    Messages.PLAYER_JOIN_REMAINING_TIME.broadcast(vplayer);
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer), vplayer.getRealUUID());
+				    Messages.LOG_PLAYER_RECONNECT.log(LogType.JOIN_LEAVE, vplayer);
 				}
 			} else if (!vplayer.getStats().hasTimeLeft()) {
 			    Messages.PLAYER_JOIN_PROTECTION.broadcast(vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_JOINED.getValue(null, vplayer), vplayer.getRealUUID());
+			    Messages.LOG_PLAYER_JOINED.log(LogType.JOIN_LEAVE, vplayer);
 			} else {
 			    Messages.PLAYER_JOIN_REMAINING_TIME.broadcast(vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_RECONNECT.getValue(null, vplayer), vplayer.getRealUUID());
+			    Messages.LOG_PLAYER_RECONNECT.log(LogType.JOIN_LEAVE, vplayer);
 			}
 			return;
 		}

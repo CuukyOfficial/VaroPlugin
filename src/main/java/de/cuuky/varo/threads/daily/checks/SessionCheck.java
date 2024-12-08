@@ -1,6 +1,6 @@
 package de.cuuky.varo.threads.daily.checks;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -8,6 +8,7 @@ import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerDisconnect;
 import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.threads.daily.Checker;
+import io.github.almightysatan.slams.Placeholder;
 
 public class SessionCheck extends Checker {
 
@@ -33,7 +34,7 @@ public class SessionCheck extends Checker {
 					vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
 
 				vp.onEvent(BukkitEventType.KICKED);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_SESSIONS_ENDED.getValue(null, vp), vp.getRealUUID());
+				Messages.LOG_SESSIONS_ENDED.log(LogType.LOG, vp);
 			}
 
 			vp.getStats().setSessions(vp.getStats().getSessions() + normalSessions);
@@ -43,8 +44,8 @@ public class SessionCheck extends Checker {
 		}
 
 		if (ConfigSetting.CATCH_UP_SESSIONS.getValueAsBoolean())
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS_FOR_ALL.getValue().replace("%newSessions%", String.valueOf(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())));
+		    Messages.LOG_NEW_SESSIONS_FOR_ALL.log(LogType.LOG, Placeholder.constant("new-sessions", String.valueOf(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())));
 		else
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NEW_SESSIONS.getValue().replace("%newSessions%", String.valueOf(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())));
+		    Messages.LOG_NEW_SESSIONS.log(LogType.LOG, Placeholder.constant("new-sessions", String.valueOf(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())));
 	}
 }

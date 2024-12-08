@@ -6,12 +6,15 @@ import org.apache.commons.lang.time.DateUtils;
 import org.bukkit.Location;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Contexts.StrikeContext;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import io.github.almightysatan.slams.Placeholder;
 
 public class Strike implements VaroSerializeable {
 
@@ -120,25 +123,26 @@ public class Strike implements VaroSerializeable {
 		if (ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
 			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
 
+		StrikeContext ctx = new StrikeContext(this.striked, this.reason, this.striker, this.number);
 		switch (number) {
 		case 1:
 			if (striked.getStats().getLastLocation() == null) {
 				Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE_NEVER_ONLINE.getValue(striked, striked).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker), striked.getRealUUID());
+				Messages.LOG_STRIKE_FIRST_NEVER_ONLINE.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_FIRST_STRIKE.getValue(striked, striked).replace("%pos%", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()).replace("%reason%", reason).replace("%striker%", striker), striked.getRealUUID());
+				Messages.LOG_STRIKE_FIRST.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
 			}
 			break;
 		case 2:
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_SECOND_STRIKE.getValue(striked, striked).replace("%reason%", reason).replace("%striker%", striker), striked.getRealUUID());
-			break;
+			Messages.LOG_STRIKE_SECOND.log(LogType.STRIKE, ctx);
+            break;
 		case 3:
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_THRID_STRIKE.getValue(striked, striked).replace("%reason%", reason).replace("%striker%", striker), striked.getRealUUID());
+			Messages.LOG_STRIKE_THRID.log(LogType.STRIKE, ctx);
 			break;
 		default:
-			Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.STRIKE, ConfigMessages.ALERT_GENERAL_STRIKE.getValue(striked, striked).replace("%strikeNumber%", String.valueOf(number)).replace("%reason%", reason).replace("%striker%", striker), striked.getRealUUID());
-			break;
+		    Messages.LOG_STRIKE_GENERAL.log(LogType.STRIKE, ctx);
+		    break;
 		}
 
 		posted = true;

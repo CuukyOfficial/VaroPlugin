@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.CombatlogCheck;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerDisconnect;
@@ -38,7 +38,7 @@ public class PlayerQuitListener implements Listener {
 			if (vplayer.getStats().getState() == PlayerState.DEAD || !vplayer.getStats().hasTimeLeft() && Main.getVaroGame().isPlayTimeLimited()) {
 				vplayer.onEvent(BukkitEventType.QUIT);
 				if (vplayer.getStats().getState() != PlayerState.DEAD)
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_KICKED_PLAYER.getValue(null, vplayer), vplayer.getRealUUID());
+				    Messages.LOG_KICKED_PLAYER.log(LogType.JOIN_LEAVE, vplayer);
 				return;
 			}
 
@@ -66,7 +66,7 @@ public class PlayerQuitListener implements Listener {
 
 				VaroPlayerDisconnect.disconnected(vplayer);
 				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME, vplayer);
-				Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.JOIN_LEAVE, ConfigMessages.ALERT_PLAYER_DC_TO_EARLY.getValue(null, vplayer), vplayer.getRealUUID());
+				Messages.LOG_PLAYER_DC_TO_EARLY.log(LogType.JOIN_LEAVE, vplayer);
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
 			}

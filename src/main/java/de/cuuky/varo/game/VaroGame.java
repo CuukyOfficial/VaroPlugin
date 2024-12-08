@@ -21,6 +21,7 @@ import com.cryptomorin.xseries.XSound;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.api.game.VaroEndEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.start.AutoStart;
@@ -43,6 +44,7 @@ import de.cuuky.varo.spawns.sort.PlayerSort;
 import de.cuuky.varo.threads.daily.checks.YouTubeCheck;
 import de.cuuky.varo.utils.EventUtils;
 import de.cuuky.varo.utils.VaroUtils;
+import io.github.almightysatan.slams.Placeholder;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -254,10 +256,10 @@ public class VaroGame implements VaroSerializeable {
         }
 
         if (first.contains("&")) {
-            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
+            Messages.LOG_WINNER_TEAM.log(LogType.WIN, Placeholder.constant("winner", first));
             Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN_TEAM).replace("%winnerPlayers%", first);
         } else {
-            Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER.getValue().replace("%player%", first));
+            Messages.LOG_WINNER.log(LogType.WIN, Placeholder.constant("winner", first));
             Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN).replace("%player%", first);
         }
 

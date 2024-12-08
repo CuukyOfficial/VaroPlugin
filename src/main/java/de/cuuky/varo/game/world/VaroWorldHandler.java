@@ -9,8 +9,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.border.decrease.BorderDecrease;
 import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -85,11 +85,11 @@ public class VaroWorldHandler {
         this.setBorderSize(newSize, time, null);
         
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            this.activeBorderDecrease.getReason().postAlert();
+            this.activeBorderDecrease.getReason().postLog();
             this.activeBorderDecrease = null;
 
             if (this.isBorderMinimumSize()) {
-                Main.getLanguageManager().broadcastMessage(ConfigMessages.BORDER_MINIMUM_REACHED);
+                Messages.BORDER_MINIMUM_REACHED.broadcast();
                 this.borderDecreases.clear();
             } else
                 this.runBorderCheck();

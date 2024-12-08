@@ -22,9 +22,12 @@ import java.util.Collections;
 import java.util.function.Function;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.config.language.Contexts.KillerContext;
+import de.cuuky.varo.config.language.Contexts.BorderDecreaseContext;
+import de.cuuky.varo.config.language.Contexts.DeathContext;
+import de.cuuky.varo.config.language.Contexts.KillContext;
 import de.cuuky.varo.config.language.Contexts.OnlinePlayerContext;
 import de.cuuky.varo.config.language.Contexts.PlayerContext;
+import de.cuuky.varo.config.language.Contexts.StrikeContext;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import io.github.almightysatan.slams.PlaceholderResolver;
 
@@ -81,7 +84,15 @@ public final class Placeholders {
                 .variable("minute", () -> "TODO")
                 .variable("second", () -> "TODO")
                 .namespace(null, PlayerContext.class, Function.identity(), Placeholders::addPlayerPlaceholders)
-                .namespace("killer-", KillerContext.class, ctx -> new PlayerContext(ctx.getPlayer()), Placeholders::addPlayerPlaceholders);
+                .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getPlayer()), Placeholders::addPlayerPlaceholders)
+                .contextual("death-reason", DeathContext.class, DeathContext::getReason)
+                .contextual("strike-reason", StrikeContext.class, StrikeContext::getReason)
+                .contextual("strike-operator", StrikeContext.class, StrikeContext::getOperator)
+                .contextual("strike-num", StrikeContext.class, StrikeContext::getNum)
+                .contextual("border-decrease-size", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
+                .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
+                .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getSize);
+        
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
                 builder.variable("config-" + setting.getPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
@@ -95,13 +106,15 @@ public final class Placeholders {
         .contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()))
         .contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-")
         .contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-")
+        .contextual("team-lives", PlayerContext.class, ctx -> String.valueOf((ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getLifes() : "-")))
         .contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-")
         .contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()))
         .contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()))
         .contextual("countdown-hour", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() / 3600))
         .contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (ctx.getPlayer().getStats().getCountdown() / 60) % 60))
         .contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() % 60))
-
+        .contextual("episode", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessionsPlayed()))
+        
         .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
             onlineBuilder.contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
             .contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()))

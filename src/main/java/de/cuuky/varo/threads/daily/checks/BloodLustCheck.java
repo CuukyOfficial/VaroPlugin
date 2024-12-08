@@ -4,15 +4,13 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.Strike;
 import de.cuuky.varo.threads.daily.Checker;
+import io.github.almightysatan.slams.Placeholder;
 
 public class BloodLustCheck extends Checker {
 
@@ -27,12 +25,11 @@ public class BloodLustCheck extends Checker {
 			Date lastContact = player.getStats().getLastEnemyContact();
 
 			if (lastContact.before(DateUtils.addDays(new Date(), -days))) {
-				new Alert(AlertType.BLOODLUST, player.getName() + " hat nun " + days + " Tage nicht gekaempft!");
 				if (strike) {
 					player.getStats().addStrike(new Strike("Es wurde fuer zu viele Tage nicht gekaempft.", player, "CONSOLE"));
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST_STRIKE.getValue(null, player).replace("%days%", String.valueOf(days)), player.getRealUUID());
+					Messages.ALERT_STRIKE_NO_BLOODLUST.alert(AlertType.BLOODLUST, player, Placeholder.constant("bloodlust-days", String.valueOf(days)));
 				} else
-					Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, ConfigMessages.ALERT_NO_BLOODLUST.getValue(null, player).replace("%days%", String.valueOf(days)), player.getRealUUID());
+				    Messages.ALERT_NO_BLOODLUST.alert(AlertType.BLOODLUST, player, Placeholder.constant("bloodlust-days", String.valueOf(days)));
 			}
 		}
 	}
