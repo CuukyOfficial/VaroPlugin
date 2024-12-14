@@ -164,6 +164,8 @@ public class DataManager {
 	
 	private void loadBackups() {
         File directory = new File(VaroBackup.BACKUP_DIRECTORY);
+        if (!directory.exists())
+            return;
         if (!directory.isDirectory())
             throw new IllegalStateException();
 
