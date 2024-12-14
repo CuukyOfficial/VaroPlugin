@@ -26,6 +26,7 @@ public class WinnerCheck {
 	private void check() {
 		places = new HashMap<Integer, ArrayList<VaroPlayer>>();
 		ArrayList<VaroPlayer> alive = VaroPlayer.getAlivePlayer();
+		// TODO wtf is this??? TEAMREQUEST_MAXTEAMMEMBERS could change after the game has started
 		if (!(alive.size() <= ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() || alive.size() <= 2) || alive.size() == 0)
 			return;
 
