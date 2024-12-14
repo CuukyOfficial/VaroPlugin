@@ -184,7 +184,7 @@ public class Main extends JavaPlugin {
 			    System.out.println(CONSOLE_PREFIX + "Unable to create crash-report");
 		}
 		Bukkit.getScheduler().cancelTasks(this);
-		dataManager.getVaroLoggerManager().cleanUp();
+		dataManager.cleanUp();
 
 		System.out.println(CONSOLE_PREFIX + "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		System.out.println(CONSOLE_PREFIX + " ");

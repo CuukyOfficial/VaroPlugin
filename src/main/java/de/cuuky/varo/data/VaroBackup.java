@@ -52,10 +52,14 @@ public class VaroBackup implements Comparable<VaroBackup> {
         return this.size;
     }
 
-	public static VaroBackup createBackup() {
-        File zipFile = new File(BACKUP_DIRECTORY + "/backup-" + DATE_FROMAT.format(new Date()) + ".zip");
+	public static synchronized VaroBackup createBackup() {
+	    String date = DATE_FROMAT.format(new Date());
+        File zipFile = new File(BACKUP_DIRECTORY + "/backup-" + date + ".zip");
+        int i = 0;
+        while (zipFile.exists())
+            zipFile = new File(BACKUP_DIRECTORY + "/backup-" + date + "_" + (i++) + ".zip");
+        
         boolean success = ZipUtil.zip(zipFile, new File("plugins/Varo").getAbsoluteFile(), VaroBackup::includeCallback);
-
         return success ? new VaroBackup(zipFile) : null;
     }
 	
