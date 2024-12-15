@@ -46,12 +46,12 @@ public class Dependencies {
 
     static {
         REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.cryptomorin.xseries.XMaterial")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> true));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.gson.JsonElement")));
 
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("net.dv8tion.jda.api.JDA")));
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("org.slf4j.impl.SimpleLogger")));
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("java-telegram-bot-api", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean() && !doesClassExist("com.pengrad.telegrambot.TelegramBot")));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("java-telegram-bot-api", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean()));
     }
     
     public static void loadRequired(Plugin plugin) {
