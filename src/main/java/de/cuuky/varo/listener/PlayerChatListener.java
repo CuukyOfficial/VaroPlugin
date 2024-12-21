@@ -1,5 +1,6 @@
 package de.cuuky.varo.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,15 +22,12 @@ public class PlayerChatListener implements Listener {
 	private static final String AD_REGEX_AGRESSIVE = "(?ui).*(w\\s*w\\s*w|h\\s*t\\s*t\\s*p\\s*s?|[.,;]\\s*(d\\s*e|n\\s*e\\s*t|c\\s*o\\s*m|t\\s*v|t\\s*o)).*";
 
 	private void sendMessageToAll(String msg, VaroPlayer vp, AsyncPlayerChatEvent event) {
-		if (vp.getStats().getYoutubeLink() == null) {
-			event.setCancelled(false);
-			event.setFormat(msg);
-			return;
-		}
-
-		for (VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
-			vpo.getVersionAdapter().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
-		event.setCancelled(true);
+	    event.setCancelled(true);
+	    if (vp.getStats().getYoutubeLink() == null)
+			Bukkit.broadcastMessage(msg);
+		else
+    		for (VaroPlayer vpo : VaroPlayer.getOnlinePlayer())
+    			vpo.getVersionAdapter().sendLinkedMessage(msg, vp.getStats().getYoutubeLink());
 	}
 
 	@EventHandler
