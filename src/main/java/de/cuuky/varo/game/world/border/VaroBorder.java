@@ -27,6 +27,10 @@ public interface VaroBorder {
     
     void setSize(double size, long time);
     
+    default double getRadius() {
+        return this.getSize() / 2;
+    }
+
     Location getCenter();
     
     void setCenter(Location location);

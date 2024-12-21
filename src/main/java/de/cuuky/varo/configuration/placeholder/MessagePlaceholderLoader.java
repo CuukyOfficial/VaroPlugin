@@ -54,6 +54,7 @@ public class MessagePlaceholderLoader {
         new VaroGeneralMessagePlaceholder("projectTimeMin", 1, "Ersetzt durch die Minuten der Spielzeit des Projektes", () -> Main.getVaroGame() == null ? "-" : String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60));
         new VaroGeneralMessagePlaceholder("projectTimeSec", 1, "Ersetzt durch die Sekunden der Spielzeit des Projektes", () -> Main.getVaroGame() == null ? "-" : String.format("%02d", Main.getVaroGame().getProjectTime() % 60));
         new VaroGeneralMessagePlaceholder("bordersize", 1, "Ersetzt durch die Bordergroesse", () -> !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)));
+        new VaroGeneralMessagePlaceholder("borderradius", 1, "Ersetzt durch die Bordergroesse", () -> !Main.isBootedUp() ? "0" : String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)));
         new VaroGeneralMessagePlaceholder("discordLink", 20, "Ersetzt durch den DiscordLink aus der Config", ConfigSetting.DISCORDBOT_INVITELINK::getValueAsString);
         new VaroGeneralMessagePlaceholder("protectionTime", 5, "Ersetzt durch die Schutzzeit aus der Config", () -> String.valueOf(ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt()));
         new VaroGeneralMessagePlaceholder("&", -1, true, "Ersetzt durch §", () -> "§");

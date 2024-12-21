@@ -118,6 +118,18 @@ public class VaroWorldHandler {
         }
     }
 
+    public double getBorderRadius(World world) {
+        if (ConfigSetting.WORLD_SNCHRONIZE_BORDER.getValueAsBoolean())
+            return getBorderRadius();
+
+        VaroWorld vworld = world != null ? getVaroWorld(world) : this.mainVaroWorld;
+        return vworld.getVaroBorder().getRadius();
+    }
+
+    public double getBorderRadius() {
+        return this.mainVaroWorld.getVaroBorder().getRadius();
+    }
+
     public VaroWorld getVaroWorld(World world) {
         for (VaroWorld vworld : worlds)
             if (vworld.getWorld().equals(world))
