@@ -240,6 +240,7 @@ public enum ConfigSetting implements SectionEntry {
 	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen koennen."),
 
 	SPAWN_TELEPORT_JOIN(ConfigSettingSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfuer sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),
+	LOBBY_INTERACT_VEHICLES(ConfigSettingSection.START, "lobbyInteractVehicles", true, "Ob Spieler in der lobby mit Booten und Minecrats interagieren können sollen"),
 	START_AT_PLAYERS(ConfigSettingSection.START, "startAtPlayers", -1, "Startet das Projekt automatisch wenn die\nAnzahl der Online Spieler dieser entspricht."),
 
 	// START

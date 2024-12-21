@@ -2,8 +2,10 @@ package de.cuuky.varo.listener.spectator;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.Cancellable;
@@ -29,7 +31,6 @@ import com.cryptomorin.xseries.XMaterial;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.PlayerState;
 import de.cuuky.varo.utils.Vanish;
@@ -116,9 +117,11 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
-        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp())
+        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp()) {
+            if (ConfigSetting.LOBBY_INTERACT_VEHICLES.getValueAsBoolean() && (event.getRightClicked() instanceof Minecart || event.getRightClicked() instanceof Boat))
+                return;
             event.setCancelled(true);
-        else this.checkWorldInteract(event, event.getPlayer());
+        } else this.checkWorldInteract(event, event.getPlayer());
     }
 
     @EventHandler
