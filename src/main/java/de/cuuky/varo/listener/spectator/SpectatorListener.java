@@ -118,7 +118,8 @@ public class SpectatorListener implements Listener {
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
         if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp()) {
-            if (ConfigSetting.LOBBY_INTERACT_VEHICLES.getValueAsBoolean() && (event.getRightClicked() instanceof Minecart || event.getRightClicked() instanceof Boat))
+            if (ConfigSetting.CAN_MOVE_BEFORE_START.getValueAsBoolean() && ConfigSetting.LOBBY_INTERACT_VEHICLES.getValueAsBoolean()
+                    && (event.getRightClicked() instanceof Minecart || event.getRightClicked() instanceof Boat))
                 return;
             event.setCancelled(true);
         } else this.checkWorldInteract(event, event.getPlayer());
