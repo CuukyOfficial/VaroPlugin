@@ -42,7 +42,7 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
                     return;
                 }
 
-                getPlayer().playSound(getPlayer().getLocation(), XSound.BLOCK_ANVIL_LAND.parseSound(), 1, 1);
+                getPlayer().playSound(getPlayer().getLocation(), XSound.BLOCK_ANVIL_LAND.get(), 1, 1);
                 getPlayer().sendMessage(Main.getPrefix() + "§7'§a" + entry.getPath() + "§7' erfolgreich auf '§a" + message + "§7' gesetzt!");
             }
 

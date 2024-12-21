@@ -64,7 +64,7 @@ public class BorderCommand implements CommandExecutor {
 
             sender.sendMessage(Main.getPrefix() + ConfigMessages.BORDER_COMMAND_SET_BORDER.getValue(vp).replace("%size%", String.valueOf(borderSize)));
             if (p != null)
-                p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
+                p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1);
         } else
             sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
         return false;

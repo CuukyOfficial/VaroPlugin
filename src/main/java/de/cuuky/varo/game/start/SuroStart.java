@@ -48,7 +48,7 @@ public class SuroStart {
 					sched.cancel();
 
 					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-						vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
+						vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
 						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
 						VaroCancelable.removeCancelable(vp, CancelableType.FREEZE);
 						VaroCancelable.removeCancelable(vp, CancelableType.MUTE);

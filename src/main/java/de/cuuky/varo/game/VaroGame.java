@@ -146,7 +146,7 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player pl = pl1.getPlayer();
-            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
+            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
             pl.setGameMode(GameMode.SURVIVAL);
             pl1.cleanUpPlayer();
         }

@@ -107,7 +107,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
-	private Sound guiSound = XSound.UI_BUTTON_CLICK.parseSound();
+	private Sound guiSound = XSound.UI_BUTTON_CLICK.get();
 	private Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
