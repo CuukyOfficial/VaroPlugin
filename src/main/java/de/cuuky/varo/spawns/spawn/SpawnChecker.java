@@ -28,7 +28,7 @@ public class SpawnChecker {
 			int y = world.getMaxHeight();
 			Material type;
 			while (!(type = world.getBlockAt(xPos + (int) x, y, zPos + (int) z).getType()).isSolid()) {
-				if (type == XMaterial.WATER.parseMaterial()  || type == XMaterial.LAVA.parseMaterial() || type.name().contains("LEAVES") || type.name().contains("WOOD"))
+				if (type == XMaterial.WATER.get()  || type == XMaterial.LAVA.get() || type.name().contains("LEAVES") || type.name().contains("WOOD"))
 					return false;
 
 				y--;

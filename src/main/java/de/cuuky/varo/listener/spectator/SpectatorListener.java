@@ -75,8 +75,8 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-    	if(event.getBlock() == null || event.getBlock().getType() != XMaterial.FIRE.parseMaterial() || event.getPlayer().getItemInHand() == null
-        		|| !(event.getPlayer().getItemInHand().getType() == XMaterial.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == XMaterial.FIRE_CHARGE.parseMaterial()))
+    	if(event.getBlock() == null || event.getBlock().getType() != XMaterial.FIRE.get() || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == XMaterial.FLINT_AND_STEEL.get() || event.getPlayer().getItemInHand().getType() == XMaterial.FIRE_CHARGE.get()))
     		this.checkWorldInteract(event, event.getPlayer());
     }
 

@@ -83,7 +83,7 @@ public class VaroSaveable implements VaroSerializeable {
     }
 
     private boolean exists() {
-        return this.blockLocation.getBlock().getType() == this.type.getMaterial().parseMaterial();
+        return this.blockLocation.getBlock().getType() == this.type.getMaterial().get();
     }
 
     public boolean canModify(VaroPlayer player) {
