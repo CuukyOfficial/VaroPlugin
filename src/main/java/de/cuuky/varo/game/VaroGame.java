@@ -348,7 +348,7 @@ public class VaroGame implements VaroSerializeable {
                     }
 
                     if (VaroGame.this.finaleCountdown != 0) {
-                        Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_FINALE_COUNTDOWN).replace("%countdown%", countdown == 1 ? "einer" : String.valueOf(countdown));
+                        Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_FINALE_COUNTDOWN).replace("%countdown%", finaleCountdown == 1 ? "einer" : String.valueOf(finaleCountdown));
                     } else {
                         VaroGame.this.startFinale();
                         VaroGame.this.finaleStartScheduler.cancel();
