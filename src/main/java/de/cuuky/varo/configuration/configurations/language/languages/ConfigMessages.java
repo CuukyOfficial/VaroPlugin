@@ -86,7 +86,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "Dein Team hat aufgrund eines Kills ein Teamleben erhalten!"),
 	DEATH_KILL_TIME_ADD("death.killTimeAdd", "Aufgrund deines Kills hast du zusätzlich %colorcode%%timeAdded% &7Sekunden Zeit erhalten!"),
 
-	GAME_FINALE_COUNTDOWN("game.finaleCountdown", "&7Das Finale startet in %colorcode%%countdown% &7Sekunde(n)!"),
+	GAME_FINALE_COUNTDOWN("game.finale.finaleCountdown", "&7Das Finale startet in %colorcode%%countdown% &7Sekunde(n)!"),
 	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunde(n)!"),
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7wurde gestartet! &5Viel Erfolg!"),
 	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
