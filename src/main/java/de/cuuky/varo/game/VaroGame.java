@@ -348,7 +348,7 @@ public class VaroGame implements VaroSerializeable {
                     }
 
                     if (VaroGame.this.finaleCountdown != 0) {
-                        Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + VaroGame.this.finaleCountdown + " Sekunden!");
+                        Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_FINALE_COUNTDOWN).replace("%countdown%", finaleCountdown == 1 ? "einer" : String.valueOf(finaleCountdown));
                     } else {
                         VaroGame.this.startFinale();
                         VaroGame.this.finaleStartScheduler.cancel();
