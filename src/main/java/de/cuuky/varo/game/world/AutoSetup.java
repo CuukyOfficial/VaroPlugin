@@ -113,13 +113,38 @@ public class AutoSetup {
     private void setupSpawns(Location middle) {
         Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: Setting the spawns...");
 
-        int y = this.getGroundHeight(middle.getWorld(), this.x, this.z);
-        if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean())
-            y += ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
-        middle.getWorld().setSpawnLocation(this.x, y, this.z);
+        int flatHeight = getFlatSurfaceHeight(middle.getWorld(), this.x, this.z);
+        
+        middle.getWorld().setSpawnLocation(this.x, flatHeight, this.z);
 
         new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()),ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(),
                 (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
+    }
+
+    private int getFlatSurfaceHeight(World world, int x, int z) {
+        int flatHeight = getGroundHeight(world, x, z);
+
+        int radius = getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt());
+
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                if (i * i + j * j <= radius * radius) {
+                    int tempHeight = getGroundHeight(world, x + i, z + j);
+                    flatHeight = Math.min(flatHeight, tempHeight);
+                }
+            }
+        }
+
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                if (i * i + j * j <= radius * radius) {
+                    Location loc = new Location(world, x + i, flatHeight, z + j);
+                    loc.getBlock().setType(XMaterial.GRASS_BLOCK.parseMaterial());
+                }
+            }
+        }
+
+        return flatHeight;
     }
 
     private void setupAutoStart() {
