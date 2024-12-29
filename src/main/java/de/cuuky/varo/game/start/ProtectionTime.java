@@ -10,6 +10,7 @@ import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessa
 public class ProtectionTime {
 
 	private BukkitTask scheduler;
+	private int protectionTimer;
 
 	public ProtectionTime() {
 		startGeneralTimer(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
@@ -20,9 +21,8 @@ public class ProtectionTime {
 	}
 
 	private void startGeneralTimer(int timer) {
+		this.protectionTimer = timer;
 		this.scheduler = new BukkitRunnable() {
-
-			private int protectionTimer = timer;
 
 			@Override
 			public void run() {
@@ -43,7 +43,7 @@ public class ProtectionTime {
 		}.runTaskTimer(Main.getInstance(), 1L, 20L);
 	}
 
-	private String getCountdownMin(int sec) {
+	public String getCountdownMin(int sec) {
 		int min = sec / 60;
 
 		if (min < 10)
@@ -52,12 +52,16 @@ public class ProtectionTime {
 			return min + "";
 	}
 
-	private String getCountdownSec(int sec) {
+	public String getCountdownSec(int sec) {
 		sec = sec % 60;
 
 		if (sec < 10)
 			return "0" + sec;
 		else
 			return sec + "";
+	}
+
+	public int getProtectionTimer() {
+		return protectionTimer;
 	}
 }
