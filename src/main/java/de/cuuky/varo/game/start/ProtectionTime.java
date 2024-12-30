@@ -82,15 +82,15 @@ public class ProtectionTime {
 	*
 	* @return the remaining protection time or null if no protection time is set
 	*/
-	public int getRemainingTime() {
-		return this.protectionTiimer > 0 ? this.protectionTimer : null;
+	public Integer getRemainingTime() {
+		return this.protectionTimer > 0 ? this.protectionTimer : null;
 	}
 
 	/**
 	*
 	* @return the protection timer or null if no protection time is set
 	*/
-	public int getProtectionTimer() {
+	public Integer getProtectionTimer() {
 		return this.protectionTimer > 0 ? protectionTimer : null;
 	}
 }
