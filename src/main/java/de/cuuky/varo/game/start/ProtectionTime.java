@@ -22,6 +22,12 @@ public class ProtectionTime {
 
 	private void startGeneralTimer(int timer) {
 		this.protectionTimer = timer;
+
+		if (this.protectionTimer == 0) {
+			Main.getVaroGame().setProtection(null);
+			return;
+		}
+		
 		this.scheduler = new BukkitRunnable() {
 
 			@Override
@@ -36,7 +42,9 @@ public class ProtectionTime {
 					Main.getVaroGame().setProtection(null);
 					scheduler.cancel();
 				} else if (ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE).replace("%minutes%", getCountdownMin(ProtectionTime.this.protectionTimer)).replace("%seconds%", getCountdownSec(ProtectionTime.this.protectionTimer));
+					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE)
+						.replace("%minutes%", getCountdownMin(ProtectionTime.this.protectionTimer))
+						.replace("%seconds%", getCountdownSec(ProtectionTime.this.protectionTimer));
 				}
 
 				ProtectionTime.this.protectionTimer--;
@@ -56,33 +64,33 @@ public class ProtectionTime {
 
 	/**
 	*
-	* @return the countdown in minutes
+	* @return the countdown in minutes or null if no protection time is set
 	*/
 	public String getCountdownMinutes() {
-		return getCountdownMin(this.protectionTimer);
+		return this.protectionTimer > 0 ? getCountdownMin(this.protectionTimer) : null;
 	}
 
 	/**
 	*
-	* @return the countdown in seconds
+	* @return the countdown in seconds or null if no protection time is set
 	*/
 	public String getCountdownSeconds() {
-		return getCountdownSec(this.protectionTimer);
+		return this.protectionTimer > 0 ? getCountdownSec(this.protectionTimer) : null;
 	}
 
 	/**
 	*
-	* @return the remaining protection time
+	* @return the remaining protection time or null if no protection time is set
 	*/
 	public int getRemainingTime() {
-		return this.protectionTimer;
+		return this.protectionTiimer > 0 ? this.protectionTimer : null;
 	}
 
 	/**
 	*
-	* @return the protection timer
+	* @return the protection timer or null if no protection time is set
 	*/
 	public int getProtectionTimer() {
-		return protectionTimer;
+		return this.protectionTimer > 0 ? protectionTimer : null;
 	}
 }
