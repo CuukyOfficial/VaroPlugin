@@ -35,30 +35,43 @@ public class ProtectionTime {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
 					Main.getVaroGame().setProtection(null);
 					scheduler.cancel();
-				} else if (protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE).replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer));
+				} else if (ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
+					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE).replace("%minutes%", getCountdownMin(ProtectionTime.this.protectionTimer)).replace("%seconds%", getCountdownSec(ProtectionTime.this.protectionTimer));
+				}
 
-				this.protectionTimer--;
+				ProtectionTime.this.protectionTimer--;
 			}
 		}.runTaskTimer(Main.getInstance(), 1L, 20L);
 	}
 
-	public String getCountdownMin(int sec) {
+	private String getCountdownMin(int sec) {
 		int min = sec / 60;
-
-		if (min < 10)
-			return "0" + min;
-		else
-			return min + "";
+		return (min < 10) ? "0" + min : String.valueOf(min);
 	}
 
-	public String getCountdownSec(int sec) {
+	private String getCountdownSec(int sec) {
 		sec = sec % 60;
+		return (sec < 10) ? "0" + sec : String.valueOf(sec);
+	}
 
-		if (sec < 10)
-			return "0" + sec;
-		else
-			return sec + "";
+	/**
+	*
+	* @return the countdown in minutes
+	*/
+	public String getCountdownMinutes() {
+		return getCountdownMin(this.protectionTimer);
+	}
+
+	/**
+	*
+	* @return the count down in seconds
+	*/
+	public String getCountdownSeconds() {
+		return getCountdownSec(this.protectionTimer);
+	}
+
+	public int getRemainingTime() {
+		return this.protectionTimer;
 	}
 
 	public int getProtectionTimer() {
