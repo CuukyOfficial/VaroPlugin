@@ -31,7 +31,7 @@ public class ProtectionTime {
 					return;
 				}
 
-				if (this.protectionTimer == 0) {
+				if (ProtectionTime.this.protectionTimer == 0) {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
 					Main.getVaroGame().setProtection(null);
 					scheduler.cancel();
@@ -64,16 +64,24 @@ public class ProtectionTime {
 
 	/**
 	*
-	* @return the count down in seconds
+	* @return the countdown in seconds
 	*/
 	public String getCountdownSeconds() {
 		return getCountdownSec(this.protectionTimer);
 	}
 
+	/**
+	*
+	* @return the remaining protection time
+	*/
 	public int getRemainingTime() {
 		return this.protectionTimer;
 	}
 
+	/**
+	*
+	* @return the protection timer
+	*/
 	public int getProtectionTimer() {
 		return protectionTimer;
 	}
