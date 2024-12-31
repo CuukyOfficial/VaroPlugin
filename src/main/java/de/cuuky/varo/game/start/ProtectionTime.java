@@ -52,38 +52,14 @@ public class ProtectionTime {
 		}.runTaskTimer(Main.getInstance(), 1L, 20L);
 	}
 
-	private String getCountdownMin(int sec) {
+	public String getCountdownMin(int sec) {
 		int min = sec / 60;
 		return (min < 10) ? "0" + min : String.valueOf(min);
 	}
 
-	private String getCountdownSec(int sec) {
+	public String getCountdownSec(int sec) {
 		sec = sec % 60;
 		return (sec < 10) ? "0" + sec : String.valueOf(sec);
-	}
-
-	/**
-	*
-	* @return the countdown in minutes or null if no protection time is set
-	*/
-	public String getCountdownMinutes() {
-		return this.protectionTimer > 0 ? getCountdownMin(this.protectionTimer) : null;
-	}
-
-	/**
-	*
-	* @return the countdown in seconds or null if no protection time is set
-	*/
-	public String getCountdownSeconds() {
-		return this.protectionTimer > 0 ? getCountdownSec(this.protectionTimer) : null;
-	}
-
-	/**
-	*
-	* @return the remaining protection time or null if no protection time is set
-	*/
-	public Integer getRemainingTime() {
-		return this.protectionTimer > 0 ? this.protectionTimer : null;
 	}
 
 	/**
