@@ -7,13 +7,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.team.VaroTeam;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
+import io.github.almightysatan.slams.Placeholder;
 
 public class ExportCommand extends VaroCommand {
 
@@ -24,9 +25,9 @@ public class ExportCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Export"));
+			Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Export"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " export players");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
+			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Export"));
 		}
 
 		else if (args.length == 1 && args[0].equalsIgnoreCase("players")) {
@@ -62,8 +63,8 @@ public class ExportCommand extends VaroCommand {
 
 			YamlConfigurationUtil.save(yaml, file);
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_EXPORT_SUCCESSFULL.getValue(vp).replace("%file%", "/plugins/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + "/exports/players.yml"));
+			Messages.COMMANDS_VARO_EXPORT_SUCCESSFULL.send(vp, Placeholder.constant("file", "/plugins/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + "/exports/players.yml"));
 		} else
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%commands%", "export"));
+		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "export"));
 	}
 }

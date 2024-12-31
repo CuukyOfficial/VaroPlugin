@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -25,7 +25,7 @@ public class SunCommand implements CommandExecutor {
 
 		world.setStorm(false);
 		world.setThundering(false);
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_WEATHER_SUN.getValue(vp));
+		Messages.COMMANDS_WEATHER_SUN.send(vp);
 		return false;
 	}
 

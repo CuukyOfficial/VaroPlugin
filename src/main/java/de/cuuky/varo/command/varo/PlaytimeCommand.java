@@ -4,9 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class PlaytimeCommand extends VaroCommand {
@@ -16,9 +15,9 @@ public class PlaytimeCommand extends VaroCommand {
 
     @Override
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
-        if (sender instanceof Player) {
-            String msg = Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PLAYTIME.getValue(vp, vp);
-            vp.sendMessage(msg);
-        } else sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
+        if (sender instanceof Player)
+            Messages.COMMANDS_VARO_PLAYTIME.send(vp);
+        else
+            Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
     }
 }

@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.game.LobbyItem;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -19,12 +19,12 @@ public class AbortCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (!Main.getVaroGame().isStarting()) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ABORT_COUNTDOWN_NOT_ACTIVE.getValue(vp));
+			Messages.COMMANDS_VARO_ABORT_COUNTDOWN_NOT_ACTIVE.send(vp);
 			return;
 		}
 
 		Main.getVaroGame().abort();
 		Bukkit.getOnlinePlayers().forEach(player -> LobbyItem.giveItems(player));
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ABORT_COUNTDOWN_STOPPED.getValue(vp));
+		Messages.COMMANDS_VARO_ABORT_COUNTDOWN_STOPPED.send(vp);
 	}
 }

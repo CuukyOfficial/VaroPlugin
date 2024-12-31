@@ -1,15 +1,14 @@
 package de.cuuky.varo.command.essentials;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.cfw.version.VersionUtils;
-import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class ChatClearCommand implements CommandExecutor {
 
@@ -25,7 +24,7 @@ public class ChatClearCommand implements CommandExecutor {
 			for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
 				pl.sendMessage("");
 
-		Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_CHATCLEAR_CLEAR.getValue(vp));
+		Messages.COMMANDS_CHATCLEAR_CLEAR.broadcast();
 		return false;
 	}
 }

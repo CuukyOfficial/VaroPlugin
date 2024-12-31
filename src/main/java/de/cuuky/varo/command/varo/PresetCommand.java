@@ -7,10 +7,11 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.preset.PresetLoader;
+import io.github.almightysatan.slams.Placeholder;
 
 public class PresetCommand extends VaroCommand {
 
@@ -21,49 +22,49 @@ public class PresetCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Presets"));
+		    Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Presets"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7load <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7save <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7list");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
+			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Presets"));
 			return;
 		}
 
 		if (args[0].equalsIgnoreCase("load")) {
 			if (args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_HELP_LOAD.getValue(vp));
+				Messages.COMMANDS_VARO_PRESET_HELP_LOAD.send(vp);
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
 			if (!loader.getFile().isDirectory()) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_NOT_FOUND.getValue(vp).replace("%preset%", args[1]));
+				Messages.COMMANDS_VARO_PRESET_NOT_FOUND.send(vp, Placeholder.constant("preset", args[1]));
 				return;
 			}
 
 			if (loader.loadSettings()) {
 				Main.getDataManager().reloadConfig();
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LOADED.getValue(vp).replace("%preset%", args[1]));
+				Messages.COMMANDS_VARO_PRESET_LOADED.send(vp, Placeholder.constant("preset", args[1]));
 			} else
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_PATH_TRAVERSAL.getValue(vp).replace("%preset%", args[1]));
+			    Messages.COMMANDS_VARO_PRESET_PATH_TRAVERSAL.send(vp, Placeholder.constant("preset", args[1]));
 		} else if (args[0].equalsIgnoreCase("save")) {
 			if (args.length != 2) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_HELP_SAVE.getValue(vp));
+			    Messages.COMMANDS_VARO_PRESET_HELP_SAVE.send(vp);
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
 			if (loader.copyCurrentSettingsTo())
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_SAVED.getValue(vp).replace("%preset%", args[1]));
+			    Messages.COMMANDS_VARO_PRESET_SAVED.send(vp, Placeholder.constant("preset", args[1]));
 			else
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_PATH_TRAVERSAL.getValue(vp).replace("%preset%", args[1]));
+			    Messages.COMMANDS_VARO_PRESET_PATH_TRAVERSAL.send(vp, Placeholder.constant("preset", args[1]));
 		} else if (args[0].equalsIgnoreCase("list")) {
 			File file = new File("plugins/Varo/presets");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_PRESET_LIST.getValue(vp));
+			Messages.COMMANDS_VARO_PRESET_LIST.send(vp);
 			for (File f : file.listFiles())
 				sender.sendMessage(Main.getPrefix() + f.getName());
 		} else
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "preset"));
+		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "preset"));
 
 	}
 }

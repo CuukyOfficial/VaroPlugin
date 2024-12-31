@@ -7,10 +7,11 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.data.BugReport;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
+import io.github.almightysatan.slams.Placeholder;
 
 public class BugreportCommand extends VaroCommand {
 
@@ -22,20 +23,17 @@ public class BugreportCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (Main.getVaroUpdater() != null && Main.getVaroUpdater().getLastResult() != null
 		        &&  Main.getVaroUpdater().getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_OUTDATED_VERSION.getValue(vp));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_CURRENT_VERSION.getValue(vp).replace("%version%", Main.getInstance().getDescription().getVersion().toString()));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_NEWEST_VERSION.getValue(vp).replace("%version%", Main.getVaroUpdater().getLastResult().getVersionName()));
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_UPDATE.getValue(vp));
+			Messages.COMMANDS_VARO_BUGREPORT_UPDATE.send(vp);
 			return;
 		}
 
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_COLLECTING_DATA.getValue(vp));
+		Messages.COMMANDS_VARO_BUGREPORT_COLLECTING_DATA.send(vp);
 		File bugReport = BugReport.createBugReport();
 		if (bugReport == null) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR.getValue(vp));
+			Messages.COMMANDS_ERROR_GENERIC.send(vp);
 			return;
 		}
 
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_BUGREPORT_CREATED.getValue(vp).replace("%filename%", bugReport.getAbsolutePath()));
+		Messages.COMMANDS_VARO_BUGREPORT_CREATED.send(vp, Placeholder.constant("file", bugReport.getAbsolutePath()));
 	}
 }

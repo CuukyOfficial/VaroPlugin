@@ -1,12 +1,12 @@
 package de.cuuky.varo.command.essentials;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -17,26 +17,26 @@ public class PingCommand implements CommandExecutor {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if (args.length == 0) {
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_CONSOLE.getValue(vp));
+				Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.OTHER_PING.getValue(vp, vp));
+			Messages.COMMANDS_PING.send(vp);
 		} else if (args.length == 1) {
 			if (!sender.hasPermission("varo.ping")) {
 				sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
 				return false;
 			}
 
-			Player p = Bukkit.getPlayerExact(args[0]);
-			if (p == null) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §7nicht gefunden!");
+			VaroPlayer target = VaroPlayer.getPlayer(args[0]);
+			if (target == null || !target.isOnline()) {
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(vp);
 				return false;
 			}
 
-			sender.sendMessage(Main.getPrefix() + "§7Der Ping von " + Main.getColorCode() + args[0] + " §7betraegt " + Main.getColorCode() + String.valueOf(VaroPlayer.getPlayer(p).getVersionAdapter().getPing()) + "ms§7!");
+			Messages.COMMANDS_PING.send(vp, target);
 		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/ping §7[Player]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/ping §7[player]");
 
 		return false;
 	}

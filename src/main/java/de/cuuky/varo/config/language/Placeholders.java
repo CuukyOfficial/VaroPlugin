@@ -29,6 +29,8 @@ import de.cuuky.varo.config.language.Contexts.OnlinePlayerContext;
 import de.cuuky.varo.config.language.Contexts.PlayerContext;
 import de.cuuky.varo.config.language.Contexts.StrikeContext;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
 import io.github.almightysatan.slams.PlaceholderResolver;
 
 public final class Placeholders {
@@ -39,6 +41,7 @@ public final class Placeholders {
                 .constant("varo-author", Main.getInstance().getDescription().getAuthors().get(0))
                 .constant("varo-contributors", Main.getContributors())
                 .constant("varo-version", Main.getInstance().getDescription().getVersion())
+                .variable("varo-version-latest", () -> Main.getVaroUpdater() != null && Main.getVaroUpdater().getLastResult() != null && Main.getVaroUpdater().getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE ? Main.getVaroUpdater().getLastResult().getVersionName() : Main.getInstance().getDescription().getVersion())
                 .constant("varo-discord", Main.DISCORD_INVITE)
                 // Project
                 .constant("projectname", Main.getProjectName())
@@ -114,9 +117,11 @@ public final class Placeholders {
         .contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (ctx.getPlayer().getStats().getCountdown() / 60) % 60))
         .contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() % 60))
         .contextual("episode", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessionsPlayed()))
+        .contextual("episodes-remaining", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessions()))
         
         .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
-            onlineBuilder.contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
+            onlineBuilder.contextual("ping", OnlinePlayerContext.class, ctx -> String.valueOf(VaroPlayer.getPlayer(ctx.getPlayer()).getVersionAdapter().getPing()))
+            .contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
             .contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()))
             .contextual("z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockZ()))
             .contextual("world", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getName())

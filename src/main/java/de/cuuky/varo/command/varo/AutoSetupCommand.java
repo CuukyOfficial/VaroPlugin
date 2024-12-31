@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.AutoSetup;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -21,7 +21,7 @@ public class AutoSetupCommand extends VaroCommand {
 		if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("run")) {
 				if (!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
-					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_NOT_SETUP_YET.getValue(vp));
+					Messages.COMMANDS_VARO_AUTOSETUP_NOT_SETUP_YET.send(vp);
 					return;
 				}
 
@@ -29,13 +29,12 @@ public class AutoSetupCommand extends VaroCommand {
 					for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
 						player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
 
-					sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_FINISHED.getValue(vp));
+					Messages.COMMANDS_VARO_AUTOSETUP_FINISHED.send(vp);
 				});
 				return;
 			}
 		}
 
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_HELP.getValue(vp));
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSETUP_ATTENTION.getValue(vp));
+		Messages.COMMANDS_VARO_AUTOSETUP_HELP.send(vp);
 	}
 }

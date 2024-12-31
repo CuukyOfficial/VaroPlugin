@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -22,7 +23,7 @@ public class DayCommand implements CommandExecutor {
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld();
 		world.setTime(1000);
-		sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_TIME_DAY.getValue(vp));
+		Messages.COMMANDS_TIME_DAY.send(vp);
 		return false;
 	}
 }

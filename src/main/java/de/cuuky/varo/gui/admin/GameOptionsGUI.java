@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
@@ -41,12 +41,12 @@ public class GameOptionsGUI extends VaroInventory {
                     }
                     VaroPlayer vp = VaroPlayer.getPlayer(this.getPlayer());
                     if (!Main.getVaroGame().hasStarted()) {
-                        this.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RESTART_IN_LOBBY.getValue(vp));
+                        Messages.COMMANDS_VARO_RESTART_IN_LOBBY.send(vp);
                         this.open();
                         return;
                     }
                     Main.getVaroGame().restart();
-                    this.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_RESTART_RESTARTED.getValue(vp));
+                    Messages.COMMANDS_VARO_RESTART_RESTARTED.send(vp);
                     this.open();
                 })));
 

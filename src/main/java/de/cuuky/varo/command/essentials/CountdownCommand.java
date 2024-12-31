@@ -1,6 +1,5 @@
 package de.cuuky.varo.command.essentials;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,8 +8,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 
 public class CountdownCommand implements CommandExecutor {
 
@@ -33,7 +34,7 @@ public class CountdownCommand implements CommandExecutor {
             sched.cancel();
             sched = null;
 
-            sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_ABORT.getValue(vp));
+            Messages.COMMANDS_COUNTDOWN_ABORT.send(vp);
             return false;
         }
 
@@ -46,11 +47,11 @@ public class CountdownCommand implements CommandExecutor {
         try {
             time = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue(vp));
+            Messages.COMMANDS_ERROR_NO_NUMBER.send(vp, Placeholder.constant("text", args[0]));
         }
 
         if (time < 1) {
-            sender.sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_TOO_SMALL.getValue(vp));
+            Messages.COMMANDS_COUNTDOWN_TOO_SMALL.send(vp);
             return false;
         }
 
@@ -58,14 +59,14 @@ public class CountdownCommand implements CommandExecutor {
             @Override
             public void run() {
                 if (time == 0) {
-                    Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_START.getValue(vp));
+                    Messages.COMMANDS_COUNTDOWN_START.broadcast();
                     time = -1;
                     sched.cancel();
                     sched = null;
                     return;
                 }
 
-                Bukkit.broadcastMessage(Main.getPrefix() + ConfigMessages.COMMANDS_COUNTDOWN_FORMAT.getValue(vp).replace("%seconds%", String.valueOf(time)));
+                Messages.COMMANDS_COUNTDOWN_FORMAT.broadcast(Placeholder.constant("seconds", String.valueOf(time)));
                 time--;
             }
         }.runTaskTimer(Main.getInstance(), 0L, 20L);

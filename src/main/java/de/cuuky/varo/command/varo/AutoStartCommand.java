@@ -9,10 +9,11 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 
 public class AutoStartCommand extends VaroCommand {
 
@@ -27,28 +28,28 @@ public class AutoStartCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (Main.getVaroGame().hasStarted()) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_ALREADY_STARTED.getValue(vp));
+			Messages.COMMANDS_VARO_AUTOSTART_ALREADY_STARTED.send(vp);
 			return;
 		}
 
 		if (args.length == 0) {
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_HEADER.getValue(vp).replace("%category%", "Autostart"));
+		    Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Autostart"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7info");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7set <Hour> <Minute> <Day> <Month> <Year>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7remove");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " autostart §7delay <Minutes>");
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_HELP_FOOTER.getValue(vp));
+			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Autostart"));
 			return;
 		}
 
 		if (args[0].equalsIgnoreCase("set")) {
 			if (Main.getVaroGame().getAutoStart() != null) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_ALREADY_SETUP.getValue(vp));
+			    Messages.COMMANDS_VARO_AUTOSTART_ALREADY_SETUP.send(vp);
 				return;
 			}
 
 			if (args.length != 6) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_HELP_SET.getValue(vp));
+			    Messages.COMMANDS_VARO_AUTOSTART_HELP_SET.send(vp);
 				return;
 			}
 
@@ -63,13 +64,13 @@ public class AutoStartCommand extends VaroCommand {
 				month = Integer.parseInt(args[4]) - 1;
 				year = Integer.parseInt(args[5]);
 			} catch (NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_NO_NUMBER.getValue(vp));
+				Messages.COMMANDS_VARO_AUTOSTART_NO_NUMBER.send(vp);
 				return;
 			}
 
 			Calendar start = new GregorianCalendar(year, month, day, hour, min, 0);
 			if (new GregorianCalendar().after(start)) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_DATE_IN_THE_PAST.getValue(vp));
+				Messages.COMMANDS_VARO_AUTOSTART_DATE_IN_THE_PAST.send(vp);
 				return;
 			}
 
@@ -77,20 +78,20 @@ public class AutoStartCommand extends VaroCommand {
 			return;
 		} else if (args[0].equalsIgnoreCase("remove")) {
 			if (Main.getVaroGame().getAutoStart() == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_NOT_SETUP_YET.getValue(vp));
+				Messages.COMMANDS_VARO_AUTOSTART_NOT_SETUP_YET.send(vp);
 				return;
 			}
 
 			Main.getVaroGame().getAutoStart().stop();
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_REMOVED.getValue(vp));
+			Messages.COMMANDS_VARO_AUTOSTART_REMOVED.send(vp);
 		} else if (args[0].equalsIgnoreCase("delay")) {
 			if (Main.getVaroGame().getAutoStart() == null) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_NOT_SETUP_YET.getValue(vp));
+				Messages.COMMANDS_VARO_AUTOSTART_NOT_SETUP_YET.send(vp);
 				return;
 			}
 
 			if (args.length < 2) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_DELAY_HELP.getValue(vp));
+				Messages.COMMANDS_VARO_AUTOSTART_DELAY_HELP.send(vp);
 				return;
 			}
 
@@ -98,28 +99,24 @@ public class AutoStartCommand extends VaroCommand {
 			try {
 				delay = Integer.parseInt(args[1]);
 			} catch (NumberFormatException e) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_NO_NUMBER.getValue(vp).replace("%text%", args[1]));
+				Messages.COMMANDS_ERROR_NO_NUMBER.send(vp, Placeholder.constant("text", args[1]));
 				return;
 			}
 
 			if (delay < 1) {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_DELAY_TO_SMALL.getValue(vp));
+				Messages.COMMANDS_VARO_AUTOSTART_DELAY_TO_SMALL.send(vp);
 				return;
 			}
 
 			Main.getVaroGame().getAutoStart().delay(delay);
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_START_DELAYED.getValue(vp).replace("%delay%", String.valueOf(delay)));
+            Messages.COMMANDS_VARO_AUTOSTART_START_DELAYED.send(vp, Placeholder.constant("autostart-delay", String.valueOf(delay)));
 		} else if (args[0].equalsIgnoreCase("info")) {
 			if (Main.getVaroGame().getAutoStart() == null)
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_INFO_NOT_ACTIVE.getValue(vp));
-			else {
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_INFO_ACTIVE.getValue(vp));
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_INFO_DATE.getValue(vp).replace("%date%", new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart().toString())));
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_INFO_ACTIVE.getValue(vp).replace("%active%", String.valueOf(ConfigSetting.DO_SORT_AT_START.getValueAsBoolean())));
-				sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_AUTOSTART_INFO_ACTIVE.getValue(vp).replace("%teamsize%", String.valueOf(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt())));
-			}
+			    Messages.COMMANDS_VARO_AUTOSTART_INACTIVE.send(vp);
+			else
+			    Messages.COMMANDS_VARO_AUTOSTART_INFO.send(vp, Placeholder.constant("autostart-date", new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart().toString())));
 		} else
-			sender.sendMessage(Main.getPrefix() + ConfigMessages.VARO_COMMANDS_ERROR_USAGE.getValue(vp).replace("%command%", "autostart"));
+		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "autostart"));
 		return;
 
 	}

@@ -1,14 +1,15 @@
 package de.cuuky.varo.command.essentials;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 import net.md_5.bungee.api.ChatColor;
 
 public class BroadcastCommand implements CommandExecutor {
@@ -33,7 +34,7 @@ public class BroadcastCommand implements CommandExecutor {
 			else
 				msg = arg;
 
-		Bukkit.broadcastMessage(ConfigMessages.COMMANDS_BROADCAST_FORMAT.getValue(vp).replace("%message%", ChatColor.translateAlternateColorCodes('&', msg)));
+		Messages.COMMANDS_BROADCAST_FORMAT.send(vp, Placeholder.constant("message", ChatColor.translateAlternateColorCodes('&', msg)));
 		return false;
 	}
 

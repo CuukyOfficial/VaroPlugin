@@ -101,20 +101,20 @@ log:
       player: "<name> was killed by <killer-name>! They now have <team-lives> life/lives left!"
       other: "<name> died! They now have <team-lives> life/lives left! Reason: <death-reason>"
   strike:
-      combatlog: "<name> logged out during battle and has therefore received a strike!"
-      general: "<name> now has <strike-num> strikes! The strike was given by <strike-operator>. Reason: <strike-reason>"
-      firstNeverOnline: |-
-        <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
-        The player has not joined yet and will spawn at the spawn coordinates: <strike-location>!
-      first: |-
-        <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
-        Here are their current coordinates: <strike-location>!
-      second: |-
-        <name> now has two strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
-        Their inventory has been cleared!
-      third: |-
-        <name> now has three strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
-        <name> has now been removed from <projectname>!
+    combatlog: "<name> logged out during battle and has therefore received a strike!"
+    general: "<name> now has <strike-num> strikes! The strike was given by <strike-operator>. Reason: <strike-reason>"
+    firstNeverOnline: |-
+      <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
+      The player has not joined yet and will spawn at the spawn coordinates: <strike-location>!
+    first: |-
+      <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
+      Here are their current coordinates: <strike-location>!
+    second: |-
+      <name> now has two strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
+      Their inventory has been cleared!
+    third: |-
+      <name> now has three strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
+      <name> has now been removed from <projectname>!
   borderDecrease:
     days: "The border size was decreased by <border-decrease-size>. Next decrease in <border-decrease-time> days!"
     minutes: "The border size was decreased by <border-decrease-size>. Next decrease in <border-decrease-time> minutes!"
@@ -123,9 +123,9 @@ log:
   combatlog: "<name> has logged out during battle!"
   gameStarted: "<projectname> has started!"
   playerJoinNormal: "<name> has joined the game!"
-  newSessions: <new-sessions> new sessions were given to players!
+  newSessions: "<new-sessions> new sessions were given to players!"
   switchedName: "<name> has changed their name and is now known as <new-name>!"
-  newSessionsForAll: Everybody received <new-sessions> new sessions!
+  newSessionsForAll: "Everybody received <new-sessions> new sessions!"
   finale: "<name> has entered the server to participate in the finale"
   playerJoinMassrec: "<name> has entered the server during mass recording and is now playing their <episode>th episode."
   win:
@@ -145,3 +145,152 @@ border:
     death: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s due to a death."
     minuteUpdate: "<prefix>§7The border will shrink in §c<border-decrease-minutes>§8:§c<border-decrease-seconds>"
   minimum: "<prefix>§cThe Border has reached its minimum!"
+
+category:
+  header: "§7-------- <colorcode> <category> §7-------"
+  footer: "§7------------------------"
+
+commands:
+  error:
+    usernotfound: "<prefix>§cNo user could be found for this player!"
+    nonumber: "<prefix><colorcode><text> §cis not a number!"
+    notstarted: "<prefix>§cThe games have not started yet!"
+    generic: "<prefix>§cAn error has occurred!"
+    wrongVersion: "<prefix>§cThis feature is not available on versions lower than <colorcode><required-version>§c!"
+    unknownplayer: "<prefix>§cThe player <colorcode><target> §chas never entered the server before!"
+    usage: "<prefix>§cError! Use <colorcode>/varo <command> §cfor help."
+    noconsole: "<prefix>§cYou must be a player!"
+    blocked: "<prefix>§cYou are not allowed to use this command!"
+  varo:
+    autostart:
+      alreadystarted: "<prefix><projectname> §7has already been started!"
+      delayhelp: "<prefix><colorcode>/autostart delay §7\\<Delay in Minutes\\>"
+      removed: "<prefix><colorcode>AutoStart §7 successfully removed!"
+      nonumber: "<prefix>One or more arguments are §cnot §7a number!"
+      startdelayed: "<prefix>§7The start has been delayed by <colorcode><autostart-delay> §7minutes!"
+      info: "<prefix><prefix>AutoStart §aactive:\n<colorcode>Date: §7<autostart-date>\n<colorcode>Auto random team size: §7<config-Start-doSortAtStart>\n<colorcode>AutoSort: §7<config-Start-doRandomTeamAtStart>"
+      dateinthepast: "<prefix>§7The <colorcode>date §7must not be in the past!"
+      active: "<prefix>AutoStart §aactive§7:"
+      alreadysetup: "<prefix>§7Remove the AutoStart first before you set a new one!"
+      delaytosmall: "<prefix>The delay must not be less than 1!"
+      notactive: "<prefix>AutoStart is inactive"
+      helpset: "<prefix><colorcode>/autostart §7set <Hour> <Minute> <Day> <Month> <Year>"
+      notsetupyet: "<prefix>§7There is no <colorcode>autostart §7defined yet!"
+    discord:
+      verificationremoved: "<prefix>Your verification was removed."
+      noeventchannel: "<prefix>No event channel was given to the bot."
+      status:
+        active: "<prefix>Your discord verification is active."
+        inactive: "<prefix>Your discord verification is inactive."
+      verifysystemdisabled: "<prefix>The Verify system is disabled."
+      botoffline: "<prefix>The Discordbot is not online!"
+      pleasereload: "<prefix>The DiscordBot was not set up at start, please reload!"
+      notverified: "<prefix>You are not verified yet!"
+      discordbotdisabled: "<prefix>The Discordbot is disabled."
+      shutdown: "<prefix>The Discordbot was §asuccessfully §7shut down."
+      remove:
+        usage: "<prefix>Use <colorcode>/varo discord verify remove §7to remove the verification."
+      usernotfound: "<prefix>User not found for this player!"
+      unverify: "<prefix>The account has successfully been unlinked from <colorcode><target>§7!"
+      verifydisabled: "<prefix>The verification system has been deactivated in the Config!"
+      notsetup: "<prefix>The DiscordBot was not set up at the start!"
+      verifyenabled: "<prefix>The Verify system has been activated."
+      reloaded: "<prefix>The Discordbot was §asuccessfully §7reloaded."
+      discordmessagetitle: "MESSAGE"
+      account: "<prefix>Account: <colorcode><target>"
+      bypassinactive: "<prefix><target> no longer bypasses the verification system."
+      getlink: "<prefix><colorcode><target-name> account is called <colorcode><target-discord-name>§7 and the ID is <colorcode><target-discord-id>§7!"
+      botdisabled: "<prefix>The DiscordBot is disabled!"
+      bypassactive: "<prefix><target> now bypasses the verification system."
+    config:
+      noimgameset: "<prefix><colorcode>This setting can not be changed in game!"
+      entrynotfound: "<prefix>The entry <colorcode><entry>§7 was not found."
+      reloaded: "<prefix>All <colorcode>lists§7, <colorcode>messages, §7and the <colorcode>config §7have been successfully reloaded."
+      searchlisttitle: "<prefix>§lThe following settings were found:"
+      errorset: "<prefix><colorcode>An error occurred: <error>"
+      helpsearch: "<prefix><colorcode>/varo config §7search <key>"
+      helpset: "<prefix><colorcode>/varo config §7set <key> <value>"
+      reset: "<prefix>All entries have been successfully reset."
+      entryset: "<prefix>The entry <colorcode><entry>§7 was successfully set to <colorcode><value>§7."
+      searchlistformat: "<prefix><colorcode><entry> §8- §7<description>"
+    checkcombat:
+      help: "<prefix><colorcode>/varo checkcombat"
+      incombat: "<prefix>You are currently in <colorcode>combat§7!"
+      notincombat: "<prefix>You are currently <colorcode>not in combat§7!"
+    sort:
+      nospawnwithteam: "<prefix>It was not possible to find a spawn next to their other team members for every player!"
+      help: "<prefix><colorcode>/varo sort"
+      nospawn: "<prefix>It was not possible to find a spawn for every player!"
+      sorted: "<prefix>All players were successfully sorted."
+    backpack:
+      noteam: "<prefix>You are not in a team and therefore do not have a team backpack."
+      choosetype: "<prefix>Please choose which backpack you want to open <colorcode>(Player/Team)§7."
+      playerdoesntexist: "<prefix>§cThe player <colorcode><target> §7does not exist."
+      teamdoesntexist: "<prefix>§cThe team <colorcode><target> §7does not exist."
+      notenabled: "<prefix>Backpacks are disabled."
+    preset:
+      saved: "<prefix>The current settings were §asuccessfully §7saved as preset <colorcode><preset> §7."
+      helploaded: "<prefix><colorcode>/varo preset §7load <PresetPath>"
+      pathtraversal: "<prefix>Presets must be located inside the §3presets §7folder."
+      list: "<prefix>§lList of all presets:"
+      notfound: "<prefix>The preset <colorcode><preset> §7was not found."
+      helpsave: "<prefix><colorcode>/varo preset §7save <PresetPath>"
+      loaded: "<prefix>The preset <colorcode><preset> §7was §asuccessfully §7loaded."
+    actionbar:
+      disabled: "<prefix>You can no longer see the action bar!"
+      enabled: "<prefix>You can now see the action bar!"
+      deactivated: "<prefix>The action bar is not enabled on this server!"
+    episodes: "<prefix>You have already played <colorcode><episode> §7episode(s). You have <colorcode><episodes-remaining> §7episode(s) left for today"
+    autosetup:
+      finished: "<prefix>The AutoSetup is finished."
+      help: "<prefix><colorcode>/varo autosetup run §7starts the autosetup\n§cCaution: §7This command sets new spawns, lobby, portal, border and §loptional§7 an autostart"
+      notsetupyet: "<prefix>The AutoSetup has not yet been set up in the Config!"
+    playtime: "<prefix>Time remaining: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+    randomteam:
+      sorted: "<prefix>All players without a team are now in teams of <colorcode><sort-size>§7!"
+      teamsizetoosmall: "<prefix>The team size must be at least 1."
+      nopartner: "<prefix>Not enough team partners could be found for you."
+      help: "<prefix><colorcode>/varo randomTeam <team size>"
+    bugreport:
+      collectingdata: "<prefix>Collecting data..."
+      created: "<prefix>Bugreport was saved as §c<file> §7! Please upload this file to our Discord: <varo-discord>"
+      update: "<prefix>You cannot make bug reports when using an outdated plugin version!\n<prefix>§7Use <colorcode>/varo update §7to update.\n<prefix>Current version: §c<varo-version>\n<prefix>Latest version: §a<varo-version-latest>"
+    scoreboard:
+      enabled: "<prefix>You can now see the scoreboard."
+      deactivated: "<prefix>Scoreboards are disabled."
+      disabled: "<prefix>You can no longer see the scoreboard."
+    restart:
+      inlobby: "<prefix>The game is already in the lobby phase!"
+      restarted: "<prefix>The games has been restarted."
+    abort:
+      stopped: "<prefix>Start countdown successfully stopped!"
+      notactive: "<prefix>The start countdown is not active!"
+    intro:
+      alreadystarted: "<prefix>The intro has already been started!"
+      gamealreadystarted: "<prefix>The game has already been started!"
+      started: "<prefix>And here we go!"
+    export:
+      players: "<prefix>All players were successfully exported to <colorcode><file>§7"
+  broadcast:
+    format: "§8[§cBroadcast§8] §7<message>"
+  chatclear:
+    cleared: "<prefix>The chat was cleared."
+  countdown:
+    abort: "<prefix>Countdown canceled!"
+    format: "<colorcode><seconds>"
+    tooSmall: "<prefix>The countdown has to be greater than zero!"
+    start: "<prefix>Go!"
+  border:
+    distance: "<prefix>You are <colorcode><distance-to-border> blocks §7away from the border."
+    usage: "<prefix>You can change the size of the border using <colorcode>/border <diameter> [seconds]§7. The center of the border will be set to your current position."
+    size: "<prefix>The border has a size of <colorcode><border-size> blocks§7."
+  weather:
+    thunder: "<prefix>Changed weather to <colorcode>thunderstorm§7."
+    sun: "<prefix>Weather <colorcode>cleared§7."
+    rain: "<prefix>It's <colorcode>raining §7now."
+  time:
+    night: "<prefix>Time set to <colorcode>night§7."
+    day: "<prefix>Time set to <colorcode>day§7."
+  setworldspawn:
+    setworldspawn: "<prefix>Worldspawn set"
+  ping: "<prefix>Ping: <colorcode><ping>§7ms"

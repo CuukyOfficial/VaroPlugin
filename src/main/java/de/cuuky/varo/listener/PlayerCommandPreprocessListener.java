@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class PlayerCommandPreprocessListener implements Listener {
@@ -32,10 +32,10 @@ public class PlayerCommandPreprocessListener implements Listener {
 				else
 					Bukkit.getServer().broadcastMessage(String.format("%s§e%s §chat möglicherweise versucht den Server zu crashen!", Main.getPrefix(), event.getPlayer().getName(), event.getMessage()));
 			} else
-				event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_DENIED.getValue(VaroPlayer.getPlayer(event.getPlayer())));
+			    Messages.COMMANDS_ERROR_BLOCKED.send(VaroPlayer.getPlayer(event.getPlayer()));
 		} else if (TELL_COMMANDS.contains(lowerMessage)) {
 			event.setCancelled(true);
-			event.getPlayer().sendMessage(Main.getPrefix() + ConfigMessages.COMMANDS_DENIED.getValue(VaroPlayer.getPlayer(event.getPlayer())));
+			Messages.COMMANDS_ERROR_BLOCKED.send(VaroPlayer.getPlayer(event.getPlayer()));
 		}
 	}
 }

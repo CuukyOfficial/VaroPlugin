@@ -12,8 +12,8 @@ import org.bukkit.block.Block;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.team.VaroTeam;
 import net.luckperms.api.LuckPerms;
@@ -49,7 +49,7 @@ public final class VaroUtils {
             int actualSize = Math.min(i + teamSize, random.size());
             Collection<VaroPlayer> members = random.subList(i, actualSize);
             if (members.size() < teamSize)
-                members.forEach(m -> m.sendMessage(ConfigMessages.VARO_COMMANDS_RANDOMTEAM_NO_PARTNER));
+                members.forEach(m -> Messages.COMMANDS_VARO_RANDOMTEAM_NO_PARTNER.send(m));
 
             // add
             VaroTeam team = new VaroTeam(getRandomTeamName(members));
