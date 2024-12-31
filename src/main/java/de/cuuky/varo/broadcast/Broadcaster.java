@@ -62,6 +62,9 @@ public class Broadcaster {
 
 			@Override
 			public void run() {
+				if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() == 0)
+				    return;
+				
 				int random = new Random().nextInt(messages.size());
 				Bukkit.broadcastMessage(Main.getLanguageManager().replaceMessage(messages.get(random)));
 			}
