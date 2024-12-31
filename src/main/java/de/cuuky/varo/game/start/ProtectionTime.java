@@ -66,7 +66,7 @@ public class ProtectionTime {
 	*
 	* @return the protection timer or null if no protection time is set
 	*/
-	public Integer getProtectionTimer() {
+	public int getProtectionTimer() {
 		return this.protectionTimer > 0 ? protectionTimer : null;
 	}
 }
