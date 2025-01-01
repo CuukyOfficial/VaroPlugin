@@ -9,23 +9,21 @@ import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Messages;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.border.VaroBorder;
-import de.cuuky.varo.player.VaroPlayer;
 
 public class SetWorldspawnCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if (!(sender instanceof Player)) {
+		    Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 			System.out.println("Nicht fuer die Konsole");
 			return false;
 		}
 
 		Player p = (Player) sender;
 		if (!p.hasPermission("Varo.setup")) {
-			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
+			Messages.COMMANDS_ERROR_PERMISSION.send(sender);
 			return false;
 		}
 

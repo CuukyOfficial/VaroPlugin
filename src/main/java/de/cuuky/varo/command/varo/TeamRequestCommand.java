@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.gui.settings.VaroColorMenu;
@@ -22,7 +23,7 @@ public class TeamRequestCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer player, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			System.out.println("Not for console!");
+		    Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 			return;
 		}
 
@@ -39,7 +40,7 @@ public class TeamRequestCommand extends VaroCommand {
 			}
 
 			if (!player.getPlayer().hasPermission("varo.changeTeamColor")) {
-				player.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(player));
+			    Messages.COMMANDS_ERROR_PERMISSION.send(player);
 				return;
 			}
 

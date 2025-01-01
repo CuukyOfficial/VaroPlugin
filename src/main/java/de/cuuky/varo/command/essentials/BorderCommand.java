@@ -9,9 +9,7 @@ import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Messages;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.world.VaroWorldHandler;
-import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import io.github.almightysatan.slams.Placeholder;
@@ -20,7 +18,6 @@ public class BorderCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-        VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
         if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
             Messages.COMMANDS_ERROR_WRONGVERSION.send(sender, Placeholder.constant("required-version", "1.8.8"));
             return false;
@@ -64,11 +61,11 @@ public class BorderCommand implements CommandExecutor {
                 return false;
             }
 
-            sender.sendMessage(Main.getPrefix() + ConfigMessages.BORDER_COMMAND_SET_BORDER.getValue(vp).replace("%size%", String.valueOf(borderSize)));
+            Messages.COMMANDS_BORDER_SUCCESS.send(sender);
             if (p != null)
                 p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
         } else
-            sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
+            Messages.COMMANDS_ERROR_PERMISSION.send(sender);
         return false;
     }
 }

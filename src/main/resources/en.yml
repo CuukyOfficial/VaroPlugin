@@ -157,10 +157,11 @@ commands:
     notstarted: "<prefix>§cThe games have not started yet!"
     generic: "<prefix>§cAn error has occurred!"
     wrongVersion: "<prefix>§cThis feature is not available on versions lower than <colorcode><required-version>§c!"
-    unknownplayer: "<prefix>§cThe player <colorcode><target> §chas never entered the server before!"
+    unknownplayer: "<prefix>§cUnknown player <colorcode><target>§c!"
     usage: "<prefix>§cError! Use <colorcode>/varo <command> §cfor help."
     noconsole: "<prefix>§cYou must be a player!"
     blocked: "<prefix>§cYou are not allowed to use this command!"
+    permission: "<prefix>§cInsufficient permission"
   varo:
     autostart:
       alreadystarted: "<prefix><projectname> §7has already been started!"
@@ -284,6 +285,7 @@ commands:
     distance: "<prefix>You are <colorcode><distance-to-border> blocks §7away from the border."
     usage: "<prefix>You can change the size of the border using <colorcode>/border <diameter> [seconds]§7. The center of the border will be set to your current position."
     size: "<prefix>The border has a size of <colorcode><border-size> blocks§7."
+    success: "<prefix>The border size is now <colorcode><border-size> §7blocks!"
   weather:
     thunder: "<prefix>Changed weather to <colorcode>thunderstorm§7."
     sun: "<prefix>Weather <colorcode>cleared§7."
@@ -298,3 +300,9 @@ commands:
 broadcast:
   - "<prefix> A broadcast message"
   - "<prefix> Another broadcast message"
+
+spectator:
+  height: "§cYou can not fly any lower!"
+
+crafting:
+  disallowed: "§cYou are not allowed to craft, use or brew this item!"

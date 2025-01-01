@@ -7,16 +7,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 
 public class UnflyCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if (!sender.hasPermission("varo.unfly")) {
-			sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(vp));
+			Messages.COMMANDS_ERROR_PERMISSION.send(sender);
 			return false;
 		}
 
@@ -44,7 +44,7 @@ public class UnflyCommand implements CommandExecutor {
 
 			Player to = Bukkit.getPlayerExact(args[0]);
 			if (to == null) {
-				sender.sendMessage(Main.getPrefix() + "§7" + args[0] + "§7 nicht gefunden!");
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender, Placeholder.constant("target", args[0]));
 				return false;
 			}
 

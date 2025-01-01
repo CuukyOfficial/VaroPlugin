@@ -1,10 +1,7 @@
 package de.cuuky.varo.command.essentials;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.gui.report.ReportGUI;
-import de.cuuky.varo.gui.report.ReportListGUI;
-import de.cuuky.varo.player.VaroPlayer;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,8 +9,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.gui.report.ReportGUI;
+import de.cuuky.varo.gui.report.ReportListGUI;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class ReportCommand implements CommandExecutor {
 

@@ -11,8 +11,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cDu bist noch nicht mit Discord verifiziert!\n&7Nutze &c/verify %code% &7um dich auf unserem Discord zu verifizieren!\nLink zum Discord: &c%discordLink%"),
 	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cDein Account ist nicht auf dem Discord!%nextLine%&7Joine dem Discord und versuche es erneut."),
 
-	BORDER_COMMAND_SET_BORDER("border.borderSet", "&7Die Border wurde auf %colorcode%%size% &7gesetzt!"),
-
 	COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT("combat.inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),
 	COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7hat den Server während eines Kampfes verlassen!"),
@@ -79,10 +77,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	CHEST_SAVED_CHEST("chest.newChestSaved", "&7Eine neue Kiste wurde gesichert!"),
 	CHEST_SAVED_FURNACE("chest.newFurnaceSaved", "&7Ein neuer Ofen wurde gesichert!"),
 
-	NOPERMISSION_NO_PERMISSION("nopermission.noPermission", "%colorcode%Dazu bist du nicht berechtigt!"),
-	NOPERMISSION_NOT_ALLOWED_CRAFT("nopermission.notAllowedCraft", "&7Das darfst du nicht craften, benutzen oder brauen!"),
-	NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7Niedriger darfst du nicht fliegen!"),
-
 	PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "-"), // TODO delete this
 	PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "-"), // TODO delete this
 
@@ -130,8 +124,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	MODS_BLOCKED_MODS_KICK("mods.blockedModsKick", "&7Bitte entferne folgende Mods: %colorcode%%mods%"),
 	MODS_BLOCKED_MODLIST_SPLIT("mods.blockedModsListSplit", "&7, "),
 	MODS_BLOCKED_MODS_BROADCAST("mods.blockedModsBroadcast", "&7Der Spieler %colorcode%%player% &7hat versucht mit folgenden blockierten Mods zu joinen: %colorcode%%mods%"),
-
-	OTHER_CONFIG("other.configReload", "&7Die %colorcode%Config &7wurde neu geladen"),
 
 	LOGGER_FILTER_INVALID_FILTER("blockLoggerFilter.invalidFilter", "&c%filterName% \"%content%\" ist nicht gültig!"),
 	LOGGER_FILTER_SET_FILTER("blockLoggerFilter.setFilter", "&7%filterName% wurde auf %colorcode%%newContent% &7gesetzt (vorher: %oldContent%)."),

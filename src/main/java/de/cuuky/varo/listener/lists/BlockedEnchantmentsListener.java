@@ -13,7 +13,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class BlockedEnchantmentsListener implements Listener {
@@ -27,7 +27,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
-				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
+				Messages.CRAFTING_DISALLOWED.send(vp);
 				return;
 			}
 	}
@@ -56,7 +56,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
-				vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
+				Messages.CRAFTING_DISALLOWED.send(vp);
 				return;
 			}
 	}

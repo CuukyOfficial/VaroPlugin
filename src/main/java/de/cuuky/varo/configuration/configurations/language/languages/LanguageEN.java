@@ -7,8 +7,6 @@ public enum LanguageEN implements LoadableMessage {
     BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cYour account is not verified!\n&7Please use &c/verify %code% &7to verify your Discord account!\nLink: &c%discordLink%"),
     BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cYour account is not on the discord!%nextLine%&7Join the discord and try again."),
 
-    BORDER_COMMAND_SET_BORDER("border.borderSet", "&7The border was set to %colorcode%%size% &7!"),
-
     COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7This player is on your team!"),
     COMBAT_IN_FIGHT("combat.inFight", "&7You are now in combat, do &4NOT &7log &7out!"),
     COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7has left the server during a fight!"),
@@ -75,10 +73,6 @@ public enum LanguageEN implements LoadableMessage {
     CHEST_SAVED_CHEST("chest.newChestSaved", "&7A new chest was secured!"),
     CHEST_SAVED_FURNACE("chest.newFurnaceSaved", "&7A new furnace was secured!"),
 
-    NOPERMISSION_NO_PERMISSION("nopermission.noPermission", "%colorcode%You are not authorized for this!"),
-    NOPERMISSION_NOT_ALLOWED_CRAFT("nopermission.notAllowedCraft", "&7You may not craft, use or brew that!"),
-    NOPERMISSION_NO_LOWER_FLIGHT("nopermission.noLowerFlight", "&7You can not fly lower!"),
-
     PLACEHOLDER_NO_TOP_PLAYER("placeholder.noTopPlayer", "-"),
     PLACEHOLDER_NO_TOP_TEAM("placeholder.noTopTeam", "-"),
 
@@ -126,8 +120,6 @@ public enum LanguageEN implements LoadableMessage {
     MODS_BLOCKED_MODS_KICK("mods.blockedModsKick", "&7Please remove the following mods: %colorcode%%mods%"),
     MODS_BLOCKED_MODLIST_SPLIT("mods.blockedModsListSplit", "&7, "),
     MODS_BLOCKED_MODS_BROADCAST("mods.blockedModsBroadcast", "%colorcode%%player% &7tried to join while having the following mods installed: %colorcode%%mods%"),
-
-    OTHER_CONFIG("other.configReload", "&7The %colorcode%Config &7was reloaded"),
 
     LOGGER_FILTER_INVALID_FILTER("blockLoggerFilter.invalidFilter", "&c%filterName% \"%content%\" is invalid!"),
     LOGGER_FILTER_SET_FILTER("blockLoggerFilter.setFilter", "&7Set %filterName% to %colorcode%%newContent%&7 (before: %oldContent%)."),

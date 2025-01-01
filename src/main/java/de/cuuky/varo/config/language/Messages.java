@@ -134,6 +134,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_ERROR_WRONGVERSION = message("commands.error.wrongVersion");
     public static final VaroMessage COMMANDS_ERROR_GENERIC = message("commands.error.generic");
     public static final VaroMessage COMMANDS_ERROR_BLOCKED = message("commands.error.blocked");
+    public static final VaroMessage COMMANDS_ERROR_PERMISSION = message("commands.error.permission");
 
     public static final VaroMessage COMMANDS_VARO_BUGREPORT_UPDATE = message("commands.varo.bugreport.update");
     public static final VaroMessage COMMANDS_VARO_BUGREPORT_COLLECTING_DATA = message("commands.varo.bugreport.collectingdata");
@@ -236,6 +237,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_BORDER_SIZE = message("commands.border.size");
     public static final VaroMessage COMMANDS_BORDER_DISTANCE = message("commands.border.distance");
     public static final VaroMessage COMMANDS_BORDER_USAGE = message("commands.border.usage");
+    public static final VaroMessage COMMANDS_BORDER_SUCCESS = message("commands.border.success");
 
     public static final VaroMessage COMMANDS_BROADCAST_FORMAT = message("commands.broadcast.format");
 
@@ -258,6 +260,10 @@ public final class Messages {
     public static final VaroMessage COMMANDS_PING = message("commands.ping");
 
     public static final VaroMessageArray BROADCAST = array("broadcast");
+    
+    public static final VaroMessage SPECTATOR_HEIGHT = message("spectator.height");
+    
+    public static final VaroMessage CRAFTING_DISALLOWED = message("crafting.disallowed");
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
         SLAMS.load("en", JasklParser.createParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))));

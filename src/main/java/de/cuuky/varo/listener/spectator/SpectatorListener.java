@@ -27,9 +27,8 @@ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.PlayerState;
 import de.cuuky.varo.utils.Vanish;
@@ -177,7 +176,7 @@ public class SpectatorListener implements Listener {
                     tp.setY(ConfigSetting.MINIMAL_SPECTATOR_HEIGHT.getValueAsInt());
                     event.setTo(tp);
                     VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-                    vp.sendMessage(ConfigMessages.NOPERMISSION_NO_LOWER_FLIGHT, vp);
+                    Messages.SPECTATOR_HEIGHT.send(vp);
                 }
     }
 

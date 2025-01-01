@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.custom.CustomCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class VaroCommandListener implements CommandExecutor {
@@ -43,7 +43,7 @@ public class VaroCommandListener implements CommandExecutor {
         }
 
         if (command.getPermission() != null && !sender.hasPermission(command.getPermission())) {
-            sender.sendMessage(ConfigMessages.NOPERMISSION_NO_PERMISSION.getValue(player, player));
+            Messages.COMMANDS_ERROR_PERMISSION.send(sender);
             return false;
         }
 

@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class BlockedItemsListener implements Listener {
@@ -22,7 +22,7 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
-		vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
+		Messages.CRAFTING_DISALLOWED.send(vp);
 	}
 
 	@EventHandler
@@ -35,6 +35,6 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-		vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
+		Messages.CRAFTING_DISALLOWED.send(vp);
 	}
 }
