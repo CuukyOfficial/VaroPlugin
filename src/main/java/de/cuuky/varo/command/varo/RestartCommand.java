@@ -17,12 +17,12 @@ public class RestartCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (!Main.getVaroGame().hasStarted()) {
-			Messages.COMMANDS_VARO_RESTART_IN_LOBBY.send(vp);
+			Messages.COMMANDS_VARO_RESTART_IN_LOBBY.send(sender);
 			return;
 		}
 
 		Main.getVaroGame().restart();
-		Messages.COMMANDS_VARO_RESTART_RESTARTED.send(vp);
+		Messages.COMMANDS_VARO_RESTART_RESTARTED.send(sender);
 	}
 
 }

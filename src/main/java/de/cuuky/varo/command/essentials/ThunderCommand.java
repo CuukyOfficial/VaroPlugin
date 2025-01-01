@@ -25,7 +25,7 @@ public class ThunderCommand implements CommandExecutor {
 
 		world.setStorm(true);
 		world.setThundering(true);
-		Messages.COMMANDS_WEATHER_THUNDER.send(vp);
+		Messages.COMMANDS_WEATHER_THUNDER.send(sender);
 		return false;
 	}
 

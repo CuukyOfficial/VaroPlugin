@@ -17,7 +17,7 @@ public class PingCommand implements CommandExecutor {
 		VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
 		if (args.length == 0) {
 			if (!(sender instanceof Player)) {
-				Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+				Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 				return false;
 			}
 
@@ -30,11 +30,11 @@ public class PingCommand implements CommandExecutor {
 
 			VaroPlayer target = VaroPlayer.getPlayer(args[0]);
 			if (target == null || !target.isOnline()) {
-				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(vp);
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender);
 				return false;
 			}
 
-			Messages.COMMANDS_PING.send(vp, target);
+			Messages.COMMANDS_PING.send(sender, target);
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/ping §7[player]");
 

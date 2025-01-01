@@ -25,7 +25,7 @@ public class RainCommand implements CommandExecutor {
 
 		world.setStorm(true);
 		world.setThundering(false);
-		Messages.COMMANDS_WEATHER_RAIN.send(vp);
+		Messages.COMMANDS_WEATHER_RAIN.send(sender);
 		return false;
 	}
 }

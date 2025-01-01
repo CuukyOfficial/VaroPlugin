@@ -17,19 +17,19 @@ public class CheckCombatCommand extends VaroCommand {
     @Override
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
         if (vp == null) {
-        	Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+        	Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
             return;
         }
 
         if (args.length != 0) {
-            Messages.COMMANDS_VARO_CHECKCOMBAT_HELP.send(vp);
+            Messages.COMMANDS_VARO_CHECKCOMBAT_HELP.send(sender);
             return;
         }
 
         if (new CombatlogCheck(vp.getPlayer()).isCombatLog()) {
-            Messages.COMMANDS_VARO_CHECKCOMBAT_INCOMBAT.send(vp);
+            Messages.COMMANDS_VARO_CHECKCOMBAT_INCOMBAT.send(sender);
         } else {
-            Messages.COMMANDS_VARO_CHECKCOMBAT_NOTINCOMBAT.send(vp);
+            Messages.COMMANDS_VARO_CHECKCOMBAT_NOTINCOMBAT.send(sender);
         }
     }
 

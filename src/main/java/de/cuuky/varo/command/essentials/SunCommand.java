@@ -25,7 +25,7 @@ public class SunCommand implements CommandExecutor {
 
 		world.setStorm(false);
 		world.setThundering(false);
-		Messages.COMMANDS_WEATHER_SUN.send(vp);
+		Messages.COMMANDS_WEATHER_SUN.send(sender);
 		return false;
 	}
 

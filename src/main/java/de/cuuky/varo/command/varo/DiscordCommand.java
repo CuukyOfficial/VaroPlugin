@@ -28,7 +28,7 @@ public class DiscordCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Discord-Commands §7-----");
-			Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Discord"));
+			Messages.CATEGORY_HEADER.send(sender, Placeholder.constant("category", "Discord"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord verify §7<Spieler>");
 
 			if (sender.hasPermission("varo.discord")) {
@@ -40,18 +40,18 @@ public class DiscordCommand extends VaroCommand {
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord shutdown");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " discord settings");
 			}
-			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Discord"));
+			Messages.CATEGORY_FOOTER.send(sender, Placeholder.constant("category", "Discord"));
 			return;
 		}
 
 		if (Main.getBotLauncher().getDiscordbot() == null) {
-			Messages.COMMANDS_VARO_DISCORD_NOT_SETUP.send(vp);
+			Messages.COMMANDS_VARO_DISCORD_NOT_SETUP.send(sender);
 			return;
 		}
 
 		if (args[0].equalsIgnoreCase("verify")) {
 			if (!(sender instanceof Player)) {
-			    Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+			    Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 				return;
 			}
 
@@ -59,26 +59,26 @@ public class DiscordCommand extends VaroCommand {
 			reg.setPlayerName(vp.getName());
 			if (args.length == 1) {
 				if (!reg.isActive()) {
-				    Messages.COMMANDS_VARO_DISCORD_STATUS_INACTIVE.send(vp);
+				    Messages.COMMANDS_VARO_DISCORD_STATUS_INACTIVE.send(sender);
 					sender.sendMessage(reg.getKickMessage(vp));
 				} else {
-				    Messages.COMMANDS_VARO_DISCORD_STATUS_ACTIVE.send(vp);
-					Messages.COMMANDS_VARO_DISCORD_VERIFY_ACCOUNT.send(vp, Placeholder.constant("target", reg.getMember().getNickname()));
-					Messages.COMMANDS_VARO_DISCORD_VERIFY_REMOVE_USAGE.send(vp);
+				    Messages.COMMANDS_VARO_DISCORD_STATUS_ACTIVE.send(sender);
+					Messages.COMMANDS_VARO_DISCORD_VERIFY_ACCOUNT.send(sender, Placeholder.constant("target", reg.getMember().getNickname()));
+					Messages.COMMANDS_VARO_DISCORD_VERIFY_REMOVE_USAGE.send(sender);
 				}
 			} else if (args[1].equals("remove")) {
 				if (!reg.isActive()) {
-					Messages.COMMANDS_VARO_DISCORD_NOT_VERIFIED.send(vp);
+					Messages.COMMANDS_VARO_DISCORD_NOT_VERIFIED.send(sender);
 					return;
 				}
 
 				reg.delete();
-				Messages.COMMANDS_VARO_DISCORD_VERIFICATION_REMOVED.send(vp);
+				Messages.COMMANDS_VARO_DISCORD_VERIFICATION_REMOVED.send(sender);
 			}
 
 			return;
 		} else if (!sender.hasPermission("varo.discord")) {
-		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "discord"));
+		    Messages.COMMANDS_ERROR_USAGE.send(sender, Placeholder.constant("command", "discord"));
 			return;
 		}
 
@@ -89,12 +89,12 @@ public class DiscordCommand extends VaroCommand {
 
 		if (args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				Messages.COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED.send(vp);
+				Messages.COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED.send(sender);
 				return;
 			}
 
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-			    Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(vp);
+			    Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
 				return;
 			}
 
@@ -104,25 +104,25 @@ public class DiscordCommand extends VaroCommand {
             }
 
 			if (reg == null) {
-				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(vp, Placeholder.constant("target", args[1]));
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender, Placeholder.constant("target", args[1]));
 				return;
 			}
 
 			User user = Main.getBotLauncher().getDiscordbot().getJda().getUserById(reg.getUserId());
 			if (user == null) {
-				Messages.COMMANDS_ERROR_USER_NOT_FOUND.send(vp);
+				Messages.COMMANDS_ERROR_USER_NOT_FOUND.send(sender);
 				return;
 			}
 
-			Messages.COMMANDS_VARO_DISCORD_GETLINK.send(vp, PlaceholderResolver.builder().constant("target-name", args[1]).constant("target-discord-name", user.getName()).constant("target-discord-id", user.getId()).build());
+			Messages.COMMANDS_VARO_DISCORD_GETLINK.send(sender, PlaceholderResolver.builder().constant("target-name", args[1]).constant("target-discord-name", user.getName()).constant("target-discord-id", user.getId()).build());
 		} else if (args[0].equalsIgnoreCase("unlink")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				Messages.COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED.send(vp);
+				Messages.COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED.send(sender);
 				return;
 			}
 
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-				Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(vp);
+				Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
 				return;
 			}
 
@@ -132,24 +132,24 @@ public class DiscordCommand extends VaroCommand {
             }
 
 			if (reg == null) {
-				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(vp, Placeholder.constant("target", args[1]));
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender, Placeholder.constant("target", args[1]));
 				return;
 			}
 
 			reg.setUserId(-1);
-			Messages.COMMANDS_VARO_DISCORD_UNVERIFY.send(vp, Placeholder.constant("target", args[1]));
+			Messages.COMMANDS_VARO_DISCORD_UNVERIFY.send(sender, Placeholder.constant("target", args[1]));
 
 			Player target = Bukkit.getPlayerExact(reg.getPlayerName());
 			if (target != null)
 				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(target)));
 		} else if (args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				Messages.COMMANDS_VARO_DISCORD_VERIFY_DISABLED.send(vp);
+				Messages.COMMANDS_VARO_DISCORD_VERIFY_DISABLED.send(sender);
 				return;
 			}
 
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-			    Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(vp);
+			    Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
 				return;
 			}
 
@@ -159,16 +159,16 @@ public class DiscordCommand extends VaroCommand {
             }
 
 			if (reg == null) {
-				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(vp, Placeholder.constant("target", args[1]));
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender, Placeholder.constant("target", args[1]));
 				return;
 			}
 
 			if (args[2].equalsIgnoreCase("true") || args[2].equalsIgnoreCase("false")) {
 				reg.setBypass(args[2].equalsIgnoreCase("true") ? true : false);
 				if (reg.isBypass()) {
-					Messages.COMMANDS_VARO_DISCORD_BYPASS_ACTIVE.send(vp, Placeholder.constant("target", args[1]));
+					Messages.COMMANDS_VARO_DISCORD_BYPASS_ACTIVE.send(sender, Placeholder.constant("target", args[1]));
 				} else {
-				    Messages.COMMANDS_VARO_DISCORD_BYPASS_INACTIVE.send(vp, Placeholder.constant("target", args[1]));
+				    Messages.COMMANDS_VARO_DISCORD_BYPASS_INACTIVE.send(sender, Placeholder.constant("target", args[1]));
 				}
 
 			} else
@@ -179,25 +179,25 @@ public class DiscordCommand extends VaroCommand {
 			for (Player pl : Bukkit.getOnlinePlayers())
 				if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && BotRegister.getBotRegisterByPlayerName(pl.getName()) == null)
 				    Messages.COMMANDS_VARO_DISCORD_VERIFY_ENABLED.kick(VaroPlayer.getPlayer(pl));
-			Messages.COMMANDS_VARO_DISCORD_RELOADED.send(vp);
+			Messages.COMMANDS_VARO_DISCORD_RELOADED.send(sender);
 		} else if (args[0].equalsIgnoreCase("settings")) {
 			if (!(sender instanceof Player)) {
-				Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+				Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 				return;
 			}
 
 			new DiscordBotGUI((Player) sender);
 		} else if (args[0].equalsIgnoreCase("shutdown")) {
 			if (Main.getBotLauncher().getDiscordbot().getJda() == null) {
-			    Messages.COMMANDS_VARO_DISCORD_BOT_OFFLINE.send(vp);
+			    Messages.COMMANDS_VARO_DISCORD_BOT_OFFLINE.send(sender);
 				return;
 			}
 
-			Messages.COMMANDS_VARO_DISCORD_SHUTDOWN.send(vp);
+			Messages.COMMANDS_VARO_DISCORD_SHUTDOWN.send(sender);
 			Main.getBotLauncher().getDiscordbot().disconnect();
 		} else if (args[0].equalsIgnoreCase("sendMessage")) {
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-				Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(vp);
+				Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
 				return;
 			}
 
@@ -212,10 +212,10 @@ public class DiscordCommand extends VaroCommand {
 			}
 			
 			if (!Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, ConfigSetting.DISCORDBOT_EVENT_CHANNELID.getValueAsLong()))
-			    Messages.COMMANDS_VARO_DISCORD_NO_EVENT_CHANNEL.send(vp);
+			    Messages.COMMANDS_VARO_DISCORD_NO_EVENT_CHANNEL.send(sender);
 			return;
 		} else
-		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "discord"));
+		    Messages.COMMANDS_ERROR_USAGE.send(sender, Placeholder.constant("command", "discord"));
 		return;
 	}
 }

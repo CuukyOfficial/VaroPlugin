@@ -25,9 +25,9 @@ public class ExportCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Export"));
+			Messages.CATEGORY_HEADER.send(sender, Placeholder.constant("category", "Export"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " export players");
-			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Export"));
+			Messages.CATEGORY_FOOTER.send(sender, Placeholder.constant("category", "Export"));
 		}
 
 		else if (args.length == 1 && args[0].equalsIgnoreCase("players")) {
@@ -63,8 +63,8 @@ public class ExportCommand extends VaroCommand {
 
 			YamlConfigurationUtil.save(yaml, file);
 
-			Messages.COMMANDS_VARO_EXPORT_SUCCESSFULL.send(vp, Placeholder.constant("file", "/plugins/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + "/exports/players.yml"));
+			Messages.COMMANDS_VARO_EXPORT_SUCCESSFULL.send(sender, Placeholder.constant("file", "/plugins/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + "/exports/players.yml"));
 		} else
-		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "export"));
+		    Messages.COMMANDS_ERROR_USAGE.send(sender, Placeholder.constant("command", "export"));
 	}
 }

@@ -21,7 +21,7 @@ public class AutoSetupCommand extends VaroCommand {
 		if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("run")) {
 				if (!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
-					Messages.COMMANDS_VARO_AUTOSETUP_NOT_SETUP_YET.send(vp);
+					Messages.COMMANDS_VARO_AUTOSETUP_NOT_SETUP_YET.send(sender);
 					return;
 				}
 
@@ -29,12 +29,12 @@ public class AutoSetupCommand extends VaroCommand {
 					for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
 						player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getTeleportLocation());
 
-					Messages.COMMANDS_VARO_AUTOSETUP_FINISHED.send(vp);
+					Messages.COMMANDS_VARO_AUTOSETUP_FINISHED.send(sender);
 				});
 				return;
 			}
 		}
 
-		Messages.COMMANDS_VARO_AUTOSETUP_HELP.send(vp);
+		Messages.COMMANDS_VARO_AUTOSETUP_HELP.send(sender);
 	}
 }

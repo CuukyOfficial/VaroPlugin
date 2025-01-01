@@ -24,7 +24,7 @@ public class InfoCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		PluginDescriptionFile pdf = Main.getInstance().getDescription();
 
-		Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Info"));
+		Messages.CATEGORY_HEADER.send(sender, Placeholder.constant("category", "Info"));
 		sender.sendMessage(Main.getPrefix());
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lVaro Plugin§7:");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Author§7: " + pdf.getAuthors().get(0));
@@ -38,6 +38,6 @@ public class InfoCommand extends VaroCommand {
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "License§7: GNU AGPL v3");
 		sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Source code§7: https://github.com/CuukyOfficial/VaroPlugin");
 		sender.sendMessage(Main.getPrefix());
-		Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Info"));
+		Messages.CATEGORY_FOOTER.send(sender, Placeholder.constant("category", "Info"));
 	}
 }

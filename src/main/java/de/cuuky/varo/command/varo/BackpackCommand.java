@@ -53,12 +53,12 @@ public class BackpackCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (!Main.getVaroGame().hasStarted()) {
-			Messages.COMMANDS_ERROR_NOT_STARTED.send(vp);
+			Messages.COMMANDS_ERROR_NOT_STARTED.send(sender);
 			return;
 		}
 
 		if (vp == null) {
-			Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+			Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 			return;
 		}
 

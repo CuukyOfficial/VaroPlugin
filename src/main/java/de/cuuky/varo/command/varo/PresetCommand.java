@@ -22,49 +22,49 @@ public class PresetCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-		    Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Presets"));
+		    Messages.CATEGORY_HEADER.send(sender, Placeholder.constant("category", "Presets"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7load <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7save <PresetPath>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " preset §7list");
-			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Presets"));
+			Messages.CATEGORY_FOOTER.send(sender, Placeholder.constant("category", "Presets"));
 			return;
 		}
 
 		if (args[0].equalsIgnoreCase("load")) {
 			if (args.length != 2) {
-				Messages.COMMANDS_VARO_PRESET_HELP_LOAD.send(vp);
+				Messages.COMMANDS_VARO_PRESET_HELP_LOAD.send(sender);
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
 			if (!loader.getFile().isDirectory()) {
-				Messages.COMMANDS_VARO_PRESET_NOT_FOUND.send(vp, Placeholder.constant("preset", args[1]));
+				Messages.COMMANDS_VARO_PRESET_NOT_FOUND.send(sender, Placeholder.constant("preset", args[1]));
 				return;
 			}
 
 			if (loader.loadSettings()) {
 				Main.getDataManager().reloadConfig();
-				Messages.COMMANDS_VARO_PRESET_LOADED.send(vp, Placeholder.constant("preset", args[1]));
+				Messages.COMMANDS_VARO_PRESET_LOADED.send(sender, Placeholder.constant("preset", args[1]));
 			} else
-			    Messages.COMMANDS_VARO_PRESET_PATH_TRAVERSAL.send(vp, Placeholder.constant("preset", args[1]));
+			    Messages.COMMANDS_VARO_PRESET_PATH_TRAVERSAL.send(sender, Placeholder.constant("preset", args[1]));
 		} else if (args[0].equalsIgnoreCase("save")) {
 			if (args.length != 2) {
-			    Messages.COMMANDS_VARO_PRESET_HELP_SAVE.send(vp);
+			    Messages.COMMANDS_VARO_PRESET_HELP_SAVE.send(sender);
 				return;
 			}
 
 			PresetLoader loader = new PresetLoader(args[1]);
 			if (loader.copyCurrentSettingsTo())
-			    Messages.COMMANDS_VARO_PRESET_SAVED.send(vp, Placeholder.constant("preset", args[1]));
+			    Messages.COMMANDS_VARO_PRESET_SAVED.send(sender, Placeholder.constant("preset", args[1]));
 			else
-			    Messages.COMMANDS_VARO_PRESET_PATH_TRAVERSAL.send(vp, Placeholder.constant("preset", args[1]));
+			    Messages.COMMANDS_VARO_PRESET_PATH_TRAVERSAL.send(sender, Placeholder.constant("preset", args[1]));
 		} else if (args[0].equalsIgnoreCase("list")) {
 			File file = new File("plugins/Varo/presets");
-			Messages.COMMANDS_VARO_PRESET_LIST.send(vp);
+			Messages.COMMANDS_VARO_PRESET_LIST.send(sender);
 			for (File f : file.listFiles())
 				sender.sendMessage(Main.getPrefix() + f.getName());
 		} else
-		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "preset"));
+		    Messages.COMMANDS_ERROR_USAGE.send(sender, Placeholder.constant("command", "preset"));
 
 	}
 }

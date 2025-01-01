@@ -18,20 +18,20 @@ public class SortCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length != 0) {
-			Messages.COMMANDS_VARO_SORT_HELP.send(vp);
+			Messages.COMMANDS_VARO_SORT_HELP.send(sender);
 			return;
 		}
 
 		SortResult result = new PlayerSort().sortPlayers();
 		switch (result) {
 		case SORTED_WELL:
-			Messages.COMMANDS_VARO_SORT_SORTED_WELL.send(vp);
+			Messages.COMMANDS_VARO_SORT_SORTED_WELL.send(sender);
 			break;
 		case NO_SPAWN_WITH_TEAM:
-			Messages.COMMANDS_VARO_SORT_NO_SPAWN_WITH_TEAM.send(vp);
+			Messages.COMMANDS_VARO_SORT_NO_SPAWN_WITH_TEAM.send(sender);
 			break;
 		case NO_SPAWN:
-		    Messages.COMMANDS_VARO_SORT_NO_SPAWN.send(vp);
+		    Messages.COMMANDS_VARO_SORT_NO_SPAWN.send(sender);
 			break;
 		}
 	}

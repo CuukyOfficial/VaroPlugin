@@ -21,6 +21,7 @@ package de.cuuky.varo.config.language;
 import java.io.IOException;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.alert.Alert;
@@ -253,9 +254,9 @@ public final class Messages {
     public static final VaroMessage COMMANDS_WEATHER_THUNDER = message("commands.weather.thunder");
 
     public static final VaroMessage COMMANDS_SETWORLDSPAWN = message("commands.setworldspawn.setworldspawn");
-    
+
     public static final VaroMessage COMMANDS_PING = message("commands.ping");
-    
+
     public static final VaroMessageArray BROADCAST = array("broadcast");
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
@@ -326,6 +327,30 @@ public final class Messages {
             @Override
             public void send(VaroPlayer subject) {
                 subject.sendMessage(message.value(new PlayerContext(subject)));
+            }
+
+            @Override
+            public void send(CommandSender recipient, VaroPlayer subject) {
+                if (recipient instanceof Player)
+                    this.send(VaroPlayer.getPlayer((Player) recipient), subject);
+                else
+                    recipient.sendMessage(message.value(new PlayerContext(subject)));
+            }
+
+            @Override
+            public void send(CommandSender subject, PlaceholderResolver placeholders) {
+                if (subject instanceof Player)
+                    this.send(VaroPlayer.getPlayer((Player) subject), placeholders);
+                else
+                    subject.sendMessage(message.value(placeholders));
+            }
+
+            @Override
+            public void send(CommandSender subject) {
+                if (subject instanceof Player)
+                    this.send(VaroPlayer.getPlayer((Player) subject));
+                else
+                    subject.sendMessage(message.value());
             }
 
             @Override
@@ -447,6 +472,10 @@ public final class Messages {
         void send(VaroPlayer recipient, VaroPlayer subject);
         void send(VaroPlayer subject, PlaceholderResolver placeholders);
         void send(VaroPlayer subject);
+
+        void send(CommandSender recipient, VaroPlayer subject);
+        void send(CommandSender subject, PlaceholderResolver placeholders);
+        void send(CommandSender subject);
 
         void kick(VaroPlayer subject);
 

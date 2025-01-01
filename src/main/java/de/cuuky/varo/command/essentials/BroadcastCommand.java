@@ -34,7 +34,7 @@ public class BroadcastCommand implements CommandExecutor {
 			else
 				msg = arg;
 
-		Messages.COMMANDS_BROADCAST_FORMAT.send(vp, Placeholder.constant("message", ChatColor.translateAlternateColorCodes('&', msg)));
+		Messages.COMMANDS_BROADCAST_FORMAT.send(sender, Placeholder.constant("message", ChatColor.translateAlternateColorCodes('&', msg)));
 		return false;
 	}
 

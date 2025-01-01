@@ -34,7 +34,7 @@ public class CountdownCommand implements CommandExecutor {
             sched.cancel();
             sched = null;
 
-            Messages.COMMANDS_COUNTDOWN_ABORT.send(vp);
+            Messages.COMMANDS_COUNTDOWN_ABORT.send(sender);
             return false;
         }
 
@@ -47,11 +47,11 @@ public class CountdownCommand implements CommandExecutor {
         try {
             time = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            Messages.COMMANDS_ERROR_NO_NUMBER.send(vp, Placeholder.constant("text", args[0]));
+            Messages.COMMANDS_ERROR_NO_NUMBER.send(sender, Placeholder.constant("text", args[0]));
         }
 
         if (time < 1) {
-            Messages.COMMANDS_COUNTDOWN_TOO_SMALL.send(vp);
+            Messages.COMMANDS_COUNTDOWN_TOO_SMALL.send(sender);
             return false;
         }
 

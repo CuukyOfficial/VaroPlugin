@@ -24,22 +24,22 @@ public class ConfigCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-		    Messages.CATEGORY_HEADER.send(vp, Placeholder.constant("category", "Config"));
+		    Messages.CATEGORY_HEADER.send(sender, Placeholder.constant("category", "Config"));
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config set §7<key> <value>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config search <Keyword>");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config menu");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config reload");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " config reset");
-			Messages.CATEGORY_FOOTER.send(vp, Placeholder.constant("category", "Config"));
+			Messages.CATEGORY_FOOTER.send(sender, Placeholder.constant("category", "Config"));
 			return;
 		}
 
 		if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("refresh")) {
 			Main.getDataManager().reloadConfig();
-			Messages.COMMANDS_VARO_CONFIG_RELOADED.send(vp);
+			Messages.COMMANDS_VARO_CONFIG_RELOADED.send(sender);
 		} else if (args[0].equalsIgnoreCase("set")) {
 			if (args.length != 3) {
-				Messages.COMMANDS_VARO_CONFIG_HELP_SET.send(vp);
+				Messages.COMMANDS_VARO_CONFIG_HELP_SET.send(sender);
 				return;
 			}
 
@@ -48,37 +48,37 @@ public class ConfigCommand extends VaroCommand {
 					continue;
 
 				if (!entry.canParseFromString() || entry.isSensitive()) {
-				    Messages.COMMANDS_VARO_CONFIG_NO_INGAME_SET.send(vp);
+				    Messages.COMMANDS_VARO_CONFIG_NO_INGAME_SET.send(sender);
 					return;
 				}
 				
 				try {
 					entry.setStringValue(args[2], true);
 				} catch(Throwable t) {
-					Messages.COMMANDS_VARO_CONFIG_ERROR_SET.send(vp, Placeholder.constant("error", t.getClass() + " " + t.getMessage())); // TODO improve error handling
+					Messages.COMMANDS_VARO_CONFIG_ERROR_SET.send(sender, Placeholder.constant("error", t.getClass() + " " + t.getMessage())); // TODO improve error handling
 					return;
 				}
 
-				Messages.COMMANDS_VARO_CONFIG_ENTRY_SET.send(vp, PlaceholderResolver.builder().constant("entry", entry.getFullPath()).constant("value", args[2]).build());
+				Messages.COMMANDS_VARO_CONFIG_ENTRY_SET.send(sender, PlaceholderResolver.builder().constant("entry", entry.getFullPath()).constant("value", args[2]).build());
 				return;
 			}
 
-			Messages.COMMANDS_VARO_CONFIG_ENTRY_NOT_FOUND.send(vp, Placeholder.constant("entry", args[1]));
+			Messages.COMMANDS_VARO_CONFIG_ENTRY_NOT_FOUND.send(sender, Placeholder.constant("entry", args[1]));
 		} else if (args[0].equalsIgnoreCase("reset")) {
 			for (ConfigSetting entry : ConfigSetting.values())
 				entry.setValue(entry.getDefaultValue(), true);
 
-			Messages.COMMANDS_VARO_CONFIG_RESET.send(vp);
+			Messages.COMMANDS_VARO_CONFIG_RESET.send(sender);
 		} else if (args[0].equalsIgnoreCase("menu")) {
 			if (!(sender instanceof Player)) {
-			    Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+			    Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 				return;
 			}
 
 			new ConfigSectionGUI((Player) sender);
 		} else if (args[0].equalsIgnoreCase("search")) {
 			if (args.length != 2) {
-			    Messages.COMMANDS_VARO_CONFIG_HELP_SEARCH.send(vp);
+			    Messages.COMMANDS_VARO_CONFIG_HELP_SEARCH.send(sender);
 				return;
 			}
 
@@ -93,14 +93,14 @@ public class ConfigCommand extends VaroCommand {
 			}
 
 			if (foundSettings.isEmpty()) {
-				Messages.COMMANDS_VARO_CONFIG_ENTRY_NOT_FOUND.send(vp, Placeholder.constant("entry", needle));
+				Messages.COMMANDS_VARO_CONFIG_ENTRY_NOT_FOUND.send(sender, Placeholder.constant("entry", needle));
 				return;
 			}
 
-			Messages.COMMANDS_VARO_CONFIG_SEARCH_LIST_TITLE.send(vp);
+			Messages.COMMANDS_VARO_CONFIG_SEARCH_LIST_TITLE.send(sender);
 			for (ConfigSetting setting : foundSettings)
-			    Messages.COMMANDS_VARO_CONFIG_SEARCH_LIST_FORMAT.send(vp, PlaceholderResolver.builder().constant("entry", setting.getFullPath()).constant("description", String.join(" ", setting.getDescription())).build());
+			    Messages.COMMANDS_VARO_CONFIG_SEARCH_LIST_FORMAT.send(sender, PlaceholderResolver.builder().constant("entry", setting.getFullPath()).constant("description", String.join(" ", setting.getDescription())).build());
 		} else
-		    Messages.COMMANDS_ERROR_USAGE.send(vp, Placeholder.constant("command", "config"));
+		    Messages.COMMANDS_ERROR_USAGE.send(sender, Placeholder.constant("command", "config"));
 	}
 }

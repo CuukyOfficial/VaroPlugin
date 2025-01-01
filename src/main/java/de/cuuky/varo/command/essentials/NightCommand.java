@@ -23,7 +23,7 @@ public class NightCommand implements CommandExecutor {
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld();
 		world.setTime(13000);
-		Messages.COMMANDS_TIME_NIGHT.send(vp);
+		Messages.COMMANDS_TIME_NIGHT.send(sender);
 		return false;
 	}
 }

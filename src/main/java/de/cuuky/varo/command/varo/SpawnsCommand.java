@@ -40,7 +40,7 @@ public class SpawnsCommand extends VaroCommand {
 
         if (args[0].equalsIgnoreCase("generate")) {
             if (!(sender instanceof Player)) {
-                Messages.COMMANDS_ERROR_NO_CONSOLE.send(vp);
+                Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
                 return;
             }
 

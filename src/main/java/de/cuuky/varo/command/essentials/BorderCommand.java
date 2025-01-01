@@ -22,16 +22,16 @@ public class BorderCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
         VaroPlayer vp = (sender instanceof Player ? VaroPlayer.getPlayer((Player) sender) : null);
         if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
-            Messages.COMMANDS_ERROR_WRONGVERSION.send(vp, Placeholder.constant("required-version", "1.8.8"));
+            Messages.COMMANDS_ERROR_WRONGVERSION.send(sender, Placeholder.constant("required-version", "1.8.8"));
             return false;
         }
 
         if (args.length == 0) {
-            Messages.COMMANDS_BORDER_SIZE.send(vp);
+            Messages.COMMANDS_BORDER_SIZE.send(sender);
             if (sender instanceof Player)
-                Messages.COMMANDS_BORDER_DISTANCE.send(vp);
+                Messages.COMMANDS_BORDER_DISTANCE.send(sender);
             if (sender.hasPermission("varo.setup")) {
-                Messages.COMMANDS_BORDER_USAGE.send(vp);
+                Messages.COMMANDS_BORDER_USAGE.send(sender);
             }
             return false;
         } else if (args.length >= 1 && sender.hasPermission("varo.setup")) {
@@ -50,7 +50,7 @@ public class BorderCommand implements CommandExecutor {
             try {
                 borderSize = Integer.parseInt(args[0]);
             } catch (NumberFormatException e) {
-                Messages.COMMANDS_ERROR_NO_NUMBER.send(vp, Placeholder.constant("text", args[0]));
+                Messages.COMMANDS_ERROR_NO_NUMBER.send(sender, Placeholder.constant("text", args[0]));
                 return false;
             }
 
@@ -60,7 +60,7 @@ public class BorderCommand implements CommandExecutor {
             } catch (ArrayIndexOutOfBoundsException e) {
                 worldHandler.setBorderSize(borderSize, 0, p != null ? p.getWorld() : null);
             } catch (NumberFormatException e) {
-                Messages.COMMANDS_ERROR_NO_NUMBER.send(vp, Placeholder.constant("text", args[1]));
+                Messages.COMMANDS_ERROR_NO_NUMBER.send(sender, Placeholder.constant("text", args[1]));
                 return false;
             }
 

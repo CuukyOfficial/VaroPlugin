@@ -19,12 +19,12 @@ public class AbortCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (!Main.getVaroGame().isStarting()) {
-			Messages.COMMANDS_VARO_ABORT_COUNTDOWN_NOT_ACTIVE.send(vp);
+			Messages.COMMANDS_VARO_ABORT_COUNTDOWN_NOT_ACTIVE.send(sender);
 			return;
 		}
 
 		Main.getVaroGame().abort();
 		Bukkit.getOnlinePlayers().forEach(player -> LobbyItem.giveItems(player));
-		Messages.COMMANDS_VARO_ABORT_COUNTDOWN_STOPPED.send(vp);
+		Messages.COMMANDS_VARO_ABORT_COUNTDOWN_STOPPED.send(sender);
 	}
 }

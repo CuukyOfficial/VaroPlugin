@@ -23,17 +23,17 @@ public class BugreportCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (Main.getVaroUpdater() != null && Main.getVaroUpdater().getLastResult() != null
 		        &&  Main.getVaroUpdater().getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE) {
-			Messages.COMMANDS_VARO_BUGREPORT_UPDATE.send(vp);
+			Messages.COMMANDS_VARO_BUGREPORT_UPDATE.send(sender);
 			return;
 		}
 
-		Messages.COMMANDS_VARO_BUGREPORT_COLLECTING_DATA.send(vp);
+		Messages.COMMANDS_VARO_BUGREPORT_COLLECTING_DATA.send(sender);
 		File bugReport = BugReport.createBugReport();
 		if (bugReport == null) {
-			Messages.COMMANDS_ERROR_GENERIC.send(vp);
+			Messages.COMMANDS_ERROR_GENERIC.send(sender);
 			return;
 		}
 
-		Messages.COMMANDS_VARO_BUGREPORT_CREATED.send(vp, Placeholder.constant("file", bugReport.getAbsolutePath()));
+		Messages.COMMANDS_VARO_BUGREPORT_CREATED.send(sender, Placeholder.constant("file", bugReport.getAbsolutePath()));
 	}
 }
