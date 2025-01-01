@@ -24,8 +24,7 @@ public class ProtectionTime {
 		this.protectionTimer = timer;
 
 		if (this.protectionTimer == 0) {
-			Main.getVaroGame().setProtection(null);
-			return;
+			throw new IllegalArgumentException();
 		}
 		
 		this.scheduler = new BukkitRunnable() {
