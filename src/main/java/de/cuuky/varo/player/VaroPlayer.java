@@ -123,6 +123,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		this.id = generateId();
 
 		this.stats = new Stats(this);
+		this.stats.loadDefaults();
 	}
 
 	public VaroPlayer(String playerName, String uuid) {
@@ -261,10 +262,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	public void register() {
-		if (this.stats == null)
-			this.stats = new Stats(this);
-
-		stats.loadDefaults();
 		varoplayer.add(this);
 	}
 
