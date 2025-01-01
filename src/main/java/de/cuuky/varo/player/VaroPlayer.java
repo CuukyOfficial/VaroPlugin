@@ -472,6 +472,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return this.locale = locale;
 	}
 
+	public String getLanguage() {
+	    return null; // TODO
+	}
+
 	@Override
 	public Player getPlayer() {
 		return player;

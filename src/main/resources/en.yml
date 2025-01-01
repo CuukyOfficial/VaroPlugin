@@ -294,3 +294,7 @@ commands:
   setworldspawn:
     setworldspawn: "<prefix>Worldspawn set"
   ping: "<prefix>Ping: <colorcode><ping>§7ms"
+
+broadcast:
+  - "<prefix> A broadcast message"
+  - "<prefix> Another broadcast message"

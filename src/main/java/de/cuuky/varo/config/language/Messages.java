@@ -255,6 +255,8 @@ public final class Messages {
     public static final VaroMessage COMMANDS_SETWORLDSPAWN = message("commands.setworldspawn.setworldspawn");
     
     public static final VaroMessage COMMANDS_PING = message("commands.ping");
+    
+    public static final VaroMessageArray BROADCAST = array("broadcast");
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
         SLAMS.load("en", JasklParser.createParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))));
