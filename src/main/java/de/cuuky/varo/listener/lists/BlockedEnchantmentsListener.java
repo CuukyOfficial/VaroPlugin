@@ -20,54 +20,55 @@ public class BlockedEnchantmentsListener implements Listener {
 
 	@EventHandler
 	public void onEnchant(EnchantItemEvent event) {
-		if (event.getItem() == null)
-			return;
+		if (event.getItem() == null) return;
 
-		boolean removed = false;
-		for (Enchantment enc : event.getEnchantsToAdd().keySet()) {
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
-				event.getEnchantsToAdd().remove(enc);
-				removed = true;
+		Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+			ItemStack enchantedItem = event.getItem();
+			boolean removed = false;
+
+			for (Enchantment enc : enchantedItem.getEnchantments().keySet()) {
+				if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, enchantedItem.getEnchantments().get(enc))) {
+					enchantedItem.removeEnchantment(enc);
+					removed = true;
+				}
 			}
-		}
 
-		if (removed) {
-			VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
-			event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
-		}
+			if (removed) {
+				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
+				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
+			}
+		});
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryClick(InventoryClickEvent event) {
-		if (event.isCancelled())
-			return;
+		if (event.isCancelled()) return;
 
 		Inventory inv = event.getInventory();
 
-		if (!(inv instanceof AnvilInventory))
-			return;
+		if (!(inv instanceof AnvilInventory)) return;
 
 		InventoryView view = event.getView();
 		int rawSlot = event.getRawSlot();
 
-		if (rawSlot != view.convertSlot(rawSlot) || rawSlot != 2)
-			return;
+		if (rawSlot != view.convertSlot(rawSlot) || rawSlot != 2) return;
 
 		ItemStack item = event.getCurrentItem();
-		if (item == null)
-			return;
+		if (item == null) return;
 
-		boolean removed = false;
-		for (Enchantment enc : item.getEnchantments().keySet()) {
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
-				item.removeEnchantment(enc);
-				removed = true;
+		Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+			boolean removed = false;
+			for (Enchantment enc : item.getEnchantments().keySet()) {
+				if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
+					item.removeEnchantment(enc);
+					removed = true;
+				}
 			}
-		}
-
-		if (removed) {
-			VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
-			vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
-		}
+	
+			if (removed) {
+				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
+				vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);
+			}
+		});
 	}
 }
