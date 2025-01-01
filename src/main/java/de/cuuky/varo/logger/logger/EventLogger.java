@@ -1,17 +1,16 @@
 package de.cuuky.varo.logger.logger;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.bot.telegram.VaroTelegramBot;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.logger.CachedVaroLogger;
+import java.awt.Color;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.awt.*;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.logger.CachedVaroLogger;
 
 public class EventLogger extends CachedVaroLogger<String> {
 
@@ -71,7 +70,6 @@ public class EventLogger extends CachedVaroLogger<String> {
 
 				for (Object[] msg : queue) {
 					sendToDiscord((LogType) msg[0], (String) msg[1], (UUID) msg[2]);
-					sendToTelegram((LogType) msg[0], (String) msg[1]);
 					queue.remove(msg);
 				}
 			}
@@ -94,21 +92,6 @@ public class EventLogger extends CachedVaroLogger<String> {
 		}
 	}
 
-	private void sendToTelegram(LogType type, String message) {
-		VaroTelegramBot telegramBot = Main.getBotLauncher().getTelegrambot();
-		if (telegramBot == null)
-			return;
-
-		try {
-			if (!type.equals(LogType.YOUTUBE))
-				telegramBot.sendEvent(message);
-			else
-				telegramBot.sendVideo(message);
-		} catch (ArrayIndexOutOfBoundsException e) {
-			telegramBot.sendEvent(message);
-		}
-	}
-
 	public void println(LogType type, String message, UUID playerUuid) {
         message = ChatColor.stripColor(message.replace("&", "§"));
 
@@ -124,7 +107,6 @@ public class EventLogger extends CachedVaroLogger<String> {
         }
 
         sendToDiscord(type, message, playerUuid);
-        sendToTelegram(type, message);
     }
 
 	public void println(LogType type, String message) {

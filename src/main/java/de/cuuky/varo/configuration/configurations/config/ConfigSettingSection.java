@@ -36,7 +36,6 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	START("Start", XMaterial.ACTIVATOR_RAIL, "Hier kannst du Einstellungen zum Start deines Plugins vornehmen."),
 	STRIKE("Strike", XMaterial.PAPER, "Hier kannst du Einstellungen zu den Strikes vornehmen."),
 	TEAMS("Teams", XMaterial.DIAMOND_HELMET, "Hier kannst du Einstellungen zu Teams vornehmen."),
-	TELEGRAM("Telegram", XMaterial.DROPPER, "Alle Einstellungen zum Telegram-Bot."),
 	WORLD("World", XMaterial.GRASS_BLOCK, "Hier kannst du Einstellungen zur Welt vornehmen."),
 	YOUTUBE("YouTube", XMaterial.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");
 	

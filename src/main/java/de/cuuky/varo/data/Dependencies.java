@@ -55,7 +55,6 @@ public class Dependencies {
 
         OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("net.dv8tion.jda.api.JDA")));
         OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("org.slf4j.impl.SimpleLogger")));
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("java-telegram-bot-api", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.TELEGRAM_ENABLED.getValueAsBoolean() && !doesClassExist("com.pengrad.telegrambot.TelegramBot")));
     }
     
     public static void loadRequired(Plugin plugin) {

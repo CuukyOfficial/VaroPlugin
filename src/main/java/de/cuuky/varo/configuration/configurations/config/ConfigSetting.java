@@ -274,12 +274,6 @@ public enum ConfigSetting implements SectionEntry {
 	TEAMREQUEST_LOBBYITEM_RENAME_ITEM(ConfigSettingSection.TEAMS, "teamRequest.items.rename.item", XMaterial.NAME_TAG.parseItem(), "Item zum Umbenennen eines Teams"),
 	TEAMREQUEST_LOBBYITEM_RENAME_SLOT(ConfigSettingSection.TEAMS, "teamRequest.items.rename.slot", 4, "Slot des Items zum Umbenennen eines Teams"),
 
-	TELEGRAM_BOT_TOKEN(ConfigSettingSection.TELEGRAM, "botToken", "ENTER TOKEN HERE", "Setzt den Bot Token des Telegrambots", false, true),
-
-	// TELEGRAM
-	TELEGRAM_ENABLED(ConfigSettingSection.TELEGRAM, "telegrambotEnabled", false, "Ob der Telegrambot aktiviert werden soll."),
-	TELEGRAM_EVENT_CHAT_ID(ConfigSettingSection.TELEGRAM, "eventChatId", -1L, "In diesen Chat werden alle Events gepostet."),
-	TELEGRAM_VIDEOS_CHAT_ID(ConfigSettingSection.TELEGRAM, "videosChatId", -1L, "Hier kannst du die ID des Chats angeben, wo\ndie Videos der User gepostet werden sollen."),
 	TRIGGER_FOR_GLOBAL(ConfigSettingSection.TEAMS, "triggerForGlobal", false, "Wenn aktiviert, wird standardmaessig in den Teamchat geschrieben und mit dem Triggerbuchstaben am Anfang in den globalen Chat, ansonsten umgekehrt."),
 	UNREGISTERED_PLAYER_JOIN(ConfigSettingSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen duerfen."),
 	UNREGISTERED_PLAYER_JOIN_DURING_GAME(ConfigSettingSection.MAIN, "unregisteredPlayerJoinDuringGame", false, "Ob unregistrierte Spieler wärend des Projektes nachträglich joinen dürfen."),

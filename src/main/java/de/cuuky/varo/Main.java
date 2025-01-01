@@ -167,7 +167,7 @@ public class Main extends JavaPlugin {
 			dataManager.saveSync();
 		}
 
-		if (botLauncher != null && (botLauncher.getDiscordbot() != null || botLauncher.getTelegrambot() != null)) {
+		if (botLauncher != null && botLauncher.getDiscordbot() != null) {
 			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
 			botLauncher.disconnect();
 		}
