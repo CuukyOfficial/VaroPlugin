@@ -12,7 +12,7 @@ public class BlockedEnchantments extends EnchantmentList {
 	
 	@Override
 	public void loadDefaultValues() {
-
+		this.enchantments.add(Enchantment.DAMAGE_ARTHROPODS.getName() + ":1");
 	}
 
 	@SuppressWarnings("deprecation")
