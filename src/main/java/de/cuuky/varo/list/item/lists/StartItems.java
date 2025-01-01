@@ -1,12 +1,11 @@
 package de.cuuky.varo.list.item.lists;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.list.item.ItemList;
-import de.varoplugin.cfw.version.VersionUtils;
+import de.cuuky.varo.player.VaroPlayer;
 
 public class StartItems extends ItemList {
 
@@ -20,8 +19,8 @@ public class StartItems extends ItemList {
 	}
 
 	public void giveToAll() {
-		for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers())
+		for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
 			for (ItemStack item : getItems())
-				player.getInventory().addItem(item);
+				player.getPlayer().getInventory().addItem(item);
 	}
 }
