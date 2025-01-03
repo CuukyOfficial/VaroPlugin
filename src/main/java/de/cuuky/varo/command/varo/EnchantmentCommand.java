@@ -67,8 +67,8 @@ public class EnchantmentCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "§7:");
-			for (String enc1 : list.getEnchantments())
-				sender.sendMessage(Main.getPrefix() + enc1);
+			for (Enchantment enc1 : list.getEnchantments())
+				sender.sendMessage(Main.getPrefix() + enc1.getName());
 			return;
 		}
 
@@ -93,25 +93,25 @@ public class EnchantmentCommand extends VaroCommand {
 
 		for (Enchantment enc : encs.keySet()) {
 			if (args[1].contains("add")) {
-				if (list.hasEnchantment(enc, encs.get(enc))) {
-					sender.sendMessage(Main.getPrefix() + "Verzauberung '" + enc.getName() + " (" + encs.get(enc) + ")' steht bereits auf dieser Liste!");
+				if (list.hasEnchantment(enc)) {
+					sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " steht bereits auf dieser Liste!");
 					return;
 				}
 
-				list.addEnchantment(enc, encs.get(enc));
-				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich zu " + list.getLocation() + " hinzugefuegt!");
+				list.addEnchantment(enc);
+				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " erfolgreich zu " + list.getLocation() + " hinzugefuegt!");
 			} else if (args[1].equalsIgnoreCase("remove")) {
-				if (!list.hasEnchantment(enc, encs.get(enc))) {
-					sender.sendMessage(Main.getPrefix() + "Verzauberung '" + enc.getName() + " (" + encs.get(enc) + ")' steht nicht auf dieser Liste!");
+				if (!list.hasEnchantment(enc)) {
+					sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " steht nicht auf dieser Liste!");
 					return;
 				}
 
-				list.removeEnchantment(enc, encs.get(enc));
-				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " (" + encs.get(enc) + ") erfolgreich von " + list.getLocation() + " entfernt!");
+				list.removeEnchantment(enc);
+				sender.sendMessage(Main.getPrefix() + "Verzauberung " + enc.getName() + " erfolgreich von " + list.getLocation() + " entfernt!");
 			} else if (args[1].equalsIgnoreCase("list")) {
 				sender.sendMessage(Main.getPrefix() + "Liste aller Verzauberungen von " + Main.getColorCode() + list.getLocation() + "§7:");
-				for (String enc1 : list.getEnchantments())
-					sender.sendMessage(Main.getPrefix() + enc1);
+				for (Enchantment enc1 : list.getEnchantments())
+					sender.sendMessage(Main.getPrefix() + enc1.getName());
 			} else
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7<enchantmentlist> [Remove / Add / List]");
 		}
