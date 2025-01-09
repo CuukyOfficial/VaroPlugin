@@ -21,7 +21,11 @@ public class ProtectionTime {
 	}
 
 	private void startGeneralTimer(int timer) {
-		this.protectionTimer = timer;
+		if (this.protectionTimer != timer) {
+			this.protectionTimer = timer;
+		} else {
+			return;
+		}
 
 		if (this.protectionTimer == 0) {
 			throw new IllegalArgumentException();
