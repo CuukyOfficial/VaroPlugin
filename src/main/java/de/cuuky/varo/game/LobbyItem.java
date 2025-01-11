@@ -37,7 +37,7 @@ public class LobbyItem {
     }
 
     public static void giveItems(VaroPlayer varoPlayer, Player player) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
         hookItem(player, new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.getValue(varoPlayer))
@@ -79,7 +79,7 @@ public class LobbyItem {
     }
 
     public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
         if (varoPlayer.getTeam() == null) {
