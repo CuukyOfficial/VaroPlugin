@@ -21,16 +21,11 @@ public class ProtectionTime {
 	}
 
 	private void startGeneralTimer(int timer) {
-		if (this.protectionTimer != timer) {
-			this.protectionTimer = timer;
-		} else {
-			return;
-		}
-
-		if (this.protectionTimer == 0) {
+		if (timer == 0) {
 			throw new IllegalArgumentException();
 		}
 		
+		this.protectionTimer = timer;
 		this.scheduler = new BukkitRunnable() {
 
 			@Override
@@ -44,7 +39,8 @@ public class ProtectionTime {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
 					Main.getVaroGame().setProtection(null);
 					scheduler.cancel();
-				} else if (ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
+				} else if (ProtectionTime.this.protectionTimer != timer
+				        && ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
 					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE)
 						.replace("%minutes%", getCountdownMin(ProtectionTime.this.protectionTimer))
 						.replace("%seconds%", getCountdownSec(ProtectionTime.this.protectionTimer));
@@ -66,9 +62,10 @@ public class ProtectionTime {
 	}
 
 	/**
-	*
-	* @return the protection timer or null if no protection time is set
-	*/
+	 * Returns the protection timer
+	 * 
+	 * @return the protection timer
+	 */
 	public int getProtectionTimer() {
 		return this.protectionTimer;
 
