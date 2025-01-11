@@ -29,7 +29,7 @@ public class ColorcodesCommand extends VaroCommand {
             sender.sendMessage("&k = §kMagic§r§f                 &l = §lBold");
             sender.sendMessage("&m = §mStrikethrough§r§f  &n = §nUnderline");
             sender.sendMessage("&o = §oItalic§r§f                 &r = §rReset");
-            sender.sendMessage("§c==============================");
+            sender.sendMessage("§7==============================");
         
 	}
 }
