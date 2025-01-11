@@ -12,7 +12,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class CheckCombatCommand extends VaroCommand {
 
     public CheckCombatCommand() {
-        super("checkcombat", "Überprüft ob du dich im Combat befindest", "varo.checkcombat", "combat", "combatlog", "cl", "cc", "cls", "combatlogstatus");
+        super("checkcombat", "Überprüft ob du dich im Combat befindest", "varo.checkcombat", "combat", "combatlog", "cl", "cls", "combatlogstatus");
     }
 
     @Override
