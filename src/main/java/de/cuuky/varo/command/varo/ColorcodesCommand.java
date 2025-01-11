@@ -16,7 +16,7 @@ public class ColorcodesCommand extends VaroCommand {
 	@Override
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 
-            sender.sendMessage("§c==============================");
+            sender.sendMessage("§7==============================");
             sender.sendMessage("&0 = §0Black                §f&1 = §1Dark Blue");
             sender.sendMessage("&2 = §2Dark Green      §f&3 = §3Dark Aqua");
             sender.sendMessage("&4 = §4Dark Red          §f&5 = §5Dark Purple");
