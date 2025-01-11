@@ -25,7 +25,7 @@ public class ColorcodesCommand extends VaroCommand {
             sender.sendMessage("&a = §aGreen               §f&b = §bAqua");
             sender.sendMessage("&c = §cRed                   §f&d = §dLight Purple");
             sender.sendMessage("&e = §eYellow               §f&f = §fWhite");
-            sender.sendMessage("§c==============================");
+            sender.sendMessage("§7==============================");
             sender.sendMessage("&k = §kMagic§r§f                 &l = §lBold");
             sender.sendMessage("&m = §mStrikethrough§r§f  &n = §nUnderline");
             sender.sendMessage("&o = §oItalic§r§f                 &r = §rReset");
