@@ -10,7 +10,7 @@ import de.cuuky.varo.player.VaroPlayer;
 public class ColorcodesCommand extends VaroCommand {
 
 	public ColorcodesCommand() {
-		super("colorcodes", "Zeigt alle Colorcodes an", "varo.colorcodes", "cc");
+		super("colorcodes", "Zeigt alle Colorcodes an", "varo.colorcodes", "formatting");
 	}
 
 	@Override
