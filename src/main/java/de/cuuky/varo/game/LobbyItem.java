@@ -51,7 +51,7 @@ public class LobbyItem {
                 .subscribe(HookItemHitEvent.class, hookEvent -> {
                     EntityDamageByEntityEvent event = hookEvent.getSource();
 
-                    if (Main.getVaroGame().hasStarted())
+                    if (Main.getVaroGame().hasStarted() || !(event.getEntity() instanceof Player))
                         return;
 
                     Player invited = (Player) event.getEntity();
