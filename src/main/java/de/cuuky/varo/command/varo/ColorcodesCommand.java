@@ -17,7 +17,7 @@ public class ColorcodesCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 
             sender.sendMessage("§c==============================");
-            sender.sendMessage("&0 = §0Black                 §f&1 = §1Dark Blue");
+            sender.sendMessage("&0 = §0Black                §f&1 = §1Dark Blue");
             sender.sendMessage("&2 = §2Dark Green      §f&3 = §3Dark Aqua");
             sender.sendMessage("&4 = §4Dark Red          §f&5 = §5Dark Purple");
             sender.sendMessage("&6 = §6Gold                  §f&7 = §7Gray");
@@ -27,7 +27,7 @@ public class ColorcodesCommand extends VaroCommand {
             sender.sendMessage("&e = §eYellow               §f&f = §fWhite");
             sender.sendMessage("§c==============================");
             sender.sendMessage("&k = §kMagic§r§f                 &l = §lBold");
-            sender.sendMessage("&m = §mStrikethrough§r§f &n = §nUnderline");
+            sender.sendMessage("&m = §mStrikethrough§r§f  &n = §nUnderline");
             sender.sendMessage("&o = §oItalic§r§f                 &r = §rReset");
             sender.sendMessage("§c==============================");
         
