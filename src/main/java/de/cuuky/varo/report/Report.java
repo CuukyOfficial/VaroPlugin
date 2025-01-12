@@ -47,9 +47,11 @@ public class Report implements VaroSerializeable {
 	}
 
 	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while (getReport(id) != null)
-			generateId();
+		int id;
+
+		do {
+			id = JavaUtils.randomInt(1000, 9999999);
+		} while (getReport(id) != null);
 
 		return id;
 	}

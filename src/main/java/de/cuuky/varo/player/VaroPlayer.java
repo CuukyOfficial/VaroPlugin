@@ -138,9 +138,11 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	}
 
 	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while (getPlayer(id) != null)
-			generateId();
+		int id;
+
+		do {
+			id = JavaUtils.randomInt(1000, 9999999);
+		} while (getPlayer(id) != null);
 
 		return id;
 	}
