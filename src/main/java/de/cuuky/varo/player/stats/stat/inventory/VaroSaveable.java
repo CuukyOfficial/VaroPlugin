@@ -75,9 +75,11 @@ public class VaroSaveable implements VaroSerializeable {
     }
 
     private int generateId() {
-        int id = JavaUtils.randomInt(1000, 9999999);
-        while (getSaveable(id) != null)
-            generateId();
+        int id;
+
+        do {
+            id = JavaUtils.randomInt(1000, 9999999);
+        } while (getSaveable(id) != null);
 
         return id;
     }
