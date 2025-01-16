@@ -25,7 +25,6 @@ import de.cuuky.varo.data.Dependencies;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.spigot.VaroUpdater;
-import de.cuuky.varo.threads.SmartLagDetector;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.version.ServerSoftware;
@@ -135,7 +134,6 @@ public class Main extends JavaPlugin {
 				return;
 
 			new MetricsLoader(this);
-			new SmartLagDetector(this);
 
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
