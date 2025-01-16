@@ -330,7 +330,6 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_TIME_ENABLED(ConfigSettingSection.COMMANDS, "time.enabled", true, "Ob /day und /night aktiviert sein soll"),
 	COMMAND_TR_ENABLED(ConfigSettingSection.COMMANDS, "tr.enabled", true, "Ob /tr aktiviert sein soll"),
 	COMMAND_TR_NAME(ConfigSettingSection.COMMANDS, "tr.name", "tr", "Custom name für /tr"),
-	COMMAND_USAGE_ENABLED(ConfigSettingSection.COMMANDS, "usage.enabled", true, "Ob /usage aktiviert sein soll"),
 	COMMAND_VANISH_ENABLED(ConfigSettingSection.COMMANDS, "vanish.enabled", true, "Ob /vanish aktiviert sein soll"),
 	COMMAND_VARO_ENABLED(ConfigSettingSection.COMMANDS, "varo.enabled", true, "Ob /varo aktiviert sein soll"),
 	COMMAND_VARO_NAME(ConfigSettingSection.COMMANDS, "varo.name", "varo", "Custom name für /varo"),

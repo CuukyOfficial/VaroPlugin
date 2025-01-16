@@ -153,7 +153,6 @@ public final class BukkitRegisterer {
 		registerDynamicCommand("unfreeze", "Entfriert einen Spieler", new UnfreezeCommand(), ConfigSetting.COMMAND_FREEZE_ENABLED, "move");
 		registerDynamicCommand("unmute", "Entmutet einen Spieler", new UnmuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
 		registerDynamicCommand("unprotect", "Beendet die Beschützung vor Schaden von Spielern", new UnprotectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
-		registerDynamicCommand("usage", "Zeigt die Nutzung des Servers", new UsageCommand(), ConfigSetting.COMMAND_USAGE_ENABLED);
 		registerDynamicCommand("vanish", "Versteckt dich oder einen Spieler vor allen anderen", new VanishCommand(), ConfigSetting.COMMAND_VANISH_ENABLED, "v");
 		registerDynamicCommand(ConfigSetting.COMMAND_VARO_NAME.getValueAsString(), "Hauptbefehl des Plugins", new VaroCommandListener(), ConfigSetting.COMMAND_VARO_ENABLED, "varoplugin");
 		registerDynamicCommand("varotime", "Zeigt die verbleibende Session-Zeit an", new VaroTimeCommand(), ConfigSetting.COMMAND_VAROTIME_ENABLED, "vt");
