@@ -45,7 +45,6 @@ import de.cuuky.varo.command.essentials.UnflyCommand;
 import de.cuuky.varo.command.essentials.UnfreezeCommand;
 import de.cuuky.varo.command.essentials.UnmuteCommand;
 import de.cuuky.varo.command.essentials.UnprotectCommand;
-import de.cuuky.varo.command.essentials.UsageCommand;
 import de.cuuky.varo.command.essentials.VanishCommand;
 import de.cuuky.varo.command.essentials.VaroTimeCommand;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
