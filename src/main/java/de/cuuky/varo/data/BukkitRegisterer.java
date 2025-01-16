@@ -30,7 +30,6 @@ import de.cuuky.varo.command.essentials.LanguageCommand;
 import de.cuuky.varo.command.essentials.MessageCommand;
 import de.cuuky.varo.command.essentials.MuteCommand;
 import de.cuuky.varo.command.essentials.NightCommand;
-import de.cuuky.varo.command.essentials.PerformanceCommand;
 import de.cuuky.varo.command.essentials.PingCommand;
 import de.cuuky.varo.command.essentials.ProtectCommand;
 import de.cuuky.varo.command.essentials.RainCommand;
@@ -139,7 +138,6 @@ public final class BukkitRegisterer {
 		registerDynamicCommand("message", "Schreibt einem Spieler eine Nachricht", new MessageCommand(), ConfigSetting.COMMAND_MESSAGE_ENABLED, "msg");
 		registerDynamicCommand("mute", "Mutet einen Spieler", new MuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
 		registerDynamicCommand("night", "Setzt die Tageszeit auf Nacht", new NightCommand(), ConfigSetting.COMMAND_TIME_ENABLED);
-		registerDynamicCommand("performance", "Verbessert die Performance", new PerformanceCommand(), ConfigSetting.COMMAND_PERFORMANCE_ENABLED);
 		registerDynamicCommand("ping", "Zeigt den Ping von dir oder einem Spieler", new PingCommand(), ConfigSetting.COMMAND_PING_ENABLED);
 		registerDynamicCommand("protect", "Beschützt Spieler vor Schaden", new ProtectCommand(), ConfigSetting.COMMAND_PROTECT_ENABLED);
 		registerDynamicCommand("rain", "Wechselt zu Regen", new RainCommand(), ConfigSetting.COMMAND_WEATHER_ENABLED);

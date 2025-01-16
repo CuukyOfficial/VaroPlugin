@@ -321,7 +321,6 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_LANGUAGE_ENABLED(ConfigSettingSection.COMMANDS, "language.enabled", true, "Ob /language aktiviert sein soll"),
 	COMMAND_MESSAGE_ENABLED(ConfigSettingSection.COMMANDS, "message.enabled", true, "Ob /message und /reply aktiviert sein soll"),
 	COMMAND_MUTE_ENABLED(ConfigSettingSection.COMMANDS, "mute.enabled", true, "Ob /mute und /unmute aktiviert sein soll"),
-	COMMAND_PERFORMANCE_ENABLED(ConfigSettingSection.COMMANDS, "performance.enabled", true, "Ob /performance aktiviert sein soll"),
 	COMMAND_PING_ENABLED(ConfigSettingSection.COMMANDS, "ping.enabled", true, "Ob /ping aktiviert sein soll"),
 	COMMAND_PROTECT_ENABLED(ConfigSettingSection.COMMANDS, "protect.enabled", true, "Ob /protect und /unprotect aktiviert sein soll"),
 	COMMAND_REPORT_ENABLED(ConfigSettingSection.COMMANDS, "report.enabled", true, "Ob /report aktiviert sein soll"),
