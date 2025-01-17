@@ -23,7 +23,7 @@ player:
     tooManyStrikes: "§7You received too many strikes and were therefore removed from <projectname>"
     noPreproduceLeft: "§cYou have no more pre-produce sessions left! \n§7Try again tomorrow."
     sessionOver: "§cYour session has expired!"
-    noTimeLeft: You are only allowed to play all §4<config-JoinSystems-joinAfterHours> §chours regularly! \n§7You can only join in §c%stunden%§7:§c%minuten%§7:§c%sekunden% §7join again!
+    noTimeLeft: You are only allowed to play §4<config-JoinSystems-joinAfterHours> §chours per day! \n§7You can join again in §c<join-hours>§7:§c<join-minues>§7:§c<join-seconds>§7!
     strikeBan: |-
       §cYou are banned for <ban-hours> hours because you received a strike!
       Try again later.
