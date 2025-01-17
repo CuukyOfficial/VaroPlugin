@@ -264,6 +264,25 @@ public final class Messages {
     public static final VaroMessage SPECTATOR_HEIGHT = message("spectator.height");
     
     public static final VaroMessage CRAFTING_DISALLOWED = message("crafting.disallowed");
+    
+    public static final VaroMessage TEAMREQUEST_NAME_INVALID = message("teamrequest.name.invalid");
+    public static final VaroMessage TEAMREQUEST_NAME_DUPLICATE = message("teamrequest.name.duplicate");
+    public static final VaroMessage TEAMREQUEST_NAME_TOO_LONG = message("teamrequest.name.tooLong");
+    public static final VaroMessage TEAMREQUEST_RENAME = message("teamrequest.rename");
+    public static final VaroMessage TEAMREQUEST_RENAMED = message("teamrequest.renamed");
+    public static final VaroMessage TEAMREQUEST_ENTER_TEAMNAME = message("teamrequest.enterTeamName");
+    public static final VaroMessage TEAMREQUEST_PLAYER_NOT_ONLINE = message("teamrequest.playerNotOnline");
+    public static final VaroMessage TEAMREQUEST_REVOKED = message("teamrequest.invationRevoked");
+    public static final VaroMessage TEAMREQUEST_TEAM_FULL = message("teamrequest.teamIsFull");
+    public static final VaroMessage TEAMREQUEST_TEAM_REQUEST_RECIEVED = message("teamrequest.teamRequestRecieved");
+    public static final VaroMessage TEAMREQUEST_INVITED_TEAM = message("teamrequest.invitedInTeam");
+    public static final VaroMessage TEAMREQUEST_NO_TEAMNAME = message("teamrequest.noteamname");
+    public static final VaroMessage TEAMREQUEST_LOBBYITEM_INVITE_NAME = message("teamrequest.items.invite.name");
+    public static final VaroMessage TEAMREQUEST_LOBBYITEM_INVITE_LORE = message("teamrequest.items.invite.lore");
+    public static final VaroMessage TEAMREQUEST_LOBBYITEM_LEAVE_NAME = message("teamrequest.items.leave.name");
+    public static final VaroMessage TEAMREQUEST_LOBBYITEM_LEAVE_LORE = message("teamrequest.items.leave.lore");
+    public static final VaroMessage TEAMREQUEST_LOBBYITEM_RENAME_NAME = message("teamrequest.items.rename.name");
+    public static final VaroMessage TEAMREQUEST_LOBBYITEM_RENAME_LORE = message("teamrequest.items.rename.lore");
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
         SLAMS.load("en", JasklParser.createParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))));
@@ -363,6 +382,12 @@ public final class Messages {
             public void kick(VaroPlayer subject) {
                 // TODO Auto-generated method stub
 
+            }
+            
+            @Override
+            public String value(VaroPlayer subject, PlaceholderResolver placeholders) {
+                // TODO Auto-generated method stub
+                return null;
             }
 
             @Override
@@ -495,7 +520,8 @@ public final class Messages {
         void alert(AlertType type, VaroPlayer subject, PlaceholderResolver placeholders);
         void alert(AlertType type, VaroPlayer subject);
 
-        String value(VaroPlayer subject); // TODO remove this?
+        String value(VaroPlayer subject, PlaceholderResolver placeholders);
+        String value(VaroPlayer subject);
     }
 
     public interface VaroMessageArray {

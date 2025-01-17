@@ -98,26 +98,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	TABLIST_PLAYER_WITHOUT_TEAM("tablist.player.withoutTeam", "&7%player%  &c%kills%"),
 	TABLIST_PLAYER_WITHOUT_TEAM_RANK("tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
 
-	TEAM_NAME_INVALID("team.name.invalid", "%prefix%&cUngültiger Name!"),
-    TEAM_NAME_DUPLICATE("team.name.duplicate", "%prefix%&cDieser Name ist bereits vergeben!"),
-    TEAM_NAME_TOO_LONG("team.name.tooLong", "%prefix%&cDer Name darf nicht mehr als %colorcode%%maxLength% &cZeichen enthalten!"),
-    TEAM_RENAME("team.rename", "%prefix%%colorcode%&lBitte gib einen neuen Teamnamen ein"),
-    TEAM_RENAMED("team.renamed", "%prefix%&7Das Team %colorcode%%teamId% &7hat seinen namen zu %colorcode%%newName% &7geändert"),
-	
-	TEAMREQUEST_ENTER_TEAMNAME("teamrequest.enterTeamName", "%prefix%%colorcode%&lGib jetzt den Teamnamen für dich und %invited% ein:"),
-	TEAMREQUEST_PLAYER_NOT_ONLINE("teamrequest.playerNotOnline", "%colorcode%%invitor% ist nicht mehr online!"),
-	TEAMREQUEST_REVOKED("teamrequest.invationRevoked", "Einladung erfolgreich zurückgezogen!"),
-	TEAMREQUEST_TEAM_FULL("teamrequest.teamIsFull", "%invited% konnte dem Team nicht beitreten - es ist bereits voll."),
-	TEAMREQUEST_TEAM_REQUEST_RECIEVED("teamrequest.teamRequestRecieved", "%colorcode%%invitor% &7hat dich in ein Team eingeladen (/varo tr)!"),
-	TEAMREQUEST_INVITED_TEAM("teamrequest.invitedInTeam", "&7Du hast %colorcode%%invited% &7in das Team %colorcode%%team% &7eingeladen!"),
-	TEAMREQUEST_NO_TEAMNAME("teamrequest.noteamname", "&7Du hast noch &7keinen &7Teamnamen!"),
-	TEAMREQUEST_LOBBYITEM_INVITE_NAME("teamRequest.items.invite.name", "&6Spieler Einladen"),
-	TEAMREQUEST_LOBBYITEM_INVITE_LORE("teamRequest.items.invite.lore", "&7Schlage einen Spieler um ihn\n&7in dein Team einzuladen"),
-	TEAMREQUEST_LOBBYITEM_LEAVE_NAME("teamRequest.items.leave.name", "&cTeam Verlassen"),
-	TEAMREQUEST_LOBBYITEM_LEAVE_LORE("teamRequest.items.leave.lore", ""),
-	TEAMREQUEST_LOBBYITEM_RENAME_NAME("teamRequest.items.rename.name", "&cTeam Umbenennen"),
-	TEAMREQUEST_LOBBYITEM_RENAME_LORE("teamRequest.items.rename.lore", ""),
-
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),
 

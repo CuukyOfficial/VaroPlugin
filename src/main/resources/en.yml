@@ -306,3 +306,33 @@ spectator:
 
 crafting:
   disallowed: "§cYou are not allowed to craft, use or brew this item!"
+
+teamrequest:
+  invitedInTeam: "<prefix>§7You have invited <colorcode>%invited% §7to your team!"
+  enterTeamName: "<prefix><colorcode>§lPlease enter a team name for you and %invited%:"
+  playerNotOnline: "<prefix><colorcode><inviter> is offline!"
+  teamRequestRecieved: "<prefix><colorcode><inviter> §7has invited you to join their team (/varo tr)!"
+  noteamname: "<prefix>§7You have no team name!"
+  invationRevoked: "<prefix>Invitation withdrawn!"
+  teamIsFull: "<prefix>%invited% can't join your team - team member limit reached!"
+  items:
+    invite:
+      name: "§6Invite Player"
+      lore: |-
+        §7Hit another player in
+        §7order to invite them
+        §7to your team
+    leave:
+      lore: |-
+        §7Leave your team forever.
+        §7You may never return.
+      name: "§cLeave Team"
+    rename:
+      name: "§cRename Team"
+      lore: "§7Change the name of your team"
+  name:
+    invalid: "<prefix>§cInvalid team name!"
+    tooLong: "<prefix>§cYour team name can not be longer than <colorcode><maxLength> §ccharacters!"
+    duplicate: "<prefix>§cThat name is already taken!"
+  rename: "<prefix><colorcode>§lPlease enter a new name"
+  renamed: "<prefix>§7Team name changed to <colorcode><team-newname>"

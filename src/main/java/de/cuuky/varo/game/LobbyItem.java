@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.team.VaroTeamRequest;
 import de.varoplugin.cfw.item.ItemBuilder;
@@ -40,8 +40,8 @@ public class LobbyItem {
         if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
             return;
 
-        hookItem(player, new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.getValue(varoPlayer))
-                .lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_SLOT.getValueAsInt())
+        hookItem(player, new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue()).displayName(Messages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.value(varoPlayer))
+                .lore(Messages.TEAMREQUEST_LOBBYITEM_INVITE_LORE.value(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_SLOT.getValueAsInt())
                 .subscribe(HookItemInteractEntityEvent.class, hookEvent -> {
                     PlayerInteractEntityEvent event = hookEvent.getSource();
 
@@ -90,8 +90,8 @@ public class LobbyItem {
             return;
         }
 
-        hookItem(varoPlayer.getPlayer(), new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_NAME.getValue(varoPlayer))
-                .lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt())
+        hookItem(varoPlayer.getPlayer(), new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_ITEM.getValue()).displayName(Messages.TEAMREQUEST_LOBBYITEM_LEAVE_NAME.value(varoPlayer))
+                .lore(Messages.TEAMREQUEST_LOBBYITEM_LEAVE_LORE.value(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_LEAVE_SLOT.getValueAsInt())
                 .subscribe(HookItemInteractEntityEvent.class, hookEvent -> {
                     PlayerInteractEntityEvent event = hookEvent.getSource();
 
@@ -113,8 +113,8 @@ public class LobbyItem {
                 }));
 
         if (ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ENABLED.getValueAsBoolean())
-            hookItem(varoPlayer.getPlayer(), new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ITEM.getValue()).displayName(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_NAME.getValue(varoPlayer))
-                    .lore(ConfigMessages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.getValue(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt())
+            hookItem(varoPlayer.getPlayer(), new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_ITEM.getValue()).displayName(Messages.TEAMREQUEST_LOBBYITEM_RENAME_NAME.value(varoPlayer))
+                    .lore(Messages.TEAMREQUEST_LOBBYITEM_RENAME_LORE.value(varoPlayer)).deleteDamageAnnotation().build()).slot(ConfigSetting.TEAMREQUEST_LOBBYITEM_RENAME_SLOT.getValueAsInt())
                     .subscribe(HookItemInteractEntityEvent.class, hookEvent -> {
                         PlayerInteractEntityEvent event = hookEvent.getSource();
 

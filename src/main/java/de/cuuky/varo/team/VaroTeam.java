@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.VaroInventory;
@@ -17,6 +17,7 @@ import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
+import io.github.almightysatan.slams.Placeholder;
 
 public class VaroTeam implements VaroSerializeable {
 
@@ -214,28 +215,28 @@ public class VaroTeam implements VaroSerializeable {
 	
 	public void createNameChangeChatHook(VaroPlayer varoPlayer, Runnable callback) {
 		Player player = varoPlayer.getPlayer();
-		new PlayerChatHookBuilder().message(ConfigMessages.TEAM_RENAME.getValue(varoPlayer))
+		new PlayerChatHookBuilder().message(Messages.TEAMREQUEST_RENAME.value(varoPlayer))
         .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
             if (!hookEvent.getMessage().matches(VaroTeam.NAME_REGEX)) {
-                varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_INVALID);
+                Messages.TEAMREQUEST_NAME_INVALID.send(varoPlayer);
                 return;
             }
 
             VaroTeam duplicateTeam = VaroTeam.getTeam(hookEvent.getMessage());
             if (duplicateTeam != null) {
-                varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_DUPLICATE);
+                Messages.TEAMREQUEST_NAME_DUPLICATE.send(varoPlayer);
                 return;
             }
             
             String message = hookEvent.getMessage();
             int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
             if (message.length() > maxLength) {
-                varoPlayer.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG).replace("%maxLength%", String.valueOf(maxLength));
+                Messages.TEAMREQUEST_NAME_TOO_LONG.send(varoPlayer, Placeholder.constant("maxlength", String.valueOf(maxLength)));
                 return;
             }
 
             VaroTeam.this.setName(hookEvent.getMessage());
-            player.sendMessage(ConfigMessages.TEAM_RENAMED.getValue(varoPlayer).replace("%teamId%", String.valueOf(VaroTeam.this.getId())).replace("%newName%", VaroTeam.this.getName()));
+            Messages.TEAMREQUEST_RENAMED.send(varoPlayer, Placeholder.constant("team-newname", VaroTeam.this.getName()));
             if (callback != null)
                 callback.run();
             hookEvent.getHook().unregister();

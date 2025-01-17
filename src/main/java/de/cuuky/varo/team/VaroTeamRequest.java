@@ -7,12 +7,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.utils.VaroUtils;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
+import io.github.almightysatan.slams.Placeholder;
 
 public class VaroTeamRequest {
 
@@ -22,11 +23,11 @@ public class VaroTeamRequest {
 		requests = new ArrayList<>();
 	}
 
-	private VaroPlayer invited, invitor;
+	private VaroPlayer invited, inviter;
 	private BukkitTask sched;
 
 	public VaroTeamRequest(VaroPlayer invitor, VaroPlayer invited) {
-		this.invitor = invitor;
+		this.inviter = invitor;
 		this.invited = invited;
 
 		requests.add(this);
@@ -35,11 +36,11 @@ public class VaroTeamRequest {
 	}
 
 	private void addToTeam(VaroTeam team) {
-		if (!team.isMember(invitor))
-			team.addMember(invitor);
+		if (!team.isMember(inviter))
+			team.addMember(inviter);
 
 		if (ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= team.getMember().size()) {
-			invitor.sendMessage(ConfigMessages.TEAMREQUEST_TEAM_FULL, invitor).replace("%invited%", invited.getName());
+			Messages.TEAMREQUEST_TEAM_FULL.send(this.inviter, Placeholder.constant("invited", this.invited.getName()));
 			return;
 		}
 		
@@ -50,29 +51,29 @@ public class VaroTeamRequest {
 	}
 
 	private void sendChatHook() {
-		new PlayerChatHookBuilder().message(Main.getColorCode() + ConfigMessages.TEAMREQUEST_ENTER_TEAMNAME.getValue(invitor).replace("%invited%", invited.getName()))
+		new PlayerChatHookBuilder().message(Messages.TEAMREQUEST_ENTER_TEAMNAME.value(this.inviter, Placeholder.constant("invited", this.invited.getName())))
         .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
             String message = hookEvent.getMessage();
             if (!message.matches(VaroTeam.NAME_REGEX)) {
-                invitor.sendMessage(ConfigMessages.TEAM_NAME_INVALID);
+                Messages.TEAMREQUEST_NAME_INVALID.send(this.inviter);
                 return;
             }
             
             VaroTeam duplicateTeam = VaroTeam.getTeam(message);
             if (duplicateTeam != null) {
-                invitor.sendMessage(ConfigMessages.TEAM_NAME_DUPLICATE);
+                Messages.TEAMREQUEST_NAME_DUPLICATE.send(this.inviter);
                 return;
             }
 
             int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
             if (message.length() > maxLength) {
-                invitor.sendMessage(ConfigMessages.TEAM_NAME_TOO_LONG, invitor).replace("%maxLength%", String.valueOf(maxLength));
+                Messages.TEAMREQUEST_NAME_TOO_LONG.send(this.inviter, Placeholder.constant("maxlength", String.valueOf(maxLength)));
                 return;
             }
 
             hookEvent.getHook().unregister();
-            addToTeam(invitor.getTeam() == null ? new VaroTeam(message) : invitor.getTeam());
-        }).complete(invitor.getPlayer(), Main.getInstance());
+            addToTeam(inviter.getTeam() == null ? new VaroTeam(message) : inviter.getTeam());
+        }).complete(inviter.getPlayer(), Main.getInstance());
 	}
 
 	private void startSched() {
@@ -83,10 +84,10 @@ public class VaroTeamRequest {
 			@Override
 			public void run() {
 				if (!invited.isOnline())
-					invitor.sendMessage(Main.getPrefix() + "§7Deine Einladung an " + Main.getColorCode() + invited.getName() + " §7ist abgelaufen!");
+					inviter.sendMessage(Main.getPrefix() + "§7Deine Einladung an " + Main.getColorCode() + invited.getName() + " §7ist abgelaufen!");
 
-				if (!invitor.isOnline())
-					invited.sendMessage(Main.getPrefix() + "§7Die Einladung von " + Main.getColorCode() + invitor.getName() + " §7ist abgelaufen!");
+				if (!inviter.isOnline())
+					invited.sendMessage(Main.getPrefix() + "§7Die Einladung von " + Main.getColorCode() + inviter.getName() + " §7ist abgelaufen!");
 
 				remove();
 			}
@@ -94,19 +95,19 @@ public class VaroTeamRequest {
 	}
 
 	public void accept() {
-		if (!invitor.isOnline()) {
-			invited.sendMessage(ConfigMessages.TEAMREQUEST_PLAYER_NOT_ONLINE, invited).replace("%invitor%", invitor.getName());
+		if (!inviter.isOnline()) {
+			Messages.TEAMREQUEST_PLAYER_NOT_ONLINE.send(this.invited, Placeholder.constant("inviter", this.inviter.getName()));
 			remove();
 			return;
 		}
 
-		if (invitor.getTeam() == null) {
+		if (inviter.getTeam() == null) {
 		    if (ConfigSetting.TEAMREQUEST_RANDOM_NAME.getValueAsBoolean())
-		        this.addToTeam(new VaroTeam(VaroUtils.getRandomTeamName(Arrays.asList(this.invitor, this.invited))));
+		        this.addToTeam(new VaroTeam(VaroUtils.getRandomTeamName(Arrays.asList(this.inviter, this.invited))));
 		    else
 		        this.sendChatHook();
 		} else
-			this.addToTeam(invitor.getTeam());
+			this.addToTeam(inviter.getTeam());
 		this.remove();
 	}
 
@@ -120,7 +121,7 @@ public class VaroTeamRequest {
 	}
 
 	public void revoke() {
-		invitor.sendMessage(ConfigMessages.TEAMREQUEST_REVOKED, invitor);
+		Messages.TEAMREQUEST_REVOKED.send(this.inviter);
 		remove();
 	}
 
@@ -129,7 +130,7 @@ public class VaroTeamRequest {
 	}
 
 	public VaroPlayer getInvitor() {
-		return invitor;
+		return inviter;
 	}
 
 	public static VaroTeamRequest getByAll(VaroPlayer inviter, VaroPlayer invited) {

@@ -9,10 +9,10 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.gui.settings.VaroColorMenu;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.team.VaroTeamRequest;
+import io.github.almightysatan.slams.Placeholder;
 
 public class TeamRequestCommand extends VaroCommand {
 
@@ -99,7 +99,7 @@ public class TeamRequestCommand extends VaroCommand {
 						continue;
 					}
 
-				invite.sendMessage(ConfigMessages.TEAMREQUEST_TEAM_REQUEST_RECIEVED, invite).replace("%invitor%", player.getName());
+				Messages.TEAMREQUEST_TEAM_REQUEST_RECIEVED.send(invite, Placeholder.constant("inviter", player.getName()));
 				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " §7gesendet");
 				new VaroTeamRequest(player, invite);
 			}
