@@ -2,7 +2,6 @@ package de.cuuky.varo.threads.daily.checks;
 
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerDisconnect;
@@ -31,7 +30,7 @@ public class SessionCheck extends Checker {
 		for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
 			if (!vp.getStats().hasFullTime()) {
 				if (vp.isOnline())
-					vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(vp));
+				    Messages.PLAYER_KICK_SESSION_OVER.kick(vp);
 
 				vp.onEvent(BukkitEventType.KICKED);
 				Messages.LOG_SESSIONS_ENDED.log(LogType.LOG, vp);

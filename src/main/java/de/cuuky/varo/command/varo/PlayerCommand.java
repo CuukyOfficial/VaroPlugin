@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroChatListMessages;
 import de.cuuky.varo.command.VaroCommand;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.gui.player.PlayerGUI;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.PlayerState;
@@ -124,7 +124,7 @@ public class PlayerCommand extends VaroCommand {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
 				for (VaroPlayer pl : new ArrayList<>(VaroPlayer.getVaroPlayers())) {
 					if (pl.isOnline())
-						pl.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp));
+					    Messages.PLAYER_KICK_NOT_USER_OF_PROJECT.kick(pl);
 
 					pl.delete();
 				}
@@ -137,7 +137,7 @@ public class PlayerCommand extends VaroCommand {
 			}
 
 			if (vps.isOnline())
-				vps.getPlayer().kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp));
+			    Messages.PLAYER_KICK_NOT_USER_OF_PROJECT.kick(vps);
 
 			vps.delete();
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + args[1] + " §7wurde erfolgreich aus " + Main.getColorCode() + Main.getProjectName() + " §7entfernt!");

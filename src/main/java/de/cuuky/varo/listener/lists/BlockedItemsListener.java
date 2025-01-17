@@ -22,7 +22,7 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
-		Messages.CRAFTING_DISALLOWED.send(vp);
+		Messages.PLAYER_CRAFTING_DISALLOWED.send(vp);
 	}
 
 	@EventHandler
@@ -35,6 +35,6 @@ public class BlockedItemsListener implements Listener {
 
 		event.setCancelled(true);
 		VaroPlayer vp = VaroPlayer.getPlayer(event.getPlayer());
-		Messages.CRAFTING_DISALLOWED.send(vp);
+		Messages.PLAYER_CRAFTING_DISALLOWED.send(vp);
 	}
 }

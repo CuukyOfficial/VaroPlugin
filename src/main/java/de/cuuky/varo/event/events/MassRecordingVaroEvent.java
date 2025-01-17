@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitTask;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
@@ -98,7 +99,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
                             vp.setMassRecordingKick(true);
                             Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST, vp);
                             vp.onEvent(BukkitEventType.KICKED);
-                            vp.getPlayer().kickPlayer(ConfigMessages.KICK_MASS_REC_SESSION_OVER.getValue(vp, vp));
+                            Messages.PLAYER_KICK_MASS_REC_SESSION_OVER.kick(vp);
                         }
                     }
                 }

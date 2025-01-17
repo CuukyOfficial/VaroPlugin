@@ -29,9 +29,9 @@ public class PlayerDeathListener implements Listener {
                     return;
 
                 if (killerPlayer == null)
-                    deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_DEAD.getValue(deadPlayer, deadPlayer));
+                    Messages.PLAYER_KICK_DEATH.kick(deadPlayer);
                 else
-                    deadPlayer.getPlayer().kickPlayer(ConfigMessages.DEATH_KICK_KILLED.getValue(deadPlayer, deadPlayer).replace("%killer%", killerPlayer.getName()));
+                    Messages.PLAYER_KICK_KILL.kick(deadPlayer, new Contexts.KillContext(deadPlayer, killerPlayer));
             }
         }.runTaskLater(Main.getInstance(), 1L);
     }

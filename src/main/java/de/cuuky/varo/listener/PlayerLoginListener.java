@@ -16,11 +16,14 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.KickResult;
 import de.cuuky.varo.player.stats.stat.PlayerState;
+import io.github.almightysatan.slams.Placeholder;
+import io.github.almightysatan.slams.PlaceholderResolver;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.UserSnowflake;
@@ -32,7 +35,7 @@ public class PlayerLoginListener implements Listener {
     public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
         BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(event.getName());
         if (entry != null)
-            event.disallow(org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ConfigMessages.JOIN_KICK_BANNED.getValue().replace("%reason%", entry.getReason()));
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Messages.PLAYER_KICK_NOT_USER_OF_PROJECT.value(Placeholder.constant("reason", entry.getReason())));
     }
 
 	@EventHandler(priority = EventPriority.LOW)
@@ -98,25 +101,25 @@ public class PlayerLoginListener implements Listener {
 
 		switch (kickResult) {
 		case NO_PROJECTUSER:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(vp, vp));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_NOT_USER_OF_PROJECT.value(vp));
 			break;
 		case DEAD:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.DEATH_KICK_DEAD.getValue(vp));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DEATH.value(vp));
 			break;
 		case STRIKE_BAN:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_STRIKE_BAN.getValue(vp, vp).replace("%hours%", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DEATH.value(vp, Placeholder.constant("ban-hours", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()))));
 			break;
 		case NOT_IN_TIME:
 			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue(vp, vp).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
 			break;
 		case SERVER_FULL:
-			event.disallow(Result.KICK_FULL, ConfigMessages.JOIN_KICK_SERVER_FULL.getValue(vp, vp));
+			event.disallow(Result.KICK_FULL, Messages.PLAYER_KICK_SERVER_FULL.value(vp));
 			break;
 		case NO_SESSIONS_LEFT:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_SESSIONS_LEFT.getValue(vp, vp));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_NO_SESSIONS_LEFT.value(vp));
 			break;
 		case NO_PREPRODUCES_LEFT:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_PREPRODUCES_LEFT.getValue(vp, vp));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_NO_PREPRODUCES_LEFT.value(vp));
 			break;
 		case NO_TIME:
 			Date current = new Date();
@@ -137,11 +140,14 @@ public class PlayerLoginListener implements Listener {
 				hours = "0" + hr;
 			else
 				hours = "" + hr;
-
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NO_TIME_LEFT.getValue(vp).replace("%timeHours%", String.valueOf(ConfigSetting.JOIN_AFTER_HOURS.getValueAsInt())).replace("%stunden%", hours).replace("%minuten%", minutes).replace("%sekunden%", seconds));
+			
+			PlaceholderResolver placeholders = PlaceholderResolver.builder().constant("join-hours", hours)
+        			.constant("join-minutes", minutes)
+        			.constant("join-seconds", seconds).build();
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_NO_TIME_LEFT.value(vp, placeholders));
 			break;
 		case SERVER_NOT_PUBLISHED:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.JOIN_KICK_NOT_STARTED.getValue(vp, vp));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_NOT_STARTED.value(vp));
 			break;
 		case ALLOW:
 		case SPECTATOR:

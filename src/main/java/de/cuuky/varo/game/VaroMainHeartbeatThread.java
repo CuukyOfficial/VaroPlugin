@@ -72,7 +72,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 						if (countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 							Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST, vp);
 							vp.onEvent(BukkitEventType.KICKED);
-							vp.getPlayer().kickPlayer(ConfigMessages.KICK_SESSION_OVER.getValue(null, vp));
+							Messages.PLAYER_KICK_SESSION_OVER.kick(vp);
 							continue;
 						}
                         if (countdown == 1) {

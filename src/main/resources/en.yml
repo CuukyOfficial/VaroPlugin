@@ -13,7 +13,30 @@ player:
     spectator: "<prefix>§a<name>§7 has entered the server as a spectator!"
     massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
     remainingTime: "<prefix>§a<name>§7 left the server too early and has <colorcode><seconds>§7 seconds left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
+  kick:
+    death: "§cYou died!"
+    noSessionLeft: "§cYou have no more sessions left!\n§7Wait until tomorrow to play again!"
+    command: "<colorcode><name> §7was kicked!"
+    banned: |-
+      §4You are banned from this server!
+      §7Reason: §c<reason>
+    tooManyStrikes: "§7You received too many strikes and were therefore removed from <projectname>"
+    noPreproduceLeft: "§cYou have no more pre-produce sessions left! \n§7Try again tomorrow."
+    sessionOver: "§cYour session has expired!"
+    noTimeLeft: You are only allowed to play all §4<config-JoinSystems-joinAfterHours> §chours regularly! \n§7You can only join in §c%stunden%§7:§c%minuten%§7:§c%sekunden% §7join again!
+    strikeBan: |-
+      §cYou are banned for <ban-hours> hours because you received a strike!
+      Try again later.
+    notUserOfProject: "§7You are not a participant of <projectname>§7!"
+    kill: "§7You were killed by §c<killer-name>§7!"
+    kickMessageMassRec: "§cThe mass recording is finished, \n§7everybody got kicked!"
+    notStarted: "§cThe server has not been opened yet! \n§7Please be patient a little longer!"
+    serverFull: "§cThe server is full!\n§7Talk to the owner if this is a mistake!"
   moveProtection: "<prefix>You cannot move until your <colorcode>protection§7 has expired!"
+  spectator:
+    height: "§cYou can not fly any lower!"
+  crafting:
+    disallowed: "§cYou are not allowed to craft, use or brew this item!"
   scoreboard:
     title:
       - "<projectname>"
@@ -301,20 +324,14 @@ broadcast:
   - "<prefix> A broadcast message"
   - "<prefix> Another broadcast message"
 
-spectator:
-  height: "§cYou can not fly any lower!"
-
-crafting:
-  disallowed: "§cYou are not allowed to craft, use or brew this item!"
-
 teamrequest:
-  invitedInTeam: "<prefix>§7You have invited <colorcode>%invited% §7to your team!"
-  enterTeamName: "<prefix><colorcode>§lPlease enter a team name for you and %invited%:"
+  invitedInTeam: "<prefix>§7You have invited <colorcode><invited> §7to your team!"
+  enterTeamName: "<prefix><colorcode>§lPlease enter a team name for you and <invited>:"
   playerNotOnline: "<prefix><colorcode><inviter> is offline!"
   teamRequestRecieved: "<prefix><colorcode><inviter> §7has invited you to join their team (/varo tr)!"
   noteamname: "<prefix>§7You have no team name!"
   invationRevoked: "<prefix>Invitation withdrawn!"
-  teamIsFull: "<prefix>%invited% can't join your team - team member limit reached!"
+  teamIsFull: "<prefix><invited> can't join your team - team member limit reached!"
   items:
     invite:
       name: "§6Invite Player"

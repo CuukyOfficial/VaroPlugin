@@ -226,7 +226,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 			rank.remove();
 
 		if (isOnline())
-			player.kickPlayer(ConfigMessages.JOIN_KICK_NOT_USER_OF_PROJECT.getValue(this, this));
+		    Messages.PLAYER_KICK_NOT_USER_OF_PROJECT.kick(this);
 
 		if (villager != null)
 			villager.remove();

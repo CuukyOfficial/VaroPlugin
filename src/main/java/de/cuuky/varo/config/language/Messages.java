@@ -102,8 +102,25 @@ public final class Messages {
     public static final VaroMessage PLAYER_JOIN_SPECTATOR = message("player.join.spectator");
     public static final VaroMessage PLAYER_JOIN_MASS_RECORDING = message("player.join.massrecording");
     public static final VaroMessage PLAYER_JOIN_REMAINING_TIME = message("player.join.remainingTime");
+    
+    public static final VaroMessage PLAYER_KICK_DEATH = message("player.kick.death");
+    public static final VaroMessage PLAYER_KICK_KILL = message("player.kick.kill");
+    public static final VaroMessage PLAYER_KICK_NOT_USER_OF_PROJECT = message("player.kick.notUserOfProject");
+    public static final VaroMessage PLAYER_KICK_SERVER_FULL = message("player.kick.serverFull");
+    public static final VaroMessage PLAYER_KICK_STRIKE_BAN = message("player.kick.strikeBan");
+    public static final VaroMessage PLAYER_KICK_BANNED = message("player.kick.banned");
+    public static final VaroMessage PLAYER_KICK_NO_PREPRODUCES_LEFT = message("player.kick.noPreproduceLeft");
+    public static final VaroMessage PLAYER_KICK_NO_SESSIONS_LEFT = message("player.kick.noSessionLeft");
+    public static final VaroMessage PLAYER_KICK_NO_TIME_LEFT = message("player.kick.noTimeLeft");
+    public static final VaroMessage PLAYER_KICK_NOT_STARTED = message("player.kick.notStarted");
+    public static final VaroMessage PLAYER_KICK_SESSION_OVER = message("player.kick.sessionOver");
+    public static final VaroMessage PLAYER_KICK_MASS_REC_SESSION_OVER = message("player.kick.kickMessageMassRec");
+    public static final VaroMessage PLAYER_KICK_TOO_MANY_STRIKES = message("player.kick.tooManyStrikes");
+    public static final VaroMessage PLAYER_KICK_COMMAND = message("player.kick.command");
 
     public static final VaroMessage PLAYER_MOVE_PROTECTION = message("player.moveProtection");
+    public static final VaroMessage PLAYER_SPECTATOR_HEIGHT = message("player.spectator.height");
+    public static final VaroMessage PLAYER_CRAFTING_DISALLOWED = message("player.crafting.disallowed");
 
     public static final VaroMessageArray PLAYER_SCOREBOARD_TITLE = array("player.scoreboard.title");
     public static final VaroMessageArray2d PLAYER_SCOREBOARD_CONTENT = array2d("player.scoreboard.content");
@@ -260,11 +277,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_PING = message("commands.ping");
 
     public static final VaroMessageArray BROADCAST = array("broadcast");
-    
-    public static final VaroMessage SPECTATOR_HEIGHT = message("spectator.height");
-    
-    public static final VaroMessage CRAFTING_DISALLOWED = message("crafting.disallowed");
-    
+
     public static final VaroMessage TEAMREQUEST_NAME_INVALID = message("teamrequest.name.invalid");
     public static final VaroMessage TEAMREQUEST_NAME_DUPLICATE = message("teamrequest.name.duplicate");
     public static final VaroMessage TEAMREQUEST_NAME_TOO_LONG = message("teamrequest.name.tooLong");
@@ -379,11 +392,17 @@ public final class Messages {
             }
 
             @Override
+            public void kick(VaroPlayer recipient, VaroContext context) {
+                // TODO Auto-generated method stub
+   
+            }
+            
+            @Override
             public void kick(VaroPlayer subject) {
                 // TODO Auto-generated method stub
 
             }
-            
+
             @Override
             public String value(VaroPlayer subject, PlaceholderResolver placeholders) {
                 // TODO Auto-generated method stub
@@ -393,6 +412,12 @@ public final class Messages {
             @Override
             public String value(VaroPlayer subject) {
                 return message.value(new PlayerContext(subject));
+            }
+            
+            @Override
+            public String value(PlaceholderResolver placeholders) {
+                // TODO Auto-generated method stub
+                return null;
             }
 
             @Override
@@ -508,6 +533,7 @@ public final class Messages {
         void send(CommandSender subject, PlaceholderResolver placeholders);
         void send(CommandSender subject);
 
+        void kick(VaroPlayer recipient, VaroContext context);
         void kick(VaroPlayer subject);
 
         void log(LogType type, VaroContext context, PlaceholderResolver placeholders);
@@ -522,6 +548,7 @@ public final class Messages {
 
         String value(VaroPlayer subject, PlaceholderResolver placeholders);
         String value(VaroPlayer subject);
+        String value(PlaceholderResolver placeholders);
     }
 
     public interface VaroMessageArray {

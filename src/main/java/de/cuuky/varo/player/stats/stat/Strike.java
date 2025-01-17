@@ -9,7 +9,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Contexts.StrikeContext;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
@@ -71,7 +70,7 @@ public class Strike implements VaroSerializeable {
 		default:
 			striked.getStats().setState(PlayerState.DEAD);
 			if (striked.isOnline())
-				striked.getPlayer().kickPlayer(ConfigMessages.KICK_TOO_MANY_STRIKES.getValue(striked, striked));
+			    Messages.PLAYER_KICK_TOO_MANY_STRIKES.kick(this.striked);
 			break;
 		}
 
