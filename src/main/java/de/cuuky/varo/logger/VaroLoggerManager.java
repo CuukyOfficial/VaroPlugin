@@ -39,17 +39,13 @@ public class VaroLoggerManager {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				synchronized (this) {
-					VaroLoggerManager.this.loggers.forEach(VaroLogger::processQueue);
-				}
+				VaroLoggerManager.this.loggers.forEach(VaroLogger::processQueue);
 			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), 20L, 20L * 10L);
+		}.runTaskTimerAsynchronously(Main.getInstance(), 20L, 20L * 60L);
 	}
 
 	public void cleanUp() {
-		synchronized (this) {
-			VaroLoggerManager.this.loggers.forEach(VaroLogger::cleanUp);
-		}
+		VaroLoggerManager.this.loggers.forEach(VaroLogger::cleanUp);
 	}
 
 	public BlockLogger getBlockLogger() {

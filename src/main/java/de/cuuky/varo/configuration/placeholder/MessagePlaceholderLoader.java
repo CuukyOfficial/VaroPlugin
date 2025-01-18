@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 
+import com.cryptomorin.xseries.XMaterial;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.placeholder.varo.VaroGeneralMessagePlaceholder;
@@ -137,5 +139,10 @@ public class MessagePlaceholderLoader {
         new VaroPlayerMessagePlaceholder("playerLocZ", 1, "Ersetzt durch die Z-Koordinate des Spielers", (player) -> player.isOnline() ? String.valueOf(player.getPlayer().getLocation().getBlockZ()) : "0");
         new VaroPlayerMessagePlaceholder("lpPrefix", 10, "Ersetzt durch den LuckPerms-Prefix des Spielers", VaroUtils::getLuckPermsPrefix);
         new VaroPlayerMessagePlaceholder("lpSuffix", 10, "Ersetzt durch den LuckPerms-Suffix des Spielers", VaroUtils::getLuckPermsPrefix);
+        new VaroPlayerMessagePlaceholder("blockloggerDiamond", 5, "Ersetzt durch die anzahl der Diamanterze die der Spieler abgebaut hat", player -> String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(player.getUUID(), XMaterial.DIAMOND_ORE.get().toString()).size()));
+        new VaroPlayerMessagePlaceholder("blockloggerEmerald", 5, "Ersetzt durch die anzahl der Emeralderze die der Spieler abgebaut hat", player -> String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(player.getUUID(), XMaterial.EMERALD_ORE.get().toString()).size()));
+        new VaroPlayerMessagePlaceholder("blockloggerGold", 5, "Ersetzt durch die anzahl der Golderze die der Spieler abgebaut hat", player -> String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(player.getUUID(), XMaterial.GOLD_ORE.get().toString()).size()));
+        new VaroPlayerMessagePlaceholder("blockloggerIron", 5, "Ersetzt durch die anzahl der Eisenerze die der Spieler abgebaut hat", player -> String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(player.getUUID(), XMaterial.IRON_ORE.get().toString()).size()));
+        new VaroPlayerMessagePlaceholder("blockloggerCoal", 5, "Ersetzt durch die anzahl der Kohle die der Spieler abgebaut hat", player -> String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(player.getUUID(), XMaterial.COAL_ORE.get().toString()).size()));
     }
 }

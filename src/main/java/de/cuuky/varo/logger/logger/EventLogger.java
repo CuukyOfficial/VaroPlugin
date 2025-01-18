@@ -5,6 +5,7 @@ import de.cuuky.varo.bot.telegram.VaroTelegramBot;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.logger.CachedVaroLogger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -113,7 +114,9 @@ public class EventLogger extends CachedVaroLogger<String> {
         message = ChatColor.stripColor(message.replace("&", "§"));
 
         String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
-        this.queueLog(log);
+        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+            this.queueLog(log);
+        });
 
         if (message.contains("%noBot%") || message.contains("%noDiscord%"))
             return;

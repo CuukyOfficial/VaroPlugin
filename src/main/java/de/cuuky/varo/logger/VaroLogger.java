@@ -8,13 +8,14 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+// TODO this should use a database
 public abstract class VaroLogger<T> {
 
 	private static final File LOGS_FOLDER = new File("plugins/Varo/logs/");
@@ -23,7 +24,8 @@ public abstract class VaroLogger<T> {
 
 	private final File file;
 	private PrintWriter pw;
-	private final Queue<T> queue;
+	private final Queue<T> queue = new LinkedList<>();
+	private volatile boolean running = true;
 
 	protected VaroLogger(String name) {
 		this.file = new File(LOGS_FOLDER, name + ".varolog2");
@@ -36,33 +38,45 @@ public abstract class VaroLogger<T> {
 			this.pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.file, true), Charsets.UTF_8));
 		}catch(IOException e) {
 			e.printStackTrace();
+			this.running = false;
 		}
-		this.queue = new ConcurrentLinkedQueue<>();
 	}
 
-	protected void load() throws IOException {}
+	protected void load() throws IOException {
+	    // nop
+	}
 
 	protected void queueLog(T log) {
-		if(log != null)
-			this.queue.add(log);
+		if(log == null)
+		    return;
+
+		synchronized (this.queue) {
+		    this.queue.add(log);
+        }
 	}
 
 	public void processQueue() {
-		if(!this.queue.isEmpty()) {
-			T log;
-			while((log = this.queue.poll()) != null)
-				this.print(log);
+		synchronized (this.queue) {
+		    if(this.running && !this.queue.isEmpty()) {
+	            T log;
+	            while((log = this.queue.poll()) != null)
+	                this.print(log);
 
-			this.pw.flush();
-		}
+	            this.pw.flush();
+	        }
+        }
 	}
 
-	void print(Object object) {
+	private void print(Object object) {
 		this.pw.println(GSON.toJson(object));
 	}
 
 	public void cleanUp() {
-		this.pw.close();
+	    synchronized (this.queue) {
+	        this.processQueue();
+	        this.pw.close();
+	        this.running = false;
+        }
 	}
 
 	public File getFile() {

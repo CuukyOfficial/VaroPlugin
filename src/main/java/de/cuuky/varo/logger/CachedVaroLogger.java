@@ -10,35 +10,40 @@ import com.google.common.base.Charsets;
 
 public abstract class CachedVaroLogger<T> extends VaroLogger<T> {
 
-	private List<T> logs = Collections.synchronizedList(new ArrayList<>());
-	private Class<T> type;
+	private final List<T> logs = new ArrayList<>();
+	private final Class<T> type;
 
 	protected CachedVaroLogger(String name, Class<T> type) {
 		super(name);
 		this.type = type;
 	}
+	
+	protected void appendLog(T log) {
+	    this.logs.add(log);
+	}
 
 	@Override
 	protected void load() throws IOException {
-		Scanner scanner = new Scanner(this.getFile(), Charsets.UTF_8.name());
-		while(scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			if(!line.isEmpty())
-				this.logs.add(GSON.fromJson(line, this.type));
+		try (Scanner scanner = new Scanner(this.getFile(), Charsets.UTF_8.name())) {
+    		while(scanner.hasNextLine()) {
+    			String line = scanner.nextLine();
+    			if(!line.isEmpty())
+    			    this.appendLog(GSON.fromJson(line, this.type));
+    		}
 		}
-		scanner.close();
 		super.load();
 	}
 
 	@Override
 	protected void queueLog(T log) {
-		if(log != null) {
-			this.logs.add(log);
-			super.queueLog(log);
-		}
+		if(log == null)
+		    return;
+
+		this.appendLog(log);
+		super.queueLog(log);
 	}
 
 	public List<T> getLogs() {
-		return this.logs;
+		return Collections.unmodifiableList(this.logs);
 	}
 }
