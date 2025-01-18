@@ -8,9 +8,6 @@ import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public enum ConfigMessages implements DefaultLanguage {
 
-	BOTS_DISCORD_NOT_REGISTERED_DISCORD("bots.notRegisteredDiscord", "&cDu bist noch nicht mit Discord verifiziert!\n&7Nutze &c/verify %code% &7um dich auf unserem Discord zu verifizieren!\nLink zum Discord: &c%discordLink%"),
-	BOTS_DISCORD_NO_SERVER_USER("bots.noServerUser", "&cDein Account ist nicht auf dem Discord!%nextLine%&7Joine dem Discord und versuche es erneut."),
-
 	COMBAT_FRIENDLY_FIRE("combat.friendlyfire", "&7Dieser Spieler ist in deinem Team!"),
 	COMBAT_IN_FIGHT("combat.inFight", "&7Du bist nun im Kampf, logge dich &4NICHT &7aus!"),
 	COMBAT_LOGGED_OUT("combat.loggedOut", "&c%player% &7hat den Server während eines Kampfes verlassen!"),
@@ -21,40 +18,15 @@ public enum ConfigMessages implements DefaultLanguage {
 	SPAWN_DISTANCE("spawn.spawnDistance", "&7Du bist %colorcode%%distance% &7Blöcke vom Spawn entfernt!"),
 	SPAWN_DISTANCE_NETHER("spawn.spawnDistanceNether", "&7Du bist %colorcode%%distance% &7Blöcke vom Portal zur Oberwelt entfernt!"),
 
-	DEATH_ELIMINATED_OTHER("death.eliminated.other", "%colorcode%%player% &7ist gestorben. Grund: &c%reason%"),
-	DEATH_ELIMINATED_PLAYER("death.eliminated.player", "%colorcode%%player% &7wurde von %colorcode%%killer% &7getötet!"),
-	DEATH_LIFE_OTHER("death.teamLifeLost.other", "%colorcode%%player% &7ist gestorben und hat nun noch %colorcode%%teamLifes% &7Teamleben! Grund: &c%reason%"),
-	DEATH_LIFE_PLAYER("death.teamLifeLost.player", "%colorcode%%player% &7wurde von %colorcode%%killer% &7getötet und hat nun noch %colorcode%%teamLifes% &7Teamleben! Grund: &c%reason%"),
-	DEATH_RESPAWN_PROTECTION("death.respawnProtection", "&c%player% hat nun ein Leben weniger und ist für %seconds% unverwundbar!"),
-	DEATH_RESPAWN_PROTECTION_OVER("death.respawnProtectionOver", "&c%player% ist nun wieder verwundbar!"),
-	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "Dein Team hat aufgrund eines Kills ein Teamleben erhalten!"),
-	DEATH_KILL_TIME_ADD("death.killTimeAdd", "Aufgrund deines Kills hast du zusätzlich %colorcode%%timeAdded% &7Sekunden Zeit erhalten!"),
-
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7wurde gestartet! &5Viel Erfolg!"),
 	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
 	GAME_VARO_START_SUBTITLE("game.start.startSubtitle", "&7Viel Glück!"),
 	GAME_WIN("game.win.single", "&5%player% &7hat %projectname% &7gewonnen! &5Gratulation!"),
 	GAME_WIN_TEAM("game.win.team", "&5%winnerPlayers% &7haben %projectname% &7gewonnen! &5Gratulation!"),
 
-	QUIT_MESSAGE("quitmessage.quit", "%prefix%&c%player%&7 hat den Server verlassen!"),
-	QUIT_DISCONNECT_SESSION_END("quitmessage.disconnectKilled", "&c%player% &7hat das Spiel verlassen und ist seit &c%banTime% &7Minute(n) nicht mehr online.%nextLine%&7Damit ist er aus %projectname% &7ausgeschieden!"),
-	QUIT_SPECTATOR("quitmessage.spectator", "&c%player% &7hat den Server als Spectator verlassen!"),
-	QUIT_TOO_OFTEN("quitmessage.quitTooOften", "&c%player% &7hat den Server zu oft verlassen und dadurch seine Sitzung verloren."),
-	QUIT_WITH_REMAINING_TIME("quitmessage.quitRemainingTime", "%prefix%&c%player% &7hat den Server vorzeitig verlassen!"),
-	QUIT_KICK_BROADCAST("quitmessage.broadcast", "%colorcode%%player% &7wurde gekickt!"),
-	QUIT_KICK_DELAY_OVER("quitmessage.protectionOver", "%colorcode%%player% &7wurde aufgrund seines Todes jetzt gekickt!"),
-	QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunde(n) gekickt!"),
-	QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cEs befindet sich ein Spieler &4%distance% &cBlöcke in deiner Nähe!%nextLine%&7Um gekickt zu werden, entferne dich von diesem Spieler!"),
-	QUIT_KICK_SERVER_CLOSE_SOON("quitmessage.serverCloseSoon", "&7Der Server schliesst in &c%minutes% &7Minuten!"),
-
 	SERVER_MODT_CANT_JOIN_HOURS("motd.cantJoinHours", "&cDu kannst nur zwischen &4%minHour% &cund &4%maxHour%&c Uhr joinen! %nextLine%&7Versuche es später erneut! &7%currHour%&7:&7%currMin%&7:&7%currSec%"),
 	SERVER_MODT_NOT_OPENED("motd.serverNotOpened", "&cDer Server wurde noch nicht für alle geöffnet! %nextLine%&7Versuche es später erneut!"),
 	SERVER_MODT_OPEN("motd.serverOpen", "&aSei nun bei %projectname% &adabei! \n&7Viel Spass!"),
-
-	NAMETAG_PREFIX_NO_TEAM("nametag.prefix.noTeam", "&7"),
-	NAMETAG_PREFIX_TEAM("nametag.prefix.team", "%colorcode%%team% &7"),
-	NAMETAG_SUFFIX_NO_TEAM("nametag.suffix.noTeam", "&c %kills%"),
-	NAMETAG_SUFFIX_TEAM("nametag.suffix.team", "&c %kills%"),
 
 	CHEST_NOT_TEAM_CHEST("chest.notTeamChest", "&7Diese Kiste gehört %colorcode%%player%&7!"),
 	CHEST_NOT_TEAM_FURNACE("chest.notTeamFurnace", "&7Dieser Ofen gehört %colorcode%%player%&7!"),
@@ -77,11 +49,6 @@ public enum ConfigMessages implements DefaultLanguage {
 	SORT_OWN_HOLE("sort.ownHoleTeleport", "Du wurdest in dein Loch einsortiert!"),
 	SORT_SPECTATOR_TELEPORT("sort.spectatorTeleport", "Du wurdest, da du Spectator bist, zum Spawn teleportiert!"),
 	SORT_SORTED("sort.sorted", "&7Du wurdest in das Loch %colorcode%%zahl% &7teleportiert!"),
-
-	TABLIST_PLAYER_WITH_TEAM("tablist.player.withTeam", "%colorcode%%team% &8| &7%player%  &c%kills%"),
-	TABLIST_PLAYER_WITH_TEAM_RANK("tablist.player.withTeamAndRank", "&7%rank% &8| %colorcode%%team% &8| &7%player%  &c%kills%"),
-	TABLIST_PLAYER_WITHOUT_TEAM("tablist.player.withoutTeam", "&7%player%  &c%kills%"),
-	TABLIST_PLAYER_WITHOUT_TEAM_RANK("tablist.player.withoutTeamWithRank", "&7%rank% &8| &7%player%  &c%kills%"),
 
 	SPAWNS_SPAWN_NUMBER("spawns.spawnNameTag.number", "&7Spawn %colorcode%%number%"),
 	SPAWNS_SPAWN_PLAYER("spawns.spawnNameTag.player", "&7Spawn von %colorcode%%player%"),

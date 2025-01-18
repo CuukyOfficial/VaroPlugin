@@ -13,18 +13,17 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionUtils;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Contexts;
 import de.cuuky.varo.config.language.Messages;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.player.stats.stat.inventory.InventoryBackup;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class OfflineVillager implements VaroSerializeable {
 
@@ -84,7 +83,7 @@ public class OfflineVillager implements VaroSerializeable {
 		}.runTaskLater(Main.getInstance(), 1L);
 	}
 
-	public void kill(VaroPlayer killer) {
+	public void kill(VaroPlayer killer, String cause) {
 		remove();
 
 		for (ItemStack it : backup.getAllContents())
@@ -93,8 +92,8 @@ public class OfflineVillager implements VaroSerializeable {
 		int exp = Math.min(this.backup.getExpLevel() * 7, 100); // See EntityHuman#getExpValue (1.8.8)
 		((ExperienceOrb) this.location.getWorld().spawnEntity(this.location, EntityType.EXPERIENCE_ORB)).setExperience(exp);
 
-		Messages.LOG_DEATH_ELIMINATED_PLAYER.log(LogType.KILL, new Contexts.KillContext(this.vp, killer));
-		Main.getLanguageManager().broadcastMessage(ConfigMessages.DEATH_ELIMINATED_PLAYER, vp).replace("%death%", vp.getName()).replace("%killer%", killer.getName());
+		Messages.LOG_DEATH_ELIMINATED_PLAYER.log(LogType.KILL, new Contexts.KillContext(this.vp, killer, cause));
+		Messages.PLAYER_DEATH_ELIMINATED_PLAYER.broadcast(new Contexts.KillContext(this.vp, killer, cause));
 
 		killer.onEvent(BukkitEventType.KILL);
 		this.vp.onEvent(BukkitEventType.DEATH);

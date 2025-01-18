@@ -1,5 +1,6 @@
 package de.cuuky.varo.player.stats.stat.offlinevillager;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,16 +56,18 @@ public class VillagerListener implements Listener {
 
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (event.getEntity().getKiller() == null || !event.getEntity().getType().toString().contains("ZOMBIE"))
+	    LivingEntity entity = event.getEntity();
+		if (entity.getKiller() == null || !entity.getType().toString().contains("ZOMBIE"))
 			return;
 
-		OfflineVillager vill = OfflineVillager.getVillager(event.getEntity());
+		OfflineVillager vill = OfflineVillager.getVillager(entity);
 		if (vill == null)
 			return;
 
 		event.setDroppedExp(0);
 		event.getDrops().clear();
-		vill.kill(VaroPlayer.getPlayer(event.getEntity().getKiller()));
+		String cause = entity.getLastDamageCause() != null ? entity.getLastDamageCause().getCause().toString() : "?";
+		vill.kill(VaroPlayer.getPlayer(entity.getKiller()), cause);
 	}
 
 	@EventHandler

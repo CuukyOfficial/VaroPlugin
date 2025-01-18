@@ -13,6 +13,17 @@ player:
     spectator: "<prefix>§a<name>§7 has entered the server as a spectator!"
     massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
     remainingTime: "<prefix>§a<name>§7 left the server too early and has <colorcode><seconds>§7 seconds left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
+  disconnect:
+    kick: "<prefix><colorcode><name> §7has been kicked!"
+    spectator: "<prefix>§c<name> §7has left the server as a spectator!"
+    broadcast: "<prefix>§c<name>§7 has left the server!"
+    eliminated: "<prefix>§c<name> §7has not been online for §c<config-Disconnect-banAfterDisconnectMinutes> §7minute(s).§7They have now been removed from <projectname>§7!"
+    serverCloseSoon: "<prefix>§7The server closes in §c<server-close> §7minutes!"
+    kickInSeconds: "<prefix><colorcode><name> §7will be kicked in <colorcode><kick-delay> §7second(s)!"
+    quitTooOften: "<prefix>§c<name> §7has left the server too often and thus lost their session."
+    quitRemainingTime: "<prefix>§c<name> §7has left the server early!"
+    noKickPlayerNearby: "<prefix>§cA player is less than §4<config-Other-noKickDistance> §cblocks away from you! §7Move away from this player to get kicked!"
+    delay: "<prefix><colorcode><name> §7has been kicked!"
   kick:
     death: "§cYou died!"
     noSessionLeft: "§cYou have no more sessions left!\n§7Wait until tomorrow to play again!"
@@ -32,11 +43,27 @@ player:
     kickMessageMassRec: "§cThe mass recording is finished, \n§7everybody got kicked!"
     notStarted: "§cThe server has not been opened yet! \n§7Please be patient a little longer!"
     serverFull: "§cThe server is full!\n§7Talk to the owner if this is a mistake!"
+    notRegisteredDiscord: |-
+      §7Your account is not verified!
+      §7Please use §c/verify <discord-code> §7to verify your Discord account!
+      Link: §c<discord>
+    noDiscordUser: "§7Your account is not on the discord server!\n§7Join the discord and try again!"
+  death:
+    teamLifeLost:
+      player: "<prefix><colorcode><name> §7was killed by <colorcode><killer-name>§7! They now have <colorcode><team-lives> §7life/lives left! Reason: §c<death-reason>"
+      other: "<prefix><colorcode><name> §7died! They now have <colorcode><team-lives> §7life/lives left! Reason: §c<death-reason>"
+    eliminated:
+      other: "<prefix><colorcode><name> §7died. Reason: §c<death-reason>"
+      player: "<prefix><colorcode><name> §7was killed by <colorcode><killer-name>§7!"
+    respawnProtectionOver: "<prefix>§c<name> is now vulnerable again!"
+    respawnProtection: "<prefix>§c<name> has lost a life and is invulnerable for <config-Death-respawnProtection> seconds!"
+    killLifeAdd: "<prefix>§7Your team got an additional team life!"
+    killTimeAdd: "<prefix>You've recieved <colorcode><time-additional> §7seconds of additional time!"
   moveProtection: "<prefix>You cannot move until your <colorcode>protection§7 has expired!"
   spectator:
-    height: "§cYou can not fly any lower!"
+    height: "<prefix>§cYou can not fly any lower!"
   crafting:
-    disallowed: "§cYou are not allowed to craft, use or brew this item!"
+    disallowed: "<prefix>§cYou are not allowed to craft, use or brew this item!"
   scoreboard:
     title:
       - "<projectname>"
@@ -95,6 +122,10 @@ player:
         - "<colorcode><hour>§7:<colorcode><minute>§7:<colorcode><second>"
         - " "
         - "§7------------------------"
+    format: "<displayname> §c<kills>"
+  nametag:
+    prefix: "<if_ne:<team>:-:<colorcode><team>:> §7"
+    suffix: "§c <kills>"
 chat:
   default: "<displayname> §8» §f<message>"
   team: "§7[<team>§7] <name> §8» §f<message>"

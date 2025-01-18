@@ -29,7 +29,6 @@ import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.game.LobbyItem;
@@ -370,21 +369,9 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	private String getTablistName() {
 		if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean()) {
-			String listname = "";
-			if (this.getTeam() != null) {
-				if (this.getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM.getValue(null, this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITH_TEAM_RANK.getValue(null, this);
-				}
-			} else {
-				if (this.getRank() == null) {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM.getValue(null, this);
-				} else {
-					listname = ConfigMessages.TABLIST_PLAYER_WITHOUT_TEAM_RANK.getValue(null, this);
-				}
-			}
+			String listname = Messages.PLAYER_TABLIST_FORMAT.value(this);
 
+			// max 16 characters on 1.7.10
 			if (ServerVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) && listname.length() > 16)
 				listname = listname.substring(0, 16);
 
@@ -401,22 +388,14 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
     }
 
 	private String getNametagPrefix() {
-		String prefix = "";
-		if (this.team != null)
-			prefix = ConfigMessages.NAMETAG_PREFIX_TEAM.getValue(null, this);
-		if (this.team == null || prefix.length() > 16)
-			prefix = ConfigMessages.NAMETAG_PREFIX_NO_TEAM.getValue(null, this);
+		String prefix = Messages.PLAYER_NAMETAG_PREFIX.value(this);
 		if (prefix.length() > 16)
 			prefix = prefix.substring(0, 16);
 		return prefix;
 	}
 
 	private String getNametagSuffix() {
-		String suffix = "";
-		if (this.team != null)
-			suffix = ConfigMessages.NAMETAG_SUFFIX_TEAM.getValue(null, this);
-		if (this.team == null || suffix.length() > 16)
-			suffix = ConfigMessages.NAMETAG_SUFFIX_NO_TEAM.getValue(null, this);
+		String suffix = Messages.PLAYER_NAMETAG_SUFFIX.value(this);
 		if (suffix.length() > 16)
 			suffix = suffix.substring(0, 16);
 		return suffix;

@@ -57,10 +57,10 @@ public class PlayerLoginListener implements Listener {
 				if (reg == null) {
 					reg = new BotRegister(event.getPlayer().getUniqueId().toString(), true);
 					reg.setPlayerName(event.getPlayer().getName());
-					event.disallow(Result.KICK_OTHER, reg.getKickMessage(vp));
+					event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(vp, Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 					return;
 				} else if (!reg.isActive() && !reg.isBypass()) {
-					event.disallow(Result.KICK_OTHER, reg.getKickMessage(vp));
+					event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(vp, Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 					return;
 				}
 			}
@@ -72,11 +72,11 @@ public class PlayerLoginListener implements Listener {
 					UserSnowflake userSnowflake = User.fromId(reg.getUserId());
 					if (userSnowflake == null || guild == null || !guild.isMember(userSnowflake)) {
 						if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
-							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
+							event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DISCORD_NO_USER.value(vp));
 							vp.setPlayer(null);
 							return;
-						} else
-							reg.delete();
+						}
+                        reg.delete();
 					}
 				} catch (Exception e2) {
 					System.err.println("[Varo] Es wurde keine Server ID angegeben oder die ID des Spielers ist falsch!");

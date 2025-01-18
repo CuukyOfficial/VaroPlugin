@@ -4,14 +4,15 @@ import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.PlayerHit;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.BukkitEvent;
 import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.player.stats.Stats;
+import io.github.almightysatan.slams.Placeholder;
 
 public class KillEvent extends BukkitEvent {
 
@@ -34,7 +35,7 @@ public class KillEvent extends BukkitEvent {
 
 			if (add > 0 && player.getTeam().getLifes() + add <= max) {
 				player.getTeam().setLifes(player.getTeam().getLifes() + add);
-				player.sendMessage(ConfigMessages.DEATH_KILL_LIFE_ADD);
+				Messages.PLAYER_DEATH_KILL_LIFE_ADD.send(player);
 			}
 		}
 		
@@ -49,7 +50,7 @@ public class KillEvent extends BukkitEvent {
 
 			if (timeAdded > 0) {
 				stats.setCountdown(timeAdded + stats.getCountdown());
-				player.sendMessage(Main.getPrefix() + ConfigMessages.DEATH_KILL_TIME_ADD.getValue(player).replace("%timeAdded%", String.valueOf(timeAdded)));
+				Messages.PLAYER_DEATH_KILL_TIME_ADD.send(player, Placeholder.constant("time-additional", String.valueOf(timeAdded)));
 			}
 		}
 

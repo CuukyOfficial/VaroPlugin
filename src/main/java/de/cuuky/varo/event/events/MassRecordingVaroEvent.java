@@ -11,7 +11,6 @@ import com.cryptomorin.xseries.XMaterial;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
@@ -97,7 +96,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
                             vp.getStats().setCountdown(1);
                         } else {
                             vp.setMassRecordingKick(true);
-                            Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST, vp);
+                            Messages.PLAYER_DISCONNECT_KICK.broadcast(vp);
                             vp.onEvent(BukkitEventType.KICKED);
                             Messages.PLAYER_KICK_MASS_REC_SESSION_OVER.kick(vp);
                         }

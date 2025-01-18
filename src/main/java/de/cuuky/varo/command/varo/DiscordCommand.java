@@ -60,7 +60,7 @@ public class DiscordCommand extends VaroCommand {
 			if (args.length == 1) {
 				if (!reg.isActive()) {
 				    Messages.COMMANDS_VARO_DISCORD_STATUS_INACTIVE.send(sender);
-					sender.sendMessage(reg.getKickMessage(vp));
+					sender.sendMessage(Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 				} else {
 				    Messages.COMMANDS_VARO_DISCORD_STATUS_ACTIVE.send(sender);
 					Messages.COMMANDS_VARO_DISCORD_VERIFY_ACCOUNT.send(sender, Placeholder.constant("target", reg.getMember().getNickname()));
@@ -141,7 +141,7 @@ public class DiscordCommand extends VaroCommand {
 
 			Player target = Bukkit.getPlayerExact(reg.getPlayerName());
 			if (target != null)
-				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(reg.getKickMessage(VaroPlayer.getPlayer(target)));
+				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 		} else if (args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				Messages.COMMANDS_VARO_DISCORD_VERIFY_DISABLED.send(sender);

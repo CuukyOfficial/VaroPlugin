@@ -103,6 +103,17 @@ public final class Messages {
     public static final VaroMessage PLAYER_JOIN_MASS_RECORDING = message("player.join.massrecording");
     public static final VaroMessage PLAYER_JOIN_REMAINING_TIME = message("player.join.remainingTime");
     
+    public static final VaroMessage PLAYER_DISCONNECT_BROADCAST = message("player.disconnect.broadcast");
+    public static final VaroMessage PLAYER_DISCONNECT_SESSION_END = message("player.disconnect.eliminated");
+    public static final VaroMessage PLAYER_DISCONNECT_SPECTATOR = message("player.disconnect.spectator");
+    public static final VaroMessage PLAYER_DISCONNECT_TOO_OFTEN = message("player.disconnect.quitTooOften");
+    public static final VaroMessage PLAYER_DISCONNECT_WITH_REMAINING_TIME = message("player.disconnect.quitRemainingTime");
+    public static final VaroMessage PLAYER_DISCONNECT_KICK = message("player.disconnect.kick");
+    public static final VaroMessage PLAYER_DISCONNECT_KICK_DELAY_OVER = message("player.disconnect.delay");
+    public static final VaroMessage PLAYER_DISCONNECT_KICK_IN_SECONDS = message("player.disconnect.kickInSeconds");
+    public static final VaroMessage PLAYER_DISCONNECT_KICK_PLAYER_NEARBY = message("player.disconnect.noKickPlayerNearby");
+    public static final VaroMessage PLAYER_DISCONNECT_KICK_SERVER_CLOSE_SOON = message("player.disconnect.serverCloseSoon");
+    
     public static final VaroMessage PLAYER_KICK_DEATH = message("player.kick.death");
     public static final VaroMessage PLAYER_KICK_KILL = message("player.kick.kill");
     public static final VaroMessage PLAYER_KICK_NOT_USER_OF_PROJECT = message("player.kick.notUserOfProject");
@@ -117,7 +128,18 @@ public final class Messages {
     public static final VaroMessage PLAYER_KICK_MASS_REC_SESSION_OVER = message("player.kick.kickMessageMassRec");
     public static final VaroMessage PLAYER_KICK_TOO_MANY_STRIKES = message("player.kick.tooManyStrikes");
     public static final VaroMessage PLAYER_KICK_COMMAND = message("player.kick.command");
+    public static final VaroMessage PLAYER_KICK_DISCORD_NOT_REGISTERED = message("player.kick.notRegisteredDiscord");
+    public static final VaroMessage PLAYER_KICK_DISCORD_NO_USER = message("player.kick.noDiscordUser");
 
+    public static final VaroMessage PLAYER_DEATH_ELIMINATED_OTHER = message("player.death.eliminated.other");
+    public static final VaroMessage PLAYER_DEATH_ELIMINATED_PLAYER = message("player.death.eliminated.player");
+    public static final VaroMessage PLAYER_DEATH_LIFE_OTHER = message("player.death.teamLifeLost.other");
+    public static final VaroMessage PLAYER_DEATH_LIFE_PLAYER = message("player.death.teamLifeLost.player");
+    public static final VaroMessage PLAYER_DEATH_RESPAWN_PROTECTION = message("player.death.respawnProtection");
+    public static final VaroMessage PLAYER_DEATH_RESPAWN_PROTECTION_OVER = message("player.death.respawnProtectionOver");
+    public static final VaroMessage PLAYER_DEATH_KILL_LIFE_ADD = message("player.death.killLifeAdd");
+    public static final VaroMessage PLAYER_DEATH_KILL_TIME_ADD = message("player.death.killTimeAdd");
+    
     public static final VaroMessage PLAYER_MOVE_PROTECTION = message("player.moveProtection");
     public static final VaroMessage PLAYER_SPECTATOR_HEIGHT = message("player.spectator.height");
     public static final VaroMessage PLAYER_CRAFTING_DISALLOWED = message("player.crafting.disallowed");
@@ -127,6 +149,10 @@ public final class Messages {
     public static final VaroMessageArray PLAYER_ACTIONBAR = array("player.actionbar");
     public static final VaroMessageArray2d PLAYER_TABLIST_HEADER = array2d("player.tablist.header");
     public static final VaroMessageArray2d PLAYER_TABLIST_FOOTER = array2d("player.tablist.footer");
+    public static final VaroMessage PLAYER_TABLIST_FORMAT = message("player.tablist.footer");
+    
+    public static final VaroMessage PLAYER_NAMETAG_PREFIX = message("player.nametag.prefix");
+    public static final VaroMessage PLAYER_NAMETAG_SUFFIX = message("player.nametag.suffix");
 
     public static final VaroMessage CHAT_DEFAULT = message("chat.default");
     public static final VaroMessage CHAT_TEAM = message("chat.team");

@@ -13,15 +13,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
+import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
+import io.github.almightysatan.slams.Placeholder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
+// TODO Rework this shit
 public class BotRegister {
 
 	/*
@@ -74,10 +75,6 @@ public class BotRegister {
 
 	public int getCode() {
 		return this.code;
-	}
-
-	public String getKickMessage(VaroPlayer vp) {
-		return ConfigMessages.BOTS_DISCORD_NOT_REGISTERED_DISCORD.getValue(vp, vp).replace("%code%", String.valueOf(getCode()));
 	}
 
 	public Member getMember() {
@@ -175,7 +172,7 @@ public class BotRegister {
 
 					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 					if (player != null && !reg.isActive())
-						kickPlayerLater(player, reg.getKickMessage(VaroPlayer.getPlayer(player)));
+						kickPlayerLater(player, Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -204,7 +201,7 @@ public class BotRegister {
 
 				Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 				if (player != null && !reg.isActive())
-					kickPlayerLater(player, reg.getKickMessage(VaroPlayer.getPlayer(player)));
+					kickPlayerLater(player, Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 			}
 		}
 	}

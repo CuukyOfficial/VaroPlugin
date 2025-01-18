@@ -10,12 +10,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.event.VaroEvent;
 import de.cuuky.varo.event.VaroEventType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.player.stats.stat.PlayerState;
+import io.github.almightysatan.slams.Placeholder;
 
 public class VaroMainHeartbeatThread extends BukkitRunnable {
 
@@ -43,7 +43,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 				if (secondsToClose % 60 == 0) {
 					int minutesToClose = secondsToClose / 60;
 					if (minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
-						Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_SERVER_CLOSE_SOON).replace("%minutes%", String.valueOf(minutesToClose));
+					    Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(Placeholder.constant("server-close", String.valueOf(minutesToClose)));
 
 					if (!Main.getDataManager().getOutsideTimeChecker().canJoin()) {
 						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
@@ -70,19 +70,19 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 
 					if (countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
 						if (countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
-							Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_BROADCAST, vp);
+							Messages.PLAYER_DISCONNECT_KICK.broadcast(vp);
 							vp.onEvent(BukkitEventType.KICKED);
 							Messages.PLAYER_KICK_SESSION_OVER.kick(vp);
 							continue;
 						}
                         if (countdown == 1) {
                         	if (!vp.canBeKicked(noKickDistance)) {
-                        		vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY).replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt()));
+                        	    Messages.PLAYER_DISCONNECT_KICK_PLAYER_NEARBY.send(vp);
                         		countdown += 1;
                         	} else
-                        		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown));
+                        	    Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(vp, Placeholder.constant("kick-delay", String.valueOf(countdown)));
                         } else
-                        	Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown));
+                            Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(vp, Placeholder.constant("kick-delay", String.valueOf(countdown)));
 					}
 
 					vp.getStats().setCountdown(countdown);

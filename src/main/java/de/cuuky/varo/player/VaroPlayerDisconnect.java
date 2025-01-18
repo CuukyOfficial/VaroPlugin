@@ -12,7 +12,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.stats.stat.PlayerState;
 import de.cuuky.varo.player.stats.stat.Strike;
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
@@ -72,7 +71,7 @@ public class VaroPlayerDisconnect {
 			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
 
 		Messages.ALERT_DISCONNECT_TOO_OFTEN.alert(AlertType.DISCONNECT, vp);
-		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_TOO_OFTEN, vp);
+		Messages.PLAYER_DISCONNECT_TOO_OFTEN.broadcast(vp);
 		this.remove();
 		return true;
 	}
@@ -116,7 +115,7 @@ public class VaroPlayerDisconnect {
 
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_DISCONNECT_SESSION_END, vp).replace("%banTime%", String.valueOf(ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt()));
+				Messages.PLAYER_DISCONNECT_SESSION_END.broadcast(vp);
 			}
 		}.runTaskLater(Main.getInstance(), (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
 	}

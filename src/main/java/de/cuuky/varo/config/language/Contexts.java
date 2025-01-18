@@ -62,11 +62,11 @@ public interface Contexts {
         }
     }
 
-    class KillContext extends PlayerContext {
+    class KillContext extends DeathContext {
         private final VaroPlayer killer;
 
-        public KillContext(VaroPlayer player, VaroPlayer killer) {
-            super(player);
+        public KillContext(VaroPlayer player, VaroPlayer killer, String reason) {
+            super(player, reason);
             this.killer = killer;
         }
 

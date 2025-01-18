@@ -11,7 +11,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.combatlog.CombatlogCheck;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerDisconnect;
@@ -28,7 +27,7 @@ public class PlayerQuitListener implements Listener {
 
 		// IF THEY WERE A SPECTATOR
 		if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
-			Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_SPECTATOR, vplayer);
+			Messages.PLAYER_DISCONNECT_SPECTATOR.broadcast(vplayer);
 			vplayer.onEvent(BukkitEventType.QUIT);
 			return;
 		}
@@ -65,7 +64,7 @@ public class PlayerQuitListener implements Listener {
 				}
 
 				VaroPlayerDisconnect.disconnected(vplayer);
-				Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_WITH_REMAINING_TIME, vplayer);
+				Messages.PLAYER_DISCONNECT_WITH_REMAINING_TIME.broadcast(vplayer);
 				Messages.LOG_PLAYER_DC_TO_EARLY.log(LogType.JOIN_LEAVE, vplayer);
 				vplayer.onEvent(BukkitEventType.QUIT);
 				return;
@@ -73,7 +72,7 @@ public class PlayerQuitListener implements Listener {
 		}
 
 		vplayer.onEvent(BukkitEventType.QUIT);
-		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_MESSAGE, vplayer);
+		Messages.PLAYER_DISCONNECT_BROADCAST.broadcast(vplayer);
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
