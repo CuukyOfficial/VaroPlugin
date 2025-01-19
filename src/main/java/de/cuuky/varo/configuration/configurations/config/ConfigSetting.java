@@ -99,7 +99,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	// DEATH
 	DEATH_SOUND_ENABLED(ConfigSettingSection.DEATH, "deathSound.enabled", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
-	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", XSound.ENTITY_WITHER_AMBIENT.get(), "Sound der abgespielt werden soll", true),
+	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", XSound.ENTITY_WITHER_AMBIENT.name(), "Sound der abgespielt werden soll", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 
