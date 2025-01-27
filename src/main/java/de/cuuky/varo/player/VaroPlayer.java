@@ -7,7 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -112,6 +114,7 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 	private ChatMessage lastMessage;
+	private ArmorStand armorStandNametag;
 
 	public VaroPlayer() {
 		varoplayer.add(this);
@@ -357,6 +360,15 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 						for (VaroTeam team : VaroTeam.getOnlineTeams())
 							team.getNameTagGroup().update(this.player, team == this.team && !potion, name, prefix, suffix);
 				}
+				if (ConfigSetting.NAMETAGS_USE_ARMOR_STANDS.getValueAsBoolean()) {
+					if (this.armorStandNametag == null) {
+						this.createArmorStandNametag();
+					} else {
+						this.updateArmorStandNametag();
+					}
+				} else {
+					this.removeArmorStandNametag();
+				}
 			}
 		}
 	}
@@ -413,6 +425,36 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		if (suffix.length() > 16)
 			suffix = suffix.substring(0, 16);
 		return suffix;
+	}
+
+	private void createArmorStandNametag() {
+		Location location = this.player.getLocation().clone().add(0, 2.5, 0);
+		this.armorStandNametag = this.player.getWorld().spawn(location, ArmorStand.class);
+		this.armorStandNametag.setVisible(false);
+		this.armorStandNametag.setCustomNameVisible(true);
+		this.updateArmorStandNametag();
+	}
+
+	private void updateArmorStandNametag() {
+		this.armorStandNametag.setCustomName(this.getNametagPrefix() + this.player.getName() + this.getNametagSuffix());
+	}
+
+	private void removeArmorStandNametag() {
+		if (this.armorStandNametag != null) {
+			this.armorStandNametag.remove();
+			this.armorStandNametag = null;
+		}
+	}
+
+	public void updateArmorStandNametagPos(Location to) {
+		Entity armorStand = this.armorStandNametag;
+		if (armorStand != null && armorStand instanceof ArmorStand) {
+			Location armorStandLocation = armorStand.getLocation();
+			armorStandLocation.setX(to.getX());
+			armorStandLocation.setY(to.getY() + 2); // Adjust the Y offset as needed
+			armorStandLocation.setZ(to.getZ());
+			armorStand.teleport(armorStandLocation);
+		}
 	}
 
 	public void saveTeleport(Location location) {

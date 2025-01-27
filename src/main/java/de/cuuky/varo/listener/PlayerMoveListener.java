@@ -2,6 +2,8 @@ package de.cuuky.varo.listener;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,6 +51,11 @@ public class PlayerMoveListener implements Listener {
 				vp.sendMessage(ConfigMessages.JOIN_NO_MOVE_IN_PROTECTION);
 				return;
 			}
+		}
+
+		// Move the armor stand nametag with the player
+		if (ConfigSetting.NAMETAGS_USE_ARMOR_STANDS.getValueAsBoolean()) {
+			vp.updateArmorStandNametagPos(to);
 		}
 	}
 }

@@ -100,7 +100,7 @@ public enum ConfigSetting implements SectionEntry {
 	// DEATH
 	DEATH_SOUND_ENABLED(ConfigSettingSection.DEATH, "deathSound.enabled", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
 	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", XSound.ENTITY_WITHER_AMBIENT.get(), "Sound der abgespielt werden soll", true),
-	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
+	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen."),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 
 	// DISCONNECT
@@ -122,6 +122,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_EVENT_WIN(ConfigSettingSection.DISCORD, "eventChannel.win", -1L, "ID's des Channels, wo die Winnachricht gepostet wird.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_YOUTUBE(ConfigSettingSection.DISCORD, "eventChannel.youtube", -1L, "ID's des Channels, wo die YT-Videos gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_CHANNELID(ConfigSettingSection.DISCORD, "eventChannelID", -1L, "Gib hier die ChannelID des Channels an,\nin welchen der Bot Events posten soll.\nRechtsklick auf den Channel -> 'Copy ChannelID'\nWenn Option nicht vorhanden, schalte\n'developer options' in den Einstellungen von Discord ein."),
+
 	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127, UeberallGebannt", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 
@@ -179,6 +180,7 @@ public enum ConfigSetting implements SectionEntry {
 	NAMETAGS_VISIBLE_DEFAULT(ConfigSettingSection.MAIN, "nametags.visible.default", true, "Ob NameTags sichtbar sein sollen"),
 	NAMETAGS_VISIBLE_TEAM(ConfigSettingSection.MAIN, "nametags.visible.team", true, "Ob NameTags für das eigene Team sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
 	NAMETAGS_VISIBLE_SPECTATOR(ConfigSettingSection.MAIN, "nametags.visible.spectator", true, "Ob NameTags für Spectator sichtbar sein sollen\nwenn nametags.visible.default deaktiviert ist"),
+	NAMETAGS_USE_ARMOR_STANDS(ConfigSettingSection.MAIN, "nametags.useArmorStands", false, "Ob unsichtbare Rüstungsständer für Nametags verwendet werden sollen"),
 
 	NO_ACTIVITY_DAYS(ConfigSettingSection.ACTIVITY, "noActivityDays", -1, "Nach wie vielen Tagen ohne Aktiviaet auf dem\nServer der Spieler gemeldet werden soll.\nOff = -1"),
 
@@ -305,7 +307,7 @@ public enum ConfigSetting implements SectionEntry {
 	TABLIST_USE_HEADER(ConfigSettingSection.TABLIST, "useHeader", true, "Ob die Tablist einen Header haben soll.\nErfordert config reload und ggf. rejoin."),
 	TABLIST_USE_FOOTER(ConfigSettingSection.TABLIST, "useFooter", true, "Ob die Tablist einen Footer haben soll.\nErfordert config reload und ggf. rejoin."), // enable: config reload
 	TABLIST_CHANGE_NAMES(ConfigSettingSection.TABLIST, "changeNames", true, "Ob die Namen in der Tablist modfiziert werden sollen."),
-	
+
 	// COMMANDS
 	COMMAND_ANTIXRAY_ENABLED(ConfigSettingSection.COMMANDS, "antixray.enabled", true, "Ob /antixray aktiviert sein soll"),
 	COMMAND_BORDER_ENABLED(ConfigSettingSection.COMMANDS, "border.enabled", true, "Ob /border aktiviert sein soll"),
