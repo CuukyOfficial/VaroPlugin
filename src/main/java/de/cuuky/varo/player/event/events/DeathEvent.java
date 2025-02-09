@@ -38,6 +38,8 @@ public class DeathEvent extends AbstractDeathEvent {
 			world.strikeLightningEffect(location);
 
 		Optional<XSound> sound = XSound.of(ConfigSetting.DEATH_SOUND.getValueAsString());
+		if (!sound.isPresent()) // Reset sound if invalid (backwards compatibility)
+		    ConfigSetting.DEATH_SOUND.setValue(XSound.ENTITY_WITHER_AMBIENT.name());
 		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean() && sound.isPresent())
 			VersionUtils.getVersionAdapter().getOnlinePlayers().forEach(pl -> pl.playSound(pl.getLocation(),
                 sound.get().get(), 1, 1));
