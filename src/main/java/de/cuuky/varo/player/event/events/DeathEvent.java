@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
@@ -38,11 +39,15 @@ public class DeathEvent extends AbstractDeathEvent {
 			world.strikeLightningEffect(location);
 
 		Optional<XSound> sound = XSound.of(ConfigSetting.DEATH_SOUND.getValueAsString());
-		if (!sound.isPresent()) // Reset sound if invalid (backwards compatibility)
+		if (!sound.isPresent()) { // Reset sound if invalid (backwards compatibility)
 		    ConfigSetting.DEATH_SOUND.setValue(XSound.ENTITY_WITHER_AMBIENT.name());
-		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean() && sound.isPresent())
+		    sound = XSound.of(ConfigSetting.DEATH_SOUND.getValueAsString());
+		}
+		if (ConfigSetting.DEATH_SOUND_ENABLED.getValueAsBoolean() && sound.isPresent()) {
+		    Sound bukkitSound = sound.get().get();
 			VersionUtils.getVersionAdapter().getOnlinePlayers().forEach(pl -> pl.playSound(pl.getLocation(),
-                sound.get().get(), 1, 1));
+			        bukkitSound, 1, 1));
+		}
 
         this.dropInventory(Main.getDataManager().getListManager().getDeathItems().getItems().toArray(new ItemStack[0]), location);
 	}
