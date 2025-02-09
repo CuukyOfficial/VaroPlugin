@@ -225,6 +225,7 @@ public class VaroGame implements VaroSerializeable {
             p.getWorld().spawnEntity(p.getLocation().clone().add(0, 0, -1), EntityType.FIREWORK);
         }
 
+        // This shit needs to be rewritten in v4-next
         String first = "";
         String second = "";
         String third = "";
@@ -237,7 +238,7 @@ public class VaroGame implements VaroSerializeable {
 
             StringBuilder names = new StringBuilder();
             for (VaroPlayer vp : won)
-                names.append(!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : " & ") + vp.getName()));
+                names.append(!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : ", ") + vp.getName()));
             names.append(won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
             switch (i) {
@@ -253,7 +254,7 @@ public class VaroGame implements VaroSerializeable {
             }
         }
 
-        if (first.contains("&")) {
+        if (first.contains(",")) {
             Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.WIN, ConfigMessages.ALERT_WINNER_TEAM.getValue().replace("%winnerPlayers%", first));
             Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN_TEAM).replace("%winnerPlayers%", first);
         } else {
