@@ -79,7 +79,8 @@ public class CustomCommand extends VaroCommand {
     public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             String message = String.format("%s%s", (ConfigSetting.CUSTOMCOMMAND_USEPREFIX.getValueAsBoolean()) ? Main.getPrefix() : "", this.output);
-            message = Main.getLanguageManager().replaceMessage(message, vp);
+            // TODO v5
+            // message = Main.getLanguageManager().replaceMessage(message, vp);
             vp.sendMessage(message);
         } else sender.sendMessage(Main.getConsolePrefix() + "Du musst ein Spieler sein!");
     }

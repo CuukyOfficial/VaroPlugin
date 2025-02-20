@@ -36,7 +36,6 @@ public abstract class VaroCommand {
 		new ItemCommand();
 		new LobbyCommand();
 		new MenuCommand();
-		new PlaceholderCommand();
 		new PlayerCommand();
 		new PlaytimeCommand();
 		new PresetCommand();

@@ -20,7 +20,6 @@ import de.cuuky.varo.command.custom.CustomCommandManager;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.ConfigHandler;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.placeholder.MessagePlaceholderLoader;
 import de.cuuky.varo.game.LobbyItem;
 import de.cuuky.varo.game.VaroGameHandler;
 import de.cuuky.varo.list.VaroList;
@@ -85,7 +84,6 @@ public class DataManager {
 	}
 
 	public void load() {
-		new MessagePlaceholderLoader();
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
@@ -144,9 +142,7 @@ public class DataManager {
 	public void reloadConfig() {
 		VaroList.loadLists();
 		this.customCommandManager.reload();
-		Main.getCuukyFrameWork().getPlaceholderManager().clear();
 		this.configHandler.reload();
-		Main.getLanguageManager().loadLanguages();
 	}
 
 	public synchronized void saveSync() {

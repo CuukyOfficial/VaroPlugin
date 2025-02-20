@@ -50,7 +50,6 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 }
 
 dependencies {
-    modularInternal("de.varoplugin:CFW:0.6.19", "CFW-legacy")
     modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-18", "CFW")
 
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")

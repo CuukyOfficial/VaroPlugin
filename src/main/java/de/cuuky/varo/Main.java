@@ -12,12 +12,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.BaseEncoding;
 
-import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.varo.bot.BotLauncher;
 import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
 import de.cuuky.varo.data.BugReport;
 import de.cuuky.varo.data.BukkitRegisterer;
 import de.cuuky.varo.data.DataManager;
@@ -45,11 +43,9 @@ public class Main extends JavaPlugin {
 	private static Main instance;
 
 	private static BotLauncher botLauncher;
-	private static CuukyFrameWork cuukyFrameWork;
 	private static VaroInventoryManager inventoryManager;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
-	private static VaroLanguageManager languageManager;
 	private static VaroGame varoGame;
 	private static boolean enabled;
 
@@ -121,8 +117,6 @@ public class Main extends JavaPlugin {
 			}
 
 			long dataStamp = System.currentTimeMillis();
-			cuukyFrameWork = new CuukyFrameWork(instance,
-					languageManager = new VaroLanguageManager(Main.this));
 			inventoryManager = new VaroInventoryManager(this);
 			dataManager.load();
 			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
@@ -173,7 +167,6 @@ public class Main extends JavaPlugin {
 		}
 
 		if (!this.failed) {
-            cuukyFrameWork.disable();
             VersionUtils.getVersionAdapter().getOnlinePlayers()
                 .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
         } else {
@@ -238,10 +231,6 @@ public class Main extends JavaPlugin {
 	public static VaroGame getVaroGame() {
 		return varoGame;
 	}
-
-	public static CuukyFrameWork getCuukyFrameWork() {
-		return cuukyFrameWork;
-	}
 	
 	public static VaroInventoryManager getInventoryManager() {
         return inventoryManager;
@@ -257,14 +246,6 @@ public class Main extends JavaPlugin {
 
 	public static DataManager getDataManager() {
 		return dataManager;
-	}
-
-	public static void setLanguageManager(VaroLanguageManager languageManager) {
-		Main.languageManager = languageManager;
-	}
-
-	public static VaroLanguageManager getLanguageManager() {
-		return languageManager;
 	}
 
 	public static BotLauncher getBotLauncher() {

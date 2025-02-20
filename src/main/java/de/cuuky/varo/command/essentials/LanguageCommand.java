@@ -5,7 +5,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.cuuky.cfw.configuration.language.Language;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.player.VaroPlayer;
 
@@ -13,7 +12,8 @@ public class LanguageCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!(sender instanceof Player)) {
+		// TODO v5
+	    /*if (!(sender instanceof Player)) {
 			sender.sendMessage(Main.getPrefix() + "Not for console!");
 			return false;
 		}
@@ -38,7 +38,7 @@ public class LanguageCommand implements CommandExecutor {
 		}
 
 		VaroPlayer.getPlayer((Player) sender).setLocale(args[0]);
-		sender.sendMessage(Main.getPrefix() + "Language successfully changed to " + args[0] + "!");
+		sender.sendMessage(Main.getPrefix() + "Language successfully changed to " + args[0] + "!");*/
 		return false;
 	}
 }

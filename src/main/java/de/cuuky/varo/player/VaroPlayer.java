@@ -15,13 +15,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.cryptomorin.xseries.XSound;
 
-import de.cuuky.cfw.configuration.language.LanguageManager;
-import de.cuuky.cfw.configuration.language.broadcast.MessageHolder;
-import de.cuuky.cfw.configuration.language.languages.LoadableMessage;
-import de.cuuky.cfw.configuration.placeholder.MessagePlaceholderManager;
-import de.cuuky.cfw.player.CustomLanguagePlayer;
-import de.cuuky.cfw.player.CustomPlayer;
-import de.cuuky.cfw.player.clientadapter.BoardUpdateHandler;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
@@ -62,7 +55,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.UserSnowflake;
 
-public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, VaroSerializeable {
+public class VaroPlayer implements VaroSerializeable {
 
 	private static ArrayList<VaroPlayer> varoplayer;
 
@@ -270,18 +263,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		varoplayer.add(this);
 	}
 
-	@Deprecated
-	public String getPrefix() {
-		String pr = "";
-		if (team != null)
-			pr = team.getDisplay() + " ";
-
-		if (rank != null)
-			pr = rank.getDisplay() + (pr.isEmpty() ? " " : " §8| ") + pr;
-
-		return pr;
-	}
-
 	public void setSpectacting() {
 		new BukkitRunnable() {
 			@Override
@@ -437,12 +418,10 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		return versionAdapter;
 	}
 
-	@Override
 	public String getUUID() {
 		return this.uuid;
 	}
 
-	@Override
 	public String getLocale() {
 		return this.locale == null && this.versionAdapter != null ? this.versionAdapter.getLocale() : this.locale;
 	}
@@ -455,7 +434,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 	    return null; // TODO
 	}
 
-	@Override
 	public Player getPlayer() {
 		return player;
 	}
@@ -516,33 +494,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 
 	public void sendMessage(String message) {
 		this.player.sendMessage(message);
-	}
-
-	// Copied from legacy CFW
-	@Override
-	public MessageHolder sendTranslatedMessage(LoadableMessage message, CustomPlayer replace, MessagePlaceholderManager placeholder, LanguageManager languageManager) {
-        MessageHolder holder = new MessageHolder(placeholder);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (getPlayer() == null)
-                    return;
-
-                String playerMessage = holder.getReplaced(languageManager.getMessage(message.getPath(), getLocale()), (replace != null ? replace : VaroPlayer.this));
-                if (!playerMessage.isEmpty())
-                    getPlayer().sendMessage(playerMessage);
-            }
-        }.runTaskLater(placeholder.getOwnerInstance(), 1L);
-
-        return holder;
-    }
-	
-	public MessageHolder sendMessage(LoadableMessage message) {
-		return sendTranslatedMessage(message, null, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
-	}
-
-	public MessageHolder sendMessage(LoadableMessage message, CustomPlayer replacement) {
-		return sendTranslatedMessage(message, replacement, Main.getCuukyFrameWork().getPlaceholderManager(), Main.getCuukyFrameWork().getLanguageManager());
 	}
 
 	public void setAdminIgnore(boolean adminIgnore) {
@@ -792,11 +743,6 @@ public class VaroPlayer extends CustomLanguagePlayer implements CustomPlayer, Va
 		// Main#getVaroGame may not be initialized yet
 		if (Main.getVaroGame() != null)
 			Main.getVaroGame().getTopScores().update();
-	}
-
-	@Override
-	public BoardUpdateHandler<VaroPlayer> getUpdateHandler() {
-		throw new UnsupportedOperationException();
 	}
 
 	/**
