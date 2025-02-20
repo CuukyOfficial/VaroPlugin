@@ -1,10 +1,8 @@
 package de.cuuky.varo.combatlog;
 
-import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
-import de.cuuky.varo.player.VaroPlayer;
-import de.varoplugin.cfw.utils.EventUtils;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,9 +12,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
+import de.cuuky.varo.player.VaroPlayer;
+import de.varoplugin.cfw.utils.EventUtils;
 
 public class PlayerHit {
 
@@ -61,7 +61,7 @@ public class PlayerHit {
 
 	public PlayerHit(Player player, Player opponent) {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		if (!hasOld(player)) vp.sendMessage(ConfigMessages.COMBAT_IN_FIGHT);
+		if (!hasOld(player)) Messages.PLAYER_COMBAT_FIGHT.send(vp);
 
 		this.player = player;
 		this.opponent = opponent;
@@ -94,7 +94,7 @@ public class PlayerHit {
 
 	public void over() {
 		VaroPlayer vp = VaroPlayer.getPlayer(player);
-		vp.sendMessage(ConfigMessages.COMBAT_NOT_IN_FIGHT);
+		Messages.PLAYER_COMBAT_FIGHT_END.send(vp);
 		remove();
 	}
 

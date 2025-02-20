@@ -23,6 +23,7 @@ import java.util.function.Function;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Contexts.BorderDecreaseContext;
+import de.cuuky.varo.config.language.Contexts.ContainerContext;
 import de.cuuky.varo.config.language.Contexts.DeathContext;
 import de.cuuky.varo.config.language.Contexts.KillContext;
 import de.cuuky.varo.config.language.Contexts.OnlinePlayerContext;
@@ -30,7 +31,9 @@ import de.cuuky.varo.config.language.Contexts.PlayerContext;
 import de.cuuky.varo.config.language.Contexts.StrikeContext;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.player.VaroPlayerDisconnect;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
+import de.cuuky.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.PlaceholderResolver;
 
 public final class Placeholders {
@@ -55,10 +58,6 @@ public final class Placeholders {
                 .variable("project-minute", () -> String.format("%02d", (Main.getVaroGame().getProjectTime() / 60) % 60))
                 .variable("project-second", () -> String.format("%02d", Main.getVaroGame().getProjectTime() % 60))
                 .variable("border-size", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)))
-                .constant("protection-time", String.valueOf(ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt()))
-                .variable("spawn-x", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockX()))
-                .variable("spawn-y", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockY()))
-                .variable("spawn-z", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockZ()))
                 .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
 //                .withArgs("top-player", args -> {
 //                    if (args.size() != 2) return "INVALID_ARGS";
@@ -87,7 +86,8 @@ public final class Placeholders {
                 .variable("minute", () -> "TODO")
                 .variable("second", () -> "TODO")
                 .namespace(null, PlayerContext.class, Function.identity(), Placeholders::addPlayerPlaceholders)
-                .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getPlayer()), Placeholders::addPlayerPlaceholders)
+                .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getKiller()), Placeholders::addPlayerPlaceholders)
+                .namespace("owner-", ContainerContext.class, ctx -> new PlayerContext(ctx.getOwner()), Placeholders::addPlayerPlaceholders)
                 .contextual("death-reason", DeathContext.class, DeathContext::getReason)
                 .contextual("strike-reason", StrikeContext.class, StrikeContext::getReason)
                 .contextual("strike-operator", StrikeContext.class, StrikeContext::getOperator)
@@ -98,7 +98,7 @@ public final class Placeholders {
         
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
-                builder.variable("config-" + setting.getPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
+                builder.variable("config-" + setting.getFullPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
         return builder.build();
     }
 
@@ -109,23 +109,43 @@ public final class Placeholders {
         .contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()))
         .contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-")
         .contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-")
-        .contextual("team-lives", PlayerContext.class, ctx -> String.valueOf((ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getLifes() : "-")))
+        .contextual("team-lives", PlayerContext.class, ctx -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getLifes()) : "-")
+        .contextual("team-kills", PlayerContext.class, ctx -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getKills()) : "-")
         .contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-")
         .contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()))
         .contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()))
         .contextual("countdown-hour", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() / 3600))
         .contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", (ctx.getPlayer().getStats().getCountdown() / 60) % 60))
         .contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : String.format("%02d", ctx.getPlayer().getStats().getCountdown() % 60))
+        .contextual("session-hour", PlayerContext.class, (ctx) -> String.format("%02d", ctx.getPlayer().getStats().getSessionTime() / 3600))
+        .contextual("session-minute", PlayerContext.class, (ctx) -> String.format("%02d", (ctx.getPlayer().getStats().getSessionTime() / 60) % 60))
+        .contextual("session-second", PlayerContext.class, (ctx) -> String.format("%02d", ctx.getPlayer().getStats().getSessionTime() % 60))
+        .contextual("online-hour", PlayerContext.class, (ctx) -> String.format("%02d", ctx.getPlayer().getStats().getOnlineTime() / 3600))
+        .contextual("online-minute", PlayerContext.class, (ctx) -> String.format("%02d", (ctx.getPlayer().getStats().getOnlineTime() / 60) % 60))
+        .contextual("online-second", PlayerContext.class, (ctx) -> String.format("%02d", ctx.getPlayer().getStats().getOnlineTime() % 60))
+        .contextual("online-total-hour", PlayerContext.class, (ctx) -> String.format("%02d", ctx.getPlayer().getStats().getOnlineTimeTotal() / 3600))
+        .contextual("online-total-minute", PlayerContext.class, (ctx) -> String.format("%02d", (ctx.getPlayer().getStats().getOnlineTimeTotal() / 60) % 60))
+        .contextual("online-total-second", PlayerContext.class, (ctx) -> String.format("%02d", ctx.getPlayer().getStats().getOnlineTimeTotal() % 60))
         .contextual("episode", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessionsPlayed()))
         .contextual("episodes-remaining", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessions()))
+        .contextual("remaining-disconnects", PlayerContext.class, ctx -> String.valueOf(VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt()))
+        .contextual("luckperms-prefix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsPrefix(ctx.getPlayer()))
+        .contextual("luckperms-suffix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsSuffix(ctx.getPlayer()))
         
+        .conditional("online", PlayerContext.class, ctx -> ctx.getPlayer() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
         .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
             onlineBuilder.contextual("ping", OnlinePlayerContext.class, ctx -> String.valueOf(VaroPlayer.getPlayer(ctx.getPlayer()).getVersionAdapter().getPing()))
             .contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
             .contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()))
             .contextual("z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockZ()))
             .contextual("world", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getName())
-            .contextual("distance-to-border", OnlinePlayerContext.class, ctx -> String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(ctx.getPlayer().getWorld()).getVaroBorder().getDistance(ctx.getPlayer())));
+            .contextual("distance-to-border", OnlinePlayerContext.class, ctx -> String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(ctx.getPlayer().getWorld()).getVaroBorder().getDistance(ctx.getPlayer())))
+            .contextual("spawn-x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockX()), (ctx, args) -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockX()))
+            .contextual("spawn-y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockY()), (ctx, args) -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockY()))
+            .contextual("spawn-z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockZ()), (ctx, args) -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockZ()))
+            .contextual("spawn-distance", OnlinePlayerContext.class, ctx -> String.valueOf((int) ctx.getPlayer().getLocation().distance(ctx.getPlayer().getLocation().getWorld().getSpawnLocation())))
+            .contextual("health", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getHealth()))
+            .contextual("food", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getFoodLevel()));
         });
     }
 }

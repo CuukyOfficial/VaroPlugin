@@ -9,10 +9,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Contexts;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
-import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
 
 public class PlayerInteractListener implements Listener {
 
@@ -37,9 +37,9 @@ public class PlayerInteractListener implements Listener {
 			return;
 
 		if (!player.hasPermission("varo.ignoreSaveable")) {
-			player.sendMessage((saveable.getType() == SaveableType.CHEST ? ConfigMessages.CHEST_NOT_TEAM_CHEST.getValue(varoPlayer).replace("%player%", saveable.getPlayer().getName()) : ConfigMessages.CHEST_NOT_TEAM_FURNACE.getValue(varoPlayer).replace("%player%", saveable.getPlayer().getName())));
+		    Messages.PLAYER_CHEST_DISALLOWED.send(varoPlayer, new Contexts.ContainerContext(varoPlayer, saveable.getPlayer()));
 			e.setCancelled(true);
 		} else
-			player.sendMessage("§7Diese(r) " + saveable.getType().toString() + " gehoert " + Main.getColorCode() + saveable.getPlayer().getName() + "§7, doch durch deine Rechte konntest du sie trotzdem oeffnen!");
+		    Messages.PLAYER_CHEST_ADMIN.send(varoPlayer, new Contexts.ContainerContext(varoPlayer, saveable.getPlayer()));
 	}
 }

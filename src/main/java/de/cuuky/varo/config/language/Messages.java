@@ -64,7 +64,8 @@ public final class Messages {
     public static final VaroMessage LOG_DEATH_LIFE_OTHER = message("log.death.teamLifeLost.other");
     public static final VaroMessage LOG_DEATH_LIFE_PLAYER = message("log.death.teamLifeLost.player");
     public static final VaroMessage LOG_GAME_STARTED = message("log.gameStarted");
-    public static final VaroMessage LOG_JOIN_FINALE = message("log.finale");
+    public static final VaroMessage LOG_FINALE_JOIN = message("log.finaleJoin");
+    public static final VaroMessage LOG_FINALE_START = message("log.finaleStart");
     public static final VaroMessage LOG_KICKED_PLAYER = message("log.kickedPlayer");
     public static final VaroMessage LOG_SESSIONS_ENDED = message("log.sessionsEnded");
     public static final VaroMessage LOG_STRIKE_GENERAL = message("log.strike.general");
@@ -83,8 +84,8 @@ public final class Messages {
     public static final VaroMessage LOG_PLAYER_RECONNECT = message("log.playerReconnect");
     public static final VaroMessage LOG_SWITCHED_NAME = message("log.switchedName");
     public static final VaroMessage LOG_TELEPORTED_TO_MIDDLE = message("log.teleportedToMiddle");
-    public static final VaroMessage LOG_WINNER = message("log.win.player");
-    public static final VaroMessage LOG_WINNER_TEAM = message("log.win.team");
+    public static final VaroMessage LOG_WIN_PLAYER = message("log.win.player");
+    public static final VaroMessage LOG_WIN_TEAM = message("log.win.team");
 
     public static final VaroMessage BORDER_DECREASE_DEATH = message("border.decrease.death");
     public static final VaroMessage BORDER_DECREASE_DAYS = message("border.decrease.days");
@@ -118,6 +119,7 @@ public final class Messages {
     public static final VaroMessage PLAYER_KICK_KILL = message("player.kick.kill");
     public static final VaroMessage PLAYER_KICK_NOT_USER_OF_PROJECT = message("player.kick.notUserOfProject");
     public static final VaroMessage PLAYER_KICK_SERVER_FULL = message("player.kick.serverFull");
+    public static final VaroMessage PLAYER_KICK_SERVER_CLOSED = message("player.kick.serverClosed");
     public static final VaroMessage PLAYER_KICK_STRIKE_BAN = message("player.kick.strikeBan");
     public static final VaroMessage PLAYER_KICK_BANNED = message("player.kick.banned");
     public static final VaroMessage PLAYER_KICK_NO_PREPRODUCES_LEFT = message("player.kick.noPreproduceLeft");
@@ -143,13 +145,23 @@ public final class Messages {
     public static final VaroMessage PLAYER_MOVE_PROTECTION = message("player.moveProtection");
     public static final VaroMessage PLAYER_SPECTATOR_HEIGHT = message("player.spectator.height");
     public static final VaroMessage PLAYER_CRAFTING_DISALLOWED = message("player.crafting.disallowed");
+    
+    public static final VaroMessage PLAYER_COMBAT_FRIENDLY_FIRE = message("player.combat.friendlyfire");
+    public static final VaroMessage PLAYER_COMBAT_FIGHT = message("player.combat.fight");
+    public static final VaroMessage PLAYER_COMBAT_FIGHT_END = message("player.combat.fightEnd");
+    public static final VaroMessage PLAYER_COMBAT_LOGGED_OUT = message("player.combat.loggedOut");
+    
+    public static final VaroMessage PLAYER_CHEST_NEW = message("player.chests.new");
+    public static final VaroMessage PLAYER_CHEST_REMOVED = message("player.chests.removed");
+    public static final VaroMessage PLAYER_CHEST_DISALLOWED = message("player.chests.disallowed");
+    public static final VaroMessage PLAYER_CHEST_ADMIN = message("player.chests.admin");
 
     public static final VaroMessageArray PLAYER_SCOREBOARD_TITLE = array("player.scoreboard.title");
     public static final VaroMessageArray2d PLAYER_SCOREBOARD_CONTENT = array2d("player.scoreboard.content");
     public static final VaroMessageArray PLAYER_ACTIONBAR = array("player.actionbar");
     public static final VaroMessageArray2d PLAYER_TABLIST_HEADER = array2d("player.tablist.header");
     public static final VaroMessageArray2d PLAYER_TABLIST_FOOTER = array2d("player.tablist.footer");
-    public static final VaroMessage PLAYER_TABLIST_FORMAT = message("player.tablist.footer");
+    public static final VaroMessage PLAYER_TABLIST_FORMAT = message("player.tablist.format");
     
     public static final VaroMessage PLAYER_NAMETAG_PREFIX = message("player.nametag.prefix");
     public static final VaroMessage PLAYER_NAMETAG_SUFFIX = message("player.nametag.suffix");
@@ -159,11 +171,28 @@ public final class Messages {
     public static final VaroMessage CHAT_MUTED = message("chat.muted");
     public static final VaroMessage CHAT_SPECTATOR = message("chat.spectator");
     public static final VaroMessage CHAT_START = message("chat.start");
-
-    public static final VaroMessage FINALE_START_FREEZE = message("finale.start.freeze");
-    public static final VaroMessage FINALE_START_NOFREEZE = message("finale.start.noFreeze");
-
+    
+    public static final VaroMessage GAME_SORT_NUMBER = message("game.sort.number");
+    public static final VaroMessage GAME_SORT_PLAYER = message("game.sort.player");
+    public static final VaroMessage GAME_SORT_NO_SPAWN_FOUND = message("game.sort.noSpawnFound");
+    public static final VaroMessage GAME_SORT_NO_SPAWN_FOUND_TEAM = message("game.sort.noSpawnFoundTeam");
+    public static final VaroMessage GAME_SORT_SPECTATOR_TELEPORT = message("game.sort.spectator");
+    public static final VaroMessage GAME_START_VARO = message("game.start.varoStart");
+    public static final VaroMessage GAME_START_ABORT = message("game.start.abort");
+    public static final VaroMessage GAME_START_TITLE = message("game.start.startTitle");
+    public static final VaroMessage GAME_START_SUBTITLE = message("game.start.startSubtitle");
     public static final VaroMessage GAME_START_COUNTDOWN = message("game.start.countdown");
+    public static final VaroMessage GAME_WIN_PLAYER = message("game.win.player");
+    public static final VaroMessage GAME_WIN_TEAM = message("game.win.team");
+    public static final VaroMessage GAME_FINALE_COUNTDOWN = message("game.finale.countdown");
+    public static final VaroMessage GAME_FINALE_START = message("game.finale.start");
+    public static final VaroMessage GAME_FINALE_FREEZE = message("game.finale.freeze");
+    public static final VaroMessage GAME_FINALE_NOFREEZE = message("game.finale.noFreeze");
+    public static final VaroMessage GAME_LOBBY_MOVE = message("game.lobby.move");
+
+    public static final VaroMessage MOTD_OPEN = message("motd.open");
+    public static final VaroMessage MOTD_CLOSED = message("motd.closed");
+    public static final VaroMessage MOTD_CLOSED_HOURS = message("motd.closedHours");
 
     public static final VaroMessage CATEGORY_HEADER = message("category.header");
     public static final VaroMessage CATEGORY_FOOTER = message("category.footer");
@@ -299,6 +328,10 @@ public final class Messages {
     public static final VaroMessage COMMANDS_WEATHER_THUNDER = message("commands.weather.thunder");
 
     public static final VaroMessage COMMANDS_SETWORLDSPAWN = message("commands.setworldspawn.setworldspawn");
+    
+    public static final VaroMessage COMMANDS_SPAWN_OVERWORLD = message("commands.spawn.overworld");
+    public static final VaroMessage COMMANDS_SPAWN_NETHER = message("commands.spawn.nether");
+    public static final VaroMessage COMMANDS_SPAWN_END = message("commands.spawn.end");
 
     public static final VaroMessage COMMANDS_PING = message("commands.ping");
 
@@ -322,6 +355,20 @@ public final class Messages {
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_LEAVE_LORE = message("teamrequest.items.leave.lore");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_RENAME_NAME = message("teamrequest.items.rename.name");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_RENAME_LORE = message("teamrequest.items.rename.lore");
+    
+    public static final VaroMessage SPAWN_NUMBER = message("spawn.number");
+    public static final VaroMessage SPAWN_PLAYER = message("spawn.player");
+    
+    public static final VaroMessage PROTECTION_START = message("protection.start");
+    public static final VaroMessage PROTECTION_END = message("protection.end");
+    public static final VaroMessage PROTECTION_UPDATE = message("protection.update");
+    public static final VaroMessage PROTECTION_PROTECTED = message("protection.protected");
+    
+    public static final VaroMessage BLOCKLOGGER_FILTER_INVALID = message("blocklogger.filter.invalid");
+    public static final VaroMessage BLOCKLOGGER_FILTER_SET = message("blocklogger.filter.set");
+    public static final VaroMessage BLOCKLOGGER_FILTER_RESET = message("blocklogger.filter.reset");
+    public static final VaroMessage BLOCKLOGGER_FILTER_PLAYER = message("blocklogger.filter.player");
+    public static final VaroMessage BLOCKLOGGER_FILTER_MATERIAL = message("blocklogger.filter.material");
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
         SLAMS.load("en", JasklParser.createParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))));
@@ -442,6 +489,12 @@ public final class Messages {
             
             @Override
             public String value(PlaceholderResolver placeholders) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+            
+            @Override
+            public String value() {
                 // TODO Auto-generated method stub
                 return null;
             }
@@ -575,6 +628,7 @@ public final class Messages {
         String value(VaroPlayer subject, PlaceholderResolver placeholders);
         String value(VaroPlayer subject);
         String value(PlaceholderResolver placeholders);
+        String value();
     }
 
     public interface VaroMessageArray {

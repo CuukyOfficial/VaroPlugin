@@ -17,7 +17,6 @@ public class SetWorldspawnCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		if (!(sender instanceof Player)) {
 		    Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
-			System.out.println("Nicht fuer die Konsole");
 			return false;
 		}
 

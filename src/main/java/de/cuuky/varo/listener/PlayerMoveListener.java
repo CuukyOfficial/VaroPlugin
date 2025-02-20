@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.player.VaroPlayer;
@@ -38,7 +37,7 @@ public class PlayerMoveListener implements Listener {
 				return;
 
 			event.setTo(from);
-			vp.sendMessage(ConfigMessages.PROTECTION_NO_MOVE_START);
+			Messages.GAME_LOBBY_MOVE.send(vp);
 			return;
 		} else if (Main.getVaroGame().isRunning()) {
 			if (vp.getStats().isSpectator() || ConfigSetting.CANWALK_PROTECTIONTIME.getValueAsBoolean() || !ConfigSetting.JOIN_PROTECTIONTIME.isIntActivated() || vp.isAdminIgnore())

@@ -23,7 +23,6 @@ import de.cuuky.varo.api.game.VaroEndEvent;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.game.start.AutoStart;
 import de.cuuky.varo.game.start.ProtectionTime;
 import de.cuuky.varo.game.world.AutoSetup;
@@ -164,7 +163,7 @@ public class VaroGame implements VaroSerializeable {
             world.fillChests();
 
         if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
-            Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_START).replace("%seconds%", String.valueOf(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
+            Messages.PROTECTION_START.broadcast();
             Main.getVaroGame().setProtection(new ProtectionTime());
         }
 
@@ -194,7 +193,7 @@ public class VaroGame implements VaroSerializeable {
 
     public void abort() {
         startThread.cancel();
-        Bukkit.broadcastMessage("§7Der Start wurde §cabgebrochen§7!");
+        Messages.GAME_START_ABORT.broadcast();
 
         startThread = null;
     }
@@ -256,11 +255,11 @@ public class VaroGame implements VaroSerializeable {
         }
 
         if (first.contains("&")) {
-            Messages.LOG_WINNER_TEAM.log(LogType.WIN, Placeholder.constant("winner", first));
-            Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN_TEAM).replace("%winnerPlayers%", first);
+            Messages.LOG_WIN_TEAM.log(LogType.WIN, Placeholder.constant("winner", first));
+            Messages.GAME_WIN_TEAM.broadcast(Placeholder.constant("winner", first));
         } else {
-            Messages.LOG_WINNER.log(LogType.WIN, Placeholder.constant("winner", first));
-            Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_WIN).replace("%player%", first);
+            Messages.LOG_WIN_PLAYER.log(LogType.WIN, Placeholder.constant("winner", first));
+            Messages.GAME_WIN_PLAYER.broadcast(Placeholder.constant("winner", first));
         }
 
         long resultChannelId = ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong();
@@ -295,13 +294,10 @@ public class VaroGame implements VaroSerializeable {
 
         this.setGamestate(GameState.FINALE);
 
-        Bukkit.broadcastMessage(Main.getPrefix() + "§cDAS FINALE STARTET!");
-        if (ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() > 0) {
-            Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt " + ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() + " Sekunden Schutzzeit.");
+        Messages.LOG_FINALE_START.log(LogType.ALERT);
+        Messages.GAME_FINALE_START.broadcast();
+        if (ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() > 0)
             Main.getVaroGame().setProtection(new ProtectionTime(ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt()));
-        } else {
-            Bukkit.broadcastMessage(Main.getPrefix() + "§7Es gibt keine Schutzzeit");
-        }
 
         for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
             if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean())
@@ -320,9 +316,6 @@ public class VaroGame implements VaroSerializeable {
         }
 
         Main.getVaroGame().getVaroWorldHandler().setBorderSize(ConfigSetting.BORDER_SIZE_IN_FINALE.getValueAsInt(), 0, null);
-
-        int playerNumber = VaroPlayer.getOnlinePlayer().size();
-        Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, "DAS FINALE STARTET!\nEs nehmen " + playerNumber + "Spieler teil.");
     }
 
     public void startFinaleCountdown(int countdown) {
@@ -341,23 +334,20 @@ public class VaroGame implements VaroSerializeable {
 
             this.finaleJoin = true;
             this.finaleCountdown = countdown;
-            this.finaleStartScheduler = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (!VaroGame.this.isRunning() || VaroGame.this.isFinale() || VaroGame.this.finaleStartScheduler == null) {
-                        abortFinaleStart();
-                        return;
-                    }
-
-                    if (VaroGame.this.finaleCountdown != 0) {
-                        Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale startet in " + VaroGame.this.finaleCountdown + " Sekunden!");
-                    } else {
-                        VaroGame.this.startFinale();
-                        VaroGame.this.finaleStartScheduler.cancel();
-                    }
-                    VaroGame.this.finaleCountdown--;
+            this.finaleStartScheduler = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+                if (!this.isRunning() || this.isFinale() || this.finaleStartScheduler == null) {
+                    abortFinaleStart();
+                    return;
                 }
-            }.runTaskTimer(Main.getInstance(), 0L, 20L);
+
+                if (this.finaleCountdown != 0) {
+                    Messages.GAME_START_COUNTDOWN.broadcast(Placeholder.constant("finale-countdown", String.valueOf(this.finaleCountdown)));
+                } else {
+                    this.startFinale();
+                    this.finaleStartScheduler.cancel();
+                }
+                this.finaleCountdown--;
+            }, 0L, 20L);
         } else {
             this.startFinale();
         }

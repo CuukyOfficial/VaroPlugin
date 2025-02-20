@@ -7,7 +7,6 @@ import de.cuuky.varo.alert.Alert;
 import de.cuuky.varo.alert.AlertType;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.BukkitEventType;
@@ -56,7 +55,7 @@ public class CombatlogCheck {
         } else
             Messages.LOG_COMBAT_LOG.log(LogType.ALERT, vp);
 
-        Main.getLanguageManager().broadcastMessage(ConfigMessages.COMBAT_LOGGED_OUT, vp);
+        Messages.PLAYER_COMBAT_LOGGED_OUT.broadcast(this.vp);
     }
 
     public boolean isCombatLog() {

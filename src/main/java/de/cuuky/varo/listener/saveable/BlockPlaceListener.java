@@ -16,7 +16,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Contexts;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -56,7 +57,7 @@ public class BlockPlaceListener implements Listener {
 
 				if (saveable.canModify(player)) {
 					new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-					player.sendMessage(ConfigMessages.CHEST_SAVED_CHEST);
+					Messages.PLAYER_CHEST_NEW.send(player, new Contexts.ContainerContext(player, player));
 					p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
 					p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 					return;

@@ -59,16 +59,16 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.luckperms:api:5.4")
 
-	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.1.3") {
+	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.1.4") {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.slams:slams-parser-jaskl:1.1.3") {
+    runtimeDownload("io.github.almighty-satan.slams:slams-parser-jaskl:1.1.4") {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "slams-core")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.slams:slams-papi:1.1.3") {
+    runtimeDownload("io.github.almighty-satan.slams:slams-papi:1.1.4") {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "slams-core")
         exclude(module = "annotations")

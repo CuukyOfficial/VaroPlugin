@@ -10,7 +10,6 @@ import de.cuuky.varo.Main;
 import de.cuuky.varo.api.game.VaroStartEvent;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.logger.logger.EventLogger.LogType;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.utils.EventUtils;
@@ -58,9 +57,8 @@ public class VaroStartThread extends BukkitRunnable {
 				Player pl = vp.getPlayer();
 				pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
 
-				String countdownString = String.valueOf(startcountdown);
-				String title = ConfigMessages.GAME_VARO_START_TITLE.getValue(vp).replace("%countdown%", countdownString);
-				String subtitle = ConfigMessages.GAME_VARO_START_SUBTITLE.getValue(vp).replace("%countdown%", countdownString);
+				String title = Messages.GAME_START_TITLE.value(vp ,Placeholder.constant("start-countdown", String.valueOf(this.startcountdown)));
+				String subtitle = Messages.GAME_START_SUBTITLE.value(vp, Placeholder.constant("start-countdown", String.valueOf(this.startcountdown)));
 				if (!title.isEmpty() || !subtitle.isEmpty())
 					vp.getVersionAdapter().sendTitle(title, subtitle);
 			}
@@ -76,7 +74,7 @@ public class VaroStartThread extends BukkitRunnable {
 			this.startcountdown = ConfigSetting.STARTCOUNTDOWN.getValueAsInt();
 
 			Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().strikeLightningEffect(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
-			Main.getLanguageManager().broadcastMessage(ConfigMessages.GAME_VARO_START);
+			Messages.GAME_START_VARO.broadcast();
 			Messages.LOG_GAME_STARTED.log(LogType.LOG);
 			cancel();
 

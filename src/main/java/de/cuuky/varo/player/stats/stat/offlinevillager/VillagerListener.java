@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.utils.EventUtils;
 
@@ -43,7 +43,7 @@ public class VillagerListener implements Listener {
 
 		VaroPlayer vp = VaroPlayer.getPlayer(damager);
 		if (Main.getVaroGame().getProtection() != null) {
-			vp.sendMessage(ConfigMessages.PROTECTION_TIME_RUNNING);
+			Messages.PROTECTION_PROTECTED.send(vp);
 			event.setCancelled(true);
 			return;
 		}

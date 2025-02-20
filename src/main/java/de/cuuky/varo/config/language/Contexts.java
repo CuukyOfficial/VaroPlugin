@@ -113,6 +113,19 @@ public interface Contexts {
         }
     }
     
+    class ContainerContext extends PlayerContext {
+        private final VaroPlayer owner;
+
+        public ContainerContext(VaroPlayer player, VaroPlayer owner) {
+            super(player);
+            this.owner = owner;
+        }
+
+        public VaroPlayer getOwner() {
+            return this.owner;
+        }
+    }
+    
     class BorderDecreaseContext extends VaroContext {
         private final int size;
         private final double speed;

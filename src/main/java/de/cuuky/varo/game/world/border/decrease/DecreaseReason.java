@@ -45,7 +45,7 @@ public enum DecreaseReason {
 	}
 
 	public int getTime() {
-		return time.getValueAsInt();
+		return time == null ? 0 : time.getValueAsInt();
 	}
 
 	public boolean isEnabled() {

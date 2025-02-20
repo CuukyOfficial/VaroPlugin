@@ -107,13 +107,13 @@ public class PlayerJoinListener implements Listener {
 			    Messages.PLAYER_JOIN_SPECTATOR.broadcast(vplayer);
 			} else if (Main.getVaroGame().isFinaleJoin()) {
 				Messages.PLAYER_JOIN_FINALE.broadcast(vplayer);
-				Messages.LOG_JOIN_FINALE.log(LogType.JOIN_LEAVE, vplayer);
+				Messages.LOG_FINALE_JOIN.log(LogType.JOIN_LEAVE, vplayer);
 				if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean()) {
-				    Messages.FINALE_START_FREEZE.send(vplayer);
+				    Messages.GAME_FINALE_FREEZE.send(vplayer);
     				if (!player.isOp())
     					new VaroCancelable(CancelableType.FREEZE, vplayer);
 				} else
-				    Messages.FINALE_START_NOFREEZE.send(vplayer);
+				    Messages.GAME_FINALE_NOFREEZE.send(vplayer);
 			} else if (!Main.getVaroGame().isPlayTimeLimited()) {
 			    Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
 			    Messages.LOG_PLAYER_JOIN_NORMAL.log(LogType.JOIN_LEAVE, vplayer);

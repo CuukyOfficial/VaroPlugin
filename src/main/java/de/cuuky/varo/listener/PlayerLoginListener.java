@@ -18,7 +18,6 @@ import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
 import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.KickResult;
 import de.cuuky.varo.player.stats.stat.PlayerState;
@@ -110,8 +109,8 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DEATH.value(vp, Placeholder.constant("ban-hours", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()))));
 			break;
 		case NOT_IN_TIME:
-			event.disallow(Result.KICK_OTHER, ConfigMessages.SERVER_MODT_CANT_JOIN_HOURS.getValue(vp, vp).replace("%minHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR1.getValueAsInt())).replace("%maxHour%", String.valueOf(ConfigSetting.ONLY_JOIN_BETWEEN_HOURS_HOUR2.getValueAsInt())));
-			break;
+		    event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_SERVER_CLOSED.value(vp));
+		    break;
 		case SERVER_FULL:
 			event.disallow(Result.KICK_FULL, Messages.PLAYER_KICK_SERVER_FULL.value(vp));
 			break;

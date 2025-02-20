@@ -18,8 +18,9 @@ import org.bukkit.inventory.InventoryHolder;
 import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Contexts;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
 import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -83,7 +84,7 @@ public class SignChangeListener implements Listener {
 					p.getWorld().playEffect(secChest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
 				new VaroSaveable(SaveableType.CHEST, secChest.getLocation(), player);
-				player.sendMessage(ConfigMessages.CHEST_SAVED_CHEST);
+				Messages.PLAYER_CHEST_NEW.send(player, new Contexts.ContainerContext(player, player));
 			}
 
 			event.setLine(0, "§8--------------");
@@ -95,7 +96,7 @@ public class SignChangeListener implements Listener {
 				p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
 			new VaroSaveable(SaveableType.CHEST, chest.getLocation(), player);
-			player.sendMessage(ConfigMessages.CHEST_SAVED_CHEST);
+			Messages.PLAYER_CHEST_NEW.send(player, new Contexts.ContainerContext(player, player));
 		} else if (attached.getState() instanceof Furnace) {
 			Furnace furnace = (Furnace) attached.getState();
 
@@ -137,7 +138,7 @@ public class SignChangeListener implements Listener {
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNACE, furnace.getBlock().getLocation(), player);
-			player.sendMessage(ConfigMessages.CHEST_SAVED_FURNACE);
+			Messages.PLAYER_CHEST_NEW.send(player, new Contexts.ContainerContext(player, player));
 		}
 	}
 }

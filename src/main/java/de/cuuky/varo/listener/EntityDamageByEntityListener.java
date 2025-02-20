@@ -8,8 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.listener.helper.cancelable.CancelableType;
 import de.cuuky.varo.listener.helper.cancelable.VaroCancelable;
 import de.cuuky.varo.player.VaroPlayer;
@@ -34,9 +34,9 @@ public class EntityDamageByEntityListener implements Listener {
 		VaroPlayer vp = VaroPlayer.getPlayer(p), vDamager = damager != null ? VaroPlayer.getPlayer(damager) : null;
 		if (Main.getVaroGame().getProtection() != null) {
 			if (damager == null)
-				vp.sendMessage(ConfigMessages.PROTECTION_TIME_RUNNING);
+			    Messages.PROTECTION_PROTECTED.send(vp);
 			else
-				vDamager.sendMessage(ConfigMessages.PROTECTION_TIME_RUNNING, vDamager);
+			    Messages.PROTECTION_PROTECTED.send(vDamager);
 			event.setCancelled(true);
 			return;
 		}
@@ -58,7 +58,7 @@ public class EntityDamageByEntityListener implements Listener {
 			return;
 
 		event.setCancelled(true);
-		vDamager.sendMessage(ConfigMessages.COMBAT_FRIENDLY_FIRE);
+		Messages.PLAYER_COMBAT_FRIENDLY_FIRE.send(vDamager);
 		return;
 	}
 }

@@ -4,8 +4,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import io.github.almightysatan.slams.PlaceholderResolver;
 
 public class ProtectionTime {
 
@@ -32,11 +33,12 @@ public class ProtectionTime {
 				}
 
 				if (this.protectionTimer == 0) {
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_OVER);
+					Messages.PROTECTION_END.broadcast();
 					Main.getVaroGame().setProtection(null);
 					scheduler.cancel();
 				} else if (protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
-					Main.getLanguageManager().broadcastMessage(ConfigMessages.PROTECTION_TIME_UPDATE).replace("%minutes%", getCountdownMin(protectionTimer)).replace("%seconds%", getCountdownSec(protectionTimer));
+				    Messages.PROTECTION_PROTECTED.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
+				            .constant("protection-seconds", getCountdownSec(protectionTimer)).build());
 
 				this.protectionTimer--;
 			}

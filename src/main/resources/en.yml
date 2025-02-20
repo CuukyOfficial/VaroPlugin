@@ -1,6 +1,26 @@
 game:
+  sort:
+    number: "<prefix>You've been teleported to spawn <colorcode><spawn-id>§7!"
+    player: "<prefix>You've been teleported to your spawn!"
+    noSpawnFound: "<prefix>There is no spawn available for you!"
+    noSpawnFoundTeam: "<prefix>There is no spawn available for you that's next to your team partner(s)!"
+    spectator: "<prefix>You've been teleported to the world spawn!"
   start:
     countdown: "<projectname>§7 starts in <colorcode><start-countdown>§7 second<if_eq:1:<start-countdown>::s>!"
+    startTitle: "<colorcode><start-countdown>"
+    startSubtitle: "§7Good luck!"
+    varoStart: "<projectname> §7has started! §5Good luck!"
+    abort: "<prefix>§cThe start has been aborted!"
+  finale:
+    start: "§7The finale starts now!<if_num_gt:<config-Finale-finaleProtectionTime>:0: Everybody is protected for <colorcode><config-Finale-finaleProtectionTime> §7seconds!:>"
+    countdown: "§7The finale starts in <colorcode><finale-countdown>§7 second<if_eq:1:<finale-countdown>::s>!"
+    freeze: "<prefix>The finale is about to begin! All players have been freezed!"
+    noFreeze: "<prefix>The finale is about to begin!"
+  win:
+    player: "<colorcode><winner> §7has won <colorcode><projectname>§7! Congratulations!"
+    team: <colorcode>"<winner> §7have won <colorcode><projectname>§7! Congratulations!"
+  lobby:
+    move: "<prefix>You cannot move until the project has been started!"
 
 player:
   displayname: "<if_ne:<rank>:-:§7<rank> §8| :><if_ne:<team>:-:<colorcode><team> §8| :>§7<name>"
@@ -11,7 +31,7 @@ player:
     protection: "<prefix>§a<name>§7 has entered the server and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
     protectionEnd: "<prefix>§a<name>§7 is now vulnerable!"
     spectator: "<prefix>§a<name>§7 has entered the server as a spectator!"
-    massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
+    massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is protected for <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
     remainingTime: "<prefix>§a<name>§7 left the server too early and has <colorcode><seconds>§7 seconds left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
   disconnect:
     kick: "<prefix><colorcode><name> §7has been kicked!"
@@ -43,6 +63,7 @@ player:
     kickMessageMassRec: "§cThe mass recording is finished, \n§7everybody got kicked!"
     notStarted: "§cThe server has not been opened yet! \n§7Please be patient a little longer!"
     serverFull: "§cThe server is full!\n§7Talk to the owner if this is a mistake!"
+    serverClosed: "§cThe server is closed!\n§7Please try again later!"
     notRegisteredDiscord: |-
       §7Your account is not verified!
       §7Please use §c/verify <discord-code> §7to verify your Discord account!
@@ -64,6 +85,16 @@ player:
     height: "<prefix>§cYou can not fly any lower!"
   crafting:
     disallowed: "<prefix>§cYou are not allowed to craft, use or brew this item!"
+  combat:
+    friendlyfire: "<prefix>§7This player is on your team!"
+    fight: "<prefix>§7You are now in combat, do §4NOT §7log out!"
+    fightEnd: "<prefix>§7You are now no longer in a fight! You can now log out!"
+    loggedOut: "<prefix>§c<name> §7has left the server during a fight!"
+  chests:
+    new: "<prefix>Container secured!"
+    removed: "<prefix>Container successfully removed!"
+    disallowed: "<prefix>This container belongs to <colorcode><owner-name>!"
+    admin: "<prefix>This container belongs to <colorcode><owner-name>! But you have permission to use it anyway!"
   scoreboard:
     title:
       - "<projectname>"
@@ -133,11 +164,6 @@ chat:
   spectator: "§7Chat is disabled for spectators!"
   start: "§7Chat is disabled until the game has started!"
 
-finale:
-  start:
-    freeze: "<prefix>The finale is about to begin! All players have been freezed!"
-    noFreeze: "<prefix>The finale is about to begin!"
-
 alert:
   disconnectTooOften: "<name> left the game too often! Their episode has now expired prematurely!"
   strike:
@@ -180,7 +206,8 @@ log:
   newSessions: "<new-sessions> new sessions were given to players!"
   switchedName: "<name> has changed their name and is now known as <new-name>!"
   newSessionsForAll: "Everybody received <new-sessions> new sessions!"
-  finale: "<name> has entered the server to participate in the finale"
+  finaleJoin: "<name> has entered the server to participate in the finale!"
+  finaleStart: "The finale has started!"
   playerJoinMassrec: "<name> has entered the server during mass recording and is now playing their <episode>th episode."
   win:
     player: "<winner> has won <projectname>! Congratulations!"
@@ -349,6 +376,10 @@ commands:
     day: "<prefix>Time set to <colorcode>day§7."
   setworldspawn:
     setworldspawn: "<prefix>Worldspawn set"
+  spawn:
+    overworld: "<prefix>The spawn is at <colorcode><spawn-x>§7, <colorcode><spawn-y>§7, <colorcode><spawn-z><online:\n<prefix>You are <colorcode><spawn-distance> §7blocks away from spawn!:>"
+    nether: "<prefix>The portal is at <colorcode><spawn-x>§7, <colorcode><spawn-y>§7, <colorcode><spawn-z><online:\n<prefix>You are <colorcode><spawn-distance> §7blocks away from the portal!:>"
+    end: "<prefix>§cThis command can not be used in the end!"
   ping: "<prefix>Ping: <colorcode><ping>§7ms"
 
 broadcast:
@@ -384,3 +415,26 @@ teamrequest:
     duplicate: "<prefix>§cThat name is already taken!"
   rename: "<prefix><colorcode>§lPlease enter a new name"
   renamed: "<prefix>§7Team name changed to <colorcode><team-newname>"
+
+motd:
+  open: "§aJoin <projectname>§a! §7Have fun!"
+  closedHours: "§cYou can only join between §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cand §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1>\n§7Please try again later!"
+  closed: "§cThe server is not yet available! \n§7Please try again later!"
+
+spawn:
+  number: "§7Spawn #<colorcode><spawn-id>"
+  player: "§7Spawn of <colorcode><name>"
+
+protection:
+  start: "<prefix>The <colorcode>protection time §7starts now and will end in <colorcode><config-Protections-startperiodProtectiontime> §7seconds!"
+  end: "<prefix>The initial <colorcode>protection time §7has expired!"
+  update: "<prefix>The <colorcode>protection time §7expires in <colorcode><protection-minutes>§7:<colorcode><protection-seconds>§7!"
+  protected: "<prefix>The <colorcode>protection time §7has not expired yet!"
+
+blocklogger:
+  filter:
+    invalid: "<prefix>Could not set filter <colorcode><filter-name> §7to <colorcode><filter-content>§7!"
+    set: "<prefix>Set filter <colorcode><filter-name> §7to <colorcode><filter-content>"
+    reset: "<prefix>Removed filter <colorcode><filter-name>"
+    player: "<prefix>Please enter a player name to filter for:"
+    material: "<prefix>Please enter a material to filter for:"

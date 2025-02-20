@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Messages;
+import de.cuuky.varo.config.language.Messages.VaroMessage;
 import de.cuuky.varo.gui.VaroInventory;
 import de.cuuky.varo.logger.logger.LoggedBlock;
 import de.cuuky.varo.player.VaroPlayer;
@@ -18,6 +19,7 @@ import de.varoplugin.cfw.inventory.ItemClick;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
+import io.github.almightysatan.slams.PlaceholderResolver;
 
 public class OreLoggerFilterGUI extends VaroInventory {
 
@@ -34,26 +36,20 @@ public class OreLoggerFilterGUI extends VaroInventory {
             this.contentChecker = contentChecker;
         }
 
-        private ItemClick setFilter(VaroPlayer player, String message) {
+        private ItemClick setFilter(VaroPlayer player, VaroMessage message) {
             return click -> {
                 if (click.isRightClick()) {
                     setContent(null);
                 } else {
-                    new PlayerChatHookBuilder().message(message).subscribe(ChatHookTriggerEvent.class, hookEvent -> {
+                    new PlayerChatHookBuilder().message(message.value(player)).subscribe(ChatHookTriggerEvent.class, hookEvent -> {
                         String newContent = hookEvent.getMessage();
 
                         if (!Filter.this.contentChecker.test(newContent)) {
-                            String msg = ConfigMessages.LOGGER_FILTER_INVALID_FILTER.getValue(player)
-                                .replace("%filterName%", Filter.this.name)
-                                .replace("%content%", newContent);
-                            player.sendMessage(Main.getPrefix() + msg);
+                            Messages.BLOCKLOGGER_FILTER_INVALID.send(player, PlaceholderResolver.builder()
+                                    .constant("filter-name", Filter.this.name).constant("filter-content", newContent).build());
                         } else {
-                            String msg = ConfigMessages.LOGGER_FILTER_SET_FILTER.getValue(player)
-                                .replace("%filterName%", Filter.this.name)
-                                .replace("%newContent%", newContent)
-                                .replace("%oldContent%", Filter.this.getContent());
-                            player.sendMessage(Main.getPrefix() + msg);
-
+                            Messages.BLOCKLOGGER_FILTER_SET.send(player, PlaceholderResolver.builder()
+                                    .constant("filter-name", Filter.this.name).constant("filter-content", newContent).build());
                             Filter.this.setContent(newContent);
                         }
 
@@ -107,16 +103,14 @@ public class OreLoggerFilterGUI extends VaroInventory {
         addItem(base, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(
                     Main.getColorCode() + "Filter Player " + ChatColor.GRAY + "(" + this.playerFilter.getContent() + ")")
                 .lore("§7Right-Click to reset").build(),
-            this.playerFilter.setFilter(this.player,
-                Main.getPrefix() + ConfigMessages.LOGGER_FILTER_PLAYER_FILTER_MESSAGE.getValue(this.player))
+            this.playerFilter.setFilter(this.player, Messages.BLOCKLOGGER_FILTER_PLAYER)
         );
         
         // Filter material
         addItem(base + 4, ItemBuilder.material(XMaterial.OAK_SIGN).displayName(
                     Main.getColorCode() + "Filter Material" + ChatColor.GRAY + " (" + this.materialFilter.getContent() + ")")
             .lore("§7Right-Click to reset").build(),
-            this.materialFilter.setFilter(this.player,
-                Main.getPrefix() + ConfigMessages.LOGGER_FILTER_MATERIAL_FILTER_MESSAGE.getValue(this.player)));
+            this.materialFilter.setFilter(this.player, Messages.BLOCKLOGGER_FILTER_MATERIAL));
 
         // Open
         addItem(base + 2, ItemBuilder.material(XMaterial.EMERALD).displayName(Main.getColorCode() + "Open").build(),

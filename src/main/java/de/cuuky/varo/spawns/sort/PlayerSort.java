@@ -9,11 +9,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.spawns.Spawn;
 import de.varoplugin.cfw.player.SafeTeleport;
+import io.github.almightysatan.slams.Placeholder;
 
 public class PlayerSort {
 
@@ -61,7 +62,7 @@ public class PlayerSort {
                 continue;
 
             toTeleport.put(vp.getPlayer(), vp.getPlayer().getWorld().getSpawnLocation());
-            vp.sendMessage(ConfigMessages.SORT_SPECTATOR_TELEPORT, vp);
+            Messages.GAME_SORT_SPECTATOR_TELEPORT.send(vp);
             players.remove(vp);
         }
 
@@ -71,7 +72,7 @@ public class PlayerSort {
 
             spawn.getPlayer().cleanUpPlayer();
             toTeleport.put(spawn.getPlayer().getPlayer(), spawn.getLocation());
-            spawn.getPlayer().sendMessage(ConfigMessages.SORT_OWN_HOLE);
+            Messages.GAME_SORT_PLAYER.send(spawn.getPlayer());
             players.remove(spawn.getPlayer());
             spawns.remove(spawn);
         }
@@ -86,8 +87,7 @@ public class PlayerSort {
             player.cleanUpPlayer();
             toTeleport.put(player.getPlayer(), spawn.getLocation());
             spawn.setPlayer(player);
-            player.sendMessage(ConfigMessages.SORT_NUMBER_HOLE)
-                .replace("%number%", String.valueOf(spawn.getNumber()));
+            Messages.GAME_SORT_NUMBER.send(player, Placeholder.constant("spawn-id", String.valueOf(spawn.getNumber())));
             players.remove(0);
             spawns.remove(0);
 
@@ -106,8 +106,7 @@ public class PlayerSort {
                             teamPlayer.cleanUpPlayer();
                             toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
                             spawns.get(0).setPlayer(teamPlayer);
-                            teamPlayer.sendMessage(ConfigMessages.SORT_NUMBER_HOLE)
-                                .replace("%number%", String.valueOf(spawns.get(0).getNumber()));
+                            Messages.GAME_SORT_NUMBER.send(teamPlayer, Placeholder.constant("spawn-id", String.valueOf(spawn.getNumber())));
                             players.remove(teamPlayer);
                         }
 
@@ -116,14 +115,13 @@ public class PlayerSort {
                     } else {
                         result = SortResult.NO_SPAWN_WITH_TEAM;
                         players.remove(teamPlayer);
-                        teamPlayer.sendMessage(ConfigMessages.SORT_NO_HOLE_FOUND_TEAM);
+                        Messages.GAME_SORT_NO_SPAWN_FOUND_TEAM.send(teamPlayer);
                     }
                 } else if (players.contains(teamPlayer)) {
                     teamPlayer.cleanUpPlayer();
                     toTeleport.put(teamPlayer.getPlayer(), spawns.get(0).getLocation());
                     spawns.get(0).setPlayer(teamPlayer);
-                    teamPlayer.sendMessage(ConfigMessages.SORT_NUMBER_HOLE)
-                        .replace("%number%", String.valueOf(spawns.get(0).getNumber()));
+                    Messages.GAME_SORT_NUMBER.send(teamPlayer, Placeholder.constant("spawn-id", String.valueOf(spawn.getNumber())));
                     players.remove(teamPlayer);
                     spawns.remove(0);
                 }
@@ -131,7 +129,7 @@ public class PlayerSort {
         }
 
         for (VaroPlayer vp : players) {
-            vp.sendMessage(ConfigMessages.SORT_NO_HOLE_FOUND);
+            Messages.GAME_SORT_NO_SPAWN_FOUND.send(vp);
             if (result == SortResult.SORTED_WELL) {
                 result = SortResult.NO_SPAWN;
             }

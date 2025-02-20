@@ -16,14 +16,15 @@ import org.bukkit.entity.EntityType;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.serialize.identifier.VaroSerializeField;
 import de.cuuky.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
+import io.github.almightysatan.slams.Placeholder;
 
 public class Spawn implements VaroSerializeable {
 
@@ -130,9 +131,9 @@ public class Spawn implements VaroSerializeable {
     }
 
     private String computeNameTagName() {
-        return this.player == null ?
-            ConfigMessages.SPAWNS_SPAWN_NUMBER.getValue().replace("%number%", String.valueOf(number)) :
-            ConfigMessages.SPAWNS_SPAWN_PLAYER.getValue(null, this.player).replace("%number%", String.valueOf(number));
+        Placeholder placeholder = Placeholder.constant("spawn-id", String.valueOf(this.number));
+        return this.player == null ? Messages.SPAWN_NUMBER.value(placeholder)
+                : Messages.SPAWN_PLAYER.value(this.player, placeholder);
     }
 
     private void remove() {

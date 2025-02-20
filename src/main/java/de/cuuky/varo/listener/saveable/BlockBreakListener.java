@@ -5,7 +5,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +13,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.configuration.configurations.language.languages.ConfigMessages;
+import de.cuuky.varo.config.language.Contexts;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.stat.inventory.VaroSaveable;
 
@@ -46,7 +46,7 @@ public class BlockBreakListener implements Listener {
 		VaroPlayer holder = saveable.getPlayer();
 
 		if (saveable.canModify(varoPlayer)) {
-			varoPlayer.sendMessage(ConfigMessages.CHEST_REMOVED_SAVEABLE).replace("%saveable%", block.getState() instanceof Chest ? "Chest" : "Furnace");
+			Messages.PLAYER_CHEST_REMOVED.send(varoPlayer, new Contexts.ContainerContext(varoPlayer, holder));
 			player.playSound(player.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
 			for (int i = 0; i < 3; i++)
 				player.getWorld().playEffect(block.getLocation(), Effect.SMOKE, 1);
@@ -58,10 +58,10 @@ public class BlockBreakListener implements Listener {
 			return;
 
 		if (!player.hasPermission("varo.ignoreSaveable")) {
-			varoPlayer.sendMessage(ConfigMessages.CHEST_NOT_TEAM_CHEST).replace("%player%", holder.getName());
+		    Messages.PLAYER_CHEST_DISALLOWED.send(varoPlayer, new Contexts.ContainerContext(varoPlayer, holder));
 			event.setCancelled(true);
 		} else {
-			player.sendMessage("§7Diese(r) " + saveable.getType().toString() + " gehoerte " + Main.getColorCode() + saveable.getPlayer().getName() + "§7 aber da du Rechte hast, konntest du sie dennoch zerstoeren!");
+			Messages.PLAYER_CHEST_ADMIN.send(varoPlayer, new Contexts.ContainerContext(varoPlayer, holder));
 			saveable.remove();
 		}
 	}
