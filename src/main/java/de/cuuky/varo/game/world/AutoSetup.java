@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
@@ -113,15 +114,19 @@ public class AutoSetup {
     private void setupSpawns(Location middle) {
         Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: Setting the spawns...");
 
-        int flatHeight = getFlatSurfaceHeight(middle.getWorld(), this.x, this.z);
+        if (ConfigSetting.AUTOSETUP_SPAWNS_FLAT_SURFACE.getValueAsBoolean())
+            this.generateFlatSurface(middle.getWorld(), this.x, this.z);
         
-        middle.getWorld().setSpawnLocation(this.x, flatHeight, this.z);
+        int y = this.getGroundHeight(middle.getWorld(), this.x, this.z);
+        if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean())
+            y += ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
+        middle.getWorld().setSpawnLocation(this.x, y, this.z);
 
         new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()),ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(),
                 (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
     }
 
-    private int getFlatSurfaceHeight(World world, int x, int z) {
+    private void generateFlatSurface(World world, int x, int z) {
         int flatHeight = getGroundHeight(world, x, z);
 
         int radius = getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt());
@@ -139,12 +144,10 @@ public class AutoSetup {
             for (int j = -radius; j <= radius; j++) {
                 if (i * i + j * j <= radius * radius) {
                     Location loc = new Location(world, x + i, flatHeight, z + j);
-                    loc.getBlock().setType(XMaterial.GRASS_BLOCK.parseMaterial());
+                    XBlock.setType(loc.getBlock(), XMaterial.GRASS_BLOCK);
                 }
             }
         }
-
-        return flatHeight;
     }
 
     private void setupAutoStart() {
