@@ -24,7 +24,7 @@ public class WinEvent extends BukkitEvent {
 		VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
 
 		if (db != null)
-			if (db.isEnabled() || !ConfigSetting.DISCORDBOT_ADD_POKAL_ON_WIN.getValueAsBoolean())
+			if (db.isEnabled() || !ConfigSetting.DISCORDBOT_ADD_TROPHY_ON_WIN.getValueAsBoolean())
 				return;
 
 		BotRegister register = BotRegister.getBotRegisterByPlayerName(player.getName());
@@ -35,13 +35,16 @@ public class WinEvent extends BukkitEvent {
 		int wins = 1;
 		String name = member.getNickname() == null ? member.getUser().getName() : member.getNickname();
 
-		if (name.contains("|")) {
-			wins = Integer.valueOf(name.split("\\|")[1].replace("ð", "").replace(" ", ""));
-			wins++;
-		}
+		if (name.contains("|"))
+		    try {
+		        wins = Integer.valueOf(name.split("\\|")[1].replace("🏆", "").replace(" ", ""));
+		        wins++;
+		    } catch (NumberFormatException e) {
+		        // nop
+		    }
 
 		try {
-			member.modifyNickname(member.getUser().getName() + " | " + wins + " ð");
+			member.modifyNickname(member.getUser().getName() + " | " + wins + " 🏆");
 		} catch (PermissionException e) {
 		    Main.getInstance().getLogger().log(Level.SEVERE, "Insufficient permissions to change Discord nickname of member {}", member.getEffectiveName());
 		}

@@ -125,7 +125,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127, UeberallGebannt", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 
-	DISCORDBOT_ADD_POKAL_ON_WIN(ConfigSettingSection.DISCORD, "addPokalOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
+	DISCORDBOT_ADD_TROPHY_ON_WIN(ConfigSettingSection.DISCORD, "addTrophyOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
     DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1L, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
     DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1L, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
 	
