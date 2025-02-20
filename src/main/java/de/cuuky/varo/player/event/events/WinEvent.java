@@ -1,5 +1,7 @@
 package de.cuuky.varo.player.event.events;
 
+import java.util.logging.Level;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.BotRegister;
 import de.cuuky.varo.bot.discord.VaroDiscordBot;
@@ -41,7 +43,7 @@ public class WinEvent extends BukkitEvent {
 		try {
 			member.modifyNickname(member.getUser().getName() + " | " + wins + " ð");
 		} catch (PermissionException e) {
-			System.out.println("[Varo] Konnte den Pokal fuer '" + player.getName() + "' nicht setzen, da dieser Bot zu wenig, oder der Nutzer zu viele Rechte auf dem Discord hat!");
+		    Main.getInstance().getLogger().log(Level.SEVERE, "Insufficient permissions to change Discord nickname of member {}", member.getEffectiveName());
 		}
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -52,18 +53,18 @@ public class BugReport {
         PluginDescriptionFile pdf = Main.getInstance().getDescription();
         Runtime r = Runtime.getRuntime();
 
-        System.out.println(Main.getConsolePrefix() + "----------------------");
-        System.out.println(Main.getConsolePrefix());
-        System.out.println(Main.getConsolePrefix() + "Plugin Version: " + pdf.getVersion());
-        System.out.println(Main.getConsolePrefix() + "Plugins enabled: " + Bukkit.getPluginManager().getPlugins().length);
-        System.out.println(Main.getConsolePrefix() + "Server-Version: " + Bukkit.getVersion());
-        System.out.println(Main.getConsolePrefix() + "System OS: " + System.getProperty("os.name"));
-        System.out.println(Main.getConsolePrefix() + "System Version: " + System.getProperty("os.version"));
-        System.out.println(Main.getConsolePrefix() + "Java Version: " + System.getProperty("java.version"));
-        System.out.println(Main.getConsolePrefix() + "Total memory usage: " + (r.totalMemory() - r.freeMemory()) / 1048576 + "MB!");
-        System.out.println(Main.getConsolePrefix() + "Total memory available: " + r.maxMemory() / 1048576 + "MB!");
-        System.out.println(Main.getConsolePrefix() + "Date: " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
-        System.out.println(Main.getConsolePrefix());
-        System.out.println(Main.getConsolePrefix() + "----------------------");
+        Main.getInstance().getLogger().log(Level.INFO, "----------------------");
+        Main.getInstance().getLogger().log(Level.INFO, "");
+        Main.getInstance().getLogger().log(Level.INFO, "Plugin Version: " + pdf.getVersion());
+        Main.getInstance().getLogger().log(Level.INFO, "Plugins enabled: " + Bukkit.getPluginManager().getPlugins().length);
+        Main.getInstance().getLogger().log(Level.INFO, "Server-Version: " + Bukkit.getVersion());
+        Main.getInstance().getLogger().log(Level.INFO, "System OS: " + System.getProperty("os.name"));
+        Main.getInstance().getLogger().log(Level.INFO, "System Version: " + System.getProperty("os.version"));
+        Main.getInstance().getLogger().log(Level.INFO, "Java Version: " + System.getProperty("java.version"));
+        Main.getInstance().getLogger().log(Level.INFO, "Total memory usage: " + (r.totalMemory() - r.freeMemory()) / 1048576 + "MB!");
+        Main.getInstance().getLogger().log(Level.INFO, "Total memory available: " + r.maxMemory() / 1048576 + "MB!");
+        Main.getInstance().getLogger().log(Level.INFO, "Date: " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
+        Main.getInstance().getLogger().log(Level.INFO, "");
+        Main.getInstance().getLogger().log(Level.INFO, "----------------------");
     }
 }

@@ -13,6 +13,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 
 public class EventLogger extends CachedVaroLogger<String> {
 
@@ -89,8 +90,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(Main.getPrefix() + "Failed to broadcast message! Did you enter a wrong channel ID?");
+			Main.getInstance().getLogger().log(Level.WARNING, "Failed to broadcast message! Did you enter an invalid channel ID?", e);
 			return false;
 		}
 	}

@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -113,7 +114,7 @@ public class VaroDeserializer extends VaroSerializeHandler {
 					continue;
 				}
 			} else
-				System.out.println(Main.getConsolePrefix() + "Could not deserialize field " + s + ": [FIELD NOT FOUND]");
+			    Main.getInstance().getLogger().log(Level.SEVERE, "Could not deserialize field " + s + ": [FIELD NOT FOUND]");
 		}
 
 		instance.onDeserializeEnd();

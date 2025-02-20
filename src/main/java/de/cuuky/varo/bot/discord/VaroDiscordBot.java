@@ -3,6 +3,7 @@ package de.cuuky.varo.bot.discord;
 import java.awt.Color;
 import java.io.File;
 import java.util.Random;
+import java.util.logging.Level;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.VaroBot;
@@ -39,7 +40,7 @@ public class VaroDiscordBot implements VaroBot {
 
     @Override
     public void connect() {
-        System.out.println(Main.getConsolePrefix() + "Activating discord bot...");
+        Main.getInstance().getLogger().log(Level.INFO, "Activating discord bot...");
         JDALogger.setFallbackLoggerEnabled(false);
         JDABuilder builder = JDABuilder.createLight(ConfigSetting.DISCORDBOT_TOKEN.getValueAsString());
         builder.setActivity(Activity.customStatus(ConfigSetting.DISCORDBOT_GAMESTATE.getValueAsString()));
@@ -55,12 +56,12 @@ public class VaroDiscordBot implements VaroBot {
 
         try {
             jda = builder.build();
-            System.out.println(Main.getConsolePrefix() + "Waiting for the bot to be ready...");
+            Main.getInstance().getLogger().log(Level.INFO, "Waiting for the bot to be ready...");
             jda.awaitReady();
             jda.addEventListener(new DiscordBotEventListener());
         } catch (Throwable t) {
             t.printStackTrace();
-            System.err.println(Main.getConsolePrefix() + "Couldn't connect to Discord");
+            Main.getInstance().getLogger().log(Level.SEVERE, "Couldn't connect to Discord");
             return;
         }
 
@@ -68,7 +69,7 @@ public class VaroDiscordBot implements VaroBot {
         
         Guild guild = getMainGuild();
         if (guild == null) {
-            System.out.println(Main.getConsolePrefix() + "Cannot get server from ID " + ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong());
+            Main.getInstance().getLogger().log(Level.INFO, "Cannot get server from ID " + ConfigSetting.DISCORDBOT_SERVERID.getValueAsLong());
             disconnect();
             return;
         }
@@ -76,7 +77,7 @@ public class VaroDiscordBot implements VaroBot {
         guild.updateCommands().addCommands(DiscordBotCommand.getCommands().stream()
                 .map(command -> Commands.slash(command.getName(), command.getDescription()).addOptions(command.getOptions())).toArray(CommandData[]::new)).queue();
 
-        System.out.println(Main.getConsolePrefix() + "DiscordBot enabled successfully!");
+        Main.getInstance().getLogger().log(Level.INFO, "DiscordBot enabled successfully!");
     }
 
     private void loadRole() {
@@ -89,7 +90,7 @@ public class VaroDiscordBot implements VaroBot {
                 this.pingRole = role.getAsMention();
                 return;
             }
-            System.err.println(Main.getConsolePrefix() + "Could not find role: " + ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
+            Main.getInstance().getLogger().log(Level.SEVERE, "Could not find role: " + ConfigSetting.DISCORDBOT_ANNOUNCEMENT_PING_ROLEID.getValueAsLong());
         }
         this.pingRole = "@everyone";
     }
@@ -101,11 +102,11 @@ public class VaroDiscordBot implements VaroBot {
 
         try {
             jda.shutdownNow();
-        } catch (Exception | Error e) {
-            System.err.println("[Varo] DiscordBot failed shutting down! Maybe you switched the version while the plugin was running?");
+        } catch (Throwable t) {
+            Main.getInstance().getLogger().log(Level.SEVERE, "Discord bot failed during shutdown!");
             try {
                 jda.shutdown();
-            } catch (Exception | Error e1) {
+            } catch (Throwable e1) {
                 // nop
             }
         }
@@ -136,7 +137,7 @@ public class VaroDiscordBot implements VaroBot {
             action.queue();
             return true;
         } catch (InsufficientPermissionException e) {
-            System.err.println(Main.getConsolePrefix() + "Bot failed to write a message because of missing permission in channel " + channel.getName() + "! MISSING: " + e.getPermission());
+            Main.getInstance().getLogger().log(Level.SEVERE, "Bot failed to write a message because of missing permission in channel " + channel.getName() + "! MISSING: " + e.getPermission());
             return false;
         }
     }
@@ -149,11 +150,11 @@ public class VaroDiscordBot implements VaroBot {
         try {
             channel = jda.getChannelById(GuildMessageChannel.class, channelId);
         } catch (Exception e) {
-            System.err.println(Main.getConsolePrefix() + "Failed to print discord message!");
+            Main.getInstance().getLogger().log(Level.SEVERE, "Failed to print discord message!");
             return false;
         }
         if(channel == null) {
-            System.err.println(String.format("%sFailed to find discord channel %d", Main.getConsolePrefix(), channelId));
+            Main.getInstance().getLogger().log(Level.SEVERE, "Failed to find discord channel {}", channelId);
             return false;
         }
         return this.sendMessage(message, author, authorUrl, authorIconUrl, file, color, channel);

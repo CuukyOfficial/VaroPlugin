@@ -3,6 +3,7 @@ package de.cuuky.varo.configuration;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -36,7 +37,7 @@ public class ConfigHandler {
 		loadConfiguration(ConfigSettingSection.values(), CONFIG_PATH);
 
 		if (new File(VARO_DIR + "messages").isDirectory())
-			System.err.println(Main.getConsolePrefix() + "The messages folder " + VARO_DIR + "messages/ has been moved to " + VARO_DIR + "languages/! Please delete the old folder!");
+			Main.getInstance().getLogger().log(Level.SEVERE, "The messages folder " + VARO_DIR + "messages/ has been moved to " + VARO_DIR + "languages/! Please delete the old folder!");
 
 		if (legacyFound)
 			moveLegacyFiles();
@@ -49,7 +50,7 @@ public class ConfigHandler {
 
 		for (SectionConfiguration section : sections) {
 			if (configurations.containsKey(section.getFolder() + "/" + section.getName())) {
-				System.out.println(Main.getConsolePrefix() + "PAUL NEIN");
+				Main.getInstance().getLogger().log(Level.SEVERE, "Duplicate config path");
 				Bukkit.getServer().shutdown();
 			}
 
@@ -75,7 +76,7 @@ public class ConfigHandler {
 						if (!config.contains(oldPath))
 							continue;
 	
-						System.out.println(Main.getConsolePrefix() + "Found legacy configuration entry '" + oldPath + "', got value and renamed it to '" + entry.getPath() + "'!");
+						Main.getInstance().getLogger().log(Level.INFO, "Found legacy configuration entry '" + oldPath + "', got value and renamed it to '" + entry.getPath() + "'!");
 						if (config.isString(oldPath))
 						    entry.setStringValue(config.getString(oldPath), false);
 						else
@@ -103,7 +104,7 @@ public class ConfigHandler {
 				if (section.getEntry(path) != null || config.isConfigurationSection(path))
 					continue;
 
-				System.out.println(Main.getConsolePrefix() + "Removed " + path + " in " + section.getFolder() + "/" + file.getName() + " because it was removed from the plugin");
+				Main.getInstance().getLogger().log(Level.INFO, "Removed " + path + " in " + section.getFolder() + "/" + file.getName() + " because it was removed from the plugin");
 				config.set(path, null);
 				save = true;
 			}
@@ -144,7 +145,7 @@ public class ConfigHandler {
 		
 		YamlConfiguration config = YamlConfigurationUtil.loadConfiguration(file);
 
-		System.out.println(Main.getConsolePrefix() + "Found legacy configuration! Loading " + file.getName() + "...");
+		Main.getInstance().getLogger().log(Level.INFO, "Found legacy configuration! Loading " + file.getName() + "...");
 		for (SectionConfiguration section : sections) {
 			File sectionFile = new File(filepath, section.getName().toLowerCase() + ".yml");
 			YamlConfiguration sectionConfig = YamlConfigurationUtil.loadConfiguration(sectionFile);
@@ -204,12 +205,12 @@ public class ConfigHandler {
 	public void testConfig() {
 		boolean shutdown = false;
 		if (ConfigSetting.BACKPACK_PLAYER_SIZE.getValueAsInt() > 54 || ConfigSetting.BACKPACK_TEAM_SIZE.getValueAsInt() > 54) {
-			System.err.println(Main.getConsolePrefix() + "CONFIGFEHLER! Die Groesse des Rucksackes darf nicht mehr als 54 betragen.");
+			Main.getInstance().getLogger().log(Level.SEVERE, "CONFIGFEHLER! Die Groesse des Rucksackes darf nicht mehr als 54 betragen.");
 			shutdown = true;
 		}
 
 		if (shutdown) {
-			System.out.println(Main.getConsolePrefix() + "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
+			Main.getInstance().getLogger().log(Level.SEVERE, "Das Plugin wird heruntergefahren, da Fehler in der Config existieren.");
 			Bukkit.getServer().shutdown();
 		}
 	}
