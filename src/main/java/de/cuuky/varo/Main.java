@@ -14,7 +14,6 @@ import com.google.common.io.BaseEncoding;
 
 import de.cuuky.cfw.CuukyFrameWork;
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.configuration.configurations.language.VaroLanguageManager;
@@ -133,7 +132,7 @@ public class Main extends JavaPlugin {
 			if (this.isFailed())
 				return;
 
-			new MetricsLoader(this);
+			MetricsLoader.loadMetrics(this);
 
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();

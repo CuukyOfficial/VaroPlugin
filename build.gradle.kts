@@ -69,6 +69,7 @@ dependencies {
     runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
         exclude(module = "slf4j-api")
     }
+    runtimeDownload("org.bstats:bstats-bukkit:3.1.0")
     runtimeDownload("com.github.pengrad:java-telegram-bot-api:6.9.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
