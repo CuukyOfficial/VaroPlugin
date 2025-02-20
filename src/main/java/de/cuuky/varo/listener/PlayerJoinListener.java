@@ -23,8 +23,6 @@ import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.spawns.Spawn;
 import de.cuuky.varo.spigot.VaroUpdateResultSet;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
-import de.cuuky.varo.utils.MagmaUtils;
-import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.VersionUtils;
 import io.github.almightysatan.slams.Placeholder;
 
@@ -74,8 +72,6 @@ public class PlayerJoinListener implements Listener {
 			VersionUtils.getVersionAdapter().setXpCooldown(player, 0);
 
 		event.setJoinMessage(null);
-		if (VersionUtils.getServerSoftware() == ServerSoftware.MAGMA_1_12)
-			MagmaUtils.checkForIllegalMods(player);
 
 		if (!Main.getVaroGame().hasStarted()) {
 			player.getInventory().clear();
