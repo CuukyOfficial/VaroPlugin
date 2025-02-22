@@ -2,15 +2,15 @@ game:
   sort:
     number: "<prefix>You've been teleported to spawn <colorcode><spawn-id>§7!"
     player: "<prefix>You've been teleported to your spawn!"
-    noSpawnFound: "<prefix>There is no spawn available for you!"
-    noSpawnFoundTeam: "<prefix>There is no spawn available for you that's next to your team partner(s)!"
+    noSpawnFound: "<prefix>No spawn point is available for you!"
+    noSpawnFoundTeam: "<prefix>No spawn point is available near your team partner(s)!"
     spectator: "<prefix>You've been teleported to the world spawn!"
   start:
     countdown: "<projectname>§7 starts in <colorcode><start-countdown>§7 second<if_eq:1:<start-countdown>::s>!"
     startTitle: "<colorcode><start-countdown>"
     startSubtitle: "§7Good luck!"
     varoStart: "<projectname> §7has started! §5Good luck!"
-    abort: "<prefix>§cThe start has been aborted!"
+    abort: "<prefix>§cThe start has been canceled!"
   finale:
     start: "§7The finale starts now!<if_num_gt:<config-Finale-finaleProtectionTime>:0: Everybody is protected for <colorcode><config-Finale-finaleProtectionTime> §7seconds!:>"
     countdown: "§7The finale starts in <colorcode><finale-countdown>§7 second<if_eq:1:<finale-countdown>::s>!"
