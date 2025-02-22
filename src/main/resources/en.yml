@@ -32,7 +32,7 @@ player:
     protectionEnd: "<prefix>§a<name>§7 is now vulnerable!"
     spectator: "<prefix>§a<name>§7 has entered the server as a spectator!"
     massrecording: "<prefix>§a<name>§7 has entered the server during mass recording and is protected for <colorcode><config-Protections-joinProtectionTime>§7 seconds!"
-    remainingTime: "<prefix>§a<name>§7 left the server too early and has <colorcode><seconds>§7 seconds left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
+    remainingTime: "<prefix>§a<name>§7 left the server too early and has <if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>§7 left! Remaining §cDisconnects§7: §c<remaining-disconnects>"
   disconnect:
     kick: "<prefix><colorcode><name> §7has been kicked!"
     spectator: "<prefix>§c<name> §7has left the server as a spectator!"
@@ -107,7 +107,7 @@ player:
         - "<colorcode><kills>"
         - "<padding:2>"
         - "§7Time§8:"
-        - "<colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+        - "<if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>"
         - "<padding:3>"
         - "§7Online§8: <colorcode><num-online>"
         - "§7Alive§8: <colorcode><num-alive>"
@@ -122,7 +122,7 @@ player:
         - "<colorcode><kills>"
         - "<padding:2>"
         - "§7Time§8:"
-        - "<colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+        - "<if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>"
         - "<padding:3>"
         - "§7Best Players§8:"
         - "§71. <colorcode><top-player:1>"
@@ -417,7 +417,7 @@ teamrequest:
   renamed: "<prefix>§7Team name changed to <colorcode><team-newname>"
 
 motd:
-  open: "§aJoin <projectname>§a! §7Have fun!"
+  open: "§aJoin <projectname>§a!\n§7Have fun!"
   closedHours: "§cYou can only join between §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cand §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1>\n§7Please try again later!"
   closed: "§cThe server is not yet available! \n§7Please try again later!"
 
