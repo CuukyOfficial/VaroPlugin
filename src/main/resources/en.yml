@@ -14,7 +14,7 @@ commands:
         <prefix>§7Use <colorcode>/varo update §7to update.
         <prefix>Current version: §c<varo-version>
         <prefix>Latest version: §a<varo-version-latest>
-      created: "<prefix>Bugreport was saved as §c<file> §7! Please upload this file\
+      created: "<prefix>Bug report was saved as §c<file>§7! Please upload this file\
         \ to our Discord: <varo-discord>"
       collectingdata: "<prefix>Collecting data..."
     backpack:
