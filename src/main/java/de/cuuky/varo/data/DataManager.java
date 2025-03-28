@@ -83,7 +83,7 @@ public class DataManager {
 		new DefaultPresetLoader();
 	}
 
-	public void load() {
+	public void load() throws MissingTranslationException, InvalidTypeException, IOException {
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
@@ -101,11 +101,7 @@ public class DataManager {
 		
 		this.loadBackups();
 		
-		try {
-            Messages.load();
-        } catch (MissingTranslationException | InvalidTypeException | IOException e) {
-            e.printStackTrace(); // TODO
-        }
+        Messages.load();
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
 				&& !VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
