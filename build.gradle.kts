@@ -63,7 +63,7 @@ dependencies {
 	runtimeDownload("com.google.guava:guava:33.3.0-jre")
     runtimeDownload("com.google.code.gson:gson:2.10.1")
     runtimeDownload("org.apache.commons:commons-collections4:4.4")
-    runtimeDownload("net.dv8tion:JDA:5.3.0") {
+    runtimeDownload("net.dv8tion:JDA:5.3.1") {
         exclude(module = "opus-java")
     }
     runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
