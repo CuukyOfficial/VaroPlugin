@@ -18,6 +18,7 @@
 
 package de.cuuky.varo.config.language;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -374,7 +375,8 @@ public final class Messages {
     public static final VaroMessage BLOCKLOGGER_FILTER_MATERIAL = message("blocklogger.filter.material");
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
-        SLAMS.load("en", JasklParser.createParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))));
+        SLAMS.load("en", JasklParser.createReadParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))),
+                JasklParser.createReadWriteParser(YamlConfig.of(new File("plugins/Varo/messages/en.yml"))));
     }
 
     static VaroMessage message(String key) {
