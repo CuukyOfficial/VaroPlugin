@@ -20,12 +20,7 @@ public class SessionCheck extends Checker {
 		}
 
 		int normalSessions = ConfigSetting.SESSIONS_PER_DAY.getValueAsInt();
-		int preProduceSessions;
-		if (ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
-			preProduceSessions = ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt();
-		} else {
-			preProduceSessions = 0;
-		}
+		int preProduceSessions = Math.max(ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt(), 0);
 
 		for (VaroPlayer vp : VaroPlayer.getVaroPlayers()) {
 			if (!vp.getStats().hasFullTime()) {
