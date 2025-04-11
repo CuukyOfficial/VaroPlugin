@@ -60,11 +60,11 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.luckperms:api:5.4")
 
-	runtimeDownload("com.github.cryptomorin:XSeries:13.1.0")
+	runtimeDownload("com.github.cryptomorin:XSeries:13.2.0")
 	runtimeDownload("com.google.guava:guava:33.3.0-jre")
     runtimeDownload("com.google.code.gson:gson:2.10.1")
     runtimeDownload("org.apache.commons:commons-collections4:4.4")
-    runtimeDownload("net.dv8tion:JDA:5.3.1") {
+    runtimeDownload("net.dv8tion:JDA:5.3.2") {
         exclude(module = "opus-java")
     }
     runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
