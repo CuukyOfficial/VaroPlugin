@@ -31,6 +31,7 @@ This project probably describes my progress in coding - not the skills I have to
 
 # Links
 - [SpigotMC](https://varoplugin.de/)
+- [Maven Repository](https://repo.varoplugin.de/)
 - [PayPal](https://www.paypal.me/Cuuky)
 - [TipeeeStream](https://www.tipeeestream.com/cuuky/donation)
 
