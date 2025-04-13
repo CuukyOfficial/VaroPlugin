@@ -7,6 +7,9 @@ import java.nio.file.Paths;
 
 import com.google.common.io.Files;
 
+import de.cuuky.varo.Main;
+import de.cuuky.varo.utils.ZipUtil;
+
 public class PresetLoader {
 
 	private static final Path PRESET_PATH = Paths.get("plugins/Varo/presets/");
@@ -51,5 +54,9 @@ public class PresetLoader {
 
 	public File getFile() {
 		return file;
+	}
+	
+	public static void copyDefaultPresets() {
+	    ZipUtil.unzip(Main.getInstance().getThisFile(), new File("plugins/Varo"), path -> path.startsWith("presets/"));
 	}
 }

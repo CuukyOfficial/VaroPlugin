@@ -11,6 +11,7 @@ import io.github.almightysatan.slams.PlaceholderResolver;
 public class ProtectionTime {
 
 	private BukkitTask scheduler;
+	private int protectionTimer;
 
 	public ProtectionTime() {
 		startGeneralTimer(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
@@ -21,9 +22,12 @@ public class ProtectionTime {
 	}
 
 	private void startGeneralTimer(int timer) {
+		if (timer == 0) {
+			throw new IllegalArgumentException();
+		}
+		
+		this.protectionTimer = timer;
 		this.scheduler = new BukkitRunnable() {
-
-			private int protectionTimer = timer;
 
 			@Override
 			public void run() {
@@ -32,34 +36,38 @@ public class ProtectionTime {
 					return;
 				}
 
-				if (this.protectionTimer == 0) {
+				if (ProtectionTime.this.protectionTimer == 0) {
 					Messages.PROTECTION_END.broadcast();
 					Main.getVaroGame().setProtection(null);
 					scheduler.cancel();
-				} else if (protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0 && this.protectionTimer != timer)
-				    Messages.PROTECTION_PROTECTED.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
+				} else if (ProtectionTime.this.protectionTimer != timer
+				        && ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
+					Messages.PROTECTION_PROTECTED.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
 				            .constant("protection-seconds", getCountdownSec(protectionTimer)).build());
+				}
 
-				this.protectionTimer--;
+				ProtectionTime.this.protectionTimer--;
 			}
 		}.runTaskTimer(Main.getInstance(), 1L, 20L);
 	}
 
-	private String getCountdownMin(int sec) {
+	public String getCountdownMin(int sec) {
 		int min = sec / 60;
-
-		if (min < 10)
-			return "0" + min;
-		else
-			return min + "";
+		return (min < 10) ? "0" + min : String.valueOf(min);
 	}
 
-	private String getCountdownSec(int sec) {
+	public String getCountdownSec(int sec) {
 		sec = sec % 60;
+		return (sec < 10) ? "0" + sec : String.valueOf(sec);
+	}
 
-		if (sec < 10)
-			return "0" + sec;
-		else
-			return sec + "";
+	/**
+	 * Returns the protection timer
+	 * 
+	 * @return the protection timer
+	 */
+	public int getProtectionTimer() {
+		return this.protectionTimer;
+
 	}
 }

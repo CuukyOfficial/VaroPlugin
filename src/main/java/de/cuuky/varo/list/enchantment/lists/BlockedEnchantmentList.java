@@ -16,34 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package de.cuuky.varo.game.world.border;
+package de.cuuky.varo.list.enchantment.lists;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.enchantments.Enchantment;
 
-public interface VaroBorder {
+import de.cuuky.varo.list.enchantment.EnchantmentList;
 
-    double getSize();
-    
-    void setSize(double size, long time);
-    
-    default double getRadius() {
-        return this.getSize() / 2;
+public abstract class BlockedEnchantmentList extends EnchantmentList {
+
+    public BlockedEnchantmentList(String location) {
+        super(location);
     }
 
-    Location getCenter();
-    
-    void setCenter(Location location);
-    
-    double getDistance(Location location);
-    
-    default double getDistance(Player player) {
-        return player == null ? 0 : this.getDistance(player.getLocation());
+    @Override
+    public void loadDefaultValues() {
+        this.enchantments.add(Enchantment.DAMAGE_ARTHROPODS);
     }
-    
-    boolean isOutside(Location location);
-    
-    default boolean isOutside(Player player) {
-        return player == null ? false : this.isOutside(player.getLocation());
+
+    public boolean isBlocked(Enchantment ench) {
+        return this.enchantments.contains(ench);
     }
 }

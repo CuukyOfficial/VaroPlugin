@@ -354,10 +354,11 @@ public class Stats implements VaroSerializeable {
 			if (!Main.getDataManager().getOutsideTimeChecker().canJoin())
 				result = KickResult.NOT_IN_TIME;
 
-		for (Strike strike : strikes)
-			if (strike.getBanUntil() != null)
-				if (curr.before(strike.getBanUntil()))
-					result = KickResult.STRIKE_BAN;
+		for (Strike strike : this.strikes)
+			if (strike.getBanUntil() != null && curr.before(strike.getBanUntil())) {
+				result = KickResult.STRIKE_BAN;
+				break;
+			}
 
 		if (!this.isAlive())
 			result = KickResult.DEAD;
@@ -397,11 +398,12 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public boolean isAlive() {
-		if (this.state == PlayerState.ALIVE)
-			return true;
-
-		return false;
+		return this.state == PlayerState.ALIVE;
 	}
+
+	public boolean isDead() {
+        return this.state == PlayerState.DEAD;
+    }
 
 	public boolean isShowActionbar() {
 		return showActionbar;
@@ -429,15 +431,17 @@ public class Stats implements VaroSerializeable {
 
 		removeTeamAndRank();
 
+		lastLocation = null;
 		if (owner.isOnline()) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					lastLocation = owner.getPlayer().getLocation();
+				    Player player = owner.getPlayer();
+				    if (player != null)
+				        lastLocation = player.getLocation();
 				}
 			}.runTaskLater(Main.getInstance(), 1L);
-		} else
-			lastLocation = null;
+		}
 
 	}
 

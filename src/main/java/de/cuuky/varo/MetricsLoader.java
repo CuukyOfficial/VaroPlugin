@@ -1,28 +1,30 @@
-package de.cuuky.varo.bstats;
+package de.cuuky.varo;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
 
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.MultiLineChart;
+import org.bstats.charts.SimpleBarChart;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 
 public class MetricsLoader {
 
 	private static final int BSTATS_ID = 6639;
-
-	private Metrics metrics;
-
-	public MetricsLoader(JavaPlugin instance) {
-		loadMetrics(instance);
+	
+	private MetricsLoader() {
+	    throw new UnsupportedOperationException();
 	}
 
-	private void loadMetrics(JavaPlugin instance) {
+	public static void loadMetrics(JavaPlugin instance) {
 		try {
-			metrics = new Metrics(instance, BSTATS_ID);
-			metrics.addCustomChart(new Metrics.SimpleBarChart("functionsUsed", new Callable<Map<String, Integer>>() {
+		    System.setProperty("bstats.relocatecheck", "false"); // bstats is loaded in a different class loader
+			Metrics metrics = new Metrics(instance, BSTATS_ID);
+			metrics.addCustomChart(new SimpleBarChart("functionsUsed", new Callable<Map<String, Integer>>() {
 
 				@Override
 				public Map<String, Integer> call() throws Exception {
@@ -37,7 +39,7 @@ public class MetricsLoader {
 				}
 			}));
 
-			metrics.addCustomChart(new Metrics.MultiLineChart("functionsValues", new Callable<Map<String, Integer>>() {
+			metrics.addCustomChart(new MultiLineChart("functionsValues", new Callable<Map<String, Integer>>() {
 				@Override
 				public Map<String, Integer> call() throws Exception {
 					Map<String, Integer> valueMap = new HashMap<>();
@@ -50,9 +52,8 @@ public class MetricsLoader {
 					return valueMap;
 				}
 			}));
-		} catch (Throwable e) {
-			e.printStackTrace();
-			System.err.println(Main.getConsolePrefix() + "Failed to send data to bStats! (Wrong server version?)");
+		} catch (Throwable t) {
+		    instance.getLogger().log(Level.WARNING, "Failed to load bstats!", t);
 		}
 	}
 }

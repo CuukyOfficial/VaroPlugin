@@ -2,6 +2,7 @@ package de.cuuky.varo.serialize;
 
 import java.io.File;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -68,7 +69,7 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 		try {
 			new VaroSerializer(saveUnder, instance, saveTo);
 		} catch (NoClassDefFoundError e) {
-			System.out.println(Main.getConsolePrefix() + "Failed to save files - did you change the version while the server was running?");
+		    Main.getInstance().getLogger().log(Level.SEVERE, "Failed to save files - did you change the version while the server was running?");
 		}
 	}
 

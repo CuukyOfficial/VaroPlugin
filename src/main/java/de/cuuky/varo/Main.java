@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -13,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.io.BaseEncoding;
 
 import de.cuuky.varo.bot.BotLauncher;
-import de.cuuky.varo.bstats.MetricsLoader;
 import de.cuuky.varo.configuration.ConfigFailureDetector;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.data.BugReport;
@@ -23,7 +23,6 @@ import de.cuuky.varo.data.Dependencies;
 import de.cuuky.varo.game.VaroGame;
 import de.cuuky.varo.gui.VaroInventoryManager;
 import de.cuuky.varo.spigot.VaroUpdater;
-import de.cuuky.varo.threads.SmartLagDetector;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.version.ServerSoftware;
@@ -61,56 +60,49 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		long timestamp = System.currentTimeMillis();
+	    long timestamp = System.currentTimeMillis();
+	    try {
+    		this.getLogger().log(Level.INFO, "############################################################################");
+    		this.getLogger().log(Level.INFO, "#                                                                          #");
+    		this.getLogger().log(Level.INFO, "#  #     #                         ######                                  #");
+    		this.getLogger().log(Level.INFO, "#  #     #   ##   #####   ####     #     # #      #    #  ####  # #    #   #");
+    		this.getLogger().log(Level.INFO, "#  #     #  #  #  #    # #    #    #     # #      #    # #    # # ##   #   #");
+    		this.getLogger().log(Level.INFO, "#  #     # #    # #    # #    #    ######  #      #    # #      # # #  #   #");
+    		this.getLogger().log(Level.INFO, "#   #   #  ###### #####  #    #    #       #      #    # #  ### # #  # #   #");
+    		this.getLogger().log(Level.INFO, "#    # #   #    # #   #  #    #    #       #      #    # #    # # #   ##   #");
+    		this.getLogger().log(Level.INFO, "#     #    #    # #    #  ####     #       ######  ####   ####  # #    #   #");
+    		this.getLogger().log(Level.INFO, "#                                                                          #");
+    		this.getLogger().log(Level.INFO, "#                               by Cuuky                                   #");
+    		this.getLogger().log(Level.INFO, "#                                                                          #");
+    		this.getLogger().log(Level.INFO, "############################################################################");
+    
+    		this.getLogger().log(Level.INFO, "");
+    		this.getLogger().log(Level.INFO, "Enabling " + getPluginName() + "...");
+    		
+    		this.getLogger().log(Level.INFO, "Your server: ");
+    		this.getLogger().log(Level.INFO, "	Running on " + VersionUtils.getServerSoftware().getName() + " ("
+    				+ Bukkit.getVersion() + ")");
+    		this.getLogger().log(Level.INFO, "	Software-Name (Base): " + Bukkit.getName() + " (1."
+    				+ VersionUtils.getVersion().getIdentifier() + ")");
+    		this.getLogger().log(Level.INFO, 
+    				"	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
+    		this.getLogger().log(Level.INFO, "Forge-Support: " + VersionUtils.hasForgeSupport());
 
-		System.out.println("############################################################################");
-		System.out.println("#                                                                          #");
-		System.out.println("#  #     #                         ######                                  #");
-		System.out.println("#  #     #   ##   #####   ####     #     # #      #    #  ####  # #    #   #");
-		System.out.println("#  #     #  #  #  #    # #    #    #     # #      #    # #    # # ##   #   #");
-		System.out.println("#  #     # #    # #    # #    #    ######  #      #    # #      # # #  #   #");
-		System.out.println("#   #   #  ###### #####  #    #    #       #      #    # #  ### # #  # #   #");
-		System.out.println("#    # #   #    # #   #  #    #    #       #      #    # #    # # #   ##   #");
-		System.out.println("#     #    #    # #    #  ####     #       ######  ####   ####  # #    #   #");
-		System.out.println("#                                                                          #");
-		System.out.println("#                               by Cuuky                                   #");
-		System.out.println("#                                                                          #");
-		System.out.println("############################################################################");
-
-		System.out.println(CONSOLE_PREFIX);
-		System.out.println(CONSOLE_PREFIX + "Enabling " + getPluginName() + "...");
-		
-		System.out.println(CONSOLE_PREFIX + "Your server: ");
-		System.out.println(CONSOLE_PREFIX + "	Running on " + VersionUtils.getServerSoftware().getName() + " ("
-				+ Bukkit.getVersion() + ")");
-		System.out.println(CONSOLE_PREFIX + "	Software-Name (Base): " + Bukkit.getName() + " (1."
-				+ VersionUtils.getVersion().getIdentifier() + ")");
-		System.out.println(
-				CONSOLE_PREFIX + "	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
-		System.out.println(CONSOLE_PREFIX + "Forge-Support: " + VersionUtils.hasForgeSupport());
-
-		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT) {
-			System.out.println(CONSOLE_PREFIX
-					+ "	It seems like you're using Bukkit. Bukkit has a worse performance and is lacking some features.");
-			System.out.println(
-					CONSOLE_PREFIX + "	Please use Spigot or Paper instead (https://papermc.io/).");
-		}
-		System.out.println(CONSOLE_PREFIX);
-		
-		Dependencies.loadRequired(this);
-		
-		dataManager = new DataManager(this);
-		dataManager.preLoad();
-		
-		System.out.println(CONSOLE_PREFIX);
-
-		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
-		    System.out.println(CONSOLE_PREFIX + "SHA1SUM: " + this.calcChecksum());
-
-		if (this.failed)
-			return;
-
-		try {
+    		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT)
+    			this.getLogger().log(Level.SEVERE,
+    			        "	It seems like you're using Bukkit. Please use Spigot or Paper instead! (https://papermc.io/)");
+    		this.getLogger().log(Level.INFO, "");
+    		
+    		Dependencies.loadRequired(this);
+    		
+    		dataManager = new DataManager(this);
+    		dataManager.preLoad();
+    		
+    		this.getLogger().log(Level.INFO, "");
+    
+    		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+    		    this.getLogger().log(Level.INFO, "SHA1SUM: " + this.calcChecksum());
+    		
 			if (new ConfigFailureDetector().hasFailed()) {
 				this.fail();
 				return;
@@ -119,7 +111,7 @@ public class Main extends JavaPlugin {
 			long dataStamp = System.currentTimeMillis();
 			inventoryManager = new VaroInventoryManager(this);
 			dataManager.load();
-			System.out.println(CONSOLE_PREFIX + "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
+			this.getLogger().log(Level.INFO, "Loaded all data (" + (System.currentTimeMillis() - dataStamp) + "ms)");
 
 			varoUpdater = new VaroUpdater(RESOURCE_ID, this.getDescription().getVersion(),
 					() -> varoUpdater.printResults());
@@ -128,8 +120,7 @@ public class Main extends JavaPlugin {
 			if (this.isFailed())
 				return;
 
-			new MetricsLoader(this);
-			new SmartLagDetector(this);
+			MetricsLoader.loadMetrics(this);
 
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
@@ -142,9 +133,9 @@ public class Main extends JavaPlugin {
 			return;
 
 		enabled = true;
-		System.out.println(CONSOLE_PREFIX + "Enabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		this.getLogger().log(Level.INFO, "Enabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
+		this.getLogger().log(Level.INFO, " ");
+		this.getLogger().log(Level.INFO, "--------------------------------");
 		super.onEnable();
 	}
 
@@ -152,36 +143,36 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		long timestamp = System.currentTimeMillis();
 
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "Disabling " + this.getDescription().getName() + "...");
+		this.getLogger().log(Level.INFO, "--------------------------------");
+		this.getLogger().log(Level.INFO, " ");
+		this.getLogger().log(Level.INFO, "Disabling " + this.getDescription().getName() + "...");
 
 		if (dataManager != null && !this.failed) {
-			System.out.println(CONSOLE_PREFIX + "Saving data...");
+			this.getLogger().log(Level.INFO, "Saving data...");
 			dataManager.saveSync();
 		}
 
 		if (botLauncher != null && botLauncher.getDiscordbot() != null) {
-			System.out.println(CONSOLE_PREFIX + "Disconnecting bots...");
+			this.getLogger().log(Level.INFO, "Disconnecting bots...");
 			botLauncher.disconnect();
 		}
 
 		if (!this.failed) {
             VersionUtils.getVersionAdapter().getOnlinePlayers()
                 .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+            dataManager.cleanUp();
         } else {
 			File bugReport = BugReport.createBugReport();
 			if (bugReport != null)
-			    System.out.println(CONSOLE_PREFIX + "Saved crash-report to " + bugReport.getAbsolutePath());
+			    this.getLogger().log(Level.INFO, "Saved crash-report to " + bugReport.getAbsolutePath());
 			else
-			    System.out.println(CONSOLE_PREFIX + "Unable to create crash-report");
+			    this.getLogger().log(Level.SEVERE, "Unable to create crash-report");
 		}
 		Bukkit.getScheduler().cancelTasks(this);
-		dataManager.getVaroLoggerManager().cleanUp();
 
-		System.out.println(CONSOLE_PREFIX + "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
-		System.out.println(CONSOLE_PREFIX + " ");
-		System.out.println(CONSOLE_PREFIX + "--------------------------------");
+		this.getLogger().log(Level.INFO, "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
+		this.getLogger().log(Level.INFO, " ");
+		this.getLogger().log(Level.INFO, "--------------------------------");
 		super.onDisable();
 	}
 

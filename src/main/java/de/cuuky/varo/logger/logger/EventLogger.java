@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -86,8 +88,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 		} catch (NoClassDefFoundError | BootstrapMethodError e) {
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(Main.getPrefix() + "Failed to broadcast message! Did you enter a wrong channel ID?");
+			Main.getInstance().getLogger().log(Level.WARNING, "Failed to broadcast message! Did you enter an invalid channel ID?", e);
 			return false;
 		}
 	}
@@ -96,7 +97,9 @@ public class EventLogger extends CachedVaroLogger<String> {
         message = ChatColor.stripColor(message.replace("&", "§"));
 
         String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
-        this.queueLog(log);
+        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+            this.queueLog(log);
+        });
 
         if (message.contains("%noBot%") || message.contains("%noDiscord%"))
             return;

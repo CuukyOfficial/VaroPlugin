@@ -37,6 +37,7 @@ public enum ConfigSetting implements SectionEntry {
 	AUTOSETUP_SPAWNS_BLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.block.material", XMaterial.STONE_BRICK_SLAB, "Welche Block-ID der Halftstep am Spawn haben soll"),
 	AUTOSETUP_SPAWNS_RADIUS(ConfigSettingSection.AUTOSETUP, "spawns.radius", -1, "In welchem Radius die Löcher\ngeneriert werden sollen\n-1 wählt automatisch einen passenden radius"),
 	AUTOSETUP_SPAWNS_SIDEBLOCKID(ConfigSettingSection.AUTOSETUP, "spawns.sideblock.material", XMaterial.GRASS_BLOCK, "Welche Block-ID der Block,\nden man abbaut haben soll"),
+	AUTOSETUP_SPAWNS_FLAT_SURFACE(ConfigSettingSection.AUTOSETUP, "spawns.flatSurface", false, "Ob eine flache Ebene zwischen den Spawns generiert werden soll"),
 	AUTOSETUP_TIME_HOUR(ConfigSettingSection.AUTOSETUP, "autostart.time.hour", -1, "Um welche Zeit der Stunde der\nAutoStart gesetzt werden soll"),
 	AUTOSETUP_TIME_MINUTE(ConfigSettingSection.AUTOSETUP, "autostart.time.minute", -1, "Um welche Zeit der Minute der\nAutoStart gesetzt werden soll"),
 	WORLD_SPAWNS_GENERATE_Y_TOLERANCE(ConfigSettingSection.AUTOSETUP, "spawnGeneratorYTolerance", 8, "Wie viel Hoehe die Spawns von einander\nAbstand haben duerfen beim\ngenerieren der Spawns\nBeispiel: Spawn ist 10 Bloecke hoeher als andere\n->wird weiter nach Terrain gesucht"),
@@ -99,7 +100,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	// DEATH
 	DEATH_SOUND_ENABLED(ConfigSettingSection.DEATH, "deathSound.enabled", false, "Ob ein Sound fuer alle abgespielt werden soll,\nsobald ein Spieler stirbt", true),
-	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", XSound.ENTITY_WITHER_AMBIENT.parseSound(), "Sound der abgespielt werden soll", true),
+	DEATH_SOUND(ConfigSettingSection.DEATH, "deathSound.sound", XSound.ENTITY_WITHER_AMBIENT.name(), "Sound der abgespielt werden soll", true),
 	DEBUG_OPTIONS(ConfigSettingSection.OTHER, "debugOptions", false, "Ob Debug Funktionen verfuegbar sein sollen.\nVorsicht: Mit Bedacht oder nur\nauf Anweisung nutzen!"),
 	BLOCK_ADVANCEMENTS(ConfigSettingSection.OTHER, "blockAdvancements", true, "Ob Advancements deaktiviert werden sollen [1.12+]"),
 
@@ -125,7 +126,7 @@ public enum ConfigSetting implements SectionEntry {
 	DISCORDBOT_GAMESTATE(ConfigSettingSection.DISCORD, "gameState", "Varo | Plugin by Cuuky - Contributors: Korne127, UeberallGebannt", "Stelle hier ein, was der Bot\nim Spiel als Name haben soll."),
 	DISCORDBOT_INVITELINK(ConfigSettingSection.DISCORD, "inviteLink", "ENTER LINK HERE", "Stelle hier deinen Link zum Discord ein"),
 
-	DISCORDBOT_ADD_POKAL_ON_WIN(ConfigSettingSection.DISCORD, "addPokalOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
+	DISCORDBOT_ADD_TROPHY_ON_WIN(ConfigSettingSection.DISCORD, "addTrophyOnWin", true, "Ob den Gewinnern Pokale hinter den\nNamen gesetzt werden sollen."),
     DISCORDBOT_ANNOUNCEMENT_CHANNELID(ConfigSettingSection.DISCORD, "announcementChannelID", -1L, "Gib hier den Channel an,\nin dem Nachrichten vom AutoStart geschrieben werden.\nBeispiel: Varo startet in ... Minuten."),
     DISCORDBOT_ANNOUNCEMENT_PING_ROLEID(ConfigSettingSection.DISCORD, "announcementPingRoleID", -1L, "Gib hier die ID der Rolle ein, welche\nbei Nachrichtenauf Discord gepingt werden sollen.\nHinweis: -1 = everyone"),
 	
@@ -233,6 +234,7 @@ public enum ConfigSetting implements SectionEntry {
 	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen koennen."),
 
 	SPAWN_TELEPORT_JOIN(ConfigSettingSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfuer sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),
+	LOBBY_INTERACT_VEHICLES(ConfigSettingSection.START, "lobbyInteractVehicles", true, "Ob Spieler in der lobby mit Booten und Minecrats interagieren können sollen"),
 	START_AT_PLAYERS(ConfigSettingSection.START, "startAtPlayers", -1, "Startet das Projekt automatisch wenn die\nAnzahl der Online Spieler dieser entspricht."),
 
 	// START
@@ -318,7 +320,6 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_LANGUAGE_ENABLED(ConfigSettingSection.COMMANDS, "language.enabled", true, "Ob /language aktiviert sein soll"),
 	COMMAND_MESSAGE_ENABLED(ConfigSettingSection.COMMANDS, "message.enabled", true, "Ob /message und /reply aktiviert sein soll"),
 	COMMAND_MUTE_ENABLED(ConfigSettingSection.COMMANDS, "mute.enabled", true, "Ob /mute und /unmute aktiviert sein soll"),
-	COMMAND_PERFORMANCE_ENABLED(ConfigSettingSection.COMMANDS, "performance.enabled", true, "Ob /performance aktiviert sein soll"),
 	COMMAND_PING_ENABLED(ConfigSettingSection.COMMANDS, "ping.enabled", true, "Ob /ping aktiviert sein soll"),
 	COMMAND_PROTECT_ENABLED(ConfigSettingSection.COMMANDS, "protect.enabled", true, "Ob /protect und /unprotect aktiviert sein soll"),
 	COMMAND_REPORT_ENABLED(ConfigSettingSection.COMMANDS, "report.enabled", true, "Ob /report aktiviert sein soll"),
@@ -328,7 +329,6 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_TIME_ENABLED(ConfigSettingSection.COMMANDS, "time.enabled", true, "Ob /day und /night aktiviert sein soll"),
 	COMMAND_TR_ENABLED(ConfigSettingSection.COMMANDS, "tr.enabled", true, "Ob /tr aktiviert sein soll"),
 	COMMAND_TR_NAME(ConfigSettingSection.COMMANDS, "tr.name", "tr", "Custom name für /tr"),
-	COMMAND_USAGE_ENABLED(ConfigSettingSection.COMMANDS, "usage.enabled", true, "Ob /usage aktiviert sein soll"),
 	COMMAND_VANISH_ENABLED(ConfigSettingSection.COMMANDS, "vanish.enabled", true, "Ob /vanish aktiviert sein soll"),
 	COMMAND_VARO_ENABLED(ConfigSettingSection.COMMANDS, "varo.enabled", true, "Ob /varo aktiviert sein soll"),
 	COMMAND_VARO_NAME(ConfigSettingSection.COMMANDS, "varo.name", "varo", "Custom name für /varo"),

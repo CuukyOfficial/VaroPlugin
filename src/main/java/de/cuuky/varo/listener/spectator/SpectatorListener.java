@@ -2,8 +2,10 @@ package de.cuuky.varo.listener.spectator;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.Cancellable;
@@ -73,8 +75,8 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-    	if(event.getBlock() == null || event.getBlock().getType() != XMaterial.FIRE.parseMaterial() || event.getPlayer().getItemInHand() == null
-        		|| !(event.getPlayer().getItemInHand().getType() == XMaterial.FLINT_AND_STEEL.parseMaterial() || event.getPlayer().getItemInHand().getType() == XMaterial.FIRE_CHARGE.parseMaterial()))
+    	if(event.getBlock() == null || event.getBlock().getType() != XMaterial.FIRE.get() || event.getPlayer().getItemInHand() == null
+        		|| !(event.getPlayer().getItemInHand().getType() == XMaterial.FLINT_AND_STEEL.get() || event.getPlayer().getItemInHand().getType() == XMaterial.FIRE_CHARGE.get()))
     		this.checkWorldInteract(event, event.getPlayer());
     }
 
@@ -115,9 +117,12 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
-        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp())
+        if (!Main.getVaroGame().hasStarted() && !event.getPlayer().isOp()) {
+            if (ConfigSetting.CAN_MOVE_BEFORE_START.getValueAsBoolean() && ConfigSetting.LOBBY_INTERACT_VEHICLES.getValueAsBoolean()
+                    && (event.getRightClicked() instanceof Minecart || event.getRightClicked() instanceof Boat))
+                return;
             event.setCancelled(true);
-        else this.checkWorldInteract(event, event.getPlayer());
+        } else this.checkWorldInteract(event, event.getPlayer());
     }
 
     @EventHandler

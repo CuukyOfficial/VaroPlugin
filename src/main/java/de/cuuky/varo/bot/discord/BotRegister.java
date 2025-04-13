@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -149,7 +150,7 @@ public class BotRegister {
 
 		if (ConfigSetting.DISCORDBOT_USE_VERIFYSTSTEM_MYSQL.getValueAsBoolean()) {
 			if (!Main.getDataManager().getMysqlClient().isConnected()) {
-				System.err.println(Main.getConsolePrefix() + "Failed to load BotRegister!");
+			    Main.getInstance().getLogger().log(Level.SEVERE, "Failed to load BotRegister!");
 				return;
 			}
 

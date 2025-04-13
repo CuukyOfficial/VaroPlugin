@@ -57,7 +57,7 @@ public class TeamRequestCommand extends VaroCommand {
 			return;
 		}
 
-		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean()) {
+		if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || ConfigSetting.TEAMREQUEST_MAXTEAMMEMBERS.getValueAsInt() <= 1) {
 			sender.sendMessage(Main.getPrefix() + "§7Das " + Main.getColorCode() + "Teamanfragen-System §7wurde in der Config deaktiviert!");
 			return;
 		}

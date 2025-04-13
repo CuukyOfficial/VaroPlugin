@@ -50,11 +50,13 @@ public class Dependencies {
         REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTERAL, JarDependency::new, () -> true));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTERAL, JarDependency::new, () -> true));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.cryptomorin.xseries.XMaterial")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> true));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.gson.JsonElement")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTERAL, JarDependency::new, () -> true));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTERAL, JarDependency::new, () -> true));
 
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("net.dv8tion.jda.api.JDA")));
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean() && !doesClassExist("org.slf4j.impl.SimpleLogger")));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
     }
     
     public static void loadRequired(Plugin plugin) {

@@ -147,7 +147,7 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player pl = pl1.getPlayer();
-            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
+            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
             pl.setGameMode(GameMode.SURVIVAL);
             pl1.cleanUpPlayer();
         }
@@ -226,6 +226,7 @@ public class VaroGame implements VaroSerializeable {
             p.getWorld().spawnEntity(p.getLocation().clone().add(0, 0, -1), EntityType.FIREWORK);
         }
 
+        // This shit needs to be rewritten in v4-next
         String first = "";
         String second = "";
         String third = "";
@@ -238,7 +239,7 @@ public class VaroGame implements VaroSerializeable {
 
             StringBuilder names = new StringBuilder();
             for (VaroPlayer vp : won)
-                names.append(!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : " & ") + vp.getName()));
+                names.append(!won.toArray()[won.size() - 1].equals(vp) ? vp.getName() + (won.size() > 2 ? (won.toArray()[won.size() - 2].equals(vp) ? "" : ", ") : "") : ((won.size() == 1 ? "" : ", ") + vp.getName()));
             names.append(won.get(0).getTeam() != null ? " (#" + won.get(0).getTeam().getName() + ")" : "");
 
             switch (i) {
@@ -254,7 +255,7 @@ public class VaroGame implements VaroSerializeable {
             }
         }
 
-        if (first.contains("&")) {
+        if (first.contains(",")) {
             Messages.LOG_WIN_TEAM.log(LogType.WIN, Placeholder.constant("winner", first));
             Messages.GAME_WIN_TEAM.broadcast(Placeholder.constant("winner", first));
         } else {
@@ -341,7 +342,7 @@ public class VaroGame implements VaroSerializeable {
                 }
 
                 if (this.finaleCountdown != 0) {
-                    Messages.GAME_START_COUNTDOWN.broadcast(Placeholder.constant("finale-countdown", String.valueOf(this.finaleCountdown)));
+                    Messages.GAME_FINALE_COUNTDOWN.broadcast(Placeholder.constant("finale-countdown", String.valueOf(this.finaleCountdown)));
                 } else {
                     this.startFinale();
                     this.finaleStartScheduler.cancel();

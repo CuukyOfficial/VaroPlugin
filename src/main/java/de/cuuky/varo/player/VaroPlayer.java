@@ -102,7 +102,7 @@ public class VaroPlayer implements VaroSerializeable {
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
-	private Sound guiSound = XSound.UI_BUTTON_CLICK.parseSound();
+	private Sound guiSound = XSound.UI_BUTTON_CLICK.get();
 	private Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
@@ -118,6 +118,7 @@ public class VaroPlayer implements VaroSerializeable {
 		this.id = generateId();
 
 		this.stats = new Stats(this);
+		this.stats.loadDefaults();
 	}
 
 	public VaroPlayer(String playerName, String uuid) {
@@ -132,9 +133,11 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	private int generateId() {
-		int id = JavaUtils.randomInt(1000, 9999999);
-		while (getPlayer(id) != null)
-			generateId();
+		int id;
+
+		do {
+			id = JavaUtils.randomInt(1000, 9999999);
+		} while (getPlayer(id) != null);
 
 		return id;
 	}
@@ -256,10 +259,6 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void register() {
-		if (this.stats == null)
-			this.stats = new Stats(this);
-
-		stats.loadDefaults();
 		varoplayer.add(this);
 	}
 

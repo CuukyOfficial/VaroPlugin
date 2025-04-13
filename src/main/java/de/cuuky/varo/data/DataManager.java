@@ -3,7 +3,9 @@ package de.cuuky.varo.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -28,7 +30,7 @@ import de.cuuky.varo.logger.VaroLoggerManager;
 import de.cuuky.varo.mysql.MySQLClient;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerHandler;
-import de.cuuky.varo.preset.DefaultPresetLoader;
+import de.cuuky.varo.preset.PresetLoader;
 import de.cuuky.varo.report.ReportHandler;
 import de.cuuky.varo.serialize.VaroSerializeHandler;
 import de.cuuky.varo.spawns.SpawnHandler;
@@ -65,6 +67,7 @@ public class DataManager {
 	private DailyTimer dailyTimer;
 	private CustomCommandManager customCommandManager;
 	private final SortedSet<VaroBackup> backups = new TreeSet<>();
+	private final Collection<Runnable> shutdownTasks = new LinkedList<>();
 
 	private boolean doSave;
 
@@ -80,7 +83,7 @@ public class DataManager {
 		this.defaultNameTagGroup = new NameTagGroup();
 		this.spectatorNameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
-		new DefaultPresetLoader();
+		PresetLoader.copyDefaultPresets();
 	}
 
 	public void load() throws MissingTranslationException, InvalidTypeException, IOException {
@@ -116,21 +119,18 @@ public class DataManager {
 
 		this.doSave = true;
 	}
+	
+	public void cleanUp() {
+	    this.getVaroLoggerManager().cleanUp();
+	    this.shutdownTasks.forEach(Runnable::run);
+	}
 
 	private void startAutoSave() {
 
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-//				DataManager.this.reloadConfig();
 				DataManager.this.saveSync();
-
-//				new BukkitRunnable() {
-//					@Override
-//					public void run() {
-//						DataManager.this.reloadPlayerClients();
-//					}
-//				}.runTask(Main.getInstance());
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), SAVE_DELAY, SAVE_DELAY);
 	}
@@ -157,6 +157,8 @@ public class DataManager {
 	
 	private void loadBackups() {
         File directory = new File(VaroBackup.BACKUP_DIRECTORY);
+        if (!directory.exists())
+            return;
         if (!directory.isDirectory())
             throw new IllegalStateException();
 
@@ -168,8 +170,8 @@ public class DataManager {
     }
 
 	public void createBackup(Consumer<VaroBackup> callback) {
-	    this.saveSync(); //TODO
-	    Bukkit.getScheduler().runTaskAsynchronously(this.instance, () -> { // TODO run this is in single thread executor or synchronize
+	    this.saveSync();
+	    Bukkit.getScheduler().runTaskAsynchronously(this.instance, () -> {
 	        VaroBackup backup = VaroBackup.createBackup();
 	        if (backup != null)
 	            synchronized (this.backups) {
@@ -181,7 +183,7 @@ public class DataManager {
 	}
 	
 	public void restoreBackup(VaroBackup backup) {
-	    Runtime.getRuntime().addShutdownHook(new Thread(backup::restore)); // TODO this is bad
+	    this.shutdownTasks.add(backup::restore);
 	    this.setDoSave(false);
 	    Bukkit.getServer().shutdown();
 	}

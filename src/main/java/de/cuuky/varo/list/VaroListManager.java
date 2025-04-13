@@ -1,16 +1,19 @@
 package de.cuuky.varo.list;
 
+import de.cuuky.varo.list.enchantment.lists.BlockedEnchantmentList;
 import de.cuuky.varo.list.enchantment.lists.BlockedEnchantments;
+import de.cuuky.varo.list.enchantment.lists.BlockedEnchantmentsOneEight;
 import de.cuuky.varo.list.item.lists.BlockedItems;
 import de.cuuky.varo.list.item.lists.BlockedRecipes;
 import de.cuuky.varo.list.item.lists.ChestItems;
 import de.cuuky.varo.list.item.lists.DeathItems;
 import de.cuuky.varo.list.item.lists.LogDestroyedBlocks;
 import de.cuuky.varo.list.item.lists.StartItems;
+import de.varoplugin.cfw.version.VersionUtils;
 
 public class VaroListManager {
 
-	private BlockedEnchantments blockedEnchantments;
+	private BlockedEnchantmentList blockedEnchantments;
 	private BlockedItems blockedItems;
 	private BlockedRecipes blockedRecipes;
 	private ChestItems chestItems;
@@ -19,7 +22,14 @@ public class VaroListManager {
 	private StartItems startItems;
 
 	public VaroListManager() {
-		this.blockedEnchantments = new BlockedEnchantments();
+	    switch (VersionUtils.getVersion()) {
+	        case ONE_8:
+	            this.blockedEnchantments = new BlockedEnchantmentsOneEight();
+	            break;
+	        default:
+	            this.blockedEnchantments = new BlockedEnchantments();
+	            break;
+	    }
 		this.blockedItems = new BlockedItems();
 		this.blockedRecipes = new BlockedRecipes();
 		this.chestItems = new ChestItems();
@@ -30,7 +40,7 @@ public class VaroListManager {
 		VaroList.saveLists();
 	}
 
-	public BlockedEnchantments getBlockedEnchantments() {
+	public BlockedEnchantmentList getBlockedEnchantments() {
 		return blockedEnchantments;
 	}
 

@@ -63,7 +63,7 @@ public class BorderCommand implements CommandExecutor {
 
             Messages.COMMANDS_BORDER_SUCCESS.send(sender);
             if (p != null)
-                p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
+                p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1);
         } else
             Messages.COMMANDS_ERROR_PERMISSION.send(sender);
         return false;

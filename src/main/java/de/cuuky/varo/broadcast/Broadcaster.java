@@ -29,7 +29,7 @@ public class Broadcaster {
 		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
 		    for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
                 int size = Messages.BROADCAST.size(player);
-                player.sendMessage(Messages.BROADCAST.value((int) (this.count % size), player));
+                player.sendMessage(Messages.BROADCAST.value((int) (this.count % size), player)); // TODO v5 use broadcast method
             }
             this.count++;
 		}, interval, interval);
@@ -44,5 +44,4 @@ public class Broadcaster {
             Bukkit.broadcastMessage(AD_MESSAGE);
         }, delay, delay);
 	}
-
 }

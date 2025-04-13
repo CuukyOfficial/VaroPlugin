@@ -20,9 +20,9 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
 
     public enum AlertGUIType {
 
-        ALL("§fALL", XMaterial.BOOK.parseMaterial(), Alert::getAlerts),
-        CLOSED("§4CLOSED", XMaterial.SKELETON_SKULL.parseMaterial(), Alert::getClosedAlerts),
-        OPEN("§eOPENED", XMaterial.EMERALD.parseMaterial(), Alert::getOpenAlerts);
+        ALL("§fALL", XMaterial.BOOK.get(), Alert::getAlerts),
+        CLOSED("§4CLOSED", XMaterial.SKELETON_SKULL.get(), Alert::getClosedAlerts),
+        OPEN("§eOPENED", XMaterial.EMERALD.get(), Alert::getOpenAlerts);
 
         private Material icon;
         private String typeName;

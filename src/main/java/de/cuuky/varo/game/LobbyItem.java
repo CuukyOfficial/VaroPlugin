@@ -37,7 +37,7 @@ public class LobbyItem {
     }
 
     public static void giveItems(VaroPlayer varoPlayer, Player player) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
         hookItem(player, new PlayerItemHookBuilder().item(ItemBuilder.itemStack((ItemStack) ConfigSetting.TEAMREQUEST_LOBBYITEM_INVITE_ITEM.getValue()).displayName(Messages.TEAMREQUEST_LOBBYITEM_INVITE_NAME.value(varoPlayer))
@@ -51,7 +51,7 @@ public class LobbyItem {
                 .subscribe(HookItemHitEvent.class, hookEvent -> {
                     EntityDamageByEntityEvent event = hookEvent.getSource();
 
-                    if (Main.getVaroGame().hasStarted())
+                    if (Main.getVaroGame().hasStarted() || !(event.getEntity() instanceof Player))
                         return;
 
                     Player invited = (Player) event.getEntity();
@@ -79,7 +79,7 @@ public class LobbyItem {
     }
 
     public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted())
+        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
         if (varoPlayer.getTeam() == null) {

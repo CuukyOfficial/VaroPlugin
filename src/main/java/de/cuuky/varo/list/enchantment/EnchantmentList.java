@@ -2,53 +2,62 @@ package de.cuuky.varo.list.enchantment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.enchantments.Enchantment;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.list.VaroList;
 
 public abstract class EnchantmentList extends VaroList {
 
-	protected ArrayList<String> enchantments;
+	protected ArrayList<Enchantment> enchantments;
 
 	public EnchantmentList(String location) {
 		super(location);
 	}
 
-	public void addEnchantment(Enchantment enc, int amplifier) {
-		enchantments.add(enc.getName() + ":" + amplifier);
+	public void addEnchantment(Enchantment enc) {
+		enchantments.add(enc);
 
 		saveList();
 	}
 	
 	@Override
 	public void init() {
-		this.enchantments = new ArrayList<String>();
+		this.enchantments = new ArrayList<>();
 	}
 
 	@Override
 	public void onLoad(List<?> list) {
-		for (Object id : list)
-			enchantments.add((String) id);
+		for (Object id : list) {
+		    String name = ((String) id).split(":")[0]; // legacy
+		    Enchantment enchantment = Enchantment.getByName(name);
+		    if (enchantment == null) {
+		        Main.getInstance().getLogger().warning("Unknown enchantment '" + enchantment + "'");
+		        continue;
+		    }
+			enchantments.add(enchantment);
+		}
 	}
 
-	public void removeEnchantment(Enchantment enc, int amplifier) {
-		enchantments.remove(enc.getName() + ":" + amplifier);
+	public void removeEnchantment(Enchantment enc) {
+		enchantments.remove(enc);
 
 		saveList();
 	}
 
 	@Override
-	public ArrayList<String> getAsList() {
+	public List<String> getAsList() {
+		return enchantments.stream().map(Enchantment::getName).collect(Collectors.toList());
+	}
+
+	public ArrayList<Enchantment> getEnchantments() {
 		return enchantments;
 	}
 
-	public ArrayList<String> getEnchantments() {
-		return enchantments;
-	}
-
-	public boolean hasEnchantment(Enchantment enc, int amplifier) {
-		return enchantments.contains(enc.getName() + ":" + amplifier);
+	public boolean hasEnchantment(Enchantment enc) {
+		return enchantments.contains(enc);
 	}
 
 	public static EnchantmentList getEnchantmentList(String list) {

@@ -22,6 +22,7 @@ public abstract class VaroCommand {
 		new BackpackCommand();
 		new BugreportCommand();
 		new CheckCombatCommand();
+		new ColorcodesCommand();
 		new CommandCommand();
 		new ConfigCommand();
 		new DiscordCommand();

@@ -24,7 +24,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			return;
 
 		for (Enchantment enc : event.getEnchantsToAdd().keySet())
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
+			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc)) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
 				Messages.PLAYER_CRAFTING_DISALLOWED.send(vp);
@@ -53,7 +53,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			return;
 
 		for (Enchantment enc : item.getEnchantments().keySet())
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
+			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc)) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
 				Messages.PLAYER_CRAFTING_DISALLOWED.send(vp);

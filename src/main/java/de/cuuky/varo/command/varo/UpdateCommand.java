@@ -2,6 +2,7 @@ package de.cuuky.varo.command.varo;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -99,10 +100,9 @@ public class UpdateCommand extends VaroCommand {
         } catch (Exception e) {
             sender.sendMessage(Main.getPrefix() + "§cEs bgab einen kritischen Fehler beim Download des Plugins.");
             sender.sendMessage(Main.getPrefix() + "§7Empfohlen wird ein manuelles Updaten des Plugins: https://www.spigotmc.org/resources/71075/");
-            System.out.println("Es gab einen kritischen Fehler beim Download des Plugins.");
-            System.out.println("---------- Stack Trace ----------");
-            e.printStackTrace();
-            System.out.println("---------- Stack Trace ----------");
+            Main.getInstance().getLogger().log(Level.SEVERE, "Es gab einen kritischen Fehler beim Download des Plugins.");
+            Main.getInstance().getLogger().log(Level.SEVERE, "---------- Stack Trace ----------", e);
+            Main.getInstance().getLogger().log(Level.SEVERE, "---------- Stack Trace ----------");
             return;
         }
 
@@ -110,7 +110,7 @@ public class UpdateCommand extends VaroCommand {
 
         // Step 2: Deleting old directory if wanted
         if (resetOldDirectory) {
-            System.out.println("Das Verzeichnis der alten Pluginversion wird geloescht.");
+            Main.getInstance().getLogger().log(Level.INFO, "Das Verzeichnis der alten Pluginversion wird geloescht.");
             File directory = new File("plugins/Varo/");
             deleteDirectory(directory);
         }

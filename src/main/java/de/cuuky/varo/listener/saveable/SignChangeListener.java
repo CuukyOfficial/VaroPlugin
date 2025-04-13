@@ -91,7 +91,7 @@ public class SignChangeListener implements Listener {
 			event.setLine(1, "§lSavedChest");
 			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
 			event.setLine(3, "§8--------------");
-			p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
+			p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(chest.getLocation(), Effect.ENDER_SIGNAL, 1);
 
@@ -134,7 +134,7 @@ public class SignChangeListener implements Listener {
 			event.setLine(1, "§lSavedFurnace");
 			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
 			event.setLine(3, "§8--------------");
-			p.playSound(furnace.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.parseSound(), 1, 1);
+			p.playSound(furnace.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
 			for (int i = 0; i < 6; i++)
 				p.getWorld().playEffect(furnace.getLocation(), Effect.ENDER_SIGNAL, 1);
 			new VaroSaveable(SaveableType.FURNACE, furnace.getBlock().getLocation(), player);

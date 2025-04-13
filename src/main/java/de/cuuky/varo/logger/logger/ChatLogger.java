@@ -1,9 +1,11 @@
 package de.cuuky.varo.logger.logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
+import de.cuuky.varo.Main;
 import de.cuuky.varo.logger.PlayerLogElement;
 import de.cuuky.varo.logger.VaroLogger;
 
@@ -14,7 +16,9 @@ public class ChatLogger extends VaroLogger<ChatLogElement> {
     }
 
     public void println(ChatLogType type, Player player, String recipient, String message) {
-        this.queueLog(new ChatLogElement(System.currentTimeMillis(), player.getUniqueId().toString(), player.getName(), type.getName(), recipient, message));
+        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+            this.queueLog(new ChatLogElement(System.currentTimeMillis(), player.getUniqueId().toString(), player.getName(), type.getName(), recipient, message));
+        });
     }
     
     public enum ChatLogType {

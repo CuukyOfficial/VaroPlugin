@@ -60,6 +60,7 @@ public final class Placeholders {
                 .variable("project-minute", () -> toPaddedString((Main.getVaroGame().getProjectTime() / 60) % 60))
                 .variable("project-second", () -> toPaddedString(Main.getVaroGame().getProjectTime() % 60))
                 .variable("border-size", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)))
+                .variable("border-radius", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)))
                 .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
                 .withArgs("top-player", args -> {
                     if (args.size() == 0 || args.size() > 2) return "INVALID_ARGS";

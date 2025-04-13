@@ -2,7 +2,6 @@ package de.cuuky.varo.gui.admin.orelogger;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -120,11 +119,15 @@ public class OreLoggerFilterGUI extends VaroInventory {
     }
 
     private void openFiltered(String player, String material) {
-        Predicate<LoggedBlock> filter = block -> (player == null || block.getName().equals(player)) &&
-            (material == null || block.getMaterial().equals(material));
-
-        List<LoggedBlock> blocks = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs().stream()
-            .filter(filter).collect(Collectors.toList());
+        List<LoggedBlock> blocks;
+        if (player == null && material == null)
+            blocks = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getLogs();
+        else if (player == null)
+            blocks = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getMaterialLogs(material);
+        else if (material == null)
+            blocks = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getNameLogs(player);
+        else
+            blocks = Main.getDataManager().getVaroLoggerManager().getBlockLogger().getNameMaterialLogs(player, material);
 
         this.openNext(new OreLoggerListGUI(this.getPlayer(), blocks));
     }

@@ -37,7 +37,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 			border.setCenter(p.getLocation());
 
 		Messages.COMMANDS_SETWORLDSPAWN.send(sender);
-		p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
+		p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1);
 		return false;
 	}
 }

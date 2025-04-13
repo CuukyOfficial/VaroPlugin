@@ -55,7 +55,7 @@ public class VaroStartThread extends BukkitRunnable {
 					continue;
 
 				Player pl = vp.getPlayer();
-				pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.parseSound(), 1, 1);
+				pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1);
 
 				String title = Messages.GAME_START_TITLE.value(vp ,Placeholder.constant("start-countdown", String.valueOf(this.startcountdown)));
 				String subtitle = Messages.GAME_START_SUBTITLE.value(vp, Placeholder.constant("start-countdown", String.valueOf(this.startcountdown)));

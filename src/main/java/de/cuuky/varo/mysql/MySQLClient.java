@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
@@ -26,7 +27,7 @@ public class MySQLClient {
 		this.password = ConfigSetting.DISCORDBOT_VERIFY_PASSWORD.getValueAsString();
 		this.connected = false;
 
-		System.out.println(Main.getConsolePrefix() + "Connecting to MySQL...");
+		Main.getInstance().getLogger().log(Level.INFO, "Connecting to MySQL...");
 		connect();
 
 		if (connected)
@@ -49,7 +50,7 @@ public class MySQLClient {
 			connection = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/" + database + "?autoReconnect=true", user, password);
 			connected = true;
 		} catch (SQLException e) {
-			System.err.println(Main.getConsolePrefix() + "MYSQL USERNAME, IP ODER PASSWORT FALSCH! -> Disabled");
+			Main.getInstance().getLogger().log(Level.SEVERE, "Invalid MYSQL host, user or password! Disabling MYSQL!");
 			return;
 		}
 	}
@@ -62,7 +63,7 @@ public class MySQLClient {
 			rs = st.executeQuery(qry);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
+			Main.getInstance().getLogger().log(Level.SEVERE, "Connection to MySQL-Database lost!");
 			connect();
 		}
 
@@ -76,7 +77,7 @@ public class MySQLClient {
 			st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
+			Main.getInstance().getLogger().log(Level.SEVERE, "Connection to MySQL-Database lost!");
 			connect();
 		}
 	}
@@ -86,7 +87,7 @@ public class MySQLClient {
 	        return connection.prepareStatement(query);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        System.err.println(Main.getConsolePrefix() + "Connection to MySQL-Database lost!");
+	        Main.getInstance().getLogger().log(Level.SEVERE, "Connection to MySQL-Database lost!");
 	        connect();
 	        return connection.prepareStatement(query);
 	    }
