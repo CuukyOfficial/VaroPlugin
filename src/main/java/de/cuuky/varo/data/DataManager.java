@@ -99,12 +99,13 @@ public class DataManager {
 		this.mysqlClient = new MySQLClient();
 		this.listManager = new VaroListManager();
 		this.broadcaster = new Broadcaster();
-		this.dailyTimer = new DailyTimer();
 		this.customCommandManager = new CustomCommandManager();
-		
+
 		this.loadBackups();
-		
+
         Messages.load();
+
+        this.dailyTimer = new DailyTimer();
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
 				&& !VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
