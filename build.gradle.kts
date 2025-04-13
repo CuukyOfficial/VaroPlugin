@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.varoplugin"
-version = "4.22.0"
+version = "5.0.0-alpha-1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
