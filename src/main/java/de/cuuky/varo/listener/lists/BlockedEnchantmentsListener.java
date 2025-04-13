@@ -24,7 +24,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			return;
 
 		for (Enchantment enc : event.getEnchantsToAdd().keySet())
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, event.getEnchantsToAdd().get(enc))) {
+			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc)) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
 				event.getEnchanter().sendMessage(Main.getPrefix() + ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT.getValue(vp, vp));
@@ -53,7 +53,7 @@ public class BlockedEnchantmentsListener implements Listener {
 			return;
 
 		for (Enchantment enc : item.getEnchantments().keySet())
-			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc, item.getEnchantments().get(enc))) {
+			if (Main.getDataManager().getListManager().getBlockedEnchantments().isBlocked(enc)) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
 				vp.sendMessage(ConfigMessages.NOPERMISSION_NOT_ALLOWED_CRAFT);

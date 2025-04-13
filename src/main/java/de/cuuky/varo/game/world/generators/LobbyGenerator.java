@@ -3,6 +3,7 @@ package de.cuuky.varo.game.world.generators;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.Location;
 
@@ -35,11 +36,11 @@ public class LobbyGenerator {
 	public LobbyGenerator(Location loc, File file) {
 	    SchematicLoader schematicLoader = SchematicLoader.getInstance();
 		if (schematicLoader == null) {
-		    System.out.println(Main.getConsolePrefix() + "Du brauchst WorldEdit, um den SchematicLoader zu nutzen!");
+		    Main.getInstance().getLogger().log(Level.SEVERE, "Worldedit is required to load schematics!");
 		    return;
 		}
 		schematicLoader.paste(file, loc);
-		System.out.println(Main.getConsolePrefix() + "Autosetup: Loaded schematic " + file.getName());
+		Main.getInstance().getLogger().log(Level.INFO, "Autosetup: Loaded schematic " + file.getName());
 	}
 
 	public LobbyGenerator(Location curr, int height, int size) {

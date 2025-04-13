@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.logging.Level;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.alert.Alert;
@@ -47,7 +47,7 @@ public class VaroUpdater {
 		if (this.lastResult == null)
 			return;
 
-		System.out.println(Main.getConsolePrefix() + "Updater: " + lastResult.getUpdateResult().getMessage());
+		Main.getInstance().getLogger().log(Level.INFO, Main.getConsolePrefix() + "Updater: " + lastResult.getUpdateResult().getMessage());
 
 		for (Alert upAlert : Alert.getAlerts(AlertType.UPDATE_AVAILABLE))
 			if (upAlert.isOpen() && upAlert.getMessage().contains(lastResult.getVersionName()))
@@ -60,7 +60,7 @@ public class VaroUpdater {
 	}
 
 	public VaroUpdateResultSet checkForUpdates() {
-		UpdateResult result = UpdateResult.NO_UPDATE;
+		UpdateResult result;
 		String version = "", id = "";
 
 		try(InputStream inputStream = new URL(updateLink).openStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -70,9 +70,9 @@ public class VaroUpdater {
 			result = VaroUpdater.compareVersions(this.resourceId, version, this.currentVersion);
 		} catch (IOException e) {
 			result = UpdateResult.FAIL_SPIGOT;
-		} catch (ParseException | IllegalArgumentException e) {
-			e.getSuppressed();
-			System.out.println(Main.getConsolePrefix() + "Failed to fetch server version!");
+		} catch (Throwable t) {
+			Main.getInstance().getLogger().log(Level.SEVERE, Main.getConsolePrefix() + "Failed to fetch server version!", t);
+			result = UpdateResult.FAIL_GENERIC;
 		}
 
 		this.lastResult = new VaroUpdateResultSet(result, version, id);
@@ -112,10 +112,9 @@ public class VaroUpdater {
                     return i == 0 ? UpdateResult.MAJOR_UPDATE_AVAILABLE : UpdateResult.UPDATE_AVAILABLE;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId);
-            Main.getInstance().fail();
+        } catch (Throwable t) {
+            Main.getInstance().getLogger().log(Level.SEVERE, Main.getConsolePrefix() + "Failed to compare versions of plugin id " + resourceId, t);
+            return UpdateResult.FAIL_GENERIC;
         }
 
         if (currentVersionLower.contains("alpha") || currentVersionLower.contains("beta"))

@@ -3,12 +3,14 @@ package de.cuuky.varo.game.world;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
 
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
@@ -42,7 +44,7 @@ public class AutoSetup {
     }
 
     private void searchTerrain() {
-        System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Searching for terrain (" + x + ", " + z + ")... (" + world.getWorld().getName() + ")");
+        Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Searching for terrain (" + x + ", " + z + ")... (" + world.getWorld().getName() + ")");
         long time = System.currentTimeMillis();
         while (System.currentTimeMillis() - time <= 3000) {
             if (SpawnChecker.checkSpawns(world.getWorld(), x, z, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
@@ -65,17 +67,17 @@ public class AutoSetup {
         setupBorder(middle);
         setupAutoStart();
 
-        System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Finished!");
+        Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Finished!");
         this.onFinish.run();
     }
 
     private void setupPortal() {
         if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
-            System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up the portal...");
+            Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Setting up the portal...");
             int width = ConfigSetting.AUTOSETUP_PORTAL_WIDTH.getValueAsInt(), height = ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
 
             if (width < 4 || height < 5) {
-                System.out.println(Main.getConsolePrefix() + "AutoSetup: The size of the portal is too small!");
+                Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: The size of the portal is too small!");
                 return;
             }
 
@@ -85,7 +87,7 @@ public class AutoSetup {
 
     private void setupLobby() {
         if (ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
-            System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Loading the lobby...");
+            Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Loading the lobby...");
 
             Location lobby = getLobbyLocation(world.getWorld(), x, z);
 
@@ -94,7 +96,7 @@ public class AutoSetup {
             if (schematicEnabled && schematicFile.exists()) {
                 new LobbyGenerator(lobby, schematicFile);
             } else {
-                if (schematicEnabled) System.out.println(Main.getConsolePrefix() + "AutoSetup: Die angegebene schematic Datei existiert nicht! Fallback zu Lobbygenerierung.");
+                if (schematicEnabled) Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: Schematic does not exist! Using default lobby generator!");
                 new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
             }
 
@@ -110,8 +112,11 @@ public class AutoSetup {
     }
 
     private void setupSpawns(Location middle) {
-        System.out.println(Main.getConsolePrefix() + "AutoSetup: Setting the spawns...");
+        Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: Setting the spawns...");
 
+        if (ConfigSetting.AUTOSETUP_SPAWNS_FLAT_SURFACE.getValueAsBoolean())
+            this.generateFlatSurface(middle.getWorld(), this.x, this.z);
+        
         int y = this.getGroundHeight(middle.getWorld(), this.x, this.z);
         if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean())
             y += ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
@@ -121,9 +126,33 @@ public class AutoSetup {
                 (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
     }
 
+    private void generateFlatSurface(World world, int x, int z) {
+        int flatHeight = getGroundHeight(world, x, z);
+
+        int radius = getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt());
+
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                if (i * i + j * j <= radius * radius) {
+                    int tempHeight = getGroundHeight(world, x + i, z + j);
+                    flatHeight = Math.min(flatHeight, tempHeight);
+                }
+            }
+        }
+
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                if (i * i + j * j <= radius * radius) {
+                    Location loc = new Location(world, x + i, flatHeight, z + j);
+                    XBlock.setType(loc.getBlock(), XMaterial.GRASS_BLOCK);
+                }
+            }
+        }
+    }
+
     private void setupAutoStart() {
         if (ConfigSetting.AUTOSETUP_TIME_HOUR.isIntActivated() && ConfigSetting.AUTOSETUP_TIME_MINUTE.isIntActivated()) {
-            System.out.println(Main.getConsolePrefix() + "AutoSetup: " + "Setting up AutoStart...");
+            Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Setting up AutoStart...");
             Calendar start = new GregorianCalendar();
             start.set(Calendar.HOUR_OF_DAY, ConfigSetting.AUTOSETUP_TIME_HOUR.getValueAsInt());
             start.set(Calendar.MINUTE, ConfigSetting.AUTOSETUP_TIME_MINUTE.getValueAsInt());

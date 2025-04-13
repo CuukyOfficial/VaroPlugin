@@ -398,11 +398,12 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public boolean isAlive() {
-		if (this.state == PlayerState.ALIVE)
-			return true;
-
-		return false;
+		return this.state == PlayerState.ALIVE;
 	}
+
+	public boolean isDead() {
+        return this.state == PlayerState.DEAD;
+    }
 
 	public boolean isShowActionbar() {
 		return showActionbar;

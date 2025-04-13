@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,7 +53,7 @@ public final class DailyTimer {
 			Date date = Main.getVaroGame().getLastDayTimer();
 			long dateDiff = getDateDiff(date, new Date(), TimeUnit.DAYS);
 			for (long i = 0; i < dateDiff; i++) {
-			    System.out.println(Main.getConsolePrefix() + "Catching up with daily tasks...");
+			    Main.getInstance().getLogger().log(Level.INFO, "Catching up with daily tasks...");
 				doDailyChecks();
 			}
 
@@ -60,12 +61,12 @@ public final class DailyTimer {
 		}
 
 		long nextTaskSeconds = getNextReset(offset);
-		System.out.println(Main.getConsolePrefix() + "Next daily task: " + nextTaskSeconds);
+		Main.getInstance().getLogger().log(Level.INFO, "Next daily task: " + nextTaskSeconds);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				try {
-				    System.out.println(Main.getConsolePrefix() + "Running daily timer...");
+				    Main.getInstance().getLogger().log(Level.INFO, "Running daily timer...");
 				    
 					Main.getDataManager().createBackup(null);
 					Main.getVaroGame().setLastDayTimer(new Date());
@@ -82,7 +83,7 @@ public final class DailyTimer {
 	}
 
 	public void doDailyChecks() {
-	    System.out.println(Main.getConsolePrefix() + "Running daily checks...");
+	    Main.getInstance().getLogger().log(Level.INFO, "Running daily checks...");
 		for (Checker checkers : checker) {
 			try {
 				checkers.check();

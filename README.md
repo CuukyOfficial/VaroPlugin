@@ -1,35 +1,41 @@
-## Varo Plugin by Cuuky 
-<img src="https://i.imgur.com/AnIMIbN.png" align="middle">
+![](https://i.imgur.com/AnIMIbN.png")
+  
+A versatile Spigot/Paper plugin designed for the Varo, ODV, SuRo, and Titan game modes. It features a built-in Discord bot that seamlessly broadcasts in-game events straight to your Discord server. With extensive configuration files and an intuitive in-game menu, almost everything can be adjusted to your liking.
 
-
-</br>Hey, ich habe viel an dem Plugin gearbeitet, es würde mich freuen, wenn du mir die Credits dafür lassen könntest.
-Das Plugin läuft universal auf den Versionen 1.7.10 - 1.19.x.</br></br>
+**The plugin has not yet been fully translated into English, some messages may only be available in German!**
 
 **This is a project I started years ago, don't blame me for old code.
 This project probably describes my progress in coding - not the skills I have today.**
 
-<img src="https://bstats.org/signatures/bukkit/Varo.svg"></br>
+![](https://bstats.org/signatures/bukkit/Varo.svg)
 
-</br>Bitte die <a href='https://github.com/CuukyOfficial/VaroPlugin/blob/master/CONTRIBUTING.md'>Richtlinien zum Programmieren</a> beachten!</br>
-</br>
+# Features
+- Custom Scoreboard/Tablist/Action Bar/Name Tags
+- Auto Setup
+- Automatic Backups
+- Strikes
+- Backpacks
+- Team Chests
+- Offline Zombies/Villager
+- Discord Bot
 
-<table>
-  <tr>
-    <td><a href='https://www.tipeeestream.com/cuuky/donation'><img src="https://pbs.twimg.com/profile_images/1458857403391389698/T4R-z7R5_400x400.jpg" height=100px></a></td>
-    <td><a href='https://www.paypal.me/Cuuky'><img src="https://images.ctfassets.net/k4kk06v59kf0/1B9DpTnsBuQAu60wCIemGK/c164faa3862e39b23ef49b4adaf127dd/paypalWide.svg" height=100px></a></td>
-    <td><a href='https://www.youtube.com/channel/UCkVjKrNb8w_C8Zp8nmPtpPg'><img src="https://lh3.googleusercontent.com/lMoItBgdPPVDJsNOVtP26EKHePkwBg-PkuY9NOrc-fumRtTFP4XhpUNk_22syN4Datc" height=100px></a></td>
-    <td><a href="https://www.spigotmc.org/resources/71075/"><img src="https://static.spigotmc.org/img/spigot.png" height=100px></a></td>
-    <td><a href="https://docs.varoplugin.de/"><img src="https://img.icons8.com/ios/500/google-docs.png" height=100px></a></td>
-    <td><a href="https://discord.varoPlugin.de/"><img src="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico" height=100px></a></td>
-  </tr>
-  <tr>
-    <td align='center'>TipeeeStream</td>
-    <td align='center'>PayPal</td>
-    <td align='center'>YouTube</td>
-    <td align='center'>SpigotMC</td>
-    <td align='center'>Documentation</td>
-    <td align='center'>Discord</td>
-  </tr>
-</table>
+# Requirements
+- Spigot/Paper 1.7.10+
+- Java 8+
 
-</br>Vielen Dank & happy coding!
+# Need Help?
+- [Discord (German + English)](https://discord.varoplugin.de/)
+- [GitHub (English)](https://github.com/CuukyOfficial/VaroPlugin/issues)
+- [Documentation (German)](https://docs.varoplugin.de/)
+- [YouTube Video (German, outdated)](https://www.youtube.com/watch?v=nNsZ7CB1l54) 
+
+# Links
+- [SpigotMC](https://varoplugin.de/)
+- [Maven Repository](https://repo.varoplugin.de/)
+- [PayPal](https://www.paypal.me/Cuuky)
+- [TipeeeStream](https://www.tipeeestream.com/cuuky/donation)
+
+# Notice
+Upon startup, this plugin will automatically download dependencies from [maven central](https://repo1.maven.org/maven2/).  
+It also contains an auto updater that regularly checks for new versions by contacting the [spiget API](https://spiget.org/). It does however NOT download new versions without user interaction.  
+This plugin uploads anonymized usage data to [bstats](https://bstats.org/). The resulting statistics are publicly available [here](https://bstats.org/plugin/bukkit/Varo/6639). This feature can be disabled by a server administrator in the `plugins/bStats/config.yml` configuration file.

@@ -1,6 +1,7 @@
 package de.cuuky.varo.listener;
 
 import java.util.Date;
+import java.util.logging.Level;
 
 import org.bukkit.BanEntry;
 import org.bukkit.BanList.Type;
@@ -72,11 +73,14 @@ public class PlayerLoginListener implements Listener {
 							event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
 							vp.setPlayer(null);
 							return;
-						} else
-							reg.delete();
+						}
+                        reg.delete();
 					}
-				} catch (Exception e2) {
-					System.err.println("[Varo] Es wurde keine Server ID angegeben oder die ID des Spielers ist falsch!");
+				} catch (Throwable t) {
+				    Main.getInstance().getLogger().log(Level.SEVERE, "Error while checking discord user!", t);
+				    event.disallow(Result.KICK_OTHER, ConfigMessages.BOTS_DISCORD_NO_SERVER_USER.getValue(vp, vp));
+                    vp.setPlayer(null);
+                    return;
 				}
 			}
 		}

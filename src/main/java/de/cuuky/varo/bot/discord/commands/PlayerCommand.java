@@ -50,7 +50,7 @@ public class PlayerCommand extends DiscordBotCommand {
         text.append("**Sessions played**: ").append(stats.getSessionsPlayed());
         text.append("\n**Kills**: ").append(stats.getKills());
         text.append("\n**Strikes**: ").append(stats.getStrikes() != null ? stats.getStrikes().size() : "0");
-        if (stats.getDiedAt() != null) {
+        if (stats.isDead() && stats.getDiedAt() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
             text.append("\n**Death**: ").append(dateFormat.format(stats.getDiedAt()));
         }
