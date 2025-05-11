@@ -104,6 +104,7 @@ public final class Placeholders {
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
                 builder.variable("config-" + setting.getFullPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
+        
         return builder.build();
     }
 
@@ -136,6 +137,11 @@ public final class Placeholders {
         .contextual("remaining-disconnects", PlayerContext.class, ctx -> String.valueOf(VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt()))
         .contextual("luckperms-prefix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsPrefix(ctx.getPlayer()))
         .contextual("luckperms-suffix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsSuffix(ctx.getPlayer()))
+        .contextual("blocklogger", PlayerContext.class, (ctx, args) -> {
+            if (args.size() != 1)
+                return "INVALID_ARGUMENTS";
+            return String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(ctx.getPlayer().getUUID(), args.get(0)).size());
+        })
         
         .conditional("online", PlayerContext.class, ctx -> ctx.getPlayer() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
         .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
