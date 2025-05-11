@@ -21,16 +21,29 @@ package de.cuuky.varo.config.language;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.player.VaroPlayer;
 import io.github.almightysatan.slams.Context;
 
 public interface Contexts {
 
-    class VaroContext implements Context {
+    class MessageData {
+        String language;
+    }
+
+    abstract class VaroContext implements Context {
+        private final MessageData messageData = new MessageData();
+
         @Override
         public @Nullable String language() {
-            return Messages.DEFAULT_LANGUAGE;
+            return this.messageData.language != null ? this.messageData.language : ConfigSetting.LANGUAGE_DEFAULT.getValueAsString();
         }
+
+        public MessageData getMessageData() {
+            return this.messageData;
+        }
+
+        public abstract VaroContext copy();
     }
 
     class PlayerContext extends VaroContext {
@@ -48,9 +61,14 @@ public interface Contexts {
             Player player = this.player.getPlayer();
             return player == null ? null : new OnlinePlayerContext(player);
         }
+
+        @Override
+        public PlayerContext copy() {
+            return new PlayerContext(this.player);
+        }
     }
 
-    class OnlinePlayerContext extends VaroContext {
+    class OnlinePlayerContext implements Context {
         private final Player player;
 
         OnlinePlayerContext(Player player) {
@@ -59,6 +77,29 @@ public interface Contexts {
 
         public Player getPlayer() {
             return this.player;
+        }
+
+        @Override
+        public @Nullable String language() {
+            return null;
+        }
+    }
+
+    class DeathContext extends PlayerContext {
+        private final String reason;
+
+        public DeathContext(VaroPlayer player, String reason) {
+            super(player);
+            this.reason = reason;
+        }
+
+        public String getReason() {
+            return this.reason;
+        }
+
+        @Override
+        public DeathContext copy() {
+            return new DeathContext(this.getPlayer(), this.reason);
         }
     }
 
@@ -73,21 +114,13 @@ public interface Contexts {
         public VaroPlayer getKiller() {
             return this.killer;
         }
-    }
-    
-    class DeathContext extends PlayerContext {
-        private final String reason;
 
-        public DeathContext(VaroPlayer player, String reason) {
-            super(player);
-            this.reason = reason;
-        }
-
-        public String getReason() {
-            return this.reason;
+        @Override
+        public KillContext copy() {
+            return new KillContext(this.getPlayer(), this.killer, this.getReason());
         }
     }
-    
+
     class StrikeContext extends PlayerContext {
         private final String reason;
         private final String operator;
@@ -103,16 +136,21 @@ public interface Contexts {
         public String getReason() {
             return this.reason;
         }
-        
+
         public String getOperator() {
             return this.operator;
         }
-        
+
         public String getNum() {
             return String.valueOf(this.num);
         }
+
+        @Override
+        public StrikeContext copy() {
+            return new StrikeContext(this.getPlayer(), this.reason, this.operator, this.num);
+        }
     }
-    
+
     class ContainerContext extends PlayerContext {
         private final VaroPlayer owner;
 
@@ -124,8 +162,13 @@ public interface Contexts {
         public VaroPlayer getOwner() {
             return this.owner;
         }
+
+        @Override
+        public ContainerContext copy() {
+            return new ContainerContext(this.getPlayer(), this.owner);
+        }
     }
-    
+
     class BorderDecreaseContext extends VaroContext {
         private final int size;
         private final double speed;
@@ -136,17 +179,22 @@ public interface Contexts {
             this.speed = speed;
             this.time = time;
         }
-        
+
         public String getSize() {
             return String.valueOf(this.size);
         }
-        
+
         public String getSpeed() {
             return String.valueOf(this.speed);
         }
-        
+
         public String getTime() {
             return String.valueOf(this.time);
+        }
+
+        @Override
+        public BorderDecreaseContext copy() {
+            return new BorderDecreaseContext(this.size, this.speed, this.time);
         }
     }
 }

@@ -60,7 +60,7 @@ public class DiscordCommand extends VaroCommand {
 			if (args.length == 1) {
 				if (!reg.isActive()) {
 				    Messages.COMMANDS_VARO_DISCORD_STATUS_INACTIVE.send(sender);
-					sender.sendMessage(Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
+					Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.send(sender, Placeholder.constant("discord-code", String.valueOf(reg.getCode())));
 				} else {
 				    Messages.COMMANDS_VARO_DISCORD_STATUS_ACTIVE.send(sender);
 					Messages.COMMANDS_VARO_DISCORD_VERIFY_ACCOUNT.send(sender, Placeholder.constant("target", reg.getMember().getNickname()));

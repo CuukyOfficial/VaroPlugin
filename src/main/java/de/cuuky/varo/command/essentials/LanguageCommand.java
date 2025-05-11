@@ -6,15 +6,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.player.VaroPlayer;
 
 public class LanguageCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		// TODO v5
-	    /*if (!(sender instanceof Player)) {
-			sender.sendMessage(Main.getPrefix() + "Not for console!");
+	    if (!(sender instanceof Player)) {
+	        Messages.COMMANDS_ERROR_NO_CONSOLE.send(sender);
 			return false;
 		}
 
@@ -26,19 +26,18 @@ public class LanguageCommand implements CommandExecutor {
 
 		if (args[0].equalsIgnoreCase("list")) {
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lList of all messages:");
-			for (String language : Main.getLanguageManager().getLanguages().keySet())
+			for (String language : Messages.LANGUAGES)
 				sender.sendMessage(Main.getPrefix() + language);
 			return false;
 		}
 
-		Language lang = Main.getLanguageManager().getLanguages().get(args[0]);
-		if (lang == null) {
-			sender.sendMessage(Main.getPrefix() + "Language " + args[0] + " is not useable on this server! §a/" + label + " list");
+		if (!Messages.LANGUAGES.contains(args[0])) {
+			sender.sendMessage(Main.getPrefix() + "Language " + args[0] + " is not available on this server! §a/" + label + " list");
 			return false;
 		}
 
-		VaroPlayer.getPlayer((Player) sender).setLocale(args[0]);
-		sender.sendMessage(Main.getPrefix() + "Language successfully changed to " + args[0] + "!");*/
+		VaroPlayer.getPlayer((Player) sender).setLanguage(args[0]);
+		sender.sendMessage(Main.getPrefix() + "Language successfully changed to " + args[0] + "!");
 		return false;
 	}
 }

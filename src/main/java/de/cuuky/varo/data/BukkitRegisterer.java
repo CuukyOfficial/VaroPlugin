@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.function.BooleanSupplier;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -99,8 +100,8 @@ public final class BukkitRegisterer {
 		}
 	}
 
-	private static void registerDynamicCommand(String name, String desc, CommandExecutor executor, ConfigSetting configSetting, String... aliases) {
-		if (!configSetting.getValueAsBoolean())
+	private static void registerDynamicCommand(String name, String desc, CommandExecutor executor, BooleanSupplier enabled, String... aliases) {
+		if (!enabled.getAsBoolean())
 			return;
 		
 		PluginCommand command;
@@ -115,6 +116,10 @@ public final class BukkitRegisterer {
 		command.setExecutor(executor);
 		
 		commandMap.register(name, command);
+	}
+
+	private static void registerDynamicCommand(String name, String desc, CommandExecutor executor, ConfigSetting configSetting, String... aliases) {
+	    registerDynamicCommand(name, desc, executor, () -> configSetting.getValueAsBoolean(), aliases);
 	}
 
 	private static void registerEvent(Listener listener) {
@@ -133,7 +138,7 @@ public final class BukkitRegisterer {
 		registerDynamicCommand("heal", "Heilt einen Spieler", new HealCommand(), ConfigSetting.COMMAND_HEAL_ENABLED, "feed");
 		registerDynamicCommand("info", "Zeigt Infos über einen Spieler", new InfoCommand(), ConfigSetting.COMMAND_INFO_ENABLED, "life");
 		registerDynamicCommand("invsee", "Zeigt das Inventar eines anderen Spielers", new InvSeeCommand(), ConfigSetting.COMMAND_INVSEE_ENABLED, "inventorysee");
-		registerDynamicCommand("language", "Changes language of player", new LanguageCommand(), ConfigSetting.COMMAND_LANGUAGE_ENABLED, "lang");
+		registerDynamicCommand("language", "Changes language of player", new LanguageCommand(), () -> ConfigSetting.COMMAND_LANGUAGE_ENABLED.getValueAsBoolean() && ConfigSetting.LANGUAGE_ALLOW_OTHER.getValueAsBoolean(), "lang");
 		registerDynamicCommand("message", "Schreibt einem Spieler eine Nachricht", new MessageCommand(), ConfigSetting.COMMAND_MESSAGE_ENABLED, "msg");
 		registerDynamicCommand("mute", "Mutet einen Spieler", new MuteCommand(), ConfigSetting.COMMAND_MUTE_ENABLED);
 		registerDynamicCommand("night", "Setzt die Tageszeit auf Nacht", new NightCommand(), ConfigSetting.COMMAND_TIME_ENABLED);

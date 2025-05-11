@@ -6,6 +6,7 @@ import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
 
 import de.cuuky.varo.Main;
+import de.cuuky.varo.config.language.Messages;
 import de.cuuky.varo.configuration.configurations.SectionEntry;
 import de.cuuky.varo.game.start.SuroStart;
 import de.cuuky.varo.game.world.AutoSetup;
@@ -211,8 +212,8 @@ public enum ConfigSetting implements SectionEntry {
 	PREFIX(ConfigSettingSection.MAIN, "prefix", "§7[§3Varo§7] ", "Prefix, der im Chat bzw. vor\nden Nachrichten angezeigt wird."),
 	PROJECT_NAME(ConfigSettingSection.MAIN, "projectname", "Varo", "Name deines Projektes, der in den\nNachrichten, am Scoreboard, etc. steht."),
 	PROJECTNAME_COLORCODE(ConfigSettingSection.MAIN, "projectnameColorcode", "&3", "Dieser Farbcode ist der Massgebende,\nder ueberall im Projekt verwendet wird.."),
-	MAIN_LANGUAGE(ConfigSettingSection.MAIN, "language.main", "de_de", "Alle Sprachentypen hier zu finden: https://minecraft-el.gamepedia.com/Language"),
-	MAIN_LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "language.allowOther", true, "Ob jeder Spieler eine eigene Sprache\nnutzen darf"),
+	LANGUAGE_DEFAULT(ConfigSettingSection.MAIN, "language.default", Messages.LANGUAGE_DEFAULT, "Die default Sprache"),
+	LANGUAGE_ALLOW_OTHER(ConfigSettingSection.MAIN, "language.allowOther", true, "Ob jeder Spieler eine eigene Sprache\nnutzen darf"),
 	RANDOM_CHEST_FILL_RADIUS(ConfigSettingSection.WORLD, "randomChestFillRadius", -1, "In welchem Radius die Kisten um den\nSpawn mit den in der Config angegebenen\nItems befuellt werden sollen.\nOff = -1"),
 	RANDOM_CHEST_MAX_ITEMS_PER_CHEST(ConfigSettingSection.WORLD, "randomChestMaxItems", 5, "Wie viele Items in eine Kiste sollen."),
 	REMOVE_HIT_COOLDOWN(ConfigSettingSection.OTHER, "removeHitDelay", false, "Entfernt den 1.9+ Hit delay"),

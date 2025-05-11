@@ -72,8 +72,12 @@ public class VaroPlayer implements VaroSerializeable {
 	@VaroSerializeField(path = "uuid")
 	private String uuid;
 
+	@Deprecated
 	@VaroSerializeField(path = "locale")
 	private String locale;
+	
+	@VaroSerializeField(path = "language")
+    private String language;
 
 	@VaroSerializeField(path = "adminIgnore")
 	private boolean adminIgnore;
@@ -421,17 +425,26 @@ public class VaroPlayer implements VaroSerializeable {
 		return this.uuid;
 	}
 
-	public String getLocale() {
-		return this.locale == null && this.versionAdapter != null ? this.versionAdapter.getLocale() : this.locale;
-	}
-
-	public String setLocale(String locale) {
-		return this.locale = locale;
-	}
-
 	public String getLanguage() {
-	    return null; // TODO
+	    String language = this.language;
+	    if (language != null)
+	        return language;
+	    
+	    PlayerVersionAdapter versionAdapter = this.versionAdapter;
+	    if (versionAdapter != null) {
+	        String locale = versionAdapter.getLocale();
+	        System.out.println(locale);
+	        if (locale.startsWith("en_"))
+	            return Messages.LANGUAGE_EN;
+	        else if (locale.startsWith("de_"))
+	            return Messages.LANGUAGE_DE;
+	    }
+	    return Messages.LANGUAGE_DEFAULT;
 	}
+	
+	public void setLanguage(String language) {
+        this.language = language;
+    }
 
 	public Player getPlayer() {
 		return player;
