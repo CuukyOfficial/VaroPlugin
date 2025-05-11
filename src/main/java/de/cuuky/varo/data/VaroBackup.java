@@ -16,7 +16,7 @@ public class VaroBackup implements Comparable<VaroBackup> {
 
     private static final String[] INCLUDED_PATHS = new String[] {
             "config/",
-            "languages/",
+            "messages/",
             "logs/",
             "stats/",
             "presets/"

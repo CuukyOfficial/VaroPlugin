@@ -24,7 +24,7 @@ public class BugReport {
             "logs/",
             "server.properties",
             "plugins/Varo/config/",
-            "plugins/Varo/languages/",
+            "plugins/Varo/messages/",
             "plugins/Varo/logs/logs.varolog2",
             "plugins/Varo/stats/",
     };
