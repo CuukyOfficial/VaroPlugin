@@ -43,10 +43,12 @@ import io.github.almightysatan.slams.InvalidTypeException;
 import io.github.almightysatan.slams.MissingTranslationException;
 import io.github.almightysatan.slams.PlaceholderResolver;
 import io.github.almightysatan.slams.Slams;
+import io.github.almightysatan.slams.papi.SlamsPlaceholderExpansion;
 import io.github.almightysatan.slams.parser.JasklParser;
 import io.github.almightysatan.slams.standalone.StandaloneMessage;
 import io.github.almightysatan.slams.standalone.StandaloneMessageArray;
 import io.github.almightysatan.slams.standalone.StandaloneMessageArray2d;
+import me.clip.placeholderapi.PlaceholderAPIPlugin;
 
 public final class Messages {
 
@@ -384,6 +386,13 @@ public final class Messages {
                 JasklParser.createReadWriteParser(YamlConfig.of(new File("plugins/Varo/messages/en.yml"))));
         SLAMS.load("de", JasklParser.createReadParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("de.yml")))),
                 JasklParser.createReadWriteParser(YamlConfig.of(new File("plugins/Varo/messages/de.yml"))));
+
+        try {
+            PlaceholderAPIPlugin.getInstance();
+            new SlamsPlaceholderExpansion("varo", Main.getInstance().getDescription().getAuthors().get(0), Main.getInstance().getDescription().getVersion(), PLACEHOLDERS).register();
+        } catch (NoClassDefFoundError e) {
+            // nop
+        }
     }
 
     static VaroMessage message(String key) {

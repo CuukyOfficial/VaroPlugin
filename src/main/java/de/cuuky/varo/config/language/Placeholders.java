@@ -37,6 +37,7 @@ import de.cuuky.varo.player.VaroPlayerDisconnect;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.PlaceholderResolver;
+import io.github.almightysatan.slams.papi.PapiPlaceholderResolver;
 
 public final class Placeholders {
 
@@ -104,7 +105,9 @@ public final class Placeholders {
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
                 builder.variable("config-" + setting.getFullPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
-        
+
+        PapiPlaceholderResolver.addIfAvailable(builder);
+
         return builder.build();
     }
 
