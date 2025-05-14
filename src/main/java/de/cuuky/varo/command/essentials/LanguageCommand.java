@@ -25,7 +25,7 @@ public class LanguageCommand implements CommandExecutor {
 		}
 
 		if (args[0].equalsIgnoreCase("list")) {
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lList of all messages:");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "§lList of all languages:");
 			for (String language : Messages.LANGUAGES)
 				sender.sendMessage(Main.getPrefix() + language);
 			return false;
