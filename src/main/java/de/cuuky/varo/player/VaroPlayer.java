@@ -437,11 +437,12 @@ public class VaroPlayer implements VaroSerializeable {
 	    if (versionAdapter != null) {
 	        String locale = versionAdapter.getLocale();
 	        if (locale.startsWith("en_"))
-	            return Messages.LANGUAGE_EN;
+	            return this.language = Messages.LANGUAGE_EN;
 	        else if (locale.startsWith("de_"))
-	            return Messages.LANGUAGE_DE;
+	            return this.language = Messages.LANGUAGE_DE;
+	        return this.language = ConfigSetting.LANGUAGE_DEFAULT.getValueAsString();
 	    }
-	    return Messages.LANGUAGE_DEFAULT;
+	    return ConfigSetting.LANGUAGE_DEFAULT.getValueAsString();
 	}
 	
 	public void setLanguage(String language) {
