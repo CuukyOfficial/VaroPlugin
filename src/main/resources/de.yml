@@ -215,7 +215,9 @@ log:
     death: "Die Größe der Weltbarriere wurde aufgrund des Todes eines Spielers um <border-decrease-size> verringert!"
     days: "Die Größe der Weltbarriere wurde um <border-decrease-size> verringert. Nächste Verkleinerung in <border-decrease-time> Tagen!"
     minutes: "Die Größe der Weltbarriere wurde um <border-decrease-size> verringert. Nächste Verkleinerung in <border-decrease-time> Minuten!"
+  gameStart: "<projectname> hat begonnen!"
   playerJoinMassrec: "<name> hat den Server während der Massenaufnahme betreten und spielt nun seine <episode>. Episode."
+  playerQuitTooEarly: "<name> hat das Spiel vorzeitig verlassen! Verbleibende Zeit: <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second>"
   kickedPlayer: "<name> wurde gekickt!"
   teleportedToMiddle: "<name> wurde zur Mitte teleportiert!"
   finaleJoin: "<name> hat den Server betreten, um am Finale teilzunehmen!"
@@ -223,12 +225,10 @@ log:
   playerJoined: "<name> hat den Server betreten und spielt nun seine <episode>. Episode!"
   newSessionsForAll: "Jeder hat <new-sessions> neue Folgen erhalten!"
   playerQuit: "<name> hat das Spiel verlassen!"
-  playerQuitTooEarly: "<name> hat das Spiel vorzeitig verlassen! Verbleibende Zeit: <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second>"
   playerReconnect: "<name> hat das Spiel vorzeitig verlassen und ist wieder beigetreten! Verbleibende Zeit: <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second>"
   newSessions: "<new-sessions> neue Folgen wurden an Spieler vergeben!"
   combatlog: "<name> hat sich während des Kampfes ausgeloggt!"
   finaleStart: "Das Finale hat begonnen!"
-  gameStart: "<projectname> hat begonnen!"
 player:
   combat:
     friendlyfire: "<prefix>Dieser Spieler ist in deinem Team!"
@@ -236,7 +236,9 @@ player:
     fightEnd: "<prefix>Du bist jetzt nicht mehr im Kampf! Du kannst dich jetzt ausloggen!"
     fight: "<prefix>Du befindest dich jetzt im Kampf, logge dich §cNICHT §7aus!"
   kick:
-    noPreproduceLeft: "§cDu hast keine Vorproduktions-Folgen mehr übrig!\n§7Versuche es morgen erneut."
+    noPreproduceLeft: |-
+      §cDu hast keine Vorproduktions-Folgen mehr übrig!
+      §7Versuche es morgen erneut.
     noSessionLeft: |-
       §cDu hast keine Folgen mehr übrig!
       §7Warte bis morgen, um wieder zu spielen!
@@ -248,7 +250,9 @@ player:
     banned: |-
       §cDu bist von diesem Server gebannt!
       §7Grund: §c<reason>
-    notStarted: "§cDer Server wurde noch nicht geöffnet!\n§7Bitte habe noch etwas Geduld!"
+    notStarted: |-
+      §cDer Server wurde noch nicht geöffnet!
+      §7Bitte habe noch etwas Geduld!
     notRegisteredDiscord: |-
       §cDein Konto ist nicht auf Discord verifiziert!
       §7Bitte benutze §c/verify <discord-code>§7, um dein Discord-Konto zu verifizieren!
@@ -262,11 +266,15 @@ player:
       §cDu bist für <ban-hours> Stunden gebannt, weil du einen Strike erhalten hast!
       §7Versuche es später erneut.
     tooManyStrikes: "§cDu bist aufgrund zu vieler Strikes aus <projectname> §causgeschieden"
-    noTimeLeft: "§cDu darfst nur <config-JoinSystems-joinAfterHours> Stunden pro Tag spielen!\n§7Du kannst in §c<join-hours>§7:§c<join-minues>§7:§c<join-seconds>§7 wieder beitreten!"
+    noTimeLeft: |-
+      §cDu darfst nur <config-JoinSystems-joinAfterHours> Stunden pro Tag spielen!
+      §7Du kannst in §c<join-hours>§7:§c<join-minues>§7:§c<join-seconds>§7 wieder beitreten!
     serverClosed: |-
       §cDer Server ist geschlossen!
       §7Bitte versuche es später erneut!
-    kickMessageMassRec: "§cDie Massenaufnahme ist beendet!\n§7Alle Spieler wurden gekickt!"
+    kickMessageMassRec: |-
+      §cDie Massenaufnahme ist beendet!
+      §7Alle Spieler wurden gekickt!
   actionbar:
   - "§7Entfernung zur Weltbarriere: <colorcode><distance-to-border>"
   - "§7Schau auch auf unserem Discord vorbei: <colorcode><varo-discord>"
@@ -276,9 +284,9 @@ player:
       other: "<prefix><colorcode><name> §7ist gestorben und hat jetzt noch <colorcode><team-lives> §7Leben! Grund: §c<death-reason>"
     respawnProtection: "<prefix>§c<name> hat ein Leben verloren und ist für <config-Death-respawnProtection> Sekunden unverwundbar!"
     eliminated:
+      time: "<prefix><colorcode><name> §7ist nun seit §c<config-Disconnect-banAfterDisconnectMinutes> §7Minute(n) offline und ist deshalb aus <projectname> §7ausgeschieden!"
       other: "<prefix><colorcode><name> §7ist gestorben. Grund: §c<death-reason>"
       player: "<prefix><colorcode><name> §7wurde von <colorcode><killer-name>§7 getötet! Grund: §c<death-reason>"
-      time: "<prefix><colorcode><name> §7ist nun seit §c<config-Disconnect-banAfterDisconnectMinutes> §7Minute(n) offline und ist deshalb aus <projectname> §7ausgeschieden!"
     killLifeAdd: "<prefix>Dein Team hat ein zusätzliches Teamleben erhalten!"
     killTimeAdd: "<prefix>Du hast <colorcode><time-additional> §7Sekunden zusätzliche Zeit erhalten!"
     respawnProtectionOver: "<prefix>§c<name> ist jetzt wieder verwundbar!"
@@ -329,8 +337,8 @@ player:
     kickInSeconds: "<prefix><colorcode><name> §7wird in <colorcode><kick-delay> §7Sekunde(n) gekickt!"
     noKickPlayerNearby: "<prefix>Ein Spieler ist weniger als §c<config-Other-noKickDistance> Blöcke §7von dir entfernt! Entferne dich von diesem Spieler, um gekickt zu werden!"
     spectator: "<prefix>§c<name> §7hat den Server als Zuschauer verlassen!"
-    tooEarly: "<prefix>§c<name> §7hat den Server vorzeitig verlassen!"
     delay: "<prefix>§c<name> §7wurde gekickt!"
+    tooEarly: "<prefix>§c<name> §7hat den Server vorzeitig verlassen!"
     serverCloseSoon: "<prefix>Der Server schließt in §c<server-close> §7Minute(n)!"
     broadcast: "<prefix>§c<name> §7hat den Server verlassen!"
     kick: "<prefix>§c<name> §7wurde gekickt!"
@@ -442,7 +450,9 @@ motd:
   closedHours: |-
     §cDu kannst nur zwischen §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cund §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cbeitreten
     §7Bitte versuche es später erneut!
-  closed: "§cDer Server ist noch nicht verfügbar!\n§7Bitte versuche es später erneut!"
+  closed: |-
+    §cDer Server ist noch nicht verfügbar!
+    §7Bitte versuche es später erneut!
 broadcast:
 - "<prefix> Eine Rundrufnachricht"
 - "<prefix> Eine weitere Rundrufnachricht"
