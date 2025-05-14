@@ -89,7 +89,7 @@ public class DiscordCommand extends VaroCommand {
 
 		if (args[0].equalsIgnoreCase("getLink") || args[0].equalsIgnoreCase("link")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				Messages.COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED.send(sender);
+				Messages.COMMANDS_VARO_DISCORD_VERIFY_DISABLED.send(sender);
 				return;
 			}
 
@@ -117,7 +117,7 @@ public class DiscordCommand extends VaroCommand {
 			Messages.COMMANDS_VARO_DISCORD_GETLINK.send(sender, PlaceholderResolver.builder().constant("target-name", args[1]).constant("target-discord-name", user.getName()).constant("target-discord-id", user.getId()).build());
 		} else if (args[0].equalsIgnoreCase("unlink")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
-				Messages.COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED.send(sender);
+				Messages.COMMANDS_VARO_DISCORD_VERIFY_DISABLED.send(sender);
 				return;
 			}
 

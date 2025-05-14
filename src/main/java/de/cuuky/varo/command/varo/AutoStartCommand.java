@@ -44,7 +44,7 @@ public class AutoStartCommand extends VaroCommand {
 
 		if (args[0].equalsIgnoreCase("set")) {
 			if (Main.getVaroGame().getAutoStart() != null) {
-			    Messages.COMMANDS_VARO_AUTOSTART_ALREADY_SETUP.send(sender);
+			    Messages.COMMANDS_VARO_AUTOSTART_ALREADY_SETUP.send(sender); // TODO this is stupid, just remove the old one automatically
 				return;
 			}
 
@@ -114,6 +114,7 @@ public class AutoStartCommand extends VaroCommand {
 			if (Main.getVaroGame().getAutoStart() == null)
 			    Messages.COMMANDS_VARO_AUTOSTART_INACTIVE.send(sender);
 			else
+			    // TODO autostart-date should be a global placeholder
 			    Messages.COMMANDS_VARO_AUTOSTART_INFO.send(sender, Placeholder.constant("autostart-date", new SimpleDateFormat("dd.MM.yyyy HH.mm").format(Main.getVaroGame().getAutoStart().getStart().toString())));
 		} else
 		    Messages.COMMANDS_ERROR_USAGE.send(sender, Placeholder.constant("command", "autostart"));

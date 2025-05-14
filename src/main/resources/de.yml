@@ -1,108 +1,107 @@
 commands:
   border:
-    usage: "<prefix>Du kannst die Größe der Grenze mit <colorcode>/border <Durchmesser> [Sekunden]§7 ändern. Das Zentrum der Grenze wird auf deine aktuelle Position gesetzt."
-    distance: "<prefix>Du bist <colorcode><distance-to-border> Blöcke §7von der Grenze entfernt."
-    size: "<prefix>Die Grenze hat eine Größe von <colorcode><border-size> Blöcken§7."
-    success: "<prefix>Die Grenzgröße beträgt jetzt <colorcode><border-size> §7Blöcke!"
+    usage: "<prefix>Du kannst die Größe der Weltbarriere mit <colorcode>/border <Durchmesser> [Sekunden]§7 ändern. Das Zentrum der Weltbarriere wird auf deine aktuelle Position gesetzt."
+    distance: "<prefix>Du bist <colorcode><distance-to-border> Blöcke §7von der Weltbarriere entfernt."
+    size: "<prefix>Die Weltbarriere hat eine Größe von <colorcode><border-size> Blöcken§7."
+    success: "<prefix>Die Größe der Weltbarriere beträgt jetzt <colorcode><border-size> §7Blöcke!"
   varo:
     bugreport:
       update: |-
         <prefix>Du kannst keine Fehlerberichte erstellen, wenn du eine veraltete Plugin-Version verwendest!
-        <prefix>§7Benutze <colorcode>/varo update §7zum Aktualisieren.
+        <prefix>Benutze <colorcode>/varo update §7zum Aktualisieren.
         <prefix>Aktuelle Version: §c<varo-version>
         <prefix>Neueste Version: §a<varo-version-latest>
-      created: "<prefix>Fehlerbericht wurde als §c<file>§7 gespeichert! Bitte lade diese Datei auf unseren Discord hoch: <varo-discord>"
-      collectingdata: "<prefix>Sammle Daten..."
+      created: "<prefix>Fehlerbericht wurde als §c<file> §7gespeichert! Bitte lade diese Datei auf unseren Discord hoch: <varo-discord>"
+      collectingdata: "<prefix>Daten werden gesammelt..."
     backpack:
-      notenabled: "<prefix>Rucksäcke sind deaktiviert."
-      playerdoesntexist: "<prefix>§cDer Spieler <colorcode><target> §7existiert nicht."
-      choosetype: "<prefix>Bitte wähle aus, welchen Rucksack du öffnen möchtest <colorcode>(Spieler/Team)§7."
-      teamdoesntexist: "<prefix>§cDas Team <colorcode><target> §7existiert nicht."
-      noteam: "<prefix>Du bist in keinem Team und hast daher keinen Team-Rucksack."
+      notenabled: "<prefix>§cRucksäcke sind deaktiviert!"
+      playerdoesntexist: "<prefix>§cDer Spieler <colorcode><target> §cexistiert nicht!"
+      choosetype: "<prefix>Bitte wähle aus, welchen Rucksack du öffnen möchtest <colorcode>(Spieler/Team)§7!"
+      teamdoesntexist: "<prefix>§cDas Team <colorcode><target> §cexistiert nicht!"
+      noteam: "<prefix>Du bist in keinem Team und hast daher keinen Team-Rucksack!"
     discord:
       remove:
-        usage: "<prefix>Benutze <colorcode>/varo discord verify remove §7, um die Verifizierung zu entfernen."
-      pleasereload: "<prefix>Der DiscordBot wurde beim Start nicht eingerichtet, bitte neu laden!"
-      getlink: "<prefix><colorcode><target-name>s Account heißt <colorcode><target-discord-name>§7 und die ID ist <colorcode><target-discord-id>§7!"
-      botdisabled: "<prefix>Der DiscordBot ist deaktiviert!"
+        usage: "<prefix>Benutze <colorcode>/varo discord verify remove §7um die Verifizierung zu entfernen."
+      pleasereload: "<prefix>Der Discord Bot wurde beim Start nicht eingerichtet! Bitte starte den Server neu!"
+      getlink: "<prefix>Der Account von <colorcode><target-name> §7heißt <colorcode><target-discord-name> §7und die ID ist <colorcode><target-discord-id>§7!"
+      botdisabled: "<prefix>Der Discord Bot ist deaktiviert!"
       verifydisabled: "<prefix>Das Verifizierungssystem wurde in der Config deaktiviert!"
-      notverified: "<prefix>Du bist noch nicht verifiziert!"
+      notverified: "<prefix>Du bist noch nicht mit Discord verifiziert!"
       status:
         active: "<prefix>Deine Discord-Verifizierung ist aktiv."
         inactive: "<prefix>Deine Discord-Verifizierung ist inaktiv."
-      unverify: "<prefix>Das Konto wurde erfolgreich von <colorcode><target>§7 getrennt!"
-      shutdown: "<prefix>Der Discordbot wurde §aerfolgreich §7heruntergefahren."
-      reloaded: "<prefix>Der Discordbot wurde §aerfolgreich §7neu geladen."
+      unverify: "<prefix>Das Konto wurde erfolgreich von <colorcode><target> §7getrennt!"
+      shutdown: "<prefix>Der Discord Bot wurde erfolgreich heruntergefahren."
+      reloaded: "<prefix>Der Discord Bot wurde erfolgreich neu geladen."
       verificationremoved: "<prefix>Deine Verifizierung wurde entfernt."
-      verifysystemdisabled: "<prefix>Das Verifizierungssystem ist deaktiviert."
       discordmessagetitle: "NACHRICHT"
       account: "<prefix>Konto: <colorcode><target>"
-      usernotfound: "<prefix>Benutzer für diesen Spieler nicht gefunden!"
+      usernotfound: "<prefix>Discord Benutzer für diesen Spieler nicht gefunden!"
       noeventchannel: "<prefix>Dem Bot wurde kein Event-Kanal zugewiesen."
-      botoffline: "<prefix>Der Discordbot ist nicht online!"
+      botoffline: "<prefix>Der Discord Bot ist nicht online!"
       bypassinactive: "<prefix><target> umgeht das Verifizierungssystem nicht mehr."
       verifyenabled: "<prefix>Das Verifizierungssystem wurde aktiviert."
-      discordbotdisabled: "<prefix>Der Discordbot ist deaktiviert."
-      notsetup: "<prefix>Der DiscordBot wurde beim Start nicht eingerichtet!"
+      discordbotdisabled: "<prefix>Der Discord Bot ist deaktiviert."
+      notsetup: "<prefix>Der Discord Bot wurde beim Start nicht eingerichtet!"
       bypassactive: "<prefix><target> umgeht jetzt das Verifizierungssystem."
     export:
-      players: "<prefix>Alle Spieler wurden erfolgreich nach <colorcode><file>§7 exportiert."
+      players: "<prefix>Alle Spieler Daten wurden erfolgreich nach <colorcode><file>§7 exportiert."
     preset:
-      saved: "<prefix>Die aktuellen Einstellungen wurden §aerfolgreich §7als Preset <colorcode><preset> §7gespeichert."
-      helpsave: "<prefix><colorcode>/varo preset §7save <PresetPfad>"
-      notfound: "<prefix>Das Preset <colorcode><preset> §7wurde nicht gefunden."
-      pathtraversal: "<prefix>Presets müssen sich im Ordner §3presets §7befinden."
-      loaded: "<prefix>Das Preset <colorcode><preset> §7wurde §aerfolgreich §7geladen."
-      helploaded: "<prefix><colorcode>/varo preset §7load <PresetPfad>"
+      saved: "<prefix>Die aktuellen Einstellungen wurden erfolgreich als Preset <colorcode><preset> §7gespeichert."
+      helpsave: "<prefix><colorcode>/varo preset §7save <Preset-Pfad>"
+      notfound: "<prefix>§cDas Preset <colorcode><preset> §cwurde nicht gefunden."
+      pathtraversal: "<prefix>§cPresets müssen sich im Ordner <colorcode>presets §cbefinden."
+      loaded: "<prefix>Das Preset <colorcode><preset> §7wurde erfolgreich geladen."
+      helploaded: "<prefix><colorcode>/varo preset §7load <Preset-Pfad>"
       list: "<prefix>§lListe aller Presets:"
     scoreboard:
-      deactivated: "<prefix>Scoreboards sind deaktiviert."
-      disabled: "<prefix>Du kannst das Scoreboard nicht mehr sehen."
-      enabled: "<prefix>Du kannst das Scoreboard jetzt sehen."
+      deactivated: "<prefix>Das Scoreboard ist deaktiviert!"
+      disabled: "<prefix>Du kannst das Scoreboard jetzt nicht mehr sehen!"
+      enabled: "<prefix>Du kannst das Scoreboard jetzt sehen!"
     randomteam:
-      sorted: "<prefix>Alle Spieler ohne Team sind jetzt in Teams von <colorcode><sort-size>§7!"
+      sorted: "<prefix>Alle Spieler ohne Team sind jetzt in <colorcode><sort-size>§7er Teams!"
       help: "<prefix><colorcode>/varo randomTeam <Teamgröße>"
-      teamsizetoosmall: "<prefix>Die Teamgröße muss mindestens 1 sein."
-      nopartner: "<prefix>Es konnten nicht genügend Teampartner für dich gefunden werden."
+      teamsizetoosmall: "<prefix>§cDie Teamgröße muss mindestens 1 betragen!"
+      nopartner: "<prefix>§cEs konnten nicht genügend Teampartner für dich gefunden werden!"
     checkcombat:
       incombat: "<prefix>Du befindest dich aktuell im <colorcode>Kampf§7!"
       help: "<prefix><colorcode>/varo checkcombat"
       notincombat: "<prefix>Du befindest dich aktuell <colorcode>nicht im Kampf§7!"
     autostart:
-      notactive: "<prefix>AutoStart ist inaktiv."
-      removed: "<prefix><colorcode>AutoStart §7 erfolgreich entfernt!"
-      helpset: "<prefix><colorcode>/autostart §7set <Stunde> <Minute> <Tag> <Monat> <Jahr>"
-      startdelayed: "<prefix>§7Der Start wurde um <colorcode><autostart-delay> §7Minuten verzögert!"
+      notactive: "<prefix>AutoStart ist nicht aktiv."
+      removed: "<prefix><colorcode>AutoStart §7erfolgreich entfernt!"
+      helpset: "<prefix><colorcode>/autostart §7set \\<Stunde\\> \\<Minute\\> \\<Tag\\> \\<Monat\\> \\<Jahr\\>"
+      startdelayed: "<prefix>Der Start wurde um <colorcode><autostart-delay> §7Minuten verzögert!"
       delayhelp: "<prefix><colorcode>/autostart delay §7\\<Verzögerung in Minuten\\>"
-      alreadystarted: "<prefix><projectname> §7wurde bereits gestartet!"
-      notsetupyet: "<prefix>§7Es ist noch kein <colorcode>Autostart §7definiert!"
-      dateinthepast: "<prefix>§7Das <colorcode>Datum §7darf nicht in der Vergangenheit liegen!"
-      nonumber: "<prefix>Ein oder mehrere Argumente sind §ckeine §7Zahl!"
-      alreadysetup: "<prefix>§7Entferne zuerst den AutoStart, bevor du einen neuen setzt!"
+      alreadystarted: "<prefix><projectname> §cwurde bereits gestartet!"
+      notsetupyet: "<prefix>§cEs wurde kein AutoStart festgelegt!"
+      dateinthepast: "<prefix>§cDas Datum darf nicht in der Vergangenheit liegen!"
+      nonumber: "<prefix>§cEin oder mehrere Argumente sind keine Zahl!"
+      alreadysetup: "<prefix>§cEntferne zuerst den AutoStart, bevor du einen neuen setzt!"
       info: |-
-        <prefix><prefix>AutoStart §aaktiv:
+        <prefix>AutoStart:
         <colorcode>Datum: §7<autostart-date>
-        <colorcode>Auto Zufallsteamgröße: §7<config-Start-doSortAtStart>
+        <colorcode>Zufällige Teamgröße: §7<config-Start-doSortAtStart>
         <colorcode>AutoSort: §7<config-Start-doRandomTeamAtStart>
-      delaytosmall: "<prefix>Die Verzögerung darf nicht weniger als 1 sein!"
+      delaytosmall: "<prefix>§cDie Verzögerung muss mindestens 1 betragen!"
     actionbar:
-      disabled: "<prefix>Du kannst die Aktionsleiste nicht mehr sehen!"
+      disabled: "<prefix>Du kannst die Aktionsleiste jetzt nicht mehr sehen!"
       deactivated: "<prefix>Die Aktionsleiste ist auf diesem Server nicht aktiviert!"
       enabled: "<prefix>Du kannst die Aktionsleiste jetzt sehen!"
     intro:
-      gamealreadystarted: "<prefix>Das Spiel wurde bereits gestartet!"
-      alreadystarted: "<prefix>Das Intro wurde bereits gestartet!"
-      started: "<prefix>Und los geht's!"
+      gamealreadystarted: "<prefix>§cDas Spiel wurde bereits gestartet!"
+      alreadystarted: "<prefix>§cDas Intro wurde bereits gestartet!"
+      started: "<prefix>Los geht's!"
     abort:
       stopped: "<prefix>Start-Countdown erfolgreich gestoppt!"
-      notactive: "<prefix>Der Start-Countdown ist nicht aktiv!"
+      notactive: "<prefix>§cDer Start-Countdown ist nicht aktiv!"
     playtime: "<prefix>Verbleibende Zeit: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
     config:
       entryset: "<prefix>Der Eintrag <colorcode><entry>§7 wurde erfolgreich auf <colorcode><value>§7 gesetzt."
-      reloaded: "<prefix>Alle <colorcode>Listen§7, <colorcode>Nachrichten §7und die <colorcode>Config §7wurden erfolgreich neu geladen."
-      entrynotfound: "<prefix>Der Eintrag <colorcode><entry>§7 wurde nicht gefunden."
-      noimgameset: "<prefix><colorcode>Diese Einstellung kann nicht im Spiel geändert werden!"
-      errorset: "<prefix><colorcode>Ein Fehler ist aufgetreten: <error>"
+      reloaded: "<prefix>Die Config wurde erfolgreich neu geladen."
+      entrynotfound: "<prefix>§cDer Eintrag <colorcode><entry> §cwurde nicht gefunden."
+      noimgameset: "<prefix>§cDu kannst diese Einstellung nur in der Config Datei ändern!"
+      errorset: "<prefix>§cEin Fehler ist aufgetreten: <error>"
       searchlistformat: "<prefix><colorcode><entry> §8- §7<description>"
       reset: "<prefix>Alle Einträge wurden erfolgreich zurückgesetzt."
       helpsearch: "<prefix><colorcode>/varo config §7search <Schlüssel>"
@@ -112,35 +111,35 @@ commands:
     autosetup:
       help: |-
         <prefix><colorcode>/varo autosetup run §7startet das AutoSetup
-        §cVorsicht: §7Dieser Befehl setzt neue Spawns, Lobby, Portal, Grenze und §loptional§7 einen Autostart
+        §cVorsicht: §7Dieser Befehl setzt neue Spawns, Lobby, Portal, Weltbarriere und §loptional §r§7einen Autostart
       finished: "<prefix>Das AutoSetup ist abgeschlossen."
-      notsetupyet: "<prefix>Das AutoSetup wurde noch nicht in der Config eingerichtet!"
+      notsetupyet: "<prefix>§cDas AutoSetup wurde noch nicht in der Config eingerichtet!"
     sort:
-      nospawnwithteam: "<prefix>Es konnte nicht für jeden Spieler ein Spawn neben seinen anderen Teammitgliedern gefunden werden!"
-      nospawn: "<prefix>Es konnte nicht für jeden Spieler ein Spawn gefunden werden!"
+      nospawnwithteam: "<prefix>§cEs konnte nicht für jeden Spieler ein Spawn neben seinen anderen Teammitgliedern gefunden werden!"
+      nospawn: "<prefix>§cEs konnte nicht für jeden Spieler ein Spawn gefunden werden!"
       sorted: "<prefix>Alle Spieler wurden erfolgreich sortiert."
       help: "<prefix><colorcode>/varo sort"
     restart:
       restarted: "<prefix>Das Spiel wurde neu gestartet."
-      inlobby: "<prefix>Das Spiel befindet sich bereits in der Lobby-Phase!"
+      inlobby: "<prefix>§cDas Spiel befindet sich bereits in der Lobby-Phase!"
   error:
     nonumber: "<prefix><colorcode><text> §cist keine Zahl!"
     permission: "<prefix>§cUnzureichende Berechtigung"
     usernotfound: "<prefix>§cKein Benutzer für diesen Spieler gefunden!"
     noconsole: "<prefix>§cDu musst ein Spieler sein!"
     notstarted: "<prefix>§cDas Spiel hat noch nicht begonnen!"
-    usage: "<prefix>§cFehler! Benutze <colorcode>/varo <command> §czur Hilfe."
+    usage: "<prefix>§cFehler! Benutze <colorcode>/varo <command> §cfür Hilfe."
     unknownplayer: "<prefix>§cUnbekannter Spieler <colorcode><target>§c!"
     blocked: "<prefix>§cDu darfst diesen Befehl nicht verwenden!"
-    wrongVersion: "<prefix>§cDiese Funktion ist nicht für Versionen unter <colorcode><required-version>§c verfügbar!"
+    wrongVersion: "<prefix>§cDiese Funktion ist nicht für Minecraft Versionen unter <colorcode><required-version>§c verfügbar!"
     generic: "<prefix>§cEin Fehler ist aufgetreten!"
   broadcast:
     format: "§8[§cRundruf§8] §7<message>"
   chatclear:
     cleared: "<prefix>Der Chat wurde geleert."
   weather:
-    sun: "<prefix>Wetter <colorcode>aufgeklärt§7."
-    thunder: "<prefix>Wetter auf <colorcode>Gewitter§7 geändert."
+    sun: "<prefix>Es ist jetzt <colorcode>sonnig§7."
+    thunder: "<prefix>Es <colorcode>gewittert §7jetzt."
     rain: "<prefix>Es <colorcode>regnet §7jetzt."
   countdown:
     abort: "<prefix>Countdown abgebrochen!"
@@ -156,142 +155,142 @@ commands:
       <prefix>Du bist <colorcode><spawn-distance> §7Blöcke vom Spawn entfernt!:>
     end: "<prefix>§cDieser Befehl kann nicht im Ende verwendet werden!"
   time:
-    day: "<prefix>Zeit auf <colorcode>Tag§7 gesetzt."
-    night: "<prefix>Zeit auf <colorcode>Nacht§7 gesetzt."
+    day: "<prefix>Es ist jetzt <colorcode>Tag§7."
+    night: "<prefix>Es ist jetzt <colorcode>Nacht§7."
   setworldspawn:
-    setworldspawn: "<prefix>Worldspawn gesetzt"
+    setworldspawn: "<prefix>Der Welt-Spawn wurde erfolgreich gesetzt."
   ping: "<prefix>Ping: <colorcode><ping>§7ms"
 game:
   sort:
     spectator: "<prefix>Du wurdest zum Welt-Spawn teleportiert!"
-    number: "<prefix>Du wurdest zu Spawn <colorcode><spawn-id>§7 teleportiert!"
-    noSpawnFound: "<prefix>Kein Spawnpunkt für dich verfügbar!"
+    number: "<prefix>Du wurdest zu Spawn <colorcode><spawn-id> §7teleportiert!"
+    noSpawnFound: "<prefix>§cEs wurde ein Spawn für dich gefunden!"
     player: "<prefix>Du wurdest zu deinem Spawn teleportiert!"
-    noSpawnFoundTeam: "<prefix>Kein Spawnpunkt in der Nähe deiner Teampartner verfügbar!"
+    noSpawnFoundTeam: "<prefix>§cEs konnte kein Spawn in der Nähe deiner Teampartner gefunden werden!"
   lobby:
-    move: "<prefix>Du kannst dich nicht bewegen, bis das Projekt gestartet wurde!"
+    move: "<prefix>§cDu kannst dich nicht bewegen, bis das Spiel gestartet wurde!"
   finale:
     noFreeze: "<prefix>Das Finale beginnt gleich!"
     freeze: "<prefix>Das Finale beginnt gleich! Alle Spieler wurden eingefroren!"
-    countdown: "§7Das Finale startet in <colorcode><finale-countdown>§7 Sekunde<if_eq:1:<finale-countdown>::n>!"
+    countdown: "§7Das Finale startet in <colorcode><if_eq:1:<finale-countdown>:einer §7Sekunde:<finale-countdown> §7Sekunden>!!"
     start: "§7Das Finale beginnt jetzt!<if_num_gt:<config-Finale-finaleProtectionTime>:0: Alle sind für <colorcode><config-Finale-finaleProtectionTime> §7Sekunden geschützt!:>"
   start:
     startTitle: "<colorcode><start-countdown>"
     startSubtitle: "§7Viel Glück!"
-    countdown: "<projectname>§7 startet in <colorcode><start-countdown>§7 Sekunde<if_eq:1:<start-countdown>::n>!"
+    countdown: "<projectname>§7 startet in <colorcode><if_eq:1:<start-countdown>:einer §7Sekunde:<start-countdown> §7Sekunden>!"
     varoStart: "<projectname> §7hat begonnen! §5Viel Glück!"
     abort: "<prefix>§cDer Start wurde abgebrochen!"
   win:
-    player: "<colorcode><winner> §7hat <colorcode><projectname>§7 gewonnen! Herzlichen Glückwunsch!"
-    team: "<colorcode><winner> §7haben <colorcode><projectname>§7 gewonnen! Herzlichen Glückwunsch!"
+    player: "<colorcode><winner> §7hat <projectname> §7gewonnen! Herzlichen Glückwunsch!"
+    team: "<colorcode><winner> §7haben <projectname> §7gewonnen! Herzlichen Glückwunsch!"
 log:
   strike:
-    general: "<name> hat jetzt <strike-num> Strikes! Der Strike wurde von <strike-operator> gegeben. Grund: <strike-reason>"
-    combatlog: "<name> hat sich während des Kampfes ausgeloggt und daher einen Strike erhalten!"
+    general: "<name> hat jetzt <strike-num> Strikes! Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>"
+    combatlog: "<name> hat sich während des Kampfes ausgeloggt und somit einen Strike erhalten!"
     second: |-
-      <name> hat jetzt zwei Strikes. Der Strike wurde von <strike-operator> gegeben. Grund: <strike-reason>
-      Ihr Inventar wurde geleert!
+      <name> hat jetzt zwei Strikes. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
+      Aufgrund dessen wurde das Inventar geleert!
     first: |-
-      <name> hat jetzt einen Strike. Der Strike wurde von <strike-operator> gegeben. Grund: <strike-reason>
+      <name> hat jetzt einen Strike. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
       Hier sind ihre aktuellen Koordinaten: <strike-location>!
     third: |-
-      <name> hat jetzt drei Strikes. Der Strike wurde von <strike-operator> gegeben. Grund: <strike-reason>
-      <name> wurde nun von <projectname> entfernt!
+      <name> hat jetzt drei Strikes. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
+      Somit ist <name> aus <projectname> ausgeschieden!
     firstNeverOnline: |-
-      <name> hat jetzt einen Strike. Der Strike wurde von <strike-operator> gegeben. Grund: <strike-reason>
-      Der Spieler ist noch nicht beigetreten und wird an den Spawn-Koordinaten spawnen: <strike-location>!
+      <name> hat jetzt einen Strike. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
+      Der Spieler war noch nie online und wird an den Spawn-Koordinaten spawnen: <strike-location>!
   win:
     team: "<winner> haben <projectname> gewonnen! Herzlichen Glückwunsch!"
     player: "<winner> hat <projectname> gewonnen! Herzlichen Glückwunsch!"
-  sessionsEnded: "<name>s Episode ist beendet!"
+  sessionsEnded: "Die Episode von <name> ist beendet!"
   playerJoinNormal: "<name> ist dem Spiel beigetreten!"
   death:
     eliminated:
-      player: "<name> wurde von <killer-name> getötet!"
+      player: "<name> wurde von <killer-name> getötet! Grund: <death-reason>"
       other: "<name> ist gestorben. Grund: <death-reason>"
     teamLifeLost:
-      player: "<name> wurde von <killer-name> getötet! Sie haben jetzt noch <team-lives> Leben!"
-      other: "<name> ist gestorben! Sie haben jetzt noch <team-lives> Leben! Grund: <death-reason>"
+      player: "<name> wurde von <killer-name> getötet und hat nun noch <team-lives> Leben! Grund: <death-reason>"
+      other: "<name> ist gestorben und hat jetzt noch <team-lives> Leben! Grund: <death-reason>"
   borderDecrease:
-    death: "Die Grenzgröße wurde aufgrund des Todes eines Spielers um <border-decrease-size> verringert!"
-    days: "Die Grenzgröße wurde um <border-decrease-size> verringert. Nächste Verringerung in <border-decrease-time> Tagen!"
-    minutes: "Die Grenzgröße wurde um <border-decrease-size> verringert. Nächste Verringerung in <border-decrease-time> Minuten!"
+    death: "Die Größe der Weltbarriere wurde aufgrund des Todes eines Spielers um <border-decrease-size> verringert!"
+    days: "Die Größe der Weltbarriere wurde um <border-decrease-size> verringert. Nächste Verkleinerung in <border-decrease-time> Tagen!"
+    minutes: "Die Größe der Weltbarriere wurde um <border-decrease-size> verringert. Nächste Verkleinerung in <border-decrease-time> Minuten!"
   playerJoinMassrec: "<name> hat den Server während der Massenaufnahme betreten und spielt nun seine <episode>. Episode."
   kickedPlayer: "<name> wurde gekickt!"
   teleportedToMiddle: "<name> wurde zur Mitte teleportiert!"
   finaleJoin: "<name> hat den Server betreten, um am Finale teilzunehmen!"
   switchedName: "<name> hat seinen Namen geändert und ist nun als <new-name> bekannt!"
   playerJoined: "<name> hat den Server betreten und spielt nun seine <episode>. Episode!"
-  newSessionsForAll: "Jeder hat <new-sessions> neue Sitzungen erhalten!"
+  newSessionsForAll: "Jeder hat <new-sessions> neue Folgen erhalten!"
   playerQuit: "<name> hat das Spiel verlassen!"
-  playerQuitToEarly: "<name> hat das Spiel vorzeitig verlassen! Verbleibende Zeit: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
-  playerReconnect: "<name> hat das Spiel vorzeitig verlassen und ist wieder beigetreten! Verbleibende Zeit: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
-  newSessions: "<new-sessions> neue Sitzungen wurden an Spieler vergeben!"
+  playerQuitTooEarly: "<name> hat das Spiel vorzeitig verlassen! Verbleibende Zeit: <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second>"
+  playerReconnect: "<name> hat das Spiel vorzeitig verlassen und ist wieder beigetreten! Verbleibende Zeit: <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second>"
+  newSessions: "<new-sessions> neue Folgen wurden an Spieler vergeben!"
   combatlog: "<name> hat sich während des Kampfes ausgeloggt!"
   finaleStart: "Das Finale hat begonnen!"
-  gameStarted: "<projectname> hat begonnen!"
+  gameStart: "<projectname> hat begonnen!"
 player:
   combat:
-    friendlyfire: "<prefix>§7Dieser Spieler ist in deinem Team!"
+    friendlyfire: "<prefix>Dieser Spieler ist in deinem Team!"
     loggedOut: "<prefix>§c<name> §7hat den Server während eines Kampfes verlassen!"
-    fightEnd: "<prefix>§7Du bist jetzt nicht mehr im Kampf! Du kannst dich jetzt ausloggen!"
-    fight: "<prefix>§7Du befindest dich jetzt im Kampf, logge dich §4NICHT §7aus!"
+    fightEnd: "<prefix>Du bist jetzt nicht mehr im Kampf! Du kannst dich jetzt ausloggen!"
+    fight: "<prefix>Du befindest dich jetzt im Kampf, logge dich §cNICHT §7aus!"
   kick:
-    noPreproduceLeft: "§cDu hast keine Vorproduktions-Sitzungen mehr übrig! \n§7Versuche es morgen erneut."
+    noPreproduceLeft: "§cDu hast keine Vorproduktions-Folgen mehr übrig!\n§7Versuche es morgen erneut."
     noSessionLeft: |-
-      §cDu hast keine Sitzungen mehr übrig!
+      §cDu hast keine Folgen mehr übrig!
       §7Warte bis morgen, um wieder zu spielen!
-    sessionOver: "§cDeine Sitzung ist abgelaufen!"
+    sessionOver: "§cDeine Zeit ist abgelaufen!"
     noDiscordUser: |-
-      §7Dein Konto ist nicht auf dem Discord-Server!
+      §cDu bist nicht auf dem Discord-Server!
       §7Tritt dem Discord bei und versuche es erneut!
-    notUserOfProject: "§7Du bist kein Teilnehmer von <projectname>§7!"
+    notUserOfProject: "§cDu bist kein Teilnehmer von <projectname>§c!"
     banned: |-
-      §4Du bist von diesem Server gebannt!
+      §cDu bist von diesem Server gebannt!
       §7Grund: §c<reason>
-    notStarted: "§cDer Server wurde noch nicht geöffnet! \n§7Bitte habe noch etwas Geduld!"
+    notStarted: "§cDer Server wurde noch nicht geöffnet!\n§7Bitte habe noch etwas Geduld!"
     notRegisteredDiscord: |-
-      §7Dein Konto ist nicht verifiziert!
-      §7Bitte benutze §c/verify <discord-code> §7, um dein Discord-Konto zu verifizieren!
-      Link: §c<discord>
-    kill: "§7Du wurdest von §c<killer-name>§7 getötet!"
-    command: "<colorcode><name> §7wurde gekickt!"
+      §cDein Konto ist nicht auf Discord verifiziert!
+      §7Bitte benutze §c/verify <discord-code>§7, um dein Discord-Konto zu verifizieren!
+      §7Link: §c<discord>
+    kill: "§cDu wurdest von §c<killer-name> §cgetötet!"
     death: "§cDu bist gestorben!"
     serverFull: |-
       §cDer Server ist voll!
       §7Sprich mit dem Besitzer, falls dies ein Fehler ist!
     strikeBan: |-
       §cDu bist für <ban-hours> Stunden gebannt, weil du einen Strike erhalten hast!
-      Versuche es später erneut.
-    tooManyStrikes: "§7Du hast zu viele Strikes erhalten und wurdest daher von <projectname> entfernt."
-    noTimeLeft: "Du darfst nur §4<config-JoinSystems-joinAfterHours> §cStunden pro Tag spielen! \\n§7Du kannst in §c<join-hours>§7:§c<join-minues>§7:§c<join-seconds>§7 wieder beitreten!"
+      §7Versuche es später erneut.
+    tooManyStrikes: "§cDu bist aufgrund zu vieler Strikes aus <projectname> §causgeschieden"
+    noTimeLeft: "§cDu darfst nur <config-JoinSystems-joinAfterHours> Stunden pro Tag spielen!\n§7Du kannst in §c<join-hours>§7:§c<join-minues>§7:§c<join-seconds>§7 wieder beitreten!"
     serverClosed: |-
       §cDer Server ist geschlossen!
       §7Bitte versuche es später erneut!
-    kickMessageMassRec: "§cDie Massenaufnahme ist beendet, \n§7jeder wurde gekickt!"
+    kickMessageMassRec: "§cDie Massenaufnahme ist beendet!\n§7Alle Spieler wurden gekickt!"
   actionbar:
-  - "§7Entfernung zur Grenze: <colorcode><distance-to-border>"
-  - "§7Schau auf unserem Discord vorbei <colorcode><varo-discord>"
+  - "§7Entfernung zur Weltbarriere: <colorcode><distance-to-border>"
+  - "§7Schau auch auf unserem Discord vorbei: <colorcode><varo-discord>"
   death:
     teamLifeLost:
-      player: "<prefix><colorcode><name> §7wurde von <colorcode><killer-name>§7 getötet! Sie haben jetzt noch <colorcode><team-lives> §7Leben übrig! Grund: §c<death-reason>"
-      other: "<prefix><colorcode><name> §7ist gestorben! Sie haben jetzt noch <colorcode><team-lives> §7Leben übrig! Grund: §c<death-reason>"
+      player: "<prefix><colorcode><name> §7wurde von <colorcode><killer-name> §7getötet und hat nun noch <colorcode><team-lives> §7Leben! Grund: §c<death-reason>"
+      other: "<prefix><colorcode><name> §7ist gestorben und hat jetzt noch <colorcode><team-lives> §7Leben! Grund: §c<death-reason>"
     respawnProtection: "<prefix>§c<name> hat ein Leben verloren und ist für <config-Death-respawnProtection> Sekunden unverwundbar!"
     eliminated:
       other: "<prefix><colorcode><name> §7ist gestorben. Grund: §c<death-reason>"
-      player: "<prefix><colorcode><name> §7wurde von <colorcode><killer-name>§7 getötet!"
-    killLifeAdd: "<prefix>§7Dein Team hat ein zusätzliches Teamleben erhalten!"
+      player: "<prefix><colorcode><name> §7wurde von <colorcode><killer-name>§7 getötet! Grund: §c<death-reason>"
+      time: "<prefix><colorcode><name> §7ist nun seit §c<config-Disconnect-banAfterDisconnectMinutes> §7Minute(n) offline und ist deshalb aus <projectname> §7ausgeschieden!"
+    killLifeAdd: "<prefix>Dein Team hat ein zusätzliches Teamleben erhalten!"
     killTimeAdd: "<prefix>Du hast <colorcode><time-additional> §7Sekunden zusätzliche Zeit erhalten!"
     respawnProtectionOver: "<prefix>§c<name> ist jetzt wieder verwundbar!"
   join:
-    protection: "<prefix>§a<name>§7 hat den Server betreten und ist in <colorcode><config-Protections-joinProtectionTime>§7 Sekunden verwundbar!"
-    protectionEnd: "<prefix>§a<name>§7 ist jetzt verwundbar!"
-    massrecording: "<prefix>§a<name>§7 hat den Server während der Massenaufnahme betreten und ist für <colorcode><config-Protections-joinProtectionTime>§7 Sekunden geschützt!"
-    remainingTime: "<prefix>§a<name>§7 hat den Server zu früh verlassen und hat noch <if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>§7 übrig! Verbleibende §cDisconnects§7: §c<remaining-disconnects>"
-    broadcast: "<prefix>§a<name>§7 hat den Server betreten!"
-    required: "<prefix><num-required> weitere Spieler werden benötigt, um zu starten!"
-    finale: "<prefix>§a<name>§7 hat den Server für das Finale betreten!"
-    spectator: "<prefix>§a<name>§7 hat den Server als Zuschauer betreten!"
+    protection: "<prefix>§a<name> §7hat den Server betreten und ist in <colorcode><config-Protections-joinProtectionTime>§7 Sekunden verwundbar!"
+    protectionEnd: "<prefix>§a<name> §7ist jetzt verwundbar!"
+    massrecording: "<prefix>§a<name> §7hat den Server während der Massenaufnahme betreten und ist für <colorcode><config-Protections-joinProtectionTime>§7 Sekunden geschützt!"
+    remainingTime: "<prefix>§a<name> §7hat den Server erneut betreten und hat noch <if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>§7 übrig! Verbleibende §cDisconnects§7: §c<remaining-disconnects>"
+    broadcast: "<prefix>§a<name> §7hat den Server betreten!"
+    required: "<prefix><colorcode><num-required> §7weitere Spieler werden benötigt, um zu starten!"
+    finale: "<prefix>§a<name> §7hat den Server für das Finale betreten!"
+    spectator: "<prefix>§a<name> §7hat den Server als Zuschauer betreten!"
   scoreboard:
     title:
     - "<projectname>"
@@ -328,15 +327,14 @@ player:
       - "<padding:4>"
   disconnect:
     kickInSeconds: "<prefix><colorcode><name> §7wird in <colorcode><kick-delay> §7Sekunde(n) gekickt!"
-    eliminated: "<prefix>§c<name> §7war seit §c<config-Disconnect-banAfterDisconnectMinutes> §7Minute(n) nicht online.§7Sie wurden nun von <projectname>§7 entfernt!"
-    noKickPlayerNearby: "<prefix>§cEin Spieler ist weniger als §4<config-Other-noKickDistance> §cBlöcke von dir entfernt! §7Entferne dich von diesem Spieler, um gekickt zu werden!"
+    noKickPlayerNearby: "<prefix>Ein Spieler ist weniger als §c<config-Other-noKickDistance> Blöcke §7von dir entfernt! Entferne dich von diesem Spieler, um gekickt zu werden!"
     spectator: "<prefix>§c<name> §7hat den Server als Zuschauer verlassen!"
-    quitRemainingTime: "<prefix>§c<name> §7hat den Server vorzeitig verlassen!"
-    delay: "<prefix><colorcode><name> §7wurde gekickt!"
-    serverCloseSoon: "<prefix>§7Der Server schließt in §c<server-close> §7Minuten!"
-    broadcast: "<prefix>§c<name>§7 hat den Server verlassen!"
-    kick: "<prefix><colorcode><name> §7wurde gekickt!"
-    quitTooOften: "<prefix>§c<name> §7hat den Server zu oft verlassen und hat somit seine Sitzung verloren."
+    tooEarly: "<prefix>§c<name> §7hat den Server vorzeitig verlassen!"
+    delay: "<prefix>§c<name> §7wurde gekickt!"
+    serverCloseSoon: "<prefix>Der Server schließt in §c<server-close> §7Minute(n)!"
+    broadcast: "<prefix>§c<name> §7hat den Server verlassen!"
+    kick: "<prefix>§c<name> §7wurde gekickt!"
+    quitTooOften: "<prefix>§c<name> §7hat den Server zu oft verlassen und hat somit seine Folge verloren."
   nametag:
     suffix: "§c <kills>"
     prefix: "<if_ne:<team>:-:<colorcode><team>:> §7"
@@ -356,71 +354,71 @@ player:
       - "§7------------------------"
     header:
     - - " "
-      - "§7Oo   <projectname>   §7oO"
+      - "§7Oo    <projectname>    §7oO"
       - " "
     - - " "
-      - "§7oO   <projectname>   §7Oo"
+      - "§7oO    <projectname>    §7Oo"
       - " "
     format: "<displayname> §c<kills>"
   chests:
     removed: "<prefix>Container erfolgreich entfernt!"
-    disallowed: "<prefix>Dieser Container gehört <colorcode><owner-name>!"
-    admin: "<prefix>Dieser Container gehört <colorcode><owner-name>! Aber du hast die Berechtigung, ihn trotzdem zu benutzen!"
+    disallowed: "<prefix>Dieser Container gehört <colorcode><owner-name>§7!"
+    admin: "<prefix>Dieser Container gehört <colorcode><owner-name>§7! Aber du hast die Berechtigung, ihn trotzdem zu benutzen!"
     new: "<prefix>Container gesichert!"
   spectator:
     height: "<prefix>§cDu kannst nicht tiefer fliegen!"
   displayname: "<if_ne:<rank>:-:§7<rank> §8| :><if_ne:<team>:-:<colorcode><team> §8| :>§7<name>"
   crafting:
     disallowed: "<prefix>§cDu darfst diesen Gegenstand nicht herstellen, benutzen oder brauen!"
-  moveProtection: "<prefix>Du kannst dich nicht bewegen, bis dein <colorcode>Schutz§7 abgelaufen ist!"
+  moveProtection: "<prefix>Du kannst dich nicht bewegen, bis dein <colorcode>Schutz §7abgelaufen ist!"
 blocklogger:
   filter:
     player: "<prefix>Bitte gib einen Spielernamen ein, nach dem gefiltert werden soll:"
     material: "<prefix>Bitte gib ein Material ein, nach dem gefiltert werden soll:"
-    set: "<prefix>Filter <colorcode><filter-name> §7auf <colorcode><filter-content> gesetzt"
-    invalid: "<prefix>Konnte Filter <colorcode><filter-name> §7nicht auf <colorcode><filter-content>§7 setzen!"
-    reset: "<prefix>Filter <colorcode><filter-name> entfernt"
+    set: "<prefix>Filter <colorcode><filter-name> §7auf <colorcode><filter-content> §7gesetzt"
+    invalid: "<prefix>§cKonnte Filter <colorcode><filter-name> §cnicht auf <colorcode><filter-content> §csetzen!"
+    reset: "<prefix>Filter <colorcode><filter-name> §7entfernt"
 protection:
   protected: "<prefix>Die <colorcode>Schutzzeit §7ist noch nicht abgelaufen!"
   end: "<prefix>Die anfängliche <colorcode>Schutzzeit §7ist abgelaufen!"
   start: "<prefix>Die <colorcode>Schutzzeit §7beginnt jetzt und endet in <colorcode><config-Protections-startperiodProtectiontime> §7Sekunden!"
-  update: "<prefix>Die <colorcode>Schutzzeit §7läuft in <colorcode><protection-minutes>§7:<colorcode><protection-seconds>§7 ab!"
+  update: "<prefix>Die <colorcode>Schutzzeit §7läuft in <colorcode><protection-minutes>§7:<colorcode><protection-seconds> §7ab!"
 border:
   decrease:
-    days: "<prefix>§7Die Grenze schrumpft jetzt um §c<border-decrease-size> §7Blöcke mit §c<border-decrease-speed> §7Blöcken/s. §7Nächste Reduzierung in §c<border-decrease-time> §7Tagen!"
-    minutes: "<prefix>§7Die Grenze schrumpft jetzt um §c<border-decrease-size> §7Blöcke mit §c<border-decrease-speed> §7Blöcken/s. §7Nächste Reduzierung in §c<border-decrease-time> §7Minuten!"
-    minuteUpdate: "<prefix>§7Die Grenze wird in §c<border-decrease-minutes>§8:§c<border-decrease-seconds> schrumpfen"
-    death: "<prefix>§7Die Grenze schrumpft jetzt aufgrund eines Todes um §c<border-decrease-size> §7Blöcke mit §c<border-decrease-speed> §7Blöcken/s."
-  minimum: "<prefix>§cDie Grenze hat ihr Minimum erreicht!"
+    days: "<prefix>Die Weltbarriere schrumpft jetzt um §c<border-decrease-size> §7Blöcke mit §c<border-decrease-speed> §7Blöcken/s. Nächste Verkleinerung in §c<border-decrease-time> §7Tagen!"
+    minutes: "<prefix>Die Weltbarriere schrumpft jetzt um §c<border-decrease-size> §7Blöcke mit §c<border-decrease-speed> §7Blöcken/s. Nächste Verkleinerung in §c<border-decrease-time> §7Minuten!"
+    minuteUpdate: "<prefix>Die Weltbarriere wird in §c<border-decrease-minutes>§8:§c<border-decrease-seconds> §7schrumpfen"
+    death: "<prefix>Die Weltbarriere schrumpft jetzt aufgrund eines Todes um §c<border-decrease-size> §7Blöcke mit §c<border-decrease-speed> §7Blöcken/s."
+  minimum: "<prefix>§cDie Weltbarriere hat ihr Minimum erreicht!"
 teamrequest:
   name:
     tooLong: "<prefix>§cDein Teamname darf nicht länger als <colorcode><maxLength> §cZeichen sein!"
     duplicate: "<prefix>§cDieser Name ist bereits vergeben!"
     invalid: "<prefix>§cUngültiger Teamname!"
-  invitedInTeam: "<prefix>§7Du hast <colorcode><invited> §7in dein Team eingeladen!"
+  invitedInTeam: "<prefix>Du hast <colorcode><invited> §7in dein Team eingeladen!"
   enterTeamName: "<prefix><colorcode>§lBitte gib einen Teamnamen für dich und <invited> ein:"
   items:
     leave:
       lore: |-
         §7Verlasse dein Team für immer.
         §7Du kannst niemals zurückkehren.
-      name: "§cTeam verlassen"
+      name: "§cTeam Verlassen"
     invite:
-      name: "§6Spieler einladen"
+      name: "§6Spieler Einladen"
       lore: |-
-        §7Schlage einen anderen Spieler,
-        §7um ihn in dein Team
-        §7einzuladen
+        §7Schlage einen anderen
+        §7Spieler, um ihn in
+        §7dein Team einzuladen
     rename:
       lore: "§7Ändere den Namen deines Teams"
-      name: "§cTeam umbenennen"
-  playerNotOnline: "<prefix><colorcode><inviter> ist offline!"
+      name: "§cTeam Umbenennen"
+  playerNotOnline: "<prefix><colorcode><inviter> §7ist offline!"
   teamRequestRecieved: "<prefix><colorcode><inviter> §7hat dich eingeladen, seinem Team beizutreten (/varo tr)!"
   rename: "<prefix><colorcode>§lBitte gib einen neuen Namen ein"
-  renamed: "<prefix>§7Teamname geändert zu <colorcode><team-newname>"
-  noteamname: "<prefix>§7Du hast keinen Teamnamen!"
+  renamed: "<prefix>Teamname geändert zu <colorcode><team-newname>"
+  noteamname: "<prefix>Du hast keinen Teamnamen!"
   invationRevoked: "<prefix>Einladung zurückgezogen!"
-  teamIsFull: "<prefix><invited> kann deinem Team nicht beitreten - Teammitgliederlimit erreicht!"
+  teamIsFull: "<prefix><colorcode><invited> §7kann deinem Team nicht beitreten - Teammitgliederlimit erreicht!"
 alert:
   strike:
     noJoin: "<name> war seit <no-join-days> Tagen nicht online! Daher hat <name> jetzt einen Strike erhalten!"
@@ -430,21 +428,21 @@ alert:
   noBloodlust: "<name> hat nun seit <bloodlust-days> Tagen nicht gekämpft und damit das erlaubte Limit überschritten!"
 chat:
   default: "<displayname> §8» §f<message>"
-  muted: "§7Du wurdest stummgeschaltet!"
+  muted: "§7Du wurdest stumm geschaltet!"
   team: "§7[<team>§7] <name> §8» §f<message>"
-  spectator: "§7Chat ist für Zuschauer deaktiviert!"
-  start: "§7Chat ist deaktiviert, bis das Spiel gestartet wurde!"
+  spectator: "§7Der Chat ist für Zuschauer deaktiviert!"
+  start: "§7Der Chat ist deaktiviert, bis das Spiel gestartet wurde!"
 category:
   footer: "§7------------------------"
-  header: "§7-------- <colorcode> <category> §7-------"
+  header: "§7-------- <colorcode><category> §7-------"
 motd:
   open: |-
-    §aTritt <projectname>§a bei!
+    §aTritt <projectname> §abei!
     §7Viel Spaß!
   closedHours: |-
-    §cDu kannst nur zwischen §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cund §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> beitreten
+    §cDu kannst nur zwischen §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cund §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cbeitreten
     §7Bitte versuche es später erneut!
-  closed: "§cDer Server ist noch nicht verfügbar! \n§7Bitte versuche es später erneut!"
+  closed: "§cDer Server ist noch nicht verfügbar!\n§7Bitte versuche es später erneut!"
 broadcast:
 - "<prefix> Eine Rundrufnachricht"
 - "<prefix> Eine weitere Rundrufnachricht"

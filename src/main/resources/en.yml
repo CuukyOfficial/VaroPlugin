@@ -11,101 +11,97 @@ commands:
     bugreport:
       update: |-
         <prefix>You cannot make bug reports when using an outdated plugin version!
-        <prefix>§7Use <colorcode>/varo update §7to update.
+        <prefix>Use <colorcode>/varo update §7to update.
         <prefix>Current version: §c<varo-version>
         <prefix>Latest version: §a<varo-version-latest>
       created: "<prefix>Bug report was saved as §c<file>§7! Please upload this file\
         \ to our Discord: <varo-discord>"
       collectingdata: "<prefix>Collecting data..."
     backpack:
-      notenabled: "<prefix>Backpacks are disabled."
-      playerdoesntexist: "<prefix>§cThe player <colorcode><target> §7does not exist."
-      choosetype: "<prefix>Please choose which backpack you want to open <colorcode>(Player/Team)§\
-        7."
-      teamdoesntexist: "<prefix>§cThe team <colorcode><target> §7does not exist."
-      noteam: "<prefix>You are not in a team and therefore do not have a team backpack."
+      notenabled: "<prefix>§cBackpacks are disabled!"
+      playerdoesntexist: "<prefix>§cThe player <colorcode><target> §cdoes not exist!"
+      choosetype: "<prefix>Please choose which backpack you want to open <colorcode>(Player/Team)§7!"
+      teamdoesntexist: "<prefix>§cThe team <colorcode><target> §cdoes not exist!"
+      noteam: "<prefix>§cYou are not in a team and therefore do not have a team backpack!"
     discord:
       remove:
         usage: "<prefix>Use <colorcode>/varo discord verify remove §7to remove the\
           \ verification."
-      pleasereload: "<prefix>The DiscordBot was not set up at start, please reload!"
-      getlink: "<prefix><colorcode><target-name> account is called <colorcode><target-discord-name>§\
+      pleasereload: "<prefix>The Discord bot was not set up at start, please restart the server!"
+      getlink: "<prefix><colorcode><target-name>'s account is called <colorcode><target-discord-name>§\
         7 and the ID is <colorcode><target-discord-id>§7!"
-      botdisabled: "<prefix>The DiscordBot is disabled!"
-      verifydisabled: "<prefix>The verification system has been deactivated in the\
-        \ Config!"
+      botdisabled: "<prefix>The Discord bot is disabled!"
+      verifydisabled: "<prefix>The verification system is disabled!"
       notverified: "<prefix>You are not verified yet!"
       status:
-        active: "<prefix>Your discord verification is active."
-        inactive: "<prefix>Your discord verification is inactive."
+        active: "<prefix>Your Discord verification is active."
+        inactive: "<prefix>Your Discord verification is inactive."
       unverify: "<prefix>The account has successfully been unlinked from <colorcode><target>§\
         7!"
-      shutdown: "<prefix>The Discordbot was §asuccessfully §7shut down."
-      reloaded: "<prefix>The Discordbot was §asuccessfully §7reloaded."
+      shutdown: "<prefix>The Discord bot was successfully shut down."
+      reloaded: "<prefix>The Discord bot was successfully reloaded."
       verificationremoved: "<prefix>Your verification was removed."
-      verifysystemdisabled: "<prefix>The Verify system is disabled."
       discordmessagetitle: "MESSAGE"
       account: "<prefix>Account: <colorcode><target>"
       usernotfound: "<prefix>User not found for this player!"
       noeventchannel: "<prefix>No event channel was given to the bot."
-      botoffline: "<prefix>The Discordbot is not online!"
+      botoffline: "<prefix>The Discord bot is not online!"
       bypassinactive: "<prefix><target> no longer bypasses the verification system."
       verifyenabled: "<prefix>The Verify system has been activated."
-      discordbotdisabled: "<prefix>The Discordbot is disabled."
-      notsetup: "<prefix>The DiscordBot was not set up at the start!"
+      discordbotdisabled: "<prefix>The Discord bot is disabled."
+      notsetup: "<prefix>The Discord bot was not set up at the start!"
       bypassactive: "<prefix><target> now bypasses the verification system."
     export:
-      players: "<prefix>All players were successfully exported to <colorcode><file>§\
+      players: "<prefix>All player data was successfully exported to <colorcode><file>§\
         7"
     preset:
-      saved: "<prefix>The current settings were §asuccessfully §7saved as preset <colorcode><preset>\
+      saved: "<prefix>The current settings were successfully saved as preset <colorcode><preset>\
         \ §7."
       helpsave: "<prefix><colorcode>/varo preset §7save <PresetPath>"
-      notfound: "<prefix>The preset <colorcode><preset> §7was not found."
-      pathtraversal: "<prefix>Presets must be located inside the §3presets §7folder."
-      loaded: "<prefix>The preset <colorcode><preset> §7was §asuccessfully §7loaded."
+      notfound: "<prefix>§cThe preset <colorcode><preset> §cwas not found."
+      pathtraversal: "<prefix>§cPresets must be located inside the <colorcode>presets §cfolder."
+      loaded: "<prefix>The preset <colorcode><preset> §7was successfully loaded."
       helploaded: "<prefix><colorcode>/varo preset §7load <PresetPath>"
       list: "<prefix>§lList of all presets:"
     scoreboard:
-      deactivated: "<prefix>Scoreboards are disabled."
-      disabled: "<prefix>You can no longer see the scoreboard."
-      enabled: "<prefix>You can now see the scoreboard."
+      deactivated: "<prefix>The scoreboard is disabled on this server!"
+      disabled: "<prefix>You can no longer see the scoreboard!"
+      enabled: "<prefix>You can now see the scoreboard!"
     randomteam:
       sorted: "<prefix>All players without a team are now in teams of <colorcode><sort-size>§\
         7!"
       help: "<prefix><colorcode>/varo randomTeam <team size>"
-      teamsizetoosmall: "<prefix>The team size must be at least 1."
-      nopartner: "<prefix>Not enough team partners could be found for you."
+      teamsizetoosmall: "<prefix>§cThe team size must not be less than 1!"
+      nopartner: "<prefix>§cNot enough team partners could be found for you."
     checkcombat:
       incombat: "<prefix>You are currently in <colorcode>combat§7!"
       help: "<prefix><colorcode>/varo checkcombat"
       notincombat: "<prefix>You are currently <colorcode>not in combat§7!"
     autostart:
       notactive: "<prefix>AutoStart is inactive"
-      removed: "<prefix><colorcode>AutoStart §7 successfully removed!"
-      helpset: "<prefix><colorcode>/autostart §7set <Hour> <Minute> <Day> <Month>\
-        \ <Year>"
-      startdelayed: "<prefix>§7The start has been delayed by <colorcode><autostart-delay>\
+      removed: "<prefix><colorcode>AutoStart §7successfully removed!"
+      helpset: "<prefix><colorcode>/autostart §7set \\<Hour\\> \\<Minute\\> \\<Day\\> \\<Month\\> \\<Year\\>"
+      startdelayed: "<prefix>The start has been delayed by <colorcode><autostart-delay>\
         \ §7minutes!"
       delayhelp: "<prefix><colorcode>/autostart delay §7\\<Delay in Minutes\\>"
-      alreadystarted: "<prefix><projectname> §7has already been started!"
-      notsetupyet: "<prefix>§7There is no <colorcode>autostart §7defined yet!"
-      dateinthepast: "<prefix>§7The <colorcode>date §7must not be in the past!"
-      nonumber: "<prefix>One or more arguments are §cnot §7a number!"
-      alreadysetup: "<prefix>§7Remove the AutoStart first before you set a new one!"
+      alreadystarted: "<prefix><projectname> §chas already been started!"
+      notsetupyet: "<prefix>§cAutoStart has not been set up!"
+      dateinthepast: "<prefix>§cThe date must not be in the past!"
+      nonumber: "<prefix>§cOne or more arguments are not a number!"
+      alreadysetup: "<prefix>§cEntferne erst den AutoStart, bevor du einen neuen setzt!"
       info: |-
-        <prefix><prefix>AutoStart §aactive:
+        <prefix>AutoStart:
         <colorcode>Date: §7<autostart-date>
         <colorcode>Auto random team size: §7<config-Start-doSortAtStart>
         <colorcode>AutoSort: §7<config-Start-doRandomTeamAtStart>
-      delaytosmall: "<prefix>The delay must not be less than 1!"
+      delaytosmall: "<prefix>§cThe delay must not be less than 1!"
     actionbar:
       disabled: "<prefix>You can no longer see the action bar!"
-      deactivated: "<prefix>The action bar is not enabled on this server!"
+      deactivated: "<prefix>The action bar is disabled on this server!"
       enabled: "<prefix>You can now see the action bar!"
     intro:
-      gamealreadystarted: "<prefix>The game has already been started!"
-      alreadystarted: "<prefix>The intro has already been started!"
+      gamealreadystarted: "<prefix>§cThe game has already been started!"
+      alreadystarted: "<prefix>§cThe intro has already been started!"
       started: "<prefix>And here we go!"
     abort:
       stopped: "<prefix>Start countdown successfully stopped!"
@@ -113,45 +109,44 @@ commands:
     playtime: "<prefix>Time remaining: <colorcode><countdown-hour>§8:<colorcode><countdown-minute>§\
       8:<colorcode><countdown-second>"
     config:
-      entryset: "<prefix>The entry <colorcode><entry>§7 was successfully set to <colorcode><value>§\
+      entryset: "<prefix>The entry <colorcode><entry>§7 has been successfully set to <colorcode><value>§\
         7."
-      reloaded: "<prefix>All <colorcode>lists§7, <colorcode>messages, §7and the <colorcode>config\
-        \ §7have been successfully reloaded."
-      entrynotfound: "<prefix>The entry <colorcode><entry>§7 was not found."
-      noimgameset: "<prefix><colorcode>This setting can not be changed in game!"
-      errorset: "<prefix><colorcode>An error occurred: <error>"
+      reloaded: "<prefix>The config has been successfully reloaded."
+      entrynotfound: "<prefix>§cThe entry <colorcode><entry> §cwas not found!"
+      noimgameset: "<prefix>§cThis setting can not be changed in game!"
+      errorset: "<prefix>§cAn error occurred: <error>"
       searchlistformat: "<prefix><colorcode><entry> §8- §7<description>"
-      reset: "<prefix>All entries have been successfully reset."
+      reset: "<prefix>All entries have been reset to their default values."
       helpsearch: "<prefix><colorcode>/varo config §7search <key>"
       helpset: "<prefix><colorcode>/varo config §7set <key> <value>"
       searchlisttitle: "<prefix>§lThe following settings were found:"
     episodes: "<prefix>You have already played <colorcode><episode> §7episode(s).\
-      \ You have <colorcode><episodes-remaining> §7episode(s) left for today"
+      \ You have <colorcode><episodes-remaining> §7episode(s) left for today."
     autosetup:
       help: |-
         <prefix><colorcode>/varo autosetup run §7starts the autosetup
-        §cCaution: §7This command sets new spawns, lobby, portal, border and §loptional§7 an autostart
+        §cCaution: §7This command sets new spawns, lobby, portal, border and an §loptional §r§7autostart.
       finished: "<prefix>The AutoSetup is finished."
-      notsetupyet: "<prefix>The AutoSetup has not yet been set up in the Config!"
+      notsetupyet: "<prefix>§cThe AutoSetup has not yet been set up in the Config!"
     sort:
-      nospawnwithteam: "<prefix>It was not possible to find a spawn next to their\
-        \ other team members for every player!"
-      nospawn: "<prefix>It was not possible to find a spawn for every player!"
+      nospawnwithteam: "<prefix>§cIt was not possible to find a spawn next to their\
+        \ team partners for every player!"
+      nospawn: "<prefix>§cIt was not possible to find a spawn for every player!"
       sorted: "<prefix>All players were successfully sorted."
       help: "<prefix><colorcode>/varo sort"
     restart:
-      restarted: "<prefix>The games has been restarted."
-      inlobby: "<prefix>The game is already in the lobby phase!"
+      restarted: "<prefix>The game has been restarted."
+      inlobby: "<prefix>§cThe game is already in the lobby phase!"
   error:
     nonumber: "<prefix><colorcode><text> §cis not a number!"
-    permission: "<prefix>§cInsufficient permission"
+    permission: "<prefix>§cInsufficient permission!"
     usernotfound: "<prefix>§cNo user could be found for this player!"
     noconsole: "<prefix>§cYou must be a player!"
-    notstarted: "<prefix>§cThe games have not started yet!"
+    notstarted: "<prefix>§cThe game has not started yet!"
     usage: "<prefix>§cError! Use <colorcode>/varo <command> §cfor help."
     unknownplayer: "<prefix>§cUnknown player <colorcode><target>§c!"
     blocked: "<prefix>§cYou are not allowed to use this command!"
-    wrongVersion: "<prefix>§cThis feature is not available on versions lower than\
+    wrongVersion: "<prefix>§cThis feature is not available on Minecraft versions lower than\
       \ <colorcode><required-version>§c!"
     generic: "<prefix>§cAn error has occurred!"
   broadcast:
@@ -160,7 +155,7 @@ commands:
     cleared: "<prefix>The chat was cleared."
   weather:
     sun: "<prefix>Weather <colorcode>cleared§7."
-    thunder: "<prefix>Changed weather to <colorcode>thunderstorm§7."
+    thunder: "<prefix>It's <colorcode>thundering §7now."
     rain: "<prefix>It's <colorcode>raining §7now."
   countdown:
     abort: "<prefix>Countdown canceled!"
@@ -179,17 +174,17 @@ commands:
     day: "<prefix>Time set to <colorcode>day§7."
     night: "<prefix>Time set to <colorcode>night§7."
   setworldspawn:
-    setworldspawn: "<prefix>Worldspawn set"
+    setworldspawn: "<prefix>World spawn set."
   ping: "<prefix>Ping: <colorcode><ping>§7ms"
 game:
   sort:
     spectator: "<prefix>You've been teleported to the world spawn!"
     number: "<prefix>You've been teleported to spawn <colorcode><spawn-id>§7!"
-    noSpawnFound: "<prefix>No spawn point is available for you!"
+    noSpawnFound: "<prefix>§cNo spawn point is available for you!"
     player: "<prefix>You've been teleported to your spawn!"
-    noSpawnFoundTeam: "<prefix>No spawn point is available near your team partner(s)!"
+    noSpawnFoundTeam: "<prefix>§cNo spawn point is available near your team partner(s)!"
   lobby:
-    move: "<prefix>You cannot move until the project has been started!"
+    move: "<prefix>§cYou cannot move until the game has been started!"
   finale:
     noFreeze: "<prefix>The finale is about to begin!"
     freeze: "<prefix>The finale is about to begin! All players have been freezed!"
@@ -200,12 +195,12 @@ game:
   start:
     startTitle: "<colorcode><start-countdown>"
     startSubtitle: "§7Good luck!"
-    countdown: "<projectname>§7 starts in <colorcode><start-countdown>§7 second<if_eq:1:<start-countdown>::s>!"
+    countdown: "<projectname> §7starts in <colorcode><start-countdown>§7 second<if_eq:1:<start-countdown>::s>!"
     varoStart: "<projectname> §7has started! §5Good luck!"
     abort: "<prefix>§cThe start has been canceled!"
   win:
-    player: "<colorcode><winner> §7has won <colorcode><projectname>§7! Congratulations!"
-    team: "<colorcode><winner> §7have won <colorcode><projectname>§7! Congratulations!"
+    player: "<colorcode><winner> §7has won <projectname>§7! Congratulations!"
+    team: "<colorcode><winner> §7have won <projectname>§7! Congratulations!"
 log:
   strike:
     general: "<name> now has <strike-num> strikes! The strike was given by <strike-operator>.\
@@ -230,11 +225,11 @@ log:
   playerJoinNormal: "<name> has joined the game!"
   death:
     eliminated:
-      player: "<name> was killed by <killer-name>!"
+      player: "<name> was killed by <killer-name>! Reason: §c<death-reason>"
       other: "<name> died. Reason: <death-reason>"
     teamLifeLost:
       player: "<name> was killed by <killer-name>! They now have <team-lives> life/lives\
-        \ left!"
+        \ left! Reason: §c<death-reason>"
       other: "<name> died! They now have <team-lives> life/lives left! Reason: <death-reason>"
   borderDecrease:
     death: "The border size was decreased by <border-decrease-size> due to the death\
@@ -244,100 +239,96 @@ log:
     minutes: "The border size was decreased by <border-decrease-size>. Next decrease\
       \ in <border-decrease-time> minutes!"
   playerJoinMassrec: "<name> has entered the server during mass recording and is now\
-    \ playing their <episode>th episode."
+    \ playing their <episode>. episode."
   kickedPlayer: "<name> has been kicked!"
   teleportedToMiddle: "<name> was teleported to the center!"
   finaleJoin: "<name> has entered the server to participate in the finale!"
   switchedName: "<name> has changed their name and is now known as <new-name>!"
-  playerJoined: "<name> has entered the server and is now playing their <episode>th\
+  playerJoined: "<name> has entered the server and is now playing their <episode>.\
     \ episode!"
   newSessionsForAll: "Everybody received <new-sessions> new sessions!"
   playerQuit: "<name> left the game!"
-  playerQuitToEarly: "<name> has left the game early! Remaining time: <colorcode><countdown-hour>§\
-    8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
-  playerReconnect: "<name> left the game early and rejoined! Remaining time: <colorcode><countdown-hour>§\
-    8:<colorcode><countdown-minute>§8:<colorcode><countdown-second>"
+  playerQuitTooEarly: "<name> has left the game early! Remaining time: <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second>"
+  playerReconnect: "<name> has entered the server and has <colorcode><countdown-hour>:<colorcode><countdown-minute>:<colorcode><countdown-second> left!"
   newSessions: "<new-sessions> new sessions were given to players!"
   combatlog: "<name> has logged out during battle!"
   finaleStart: "The finale has started!"
-  gameStarted: "<projectname> has started!"
+  gameStart: "<projectname> has started!"
 player:
   combat:
-    friendlyfire: "<prefix>§7This player is on your team!"
-    loggedOut: "<prefix>§c<name> §7has left the server during a fight!"
-    fightEnd: "<prefix>§7You are now no longer in a fight! You can now log out!"
-    fight: "<prefix>§7You are now in combat, do §4NOT §7log out!"
+    friendlyfire: "<prefix>This player is on your team!"
+    loggedOut: "<prefix><colorcode><name> §7has left the server during a fight!"
+    fightEnd: "<prefix>You are now no longer in a fight! You can now log out!"
+    fight: "<prefix>You are now in combat, do §cNOT §7log out!"
   kick:
-    noPreproduceLeft: "§cYou have no more pre-produce sessions left! \n§7Try again\
+    noPreproduceLeft: "§cYou have no more sessions left to pre-produce!\n§7Try again\
       \ tomorrow."
     noSessionLeft: |-
       §cYou have no more sessions left!
-      §7Wait until tomorrow to play again!
-    sessionOver: "§cYour session has expired!"
+      §7Try again tomorrow!
+    sessionOver: "§cYour time is up!"
     noDiscordUser: |-
-      §7Your account is not on the discord server!
-      §7Join the discord and try again!
-    notUserOfProject: "§7You are not a participant of <projectname>§7!"
+      §cYour account is not on the Discord server!
+      §7Join the Discord and try again!
+    notUserOfProject: "§cYou are not a participant of <projectname>§c!"
     banned: |-
-      §4You are banned from this server!
+      §cYou are banned from this server!
       §7Reason: §c<reason>
-    notStarted: "§cThe server has not been opened yet! \n§7Please be patient a little\
+    notStarted: "§cThe server has not been opened yet!\n§7Please be patient a little\
       \ longer!"
     notRegisteredDiscord: |-
-      §7Your account is not verified!
+      §cYour account is not verified!
       §7Please use §c/verify <discord-code> §7to verify your Discord account!
-      Link: §c<discord>
-    kill: "§7You were killed by §c<killer-name>§7!"
-    command: "<colorcode><name> §7was kicked!"
+      §7Link: §c<discord>
+    kill: "§cYou were killed by §c<killer-name>§c!"
     death: "§cYou died!"
     serverFull: |-
       §cThe server is full!
-      §7Talk to the owner if this is a mistake!
+      §7Contact the owner if you think this is a mistake!
     strikeBan: |-
       §cYou are banned for <ban-hours> hours because you received a strike!
-      Try again later.
-    tooManyStrikes: "§7You received too many strikes and were therefore removed from\
+      §7Try again later.
+    tooManyStrikes: "§cYou received too many strikes and were therefore removed from\
       \ <projectname>"
-    noTimeLeft: "You are only allowed to play §4<config-JoinSystems-joinAfterHours>\
-      \ §chours per day! \\n§7You can join again in §c<join-hours>§7:§c<join-minues>§\
-      7:§c<join-seconds>§7!"
+    noTimeLeft: "§cYou are only allowed to play <config-JoinSystems-joinAfterHours> hours per day!\n§7You can join again in <join-hours>:<join-minutes>:<join-seconds>!"
     serverClosed: |-
       §cThe server is closed!
       §7Please try again later!
-    kickMessageMassRec: "§cThe mass recording is finished, \n§7everybody got kicked!"
+    kickMessageMassRec: "§cThe mass recording is finished,\n§7everybody got kicked!"
   actionbar:
   - "§7Distance to border: <colorcode><distance-to-border>"
-  - "§7Check out our Discord <colorcode><varo-discord>"
+  - "§7Check out our Discord: <colorcode><varo-discord>"
   death:
     teamLifeLost:
       player: "<prefix><colorcode><name> §7was killed by <colorcode><killer-name>§\
         7! They now have <colorcode><team-lives> §7life/lives left! Reason: §c<death-reason>"
       other: "<prefix><colorcode><name> §7died! They now have <colorcode><team-lives>\
         \ §7life/lives left! Reason: §c<death-reason>"
-    respawnProtection: "<prefix>§c<name> has lost a life and is invulnerable for <config-Death-respawnProtection>\
+    respawnProtection: "<prefix><colorcode><name> §7has lost a life and is invulnerable for <config-Death-respawnProtection>\
       \ seconds!"
     eliminated:
-      other: "<prefix><colorcode><name> §7died. Reason: §c<death-reason>"
+      other: "<prefix><colorcode><name> §7died! Reason: §c<death-reason>"
       player: "<prefix><colorcode><name> §7was killed by <colorcode><killer-name>§\
-        7!"
-    killLifeAdd: "<prefix>§7Your team got an additional team life!"
-    killTimeAdd: "<prefix>You've recieved <colorcode><time-additional> §7seconds of\
+        7! Reason: §c<death-reason>"
+      time: "<prefix><colorcode><name> §7has now been offline for §c<config-Disconnect-banAfterDisconnectMinutes> §7minute(s). They have therefore been removed from <projectname>§7!"
+    killLifeAdd: "<prefix>Your team received an additional team life!"
+    killTimeAdd: "<prefix>You've received <colorcode><time-additional> §7seconds of\
       \ additional time!"
-    respawnProtectionOver: "<prefix>§c<name> is now vulnerable again!"
+    respawnProtectionOver: "<prefix><colorcode><name> §7is now vulnerable!"
   join:
     protection: "<prefix>§a<name>§7 has entered the server and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§\
       7 seconds!"
-    protectionEnd: "<prefix>§a<name>§7 is now vulnerable!"
-    massrecording: "<prefix>§a<name>§7 has entered the server during mass recording\
-      \ and is protected for <colorcode><config-Protections-joinProtectionTime>§7\
+    protectionEnd: "<prefix><colorcode><name> §7is now vulnerable!"
+    massrecording: "<prefix>§a<name> §7has entered the server during mass recording\
+      \ and is vulnerable in <colorcode><config-Protections-joinProtectionTime>§7\
       \ seconds!"
-    remainingTime: "<prefix>§a<name>§7 left the server too early and has <if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§\
+    remainingTime: "<prefix>§a<name> §7has entered the server and has <if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§\
       8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>§7 left!\
       \ Remaining §cDisconnects§7: §c<remaining-disconnects>"
-    broadcast: "<prefix>§a<name>§7 has entered the server!"
-    required: "<prefix><num-required> more players are required to start!"
-    finale: "<prefix>§a<name>§7 has entered the server for the finale!"
-    spectator: "<prefix>§a<name>§7 has entered the server as a spectator!"
+    broadcast: "<prefix>§a<name> §7has entered the server!"
+    required: "<prefix><colorcode><num-required> §7more players are required to start!"
+    finale: "<prefix>§a<name> §7has entered the server for the finale!"
+    spectator: "<prefix>§a<name> §7has entered the server as a spectator!"
   scoreboard:
     title:
     - "<projectname>"
@@ -377,16 +368,14 @@ player:
   disconnect:
     kickInSeconds: "<prefix><colorcode><name> §7will be kicked in <colorcode><kick-delay>\
       \ §7second(s)!"
-    eliminated: "<prefix>§c<name> §7has not been online for §c<config-Disconnect-banAfterDisconnectMinutes>\
-      \ §7minute(s).§7They have now been removed from <projectname>§7!"
-    noKickPlayerNearby: "<prefix>§cA player is less than §4<config-Other-noKickDistance>\
-      \ §cblocks away from you! §7Move away from this player to get kicked!"
+    noKickPlayerNearby: "<prefix>A player is less than §c<config-Other-noKickDistance>\
+      \ blocks §7away from you! Move away from this player to get kicked!"
     spectator: "<prefix>§c<name> §7has left the server as a spectator!"
-    quitRemainingTime: "<prefix>§c<name> §7has left the server early!"
-    delay: "<prefix><colorcode><name> §7has been kicked!"
-    serverCloseSoon: "<prefix>§7The server closes in §c<server-close> §7minutes!"
+    tooEarly: "<prefix>§c<name> §7has left the server too early!"
+    delay: "<prefix>§c<name> §7has been kicked!"
+    serverCloseSoon: "<prefix>The server closes in <colorcode><server-close> §7minute(s)!"
     broadcast: "<prefix>§c<name>§7 has left the server!"
-    kick: "<prefix><colorcode><name> §7has been kicked!"
+    kick: "<prefix>§c<name> §7has been kicked!"
     quitTooOften: "<prefix>§c<name> §7has left the server too often and thus lost\
       \ their session."
   nametag:
@@ -416,8 +405,8 @@ player:
     format: "<displayname> §c<kills>"
   chests:
     removed: "<prefix>Container successfully removed!"
-    disallowed: "<prefix>This container belongs to <colorcode><owner-name>!"
-    admin: "<prefix>This container belongs to <colorcode><owner-name>! But you have\
+    disallowed: "<prefix>This container belongs to <colorcode><owner-name>§7!"
+    admin: "<prefix>This container belongs to <colorcode><owner-name>§7! But you have\
       \ permission to use it anyway!"
     new: "<prefix>Container secured!"
   spectator:
@@ -426,15 +415,15 @@ player:
     8| :>§7<name>"
   crafting:
     disallowed: "<prefix>§cYou are not allowed to craft, use or brew this item!"
-  moveProtection: "<prefix>You cannot move until your <colorcode>protection§7 has\
+  moveProtection: "<prefix>You cannot move until your <colorcode>protection §7has\
     \ expired!"
 blocklogger:
   filter:
     player: "<prefix>Please enter a player name to filter for:"
     material: "<prefix>Please enter a material to filter for:"
     set: "<prefix>Set filter <colorcode><filter-name> §7to <colorcode><filter-content>"
-    invalid: "<prefix>Could not set filter <colorcode><filter-name> §7to <colorcode><filter-content>§\
-      7!"
+    invalid: "<prefix>§cCould not set filter <colorcode><filter-name> §cto <colorcode><filter-content>§\
+      c!"
     reset: "<prefix>Removed filter <colorcode><filter-name>"
 protection:
   protected: "<prefix>The <colorcode>protection time §7has not expired yet!"
@@ -445,15 +434,15 @@ protection:
     7:<colorcode><protection-seconds>§7!"
 border:
   decrease:
-    days: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §7blocks\
-      \ with §c<border-decrease-speed> §7blocks/s. §7Next reduction in §c<border-decrease-time>\
+    days: "<prefix>The border is now shrinking by §c<border-decrease-size> §7blocks\
+      \ with §c<border-decrease-speed> §7blocks/s. Next reduction in §c<border-decrease-time>\
       \ §7days!"
-    minutes: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §\
-      7blocks with §c<border-decrease-speed> §7blocks/s. §7Next reduction in §c<border-decrease-time>\
+    minutes: "<prefix>The border is now shrinking by §c<border-decrease-size> §\
+      7blocks with §c<border-decrease-speed> §7blocks/s. Next reduction in §c<border-decrease-time>\
       \ §7minutes!"
-    minuteUpdate: "<prefix>§7The border will shrink in §c<border-decrease-minutes>§\
+    minuteUpdate: "<prefix>The border will shrink in §c<border-decrease-minutes>§\
       8:§c<border-decrease-seconds>"
-    death: "<prefix>§7The border is now shrinking by §c<border-decrease-size> §7blocks\
+    death: "<prefix>The border is now shrinking by §c<border-decrease-size> §7blocks\
       \ with §c<border-decrease-speed> §7blocks/s due to a death."
   minimum: "<prefix>§cThe Border has reached its minimum!"
 teamrequest:
@@ -462,7 +451,7 @@ teamrequest:
       \ §ccharacters!"
     duplicate: "<prefix>§cThat name is already taken!"
     invalid: "<prefix>§cInvalid team name!"
-  invitedInTeam: "<prefix>§7You have invited <colorcode><invited> §7to your team!"
+  invitedInTeam: "<prefix>You have invited <colorcode><invited> §7to your team!"
   enterTeamName: "<prefix><colorcode>§lPlease enter a team name for you and <invited>:"
   items:
     leave:
@@ -479,14 +468,14 @@ teamrequest:
     rename:
       lore: "§7Change the name of your team"
       name: "§cRename Team"
-  playerNotOnline: "<prefix><colorcode><inviter> is offline!"
+  playerNotOnline: "<prefix><colorcode><inviter> §7is offline!"
   teamRequestRecieved: "<prefix><colorcode><inviter> §7has invited you to join their\
     \ team (/varo tr)!"
   rename: "<prefix><colorcode>§lPlease enter a new name"
-  renamed: "<prefix>§7Team name changed to <colorcode><team-newname>"
-  noteamname: "<prefix>§7You have no team name!"
+  renamed: "<prefix>Team name changed to <colorcode><team-newname>"
+  noteamname: "<prefix>You have no team name!"
   invationRevoked: "<prefix>Invitation withdrawn!"
-  teamIsFull: "<prefix><invited> can't join your team - team member limit reached!"
+  teamIsFull: "<prefix><colorcode><invited> §7can't join your team - team member limit reached!"
 alert:
   strike:
     noJoin: "<name> has not been online for <no-join-days> days! Therefore <name>\
@@ -507,7 +496,7 @@ chat:
   start: "§7Chat is disabled until the game has started!"
 category:
   footer: "§7------------------------"
-  header: "§7-------- <colorcode> <category> §7-------"
+  header: "§7-------- <colorcode><category> §7-------"
 motd:
   open: |-
     §aJoin <projectname>§a!
@@ -515,7 +504,7 @@ motd:
   closedHours: |-
     §cYou can only join between §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cand §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1>
     §7Please try again later!
-  closed: "§cThe server is not yet available! \n§7Please try again later!"
+  closed: "§cThe server is not yet available!\n§7Please try again later!"
 broadcast:
 - "<prefix> A broadcast message"
 - "<prefix> Another broadcast message"

@@ -115,7 +115,7 @@ public class VaroPlayerDisconnect {
 
 				vp.getStats().removeCountdown();
 				vp.getStats().setState(PlayerState.DEAD);
-				Messages.PLAYER_DISCONNECT_SESSION_END.broadcast(vp);
+				Messages.PLAYER_DEATH_ELIMINATED_TIME.broadcast(vp);
 			}
 		}.runTaskLater(Main.getInstance(), (ConfigSetting.BAN_AFTER_DISCONNECT_MINUTES.getValueAsInt() * 60L) * 20));
 	}

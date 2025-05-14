@@ -37,7 +37,7 @@ public class SessionCheck extends Checker {
 				vp.getStats().setSessions(normalSessions + preProduceSessions);
 		}
 
-		if (ConfigSetting.CATCH_UP_SESSIONS.getValueAsBoolean())
+		if (ConfigSetting.CATCH_UP_SESSIONS.getValueAsBoolean()) // TODO these messages should be improved
 		    Messages.LOG_NEW_SESSIONS_FOR_ALL.log(LogType.LOG, Placeholder.constant("new-sessions", String.valueOf(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())));
 		else
 		    Messages.LOG_NEW_SESSIONS.log(LogType.LOG, Placeholder.constant("new-sessions", String.valueOf(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())));

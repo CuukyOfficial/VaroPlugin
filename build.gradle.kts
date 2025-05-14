@@ -73,7 +73,7 @@ dependencies {
         exclude(module = "slams-core")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.1")
+    runtimeDownload("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.2")
 	runtimeDownload("com.github.cryptomorin:XSeries:13.2.0")
 	runtimeDownload("com.google.guava:guava:33.3.0-jre")
     runtimeDownload("com.google.code.gson:gson:2.10.1")

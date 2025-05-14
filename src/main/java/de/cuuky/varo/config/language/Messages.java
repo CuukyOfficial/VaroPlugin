@@ -74,7 +74,7 @@ public final class Messages {
     public static final VaroMessage LOG_DEATH_ELIMINATED_PLAYER = message("log.death.eliminated.player");
     public static final VaroMessage LOG_DEATH_LIFE_OTHER = message("log.death.teamLifeLost.other");
     public static final VaroMessage LOG_DEATH_LIFE_PLAYER = message("log.death.teamLifeLost.player");
-    public static final VaroMessage LOG_GAME_STARTED = message("log.gameStarted");
+    public static final VaroMessage LOG_GAME_STARTED = message("log.gameStart");
     public static final VaroMessage LOG_FINALE_JOIN = message("log.finaleJoin");
     public static final VaroMessage LOG_FINALE_START = message("log.finaleStart");
     public static final VaroMessage LOG_KICKED_PLAYER = message("log.kickedPlayer");
@@ -87,7 +87,7 @@ public final class Messages {
     public static final VaroMessage LOG_STRIKE_THRID = message("log.strike.third");
     public static final VaroMessage LOG_NEW_SESSIONS = message("log.newSessions");
     public static final VaroMessage LOG_NEW_SESSIONS_FOR_ALL = message("log.newSessionsForAll");
-    public static final VaroMessage LOG_PLAYER_DC_TO_EARLY = message("log.playerQuitToEarly");
+    public static final VaroMessage LOG_PLAYER_DC_TOO_EARLY = message("log.playerQuitTooEarly");
     public static final VaroMessage LOG_PLAYER_JOIN_MASSREC = message("log.playerJoinMassrec");
     public static final VaroMessage LOG_PLAYER_JOIN_NORMAL = message("log.playerJoinNormal");
     public static final VaroMessage LOG_PLAYER_JOINED = message("log.playerJoined");
@@ -116,10 +116,9 @@ public final class Messages {
     public static final VaroMessage PLAYER_JOIN_REMAINING_TIME = message("player.join.remainingTime");
     
     public static final VaroMessage PLAYER_DISCONNECT_BROADCAST = message("player.disconnect.broadcast");
-    public static final VaroMessage PLAYER_DISCONNECT_SESSION_END = message("player.disconnect.eliminated");
     public static final VaroMessage PLAYER_DISCONNECT_SPECTATOR = message("player.disconnect.spectator");
     public static final VaroMessage PLAYER_DISCONNECT_TOO_OFTEN = message("player.disconnect.quitTooOften");
-    public static final VaroMessage PLAYER_DISCONNECT_WITH_REMAINING_TIME = message("player.disconnect.quitRemainingTime");
+    public static final VaroMessage PLAYER_DISCONNECT_TOO_ERALY = message("player.disconnect.tooEarly");
     public static final VaroMessage PLAYER_DISCONNECT_KICK = message("player.disconnect.kick");
     public static final VaroMessage PLAYER_DISCONNECT_KICK_DELAY_OVER = message("player.disconnect.delay");
     public static final VaroMessage PLAYER_DISCONNECT_KICK_IN_SECONDS = message("player.disconnect.kickInSeconds");
@@ -140,12 +139,12 @@ public final class Messages {
     public static final VaroMessage PLAYER_KICK_SESSION_OVER = message("player.kick.sessionOver");
     public static final VaroMessage PLAYER_KICK_MASS_REC_SESSION_OVER = message("player.kick.kickMessageMassRec");
     public static final VaroMessage PLAYER_KICK_TOO_MANY_STRIKES = message("player.kick.tooManyStrikes");
-    public static final VaroMessage PLAYER_KICK_COMMAND = message("player.kick.command");
     public static final VaroMessage PLAYER_KICK_DISCORD_NOT_REGISTERED = message("player.kick.notRegisteredDiscord");
     public static final VaroMessage PLAYER_KICK_DISCORD_NO_USER = message("player.kick.noDiscordUser");
 
     public static final VaroMessage PLAYER_DEATH_ELIMINATED_OTHER = message("player.death.eliminated.other");
     public static final VaroMessage PLAYER_DEATH_ELIMINATED_PLAYER = message("player.death.eliminated.player");
+    public static final VaroMessage PLAYER_DEATH_ELIMINATED_TIME = message("player.death.eliminated.time");
     public static final VaroMessage PLAYER_DEATH_LIFE_OTHER = message("player.death.teamLifeLost.other");
     public static final VaroMessage PLAYER_DEATH_LIFE_PLAYER = message("player.death.teamLifeLost.player");
     public static final VaroMessage PLAYER_DEATH_RESPAWN_PROTECTION = message("player.death.respawnProtection");
@@ -262,10 +261,6 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_CONFIG_SEARCH_LIST_TITLE = message("commands.varo.config.searchlisttitle");
     public static final VaroMessage COMMANDS_VARO_CONFIG_SEARCH_LIST_FORMAT = message("commands.varo.config.searchlistformat");
     public static final VaroMessage COMMANDS_VARO_EXPORT_SUCCESSFULL = message("commands.varo.export.players");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_PLEASE_RELOAD = message("commands.varo.discord.pleasereload");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_DISABLED = message("commands.varo.discord.verifydisabled");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_BOT_DISABLED = message("commands.varo.discord.botdisabled");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_USER_NOT_FOUND = message("commands.varo.discord.usernotfound");
     public static final VaroMessage COMMANDS_VARO_INTRO_ALREADY_STARTED = message("commands.varo.intro.alreadystarted");
     public static final VaroMessage COMMANDS_VARO_INTRO_GAME_ALREADY_STARTED = message("commands.varo.intro.gamealreadystarted");
     public static final VaroMessage COMMANDS_VARO_INTRO_STARTED = message("commands.varo.intro.started");
@@ -300,7 +295,6 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_DISCORD_STATUS_INACTIVE = message("commands.varo.discord.status.inactive");
     public static final VaroMessage COMMANDS_VARO_DISCORD_NOT_VERIFIED = message("commands.varo.discord.notverified");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFICATION_REMOVED = message("commands.varo.discord.verificationremoved");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_SYSTEM_DISABLED = message("commands.varo.discord.verifysystemdisabled");
     public static final VaroMessage COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED = message("commands.varo.discord.discordbotdisabled");
     public static final VaroMessage COMMANDS_VARO_DISCORD_GETLINK = message("commands.varo.discord.getlink");
     public static final VaroMessage COMMANDS_VARO_DISCORD_UNVERIFY = message("commands.varo.discord.unverify");
@@ -314,6 +308,10 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_DISCORD_BYPASS_INACTIVE = message("commands.varo.discord.bypassinactive");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_ACCOUNT = message("commands.varo.discord.account");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_REMOVE_USAGE = message("commands.varo.discord.remove.usage");
+    public static final VaroMessage COMMANDS_VARO_DISCORD_PLEASE_RELOAD = message("commands.varo.discord.pleasereload");
+    public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_DISABLED = message("commands.varo.discord.verifydisabled");
+    public static final VaroMessage COMMANDS_VARO_DISCORD_BOT_DISABLED = message("commands.varo.discord.botdisabled");
+    public static final VaroMessage COMMANDS_VARO_DISCORD_USER_NOT_FOUND = message("commands.varo.discord.usernotfound");
 
     public static final VaroMessage COMMANDS_VARO_PLAYTIME = message("commands.varo.playtime");
 
