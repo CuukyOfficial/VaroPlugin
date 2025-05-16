@@ -407,18 +407,19 @@ teamrequest:
   enterTeamName: "<prefix><colorcode>§lBitte gib einen Teamnamen für dich und <invited> ein:"
   items:
     leave:
-      lore: |-
-        §7Verlasse dein Team für immer.
-        §7Du kannst niemals zurückkehren.
+      lore:
+        - "§7Verlasse dein Team für immer."
+        - "§7Du kannst niemals zurückkehren."
       name: "§cTeam Verlassen"
     invite:
       name: "§6Spieler Einladen"
-      lore: |-
-        §7Schlage einen anderen
-        §7Spieler, um ihn in
-        §7dein Team einzuladen
+      lore:
+        - "§7Schlage einen anderen"
+        - "§7Spieler, um ihn in"
+        - "§7dein Team einzuladen"
     rename:
-      lore: "§7Ändere den Namen deines Teams"
+      lore:
+        - "§7Ändere den Namen deines Teams"
       name: "§cTeam Umbenennen"
   playerNotOnline: "<prefix><colorcode><inviter> §7ist offline!"
   teamRequestRecieved: "<prefix><colorcode><inviter> §7hat dich eingeladen, seinem Team beizutreten (/varo tr)!"

@@ -359,11 +359,11 @@ public final class Messages {
     public static final VaroMessage TEAMREQUEST_INVITED_TEAM = message("teamrequest.invitedInTeam");
     public static final VaroMessage TEAMREQUEST_NO_TEAMNAME = message("teamrequest.noteamname");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_INVITE_NAME = message("teamrequest.items.invite.name");
-    public static final VaroMessage TEAMREQUEST_LOBBYITEM_INVITE_LORE = message("teamrequest.items.invite.lore");
+    public static final VaroMessageArray TEAMREQUEST_LOBBYITEM_INVITE_LORE = array("teamrequest.items.invite.lore");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_LEAVE_NAME = message("teamrequest.items.leave.name");
-    public static final VaroMessage TEAMREQUEST_LOBBYITEM_LEAVE_LORE = message("teamrequest.items.leave.lore");
+    public static final VaroMessageArray TEAMREQUEST_LOBBYITEM_LEAVE_LORE = array("teamrequest.items.leave.lore");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_RENAME_NAME = message("teamrequest.items.rename.name");
-    public static final VaroMessage TEAMREQUEST_LOBBYITEM_RENAME_LORE = message("teamrequest.items.rename.lore");
+    public static final VaroMessageArray TEAMREQUEST_LOBBYITEM_RENAME_LORE = array("teamrequest.items.rename.lore");
     
     public static final VaroMessage SPAWN_NUMBER = message("spawn.number");
     public static final VaroMessage SPAWN_PLAYER = message("spawn.player");
