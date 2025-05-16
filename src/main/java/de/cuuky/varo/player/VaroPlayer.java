@@ -167,16 +167,18 @@ public class VaroPlayer implements VaroSerializeable {
 		if (oldTeam != null) {
 			if (guild.getRolesByName("#" + oldTeam.getName(), true).size() > 0) {
 				Role role = guild.getRolesByName("#" + oldTeam.getName(), true).get(0);
-				guild.removeRoleFromMember(userSnowflake, role).complete();
+				guild.removeRoleFromMember(userSnowflake, role).queue();
 			}
 		}
 
 		if (this.team != null) {
 			Role role = guild.getRolesByName("#" + team.getName(), true).size() > 0 ? guild.getRolesByName("#" + team.getName(), true).get(0) : null;
 			if (role == null)
-				role = guild.createCopyOfRole(guild.getPublicRole()).setHoisted(true).setName("#" + team.getName()).complete();
-
-			guild.addRoleToMember(userSnowflake, role).complete();
+				guild.createCopyOfRole(guild.getPublicRole()).setHoisted(true).setName("#" + team.getName()).queue(newRole -> {
+				    guild.addRoleToMember(userSnowflake, newRole).queue();
+				});
+			else
+			    guild.addRoleToMember(userSnowflake, role).queue();
 		}
 	}
 
@@ -739,7 +741,7 @@ public class VaroPlayer implements VaroSerializeable {
 						public void run() {
 							updateDiscordTeam(oldTeam);
 						}
-					}.runTaskLaterAsynchronously(Main.getInstance(), 1L);
+					}.runTaskLater(Main.getInstance(), 1L);
 				else
 					updateDiscordTeam(oldTeam);
 			}

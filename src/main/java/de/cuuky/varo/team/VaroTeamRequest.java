@@ -91,7 +91,7 @@ public class VaroTeamRequest {
 
 				remove();
 			}
-		}.runTaskLaterAsynchronously(Main.getInstance(), 20 * ConfigSetting.TEAMREQUEST_EXPIRETIME.getValueAsInt());
+		}.runTaskLater(Main.getInstance(), 20 * ConfigSetting.TEAMREQUEST_EXPIRETIME.getValueAsInt());
 	}
 
 	public void accept() {

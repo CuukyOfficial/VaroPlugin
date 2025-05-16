@@ -9,12 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.gui.VaroPlayerAsyncListInventory;
 import de.cuuky.varo.player.VaroPlayer;
 import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.list.AdvancedListInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 
-public class PlayerListGUI extends VaroPlayerAsyncListInventory<VaroPlayer> {
+public class PlayerListGUI extends AdvancedListInventory<VaroPlayer> {
 
     public enum PlayerGUIType {
 

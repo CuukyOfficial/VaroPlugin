@@ -5,11 +5,11 @@ import org.bukkit.inventory.ItemStack;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.bot.discord.BotRegister;
-import de.cuuky.varo.gui.VaroPlayerAsyncListInventory;
 import de.varoplugin.cfw.inventory.ItemClick;
+import de.varoplugin.cfw.inventory.list.AdvancedListInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 
-public class BotRegisterListGUI extends VaroPlayerAsyncListInventory<BotRegister> {
+public class BotRegisterListGUI extends AdvancedListInventory<BotRegister> {
 
     public BotRegisterListGUI(Player player) {
         super(Main.getInventoryManager(), player, BotRegister.getBotRegister());

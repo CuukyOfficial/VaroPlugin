@@ -131,7 +131,7 @@ public class DataManager {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				DataManager.this.saveSync();
+				DataManager.this.saveSync(); // TODO This can cause concurrency issues
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), SAVE_DELAY, SAVE_DELAY);
 	}
