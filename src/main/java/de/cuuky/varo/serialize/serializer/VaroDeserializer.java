@@ -1,6 +1,7 @@
 package de.cuuky.varo.serialize.serializer;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -52,7 +53,7 @@ public class VaroDeserializer extends VaroSerializeHandler {
 						if (((String) obj).equals(NULL_REPLACE))
 							obj = null;
 
-					VaroSerializeObject handl = getHandler((Class<?>) field.getType());
+					VaroSerializeObject handl = getHandler(field.getType());
 					if (handl != null && obj != null) {
 						handled.add(s);
 						field.set(instance, new VaroDeserializer((MemorySection) obj, handl).deserialize());
@@ -107,6 +108,9 @@ public class VaroDeserializer extends VaroSerializeHandler {
 
 					if (field.getType().isPrimitive() && obj instanceof String)
 						obj = Long.valueOf((String) obj);
+					
+					if (field.getType() == BigDecimal.class && obj instanceof String)
+                        obj = new BigDecimal((String) obj);
 
 					field.set(instance, obj);
 				} catch (IllegalArgumentException | IllegalAccessException | ExceptionInInitializerError | NullPointerException e) {

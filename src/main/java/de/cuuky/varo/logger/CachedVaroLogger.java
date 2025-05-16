@@ -31,7 +31,6 @@ public abstract class CachedVaroLogger<T> extends VaroLogger<T> {
     			    this.appendLog(GSON.fromJson(line, this.type));
     		}
 		}
-		super.load();
 	}
 
 	@Override

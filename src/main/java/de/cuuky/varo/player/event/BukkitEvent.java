@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.events.DeathEvent;
-import de.cuuky.varo.player.event.events.DeathNoLifesEvent;
+import de.cuuky.varo.player.event.events.DeathNoLivesEvent;
 import de.cuuky.varo.player.event.events.JoinEvent;
 import de.cuuky.varo.player.event.events.KickEvent;
 import de.cuuky.varo.player.event.events.KillEvent;
@@ -14,7 +14,7 @@ import de.cuuky.varo.player.event.events.QuitEvent;
 public class BukkitEvent {
 
     private static final List<BukkitEvent> events = Arrays.asList(new DeathEvent(),
-        new DeathNoLifesEvent(), new KickEvent(), new JoinEvent(), new QuitEvent(), new KillEvent());
+        new DeathNoLivesEvent(), new KickEvent(), new JoinEvent(), new QuitEvent(), new KillEvent());
 
     protected BukkitEventType eventType;
 

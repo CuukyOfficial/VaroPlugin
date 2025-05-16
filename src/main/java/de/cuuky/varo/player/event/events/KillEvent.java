@@ -1,5 +1,7 @@
 package de.cuuky.varo.player.event.events;
 
+import java.math.BigDecimal;
+
 import org.bukkit.entity.Player;
 
 import de.cuuky.varo.Main;
@@ -30,12 +32,15 @@ public class KillEvent extends BukkitEvent {
 		this.checkHealth(player.getPlayer());
 
 		if (player.getTeam() != null) {
-			Number addNumber = (Number) ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValue(), maxNumber = (Number) ConfigSetting.MAX_TEAM_LIFES.getValue();
-			double add = addNumber.doubleValue(), max = maxNumber.doubleValue();
-
-			if (add > 0 && player.getTeam().getLifes() + add <= max) {
-				player.getTeam().setLifes(player.getTeam().getLifes() + add);
-				Messages.PLAYER_DEATH_KILL_LIFE_ADD.send(player);
+			BigDecimal add = ConfigSetting.ADD_TEAM_LIFE_ON_KILL.getValueAsBigDecimal();
+			BigDecimal max = ConfigSetting.MAX_TEAM_LIVES.getValueAsBigDecimal();
+			
+			if (add.compareTo(BigDecimal.ZERO) > 0) {
+			    BigDecimal newLives = player.getTeam().getLives().add(add);
+			    if (add.compareTo(max) < 0) {
+			        player.getTeam().setLives(newLives.min(max));
+			        Messages.PLAYER_DEATH_KILL_LIFE_ADD.send(player);
+			    }
 			}
 		}
 		

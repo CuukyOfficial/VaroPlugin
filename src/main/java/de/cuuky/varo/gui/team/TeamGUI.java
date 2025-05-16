@@ -1,5 +1,7 @@
 package de.cuuky.varo.gui.team;
 
+import java.math.BigDecimal;
+
 import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -34,19 +36,19 @@ public class TeamGUI extends VaroInventory {
 
     @Override
     public void refreshContent() {
-        addItem(1, ItemBuilder.material(XMaterial.DIAMOND).displayName("§cSet team-lives").lore("§7Current§8: §4" + team.getLifes()).build(), (event) -> {
+        addItem(1, ItemBuilder.material(XMaterial.DIAMOND).displayName("§cSet team-lives").lore("§7Current§8: §4" + team.getLives().toPlainString()).build(), (event) -> {
             new PlayerChatHookBuilder().message("§7Enter team-lives:")
             .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
-                double lives;
+                BigDecimal lives;
                 try {
-                    lives = Double.parseDouble(hookEvent.getMessage());
+                    lives = new BigDecimal(hookEvent.getMessage());
                 } catch (NumberFormatException e) {
                     getPlayer().sendMessage(Main.getPrefix() + "Pleas enter a valid value for team lives");
                     return;
                 }
 
-                team.setLifes(lives);
-                getPlayer().sendMessage(Main.getPrefix() + "Team lives of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getLifes() + "§7'");
+                team.setLives(lives);
+                getPlayer().sendMessage(Main.getPrefix() + "Team lives of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getLives().toPlainString() + "§7'");
                 open();
                 hookEvent.getHook().unregister();
             }).complete(getPlayer(), Main.getInstance());

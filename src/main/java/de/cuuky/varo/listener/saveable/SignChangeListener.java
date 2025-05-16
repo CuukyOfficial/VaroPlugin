@@ -46,7 +46,7 @@ public class SignChangeListener implements Listener {
 
 		if (attached.getState() instanceof Chest) {
 			Chest chest = (Chest) attached.getState();
-			InventoryHolder ih = ((InventoryHolder) chest).getInventory().getHolder();
+			InventoryHolder ih = chest.getInventory().getHolder();
 			Chest secChest = (ih instanceof DoubleChest ? (Chest) ((DoubleChest) ih).getLeftSide() : null);
 			if (chest.equals(secChest) && secChest != null)
 				secChest = (Chest) ((DoubleChest) ih).getRightSide();

@@ -42,9 +42,7 @@ public abstract class VaroLogger<T> {
 		}
 	}
 
-	protected void load() throws IOException {
-	    // nop
-	}
+	protected abstract void load() throws IOException;
 
 	protected void queueLog(T log) {
 		if(log == null)

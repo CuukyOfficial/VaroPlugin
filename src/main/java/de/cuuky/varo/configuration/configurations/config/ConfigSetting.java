@@ -1,5 +1,7 @@
 package de.cuuky.varo.configuration.configurations.config;
 
+import java.math.BigDecimal;
+
 import org.bukkit.Bukkit;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -13,7 +15,6 @@ import de.cuuky.varo.game.world.AutoSetup;
 
 public enum ConfigSetting implements SectionEntry {
 
-	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "teamLife.addOnKill", -1D, "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler toetet.", "addTeamLifesOnKill"),
 	ALWAYS_TIME(ConfigSettingSection.WORLD, "setAlwaysTime", 1000, "Setzt die Zeit auf dem Server,\ndie dann bis zum Start so stehen bleibt.\nHinweis: Nacht = 13000, Tag = 1000, Deaktiviert = -1", true),
 	ALWAYS_TIME_USE_AFTER_START(ConfigSettingSection.WORLD, "alwaysTimeUseAfterStart", false, "Ob die Zeit auch stehen bleiben soll,\nwenn das Projekt gestartet wurde."),
 	AUTOSETUP_BORDER(ConfigSettingSection.AUTOSETUP, "border", 2000, "Wie gross die Border beim\nAutoSetup gesetzt werden soll"),
@@ -258,8 +259,9 @@ public enum ConfigSetting implements SectionEntry {
 	
 	TEAM_MAX_NAME_LENGTH(ConfigSettingSection.TEAMS, "teamNameLength", 10, "Maximal Laenge eines Teamnamens."),
 	TEAM_PLACE_SPAWN(ConfigSettingSection.TEAMS, "teamPlaceSpawn", -1, "Anzahl an Spawnplaetzen in einer Teambasis\nWenn angeschaltet (nicht -1) wird eine Luecke fuer fehlende Teammitglieder gelassen.\nAnschalten, wenn jedes Team einen eigenen Spawnplatz besitzt und es keinen grossen Kreis gibt."),
-	TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.default", 1D, "Wie viele Leben ein Team hat", "teamLifes"),
-	MAX_TEAM_LIFES(ConfigSettingSection.DEATH, "teamLife.maxLifes", 5D, "Wie viele Leben ein maximal haben kann"),
+	TEAM_LIVES(ConfigSettingSection.DEATH, "teamLives.default", BigDecimal.ZERO, "Wie viele Leben ein Team hat", "teamLifes"),
+	MAX_TEAM_LIVES(ConfigSettingSection.DEATH, "teamLives.maxLives", BigDecimal.valueOf(5), "Wie viele Leben ein Team maximal haben kann"),
+	ADD_TEAM_LIFE_ON_KILL(ConfigSettingSection.DEATH, "teamLives.addOnKill", BigDecimal.valueOf(-1), "Wie viele Leben ein Team bekommen soll,\nsobald es einen Spieler toetet.", "addTeamLifesOnKill"),
 	DEATH_LIGHTNING_EFFECT(ConfigSettingSection.DEATH, "deathLightningEffect", true, "Ob beim Tod eines Spielers\nein Blitz-Effekt kommen soll"),
 	DEATH_TIME_ADD(ConfigSettingSection.DEATH, "deathTimeAdd", -1, "Zusätzliche zeit die der Killer\ndurch einen kill bekommt (in Sekunden)"),
 	DEATH_TIME_MIN(ConfigSettingSection.DEATH, "deathTimeMin", 30, "Zeit die der Killer\nnach einem Kill nicht gekickt werden soll (in Sekunden)"),
@@ -395,7 +397,11 @@ public enum ConfigSetting implements SectionEntry {
 
 	@Override
     public Object getDefaultValueToWrite() {
-        return Enum.class.isAssignableFrom(this.defaultValue.getClass()) ? ((Enum<?>) this.defaultValue).name() : this.defaultValue;
+	    if (Enum.class.isAssignableFrom(this.defaultValue.getClass()))
+            return ((Enum<?>) this.defaultValue).name();
+	    if (BigDecimal.class == this.defaultValue.getClass())
+            return ((BigDecimal) this.defaultValue).toPlainString();
+        return this.defaultValue;
     }
 
 	@Override
@@ -425,7 +431,11 @@ public enum ConfigSetting implements SectionEntry {
 
 	@Override
     public Object getValueToWrite() {
-        return Enum.class.isAssignableFrom(this.defaultValue.getClass()) ? ((Enum<?>) this.value).name() : this.value;
+	    if (Enum.class.isAssignableFrom(this.defaultValue.getClass()))
+	        return ((Enum<?>) this.value).name();
+	    if (BigDecimal.class == this.defaultValue.getClass())
+	        return ((BigDecimal) this.value).toPlainString();
+        return this.value;
     }
 
 	@Override
@@ -440,6 +450,7 @@ public enum ConfigSetting implements SectionEntry {
 			if (!defaultClass.isAssignableFrom(valueClass)
 			        && (valueClass != Integer.class || defaultClass != Long.class)
 			        && (valueClass != Integer.class || defaultClass != Double.class)
+			        && (valueClass != String.class || defaultClass != BigDecimal.class)
 			        && (valueClass != String.class || !Enum.class.isAssignableFrom(defaultClass)))
 				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applicable for " + defaultClass.getName() + " for entry " + getFullPath());
 		}
@@ -533,6 +544,20 @@ public enum ConfigSetting implements SectionEntry {
 
 		return (String) defaultValue;
 	}
+	
+	public BigDecimal getValueAsBigDecimal() {
+        try {
+            return (BigDecimal) this.value;
+        } catch (ClassCastException e) {
+            try {
+                return new BigDecimal(this.getValueAsString());
+            } catch (NumberFormatException e2) {
+                this.sendFalseCast(BigDecimal.class);
+            }
+        }
+
+        return (BigDecimal) this.defaultValue;
+    }
 
 	public boolean isIntActivated() {
 		return getValueAsInt() > -1;
@@ -540,7 +565,7 @@ public enum ConfigSetting implements SectionEntry {
 
 	public boolean canParseFromString() {
 		Class<?> type = this.defaultValue.getClass();
-		return type == String.class || type == Boolean.class || type == Integer.class || type == Long.class || type == Double.class || Enum.class.isAssignableFrom(type);
+		return type == String.class || type == Boolean.class || type == Integer.class || type == Long.class || type == Double.class || type == BigDecimal.class || Enum.class.isAssignableFrom(type);
 	}
 	
 	/**
@@ -565,6 +590,8 @@ public enum ConfigSetting implements SectionEntry {
 			return Long.parseLong(input);
 		case "java.lang.Double":
 			return Double.parseDouble(input);
+		case "java.math.BigDecimal":
+            return new BigDecimal(input);
 		case "com.cryptomorin.xseries.XMaterial":
 		    return XMaterial.matchXMaterial(input).orElseThrow(() -> new IllegalArgumentException("Unknown material: " + input));
 		default:

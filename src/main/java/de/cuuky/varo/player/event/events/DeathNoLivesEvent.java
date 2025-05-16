@@ -1,21 +1,20 @@
 package de.cuuky.varo.player.event.events;
 
+import java.util.Date;
+
+import org.bukkit.Location;
+
 import de.cuuky.varo.Main;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.game.world.border.decrease.DecreaseReason;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.event.BukkitEventType;
 import de.cuuky.varo.player.stats.stat.PlayerState;
 
-import org.bukkit.Location;
+public class DeathNoLivesEvent extends AbstractDeathEvent {
 
-import java.util.Date;
-
-public class DeathNoLifesEvent extends AbstractDeathEvent {
-
-	public DeathNoLifesEvent() {
-		super(BukkitEventType.DEATH_NO_LIFES);
+	public DeathNoLivesEvent() {
+		super(BukkitEventType.DEATH_NO_LIVES);
 	}
 
 	@Override

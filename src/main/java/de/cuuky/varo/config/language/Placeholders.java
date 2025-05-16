@@ -224,7 +224,7 @@ public final class Placeholders {
         .contextual("displayname", TeamContext.class, (ctx) -> ctx.getTeam().getDisplayName())
         .contextual("id", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getId()))
         .contextual("kills", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getKills()))
-        .contextual("lives", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getLifes()));
+        .contextual("lives", TeamContext.class, (ctx) -> ctx.getTeam().getLives().toPlainString());
     }
     
     private static String toPaddedString(long value) {

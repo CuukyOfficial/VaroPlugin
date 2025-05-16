@@ -97,7 +97,7 @@ public class OfflineVillager implements VaroSerializeable {
 
 		killer.onEvent(BukkitEventType.KILL);
 		this.vp.onEvent(BukkitEventType.DEATH);
-		this.vp.onEvent(BukkitEventType.DEATH_NO_LIFES);
+		this.vp.onEvent(BukkitEventType.DEATH_NO_LIVES);
 	}
 
 	public void remove() {

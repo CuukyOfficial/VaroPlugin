@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.StatType;
 import de.cuuky.varo.player.stats.stat.PlayerState;

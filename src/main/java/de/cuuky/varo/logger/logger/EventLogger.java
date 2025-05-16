@@ -7,7 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.cuuky.varo.Main;
@@ -94,9 +93,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 	}
 
 	public void println(LogType type, String message, UUID playerUuid) {
-        message = ChatColor.stripColor(message.replace("&", "§"));
-
-        String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
+	    String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
             this.queueLog(log);
         });

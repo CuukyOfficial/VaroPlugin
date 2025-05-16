@@ -1,5 +1,7 @@
 package de.cuuky.varo.listener;
 
+import java.math.BigDecimal;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -54,7 +56,7 @@ public class PlayerDeathListener implements Listener {
                 hit.over();
 
             String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
-            if (deadP.getTeam() == null || deadP.getTeam().getLifes() - 2D < -0.00000001D) {
+            if (deadP.getTeam() == null || deadP.getTeam().getLives().compareTo(BigDecimal.ONE) >= 0) {
                 if (killerPlayer == null) {
                     Messages.LOG_DEATH_ELIMINATED_OTHER.log(LogType.DEATH, new Contexts.DeathContext(deadP, cause));
                     Messages.PLAYER_DEATH_ELIMINATED_OTHER.broadcast(new Contexts.DeathContext(deadP, cause));
@@ -63,7 +65,7 @@ public class PlayerDeathListener implements Listener {
                     Messages.PLAYER_DEATH_ELIMINATED_PLAYER.broadcast(new Contexts.KillContext(deadP, killer, cause));
                 }
 
-                deadP.onEvent(BukkitEventType.DEATH_NO_LIFES);
+                deadP.onEvent(BukkitEventType.DEATH_NO_LIVES);
 
                 if (!ConfigSetting.PLAYER_SPECTATE_AFTER_DEATH.getValueAsBoolean()) {
                     if (ConfigSetting.KICK_DELAY_AFTER_DEATH.isIntActivated()) {
@@ -97,7 +99,7 @@ public class PlayerDeathListener implements Listener {
                     prot.setTimerHook(() -> Messages.PLAYER_DEATH_RESPAWN_PROTECTION_OVER.broadcast(deadP));
                 }
 
-                deadP.getTeam().setLifes(deadP.getTeam().getLifes() - 1);
+                deadP.getTeam().setLives(deadP.getTeam().getLives().subtract(BigDecimal.ONE));
                 if (killerPlayer == null) {
                     Messages.LOG_DEATH_LIFE_OTHER.log(LogType.DEATH, new Contexts.DeathContext(deadP, cause));
                     Messages.PLAYER_DEATH_LIFE_OTHER.broadcast(new Contexts.DeathContext(deadP, cause));

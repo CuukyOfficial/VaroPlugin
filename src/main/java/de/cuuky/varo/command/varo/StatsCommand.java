@@ -11,7 +11,6 @@ import org.bukkit.command.CommandSender;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.command.VaroCommand;
-import de.cuuky.varo.game.GameState;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.stats.StatType;
 import de.cuuky.varo.player.stats.stat.PlayerState;

@@ -1,5 +1,6 @@
 package de.cuuky.varo.team;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
@@ -36,9 +37,13 @@ public class VaroTeam implements VaroSerializeable {
 
 	@VaroSerializeField(path = "id")
 	private int id;
+	
+	@VaroSerializeField(path = "lives")
+    private BigDecimal lives;
 
+	@Deprecated
 	@VaroSerializeField(path = "lifes")
-	private double lifes;
+	private double livesLegacy;
 
 	private ArrayList<VaroPlayer> member;
 
@@ -122,7 +127,7 @@ public class VaroTeam implements VaroSerializeable {
 	}
 
 	public void loadDefaults() {
-		this.lifes = ConfigSetting.TEAM_LIFES.getValueAsDouble();
+		this.lives = ConfigSetting.TEAM_LIVES.getValueAsBigDecimal();
 	}
 
 	@Override
@@ -196,8 +201,8 @@ public class VaroTeam implements VaroSerializeable {
 		return kills;
 	}
 
-	public double getLifes() {
-		return lifes;
+	public BigDecimal getLives() {
+		return lives;
 	}
 
 	public ArrayList<VaroPlayer> getMember() {
@@ -259,8 +264,8 @@ public class VaroTeam implements VaroSerializeable {
 		this.id = id;
 	}
 
-	public void setLifes(double lifes) {
-		this.lifes = lifes;
+	public void setLives(BigDecimal lives) {
+		this.lives = lives;
 	}
 
 	public NameTagGroup getNameTagGroup() {

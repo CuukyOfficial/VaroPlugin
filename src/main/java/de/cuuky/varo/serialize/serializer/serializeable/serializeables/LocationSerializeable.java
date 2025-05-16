@@ -18,6 +18,7 @@ public class LocationSerializeable extends VaroSerialize {
 
 	@Override
 	public Object deserialize(Field field, Object obj, MemorySection section, String s, VaroSerializeObject object) {
+	    // TODO wtf is this??????????
 		if (field.getType() == Location.class)
 			if (obj != null)
 				obj = new Location(Bukkit.getWorld(section.getString(s + ".world")), (double) section.get(s + ".x"), (double) section.get(s + ".y"), (double) section.get(s + ".z"));

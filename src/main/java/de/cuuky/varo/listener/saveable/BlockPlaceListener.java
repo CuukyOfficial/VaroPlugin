@@ -38,7 +38,7 @@ public class BlockPlaceListener implements Listener {
 					return;
 
 				Chest chest = (Chest) placed.getState();
-				InventoryHolder ih = ((InventoryHolder) chest).getInventory().getHolder();
+				InventoryHolder ih = chest.getInventory().getHolder();
 
 				if (!(ih instanceof DoubleChest))
 					return;

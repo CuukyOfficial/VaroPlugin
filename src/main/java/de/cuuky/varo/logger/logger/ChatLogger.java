@@ -1,5 +1,7 @@
 package de.cuuky.varo.logger.logger;
 
+import java.io.IOException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -13,6 +15,11 @@ public class ChatLogger extends VaroLogger<ChatLogElement> {
 
     public ChatLogger(String name) {
         super(name);
+    }
+    
+    @Override
+    protected void load() throws IOException {
+        // nop
     }
 
     public void println(ChatLogType type, Player player, String recipient, String message) {

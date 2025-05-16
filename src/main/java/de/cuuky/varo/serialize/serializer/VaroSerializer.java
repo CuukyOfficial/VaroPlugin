@@ -1,6 +1,7 @@
 package de.cuuky.varo.serialize.serializer;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +48,7 @@ public class VaroSerializer extends VaroSerializeHandler {
 								for (int i = 0; i < list.size(); i++) {
 									Object listObject = list.get(i);
 
-									VaroSerializeObject handl = getHandler((Class<?>) listObject.getClass());
+									VaroSerializeObject handl = getHandler(listObject.getClass());
 									if (handl != null) {
 										new VaroSerializer(saveUnder + "." + fieldIdent + "." + i, (VaroSerializeable) listObject, saveTo);
 										continue;
@@ -56,7 +57,7 @@ public class VaroSerializer extends VaroSerializeHandler {
 								continue;
 							}
 
-						if (obj instanceof Long)
+						if (obj instanceof Long) // this can never be true???
 							obj = String.valueOf((long) obj);
 					}
 
@@ -74,8 +75,11 @@ public class VaroSerializer extends VaroSerializeHandler {
 						saveTo.set(saveUnder + "." + fieldIdent + ".z", loc.getZ());
 						continue;
 					}
+					
+					if (field.getType() == BigDecimal.class)
+					    obj = ((BigDecimal) obj).toPlainString();
 
-					VaroSerializeObject handl = getHandler((Class<?>) obj.getClass());
+					VaroSerializeObject handl = getHandler(obj.getClass());
 					if (handl != null) {
 						new VaroSerializer(saveUnder + "." + fieldIdent, (VaroSerializeable) field.get(instance), saveTo);
 						continue;
