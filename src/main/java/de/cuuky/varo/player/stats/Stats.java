@@ -167,24 +167,6 @@ public class Stats implements VaroSerializeable {
 		return this.countdown;
 	}
 
-	public String getCountdownMin(int sec) {
-		int min = sec / 60;
-
-		if (min < 10)
-			return "0" + min;
-		else
-			return min + "";
-	}
-
-	public String getCountdownSec(int sec) {
-		sec = sec % 60;
-
-		if (sec < 10)
-			return "0" + sec;
-		else
-			return sec + "";
-	}
-
 	public int getSessionTime() {
 		return this.sessionTime;
 	}
@@ -268,8 +250,7 @@ public class Stats implements VaroSerializeable {
 	public ArrayList<VaroSaveable> getSaveables() {
 		if (owner.getTeam() != null)
 			return owner.getTeam().getSaveables();
-		else
-			return saveables;
+        return saveables;
 	}
 
 	public ArrayList<VaroSaveable> getSaveablesRaw() {
