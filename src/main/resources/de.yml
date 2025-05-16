@@ -400,7 +400,7 @@ border:
   minimum: "<prefix>§cDie Weltbarriere hat ihr Minimum erreicht!"
 teamrequest:
   name:
-    tooLong: "<prefix>§cDein Teamname darf nicht länger als <colorcode><maxLength> §cZeichen sein!"
+    tooLong: "<prefix>§cDein Teamname darf nicht länger als <colorcode><max-length> §cZeichen sein!"
     duplicate: "<prefix>§cDieser Name ist bereits vergeben!"
     invalid: "<prefix>§cUngültiger Teamname!"
   invitedInTeam: "<prefix>Du hast <colorcode><invited> §7in dein Team eingeladen!"

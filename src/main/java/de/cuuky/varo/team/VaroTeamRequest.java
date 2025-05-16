@@ -67,7 +67,7 @@ public class VaroTeamRequest {
 
             int maxLength = ConfigSetting.TEAM_MAX_NAME_LENGTH.getValueAsInt();
             if (message.length() > maxLength) {
-                Messages.TEAMREQUEST_NAME_TOO_LONG.send(this.inviter, Placeholder.constant("maxlength", String.valueOf(maxLength)));
+                Messages.TEAMREQUEST_NAME_TOO_LONG.send(this.inviter, Placeholder.constant("max-length", String.valueOf(maxLength)));
                 return;
             }
 
