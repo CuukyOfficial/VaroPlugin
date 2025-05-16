@@ -78,7 +78,7 @@ public class VaroGame implements VaroSerializeable {
     private BorderDecreaseMinuteTimer borderMinuteTimer;
     private ProtectionTime protection;
     private VaroWorldHandler varoWorldHandler;
-    private TopScoreList topScores;
+    private TopScoreManager topScores;
 
     public VaroGame() {
         Main.setVaroGame(this);
@@ -91,7 +91,7 @@ public class VaroGame implements VaroSerializeable {
         if (mainThread != null)
             mainThread.loadVariables();
 
-        this.topScores = new TopScoreList();
+        this.topScores = new TopScoreManager();
     }
 
     public void init() {
@@ -380,7 +380,7 @@ public class VaroGame implements VaroSerializeable {
         this.finaleJoin = false;
     }
 
-    public TopScoreList getTopScores() {
+    public TopScoreManager getTopScores() {
         return this.topScores;
     }
 
