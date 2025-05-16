@@ -214,12 +214,12 @@ public class TeamCommand extends VaroCommand {
 
             if (args[2].equalsIgnoreCase("remove")) {
                 team.setColorCode(null);
-                sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplay() + " §7erfolgreich entfernt");
+                sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplayName() + " §7erfolgreich entfernt");
                 return;
             }
 
             team.setColorCode(args[2]);
-            sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplay() + " §7erfolgreich geaendert!");
+            sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + team.getDisplayName() + " §7erfolgreich geaendert!");
         } else
             sender.sendMessage(Main.getPrefix() + "§7Befehl nicht gefunden! " + Main.getColorCode() + "/team");
         return;

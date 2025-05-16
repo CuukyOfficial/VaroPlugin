@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.player.VaroPlayer;
+import de.cuuky.varo.team.VaroTeam;
 import io.github.almightysatan.slams.Context;
 
 public interface Contexts {
@@ -60,6 +61,11 @@ public interface Contexts {
         public OnlinePlayerContext toOnlinePlayerContext() {
             Player player = this.player.getPlayer();
             return player == null ? null : new OnlinePlayerContext(player);
+        }
+        
+        public TeamContext toTeamContext() {
+            VaroTeam team = this.player.getTeam();
+            return team == null ? null : new TeamContext(team);
         }
 
         @Override
@@ -166,6 +172,23 @@ public interface Contexts {
         @Override
         public ContainerContext copy() {
             return new ContainerContext(this.getPlayer(), this.owner);
+        }
+    }
+    
+    class TeamContext extends VaroContext {
+        private final VaroTeam team;
+
+        TeamContext(VaroTeam team) {
+            this.team = team;
+        }
+
+        public VaroTeam getTeam() {
+            return this.team;
+        }
+
+        @Override
+        public TeamContext copy() {
+            return new TeamContext(this.team);
         }
     }
 

@@ -89,7 +89,7 @@ public class SignChangeListener implements Listener {
 
 			event.setLine(0, "§8--------------");
 			event.setLine(1, "§lSavedChest");
-			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
+			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplayName() : player.getName()));
 			event.setLine(3, "§8--------------");
 			p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
 			for (int i = 0; i < 6; i++)
@@ -132,7 +132,7 @@ public class SignChangeListener implements Listener {
 
 			event.setLine(0, "§8--------------");
 			event.setLine(1, "§lSavedFurnace");
-			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplay() : player.getName()));
+			event.setLine(2, Main.getColorCode() + (player.getTeam() != null ? player.getTeam().getDisplayName() : player.getName()));
 			event.setLine(3, "§8--------------");
 			p.playSound(furnace.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
 			for (int i = 0; i < 6; i++)

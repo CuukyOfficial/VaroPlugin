@@ -34,10 +34,12 @@ import de.cuuky.varo.config.language.Contexts.KillContext;
 import de.cuuky.varo.config.language.Contexts.OnlinePlayerContext;
 import de.cuuky.varo.config.language.Contexts.PlayerContext;
 import de.cuuky.varo.config.language.Contexts.StrikeContext;
+import de.cuuky.varo.config.language.Contexts.TeamContext;
 import de.cuuky.varo.configuration.configurations.config.ConfigSetting;
 import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerDisconnect;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
+import de.cuuky.varo.team.VaroTeam;
 import de.cuuky.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
 import io.github.almightysatan.slams.PlaceholderResolver;
@@ -48,66 +50,66 @@ public final class Placeholders {
 
     static PlaceholderResolver getPlaceholders() {
         PlaceholderResolver.Builder builder = PlaceholderResolver.builder().builtIn()
-                // Plugin
-                .constant("varo-author", Main.getInstance().getDescription().getAuthors().get(0))
-                .constant("varo-contributors", Main.getContributors())
-                .constant("varo-version", Main.getInstance().getDescription().getVersion())
-                .variable("varo-version-latest", () -> Main.getVaroUpdater() != null && Main.getVaroUpdater().getLastResult() != null && Main.getVaroUpdater().getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE ? Main.getVaroUpdater().getLastResult().getVersionName() : Main.getInstance().getDescription().getVersion())
-                .constant("varo-discord", Main.DISCORD_INVITE)
-                // Project
-                .constant("projectname", Main.getProjectName())
-                .constant("prefix", Main.getPrefix())
-                .constant("colorcode", Main.getColorCode())
-                .constant("discord", ConfigSetting.DISCORDBOT_INVITELINK.getValueAsString())
-                .variable("num-players", () -> String.valueOf(VaroPlayer.getVaroPlayers().size()))
-                .variable("num-alive", () -> String.valueOf(VaroPlayer.getAlivePlayer().size()))
-                .variable("num-online", () -> String.valueOf(VaroPlayer.getOnlineAndAlivePlayer().size()))
-                .variable("project-hour", () -> toPaddedString(Main.getVaroGame().getProjectTime() / 3600))
-                .variable("project-minute", () -> toPaddedString((Main.getVaroGame().getProjectTime() / 60) % 60))
-                .variable("project-second", () -> toPaddedString(Main.getVaroGame().getProjectTime() % 60))
-                .variable("border-size", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)))
-                .variable("border-radius", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)))
-                .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
-                .withArgs("top-player", args -> {
-                    if (args.size() == 0 || args.size() > 2) return "INVALID_ARGS";
-                    try {
-                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(Integer.parseInt(args.get(0)));
-                        if (player != null)
-                            return player.getName();
-                        return args.size() == 1 ? "-" : args.get(1);
-                    } catch (NumberFormatException e) {
-                        return "INVALID_ARGS";
-                    }
-                })
-                // Misc
-                .constant("heart", "♥")
-                .constant("newline", "\n")
-                .withArgs("padding", args -> {
-                    if (args.size() != 1) return "INVALID_ARGS";
-                    try {
-                        return String.join("", Collections.nCopies(Integer.parseInt(args.get(0)), " "));
-                    } catch (NumberFormatException e) {
-                        return "INVALID_ARGS";
-                    }
-                })
-                .variable("year", () -> String.valueOf(LocalDate.now().getYear()))
-                .variable("month", () -> toPaddedString(LocalDate.now().getMonthValue()))
-                .variable("day", () -> toPaddedString(LocalDate.now().getDayOfMonth()))
-                .variable("hour", () -> toPaddedString(LocalDateTime.now().getHour()))
-                .variable("minute", () -> toPaddedString(LocalDateTime.now().getMinute()))
-                .variable("second", () -> toPaddedString(LocalDateTime.now().getSecond()))
-                // Player
-                .namespace(null, PlayerContext.class, Function.identity(), Placeholders::addPlayerPlaceholders)
-                .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getKiller()), Placeholders::addPlayerPlaceholders)
-                .namespace("owner-", ContainerContext.class, ctx -> new PlayerContext(ctx.getOwner()), Placeholders::addPlayerPlaceholders)
-                // Other contexts
-                .contextual("death-reason", DeathContext.class, DeathContext::getReason)
-                .contextual("strike-reason", StrikeContext.class, StrikeContext::getReason)
-                .contextual("strike-operator", StrikeContext.class, StrikeContext::getOperator)
-                .contextual("strike-num", StrikeContext.class, StrikeContext::getNum)
-                .contextual("border-decrease-size", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
-                .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
-                .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getSize);
+        // Plugin
+        .constant("varo-author", Main.getInstance().getDescription().getAuthors().get(0))
+        .constant("varo-contributors", Main.getContributors())
+        .constant("varo-version", Main.getInstance().getDescription().getVersion())
+        .variable("varo-version-latest", () -> Main.getVaroUpdater() != null && Main.getVaroUpdater().getLastResult() != null && Main.getVaroUpdater().getLastResult().getUpdateResult() == UpdateResult.UPDATE_AVAILABLE ? Main.getVaroUpdater().getLastResult().getVersionName() : Main.getInstance().getDescription().getVersion())
+        .constant("varo-discord", Main.DISCORD_INVITE)
+        // Project
+        .constant("projectname", Main.getProjectName())
+        .constant("prefix", Main.getPrefix())
+        .constant("colorcode", Main.getColorCode())
+        .constant("discord", ConfigSetting.DISCORDBOT_INVITELINK.getValueAsString())
+        .variable("num-players", () -> String.valueOf(VaroPlayer.getVaroPlayers().size()))
+        .variable("num-alive", () -> String.valueOf(VaroPlayer.getAlivePlayer().size()))
+        .variable("num-online", () -> String.valueOf(VaroPlayer.getOnlineAndAlivePlayer().size()))
+        .variable("project-hour", () -> toPaddedString(Main.getVaroGame().getProjectTime() / 3600))
+        .variable("project-minute", () -> toPaddedString((Main.getVaroGame().getProjectTime() / 60) % 60))
+        .variable("project-second", () -> toPaddedString(Main.getVaroGame().getProjectTime() % 60))
+        .variable("border-size", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)))
+        .variable("border-radius", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)))
+        .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
+        .withArgs("top-player", args -> {
+            if (args.size() == 0 || args.size() > 2) return "INVALID_ARGS";
+            try {
+                VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(Integer.parseInt(args.get(0)));
+                if (player != null)
+                    return player.getName();
+                return args.size() == 1 ? "-" : args.get(1);
+            } catch (NumberFormatException e) {
+                return "INVALID_ARGS";
+            }
+        })
+        // Misc
+        .constant("heart", "♥")
+        .constant("newline", "\n")
+        .withArgs("padding", args -> {
+            if (args.size() != 1) return "INVALID_ARGS";
+            try {
+                return String.join("", Collections.nCopies(Integer.parseInt(args.get(0)), " "));
+            } catch (NumberFormatException e) {
+                return "INVALID_ARGS";
+            }
+        })
+        .variable("year", () -> String.valueOf(LocalDate.now().getYear()))
+        .variable("month", () -> toPaddedString(LocalDate.now().getMonthValue()))
+        .variable("day", () -> toPaddedString(LocalDate.now().getDayOfMonth()))
+        .variable("hour", () -> toPaddedString(LocalDateTime.now().getHour()))
+        .variable("minute", () -> toPaddedString(LocalDateTime.now().getMinute()))
+        .variable("second", () -> toPaddedString(LocalDateTime.now().getSecond()))
+        // Player
+        .namespace(null, PlayerContext.class, Function.identity(), Placeholders::addPlayerPlaceholders)
+        .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getKiller()), Placeholders::addPlayerPlaceholders)
+        .namespace("owner-", ContainerContext.class, ctx -> new PlayerContext(ctx.getOwner()), Placeholders::addPlayerPlaceholders)
+        // Other contexts
+        .contextual("death-reason", DeathContext.class, DeathContext::getReason)
+        .contextual("strike-reason", StrikeContext.class, StrikeContext::getReason)
+        .contextual("strike-operator", StrikeContext.class, StrikeContext::getOperator)
+        .contextual("strike-num", StrikeContext.class, StrikeContext::getNum)
+        .contextual("border-decrease-size", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
+        .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
+        .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getSize);
         
         addPlayerPlaceholders(new Builder() {
             
@@ -132,6 +134,30 @@ public final class Placeholders {
                 return this;
             }
         });
+        
+        addTeamPlaceholders(new Builder() {
+            
+            @Override
+            public @NotNull PlaceholderResolver build() {
+                throw new UnsupportedOperationException();
+            }
+            
+            @Override
+            public @NotNull Builder add(@NotNull Placeholder placeholder) {
+                builder.add("top-team-" + placeholder.key(), (ctx, args) -> {
+                    if (args.size() < 2) return "INVALID_ARGUMENTS";
+                    try {
+                        VaroTeam team = Main.getVaroGame().getTopScores().getTeam(Integer.parseInt(args.get(0)));
+                        if (team == null)
+                            return args.get(1);
+                        return placeholder.value(new TeamContext(team), args.stream().skip(2).collect(Collectors.toList()));
+                    } catch (NumberFormatException e) {
+                        return "INVALID_ARGUMENTS";
+                    }
+                });
+                return this;
+            }
+        });
 
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
@@ -147,10 +173,6 @@ public final class Placeholders {
         .contextual("displayname", PlayerContext.class, (ctx) -> ctx.getPlayer().getDisplayName())
         .contextual("uuid", PlayerContext.class, (ctx) -> ctx.getPlayer().getUUID())
         .contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()))
-        .contextual("team", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? ctx.getPlayer().getTeam().getDisplay() : "-")
-        .contextual("team-id", PlayerContext.class, (ctx) -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getId()) : "-")
-        .contextual("team-lives", PlayerContext.class, ctx -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getLifes()) : "-")
-        .contextual("team-kills", PlayerContext.class, ctx -> ctx.getPlayer().getTeam() != null ? String.valueOf(ctx.getPlayer().getTeam().getKills()) : "-")
         .contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-")
         .contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()))
         .contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()))
@@ -176,8 +198,8 @@ public final class Placeholders {
                 return "INVALID_ARGUMENTS";
             return String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(ctx.getPlayer().getUUID(), args.get(0)).size());
         })
-        
-        .conditional("online", PlayerContext.class, ctx -> ctx.getPlayer() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
+        // Online
+        .conditional("online", PlayerContext.class, ctx -> ctx.getPlayer().getPlayer() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
         .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
             onlineBuilder.contextual("ping", OnlinePlayerContext.class, ctx -> String.valueOf(VaroPlayer.getPlayer(ctx.getPlayer()).getVersionAdapter().getPing()))
             .contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
@@ -191,7 +213,18 @@ public final class Placeholders {
             .contextual("spawn-distance", OnlinePlayerContext.class, ctx -> String.valueOf((int) ctx.getPlayer().getLocation().distance(ctx.getPlayer().getLocation().getWorld().getSpawnLocation())))
             .contextual("health", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getHealth()))
             .contextual("food", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getFoodLevel()));
-        });
+        })
+        // Team
+        .conditional("has-team", PlayerContext.class, ctx -> ctx.getPlayer().getTeam() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
+        .namespace("team-", PlayerContext.class, PlayerContext::toTeamContext, Placeholders::addTeamPlaceholders);
+    }
+    
+    private static void addTeamPlaceholders(PlaceholderResolver.Builder builder) {
+        builder.contextual("name", TeamContext.class, (ctx) -> ctx.getTeam().getName())
+        .contextual("displayname", TeamContext.class, (ctx) -> ctx.getTeam().getDisplayName())
+        .contextual("id", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getId()))
+        .contextual("kills", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getKills()))
+        .contextual("lives", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getLifes()));
     }
     
     private static String toPaddedString(long value) {

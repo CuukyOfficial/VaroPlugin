@@ -275,7 +275,7 @@ public class Stats implements VaroSerializeable {
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
 		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUUID(),
-				"§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplay() : "/"),
+				"§7Team§8: " + colorcode + (owner.getTeam() != null ? owner.getTeam().getDisplayName() : "/"),
 				"§7Rank§8: " + colorcode + (owner.getRank() != null ? owner.getRank().getDisplay() : "/"),
 				"§7Sessions§8: " + colorcode + sessions, "§7Sessions Played§8: " + colorcode + sessionsPlayed,
 				"§7Countdown§8: " + colorcode + countdown,

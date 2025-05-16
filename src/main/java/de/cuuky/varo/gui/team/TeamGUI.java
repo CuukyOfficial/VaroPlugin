@@ -53,7 +53,7 @@ public class TeamGUI extends VaroInventory {
             this.close();
         });
 
-        addItem(3, ItemBuilder.material(XMaterial.DIAMOND_HELMET).displayName("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplay()).build(), (event) -> {
+        addItem(3, ItemBuilder.material(XMaterial.DIAMOND_HELMET).displayName("§7Set §3name").lore("§7Current§8: " + Main.getColorCode() + team.getDisplayName()).build(), (event) -> {
             team.createNameChangeChatHook(VaroPlayer.getPlayer(this.getPlayer()), this::open);
             this.close();
         });
@@ -62,7 +62,7 @@ public class TeamGUI extends VaroInventory {
             new PlayerChatHookBuilder().message("§7Enter team colorcode:")
             .subscribe(ChatHookTriggerEvent.class, hookEvent -> {
                 team.setColorCode(hookEvent.getMessage());
-                getPlayer().sendMessage(Main.getPrefix() + "Team colorocode of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getDisplay() + "§7'");
+                getPlayer().sendMessage(Main.getPrefix() + "Team colorocode of team " + Main.getColorCode() + team.getId() + " §7has been set to '" + team.getDisplayName() + "§7'");
                 open();
                 hookEvent.getHook().unregister();
             }).complete(getPlayer(), Main.getInstance());

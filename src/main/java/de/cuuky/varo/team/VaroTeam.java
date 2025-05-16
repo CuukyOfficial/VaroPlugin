@@ -180,7 +180,7 @@ public class VaroTeam implements VaroSerializeable {
 		return this.colorCode;
 	}
 
-	public String getDisplay() {
+	public String getDisplayName() {
 		return (this.colorCode != null ? colorCode : "") + "#" + name;
 	}
 

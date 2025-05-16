@@ -52,7 +52,7 @@ public class TeamRequestCommand extends VaroCommand {
 
 			new VaroColorMenu(Main.getInventoryManager(), (Player) sender, varoMenuColor -> {
 				player.getTeam().setColorCode(varoMenuColor.getColorCode());
-				sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + player.getTeam().getDisplay() + " §7erfolgreich geaendert!");
+				sender.sendMessage(Main.getPrefix() + "Team-Farbcode vom Team " + player.getTeam().getDisplayName() + " §7erfolgreich geaendert!");
 			}, true);
 			return;
 		}
@@ -161,7 +161,7 @@ public class TeamRequestCommand extends VaroCommand {
 				return;
 			}
 
-			player.sendMessage(Main.getPrefix() + "§7Du hast dein Team " + Main.getColorCode() + player.getTeam().getDisplay() + " §7erfolgreich verlassen!");
+			player.sendMessage(Main.getPrefix() + "§7Du hast dein Team " + Main.getColorCode() + player.getTeam().getDisplayName() + " §7erfolgreich verlassen!");
 			player.getTeam().removeMember(player);
 		} else {
 			player.sendMessage(Main.getPrefix() + Main.getColorCode() + args[0] + " §kein Argument!");

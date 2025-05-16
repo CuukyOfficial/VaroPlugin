@@ -149,10 +149,10 @@ commands:
   spawn:
     nether: |-
       <prefix>The portal is at <colorcode><spawn-x>§7, <colorcode><spawn-y>§7, <colorcode><spawn-z><online:
-      <prefix>You are <colorcode><spawn-distance> §7blocks away from the portal!:>
+      <prefix>You are <colorcode><spawn-distance> §7blocks away from the portal!>
     overworld: |-
       <prefix>The spawn is at <colorcode><spawn-x>§7, <colorcode><spawn-y>§7, <colorcode><spawn-z><online:
-      <prefix>You are <colorcode><spawn-distance> §7blocks away from spawn!:>
+      <prefix>You are <colorcode><spawn-distance> §7blocks away from spawn!>
     end: "<prefix>§cThis command can not be used in the end!"
   time:
     day: "<prefix>Time set to <colorcode>day§7."
@@ -305,7 +305,7 @@ player:
     content:
     - - "<padding:19>"
       - "§7Team§8:"
-      - "<colorcode><team>"
+      - "<colorcode><has-team:<team-displayname>:->"
       - "<padding:1>"
       - "§7Kills§8:"
       - "<colorcode><kills>"
@@ -320,7 +320,7 @@ player:
       - "<padding:4>"
     - - "<padding:19>"
       - "§7Team§8:"
-      - "<colorcode><team>"
+      - "<colorcode><has-team:<team-displayname>:->"
       - "<padding:1>"
       - "§7Kills§8:"
       - "<colorcode><kills>"
@@ -345,7 +345,7 @@ player:
     quitTooOften: "<prefix>§c<name> §7has left the server too often and thus lost their session."
   nametag:
     suffix: "§c <kills>"
-    prefix: "<if_ne:<team>:-:<colorcode><team>:> §7"
+    prefix: "<has-team:<colorcode><team-displayname> >§7"
   tablist:
     footer:
     - - "§7------------------------"
@@ -375,7 +375,7 @@ player:
     new: "<prefix>Container secured!"
   spectator:
     height: "<prefix>§cYou can not fly any lower!"
-  displayname: "<if_ne:<rank>:-:§7<rank> §8| :><if_ne:<team>:-:<colorcode><team> §8| :>§7<name>"
+  displayname: "<if_ne:<rank>:-:§7<rank> §8| :><has-team:<colorcode><team-displayname> §8| >§7<name>"
   crafting:
     disallowed: "<prefix>§cYou are not allowed to craft, use or brew this item!"
   moveProtection: "<prefix>You cannot move until your <colorcode>protection §7has expired!"
@@ -437,7 +437,7 @@ alert:
 chat:
   default: "<displayname> §8» §f<message>"
   muted: "§7You have been muted!"
-  team: "§7[<team>§7] <name> §8» §f<message>"
+  team: "§7[<colorcode><team-displayname>§7] <name> §8» §f<message>"
   spectator: "§7Chat is disabled for spectators!"
   start: "§7Chat is disabled until the game has started!"
 category:

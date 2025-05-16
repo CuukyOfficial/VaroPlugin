@@ -51,7 +51,7 @@ public class TeamListGUI extends VaroListInventory<VaroTeam> {
 
     @Override
     protected ItemStack getItemStack(VaroTeam team) {
-        return ItemBuilder.material(XMaterial.DIAMOND_HELMET).displayName((team.getColorCode() == null ? Main.getColorCode() : "") + team.getDisplay()).build();
+        return ItemBuilder.material(XMaterial.DIAMOND_HELMET).displayName((team.getColorCode() == null ? Main.getColorCode() : "") + team.getDisplayName()).build();
     }
 
     @Override
