@@ -22,6 +22,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
 
 import de.cuuky.varo.Main;
 import de.cuuky.varo.config.language.Contexts.BorderDecreaseContext;
@@ -36,7 +39,9 @@ import de.cuuky.varo.player.VaroPlayer;
 import de.cuuky.varo.player.VaroPlayerDisconnect;
 import de.cuuky.varo.spigot.VaroUpdateResultSet.UpdateResult;
 import de.cuuky.varo.utils.VaroUtils;
+import io.github.almightysatan.slams.Placeholder;
 import io.github.almightysatan.slams.PlaceholderResolver;
+import io.github.almightysatan.slams.PlaceholderResolver.Builder;
 import io.github.almightysatan.slams.papi.PapiPlaceholderResolver;
 
 public final class Placeholders {
@@ -91,9 +96,11 @@ public final class Placeholders {
                 .variable("hour", () -> toPaddedString(LocalDateTime.now().getHour()))
                 .variable("minute", () -> toPaddedString(LocalDateTime.now().getMinute()))
                 .variable("second", () -> toPaddedString(LocalDateTime.now().getSecond()))
+                // Player
                 .namespace(null, PlayerContext.class, Function.identity(), Placeholders::addPlayerPlaceholders)
                 .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getKiller()), Placeholders::addPlayerPlaceholders)
                 .namespace("owner-", ContainerContext.class, ctx -> new PlayerContext(ctx.getOwner()), Placeholders::addPlayerPlaceholders)
+                // Other contexts
                 .contextual("death-reason", DeathContext.class, DeathContext::getReason)
                 .contextual("strike-reason", StrikeContext.class, StrikeContext::getReason)
                 .contextual("strike-operator", StrikeContext.class, StrikeContext::getOperator)
@@ -102,6 +109,30 @@ public final class Placeholders {
                 .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
                 .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getSize);
         
+        addPlayerPlaceholders(new Builder() {
+            
+            @Override
+            public @NotNull PlaceholderResolver build() {
+                throw new UnsupportedOperationException();
+            }
+            
+            @Override
+            public @NotNull Builder add(@NotNull Placeholder placeholder) {
+                builder.add("top-player-" + placeholder.key(), (ctx, args) -> {
+                    if (args.size() < 2) return "INVALID_ARGUMENTS";
+                    try {
+                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(Integer.parseInt(args.get(0)));
+                        if (player == null)
+                            return args.get(1);
+                        return placeholder.value(new PlayerContext(player), args.stream().skip(2).collect(Collectors.toList()));
+                    } catch (NumberFormatException e) {
+                        return "INVALID_ARGUMENTS";
+                    }
+                });
+                return this;
+            }
+        });
+
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
                 builder.variable("config-" + setting.getFullPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));

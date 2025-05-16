@@ -329,9 +329,9 @@ player:
       - "<if_num_ge:<config-Main-playTime>:60:<colorcode><countdown-hour>§8\\::><colorcode><countdown-minute>§8:<colorcode><countdown-second>"
       - "<padding:3>"
       - "§7Beste Spieler§8:"
-      - "§71. <colorcode><top-player:1>"
-      - "§72. <colorcode><top-player:2>"
-      - "§73. <colorcode><top-player:3>"
+      - "§71. <colorcode><top-player-name:1:->"
+      - "§72. <colorcode><top-player-name:2:->"
+      - "§73. <colorcode><top-player-name:3:->"
       - "<padding:4>"
   disconnect:
     kickInSeconds: "<prefix><colorcode><name> §7wird in <colorcode><kick-delay> §7Sekunde(n) gekickt!"
