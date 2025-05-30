@@ -53,6 +53,7 @@ public class Dependencies {
         REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, () -> !doesClassExist("com.google.gson.JsonElement")));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-lang3", MAVEN_CENTERAL));
         REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTERAL));
 
         OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
