@@ -2,7 +2,7 @@ package de.varoplugin.varo.player.stats.stat;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.bukkit.Location;
 
 import de.varoplugin.varo.Main;

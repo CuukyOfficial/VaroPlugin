@@ -2,7 +2,7 @@ package de.varoplugin.varo.threads.daily.checks;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import de.varoplugin.cfw.location.LocationFormat;
 import de.varoplugin.cfw.location.SimpleLocationFormat;
