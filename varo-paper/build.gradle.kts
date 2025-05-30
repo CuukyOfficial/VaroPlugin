@@ -29,8 +29,8 @@ dependencies {
     compileOnly("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.2")
     compileOnly(project(":varo-spigot"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<JavaCompile>().configureEach {

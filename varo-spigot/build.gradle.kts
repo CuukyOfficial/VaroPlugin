@@ -54,7 +54,7 @@ dependencies {
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
     compileOnly("me.clip:placeholderapi:2.11.6")
-    compileOnly("net.luckperms:api:5.4")
+    compileOnly("net.luckperms:api:5.5")
 
 	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.2.1") {
         exclude(group = "io.github.almighty-satan.jaskl")
@@ -72,21 +72,21 @@ dependencies {
     }
     runtimeDownload("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.2")
 	runtimeDownload("com.github.cryptomorin:XSeries:13.3.0")
-	runtimeDownload("com.google.guava:guava:33.3.0-jre")
-    runtimeDownload("com.google.code.gson:gson:2.10.1")
-    runtimeDownload("org.apache.commons:commons-collections4:4.4")
+	runtimeDownload("com.google.guava:guava:33.4.8-jre")
+    runtimeDownload("com.google.code.gson:gson:2.13.1")
+    runtimeDownload("org.apache.commons:commons-collections4:4.5.0")
     runtimeDownload("org.apache.commons:commons-lang3:3.17.0")
     runtimeDownload("net.dv8tion:JDA:5.5.1") {
         exclude(module = "opus-java")
+        exclude(module = "tink")
     }
     runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
         exclude(module = "slf4j-api")
     }
     runtimeDownload("org.bstats:bstats-bukkit:3.1.0")
-    runtimeDownload("com.github.pengrad:java-telegram-bot-api:6.9.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 val createDependenciesFile = tasks.register("createDependenciesFile") {
