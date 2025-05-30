@@ -48,7 +48,7 @@ public class EnchantmentManager {
         blocked.addAll(Arrays.stream(enchantment).map(Enchantment::getName).collect(Collectors.toList()));
         VaroConfig.ENCHANTMENT_BLOCKED.setValue(blocked);
         VaroConfig.write();
-        enchantmentBlocker.update(blocked);
+        this.enchantmentBlocker.update(blocked);
     }
 
     public void unblockEnchantments(Enchantment... enchantment) {
@@ -56,7 +56,7 @@ public class EnchantmentManager {
         blocked.removeAll(Arrays.stream(enchantment).map(Enchantment::getName).collect(Collectors.toList()));
         VaroConfig.ENCHANTMENT_BLOCKED.setValue(blocked);
         VaroConfig.write();
-        enchantmentBlocker.update(blocked);
+        this.enchantmentBlocker.update(blocked);
     }
 
     public boolean isBlocked(Enchantment enchantment) {

@@ -35,13 +35,18 @@ import java.util.logging.Level;
 
 public class VaroConfig {
     
+    private static boolean loaded;
+
     private static final Config ENCHANTMENT_CONFIG = YamlConfig.of(new File("plugins/Varo/config/enchantments.yml"));
     
     public static final ListConfigEntry<String> ENCHANTMENT_BLOCKED = ListConfigEntry.of(ENCHANTMENT_CONFIG, "blocked", "Blocked enchantments", Arrays.asList(VaroConfigDefaults.blockedEnchantmentName), Type.STRING);
 
     public static void load() throws IllegalStateException, InvalidTypeException, ValidationException, IOException {
-        ENCHANTMENT_CONFIG.load();
-        write(ENCHANTMENT_CONFIG);
+        if (!loaded) {
+            ENCHANTMENT_CONFIG.load();
+            write(ENCHANTMENT_CONFIG);
+        }
+        loaded = true;
     }
     
     public static void write() {

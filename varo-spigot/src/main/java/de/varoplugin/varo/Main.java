@@ -97,10 +97,10 @@ public class Main extends JavaPlugin {
     		
     		if (!isPaper()) {
     		    Dependencies.loadRequired(this);
-    		    
-    		    VaroConfig.load();
     		}
-    		
+
+    		VaroConfig.load();
+
     		dataManager = new DataManager(this);
     		dataManager.preLoad();
     		

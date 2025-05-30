@@ -1,9 +1,24 @@
 name: VaroPlugin
 authors: [Cuuky, Korne127, LeStegii, Almighty-Satan]
 version: ${version}
-# softdepend: [PlaceholderAPI, LuckPerms, PermissionsEx, Multiverse-Core, WorldEdit]
-# loadbefore: [CuukyFrameWork]
-api-version: 1.25.5
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    LuckPerms:
+      load: BEFORE
+      required: false
+    PermissionsEx:
+      load: BEFORE
+      required: false
+    Multiverse-Core:
+      load: BEFORE
+      required: false
+    WorldEdit:
+      load: BEFORE
+      required: false
+api-version: "1.19"
 main: de.varoplugin.varo.Main
 bootstrapper: de.varoplugin.varo.VaroBootstrap
 loader: de.varoplugin.varo.VaroPluginLoader
