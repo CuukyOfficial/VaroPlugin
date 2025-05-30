@@ -39,24 +39,24 @@ public class Dependencies {
 
     public static final String MAVEN_CENTERAL = "https://repo1.maven.org/maven2/";
 
-    private static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
+    static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
 
-    private static final Collection<VaroDependency> REQUIRED_DEPENDENCIES = new ArrayList<>();
-    private static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
+    public static final Collection<VaroDependency> REQUIRED_DEPENDENCIES = new ArrayList<>();
+    public static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
 
     static {
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTERAL, JarDependency::new, () -> true));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTERAL, JarDependency::new, () -> true));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTERAL, JarDependency::new, () -> true));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTERAL, JarDependency::new, () -> true));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL, JarDependency::new, () -> true));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, JarDependency::new, () -> !doesClassExist("com.google.gson.JsonElement")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTERAL, JarDependency::new, () -> true));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTERAL, JarDependency::new, () -> true));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTERAL, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, () -> !doesClassExist("com.google.gson.JsonElement")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTERAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTERAL));
 
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, JarDependency::new, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
+        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
     }
     
     public static void loadRequired(Plugin plugin) {
@@ -80,13 +80,15 @@ public class Dependencies {
     public static class VaroDependency {
 
         private final String name;
+        private final String[] mavenCoordinates;
         private final Dependency[] dependencies;
         private final LoadPolicy loadPolicy;
 
-        private VaroDependency(String name, String repo, DependencySupplier supplier, LoadPolicy loadPolicy) {
+        VaroDependency(String name, String repo, LoadPolicy loadPolicy) {
             this.name = name;
             this.loadPolicy = loadPolicy;
             // TODO this should be cleaned up and optimized
+            List<String> mavenCoordinates = new ArrayList<>();
             List<Dependency> dependencies = new ArrayList<>();
             try (Scanner scanner = new Scanner(DEPENDENCY_FILE.openStream())) {
                 while (scanner.hasNextLine()) {
@@ -94,19 +96,22 @@ public class Dependencies {
                     String[] split = line.split(":");
                     if (split.length != 5)
                         throw new Error();
-                    if (split[0].equals(name))
-                        dependencies.add(supplier.get(split[2] + "-" + split[3], LIB_FOLDER, repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
+                    if (split[0].equals(name)) {
+                        mavenCoordinates.add(split[1] + ":" + split[2] + ":" + split[3]);
+                        dependencies.add(new JarDependency(split[2] + "-" + split[3], LIB_FOLDER, repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (dependencies.isEmpty())
                 throw new Error("Missing dependency information for " + name);
+            this.mavenCoordinates = mavenCoordinates.toArray(new String[mavenCoordinates.size()]);
             this.dependencies = dependencies.toArray(new Dependency[dependencies.size()]);
         }
 
-        private VaroDependency(String name, String repo, DependencySupplier supplier) {
-            this(name, repo, supplier, () -> true);
+        VaroDependency(String name, String repo) {
+            this(name, repo, () -> true);
         }
 
         public void load(Plugin plugin) throws Throwable {
@@ -124,6 +129,10 @@ public class Dependencies {
             for (int i = 0; i < urls.length; i++)
                 urls[i] = this.dependencies[i].getUrl();
             return urls;
+        }
+        
+        public String[] getMavenCoordinates() {
+            return this.mavenCoordinates;
         }
     }
 

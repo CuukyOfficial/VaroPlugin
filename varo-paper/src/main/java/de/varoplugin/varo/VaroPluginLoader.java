@@ -18,33 +18,42 @@
 
 package de.varoplugin.varo;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.Exclusion;
 import org.eclipse.aether.repository.RemoteRepository;
 import org.jetbrains.annotations.NotNull;
 
 import de.varoplugin.varo.data.Dependencies;
+import de.varoplugin.varo.data.Dependencies.VaroDependency;
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
 import io.papermc.paper.plugin.loader.PluginLoader;
 import io.papermc.paper.plugin.loader.library.impl.MavenLibraryResolver;
 
 public class VaroPluginLoader implements PluginLoader {
+    
+    private static final List<Exclusion> EXCLUDE_TRANSITIVE = Arrays.asList(new Exclusion("*", "*", null, null));
 
     @Override
     public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
         classpathBuilder.getContext().getLogger().info("Loading Varo dependencies...");
 
-        // TODO
         MavenLibraryResolver resolver = new MavenLibraryResolver();
-        resolver.addDependency(new Dependency(new DefaultArtifact("io.github.almighty-satan.slams:slams-standalone:1.2.1"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("io.github.almighty-satan.slams:slams-parser-jaskl:1.2.1"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("io.github.almighty-satan.slams:slams-papi:1.2.1"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.2"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.cryptomorin:XSeries:13.2.0"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("org.apache.commons:commons-collections4:4.4"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("org.bstats:bstats-bukkit:3.1.0"), null));
+        addDependencies(resolver, Dependencies.REQUIRED_DEPENDENCIES);
+        addDependencies(resolver, Dependencies.OPTIONAL_DEPENDENCIES);
+        
         resolver.addRepository(new RemoteRepository.Builder("central", "default", Dependencies.MAVEN_CENTERAL).build());
         classpathBuilder.addLibrary(resolver);
     }
-
+    
+    private void addDependencies(MavenLibraryResolver resolver, Collection<VaroDependency> dependencies) {
+        for (var dependency : dependencies) {
+            for (var coords : dependency.getMavenCoordinates())
+                resolver.addDependency(new Dependency(new DefaultArtifact(coords), null, false, EXCLUDE_TRANSITIVE));
+        }
+    }
 }
