@@ -5,9 +5,6 @@ plugins {
     id("maven-publish")
 }
 
-group = "de.varoplugin"
-version = "5.0.0-alpha-2"
-
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
