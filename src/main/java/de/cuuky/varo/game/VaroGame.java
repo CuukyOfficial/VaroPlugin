@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.cryptomorin.xseries.XEntityType;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
 
@@ -220,10 +221,11 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player p = vp.getPlayer();
-            p.getWorld().spawnEntity(p.getLocation().clone().add(1, 0, 0), EntityType.FIREWORK);
-            p.getWorld().spawnEntity(p.getLocation().clone().add(-1, 0, 0), EntityType.FIREWORK);
-            p.getWorld().spawnEntity(p.getLocation().clone().add(0, 0, 1), EntityType.FIREWORK);
-            p.getWorld().spawnEntity(p.getLocation().clone().add(0, 0, -1), EntityType.FIREWORK);
+            EntityType firework = XEntityType.FIREWORK_ROCKET.get();
+            p.getWorld().spawnEntity(p.getLocation().clone().add(1, 0, 0), firework);
+            p.getWorld().spawnEntity(p.getLocation().clone().add(-1, 0, 0), firework);
+            p.getWorld().spawnEntity(p.getLocation().clone().add(0, 0, 1), firework);
+            p.getWorld().spawnEntity(p.getLocation().clone().add(0, 0, -1), firework);
         }
 
         // This shit needs to be rewritten in v4-next

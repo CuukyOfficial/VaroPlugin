@@ -2,7 +2,6 @@ package de.cuuky.varo.event.events;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -11,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.cryptomorin.xseries.XEntityType;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.cuuky.varo.Main;
@@ -53,7 +53,7 @@ public class ExposedVaroEvent extends VaroEvent {
 					if (type != null)
 						pl.getPlayer().addPotionEffect(new PotionEffect(type, 11, 1));
 					else {
-						Firework fw = (Firework) pl.getWorld().spawnEntity(pl.getLocation(), EntityType.FIREWORK);
+						Firework fw = (Firework) pl.getWorld().spawnEntity(pl.getLocation(), XEntityType.FIREWORK_ROCKET.get());
 						FireworkMeta meta = fw.getFireworkMeta();
 						meta.addEffect(effect);
 						meta.setPower(1);
