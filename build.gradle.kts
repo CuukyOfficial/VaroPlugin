@@ -48,7 +48,7 @@ tasks.jar {
         archiveFileName.set(project.property("fileName").toString())
 
     manifest {
-        attributes(Pair("Manifest-Version", "1.0"), Pair("Class-Path", "."), Pair("Main-Class", "de.cuuky.varo.MainLauncher"))
+        attributes(Pair("Manifest-Version", "1.0"), Pair("Class-Path", "."), Pair("Main-Class", "de.varoplugin.varo.MainLauncher"))
     }
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
