@@ -4,17 +4,24 @@ import java.io.File;
 import java.io.InputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 import com.google.common.io.BaseEncoding;
 
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
+import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -275,6 +282,23 @@ public class Main extends JavaPlugin {
     }
 	
 	public static PlayerLookup lookupPlayer(String name) {
+	    String prefix = ConfigSetting.GEYSER_PREFIX.getValueAsString();
+	    if (ConfigSetting.GEYSER_ENABLED.getValueAsBoolean() && !prefix.isEmpty() && name.startsWith(prefix))
+	        try {
+	            CompletableFuture<UUID> future = FloodgateApi.getInstance().getUuidFor(name.substring(prefix.length()));
+	            try {
+                    UUID uuid = future.get(30, TimeUnit.SECONDS);
+                    if (uuid == null)
+                        return new PlayerLookup(Result.UNKNOWN_PLAYER, null, null, null);
+                    return new PlayerLookup(Result.SUCCESS, uuid, name, null);
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                    return new PlayerLookup(Result.ERROR, null, null, e);
+                }
+	            
+	        } catch (NoClassDefFoundError e) {
+	            instance.getLogger().warning("FloodgateApi not found!");
+	        }
+
         return !ConfigSetting.CRACKED_SERVER.getValueAsBoolean() ? PlayerProfileUtils.getOrFetchByName(name) : PlayerProfileUtils.getCrackedByName(name);
     }
 

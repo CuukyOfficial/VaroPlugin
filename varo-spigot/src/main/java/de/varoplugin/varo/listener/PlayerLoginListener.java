@@ -33,6 +33,10 @@ public class PlayerLoginListener implements Listener {
     
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
+        String prefix = ConfigSetting.GEYSER_PREFIX.getValueAsString();
+        if (ConfigSetting.GEYSER_ENABLED.getValueAsBoolean() && !prefix.isEmpty() && event.getName().startsWith(prefix))
+            return;
+
         BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(event.getName());
         if (entry != null)
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Messages.PLAYER_KICK_BANNED.value(Placeholder.constant("reason", entry.getReason())));

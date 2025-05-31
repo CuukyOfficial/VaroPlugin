@@ -2,7 +2,7 @@ name: VaroPlugin
 author: Cuuky
 authors: [Korne127, LeStegii, Almighty-Satan]
 version: ${version}
-softdepend: [PlaceholderAPI, LuckPerms, PermissionsEx, Multiverse-Core, WorldEdit]
+softdepend: [PlaceholderAPI, LuckPerms, PermissionsEx, Multiverse-Core, WorldEdit, floodgate]
 loadbefore: [CuukyFrameWork]
 api-version: 1.13
 main: de.varoplugin.varo.Main

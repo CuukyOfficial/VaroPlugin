@@ -18,6 +18,9 @@ dependencies:
     WorldEdit:
       load: BEFORE
       required: false
+    floodgate:
+      load: BEFORE
+      required: false
 api-version: "1.19"
 main: de.varoplugin.varo.Main
 bootstrapper: de.varoplugin.varo.VaroBootstrap

@@ -48,13 +48,14 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 }
 
 dependencies {
-    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-22", "CFW")
+    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-23", "CFW")
 
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("net.luckperms:api:5.5")
+    compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
 
 	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.2.1") {
         exclude(group = "io.github.almighty-satan.jaskl")

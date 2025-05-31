@@ -222,6 +222,8 @@ public enum ConfigSetting implements SectionEntry {
 	REPORT_SEND_DELAY(ConfigSettingSection.REPORT, "reportDelay", 30, "Zeit in Sekunden, die ein Spieler warten muss,\nbevor er einen neuen Spieler reporten kann.\nOff = -1"),
 	REPORT_STAFF_MEMBER(ConfigSettingSection.REPORT, "reportStaffMember", true, "Ob Spieler mit der Permission\n'varo.report' reportet werden koennen."),
 	CRACKED_SERVER(ConfigSettingSection.MAIN, "crackedServer", false, "Ob der Server mit Mojang-UUIDs arbeiten soll.\nVorsicht: Spieler müssen neu eingetragen werden."),
+	GEYSER_ENABLED(ConfigSettingSection.MAIN, "geyser.enabled", true, "Ob Geyser support aktiviert sein soll"),
+	GEYSER_PREFIX(ConfigSettingSection.MAIN, "geyser.floodgate.prefix", ".", "Das Floodgate prefix"),
 
 	// REPORT
 	REPORTSYSTEM_ENABLED(ConfigSettingSection.REPORT, "enabled", true, "Ob das Report-System angeschaltet sein soll."),
