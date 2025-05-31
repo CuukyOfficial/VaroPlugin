@@ -26,7 +26,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	ALERT_GENERAL_STRIKE("alerts.BOTS_ALERT.generalStrike", "%player% hat nun den %strikeNumber%ten Strike! Der Strike wurde von %striker% gegeben. Begründung: %reason%"),
 	ALERT_JOIN_FINALE("alerts.BOTS_ALERT.finale", "%player% hat den Server zum Finale betreten."),
 	ALERT_KICKED_PLAYER("alerts.BOTS_ALERT.kickedPlayer", "%player% wurde gekickt!"),
-	ALERT_SESSIONS_ENDED("alerts.BOTS_ALERT.sessionsEnded", "%player%'s Session wurde beendet, da der Spieltag vorrüber ist!"),
+	ALERT_SESSIONS_ENDED("alerts.BOTS_ALERT.sessionsEnded", "%player%'s Session wurde beendet, da der Spieltag vorüber ist!"),
 	ALERT_NEW_SESSIONS("alerts.BOTS_ALERT.newSessions", "Es wurden %newSessions% neue Folgen an die Spieler gegeben!"),
 	ALERT_NEW_SESSIONS_FOR_ALL("alerts.BOTS_ALERT.newSessionsForAll", "Alle haben %newSessions% neue Folgen bekommen!"),
 	ALERT_NO_BLOODLUST("alerts.BOTS_ALERT.noBloodlust", "%player% hat nun %days% Tage nicht gekämpft, was das Limit überschritten hat!"),
@@ -156,8 +156,8 @@ public enum ConfigMessages implements DefaultLanguage {
 
 	PROTECTION_NO_MOVE_START("protection.noMoveStart", "&7Du kannst dich nicht bewegen, solange das Projekt noch nicht gestartet wurde."),
 	PROTECTION_START("protection.start", "&7Die &cSchutzzeit &7startet jetzt und wird &c%seconds% &7Sekunden anhalten!"),
-	PROTECTION_TIME_OVER("protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorrüber!"),
-	PROTECTION_TIME_UPDATE("protection.protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes%&7:&c%seconds% &7vorrüber!"),
+	PROTECTION_TIME_OVER("protection.protectionOver", "&7Die &cSchutzzeit &7ist nun vorüber!"),
+	PROTECTION_TIME_UPDATE("protection.protectionUpdate", "&7Die &cSchutzzeit &7ist in &c%minutes%&7:&c%seconds% &7vorüber!"),
 	PROTECTION_TIME_RUNNING("protection.timeRunning", "&7Die %colorcode%Schutzzeit &7läuft noch!"),
 
 	SORT_NO_HOLE_FOUND("sort.noHoleFound", "&7Es konnte für dich kein Loch gefunden werden!"),
