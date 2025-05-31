@@ -60,6 +60,6 @@ public class VaroInventoryConfigProvider implements InfoProvider {
     @Override
     public Consumer<Player> getSoundPlayer() {
         return this.player.getGuiSound() != null ? (player) ->
-                player.playSound(player.getLocation(), this.player.getGuiSound(), 1f, 1f) : null;
+                player.playSound(player.getLocation(), this.player.getGuiSound().get(), 1f, 1f) : null;
     }
 }

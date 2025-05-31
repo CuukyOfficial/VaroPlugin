@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -106,7 +105,7 @@ public class VaroPlayer implements VaroSerializeable {
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
-	private Sound guiSound = XSound.UI_BUTTON_CLICK.get();
+	private XSound guiSound = XSound.UI_BUTTON_CLICK;
 	private Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
@@ -240,7 +239,7 @@ public class VaroPlayer implements VaroSerializeable {
 	@Override
 	public void onDeserializeEnd() {
 		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
-		this.guiSound = this.guiSoundName != null ? Sound.valueOf(this.guiSoundName) : null;
+		this.guiSound = this.guiSoundName != null ? XSound.of(this.guiSoundName).orElse(null) : null;
 		if (this.player != null)
 			setPlayer(this.player);
 		if (isOnline()) {
@@ -257,7 +256,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 	@Override
 	public void onSerializeStart() {
-		this.guiSoundName = this.guiSound != null ? this.guiSound.toString() : null;
+		this.guiSoundName = this.guiSound != null ? this.guiSound.name() : null;
 	}
 
 	public void onEvent(BukkitEventType type) {
@@ -702,11 +701,11 @@ public class VaroPlayer implements VaroSerializeable {
 		return guiFiller;
 	}
 
-	public void setGuiSound(Sound guiSound) {
+	public void setGuiSound(XSound guiSound) {
 		this.guiSound = guiSound;
 	}
 
-	public Sound getGuiSound() {
+	public XSound getGuiSound() {
 		return guiSound;
 	}
 

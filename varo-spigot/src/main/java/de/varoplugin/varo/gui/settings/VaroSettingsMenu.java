@@ -3,6 +3,7 @@ package de.varoplugin.varo.gui.settings;
 import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.varo.Main;
@@ -21,6 +22,10 @@ public class VaroSettingsMenu extends VaroInventory {
 
     private String stringify(Object obj) {
         return obj != null ? obj.toString() : "/";
+    }
+    
+    private String stringify(XSound obj) {
+        return obj != null ? obj.name() : "/";
     }
 
     @Override
