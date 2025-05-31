@@ -35,7 +35,7 @@ public class PlayerLoginListener implements Listener {
     public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
         BanEntry entry = Bukkit.getBanList(Type.NAME).getBanEntry(event.getName());
         if (entry != null)
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Messages.PLAYER_KICK_NOT_USER_OF_PROJECT.value(Placeholder.constant("reason", entry.getReason())));
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Messages.PLAYER_KICK_BANNED.value(Placeholder.constant("reason", entry.getReason())));
     }
 
 	@EventHandler(priority = EventPriority.LOW)
