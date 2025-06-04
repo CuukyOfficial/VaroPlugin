@@ -582,7 +582,21 @@ public final class Messages {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
             }
-            
+
+            @Override
+            public void kick(VaroPlayer subject, PlaceholderResolver placeholders) {
+                try {
+                    Player player = subject.getPlayer();
+                    if (player != null) {
+                        PlayerContext context = new PlayerContext(subject);
+                        context.getMessageData().language = subject.getLanguage();
+                        player.kickPlayer(message.value(context, placeholders));
+                    }
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
+                }
+            }
+
             @Override
             public void kick(VaroPlayer subject) {
                 try {
@@ -805,6 +819,7 @@ public final class Messages {
         void send(CommandSender subject);
 
         void kick(VaroPlayer recipient, VaroContext context);
+        void kick(VaroPlayer subject, PlaceholderResolver placeholders);
         void kick(VaroPlayer subject);
 
         void log(LogType type, VaroContext context, PlaceholderResolver placeholders);
