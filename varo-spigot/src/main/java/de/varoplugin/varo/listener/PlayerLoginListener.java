@@ -114,7 +114,7 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DEATH.value(vp));
 			break;
 		case STRIKE_BAN:
-			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DEATH.value(vp, Placeholder.constant("ban-hours", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()))));
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_STRIKE_BAN.value(vp, Placeholder.constant("ban-hours", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()))));
 			break;
 		case NOT_IN_TIME:
 		    event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_SERVER_CLOSED.value(vp));

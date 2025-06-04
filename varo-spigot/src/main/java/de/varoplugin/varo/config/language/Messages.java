@@ -295,7 +295,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_DISCORD_STATUS_INACTIVE = message("commands.varo.discord.status.inactive");
     public static final VaroMessage COMMANDS_VARO_DISCORD_NOT_VERIFIED = message("commands.varo.discord.notverified");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFICATION_REMOVED = message("commands.varo.discord.verificationremoved");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED = message("commands.varo.discord.discordbotdisabled");
+    public static final VaroMessage COMMANDS_VARO_DISCORD_DISABLED = message("commands.varo.discord.disabled");
     public static final VaroMessage COMMANDS_VARO_DISCORD_GETLINK = message("commands.varo.discord.getlink");
     public static final VaroMessage COMMANDS_VARO_DISCORD_UNVERIFY = message("commands.varo.discord.unverify");
     public static final VaroMessage COMMANDS_VARO_DISCORD_RELOADED = message("commands.varo.discord.reloaded");
@@ -308,10 +308,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_DISCORD_BYPASS_INACTIVE = message("commands.varo.discord.bypassinactive");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_ACCOUNT = message("commands.varo.discord.account");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_REMOVE_USAGE = message("commands.varo.discord.remove.usage");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_PLEASE_RELOAD = message("commands.varo.discord.pleasereload");
     public static final VaroMessage COMMANDS_VARO_DISCORD_VERIFY_DISABLED = message("commands.varo.discord.verifydisabled");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_BOT_DISABLED = message("commands.varo.discord.botdisabled");
-    public static final VaroMessage COMMANDS_VARO_DISCORD_USER_NOT_FOUND = message("commands.varo.discord.usernotfound");
 
     public static final VaroMessage COMMANDS_VARO_PLAYTIME = message("commands.varo.playtime");
 
@@ -355,9 +352,8 @@ public final class Messages {
     public static final VaroMessage TEAMREQUEST_PLAYER_NOT_ONLINE = message("teamrequest.playerNotOnline");
     public static final VaroMessage TEAMREQUEST_REVOKED = message("teamrequest.invationRevoked");
     public static final VaroMessage TEAMREQUEST_TEAM_FULL = message("teamrequest.teamIsFull");
-    public static final VaroMessage TEAMREQUEST_TEAM_REQUEST_RECIEVED = message("teamrequest.teamRequestRecieved");
-    public static final VaroMessage TEAMREQUEST_INVITED_TEAM = message("teamrequest.invitedInTeam");
-    public static final VaroMessage TEAMREQUEST_NO_TEAMNAME = message("teamrequest.noteamname");
+    public static final VaroMessage TEAMREQUEST_RECEIVED = message("teamrequest.received");
+    public static final VaroMessage TEAMREQUEST_SENT = message("teamrequest.sent");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_INVITE_NAME = message("teamrequest.items.invite.name");
     public static final VaroMessageArray TEAMREQUEST_LOBBYITEM_INVITE_LORE = array("teamrequest.items.invite.lore");
     public static final VaroMessage TEAMREQUEST_LOBBYITEM_LEAVE_NAME = message("teamrequest.items.leave.name");

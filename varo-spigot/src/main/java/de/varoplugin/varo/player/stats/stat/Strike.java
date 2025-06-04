@@ -55,7 +55,7 @@ public class Strike implements VaroSerializeable {
 		this.number = number;
 
 		if (ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
-			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
+			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()); // TODO kick player ???
 
 		switch (number) {
 		case 1:
@@ -120,7 +120,7 @@ public class Strike implements VaroSerializeable {
 
 	public void post() {
 		if (ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
-			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
+			banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()); // TODO kick player ???
 
 		StrikeContext ctx = new StrikeContext(this.striked, this.reason, this.striker, this.number);
 		switch (number) {

@@ -42,7 +42,7 @@ public class ProtectionTime {
 					scheduler.cancel();
 				} else if (ProtectionTime.this.protectionTimer != timer
 				        && ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
-					Messages.PROTECTION_PROTECTED.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
+					Messages.PROTECTION_UPDATE.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
 				            .constant("protection-seconds", getCountdownSec(protectionTimer)).build());
 				}
 

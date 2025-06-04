@@ -25,6 +25,8 @@ public class PlayerQuitListener implements Listener {
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 		event.setQuitMessage(null);
 
+		Messages.LOG_PLAYER_QUIT.log(LogType.JOIN_LEAVE, vplayer);
+
 		// IF THEY WERE A SPECTATOR
 		if (vplayer.getStats().isSpectator() || vplayer.isAdminIgnore()) {
 			Messages.PLAYER_DISCONNECT_SPECTATOR.broadcast(vplayer);

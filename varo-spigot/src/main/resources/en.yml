@@ -22,9 +22,8 @@ commands:
     discord:
       remove:
         usage: "<prefix>Use <colorcode>/varo discord verify remove §7to remove the verification."
-      pleasereload: "<prefix>The Discord bot was not set up at start, please restart the server!"
       getlink: "<prefix><colorcode><target-name>'s account is called <colorcode><target-discord-name>§7 and the ID is <colorcode><target-discord-id>§7!"
-      botdisabled: "<prefix>The Discord bot is disabled!"
+      disabled: "<prefix>The Discord bot is disabled!"
       verifydisabled: "<prefix>The verification system is disabled!"
       notverified: "<prefix>You are not verified yet!"
       status:
@@ -36,12 +35,10 @@ commands:
       verificationremoved: "<prefix>Your verification was removed."
       discordmessagetitle: "MESSAGE"
       account: "<prefix>Account: <colorcode><target>"
-      usernotfound: "<prefix>User not found for this player!"
       noeventchannel: "<prefix>No event channel was given to the bot."
       botoffline: "<prefix>The Discord bot is not online!"
       bypassinactive: "<prefix><target> no longer bypasses the verification system."
       verifyenabled: "<prefix>The Verify system has been activated."
-      discordbotdisabled: "<prefix>The Discord bot is disabled."
       notsetup: "<prefix>The Discord bot was not set up at the start!"
       bypassactive: "<prefix><target> now bypasses the verification system."
     export:
@@ -403,7 +400,7 @@ teamrequest:
     tooLong: "<prefix>§cYour team name can not be longer than <colorcode><max-length> §ccharacters!"
     duplicate: "<prefix>§cThat name is already taken!"
     invalid: "<prefix>§cInvalid team name!"
-  invitedInTeam: "<prefix>You have invited <colorcode><invited> §7to your team!"
+  sent: "<prefix>You have invited <colorcode><invited> §7to your team!"
   enterTeamName: "<prefix><colorcode>§lPlease enter a team name for you and <invited>:"
   items:
     leave:
@@ -422,10 +419,9 @@ teamrequest:
         - "§7Change the name of your team"
       name: "§cRename Team"
   playerNotOnline: "<prefix><colorcode><inviter> §7is offline!"
-  teamRequestRecieved: "<prefix><colorcode><inviter> §7has invited you to join their team (/varo tr)!"
+  received: "<prefix><colorcode><inviter> §7has invited you to join their team (/varo tr)!"
   rename: "<prefix><colorcode>§lPlease enter a new name"
   renamed: "<prefix>Team name changed to <colorcode><team-newname>"
-  noteamname: "<prefix>You have no team name!"
   invationRevoked: "<prefix>Invitation withdrawn!"
   teamIsFull: "<prefix><colorcode><invited> §7can't join your team - team member limit reached!"
 alert:

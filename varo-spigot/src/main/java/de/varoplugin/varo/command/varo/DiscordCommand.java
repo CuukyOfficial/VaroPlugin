@@ -94,7 +94,7 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-			    Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
+			    Messages.COMMANDS_VARO_DISCORD_DISABLED.send(sender);
 				return;
 			}
 
@@ -122,7 +122,7 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-				Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
+				Messages.COMMANDS_VARO_DISCORD_DISABLED.send(sender);
 				return;
 			}
 
@@ -149,7 +149,7 @@ public class DiscordCommand extends VaroCommand {
 			}
 
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-			    Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
+			    Messages.COMMANDS_VARO_DISCORD_DISABLED.send(sender);
 				return;
 			}
 
@@ -197,7 +197,7 @@ public class DiscordCommand extends VaroCommand {
 			Main.getBotLauncher().getDiscordbot().disconnect();
 		} else if (args[0].equalsIgnoreCase("sendMessage")) {
 			if (Main.getBotLauncher().getDiscordbot() == null || !Main.getBotLauncher().getDiscordbot().isEnabled()) {
-				Messages.COMMANDS_VARO_DISCORD_DISCORDBOT_DISABLED.send(sender);
+				Messages.COMMANDS_VARO_DISCORD_DISABLED.send(sender);
 				return;
 			}
 
@@ -211,7 +211,8 @@ public class DiscordCommand extends VaroCommand {
 					message = message + " " + ar;
 			}
 			
-			if (!Main.getBotLauncher().getDiscordbot().sendMessage(message, "MESSAGE", Color.YELLOW, ConfigSetting.DISCORDBOT_EVENT_CHANNELID.getValueAsLong()))
+			if (!Main.getBotLauncher().getDiscordbot().sendMessage(message, Messages.COMMANDS_VARO_DISCORD_DISCORD_MESSAGE_TITLE.value(),
+					Color.YELLOW, ConfigSetting.DISCORDBOT_EVENT_CHANNELID.getValueAsLong()))
 			    Messages.COMMANDS_VARO_DISCORD_NO_EVENT_CHANNEL.send(sender);
 			return;
 		} else

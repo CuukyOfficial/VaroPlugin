@@ -43,7 +43,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 				if (secondsToClose % 60 == 0) {
 					int minutesToClose = secondsToClose / 60;
 					if (minutesToClose == 10 || minutesToClose == 5 || minutesToClose == 3 || minutesToClose == 2 || minutesToClose == 1)
-					    Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(Placeholder.constant("server-close", String.valueOf(minutesToClose)));
+					    Messages.PLAYER_DISCONNECT_KICK_SERVER_CLOSE_SOON.broadcast(Placeholder.constant("server-close", String.valueOf(minutesToClose)));
 
 					if (!Main.getDataManager().getOutsideTimeChecker().canJoin()) {
 						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {

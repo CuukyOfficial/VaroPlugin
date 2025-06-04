@@ -22,9 +22,8 @@ commands:
     discord:
       remove:
         usage: "<prefix>Benutze <colorcode>/varo discord verify remove §7um die Verifizierung zu entfernen."
-      pleasereload: "<prefix>Der Discord Bot wurde beim Start nicht eingerichtet! Bitte starte den Server neu!"
       getlink: "<prefix>Der Account von <colorcode><target-name> §7heißt <colorcode><target-discord-name> §7und die ID ist <colorcode><target-discord-id>§7!"
-      botdisabled: "<prefix>Der Discord Bot ist deaktiviert!"
+      disabled: "<prefix>Der Discord Bot ist deaktiviert!"
       verifydisabled: "<prefix>Das Verifizierungssystem wurde in der Config deaktiviert!"
       notverified: "<prefix>Du bist noch nicht mit Discord verifiziert!"
       status:
@@ -36,12 +35,10 @@ commands:
       verificationremoved: "<prefix>Deine Verifizierung wurde entfernt."
       discordmessagetitle: "NACHRICHT"
       account: "<prefix>Konto: <colorcode><target>"
-      usernotfound: "<prefix>Discord Benutzer für diesen Spieler nicht gefunden!"
       noeventchannel: "<prefix>Dem Bot wurde kein Event-Kanal zugewiesen."
       botoffline: "<prefix>Der Discord Bot ist nicht online!"
       bypassinactive: "<prefix><target> umgeht das Verifizierungssystem nicht mehr."
       verifyenabled: "<prefix>Das Verifizierungssystem wurde aktiviert."
-      discordbotdisabled: "<prefix>Der Discord Bot ist deaktiviert."
       notsetup: "<prefix>Der Discord Bot wurde beim Start nicht eingerichtet!"
       bypassactive: "<prefix><target> umgeht jetzt das Verifizierungssystem."
     export:
@@ -403,7 +400,7 @@ teamrequest:
     tooLong: "<prefix>§cDein Teamname darf nicht länger als <colorcode><max-length> §cZeichen sein!"
     duplicate: "<prefix>§cDieser Name ist bereits vergeben!"
     invalid: "<prefix>§cUngültiger Teamname!"
-  invitedInTeam: "<prefix>Du hast <colorcode><invited> §7in dein Team eingeladen!"
+  sent: "<prefix>Du hast <colorcode><invited> §7in dein Team eingeladen!"
   enterTeamName: "<prefix><colorcode>§lBitte gib einen Teamnamen für dich und <invited> ein:"
   items:
     leave:
@@ -422,10 +419,9 @@ teamrequest:
         - "§7Ändere den Namen deines Teams"
       name: "§cTeam Umbenennen"
   playerNotOnline: "<prefix><colorcode><inviter> §7ist offline!"
-  teamRequestRecieved: "<prefix><colorcode><inviter> §7hat dich eingeladen, seinem Team beizutreten (/varo tr)!"
+  received: "<prefix><colorcode><inviter> §7hat dich eingeladen, seinem Team beizutreten (/varo tr)!"
   rename: "<prefix><colorcode>§lBitte gib einen neuen Namen ein"
   renamed: "<prefix>Teamname geändert zu <colorcode><team-newname>"
-  noteamname: "<prefix>Du hast keinen Teamnamen!"
   invationRevoked: "<prefix>Einladung zurückgezogen!"
   teamIsFull: "<prefix><colorcode><invited> §7kann deinem Team nicht beitreten - Teammitgliederlimit erreicht!"
 alert:

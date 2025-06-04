@@ -3,6 +3,7 @@ package de.varoplugin.varo.gui.admin.orelogger;
 import java.util.List;
 import java.util.function.Predicate;
 
+import io.github.almightysatan.slams.Placeholder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -38,6 +39,7 @@ public class OreLoggerFilterGUI extends VaroInventory {
         private ItemClick setFilter(VaroPlayer player, VaroMessage message) {
             return click -> {
                 if (click.isRightClick()) {
+                    Messages.BLOCKLOGGER_FILTER_RESET.send(player, Placeholder.constant("filter-name", Filter.this.name));
                     setContent(null);
                 } else {
                     new PlayerChatHookBuilder().message(message.value(player)).subscribe(ChatHookTriggerEvent.class, hookEvent -> {

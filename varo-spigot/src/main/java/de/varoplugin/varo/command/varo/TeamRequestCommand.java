@@ -99,8 +99,8 @@ public class TeamRequestCommand extends VaroCommand {
 						continue;
 					}
 
-				Messages.TEAMREQUEST_TEAM_REQUEST_RECIEVED.send(invite, Placeholder.constant("inviter", player.getName()));
-				player.sendMessage(Main.getPrefix() + "Du hast eine Teamanfrage an " + Main.getColorCode() + invite.getName() + " §7gesendet");
+				Messages.TEAMREQUEST_RECEIVED.send(invite, Placeholder.constant("inviter", player.getName()));
+				Messages.TEAMREQUEST_SENT.send(player, Placeholder.constant("invited", invite.getName()));
 				new VaroTeamRequest(player, invite);
 			}
 		} else if (args[0].equalsIgnoreCase("accept") || args[0].equalsIgnoreCase("decline")) {
