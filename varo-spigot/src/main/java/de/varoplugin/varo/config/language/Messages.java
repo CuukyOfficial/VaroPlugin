@@ -52,13 +52,24 @@ import me.clip.placeholderapi.PlaceholderAPIPlugin;
 
 public final class Messages {
 
+    static String messageFilePath = "plugins/Varo/messages/";
+
     public static final String LANGUAGE_EN = "en";
     public static final String LANGUAGE_DE = "de";
     public static final String LANGUAGE_DEFAULT = LANGUAGE_EN;
     public static final List<String> LANGUAGES = Arrays.asList(LANGUAGE_EN, LANGUAGE_DE);
 
-    private static final Slams SLAMS = Slams.create(LANGUAGE_DEFAULT);
-    private static final PlaceholderResolver PLACEHOLDERS = Placeholders.getPlaceholders();
+    static final Slams SLAMS = Slams.create(LANGUAGE_DEFAULT);
+    private static final PlaceholderResolver PLACEHOLDERS;
+
+    static {
+        if (Bukkit.getServer() != null) {
+            PLACEHOLDERS = Placeholders.getPlaceholders();
+        } else {
+            // Unit tests
+            PLACEHOLDERS = PlaceholderResolver.empty();
+        }
+    }
 
     public static final VaroMessage ALERT_DISCONNECT_TOO_OFTEN = message("alert.disconnectTooOften");
     public static final VaroMessage ALERT_STRIKE_NO_BLOODLUST = message("alert.strike.noBloodlust");
@@ -377,9 +388,9 @@ public final class Messages {
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
         SLAMS.load("en", JasklParser.createReadParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))),
-                JasklParser.createReadWriteParser(YamlConfig.of(new File("plugins/Varo/messages/en.yml"))));
+                JasklParser.createReadWriteParser(YamlConfig.of(new File(messageFilePath + "en.yml"))));
         SLAMS.load("de", JasklParser.createReadParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("de.yml")))),
-                JasklParser.createReadWriteParser(YamlConfig.of(new File("plugins/Varo/messages/de.yml"))));
+                JasklParser.createReadWriteParser(YamlConfig.of(new File(messageFilePath + "de.yml"))));
 
         try {
             PlaceholderAPIPlugin.getInstance();
