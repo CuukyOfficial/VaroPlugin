@@ -50,7 +50,7 @@ public interface Contexts {
     class PlayerContext extends VaroContext {
         private final VaroPlayer player;
 
-        PlayerContext(VaroPlayer player) {
+        public PlayerContext(VaroPlayer player) {
             this.player = player;
         }
 

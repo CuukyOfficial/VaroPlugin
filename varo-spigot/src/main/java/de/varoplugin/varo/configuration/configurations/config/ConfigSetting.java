@@ -237,12 +237,13 @@ public enum ConfigSetting implements SectionEntry {
 
 	SPAWN_PROTECTION_RADIUS(ConfigSettingSection.WORLD, "spawnProtectionRadius", 0, "Radius, in dem die Spieler\nnicht am Spawn bauen koennen."),
 
+	// START
+	STARTCOUNTDOWN(ConfigSettingSection.START, "startCountdown", 30, "Wie lange der Startcountdown\nbei Start in Sekunden ist."),
 	SPAWN_TELEPORT_JOIN(ConfigSettingSection.START, "spawnTeleportAtLobbyPhase", true, "Ob die Spieler, wenn\nfuer sie ein Spawn gesetzt wurde auch in\ndiesem spawnen sollen, sobald sie joinen."),
 	LOBBY_INTERACT_VEHICLES(ConfigSettingSection.START, "lobbyInteractVehicles", true, "Ob Spieler in der lobby mit Booten und Minecrats interagieren können sollen"),
 	START_AT_PLAYERS(ConfigSettingSection.START, "startAtPlayers", -1, "Startet das Projekt automatisch wenn die\nAnzahl der Online Spieler dieser entspricht."),
+	SURO_START(ConfigSettingSection.START, "suroStart", false, "Ob der SURO-Start genutzt werden soll"),
 
-	// START
-	STARTCOUNTDOWN(ConfigSettingSection.START, "startCountdown", 30, "Wie lange der Startcountdown\nbei Start in Sekunden ist."),
 	STARTPERIOD_PROTECTIONTIME(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontime", -1, "Laenge der Schutzzeit nach dem Start.\nOff = -1"),
 	STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL(ConfigSettingSection.PROTECTIONS, "startperiodProtectiontimeBcInterval", 60, "In welchen Sekundenabstaenden die restliche Schutzzeit\ngebroacastet werden soll"),
 	STOP_SERVER_ON_WIN(ConfigSettingSection.DEATH, "stopServerOnWin", -1, "Zeit in Sekunden, nachdem der Server nach\nWin eines Teams heruntergefahren wird."),
@@ -338,10 +339,7 @@ public enum ConfigSetting implements SectionEntry {
 	COMMAND_VARO_ENABLED(ConfigSettingSection.COMMANDS, "varo.enabled", true, "Ob /varo aktiviert sein soll"),
 	COMMAND_VARO_NAME(ConfigSettingSection.COMMANDS, "varo.name", "varo", "Custom name für /varo"),
 	COMMAND_VAROTIME_ENABLED(ConfigSettingSection.COMMANDS, "varotime.enabled", true, "Ob /varotime aktiviert sein soll"),
-	COMMAND_WEATHER_ENABLED(ConfigSettingSection.COMMANDS, "weather.enabled", true, "Ob /sun, /rain und /thunder aktiviert sein soll"),
-
-	// INTRO
-	INTRO_INTRO_LINES(ConfigSettingSection.INTRO, "intro.lines", SuroStart.DEFAULT_TITLES, "Alle Titel für das Suro-Intro");
+	COMMAND_WEATHER_ENABLED(ConfigSettingSection.COMMANDS, "weather.enabled", true, "Ob /sun, /rain und /thunder aktiviert sein soll");
 
 	private Object defaultValue, value;
 	private String path, description, oldPaths[];

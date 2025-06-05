@@ -33,7 +33,6 @@ public abstract class VaroCommand {
 		new FinaleCommand();
 		new GameCommand();
 		new InfoCommand();
-		new IntroCommand();
 		new ItemCommand();
 		new LobbyCommand();
 		new MenuCommand();

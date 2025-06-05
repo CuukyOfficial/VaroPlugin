@@ -198,11 +198,12 @@ public final class Messages {
     public static final VaroMessage GAME_SORT_NO_SPAWN_FOUND = message("game.sort.noSpawnFound");
     public static final VaroMessage GAME_SORT_NO_SPAWN_FOUND_TEAM = message("game.sort.noSpawnFoundTeam");
     public static final VaroMessage GAME_SORT_SPECTATOR_TELEPORT = message("game.sort.spectator");
-    public static final VaroMessage GAME_START_VARO = message("game.start.varoStart");
     public static final VaroMessage GAME_START_ABORT = message("game.start.abort");
-    public static final VaroMessage GAME_START_TITLE = message("game.start.startTitle");
-    public static final VaroMessage GAME_START_SUBTITLE = message("game.start.startSubtitle");
-    public static final VaroMessage GAME_START_COUNTDOWN = message("game.start.countdown");
+    public static final VaroMessage GAME_START_VARO_BROADCAST = message("game.start.varo.broadcast");
+    public static final VaroMessage GAME_START_VARO_TITLE = message("game.start.varo.title");
+    public static final VaroMessage GAME_START_VARO_SUBTITLE = message("game.start.varo.subtitle");
+    public static final VaroMessage GAME_START_VARO_COUNTDOWN = message("game.start.varo.countdown");
+    public static final VaroMessageArray GAME_START_SURO_TITLE = array("game.start.suro.title");
     public static final VaroMessage GAME_WIN_PLAYER = message("game.win.player");
     public static final VaroMessage GAME_WIN_TEAM = message("game.win.team");
     public static final VaroMessage GAME_FINALE_COUNTDOWN = message("game.finale.countdown");
@@ -272,9 +273,6 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_CONFIG_SEARCH_LIST_TITLE = message("commands.varo.config.searchlisttitle");
     public static final VaroMessage COMMANDS_VARO_CONFIG_SEARCH_LIST_FORMAT = message("commands.varo.config.searchlistformat");
     public static final VaroMessage COMMANDS_VARO_EXPORT_SUCCESSFULL = message("commands.varo.export.players");
-    public static final VaroMessage COMMANDS_VARO_INTRO_ALREADY_STARTED = message("commands.varo.intro.alreadystarted");
-    public static final VaroMessage COMMANDS_VARO_INTRO_GAME_ALREADY_STARTED = message("commands.varo.intro.gamealreadystarted");
-    public static final VaroMessage COMMANDS_VARO_INTRO_STARTED = message("commands.varo.intro.started");
     public static final VaroMessage COMMANDS_VARO_PRESET_NOT_FOUND = message("commands.varo.preset.notfound");
     public static final VaroMessage COMMANDS_VARO_PRESET_PATH_TRAVERSAL = message("commands.varo.preset.pathtraversal");
     public static final VaroMessage COMMANDS_VARO_PRESET_LOADED = message("commands.varo.preset.loaded");
@@ -740,6 +738,21 @@ public final class Messages {
             }
 
             @Override
+            public int size() {
+                return message.translate(null).size();
+            }
+
+            @Override
+            public String[] value(VaroContext context) {
+                try {
+                    return message.value(context);
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
+                    return Collections.nCopies(size(), "MESSAGE_ERROR").toArray(new String[0]);
+                }
+            }
+
+            @Override
             public String[] value(VaroPlayer subject) {
                 try {
                     VaroContext ctx = new PlayerContext(subject);
@@ -748,6 +761,16 @@ public final class Messages {
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return Collections.nCopies(size(subject), "MESSAGE_ERROR").toArray(new String[0]);
+                }
+            }
+
+            @Override
+            public String value(int index, VaroContext context) {
+                try {
+                    return message.translate(context).get(index).value(context);
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
+                    return "MESSAGE_ERROR";
                 }
             }
 
@@ -775,6 +798,21 @@ public final class Messages {
             }
 
             @Override
+            public int size() {
+                return message.translate(null).size();
+            }
+
+            @Override
+            public String[][] value(VaroContext context) {
+                try {
+                    return message.value(context);
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
+                    return Collections.nCopies(size(), new String[] {"MESSAGE_ERROR"}).toArray(new String[0][]);
+                }
+            }
+
+            @Override
             public String[][] value(VaroPlayer subject) {
                 try {
                     VaroContext ctx = new PlayerContext(subject);
@@ -783,6 +821,16 @@ public final class Messages {
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return Collections.nCopies(size(subject), new String[] {"MESSAGE_ERROR"}).toArray(new String[0][]);
+                }
+            }
+
+            @Override
+            public String[] value(int index, VaroContext context) {
+                try {
+                    return message.translate(context).get(index).value(context);
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
+                    return new String[] {"MESSAGE_ERROR"};
                 }
             }
 
@@ -840,15 +888,21 @@ public final class Messages {
 
     public interface VaroMessageArray {
         int size(VaroPlayer subject);
+        int size();
 
+        String[] value(VaroContext context);
         String[] value(VaroPlayer subject);
+        String value(int index, VaroContext context);
         String value(int index, VaroPlayer subject);
     }
 
     public interface VaroMessageArray2d {
         int size(VaroPlayer subject);
+        int size();
 
+        String[][] value(VaroContext context);
         String[][] value(VaroPlayer subject);
+        String[] value(int index, VaroContext context);
         String[] value(int index, VaroPlayer subject);
     }
 }

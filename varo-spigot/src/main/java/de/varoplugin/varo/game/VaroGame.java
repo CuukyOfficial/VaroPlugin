@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.varoplugin.varo.api.game.VaroStartEvent;
+import de.varoplugin.varo.game.start.*;
+import de.varoplugin.varo.logger.logger.EventLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -24,8 +27,6 @@ import de.varoplugin.varo.api.game.VaroEndEvent;
 import de.varoplugin.varo.bot.discord.VaroDiscordBot;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
-import de.varoplugin.varo.game.start.AutoStart;
-import de.varoplugin.varo.game.start.ProtectionTime;
 import de.varoplugin.varo.game.world.AutoSetup;
 import de.varoplugin.varo.game.world.VaroWorld;
 import de.varoplugin.varo.game.world.VaroWorldHandler;
@@ -74,8 +75,8 @@ public class VaroGame implements VaroSerializeable {
     private int finaleCountdown;
 
     private boolean firstTime;
-    private VaroMainHeartbeatThread mainThread;
-    private VaroStartThread startThread;
+    private VaroMainHeartbeatThread mainThread; // this is not actually a thread
+    private StartSequence startSequence;
     private BorderDecreaseMinuteTimer borderMinuteTimer;
     private ProtectionTime protection;
     private VaroWorldHandler varoWorldHandler;
@@ -86,9 +87,6 @@ public class VaroGame implements VaroSerializeable {
     }
 
     private void loadVariables() {
-        if (startThread != null)
-            startThread.loadVaraibles();
-
         if (mainThread != null)
             mainThread.loadVariables();
 
@@ -137,11 +135,20 @@ public class VaroGame implements VaroSerializeable {
             borderMinuteTimer.remove();
 
         this.lastDayTimer = new Date();
-        (startThread = new VaroStartThread()).runTaskTimer(Main.getInstance(), 0, 20);
+        this.startSequence = ConfigSetting.SURO_START.getValueAsBoolean() ? new SuroStart(this) : new VaroStart(this);
+        this.startSequence.start();
     }
 
     public void start() {
+        this.startSequence.abort();
+        this.startSequence = null;
+
+        if (EventUtils.callEvent(new VaroStartEvent(this))) {
+            return;
+        }
+
         this.setGamestate(GameState.STARTED);
+        Messages.LOG_GAME_STARTED.log(EventLogger.LogType.LOG);
 
         for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
             if (pl1.getStats().isSpectator())
@@ -181,7 +188,7 @@ public class VaroGame implements VaroSerializeable {
             @Override
             public void run() {
                 // Copy the list to avoid ConcurrentModificationException
-                // This is only executed once anyway so performance doen't really matter
+                // This is only executed once anyway so performance doesn't really matter
                 for (VaroPlayer player : VaroPlayer.getVaroPlayers().toArray(new VaroPlayer[0]))
                     if (player.getStats().getYoutubeLink() != null) {
                         List<YouTubeVideo> videos = YouTubeCheck.loadNewVideos(player);
@@ -193,10 +200,9 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void abort() {
-        startThread.cancel();
+        this.startSequence.abort();
+        this.startSequence = null;
         Messages.GAME_START_ABORT.broadcast();
-
-        startThread = null;
     }
 
     public void restart() {
@@ -394,10 +400,6 @@ public class VaroGame implements VaroSerializeable {
         return autostart;
     }
 
-    public void setStartThread(VaroStartThread startThread) {
-        this.startThread = startThread;
-    }
-
     public GameState getGameState() {
         return gamestate;
     }
@@ -460,7 +462,7 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public boolean isStarting() {
-        return startThread != null;
+        return startSequence != null;
     }
 
     public int getPlayTime() {

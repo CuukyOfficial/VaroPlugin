@@ -1,77 +1,65 @@
 package de.varoplugin.varo.game.start;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.bukkit.ChatColor;
+import com.cryptomorin.xseries.XSound;
+import de.varoplugin.cfw.version.VersionUtils;
+import de.varoplugin.varo.config.language.Contexts;
+import de.varoplugin.varo.config.language.Messages;
+import de.varoplugin.varo.game.VaroGame;
+import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
-import com.cryptomorin.xseries.XSound;
 
 import de.varoplugin.varo.Main;
-import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
-import de.varoplugin.varo.game.LobbyItem;
-import de.varoplugin.varo.listener.helper.cancelable.CancelableType;
-import de.varoplugin.varo.listener.helper.cancelable.VaroCancelable;
 import de.varoplugin.varo.player.VaroPlayer;
 
-public class SuroStart {
+public class SuroStart extends AbstractStartSequence {
 
-	private BukkitTask sched;
-	private List<String> titles;
+	private final int titleSize;
 
-	public static final ArrayList<String> DEFAULT_TITLES = new ArrayList<>(Arrays.asList(new String[] {"&a%name%", "&6...du bist gestrandet...", "&c...auf einer Insel...", "&6...genau so wie...", "&c%players% weitere Spieler auch!", "&aJa?", "&6dann viel Glück bei...", "&cMINECRAFT SURO!", "&cWach auf!", "&c10!", "", "", "", "", "&c5!", "&c4!", "&c3!", "&c2!", "&c1!", "&cGO!"}));
-
-	@SuppressWarnings("unchecked")
-	public SuroStart() {
-		titles = (List<String>) ConfigSetting.INTRO_INTRO_LINES.getValue();
-		start(60, 0, false);
+	public SuroStart(VaroGame game) {
+		super(game);
+		this.titleSize = Messages.GAME_START_SURO_TITLE.size() - 1;
+		this.countdown = this.titleSize;
 	}
 
-	public void start(int delay, int start, boolean ignore) {
-		LobbyItem.removeHooks();
-		sched = new BukkitRunnable() {
+	@Override
+	public void start() {
+		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
+			Player player = vp.getPlayer();
+			player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
+			player.setGameMode(GameMode.ADVENTURE);
+			vp.cleanUpPlayer();
+		}
 
-			int i = start;
-			@Override
-			public void run() {
-				if (titles.size() - 11 == i && !ignore) {
-					sched.cancel();
-					start(20, i, true);
-				}
+		this.task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+			VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
-				if (i >= titles.size()) {
-					sched.cancel();
-
-					for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-						vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
-						vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
-						VaroCancelable.removeCancelable(vp, CancelableType.FREEZE);
-						VaroCancelable.removeCancelable(vp, CancelableType.MUTE);
-						VaroCancelable.removeCancelable(vp, CancelableType.PROTECTION);
-					}
-
-					Main.getVaroGame().start();
-					return;
-				}
-
-				for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
-					new VaroCancelable(CancelableType.FREEZE, vp);
-					new VaroCancelable(CancelableType.MUTE, vp);
-					new VaroCancelable(CancelableType.PROTECTION, vp);
-
-					vp.cleanUpPlayer();
-					vp.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
-					if (!titles.get(i).isEmpty())
-						vp.getVersionAdapter().sendTitle(ChatColor.translateAlternateColorCodes('&', titles.get(i).replace("%name%", vp.getName()).replace("%players%", String.valueOf(VaroPlayer.getAlivePlayer().size()))), "");
-				}
-
-				i++;
+			for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
+				Contexts.PlayerContext context = new Contexts.PlayerContext(vp); // Setting the context manually forces the default language
+				String title = Messages.GAME_START_SURO_TITLE.value(this.titleSize - this.countdown, context);
+				if (StringUtils.isNotBlank(title))
+					VersionUtils.getVersionAdapter().sendTitle(vp.getPlayer(), title, "");
 			}
-		}.runTaskTimer(Main.getInstance(), 1, delay);
+
+			if (this.countdown == 0) {
+				for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer())
+					vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
+
+				this.game.start();
+				return;
+			}
+			this.countdown--;
+		}, 0L, 20L);
+	}
+
+	@Override
+	public void abort() {
+		super.abort();
+
+		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
+			vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
 	}
 }
