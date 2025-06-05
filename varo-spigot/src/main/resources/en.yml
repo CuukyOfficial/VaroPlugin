@@ -116,6 +116,7 @@ commands:
       restarted: "<prefix>The game has been restarted."
       inlobby: "<prefix>§cThe game is already in the lobby phase!"
   error:
+    unknownCommand: "<prefix>§cUnknown command <colorcode><command>§c!"
     nonumber: "<prefix><colorcode><text> §cis not a number!"
     permission: "<prefix>§cInsufficient permission!"
     usernotfound: "<prefix>§cNo user could be found for this player!"

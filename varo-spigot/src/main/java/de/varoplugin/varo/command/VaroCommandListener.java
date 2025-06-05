@@ -2,6 +2,7 @@ package de.varoplugin.varo.command;
 
 import java.util.Arrays;
 
+import io.github.almightysatan.slams.Placeholder;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +30,7 @@ public class VaroCommandListener implements CommandExecutor {
 
         VaroCommand command = VaroCommand.getCommand(args[0]);
         if (command == null) {
-            sender.sendMessage(Main.getPrefix() + "§7Kommando '" + Main.getColorCode() + args[0] + "§7' nicht gefunden!");
+            Messages.COMMANDS_ERROR_UNKNOWN_COMMAND.send(sender, Placeholder.constant("command", args[0]));
             return false;
         }
 
@@ -38,7 +39,7 @@ public class VaroCommandListener implements CommandExecutor {
                 sender.sendMessage(player == null ? Main.getConsolePrefix() : Main.getPrefix() + ChatColor.GRAY + "Dieser Command ist " + Main.getColorCode() + "deaktiviert" + ChatColor.GRAY + ",  aber du kannst ihn\n" + Main.getPrefix() + "benutzen:");
                 command.onCommand(sender, player, cmd, label, Arrays.copyOfRange(args, 1, args.length));
             } else
-                sender.sendMessage(Main.getPrefix() + "§7Kommando '" + Main.getColorCode() + args[0] + "§7' nicht gefunden!");
+                Messages.COMMANDS_ERROR_UNKNOWN_COMMAND.send(sender, Placeholder.constant("command", args[0]));
             return false;
         }
 

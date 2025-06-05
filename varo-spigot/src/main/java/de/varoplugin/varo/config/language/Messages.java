@@ -229,6 +229,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_ERROR_GENERIC = message("commands.error.generic");
     public static final VaroMessage COMMANDS_ERROR_BLOCKED = message("commands.error.blocked");
     public static final VaroMessage COMMANDS_ERROR_PERMISSION = message("commands.error.permission");
+    public static final VaroMessage COMMANDS_ERROR_UNKNOWN_COMMAND = message("commands.error.unknownCommand");
 
     public static final VaroMessage COMMANDS_VARO_BUGREPORT_UPDATE = message("commands.varo.bugreport.update");
     public static final VaroMessage COMMANDS_VARO_BUGREPORT_COLLECTING_DATA = message("commands.varo.bugreport.collectingdata");

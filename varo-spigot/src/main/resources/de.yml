@@ -116,6 +116,7 @@ commands:
       restarted: "<prefix>Das Spiel wurde neu gestartet."
       inlobby: "<prefix>§cDas Spiel befindet sich bereits in der Lobby-Phase!"
   error:
+    unknownCommand: "<prefix>§cBefehl <colorcode><command> §cnicht gefunden!"
     nonumber: "<prefix><colorcode><text> §cist keine Zahl!"
     permission: "<prefix>§cUnzureichende Berechtigung"
     usernotfound: "<prefix>§cKein Benutzer für diesen Spieler gefunden!"
