@@ -18,8 +18,10 @@
 
 package de.varoplugin.varo.config.language;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MessagesTest {
@@ -27,6 +29,7 @@ public class MessagesTest {
     @Test
     public void testLoadMessages() throws IOException {
         Messages.messageFilePath = "build/test/messages/";
+        FileUtils.deleteDirectory(new File(Messages.messageFilePath));
         Messages.load();
     }
 }
