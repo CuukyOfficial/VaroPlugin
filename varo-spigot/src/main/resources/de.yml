@@ -221,19 +221,13 @@ game:
 log:
   strike:
     general: "<name> hat jetzt <strike-num> Strikes! Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>"
+    coordinates: |-
+      <name> hat jetzt <strike-num> Strikes! Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
+      Hier sind ihre aktuellen Koordinaten: <strike-location>
     combatlog: "<name> hat sich während des Kampfes ausgeloggt und somit einen Strike erhalten!"
-    second: |-
-      <name> hat jetzt zwei Strikes. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
-      Aufgrund dessen wurde das Inventar geleert!
-    first: |-
-      <name> hat jetzt einen Strike. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
-      Hier sind ihre aktuellen Koordinaten: <strike-location>!
-    third: |-
-      <name> hat jetzt drei Strikes. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
-      Somit ist <name> aus <projectname> ausgeschieden!
-    firstNeverOnline: |-
-      <name> hat jetzt einen Strike. Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
-      Der Spieler war noch nie online und wird an den Spawn-Koordinaten spawnen: <strike-location>!
+    coordinatesNeverOnline: |-
+      <name> hat jetzt <strike-num> Strikes! Der Strike wurde von <strike-operator> vergeben. Grund: <strike-reason>
+      Der Spieler war noch nie online und wird an den Spawn-Koordinaten spawnen: <strike-location>
   win:
     team: "<winner> haben <projectname> gewonnen! Herzlichen Glückwunsch!"
     player: "<winner> hat <projectname> gewonnen! Herzlichen Glückwunsch!"

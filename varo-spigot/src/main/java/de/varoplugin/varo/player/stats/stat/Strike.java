@@ -2,6 +2,7 @@ package de.varoplugin.varo.player.stats.stat;
 
 import java.util.Date;
 
+import de.varoplugin.varo.config.VaroConfig;
 import org.apache.commons.lang3.time.DateUtils;
 import org.bukkit.Location;
 
@@ -20,6 +21,9 @@ public class Strike implements VaroSerializeable {
 	@VaroSerializeField(path = "strikedId")
 	private int strikedId;
 
+	@VaroSerializeField(path = "template")
+	private StrikeTemplate template;
+
 	@VaroSerializeField(path = "striker")
 	private String striker;
 
@@ -28,9 +32,6 @@ public class Strike implements VaroSerializeable {
 
 	@VaroSerializeField(path = "banUntil")
 	private Date banUntil;
-
-	@VaroSerializeField(path = "number")
-	private int number;
 
 	@VaroSerializeField(path = "posted")
 	private boolean posted;
@@ -42,7 +43,8 @@ public class Strike implements VaroSerializeable {
 
 	public Strike() {}
 
-	public Strike(String reason, VaroPlayer striked, String striker) {
+	public Strike(StrikeTemplate template, String reason, VaroPlayer striked, String striker) {
+		this.template = template;
 		this.reason = reason;
 		this.striker = striker;
 		this.striked = striked;
@@ -51,70 +53,42 @@ public class Strike implements VaroSerializeable {
 		this.posted = false;
 	}
 
-	public void activate(int number) {
-		this.number = number;
-
-		if (ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && !ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
-			this.banPlayer();
-
-		switch (number) {
-		case 1:
-			break;
-		case 2:
+	public void activate() {
+		if (this.template.isClearInventory()) {
 			if (striked.isOnline())
 				striked.getStats().clearInventory();
 			else
 				striked.getStats().setWillClear(true);
-			break;
-		case 3:
-		default:
-			striked.getStats().setState(PlayerState.DEAD);
-			if (striked.isOnline())
-			    Messages.PLAYER_KICK_TOO_MANY_STRIKES.kick(this.striked);
-			break;
 		}
 
-		if (!ConfigSetting.STRIKE_POST_RESET_HOUR.getValueAsBoolean())
+		if (this.template.isEliminate()) {
+			striked.getStats().setState(PlayerState.DEAD);
+			if (striked.isOnline())
+				Messages.PLAYER_KICK_TOO_MANY_STRIKES.kick(this.striked);
+		} else if (this.template.getBanHours() > 0) {
+			this.banUntil = DateUtils.addHours(new Date(), this.template.getBanHours());
+			if (striked.isOnline())
+				Messages.PLAYER_KICK_STRIKE_BAN.kick(this.striked, Placeholder.constant("ban-hours", String.valueOf(this.template.getBanHours())));
+		}
+
+		if (!VaroConfig.STRIKE_POST_AT_REST.getValue())
 			post();
 	}
 
 	public void post() {
-		if (ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.isIntActivated() && ConfigSetting.STRIKE_BAN_AT_POST.getValueAsBoolean())
-			this.banPlayer();
-
-		StrikeContext ctx = new StrikeContext(this.striked, this.reason, this.striker, this.number);
-		switch (number) {
-			case 1:
-				if (striked.getStats().getLastLocation() == null) {
-					Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
-					Messages.LOG_STRIKE_FIRST_NEVER_ONLINE.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
-				} else {
-					Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-					Messages.LOG_STRIKE_FIRST.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
-				}
-				break;
-			case 2:
-				Messages.LOG_STRIKE_SECOND.log(LogType.STRIKE, ctx);
-				break;
-			case 3:
-				Messages.LOG_STRIKE_THRID.log(LogType.STRIKE, ctx);
-				break;
-			default:
-				Messages.LOG_STRIKE_GENERAL.log(LogType.STRIKE, ctx);
-				break;
-		}
+		StrikeContext ctx = new StrikeContext(this.striked, this.reason, this.striker, this.striked.getStats().getStrikes().size());
+		if (this.template.isPostCoordinates()) {
+			if (striked.getStats().getLastLocation() == null) {
+				Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
+				Messages.LOG_STRIKE_COORDINATES_NEVER_ONLINE.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
+			} else {
+				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
+				Messages.LOG_STRIKE_COORDINATES.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
+			}
+		} else
+			Messages.LOG_STRIKE_GENERAL.log(LogType.STRIKE, ctx);
 
 		posted = true;
-	}
-
-	private void banPlayer() {
-		banUntil = DateUtils.addHours(new Date(), ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt());
-		if (striked.isOnline())
-			Messages.PLAYER_KICK_STRIKE_BAN.kick(this.striked, Placeholder.constant("ban-hours", String.valueOf(ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt())));
-	}
-
-	public void decreaseStrikeNumber() {
-		this.number -= 1;
 	}
 
 	public Date getAcquiredDate() {
@@ -131,10 +105,6 @@ public class Strike implements VaroSerializeable {
 
 	public VaroPlayer getStriked() {
 		return striked;
-	}
-
-	public int getStrikeNumber() {
-		return number;
 	}
 
 	public String getStriker() {

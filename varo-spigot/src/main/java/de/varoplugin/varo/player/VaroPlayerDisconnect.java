@@ -1,20 +1,18 @@
 package de.varoplugin.varo.player;
 
-import java.util.HashMap;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
-import de.varoplugin.varo.player.stats.stat.Strike;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class VaroPlayerDisconnect {
 
@@ -68,7 +66,7 @@ public class VaroPlayerDisconnect {
 			vp.getStats().removeCountdown();
 
 		if (ConfigSetting.STRIKE_ON_DISCONNECT.getValueAsBoolean())
-			vp.getStats().addStrike(new Strike("Der Server wurde zu oft verlassen.", vp, "CONSOLE"));
+			vp.getStats().strike("Der Server wurde zu oft verlassen.", "CONSOLE");
 
 		Messages.ALERT_DISCONNECT_TOO_OFTEN.alert(AlertType.DISCONNECT, vp);
 		Messages.PLAYER_DISCONNECT_TOO_OFTEN.broadcast(vp);

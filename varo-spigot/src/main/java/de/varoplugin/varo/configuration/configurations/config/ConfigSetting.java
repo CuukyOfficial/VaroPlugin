@@ -249,15 +249,11 @@ public enum ConfigSetting implements SectionEntry {
 	STOP_SERVER_ON_WIN(ConfigSettingSection.DEATH, "stopServerOnWin", -1, "Zeit in Sekunden, nachdem der Server nach\nWin eines Teams heruntergefahren wird."),
 	
 	// STRIKE
-	STRIKE_BAN_AFTER_STRIKE_HOURS(ConfigSettingSection.STRIKE, "banOnPostHours", -1, "Fuer wie viele Stunden die Spieler\nnach einem Strike gestriket werden"),
-	STRIKE_CLEAR_ARMOR(ConfigSettingSection.STRIKE, "clearArmor", true, "Ob die Rüstung beim 2ten Strike\nauch gecleart werden soll"),
-	STRIKE_BAN_AT_POST(ConfigSettingSection.STRIKE, "banAtPost", true, "Ob der Spieler beim Posten des Strikes\num die oben genannte Zahl gebannt werden soll.\nSonst wird dieser beim Erhalten gebannt"),
 	STRIKE_ON_BLOODLUST(ConfigSettingSection.ACTIVITY, "strikeOnBloodlust", false, "Ob der Spieler nach den oben\ngenannten Tagen ohne Gegnerkontakt\ngestriket werden soll."),
 	STRIKE_ON_COMBATLOG(ConfigSettingSection.COMBATLOG, "strikeOnCombatlog", true, "Ob ein Spieler, wenn er sich in\nder oben genannten Zeit ausloggt,\ngestriket werden soll."),
 	STRIKE_ON_DISCONNECT(ConfigSettingSection.DISCONNECT, "strikeOnMaxDisconnect", false, "Ob ein Spieler gestriket werden soll\nwenn zu oft disconnected wurde."),
 	STRIKE_ON_NO_ACTIVITY(ConfigSettingSection.ACTIVITY, "strikeOnNoActivity", false, "Ob der Spieler nach den oben genannten Tagen\nohne Aktivitaet auf dem Servergestriket werden soll."),
-	STRIKE_POST_RESET_HOUR(ConfigSettingSection.STRIKE, "postAtResetHour", false, "Ob die Strikes erst um die ResetHour gepostet werden sollen"),
-	
+
 	SUPPORT_PLUGIN_ADS(ConfigSettingSection.MAIN, "supportPluginAds", false, "Werbung wird im Plugin mit eingebaut, was das Plugin,\nalso mich, supportet. Danke an alle, die das aktivieren :3"),
 	
 	TEAM_MAX_NAME_LENGTH(ConfigSettingSection.TEAMS, "teamNameLength", 10, "Maximal Laenge eines Teamnamens."),

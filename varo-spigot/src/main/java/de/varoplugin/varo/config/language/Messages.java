@@ -91,11 +91,9 @@ public final class Messages {
     public static final VaroMessage LOG_KICKED_PLAYER = message("log.kickedPlayer");
     public static final VaroMessage LOG_SESSIONS_ENDED = message("log.sessionsEnded");
     public static final VaroMessage LOG_STRIKE_GENERAL = message("log.strike.general");
+    public static final VaroMessage LOG_STRIKE_COORDINATES = message("log.strike.coordinates");
+    public static final VaroMessage LOG_STRIKE_COORDINATES_NEVER_ONLINE = message("log.strike.coordinatesNeverOnline");
     public static final VaroMessage LOG_STRIKE_COMBAT_LOG = message("log.strike.combatlog");
-    public static final VaroMessage LOG_STRIKE_FIRST_NEVER_ONLINE = message("log.strike.firstNeverOnline");
-    public static final VaroMessage LOG_STRIKE_FIRST = message("log.strike.first");
-    public static final VaroMessage LOG_STRIKE_SECOND = message("log.strike.second");
-    public static final VaroMessage LOG_STRIKE_THRID = message("log.strike.third");
     public static final VaroMessage LOG_NEW_SESSIONS = message("log.newSessions");
     public static final VaroMessage LOG_NEW_SESSIONS_FOR_ALL = message("log.newSessionsForAll");
     public static final VaroMessage LOG_PLAYER_DC_TOO_EARLY = message("log.playerQuitTooEarly");

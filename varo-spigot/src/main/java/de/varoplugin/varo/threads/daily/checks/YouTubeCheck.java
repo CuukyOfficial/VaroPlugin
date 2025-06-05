@@ -53,7 +53,7 @@ public class YouTubeCheck extends Checker {
 		new Alert(AlertType.NO_YOUTUBE_UPLOAD, player.getName() + " hat kein Varo Video hochgeladen!");
 		
 		if (ConfigSetting.YOUTUBE_STRIKE.getValueAsBoolean())
-			player.getStats().addStrike(new Strike("Missing youtube video", player, "CONSOLE"));
+			player.getStats().strike("Missing youtube video", "CONSOLE");
 	}
 	
 	public static List<YouTubeVideo> loadNewVideos(VaroPlayer player) {

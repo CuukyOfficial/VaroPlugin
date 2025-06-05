@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import de.varoplugin.varo.config.VaroConfig;
+import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
 import org.apache.commons.lang3.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -126,12 +129,15 @@ public class Stats implements VaroSerializeable {
 		sessionsPlayed++;
 	}
 
-	public void addStrike(Strike strike) {
+	public void strike(String reason, String operator) {
+		List<StrikeTemplate> templates = VaroConfig.STRIKE_TEMPLATES.getValue();
+		StrikeTemplate template = templates.get(Math.min(this.strikes.size(), templates.size() - 1));
+		Strike strike = new Strike(template, reason, this.owner, operator);
 		if (EventUtils.callEvent(new PlayerStrikeReceiveEvent(strike)))
 			return;
 
 		this.strikes.add(strike);
-		strike.activate(strikes.size());
+		strike.activate();
 
 		new Alert(AlertType.STRIKE, this.owner.getName() + " hat einen Strike erhalten! " + this.owner.getName() + " hat jetzt " + strikes.size());
 	}
@@ -150,13 +156,13 @@ public class Stats implements VaroSerializeable {
 		if (owner.isOnline()) {
 			owner.getPlayer().getInventory().clear();
 
-			if (ConfigSetting.STRIKE_CLEAR_ARMOR.getValueAsBoolean()) {
+			if (VaroConfig.STRIKE_CLEAR_ARMOR.getValue()) {
 				for (ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
 					if (stack != null)
 						stack.setType(Material.AIR);
 			}
 
-			owner.getPlayer().getInventory().setArmorContents(new ItemStack[] {});
+			owner.getPlayer().getInventory().setArmorContents(new ItemStack[] {}); // TODO ???
 		} else
 			setWillClear(true);
 
@@ -499,18 +505,7 @@ public class Stats implements VaroSerializeable {
 		if (EventUtils.callEvent(new PlayerStrikeRemoveEvent(strike)))
 			return;
 
-		int strikeNumber = strike.getStrikeNumber();
 		this.strikes.remove(strike);
-
-		for (Strike aStrike : this.strikes) {
-			if (aStrike.getStrikeNumber() > strikeNumber) {
-				aStrike.decreaseStrikeNumber();
-			}
-		}
-	}
-
-	public void removeStrikes() {
-		strikes.clear();
 	}
 
 	public void removeTeamAndRank() {

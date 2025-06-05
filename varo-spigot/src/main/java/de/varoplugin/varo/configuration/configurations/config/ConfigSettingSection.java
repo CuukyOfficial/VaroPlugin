@@ -33,7 +33,6 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	REPORT("Report", XMaterial.REDSTONE_TORCH, "Hier kannst du Einstellungen zum Report-System vornehmen."),
 	SERVER_LIST("Serverlist", XMaterial.OAK_SIGN, "Hier kannst du die Anzeige des Servers in der Serverliste konfigurieren."),
 	START("Start", XMaterial.ACTIVATOR_RAIL, "Hier kannst du Einstellungen zum Start deines Plugins vornehmen."),
-	STRIKE("Strike", XMaterial.PAPER, "Hier kannst du Einstellungen zu den Strikes vornehmen."),
 	TEAMS("Teams", XMaterial.DIAMOND_HELMET, "Hier kannst du Einstellungen zu Teams vornehmen."),
 	WORLD("World", XMaterial.GRASS_BLOCK, "Hier kannst du Einstellungen zur Welt vornehmen."),
 	YOUTUBE("YouTube", XMaterial.MAP, "Hier kannst du Einstellungen zu den Videos deines Projektes vornehmen.");

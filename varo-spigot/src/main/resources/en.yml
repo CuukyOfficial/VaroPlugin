@@ -221,19 +221,13 @@ game:
 log:
   strike:
     general: "<name> now has <strike-num> strikes! The strike was given by <strike-operator>. Reason: <strike-reason>"
+    coordinates: |-
+      <name> now has <strike-num> strikes! The strike was given by <strike-operator>. Reason: <strike-reason>
+      Here are their current coordinates: <strike-location>
     combatlog: "<name> logged out during battle and has therefore received a strike!"
-    second: |-
-      <name> now has two strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
-      Their inventory has been cleared!
-    first: |-
-      <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
-      Here are their current coordinates: <strike-location>!
-    third: |-
-      <name> now has three strikes. The strike was given by <strike-operator>. Reason: <strike-reason>
-      <name> has now been removed from <projectname>!
-    firstNeverOnline: |-
-      <name> now has a strike. The strike was given by <strike-operator>. Reason: <strike-reason>
-      The player has not joined yet and will spawn at the spawn coordinates: <strike-location>!
+    coordinatesNeverOnline: |-
+      <name> now has <strike-num> strikes! The strike was given by <strike-operator>. Reason: <strike-reason>
+      The player has not joined yet and will spawn at the spawn coordinates: <strike-location>
   win:
     team: "<winner> have won <projectname>! Congratulations!"
     player: "<winner> has won <projectname>! Congratulations!"

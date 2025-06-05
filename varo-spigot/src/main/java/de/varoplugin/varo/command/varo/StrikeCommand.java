@@ -1,6 +1,7 @@
 package de.varoplugin.varo.command.varo;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,8 +45,7 @@ public class StrikeCommand extends VaroCommand {
 				reason = new StringBuilder("-");
 			}
 
-			Strike strike = new Strike(reason.toString(), varoPlayer, sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
-			varoPlayer.getStats().addStrike(strike);
+			varoPlayer.getStats().strike(reason.toString(), sender instanceof ConsoleCommandSender ? "CONSOLE" : "" + sender.getName());
 			sender.sendMessage(Main.getPrefix() + "Du hast " + varoPlayer.getName() + " gestriket!");
 			return;
 		} else if (args[0].equalsIgnoreCase("remove")) {
@@ -100,8 +100,10 @@ public class StrikeCommand extends VaroCommand {
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Strikes von " + Main.getColorCode() + varoPlayer.getName() + "§7:");
-			for (Strike strike : varoPlayer.getStats().getStrikes()) {
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + strike.getStrikeNumber() + "§8:");
+			List<Strike> strikes = varoPlayer.getStats().getStrikes();
+			for (int i = 0; i < strikes.size(); i++) {
+				Strike strike = strikes.get(i);
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + i + "§8:");
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason: §7" + strike.getReason());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker: §7" + strike.getStriker());
 				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: §7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));

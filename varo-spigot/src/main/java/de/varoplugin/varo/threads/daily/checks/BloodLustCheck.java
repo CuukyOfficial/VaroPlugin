@@ -1,16 +1,14 @@
 package de.varoplugin.varo.threads.daily.checks;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.time.DateUtils;
-
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
-import de.varoplugin.varo.player.stats.stat.Strike;
 import de.varoplugin.varo.threads.daily.Checker;
 import io.github.almightysatan.slams.Placeholder;
+import org.apache.commons.lang3.time.DateUtils;
+
+import java.util.Date;
 
 public class BloodLustCheck extends Checker {
 
@@ -26,7 +24,7 @@ public class BloodLustCheck extends Checker {
 
 			if (lastContact.before(DateUtils.addDays(new Date(), -days))) {
 				if (strike) {
-					player.getStats().addStrike(new Strike("Es wurde fuer zu viele Tage nicht gekaempft.", player, "CONSOLE"));
+					player.getStats().strike("Es wurde für zu viele Tage nicht gekämpft.", "CONSOLE");
 					Messages.ALERT_STRIKE_NO_BLOODLUST.alert(AlertType.BLOODLUST, player, Placeholder.constant("bloodlust-days", String.valueOf(days)));
 				} else
 				    Messages.ALERT_NO_BLOODLUST.alert(AlertType.BLOODLUST, player, Placeholder.constant("bloodlust-days", String.valueOf(days)));

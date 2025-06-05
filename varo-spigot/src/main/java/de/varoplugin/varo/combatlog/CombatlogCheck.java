@@ -1,7 +1,5 @@
 package de.varoplugin.varo.combatlog;
 
-import org.bukkit.entity.Player;
-
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
@@ -11,7 +9,7 @@ import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.event.BukkitEventType;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
-import de.varoplugin.varo.player.stats.stat.Strike;
+import org.bukkit.entity.Player;
 
 public class CombatlogCheck {
 
@@ -50,7 +48,7 @@ public class CombatlogCheck {
         vp.onEvent(BukkitEventType.KICKED);
         new Alert(AlertType.COMBATLOG, vp.getName() + " hat sich im Kampf ausgeloggt!");
         if (ConfigSetting.STRIKE_ON_COMBATLOG.getValueAsBoolean()) {
-            vp.getStats().addStrike(new Strike("CombatLog", vp, "CONSOLE"));
+            vp.getStats().strike("CombatLog", "CONSOLE");
             Messages.LOG_STRIKE_COMBAT_LOG.log(LogType.ALERT, vp);
         } else
             Messages.LOG_COMBAT_LOG.log(LogType.ALERT, vp);

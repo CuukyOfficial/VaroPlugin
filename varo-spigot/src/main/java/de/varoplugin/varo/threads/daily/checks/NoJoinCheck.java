@@ -1,17 +1,15 @@
 package de.varoplugin.varo.threads.daily.checks;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.time.DateUtils;
-
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
-import de.varoplugin.varo.player.stats.stat.Strike;
 import de.varoplugin.varo.threads.daily.Checker;
 import io.github.almightysatan.slams.Placeholder;
+import org.apache.commons.lang3.time.DateUtils;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class NoJoinCheck extends Checker {
 
@@ -31,7 +29,7 @@ public class NoJoinCheck extends Checker {
 				if (ConfigSetting.STRIKE_ON_NO_ACTIVITY.getValueAsBoolean()) {
 					Messages.ALERT_STRIKE_NOT_JOIN.alert(AlertType.NO_JOIN, vp, Placeholder.constant("no-join-days", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))));
 					
-					vp.getStats().addStrike(new Strike("Es wurde fuer zu viele Tage nicht auf den Server gejoint.", vp, "CONSOLE"));
+					vp.getStats().strike("Es wurde fuer zu viele Tage nicht auf den Server gejoint.", "CONSOLE");
 				} else
 				    Messages.ALERT_NOT_JOIN.alert(AlertType.NO_JOIN, vp, Placeholder.constant("no-join-days", String.valueOf((int) getDateDiff(vp.getStats().getLastJoined(), current, TimeUnit.DAYS))));
 			}
