@@ -1,8 +1,10 @@
 package de.varoplugin.varo.listener;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 
+import de.varoplugin.varo.player.stats.stat.Strike;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
@@ -48,7 +50,10 @@ public class PlayerLoginListener implements Listener {
 		if (event.getResult() != Result.ALLOWED)
 			return;
 
-		VaroPlayer vp = VaroPlayer.getPlayer(player) == null ? new VaroPlayer(player) : VaroPlayer.getPlayer(player);
+		VaroPlayer vp = VaroPlayer.getPlayer(player);
+		if (vp == null)
+			vp = new VaroPlayer(player);
+
 		VaroDiscordBot discordBot = Main.getBotLauncher().getDiscordbot();
 		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean() && discordBot != null && discordBot.getJda() != null) {
 			if(!discordBot.getJda().getGatewayIntents().contains(GatewayIntent.GUILD_MEMBERS)) {
@@ -74,7 +79,7 @@ public class PlayerLoginListener implements Listener {
 				try {
 				    Guild guild = discordBot.getMainGuild();
 					UserSnowflake userSnowflake = User.fromId(reg.getUserId());
-					if (userSnowflake == null || guild == null || !guild.isMember(userSnowflake)) {
+					if (guild == null || !guild.isMember(userSnowflake)) {
 						if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean()) {
 							event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DISCORD_NO_USER.value(vp));
 							vp.setPlayer(null);
@@ -114,7 +119,14 @@ public class PlayerLoginListener implements Listener {
 			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_DEATH.value(vp));
 			break;
 		case STRIKE_BAN:
-			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_STRIKE_BAN.value(vp, Placeholder.constant("ban-hours", String.valueOf(0 /*ConfigSetting.STRIKE_BAN_AFTER_STRIKE_HOURS.getValueAsInt()*/)))); // TODO
+			int duration = 0;
+			GregorianCalendar curr = new GregorianCalendar();
+			for (Strike strike : vp.getStats().getStrikes())
+				if (strike.getBanUntil() != null && curr.before(strike.getBanUntil())) {
+					duration = strike.getTemplate().getBanHours();
+					break;
+				}
+			event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_STRIKE_BAN.value(vp, Placeholder.constant("ban-hours", String.valueOf(duration))));
 			break;
 		case NOT_IN_TIME:
 		    event.disallow(Result.KICK_OTHER, Messages.PLAYER_KICK_SERVER_CLOSED.value(vp));

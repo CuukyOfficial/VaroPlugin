@@ -201,6 +201,7 @@ public class Stats implements VaroSerializeable {
 		return inventoryBackups;
 	}
 
+	// TODO this belongs in PlayerLoginListener
 	public KickResult getKickResult(Player player) {
         if (Bukkit.hasWhitelist() && !Bukkit.getWhitelistedPlayers().contains(player))
             return KickResult.SERVER_NOT_PUBLISHED;

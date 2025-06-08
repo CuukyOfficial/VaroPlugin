@@ -91,6 +91,10 @@ public class Strike implements VaroSerializeable {
 		posted = true;
 	}
 
+	public StrikeTemplate getTemplate() {
+		return template;
+	}
+
 	public Date getAcquiredDate() {
 		return acquired;
 	}
