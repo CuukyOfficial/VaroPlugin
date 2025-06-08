@@ -72,12 +72,12 @@ dependencies {
         exclude(module = "annotations")
     }
     runtimeDownload("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.3")
-	runtimeDownload("com.github.cryptomorin:XSeries:13.3.0")
+	runtimeDownload("com.github.cryptomorin:XSeries:13.3.1")
 	runtimeDownload("com.google.guava:guava:33.4.8-jre")
     runtimeDownload("com.google.code.gson:gson:2.13.1")
     runtimeDownload("org.apache.commons:commons-collections4:4.5.0")
     runtimeDownload("org.apache.commons:commons-lang3:3.17.0")
-    runtimeDownload("net.dv8tion:JDA:5.5.1") {
+    runtimeDownload("net.dv8tion:JDA:5.6.0") {
         exclude(module = "opus-java")
         exclude(module = "tink")
     }
