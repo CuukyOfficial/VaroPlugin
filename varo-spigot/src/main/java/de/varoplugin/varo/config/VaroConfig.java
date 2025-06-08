@@ -20,10 +20,7 @@ package de.varoplugin.varo.config;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
-import io.github.almightysatan.jaskl.Config;
-import io.github.almightysatan.jaskl.InvalidTypeException;
-import io.github.almightysatan.jaskl.Type;
-import io.github.almightysatan.jaskl.ValidationException;
+import io.github.almightysatan.jaskl.*;
 import io.github.almightysatan.jaskl.entries.BooleanConfigEntry;
 import io.github.almightysatan.jaskl.entries.ListConfigEntry;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
@@ -44,7 +41,7 @@ public class VaroConfig {
     private static final Config STRIKE_CONFIG = YamlConfig.of(new File("plugins/Varo/config/strikes.yml"));
     public static final BooleanConfigEntry STRIKE_POST_AT_REST = BooleanConfigEntry.of(STRIKE_CONFIG, "postAtResetHour", "Whether strikes should only be posted at the reset hour.", false);
     public static final BooleanConfigEntry STRIKE_CLEAR_ARMOR = BooleanConfigEntry.of(STRIKE_CONFIG, "clearArmor", "Whether strikes should also clear the armor slots when clearing a player's inventory.", false);
-    public static final ListConfigEntry<StrikeTemplate> STRIKE_TEMPLATES = ListConfigEntry.of(STRIKE_CONFIG, "templates", "", StrikeTemplate.getDefaultStrikeTemplates(), Type.custom(StrikeTemplate.class));
+    public static final ListConfigEntry<StrikeTemplate> STRIKE_TEMPLATES = ListConfigEntry.of(STRIKE_CONFIG, "templates", "", StrikeTemplate.getDefaultStrikeTemplates(), Type.custom(StrikeTemplate.class), Validator.listNotEmpty());
 
     private static final Config[] CONFIGS = new Config[] {
             ENCHANTMENT_CONFIG,
