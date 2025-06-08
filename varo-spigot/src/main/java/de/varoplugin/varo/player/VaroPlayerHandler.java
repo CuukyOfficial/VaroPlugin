@@ -4,10 +4,7 @@ import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.gui.settings.VaroMenuColor;
 import de.varoplugin.varo.player.stats.Stats;
 import de.varoplugin.varo.player.stats.VaroInventory;
-import de.varoplugin.varo.player.stats.stat.PlayerState;
-import de.varoplugin.varo.player.stats.stat.Rank;
-import de.varoplugin.varo.player.stats.stat.Strike;
-import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
+import de.varoplugin.varo.player.stats.stat.*;
 import de.varoplugin.varo.player.stats.stat.inventory.InventoryBackup;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable.SaveableType;
@@ -21,6 +18,7 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 	static {
 		registerClass(Rank.class);
 		registerClass(Strike.class);
+		registerClass(StrikeTemplate.class);
 		registerClass(Stats.class);
 		registerClass(YouTubeVideo.class);
 		registerClass(VaroSaveable.class);

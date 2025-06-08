@@ -18,13 +18,14 @@
 
 package de.varoplugin.varo.player.stats.stat;
 
+import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 import io.github.almightysatan.jaskl.annotation.Description;
 import io.github.almightysatan.jaskl.annotation.Entry;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class StrikeTemplate {
+public class StrikeTemplate implements VaroSerializeable {
 
     @Entry
     @Description("If true the player's coordinates will be posted.")
@@ -73,5 +74,15 @@ public class StrikeTemplate {
                 new StrikeTemplate(false, true, false, -1),
                 new StrikeTemplate(false, false, true, -1)
         );
+    }
+
+    @Override
+    public void onDeserializeEnd() {
+        // nop
+    }
+
+    @Override
+    public void onSerializeStart() {
+        // nop
     }
 }
