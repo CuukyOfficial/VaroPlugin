@@ -137,8 +137,8 @@ public class Main extends JavaPlugin {
 
 			BukkitRegisterer.registerEvents();
 			BukkitRegisterer.registerCommands();
-		} catch (Throwable e) {
-			e.printStackTrace();
+		} catch (Throwable t) {
+			instance.getLogger().log(Level.SEVERE, "An error occurred while initializing plugin!", t);
 			this.fail();
 		}
 
@@ -198,7 +198,7 @@ public class Main extends JavaPlugin {
                 return BaseEncoding.base16().lowerCase().encode(messageDigest.digest());
             }
         } catch (Throwable t) {
-            t.printStackTrace();
+			instance.getLogger().log(Level.SEVERE, "Error calculating checksum", t);
         }
         return "Unknown";
 	}
