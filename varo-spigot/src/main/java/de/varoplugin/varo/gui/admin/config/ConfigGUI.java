@@ -65,7 +65,7 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
     }
 
     @Override
-    protected ItemStack getItemStack(ConfigSetting setting) {
+    protected ItemStack getItemStack(int index, ConfigSetting setting) {
         List<String> lore = new ArrayList<>();
         for (String strin : setting.getDescription())
             lore.add(Main.getColorCode() + strin);

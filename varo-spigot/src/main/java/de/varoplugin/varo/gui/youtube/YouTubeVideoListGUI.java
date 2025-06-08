@@ -36,7 +36,7 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
     }
 
     @Override
-    protected ItemStack getItemStack(YouTubeVideo video) {
+    protected ItemStack getItemStack(int index, YouTubeVideo video) {
         ItemBuilder itemBuilder = video.getOwner() != null ? ItemBuilder.skull(video.getOwner().getRealUUID()) : ItemBuilder.material(XMaterial.SKELETON_SKULL);
         return itemBuilder.displayName("§5" + video.getTitle())
                 .lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm")

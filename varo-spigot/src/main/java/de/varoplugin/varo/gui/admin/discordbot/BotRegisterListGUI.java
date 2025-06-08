@@ -16,7 +16,7 @@ public class BotRegisterListGUI extends AdvancedListInventory<BotRegister> {
     }
 
     @Override
-    protected ItemStack getItemStack(BotRegister register) {
+    protected ItemStack getItemStack(int index, BotRegister register) {
         return ItemBuilder.skull(register.getPlayerName())
                 .lore("§7Player Name: " + Main.getColorCode() + register.getUUID(),
                         "§7Player Name: " + Main.getColorCode() + register.getPlayerName(),

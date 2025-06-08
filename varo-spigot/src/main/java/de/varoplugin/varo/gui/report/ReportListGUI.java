@@ -32,7 +32,7 @@ public class ReportListGUI extends VaroListInventory<Report> {
     }
 
     @Override
-    protected ItemStack getItemStack(Report report) {
+    protected ItemStack getItemStack(int index, Report report) {
         List<String> lore = new ArrayList<>();
         lore.add("§7ID: §c" + report.getId());
         lore.add("§7Reason: §c" + report.getReason().getName());

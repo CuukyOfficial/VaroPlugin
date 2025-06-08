@@ -35,7 +35,7 @@ public class VaroColorMenu extends VaroListInventory<VaroMenuColor> {
     }
 
     @Override
-    protected ItemStack getItemStack(VaroMenuColor varoMenuColor) {
+    protected ItemStack getItemStack(int index, VaroMenuColor varoMenuColor) {
         return ItemBuilder.itemStack(varoMenuColor.getColorPane())
                 .displayName((varoMenuColor.getColorCode() != null ? varoMenuColor.getColorCode() : "§f")
                         + varoMenuColor.name()).build();

@@ -35,8 +35,8 @@ public class StrikeListGUI extends VaroListInventory<Strike> {
     }
 
     @Override
-    protected ItemStack getItemStack(Strike strike) {
-        return ItemBuilder.material(XMaterial.PAPER).displayName("§cStrike") // TODO show strike number
+    protected ItemStack getItemStack(int index, Strike strike) {
+        return ItemBuilder.material(XMaterial.PAPER).displayName("§cStrike #" + (index + 1))
                 .lore(new String[]{"§7Reason: §c" + strike.getReason(), "§7Striker: §c" + strike.getStriker(),
                         "§7Date: §c" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(strike.getAcquiredDate())}).build();
     }

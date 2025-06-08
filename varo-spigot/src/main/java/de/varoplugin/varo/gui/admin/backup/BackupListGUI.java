@@ -18,7 +18,7 @@ public class BackupListGUI extends VaroListInventory<VaroBackup> {
     }
 
     @Override
-    protected ItemStack getItemStack(VaroBackup backup) {
+    protected ItemStack getItemStack(int index, VaroBackup backup) {
         // TODO
 //        List<String> lore = new ArrayList<>();
 //        lore.add("Backup made date: ");

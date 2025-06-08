@@ -42,7 +42,7 @@ public class OreLoggerListGUI extends VaroListInventory<LoggedBlock> {
     }
 
     @Override
-    protected ItemStack getItemStack(LoggedBlock block) {
+    protected ItemStack getItemStack(int index, LoggedBlock block) {
         List<String> lore = new ArrayList<>();
         String color = Main.getColorCode();
         lore.add("§7Mined at: " + color + String.format("x:%d y:%d z:%d world: %s", block.getX(), block.getY(), block.getZ(), block.getWorld()));

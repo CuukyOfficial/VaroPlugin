@@ -28,7 +28,7 @@ public class EventListGUI extends VaroListInventory<String> {
     }
 
     @Override
-    protected ItemStack getItemStack(String string) {
+    protected ItemStack getItemStack(int index, String string) {
         String[] line = string.split("] ");
         String lore = "§c" + line[0].replace("[", "");
         return ItemBuilder.material(XMaterial.OAK_SIGN).displayName("§7" + line[1].replaceAll("&[0-9]", "")).lore(lore).build();

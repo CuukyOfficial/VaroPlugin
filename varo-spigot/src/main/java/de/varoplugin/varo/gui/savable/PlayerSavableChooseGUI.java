@@ -31,7 +31,7 @@ public class PlayerSavableChooseGUI extends VaroListInventory<VaroSaveable> {
     }
 
     @Override
-    protected ItemStack getItemStack(VaroSaveable savable) {
+    protected ItemStack getItemStack(int index, VaroSaveable savable) {
         return ItemBuilder.material(savable.getType() == SaveableType.CHEST ? XMaterial.CHEST : XMaterial.FURNACE).displayName(Main.getColorCode() + savable.getId())
                 .lore("§7Location§8: " + new SimpleLocationFormat(Main.getColorCode() + "x§7, " + Main.getColorCode() + "y§7, " + Main.getColorCode() + "z§7 in " + Main.getColorCode() + "world").format(savable.getBlock().getLocation()))
                 .build();

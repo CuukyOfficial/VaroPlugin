@@ -29,7 +29,7 @@ public class VaroEventGUI extends VaroListInventory<VaroEvent> {
     }
 
     @Override
-    protected ItemStack getItemStack(VaroEvent event) {
+    protected ItemStack getItemStack(int index, VaroEvent event) {
         return ItemBuilder.material(event.getIcon()).displayName(event.getEventType().getName()).deleteDamageAnnotation()
                 .lore(JavaUtils.combineArrays(new String[]{"§7Enabled: " + (event.isEnabled() ? "§a" : "§c") + event.isEnabled(), ""},
                         Arrays.stream(event.getDescription().split("\n")).map(s -> "§7" + s).toArray(String[]::new))).build();

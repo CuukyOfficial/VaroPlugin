@@ -47,7 +47,7 @@ public class SetupHelpGUI extends VaroListInventory<SetupHelpGUI.SetupCheckList>
     }
 
     @Override
-    protected ItemStack getItemStack(SetupCheckList check) {
+    protected ItemStack getItemStack(int index, SetupCheckList check) {
         return ItemBuilder.material(check.checked ? XMaterial.GUNPOWDER : check.icon).displayName(Main.getColorCode() + check.name).lore(check.description).build();
     }
 

@@ -52,7 +52,7 @@ public class AlertChooseGUI extends VaroListInventory<Alert> {
     }
 
     @Override
-    protected ItemStack getItemStack(Alert alert) {
+    protected ItemStack getItemStack(int index, Alert alert) {
         return ItemBuilder.material(XMaterial.BOOK).displayName("§c" + alert.getType() + " §8| §7" + alert.getId())
                 .lore(new String[]{"§7Message: §f" + alert.getMessage(), "§7Date: §f" + new SimpleDateFormat("dd.MM.yyy HH:mm:ss")
                         .format(alert.getCreated()), "§7Open: §f" + alert.isOpen()}).build();

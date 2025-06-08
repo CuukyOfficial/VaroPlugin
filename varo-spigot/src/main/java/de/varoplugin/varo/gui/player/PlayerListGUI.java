@@ -75,7 +75,7 @@ public class PlayerListGUI extends AdvancedListInventory<VaroPlayer> {
     }
 
     @Override
-    protected ItemStack getItemStack(VaroPlayer player) {
+    protected ItemStack getItemStack(int index, VaroPlayer player) {
         return ItemBuilder.skull(player.getName()).displayName("§3" + player.getName())
                 .lore((showStats ? player.getStats().getStatsListed() : null)).build();
     }

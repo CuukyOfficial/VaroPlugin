@@ -19,7 +19,7 @@ public class CustomCommandListGUI extends VaroListInventory<CustomCommand> {
     }
 
     @Override
-    protected ItemStack getItemStack(CustomCommand customCommand) {
+    protected ItemStack getItemStack(int index, CustomCommand customCommand) {
         String[] lore = new String[]{ChatColor.GRAY + "Output: " + Main.getColorCode() + customCommand.getOutput(), ChatColor.GRAY + "Beschreibung: " + Main.getColorCode() + customCommand.getDescription(),
                 ChatColor.GRAY + "Permission: " + Main.getColorCode() + customCommand.getPermission(), ChatColor.GRAY + "Unused: " + Main.getColorCode() + customCommand.isUnused()};
 

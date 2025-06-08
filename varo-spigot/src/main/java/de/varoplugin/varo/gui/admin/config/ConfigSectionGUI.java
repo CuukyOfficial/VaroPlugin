@@ -18,7 +18,7 @@ public class ConfigSectionGUI extends VaroListInventory<ConfigSettingSection> {
     }
 
     @Override
-    protected ItemStack getItemStack(ConfigSettingSection section) {
+    protected ItemStack getItemStack(int index, ConfigSettingSection section) {
         return ItemBuilder.material(section.getMaterial()).displayName("§7" + section.getName()).deleteDamageAnnotation()
                 .lore(String.join("\n" + Main.getColorCode(), (Main.getColorCode() + section.getDescription()).split("\n"))).build();
     }

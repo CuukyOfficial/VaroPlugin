@@ -22,7 +22,7 @@ public class ItemListSelectInventory extends VaroListInventory<ItemList> {
     }
 
     @Override
-    protected ItemStack getItemStack(ItemList itemList) {
+    protected ItemStack getItemStack(int index, ItemList itemList) {
         return ItemBuilder.material(XMaterial.CHEST).displayName(Main.getColorCode() + itemList.getLocation())
                 .lore(this.hasWritePermission() && !itemList.isPublic() ? "§7Nur für Admins einsehbar" : null).build();
     }

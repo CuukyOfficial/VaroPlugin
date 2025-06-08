@@ -30,7 +30,7 @@ public class VaroSoundMenu extends VaroListInventory<XSound> {
     }
 
     @Override
-    protected ItemStack getItemStack(XSound sound) {
+    protected ItemStack getItemStack(int index, XSound sound) {
         return ItemBuilder.material(XMaterial.NOTE_BLOCK).displayName("§f" + sound.name()).build();
     }
 

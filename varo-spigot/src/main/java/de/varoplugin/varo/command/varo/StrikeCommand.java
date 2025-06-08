@@ -66,20 +66,20 @@ public class StrikeCommand extends VaroCommand {
 				return;
 			}
 
-			int num = -1;
+			int num;
 			try {
-				num = Integer.parseInt(args[2]) - 1;
+				num = Integer.parseInt(args[2]);
 			} catch (NumberFormatException e) {
 				sender.sendMessage(Main.getPrefix() + args[2] + " ist keine Zahl!");
 				return;
 			}
 
-			if (num >= varoPlayer.getStats().getStrikes().size()) {
+			if (num <= 0 || num > varoPlayer.getStats().getStrikes().size()) {
 				sender.sendMessage(Main.getPrefix() + "Strike " + args[2] + " nicht gefunden!");
 				return;
 			}
 
-			varoPlayer.getStats().removeStrike(varoPlayer.getStats().getStrikes().get(num));
+			varoPlayer.getStats().removeStrike(varoPlayer.getStats().getStrikes().get(num - 1));
 			sender.sendMessage(Main.getPrefix() + "§7Du hast " + Main.getColorCode() + varoPlayer.getName() + " §7einen Strike entfernt! Er hat noch " + Main.getColorCode() + varoPlayer.getStats().getStrikes().size() + " §7Strikes!");
 		} else if (args[0].equalsIgnoreCase("list")) {
 			if (args.length != 2) {
@@ -103,10 +103,10 @@ public class StrikeCommand extends VaroCommand {
 			List<Strike> strikes = varoPlayer.getStats().getStrikes();
 			for (int i = 0; i < strikes.size(); i++) {
 				Strike strike = strikes.get(i);
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike Nr." + i + "§8:");
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason: §7" + strike.getReason());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker: §7" + strike.getStriker());
-				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired: §7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Strike #" + (i + 1) + "§8:");
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Reason§8: §7" + strike.getReason());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Striker§8: §7" + strike.getStriker());
+				sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "Acquired§8: §7" + new SimpleDateFormat("dd:MM:yyy HH:mm").format(strike.getAcquiredDate()));
 			}
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7Nicht gefunden! " + Main.getColorCode() + "/strike §7fuer Hilfe.");

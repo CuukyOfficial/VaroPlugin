@@ -35,7 +35,7 @@ public class InventoryBackupListGUI extends VaroListInventory<InventoryBackup> {
     }
 
     @Override
-    protected ItemStack getItemStack(InventoryBackup backup) {
+    protected ItemStack getItemStack(int index, InventoryBackup backup) {
         return ItemBuilder.material(XMaterial.BOOK).displayName("§3" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
                 .format(backup.getDate())).build();
     }
