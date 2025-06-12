@@ -385,9 +385,11 @@ public final class Messages {
 
     public static void load() throws MissingTranslationException, InvalidTypeException, IOException {
         SLAMS.load("en", JasklParser.createReadParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("en.yml")))),
-                JasklParser.createReadWriteParser(YamlConfig.of(new File(messageFilePath + "en.yml"))));
+                JasklParser.createReadWriteParser(YamlConfig.of(new File(messageFilePath + "en.yml"),
+                "English language configuration file\nSee https://almighty-satan.github.io/varoplugin-docs/category/messages for more information")));
         SLAMS.load("de", JasklParser.createReadParser(YamlConfig.of(Resource.of(Messages.class.getClassLoader().getResource("de.yml")))),
-                JasklParser.createReadWriteParser(YamlConfig.of(new File(messageFilePath + "de.yml"))));
+                JasklParser.createReadWriteParser(YamlConfig.of(new File(messageFilePath + "de.yml"),
+                "German language configuration file\nSee https://almighty-satan.github.io/varoplugin-docs/category/messages for more information")));
 
         try {
             PlaceholderAPIPlugin.getInstance();
