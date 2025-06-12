@@ -95,7 +95,7 @@ public class Stats implements VaroSerializeable {
 	private ArrayList<InventoryBackup> inventoryBackups;
 	@VaroSerializeField(path = "saveables", arrayClass = VaroSaveable.class)
 	private ArrayList<VaroSaveable> saveables;
-	@VaroSerializeField(path = "strikes", arrayClass = Strike.class)
+	@VaroSerializeField(path = "strikes5", arrayClass = Strike.class)
 	private ArrayList<Strike> strikes;
 	@VaroSerializeField(path = "videos", arrayClass = YouTubeVideo.class)
 	private ArrayList<YouTubeVideo> videos;
@@ -469,7 +469,10 @@ public class Stats implements VaroSerializeable {
 	}
 
 	@Override
-	public void onDeserializeEnd() {}
+	public void onDeserializeEnd() {
+		if (this.strikes == null) // Backwards compatibility with v4
+			this.strikes = new ArrayList<>();
+	}
 
 	@Override
 	public void onSerializeStart() {}
