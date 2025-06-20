@@ -47,12 +47,9 @@ public class VaroDiscordBot implements VaroBot {
         builder.setAutoReconnect(true);
         builder.setRequestTimeoutRetry(true);
         builder.setStatus(OnlineStatus.ONLINE);
-
-        if(ConfigSetting.DISCORDBOT_ENABLED_PRIVILIGES.getValueAsBoolean()) {
-            builder.setMemberCachePolicy(MemberCachePolicy.ALL);
-            builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
-            builder.setChunkingFilter(ChunkingFilter.ALL);
-        }
+        builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+        builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+        builder.setChunkingFilter(ChunkingFilter.ALL);
 
         try {
             jda = builder.build();

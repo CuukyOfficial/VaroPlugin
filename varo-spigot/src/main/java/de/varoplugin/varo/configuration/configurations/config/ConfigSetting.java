@@ -114,7 +114,6 @@ public enum ConfigSetting implements SectionEntry {
 
 	// DISCORDBOT
 	DISCORDBOT_ENABLED(ConfigSettingSection.DISCORD, "discordBotEnabled", false, "Ob der DiscordBot fuer Events aktiviert werden soll.\nHinweis: bitte fuer diesen Informationen unten ausfuellen"),
-	DISCORDBOT_ENABLED_PRIVILIGES(ConfigSettingSection.DISCORD, "enabledPriviliges", false, "Aktiviere diesen Eintrag nur, wenn\ndu die besonderen Rechte\ndes Discordbots aktiviert hast\n-> Priviliged Gateway Intents\nAktiviere dies, sobald das Plugin meldet\ndass die Nutzer nicht auf dem Discord sind."),
 	DISCORDBOT_EVENT_ALERT(ConfigSettingSection.DISCORD, "eventChannel.alert", -1L, "ID's des Channels, wo die Benachrichtigungen gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_BORDER(ConfigSettingSection.DISCORD, "eventChannel.border", -1L, "ID's des Channels, wo die Border Veränderungen gepostet werden.\n-1= EventChannelID wird genutzt"),
 	DISCORDBOT_EVENT_DEATH(ConfigSettingSection.DISCORD, "eventChannel.death", -1L, "ID's des Channels, wo die Tode gepostet werden.\n-1= EventChannelID wird genutzt"),
