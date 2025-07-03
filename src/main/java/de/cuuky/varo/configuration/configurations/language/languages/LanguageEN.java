@@ -87,6 +87,7 @@ public enum LanguageEN implements LoadableMessage {
     GAME_FINALE_COUNTDOWN_ONESECOND("game.finale.finaleCountdown.oneSecond", "&7The finale starts in %colorcode%one &7second!"),
     GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7starts in %colorcode%%countdown% &7seconds!"),
     GAME_START_COUNTDOWN_ONESECOND("game.start.startCountdown.oneSecond", "%projectname% &7starts in %colorcode%one &7second!"),
+
     GAME_VARO_START("game.start.varoStart", "%projectname% &7has started! &5Good luck!"),
     GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
     GAME_VARO_START_SUBTITLE("game.start.startSubtitle", "&7Good luck!"),
