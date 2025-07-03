@@ -89,7 +89,7 @@ public enum ConfigMessages implements DefaultLanguage {
 	GAME_FINALE_COUNTDOWN("game.finale.finaleCountdown", "&7Das Finale startet in %colorcode%%countdown% &7Sekunden!"),
 	GAME_FINALE_COUNTDOWN_ONESECOND("game.finale.finaleCountdown.oneSecond", "&7Das Finale startet in %colorcode%einer &7Sekunde!"),
 	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunden!"),
-	GAME_START_COUNTDOWN_ONESECOND("game.start.startCountdown.oneSecond", "%projectname% &7startet in %colorcode%einer &7Sekunde!")m
+	GAME_START_COUNTDOWN_ONESECOND("game.start.startCountdown.oneSecond", "%projectname% &7startet in %colorcode%einer &7Sekunde!"),
 	
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7wurde gestartet! &5Viel Erfolg!"),
 	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
