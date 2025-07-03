@@ -78,10 +78,12 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
                         	if (!vp.canBeKicked(noKickDistance)) {
                         		vp.sendMessage(ConfigMessages.QUIT_KICK_PLAYER_NEARBY).replace("%distance%", String.valueOf(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt()));
                         		countdown += 1;
-                        	} else
-                        		Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown));
-                        } else
-                        	Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", (countdown == 1) ? "einer" : String.valueOf(countdown));
+                        	} else {
+								Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS_ONESECOND, vp).replace("%countdown%", String.valueOf(countdown));
+							}
+                        } else {
+							Main.getLanguageManager().broadcastMessage(ConfigMessages.QUIT_KICK_IN_SECONDS, vp).replace("%countdown%", String.valueOf(countdown));
+						}
 					}
 
 					vp.getStats().setCountdown(countdown);
