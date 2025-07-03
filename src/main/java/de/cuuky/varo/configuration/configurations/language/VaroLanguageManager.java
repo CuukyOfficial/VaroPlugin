@@ -138,14 +138,27 @@ public class VaroLanguageManager extends LanguageManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                String consoleMessage = holder.getReplaced(getMessage(message.getPath(), getDefaultLanguage().getName()), replace);
-                if (!consoleMessage.isEmpty())
-                    ownerInstance.getServer().getConsoleSender().sendMessage(consoleMessage);
+				String rawConsoleMessage = getMessage(message.getPath(), getDefaultLanguage().getName());
+				if (rawConsoleMessage == null) {
+					return;
+				}
+				
+                String consoleMessage = holder.getReplaced(rawConsoleMessage, replace);
+                if (!consoleMessage.isEmpty()) {
+					ownerInstance.getServer().getConsoleSender().sendMessage(consoleMessage);
+				}
+				
                 for (CustomLanguagePlayer player : players)
                     if (player.getPlayer() != null) {
-                        String playerMessage = holder.getReplaced(getMessage(message.getPath(), ((CustomPlayer) player).getLocale()), replace != null ? replace : (CustomPlayer) player);
-                        if (!playerMessage.isEmpty())
+						String rawPlayerMessage = getMessage(message.getPath(), ((CustomPlayer) player).getLocale());
+						if (rawPlayerMessage == null) {
+							return;
+						}
+						
+                        String playerMessage = holder.getReplaced(rawPlayerMessage, replace != null ? replace : (CustomPlayer) player);
+                        if (!playerMessage.isEmpty()) {
                             player.getPlayer().sendMessage(playerMessage);
+						}
                     }
             }
         }.runTaskLater(ownerInstance, 1L);

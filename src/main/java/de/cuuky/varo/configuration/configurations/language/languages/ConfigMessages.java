@@ -86,8 +86,11 @@ public enum ConfigMessages implements DefaultLanguage {
 	DEATH_KILL_LIFE_ADD("death.killLifeAdd", "Dein Team hat aufgrund eines Kills ein Teamleben erhalten!"),
 	DEATH_KILL_TIME_ADD("death.killTimeAdd", "Aufgrund deines Kills hast du zusätzlich %colorcode%%timeAdded% &7Sekunden Zeit erhalten!"),
 
-	GAME_FINALE_COUNTDOWN("game.finale.finaleCountdown", "&7Das Finale startet in %colorcode%%countdown% &7Sekunde(n)!"),
-	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunde(n)!"),
+	GAME_FINALE_COUNTDOWN("game.finale.finaleCountdown", "&7Das Finale startet in %colorcode%%countdown% &7Sekunden!"),
+	GAME_FINALE_COUNTDOWN_ONESECOND("game.finale.finaleCountdown.oneSecond", "&7Das Finale startet in %colorcode%einer &7Sekunde!"),
+	GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7startet in %colorcode%%countdown% &7Sekunden!"),
+	GAME_START_COUNTDOWN_ONESECOND("game.start.startCountdown.oneSecond", "%projectname% &7startet in %colorcode%einer &7Sekunde!"),
+	
 	GAME_VARO_START("game.start.varoStart", "%projectname% &7wurde gestartet! &5Viel Erfolg!"),
 	GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
 	GAME_VARO_START_SUBTITLE("game.start.startSubtitle", "&7Viel Glück!"),
@@ -113,7 +116,8 @@ public enum ConfigMessages implements DefaultLanguage {
 	QUIT_WITH_REMAINING_TIME("quitmessage.quitRemainingTime", "%prefix%&c%player% &7hat den Server vorzeitig verlassen!"),
 	QUIT_KICK_BROADCAST("quitmessage.broadcast", "%colorcode%%player% &7wurde gekickt!"),
 	QUIT_KICK_DELAY_OVER("quitmessage.protectionOver", "%colorcode%%player% &7wurde aufgrund seines Todes jetzt gekickt!"),
-	QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunde(n) gekickt!"),
+	QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7wird in %colorcode%%countdown% &7Sekunden gekickt!"),
+	QUIT_KICK_IN_SECONDS_ONESECOND("quitmessage.kickInSeconds.oneSecond", "%colorcode%%player% &7wird in %colorcode%einer &7Sekunde gekickt!"),
 	QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cEs befindet sich ein Spieler &4%distance% &cBlöcke in deiner Nähe!%nextLine%&7Um gekickt zu werden, entferne dich von diesem Spieler!"),
 	QUIT_KICK_SERVER_CLOSE_SOON("quitmessage.serverCloseSoon", "&7Der Server schliesst in &c%minutes% &7Minuten!"),
 

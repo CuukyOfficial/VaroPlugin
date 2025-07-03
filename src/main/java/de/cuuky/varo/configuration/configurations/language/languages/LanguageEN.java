@@ -83,8 +83,11 @@ public enum LanguageEN implements LoadableMessage {
     DEATH_KILL_LIFE_ADD("death.killLifeAdd", "&7Your team got a team life because of a kill!"),
     DEATH_KILL_TIME_ADD("death.killTimeAdd", "You've recieved %colorcode%%timeAdded% &7seconds of additional time!"),
 
-    GAME_FINALE_COUNTDOWN("game.finale.finaleCountdown", "&7The finale starts in %colorcode%%countdown% &7second(s)!"),
-    GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7starts in %colorcode%%countdown% &7second(s)!"),
+    GAME_FINALE_COUNTDOWN("game.finale.finaleCountdown", "&7The finale starts in %colorcode%%countdown% &7seconds!"),
+    GAME_FINALE_COUNTDOWN_ONESECOND("game.finale.finaleCountdown.oneSecond", "&7The finale starts in %colorcode%one &7second!"),
+    GAME_START_COUNTDOWN("game.start.startCountdown", "%projectname% &7starts in %colorcode%%countdown% &7seconds!"),
+    GAME_START_COUNTDOWN_ONESECOND("game.start.startCountdown.oneSecond", "%projectname% &7starts in %colorcode%one &7second!"),
+
     GAME_VARO_START("game.start.varoStart", "%projectname% &7has started! &5Good luck!"),
     GAME_VARO_START_TITLE("game.start.startTitle", "%colorcode%%countdown%"),
     GAME_VARO_START_SUBTITLE("game.start.startSubtitle", "&7Good luck!"),
@@ -110,7 +113,8 @@ public enum LanguageEN implements LoadableMessage {
     QUIT_WITH_REMAINING_TIME("quitmessage.quitRemainingTime", "%prefix%&c%player% &7has left the server early!"),
     QUIT_KICK_BROADCAST("quitmessage.broadcast", "%colorcode%%player% &7has been kicked!"),
     QUIT_KICK_DELAY_OVER("quitmessage.protectionOver", "%colorcode%%player% &7was kicked because of their death now!"),
-    QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7will be kicked in %colorcode%%countdown% &7second(s)!"),
+    QUIT_KICK_IN_SECONDS("quitmessage.kickInSeconds", "%colorcode%%player% &7will be kicked in %colorcode%%countdown% &7seconds!"),
+    QUIT_KICK_IN_SECONDS_ONESECOND("quitmessage.kickInSeconds.oneSecond", "%colorcode%%player% &7will be kicked in %colorcode%one &7second!"),
     QUIT_KICK_PLAYER_NEARBY("quitmessage.noKickPlayerNearby", "&cThere is a player &4%distance% &cblocks near you!%nextLine%&7To get kicked, move away from this player!"),
     QUIT_KICK_SERVER_CLOSE_SOON("quitmessage.serverCloseSoon", "&7The server closes in &c%minutes% &7minutes!"),
 
