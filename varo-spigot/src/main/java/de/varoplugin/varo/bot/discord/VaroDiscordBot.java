@@ -140,7 +140,7 @@ public class VaroDiscordBot implements VaroBot {
     }
 
     public boolean sendMessage(String message, String author, String authorUrl, String authorIconUrl, File file, Color color, long channelId) {
-        if (channelId == 0 || channelId == -1)
+        if (channelId == 0 || channelId == -1 || this.jda == null)
             return false;
         
         GuildMessageChannel channel = null;
