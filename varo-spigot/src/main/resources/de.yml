@@ -1,3 +1,5 @@
+# German language configuration file
+# See https://almighty-satan.github.io/varoplugin-docs/category/messages for more information
 commands:
   border:
     usage: "<prefix>Du kannst die Größe der Weltbarriere mit <colorcode>/border <Durchmesser> [Sekunden]§7 ändern. Das Zentrum der Weltbarriere wird auf deine aktuelle Position gesetzt."
@@ -253,6 +255,7 @@ log:
   switchedName: "<name> hat seinen Namen geändert und ist nun als <new-name> bekannt!"
   playerJoined: "<name> hat den Server betreten und spielt nun seine <add:1:<episode>>. Episode!"
   newSessionsForAll: "Jeder hat <new-sessions> neue Folgen erhalten!"
+  playerJoinSpectator: "<name> hat den Server als Zuschauer betreten!"
   playerQuit: "<name> hat das Spiel verlassen!"
   playerReconnect: "<name> hat das Spiel vorzeitig verlassen und ist wieder beigetreten! Verbleibende Zeit: <countdown-hour>:<countdown-minute>:<countdown-second>"
   newSessions: "<new-sessions> neue Folgen wurden an Spieler vergeben!"

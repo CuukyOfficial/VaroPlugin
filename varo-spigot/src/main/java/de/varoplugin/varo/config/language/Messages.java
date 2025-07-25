@@ -100,6 +100,7 @@ public final class Messages {
     public static final VaroMessage LOG_PLAYER_JOIN_MASSREC = message("log.playerJoinMassrec");
     public static final VaroMessage LOG_PLAYER_JOIN_NORMAL = message("log.playerJoinNormal");
     public static final VaroMessage LOG_PLAYER_JOINED = message("log.playerJoined");
+    public static final VaroMessage LOG_PLAYER_JOIN_SPECTATOR = message("log.playerJoinSpectator");
     public static final VaroMessage LOG_PLAYER_QUIT = message("log.playerQuit");
     public static final VaroMessage LOG_PLAYER_RECONNECT = message("log.playerReconnect");
     public static final VaroMessage LOG_SWITCHED_NAME = message("log.switchedName");
