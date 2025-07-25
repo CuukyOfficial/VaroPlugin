@@ -144,5 +144,6 @@ public class PlayerJoinListener implements Listener {
 		}
 
 		Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
+		Messages.LOG_PLAYER_JOIN_NORMAL.log(LogType.JOIN_LEAVE, vplayer);
 	}
 }
