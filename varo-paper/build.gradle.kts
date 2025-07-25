@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.6-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.2")
     compileOnly(project(":varo-spigot"))
 
