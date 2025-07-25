@@ -3,6 +3,7 @@ package de.varoplugin.varo.bot.discord;
 import java.awt.Color;
 import java.io.File;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import de.varoplugin.varo.Main;
@@ -93,12 +94,14 @@ public class VaroDiscordBot implements VaroBot {
     }
 
     @Override
-    public void disconnect() {
+    public void disconnect(long duration, TimeUnit timeUnit) {
         if (!isEnabled())
             return;
 
         try {
             jda.shutdownNow();
+            if (duration > 0 && timeUnit != null)
+                jda.awaitShutdown(duration, timeUnit);
         } catch (Throwable t) {
             Main.getInstance().getLogger().log(Level.SEVERE, "Discord bot failed during shutdown!");
             try {

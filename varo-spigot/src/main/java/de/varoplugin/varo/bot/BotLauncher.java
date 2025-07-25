@@ -1,5 +1,6 @@
 package de.varoplugin.varo.bot;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import de.varoplugin.varo.Main;
@@ -14,9 +15,9 @@ public class BotLauncher {
 		startupDiscord();
 	}
 
-	public void disconnect() {
+	public void disconnect(long duration, TimeUnit timeUnit) {
 		if (discordbot != null)
-			discordbot.disconnect();
+			discordbot.disconnect(duration, timeUnit);
 	}
 
 	public void startupDiscord() {

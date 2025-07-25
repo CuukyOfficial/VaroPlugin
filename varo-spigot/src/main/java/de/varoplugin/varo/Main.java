@@ -167,7 +167,7 @@ public class Main extends JavaPlugin {
 
 		if (botLauncher != null && botLauncher.getDiscordbot() != null) {
 			this.getLogger().log(Level.INFO, "Disconnecting bots...");
-			botLauncher.disconnect();
+			botLauncher.disconnect(5, TimeUnit.SECONDS);
 		}
 
 		if (!this.failed) {
