@@ -31,13 +31,12 @@ import org.bukkit.plugin.Plugin;
 
 import de.varoplugin.cfw.dependencies.Dependency;
 import de.varoplugin.cfw.dependencies.JarDependency;
-import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 
 public class Dependencies {
     
     protected static final String LIB_FOLDER = "plugins/Varo/libs";
 
-    public static final String MAVEN_CENTERAL = "https://repo1.maven.org/maven2/";
+    public static final String MAVEN_CENTRAL = "https://repo1.maven.org/maven2/";
 
     static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
 
@@ -45,19 +44,18 @@ public class Dependencies {
     public static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
 
     static {
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTERAL, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTERAL, () -> !doesClassExist("com.google.gson.JsonElement")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-lang3", MAVEN_CENTERAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTERAL));
-
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTERAL, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
-        OPTIONAL_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTERAL, () -> ConfigSetting.DISCORDBOT_ENABLED.getValueAsBoolean()));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTRAL, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTRAL, () -> !doesClassExist("com.google.gson.JsonElement")));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-lang3", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTRAL));
+        REQUIRED_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTRAL));
     }
     
     public static void loadRequired(Plugin plugin) {

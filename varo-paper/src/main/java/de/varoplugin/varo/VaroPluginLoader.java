@@ -46,7 +46,7 @@ public class VaroPluginLoader implements PluginLoader {
         addDependencies(resolver, Dependencies.REQUIRED_DEPENDENCIES);
         addDependencies(resolver, Dependencies.OPTIONAL_DEPENDENCIES);
         
-        resolver.addRepository(new RemoteRepository.Builder("central", "default", Dependencies.MAVEN_CENTERAL).build());
+        resolver.addRepository(new RemoteRepository.Builder("central", "default", Dependencies.MAVEN_CENTRAL).build());
         classpathBuilder.addLibrary(resolver);
     }
     
