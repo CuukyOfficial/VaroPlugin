@@ -1,10 +1,12 @@
 package de.varoplugin.varo.player.event;
 
-import java.util.Arrays;
-import java.util.List;
-
+import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.event.events.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
 
 public class BukkitEvent {
 
@@ -17,10 +19,15 @@ public class BukkitEvent {
         this.eventType = eventType;
     }
 
+    // why tf is this a constructor???
     public BukkitEvent(VaroPlayer player, BukkitEventType eventType) {
         for (BukkitEvent event : events)
-            if (event.getEventType().equals(eventType))
-                event.onExec(player);
+            if (event.getEventType() == eventType)
+                try {
+                    event.onExec(player);
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Error while executing event", t);
+                }
     }
 
     public BukkitEventType getEventType() {
