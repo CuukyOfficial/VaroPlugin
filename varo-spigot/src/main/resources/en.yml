@@ -307,6 +307,9 @@ player:
     kickMessageMassRec: |-
       §cThe mass recording is finished,
       §7everybody got kicked!
+    serverClose: |-
+      §cThe server is now closed!
+      §7Try again tomorrow!"
   actionbar:
     - "§7Distance to border: <colorcode><distance-to-border>"
     - "§7Check out our Discord: <colorcode><varo-discord>"

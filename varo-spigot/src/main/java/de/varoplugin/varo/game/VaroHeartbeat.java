@@ -1,12 +1,5 @@
 package de.varoplugin.varo.game;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -16,25 +9,23 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.event.BukkitEventType;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
 import io.github.almightysatan.slams.Placeholder;
+import org.apache.commons.lang3.time.DateUtils;
 
-public class VaroMainHeartbeatThread extends BukkitRunnable {
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-	private int protectionTime, noKickDistance, playTime;
+public class VaroHeartbeat implements Runnable {
+
+	private final int protectionTime, noKickDistance, playTime;
 	private final VaroGame game;
 
-	public VaroMainHeartbeatThread() {
-		this.game = Main.getVaroGame();
-
-		loadVariables();
+	public VaroHeartbeat(VaroGame game) {
+		this.game = game;
+		this.protectionTime = ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt();
+		this.noKickDistance = ConfigSetting.NO_KICK_DISTANCE.getValueAsInt();
+		this.playTime = game.getPlayTime() * 60;
 	}
 
-	public void loadVariables() { // TODO remove this (?)
-		protectionTime = ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt();
-		noKickDistance = ConfigSetting.NO_KICK_DISTANCE.getValueAsInt();
-		playTime = Main.getVaroGame().getPlayTime() * 60;
-	}
-
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		if (this.game.isRunning()) {
@@ -46,12 +37,12 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 					    Messages.PLAYER_DISCONNECT_KICK_SERVER_CLOSE_SOON.broadcast(Placeholder.constant("server-close", String.valueOf(minutesToClose)));
 
 					if (!Main.getDataManager().getOutsideTimeChecker().canJoin()) {
-						for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+						for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 							if (vp.isAdminIgnore())
 								continue;
 
 							vp.getStats().setCountdown(0);
-							vp.getPlayer().kickPlayer("§cDie Spielzeit ist nun vorueber!\n§7Versuche es morgen erneut");
+							Messages.PLAYER_KICK_SERVER_CLOSE.kick(vp);
 						}
 					}
 				}
@@ -59,17 +50,18 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 			}
 
 			if (Main.getVaroGame().isPlayTimeLimited()) {
-				for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone()) {
+				for (VaroPlayer vp : VaroPlayer.getOnlinePlayer()) {
 					if (vp.getStats().isSpectator() || vp.isAdminIgnore())
 						continue;
 
 					int countdown = Math.max(vp.getStats().getCountdown() - 1, 0);
 
-					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) // TODO this does not work when playTime is set to -1
+					boolean massRecordingEnabled = !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled();
+					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !massRecordingEnabled)
 						Messages.PLAYER_JOIN_PROTECTION_END.broadcast(vp);
 
-					if (countdown == 30 || countdown == 10 || countdown == 5 || countdown == 4 || countdown == 3 || countdown == 2 || countdown == 1 || countdown == 0) {
-						if (countdown == 0 && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
+					if (countdown == 30 || countdown == 10 || countdown <= 5) {
+						if (countdown == 0 && !massRecordingEnabled) {
 							Messages.PLAYER_DISCONNECT_KICK.broadcast(vp);
 							vp.onEvent(BukkitEventType.KICKED);
 							Messages.PLAYER_KICK_SESSION_OVER.kick(vp);
@@ -89,7 +81,7 @@ public class VaroMainHeartbeatThread extends BukkitRunnable {
 				}
 			}
 
-			for (VaroPlayer vp : (ArrayList<VaroPlayer>) VaroPlayer.getOnlinePlayer().clone())
+			for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
 				if(!vp.isAdminIgnore() && vp.getStats().isAlive())
 					vp.getStats().increaseOnlineTime();
 			

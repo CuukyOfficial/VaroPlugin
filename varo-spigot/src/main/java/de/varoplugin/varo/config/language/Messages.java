@@ -151,6 +151,7 @@ public final class Messages {
     public static final VaroMessage PLAYER_KICK_TOO_MANY_STRIKES = message("player.kick.tooManyStrikes");
     public static final VaroMessage PLAYER_KICK_DISCORD_NOT_REGISTERED = message("player.kick.notRegisteredDiscord");
     public static final VaroMessage PLAYER_KICK_DISCORD_NO_USER = message("player.kick.noDiscordUser");
+    public static final VaroMessage PLAYER_KICK_SERVER_CLOSE = message("player.kick.serverClose");
 
     public static final VaroMessage PLAYER_DEATH_ELIMINATED_OTHER = message("player.death.eliminated.other");
     public static final VaroMessage PLAYER_DEATH_ELIMINATED_PLAYER = message("player.death.eliminated.player");

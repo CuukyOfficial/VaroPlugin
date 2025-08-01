@@ -1,33 +1,15 @@
 package de.varoplugin.varo.game;
 
-import java.awt.Color;
-import java.io.File;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import de.varoplugin.varo.api.game.VaroStartEvent;
-import de.varoplugin.varo.game.start.*;
-import de.varoplugin.varo.logger.logger.EventLogger;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import com.cryptomorin.xseries.XEntityType;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
-
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.api.game.VaroEndEvent;
+import de.varoplugin.varo.api.game.VaroStartEvent;
 import de.varoplugin.varo.bot.discord.VaroDiscordBot;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
+import de.varoplugin.varo.game.start.*;
 import de.varoplugin.varo.game.world.AutoSetup;
 import de.varoplugin.varo.game.world.VaroWorld;
 import de.varoplugin.varo.game.world.VaroWorldHandler;
@@ -36,6 +18,7 @@ import de.varoplugin.varo.game.world.border.decrease.BorderDecreaseMinuteTimer;
 import de.varoplugin.varo.game.world.generators.SpawnGenerator;
 import de.varoplugin.varo.listener.helper.cancelable.CancelableType;
 import de.varoplugin.varo.listener.helper.cancelable.VaroCancelable;
+import de.varoplugin.varo.logger.logger.EventLogger;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
@@ -47,6 +30,21 @@ import de.varoplugin.varo.tasks.checks.YouTubeCheck;
 import de.varoplugin.varo.utils.EventUtils;
 import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.awt.*;
+import java.io.File;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -79,31 +77,22 @@ public class VaroGame implements VaroSerializeable {
     private int finaleCountdown;
 
     private boolean firstTime;
-    private VaroMainHeartbeatThread mainThread; // this is not actually a thread
     private StartSequence startSequence;
     private BorderDecreaseMinuteTimer borderMinuteTimer;
     private ProtectionTime protection;
-    private VaroWorldHandler varoWorldHandler;
-    private TopScoreManager topScores;
+
+    private final TopScoreManager topScores;
+    private final VaroWorldHandler varoWorldHandler;
 
     public VaroGame() {
         Main.setVaroGame(this);
-    }
-
-    private void loadVariables() {
-        if (mainThread != null)
-            mainThread.loadVariables();
-
         this.topScores = new TopScoreManager();
+        this.varoWorldHandler = new VaroWorldHandler();
+        Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new VaroHeartbeat(this), 0L, 20L);
     }
 
     public void init() {
-        startRefreshTimer();
-        loadVariables();
-
-        this.varoWorldHandler = new VaroWorldHandler();
-
-        this.setGamestate(GameState.LOBBY);
+        this.setGameState(GameState.LOBBY);
         this.borderDayTimer = new BorderDecreaseDayTimer(true);
     }
 
@@ -151,7 +140,7 @@ public class VaroGame implements VaroSerializeable {
             return;
         }
 
-        this.setGamestate(GameState.STARTED);
+        this.setGameState(GameState.STARTED);
         Messages.LOG_GAME_STARTED.log(EventLogger.LogType.LOG);
 
         for (VaroPlayer pl1 : VaroPlayer.getOnlinePlayer()) {
@@ -167,7 +156,7 @@ public class VaroGame implements VaroSerializeable {
         for (VaroPlayer pl1 : VaroPlayer.getVaroPlayers())
             pl1.getStats().loadStartDefaults();
 
-        Main.getVaroGame().setFirstTime(true);
+        this.firstTime = true;
         Main.getDataManager().getListManager().getStartItems().giveToAll();
         Main.getVaroGame().setBorderMinuteTimer(new BorderDecreaseMinuteTimer());
 
@@ -182,7 +171,7 @@ public class VaroGame implements VaroSerializeable {
         new BukkitRunnable() {
             @Override
             public void run() {
-                setFirstTime(false);
+                firstTime = false;
             }
         }.runTaskLater(Main.getInstance(), this.getPlayTime() * 60 * 20); // TODO this does not work when PLAY_TIME is -1
 
@@ -210,7 +199,7 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void restart() {
-        this.setGamestate(GameState.LOBBY);
+        this.setGameState(GameState.LOBBY);
         // TODO maybe reset some stuff ???
     }
 
@@ -224,7 +213,7 @@ public class VaroGame implements VaroSerializeable {
         if (EventUtils.callEvent(new VaroEndEvent(this, check)))
             return;
 
-        this.setGamestate(GameState.END);
+        this.setGameState(GameState.END);
 
         for (VaroPlayer vp : check.getPlaces().get(1)) {
             if (!vp.isOnline())
@@ -288,24 +277,16 @@ public class VaroGame implements VaroSerializeable {
         if (ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
             Bukkit.getServer().broadcastMessage("§7Der Server wird in " + Main.getColorCode() + ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() + " Sekunden §7heruntergefahren...");
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    Bukkit.getServer().shutdown();
-                }
-            }.runTaskLater(Main.getInstance(), ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20);
+            Bukkit.getScheduler().runTaskLater(Main.getInstance(), Bukkit.getServer()::shutdown,
+                    ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20L);
         }
-    }
-
-    private void startRefreshTimer() {
-        (mainThread = new VaroMainHeartbeatThread()).runTaskTimer(Main.getInstance(), 0L, 20L);
     }
 
     private void startFinale() {
         if (!this.isRunning() || this.isFinale())
             throw new IllegalStateException(this.getGameState().name());
 
-        this.setGamestate(GameState.FINALE);
+        this.setGameState(GameState.FINALE);
 
         Messages.LOG_FINALE_START.log(LogType.ALERT);
         Messages.GAME_FINALE_START.broadcast();
@@ -396,10 +377,6 @@ public class VaroGame implements VaroSerializeable {
         return this.topScores;
     }
 
-    public VaroMainHeartbeatThread getMainThread() {
-        return this.mainThread;
-    }
-
     public AutoStart getAutoStart() {
         return autostart;
     }
@@ -408,7 +385,7 @@ public class VaroGame implements VaroSerializeable {
         return gamestate;
     }
 
-    private void setGamestate(GameState gamestate) {
+    private void setGameState(GameState gamestate) {
         this.gamestate = gamestate;
         VaroUtils.updateWorldTime();
     }
@@ -513,10 +490,6 @@ public class VaroGame implements VaroSerializeable {
         this.protection = protection;
     }
 
-    public void setFirstTime(boolean firstTime) {
-        this.firstTime = firstTime;
-    }
-
     @Override
     public void onDeserializeEnd() {
         if (this.hasStarted() && this.startTimestamp == null) {
@@ -527,11 +500,6 @@ public class VaroGame implements VaroSerializeable {
 
         if (gamestate == GameState.STARTED)
             borderMinuteTimer = new BorderDecreaseMinuteTimer();
-
-        startRefreshTimer();
-        loadVariables();
-
-        this.varoWorldHandler = new VaroWorldHandler();
     }
 
     @Override

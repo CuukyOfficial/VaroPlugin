@@ -307,6 +307,9 @@ player:
     kickMessageMassRec: |-
       §cDie Massenaufnahme ist beendet!
       §7Alle Spieler wurden gekickt!
+    serverClose: |- 
+      §cDie Spielzeit ist vorüber!
+      §7Versuche es morgen erneut!"
   actionbar:
     - "§7Entfernung zur Weltbarriere: <colorcode><distance-to-border>"
     - "§7Schau auch auf unserem Discord vorbei: <colorcode><varo-discord>"
