@@ -21,8 +21,6 @@ tasks.javadoc { options.encoding = "UTF-8" }
 
 repositories {
     mavenCentral()
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.varoplugin.de/releases")
     maven("https://repo.varoplugin.de/mirrors")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
