@@ -35,6 +35,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -279,6 +280,7 @@ public class Stats implements VaroSerializeable {
 	public String[] getStatsListed() {
 		String colorcode = Main.getColorCode();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 		this.lastLocation = owner.isOnline() ? owner.getPlayer().getLocation() : lastLocation;
 
 		return new String[] { "§7ID§8: " + colorcode + owner.getId(), "§7UUID§8: " + colorcode + owner.getUUID(),
@@ -297,7 +299,7 @@ public class Stats implements VaroSerializeable {
 				"§7TimeUntilAddSession§8: " + colorcode + (timeUntilAddSession != null ? dateFormat.format(timeUntilAddSession.getTime()) : "/"),
 				"§7OnlineAfterStart§8: " + colorcode + onlineAfterStart,
 				"§7FirstTimeJoined§8: " + colorcode + (firstTimeJoined != null ? dateFormat.format(firstTimeJoined) : "/"),
-				"§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? dateFormat.format(lastJoined) : "/"),
+				"§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? lastJoined.format(dateTimeFormatter) : "/"),
 				"§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"),
 				"§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)),
 				"§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"),
