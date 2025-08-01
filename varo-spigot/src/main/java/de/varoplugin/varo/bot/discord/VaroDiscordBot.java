@@ -154,7 +154,7 @@ public class VaroDiscordBot implements VaroBot {
             return false;
         }
         if(channel == null) {
-            Main.getInstance().getLogger().log(Level.SEVERE, "Failed to find discord channel {}", channelId);
+            Main.getInstance().getLogger().log(Level.SEVERE, "Failed to find discord channel {0}", channelId);
             return false;
         }
         return this.sendMessage(message, author, authorUrl, authorIconUrl, file, color, channel);

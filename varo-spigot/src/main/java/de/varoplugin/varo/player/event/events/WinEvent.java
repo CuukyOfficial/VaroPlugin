@@ -46,7 +46,7 @@ public class WinEvent extends BukkitEvent {
 		try {
 			member.modifyNickname(member.getUser().getName() + " | " + wins + " 🏆");
 		} catch (PermissionException e) {
-		    Main.getInstance().getLogger().log(Level.SEVERE, "Insufficient permissions to change Discord nickname of member {}", member.getEffectiveName());
+		    Main.getInstance().getLogger().log(Level.SEVERE, "Insufficient permissions to change Discord nickname of member {0}", member.getEffectiveName());
 		}
 	}
 }
