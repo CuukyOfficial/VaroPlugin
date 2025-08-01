@@ -492,12 +492,6 @@ public class VaroGame implements VaroSerializeable {
 
     @Override
     public void onDeserializeEnd() {
-        if (this.hasStarted() && this.startTimestamp == null) {
-            // upgrade from v4 to v5
-            Main.getInstance().getLogger().warning("Missing start timestamp");
-            this.startTimestamp = OffsetDateTime.now();
-        }
-
         if (gamestate == GameState.STARTED)
             borderMinuteTimer = new BorderDecreaseMinuteTimer();
     }
