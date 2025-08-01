@@ -4,17 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.varoplugin.varo.player.VaroPlayer;
-import de.varoplugin.varo.player.event.events.DeathEvent;
-import de.varoplugin.varo.player.event.events.DeathNoLivesEvent;
-import de.varoplugin.varo.player.event.events.JoinEvent;
-import de.varoplugin.varo.player.event.events.KickEvent;
-import de.varoplugin.varo.player.event.events.KillEvent;
-import de.varoplugin.varo.player.event.events.QuitEvent;
+import de.varoplugin.varo.player.event.events.*;
 
 public class BukkitEvent {
 
     private static final List<BukkitEvent> events = Arrays.asList(new DeathEvent(),
-        new DeathNoLivesEvent(), new KickEvent(), new JoinEvent(), new QuitEvent(), new KillEvent());
+        new DeathNoLivesEvent(), new KickEvent(), new JoinEvent(), new QuitEvent(), new KillEvent(), new WinEvent());
 
     protected BukkitEventType eventType;
 
