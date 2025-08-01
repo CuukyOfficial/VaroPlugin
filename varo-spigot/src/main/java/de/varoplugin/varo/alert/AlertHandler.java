@@ -9,7 +9,7 @@ public class AlertHandler extends VaroSerializeObject {
 	}
 
 	public AlertHandler() {
-		super(Alert.class, "/stats/alerts.yml");
+		super(Alert.class, "/stats/alerts5.yml");
 
 		load();
 	}

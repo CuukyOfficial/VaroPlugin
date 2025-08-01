@@ -18,11 +18,8 @@ public class VaroSerializeHandler {
 	protected static Map<VaroSerializeable, String> enumsRepl;
 	protected static Map<String, File> files;
 	protected static List<VaroSerializeObject> handler;
-	protected static final String NULL_REPLACE;
 
 	static {
-		NULL_REPLACE = "nullReplace";
-
 		handler = new ArrayList<VaroSerializeObject>();
 		enumsRepl = new HashMap<VaroSerializeable, String>();
 		configs = new HashMap<String, YamlConfiguration>();

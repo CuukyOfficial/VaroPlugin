@@ -14,7 +14,7 @@ public class VaroGameHandler extends VaroSerializeObject {
 	}
 
 	public VaroGameHandler() {
-		super(VaroGame.class, "/stats/game.yml");
+		super(VaroGame.class, "/stats/game5.yml");
 
 		load();
 

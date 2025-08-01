@@ -9,7 +9,7 @@ public class ReportHandler extends VaroSerializeObject {
 	}
 
 	public ReportHandler() {
-		super(Report.class, "/stats/reports.yml");
+		super(Report.class, "/stats/reports5.yml");
 
 		load();
 	}

@@ -5,7 +5,7 @@ import de.varoplugin.varo.serialize.VaroSerializeObject;
 public class SpawnHandler extends VaroSerializeObject {
 
 	public SpawnHandler() {
-		super(Spawn.class, "/stats/spawns.yml");
+		super(Spawn.class, "/stats/spawns5.yml");
 
 		load();
 	}

@@ -5,7 +5,7 @@ import de.varoplugin.varo.serialize.VaroSerializeObject;
 public class VaroTeamHandler extends VaroSerializeObject {
 
 	public VaroTeamHandler() {
-		super(VaroTeam.class, "/stats/teams.yml");
+		super(VaroTeam.class, "/stats/teams5.yml");
 
 		load();
 	}

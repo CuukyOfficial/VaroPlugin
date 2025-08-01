@@ -50,9 +50,6 @@ public class VaroDeserializer extends VaroSerializeHandler {
 
 					// CHECK FOR OTHER SERIALIZABLE OBJ
 					Object obj = section.get(s);
-					if (obj instanceof String)
-						if (((String) obj).equals(NULL_REPLACE))
-							obj = null;
 
 					VaroSerializeObject handl = getHandler(field.getType());
 					if (handl != null && obj != null) {

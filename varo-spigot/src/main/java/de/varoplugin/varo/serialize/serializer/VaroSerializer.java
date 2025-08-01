@@ -65,8 +65,6 @@ public class VaroSerializer extends VaroSerializeHandler {
 					if (field.getType() == Location.class) {
 						Location loc = (Location) obj;
 						if (loc.getWorld() == null) {
-							obj = NULL_REPLACE;
-							saveTo.set(saveUnder + "." + fieldIdent, NULL_REPLACE);
 							continue;
 						}
 
@@ -88,10 +86,9 @@ public class VaroSerializer extends VaroSerializeHandler {
 						new VaroSerializer(saveUnder + "." + fieldIdent, (VaroSerializeable) field.get(instance), saveTo);
 						continue;
 					}
-				} else
-					obj = NULL_REPLACE;
 
-				saveTo.set(saveUnder + "." + fieldIdent, (obj instanceof Enum ? getStringByEnum((VaroSerializeable) obj) : obj));
+					saveTo.set(saveUnder + "." + fieldIdent, (obj instanceof Enum ? getStringByEnum((VaroSerializeable) obj) : obj));
+				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 				return;
