@@ -2,6 +2,7 @@ package de.varoplugin.varo.game;
 
 import java.awt.Color;
 import java.io.File;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -42,7 +43,7 @@ import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.varo.spawns.sort.PlayerSort;
-import de.varoplugin.varo.threads.daily.checks.YouTubeCheck;
+import de.varoplugin.varo.tasks.checks.YouTubeCheck;
 import de.varoplugin.varo.utils.EventUtils;
 import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
@@ -61,8 +62,11 @@ public class VaroGame implements VaroSerializeable {
     @VaroSerializeField(path = "lastCoordsPost")
     private Date lastCoordsPost;
 
-    @VaroSerializeField(path = "lastDayTimer")
-    private Date lastDayTimer;
+    @VaroSerializeField(path = "startTimestamp")
+    private OffsetDateTime startTimestamp;
+
+    @VaroSerializeField(path = "lastDailyTimer")
+    private OffsetDateTime lastDailyTimer;
 
     @VaroSerializeField(path = "lobby")
     private Location lobby;
@@ -134,7 +138,7 @@ public class VaroGame implements VaroSerializeable {
         if (borderMinuteTimer != null)
             borderMinuteTimer.remove();
 
-        this.lastDayTimer = new Date();
+        this.startTimestamp = OffsetDateTime.now();
         this.startSequence = ConfigSetting.SURO_START.getValueAsBoolean() ? new SuroStart(this) : new VaroStart(this);
         this.startSequence.start();
     }
@@ -437,8 +441,12 @@ public class VaroGame implements VaroSerializeable {
         return lastCoordsPost;
     }
 
-    public Date getLastDayTimer() {
-        return lastDayTimer;
+    public OffsetDateTime getStartTimestamp() {
+        return startTimestamp;
+    }
+
+    public OffsetDateTime getLastDayTimer() {
+        return lastDailyTimer;
     }
 
     public Location getLobby() {
@@ -493,8 +501,8 @@ public class VaroGame implements VaroSerializeable {
         this.lastCoordsPost = lastCoordsPost;
     }
 
-    public void setLastDayTimer(Date lastDayTimer) {
-        this.lastDayTimer = lastDayTimer;
+    public void setLastDayTimer(OffsetDateTime lastDayTimer) {
+        this.lastDailyTimer = lastDayTimer;
     }
 
     public void setLobby(Location lobby) {
@@ -511,6 +519,12 @@ public class VaroGame implements VaroSerializeable {
 
     @Override
     public void onDeserializeEnd() {
+        if (this.hasStarted() && this.startTimestamp == null) {
+            // upgrade from v4 to v5
+            Main.getInstance().getLogger().warning("Missing start timestamp");
+            this.startTimestamp = OffsetDateTime.now();
+        }
+
         if (gamestate == GameState.STARTED)
             borderMinuteTimer = new BorderDecreaseMinuteTimer();
 

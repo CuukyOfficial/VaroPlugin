@@ -2,6 +2,7 @@ package de.varoplugin.varo.serialize.serializer;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -111,6 +112,9 @@ public class VaroDeserializer extends VaroSerializeHandler {
 					
 					if (field.getType() == BigDecimal.class && obj instanceof String)
                         obj = new BigDecimal((String) obj);
+
+					if (field.getType() == OffsetDateTime.class && obj instanceof String)
+						obj = OffsetDateTime.parse((String) obj);
 
 					field.set(instance, obj);
 				} catch (IllegalArgumentException | IllegalAccessException | ExceptionInInitializerError | NullPointerException e) {

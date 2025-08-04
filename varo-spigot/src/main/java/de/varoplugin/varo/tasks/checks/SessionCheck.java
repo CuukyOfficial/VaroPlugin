@@ -1,4 +1,4 @@
-package de.varoplugin.varo.threads.daily.checks;
+package de.varoplugin.varo.tasks.checks;
 
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -6,10 +6,10 @@ import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.VaroPlayerDisconnect;
 import de.varoplugin.varo.player.event.BukkitEventType;
-import de.varoplugin.varo.threads.daily.Checker;
+import de.varoplugin.varo.tasks.Task;
 import io.github.almightysatan.slams.Placeholder;
 
-public class SessionCheck extends Checker {
+public class SessionCheck implements Task {
 
 	@Override
 	public void check() {

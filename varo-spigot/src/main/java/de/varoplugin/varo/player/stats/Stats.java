@@ -1,21 +1,5 @@
 package de.varoplugin.varo.player.stats;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
-import org.apache.commons.lang3.time.DateUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.varoplugin.cfw.location.SimpleLocationFormat;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -24,6 +8,7 @@ import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.api.player.PlayerStateChangeEvent;
 import de.varoplugin.varo.api.player.strike.PlayerStrikeReceiveEvent;
 import de.varoplugin.varo.api.player.strike.PlayerStrikeRemoveEvent;
+import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.event.VaroEvent;
 import de.varoplugin.varo.event.VaroEventType;
@@ -32,6 +17,7 @@ import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
 import de.varoplugin.varo.player.stats.stat.Strike;
+import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
 import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
 import de.varoplugin.varo.player.stats.stat.inventory.InventoryBackup;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable;
@@ -39,6 +25,20 @@ import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.varo.spawns.Spawn;
 import de.varoplugin.varo.utils.EventUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Stats implements VaroSerializeable {
 
@@ -75,8 +75,8 @@ public class Stats implements VaroSerializeable {
 	private boolean onlineAfterStart;
 	@VaroSerializeField(path = "firstTimeJoined")
 	private Date firstTimeJoined;
-	@VaroSerializeField(path = "lastJoined")
-	private Date lastJoined;
+	@VaroSerializeField(path = "lastJoined5")
+	private OffsetDateTime lastJoined;
 	@VaroSerializeField(path = "lastEnemyContact")
 	private Date lastEnemyContact;
 	@VaroSerializeField(path = "diedAt")
@@ -234,7 +234,7 @@ public class Stats implements VaroSerializeable {
 		return lastEnemyContact;
 	}
 
-	public Date getLastJoined() {
+	public OffsetDateTime getLastJoined() {
 		return lastJoined;
 	}
 
@@ -451,7 +451,7 @@ public class Stats implements VaroSerializeable {
 
 		onlineAfterStart = owner.isOnline();
 		firstTimeJoined = new Date();
-		lastJoined = new Date();
+		lastJoined = OffsetDateTime.now();
 		lastEnemyContact = new Date();
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() > 0) {
 			sessions = ConfigSetting.SESSIONS_PER_DAY.getValueAsInt();
@@ -578,7 +578,7 @@ public class Stats implements VaroSerializeable {
 		this.lastEnemyContact = lastEnemyContact;
 	}
 
-	public void setLastJoined(Date lastJoined) {
+	public void setLastJoined(OffsetDateTime lastJoined) {
 		this.lastJoined = lastJoined;
 	}
 

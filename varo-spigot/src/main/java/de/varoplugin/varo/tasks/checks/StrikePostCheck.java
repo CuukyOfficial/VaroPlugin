@@ -1,10 +1,10 @@
-package de.varoplugin.varo.threads.daily.checks;
+package de.varoplugin.varo.tasks.checks;
 
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.Strike;
-import de.varoplugin.varo.threads.daily.Checker;
+import de.varoplugin.varo.tasks.Task;
 
-public class StrikePostCheck extends Checker {
+public class StrikePostCheck implements Task {
 
 	@Override
 	public void check() {

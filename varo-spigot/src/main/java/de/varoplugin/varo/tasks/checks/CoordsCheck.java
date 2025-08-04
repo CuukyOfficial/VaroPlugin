@@ -1,4 +1,4 @@
-package de.varoplugin.varo.threads.daily.checks;
+package de.varoplugin.varo.tasks.checks;
 
 import java.util.Date;
 
@@ -10,9 +10,9 @@ import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
-import de.varoplugin.varo.threads.daily.Checker;
+import de.varoplugin.varo.tasks.Task;
 
-public class CoordsCheck extends Checker {
+public class CoordsCheck implements Task {
     
     private static final LocationFormat LOCATION_FORMAT = new SimpleLocationFormat("X:x Y:y Z:z in world");
 

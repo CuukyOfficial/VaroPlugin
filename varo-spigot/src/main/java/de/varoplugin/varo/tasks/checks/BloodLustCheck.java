@@ -1,16 +1,16 @@
-package de.varoplugin.varo.threads.daily.checks;
+package de.varoplugin.varo.tasks.checks;
 
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
-import de.varoplugin.varo.threads.daily.Checker;
+import de.varoplugin.varo.tasks.Task;
 import io.github.almightysatan.slams.Placeholder;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 
-public class BloodLustCheck extends Checker {
+public class BloodLustCheck implements Task {
 
 	@Override
 	public void check() {

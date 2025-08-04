@@ -11,6 +11,7 @@ import de.varoplugin.varo.player.stats.Stats;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class JoinEvent extends BukkitEvent {
@@ -26,7 +27,7 @@ public class JoinEvent extends BukkitEvent {
 		if (stats.getFirstTimeJoined() == null)
 			stats.setFirstTimeJoined(new Date());
 
-		stats.setLastJoined(new Date());
+		stats.setLastJoined(OffsetDateTime.now());
 		stats.setLastLocation(player.getPlayer().getLocation());
 		
 		if(!stats.isOnlineAfterStart()) {

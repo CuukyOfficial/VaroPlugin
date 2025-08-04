@@ -39,7 +39,7 @@ import de.varoplugin.varo.report.ReportHandler;
 import de.varoplugin.varo.serialize.VaroSerializeHandler;
 import de.varoplugin.varo.spawns.SpawnHandler;
 import de.varoplugin.varo.team.VaroTeamHandler;
-import de.varoplugin.varo.threads.daily.DailyTimer;
+import de.varoplugin.varo.tasks.DailyTasks;
 import de.varoplugin.varo.utils.OutSideTimeChecker;
 import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.InvalidTypeException;
@@ -65,7 +65,7 @@ public class DataManager {
 	private MySQLClient mysqlClient;
 	private VaroListManager listManager;
 	private Broadcaster broadcaster;
-	private DailyTimer dailyTimer;
+	private DailyTasks dailyTimer;
 	private CustomCommandManager customCommandManager;
 	private EnchantmentManager enchantmentManager;
 	private final SortedSet<VaroBackup> backups = new TreeSet<>();
@@ -110,7 +110,7 @@ public class DataManager {
 
         Messages.load();
 
-        this.dailyTimer = new DailyTimer();
+        this.dailyTimer = new DailyTasks();
 
 		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
 				&& !VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
@@ -263,7 +263,7 @@ public class DataManager {
 		return this.varoTeamHandler;
 	}
 
-	public DailyTimer getDailyTimer() {
+	public DailyTasks getDailyTimer() {
 		return this.dailyTimer;
 	}
 	

@@ -46,7 +46,7 @@ public class DebugGUI extends VaroInventory {
         });
 
         addItem(13, ItemBuilder.material(XMaterial.DAYLIGHT_DETECTOR).displayName("§cDo daily timer").lore("§7Fuehrt die Dinge aus, die sonst immer", "§7Nachts ausgefuehrt werden, wie Sessionreset").build(), (event) -> {
-            Main.getDataManager().getDailyTimer().doDailyChecks();
+            Main.getDataManager().getDailyTimer().doDailyTasks();
             getPlayer().sendMessage(Main.getPrefix() + "§aErfolgreich!");
         });
 

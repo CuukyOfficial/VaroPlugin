@@ -1,4 +1,4 @@
-package de.varoplugin.varo.threads.daily.checks;
+package de.varoplugin.varo.tasks.checks;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -7,9 +7,8 @@ import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
-import de.varoplugin.varo.player.stats.stat.Strike;
 import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
-import de.varoplugin.varo.threads.daily.Checker;
+import de.varoplugin.varo.tasks.Task;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class YouTubeCheck extends Checker {
+public class YouTubeCheck implements Task {
 
 	@Override
 	public void check() {

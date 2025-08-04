@@ -2,6 +2,7 @@ package de.varoplugin.varo.serialize.serializer;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,6 +79,9 @@ public class VaroSerializer extends VaroSerializeHandler {
 					
 					if (field.getType() == BigDecimal.class)
 					    obj = ((BigDecimal) obj).toPlainString();
+
+					if (field.getType() == OffsetDateTime.class)
+						obj = ((OffsetDateTime) obj).toString();
 
 					VaroSerializeObject handl = getHandler(obj.getClass());
 					if (handl != null) {
