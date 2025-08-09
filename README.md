@@ -20,7 +20,7 @@ This project probably describes my progress in coding - not the skills I have to
 - Discord Bot
 
 # Requirements
-- Spigot/Paper 1.7.10+
+- Spigot/Paper 1.8.8+
 - Java 8+
 
 # Need Help?
