@@ -1,0 +1,18 @@
+# Die Liste aller Placeholder kannst du mit /varo ph aufrufen!
+header: '%projectname%'
+scoreboard:
+- '%space%'
+- '&7Team&8:'
+- ' %colorcode%%team%'
+- '%space%'
+- '&7Kills&8:'
+- ' %colorcode%%kills%'
+- '%space%'
+- '&7Border&8:'
+- ' %colorcode%%bordersize%'
+- '%space%'
+- '&7Top-&6Player&8:'
+- '&61. &7%topplayer-1% &c%topplayerkills-1%'
+- '&72. &7%topplayer-2% &c%topplayerkills-2%'
+- '&c3. &7%topplayer-3% &c%topplayerkills-3%'
+- '%space%'

@@ -1,0 +1,160 @@
+/* 
+ * VaroPlugin
+ * Copyright (C) 2022 Cuuky, Almighty-Satan
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+package de.varoplugin.varo.data;
+
+import de.varoplugin.cfw.dependencies.BukkitJarLoader;
+import de.varoplugin.cfw.dependencies.Dependency;
+import de.varoplugin.cfw.dependencies.JarLoader;
+import de.varoplugin.varo.Main;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
+import java.util.logging.Level;
+
+public class Dependencies {
+
+    protected static final String LIB_FOLDER = "plugins/Varo/libs";
+
+    public static final String MAVEN_CENTRAL = "https://repo1.maven.org/maven2/";
+
+    static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
+
+    public static final Collection<VaroDependency> DEPENDENCIES = new ArrayList<>();
+
+    static {
+        DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTRAL, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
+        DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTRAL, () -> !doesClassExist("com.google.gson.JsonElement")));
+        DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("commons-lang3", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTRAL));
+    }
+
+    public static void loadRequired() {
+        try {
+            JarLoader loader = new BukkitJarLoader();
+            for (VaroDependency lib : DEPENDENCIES)
+                if (lib.shouldLoad()) {
+                    Main.getInstance().getLogger().info("Loading dependency " + lib.getName());
+                    lib.load();
+                    lib.init(loader);
+                }
+        } catch (Throwable e) {
+            Main.getInstance().getLogger().log(Level.SEVERE, "Unable to load dependency", e);
+        }
+    }
+
+    public static class VaroDependency {
+
+        private final String name;
+        private final String[] mavenCoordinates;
+        private final Dependency[] dependencies;
+        private final LoadPolicy loadPolicy;
+
+        VaroDependency(String name, String repo, LoadPolicy loadPolicy) {
+            this.name = name;
+            this.loadPolicy = loadPolicy;
+            // TODO this should be cleaned up and optimized
+            List<String> mavenCoordinates = new ArrayList<>();
+            List<Dependency> dependencies = new ArrayList<>();
+            try (Scanner scanner = new Scanner(DEPENDENCY_FILE.openStream())) {
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] split = line.split(":");
+                    if (split.length != 5)
+                        throw new RuntimeException();
+                    if (split[0].equals(name)) {
+                        mavenCoordinates.add(split[1] + ":" + split[2] + ":" + split[3]);
+                        dependencies.add(Dependency.of(split[2] + "-" + split[3], LIB_FOLDER,
+                                repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
+                    }
+                }
+            } catch (Throwable t) {
+                Main.getInstance().getLogger().log(Level.SEVERE, "Unable to read dependency file", t);
+            }
+            if (dependencies.isEmpty())
+                throw new RuntimeException("Missing dependency information for " + name);
+            this.mavenCoordinates = mavenCoordinates.toArray(new String[mavenCoordinates.size()]);
+            this.dependencies = dependencies.toArray(new Dependency[dependencies.size()]);
+        }
+
+        VaroDependency(String name, String repo) {
+            this(name, repo, () -> true);
+        }
+
+        public void load() throws Throwable {
+            for (Dependency dependency : this.dependencies)
+                dependency.load();
+        }
+
+        public void init(JarLoader loader) throws Throwable {
+            for (Dependency dependency : this.dependencies)
+                loader.load(dependency.getFile());
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        public boolean shouldLoad() {
+            return this.loadPolicy.shouldLoad();
+        }
+
+        public URL[] getUrls() throws MalformedURLException {
+            URL[] urls = new URL[this.dependencies.length];
+            for (int i = 0; i < urls.length; i++)
+                urls[i] = this.dependencies[i].getUrl();
+            return urls;
+        }
+
+        public String[] getMavenCoordinates() {
+            return this.mavenCoordinates;
+        }
+        
+        public File[] getFiles() {
+            return Arrays.stream(this.dependencies).map(Dependency::getFile).toArray(File[]::new);
+        }
+    }
+
+    @FunctionalInterface
+    private interface DependencySupplier {
+        Dependency get(String name, String folder, String link, String hash);
+    }
+
+    private interface LoadPolicy {
+        boolean shouldLoad();
+    }
+
+    public static boolean doesClassExist(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+}
