@@ -46,7 +46,7 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 }
 
 dependencies {
-    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-25", "CFW")
+    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-26", "CFW")
 
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")

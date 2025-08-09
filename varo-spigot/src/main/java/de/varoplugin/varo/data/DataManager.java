@@ -81,9 +81,6 @@ public class DataManager {
 
 	public void preLoad() {
 		this.configHandler = new ConfigHandler();
-		if (!Main.isPaper()) {
-		    Dependencies.loadOptional(this.instance);
-		}
 		this.defaultNameTagGroup = new NameTagGroup();
 		this.spectatorNameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();

@@ -103,7 +103,7 @@ public class Main extends JavaPlugin {
     		this.getLogger().log(Level.INFO, "");
     		
     		if (!isPaper()) {
-    		    Dependencies.loadRequired(this);
+    		    Dependencies.loadRequired();
     		}
 
     		VaroConfig.load();

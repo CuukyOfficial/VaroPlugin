@@ -18,61 +18,53 @@
 
 package de.varoplugin.varo.data;
 
-import java.io.IOException;
+import de.varoplugin.cfw.dependencies.BukkitJarLoader;
+import de.varoplugin.cfw.dependencies.Dependency;
+import de.varoplugin.cfw.dependencies.JarLoader;
+import de.varoplugin.varo.Main;
+
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Level;
 
-import org.bukkit.plugin.Plugin;
-
-import de.varoplugin.cfw.dependencies.Dependency;
-import de.varoplugin.cfw.dependencies.JarDependency;
-
 public class Dependencies {
-    
+
     protected static final String LIB_FOLDER = "plugins/Varo/libs";
 
     public static final String MAVEN_CENTRAL = "https://repo1.maven.org/maven2/";
 
     static final URL DEPENDENCY_FILE = Dependencies.class.getClassLoader().getResource("dependencies.txt");
 
-    public static final Collection<VaroDependency> REQUIRED_DEPENDENCIES = new ArrayList<>();
-    public static final Collection<VaroDependency> OPTIONAL_DEPENDENCIES = new ArrayList<>();
+    public static final Collection<VaroDependency> DEPENDENCIES = new ArrayList<>();
 
     static {
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTRAL, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTRAL, () -> !doesClassExist("com.google.gson.JsonElement")));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("commons-lang3", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTRAL));
-        REQUIRED_DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTRAL));
-    }
-    
-    public static void loadRequired(Plugin plugin) {
-        for (VaroDependency lib : REQUIRED_DEPENDENCIES)
-            load(plugin, lib);
-    }
-    
-    public static void loadOptional(Plugin plugin) {
-        for (VaroDependency lib : OPTIONAL_DEPENDENCIES)
-            load(plugin, lib);
+        DEPENDENCIES.add(new VaroDependency("slams-standalone", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("slams-parser-jaskl", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("slams-papi", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("jaskl-yaml", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("guava", MAVEN_CENTRAL, () -> !doesClassExist("com.google.common.cache.AbstractLoadingCache")));
+        DEPENDENCIES.add(new VaroDependency("XSeries", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("gson", MAVEN_CENTRAL, () -> !doesClassExist("com.google.gson.JsonElement")));
+        DEPENDENCIES.add(new VaroDependency("commons-collections4", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("commons-lang3", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTRAL));
     }
 
-    private static void load(Plugin plugin, VaroDependency dependency) {
+    public static void loadRequired() {
         try {
-            dependency.load(plugin);
+            JarLoader loader = new BukkitJarLoader();
+            for (VaroDependency lib : DEPENDENCIES)
+                if (lib.shouldLoad()) {
+                    Main.getInstance().getLogger().info("Loading dependency " + lib.getName());
+                    lib.load();
+                    lib.init(loader);
+                }
         } catch (Throwable e) {
-            plugin.getLogger().log(Level.SEVERE, "Unable to load dependency", e);
+            Main.getInstance().getLogger().log(Level.SEVERE, "Unable to load dependency", e);
         }
     }
 
@@ -94,17 +86,18 @@ public class Dependencies {
                     String line = scanner.nextLine();
                     String[] split = line.split(":");
                     if (split.length != 5)
-                        throw new Error();
+                        throw new RuntimeException();
                     if (split[0].equals(name)) {
                         mavenCoordinates.add(split[1] + ":" + split[2] + ":" + split[3]);
-                        dependencies.add(new JarDependency(split[2] + "-" + split[3], LIB_FOLDER, repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
+                        dependencies.add(Dependency.of(split[2] + "-" + split[3], LIB_FOLDER,
+                                repo + split[1].replace('.', '/') + "/" + split[2] + "/" + split[3] + "/" + split[2] + "-" + split[3] + ".jar", split[4]));
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Throwable t) {
+                Main.getInstance().getLogger().log(Level.SEVERE, "Unable to read dependency file", t);
             }
             if (dependencies.isEmpty())
-                throw new Error("Missing dependency information for " + name);
+                throw new RuntimeException("Missing dependency information for " + name);
             this.mavenCoordinates = mavenCoordinates.toArray(new String[mavenCoordinates.size()]);
             this.dependencies = dependencies.toArray(new Dependency[dependencies.size()]);
         }
@@ -113,14 +106,22 @@ public class Dependencies {
             this(name, repo, () -> true);
         }
 
-        public void load(Plugin plugin) throws Throwable {
-            if (this.loadPolicy.shouldLoad()) {
-                for (Dependency dependency : this.dependencies) {
-                    plugin.getLogger().info("Loading dependency " + dependency.getName());
-                    dependency.load(plugin);
-                }
-            } else
-                plugin.getLogger().info("Dependency " + this.name + " is not required");
+        public void load() throws Throwable {
+            for (Dependency dependency : this.dependencies)
+                dependency.load();
+        }
+
+        public void init(JarLoader loader) throws Throwable {
+            for (Dependency dependency : this.dependencies)
+                loader.load(dependency.getFile());
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        public boolean shouldLoad() {
+            return this.loadPolicy.shouldLoad();
         }
 
         public URL[] getUrls() throws MalformedURLException {
@@ -129,9 +130,13 @@ public class Dependencies {
                 urls[i] = this.dependencies[i].getUrl();
             return urls;
         }
-        
+
         public String[] getMavenCoordinates() {
             return this.mavenCoordinates;
+        }
+        
+        public File[] getFiles() {
+            return Arrays.stream(this.dependencies).map(Dependency::getFile).toArray(File[]::new);
         }
     }
 

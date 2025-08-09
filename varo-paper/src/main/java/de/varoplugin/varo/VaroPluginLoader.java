@@ -18,10 +18,11 @@
 
 package de.varoplugin.varo;
 
+import java.io.File;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
+import io.papermc.paper.plugin.loader.library.impl.JarLibrary;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.graph.Exclusion;
@@ -42,18 +43,16 @@ public class VaroPluginLoader implements PluginLoader {
     public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
         classpathBuilder.getContext().getLogger().info("Loading Varo dependencies...");
 
-        MavenLibraryResolver resolver = new MavenLibraryResolver();
-        addDependencies(resolver, Dependencies.REQUIRED_DEPENDENCIES);
-        addDependencies(resolver, Dependencies.OPTIONAL_DEPENDENCIES);
-        
-        resolver.addRepository(new RemoteRepository.Builder("central", "default", Dependencies.MAVEN_CENTRAL).build());
-        classpathBuilder.addLibrary(resolver);
-    }
-    
-    private void addDependencies(MavenLibraryResolver resolver, Collection<VaroDependency> dependencies) {
-        for (var dependency : dependencies) {
-            for (var coords : dependency.getMavenCoordinates())
-                resolver.addDependency(new Dependency(new DefaultArtifact(coords), null, false, EXCLUDE_TRANSITIVE));
+        try {
+            for (VaroDependency lib : Dependencies.DEPENDENCIES)
+                if (lib.shouldLoad()) {
+                    classpathBuilder.getContext().getLogger().info("Loading dependency {}", lib.getName());
+                    lib.load();
+                    for (File file : lib.getFiles())
+                        classpathBuilder.addLibrary(new JarLibrary(file.toPath()));
+                }
+        } catch (Throwable t) {
+            classpathBuilder.getContext().getLogger().error("Unable to load dependencies", t);
         }
     }
 }
