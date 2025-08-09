@@ -24,18 +24,23 @@ This project probably describes my progress in coding - not the skills I have to
 - Java 8+
 
 # Need Help?
+- [Documentation (English)](https://almighty-satan.github.io/varoplugin-docs/)
 - [Discord (German + English)](https://discord.varoplugin.de/)
 - [GitHub (English)](https://github.com/CuukyOfficial/VaroPlugin/issues)
-- [Documentation (German)](https://docs.varoplugin.de/)
-- [YouTube Video (German, outdated)](https://www.youtube.com/watch?v=nNsZ7CB1l54) 
+- [Old Documentation (German, outdated)](https://docs.varoplugin.de/)
+- [Old YouTube Video (German, outdated)](https://www.youtube.com/watch?v=nNsZ7CB1l54) 
 
-# Links
+# Download
 - [SpigotMC](https://varoplugin.de/)
+- [Modrinth](https://modrinth.com/plugin/varo)
+- [Hangar](https://hangar.papermc.io/VaroPlugin/Varo)
 - [Maven Repository](https://repo.varoplugin.de/)
-- [PayPal](https://www.paypal.me/Cuuky)
-- [TipeeeStream](https://www.tipeeestream.com/cuuky/donation)
 
 # Notice
 Upon startup, this plugin will automatically download dependencies from [maven central](https://repo1.maven.org/maven2/).  
 It also contains an auto updater that regularly checks for new versions by contacting the [spiget API](https://spiget.org/). It does however NOT download new versions without user interaction.  
 This plugin uploads anonymized usage data to [bstats](https://bstats.org/). The resulting statistics are publicly available [here](https://bstats.org/plugin/bukkit/Varo/6639). This feature can be disabled by a server administrator in the `plugins/bStats/config.yml` configuration file.
+
+# Support Cuuky
+- [PayPal](https://www.paypal.me/Cuuky)
+- [TipeeeStream](https://www.tipeeestream.com/cuuky/donation)
