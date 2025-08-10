@@ -99,7 +99,7 @@ public class VaroDiscordBot implements VaroBot {
             return;
 
         try {
-            jda.shutdownNow();
+            jda.shutdown();
             if (duration > 0 && timeUnit != null)
                 jda.awaitShutdown(duration, timeUnit);
         } catch (Throwable t) {
