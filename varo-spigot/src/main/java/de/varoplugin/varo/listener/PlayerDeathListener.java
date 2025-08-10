@@ -56,7 +56,7 @@ public class PlayerDeathListener implements Listener {
                 hit.over();
 
             String cause = deadPlayer.getLastDamageCause() != null ? deadPlayer.getLastDamageCause().getCause().toString() : "?";
-            if (deadP.getTeam() == null || deadP.getTeam().getLives().compareTo(BigDecimal.ONE) >= 0) {
+            if (deadP.getTeam() == null || deadP.getTeam().getLives().compareTo(BigDecimal.ONE) < 0) {
                 if (killerPlayer == null) {
                     Messages.LOG_DEATH_ELIMINATED_OTHER.log(LogType.DEATH, new Contexts.DeathContext(deadP, cause));
                     Messages.PLAYER_DEATH_ELIMINATED_OTHER.broadcast(new Contexts.DeathContext(deadP, cause));
