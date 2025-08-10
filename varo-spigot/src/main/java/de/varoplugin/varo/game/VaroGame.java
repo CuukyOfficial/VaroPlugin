@@ -267,7 +267,7 @@ public class VaroGame implements VaroSerializeable {
         long resultChannelId = ConfigSetting.DISCORDBOT_RESULT_CHANNELID.getValueAsLong();
         VaroDiscordBot db = Main.getBotLauncher().getDiscordbot();
         if (db != null && db.isEnabled() && resultChannelId != 0 && resultChannelId != -1) {
-            db.sendMessage((":first_place: " + first + (second != null ? "\n" + ":second_place: " + second : "") + (third != null ? "\n" + ":third_place: " + third : "")) + "\n\nHerzlichen Glueckwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, resultChannelId);
+            db.sendMessage(("\uD83E\uDD47 " + first + (!second.isEmpty() ? "\n" + "\uD83E\uDD48 " + second : "") + (!third.isEmpty() ? "\n" + "\uD83E\uDD49 " + third : "")) + "\n\nHerzlichen Glückwunsch!", "Das Projekt ist nun vorbei!", Color.MAGENTA, resultChannelId);
 
             File file = new File("plugins/Varo/logs", "logs.yml");
             if (file.exists())
