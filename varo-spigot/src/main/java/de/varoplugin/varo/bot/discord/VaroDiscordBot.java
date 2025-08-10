@@ -28,6 +28,7 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.FileUpload;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.internal.utils.JDALogger;
+import net.md_5.bungee.api.ChatColor;
 
 public class VaroDiscordBot implements VaroBot {
 
@@ -115,7 +116,7 @@ public class VaroDiscordBot implements VaroBot {
     }
 
     private boolean sendMessage(String message, String author, String authorUrl, String authorIconUrl, File file, Color color, MessageChannel channel) {
-        String escapedMessage = message.replace("_", "\\_");
+        String escapedMessage = ChatColor.stripColor(message.replace("_", "\\_"));
         try {
             MessageCreateAction action;
             if (ConfigSetting.DISCORDBOT_USE_EMBEDS.getValueAsBoolean()) {
