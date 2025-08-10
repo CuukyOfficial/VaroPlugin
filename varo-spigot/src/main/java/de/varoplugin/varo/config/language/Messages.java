@@ -439,7 +439,7 @@ public final class Messages {
             public void broadcast(VaroPlayer subject, PlaceholderResolver placeholders) {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
-                        this.send(player, placeholders);
+                        this.send(player, subject, placeholders);
                     Bukkit.getConsoleSender().sendMessage(message.value(new PlayerContext(subject), placeholders));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
@@ -450,7 +450,7 @@ public final class Messages {
             public void broadcast(VaroPlayer subject) {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
-                        this.send(player);
+                        this.send(player, subject);
                     Bukkit.getConsoleSender().sendMessage(message.value(new PlayerContext(subject)));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
