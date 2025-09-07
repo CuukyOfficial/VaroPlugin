@@ -56,7 +56,7 @@ public class VaroHeartbeat implements Runnable {
 
 					int countdown = Math.max(vp.getStats().getCountdown() - 1, 0);
 
-					boolean massRecordingEnabled = !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled();
+					boolean massRecordingEnabled = VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled();
 					if (countdown == playTime - protectionTime - 1 && !game.isFirstTime() && !massRecordingEnabled)
 						Messages.PLAYER_JOIN_PROTECTION_END.broadcast(vp);
 
