@@ -238,18 +238,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 	@Override
 	public void onDeserializeEnd() {
-		this.player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
 		this.guiSound = this.guiSoundName != null ? XSound.of(this.guiSoundName).orElse(null) : null;
-		if (this.player != null)
-			setPlayer(this.player);
-		if (isOnline()) {
-			if (getStats().isSpectator() || isAdminIgnore())
-				setSpectacting();
-
-			setNormalAttackSpeed();
-			LobbyItem.giveItems(player);
-		} else if (isAdminIgnore())
-			adminIgnore = false;
 
 		this.stats.setOwner(this);
 	}
@@ -258,6 +247,20 @@ public class VaroPlayer implements VaroSerializeable {
 	public void onSerializeStart() {
 		this.guiSoundName = this.guiSound != null ? this.guiSound.name() : null;
 	}
+    
+    public void initPlayer() {
+        Player player = Bukkit.getPlayer(getRealUUID()) != null ? Bukkit.getPlayer(getRealUUID()) : null;
+        if (player != null)
+            setPlayer(player);
+        if (isOnline()) {
+            if (getStats().isSpectator() || isAdminIgnore())
+                setSpectacting();
+
+            setNormalAttackSpeed();
+            LobbyItem.giveItems(this, player);
+        } else if (isAdminIgnore())
+            adminIgnore = false;
+    }
 
 	public void onEvent(BukkitEventType type) {
 		new BukkitEvent(this, type);

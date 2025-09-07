@@ -34,14 +34,17 @@ public class VaroPlayerHandler extends VaroSerializeObject {
 		super(VaroPlayer.class, "/stats/players5.yml");
 
 		load();
-
-		for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers())
-			if (VaroPlayer.getPlayer(player) == null) {
-				VaroPlayer vp = new VaroPlayer(player);
-				vp.register();
-				vp.setPlayer(player);
-			}
 	}
+    
+    public void initPlayers() {
+        VaroPlayer.getVaroPlayers().forEach(VaroPlayer::initPlayer);
+        for (Player player : VersionUtils.getVersionAdapter().getOnlinePlayers())
+            if (VaroPlayer.getPlayer(player) == null) {
+                VaroPlayer vp = new VaroPlayer(player);
+                vp.register();
+                vp.initPlayer();
+            }
+    }
 
 	@Override
 	public void onSave() {

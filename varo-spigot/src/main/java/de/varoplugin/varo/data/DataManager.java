@@ -91,8 +91,6 @@ public class DataManager {
 		this.varoPlayerHandler = new VaroPlayerHandler();
 		this.varoTeamHandler = new VaroTeamHandler();
 		this.varoGameHandler = new VaroGameHandler();
-		if (!Main.getVaroGame().hasStarted())
-			VaroPlayer.getOnlinePlayer().forEach(LobbyItem::giveItems);
 		this.spawnHandler = new SpawnHandler();
 		this.reportHandler = new ReportHandler();
 		this.alertHandler = new AlertHandler();
@@ -106,6 +104,8 @@ public class DataManager {
 		this.loadBackups();
 
         Messages.load();
+        
+        this.varoPlayerHandler.initPlayers();
 
         this.dailyTimer = new DailyTasks();
 
