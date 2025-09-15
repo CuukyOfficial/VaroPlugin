@@ -30,18 +30,13 @@ public class EnchantmentCommand extends VaroCommand {
 			return;
 		}
 
-		if (args.length == 0) {
+		if (args.length != 1) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Enchantments §7-----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7[Remove / Add / List]");
 			sender.sendMessage(Main.getPrefix());
-			sender.sendMessage(Main.getPrefix() + "§7Dieser Command fuegt alle Verzauberungungen des Items, das du in der Hand haeltst, der Liste hinzu.");
-			sender.sendMessage(Main.getPrefix() + "§7Alternativ sind auch Buecher moeglich");
+			sender.sendMessage(Main.getPrefix() + "§7Dieser Command blockiert alle Verzauberungungen des Items das du in der Hand hältst.");
+			sender.sendMessage(Main.getPrefix() + "§7Alternativ sind auch Buecher möglich");
 			sender.sendMessage(Main.getPrefix() + "§7--------------------");
-			return;
-		}
-
-		if (args.length != 0) {
-			sender.sendMessage(Main.getPrefix() + "Falsche Argumente! " + Main.getColorCode() + label + " enchant");
 			return;
 		}
 
@@ -65,7 +60,7 @@ public class EnchantmentCommand extends VaroCommand {
 		}
 
 		ItemStack item = player.getItemInHand();
-		Map<Enchantment, Integer> encs = null;
+		Map<Enchantment, Integer> encs;
 		if (item.getItemMeta() instanceof EnchantmentStorageMeta) {
 			EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
 			encs = meta.getStoredEnchants();
@@ -77,13 +72,13 @@ public class EnchantmentCommand extends VaroCommand {
 			return;
 		}
 
-		if (args[0].contains("add")) {
+		if (args[0].equalsIgnoreCase("add")) {
 		    Main.getDataManager().getEnchantmentManager().blockEnchantments(encs.keySet().toArray(new Enchantment[0]));
 		    sender.sendMessage(Main.getPrefix() + "Verzauberungen erfolgreich blockiert!");
 		} else if (args[0].equalsIgnoreCase("remove")) {
 			Main.getDataManager().getEnchantmentManager().unblockEnchantments(encs.keySet().toArray(new Enchantment[0]));
             sender.sendMessage(Main.getPrefix() + "Verzauberungen erfolgreich freigegeben!");
 		} else
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7<enchantmentlist> [Remove / Add / List]");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + label + " enchantment §7[Remove / Add / List]");
 	}
 }
