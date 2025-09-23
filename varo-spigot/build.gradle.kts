@@ -55,16 +55,16 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
 
-	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.2.1") {
+	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.2.2") {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.slams:slams-parser-jaskl:1.2.1") {
+    runtimeDownload("io.github.almighty-satan.slams:slams-parser-jaskl:1.2.2") {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "slams-core")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.slams:slams-papi:1.2.1") {
+    runtimeDownload("io.github.almighty-satan.slams:slams-papi:1.2.2") {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "slams-core")
         exclude(module = "annotations")
