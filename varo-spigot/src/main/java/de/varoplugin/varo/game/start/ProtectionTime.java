@@ -1,5 +1,8 @@
 package de.varoplugin.varo.game.start;
 
+import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
+import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -8,48 +11,46 @@ import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import io.github.almightysatan.slams.PlaceholderResolver;
 
-public class ProtectionTime {
+public class ProtectionTime implements VaroSerializeable {
 
-	private BukkitTask scheduler;
+    @VaroSerializeField(path = "borderDecrease")
 	private int protectionTimer;
 
-	public ProtectionTime() {
-		startGeneralTimer(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt());
-	}
+    private BukkitTask scheduler;
+    
+    public ProtectionTime() {}
 
 	public ProtectionTime(int timer) {
-		startGeneralTimer(timer);
+        this.protectionTimer = timer;
+		startTimer();
 	}
 
-	private void startGeneralTimer(int timer) {
-		if (timer == 0) {
-			throw new IllegalArgumentException();
-		}
-		
-		this.protectionTimer = timer;
-		this.scheduler = new BukkitRunnable() {
+	public void startTimer() {
+		if (this.protectionTimer <= 0)
+            return;
 
-			@Override
-			public void run() {
-				if (!Main.getVaroGame().isRunning()) {
-					scheduler.cancel();
-					return;
-				}
+        this.scheduler = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+            if (!Main.getVaroGame().isRunning()) {
+                this.scheduler.cancel();
+                return;
+            }
 
-				if (ProtectionTime.this.protectionTimer == 0) {
-					Messages.PROTECTION_END.broadcast();
-					Main.getVaroGame().setProtection(null);
-					scheduler.cancel();
-				} else if (ProtectionTime.this.protectionTimer != timer
-				        && ProtectionTime.this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
-					Messages.PROTECTION_UPDATE.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
-				            .constant("protection-seconds", getCountdownSec(protectionTimer)).build());
-				}
+            if (this.protectionTimer == 0) {
+                Messages.PROTECTION_END.broadcast();
+                Main.getVaroGame().setProtection(null);
+                return;
+            } else if (this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
+                Messages.PROTECTION_UPDATE.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
+                        .constant("protection-seconds", getCountdownSec(protectionTimer)).build());
+            }
 
-				ProtectionTime.this.protectionTimer--;
-			}
-		}.runTaskTimer(Main.getInstance(), 1L, 20L);
+            this.protectionTimer--;
+        }, 0L, 20L);
 	}
+    
+    public void cancel() {
+        this.scheduler.cancel();
+    }
 
 	public String getCountdownMin(int sec) {
 		int min = sec / 60;
@@ -68,6 +69,11 @@ public class ProtectionTime {
 	 */
 	public int getProtectionTimer() {
 		return this.protectionTimer;
-
 	}
+
+    @Override
+    public void onDeserializeEnd() {}
+
+    @Override
+    public void onSerializeStart() {}
 }

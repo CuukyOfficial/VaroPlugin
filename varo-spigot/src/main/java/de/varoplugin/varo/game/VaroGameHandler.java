@@ -2,6 +2,7 @@ package de.varoplugin.varo.game;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.game.start.AutoStart;
+import de.varoplugin.varo.game.start.ProtectionTime;
 import de.varoplugin.varo.game.world.border.decrease.BorderDecreaseDayTimer;
 import de.varoplugin.varo.serialize.VaroSerializeObject;
 
@@ -11,6 +12,7 @@ public class VaroGameHandler extends VaroSerializeObject {
 		registerEnum(GameState.class);
 		registerClass(AutoStart.class);
 		registerClass(BorderDecreaseDayTimer.class);
+        registerClass(ProtectionTime.class);
 	}
 
 	public VaroGameHandler() {

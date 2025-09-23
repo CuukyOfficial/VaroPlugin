@@ -72,6 +72,9 @@ public class VaroGame implements VaroSerializeable {
     @VaroSerializeField(path = "projectTime")
     private long projectTime;
 
+    @VaroSerializeField(path = "protection")
+    private ProtectionTime protection;
+
     private boolean finaleJoin;
     private BukkitTask finaleStartScheduler;
     private int finaleCountdown;
@@ -79,7 +82,6 @@ public class VaroGame implements VaroSerializeable {
     private boolean firstTime;
     private StartSequence startSequence;
     private BorderDecreaseMinuteTimer borderMinuteTimer;
-    private ProtectionTime protection;
 
     private final TopScoreManager topScores;
     private final VaroWorldHandler varoWorldHandler;
@@ -165,7 +167,7 @@ public class VaroGame implements VaroSerializeable {
 
         if (ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt() > 0) {
             Messages.PROTECTION_START.broadcast();
-            Main.getVaroGame().setProtection(new ProtectionTime());
+            Main.getVaroGame().setProtection(new ProtectionTime(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
         }
 
         new BukkitRunnable() {
@@ -484,6 +486,8 @@ public class VaroGame implements VaroSerializeable {
     }
 
     public void setProtection(ProtectionTime protection) {
+        if (this.protection != null)
+            this.protection.cancel();
         this.protection = protection;
     }
 
@@ -491,6 +495,8 @@ public class VaroGame implements VaroSerializeable {
     public void onDeserializeEnd() {
         if (gamestate == GameState.STARTED)
             borderMinuteTimer = new BorderDecreaseMinuteTimer();
+        if (this.protection != null)
+            this.protection.startTimer();
     }
 
     @Override
