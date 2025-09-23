@@ -58,7 +58,7 @@ public class PlayerJoinListener implements Listener {
 				case TEST_BUILD:
 					if (!Main.getVaroGame().hasStarted())
 						vplayer.getVersionAdapter().sendTitle("§cTEST-BUILD", "");
-					player.sendMessage(Main.getPrefix() + "§cYou are running a test build! This version may be unstable! Please check our discord reguarly for updates " + Main.DISCORD_INVITE);
+					player.sendMessage(Main.getPrefix() + "§cYou are running a test build! This version may be unstable! Please check our Discord regularly for updates " + Main.DISCORD_INVITE);
 					break;
 				default:
 					break;
