@@ -481,6 +481,7 @@ public class VaroPlayer implements VaroSerializeable {
 		return adminIgnore;
 	}
 
+    // TODO join protection is disabled when play time is unlimited
 	public boolean isInProtection() {
 		if (VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 			return inMassProtectionTime;

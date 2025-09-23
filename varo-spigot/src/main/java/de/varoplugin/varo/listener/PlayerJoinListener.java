@@ -112,6 +112,7 @@ public class PlayerJoinListener implements Listener {
 				} else
 				    Messages.GAME_FINALE_NOFREEZE.send(vplayer);
 			} else if (!Main.getVaroGame().isPlayTimeLimited()) {
+                // For some reason VaroPlayer#isInProtection always returns false when play time is unlimited
 			    Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
 			    Messages.LOG_PLAYER_JOIN_NORMAL.log(LogType.JOIN_LEAVE, vplayer);
 			} else if (massRecording.isEnabled()) {
@@ -135,7 +136,10 @@ public class PlayerJoinListener implements Listener {
 				    Messages.LOG_PLAYER_RECONNECT.log(LogType.JOIN_LEAVE, vplayer);
 				}
 			} else if (!vplayer.getStats().hasTimeLeft()) {
-			    Messages.PLAYER_JOIN_PROTECTION.broadcast(vplayer);
+                if (ConfigSetting.JOIN_PROTECTIONTIME.getValueAsInt() > 0)
+			        Messages.PLAYER_JOIN_PROTECTION.broadcast(vplayer);
+                else
+                    Messages.PLAYER_JOIN_BROADCAST.broadcast(vplayer);
 			    Messages.LOG_PLAYER_JOINED.log(LogType.JOIN_LEAVE, vplayer);
 			} else {
 			    Messages.PLAYER_JOIN_REMAINING_TIME.broadcast(vplayer);
