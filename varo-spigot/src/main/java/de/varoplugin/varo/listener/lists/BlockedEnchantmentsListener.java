@@ -1,5 +1,10 @@
 package de.varoplugin.varo.listener.lists;
 
+import com.cryptomorin.xseries.inventory.BukkitInventoryView;
+import com.cryptomorin.xseries.inventory.XInventoryView;
+import de.varoplugin.varo.Main;
+import de.varoplugin.varo.config.language.Messages;
+import de.varoplugin.varo.player.VaroPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,12 +14,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-
-import de.varoplugin.varo.Main;
-import de.varoplugin.varo.config.language.Messages;
-import de.varoplugin.varo.player.VaroPlayer;
 
 public class BlockedEnchantmentsListener implements Listener {
 
@@ -42,7 +42,7 @@ public class BlockedEnchantmentsListener implements Listener {
 		if (!(inv instanceof AnvilInventory))
 			return;
 
-		InventoryView view = event.getView();
+        BukkitInventoryView view = XInventoryView.of(event.getView());
 		int rawSlot = event.getRawSlot();
 
 		if (rawSlot != view.convertSlot(rawSlot) || rawSlot != 2)
