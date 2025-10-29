@@ -25,8 +25,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    compileOnly("io.github.almighty-satan.jaskl:jaskl-yaml:1.6.4")
+    compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
+    compileOnly("io.github.almighty-satan.jaskl:jaskl-yaml:1.7.0")
     compileOnly(project(":varo-spigot"))
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
