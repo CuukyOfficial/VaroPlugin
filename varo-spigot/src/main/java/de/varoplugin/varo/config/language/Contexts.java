@@ -32,7 +32,7 @@ public interface Contexts {
         String language;
     }
 
-    abstract class VaroContext implements Context {
+    class VaroContext implements Context {
         private final MessageData messageData = new MessageData();
 
         @Override
@@ -44,7 +44,9 @@ public interface Contexts {
             return this.messageData;
         }
 
-        public abstract VaroContext copy();
+        public VaroContext copy() {
+            return new VaroContext();
+        }
     }
 
     class PlayerContext extends VaroContext {

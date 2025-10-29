@@ -473,7 +473,7 @@ public final class Messages {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
                         this.send(player);
-                    Bukkit.getConsoleSender().sendMessage(message.value());
+                    Bukkit.getConsoleSender().sendMessage(message.value(new VaroContext()));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -564,7 +564,7 @@ public final class Messages {
                     if (subject instanceof Player)
                         this.send(VaroPlayer.getPlayer((Player) subject));
                     else
-                        subject.sendMessage(message.value());
+                        subject.sendMessage(message.value(new VaroContext()));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -646,7 +646,7 @@ public final class Messages {
             @Override
             public String value() {
                 try {
-                    return message.value();
+                    return message.value(new VaroContext());
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return "MESSAGE_ERROR";
@@ -701,7 +701,7 @@ public final class Messages {
             @Override
             public void log(LogType type) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value());
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(new VaroContext()));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
