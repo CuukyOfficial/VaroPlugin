@@ -483,7 +483,7 @@ motd:
     §aJoin <projectname>§a!
     §7Have fun!
   closedHours: |-
-    §cYou can only join between §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cand §4<config-JoinSystems-onlyJoinBetweenHoursHour2>:<config-JoinSystems-onlyJoinBetweenHoursMinute2>
+    §cYou can only join between §4<pad-left:<config-JoinSystems-onlyJoinBetweenHoursHour1>:2:0>:<pad-left:<config-JoinSystems-onlyJoinBetweenHoursMinute1>:2:0> §cand §4<pad-left:<config-JoinSystems-onlyJoinBetweenHoursHour2>:2:0>:<pad-left:<config-JoinSystems-onlyJoinBetweenHoursMinute2>:2:0>
     §7Please try again later!
   closed: |-
     §cThe server is not yet available!

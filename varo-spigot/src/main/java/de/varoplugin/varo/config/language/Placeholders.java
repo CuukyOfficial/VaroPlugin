@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import de.varoplugin.varo.Main;
@@ -98,6 +99,24 @@ public final class Placeholders {
         .variable("hour", () -> toPaddedString(LocalDateTime.now().getHour()))
         .variable("minute", () -> toPaddedString(LocalDateTime.now().getMinute()))
         .variable("second", () -> toPaddedString(LocalDateTime.now().getSecond()))
+        .withArgs("pad-left", args -> {
+            if (args.size() != 3)
+                return "INVALID_ARGS";
+            try {
+                return StringUtils.leftPad(args.get(0), Integer.parseInt(args.get(1)), args.get(2));
+            } catch (NumberFormatException e) {
+                return "INVALID_ARGS";
+            }
+        })
+        .withArgs("pad-right", args -> {
+            if (args.size() != 3)
+                return "INVALID_ARGS";
+            try {
+                return StringUtils.rightPad(args.get(0), Integer.parseInt(args.get(1)), args.get(2));
+            } catch (NumberFormatException e) {
+                return "INVALID_ARGS";
+            }
+        })
         // Player
         .namespace(null, PlayerContext.class, Function.identity(), Placeholders::addPlayerPlaceholders)
         .namespace("killer-", KillContext.class, ctx -> new PlayerContext(ctx.getKiller()), Placeholders::addPlayerPlaceholders)

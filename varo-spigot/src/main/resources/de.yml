@@ -483,7 +483,7 @@ motd:
     §aTritt <projectname> §abei!
     §7Viel Spaß!
   closedHours: |-
-    §cDu kannst nur zwischen §4<config-JoinSystems-onlyJoinBetweenHoursHour1>:<config-JoinSystems-onlyJoinBetweenHoursMinute1> §cund §4<config-JoinSystems-onlyJoinBetweenHoursHour2>:<config-JoinSystems-onlyJoinBetweenHoursMinute2> §cbeitreten
+    §cDu kannst nur zwischen §4<pad-left:<config-JoinSystems-onlyJoinBetweenHoursHour1>:2:0>:<pad-left:<config-JoinSystems-onlyJoinBetweenHoursMinute1>:2:0> §cund §4<pad-left:<config-JoinSystems-onlyJoinBetweenHoursHour2>:2:0>:<pad-left:<config-JoinSystems-onlyJoinBetweenHoursMinute2>:2:0> §cbeitreten
     §7Bitte versuche es später erneut!
   closed: |-
     §cDer Server ist noch nicht verfügbar!
