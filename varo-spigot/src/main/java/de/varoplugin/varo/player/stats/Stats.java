@@ -319,9 +319,7 @@ public class Stats implements VaroSerializeable {
 	public KickResult getVaroKickResult() {
 		GregorianCalendar curr = new GregorianCalendar();
 		KickResult result = KickResult.ALLOW;
-		if (this.sessions > 0) {
-			result = KickResult.ALLOW;
-		} else {
+		if (this.sessions == 0) {
 			if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() > 0) {
 				if (ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
 					result = KickResult.NO_PREPRODUCES_LEFT;
@@ -333,16 +331,15 @@ public class Stats implements VaroSerializeable {
 			}
 		}
 
+        if (Main.isBootedUp())
+            if (!Main.getDataManager().getOutsideTimeChecker().canJoin())
+                result = KickResult.NOT_IN_TIME;
+
 		if (VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled())
 			result = KickResult.MASS_RECORDING_JOIN;
 
-		if (Main.getVaroGame().isFinaleJoin()) {
+		if (Main.getVaroGame().isFinaleJoin())
 			result = KickResult.FINALE_JOIN;
-		}
-
-		if (Main.isBootedUp())
-			if (!Main.getDataManager().getOutsideTimeChecker().canJoin())
-				result = KickResult.NOT_IN_TIME;
 
 		for (Strike strike : this.strikes)
 			if (strike.getBanUntil() != null && curr.before(strike.getBanUntil())) {
