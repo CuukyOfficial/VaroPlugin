@@ -61,19 +61,19 @@ public class VaroHeartbeat implements Runnable {
 						Messages.PLAYER_JOIN_PROTECTION_END.broadcast(vp);
 
 					if (countdown == 30 || countdown == 10 || countdown <= 5) {
-						if (countdown == 0 && !massRecordingEnabled) {
+						if (countdown == 0) {
+                            if (massRecordingEnabled)
+                                continue;
+                            if (!vp.canBeKicked(noKickDistance)) {
+                                Messages.PLAYER_DISCONNECT_KICK_PLAYER_NEARBY.send(vp);
+                                continue;
+                            }
+
 							Messages.PLAYER_DISCONNECT_KICK.broadcast(vp);
 							vp.onEvent(BukkitEventType.KICKED);
 							Messages.PLAYER_KICK_SESSION_OVER.kick(vp);
 							continue;
-						}
-                        if (countdown == 1) {
-                        	if (!vp.canBeKicked(noKickDistance)) {
-                        	    Messages.PLAYER_DISCONNECT_KICK_PLAYER_NEARBY.send(vp);
-                        		countdown += 1;
-                        	} else
-                        	    Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(vp, Placeholder.constant("kick-delay", String.valueOf(countdown)));
-                        } else
+						} else
                             Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(vp, Placeholder.constant("kick-delay", String.valueOf(countdown)));
 					}
 
