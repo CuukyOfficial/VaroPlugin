@@ -24,7 +24,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	DISCONNECT("Disconnect", XMaterial.COAL, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler zu frueh disconnected."),
 	DISCORD("Discord", XMaterial.DISPENSER, "Hier kannst du Einstellungen zum DiscordBot vornehmen."),
 	FINALE("Finale", XMaterial.END_PORTAL_FRAME, "Hier kannst du Einstellungen zum Finale des Projektes vornehmen."),
-	HUD("HUD", XMaterial.PAINTING, "Hier kannst du Einstellungen zur HUD vornehmen."),
+	HUD("HUD", XMaterial.PAINTING, "Hier kannst du Einstellungen zum Scoreboard, Nametags, Actionbar und Tablist vornehmen. Siehe https://almighty-satan.github.io/varoplugin-docs/setup/messages/customizing für mehr Informationen."),
 	JOIN_SYSTEMS("JoinSystems", XMaterial.RED_BED, "Hier kannst du einstellen, wann und wie oft Spieler joinen duerfen."),
 	MAIN("Main", XMaterial.LEVER, "Hier kannst du alle Haupteinstellungen vornehmen."),
 	OFFLINEVILLAGER("OfflineVillager", XMaterial.VILLAGER_SPAWN_EGG, "Einstellungen zu den OfflineVillagern"),
