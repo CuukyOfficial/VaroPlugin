@@ -71,10 +71,13 @@ public final class Placeholders {
         .variable("border-size", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)))
         .variable("border-radius", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)))
         .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
-        .withArgs("top-player", args -> {
-            if (args.size() == 0 || args.size() > 2) return "INVALID_ARGS";
+        .withArgs("top-player", args -> { // top-player-name should be used instead
+            if (args.isEmpty() || args.size() > 2) return "INVALID_ARGS";
             try {
-                VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(Integer.parseInt(args.get(0)));
+                int index = Integer.parseInt(args.get(0));
+                if (index <= 0)
+                    return "INVALID_ARGS";
+                VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
                 if (player != null)
                     return player.getName();
                 return args.size() == 1 ? "-" : args.get(1);
@@ -142,7 +145,10 @@ public final class Placeholders {
                 builder.add("top-player-" + placeholder.key(), (ctx, args) -> {
                     if (args.size() < 2) return "INVALID_ARGUMENTS";
                     try {
-                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(Integer.parseInt(args.get(0)));
+                        int index = Integer.parseInt(args.get(0));
+                        if (index <= 0)
+                            return "INVALID_ARGS";
+                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
                         if (player == null)
                             return args.get(1);
                         return placeholder.value(new PlayerContext(player), args.stream().skip(2).collect(Collectors.toList()));
@@ -166,7 +172,10 @@ public final class Placeholders {
                 builder.add("top-team-" + placeholder.key(), (ctx, args) -> {
                     if (args.size() < 2) return "INVALID_ARGUMENTS";
                     try {
-                        VaroTeam team = Main.getVaroGame().getTopScores().getTeam(Integer.parseInt(args.get(0)));
+                        int index = Integer.parseInt(args.get(0));
+                        if (index <= 0)
+                            return "INVALID_ARGS";
+                        VaroTeam team = Main.getVaroGame().getTopScores().getTeam(index);
                         if (team == null)
                             return args.get(1);
                         return placeholder.value(new TeamContext(team), args.stream().skip(2).collect(Collectors.toList()));
