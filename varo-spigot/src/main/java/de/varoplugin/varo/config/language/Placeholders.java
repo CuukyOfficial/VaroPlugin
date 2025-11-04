@@ -49,6 +49,8 @@ import io.github.almightysatan.slams.papi.PapiPlaceholderResolver;
 
 public final class Placeholders {
 
+    private static final String INVALID_ARGS = "INVALID_ARGS";
+
     static PlaceholderResolver getPlaceholders() {
         PlaceholderResolver.Builder builder = PlaceholderResolver.builder().builtIn()
         // Plugin
@@ -72,28 +74,28 @@ public final class Placeholders {
         .variable("border-radius", () -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)))
         .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
         .withArgs("top-player", args -> { // top-player-name should be used instead
-            if (args.isEmpty() || args.size() > 2) return "INVALID_ARGS";
+            if (args.isEmpty() || args.size() > 2) return INVALID_ARGS;
             try {
                 int index = Integer.parseInt(args.get(0));
                 if (index <= 0)
-                    return "INVALID_ARGS";
+                    return INVALID_ARGS;
                 VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
                 if (player != null)
                     return player.getName();
                 return args.size() == 1 ? "-" : args.get(1);
             } catch (NumberFormatException e) {
-                return "INVALID_ARGS";
+                return INVALID_ARGS;
             }
         })
         // Misc
         .constant("heart", "♥")
         .constant("newline", "\n")
         .withArgs("padding", args -> {
-            if (args.size() != 1) return "INVALID_ARGS";
+            if (args.size() != 1) return INVALID_ARGS;
             try {
                 return String.join("", Collections.nCopies(Integer.parseInt(args.get(0)), " "));
             } catch (NumberFormatException e) {
-                return "INVALID_ARGS";
+                return INVALID_ARGS;
             }
         })
         .variable("year", () -> String.valueOf(LocalDate.now().getYear()))
@@ -104,20 +106,20 @@ public final class Placeholders {
         .variable("second", () -> toPaddedString(LocalDateTime.now().getSecond()))
         .withArgs("pad-left", args -> {
             if (args.size() != 3)
-                return "INVALID_ARGS";
+                return INVALID_ARGS;
             try {
                 return StringUtils.leftPad(args.get(0), Integer.parseInt(args.get(1)), args.get(2));
             } catch (NumberFormatException e) {
-                return "INVALID_ARGS";
+                return INVALID_ARGS;
             }
         })
         .withArgs("pad-right", args -> {
             if (args.size() != 3)
-                return "INVALID_ARGS";
+                return INVALID_ARGS;
             try {
                 return StringUtils.rightPad(args.get(0), Integer.parseInt(args.get(1)), args.get(2));
             } catch (NumberFormatException e) {
-                return "INVALID_ARGS";
+                return INVALID_ARGS;
             }
         })
         // Player
@@ -143,17 +145,17 @@ public final class Placeholders {
             @Override
             public @NotNull Builder add(@NotNull Placeholder placeholder) {
                 builder.add("top-player-" + placeholder.key(), (ctx, args) -> {
-                    if (args.size() < 2) return "INVALID_ARGUMENTS";
+                    if (args.size() < 2) return INVALID_ARGS;
                     try {
                         int index = Integer.parseInt(args.get(0));
                         if (index <= 0)
-                            return "INVALID_ARGS";
+                            return INVALID_ARGS;
                         VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
                         if (player == null)
                             return args.get(1);
                         return placeholder.value(new PlayerContext(player), args.stream().skip(2).collect(Collectors.toList()));
                     } catch (NumberFormatException e) {
-                        return "INVALID_ARGUMENTS";
+                        return INVALID_ARGS;
                     }
                 });
                 return this;
@@ -170,17 +172,17 @@ public final class Placeholders {
             @Override
             public @NotNull Builder add(@NotNull Placeholder placeholder) {
                 builder.add("top-team-" + placeholder.key(), (ctx, args) -> {
-                    if (args.size() < 2) return "INVALID_ARGUMENTS";
+                    if (args.size() < 2) return INVALID_ARGS;
                     try {
                         int index = Integer.parseInt(args.get(0));
                         if (index <= 0)
-                            return "INVALID_ARGS";
+                            return INVALID_ARGS;
                         VaroTeam team = Main.getVaroGame().getTopScores().getTeam(index);
                         if (team == null)
                             return args.get(1);
                         return placeholder.value(new TeamContext(team), args.stream().skip(2).collect(Collectors.toList()));
                     } catch (NumberFormatException e) {
-                        return "INVALID_ARGUMENTS";
+                        return INVALID_ARGS;
                     }
                 });
                 return this;
@@ -223,7 +225,7 @@ public final class Placeholders {
         .contextual("luckperms-suffix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsSuffix(ctx.getPlayer()))
         .contextual("blocklogger", PlayerContext.class, (ctx, args) -> {
             if (args.size() != 1)
-                return "INVALID_ARGUMENTS";
+                return INVALID_ARGS;
             return String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(ctx.getPlayer().getUUID(), args.get(0)).size());
         })
         // Online
