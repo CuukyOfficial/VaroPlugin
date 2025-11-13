@@ -3,6 +3,8 @@ package de.varoplugin.varo.gui.youtube;
 import java.text.SimpleDateFormat;
 import java.util.stream.Collectors;
 
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +39,11 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     @Override
     protected ItemStack getItemStack(int index, YouTubeVideo video) {
-        ItemBuilder itemBuilder = video.getOwner() != null ? ItemBuilder.skull(video.getOwner().getRealUUID()) : ItemBuilder.material(XMaterial.SKELETON_SKULL);
+        ItemBuilder itemBuilder;
+        if (video.getOwner() != null)
+            itemBuilder = VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_12) ? ItemBuilder.skull(video.getOwner().getName()) : ItemBuilder.skull(video.getOwner().getRealUUID());
+        else
+            itemBuilder = ItemBuilder.material(XMaterial.SKELETON_SKULL);
         return itemBuilder.displayName("§5" + video.getTitle())
                 .lore(new String[]{"§7Detected at: " + new SimpleDateFormat("dd.MMM.yyyy HH:mm")
                         .format(video.getDetectedAt()), "§7User: " + (video.getOwner() != null ?
