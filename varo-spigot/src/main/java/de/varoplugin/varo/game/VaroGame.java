@@ -176,20 +176,17 @@ public class VaroGame implements VaroSerializeable {
         }.runTaskLater(Main.getInstance(), this.getPlayTime() * 60 * 20); // TODO this does not work when PLAY_TIME is -1
 
         if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean())
-            new BukkitRunnable() {
-
-            @Override
-            public void run() {
+            Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
                 // Copy the list to avoid ConcurrentModificationException
                 // This is only executed once anyway so performance doesn't really matter
                 for (VaroPlayer player : VaroPlayer.getVaroPlayers().toArray(new VaroPlayer[0]))
                     if (player.getStats().getYoutubeLink() != null) {
                         List<YouTubeVideo> videos = YouTubeCheck.loadNewVideos(player);
                         if (videos != null)
+                            // Add videos that have already been uploaded without sending a log/Discord message
                             player.getStats().getVideos().addAll(videos);
-                    }
-            }
-        }.runTaskAsynchronously(Main.getInstance());
+                    } 
+            });
     }
 
     public void abort() {
