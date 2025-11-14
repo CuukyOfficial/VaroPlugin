@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
+import de.varoplugin.varo.config.language.Messages;
+import io.github.almightysatan.slams.Placeholder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -54,7 +56,7 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
     protected ItemClick getClick(YouTubeVideo video) {
         return (event) -> {
             if (!getPlayer().hasPermission("varo.player")) {
-                getPlayer().sendMessage("§7Video: " + video.getLink());
+                Messages.PLAYER_VIDEO.send(VaroPlayer.getPlayer(getPlayer()), video.getOwner(), Placeholder.constant("video-link", video.getLink()));
                 return;
             }
 

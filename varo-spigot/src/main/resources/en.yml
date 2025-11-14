@@ -289,6 +289,9 @@ player:
       §cYour account is not verified!
       §7Please use §c/verify <discord-code> §7to verify your Discord account!
       §7Link: §c<discord>
+    serverClose: |-
+      §cThe server is now closed!
+      §7Try again tomorrow!"
     kill: "§cYou were killed by §c<killer-name>§c!"
     death: "§cYou died!"
     serverFull: |-
@@ -307,9 +310,6 @@ player:
     kickMessageMassRec: |-
       §cThe mass recording is finished,
       §7everybody got kicked!
-    serverClose: |-
-      §cThe server is now closed!
-      §7Try again tomorrow!"
   actionbar:
     - "§7Distance to border: <colorcode><distance-to-border>"
     - "§7Check out our Discord: <colorcode><varo-discord>"
@@ -403,6 +403,7 @@ player:
         - "§7oO    <projectname>    §7Oo"
         - " "
     format: "<displayname> §c<kills>"
+  video: "<prefix>Video: <colorcode><video-link>"
   chests:
     removed: "<prefix>Container successfully removed!"
     disallowed: "<prefix>This container belongs to <colorcode><owner-name>§7!"

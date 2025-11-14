@@ -1,5 +1,8 @@
 package de.varoplugin.varo.gui.youtube;
 
+import de.varoplugin.varo.config.language.Messages;
+import de.varoplugin.varo.player.VaroPlayer;
+import io.github.almightysatan.slams.Placeholder;
 import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -32,8 +35,7 @@ public class YouTubeVideoOptionsGUI extends VaroInventory {
     @Override
     public void refreshContent() {
         addItem(11, ItemBuilder.material(XMaterial.PAPER).displayName("§aOpen").build(), (event) -> {
-            getPlayer().sendMessage(Main.getPrefix() + "Link:");
-            getPlayer().sendMessage(Main.getPrefix() + video.getLink());
+            Messages.PLAYER_VIDEO.send(VaroPlayer.getPlayer(getPlayer()), video.getOwner(), Placeholder.constant("video-link", video.getLink()));
         });
 
         addItem(15, ItemBuilder.material(XMaterial.REDSTONE).displayName("§cRemove").build(), (event) -> {

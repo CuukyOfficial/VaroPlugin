@@ -289,6 +289,9 @@ player:
       §cDein Konto ist nicht auf Discord verifiziert!
       §7Bitte benutze §c/verify <discord-code>§7, um dein Discord-Konto zu verifizieren!
       §7Link: §c<discord>
+    serverClose: |-
+      §cDie Spielzeit ist vorüber!
+      §7Versuche es morgen erneut!"
     kill: "§cDu wurdest von §c<killer-name> §cgetötet!"
     death: "§cDu bist gestorben!"
     serverFull: |-
@@ -307,9 +310,6 @@ player:
     kickMessageMassRec: |-
       §cDie Massenaufnahme ist beendet!
       §7Alle Spieler wurden gekickt!
-    serverClose: |- 
-      §cDie Spielzeit ist vorüber!
-      §7Versuche es morgen erneut!"
   actionbar:
     - "§7Entfernung zur Weltbarriere: <colorcode><distance-to-border>"
     - "§7Schau auch auf unserem Discord vorbei: <colorcode><varo-discord>"
@@ -403,6 +403,7 @@ player:
         - "§7oO    <projectname>    §7Oo"
         - " "
     format: "<displayname> §c<kills>"
+  video: "<prefix>Video: <colorcode><video-link>"
   chests:
     removed: "<prefix>Container erfolgreich entfernt!"
     disallowed: "<prefix>Dieser Container gehört <colorcode><owner-name>§7!"

@@ -187,6 +187,8 @@ public final class Messages {
     public static final VaroMessage PLAYER_NAMETAG_PREFIX = message("player.nametag.prefix");
     public static final VaroMessage PLAYER_NAMETAG_SUFFIX = message("player.nametag.suffix");
 
+    public static final VaroMessage PLAYER_VIDEO = message("player.video");
+
     public static final VaroMessage CHAT_DEFAULT = message("chat.default");
     public static final VaroMessage CHAT_TEAM = message("chat.team");
     public static final VaroMessage CHAT_MUTED = message("chat.muted");
@@ -485,6 +487,17 @@ public final class Messages {
                     VaroContext copy = context.copy();
                     copy.getMessageData().language = recipient.getLanguage();
                     recipient.sendMessage(message.value(copy));
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
+                }
+            }
+
+            @Override
+            public void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders, String link) {
+                try {
+                    VaroContext context = new PlayerContext(subject);
+                    context.getMessageData().language = recipient.getLanguage();
+                    VersionUtils.getVersionAdapter().sendLinkedMessage(recipient.getPlayer(), message.value(context, placeholders), link);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -860,6 +873,7 @@ public final class Messages {
         void broadcast();
 
         void send(VaroPlayer recipient, VaroContext context);
+        void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders, String link);
         void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders);
         void send(VaroPlayer recipient, VaroPlayer subject);
         void send(VaroPlayer subject, PlaceholderResolver placeholders);
