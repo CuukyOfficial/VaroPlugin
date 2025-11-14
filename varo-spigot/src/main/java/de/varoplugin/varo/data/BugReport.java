@@ -38,7 +38,7 @@ public class BugReport {
         for (ConfigSetting entry : ConfigSetting.values())
             if (entry.isSensitive()) {
                 redactedValues.put(entry, entry.getValue());
-                entry.setValue("REDACED", true);
+                entry.setValue("REDACTED", true);
             }
 
         File zipFile = new File("plugins/Varo/bugreports/bugreport-" + DATE_FROMAT.format(new Date()) + ".zip");
