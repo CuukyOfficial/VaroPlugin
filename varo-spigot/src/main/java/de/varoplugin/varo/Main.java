@@ -50,7 +50,6 @@ public class Main extends JavaPlugin {
 	private static Main instance;
 	private static boolean paper;
 
-	private static BotLauncher botLauncher;
 	private static VaroInventoryManager inventoryManager;
 	private static DataManager dataManager;
 	private static VaroUpdater varoUpdater;
@@ -128,7 +127,6 @@ public class Main extends JavaPlugin {
 
 			varoUpdater = new VaroUpdater(RESOURCE_ID, this.getDescription().getVersion(),
 					() -> varoUpdater.printResults());
-			botLauncher = new BotLauncher();
 
 			if (this.isFailed())
 				return;
@@ -165,9 +163,9 @@ public class Main extends JavaPlugin {
 			dataManager.saveSync();
 		}
 
-		if (botLauncher != null && botLauncher.getDiscordbot() != null) {
+		if (getBotLauncher() != null && getBotLauncher().getDiscordbot() != null) { // TODO maybe move this to DataManager
 			this.getLogger().log(Level.INFO, "Disconnecting bots...");
-			botLauncher.disconnect(5, TimeUnit.SECONDS);
+            getBotLauncher().disconnect(5, TimeUnit.SECONDS);
 		}
 
 		if (!this.failed) {
@@ -253,7 +251,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static BotLauncher getBotLauncher() {
-		return botLauncher;
+		return dataManager == null ? null : dataManager.getBotLauncher();
 	}
 
 	public static String getPluginName() {

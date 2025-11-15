@@ -1,24 +1,11 @@
 package de.varoplugin.varo.data;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.function.Consumer;
-
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.varoplugin.cfw.player.hud.NameTagGroup;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.AlertHandler;
+import de.varoplugin.varo.bot.BotLauncher;
 import de.varoplugin.varo.bot.discord.BotRegister;
 import de.varoplugin.varo.broadcast.Broadcaster;
 import de.varoplugin.varo.command.custom.CustomCommandManager;
@@ -26,7 +13,6 @@ import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.ConfigHandler;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.enchantment.EnchantmentManager;
-import de.varoplugin.varo.game.LobbyItem;
 import de.varoplugin.varo.game.VaroGameHandler;
 import de.varoplugin.varo.list.VaroList;
 import de.varoplugin.varo.list.VaroListManager;
@@ -38,12 +24,19 @@ import de.varoplugin.varo.preset.PresetLoader;
 import de.varoplugin.varo.report.ReportHandler;
 import de.varoplugin.varo.serialize.VaroSerializeHandler;
 import de.varoplugin.varo.spawns.SpawnHandler;
-import de.varoplugin.varo.team.VaroTeamHandler;
 import de.varoplugin.varo.tasks.DailyTasks;
+import de.varoplugin.varo.team.VaroTeamHandler;
 import de.varoplugin.varo.utils.OutSideTimeChecker;
 import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.InvalidTypeException;
 import io.github.almightysatan.slams.MissingTranslationException;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class DataManager {
 
@@ -68,6 +61,7 @@ public class DataManager {
 	private DailyTasks dailyTimer;
 	private CustomCommandManager customCommandManager;
 	private EnchantmentManager enchantmentManager;
+    private BotLauncher botLauncher;
 	private final SortedSet<VaroBackup> backups = new TreeSet<>();
 	private final Collection<Runnable> shutdownTasks = new LinkedList<>();
 
@@ -104,7 +98,9 @@ public class DataManager {
 		this.loadBackups();
 
         Messages.load();
-        
+
+        this.botLauncher = new BotLauncher(); // initialize bot before running daily tasks
+
         this.varoPlayerHandler.initPlayers();
 
         this.dailyTimer = new DailyTasks();
@@ -267,8 +263,12 @@ public class DataManager {
 	public EnchantmentManager getEnchantmentManager() {
         return this.enchantmentManager;
     }
-	
-	public List<VaroBackup> getBackups() {
+
+    public BotLauncher getBotLauncher() {
+        return this.botLauncher;
+    }
+
+    public List<VaroBackup> getBackups() {
 	    synchronized (this.backups) {
 	        return Collections.unmodifiableList(new ArrayList<>(this.backups));
         }
