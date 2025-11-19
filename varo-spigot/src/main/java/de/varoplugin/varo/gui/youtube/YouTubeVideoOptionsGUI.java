@@ -35,7 +35,7 @@ public class YouTubeVideoOptionsGUI extends VaroInventory {
     @Override
     public void refreshContent() {
         addItem(11, ItemBuilder.material(XMaterial.PAPER).displayName("§aOpen").build(), (event) -> {
-            Messages.PLAYER_VIDEO.send(VaroPlayer.getPlayer(getPlayer()), video.getOwner(), Placeholder.constant("video-link", video.getLink()));
+            Messages.PLAYER_VIDEO.send(VaroPlayer.getPlayer(getPlayer()), video.getOwner(), Placeholder.constant("video-link", video.getLink()), video.getLink());
         });
 
         addItem(15, ItemBuilder.material(XMaterial.REDSTONE).displayName("§cRemove").build(), (event) -> {

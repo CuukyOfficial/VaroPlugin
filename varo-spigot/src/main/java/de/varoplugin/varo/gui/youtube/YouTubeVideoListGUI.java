@@ -56,7 +56,7 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
     protected ItemClick getClick(YouTubeVideo video) {
         return (event) -> {
             if (!getPlayer().hasPermission("varo.player")) {
-                Messages.PLAYER_VIDEO.send(VaroPlayer.getPlayer(getPlayer()), video.getOwner(), Placeholder.constant("video-link", video.getLink()));
+                Messages.PLAYER_VIDEO.send(VaroPlayer.getPlayer(getPlayer()), video.getOwner(), Placeholder.constant("video-link", video.getLink()), video.getLink());
                 return;
             }
 
