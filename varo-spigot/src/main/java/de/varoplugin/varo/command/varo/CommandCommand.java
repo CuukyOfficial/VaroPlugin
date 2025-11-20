@@ -197,7 +197,11 @@ public class CommandCommand extends VaroCommand {
             sender.sendMessage(Main.getPrefix() + " " + Main.getColorCode() + name + ChatColor.GRAY + " (" + permission + ")" + ChatColor.DARK_GRAY + ": " + description);
             sender.sendMessage(Main.getPrefix() + "  " + ChatColor.GRAY + output);
         } else if (subCommand.equalsIgnoreCase("list")) {
-           this.builder.page(args.length > 1 ? args[1] : "1").build().send(sender);
+            try {
+                this.builder.page(args.length > 1 ? args[1] : "1").build().send(sender);
+            } catch (NumberFormatException e) {
+                this.sendUsage(sender);
+            }
         } else if (subCommand.equalsIgnoreCase("menu")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(Main.getConsolePrefix() + "Du musst ein Spieler sein!");

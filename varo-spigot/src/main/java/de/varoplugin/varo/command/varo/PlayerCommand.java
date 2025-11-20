@@ -36,12 +36,12 @@ public class PlayerCommand extends VaroCommand {
 		if (args.length == 0) {
 			sender.sendMessage(Main.getPrefix() + "§7----- " + Main.getColorCode() + "Player §7-----");
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player §7<Spieler>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player add §7<Spieler1> <Spieler2> ...");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player remove §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player respawn §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player kill §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player reset §7<Spieler / @a>");
-			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player list");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player add §7<Player1> <Player2> ...");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player remove §7<Player / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player respawn §7<Player / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player kill §7<Player / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player reset §7<Player / @a>");
+			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player list §7<Page>");
 			sender.sendMessage(Main.getPrefix() + "§7------------------");
 			return;
 		}
@@ -193,9 +193,12 @@ public class PlayerCommand extends VaroCommand {
 			sender.sendMessage(Main.getPrefix() + "§a" + vps.getName() + " §7erfolgreich wiederbelebt!");
 			return;
 		} else if (args[0].equalsIgnoreCase("list")) {
-            this.listBuilder.page(args.length >= 2 ? args[1] : "1").build().send(sender);
+            try {
+                this.listBuilder.page(args.length >= 2 ? args[1] : "1").build().send(sender);
+            } catch (NumberFormatException e) {
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " player list §7<Page>");
+            }
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7Player/Command not found! §7Type /player for more.");
-		return;
 	}
 }

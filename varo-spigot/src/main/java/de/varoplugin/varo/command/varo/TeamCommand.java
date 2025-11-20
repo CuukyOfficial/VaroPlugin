@@ -48,7 +48,7 @@ public class TeamCommand extends VaroCommand {
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team add §7<Team/TeamID> <Player>");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team rename §7<Team/TeamID> <Neuer Team-Name>");
             sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team colorcode §7<Team/TeamID> remove/<Farbcode>");
-            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team list");
+            sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team list <Page>");
             return;
         }
 
@@ -137,7 +137,11 @@ public class TeamCommand extends VaroCommand {
                 sender.sendMessage(Main.getPrefix() + "Team, TeamID oder Spieler nicht gefunden!");
             return;
         } else if (args[0].equalsIgnoreCase("list")) {
-            this.listBuilder.page(args.length >= 2 ? args[1] : "1").build().send(sender);
+            try {
+                this.listBuilder.page(args.length >= 2 ? args[1] : "1").build().send(sender);
+            } catch (NumberFormatException e) {
+                sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team list <Page>");
+            }
         } else if (args[0].equalsIgnoreCase("rename")) {
             if (args.length != 3) {
                 sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/" + ConfigSetting.COMMAND_VARO_NAME.getValueAsString() + " team rename §7<Team/TeamID> <Team>");
