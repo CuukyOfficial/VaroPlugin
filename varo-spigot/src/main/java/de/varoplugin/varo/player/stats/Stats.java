@@ -523,8 +523,11 @@ public class Stats implements VaroSerializeable {
 		videos.remove(video);
 	}
 
-	public void removeReamainingSession() {
-		sessions--;
+	public void removeRemainingSession() {
+        if (this.sessions <= 0)
+            throw new IllegalStateException();
+
+		this.sessions--;
 		this.sessionTime = 0;
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
@@ -594,6 +597,8 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void setSessions(int sessions) {
+        if (sessions < 0)
+            throw new IllegalArgumentException();
 		this.sessions = sessions;
 	}
 

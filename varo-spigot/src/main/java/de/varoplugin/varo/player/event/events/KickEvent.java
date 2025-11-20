@@ -15,7 +15,7 @@ public class KickEvent extends BukkitEvent {
 	public void onExec(VaroPlayer player) {
 		if (!player.isMassRecordingKick()) {
 			player.getStats().addSessionPlayed();
-			player.getStats().removeReamainingSession();
+			player.getStats().removeRemainingSession();
 		} else {
 			player.setMassRecordingKick(false);
 		}
