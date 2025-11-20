@@ -75,11 +75,11 @@ dependencies {
     runtimeDownload("com.google.code.gson:gson:2.13.1")
     runtimeDownload("org.apache.commons:commons-collections4:4.5.0")
     runtimeDownload("org.apache.commons:commons-lang3:3.18.0")
-    runtimeDownload("net.dv8tion:JDA:5.6.1") {
+    runtimeDownload("net.dv8tion:JDA:6.1.1") {
         exclude(module = "opus-java")
         exclude(module = "tink")
     }
-    runtimeDownload("org.slf4j:slf4j-simple:2.0.16") {
+    runtimeDownload("org.slf4j:slf4j-simple:2.0.17") {
         exclude(module = "slf4j-api")
     }
     runtimeDownload("org.bstats:bstats-bukkit:3.1.0")
