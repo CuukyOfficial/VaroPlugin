@@ -14,14 +14,14 @@ import de.varoplugin.varo.player.stats.stat.Rank;
 public enum StatType {
 
     ADMIN_IGNORE("adminignore", "§4Admin-Ignore", XMaterial.BOOK, (value, vp) -> vp.setAdminIgnore(Boolean.parseBoolean(value)), VaroPlayer::isAdminIgnore, (vp) -> vp.setAdminIgnore(false)),
-    COUNTDOWN("countdown","§bCountdown", XMaterial.OAK_SIGN, (value, vp) -> vp.getStats().setCountdown(Integer.parseInt(value)), vp -> vp.getStats().getCountdown(), (vp) -> vp.getStats().setCountdown(Main.getVaroGame().getPlayTime() * 60)),
-    EPISODES_PLAYED("episodesplayed","§5Episodes played", XMaterial.BLAZE_POWDER, (value, vp) -> vp.getStats().setSessionsPlayed(Integer.parseInt(value)), vp -> vp.getStats().getSessionsPlayed(), (vp) -> vp.getStats().setSessionsPlayed(0)),
-    KILLS("kills","§4Kills", XMaterial.DIAMOND_SWORD, (value, vp) -> vp.getStats().setKills(Integer.parseInt(value)), vp -> vp.getStats().getKills(), (vp) -> vp.getStats().setKills(0)),
+    COUNTDOWN("countdown","§bCountdown", XMaterial.OAK_SIGN, (value, vp) -> vp.getStats().setCountdown(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getCountdown(), (vp) -> vp.getStats().setCountdown(Main.getVaroGame().getPlayTime() * 60)),
+    EPISODES_PLAYED("episodesplayed","§5Episodes played", XMaterial.BLAZE_POWDER, (value, vp) -> vp.getStats().setSessionsPlayed(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getSessionsPlayed(), (vp) -> vp.getStats().setSessionsPlayed(0)),
+    KILLS("kills","§4Kills", XMaterial.DIAMOND_SWORD, (value, vp) -> vp.getStats().setKills(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getKills(), (vp) -> vp.getStats().setKills(0)),
     PLAYER_STATE("playerstate","§6Player State", XMaterial.GOLDEN_APPLE, (value, vp) -> vp.getStats().setState(PlayerState.valueOf(value)), vp -> vp.getStats().getState(), (vp) -> vp.getStats().setState(PlayerState.ALIVE)),
     RANK("rank","§2Rank", XMaterial.EMERALD, (value, vp) -> vp.setRank(new Rank(value)), vp -> vp.getRank() == null ? null : vp.getRank().getDisplay(), (vp) -> vp.setRank(null)),
-    SESSIONS("sessions","§bSessions", XMaterial.DIAMOND, (value, vp) -> vp.getStats().setSessions(Integer.parseInt(value)), vp -> vp.getStats().getSessions(), (vp) -> vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())),
+    SESSIONS("sessions","§bSessions", XMaterial.DIAMOND, (value, vp) -> vp.getStats().setSessions(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getSessions(), (vp) -> vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())),
     WILL_INVENTORY_CLEAR("willInventoryClear", "§cWill Inventory-Clear", XMaterial.CHEST, (value, vp) -> vp.getStats().setWillClear(Boolean.parseBoolean(value)), vp -> vp.getStats().isWillClear(), vp -> vp.getStats().setWillClear(false)),
-    WINS("wins","§dWins", XMaterial.GOLD_INGOT, (value, vp) -> vp.getStats().setWins(Integer.parseInt(value)), vp -> vp.getStats().getWins(), (vp) -> vp.getStats().setWins(0)),
+    WINS("wins","§dWins", XMaterial.GOLD_INGOT, (value, vp) -> vp.getStats().setWins(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getWins(), (vp) -> vp.getStats().setWins(0)),
     YOUTUBE_LINK("youtubelink","§5YouTube-Link", XMaterial.PAPER, (value, vp) -> vp.getStats().setYoutubeLink(value), vp -> vp.getStats().getYoutubeLink(), (vp) -> vp.getStats().setYoutubeLink(null));
 
     private final String arg, displayName;
