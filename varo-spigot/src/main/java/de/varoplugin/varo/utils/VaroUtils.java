@@ -64,7 +64,7 @@ public final class VaroUtils {
 
 	public static boolean isNotSolidTerrain(Block block) {
 	    Material material = block.getType();
-	    return !material.isSolid() && !material.isOccluding();
+	    return !material.isSolid() || !material.isOccluding();
 	}
 	
 	public static boolean isNotSolidTerrainOrLiquid(Block block) {
