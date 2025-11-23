@@ -453,12 +453,12 @@ public class Stats implements VaroSerializeable {
 		lastJoined = OffsetDateTime.now();
 		lastEnemyContact = new Date();
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() > 0) {
-			sessions = ConfigSetting.SESSIONS_PER_DAY.getValueAsInt();
+			this.setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt());
 		} else {
-			sessions = 1;
+            this.setSessions(1);
 		}
 		if (ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt() > 0) {
-			sessions += ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt();
+            this.setSessions(this.getSessions() + ConfigSetting.PRE_PRODUCE_SESSIONS.getValueAsInt());
 		}
 		sessionsPlayed = 0;
 		countdown = Main.getVaroGame().getPlayTime() * 60;
@@ -524,10 +524,7 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeRemainingSession() {
-        if (this.sessions <= 0)
-            throw new IllegalStateException();
-
-		this.sessions--;
+        this.setSessions(this.getSessions() - 1);
 		this.sessionTime = 0;
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
@@ -598,7 +595,7 @@ public class Stats implements VaroSerializeable {
 
 	public void setSessions(int sessions) {
         if (sessions < 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Sessions can not be " + sessions);
 		this.sessions = sessions;
 	}
 
