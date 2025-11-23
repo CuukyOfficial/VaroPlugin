@@ -143,6 +143,11 @@ public class Spawn implements VaroSerializeable {
 
     public void delete() {
         location.getBlock().setType(XMaterial.GRASS_BLOCK.get());
+        location.clone().add(0, -1, 0).getBlock().setType(XMaterial.DIRT.get());
+        location.clone().add(1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
+        location.clone().add(-1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
+        location.clone().add(0, 0, 1).getBlock().setType(XMaterial.GRASS_BLOCK.get());
+        location.clone().add(0, 0, -1).getBlock().setType(XMaterial.GRASS_BLOCK.get());
         location.clone().add(1, 1, 0).getBlock().setType(XMaterial.AIR.get());
         location.clone().add(-1, 1, 0).getBlock().setType(XMaterial.AIR.get());
         location.clone().add(0, 1, 1).getBlock().setType(XMaterial.AIR.get());
