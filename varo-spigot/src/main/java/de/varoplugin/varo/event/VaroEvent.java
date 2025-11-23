@@ -92,7 +92,7 @@ public abstract class VaroEvent {
 			if (event.getEventType() == eventType)
 				return event;
 
-		return null;
+		throw new IllegalArgumentException("Unknown event type: " + eventType);
 	}
 
 	public static ArrayList<VaroEvent> getEvents() {
