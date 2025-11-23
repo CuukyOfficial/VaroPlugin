@@ -200,6 +200,7 @@ public final class Messages {
     public static final VaroMessage GAME_SORT_NO_SPAWN_FOUND = message("game.sort.noSpawnFound");
     public static final VaroMessage GAME_SORT_NO_SPAWN_FOUND_TEAM = message("game.sort.noSpawnFoundTeam");
     public static final VaroMessage GAME_SORT_SPECTATOR_TELEPORT = message("game.sort.spectator");
+    public static final VaroMessage GAME_START_SPAWNS = message("game.start.spawnsGenerated");
     public static final VaroMessage GAME_START_ABORT = message("game.start.abort");
     public static final VaroMessage GAME_START_VARO_BROADCAST = message("game.start.varo.broadcast");
     public static final VaroMessage GAME_START_VARO_TITLE = message("game.start.varo.title");
@@ -208,6 +209,7 @@ public final class Messages {
     public static final VaroMessageArray GAME_START_SURO_TITLE = array("game.start.suro.title");
     public static final VaroMessage GAME_WIN_PLAYER = message("game.win.player");
     public static final VaroMessage GAME_WIN_TEAM = message("game.win.team");
+    public static final VaroMessage GAME_WIN_SHUTDOWN = message("game.win.shutdown");
     public static final VaroMessage GAME_FINALE_COUNTDOWN = message("game.finale.countdown");
     public static final VaroMessage GAME_FINALE_START = message("game.finale.start");
     public static final VaroMessage GAME_FINALE_FREEZE = message("game.finale.freeze");

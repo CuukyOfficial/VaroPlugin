@@ -107,22 +107,21 @@ public class VaroGame implements VaroSerializeable {
         if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
             removeAbsentAtStart();
 
-        if (ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt() > 0) {
-            VaroUtils.doRandomTeam(ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt());
-            Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler haben einen zufälligen Teampartner erhalten!");
+        int teamSize = ConfigSetting.DO_RANDOMTEAM_AT_START.getValueAsInt();
+        if (teamSize > 0) {
+            VaroUtils.doRandomTeam(teamSize);
+            Messages.COMMANDS_VARO_RANDOMTEAM_SORTED.broadcast(Placeholder.constant("sort-size", String.valueOf(teamSize)));
         }
 
         LobbyItem.removeHooks();
 
         if (ConfigSetting.DO_SPAWN_GENERATE_AT_START.getValueAsBoolean()) {
             new SpawnGenerator(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation(), AutoSetup.getSpawnRadius(VaroPlayer.getAlivePlayer().size()), true, (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
-            Bukkit.broadcastMessage(Main.getPrefix() + "Die Löcher für den Spawn wurden generiert!");
+            Messages.GAME_START_SPAWNS.broadcast();
         }
 
-        if (ConfigSetting.DO_SORT_AT_START.getValueAsBoolean()) {
+        if (ConfigSetting.DO_SORT_AT_START.getValueAsBoolean())
             new PlayerSort().sortPlayers();
-            Bukkit.broadcastMessage(Main.getPrefix() + "Alle Spieler wurden sortiert!");
-        }
 
         this.setProjectTime(0L);
 
@@ -274,7 +273,7 @@ public class VaroGame implements VaroSerializeable {
         }
 
         if (ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
-            Bukkit.getServer().broadcastMessage("§7Der Server wird in " + Main.getColorCode() + ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() + " Sekunden §7heruntergefahren...");
+            Messages.GAME_WIN_SHUTDOWN.broadcast(Placeholder.constant("shutdown-seconds", String.valueOf(ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt())));
 
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), Bukkit.getServer()::shutdown,
                     ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20L);
@@ -354,9 +353,9 @@ public class VaroGame implements VaroSerializeable {
             for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
                 if (!player.getPlayer().isOp())
                     new VaroCancelable(CancelableType.FREEZE, player);
-            Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale beginnt bald. Bis zum Start wurden alle gefreezed.");
+            Messages.GAME_FINALE_FREEZE.broadcast();
         } else
-            Bukkit.broadcastMessage(Main.getPrefix() + "Das Finale beginnt bald.");
+            Messages.GAME_FINALE_NOFREEZE.broadcast();
 
         this.finaleJoin = true;
     }

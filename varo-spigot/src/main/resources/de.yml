@@ -217,7 +217,9 @@ game:
       title: "<colorcode><start-countdown>"
       countdown: "<projectname>§7 startet in <colorcode><if_eq:1:<start-countdown>:einer §7Sekunde:<start-countdown> §7Sekunden>!"
     abort: "<prefix>§cDer Start wurde abgebrochen!"
+    spawnsGenerated: "<prefix>Die Spawns für alle Spieler wurden automatisch generiert!"
   win:
+    shutdown: "<prefix>Der Server wird in <colorcode><shutdown-seconds> Sekunden §7heruntergefahren..."
     player: "<colorcode><winner> §7hat <projectname> §7gewonnen! Herzlichen Glückwunsch!"
     team: "<colorcode><winner> §7haben <projectname> §7gewonnen! Herzlichen Glückwunsch!"
 log:
