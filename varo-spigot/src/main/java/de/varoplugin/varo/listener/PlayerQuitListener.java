@@ -1,5 +1,7 @@
 package de.varoplugin.varo.listener;
 
+import de.varoplugin.varo.event.VaroEvent;
+import de.varoplugin.varo.event.VaroEventType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -52,7 +54,7 @@ public class PlayerQuitListener implements Listener {
 			}
 
 			// CHECK DISCONNECTS
-			if (vplayer.getStats().hasTimeLeft() || !Main.getVaroGame().isPlayTimeLimited()) {
+			if ((vplayer.getStats().hasTimeLeft() || !Main.getVaroGame().isPlayTimeLimited()) && !VaroEvent.getEvent(VaroEventType.MASS_RECORDING).isEnabled()) {
 				if (ConfigSetting.DISCONNECT_PER_SESSION.isIntActivated()) {
 					VaroPlayerDisconnect dc = VaroPlayerDisconnect.getDisconnect(player);
 					if (dc == null)

@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
 
 public class Stats implements VaroSerializeable {
 
@@ -524,7 +525,11 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void removeRemainingSession() {
-        this.setSessions(this.getSessions() - 1);
+        if (this.sessions > 0)
+            this.setSessions(this.getSessions() - 1);
+        else
+            Main.getInstance().getLogger().log(Level.WARNING, "Player '" + this.getName() + "' has no sessions left "
+                    + "to remove! In case you did not manually modify their sessions, please report this error to the plugin developers!");
 		this.sessionTime = 0;
 
 		if (ConfigSetting.SESSIONS_PER_DAY.getValueAsInt() <= 0) {
