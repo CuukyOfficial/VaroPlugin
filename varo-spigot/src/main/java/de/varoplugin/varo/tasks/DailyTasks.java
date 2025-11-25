@@ -48,14 +48,13 @@ public final class DailyTasks {
 				Main.getInstance().getLogger().log(Level.INFO, "Running daily timer...");
 				Main.getDataManager().createBackup(null);
 
-				if (Main.getVaroGame().isRunning()) {
+				if (Main.getVaroGame().isRunning())
 					doDailyTasks();
-					Main.getVaroGame().setLastDayTimer(next);
-				}
 			} catch (Throwable t) {
 				Main.getInstance().getLogger().log(Level.SEVERE, "Error while running daily timer", t);
 			}
 
+            Main.getVaroGame().setLastDayTimer(next);
 			startTimer();
 		}, now.until(next, ChronoUnit.SECONDS) * 20L);
 	}
