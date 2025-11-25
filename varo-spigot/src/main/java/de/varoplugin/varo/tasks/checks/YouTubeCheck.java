@@ -86,7 +86,7 @@ public class YouTubeCheck implements Task {
 						if (videoTitle.length() > 200)
 							videoTitle = videoTitle.substring(0, 200);
 
-						String videoId = titleSplit[1].split("\\{\"url\":\"/watch\\?v=", 2)[1].split("\"")[0];
+						String videoId = titleSplit[1].split("\\{\"url\":\"/watch\\?v=", 2)[1].split("[\"&\\\\]", 2)[0];
 						String videoLink = "https://youtube.com/watch?v=" + videoId;
 
 						if (player.getStats().hasVideo(videoId))
