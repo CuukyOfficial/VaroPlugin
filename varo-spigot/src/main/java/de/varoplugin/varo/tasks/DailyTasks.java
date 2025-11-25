@@ -83,13 +83,9 @@ public final class DailyTasks {
 		if (resetHour < 0 || resetHour > 23)
 			throw new IllegalArgumentException("Invalid reset hour: " + resetHour);
 
-		OffsetDateTime next = prev;
-		if (prev == null) {
-			next = now.withHour(resetHour).withMinute(0).withSecond(0).withNano(0);
-			if (next.isAfter(now))
-				return next;
-		}
-		next = next.plusDays(1);
+		OffsetDateTime next = prev != null ? prev : now.withHour(resetHour).withMinute(0).withSecond(0).withNano(0);
+        while (!next.isAfter(now))
+		    next = next.plusDays(1);
 		return next;
 	}
 
