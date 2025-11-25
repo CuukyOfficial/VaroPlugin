@@ -39,6 +39,8 @@ public class DailyTasksTest {
                 DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:00Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T23:00Z"),
                 DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:01Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
+        Assertions.assertEquals(OffsetDateTime.parse("2000-01-04T23:00Z"),
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-03T23:01Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
     }
 
     @Test
