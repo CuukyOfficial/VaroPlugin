@@ -114,7 +114,7 @@ public class VaroDeserializer extends VaroSerializeHandler {
 						obj = OffsetDateTime.parse((String) obj);
 
 					field.set(instance, obj);
-				} catch (IllegalArgumentException | IllegalAccessException | ExceptionInInitializerError | NullPointerException e) {
+				} catch (IllegalAccessException e) {
 					e.printStackTrace();
 					continue;
 				}
