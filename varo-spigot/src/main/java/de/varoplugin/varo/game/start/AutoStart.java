@@ -111,7 +111,8 @@ public class AutoStart implements VaroSerializeable {
 	}
 
 	public void stop() {
-		sched.cancel();
+        if (this.sched != null)
+		    this.sched.cancel();
 		Main.getVaroGame().setAutoStart(null);
 		StartDelay.reset();
 	}
