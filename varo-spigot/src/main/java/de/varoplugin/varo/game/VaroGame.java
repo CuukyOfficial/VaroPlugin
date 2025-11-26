@@ -129,6 +129,7 @@ public class VaroGame implements VaroSerializeable {
             borderMinuteTimer.remove();
 
         this.startTimestamp = OffsetDateTime.now();
+        this.lastDailyTimer = null;
         this.startSequence = ConfigSetting.SURO_START.getValueAsBoolean() ? new SuroStart(this) : new VaroStart(this);
         this.startSequence.start();
     }
