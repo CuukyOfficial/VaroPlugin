@@ -29,48 +29,55 @@ public class DailyTasksTest {
     @Test
     public void testGetNextRun() {
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T00:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T00:00Z"), OffsetDateTime.parse("2000-01-01T00:00Z"), 0));
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T00:00Z"), 0));
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T00:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T12:00Z"), OffsetDateTime.parse("2000-01-01T00:00Z"), 0));
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T12:00Z"), 0));
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-04T00:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-03T12:00Z"), OffsetDateTime.parse("2000-01-01T00:00Z"), 0));
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-03T12:00Z"), 0));
 
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T23:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:00Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T23:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:01Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:01Z"), 23));
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-04T23:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-03T23:01Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), 23));
-    }
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-03T23:01Z"), 23));
 
-    @Test
-    public void testGetNextRunNull() {
+        Assertions.assertEquals(OffsetDateTime.parse("2000-01-01T23:00Z"),
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T00:00Z"), 23));
         Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T00:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T00:00Z"), null, 0));
-        Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T00:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T12:00Z"), null, 0));
-
-        Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T23:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:00Z"), null, 23));
-        Assertions.assertEquals(OffsetDateTime.parse("2000-01-02T23:00Z"),
-                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:01Z"), null, 23));
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T23:00Z"), 0));
+        Assertions.assertEquals(OffsetDateTime.parse("2000-01-01T02:00Z"),
+                DailyTasks.getNextRun(OffsetDateTime.parse("2000-01-01T01:00Z"), 2));
     }
 
     @Test
     public void testGetCatchUp() {
-        Assertions.assertEquals(new ImmutablePair<>(0L, OffsetDateTime.parse("2000-01-02T00:00Z")),
-                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-02T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 0));
+        Assertions.assertEquals(0L,
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-02T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 0).getLeft());
         Assertions.assertEquals(new ImmutablePair<>(1L, OffsetDateTime.parse("2000-01-03T00:00Z")),
                 DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-03T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 0));
         Assertions.assertEquals(new ImmutablePair<>(2L, OffsetDateTime.parse("2000-01-04T00:00Z")),
                 DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-04T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 0));
 
-        Assertions.assertEquals(new ImmutablePair<>(0L, OffsetDateTime.parse("2000-01-01T23:00Z")),
-                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-02T12:00Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 23));
+        Assertions.assertEquals(0L,
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-02T12:00Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 23).getLeft());
         Assertions.assertEquals(new ImmutablePair<>(1L, OffsetDateTime.parse("2000-01-02T23:00Z")),
                 DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-03T12:00Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 23));
         Assertions.assertEquals(new ImmutablePair<>(2L, OffsetDateTime.parse("2000-01-03T23:00Z")),
                 DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-04T12:00Z"), OffsetDateTime.parse("2000-01-01T23:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 23));
+
+        Assertions.assertEquals(0L,
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-02T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 13).getLeft());
+        Assertions.assertEquals(new ImmutablePair<>(1L, OffsetDateTime.parse("2000-01-02T11:00Z")),
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-02T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 11));
+        Assertions.assertEquals(new ImmutablePair<>(1L, OffsetDateTime.parse("2000-01-02T13:00Z")),
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-03T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 13));
+        Assertions.assertEquals(new ImmutablePair<>(2L, OffsetDateTime.parse("2000-01-03T11:00Z")),
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-03T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 11));
+        Assertions.assertEquals(new ImmutablePair<>(2L, OffsetDateTime.parse("2000-01-03T13:00Z")),
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-04T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 13));
+        Assertions.assertEquals(new ImmutablePair<>(3L, OffsetDateTime.parse("2000-01-04T11:00Z")),
+                DailyTasks.getCatchUp(OffsetDateTime.parse("2000-01-04T12:00Z"), OffsetDateTime.parse("2000-01-02T00:00Z"), OffsetDateTime.parse("2000-01-01T12:00Z"), 11));
     }
 
     @Test

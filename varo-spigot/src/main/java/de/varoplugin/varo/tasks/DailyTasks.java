@@ -5,6 +5,8 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.tasks.checks.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -39,9 +41,7 @@ public final class DailyTasks {
 		Main.getVaroGame().setLastDayTimer(catchUp.getRight());
 	}
 
-	private void startTimer() {
-		OffsetDateTime now = OffsetDateTime.now();
-		OffsetDateTime next = getNextRun(now, Main.getVaroGame().getLastDayTimer(), ConfigSetting.RESET_SESSION_HOUR.getValueAsInt());
+	private void startTimer(@NotNull OffsetDateTime next) {
 		Main.getInstance().getLogger().log(Level.INFO, "Next daily task: " + next);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			try {
@@ -54,10 +54,16 @@ public final class DailyTasks {
 				Main.getInstance().getLogger().log(Level.SEVERE, "Error while running daily timer", t);
 			}
 
-            Main.getVaroGame().setLastDayTimer(next);
-			startTimer();
-		}, now.until(next, ChronoUnit.SECONDS) * 20L);
+            if (Main.getVaroGame().isRunning())
+                Main.getVaroGame().setLastDayTimer(next);
+			this.startTimer(next.plusDays(1));
+		}, OffsetDateTime.now().until(next, ChronoUnit.SECONDS) * 20L);
 	}
+
+    private void startTimer() {
+        OffsetDateTime next = getNextRun(OffsetDateTime.now(), ConfigSetting.RESET_SESSION_HOUR.getValueAsInt());
+        this.startTimer(next);
+    }
 
 	public void doDailyTasks() {
 	    Main.getInstance().getLogger().log(Level.INFO, "Running daily tasks...");
@@ -74,23 +80,23 @@ public final class DailyTasks {
 	 * Returns the timestamp of the next run.
 	 *
 	 * @param now the current date-time
-	 * @param prev the timestamp of the previous run, possibly null
 	 * @param resetHour the reset hour
 	 * @return the timestamp of the next run
 	 * @throws IllegalArgumentException if resetHour is less than 0 or greater than 23
 	 */
-	public static OffsetDateTime getNextRun(OffsetDateTime now, OffsetDateTime prev, int resetHour) {
+	public static @NotNull OffsetDateTime getNextRun(@NotNull OffsetDateTime now, int resetHour) {
 		if (resetHour < 0 || resetHour > 23)
 			throw new IllegalArgumentException("Invalid reset hour: " + resetHour);
 
-		OffsetDateTime next = prev != null ? prev : now.withHour(resetHour).withMinute(0).withSecond(0).withNano(0);
-        while (!next.isAfter(now))
+		OffsetDateTime next = now.withHour(resetHour).withMinute(0).withSecond(0).withNano(0);
+        if (!next.isAfter(now))
 		    next = next.plusDays(1);
 		return next;
 	}
 
 	/**
 	 * Returns an {@link ImmutablePair} containing the number of missed runs and the new timestamp of the last run.
+     * If the number of missed runs is zero, the timestamp might be any value.
 	 *
 	 * @param now the current date-time
 	 * @param prev the timestamp of the previous run, possibly null
@@ -99,18 +105,18 @@ public final class DailyTasks {
 	 * @return an {@link ImmutablePair} containing the number of missed runs and the new timestamp of the last run
 	 * @throws IllegalArgumentException if resetHour is less than 0 or greater than 23
 	 */
-	public static ImmutablePair<Long, OffsetDateTime> getCatchUp(OffsetDateTime now, OffsetDateTime prev, OffsetDateTime start, int resetHour) {
+	public static @NotNull ImmutablePair<Long, OffsetDateTime> getCatchUp(@NotNull OffsetDateTime now, @Nullable OffsetDateTime prev,
+            @NotNull OffsetDateTime start, int resetHour) {
 		if (resetHour < 0 || resetHour > 23)
 			throw new IllegalArgumentException("Invalid reset hour: " + resetHour);
 
-		OffsetDateTime prevRun = prev;
-		if (prevRun == null) {
-			prevRun = start.withHour(resetHour).withMinute(0).withSecond(0).withNano(0);
-			if (prevRun.isAfter(start))
-				prevRun = prevRun.minusDays(1);
-		}
+        OffsetDateTime prevRun = prev != null ? prev : start;
 
-		long days = Duration.between(prevRun, now).toDays();
-		return new ImmutablePair<>(days, prevRun.plusDays(days));
+        OffsetDateTime adjustedPrevRun = prevRun.withHour(resetHour).withMinute(0).withSecond(0).withNano(0);
+        if (adjustedPrevRun.isAfter(prevRun))
+            adjustedPrevRun = adjustedPrevRun.minusDays(1);
+
+        long days = Duration.between(adjustedPrevRun, now).toDays();
+        return new ImmutablePair<>(days, adjustedPrevRun.plusDays(days));
 	}
 }
