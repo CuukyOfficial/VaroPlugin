@@ -82,7 +82,7 @@ public class ConfigCommand extends VaroCommand {
 				return;
 			}
 
-			String needle = args[1];
+			String needle = args[1].toLowerCase();
 			ArrayList<ConfigSetting> foundSettings = new ArrayList<>();
 
 			for (ConfigSetting setting : ConfigSetting.values()) {
@@ -93,7 +93,7 @@ public class ConfigCommand extends VaroCommand {
 			}
 
 			if (foundSettings.isEmpty()) {
-				Messages.COMMANDS_VARO_CONFIG_ENTRY_NOT_FOUND.send(sender, Placeholder.constant("entry", needle));
+				Messages.COMMANDS_VARO_CONFIG_ENTRY_NOT_FOUND.send(sender, Placeholder.constant("entry", args[1]));
 				return;
 			}
 
