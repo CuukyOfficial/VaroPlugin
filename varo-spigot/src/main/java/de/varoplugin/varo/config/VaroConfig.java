@@ -36,7 +36,7 @@ public class VaroConfig {
     private static boolean loaded;
 
     private static final Config ENCHANTMENT_CONFIG = YamlConfig.of(new File("plugins/Varo/config/enchantments.yml"));
-    public static final ListConfigEntry<String> ENCHANTMENT_BLOCKED = ListConfigEntry.of(ENCHANTMENT_CONFIG, "blocked", "Blocked enchantments", Collections.singletonList(VaroConfigDefaults.blockedEnchantmentName), Type.STRING);
+    public static final ListConfigEntry<String> ENCHANTMENT_BLOCKED = ListConfigEntry.of(ENCHANTMENT_CONFIG, "blocked", "Blocked enchantments", Collections.emptyList(), Type.STRING);
 
     private static final Config STRIKE_CONFIG = YamlConfig.of(new File("plugins/Varo/config/strikes.yml"));
     public static final BooleanConfigEntry STRIKE_POST_AT_REST = BooleanConfigEntry.of(STRIKE_CONFIG, "postAtResetHour", "Whether strikes should only be posted at the reset hour.", false);

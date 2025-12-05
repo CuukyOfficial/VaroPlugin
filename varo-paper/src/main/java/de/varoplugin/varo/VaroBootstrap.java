@@ -18,18 +18,16 @@
 
 package de.varoplugin.varo;
 
-import java.io.IOException;
-
-import org.jetbrains.annotations.NotNull;
-
 import de.varoplugin.varo.config.VaroConfig;
-import de.varoplugin.varo.config.VaroConfigDefaults;
 import de.varoplugin.varo.enchantment.BootstrapEnchantmentBlocker;
 import io.github.almightysatan.jaskl.InvalidTypeException;
 import io.github.almightysatan.jaskl.ValidationException;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.registry.keys.EnchantmentKeys;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public class VaroBootstrap implements PluginBootstrap {
 
@@ -40,8 +38,6 @@ public class VaroBootstrap implements PluginBootstrap {
         Main.setPaper(true);
 
         if (supportsEnchantmentKeys()) {
-            VaroConfigDefaults.blockedEnchantmentName = EnchantmentKeys.BANE_OF_ARTHROPODS.key().value();
-
             try {
                 VaroConfig.load();
             } catch (IllegalStateException | InvalidTypeException | ValidationException | IOException e) {
