@@ -21,10 +21,10 @@ public class Broadcaster {
 			startPluginAd();
 
 		if (ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.isIntActivated())
-		    starteSchedule();
+		    startSchedule();
 	}
 
-	private void starteSchedule() {
+	private void startSchedule() {
 		int interval = ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.getValueAsInt() * 20;
 		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
 		    for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
