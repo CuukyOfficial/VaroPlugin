@@ -57,6 +57,15 @@ public class VaroConfig {
         }
         loaded = true;
     }
+
+    public static void reload() throws IllegalStateException, InvalidTypeException, ValidationException, IOException {
+        if (!loaded)
+            throw new IllegalStateException();
+        for (Config config : CONFIGS)
+            synchronized (config) {
+                config.reload();
+            }
+    }
     
     public static void write() {
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
@@ -74,5 +83,13 @@ public class VaroConfig {
                 Main.getInstance().getLogger().log(Level.SEVERE, "Unable to save config!", e);
             }
         }
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static void reset() {
+        if (!loaded)
+            throw new IllegalStateException();
+        for (Config config : CONFIGS)
+            config.getEntries().forEach(entry -> ((ConfigEntry) entry).setValue(entry.getDefaultValue())); // TODO use Config#reset instead
     }
 }

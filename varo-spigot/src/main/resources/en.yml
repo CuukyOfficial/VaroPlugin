@@ -46,11 +46,11 @@ commands:
     export:
       players: "<prefix>All player data was successfully exported to <colorcode><file>§7"
     preset:
-      saved: "<prefix>The current settings were successfully saved as preset <colorcode><preset> §7."
+      saved: "<prefix>The current settings were successfully saved as preset <colorcode><preset>§7."
       helpsave: "<prefix><colorcode>/varo preset §7save <PresetPath>"
       notfound: "<prefix>§cThe preset <colorcode><preset> §cwas not found."
-      pathtraversal: "<prefix>§cPresets must be located inside the <colorcode>presets §cfolder."
-      loaded: "<prefix>The preset <colorcode><preset> §7was successfully loaded."
+      name: "<prefix>§cInvalid preset name!"
+      loaded: "<prefix>Successfully loaded preset <colorcode><preset>§7. Please restart the server!"
       helploaded: "<prefix><colorcode>/varo preset §7load <PresetPath>"
       list: "<prefix>§lList of all presets:"
     scoreboard:

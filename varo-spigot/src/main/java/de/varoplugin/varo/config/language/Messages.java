@@ -279,7 +279,7 @@ public final class Messages {
     public static final VaroMessage COMMANDS_VARO_CONFIG_SEARCH_LIST_FORMAT = message("commands.varo.config.searchlistformat");
     public static final VaroMessage COMMANDS_VARO_EXPORT_SUCCESSFULL = message("commands.varo.export.players");
     public static final VaroMessage COMMANDS_VARO_PRESET_NOT_FOUND = message("commands.varo.preset.notfound");
-    public static final VaroMessage COMMANDS_VARO_PRESET_PATH_TRAVERSAL = message("commands.varo.preset.pathtraversal");
+    public static final VaroMessage COMMANDS_VARO_PRESET_NAME_INVALID = message("commands.varo.preset.name");
     public static final VaroMessage COMMANDS_VARO_PRESET_LOADED = message("commands.varo.preset.loaded");
     public static final VaroMessage COMMANDS_VARO_PRESET_SAVED = message("commands.varo.preset.saved");
     public static final VaroMessage COMMANDS_VARO_PRESET_LIST = message("commands.varo.preset.list");

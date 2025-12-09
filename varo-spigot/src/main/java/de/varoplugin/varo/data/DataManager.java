@@ -20,7 +20,6 @@ import de.varoplugin.varo.logger.VaroLoggerManager;
 import de.varoplugin.varo.mysql.MySQLClient;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.VaroPlayerHandler;
-import de.varoplugin.varo.preset.PresetLoader;
 import de.varoplugin.varo.report.ReportHandler;
 import de.varoplugin.varo.serialize.VaroSerializeHandler;
 import de.varoplugin.varo.spawns.SpawnHandler;
@@ -78,7 +77,6 @@ public class DataManager {
 		this.defaultNameTagGroup = new NameTagGroup();
 		this.spectatorNameTagGroup = new NameTagGroup();
 		this.varoLoggerManager = new VaroLoggerManager();
-		PresetLoader.copyDefaultPresets();
 	}
 
 	public void load() throws MissingTranslationException, InvalidTypeException, IOException {

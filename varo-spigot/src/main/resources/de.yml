@@ -49,8 +49,8 @@ commands:
       saved: "<prefix>Die aktuellen Einstellungen wurden erfolgreich als Preset <colorcode><preset> §7gespeichert."
       helpsave: "<prefix><colorcode>/varo preset §7save <Preset-Pfad>"
       notfound: "<prefix>§cDas Preset <colorcode><preset> §cwurde nicht gefunden."
-      pathtraversal: "<prefix>§cPresets müssen sich im Ordner <colorcode>presets §cbefinden."
-      loaded: "<prefix>Das Preset <colorcode><preset> §7wurde erfolgreich geladen."
+      name: "<prefix>§cUngültiger Preset-Name!"
+      loaded: "<prefix>Das Preset <colorcode><preset> §7wurde erfolgreich geladen. Bitte starte den Server neu!"
       helploaded: "<prefix><colorcode>/varo preset §7load <Preset-Pfad>"
       list: "<prefix>§lListe aller Presets:"
     scoreboard:
