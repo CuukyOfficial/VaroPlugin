@@ -41,7 +41,7 @@ public class DataManager {
 
 	private static final int SAVE_DELAY = 12000;
 
-	private Main instance;
+	private final Main instance;
 
 	private VaroLoggerManager varoLoggerManager;
 	private ConfigHandler configHandler;
@@ -110,7 +110,7 @@ public class DataManager {
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.updateWorldTime();
 
-		VaroPlayer.getOnlinePlayer().forEach(vp -> vp.update());
+		VaroPlayer.getOnlinePlayer().forEach(VaroPlayer::update);
 
 		this.startAutoSave();
 
