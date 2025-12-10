@@ -85,11 +85,10 @@ public class VaroConfig {
         }
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public static void reset() {
         if (!loaded)
             throw new IllegalStateException();
         for (Config config : CONFIGS)
-            config.getEntries().forEach(entry -> ((ConfigEntry) entry).setValue(entry.getDefaultValue())); // TODO use Config#reset instead
+            config.reset();
     }
 }
