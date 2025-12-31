@@ -1,15 +1,6 @@
 package de.varoplugin.varo.game.world;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.inventory.ItemStack;
-
+import com.cryptomorin.xseries.XGameRule;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -18,6 +9,15 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.world.border.DefaultVaroBorder;
 import de.varoplugin.varo.game.world.border.NopVaroBorder;
 import de.varoplugin.varo.game.world.border.VaroBorder;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VaroWorld {
 
@@ -27,10 +27,9 @@ public class VaroWorld {
 	public VaroWorld(World world) {
 		this.world = world;
 
-		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()) {
-			world.setGameRuleValue("announceAdvancements", "false");
-			world.setGameRuleValue("announce-player-achievements", "false");
-		}
+        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
+            // Versions < 1.12 don't have this game rule and use a server property instead (see DataManager) 
+            XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean());
 
 		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
 			this.varoWorldBorder = new DefaultVaroBorder(world);

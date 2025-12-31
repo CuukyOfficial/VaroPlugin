@@ -103,9 +103,10 @@ public class DataManager {
 
         this.dailyTimer = new DailyTasks();
 
-		if (ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()
-				&& !VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
-			VersionUtils.getVersionAdapter().setServerProperty("announce-player-achievements", false);
+        if (VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_12)) {
+            // 1.12+ uses a game rule which is set in VaroWorld
+            VersionUtils.getVersionAdapter().setServerProperty("announce-player-achievements", !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean());
+        }
 
 		Bukkit.getServer().setSpawnRadius(ConfigSetting.SPAWN_PROTECTION_RADIUS.getValueAsInt());
 		VaroUtils.updateWorldTime();
