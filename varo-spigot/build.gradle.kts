@@ -51,7 +51,7 @@ dependencies {
     implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
-    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("me.clip:placeholderapi:2.11.7")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
 
@@ -71,10 +71,10 @@ dependencies {
     }
     runtimeDownload("io.github.almighty-satan.jaskl:jaskl-yaml:1.9.0")
 	runtimeDownload("com.github.cryptomorin:XSeries:13.5.1")
-	runtimeDownload("com.google.guava:guava:33.4.8-jre")
-    runtimeDownload("com.google.code.gson:gson:2.13.1")
+	runtimeDownload("com.google.guava:guava:33.5.0-jre")
+    runtimeDownload("com.google.code.gson:gson:2.13.2")
     runtimeDownload("org.apache.commons:commons-collections4:4.5.0")
-    runtimeDownload("org.apache.commons:commons-lang3:3.18.0")
+    runtimeDownload("org.apache.commons:commons-lang3:3.20.0")
     runtimeDownload("net.dv8tion:JDA:6.2.1") {
         exclude(module = "opus-java")
         exclude(module = "tink")
