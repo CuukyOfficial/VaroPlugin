@@ -75,7 +75,7 @@ dependencies {
     runtimeDownload("com.google.code.gson:gson:2.13.1")
     runtimeDownload("org.apache.commons:commons-collections4:4.5.0")
     runtimeDownload("org.apache.commons:commons-lang3:3.18.0")
-    runtimeDownload("net.dv8tion:JDA:6.1.1") {
+    runtimeDownload("net.dv8tion:JDA:6.2.1") {
         exclude(module = "opus-java")
         exclude(module = "tink")
     }
