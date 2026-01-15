@@ -15,6 +15,8 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 
+// TODO rename to ProtectedContainer
+// TODO support BLAST_FURNACE, TRAPPED_CHEST, ...
 public class VaroSaveable implements VaroSerializeable {
 
     public static enum SaveableType implements VaroSerializeable {
