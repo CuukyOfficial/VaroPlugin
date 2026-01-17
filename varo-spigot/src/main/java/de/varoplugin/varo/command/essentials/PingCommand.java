@@ -1,5 +1,6 @@
 package de.varoplugin.varo.command.essentials;
 
+import io.github.almightysatan.slams.Placeholder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class PingCommand implements CommandExecutor {
 
 			VaroPlayer target = VaroPlayer.getPlayer(args[0]);
 			if (target == null || !target.isOnline()) {
-				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender);
+				Messages.COMMANDS_ERROR_UNKNOWN_PLAYER.send(sender, Placeholder.constant("target", args[0]));
 				return false;
 			}
 
