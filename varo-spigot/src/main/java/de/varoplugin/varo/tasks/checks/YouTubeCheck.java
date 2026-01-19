@@ -74,7 +74,7 @@ public class YouTubeCheck implements Task {
 		}
 
 		for (String line : lines) {
-			if (line.startsWith("</script><script src="))
+			if (line.contains("\"title\":{\"runs\":[{\"text\":"))
 				try {
 					String[] videoSplit = line.split("\"title\"\\:\\{\"runs\"\\:\\[\\{\"text\"\\:\"");
 					for (int i = 1; i < videoSplit.length; i++) {
