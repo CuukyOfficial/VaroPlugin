@@ -76,7 +76,8 @@ public class PlayerGUI extends VaroInventory {
         addItem(22, ItemBuilder.material(XMaterial.BOOK).displayName("§5More Options").lore(target.getStats().getStatsListed()).build(),
                 (event) -> this.openNext(new PlayerOptionsGUI(getPlayer(), target)));
         
-        addItem(28, ItemBuilder.material(XMaterial.COMPASS).displayName("§5Videos").build(),
+        addItem(28, ItemBuilder.material(XMaterial.COMPASS).displayName("§5Videos")
+                .amount(getFixedSize(this.target.getStats().getVideos().size())).build(),
                 (event) -> this.openNext(new YouTubeVideoListGUI(getPlayer(), this.target)));
 
         addItem(34, ItemBuilder.material(XMaterial.RED_DYE).displayName("§4Remove").build(),

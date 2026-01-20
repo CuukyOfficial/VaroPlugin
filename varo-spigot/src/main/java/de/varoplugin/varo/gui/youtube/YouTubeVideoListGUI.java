@@ -21,6 +21,7 @@ import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
 
 public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
+    // Shows all videos of all players
     public YouTubeVideoListGUI(Player player) {
         super(Main.getInventoryManager(), player, YouTubeVideo.getVideos());
     }
