@@ -98,6 +98,9 @@ public class VaroDeserializer extends VaroSerializeHandler {
 						}
 					}
 
+                    if (field.getType() == String.class && obj instanceof byte[])
+                        obj = new String((byte[]) obj);
+
 					if (field.getType().isEnum() && obj instanceof String) {
 						VaroSerializeable ser = getEnumByString((String) obj);
 						if (ser != null)
