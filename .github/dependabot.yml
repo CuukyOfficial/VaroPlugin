@@ -7,3 +7,5 @@ updates:
     ignore:
       - dependency-name: "org.spigotmc:spigot-api"
       - dependency-name: "com.sk89q.worldedit:worldedit-bukkit"
+      - dependency-name: "org.junit.jupiter:junit-jupiter"
+        versions: [ ">=6.0.0" ]
