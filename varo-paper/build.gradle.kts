@@ -25,12 +25,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
-    compileOnly("io.github.almighty-satan.jaskl:jaskl-yaml:1.9.0")
+    compileOnly(libs.paper.latest)
+    compileOnly(libs.jaskl.yaml)
     compileOnly(project(":varo-spigot"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.junit)
+	testRuntimeOnly(libs.junitplatformlauncher)
 }
 
 tasks.withType<JavaCompile>().configureEach {

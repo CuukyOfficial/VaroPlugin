@@ -46,47 +46,47 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 }
 
 dependencies {
-    modularInternal("de.varoplugin:cfw:1.0.0-ALPHA-26", "CFW")
+    modularInternal(libs.cfw, "CFW")
 
-    implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
-    compileOnly("com.googlecode.json-simple:json-simple:1.1.1")
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.17")
-    compileOnly("me.clip:placeholderapi:2.11.7")
-    compileOnly("net.luckperms:api:5.5")
-    compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
+    implementation(libs.spigot.oneeight)
+    compileOnly(libs.json)
+    compileOnly(libs.worldedit)
+    compileOnly(libs.placeholderapi)
+    compileOnly(libs.luckperms)
+    compileOnly(libs.floodgate)
 
-	runtimeDownload("io.github.almighty-satan.slams:slams-standalone:1.2.2") {
+	runtimeDownload(libs.slams.standalone) {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.slams:slams-parser-jaskl:1.2.2") {
+    runtimeDownload(libs.slams.parser.jaskl) {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "slams-core")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.slams:slams-papi:1.2.2") {
+    runtimeDownload(libs.slams.papi) {
         exclude(group = "io.github.almighty-satan.jaskl")
         exclude(module = "slams-core")
         exclude(module = "annotations")
     }
-    runtimeDownload("io.github.almighty-satan.jaskl:jaskl-yaml:1.9.0")
-	runtimeDownload("com.github.cryptomorin:XSeries:13.5.1")
-	runtimeDownload("com.google.guava:guava:33.5.0-jre")
-    runtimeDownload("com.google.code.gson:gson:2.13.2")
-    runtimeDownload("org.apache.commons:commons-collections4:4.5.0")
-    runtimeDownload("org.apache.commons:commons-lang3:3.20.0")
-    runtimeDownload("net.dv8tion:JDA:6.2.1") {
+    runtimeDownload(libs.jaskl.yaml)
+	runtimeDownload(libs.xseries)
+	runtimeDownload(libs.guava)
+    runtimeDownload(libs.gson)
+    runtimeDownload(libs.commons.collections4)
+    runtimeDownload(libs.commons.lang3)
+    runtimeDownload(libs.jda) {
         exclude(module = "opus-java")
         exclude(module = "tink")
     }
-    runtimeDownload("org.slf4j:slf4j-simple:2.0.17") {
+    runtimeDownload(libs.slf4j) {
         exclude(module = "slf4j-api")
     }
-    runtimeDownload("org.bstats:bstats-bukkit:3.1.0")
+    runtimeDownload(libs.bstats)
 
-	testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("commons-io:commons-io:2.19.0")
+    testImplementation(libs.junit)
+    testRuntimeOnly(libs.junitplatformlauncher)
+    testImplementation(libs.commons.io)
 }
 
 val createDependenciesFile = tasks.register("createDependenciesFile") {

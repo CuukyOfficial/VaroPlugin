@@ -1,0 +1,54 @@
+[versions]
+spigot-oneeight = "1.8.8-R0.1-SNAPSHOT"
+paper-latest = "1.21.11-R0.1-SNAPSHOT"
+
+jaskl = "1.9.0"
+slams = "1.2.2"
+
+cfw = "1.0.0-ALPHA-28"
+xseries = "13.6.0"
+jda = "6.3.0"
+
+json = "1.1.1"
+guava = "33.5.0-jre"
+gson = "2.13.2"
+commons-collections4 = "4.5.0"
+commons-lang3 = "3.20.0"
+commons-io = "2.21.0"
+slf4j = "2.0.17"
+junit = "5.14.2"
+
+worldedit = "7.2.17"
+placeholderapi = "2.11.7"
+luckperms = "5.5"
+floodgate = "2.2.4-SNAPSHOT"
+bstats = "3.1.0"
+
+[libraries]
+spigot-oneeight = { module="org.spigotmc:spigot-api", version.ref="spigot-oneeight" }
+paper-latest = { module="io.papermc.paper:paper-api", version.ref="paper-latest" }
+
+jaskl-yaml = { module="io.github.almighty-satan.jaskl:jaskl-yaml", version.ref="jaskl" }
+slams-standalone = { module="io.github.almighty-satan.slams:slams-standalone", version.ref="slams" }
+slams-parser-jaskl = { module="io.github.almighty-satan.slams:slams-parser-jaskl", version.ref="slams" }
+slams-papi = { module="io.github.almighty-satan.slams:slams-papi", version.ref="slams" }
+
+cfw = { module="de.varoplugin:cfw", version.ref="cfw" }
+xseries = { module="com.github.cryptomorin:XSeries", version.ref="xseries" }
+jda = { module="net.dv8tion:JDA", version.ref="jda" }
+
+json = { module="com.googlecode.json-simple:json-simple", version.ref="json" }
+guava = { module="com.google.guava:guava", version.ref="guava" }
+gson = { module="com.google.code.gson:gson", version.ref="gson" }
+commons-collections4 = { module="org.apache.commons:commons-collections4", version.ref="commons-collections4" }
+commons-lang3 = { module="org.apache.commons:commons-lang3", version.ref="commons-lang3" }
+commons-io = { module="commons-io:commons-io", version.ref="commons-io" }
+slf4j = { module="org.slf4j:slf4j-simple", version.ref="slf4j" }
+junit = { module="org.junit.jupiter:junit-jupiter", version.ref="junit" }
+junitplatformlauncher = { module = "org.junit.platform:junit-platform-launcher" }
+
+worldedit = { module="com.sk89q.worldedit:worldedit-bukkit", version.ref="worldedit" }
+placeholderapi = { module="me.clip:placeholderapi", version.ref="placeholderapi" }
+luckperms = { module="net.luckperms:api", version.ref="luckperms" }
+floodgate = { module="org.geysermc.floodgate:api", version.ref="floodgate" }
+bstats = { module="org.bstats:bstats-bukkit", version.ref="bstats" }
