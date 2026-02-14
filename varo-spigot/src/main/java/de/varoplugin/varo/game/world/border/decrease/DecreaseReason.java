@@ -12,10 +12,10 @@ public enum DecreaseReason {
 	TIME_DAYS(ConfigSetting.BORDER_TIME_DAY_DECREASE, ConfigSetting.BORDER_TIME_DAY_DECREASE_SIZE, ConfigSetting.BORDER_TIME_DAY_DECREASE_SPEED, ConfigSetting.BORDER_TIME_DAY_DECREASE_DAYS, Messages.BORDER_DECREASE_DAYS, Messages.LOG_BORDER_DECREASED_TIME_DAYS),
 	TIME_MINUTES(ConfigSetting.BORDER_TIME_MINUTE_DECREASE, ConfigSetting.BORDER_TIME_MINUTE_DECREASE_SIZE, ConfigSetting.BORDER_TIME_MINUTE_DECREASE_SPEED, ConfigSetting.BORDER_TIME_MINUTE_DECREASE_MINUTES, Messages.BORDER_DECREASE_MINUTES, Messages.LOG_BORDER_DECREASED_TIME_MINUTE);
 
-	private VaroMessage broadcast, log;
-	private ConfigSetting enabled, size, speed, time;
+	private final VaroMessage broadcast, log;
+	private final ConfigSetting enabled, size, speed, time;
 
-	private DecreaseReason(ConfigSetting enabled, ConfigSetting size, ConfigSetting speed, ConfigSetting time, VaroMessage broadcast, VaroMessage log) {
+	DecreaseReason(ConfigSetting enabled, ConfigSetting size, ConfigSetting speed, ConfigSetting time, VaroMessage broadcast, VaroMessage log) {
 		this.enabled = enabled;
 		this.size = size;
 		this.speed = speed;
