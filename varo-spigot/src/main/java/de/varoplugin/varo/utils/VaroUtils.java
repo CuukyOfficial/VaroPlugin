@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cryptomorin.xseries.XGameRule;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,9 +21,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.UserManager;
 
 public final class VaroUtils {
-    
-    private static final String GAMERULE_DO_DAYLIGHT_CYCLE = "doDaylightCycle";
-    
+
     private static Object luckPermsUserManager;
 	
 	public static void updateWorldTime() {
@@ -30,9 +29,9 @@ public final class VaroUtils {
 
 	    for (World world : Bukkit.getWorlds())
 	        if (!ConfigSetting.ALWAYS_TIME.isIntActivated() || (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()))
-	            world.setGameRuleValue(GAMERULE_DO_DAYLIGHT_CYCLE, "true");
+                XGameRule.ADVANCE_TIME.setValue(world, true);
 	        else {
-	            world.setGameRuleValue(GAMERULE_DO_DAYLIGHT_CYCLE, "false");
+                XGameRule.ADVANCE_TIME.setValue(world, false);
 	            if (world.getTime() != time)
 	                world.setTime(time);
 	            world.setStorm(false);
