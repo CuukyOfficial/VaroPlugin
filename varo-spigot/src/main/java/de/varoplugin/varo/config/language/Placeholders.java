@@ -132,8 +132,8 @@ public final class Placeholders {
         .contextual("strike-operator", StrikeContext.class, StrikeContext::getOperator)
         .contextual("strike-num", StrikeContext.class, StrikeContext::getNum)
         .contextual("border-decrease-size", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
-        .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSize)
-        .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getSize);
+        .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSpeed)
+        .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getTime);
         
         addPlayerPlaceholders(new Builder() {
             
