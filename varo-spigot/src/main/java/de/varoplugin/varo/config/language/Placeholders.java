@@ -18,34 +18,31 @@
 
 package de.varoplugin.varo.config.language;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-
 import de.varoplugin.varo.Main;
-import de.varoplugin.varo.config.language.Contexts.BorderDecreaseContext;
-import de.varoplugin.varo.config.language.Contexts.ContainerContext;
-import de.varoplugin.varo.config.language.Contexts.DeathContext;
-import de.varoplugin.varo.config.language.Contexts.KillContext;
-import de.varoplugin.varo.config.language.Contexts.OnlinePlayerContext;
-import de.varoplugin.varo.config.language.Contexts.PlayerContext;
-import de.varoplugin.varo.config.language.Contexts.StrikeContext;
-import de.varoplugin.varo.config.language.Contexts.TeamContext;
+import de.varoplugin.varo.config.language.Contexts.*;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.VaroPlayerDisconnect;
 import de.varoplugin.varo.spigot.VaroUpdateResultSet.UpdateResult;
 import de.varoplugin.varo.team.VaroTeam;
 import de.varoplugin.varo.utils.VaroUtils;
+import io.github.almightysatan.slams.Component;
 import io.github.almightysatan.slams.Placeholder;
 import io.github.almightysatan.slams.PlaceholderResolver;
 import io.github.almightysatan.slams.PlaceholderResolver.Builder;
-import io.github.almightysatan.slams.papi.PapiPlaceholderResolver;
+import io.github.almightysatan.slams.bukkit.BukkitPlaceholders;
+import io.github.almightysatan.slams.papi.PapiPlaceholders;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
+import org.jspecify.annotations.NonNull;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class Placeholders {
 
@@ -135,65 +132,25 @@ public final class Placeholders {
         .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSpeed)
         .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getTime);
         
-        addPlayerPlaceholders(new Builder() {
-            
-            @Override
-            public @NotNull PlaceholderResolver build() {
-                throw new UnsupportedOperationException();
-            }
-            
-            @Override
-            public @NotNull Builder add(@NotNull Placeholder placeholder) {
-                builder.add("top-player-" + placeholder.key(), (ctx, args) -> {
-                    if (args.size() < 2) return INVALID_ARGS;
-                    try {
-                        int index = Integer.parseInt(args.get(0));
-                        if (index <= 0)
-                            return INVALID_ARGS;
-                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
-                        if (player == null)
-                            return args.get(1);
-                        return placeholder.value(new PlayerContext(player), args.stream().skip(2).collect(Collectors.toList()));
-                    } catch (NumberFormatException e) {
-                        return INVALID_ARGS;
-                    }
-                });
-                return this;
-            }
-        });
-        
-        addTeamPlaceholders(new Builder() {
-            
-            @Override
-            public @NotNull PlaceholderResolver build() {
-                throw new UnsupportedOperationException();
-            }
-            
-            @Override
-            public @NotNull Builder add(@NotNull Placeholder placeholder) {
-                builder.add("top-team-" + placeholder.key(), (ctx, args) -> {
-                    if (args.size() < 2) return INVALID_ARGS;
-                    try {
-                        int index = Integer.parseInt(args.get(0));
-                        if (index <= 0)
-                            return INVALID_ARGS;
-                        VaroTeam team = Main.getVaroGame().getTopScores().getTeam(index);
-                        if (team == null)
-                            return args.get(1);
-                        return placeholder.value(new TeamContext(team), args.stream().skip(2).collect(Collectors.toList()));
-                    } catch (NumberFormatException e) {
-                        return INVALID_ARGS;
-                    }
-                });
-                return this;
-            }
-        });
+        addPlayerPlaceholders(topBuilder(builder, "top-player-", index -> {
+            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
+            if (player == null)
+                return null;
+            return new PlayerContext(player);
+        }));
+        addPlayerPlaceholders(topBuilder(builder, "top-team-", index -> {
+            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(index);
+            if (team == null)
+                return null;
+            return new TeamContext(team);
+        }));
 
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
                 builder.variable("config-" + setting.getFullPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
 
-        PapiPlaceholderResolver.addIfAvailable(builder);
+        BukkitPlaceholders.addBuiltIn(builder);
+        PapiPlaceholders.addIfAvailable(builder);
 
         return builder.build();
     }
@@ -259,5 +216,47 @@ public final class Placeholders {
     
     private static String toPaddedString(long value) {
         return value <= 9 ? "0" + value : String.valueOf(value);
+    }
+    
+    private static Builder topBuilder(Builder builder, String prefix, Function<Integer, Object> function) {
+        return new Builder() {
+
+            @Override
+            public @NotNull PlaceholderResolver build() {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public @NotNull Builder add(@NotNull Placeholder placeholder) {
+                builder.add(new Placeholder() {
+                    @Override
+                    public @NotNull String key() {
+                        return prefix + placeholder.key();
+                    }
+
+                    @Override
+                    public boolean constexpr() {
+                        return false;
+                    }
+
+                    @Override
+                    public @NonNull <T> T value(@NotNull PlaceholderResolver placeholderResolver, @NotNull Object @NotNull [] contexts, @Unmodifiable @NotNull List<@NotNull Component<T>> arguments, Component.@NotNull ValueFactory<T> factory) {
+                        if (arguments.size() < 2) return factory.fromString(INVALID_ARGS);
+                        try {
+                            int index = Integer.parseInt(arguments.get(0).stringValue(placeholderResolver, contexts));
+                            if (index <= 0)
+                                return factory.fromString(INVALID_ARGS);
+                            Object context = function.apply(index);
+                            if (context == null)
+                                return arguments.get(1).value(placeholderResolver, contexts);
+                            return placeholder.value(placeholderResolver, new Object[]{context}, arguments.stream().skip(2).collect(Collectors.toList()), factory);
+                        } catch (NumberFormatException e) {
+                            return factory.fromString(INVALID_ARGS);
+                        }
+                    }
+                });
+                return this;
+            }
+        };
     }
 }
