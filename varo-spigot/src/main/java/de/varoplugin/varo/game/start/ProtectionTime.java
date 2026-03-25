@@ -35,11 +35,12 @@ public class ProtectionTime implements VaroSerializeable {
                 return;
             }
 
+            int bcInterval = ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt();
             if (this.protectionTimer == 0) {
                 Messages.PROTECTION_END.broadcast();
                 Main.getVaroGame().setProtection(null);
                 return;
-            } else if (this.protectionTimer % ConfigSetting.STARTPERIOD_PROTECTIONTIME_BROADCAST_INTERVAL.getValueAsInt() == 0) {
+            } else if (bcInterval > 0 && this.protectionTimer % bcInterval == 0) {
                 Messages.PROTECTION_UPDATE.broadcast(PlaceholderResolver.builder().constant("protection-minutes", getCountdownMin(protectionTimer))
                         .constant("protection-seconds", getCountdownSec(protectionTimer)).build());
             }
