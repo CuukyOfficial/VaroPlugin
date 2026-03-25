@@ -90,8 +90,7 @@ public class Main extends JavaPlugin {
     		this.getLogger().log(Level.INFO, "Your server: ");
     		this.getLogger().log(Level.INFO, "	Running on " + VersionUtils.getServerSoftware().getName() + " ("
     				+ Bukkit.getVersion() + ")");
-    		this.getLogger().log(Level.INFO, "	Software-Name (Base): " + Bukkit.getName() + " (1."
-    				+ VersionUtils.getVersion().getIdentifier() + ")");
+    		this.getLogger().log(Level.INFO, "	Software-Name (Base): " + Bukkit.getName() + " (" + VersionUtils.getVersion() + ")");
     		this.getLogger().log(Level.INFO, 
     				"	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
     		this.getLogger().log(Level.INFO, "Forge-Support: " + VersionUtils.hasForgeSupport());
