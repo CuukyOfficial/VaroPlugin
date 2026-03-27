@@ -100,6 +100,7 @@ public class DataManager {
         this.botLauncher = new BotLauncher(); // initialize bot before running daily tasks
 
         this.varoPlayerHandler.initPlayers();
+        this.spawnHandler.initSpawns();
 
         this.dailyTimer = new DailyTasks();
 

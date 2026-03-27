@@ -10,6 +10,10 @@ public class SpawnHandler extends VaroSerializeObject {
 		load();
 	}
 
+    public void initSpawns() {
+        Spawn.getSpawns().forEach(Spawn::initNameTag);
+    }
+
 	@Override
 	public void onSave() {
 		clearOld();

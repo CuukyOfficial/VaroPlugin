@@ -172,30 +172,32 @@ public class Spawn implements VaroSerializeable {
         	this.nameTagLocation = null;
         }
         // legacy support end
+    }
 
+    public void initNameTag() {
         if (VersionUtils.getServerSoftware() == ServerSoftware.PAPER && VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_16))
-        	// temporary paper 1.17+ workaround
-        	try {
-				Method forceLoadMethod = Chunk.class.getMethod("setForceLoaded", boolean.class);
-				forceLoadMethod.invoke(this.location.getChunk(), true);
-				
-				this.location.getChunk().load();
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-					this.checkNameTag();
-					try {
-						forceLoadMethod.invoke(this.location.getChunk(), false);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-						e.printStackTrace();
-					}
-				}, 5L * 20L);
-			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
-			}
+            // temporary paper 1.17+ workaround
+            try {
+                Method forceLoadMethod = Chunk.class.getMethod("setForceLoaded", boolean.class);
+                forceLoadMethod.invoke(this.location.getChunk(), true);
+
+                this.location.getChunk().load();
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                    this.checkNameTag();
+                    try {
+                        forceLoadMethod.invoke(this.location.getChunk(), false);
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }, 5L * 20L);
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
         else {
-	        this.checkNameTag();
+            this.checkNameTag();
         }
     }
-    
+
     private void checkNameTag() {
     	if (this.shouldHaveNameTag()) {
         	Optional<Entity> armorStand = this.findNameTag();
