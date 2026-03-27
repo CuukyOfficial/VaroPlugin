@@ -33,7 +33,7 @@ public class JoinEvent extends BukkitEvent {
 		if(!stats.isOnlineAfterStart()) {
 			stats.setOnlineAfterStart();
 			player.cleanUpPlayer();
-			player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
+			player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorldSpawn());
 		}
 
 		if (player.getVillager() != null) {

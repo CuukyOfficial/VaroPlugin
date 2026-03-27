@@ -1,13 +1,5 @@
 package de.varoplugin.varo.game.world;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -16,6 +8,14 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.world.border.decrease.BorderDecrease;
 import de.varoplugin.varo.game.world.border.decrease.DecreaseReason;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
+import de.varoplugin.varo.utils.VaroUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class VaroWorldHandler {
 
@@ -148,6 +148,20 @@ public class VaroWorldHandler {
 
     public Location getTeleportLocation() {
         return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : this.mainVaroWorld.getWorld().getSpawnLocation();
+    }
+
+    public Location getWorldSpawn(World world) {
+        Location spawn = world.getSpawnLocation();
+        if (VaroUtils.isNotSolidTerrainOrLiquid(spawn.getBlock()) || VaroUtils.isNotSolidTerrainOrLiquid(spawn.clone().add(0, 1, 0).getBlock())) {
+            Main.getInstance().getLogger().warning("World spawn of world " + world.getName() + " is obstructed! Players will be teleported to a different location!");
+
+            spawn = world.getHighestBlockAt(spawn).getLocation().add(0, 1, 0);
+        }
+        return spawn;
+    }
+
+    public Location getMainWorldSpawn() {
+        return this.getWorldSpawn(this.getMainWorld().getWorld());
     }
 
     private static void fixWorldSpawn(World world) {

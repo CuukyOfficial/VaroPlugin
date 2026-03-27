@@ -95,7 +95,7 @@ public class PlayerJoinListener implements Listener {
 		} else {
 			MassRecordingVaroEvent massRecording = ((MassRecordingVaroEvent) VaroEvent.getEvent(VaroEventType.MASS_RECORDING));
 			if (Main.getVaroGame().getVaroWorldHandler().getVaroWorld(player.getWorld()).getVaroBorder().isOutside(player) && ConfigSetting.OUTSIDE_BORDER_SPAWN_TELEPORT.getValueAsBoolean()) {
-				vplayer.saveTeleport(player.getWorld().getSpawnLocation());
+				vplayer.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getWorldSpawn(player.getWorld()));
 				Messages.LOG_TELEPORTED_TO_MIDDLE.log(LogType.JOIN_LEAVE, vplayer);
 			}
 

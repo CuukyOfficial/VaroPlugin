@@ -292,12 +292,13 @@ public class VaroGame implements VaroSerializeable {
         if (ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt() > 0)
             Main.getVaroGame().setProtection(new ProtectionTime(ConfigSetting.FINALE_PROTECTION_TIME.getValueAsInt()));
 
+        Location spawn = Main.getVaroGame().getVaroWorldHandler().getMainWorldSpawn();
         for (VaroPlayer player : VaroPlayer.getVaroPlayers()) {
             if (ConfigSetting.FINALE_FREEZE.getValueAsBoolean())
                 VaroCancelable.removeCancelable(player, CancelableType.FREEZE);
             if (player.getPlayer() != null) {
                 if (player.getPlayer().isOnline()) {
-                    player.saveTeleport(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation());
+                    player.saveTeleport(spawn);
                     continue;
                 }
             }
