@@ -23,6 +23,7 @@ import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
 import io.github.almightysatan.jaskl.*;
 import io.github.almightysatan.jaskl.entries.BooleanConfigEntry;
 import io.github.almightysatan.jaskl.entries.ListConfigEntry;
+import io.github.almightysatan.jaskl.entries.MapConfigEntry;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
 import org.bukkit.Bukkit;
 
@@ -36,7 +37,7 @@ public class VaroConfig {
     private static boolean loaded;
 
     private static final Config ENCHANTMENT_CONFIG = YamlConfig.of(new File("plugins/Varo/config/enchantments.yml"));
-    public static final ListConfigEntry<String> ENCHANTMENT_BLOCKED = ListConfigEntry.of(ENCHANTMENT_CONFIG, "blocked", "Blocked enchantments", Collections.emptyList(), Type.STRING);
+    public static final MapConfigEntry<String, Integer> ENCHANTMENT_BLOCKED = MapConfigEntry.of(ENCHANTMENT_CONFIG, "blocked", "Blocked enchantments", Collections.emptyMap(), Type.STRING, Type.INTEGER);
 
     private static final Config STRIKE_CONFIG = YamlConfig.of(new File("plugins/Varo/config/strikes.yml"));
     public static final BooleanConfigEntry STRIKE_POST_AT_REST = BooleanConfigEntry.of(STRIKE_CONFIG, "postAtResetHour", "Whether strikes should only be posted at the reset hour.", false);
