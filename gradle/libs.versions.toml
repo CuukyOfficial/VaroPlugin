@@ -6,7 +6,7 @@ jaskl = "1.10.0"
 slams = "1.2.3"
 
 cfw = "1.0.0-ALPHA-29"
-xseries = "13.6.0"
+xseries = "13.6.0+26.1"
 jda = "6.3.2"
 
 json = "1.1.1"
@@ -34,7 +34,7 @@ slams-parser-jaskl = { module="io.github.almighty-satan.slams:slams-parser-jaskl
 slams-papi = { module="io.github.almighty-satan.slams:slams-papi", version.ref="slams" }
 
 cfw = { module="de.varoplugin:cfw", version.ref="cfw" }
-xseries = { module="com.github.cryptomorin:XSeries", version.ref="xseries" }
+xseries = { module="io.github.almighty-satan:XSeries", version.ref="xseries" }
 jda = { module="net.dv8tion:JDA", version.ref="jda" }
 
 json = { module="com.googlecode.json-simple:json-simple", version.ref="json" }
