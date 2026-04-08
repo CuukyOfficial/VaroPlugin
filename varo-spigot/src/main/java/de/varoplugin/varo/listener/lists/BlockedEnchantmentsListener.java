@@ -16,6 +16,8 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Map;
+
 public class BlockedEnchantmentsListener implements Listener {
 
 	@EventHandler
@@ -23,8 +25,8 @@ public class BlockedEnchantmentsListener implements Listener {
 		if (event.getItem() == null)
 			return;
 
-		for (Enchantment enc : event.getEnchantsToAdd().keySet())
-			if (Main.getDataManager().getEnchantmentManager().isBlocked(enc)) {
+		for (Map.Entry<Enchantment, Integer> enchantment : event.getEnchantsToAdd().entrySet())
+			if (Main.getDataManager().getEnchantmentManager().isBlocked(enchantment.getKey(), enchantment.getValue())) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer(event.getEnchanter());
 				Messages.PLAYER_CRAFTING_DISALLOWED.send(vp);
@@ -52,8 +54,8 @@ public class BlockedEnchantmentsListener implements Listener {
 		if (item == null)
 			return;
 
-		for (Enchantment enc : item.getEnchantments().keySet())
-			if (Main.getDataManager().getEnchantmentManager().isBlocked(enc)) {
+		for (Map.Entry<Enchantment, Integer> enchantment : item.getEnchantments().entrySet())
+			if (Main.getDataManager().getEnchantmentManager().isBlocked(enchantment.getKey(), enchantment.getValue())) {
 				event.setCancelled(true);
 				VaroPlayer vp = VaroPlayer.getPlayer((Player) event.getWhoClicked());
 				Messages.PLAYER_CRAFTING_DISALLOWED.send(vp);

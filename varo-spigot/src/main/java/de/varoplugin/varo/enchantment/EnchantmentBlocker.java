@@ -18,9 +18,9 @@
 
 package de.varoplugin.varo.enchantment;
 
-import java.util.List;
+import java.util.Map;
 
 public interface EnchantmentBlocker {
 
-    void update(List<String> blocked);
+    void update(Map<String, Integer> blocked);
 }
