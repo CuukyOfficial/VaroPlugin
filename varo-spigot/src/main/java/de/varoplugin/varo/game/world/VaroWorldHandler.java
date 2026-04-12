@@ -147,12 +147,12 @@ public class VaroWorldHandler {
     }
 
     public Location getTeleportLocation() {
-        return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : this.mainVaroWorld.getWorld().getSpawnLocation();
+        return Main.getVaroGame().getLobby() != null ? Main.getVaroGame().getLobby() : this.getWorldSpawn(this.mainVaroWorld.getWorld());
     }
 
     public Location getWorldSpawn(World world) {
         Location spawn = world.getSpawnLocation();
-        if (VaroUtils.isNotSolidTerrainOrLiquid(spawn.getBlock()) || VaroUtils.isNotSolidTerrainOrLiquid(spawn.clone().add(0, 1, 0).getBlock())) {
+        if (!VaroUtils.isNotSolidTerrainOrLiquid(spawn.getBlock()) || !VaroUtils.isNotSolidTerrainOrLiquid(spawn.clone().add(0, 1, 0).getBlock())) {
             Main.getInstance().getLogger().warning("World spawn of world " + world.getName() + " is obstructed! Players will be teleported to a different location!");
 
             spawn = world.getHighestBlockAt(spawn).getLocation().add(0, 1, 0);
