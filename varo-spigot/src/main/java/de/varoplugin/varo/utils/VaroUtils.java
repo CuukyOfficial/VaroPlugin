@@ -1,20 +1,8 @@
 package de.varoplugin.varo.utils;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.cryptomorin.xseries.XGameRule;
 import de.varoplugin.cfw.version.ServerVersion;
-import de.varoplugin.cfw.version.VersionAdapter;
 import de.varoplugin.cfw.version.VersionUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.plugin.RegisteredServiceProvider;
-
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -22,6 +10,16 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.team.VaroTeam;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.UserManager;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.plugin.RegisteredServiceProvider;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class VaroUtils {
 
