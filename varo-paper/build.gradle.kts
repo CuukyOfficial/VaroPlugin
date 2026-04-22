@@ -14,6 +14,10 @@ java {
     
     // Disable Java version checks because Paper uses Java 21
     disableAutoTargetJvm()
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 tasks.compileJava { options.encoding = "UTF-8" }

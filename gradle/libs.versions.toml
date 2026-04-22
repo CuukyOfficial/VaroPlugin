@@ -1,6 +1,6 @@
 [versions]
 spigot-oneeight = "1.8.8-R0.1-SNAPSHOT"
-paper-latest = "1.21.11-R0.1-SNAPSHOT"
+paper-latest = "26.1.2.build.+"
 
 jaskl = "1.10.0"
 slams = "1.2.3"
