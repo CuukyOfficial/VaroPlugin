@@ -111,7 +111,7 @@ public class Main extends JavaPlugin {
     		
     		this.getLogger().log(Level.INFO, "");
     
-    		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+    		if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
     		    this.getLogger().log(Level.INFO, "SHA1SUM: " + this.calcChecksum());
     		
 			if (new ConfigFailureDetector().hasFailed()) {

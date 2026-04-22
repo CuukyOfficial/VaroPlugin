@@ -34,7 +34,7 @@ public class EnchantmentManager {
     
     public EnchantmentManager() {
         switch (VersionUtils.getVersion()) {
-            case ONE_8:
+            case VERSION_1_8:
                 this.enchantmentBlocker = new OneEightEnchantmentBlocker();
                 break;
             default:

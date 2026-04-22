@@ -104,7 +104,7 @@ public class DataManager {
 
         this.dailyTimer = new DailyTasks();
 
-        if (VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_12)) {
+        if (VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_12)) {
             // 1.12+ uses a game rule which is set in VaroWorld
             VersionUtils.getVersionAdapter().setServerProperty("announce-player-achievements", !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean());
         }

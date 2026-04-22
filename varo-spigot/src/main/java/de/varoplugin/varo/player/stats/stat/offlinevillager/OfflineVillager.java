@@ -69,12 +69,12 @@ public class OfflineVillager implements VaroSerializeable {
 				if (location.getWorld().getDifficulty() == Difficulty.PEACEFUL)
 					location.getWorld().setDifficulty(Difficulty.EASY);
 
-				EntityType type = VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
+				EntityType type = VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
 				zombie = (Zombie) location.getWorld().spawnEntity(location, type);
 				zombie.setCustomName("§c" + vp.getName());
 				zombie.setCustomNameVisible(true);
 
-				if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_9))
+				if (!VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_9))
 					zombie.setVillager(true);
 
 				freezeVillager();

@@ -16,7 +16,7 @@ public enum ConfigSettingSection implements SectionConfiguration {
 	ACTIVITY("Activity", XMaterial.FURNACE, "Hier kannst du Einstellungen zur Aktivitaet eines Spielers vornehmen."),
 	AUTOSETUP("Autosetup", XMaterial.CLOCK, "Hier kannst das Autosetup einstellen!"),
 	BACKPACKS("Backpacks", XMaterial.ENDER_CHEST, "Alle Einstellungen zur Rucksaecken"),
-	BORDER("Border", VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) ? XMaterial.BARRIER : XMaterial.OAK_FENCE, "Hier kannst du Einstellungen zur Border vornehmen."),
+	BORDER("Border", VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7) ? XMaterial.BARRIER : XMaterial.OAK_FENCE, "Hier kannst du Einstellungen zur Border vornehmen."),
 	CHAT("Chat", XMaterial.WRITABLE_BOOK, "Hier kannst du Einstellungen zum Chat vornehmen"),
 	COMBATLOG("Combatlog", XMaterial.DIAMOND_SWORD, "Hier kannst du einstellen, was passiert,\nwenn ein Spieler sich waehrend des Kampfes ausloggt."),
 	COMMANDS("Commands", XMaterial.COMMAND_BLOCK, "Hier kannst Commands aktivieren oder deaktivieren (Neustart erforderlich)"),

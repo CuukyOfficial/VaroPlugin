@@ -35,7 +35,7 @@ public class NoPortalListener implements Listener {
     static {
         try {
             // PortalCreateEvent#getBlocks was changed from ArrayList<Block> to List<BlockState> in 1.14
-            MethodType type = VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_14) ? MethodType.methodType(ArrayList.class) : MethodType.methodType(List.class);
+            MethodType type = VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_14) ? MethodType.methodType(ArrayList.class) : MethodType.methodType(List.class);
             GET_BLOCKS = MethodHandles.lookup().findVirtual(PortalCreateEvent.class, "getBlocks", type);
         } catch (NoSuchMethodException | IllegalAccessException e) {
             throw new RuntimeException(e);

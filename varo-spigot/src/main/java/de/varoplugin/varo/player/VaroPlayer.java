@@ -330,7 +330,7 @@ public class VaroPlayer implements VaroSerializeable {
 			this.actionbar.queueUpdate();
 
 		if (this.player != null) {
-			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 				this.player.setPlayerListName(this.getTablistName());
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
@@ -360,7 +360,7 @@ public class VaroPlayer implements VaroSerializeable {
 			String listname = Messages.PLAYER_TABLIST_FORMAT.value(this);
 
 			// max 16 characters on 1.7.10
-			if (ServerVersion.ONE_8.isHigherThan(VersionUtils.getVersion()) && listname.length() > 16)
+			if (ServerVersion.VERSION_1_8.isHigherThan(VersionUtils.getVersion()) && listname.length() > 16)
 				listname = listname.substring(0, 16);
 
 			return listname;
@@ -586,7 +586,7 @@ public class VaroPlayer implements VaroSerializeable {
 				this.scoreboard.setEnabled(this.stats.isShowScoreboard());
 			}
 
-			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.TABLIST_ENABLED.getValueAsBoolean() && (ConfigSetting.TABLIST_HEADER_ENABLED.getValueAsBoolean() || ConfigSetting.TABLIST_FOOTER_ENABLED.getValueAsBoolean())) {
+			if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7) && ConfigSetting.TABLIST_ENABLED.getValueAsBoolean() && (ConfigSetting.TABLIST_HEADER_ENABLED.getValueAsBoolean() || ConfigSetting.TABLIST_FOOTER_ENABLED.getValueAsBoolean())) {
 				this.tablist = new AnimatedTablist(Main.getInstance(), this.getPlayer(), new AnimationData<String>() {
                     
 				    @Override
@@ -625,7 +625,7 @@ public class VaroPlayer implements VaroSerializeable {
 				this.tablist.setFooterEnabled(ConfigSetting.TABLIST_FOOTER_ENABLED.getValueAsBoolean());
 			}
 			
-			if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7) && ConfigSetting.ACTIONBAR_ENABLED.getValueAsBoolean()) {
+			if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7) && ConfigSetting.ACTIONBAR_ENABLED.getValueAsBoolean()) {
 				this.actionbar = new AnimatedActionbar(Main.getInstance(), player, new AnimationData<String>() {
                     
 				    @Override

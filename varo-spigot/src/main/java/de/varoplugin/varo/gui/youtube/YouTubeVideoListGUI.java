@@ -44,7 +44,7 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
     protected ItemStack getItemStack(int index, YouTubeVideo video) {
         ItemBuilder itemBuilder;
         if (video.getOwner() != null)
-            itemBuilder = VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_12) ? ItemBuilder.skull(video.getOwner().getName()) : ItemBuilder.skull(video.getOwner().getRealUUID());
+            itemBuilder = VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_12) ? ItemBuilder.skull(video.getOwner().getName()) : ItemBuilder.skull(video.getOwner().getRealUUID());
         else
             itemBuilder = ItemBuilder.material(XMaterial.SKELETON_SKULL);
         return itemBuilder.displayName("§5" + video.getTitle())

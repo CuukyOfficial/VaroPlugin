@@ -35,7 +35,7 @@ public class VaroWorldHandler {
             if (!world.equals(mainVaroWorld.getWorld()))
                 addWorld(world);
 
-        if (VersionUtils.getVersion() == ServerVersion.ONE_8)
+        if (VersionUtils.getVersion() == ServerVersion.VERSION_1_8)
             disableWorldDownloader();
     }
 

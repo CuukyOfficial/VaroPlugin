@@ -29,7 +29,7 @@ public final class VaroUtils {
 	
 	public static void updateWorldTime() {
 	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
-        boolean legacyWorldClocks = VersionUtils.getVersion().isLowerThan(ServerVersion.TWENTYSIX_1);
+        boolean legacyWorldClocks = VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_26_1);
 
 	    for (World world : Bukkit.getWorlds())
 	        if (!ConfigSetting.ALWAYS_TIME.isIntActivated() || (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()))

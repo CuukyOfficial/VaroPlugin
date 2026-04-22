@@ -96,7 +96,7 @@ public class Spawn implements VaroSerializeable {
     }
     
     private boolean shouldHaveNameTag() {
-    	return !VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
+    	return !VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
     }
     
     private Entity createNameTag() {
@@ -122,7 +122,7 @@ public class Spawn implements VaroSerializeable {
     }
 
     private Optional<Entity> findNameTag() {
-    	if (this.nametagUuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.ONE_8))
+    	if (this.nametagUuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8))
     		return Optional.empty();
     	
     	String uuid = this.nametagUuid.toString();
@@ -175,7 +175,7 @@ public class Spawn implements VaroSerializeable {
     }
 
     public void initNameTag() {
-        if (VersionUtils.getServerSoftware() == ServerSoftware.PAPER && VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_16))
+        if (VersionUtils.getServerSoftware() == ServerSoftware.PAPER && VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_16))
             // temporary paper 1.17+ workaround
             try {
                 Method forceLoadMethod = Chunk.class.getMethod("setForceLoaded", boolean.class);

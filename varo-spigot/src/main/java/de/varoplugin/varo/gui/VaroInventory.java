@@ -14,7 +14,7 @@ public abstract class VaroInventory extends AdvancedInventory {
     }
 
     public static int getFixedSize(int size) {
-        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_8))
+        if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_8))
             return size < 1 ? 1 : (Math.min(size, 64));
         return size;
     }

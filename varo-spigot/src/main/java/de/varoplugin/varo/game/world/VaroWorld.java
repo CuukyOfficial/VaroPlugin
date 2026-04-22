@@ -27,11 +27,11 @@ public class VaroWorld {
 	public VaroWorld(World world) {
 		this.world = world;
 
-        if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_11))
+        if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_11))
             // Versions < 1.12 don't have this game rule and use a server property instead (see DataManager) 
             XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean());
 
-		if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+		if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 			this.varoWorldBorder = new DefaultVaroBorder(world);
 		else 
 		    this.varoWorldBorder = new NopVaroBorder(world);

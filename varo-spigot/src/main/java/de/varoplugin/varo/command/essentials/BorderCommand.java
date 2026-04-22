@@ -18,7 +18,7 @@ public class BorderCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
-        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
+        if (!VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7)) {
             Messages.COMMANDS_ERROR_WRONGVERSION.send(sender, Placeholder.constant("required-version", "1.8.8"));
             return false;
         }

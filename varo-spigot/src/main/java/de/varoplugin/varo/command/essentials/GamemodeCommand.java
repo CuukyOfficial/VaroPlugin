@@ -55,7 +55,7 @@ public class GamemodeCommand implements CommandExecutor {
 	                gm = GameMode.ADVENTURE;
 	                break;
 	            case 3:
-	                if (!VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7)) {
+	                if (!VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7)) {
 	                    sender.sendMessage(Main.getPrefix() + "Nicht verfügbar vor der 1.8!");
 	                    return false;
 	                }
@@ -63,7 +63,7 @@ public class GamemodeCommand implements CommandExecutor {
 	                gm = GameMode.SPECTATOR;
 	                break;
 	            default:
-	                if (VersionUtils.getVersion().isHigherThan(ServerVersion.ONE_7))
+	                if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 	                    sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-3 betragen!");
 	                else
 	                    sender.sendMessage(Main.getPrefix() + "§7Die Zahl muss 0-2 betragen!");
