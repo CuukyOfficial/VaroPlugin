@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cryptomorin.xseries.XGameRule;
+import de.varoplugin.cfw.version.ServerVersion;
+import de.varoplugin.cfw.version.VersionAdapter;
+import de.varoplugin.cfw.version.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -26,13 +29,14 @@ public final class VaroUtils {
 	
 	public static void updateWorldTime() {
 	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
+        boolean legacyWorldClocks = VersionUtils.getVersion().isLowerThan(ServerVersion.TWENTYSIX_1);
 
 	    for (World world : Bukkit.getWorlds())
 	        if (!ConfigSetting.ALWAYS_TIME.isIntActivated() || (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()))
                 XGameRule.ADVANCE_TIME.setValue(world, true);
 	        else {
                 XGameRule.ADVANCE_TIME.setValue(world, false);
-	            if (world.getTime() != time)
+	            if (world.getTime() != time && (legacyWorldClocks || world.getEnvironment() == World.Environment.NORMAL)) // Workaround until Paper 26.1 adds a clock API
 	                world.setTime(time);
 	            world.setStorm(false);
 	            world.setThundering(false);
