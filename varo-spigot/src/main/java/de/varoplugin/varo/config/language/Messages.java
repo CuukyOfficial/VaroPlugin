@@ -21,6 +21,7 @@ package de.varoplugin.varo.config.language;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
+import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.config.language.Contexts.PlayerContext;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
@@ -58,7 +59,8 @@ public final class Messages {
     public static final String LANGUAGE_DEFAULT = LANGUAGE_EN;
     public static final List<String> LANGUAGES = Arrays.asList(LANGUAGE_EN, LANGUAGE_DE);
 
-    static final StandaloneSlams SLAMS = StandaloneSlams.of(Slams.of(LANGUAGE_DEFAULT), PlaceholderStyle.ANGLE_BRACKETS, true, true); // TODO debug options
+    static final StandaloneSlams SLAMS = StandaloneSlams.of(Slams.of(LANGUAGE_DEFAULT), PlaceholderStyle.ANGLE_BRACKETS,
+            VaroConfig.MESSAGES_ENABLE_CONSTEXPR_EVAL.getValue(), VaroConfig.MESSAGES_ENABLE_INLINE.getValue());
     private static final PlaceholderResolver PLACEHOLDERS;
 
     static {
