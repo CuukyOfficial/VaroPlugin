@@ -18,23 +18,11 @@
 
 package de.varoplugin.varo.config.language;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
+import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.config.language.Contexts.PlayerContext;
-import de.varoplugin.varo.config.language.Contexts.VaroContext;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import io.github.almightysatan.jaskl.Resource;
@@ -43,12 +31,24 @@ import io.github.almightysatan.slams.InvalidTypeException;
 import io.github.almightysatan.slams.MissingTranslationException;
 import io.github.almightysatan.slams.PlaceholderResolver;
 import io.github.almightysatan.slams.Slams;
+import io.github.almightysatan.slams.bukkit.BukkitMessage;
 import io.github.almightysatan.slams.papi.SlamsPlaceholderExpansion;
 import io.github.almightysatan.slams.parser.JasklParser;
-import io.github.almightysatan.slams.standalone.StandaloneMessage;
+import io.github.almightysatan.slams.standalone.PlaceholderStyle;
 import io.github.almightysatan.slams.standalone.StandaloneMessageArray;
 import io.github.almightysatan.slams.standalone.StandaloneMessageArray2d;
-import me.clip.placeholderapi.PlaceholderAPIPlugin;
+import io.github.almightysatan.slams.standalone.StandaloneSlams;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
 
 public final class Messages {
 
@@ -59,7 +59,8 @@ public final class Messages {
     public static final String LANGUAGE_DEFAULT = LANGUAGE_EN;
     public static final List<String> LANGUAGES = Arrays.asList(LANGUAGE_EN, LANGUAGE_DE);
 
-    static final Slams SLAMS = Slams.create(LANGUAGE_DEFAULT);
+    static final StandaloneSlams SLAMS = StandaloneSlams.of(Slams.of(LANGUAGE_DEFAULT), PlaceholderStyle.ANGLE_BRACKETS,
+            VaroConfig.MESSAGES_ENABLE_CONSTEXPR_EVAL.getValue(), VaroConfig.MESSAGES_ENABLE_INLINE.getValue());
     private static final PlaceholderResolver PLACEHOLDERS;
 
     static {
@@ -398,7 +399,6 @@ public final class Messages {
                 "German language configuration file\nSee https://almighty-satan.github.io/varoplugin-docs/category/messages for more information")));
 
         try {
-            PlaceholderAPIPlugin.getInstance();
             new SlamsPlaceholderExpansion("varo", Main.getInstance().getDescription().getAuthors().get(0), Main.getInstance().getDescription().getVersion(), PLACEHOLDERS).register();
         } catch (NoClassDefFoundError e) {
             // nop
@@ -406,34 +406,14 @@ public final class Messages {
     }
 
     static VaroMessage message(String key) {
-        StandaloneMessage message = StandaloneMessage.of(key, SLAMS, PLACEHOLDERS);
+        BukkitMessage message = BukkitMessage.of(key, SLAMS, PLACEHOLDERS);
         return new VaroMessage() {
             @Override
-            public void broadcast(VaroContext context) {
+            public void broadcast(Object... contexts) {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
-                        this.send(player, context);
-                    Bukkit.getConsoleSender().sendMessage(message.value(context.copy()));
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                }
-            }
-
-            @Override
-            public void broadcast(VaroPlayer subject, PlaceholderResolver placeholders, String link) {
-                try {
-                    if (link == null || link.isEmpty()) {
-                        this.broadcast(subject, placeholders);
-                        return;
-                    }
-    
-                    PlayerContext context = new PlayerContext(subject);
-                    for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-                        PlayerContext newContext = context.copy();
-                        newContext.getMessageData().language = player.getLanguage();
-                        VersionUtils.getVersionAdapter().sendLinkedMessage(player.getPlayer(), message.value(newContext, placeholders), link);
-                    }
-                    Bukkit.getConsoleSender().sendMessage(message.value(context, placeholders));
+                        this.send(player, contexts);
+                    message.send(Bukkit.getConsoleSender(), contexts);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -444,7 +424,7 @@ public final class Messages {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
                         this.send(player, subject, placeholders);
-                    Bukkit.getConsoleSender().sendMessage(message.value(new PlayerContext(subject), placeholders));
+                    message.send(Bukkit.getConsoleSender(), placeholders, new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -455,7 +435,7 @@ public final class Messages {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
                         this.send(player, subject);
-                    Bukkit.getConsoleSender().sendMessage(message.value(new PlayerContext(subject)));
+                    message.send(Bukkit.getConsoleSender(), new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -466,7 +446,7 @@ public final class Messages {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
                         this.send(player, placeholders);
-                    Bukkit.getConsoleSender().sendMessage(message.value( placeholders));
+                    message.send(Bukkit.getConsoleSender(), placeholders);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -477,29 +457,16 @@ public final class Messages {
                 try {
                     for (VaroPlayer player : VaroPlayer.getOnlinePlayer())
                         this.send(player);
-                    Bukkit.getConsoleSender().sendMessage(message.value(new VaroContext()));
+                    message.send(Bukkit.getConsoleSender());
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
             }
 
             @Override
-            public void send(VaroPlayer recipient, VaroContext context) {
+            public void send(VaroPlayer recipient, Object... contexts) {
                 try {
-                    VaroContext copy = context.copy();
-                    copy.getMessageData().language = recipient.getLanguage();
-                    recipient.sendMessage(message.value(copy));
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                }
-            }
-
-            @Override
-            public void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders, String link) {
-                try {
-                    VaroContext context = new PlayerContext(subject);
-                    context.getMessageData().language = recipient.getLanguage();
-                    VersionUtils.getVersionAdapter().sendLinkedMessage(recipient.getPlayer(), message.value(context, placeholders), link);
+                    message.send(recipient.getPlayer(), recipient.getLanguage(), ArrayUtils.add(contexts, new PlayerContext(recipient)));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -508,9 +475,7 @@ public final class Messages {
             @Override
             public void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders) {
                 try {
-                    VaroContext context = new PlayerContext(subject);
-                    context.getMessageData().language = recipient.getLanguage();
-                    recipient.sendMessage(message.value(context, placeholders));
+                    message.send(recipient.getPlayer(), recipient.getLanguage(), placeholders, new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -518,35 +483,17 @@ public final class Messages {
 
             @Override
             public void send(VaroPlayer recipient, VaroPlayer subject) {
-                try {
-                    VaroContext context = new PlayerContext(subject);
-                    context.getMessageData().language = recipient.getLanguage();
-                    recipient.sendMessage(message.value(context));
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                }
+                this.send(recipient, subject, PlaceholderResolver.empty());
             }
 
             @Override
             public void send(VaroPlayer subject, PlaceholderResolver placeholders) {
-                try {
-                    VaroContext context = new PlayerContext(subject);
-                    context.getMessageData().language = subject.getLanguage();
-                    subject.sendMessage(message.value(context, placeholders));
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                }
+                this.send(subject, subject, placeholders);
             }
 
             @Override
             public void send(VaroPlayer subject) {
-                try {
-                    VaroContext context = new PlayerContext(subject);
-                    context.getMessageData().language = subject.getLanguage();
-                    subject.sendMessage(message.value(context));
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                }
+                this.send(subject, subject, PlaceholderResolver.empty());
             }
 
             @Override
@@ -555,7 +502,7 @@ public final class Messages {
                     if (recipient instanceof Player)
                         this.send(VaroPlayer.getPlayer((Player) recipient), subject);
                     else
-                        recipient.sendMessage(message.value(new PlayerContext(subject)));
+                        message.send(recipient, new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -567,7 +514,7 @@ public final class Messages {
                     if (subject instanceof Player)
                         this.send(VaroPlayer.getPlayer((Player) subject), placeholders);
                     else
-                        subject.sendMessage(message.value(placeholders));
+                        message.send(subject, placeholders);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -579,21 +526,18 @@ public final class Messages {
                     if (subject instanceof Player)
                         this.send(VaroPlayer.getPlayer((Player) subject));
                     else
-                        subject.sendMessage(message.value(new VaroContext()));
+                        message.send(subject);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
             }
 
             @Override
-            public void kick(VaroPlayer recipient, VaroContext context) {
+            public void kick(VaroPlayer subject, Object... contexts) {
                 try {
-                    Player player = recipient.getPlayer();
-                    if (player != null) {
-                        VaroContext copy = context.copy();
-                        copy.getMessageData().language = recipient.getLanguage();
-                        player.kickPlayer(message.value(copy));
-                    }
+                    Player player = subject.getPlayer();
+                    if (player != null)
+                        player.kickPlayer(message.stringValue(subject.getLanguage(), PlaceholderResolver.empty(), ArrayUtils.add(contexts, new PlayerContext(subject))));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -603,11 +547,8 @@ public final class Messages {
             public void kick(VaroPlayer subject, PlaceholderResolver placeholders) {
                 try {
                     Player player = subject.getPlayer();
-                    if (player != null) {
-                        PlayerContext context = new PlayerContext(subject);
-                        context.getMessageData().language = subject.getLanguage();
-                        player.kickPlayer(message.value(context, placeholders));
-                    }
+                    if (player != null)
+                        player.kickPlayer(message.stringValue(subject.getLanguage(), placeholders, new PlayerContext(subject)));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -615,22 +556,13 @@ public final class Messages {
 
             @Override
             public void kick(VaroPlayer subject) {
-                try {
-                    Player player = subject.getPlayer();
-                    if (player != null) {
-                        PlayerContext context = new PlayerContext(subject);
-                        context.getMessageData().language = subject.getLanguage();
-                        player.kickPlayer(message.value(context));
-                    }
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                }
+                this.kick(subject, PlaceholderResolver.empty());
             }
 
             @Override
             public String value(VaroPlayer subject, PlaceholderResolver placeholders) {
                 try {
-                    return message.value(new PlayerContext(subject), placeholders);
+                    return message.stringValue(subject.getLanguage(), placeholders, new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return "MESSAGE_ERROR";
@@ -639,19 +571,13 @@ public final class Messages {
 
             @Override
             public String value(VaroPlayer subject) {
-                try {
-                    return message.value(new PlayerContext(subject));
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                    return "MESSAGE_ERROR";
-                }
+                return this.value(subject, PlaceholderResolver.empty());
             }
             
             @Override
             public String value(PlaceholderResolver placeholders) {
                 try {
-                    return message.value(placeholders);
-                    
+                    return message.stringValue(placeholders);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return "MESSAGE_ERROR";
@@ -660,27 +586,22 @@ public final class Messages {
             
             @Override
             public String value() {
-                try {
-                    return message.value(new VaroContext());
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                    return "MESSAGE_ERROR";
-                }
+                return this.value(PlaceholderResolver.empty());
             }
 
             @Override
-            public void log(LogType type, VaroContext context, PlaceholderResolver placeholders) {
+            public void log(LogType type, PlaceholderResolver placeholders, Object... contexts) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(context, placeholders));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.stringValue(placeholders, contexts));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
             }
 
             @Override
-            public void log(LogType type, VaroContext context) {
+            public void log(LogType type, Object... contexts) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(context));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.stringValue(contexts));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -689,7 +610,7 @@ public final class Messages {
             @Override
             public void log(LogType type, VaroPlayer subject, PlaceholderResolver placeholders) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(new PlayerContext(subject), placeholders), subject.getRealUUID());
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.stringValue(placeholders, new PlayerContext(subject)), subject.getRealUUID());
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -698,7 +619,7 @@ public final class Messages {
             @Override
             public void log(LogType type, VaroPlayer subject) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(new PlayerContext(subject)), subject.getRealUUID());
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.stringValue(new PlayerContext(subject)), subject.getRealUUID());
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -707,7 +628,7 @@ public final class Messages {
             @Override
             public void log(LogType type, PlaceholderResolver placeholders) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(placeholders));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.stringValue(placeholders));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -716,7 +637,7 @@ public final class Messages {
             @Override
             public void log(LogType type) {
                 try {
-                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.value(new VaroContext()));
+                    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(type, message.stringValue());
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                 }
@@ -725,7 +646,7 @@ public final class Messages {
             @Override
             public void alert(AlertType type, VaroPlayer subject, PlaceholderResolver placeholders) {
                 try {
-                    String value = message.value(new PlayerContext(subject), placeholders);
+                    String value = message.stringValue(placeholders, new PlayerContext(subject));
                     new Alert(type, value);
                     Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, value, subject.getRealUUID());
                 } catch (Throwable t) {
@@ -736,7 +657,7 @@ public final class Messages {
             @Override
             public void alert(AlertType type, VaroPlayer subject) {
                 try {
-                    String value = message.value(new PlayerContext(subject));
+                    String value = message.stringValue(new PlayerContext(subject));
                     new Alert(type, value);
                     Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.ALERT, value, subject.getRealUUID());
                 } catch (Throwable t) {
@@ -752,7 +673,7 @@ public final class Messages {
 
             @Override
             public int size(VaroPlayer subject) {
-                return message.translate(new PlayerContext(subject)).size();
+                return message.translate(subject.getLanguage()).size();
             }
 
             @Override
@@ -761,21 +682,9 @@ public final class Messages {
             }
 
             @Override
-            public String[] value(VaroContext context) {
-                try {
-                    return message.value(context);
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                    return Collections.nCopies(size(), "MESSAGE_ERROR").toArray(new String[0]);
-                }
-            }
-
-            @Override
             public String[] value(VaroPlayer subject) {
                 try {
-                    VaroContext ctx = new PlayerContext(subject);
-                    ctx.getMessageData().language = subject.getLanguage();
-                    return message.value(ctx);
+                    return message.value(subject.getLanguage(), new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return Collections.nCopies(size(subject), "MESSAGE_ERROR").toArray(new String[0]);
@@ -783,9 +692,9 @@ public final class Messages {
             }
 
             @Override
-            public String value(int index, VaroContext context) {
+            public String value(String language, int index, VaroPlayer subject) {
                 try {
-                    return message.translate(context).get(index).value(context);
+                    return message.translate(language).get(index).value(new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return "MESSAGE_ERROR";
@@ -795,9 +704,7 @@ public final class Messages {
             @Override
             public String value(int index, VaroPlayer subject) {
                 try {
-                    VaroContext ctx = new PlayerContext(subject);
-                    ctx.getMessageData().language = subject.getLanguage();
-                    return message.translate(ctx).get(index).value(ctx);
+                    return this.value(subject.getLanguage(), index, subject);
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return "MESSAGE_ERROR";
@@ -812,7 +719,7 @@ public final class Messages {
 
             @Override
             public int size(VaroPlayer subject) {
-                return message.translate(new PlayerContext(subject)).size();
+                return message.translate(subject.getLanguage()).size();
             }
 
             @Override
@@ -821,21 +728,9 @@ public final class Messages {
             }
 
             @Override
-            public String[][] value(VaroContext context) {
-                try {
-                    return message.value(context);
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                    return Collections.nCopies(size(), new String[] {"MESSAGE_ERROR"}).toArray(new String[0][]);
-                }
-            }
-
-            @Override
             public String[][] value(VaroPlayer subject) {
                 try {
-                    VaroContext ctx = new PlayerContext(subject);
-                    ctx.getMessageData().language = subject.getLanguage();
-                    return message.value(ctx);
+                    return message.value(subject.getLanguage(), new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return Collections.nCopies(size(subject), new String[] {"MESSAGE_ERROR"}).toArray(new String[0][]);
@@ -843,21 +738,9 @@ public final class Messages {
             }
 
             @Override
-            public String[] value(int index, VaroContext context) {
-                try {
-                    return message.translate(context).get(index).value(context);
-                } catch (Throwable t) {
-                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
-                    return new String[] {"MESSAGE_ERROR"};
-                }
-            }
-
-            @Override
             public String[] value(int index, VaroPlayer subject) {
                 try {
-                    VaroContext ctx = new PlayerContext(subject);
-                    ctx.getMessageData().language = subject.getLanguage();
-                    return message.translate(ctx).get(index).value(ctx);
+                    return message.translate(subject.getLanguage()).get(index).value(new PlayerContext(subject));
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
                     return new String[] {"MESSAGE_ERROR"};
@@ -867,15 +750,13 @@ public final class Messages {
     }
 
     public interface VaroMessage {
-        void broadcast(VaroContext context);
-        void broadcast(VaroPlayer subject, PlaceholderResolver placeholders, String link);
+        void broadcast(Object... contexts);
         void broadcast(VaroPlayer subject, PlaceholderResolver placeholders);
         void broadcast(VaroPlayer subject);
         void broadcast(PlaceholderResolver placeholders);
         void broadcast();
 
-        void send(VaroPlayer recipient, VaroContext context);
-        void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders, String link);
+        void send(VaroPlayer recipient, Object... contexts);
         void send(VaroPlayer recipient, VaroPlayer subject, PlaceholderResolver placeholders);
         void send(VaroPlayer recipient, VaroPlayer subject);
         void send(VaroPlayer subject, PlaceholderResolver placeholders);
@@ -885,12 +766,12 @@ public final class Messages {
         void send(CommandSender subject, PlaceholderResolver placeholders);
         void send(CommandSender subject);
 
-        void kick(VaroPlayer recipient, VaroContext context);
+        void kick(VaroPlayer recipient, Object... contexts);
         void kick(VaroPlayer subject, PlaceholderResolver placeholders);
         void kick(VaroPlayer subject);
 
-        void log(LogType type, VaroContext context, PlaceholderResolver placeholders);
-        void log(LogType type, VaroContext context);
+        void log(LogType type, PlaceholderResolver placeholders, Object... contexts);
+        void log(LogType type, Object... contexts);
         void log(LogType type, VaroPlayer subject, PlaceholderResolver placeholders);
         void log(LogType type, VaroPlayer subject);
         void log(LogType type, PlaceholderResolver placeholders);
@@ -909,9 +790,8 @@ public final class Messages {
         int size(VaroPlayer subject);
         int size();
 
-        String[] value(VaroContext context);
         String[] value(VaroPlayer subject);
-        String value(int index, VaroContext context);
+        String value(String language, int index, VaroPlayer subject);
         String value(int index, VaroPlayer subject);
     }
 
@@ -919,9 +799,7 @@ public final class Messages {
         int size(VaroPlayer subject);
         int size();
 
-        String[][] value(VaroContext context);
         String[][] value(VaroPlayer subject);
-        String[] value(int index, VaroContext context);
         String[] value(int index, VaroPlayer subject);
     }
 }

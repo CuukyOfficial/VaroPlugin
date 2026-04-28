@@ -18,38 +18,13 @@
 
 package de.varoplugin.varo.config.language;
 
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
-
-import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.team.VaroTeam;
-import io.github.almightysatan.slams.Context;
+import org.bukkit.entity.Player;
 
 public interface Contexts {
 
-    class MessageData {
-        String language;
-    }
-
-    class VaroContext implements Context {
-        private final MessageData messageData = new MessageData();
-
-        @Override
-        public @Nullable String language() {
-            return this.messageData.language != null ? this.messageData.language : ConfigSetting.LANGUAGE_DEFAULT.getValueAsString();
-        }
-
-        public MessageData getMessageData() {
-            return this.messageData;
-        }
-
-        public VaroContext copy() {
-            return new VaroContext();
-        }
-    }
-
-    class PlayerContext extends VaroContext {
+    class PlayerContext {
         private final VaroPlayer player;
 
         public PlayerContext(VaroPlayer player) {
@@ -69,14 +44,9 @@ public interface Contexts {
             VaroTeam team = this.player.getTeam();
             return team == null ? null : new TeamContext(team);
         }
-
-        @Override
-        public PlayerContext copy() {
-            return new PlayerContext(this.player);
-        }
     }
 
-    class OnlinePlayerContext implements Context {
+    class OnlinePlayerContext {
         private final Player player;
 
         OnlinePlayerContext(Player player) {
@@ -85,11 +55,6 @@ public interface Contexts {
 
         public Player getPlayer() {
             return this.player;
-        }
-
-        @Override
-        public @Nullable String language() {
-            return null;
         }
     }
 
@@ -104,11 +69,6 @@ public interface Contexts {
         public String getReason() {
             return this.reason;
         }
-
-        @Override
-        public DeathContext copy() {
-            return new DeathContext(this.getPlayer(), this.reason);
-        }
     }
 
     class KillContext extends DeathContext {
@@ -121,11 +81,6 @@ public interface Contexts {
 
         public VaroPlayer getKiller() {
             return this.killer;
-        }
-
-        @Override
-        public KillContext copy() {
-            return new KillContext(this.getPlayer(), this.killer, this.getReason());
         }
     }
 
@@ -152,11 +107,6 @@ public interface Contexts {
         public String getNum() {
             return String.valueOf(this.num);
         }
-
-        @Override
-        public StrikeContext copy() {
-            return new StrikeContext(this.getPlayer(), this.reason, this.operator, this.num);
-        }
     }
 
     class ContainerContext extends PlayerContext {
@@ -170,14 +120,9 @@ public interface Contexts {
         public VaroPlayer getOwner() {
             return this.owner;
         }
-
-        @Override
-        public ContainerContext copy() {
-            return new ContainerContext(this.getPlayer(), this.owner);
-        }
     }
     
-    class TeamContext extends VaroContext {
+    class TeamContext {
         private final VaroTeam team;
 
         TeamContext(VaroTeam team) {
@@ -187,14 +132,9 @@ public interface Contexts {
         public VaroTeam getTeam() {
             return this.team;
         }
-
-        @Override
-        public TeamContext copy() {
-            return new TeamContext(this.team);
-        }
     }
 
-    class BorderDecreaseContext extends VaroContext {
+    class BorderDecreaseContext {
         private final int size;
         private final double speed;
         private final int time;
@@ -215,11 +155,6 @@ public interface Contexts {
 
         public String getTime() {
             return String.valueOf(this.time);
-        }
-
-        @Override
-        public BorderDecreaseContext copy() {
-            return new BorderDecreaseContext(this.size, this.speed, this.time);
         }
     }
 }
