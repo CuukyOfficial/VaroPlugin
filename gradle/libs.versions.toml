@@ -11,7 +11,7 @@ jda = "6.4.1"
 
 json = "1.1.1"
 guava = "33.6.0-jre"
-gson = "2.13.2"
+gson = "2.14.0"
 commons-collections4 = "4.5.0"
 commons-lang3 = "3.20.0"
 commons-io = "2.22.0"
