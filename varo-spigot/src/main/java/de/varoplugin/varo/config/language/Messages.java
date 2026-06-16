@@ -752,7 +752,9 @@ public final class Messages {
 
             @Override
             public int size(VaroPlayer subject) {
-                return message.translate(new PlayerContext(subject)).size();
+                VaroContext ctx = new PlayerContext(subject);
+                ctx.getMessageData().language = subject.getLanguage();
+                return message.translate(ctx).size();
             }
 
             @Override
@@ -812,7 +814,9 @@ public final class Messages {
 
             @Override
             public int size(VaroPlayer subject) {
-                return message.translate(new PlayerContext(subject)).size();
+                VaroContext ctx = new PlayerContext(subject);
+                ctx.getMessageData().language = subject.getLanguage();
+                return message.translate(ctx).size();
             }
 
             @Override
