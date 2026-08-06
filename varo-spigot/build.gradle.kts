@@ -46,6 +46,8 @@ fun DependencyHandler.modularInternal(dependencyNotation: Any, localFileName: St
 }
 
 dependencies {
+    compileOnly(project(":varo-compile-stubs"))
+    
     modularInternal(libs.cfw, "CFW")
 
     implementation(libs.spigot.oneeight)

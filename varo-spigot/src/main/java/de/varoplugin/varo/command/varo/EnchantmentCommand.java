@@ -40,15 +40,15 @@ public class EnchantmentCommand extends VaroCommand {
 			return;
 		}
 
-		List<String> list = VaroConfig.ENCHANTMENT_BLOCKED.getValue();
+		Map<String, Integer> enchantments = VaroConfig.ENCHANTMENT_BLOCKED.getValue();
 		if (args[0].equalsIgnoreCase("list")) {
-			if (list.isEmpty()) {
+			if (enchantments.isEmpty()) {
 				sender.sendMessage(Main.getPrefix() + "Keine geblockten Verzauberungen gefunden!");
 				return;
 			}
 
 			sender.sendMessage(Main.getPrefix() + "Liste aller geblockten Verzauberungen§7:");
-			for (String enchantment : list)
+			for (Map.Entry<String, Integer> enchantment : enchantments.entrySet())
 				sender.sendMessage(Main.getPrefix() + enchantment);
 			return;
 		}
@@ -72,8 +72,9 @@ public class EnchantmentCommand extends VaroCommand {
 			return;
 		}
 
+        // TODO tell the user that a server restart may be required
 		if (args[0].equalsIgnoreCase("add")) {
-		    Main.getDataManager().getEnchantmentManager().blockEnchantments(encs.keySet().toArray(new Enchantment[0]));
+		    Main.getDataManager().getEnchantmentManager().blockEnchantments(encs);
 		    sender.sendMessage(Main.getPrefix() + "Verzauberungen erfolgreich blockiert!");
 		} else if (args[0].equalsIgnoreCase("remove")) {
 			Main.getDataManager().getEnchantmentManager().unblockEnchantments(encs.keySet().toArray(new Enchantment[0]));
