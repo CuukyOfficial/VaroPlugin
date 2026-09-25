@@ -38,7 +38,7 @@ public class ConfigGUI extends VaroListInventory<ConfigSetting> {
                 try {
                     entry.setStringValue(message, true);
                 } catch (Throwable t) {
-                    getPlayer().sendMessage(Main.getPrefix() + t.getMessage());
+                    getPlayer().sendMessage(Main.getPrefix() + "§cUngültige Eingabe!");
                     return;
                 }
 
