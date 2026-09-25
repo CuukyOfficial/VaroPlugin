@@ -1,11 +1,14 @@
 package de.varoplugin.varo.game.world.border.decrease;
 
+import java.math.BigDecimal;
+
 public class BorderDecrease {
 
-	private final double amount, speed;
+	private final double amount;
+    private final BigDecimal speed;
 	private final DecreaseReason reason;
 
-	public BorderDecrease(double amount, double speed, DecreaseReason reason) {
+	public BorderDecrease(double amount, BigDecimal speed, DecreaseReason reason) {
 		this.amount = amount;
 		this.speed = speed;
 		this.reason = reason;
@@ -15,7 +18,7 @@ public class BorderDecrease {
         return this.amount;
     }
 
-	public double getSpeed() {
+	public BigDecimal getSpeed() {
 		return this.speed;
 	}
 	

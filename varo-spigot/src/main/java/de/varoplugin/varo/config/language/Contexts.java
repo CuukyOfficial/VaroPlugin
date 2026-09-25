@@ -22,6 +22,8 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.team.VaroTeam;
 import org.bukkit.entity.Player;
 
+import java.math.BigDecimal;
+
 public interface Contexts {
 
     class PlayerContext {
@@ -136,10 +138,10 @@ public interface Contexts {
 
     class BorderDecreaseContext {
         private final int size;
-        private final double speed;
+        private final BigDecimal speed;
         private final int time;
 
-        public BorderDecreaseContext(int size, double speed, int time) {
+        public BorderDecreaseContext(int size, BigDecimal speed, int time) {
             this.size = size;
             this.speed = speed;
             this.time = time;

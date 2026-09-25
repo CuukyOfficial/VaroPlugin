@@ -434,7 +434,7 @@ border:
     days: "<prefix>The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s. Next reduction in §c<border-decrease-time> §7days!"
     minutes: "<prefix>The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s. Next reduction in §c<border-decrease-time> §7minutes!"
     minuteUpdate: "<prefix>The border will shrink in §c<border-decrease-minutes>§8:§c<border-decrease-seconds>"
-    death: "<prefix>The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s due to a death."
+    death: "<prefix>The border is now shrinking by §c<border-decrease-size> §7blocks with §c<border-decrease-speed> §7blocks/s due to the death of a player."
   minimum: "<prefix>§cThe Border has reached its minimum!"
 teamrequest:
   name:

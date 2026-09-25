@@ -6,6 +6,8 @@ import de.varoplugin.varo.config.language.Messages.VaroMessage;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 
+import java.math.BigDecimal;
+
 public enum DecreaseReason {
 
 	DEATH(ConfigSetting.BORDER_DEATH_DECREASE, ConfigSetting.BORDER_DEATH_DECREASE_SIZE, ConfigSetting.BORDER_DEATH_DECREASE_SPEED, null, Messages.BORDER_DECREASE_DEATH, Messages.LOG_BORDER_DECREASED_DEATH),
@@ -24,12 +26,8 @@ public enum DecreaseReason {
 		this.log = log;
 	}
 
-	public double getDecreaseSpeed() {
-		try {
-			return speed.getValueAsInt();
-		} catch (IllegalArgumentException e) {
-			return speed.getValueAsDouble();
-		}
+	public BigDecimal getDecreaseSpeed() {
+        return speed.getValueAsBigDecimal();
 	}
 
 	public void postLog() {

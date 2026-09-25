@@ -75,17 +75,17 @@ public enum ConfigSetting implements SectionEntry {
 	WORLD_SNCHRONIZE_BORDER(ConfigSettingSection.BORDER, "synchronizeBorders", true, "Ob die Groesse der Border\nfuer alle Welten zaehlen soll"),
 	BORDER_DEATH_DECREASE(ConfigSettingSection.BORDER, "deathBorderDecrease.enabled", true, "Ob sich die Border bei Tod verringern soll"),
 	BORDER_DEATH_DECREASE_SIZE(ConfigSettingSection.BORDER, "deathBorderDecrease.size", 25, "Um wie viele Bloecke sich die\nBorder bei Tod verringern soll."),
-	BORDER_DEATH_DECREASE_SPEED(ConfigSettingSection.BORDER, "deathBorderDecrease.speed", 1, "Mit welcher Geschwindigkeit sich\ndie Border beiTod verringern soll."),
+	BORDER_DEATH_DECREASE_SPEED(ConfigSettingSection.BORDER, "deathBorderDecrease.speed", BigDecimal.valueOf(1), "Mit welcher Geschwindigkeit sich\ndie Border beiTod verringern soll."),
 	BORDER_SIZE_IN_FINALE(ConfigSettingSection.FINALE, "borderSizeInFinale", 300, "Auf diese Groesse wird die Border beim Starten des Finales gestellt."),
 
 	BORDER_TIME_DAY_DECREASE(ConfigSettingSection.BORDER, "dayBorderDecrease.enabled", true, "Ob sich die Border nach Tagen verringern soll"),
 	BORDER_TIME_DAY_DECREASE_DAYS(ConfigSettingSection.BORDER, "dayBorderDecrease.days", 3, "Nach wie vielen Tagen sich\ndie Border verkleinern soll."),
 	BORDER_TIME_DAY_DECREASE_SIZE(ConfigSettingSection.BORDER, "dayBorderDecrease.size", 50, "Um wieviel sich die Bordernach den\noben genannten Tagen verkleinern soll."),
-	BORDER_TIME_DAY_DECREASE_SPEED(ConfigSettingSection.BORDER, "dayBorderDecrease.speed", 5, "Wie viele Bloecke pro Sekunde sich\ndie Border nach Tagen verkleinern soll."),
+	BORDER_TIME_DAY_DECREASE_SPEED(ConfigSettingSection.BORDER, "dayBorderDecrease.speed", BigDecimal.valueOf(5), "Wie viele Bloecke pro Sekunde sich\ndie Border nach Tagen verkleinern soll."),
 	BORDER_TIME_MINUTE_DECREASE(ConfigSettingSection.BORDER, "minuteBorderDecrease.enabled", false, "Ob sich die Border nach Minuten verringern soll"),
 	BORDER_TIME_MINUTE_DECREASE_MINUTES(ConfigSettingSection.BORDER, "minuteBorderDecrease.minutes", 30, "Nach wie vielen Minuten sich\ndie Border verkleinern soll."),
 	BORDER_TIME_MINUTE_DECREASE_SIZE(ConfigSettingSection.BORDER, "minuteBorderDecrease.size", 50, "Um wieviel sich die Bordernach den oben\ngenannten Minuten verkleinern soll."),
-	BORDER_TIME_MINUTE_DECREASE_SPEED(ConfigSettingSection.BORDER, "minuteBorderDecrease.speed", 5, "Wie viele Bloecke pro Sekunde sichdie\nBorder nach Minuten verkleinern soll."),
+	BORDER_TIME_MINUTE_DECREASE_SPEED(ConfigSettingSection.BORDER, "minuteBorderDecrease.speed", BigDecimal.valueOf(5), "Wie viele Bloecke pro Sekunde sichdie\nBorder nach Minuten verkleinern soll."),
 	BORDER_TIME_MINUTE_BC_INTERVAL(ConfigSettingSection.BORDER, "minuteBorderDecrease.bcInterval", 300, "In welchen Sekundenabstaenden die Zeit bis zur Verkleinerung\ngebroacastet werden soll"),
 	BROADCAST_INTERVAL_IN_SECONDS(ConfigSettingSection.OTHER, "broadcastIntervalInSeconds", -1, "Interval in Sekunden, in welcher der\nBroadcaster eine Nachricht postet.\nHinweis: Die Nachrichten kannst du in der broadcasts.yml einstellen.\nOff = -1"),
 
@@ -446,7 +446,9 @@ public enum ConfigSetting implements SectionEntry {
 			        && (valueClass != Integer.class || defaultClass != Long.class)
 			        && (valueClass != Integer.class || defaultClass != Double.class)
 			        && (valueClass != String.class || defaultClass != BigDecimal.class)
-			        && (valueClass != String.class || !Enum.class.isAssignableFrom(defaultClass)))
+			        && (valueClass != String.class || !Enum.class.isAssignableFrom(defaultClass))
+                    && (valueClass != Double.class || defaultClass != BigDecimal.class)
+                    && (valueClass != Integer.class || defaultClass != BigDecimal.class))
 				throw new IllegalArgumentException("'" + value + "' (" + valueClass.getName() + ") is not applicable for " + defaultClass.getName() + " for entry " + getFullPath());
 		}
 	
