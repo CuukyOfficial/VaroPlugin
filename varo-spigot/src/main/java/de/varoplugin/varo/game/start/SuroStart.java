@@ -2,18 +2,16 @@ package de.varoplugin.varo.game.start;
 
 import com.cryptomorin.xseries.XSound;
 import de.varoplugin.cfw.version.VersionUtils;
-import de.varoplugin.varo.config.language.Contexts;
+import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.VaroGame;
+import de.varoplugin.varo.player.VaroPlayer;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import de.varoplugin.varo.Main;
-import de.varoplugin.varo.player.VaroPlayer;
 
 public class SuroStart extends AbstractStartSequence {
 
@@ -38,8 +36,8 @@ public class SuroStart extends AbstractStartSequence {
 			VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 			for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
-				Contexts.PlayerContext context = new Contexts.PlayerContext(vp); // Setting the context manually forces the default language
-				String title = Messages.GAME_START_SURO_TITLE.value(this.titleSize - this.countdown, context);
+                // Use default language to ensure all intros run for the exact same duration
+				String title = Messages.GAME_START_SURO_TITLE.value(null, this.titleSize - this.countdown, vp);
 				if (StringUtils.isNotBlank(title))
 					VersionUtils.getVersionAdapter().sendTitle(vp.getPlayer(), title, "");
 			}

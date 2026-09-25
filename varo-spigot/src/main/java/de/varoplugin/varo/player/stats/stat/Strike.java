@@ -1,20 +1,18 @@
 package de.varoplugin.varo.player.stats.stat;
 
-import java.util.Date;
-
-import de.varoplugin.varo.config.VaroConfig;
-import org.apache.commons.lang3.time.DateUtils;
-import org.bukkit.Location;
-
 import de.varoplugin.varo.Main;
-import de.varoplugin.varo.config.language.Messages;
+import de.varoplugin.varo.config.VaroConfig;
 import de.varoplugin.varo.config.language.Contexts.StrikeContext;
-import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
+import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 import io.github.almightysatan.slams.Placeholder;
+import org.apache.commons.lang3.time.DateUtils;
+import org.bukkit.Location;
+
+import java.util.Date;
 
 public class Strike implements VaroSerializeable {
 
@@ -80,10 +78,10 @@ public class Strike implements VaroSerializeable {
 		if (this.template.isPostCoordinates()) {
 			if (striked.getStats().getLastLocation() == null) {
 				Location loc = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation();
-				Messages.LOG_STRIKE_COORDINATES_NEVER_ONLINE.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
+				Messages.LOG_STRIKE_COORDINATES_NEVER_ONLINE.log(LogType.STRIKE, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()), ctx);
 			} else {
 				Location loc = striked.isOnline() ? striked.getPlayer().getLocation() : striked.getStats().getLastLocation();
-				Messages.LOG_STRIKE_COORDINATES.log(LogType.STRIKE, ctx, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()));
+				Messages.LOG_STRIKE_COORDINATES.log(LogType.STRIKE, Placeholder.constant("strike-location", "X:" + loc.getBlockX() + ", Y:" + loc.getBlockY() + ", Z:" + loc.getBlockZ() + " & world: " + loc.getWorld().getName()), ctx);
 			}
 		} else
 			Messages.LOG_STRIKE_GENERAL.log(LogType.STRIKE, ctx);

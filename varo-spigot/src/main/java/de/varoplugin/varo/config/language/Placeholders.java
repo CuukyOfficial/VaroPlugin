@@ -18,38 +18,33 @@
 
 package de.varoplugin.varo.config.language;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-
 import de.varoplugin.varo.Main;
-import de.varoplugin.varo.config.language.Contexts.BorderDecreaseContext;
-import de.varoplugin.varo.config.language.Contexts.ContainerContext;
-import de.varoplugin.varo.config.language.Contexts.DeathContext;
-import de.varoplugin.varo.config.language.Contexts.KillContext;
-import de.varoplugin.varo.config.language.Contexts.OnlinePlayerContext;
-import de.varoplugin.varo.config.language.Contexts.PlayerContext;
-import de.varoplugin.varo.config.language.Contexts.StrikeContext;
-import de.varoplugin.varo.config.language.Contexts.TeamContext;
+import de.varoplugin.varo.config.language.Contexts.*;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.VaroPlayerDisconnect;
 import de.varoplugin.varo.spigot.VaroUpdateResultSet.UpdateResult;
 import de.varoplugin.varo.team.VaroTeam;
 import de.varoplugin.varo.utils.VaroUtils;
+import io.github.almightysatan.slams.Component;
 import io.github.almightysatan.slams.Placeholder;
 import io.github.almightysatan.slams.PlaceholderResolver;
 import io.github.almightysatan.slams.PlaceholderResolver.Builder;
-import io.github.almightysatan.slams.papi.PapiPlaceholderResolver;
+import io.github.almightysatan.slams.bukkit.BukkitPlaceholders;
+import io.github.almightysatan.slams.papi.PapiPlaceholders;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
+import org.jspecify.annotations.NonNull;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
 
 public final class Placeholders {
-
-    private static final String INVALID_ARGS = "INVALID_ARGS";
 
     static PlaceholderResolver getPlaceholders() {
         PlaceholderResolver.Builder builder = PlaceholderResolver.builder().builtIn()
@@ -64,41 +59,41 @@ public final class Placeholders {
         .constant("prefix", Main.getPrefix())
         .constant("colorcode", Main.getColorCode())
         .constant("discord", ConfigSetting.DISCORDBOT_INVITELINK.getValueAsString())
-        .variable("num-players", () -> String.valueOf(VaroPlayer.getVaroPlayers().size()))
-        .variable("num-alive", () -> String.valueOf(VaroPlayer.getAlivePlayer().size()))
-        .variable("num-online", () -> String.valueOf(VaroPlayer.getOnlineAndAlivePlayer().size()))
+        .variable("num-players", () -> VaroPlayer.getVaroPlayers().size())
+        .variable("num-alive", () -> VaroPlayer.getAlivePlayer().size())
+        .variable("num-online", () -> VaroPlayer.getOnlineAndAlivePlayer().size())
         .variable("project-hour", () -> toPaddedString(Main.getVaroGame().getProjectTime() / 3600))
         .variable("project-minute", () -> toPaddedString((Main.getVaroGame().getProjectTime() / 60) % 60))
         .variable("project-second", () -> toPaddedString(Main.getVaroGame().getProjectTime() % 60))
-        .variable("border-size", () -> String.valueOf((long) Main.getVaroGame().getVaroWorldHandler().getBorderSize(null)))
-        .variable("border-radius", () -> String.valueOf((long) Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null)))
+        .variable("border-size", () -> (long) Main.getVaroGame().getVaroWorldHandler().getBorderSize(null))
+        .variable("border-radius", () -> (long) Main.getVaroGame().getVaroWorldHandler().getBorderRadius(null))
         .variable("spawn-world", () -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getName())
         .withArgs("top-player", args -> { // top-player-name should be used instead
-            if (args.isEmpty() || args.size() > 2) return INVALID_ARGS;
+            if (args.isEmpty() || args.size() > 2) return Placeholder.INVALID_ARGUMENTS;
             try {
                 int index = Integer.parseInt(args.get(0));
                 if (index <= 0)
-                    return INVALID_ARGS;
+                    return Placeholder.INVALID_ARGUMENTS;
                 VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
                 if (player != null)
                     return player.getName();
                 return args.size() == 1 ? "-" : args.get(1);
             } catch (NumberFormatException e) {
-                return INVALID_ARGS;
+                return Placeholder.INVALID_ARGUMENTS;
             }
         })
         // Misc
         .constant("heart", "♥")
         .constant("newline", "\n")
         .withArgs("padding", args -> {
-            if (args.size() != 1) return INVALID_ARGS;
+            if (args.size() != 1) return Placeholder.INVALID_ARGUMENTS;
             try {
                 return String.join("", Collections.nCopies(Integer.parseInt(args.get(0)), " "));
             } catch (NumberFormatException e) {
-                return INVALID_ARGS;
+                return Placeholder.INVALID_ARGUMENTS;
             }
         })
-        .variable("year", () -> String.valueOf(LocalDate.now().getYear()))
+        .variable("year", () -> LocalDate.now().getYear())
         .variable("month", () -> toPaddedString(LocalDate.now().getMonthValue()))
         .variable("day", () -> toPaddedString(LocalDate.now().getDayOfMonth()))
         .variable("hour", () -> toPaddedString(LocalDateTime.now().getHour()))
@@ -106,20 +101,20 @@ public final class Placeholders {
         .variable("second", () -> toPaddedString(LocalDateTime.now().getSecond()))
         .withArgs("pad-left", args -> {
             if (args.size() != 3)
-                return INVALID_ARGS;
+                return Placeholder.INVALID_ARGUMENTS;
             try {
                 return StringUtils.leftPad(args.get(0), Integer.parseInt(args.get(1)), args.get(2));
             } catch (NumberFormatException e) {
-                return INVALID_ARGS;
+                return Placeholder.INVALID_ARGUMENTS;
             }
         })
         .withArgs("pad-right", args -> {
             if (args.size() != 3)
-                return INVALID_ARGS;
+                return Placeholder.INVALID_ARGUMENTS;
             try {
                 return StringUtils.rightPad(args.get(0), Integer.parseInt(args.get(1)), args.get(2));
             } catch (NumberFormatException e) {
-                return INVALID_ARGS;
+                return Placeholder.INVALID_ARGUMENTS;
             }
         })
         // Player
@@ -135,65 +130,25 @@ public final class Placeholders {
         .contextual("border-decrease-speed", BorderDecreaseContext.class, BorderDecreaseContext::getSpeed)
         .contextual("border-decrease-time", BorderDecreaseContext.class, BorderDecreaseContext::getTime);
         
-        addPlayerPlaceholders(new Builder() {
-            
-            @Override
-            public @NotNull PlaceholderResolver build() {
-                throw new UnsupportedOperationException();
-            }
-            
-            @Override
-            public @NotNull Builder add(@NotNull Placeholder placeholder) {
-                builder.add("top-player-" + placeholder.key(), (ctx, args) -> {
-                    if (args.size() < 2) return INVALID_ARGS;
-                    try {
-                        int index = Integer.parseInt(args.get(0));
-                        if (index <= 0)
-                            return INVALID_ARGS;
-                        VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
-                        if (player == null)
-                            return args.get(1);
-                        return placeholder.value(new PlayerContext(player), args.stream().skip(2).collect(Collectors.toList()));
-                    } catch (NumberFormatException e) {
-                        return INVALID_ARGS;
-                    }
-                });
-                return this;
-            }
-        });
-        
-        addTeamPlaceholders(new Builder() {
-            
-            @Override
-            public @NotNull PlaceholderResolver build() {
-                throw new UnsupportedOperationException();
-            }
-            
-            @Override
-            public @NotNull Builder add(@NotNull Placeholder placeholder) {
-                builder.add("top-team-" + placeholder.key(), (ctx, args) -> {
-                    if (args.size() < 2) return INVALID_ARGS;
-                    try {
-                        int index = Integer.parseInt(args.get(0));
-                        if (index <= 0)
-                            return INVALID_ARGS;
-                        VaroTeam team = Main.getVaroGame().getTopScores().getTeam(index);
-                        if (team == null)
-                            return args.get(1);
-                        return placeholder.value(new TeamContext(team), args.stream().skip(2).collect(Collectors.toList()));
-                    } catch (NumberFormatException e) {
-                        return INVALID_ARGS;
-                    }
-                });
-                return this;
-            }
-        });
+        addPlayerPlaceholders(topBuilder(builder, "top-player-", index -> {
+            VaroPlayer player = Main.getVaroGame().getTopScores().getPlayer(index);
+            if (player == null)
+                return null;
+            return new PlayerContext(player);
+        }));
+        addPlayerPlaceholders(topBuilder(builder, "top-team-", index -> {
+            VaroTeam team = Main.getVaroGame().getTopScores().getTeam(index);
+            if (team == null)
+                return null;
+            return new TeamContext(team);
+        }));
 
         for (ConfigSetting setting : ConfigSetting.values())
             if (!setting.isSensitive())
-                builder.variable("config-" + setting.getFullPath().replace('.', '-'), () -> String.valueOf(setting.getValue()));
+                builder.variable("config-" + setting.getFullPath().replace('.', '-'), setting::getValue);
 
-        PapiPlaceholderResolver.addIfAvailable(builder);
+        BukkitPlaceholders.addBuiltIn(builder);
+        PapiPlaceholders.addIfAvailable(builder);
 
         return builder.build();
     }
@@ -202,10 +157,10 @@ public final class Placeholders {
         builder.contextual("name", PlayerContext.class, (ctx) -> ctx.getPlayer().getName())
         .contextual("displayname", PlayerContext.class, (ctx) -> ctx.getPlayer().getDisplayName())
         .contextual("uuid", PlayerContext.class, (ctx) -> ctx.getPlayer().getUUID())
-        .contextual("id", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getId()))
+        .contextual("id", PlayerContext.class, (ctx) -> ctx.getPlayer().getId())
         .contextual("rank", PlayerContext.class, (ctx) -> ctx.getPlayer().getRank() != null ? ctx.getPlayer().getRank().getDisplay() : "-")
-        .contextual("kills", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getKills()))
-        .contextual("strikes", PlayerContext.class, (ctx) -> String.valueOf(ctx.getPlayer().getStats().getStrikes().size()))
+        .contextual("kills", PlayerContext.class, (ctx) -> ctx.getPlayer().getStats().getKills())
+        .contextual("strikes", PlayerContext.class, (ctx) -> ctx.getPlayer().getStats().getStrikes().size())
         .contextual("countdown-hour", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : toPaddedString(ctx.getPlayer().getStats().getCountdown() / 3600))
         .contextual("countdown-minute", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : toPaddedString((ctx.getPlayer().getStats().getCountdown() / 60) % 60))
         .contextual("countdown-second", PlayerContext.class, (ctx) -> !Main.getVaroGame().isPlayTimeLimited() ? "-" : toPaddedString(ctx.getPlayer().getStats().getCountdown() % 60))
@@ -218,31 +173,31 @@ public final class Placeholders {
         .contextual("online-total-hour", PlayerContext.class, (ctx) -> toPaddedString(ctx.getPlayer().getStats().getOnlineTimeTotal() / 3600))
         .contextual("online-total-minute", PlayerContext.class, (ctx) -> toPaddedString((ctx.getPlayer().getStats().getOnlineTimeTotal() / 60) % 60))
         .contextual("online-total-second", PlayerContext.class, (ctx) -> toPaddedString(ctx.getPlayer().getStats().getOnlineTimeTotal() % 60))
-        .contextual("episode", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessionsPlayed()))
-        .contextual("episodes-remaining", PlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getStats().getSessions()))
-        .contextual("remaining-disconnects", PlayerContext.class, ctx -> String.valueOf(VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt()))
+        .contextual("episode", PlayerContext.class, ctx -> ctx.getPlayer().getStats().getSessionsPlayed())
+        .contextual("episodes-remaining", PlayerContext.class, ctx -> ctx.getPlayer().getStats().getSessions())
+        .contextual("remaining-disconnects", PlayerContext.class, ctx -> VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()) != null ? ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt() - VaroPlayerDisconnect.getDisconnect(ctx.getPlayer().getPlayer()).getDisconnects() : ConfigSetting.DISCONNECT_PER_SESSION.getValueAsInt())
         .contextual("luckperms-prefix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsPrefix(ctx.getPlayer()))
         .contextual("luckperms-suffix", PlayerContext.class, ctx -> VaroUtils.getLuckPermsSuffix(ctx.getPlayer()))
         .contextual("blocklogger", PlayerContext.class, (ctx, args) -> {
             if (args.size() != 1)
-                return INVALID_ARGS;
-            return String.valueOf(Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(ctx.getPlayer().getUUID(), args.get(0)).size());
+                return Placeholder.INVALID_ARGUMENTS;
+            return Main.getDataManager().getVaroLoggerManager().getBlockLogger().getUuidMaterialLogs(ctx.getPlayer().getUUID(), args.get(0)).size();
         })
         // Online
         .conditional("online", PlayerContext.class, ctx -> ctx.getPlayer().getPlayer() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
         .namespace(null, PlayerContext.class, PlayerContext::toOnlinePlayerContext, onlineBuilder -> {
-            onlineBuilder.contextual("ping", OnlinePlayerContext.class, ctx -> String.valueOf(VaroPlayer.getPlayer(ctx.getPlayer()).getVersionAdapter().getPing()))
-            .contextual("x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockX()))
-            .contextual("y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockY()))
-            .contextual("z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getBlockZ()))
+            onlineBuilder.contextual("ping", OnlinePlayerContext.class, ctx -> VaroPlayer.getPlayer(ctx.getPlayer()).getVersionAdapter().getPing())
+            .contextual("x", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getBlockX())
+            .contextual("y", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getBlockY())
+            .contextual("z", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getBlockZ())
             .contextual("world", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getName())
-            .contextual("distance-to-border", OnlinePlayerContext.class, ctx -> String.valueOf((int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(ctx.getPlayer().getWorld()).getVaroBorder().getDistance(ctx.getPlayer())))
-            .contextual("spawn-x", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockX()), (ctx, args) -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockX()))
-            .contextual("spawn-y", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockY()), (ctx, args) -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockY()))
-            .contextual("spawn-z", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockZ()), (ctx, args) -> String.valueOf(Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockZ()))
-            .contextual("spawn-distance", OnlinePlayerContext.class, ctx -> String.valueOf((int) ctx.getPlayer().getLocation().distance(ctx.getPlayer().getLocation().getWorld().getSpawnLocation())))
-            .contextual("health", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getHealth()))
-            .contextual("food", OnlinePlayerContext.class, ctx -> String.valueOf(ctx.getPlayer().getFoodLevel()));
+            .contextual("distance-to-border", OnlinePlayerContext.class, ctx -> (int) Main.getVaroGame().getVaroWorldHandler().getVaroWorld(ctx.getPlayer().getWorld()).getVaroBorder().getDistance(ctx.getPlayer()))
+            .contextual("spawn-x", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockX(), (ctx, args) -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockX())
+            .contextual("spawn-y", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockY(), (ctx, args) -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockY())
+            .contextual("spawn-z", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getLocation().getWorld().getSpawnLocation().getBlockZ(), (ctx, args) -> Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld().getSpawnLocation().getBlockZ())
+            .contextual("spawn-distance", OnlinePlayerContext.class, ctx -> (int) ctx.getPlayer().getLocation().distance(ctx.getPlayer().getLocation().getWorld().getSpawnLocation()))
+            .contextual("health", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getHealth())
+            .contextual("food", OnlinePlayerContext.class, ctx -> ctx.getPlayer().getFoodLevel());
         })
         // Team
         .conditional("has-team", PlayerContext.class, ctx -> ctx.getPlayer().getTeam() != null, (ctx, args) -> args.size() > 1 ? args.get(1) : "")
@@ -252,12 +207,84 @@ public final class Placeholders {
     private static void addTeamPlaceholders(PlaceholderResolver.Builder builder) {
         builder.contextual("name", TeamContext.class, (ctx) -> ctx.getTeam().getName())
         .contextual("displayname", TeamContext.class, (ctx) -> ctx.getTeam().getDisplayName())
-        .contextual("id", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getId()))
-        .contextual("kills", TeamContext.class, (ctx) -> String.valueOf(ctx.getTeam().getKills()))
+        .contextual("id", TeamContext.class, (ctx) -> ctx.getTeam().getId())
+        .contextual("kills", TeamContext.class, (ctx) -> ctx.getTeam().getKills())
         .contextual("lives", TeamContext.class, (ctx) -> ctx.getTeam().getLives().toPlainString());
     }
     
     private static String toPaddedString(long value) {
         return value <= 9 ? "0" + value : String.valueOf(value);
+    }
+    
+    private static Builder topBuilder(Builder builder, String prefix, Function<Integer, Object> function) {
+        return new Builder() {
+
+            @Override
+            public @NotNull PlaceholderResolver build() {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public @NotNull Builder add(@NotNull Placeholder placeholder) {
+                builder.add(new Placeholder() {
+                    @Override
+                    public @NotNull String key() {
+                        return prefix + placeholder.key();
+                    }
+
+                    @Override
+                    public boolean constexpr() {
+                        return false;
+                    }
+
+                    @Override
+                    public @NotNull <T> Component<T> value(@NotNull Object @NotNull [] contexts, @Unmodifiable @NotNull List<@NotNull Argument<T>> arguments, Component.@NotNull ValueFactory<T> factory) {
+                        if (arguments.size() < 2)
+                            return factory.component(Placeholder.INVALID_ARGUMENTS);
+                        try {
+                            int index = Integer.parseInt(arguments.get(0).stringValue());
+                            if (index <= 0)
+                                return factory.component(Placeholder.INVALID_ARGUMENTS);
+                            Object context = function.apply(index);
+                            if (context == null)
+                                return arguments.get(1);
+                            return placeholder.value(new Object[]{context}, arguments.subList(2, arguments.size()), factory);
+                        } catch (NumberFormatException e) {
+                            return factory.component(Placeholder.INVALID_ARGUMENTS);
+                        }
+                    }
+
+                    @Override
+                    public <T> @NonNull ProcessedPlaceholder<T> processArguments(@Unmodifiable @NotNull List<@Nullable Argument<T>> arguments, Component.@NotNull ValueFactory<T> factory) {
+                        if (arguments.size() < 2)
+                            return factory.processedPlaceholder(Placeholder.INVALID_ARGUMENTS);
+                        
+                        Argument<T> arg0 = arguments.get(0);
+                        try {
+                            Integer index = arg0 != null ? Integer.parseInt(arg0.stringValue()) : null;
+                            if (index != null && index <= 0)
+                                return factory.processedPlaceholder(Placeholder.INVALID_ARGUMENTS);
+                            
+                            return (contexts0, arguments0, factory0) -> {
+                                int i;
+                                try {
+                                    i = index != null ? index : Integer.parseInt(arguments0.get(0).stringValue());
+                                } catch (NumberFormatException e) {
+                                    return factory0.component(Placeholder.INVALID_ARGUMENTS);
+                                }
+                                
+                                Object context = function.apply(i);
+                                if (context == null)
+                                    return arguments0.get(1);
+                                return placeholder.value(new Object[]{context}, arguments0.subList(2, arguments0.size()), factory0);
+                            };
+                        } catch (NumberFormatException e) {
+                            return factory.processedPlaceholder(Placeholder.INVALID_ARGUMENTS);
+                        }
+                    }
+                });
+                return this;
+            }
+        };
     }
 }
