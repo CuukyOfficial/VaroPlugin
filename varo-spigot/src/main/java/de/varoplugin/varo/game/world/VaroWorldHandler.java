@@ -13,6 +13,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -81,7 +83,7 @@ public class VaroWorldHandler {
         double size = this.getBorderSize();
         double newSize = Math.max(size - this.activeBorderDecrease.getAmount(), ConfigSetting.MIN_BORDER_SIZE.getValueAsInt());
         double diff = Math.abs(size - newSize);
-        long time = (long) (diff / this.activeBorderDecrease.getSpeed());
+        long time = BigDecimal.valueOf(diff).divide(this.activeBorderDecrease.getSpeed(), RoundingMode.HALF_UP).longValue();
         this.setBorderSize(newSize, time, null);
         
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

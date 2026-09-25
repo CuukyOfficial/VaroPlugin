@@ -26,6 +26,8 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.team.VaroTeam;
 import io.github.almightysatan.slams.Context;
 
+import java.math.BigDecimal;
+
 public interface Contexts {
 
     class MessageData {
@@ -196,10 +198,10 @@ public interface Contexts {
 
     class BorderDecreaseContext extends VaroContext {
         private final int size;
-        private final double speed;
+        private final BigDecimal speed;
         private final int time;
 
-        public BorderDecreaseContext(int size, double speed, int time) {
+        public BorderDecreaseContext(int size, BigDecimal speed, int time) {
             this.size = size;
             this.speed = speed;
             this.time = time;
