@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     ignore:
       - dependency-name: "org.spigotmc:spigot-api"
       - dependency-name: "com.sk89q.worldedit:worldedit-bukkit"
