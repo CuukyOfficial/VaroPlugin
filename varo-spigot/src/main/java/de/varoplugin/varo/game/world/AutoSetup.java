@@ -1,18 +1,7 @@
 package de.varoplugin.varo.game.world;
 
-import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.logging.Level;
-
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
-
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.start.AutoStart;
@@ -21,8 +10,20 @@ import de.varoplugin.varo.game.world.generators.PortalGenerator;
 import de.varoplugin.varo.game.world.generators.SpawnGenerator;
 import de.varoplugin.varo.spawns.spawn.SpawnChecker;
 import de.varoplugin.varo.utils.VaroUtils;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
 
 public class AutoSetup {
+
+    private static final Path SCHEMATIC_PATH = Paths.get("plugins/Varo/schematics/");
 
     private BukkitTask task;
     private VaroWorld world;
@@ -91,12 +92,18 @@ public class AutoSetup {
 
             Location lobby = getLobbyLocation(world.getWorld(), x, z);
 
-            File schematicFile = new File(ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString());
             boolean schematicEnabled = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean();
-            if (schematicEnabled && schematicFile.exists()) {
-                new LobbyGenerator(lobby, schematicFile);
+            if (schematicEnabled) {
+                String schematic = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString();
+                Path path = SCHEMATIC_PATH.resolve(schematic);
+                Path normalized = path.normalize();
+                if (normalized.startsWith(SCHEMATIC_PATH) && !path.normalize().equals(SCHEMATIC_PATH) && path.toFile().exists()) {
+                    new LobbyGenerator(lobby, path.toFile());
+                } else {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: Schematic does not exist! Using default lobby generator!");
+                    new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
+                }
             } else {
-                if (schematicEnabled) Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: Schematic does not exist! Using default lobby generator!");
                 new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
             }
 
