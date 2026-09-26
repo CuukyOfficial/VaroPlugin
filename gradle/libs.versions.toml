@@ -1,11 +1,11 @@
 [versions]
 spigot-oneeight = "1.8.8-R0.1-SNAPSHOT"
-paper-latest = "26.1.2.build.+"
+paper-latest = "26.3.build.+"
 
 jaskl = "1.10.1"
 slams = "1.2.3"
 
-cfw = "1.0.0-ALPHA-33"
+cfw = "1.0.0-ALPHA-34"
 xseries = "13.7.1"
 jda = "6.7.0"
 
