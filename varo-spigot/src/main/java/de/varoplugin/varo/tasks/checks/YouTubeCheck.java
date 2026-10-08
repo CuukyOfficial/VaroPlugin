@@ -80,9 +80,9 @@ public class YouTubeCheck implements Task {
 		for (String line : lines) {
 			if (line.contains("\"title\":{\"runs\":[{\"text\":"))
 				try {
-					String[] videoSplit = line.split("\"title\"\\:\\{\"runs\"\\:\\[\\{\"text\"\\:\"");
+					String[] videoSplit = line.split("\"metadata\":\\{\"lockupMetadataViewModel\":\\{\"title\":\\{\"content\":\"");
 					for (int i = 1; i < videoSplit.length; i++) {
-						String[] titleSplit = videoSplit[i].split("\"}]", 2);
+						String[] titleSplit = videoSplit[i].split("\"}", 2);
 						String videoTitle = titleSplit[0];
 						if (!videoTitle.toLowerCase().contains(ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase())) {
                             Main.getInstance().getLogger().info(Main.getConsolePrefix() + "Ignoring video '" + videoTitle + "' videos for player "
