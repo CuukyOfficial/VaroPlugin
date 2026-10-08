@@ -1,7 +1,5 @@
 package de.varoplugin.varo.tasks.checks;
 
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
@@ -9,41 +7,47 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
 import de.varoplugin.varo.tasks.Task;
+import org.bukkit.Bukkit;
 
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 public class YouTubeCheck implements Task {
 
 	@Override
 	public void check() {
 		if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean()) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
-						if (vp.getStats().getYoutubeLink() == null) {
-							alert(vp);
-							continue;
-						}
+            Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+                Main.getInstance().getLogger().log(Level.INFO, "Checking for new Youtube Videos...");
+                try {
+                    for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {
+                        if (vp.getStats().getYoutubeLink() == null) {
+                            this.alert(vp);
+                            continue;
+                        }
 
-						List<YouTubeVideo> videos = loadNewVideos(vp);
-						if (videos == null) {
-							new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Die Videos von " + vp.getName() + " konnten nicht geladen werden!");
-							continue;
-						}
+                        List<YouTubeVideo> videos = loadNewVideos(vp);
+                        if (videos == null) {
+                            new Alert(AlertType.NO_YOUTUBE_UPLOAD, "Die Videos von " + vp.getName() + " konnten nicht geladen werden!");
+                            continue;
+                        }
 
-						if (videos.size() == 0) {
-							alert(vp);
-						} else
-							for (YouTubeVideo video : videos)
-								vp.getStats().addVideo(video);
-					}
-				}
-			}.runTaskAsynchronously(Main.getInstance());
+                        if (videos.isEmpty()) {
+                            this.alert(vp);
+                        } else
+                            for (YouTubeVideo video : videos)
+                                vp.getStats().addVideo(video);
+                    }
+                } catch (Throwable t) {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Unable to load Youtube videos", t);
+                    return;
+                }
+                Main.getInstance().getLogger().log(Level.INFO, "Finished checking for new Youtube Videos");
+            });
 		}
 
 	}
@@ -80,8 +84,11 @@ public class YouTubeCheck implements Task {
 					for (int i = 1; i < videoSplit.length; i++) {
 						String[] titleSplit = videoSplit[i].split("\"}]", 2);
 						String videoTitle = titleSplit[0];
-						if (!videoTitle.toLowerCase().contains(ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase()))
-							continue;
+						if (!videoTitle.toLowerCase().contains(ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString().toLowerCase())) {
+                            Main.getInstance().getLogger().info(Main.getConsolePrefix() + "Ignoring video '" + videoTitle + "' videos for player "
+                                    + player.getName() + " because it does not contain '" + ConfigSetting.YOUTUBE_VIDEO_IDENTIFIER.getValueAsString() + "'");
+                            continue;
+                        }
 
 						if (videoTitle.length() > 200)
 							videoTitle = videoTitle.substring(0, 200);
