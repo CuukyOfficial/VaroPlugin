@@ -52,6 +52,8 @@ public class Dependencies {
         DEPENDENCIES.add(new VaroDependency("bstats-bukkit", MAVEN_CENTRAL));
         DEPENDENCIES.add(new VaroDependency("JDA", MAVEN_CENTRAL));
         DEPENDENCIES.add(new VaroDependency("slf4j-simple", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("google-api-client", MAVEN_CENTRAL));
+        DEPENDENCIES.add(new VaroDependency("google-api-services-youtube", MAVEN_CENTRAL));
     }
 
     public static void loadRequired() {

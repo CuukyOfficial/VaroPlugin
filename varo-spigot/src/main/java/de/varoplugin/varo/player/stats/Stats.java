@@ -44,6 +44,8 @@ import java.util.logging.Level;
 
 public class Stats implements VaroSerializeable {
 
+    private static final String YOUTUBE_LINK = "https://www.youtube.com/";
+    
 	@VaroSerializeField(path = "state")
 	private PlayerState state;
 	@VaroSerializeField(path = "lastLocation")
@@ -90,8 +92,8 @@ public class Stats implements VaroSerializeable {
 	private VaroInventory playerBackpack;
 	@VaroSerializeField(path = "restoreBackup")
 	private InventoryBackup restoreBackup;
-	@VaroSerializeField(path = "youtubeLink")
-	private String youtubeLink;
+	@VaroSerializeField(path = "youtubeHandle")
+	private String youtubeHandle;
 
 	@VaroSerializeField(path = "inventoryBackups", arrayClass = InventoryBackup.class)
 	private ArrayList<InventoryBackup> inventoryBackups;
@@ -303,7 +305,7 @@ public class Stats implements VaroSerializeable {
 				"§7LastTimeJoined§8: " + colorcode + (lastJoined != null ? lastJoined.format(dateTimeFormatter) : "/"),
 				"§7LastEnemyContact§8: " + colorcode + (lastEnemyContact != null ? dateFormat.format(lastEnemyContact) : "/"),
 				"§7DiedAt§8: " + colorcode + (diedAt == null ? "/" : dateFormat.format(diedAt)),
-				"§7YouTubeLink§8: " + colorcode + (youtubeLink != null ? youtubeLink : "/"),
+				"§7YouTubeHandle§8: " + colorcode + (youtubeHandle != null ? youtubeHandle : "/"),
 				"§7YouTubeVideos§8: " + colorcode + (videos == null ? 0 : videos.size()),
 				"§7StrikeAmount§8: " + colorcode + (strikes == null ? 0 : strikes.size()),
 				"§7State§8: " + colorcode + state.getName() };
@@ -361,11 +363,16 @@ public class Stats implements VaroSerializeable {
 		return wins;
 	}
 
-	public String getYoutubeLink() {
-		return youtubeLink;
-	}
+    public String getYoutubeHandle() {
+        return this.youtubeHandle;
+    }
 
-	public boolean hasFullTime() {
+    public String getYoutubeLink() {
+        String handle = this.getYoutubeHandle();
+        return handle != null ? YOUTUBE_LINK + handle : null;
+    }
+
+    public boolean hasFullTime() {
 		return countdown == Main.getVaroGame().getPlayTime() * 60;
 	}
 
@@ -412,7 +419,6 @@ public class Stats implements VaroSerializeable {
 	public void loadDefaults() {
 		loadStartDefaults();
 		kills = 0;
-		youtubeLink = null;
 		wins = 0;
 		state = PlayerState.ALIVE;
 		onlineAfterStart = false;
@@ -655,7 +661,7 @@ public class Stats implements VaroSerializeable {
 		this.wins = wins;
 	}
 
-	public void setYoutubeLink(String youtubeLink) {
-		this.youtubeLink = youtubeLink;
-	}
+    public void setYoutubeHandle(String youtubeHandle) {
+        this.youtubeHandle = youtubeHandle;
+    }
 }

@@ -24,6 +24,9 @@ luckperms = "5.5"
 floodgate = "2.2.4-SNAPSHOT"
 bstats = "3.2.1"
 
+google-api-client = "2.9.1"
+google-api-youtube = "v3-rev20261001-2.0.0"
+
 [libraries]
 spigot-oneeight = { module="org.spigotmc:spigot-api", version.ref="spigot-oneeight" }
 paper-latest = { module="io.papermc.paper:paper-api", version.ref="paper-latest" }
@@ -52,3 +55,6 @@ placeholderapi = { module="me.clip:placeholderapi", version.ref="placeholderapi"
 luckperms = { module="net.luckperms:api", version.ref="luckperms" }
 floodgate = { module="org.geysermc.floodgate:api", version.ref="floodgate" }
 bstats = { module="org.bstats:bstats-bukkit", version.ref="bstats" }
+
+google-api-client = {module="com.google.api-client:google-api-client", version.ref="google-api-client"}
+google-api-youtube = {module="com.google.apis:google-api-services-youtube", version.ref="google-api-youtube"}

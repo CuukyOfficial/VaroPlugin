@@ -44,7 +44,7 @@ public class ExportCommand extends VaroCommand {
 
 				if (player.getTeam() == null) {
 					yaml.set(player.getName() + ".name", player.getName());
-					yaml.set(player.getName() + ".youtubeLink", player.getStats().getYoutubeLink() == null ? "/" : player.getStats().getYoutubeLink());
+					yaml.set(player.getName() + ".youtubeHandle", player.getStats().getYoutubeHandle() == null ? "/" : player.getStats().getYoutubeHandle());
 					finished.add(player);
 				}
 			}
@@ -57,7 +57,7 @@ public class ExportCommand extends VaroCommand {
 						continue;
 
 					yaml.set(pref + ".member." + teamPl.getName() + ".name", teamPl.getName());
-					yaml.set(pref + ".member." + teamPl.getName() + ".youtubeLink", teamPl.getStats().getYoutubeLink() == null ? "/" : teamPl.getStats().getYoutubeLink());
+					yaml.set(pref + ".member." + teamPl.getName() + ".youtubeHandle", teamPl.getStats().getYoutubeHandle() == null ? "/" : teamPl.getStats().getYoutubeHandle());
 				}
 			}
 

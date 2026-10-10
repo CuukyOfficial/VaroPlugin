@@ -83,6 +83,8 @@ dependencies {
         exclude(module = "slf4j-api")
     }
     runtimeDownload(libs.bstats)
+    runtimeDownload(libs.google.api.client)
+    runtimeDownload(libs.google.api.youtube)
 
     testImplementation(libs.junit)
     testRuntimeOnly(libs.junitplatformlauncher)

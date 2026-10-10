@@ -8,6 +8,8 @@ import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 
 public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo> {
+    
+    public static final String WATCH_LINK = "https://youtube.com/watch?v=";
 
 	private static ArrayList<YouTubeVideo> videos;
 
@@ -17,9 +19,6 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 
 	@VaroSerializeField(path = "detectedAt")
 	private Date detectedAt;
-
-	@VaroSerializeField(path = "link")
-	private String link;
 
 	@VaroSerializeField(path = "title")
 	private String title;
@@ -31,10 +30,9 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		videos.add(this);
 	}
 
-	public YouTubeVideo(String videoId, String title, String link) {
+	public YouTubeVideo(String videoId, String title) {
 		this.videoId = videoId;
 		this.title = title;
-		this.link = link;
 		this.detectedAt = new Date();
 
 		videos.add(this);
@@ -51,7 +49,7 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	}
 
 	public String getLink() {
-		return link;
+		return WATCH_LINK + this.getVideoId();
 	}
 
 	public VaroPlayer getOwner() {
