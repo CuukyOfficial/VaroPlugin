@@ -11,12 +11,6 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
     
     public static final String WATCH_LINK = "https://youtube.com/watch?v=";
 
-	private static ArrayList<YouTubeVideo> videos;
-
-	static {
-		videos = new ArrayList<YouTubeVideo>();
-	}
-
 	@VaroSerializeField(path = "detectedAt")
 	private Date detectedAt;
 
@@ -26,16 +20,12 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	@VaroSerializeField(path = "videoId")
 	private String videoId;
 
-	public YouTubeVideo() {
-		videos.add(this);
-	}
+	public YouTubeVideo() {}
 
 	public YouTubeVideo(String videoId, String title) {
 		this.videoId = videoId;
 		this.title = title;
 		this.detectedAt = new Date();
-
-		videos.add(this);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -78,19 +68,5 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		VaroPlayer owner = getOwner();
 		if (owner != null)
 			owner.getStats().removeVideo(this);
-
-		videos.remove(this);
-	}
-
-	public static YouTubeVideo getVideo(String videoId) {
-		for (YouTubeVideo video : videos)
-			if (video.getVideoId().equals(videoId))
-				return video;
-
-		return null;
-	}
-
-	public static ArrayList<YouTubeVideo> getVideos() {
-		return videos;
-	}
+    }
 }

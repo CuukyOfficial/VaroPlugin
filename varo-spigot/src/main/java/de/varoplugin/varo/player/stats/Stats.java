@@ -146,10 +146,11 @@ public class Stats implements VaroSerializeable {
 		new Alert(AlertType.STRIKE, this.owner.getName() + " hat einen Strike erhalten! " + this.owner.getName() + " hat jetzt " + strikes.size());
 	}
 
-	public void addVideo(YouTubeVideo video) {
+	public void addVideo(YouTubeVideo video, boolean silent) {
 		videos.add(video);
 
-		Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink(), owner.getRealUUID());
+        if (!silent)
+		    Main.getDataManager().getVaroLoggerManager().getEventLogger().println(LogType.YOUTUBE, owner.getName() + " hat heute folgendes Projektvideo hochgeladen: " + video.getLink(), owner.getRealUUID());
 	}
 
 	public void addWin() {
@@ -388,7 +389,7 @@ public class Stats implements VaroSerializeable {
 		return false;
 	}
 
-	public ArrayList<YouTubeVideo> getVideos() {
+	public List<YouTubeVideo> getVideos() {
 		return videos;
 	}
 

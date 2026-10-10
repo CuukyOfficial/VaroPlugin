@@ -177,7 +177,7 @@ public class VaroGame implements VaroSerializeable {
             }
         }.runTaskLater(Main.getInstance(), this.getPlayTime() * 60 * 20); // TODO this does not work when PLAY_TIME is -1
 
-        YouTubeCheck.loadVideos();
+        YouTubeCheck.loadVideos(true);
     }
 
     public void abort() {
