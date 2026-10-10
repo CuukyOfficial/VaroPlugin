@@ -154,20 +154,22 @@ public class YouTubeCheck implements Task {
                     continue;
                 }
 
-                if (entry.getValue().isEmpty() && !silent) {
-                    alert(entry.getKey());
-                    continue;
-                }
-
+                List<YouTubeVideo> newVideos = new ArrayList<>();
                 for (YouTubeVideo video : entry.getValue()) {
                     if (entry.getKey().getStats().hasVideo(video.getVideoId()))
                         continue;
 
                     Main.getInstance().getLogger().info(String.format("Found video(title: \"%s\", id: \"%s\", link: \"%s\") for player %s",
                             video.getTitle(), video.getVideoId(), video.getLink(), entry.getKey().getName()));
-
-                    entry.getKey().getStats().addVideo(video, silent);
+                    newVideos.add(video);
                 }
+
+                if (newVideos.isEmpty() && !silent) {
+                    alert(entry.getKey());
+                    continue;
+                }
+
+                newVideos.forEach(video -> entry.getKey().getStats().addVideo(video, silent));
             }
         } catch (Throwable t) {
             Main.getInstance().getLogger().log(Level.SEVERE, "An error occurred while  ");
