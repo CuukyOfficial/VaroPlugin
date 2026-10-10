@@ -73,8 +73,9 @@ public class YouTubeCheck implements Task {
         YouTube.Channels.List channelRequest = service.channels().list(Collections.singletonList("contentDetails"));
         ChannelListResponse channelResponse = channelRequest.setKey(apiKey).setForHandle(player.getStats().getYoutubeHandle()).execute();
         if (channelResponse.getItems() == null || channelResponse.getItems().isEmpty()) {
-            Main.getInstance().getLogger().log(Level.SEVERE, "Received null or empty items while fetching channel details for player " + player.getName());
-            return null;
+            Main.getInstance().getLogger().log(Level.SEVERE, "Received null or empty items while fetching channel details for player "
+                    + player.getName() + "! Make sure the player's YouTube handle is correct and the channel's uploads are accessible!");
+            return Collections.emptyList(); // invalid handle or inaccessible channel counts as not having uploaded videos
         }
 
         Channel channel = channelResponse.getItems().get(0);
