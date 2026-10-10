@@ -23,21 +23,18 @@ public class YouTubeVideoListGUI extends VaroListInventory<YouTubeVideo> {
 
     // Shows all videos of all players
     public YouTubeVideoListGUI(Player player) {
-        super(Main.getInventoryManager(), player, YouTubeVideo.getVideos());
+        super(Main.getInventoryManager(), player, VaroPlayer.getVaroPlayers().stream()
+                .flatMap(p -> p.getStats().getVideos().stream()).collect(Collectors.toList()));
     }
 
+    // Shows videos of a specific player
     public YouTubeVideoListGUI(Player player, VaroPlayer target) {
-        super(Main.getInventoryManager(), player, YouTubeVideo.getVideos().stream().filter(video -> video.getOwner() == target).collect(Collectors.toList()));
+        super(Main.getInventoryManager(), player, target.getStats().getVideos());
     }
 
     @Override
     public String getTitle() {
         return "§5Videos";
-    }
-
-    @Override
-    public int getSize() {
-        return this.getRecommendedSize();
     }
 
     @Override

@@ -8,18 +8,11 @@ import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 
 public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo> {
-
-	private static ArrayList<YouTubeVideo> videos;
-
-	static {
-		videos = new ArrayList<YouTubeVideo>();
-	}
+    
+    public static final String WATCH_LINK = "https://youtube.com/watch?v=";
 
 	@VaroSerializeField(path = "detectedAt")
 	private Date detectedAt;
-
-	@VaroSerializeField(path = "link")
-	private String link;
 
 	@VaroSerializeField(path = "title")
 	private String title;
@@ -27,17 +20,12 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	@VaroSerializeField(path = "videoId")
 	private String videoId;
 
-	public YouTubeVideo() {
-		videos.add(this);
-	}
+	public YouTubeVideo() {}
 
-	public YouTubeVideo(String videoId, String title, String link) {
+	public YouTubeVideo(String videoId, String title) {
 		this.videoId = videoId;
 		this.title = title;
-		this.link = link;
 		this.detectedAt = new Date();
-
-		videos.add(this);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -51,7 +39,7 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	}
 
 	public String getLink() {
-		return link;
+		return WATCH_LINK + this.getVideoId();
 	}
 
 	public VaroPlayer getOwner() {
@@ -80,19 +68,5 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 		VaroPlayer owner = getOwner();
 		if (owner != null)
 			owner.getStats().removeVideo(this);
-
-		videos.remove(this);
-	}
-
-	public static YouTubeVideo getVideo(String videoId) {
-		for (YouTubeVideo video : videos)
-			if (video.getVideoId().equals(videoId))
-				return video;
-
-		return null;
-	}
-
-	public static ArrayList<YouTubeVideo> getVideos() {
-		return videos;
-	}
+    }
 }

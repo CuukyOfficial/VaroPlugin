@@ -281,11 +281,6 @@ public enum ConfigSetting implements SectionEntry {
 	UNREGISTERED_PLAYER_JOIN(ConfigSettingSection.MAIN, "unregisteredPlayerJoin", true, "Ob unregistrierte Spieler joinen duerfen."),
 	UNREGISTERED_PLAYER_JOIN_DURING_GAME(ConfigSettingSection.MAIN, "unregisteredPlayerJoinDuringGame", false, "Ob unregistrierte Spieler wärend des Projektes nachträglich joinen dürfen."),
 
-	// YOUTUBE
-	YOUTUBE_ENABLED(ConfigSettingSection.YOUTUBE, "enabled", false, "Checkt jeden Tag bei den Spielern,\ndie einen YouTube Link registriert haben,\nnach den Uploads"),
-	YOUTUBE_STRIKE(ConfigSettingSection.YOUTUBE, "strike", false, "Ob ein spieler einen Strike erhalten soll wenn er kein video hochläd"),
-	YOUTUBE_VIDEO_IDENTIFIER(ConfigSettingSection.YOUTUBE, "videoIdentifier", "Varo", "Was die Videotitel enthalten\nmüssen, um als Varo-Video zu gelten."),
-
 	// CUSTOM COMMAND
 	CUSTOMCOMMAND_USEPREFIX(ConfigSettingSection.OTHER, "customCommandUsePrefix", true, "Ob bei allen Custom Commands automatisch\nder Prefix genutzt werden soll."),
 

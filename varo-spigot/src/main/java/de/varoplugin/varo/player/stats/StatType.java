@@ -22,7 +22,7 @@ public enum StatType {
     SESSIONS("sessions","§bSessions", XMaterial.DIAMOND, (value, vp) -> vp.getStats().setSessions(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getSessions(), (vp) -> vp.getStats().setSessions(ConfigSetting.SESSIONS_PER_DAY.getValueAsInt())),
     WILL_INVENTORY_CLEAR("willInventoryClear", "§cWill Inventory-Clear", XMaterial.CHEST, (value, vp) -> vp.getStats().setWillClear(Boolean.parseBoolean(value)), vp -> vp.getStats().isWillClear(), vp -> vp.getStats().setWillClear(false)),
     WINS("wins","§dWins", XMaterial.GOLD_INGOT, (value, vp) -> vp.getStats().setWins(Integer.parseUnsignedInt(value)), vp -> vp.getStats().getWins(), (vp) -> vp.getStats().setWins(0)),
-    YOUTUBE_LINK("youtubelink","§5YouTube-Link", XMaterial.PAPER, (value, vp) -> vp.getStats().setYoutubeLink(value), vp -> vp.getStats().getYoutubeLink(), (vp) -> vp.getStats().setYoutubeLink(null));
+    YOUTUBE_HANDLE("youtubehandle","§5YouTube-Handle", XMaterial.PAPER, (value, vp) -> vp.getStats().setYoutubeHandle(value), vp -> vp.getStats().getYoutubeHandle(), (vp) -> vp.getStats().setYoutubeHandle(null));
 
     private final String arg, displayName;
     private final XMaterial icon;

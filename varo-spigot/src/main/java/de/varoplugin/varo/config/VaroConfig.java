@@ -23,6 +23,7 @@ import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
 import io.github.almightysatan.jaskl.*;
 import io.github.almightysatan.jaskl.entries.BooleanConfigEntry;
 import io.github.almightysatan.jaskl.entries.ListConfigEntry;
+import io.github.almightysatan.jaskl.entries.StringConfigEntry;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
 import org.bukkit.Bukkit;
 
@@ -43,9 +44,16 @@ public class VaroConfig {
     public static final BooleanConfigEntry STRIKE_CLEAR_ARMOR = BooleanConfigEntry.of(STRIKE_CONFIG, "clearArmor", "Whether strikes should also clear the armor slots when clearing a player's inventory.", false);
     public static final ListConfigEntry<StrikeTemplate> STRIKE_TEMPLATES = ListConfigEntry.of(STRIKE_CONFIG, "templates", "List of strike templates", StrikeTemplate.getDefaultStrikeTemplates(), Type.custom(StrikeTemplate.class), Validator.listNotEmpty());
 
+    private static final Config YOUTUBE_CONFIG = YamlConfig.of(new File("plugins/Varo/config/youtube.yml"));
+    public static final BooleanConfigEntry YOUTUBE_ENABLED = BooleanConfigEntry.of(YOUTUBE_CONFIG, "enabled", "Automatically check for new uploads once per day (at resetSessionHour)", false);
+    public static final BooleanConfigEntry YOUTUBE_STRIKE = BooleanConfigEntry.of(YOUTUBE_CONFIG, "strike", "Strike players who did not upload a video", false);
+    public static final StringConfigEntry YOUTUBE_IDENTIFIER = StringConfigEntry.of(YOUTUBE_CONFIG, "identifier", "Has to be included in the title for the video to be recognized", "Varo");
+    public static final StringConfigEntry YOUTUBE_API_KEY = StringConfigEntry.of(YOUTUBE_CONFIG, "api_key", "The YouTube Data API key, see TODO for more information", "INSERT KEY HERE");
+    
     private static final Config[] CONFIGS = new Config[] {
             ENCHANTMENT_CONFIG,
-            STRIKE_CONFIG
+            STRIKE_CONFIG,
+            YOUTUBE_CONFIG
     };
 
     public static void load() throws IllegalStateException, InvalidTypeException, ValidationException, IOException {
