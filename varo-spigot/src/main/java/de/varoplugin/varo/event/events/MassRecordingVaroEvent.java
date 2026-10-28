@@ -91,15 +91,17 @@ public class MassRecordingVaroEvent extends VaroEvent {
                 vp.getStats().setCountdown(countdown);
                 if (countdown == Main.getVaroGame().getPlayTime() * 60) {
                     if (vp.isOnline()) {
-                        if (!vp.canBeKicked(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt())) {
-                            vp.getStats().setSessions(vp.getStats().getSessions() + 1);
-                            vp.getStats().setCountdown(1);
-                        } else {
-                            vp.setMassRecordingKick(true);
-                            Messages.PLAYER_DISCONNECT_KICK.broadcast(vp);
-                            vp.onEvent(BukkitEventType.KICKED);
-                            Messages.PLAYER_KICK_MASS_REC_SESSION_OVER.kick(vp);
-                        }
+                        vp.checkCanBeKicked(ConfigSetting.NO_KICK_DISTANCE.getValueAsInt(), canBeKicked -> {
+                            if (!canBeKicked) {
+                                vp.getStats().setSessions(vp.getStats().getSessions() + 1);
+                                vp.getStats().setCountdown(1);
+                            } else {
+                                vp.setMassRecordingKick(true);
+                                Messages.PLAYER_DISCONNECT_KICK.broadcast(vp);
+                                vp.onEvent(BukkitEventType.KICKED);
+                                Messages.PLAYER_KICK_MASS_REC_SESSION_OVER.kick(vp);
+                            }
+                        });
                     }
                 }
             }

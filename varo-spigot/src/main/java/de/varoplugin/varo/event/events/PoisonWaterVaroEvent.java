@@ -1,7 +1,6 @@
 package de.varoplugin.varo.event.events;
 
 import org.bukkit.entity.Player;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
 
@@ -31,7 +30,7 @@ public class PoisonWaterVaroEvent extends VaroEvent {
 			@Override
 			public void run() {
 				for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers())
-					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> {
+					Main.scheduler().executeFor(p, () -> {
 						if (p.getLocation().getBlock().getType().toString().contains("WATER"))
 							p.damage(0.75);
 					});

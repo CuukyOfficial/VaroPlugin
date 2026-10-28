@@ -3,7 +3,6 @@ package de.varoplugin.varo.command.varo;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.command.VaroCommand;
 import de.varoplugin.varo.config.language.Messages;
@@ -21,7 +20,7 @@ public class AutoSetupCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("run")) {
-				if (TaskScheduler.of(Main.getInstance()).isFolia()) {
+				if (Main.scheduler().isRegionized()) {
 					sender.sendMessage(Main.getPrefix() + "§cThe AutoSetup is not supported on Folia! Please set up your world manually.");
 					return;
 				}

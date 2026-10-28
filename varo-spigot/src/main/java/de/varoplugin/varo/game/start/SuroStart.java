@@ -3,7 +3,6 @@ package de.varoplugin.varo.game.start;
 import java.util.function.Consumer;
 
 import com.cryptomorin.xseries.XSound;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.config.language.Contexts;
 import de.varoplugin.varo.config.language.Messages;
@@ -31,14 +30,14 @@ public class SuroStart extends AbstractStartSequence {
 	public void start() {
 		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			Player player = vp.getPlayer();
-			TaskScheduler.of(Main.getInstance()).executeFor(player, () -> {
+			Main.scheduler().executeFor(player, () -> {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
 				player.setGameMode(GameMode.ADVENTURE);
 			});
 			vp.cleanUpPlayer();
 		}
 
-		this.task = TaskScheduler.of(Main.getInstance()).runTimer(() -> {
+		this.task = Main.scheduler().runTimer(() -> {
 			VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 			for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
@@ -71,6 +70,6 @@ public class SuroStart extends AbstractStartSequence {
 		// Capture the player now as it might be gone by the time the task runs
 		Player player = vp.getPlayer();
 		if (player != null)
-			TaskScheduler.of(Main.getInstance()).executeFor(player, () -> action.accept(player));
+			Main.scheduler().executeFor(player, () -> action.accept(player));
 	}
 }

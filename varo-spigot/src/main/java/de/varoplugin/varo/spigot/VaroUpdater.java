@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
@@ -35,7 +34,7 @@ public class VaroUpdater {
 	}
 
 	private void checkUpdate() {
-	    TaskScheduler.of(Main.getInstance()).runAsyncLater(this::checkForUpdates, 20L);
+	    Main.scheduler().runAsyncLater(this::checkForUpdates, 20L);
 	}
 
 	public void printResults() {
@@ -73,7 +72,7 @@ public class VaroUpdater {
 		this.lastResult = new VaroUpdateResultSet(result, version, id);
 
 		if (this.finishHook != null)
-		    TaskScheduler.of(Main.getInstance()).run(this.finishHook);
+		    Main.scheduler().run(this.finishHook);
 
 		return lastResult;
 	}

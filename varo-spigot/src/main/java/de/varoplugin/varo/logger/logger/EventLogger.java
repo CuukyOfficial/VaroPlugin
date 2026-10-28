@@ -7,7 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
 import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.logger.CachedVaroLogger;
@@ -93,7 +92,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 
 	public void println(LogType type, String message, UUID playerUuid) {
 	    String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
-        TaskScheduler.of(Main.getInstance()).run(() -> {
+        Main.scheduler().run(() -> {
             this.queueLog(log);
         });
 

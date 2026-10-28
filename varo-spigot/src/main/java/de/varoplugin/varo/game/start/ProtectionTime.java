@@ -1,7 +1,6 @@
 package de.varoplugin.varo.game.start;
 
 import de.varoplugin.cfw.scheduler.Task;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -27,7 +26,7 @@ public class ProtectionTime implements VaroSerializeable {
 		if (this.protectionTimer <= 0)
             return;
 
-        this.scheduler = TaskScheduler.of(Main.getInstance()).runTimer(() -> {
+        this.scheduler = Main.scheduler().runTimer(() -> {
             if (!Main.getVaroGame().isRunning()) {
                 this.scheduler.cancel();
                 return;

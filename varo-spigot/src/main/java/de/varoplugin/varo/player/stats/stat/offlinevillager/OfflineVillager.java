@@ -43,8 +43,8 @@ public class OfflineVillager implements VaroSerializeable {
 	private Location location;
 
 	private VaroPlayer vp;
-	private Zombie zombie;
-	private Entity entity;
+	private volatile Zombie zombie;
+	private volatile Entity entity;
 
 	public OfflineVillager() {
 		villagers.add(this);
@@ -69,7 +69,7 @@ public class OfflineVillager implements VaroSerializeable {
 			@Override
 			public void run() {
 				if (location.getWorld().getDifficulty() == Difficulty.PEACEFUL)
-					TaskScheduler.of(Main.getInstance()).execute(() -> location.getWorld().setDifficulty(Difficulty.EASY));
+					Main.scheduler().execute(() -> location.getWorld().setDifficulty(Difficulty.EASY));
 
 				EntityType type = VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
 				zombie = (Zombie) location.getWorld().spawnEntity(location, type);
@@ -105,7 +105,7 @@ public class OfflineVillager implements VaroSerializeable {
 	public void remove() {
 		final Zombie zombie = this.zombie;
 		if (zombie != null)
-			TaskScheduler.of(Main.getInstance()).executeFor(zombie, zombie::remove);
+			Main.scheduler().executeFor(zombie, zombie::remove);
 
 		villagers.remove(this);
 	}
@@ -117,9 +117,9 @@ public class OfflineVillager implements VaroSerializeable {
 			remove();
 
 		// Entities can only be accessed by the thread owning their region on Folia. There only the entities in the villager's chunk are searched.
-		TaskScheduler.of(Main.getInstance()).executeAt(location, () -> {
-			TaskScheduler scheduler = TaskScheduler.of(Main.getInstance());
-			for (Entity ent : scheduler.isFolia() ? Arrays.asList(location.getChunk().getEntities()) : location.getWorld().getEntities())
+		Main.scheduler().executeAt(location, () -> {
+			TaskScheduler scheduler = Main.scheduler();
+			for (Entity ent : scheduler.isRegionized() ? Arrays.asList(location.getChunk().getEntities()) : location.getWorld().getEntities())
 				if (ent.getType().toString().contains("ZOMBIE")) {
 					Zombie zombie = (Zombie) ent;
 					if (zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {

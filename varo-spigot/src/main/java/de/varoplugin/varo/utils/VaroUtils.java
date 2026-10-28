@@ -1,7 +1,6 @@
 package de.varoplugin.varo.utils;
 
 import com.cryptomorin.xseries.XGameRule;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -31,12 +30,12 @@ public final class VaroUtils {
 	 * Kicks a player. On Folia this has to be done by the thread owning the player.
 	 */
 	public static void kickPlayer(Player player, String message) {
-	    TaskScheduler.of(Main.getInstance()).executeFor(player, () -> player.kickPlayer(message));
+	    Main.scheduler().executeFor(player, () -> player.kickPlayer(message));
 	}
 
 	public static void updateWorldTime() {
 	    // On Folia world settings can only be changed from the global region
-	    TaskScheduler.of(Main.getInstance()).execute(VaroUtils::updateWorldTime0);
+	    Main.scheduler().execute(VaroUtils::updateWorldTime0);
 	}
 
 	private static void updateWorldTime0() {

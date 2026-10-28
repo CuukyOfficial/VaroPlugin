@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XSound;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.world.border.VaroBorder;
@@ -34,7 +33,7 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		final Location spawn = p.getLocation();
-		TaskScheduler.of(Main.getInstance()).execute(() -> {
+		Main.scheduler().execute(() -> {
 			p.getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
 			Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(p.getWorld());
 		});

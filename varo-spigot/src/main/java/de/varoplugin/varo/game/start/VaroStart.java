@@ -19,7 +19,6 @@
 package de.varoplugin.varo.game.start;
 
 import com.cryptomorin.xseries.XSound;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -40,7 +39,7 @@ public class VaroStart extends AbstractStartSequence {
 
 	@Override
 	public void start() {
-		this.task = TaskScheduler.of(Main.getInstance()).runTimer(() -> {
+		this.task = Main.scheduler().runTimer(() -> {
 			VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 			if (countdown != 0)
@@ -52,7 +51,7 @@ public class VaroStart extends AbstractStartSequence {
 						continue;
 
 					Player pl = pl1.getPlayer();
-					TaskScheduler.of(Main.getInstance()).executeFor(pl, () -> pl.setGameMode(GameMode.ADVENTURE));
+					Main.scheduler().executeFor(pl, () -> pl.setGameMode(GameMode.ADVENTURE));
 					pl1.cleanUpPlayer();
 				}
 			}
@@ -63,7 +62,7 @@ public class VaroStart extends AbstractStartSequence {
 						continue;
 
 					Player pl = vp.getPlayer();
-					TaskScheduler.of(Main.getInstance()).executeFor(pl, () -> pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1));
+					Main.scheduler().executeFor(pl, () -> pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1));
 
 					String title = Messages.GAME_START_VARO_TITLE.value(vp ,Placeholder.constant("start-countdown", String.valueOf(this.countdown)));
 					String subtitle = Messages.GAME_START_VARO_SUBTITLE.value(vp, Placeholder.constant("start-countdown", String.valueOf(this.countdown)));
@@ -74,7 +73,7 @@ public class VaroStart extends AbstractStartSequence {
 
 			if (countdown == 0) {
 				World mainWorld = Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld();
-				TaskScheduler.of(Main.getInstance()).executeAt(mainWorld.getSpawnLocation(), () -> mainWorld.strikeLightningEffect(mainWorld.getSpawnLocation()));
+				Main.scheduler().executeAt(mainWorld.getSpawnLocation(), () -> mainWorld.strikeLightningEffect(mainWorld.getSpawnLocation()));
 				Messages.GAME_START_VARO_BROADCAST.broadcast();
 
 				this.game.start();

@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -81,7 +80,7 @@ public class GamemodeCommand implements CommandExecutor {
 
 			final GameMode finalGm = gm;
 			if (player != null) {
-				TaskScheduler.of(Main.getInstance()).executeFor(player, () -> player.setGameMode(finalGm));
+				Main.scheduler().executeFor(player, () -> player.setGameMode(finalGm));
 
 				if (args.length == 1) {
 					sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode " + Main.getColorCode() + gm.toString() + "§7!");
@@ -90,7 +89,7 @@ public class GamemodeCommand implements CommandExecutor {
 				}
 			} else {
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setGameMode(finalGm));
+					Main.scheduler().executeFor(p, () -> p.setGameMode(finalGm));
 				}
 				sender.sendMessage(Main.getPrefix() + "§7Alle Spieler sind nun im Gamemode " + Main.getColorCode() + gm.toString() + "§7!");
 			}

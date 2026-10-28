@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
@@ -25,7 +24,7 @@ public class PlayerTeleportListener implements Listener {
 			    
 				if (event.getFrom().distance(event.getFrom().getWorld().getSpawnLocation()) < 500) {
 					final Location to = event.getTo();
-					TaskScheduler.of(Main.getInstance()).execute(() -> {
+					Main.scheduler().execute(() -> {
 						to.getWorld().setSpawnLocation(to.getBlockX(), to.getBlockY(), to.getBlockZ());
 						Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(to.getWorld());
 					});

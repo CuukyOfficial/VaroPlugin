@@ -6,7 +6,6 @@ import org.bukkit.World;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.utils.VaroUtils;
 
@@ -18,7 +17,7 @@ public class PortalGenerator {
 			yPos--;
 
 		final int yPos0 = yPos;
-		TaskScheduler.of(Main.getInstance()).runAtLater(new Location(world, xPos, yPos0, zPos), () -> {
+		Main.scheduler().runAtLater(new Location(world, xPos, yPos0, zPos), () -> {
 		    int offset = width / 2;
 	        for (int y = 1; y < height - 1; y++) {
 	            for (int x = 1; x < width - 1; x++)

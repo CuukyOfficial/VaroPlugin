@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.varoplugin.varo.utils.SynchronizedArrayList;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.item.HookItemHitEvent;
 import de.varoplugin.cfw.player.hook.item.HookItemInteractEntityEvent;
@@ -39,6 +38,11 @@ public class LobbyItem {
     }
 
     public static void giveItems(VaroPlayer varoPlayer, Player player) {
+        // The inventory can only be modified by the thread owning the player on Folia
+        Main.scheduler().executeFor(player, () -> giveItems0(varoPlayer, player));
+    }
+
+    private static void giveItems0(VaroPlayer varoPlayer, Player player) {
         if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
@@ -86,7 +90,7 @@ public class LobbyItem {
             return;
 
         // The inventory can only be modified by the thread owning the player on Folia
-        TaskScheduler.of(Main.getInstance()).executeFor(player, () -> giveOrRemoveTeamItems0(varoPlayer));
+        Main.scheduler().executeFor(player, () -> giveOrRemoveTeamItems0(varoPlayer));
     }
 
     private static void giveOrRemoveTeamItems0(VaroPlayer varoPlayer) {

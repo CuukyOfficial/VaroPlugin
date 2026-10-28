@@ -3,7 +3,6 @@ package de.varoplugin.varo.event.events;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
 
@@ -46,7 +45,7 @@ public class MoonGravityVaroEvent extends VaroEvent {
 			@Override
 			public void run() {
 				for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers())
-					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.addPotionEffect(new PotionEffect(PotionEffectType.getByName("SLOW_FALLING"), 9999, 1)));
+					Main.scheduler().executeFor(p, () -> p.addPotionEffect(new PotionEffect(PotionEffectType.getByName("SLOW_FALLING"), 9999, 1)));
 			}
 		}.runTaskTimer(Main.getInstance(), 1L, 100L);
 	}

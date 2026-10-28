@@ -6,7 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import io.github.almightysatan.slams.Placeholder;
@@ -115,7 +114,7 @@ public class SpeedCommand implements CommandExecutor {
 
 	private static void setSpeed(Player player, float speed, boolean fly) {
 		// Players can only be modified by the thread owning them on Folia
-		TaskScheduler.of(Main.getInstance()).executeFor(player, () -> {
+		Main.scheduler().executeFor(player, () -> {
 			if (fly)
 				player.setFlySpeed(speed);
 			else

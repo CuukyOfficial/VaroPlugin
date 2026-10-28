@@ -155,16 +155,20 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void clearInventory() {
-		if (owner.isOnline()) {
-			owner.getPlayer().getInventory().clear();
+		final Player player = owner.getPlayer();
+		if (player != null) {
+			// The inventory can only be modified by the thread owning the player on Folia
+			Main.scheduler().executeFor(player, () -> {
+				player.getInventory().clear();
 
-			if (VaroConfig.STRIKE_CLEAR_ARMOR.getValue()) {
-				for (ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
-					if (stack != null)
-						stack.setType(Material.AIR);
-			}
+				if (VaroConfig.STRIKE_CLEAR_ARMOR.getValue()) {
+					for (ItemStack stack : player.getInventory().getArmorContents())
+						if (stack != null)
+							stack.setType(Material.AIR);
+				}
 
-			owner.getPlayer().getInventory().setArmorContents(new ItemStack[] {}); // TODO ???
+				player.getInventory().setArmorContents(new ItemStack[] {}); // TODO ???
+			});
 		} else
 			setWillClear(true);
 

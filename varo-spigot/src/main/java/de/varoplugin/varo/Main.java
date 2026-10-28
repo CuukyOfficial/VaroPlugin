@@ -50,6 +50,7 @@ public class Main extends JavaPlugin {
 	public static final String DISCORD_INVITE = "https://discord.varoplugin.de/";
 
 	private static Main instance;
+	private TaskScheduler scheduler;
 	private static boolean paper;
 
 	private static VaroInventoryManager inventoryManager;
@@ -64,6 +65,7 @@ public class Main extends JavaPlugin {
 	public void onLoad() {
 		this.failed = false;
 		instance = this;
+		this.scheduler = TaskScheduler.of(this);
 
 		super.onLoad();
 	}
@@ -96,7 +98,7 @@ public class Main extends JavaPlugin {
     		this.getLogger().log(Level.INFO, 
     				"	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
     		this.getLogger().log(Level.INFO, "Forge-Support: " + VersionUtils.hasForgeSupport());
-    		if (TaskScheduler.of(this).isFolia())
+    		if (this.scheduler.isRegionized())
     		    this.getLogger().log(Level.WARNING, "Folia support is experimental: Bukkit scoreboards are unavailable, so the sidebar scoreboard and nametag teams are disabled. AutoSetup is not supported and teleports are asynchronous.");
 
     		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT)
@@ -183,7 +185,7 @@ public class Main extends JavaPlugin {
 			else
 			    this.getLogger().log(Level.SEVERE, "Unable to create crash-report");
 		}
-		TaskScheduler.of(this).cancelTasks();
+		this.scheduler.cancelTasks();
 
 		this.getLogger().log(Level.INFO, "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		this.getLogger().log(Level.INFO, " ");
@@ -306,6 +308,13 @@ public class Main extends JavaPlugin {
 
 	public static boolean isBootedUp() {
 		return enabled;
+	}
+
+	/**
+	 * @return The scheduler of this plugin. All tasks must be scheduled through it, as the Bukkit scheduler is not available on Folia.
+	 */
+	public static TaskScheduler scheduler() {
+		return instance.scheduler;
 	}
 
 	public static Main getInstance() {

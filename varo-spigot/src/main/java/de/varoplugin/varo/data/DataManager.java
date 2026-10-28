@@ -1,6 +1,5 @@
 package de.varoplugin.varo.data;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -171,14 +170,14 @@ public class DataManager {
 
 	public void createBackup(Consumer<VaroBackup> callback) {
 	    this.saveSync();
-	    TaskScheduler.of(Main.getInstance()).runAsync(() -> {
+	    Main.scheduler().runAsync(() -> {
 	        VaroBackup backup = VaroBackup.createBackup();
 	        if (backup != null)
 	            synchronized (this.backups) {
                     this.backups.add(backup);
                 }
 	        if (callback != null)
-	            TaskScheduler.of(Main.getInstance()).run(() -> callback.accept(backup));
+	            Main.scheduler().run(() -> callback.accept(backup));
 	    });
 	}
 	
@@ -194,7 +193,7 @@ public class DataManager {
 	        removed = this.backups.remove(backup);
         }
 	    if (removed)
-	        TaskScheduler.of(Main.getInstance()).runAsync(backup::delete);
+	        Main.scheduler().runAsync(backup::delete);
 	}
 
 	public void setDoSave(boolean doSave) {

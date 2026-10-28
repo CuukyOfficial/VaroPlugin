@@ -12,7 +12,6 @@ import org.bukkit.Location;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.spawns.Spawn;
@@ -81,7 +80,7 @@ public class SpawnGenerator {
     private void createSpawn(Location location, Function<Location, Spawn> factory) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         this.pending.add(future);
-        TaskScheduler.of(Main.getInstance()).executeAt(location, () -> {
+        Main.scheduler().executeAt(location, () -> {
             try {
                 factory.apply(this.setSpawnAt(location));
                 future.complete(null);
@@ -112,7 +111,7 @@ public class SpawnGenerator {
     private Location setSpawnAt(Location location) {
         final Location location0 = VaroUtils.isNotSolidTerrainOrLiquid(location.getBlock()) ? this.searchNext(location, -1, false) : this.searchNext(location, 1, true);
 
-        TaskScheduler.of(Main.getInstance()).runAtLater(location0, () -> {
+        Main.scheduler().runAtLater(location0, () -> {
             XBlock.setType(location0.getBlock(), XMaterial.AIR);
             XBlock.setType(location0.clone().add(0, -1, 0).getBlock(), XMaterial.AIR);
             

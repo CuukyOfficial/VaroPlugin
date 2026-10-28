@@ -1,7 +1,6 @@
 package de.varoplugin.varo.event.events;
 
 import org.bukkit.entity.Player;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
 
@@ -32,7 +31,7 @@ public class PoisonRainVaroEvent extends VaroEvent {
 			@Override
 			public void run() {
 				for (Player p : VersionUtils.getVersionAdapter().getOnlinePlayers())
-					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> damageIfRainedOn(p));
+					Main.scheduler().executeFor(p, () -> damageIfRainedOn(p));
 			}
 
 			private void damageIfRainedOn(Player p) {

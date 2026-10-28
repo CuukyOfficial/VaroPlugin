@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
 
@@ -35,7 +34,7 @@ public class ExposedVaroEvent extends VaroEvent {
 	public void onDisable() {
 		if (type != null)
 			for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
-				TaskScheduler.of(Main.getInstance()).executeFor(pl, () -> pl.removePotionEffect(type));
+				Main.scheduler().executeFor(pl, () -> pl.removePotionEffect(type));
 
 		scheduler.cancel();
 		super.onDisable();
@@ -51,7 +50,7 @@ public class ExposedVaroEvent extends VaroEvent {
 				for (VaroPlayer vpl : VaroPlayer.getOnlineAndAlivePlayer()) {
 					Player pl = vpl.getPlayer();
 
-					TaskScheduler.of(Main.getInstance()).executeFor(pl, () -> {
+					Main.scheduler().executeFor(pl, () -> {
 						if (type != null)
 							pl.getPlayer().addPotionEffect(new PotionEffect(type, 11, 1));
 						else {

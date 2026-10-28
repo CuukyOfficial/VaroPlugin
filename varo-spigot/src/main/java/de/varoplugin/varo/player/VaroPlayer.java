@@ -1,5 +1,6 @@
 package de.varoplugin.varo.player;
 
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.concurrent.CompletableFuture;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import de.varoplugin.varo.utils.SynchronizedArrayList;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import com.cryptomorin.xseries.XSound;
@@ -186,6 +186,21 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	/**
+	 * Checks whether the player can be kicked. The check is performed by the thread owning the player (this is required on Folia). Therefore
+	 * the result is passed to the callback, which is executed immediately on all other servers.
+	 *
+	 * @param noKickDistance Distance in which other players prevent a kick
+	 * @param callback       Callback that receives the result of {@link #canBeKicked(int)}
+	 */
+	public void checkCanBeKicked(int noKickDistance, Consumer<Boolean> callback) {
+		final Player player = this.player;
+		if (player == null)
+			return;
+
+		Main.scheduler().executeFor(player, () -> callback.accept(this.canBeKicked(noKickDistance)));
+	}
+
+	/**
 	 * @return Returns if a player is nearby
 	 */
 	public boolean canBeKicked(int noKickDistance) {
@@ -215,7 +230,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public void cleanUpPlayer() {
 		final Player player = this.player;
-		TaskScheduler.of(Main.getInstance()).executeFor(player, () -> {
+		Main.scheduler().executeFor(player, () -> {
 			player.setHealth(player.getMaxHealth());
 			player.setFoodLevel(20);
 			player.getInventory().clear();
@@ -345,7 +360,7 @@ public class VaroPlayer implements VaroSerializeable {
 		final Player player = this.player;
 		if (player != null)
 			// Players can only be modified by the thread owning them on Folia
-			TaskScheduler.of(Main.getInstance()).executeFor(player, () -> this.updatePlayer(player));
+			Main.scheduler().executeFor(player, () -> this.updatePlayer(player));
 	}
 
 	private void updatePlayer(Player player) {
@@ -416,7 +431,7 @@ public class VaroPlayer implements VaroSerializeable {
 	 */
 	public CompletableFuture<Boolean> saveTeleport(Location location) {
 		final Player player = this.player;
-		CompletableFuture<Boolean> future = SafeTeleport.tp(player, location);
+		CompletableFuture<Boolean> future = SafeTeleport.teleport(player, location);
 		future.whenComplete((success, throwable) -> {
 			if (throwable != null || !Boolean.TRUE.equals(success))
 				Main.getInstance().getLogger().log(Level.WARNING, "Failed to teleport " + this.name + " to " + location, throwable);

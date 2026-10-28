@@ -50,15 +50,19 @@ public class VaroWorldHandler {
      * cached) in a task running on the region of the spawn.
      */
     private void initializeSpawn(World world) {
-        TaskScheduler scheduler = TaskScheduler.of(Main.getInstance());
-        if (!scheduler.isFolia()) {
+        TaskScheduler scheduler = Main.scheduler();
+        if (!scheduler.isRegionized()) {
             fixWorldSpawn(world);
             return;
         }
 
         scheduler.runAt(world.getSpawnLocation(), () -> {
-            fixWorldSpawn(world);
-            this.cachedSpawns.put(world, this.calculateWorldSpawn(world));
+            Location fixed = findFreeSpawn(world);
+            // World settings can only be changed by the global region
+            scheduler.run(() -> {
+                world.setSpawnLocation(fixed.getBlockX(), fixed.getBlockY(), fixed.getBlockZ());
+                this.refreshWorldSpawn(world);
+            });
         });
     }
 
@@ -86,7 +90,7 @@ public class VaroWorldHandler {
             return;
 
         // Can be called by any thread (e.g. a player's region thread on Folia). The queue is only accessed by the main/global thread
-        TaskScheduler.of(Main.getInstance()).execute(() -> {
+        Main.scheduler().execute(() -> {
             if (!isBorderMinimumSize()) {
                 this.borderDecreases.add(new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed(), reason));
                 runBorderCheck();
@@ -110,7 +114,7 @@ public class VaroWorldHandler {
         long time = BigDecimal.valueOf(diff).divide(this.activeBorderDecrease.getSpeed(), RoundingMode.HALF_UP).longValue();
         this.setBorderSize(newSize, time, null);
         
-        TaskScheduler.of(Main.getInstance()).runLater(() -> {
+        Main.scheduler().runLater(() -> {
             this.activeBorderDecrease.getReason().postLog();
             this.activeBorderDecrease = null;
 
@@ -177,7 +181,7 @@ public class VaroWorldHandler {
     }
 
     public Location getWorldSpawn(World world) {
-        if (TaskScheduler.of(Main.getInstance()).isFolia()) {
+        if (Main.scheduler().isRegionized()) {
             Location cached = this.cachedSpawns.get(world);
             return cached != null ? cached.clone() : world.getSpawnLocation();
         }
@@ -189,8 +193,8 @@ public class VaroWorldHandler {
      * Recalculates the cached world spawn after it has been changed. Only required on Folia.
      */
     public void refreshWorldSpawn(World world) {
-        TaskScheduler scheduler = TaskScheduler.of(Main.getInstance());
-        if (scheduler.isFolia())
+        TaskScheduler scheduler = Main.scheduler();
+        if (scheduler.isRegionized())
             scheduler.runAt(world.getSpawnLocation(), () -> this.cachedSpawns.put(world, this.calculateWorldSpawn(world)));
     }
 
@@ -208,10 +212,15 @@ public class VaroWorldHandler {
         return this.getWorldSpawn(this.getMainWorld().getWorld());
     }
 
-    private static void fixWorldSpawn(World world) {
+    private static Location findFreeSpawn(World world) {
         Location location = world.getSpawnLocation();
         while (location.getBlock().getType().isSolid() || location.getBlock().isLiquid())
             location.add(0, 1, 0);
-        TaskScheduler.of(Main.getInstance()).execute(() -> world.setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
+        return location;
+    }
+
+    private static void fixWorldSpawn(World world) {
+        Location location = findFreeSpawn(world);
+        Main.scheduler().execute(() -> world.setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 }

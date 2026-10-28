@@ -16,7 +16,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,7 +32,7 @@ public class VaroWorld {
 
         if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_11))
             // Versions < 1.12 don't have this game rule and use a server property instead (see DataManager) 
-            TaskScheduler.of(Main.getInstance()).execute(() -> XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()));
+            Main.scheduler().execute(() -> XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()));
 
 		if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 			this.varoWorldBorder = new DefaultVaroBorder(world);
@@ -78,7 +77,7 @@ public class VaroWorld {
 			chunks.computeIfAbsent(((long) (block.getX() >> 4) << 32) | ((block.getZ() >> 4) & 0xFFFFFFFFL), k -> new ArrayList<>()).add(block);
 
 		for (List<Block> blocks : chunks.values())
-			TaskScheduler.of(Main.getInstance()).executeAt(blocks.get(0).getLocation(), () -> fillChests(blocks, chestItems));
+			Main.scheduler().executeAt(blocks.get(0).getLocation(), () -> fillChests(blocks, chestItems));
 
 		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
 	}

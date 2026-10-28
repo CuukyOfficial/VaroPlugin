@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 
@@ -22,7 +21,7 @@ public class SunCommand implements CommandExecutor {
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : Bukkit.getWorlds().get(0);
 
-		TaskScheduler.of(Main.getInstance()).execute(() -> {
+		Main.scheduler().execute(() -> {
 			world.setStorm(false);
 			world.setThundering(false);
 		});

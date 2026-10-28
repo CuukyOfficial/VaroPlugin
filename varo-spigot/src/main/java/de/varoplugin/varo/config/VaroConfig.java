@@ -18,7 +18,6 @@
 
 package de.varoplugin.varo.config;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.stats.stat.StrikeTemplate;
 import io.github.almightysatan.jaskl.*;
@@ -68,7 +67,7 @@ public class VaroConfig {
     }
     
     public static void write() {
-        TaskScheduler.of(Main.getInstance()).runAsync(() -> {
+        Main.scheduler().runAsync(() -> {
             for (Config config : CONFIGS)
                 write(config);
         });

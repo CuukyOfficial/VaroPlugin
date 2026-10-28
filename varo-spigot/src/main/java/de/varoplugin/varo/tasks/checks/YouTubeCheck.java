@@ -1,6 +1,5 @@
 package de.varoplugin.varo.tasks.checks;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
@@ -21,7 +20,7 @@ public class YouTubeCheck implements Task {
 	@Override
 	public void check() {
 		if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean()) {
-            TaskScheduler.of(Main.getInstance()).runAsync(() -> {
+            Main.scheduler().runAsync(() -> {
                 Main.getInstance().getLogger().log(Level.INFO, "Checking for new Youtube Videos...");
                 try {
                     for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {

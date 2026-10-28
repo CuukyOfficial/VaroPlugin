@@ -11,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.command.VaroCommand;
@@ -51,7 +50,7 @@ public class ResetCommand extends VaroCommand {
 			VaroUtils.kickPlayer(pl, "§cRESET");
 
 		// Wait to ensure the players are actually disconnected
-		TaskScheduler.of(Main.getInstance()).runLater(() -> {
+		Main.scheduler().runLater(() -> {
 		    Main.getDataManager().saveSync();
 	        List<Integer> success = new ArrayList<>();
 	        List<File> toDelete = new ArrayList<>();
@@ -97,6 +96,6 @@ public class ResetCommand extends VaroCommand {
 
 	        if (!success.isEmpty())
 	            Bukkit.getServer().shutdown();
-		}, TaskScheduler.of(Main.getInstance()).isFolia() ? 20L : 1L);
+		}, Main.scheduler().isRegionized() ? 20L : 1L);
 	}
 }
