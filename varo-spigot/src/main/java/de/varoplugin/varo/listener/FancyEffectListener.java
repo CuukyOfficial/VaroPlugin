@@ -12,8 +12,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;

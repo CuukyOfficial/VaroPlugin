@@ -2,6 +2,8 @@ package de.varoplugin.varo.game.world;
 
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.start.AutoStart;
@@ -12,8 +14,6 @@ import de.varoplugin.varo.spawns.spawn.SpawnChecker;
 import de.varoplugin.varo.utils.VaroUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

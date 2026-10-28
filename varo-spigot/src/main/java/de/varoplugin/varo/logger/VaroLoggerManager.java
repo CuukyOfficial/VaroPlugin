@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.logger.logger.BlockLogger;
 import de.varoplugin.varo.logger.logger.ChatLogger;

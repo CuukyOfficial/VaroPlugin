@@ -1,12 +1,5 @@
 package de.varoplugin.varo.game.world.generators;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
-
 import org.bukkit.Location;
 
 import com.cryptomorin.xseries.XBlock;
@@ -17,6 +10,12 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.spawns.Spawn;
 import de.varoplugin.varo.team.VaroTeam;
 import de.varoplugin.varo.utils.VaroUtils;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class SpawnGenerator {
 

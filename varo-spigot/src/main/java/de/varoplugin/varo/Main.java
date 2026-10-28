@@ -21,9 +21,9 @@ import com.google.common.io.BaseEncoding;
 
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
 import de.varoplugin.cfw.scheduler.TaskScheduler;
+import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
-import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;

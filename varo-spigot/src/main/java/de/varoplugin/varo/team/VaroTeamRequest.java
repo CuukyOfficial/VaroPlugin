@@ -3,7 +3,7 @@ package de.varoplugin.varo.team;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
+
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 import de.varoplugin.cfw.scheduler.Task;
@@ -12,6 +12,7 @@ import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
 

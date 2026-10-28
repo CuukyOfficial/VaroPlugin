@@ -1,7 +1,5 @@
 package de.varoplugin.varo.game.start;
 
-import java.util.function.Consumer;
-
 import com.cryptomorin.xseries.XSound;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.config.language.Contexts;
@@ -15,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
+import java.util.function.Consumer;
 
 public class SuroStart extends AbstractStartSequence {
 

@@ -1,6 +1,8 @@
 package de.varoplugin.varo.player;
 
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.config.language.Messages;
@@ -8,12 +10,10 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class VaroPlayerDisconnect {
 

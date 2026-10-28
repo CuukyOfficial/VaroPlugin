@@ -3,6 +3,8 @@ package de.varoplugin.varo.game;
 import com.cryptomorin.xseries.XEntityType;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.api.game.VaroEndEvent;
 import de.varoplugin.varo.api.game.VaroStartEvent;
@@ -35,17 +37,15 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
 
 import java.awt.*;
 import java.io.File;
 import java.time.OffsetDateTime;
-import java.util.logging.Level;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class VaroGame implements VaroSerializeable {
 
@@ -110,6 +110,16 @@ public class VaroGame implements VaroSerializeable {
             return;
         this.preparing = true;
 
+        try {
+            this.prepareStart2();
+        } catch (Throwable t) {
+            // Allow the start to be retried
+            this.preparing = false;
+            throw t;
+        }
+    }
+
+    private void prepareStart2() {
         Main.getDataManager().createBackup(null);
 
         if (ConfigSetting.REMOVE_PLAYERS_ABSENT_AT_START.getValueAsBoolean())
@@ -137,7 +147,12 @@ public class VaroGame implements VaroSerializeable {
                 }
 
                 Messages.GAME_START_SPAWNS.broadcast();
-                this.prepareStart0();
+                try {
+                    this.prepareStart0();
+                } catch (Throwable t) {
+                    this.preparing = false;
+                    Main.getInstance().getLogger().log(Level.SEVERE, "Failed to start the game", t);
+                }
             }));
             return;
         }

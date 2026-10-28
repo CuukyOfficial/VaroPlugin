@@ -7,11 +7,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.VaroInventory;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class InventoryBackup implements VaroSerializeable {
 

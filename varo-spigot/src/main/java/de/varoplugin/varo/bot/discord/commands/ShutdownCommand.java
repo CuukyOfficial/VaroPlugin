@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.bot.discord.BotRegister;
 import de.varoplugin.varo.bot.discord.DiscordBotCommand;

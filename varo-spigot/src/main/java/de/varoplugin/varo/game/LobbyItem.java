@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -12,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.item.HookItemHitEvent;
 import de.varoplugin.cfw.player.hook.item.HookItemInteractEntityEvent;
@@ -25,6 +23,7 @@ import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.team.VaroTeamRequest;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class LobbyItem {
 

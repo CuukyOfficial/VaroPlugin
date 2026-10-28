@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.gui.VaroInventory;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable;

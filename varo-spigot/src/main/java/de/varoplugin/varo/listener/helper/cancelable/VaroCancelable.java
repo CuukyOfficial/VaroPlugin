@@ -2,11 +2,11 @@ package de.varoplugin.varo.listener.helper.cancelable;
 
 import java.util.ArrayList;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 // TODO this belongs in the trash and should be replaced by a system that is able to freeze/mute/protect all players at once
 public class VaroCancelable {

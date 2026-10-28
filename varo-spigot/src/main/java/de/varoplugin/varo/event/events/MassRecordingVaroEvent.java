@@ -3,11 +3,11 @@ package de.varoplugin.varo.event.events;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;

@@ -2,7 +2,6 @@ package de.varoplugin.varo.game.world.border;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-
 import de.varoplugin.varo.Main;
 
 public class DefaultVaroBorder implements RectangularVaroBorder {

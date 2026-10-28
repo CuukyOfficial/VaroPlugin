@@ -1,15 +1,15 @@
 package de.varoplugin.varo.player.stats.stat.inventory;
 
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;

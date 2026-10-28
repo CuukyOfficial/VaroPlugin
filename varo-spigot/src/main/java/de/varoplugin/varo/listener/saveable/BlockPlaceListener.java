@@ -11,10 +11,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import com.cryptomorin.xseries.XSound;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Contexts;
 import de.varoplugin.varo.config.language.Messages;

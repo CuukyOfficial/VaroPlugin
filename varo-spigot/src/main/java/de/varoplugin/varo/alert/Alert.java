@@ -3,10 +3,10 @@ package de.varoplugin.varo.alert;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class Alert implements VaroSerializeable {
 

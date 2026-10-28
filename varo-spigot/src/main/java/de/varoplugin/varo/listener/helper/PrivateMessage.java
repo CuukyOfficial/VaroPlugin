@@ -5,9 +5,9 @@ import java.util.Date;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.logger.logger.ChatLogger.ChatLogType;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class PrivateMessage {
 

@@ -1,6 +1,7 @@
 package de.varoplugin.varo.player.stats;
 
 import de.varoplugin.cfw.location.SimpleLocationFormat;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
@@ -31,7 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;

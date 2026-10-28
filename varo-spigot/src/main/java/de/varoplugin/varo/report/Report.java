@@ -2,11 +2,11 @@ package de.varoplugin.varo.report;
 
 import java.util.ArrayList;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class Report implements VaroSerializeable {
 

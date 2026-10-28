@@ -1,11 +1,11 @@
 package de.varoplugin.varo.event.events;
 
 import org.bukkit.entity.Player;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.event.VaroEvent;

@@ -1,6 +1,7 @@
 package de.varoplugin.varo.data;
 
 import de.varoplugin.cfw.player.hud.NameTagGroup;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -30,7 +31,6 @@ import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.InvalidTypeException;
 import io.github.almightysatan.slams.MissingTranslationException;
 import org.bukkit.Bukkit;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import java.io.File;
 import java.io.IOException;
