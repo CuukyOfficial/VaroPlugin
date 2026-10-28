@@ -24,6 +24,7 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.BlockEditor;
 import io.github.almightysatan.slams.Placeholder;
 
 public class Spawn implements VaroSerializeable {
@@ -154,21 +155,27 @@ public class Spawn implements VaroSerializeable {
     }
 
     public void delete() {
-        Main.scheduler().executeAt(this.location, this::resetBlocks);
+        this.resetBlocks();
         remove();
     }
 
     private void resetBlocks() {
-        location.getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(0, -1, 0).getBlock().setType(XMaterial.DIRT.get());
-        location.clone().add(1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(-1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(0, 0, 1).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(0, 0, -1).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(1, 1, 0).getBlock().setType(XMaterial.AIR.get());
-        location.clone().add(-1, 1, 0).getBlock().setType(XMaterial.AIR.get());
-        location.clone().add(0, 1, 1).getBlock().setType(XMaterial.AIR.get());
-        location.clone().add(0, 1, -1).getBlock().setType(XMaterial.AIR.get());
+        if (this.location == null)
+            return;
+
+        final int x = this.location.getBlockX(), y = this.location.getBlockY(), z = this.location.getBlockZ();
+        new BlockEditor(this.location.getWorld())
+                .set(x, y, z, XMaterial.GRASS_BLOCK)
+                .set(x, y - 1, z, XMaterial.DIRT)
+                .set(x + 1, y, z, XMaterial.GRASS_BLOCK)
+                .set(x - 1, y, z, XMaterial.GRASS_BLOCK)
+                .set(x, y, z + 1, XMaterial.GRASS_BLOCK)
+                .set(x, y, z - 1, XMaterial.GRASS_BLOCK)
+                .set(x + 1, y + 1, z, XMaterial.AIR)
+                .set(x - 1, y + 1, z, XMaterial.AIR)
+                .set(x, y + 1, z + 1, XMaterial.AIR)
+                .set(x, y + 1, z - 1, XMaterial.AIR)
+                .apply();
     }
 
     @Override

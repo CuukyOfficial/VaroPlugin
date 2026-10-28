@@ -3,16 +3,17 @@ package de.varoplugin.varo.game.world.generators;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
 
-import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.game.world.schematic.SchematicLoader;
+import de.varoplugin.varo.utils.BlockEditor;
 
 public class LobbyGenerator {
 
@@ -32,6 +33,7 @@ public class LobbyGenerator {
 	}
 
 	private Location last;
+	private CompletableFuture<Void> future = CompletableFuture.completedFuture(null);
 
 	public LobbyGenerator(Location loc, File file) {
 	    SchematicLoader schematicLoader = SchematicLoader.getInstance();
@@ -39,24 +41,40 @@ public class LobbyGenerator {
 		    Main.getInstance().getLogger().log(Level.SEVERE, "Worldedit is required to load schematics!");
 		    return;
 		}
+		if (Main.scheduler().isRegionized())
+		    Main.getInstance().getLogger().log(Level.WARNING, "Pasting schematics requires WorldEdit to support Folia");
+
+		this.future = new CompletableFuture<>();
 		Main.scheduler().executeAt(loc, () -> {
-			schematicLoader.paste(file, loc);
-			Main.getInstance().getLogger().log(Level.INFO, "Autosetup: Loaded schematic " + file.getName());
+			try {
+				schematicLoader.paste(file, loc);
+				Main.getInstance().getLogger().log(Level.INFO, "Autosetup: Loaded schematic " + file.getName());
+				this.future.complete(null);
+			} catch (Throwable t) {
+				this.future.completeExceptionally(t);
+			}
 		});
 	}
 
 	public LobbyGenerator(Location curr, int height, int size) {
-		// Blocks can only be modified by the thread owning the region on Folia
-		Main.scheduler().executeAt(curr, () -> {
-			makeWall(curr.clone().add(-5, -2, -5), size, 0, size);
-			makeWall(curr, 0, height, -size);
-			makeWall(curr, -size, -height, 0);
-			makeWall(curr, 0, height, size);
-			makeWall(curr, size, -height, 0);
-		});
+		// Blocks are grouped by chunk, as they can only be modified by the thread owning the region on Folia
+		BlockEditor editor = new BlockEditor(curr.getWorld());
+		this.makeWall(editor, curr.clone().add(-5, -2, -5), size, 0, size);
+		this.makeWall(editor, curr, 0, height, -size);
+		this.makeWall(editor, curr, -size, -height, 0);
+		this.makeWall(editor, curr, 0, height, size);
+		this.makeWall(editor, curr, size, -height, 0);
+		this.future = editor.apply();
 	}
 
-	private void makeWall(Location one, int x1, int y1, int z1) {
+	/**
+	 * @return Future that completes once the lobby has been built
+	 */
+	public CompletableFuture<Void> getFuture() {
+		return this.future;
+	}
+
+	private void makeWall(BlockEditor editor, Location one, int x1, int y1, int z1) {
 		Location from = last != null ? last : one;
 		Location to = from.clone().add(x1, y1, z1);
 		last = to;
@@ -71,7 +89,6 @@ public class LobbyGenerator {
 		for (int x = bottomBlockX; x <= topBlockX; x++)
 			for (int y = bottomBlockY; y <= topBlockY; y++)
 				for (int z = bottomBlockZ; z <= topBlockZ; z++)
-				    XBlock.setType(to.getWorld().getBlockAt(x, y, z), glassTypes.get(JavaUtils.randomInt(0, glassTypes.size() - 1)), true);
-		
+				    editor.set(x, y, z, glassTypes.get(JavaUtils.randomInt(0, glassTypes.size() - 1)), true);
 	}
 }

@@ -20,11 +20,6 @@ public class AutoSetupCommand extends VaroCommand {
 	public void onCommand(CommandSender sender, VaroPlayer vp, Command cmd, String label, String[] args) {
 		if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("run")) {
-				if (Main.scheduler().isRegionized()) {
-					sender.sendMessage(Main.getPrefix() + "§cThe AutoSetup is not supported on Folia! Please set up your world manually.");
-					return;
-				}
-
 				if (!ConfigSetting.AUTOSETUP_ENABLED.getValueAsBoolean()) {
 					Messages.COMMANDS_VARO_AUTOSETUP_NOT_SETUP_YET.send(sender);
 					return;

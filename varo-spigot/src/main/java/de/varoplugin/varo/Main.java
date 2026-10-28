@@ -37,6 +37,7 @@ import de.varoplugin.varo.data.DataManager;
 import de.varoplugin.varo.data.Dependencies;
 import de.varoplugin.varo.game.VaroGame;
 import de.varoplugin.varo.gui.VaroInventoryManager;
+import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.spigot.VaroUpdater;
 
 public class Main extends JavaPlugin {
@@ -98,8 +99,6 @@ public class Main extends JavaPlugin {
     		this.getLogger().log(Level.INFO, 
     				"	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
     		this.getLogger().log(Level.INFO, "Forge-Support: " + VersionUtils.hasForgeSupport());
-    		if (this.scheduler.isRegionized())
-    		    this.getLogger().log(Level.WARNING, "Folia support is experimental: Bukkit scoreboards are unavailable, so the sidebar scoreboard and nametag teams are disabled. AutoSetup is not supported and teleports are asynchronous.");
 
     		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT)
     			this.getLogger().log(Level.SEVERE,
@@ -174,7 +173,9 @@ public class Main extends JavaPlugin {
 		}
 
 		if (!this.failed) {
-            if (ScoreboardInstance.isSupported())
+            if (ScoreboardInstance.isPacketBased())
+                VaroPlayer.getOnlinePlayer().forEach(VaroPlayer::destroyScoreboard);
+            else
                 VersionUtils.getVersionAdapter().getOnlinePlayers()
                     .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
             dataManager.cleanUp();

@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game.world;
 
-import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import de.varoplugin.cfw.scheduler.Task;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
@@ -11,6 +10,8 @@ import de.varoplugin.varo.game.world.generators.LobbyGenerator;
 import de.varoplugin.varo.game.world.generators.PortalGenerator;
 import de.varoplugin.varo.game.world.generators.SpawnGenerator;
 import de.varoplugin.varo.spawns.spawn.SpawnChecker;
+import de.varoplugin.varo.utils.BlockEditor;
+import de.varoplugin.varo.utils.ColumnScan;
 import de.varoplugin.varo.utils.VaroUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,7 +19,10 @@ import org.bukkit.World;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 public class AutoSetup {
@@ -27,8 +31,9 @@ public class AutoSetup {
 
     private Task task;
     private VaroWorld world;
-    private int x, z;
+    private volatile int x, z;
     private Runnable onFinish;
+    private volatile boolean searching;
 
     public AutoSetup(Runnable onFinish) {
         if (Main.getVaroGame().hasStarted())
@@ -45,70 +50,123 @@ public class AutoSetup {
     }
 
     private void searchTerrain() {
+        // On Folia the result of a probe is only available later
+        if (this.searching)
+            return;
+
         Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Searching for terrain (" + x + ", " + z + ")... (" + world.getWorld().getName() + ")");
         long time = System.currentTimeMillis();
         while (System.currentTimeMillis() - time <= 3000) {
-            if (SpawnChecker.checkSpawns(world.getWorld(), x, z, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()), ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt())) {
-                task.cancel();
-                startSetup();
+            int amount = ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt();
+            CompletableFuture<Boolean> probe = SpawnChecker.checkSpawns(world.getWorld(), x, z, getSpawnRadius(amount), amount);
+            if (!probe.isDone()) {
+                this.searching = true;
+                probe.whenComplete((found, t) -> {
+                    try {
+                        this.handleProbe(found, t);
+                    } finally {
+                        this.searching = false;
+                    }
+                });
                 return;
             }
-            world.getWorld().getChunkAt(x, z).unload();
-            this.x += 100;
-            this.z += 100;
+
+            if (this.handleProbe(probe.getNow(false), null))
+                return;
         }
     }
 
-    private void startSetup() {
-        Location middle = new Location(world.getWorld(), x, world.getWorld().getMaxHeight(), z);
+    /**
+     * @return Whether the search is finished
+     */
+    private boolean handleProbe(Boolean found, Throwable throwable) {
+        if (throwable != null) {
+            task.cancel();
+            Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: Failed to search for terrain", throwable);
+            return true;
+        }
 
-        setupSpawns(middle);
-        setupPortal();
-        setupLobby();
-        setupBorder(middle);
-        setupAutoStart();
+        if (found) {
+            task.cancel();
+            startSetup();
+            return true;
+        }
 
-        Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Finished!");
-        this.onFinish.run();
+        if (!Main.scheduler().isRegionized())
+            world.getWorld().getChunkAt(x, z).unload();
+        this.x += 100;
+        this.z += 100;
+        return false;
     }
 
-    private void setupPortal() {
+    private void startSetup() {
+        World world = this.world.getWorld();
+        Location middle = new Location(world, x, world.getMaxHeight(), z);
+        int radius = getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt());
+
+        // The terrain can only be read by the threads owning it on Folia, so all heights are collected first
+        List<int[]> columns = ConfigSetting.AUTOSETUP_SPAWNS_FLAT_SURFACE.getValueAsBoolean() ? ColumnScan.disc(x, z, radius) : Collections.singletonList(new int[] { x, z });
+        ColumnScan.scan(world, columns, (w, x, z) -> getGroundHeight(w, x, z))
+                .thenCompose(ground -> {
+                    int groundHeight = ground.get(x, z);
+                    return this.setupSpawns(middle, ground, groundHeight, radius)
+                            .thenCompose(v -> this.setupPortal(groundHeight))
+                            .thenCompose(v -> this.setupLobby(groundHeight));
+                })
+                .thenRun(() -> Main.scheduler().execute(() -> {
+                    setupBorder(middle);
+                    setupAutoStart();
+
+                    Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Finished!");
+                    this.onFinish.run();
+                }))
+                .exceptionally(t -> {
+                    Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: Failed", t);
+                    return null;
+                });
+    }
+
+    private CompletableFuture<Void> setupPortal(int groundHeight) {
         if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean()) {
             Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Setting up the portal...");
             int width = ConfigSetting.AUTOSETUP_PORTAL_WIDTH.getValueAsInt(), height = ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
 
             if (width < 4 || height < 5) {
                 Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: The size of the portal is too small!");
-                return;
+                return CompletableFuture.completedFuture(null);
             }
 
-            new PortalGenerator(world.getWorld(), x, z, width, height);
+            return new PortalGenerator(world.getWorld(), x, groundHeight, z, width, height).getFuture();
         }
+        return CompletableFuture.completedFuture(null);
     }
 
-    private void setupLobby() {
+    private CompletableFuture<Void> setupLobby(int groundHeight) {
         if (ConfigSetting.AUTOSETUP_LOBBY_ENABLED.getValueAsBoolean()) {
             Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: " + "Loading the lobby...");
 
-            Location lobby = getLobbyLocation(world.getWorld(), x, z);
+            Location lobby = new Location(world.getWorld(), x, getLobbyHeight(world.getWorld(), groundHeight), z);
 
+            LobbyGenerator generator;
             boolean schematicEnabled = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_ENABLED.getValueAsBoolean();
             if (schematicEnabled) {
                 String schematic = ConfigSetting.AUTOSETUP_LOBBY_SCHEMATIC_FILE.getValueAsString();
                 Path path = SCHEMATIC_PATH.resolve(schematic);
                 Path normalized = path.normalize();
                 if (normalized.startsWith(SCHEMATIC_PATH) && !path.normalize().equals(SCHEMATIC_PATH) && path.toFile().exists()) {
-                    new LobbyGenerator(lobby, path.toFile());
+                    generator = new LobbyGenerator(lobby, path.toFile());
                 } else {
                     Main.getInstance().getLogger().log(Level.SEVERE, "AutoSetup: Schematic does not exist! Using default lobby generator!");
-                    new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
+                    generator = new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
                 }
             } else {
-                new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
+                generator = new LobbyGenerator(lobby, ConfigSetting.AUTOSETUP_LOBBY_GENERATED_HEIGHT.getValueAsInt(), ConfigSetting.AUTOSETUP_LOBBY_GENERATED_SIZE.getValueAsInt());
             }
 
             Main.getVaroGame().setLobby(lobby);
+            return generator.getFuture();
         }
+        return CompletableFuture.completedFuture(null);
     }
 
     private void setupBorder(Location middle) {
@@ -118,43 +176,34 @@ public class AutoSetup {
         }
     }
 
-    private void setupSpawns(Location middle) {
+    private CompletableFuture<Void> setupSpawns(Location middle, ColumnScan ground, int groundHeight, int radius) {
         Main.getInstance().getLogger().log(Level.INFO, "AutoSetup: Setting the spawns...");
 
-        if (ConfigSetting.AUTOSETUP_SPAWNS_FLAT_SURFACE.getValueAsBoolean())
-            this.generateFlatSurface(middle.getWorld(), this.x, this.z);
-        
-        int y = this.getGroundHeight(middle.getWorld(), this.x, this.z);
+        CompletableFuture<Void> flatSurface = ConfigSetting.AUTOSETUP_SPAWNS_FLAT_SURFACE.getValueAsBoolean() ? this.generateFlatSurface(middle.getWorld(), ground, radius) : CompletableFuture.completedFuture(null);
+
+        int y = groundHeight;
         if (ConfigSetting.AUTOSETUP_PORTAL_ENABLED.getValueAsBoolean())
             y += ConfigSetting.AUTOSETUP_PORTAL_HEIGHT.getValueAsInt();
-        middle.getWorld().setSpawnLocation(this.x, y, this.z);
+        final int spawnY = y;
+        Main.scheduler().execute(() -> {
+            middle.getWorld().setSpawnLocation(this.x, spawnY, this.z);
+            Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(middle.getWorld());
+        });
 
-        new SpawnGenerator(middle, getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt()),ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(),
-                (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum());
+        return flatSurface.thenCompose(v -> new SpawnGenerator(middle, radius, ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt(),
+                (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_BLOCKID.getValueAsEnum(), (XMaterial) ConfigSetting.AUTOSETUP_SPAWNS_SIDEBLOCKID.getValueAsEnum()).getFuture());
     }
 
-    private void generateFlatSurface(World world, int x, int z) {
-        int flatHeight = getGroundHeight(world, x, z);
+    private CompletableFuture<Void> generateFlatSurface(World world, ColumnScan ground, int radius) {
+        int flatHeight = ground.get(x, z);
 
-        int radius = getSpawnRadius(ConfigSetting.AUTOSETUP_SPAWNS_AMOUNT.getValueAsInt());
+        for (int[] column : ColumnScan.disc(x, z, radius))
+            flatHeight = Math.min(flatHeight, ground.get(column[0], column[1]));
 
-        for (int i = -radius; i <= radius; i++) {
-            for (int j = -radius; j <= radius; j++) {
-                if (i * i + j * j <= radius * radius) {
-                    int tempHeight = getGroundHeight(world, x + i, z + j);
-                    flatHeight = Math.min(flatHeight, tempHeight);
-                }
-            }
-        }
-
-        for (int i = -radius; i <= radius; i++) {
-            for (int j = -radius; j <= radius; j++) {
-                if (i * i + j * j <= radius * radius) {
-                    Location loc = new Location(world, x + i, flatHeight, z + j);
-                    XBlock.setType(loc.getBlock(), XMaterial.GRASS_BLOCK);
-                }
-            }
-        }
+        BlockEditor editor = new BlockEditor(world);
+        for (int[] column : ColumnScan.disc(x, z, radius))
+            editor.set(column[0], flatHeight, column[1], XMaterial.GRASS_BLOCK);
+        return editor.apply();
     }
 
     private void setupAutoStart() {
@@ -173,16 +222,12 @@ public class AutoSetup {
         }
     }
 
-    private Location getLobbyLocation(World world, int x, int z) {
-        return new Location(world, x, getLobbyHeight(world, x, z), z);
-    }
-
-    private int getLobbyHeight(World world, int x, int z) {
+    private int getLobbyHeight(World world, int groundHeight) {
         LobbySnap snapSetting = (LobbySnap) ConfigSetting.AUTOSETUP_LOBBY_SNAP_TYPE.getValueAsEnum();
 
         switch (snapSetting) {
             case GROUND:
-                return getGroundHeight(world, x, z) + ConfigSetting.AUTOSETUP_LOBBY_SNAP_GROUND_OFFSET.getValueAsInt();
+                return groundHeight + ConfigSetting.AUTOSETUP_LOBBY_SNAP_GROUND_OFFSET.getValueAsInt();
             case ABSOLUTE:
                 return ConfigSetting.AUTOSETUP_LOBBY_SNAP_ABSOLUTE_YPOS.getValueAsInt();
             case MAX_HEIGHT:
@@ -192,7 +237,7 @@ public class AutoSetup {
         }
     }
 
-    private int getGroundHeight(World world, int x, int z) {
+    private static int getGroundHeight(World world, int x, int z) {
         int groundHeight = world.getMaxHeight();
 
         while (VaroUtils.isNotSolidTerrainOrLiquid(new Location(world, x, groundHeight, z).getBlock()) && groundHeight > 0) {

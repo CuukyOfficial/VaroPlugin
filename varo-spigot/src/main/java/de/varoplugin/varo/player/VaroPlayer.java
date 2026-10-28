@@ -593,7 +593,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
 
-			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean() && this.scoreboardInstance != null) { // scoreboardInstance is null if scoreboards are not supported (Folia)
+			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean() && this.scoreboardInstance != null) { // scoreboardInstance is null if scoreboards are not supported
 				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, new AnimationData<String>() {
                     
                     @Override
@@ -706,6 +706,15 @@ public class VaroPlayer implements VaroSerializeable {
 			this.scoreboard = null;
 			this.tablist = null;
 		}
+	}
+
+	/**
+	 * Removes the scoreboard from the client of the player
+	 */
+	public void destroyScoreboard() {
+		ScoreboardInstance instance = this.scoreboardInstance;
+		if (instance != null)
+			instance.destroy();
 	}
 
 	private void registerNametag(ScoreboardInstance scoreboardInstance) {

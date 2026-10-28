@@ -2,13 +2,13 @@ package de.varoplugin.varo.game.world.generators;
 
 import org.bukkit.Location;
 
-import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.spawns.Spawn;
 import de.varoplugin.varo.team.VaroTeam;
+import de.varoplugin.varo.utils.BlockEditor;
 import de.varoplugin.varo.utils.VaroUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -81,8 +81,14 @@ public class SpawnGenerator {
         this.pending.add(future);
         Main.scheduler().executeAt(location, () -> {
             try {
-                factory.apply(this.setSpawnAt(location));
-                future.complete(null);
+                BlockEditor editor = new BlockEditor(location.getWorld());
+                factory.apply(this.setSpawnAt(location, editor));
+                editor.apply(1).whenComplete((v, t) -> {
+                    if (t != null)
+                        future.completeExceptionally(t);
+                    else
+                        future.complete(null);
+                });
             } catch (Throwable t) {
                 future.completeExceptionally(t);
             }
@@ -107,24 +113,23 @@ public class SpawnGenerator {
         return newLocation;
     }
 
-    private Location setSpawnAt(Location location) {
+    private Location setSpawnAt(Location location, BlockEditor editor) {
         final Location location0 = VaroUtils.isNotSolidTerrainOrLiquid(location.getBlock()) ? this.searchNext(location, -1, false) : this.searchNext(location, 1, true);
+        final int x = location0.getBlockX(), y = location0.getBlockY(), z = location0.getBlockZ();
 
-        Main.scheduler().runAtLater(location0, () -> {
-            XBlock.setType(location0.getBlock(), XMaterial.AIR);
-            XBlock.setType(location0.clone().add(0, -1, 0).getBlock(), XMaterial.AIR);
-            
-            XBlock.setType(location0.clone().add(1, 0, 0).getBlock(), blockMaterial);
-            XBlock.setType(location0.clone().add(0, 0, 1).getBlock(), blockMaterial);
-            XBlock.setType(location0.clone().add(-1, 0, 0).getBlock(), blockMaterial);
-            XBlock.setType(location0.clone().add(0, 0, -1).getBlock(), blockMaterial);
+        editor.set(x, y, z, XMaterial.AIR);
+        editor.set(x, y - 1, z, XMaterial.AIR);
 
-            XBlock.setType(location0.clone().add(0, -2, 0).getBlock(), sideBlockMaterial);
-            XBlock.setType(location0.clone().add(1, -1, 0).getBlock(), sideBlockMaterial);
-            XBlock.setType(location0.clone().add(0, -1, 1).getBlock(), sideBlockMaterial);
-            XBlock.setType(location0.clone().add(-1, -1, 0).getBlock(), sideBlockMaterial);
-            XBlock.setType(location0.clone().add(0, -1, -1).getBlock(), sideBlockMaterial);
-        }, 1);
+        editor.set(x + 1, y, z, this.blockMaterial);
+        editor.set(x, y, z + 1, this.blockMaterial);
+        editor.set(x - 1, y, z, this.blockMaterial);
+        editor.set(x, y, z - 1, this.blockMaterial);
+
+        editor.set(x, y - 2, z, this.sideBlockMaterial);
+        editor.set(x + 1, y - 1, z, this.sideBlockMaterial);
+        editor.set(x, y - 1, z + 1, this.sideBlockMaterial);
+        editor.set(x - 1, y - 1, z, this.sideBlockMaterial);
+        editor.set(x, y - 1, z - 1, this.sideBlockMaterial);
 
         return location0.getBlock().getLocation().add(0.5, -1, 0.5);
     }

@@ -24,7 +24,7 @@ public class ScoreboardCommand extends VaroCommand {
 		}
 
 		if (!ScoreboardInstance.isSupported()) {
-			sender.sendMessage(Main.getPrefix() + "§cScoreboards are not supported on this server software (Folia)!");
+			sender.sendMessage(Main.getPrefix() + "§cScoreboards are not supported on this server version!");
 			return;
 		}
 

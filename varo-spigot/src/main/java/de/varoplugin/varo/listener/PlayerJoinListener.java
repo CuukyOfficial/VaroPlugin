@@ -34,7 +34,7 @@ public class PlayerJoinListener implements Listener {
 		Player player = event.getPlayer();
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 
-		if (ScoreboardInstance.isSupported())
+		if (!ScoreboardInstance.isPacketBased())
 			player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
 		vplayer.setPlayer(player);
