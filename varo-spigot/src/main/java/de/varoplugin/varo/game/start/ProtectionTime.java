@@ -27,9 +27,9 @@ public class ProtectionTime implements VaroSerializeable {
 		if (this.protectionTimer <= 0)
             return;
 
-        this.scheduler = Main.scheduler().runTimer(() -> {
+        this.scheduler = Main.scheduler().runTimer(task -> {
             if (!Main.getVaroGame().isRunning()) {
-                this.scheduler.cancel();
+                task.cancel();
                 return;
             }
 

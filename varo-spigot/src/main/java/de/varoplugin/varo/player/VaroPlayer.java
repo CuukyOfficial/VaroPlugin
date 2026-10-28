@@ -103,9 +103,9 @@ public class VaroPlayer implements VaroSerializeable {
 	@VaroSerializeField(path = "guiAnimation")
 	private boolean guiAnimation = true;
 
-	private AnimatedScoreboard scoreboard;
-	private AnimatedTablist tablist;
-	private AnimatedActionbar actionbar;
+	private volatile AnimatedScoreboard scoreboard;
+	private volatile AnimatedTablist tablist;
+	private volatile AnimatedActionbar actionbar;
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
@@ -230,6 +230,8 @@ public class VaroPlayer implements VaroSerializeable {
 
 	public void cleanUpPlayer() {
 		final Player player = this.player;
+		if (player == null)
+			return;
 		Main.scheduler().executeFor(player, () -> {
 			player.setHealth(player.getMaxHealth());
 			player.setFoodLevel(20);

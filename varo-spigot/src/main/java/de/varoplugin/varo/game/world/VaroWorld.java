@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game.world;
 
-import com.cryptomorin.xseries.XGameRule;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -9,6 +8,7 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.world.border.DefaultVaroBorder;
 import de.varoplugin.varo.game.world.border.NopVaroBorder;
 import de.varoplugin.varo.game.world.border.VaroBorder;
+import de.varoplugin.varo.utils.VaroUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -31,7 +31,7 @@ public class VaroWorld {
 
         if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_11))
             // Versions < 1.12 don't have this game rule and use a server property instead (see DataManager) 
-            Main.scheduler().execute(() -> XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()));
+            Main.scheduler().execute(() -> VaroUtils.setShowAdvancementMessages(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()));
 
 		if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 			this.varoWorldBorder = new DefaultVaroBorder(world);

@@ -192,6 +192,8 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player pl = pl1.getPlayer();
+            if (pl == null) // might have left in the meantime
+                continue;
             Main.scheduler().executeFor(pl, () -> {
                 pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
                 pl.setGameMode(GameMode.SURVIVAL);

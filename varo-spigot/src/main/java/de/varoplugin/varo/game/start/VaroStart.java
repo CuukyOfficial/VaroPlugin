@@ -51,6 +51,8 @@ public class VaroStart extends AbstractStartSequence {
 						continue;
 
 					Player pl = pl1.getPlayer();
+					if (pl == null) // might have left in the meantime
+						continue;
 					Main.scheduler().executeFor(pl, () -> pl.setGameMode(GameMode.ADVENTURE));
 					pl1.cleanUpPlayer();
 				}
@@ -62,6 +64,8 @@ public class VaroStart extends AbstractStartSequence {
 						continue;
 
 					Player pl = vp.getPlayer();
+					if (pl == null)
+						continue;
 					Main.scheduler().executeFor(pl, () -> pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_BASEDRUM.get(), 1, 1));
 
 					String title = Messages.GAME_START_VARO_TITLE.value(vp ,Placeholder.constant("start-countdown", String.valueOf(this.countdown)));

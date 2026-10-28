@@ -29,6 +29,8 @@ public class SuroStart extends AbstractStartSequence {
 	public void start() {
 		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			Player player = vp.getPlayer();
+			if (player == null)
+				continue;
 			Main.scheduler().executeFor(player, () -> {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
 				player.setGameMode(GameMode.ADVENTURE);

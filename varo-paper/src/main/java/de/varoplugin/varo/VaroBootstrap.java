@@ -24,6 +24,7 @@ import io.github.almightysatan.jaskl.InvalidTypeException;
 import io.github.almightysatan.jaskl.ValidationException;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
+import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
 import io.papermc.paper.registry.keys.EnchantmentKeys;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,9 +34,7 @@ public class VaroBootstrap implements PluginBootstrap {
 
     @Override
     public void bootstrap(@NotNull BootstrapContext context) {
-        context.getLogger().info("Running Varo bootstrap");
-        
-        Main.setPaper(true);
+        this.bootstrap((PluginProviderContext) context);
 
         if (supportsEnchantmentKeys()) {
             try {
@@ -49,11 +48,21 @@ public class VaroBootstrap implements PluginBootstrap {
         }
     }
     
+    /**
+     * Paper 1.19.x declares this method instead of {@link #bootstrap(BootstrapContext)}
+     */
+    public void bootstrap(@NotNull PluginProviderContext context) {
+        context.getLogger().info("Running Varo bootstrap");
+
+        Main.setPaper(true);
+    }
+
     private static boolean supportsEnchantmentKeys() {
         try {
             EnchantmentKeys.class.getName();
+            Class.forName("io.papermc.paper.registry.event.RegistryEvents");
             return true;
-        } catch (NoClassDefFoundError e) {
+        } catch (NoClassDefFoundError | ClassNotFoundException e) {
             return false;
         }
     }

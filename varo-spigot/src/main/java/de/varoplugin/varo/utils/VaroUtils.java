@@ -38,15 +38,36 @@ public final class VaroUtils {
 	    Main.scheduler().execute(VaroUtils::updateWorldTime0);
 	}
 
+	public static void setAdvanceTime(World world, boolean value) {
+	    try {
+	        XGameRule.ADVANCE_TIME.setValue(world, value);
+	    } catch (Throwable t) { // XSeries is unable to access game rules on some versions
+	        setLegacyGameRule(world, "doDaylightCycle", value);
+	    }
+	}
+
+	public static void setShowAdvancementMessages(World world, boolean value) {
+	    try {
+	        XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, value);
+	    } catch (Throwable t) {
+	        setLegacyGameRule(world, "announceAdvancements", value);
+	    }
+	}
+
+	@SuppressWarnings("deprecation")
+	private static void setLegacyGameRule(World world, String rule, boolean value) {
+	    world.setGameRuleValue(rule, String.valueOf(value));
+	}
+
 	private static void updateWorldTime0() {
 	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
         boolean legacyWorldClocks = VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_26_1);
 
 	    for (World world : Bukkit.getWorlds())
 	        if (!ConfigSetting.ALWAYS_TIME.isIntActivated() || (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()))
-                XGameRule.ADVANCE_TIME.setValue(world, true);
+                setAdvanceTime(world, true);
 	        else {
-                XGameRule.ADVANCE_TIME.setValue(world, false);
+                setAdvanceTime(world, false);
 	            if (world.getTime() != time && (legacyWorldClocks || world.getEnvironment() == World.Environment.NORMAL)) // Workaround until Paper 26.1 adds a clock API
 	                world.setTime(time);
 	            world.setStorm(false);
