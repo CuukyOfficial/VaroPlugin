@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import de.varoplugin.cfw.player.SafeTeleport;
 import de.varoplugin.varo.Main;
@@ -24,7 +24,7 @@ public class PlayerSort {
         SORTED_WELL
     }
 
-    private BukkitTask scheduler;
+    private Task scheduler;
     private HashMap<Player, Location> toTeleport;
 
     public PlayerSort() {
@@ -32,7 +32,7 @@ public class PlayerSort {
     }
 
     private void startTeleporting() {
-        scheduler = new BukkitRunnable() {
+        scheduler = new TaskRunnable() {
 
             int index = 0;
 

@@ -1,5 +1,7 @@
 package de.varoplugin.varo.command.essentials;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -14,7 +16,7 @@ import de.varoplugin.varo.Main;
 
 public class MessageCommand implements CommandExecutor {
 
-	public static HashMap<String, String> lastChat = new HashMap<>();
+	public static Map<String, String> lastChat = new ConcurrentHashMap<>();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

@@ -1,10 +1,12 @@
 package de.varoplugin.varo.listener;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
@@ -22,7 +24,8 @@ public class PlayerTeleportListener implements Listener {
 			    }
 			    
 				if (event.getFrom().distance(event.getFrom().getWorld().getSpawnLocation()) < 500) {
-					event.getTo().getWorld().setSpawnLocation(event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ());
+					final Location to = event.getTo();
+					TaskScheduler.of(Main.getInstance()).execute(() -> to.getWorld().setSpawnLocation(to.getBlockX(), to.getBlockY(), to.getBlockZ()));
 				}
 			}
 		}

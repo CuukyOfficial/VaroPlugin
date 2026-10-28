@@ -3,7 +3,7 @@ package de.varoplugin.varo.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -20,11 +20,11 @@ public class PlayerRespawnListener implements Listener {
 	        event.setRespawnLocation(event.getPlayer().getLocation());
 	    }
 	    
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				player.setNormalAttackSpeed();
 			}
-		}.runTaskLater(Main.getInstance(), 20L);
+		}.runTaskForLater(Main.getInstance(), event.getPlayer(), 20L);
 	}
 }

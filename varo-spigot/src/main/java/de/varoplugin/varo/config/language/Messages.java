@@ -29,6 +29,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.varo.utils.VaroUtils;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
@@ -592,7 +593,7 @@ public final class Messages {
                     if (player != null) {
                         VaroContext copy = context.copy();
                         copy.getMessageData().language = recipient.getLanguage();
-                        player.kickPlayer(message.value(copy));
+                        VaroUtils.kickPlayer(player, message.value(copy));
                     }
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
@@ -606,7 +607,7 @@ public final class Messages {
                     if (player != null) {
                         PlayerContext context = new PlayerContext(subject);
                         context.getMessageData().language = subject.getLanguage();
-                        player.kickPlayer(message.value(context, placeholders));
+                        VaroUtils.kickPlayer(player, message.value(context, placeholders));
                     }
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
@@ -620,7 +621,7 @@ public final class Messages {
                     if (player != null) {
                         PlayerContext context = new PlayerContext(subject);
                         context.getMessageData().language = subject.getLanguage();
-                        player.kickPlayer(message.value(context));
+                        VaroUtils.kickPlayer(player, message.value(context));
                     }
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);

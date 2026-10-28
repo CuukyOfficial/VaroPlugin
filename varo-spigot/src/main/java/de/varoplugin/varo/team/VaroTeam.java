@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
@@ -28,7 +29,7 @@ public class VaroTeam implements VaroSerializeable {
 	private static ArrayList<VaroTeam> teams;
 
 	static {
-		teams = new ArrayList<>();
+		teams = new SynchronizedArrayList<>();
 		highestNumber = 1;
 	}
 

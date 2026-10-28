@@ -11,7 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -63,11 +64,11 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	public void create() {
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (location.getWorld().getDifficulty() == Difficulty.PEACEFUL)
-					location.getWorld().setDifficulty(Difficulty.EASY);
+					TaskScheduler.of(Main.getInstance()).execute(() -> location.getWorld().setDifficulty(Difficulty.EASY));
 
 				EntityType type = VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
 				zombie = (Zombie) location.getWorld().spawnEntity(location, type);
@@ -80,7 +81,7 @@ public class OfflineVillager implements VaroSerializeable {
 				freezeVillager();
 				entity = zombie;
 			}
-		}.runTaskLater(Main.getInstance(), 1L);
+		}.runTaskAtLater(Main.getInstance(), location, 1L);
 	}
 
 	public void kill(VaroPlayer killer, String cause) {

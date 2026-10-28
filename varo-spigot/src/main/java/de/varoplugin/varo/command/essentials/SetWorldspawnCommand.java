@@ -1,5 +1,6 @@
 package de.varoplugin.varo.command.essentials;
 
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XSound;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.world.border.VaroBorder;
@@ -31,7 +33,8 @@ public class SetWorldspawnCommand implements CommandExecutor {
 			return false;
 		}
 
-		p.getWorld().setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
+		final Location spawn = p.getLocation();
+		TaskScheduler.of(Main.getInstance()).execute(() -> p.getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ()));
 		VaroBorder border = Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder();
 		if(border != null)
 			border.setCenter(p.getLocation());

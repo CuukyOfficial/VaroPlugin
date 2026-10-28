@@ -3,6 +3,7 @@ package de.varoplugin.varo.game;
 import com.cryptomorin.xseries.XEntityType;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.api.game.VaroEndEvent;
 import de.varoplugin.varo.api.game.VaroStartEvent;
@@ -35,8 +36,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import java.awt.*;
 import java.io.File;
@@ -76,7 +77,7 @@ public class VaroGame implements VaroSerializeable {
     private ProtectionTime protection;
 
     private boolean finaleJoin;
-    private BukkitTask finaleStartScheduler;
+    private Task finaleStartScheduler;
     private int finaleCountdown;
 
     private boolean firstTime;
@@ -90,7 +91,7 @@ public class VaroGame implements VaroSerializeable {
         Main.setVaroGame(this);
         this.topScores = new TopScoreManager();
         this.varoWorldHandler = new VaroWorldHandler();
-        Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new VaroHeartbeat(this), 0L, 20L);
+        TaskScheduler.of(Main.getInstance()).runTimer(new VaroHeartbeat(this), 0L, 20L);
     }
 
     public void init() {
@@ -150,8 +151,10 @@ public class VaroGame implements VaroSerializeable {
                 continue;
 
             Player pl = pl1.getPlayer();
-            pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
-            pl.setGameMode(GameMode.SURVIVAL);
+            TaskScheduler.of(Main.getInstance()).executeFor(pl, () -> {
+                pl.playSound(pl.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
+                pl.setGameMode(GameMode.SURVIVAL);
+            });
             pl1.cleanUpPlayer();
         }
 
@@ -170,7 +173,7 @@ public class VaroGame implements VaroSerializeable {
             Main.getVaroGame().setProtection(new ProtectionTime(ConfigSetting.STARTPERIOD_PROTECTIONTIME.getValueAsInt()));
         }
 
-        new BukkitRunnable() {
+        new TaskRunnable() {
             @Override
             public void run() {
                 firstTime = false;
@@ -178,7 +181,7 @@ public class VaroGame implements VaroSerializeable {
         }.runTaskLater(Main.getInstance(), this.getPlayTime() * 60 * 20); // TODO this does not work when PLAY_TIME is -1
 
         if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean())
-            Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            TaskScheduler.of(Main.getInstance()).runAsync(() -> {
                 // Copy the list to avoid ConcurrentModificationException
                 // This is only executed once anyway so performance doesn't really matter
                 for (VaroPlayer player : VaroPlayer.getVaroPlayers().toArray(new VaroPlayer[0]))
@@ -276,7 +279,7 @@ public class VaroGame implements VaroSerializeable {
         if (ConfigSetting.STOP_SERVER_ON_WIN.isIntActivated()) {
             Messages.GAME_WIN_SHUTDOWN.broadcast(Placeholder.constant("shutdown-seconds", String.valueOf(ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt())));
 
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), Bukkit.getServer()::shutdown,
+            TaskScheduler.of(Main.getInstance()).runLater(Bukkit.getServer()::shutdown,
                     ConfigSetting.STOP_SERVER_ON_WIN.getValueAsInt() * 20L);
         }
     }
@@ -328,7 +331,7 @@ public class VaroGame implements VaroSerializeable {
 
             this.finaleJoin = true;
             this.finaleCountdown = countdown;
-            this.finaleStartScheduler = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+            this.finaleStartScheduler = TaskScheduler.of(Main.getInstance()).runTimer(() -> {
                 if (!this.isRunning() || this.isFinale() || this.finaleStartScheduler == null) {
                     abortFinaleStart();
                     return;

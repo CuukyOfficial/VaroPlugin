@@ -11,7 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import com.cryptomorin.xseries.XSound;
 
@@ -26,7 +26,7 @@ public class BlockPlaceListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!Main.getVaroGame().hasStarted())
@@ -65,6 +65,6 @@ public class BlockPlaceListener implements Listener {
 
 				event.getBlock().breakNaturally();
 			}
-		}.runTaskLater(Main.getInstance(), 1L);
+		}.runTaskAtLater(Main.getInstance(), event.getBlock().getLocation(), 1L);
 	}
 }

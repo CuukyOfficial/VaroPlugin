@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.varo.utils.VaroUtils;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.location.LocationFormat;
@@ -65,7 +66,7 @@ public class PlayerGUI extends VaroInventory {
                 (event) -> this.openNext(new ConfirmInventory(this, "§4Reset?", (accept) -> {
                     if (accept) {
                         if (target.isOnline())
-                            target.getPlayer().kickPlayer("§7You've been resetted.\n§cPlease join again.");
+                            VaroUtils.kickPlayer(target.getPlayer(), "§7You've been resetted.\n§cPlease join again.");
 
                         target.getStats().loadDefaults();
                     }

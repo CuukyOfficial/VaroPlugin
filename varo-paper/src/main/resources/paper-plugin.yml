@@ -26,3 +26,4 @@ main: de.varoplugin.varo.Main
 bootstrapper: de.varoplugin.varo.VaroBootstrap
 loader: de.varoplugin.varo.VaroPluginLoader
 website: VaroPlugin.de
+folia-supported: true

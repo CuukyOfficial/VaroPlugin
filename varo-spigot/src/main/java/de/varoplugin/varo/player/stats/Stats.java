@@ -31,7 +31,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
@@ -421,14 +421,14 @@ public class Stats implements VaroSerializeable {
 
 		lastLocation = null;
 		if (owner.isOnline()) {
-			new BukkitRunnable() {
+			new TaskRunnable() {
 				@Override
 				public void run() {
 				    Player player = owner.getPlayer();
 				    if (player != null)
 				        lastLocation = player.getLocation();
 				}
-			}.runTaskLater(Main.getInstance(), 1L);
+			}.runTaskForLater(Main.getInstance(), owner.getPlayer(), 1L);
 		}
 
 	}

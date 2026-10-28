@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
 import de.varoplugin.varo.alert.AlertType;
@@ -35,7 +36,7 @@ public class VaroUpdater {
 	}
 
 	private void checkUpdate() {
-	    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), this::checkForUpdates, 20L);
+	    TaskScheduler.of(Main.getInstance()).runAsyncLater( this::checkForUpdates, 20L);
 	}
 
 	public void printResults() {
@@ -73,7 +74,7 @@ public class VaroUpdater {
 		this.lastResult = new VaroUpdateResultSet(result, version, id);
 
 		if (this.finishHook != null)
-		    Bukkit.getScheduler().runTask(Main.getInstance(), this.finishHook);
+		    TaskScheduler.of(Main.getInstance()).run(this.finishHook);
 
 		return lastResult;
 	}

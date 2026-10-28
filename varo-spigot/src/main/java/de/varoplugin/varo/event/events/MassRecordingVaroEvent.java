@@ -3,8 +3,8 @@ package de.varoplugin.varo.event.events;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import com.cryptomorin.xseries.XMaterial;
 
@@ -20,7 +20,7 @@ import de.varoplugin.varo.player.event.BukkitEventType;
 public class MassRecordingVaroEvent extends VaroEvent {
 
     private Map<VaroPlayer, Integer> countdowns = new HashMap<>();
-    private BukkitTask scheduler;
+    private Task scheduler;
     private int timer;
     private boolean timerEnd = false;
 
@@ -59,7 +59,7 @@ public class MassRecordingVaroEvent extends VaroEvent {
         for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
             vp.getVersionAdapter().sendTitle("Massenaufnahme", ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() == 1 ? "Alle können für eine Minute joinen." : "Alle können für" + ConfigSetting.MASS_RECORDING_TIME.getValueAsInt() + " Minuten joinen.");
 
-        scheduler = new BukkitRunnable() {
+        scheduler = new TaskRunnable() {
             @Override
             public void run() {
                 if (timer < 1) {

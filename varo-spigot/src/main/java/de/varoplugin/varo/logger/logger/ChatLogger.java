@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.logger.PlayerLogElement;
 import de.varoplugin.varo.logger.VaroLogger;
@@ -23,7 +24,7 @@ public class ChatLogger extends VaroLogger<ChatLogElement> {
     }
 
     public void println(ChatLogType type, Player player, String recipient, String message) {
-        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+        TaskScheduler.of(Main.getInstance()).run(() -> {
             this.queueLog(new ChatLogElement(System.currentTimeMillis(), player.getUniqueId().toString(), player.getName(), type.getName(), recipient, message));
         });
     }

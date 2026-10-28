@@ -1,6 +1,7 @@
 package de.varoplugin.varo.game.start;
 
 import com.cryptomorin.xseries.XSound;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.config.language.Contexts;
 import de.varoplugin.varo.config.language.Messages;
@@ -29,24 +30,26 @@ public class SuroStart extends AbstractStartSequence {
 	public void start() {
 		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			Player player = vp.getPlayer();
-			player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
-			player.setGameMode(GameMode.ADVENTURE);
+			TaskScheduler.of(Main.getInstance()).executeFor(player, () -> {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
+				player.setGameMode(GameMode.ADVENTURE);
+			});
 			vp.cleanUpPlayer();
 		}
 
-		this.task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		this.task = TaskScheduler.of(Main.getInstance()).runTimer(() -> {
 			VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 			for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 				Contexts.PlayerContext context = new Contexts.PlayerContext(vp); // Setting the context manually forces the default language
 				String title = Messages.GAME_START_SURO_TITLE.value(this.titleSize - this.countdown, context);
 				if (StringUtils.isNotBlank(title))
-					VersionUtils.getVersionAdapter().sendTitle(vp.getPlayer(), title, "");
+					TaskScheduler.of(Main.getInstance()).executeFor(vp.getPlayer(), () -> VersionUtils.getVersionAdapter().sendTitle(vp.getPlayer(), title, ""));
 			}
 
 			if (this.countdown == 0) {
 				for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer())
-					vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
+					TaskScheduler.of(Main.getInstance()).executeFor(vp.getPlayer(), () -> vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1));
 
 				this.game.start();
 				return;
@@ -60,6 +63,6 @@ public class SuroStart extends AbstractStartSequence {
 		super.abort();
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-			vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
+			TaskScheduler.of(Main.getInstance()).executeFor(vp.getPlayer(), () -> vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS));
 	}
 }

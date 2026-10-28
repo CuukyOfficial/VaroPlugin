@@ -3,8 +3,8 @@ package de.varoplugin.varo.command.essentials;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -16,7 +16,7 @@ public class CountdownCommand implements CommandExecutor {
      * OLD CODE
      */
 
-    BukkitTask sched = null;
+    Task sched = null;
     int time = 0;
 
     @Override
@@ -51,7 +51,7 @@ public class CountdownCommand implements CommandExecutor {
             return false;
         }
 
-        sched = new BukkitRunnable() {
+        sched = new TaskRunnable() {
             @Override
             public void run() {
                 if (time == 0) {

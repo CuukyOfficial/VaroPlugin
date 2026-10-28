@@ -2,6 +2,7 @@ package de.varoplugin.varo.broadcast;
 
 import org.bukkit.Bukkit;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -26,7 +27,7 @@ public class Broadcaster {
 
 	private void startSchedule() {
 		int interval = ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.getValueAsInt() * 20;
-		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		TaskScheduler.of(Main.getInstance()).runTimer(() -> {
 		    for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
                 int size = Messages.BROADCAST.size(player);
                 player.sendMessage(Messages.BROADCAST.value((int) (this.count % size), player));
@@ -37,7 +38,7 @@ public class Broadcaster {
 
 	private void startPluginAd() {
 		int delay = (Main.getVaroGame().getPlayTime() * 60) > 0 ? (((Main.getVaroGame().getPlayTime() * 60) - 30) > 0 ? ((Main.getVaroGame().getPlayTime() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
-		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		TaskScheduler.of(Main.getInstance()).runTimer(() -> {
             if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() == 0)
                 return;
 

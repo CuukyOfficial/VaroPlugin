@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -19,7 +19,7 @@ import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 
 public class AutoStart implements VaroSerializeable {
 
-	private BukkitTask sched;
+	private Task sched;
 	@VaroSerializeField(path = "start")
 	private Date start;
 
@@ -85,7 +85,7 @@ public class AutoStart implements VaroSerializeable {
 		StartDelay startDelay = StartDelay.getStartDelay(delay);
 		long seconds = (long) (delay - startDelay.getDelay());
 
-		this.sched = new BukkitRunnable() {
+		this.sched = new TaskRunnable() {
 			@Override
 			public void run() {
 				sched.cancel();

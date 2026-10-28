@@ -12,7 +12,8 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.varo.utils.VaroUtils;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
 import de.varoplugin.varo.Main;
@@ -59,7 +60,7 @@ public class BotRegister {
 
 	public void delete() {
 		if (getPlayer() != null)
-			getPlayer().kickPlayer("§cBotRegister §7unregistered");
+			VaroUtils.kickPlayer(getPlayer(), "§cBotRegister §7unregistered");
 
 		register.remove(this);
 	}
@@ -136,10 +137,10 @@ public class BotRegister {
 		if (ConfigSetting.DISCORDBOT_VERIFYSYSTEM_OPTIONAL.getValueAsBoolean())
 			return;
 
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
-				player.kickPlayer(message);
+				VaroUtils.kickPlayer(player, message);
 			}
 		}.runTask(Main.getInstance());
 	}

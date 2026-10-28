@@ -10,7 +10,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import com.cryptomorin.xseries.XSound;
 
@@ -59,7 +61,7 @@ public class VaroPlayer implements VaroSerializeable {
 	private static ArrayList<VaroPlayer> varoplayer;
 
 	static {
-		varoplayer = new ArrayList<>();
+		varoplayer = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "id")
@@ -210,12 +212,15 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void cleanUpPlayer() {
-		player.setHealth(player.getMaxHealth());
-		player.setFoodLevel(20);
-		player.getInventory().clear();
-		player.getInventory().setArmorContents(null);
-		player.setExp(0);
-		player.setLevel(0);
+		final Player player = this.player;
+		TaskScheduler.of(Main.getInstance()).executeFor(player, () -> {
+			player.setHealth(player.getMaxHealth());
+			player.setFoodLevel(20);
+			player.getInventory().clear();
+			player.getInventory().setArmorContents(null);
+			player.setExp(0);
+			player.setLevel(0);
+		});
 	}
 
 	public void delete() {
@@ -271,7 +276,10 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void setSpectacting() {
-		new BukkitRunnable() {
+		if (this.player == null)
+			return;
+
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!isOnline())
@@ -293,11 +301,14 @@ public class VaroPlayer implements VaroSerializeable {
 				unregisterNametag(player, team);
 				registerNametag(scoreboardInstance);
 			}
-		}.runTask(Main.getInstance());
+		}.runTaskFor(Main.getInstance(), this.player);
 	}
 
 	public void setAlive() {
-		new BukkitRunnable() {
+		if (this.player == null)
+			return;
+
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!isOnline())
@@ -316,7 +327,7 @@ public class VaroPlayer implements VaroSerializeable {
 				unregisterNametag(player, team);
 				registerNametag(scoreboardInstance);
 			}
-		}.runTask(Main.getInstance());
+		}.runTaskFor(Main.getInstance(), this.player);
 	}
 
 	public void update() {
@@ -329,27 +340,34 @@ public class VaroPlayer implements VaroSerializeable {
 		if (this.actionbar != null)
 			this.actionbar.queueUpdate();
 
-		if (this.player != null) {
+		final Player player = this.player;
+		if (player != null)
+			// Players can only be modified by the thread owning them on Folia
+			TaskScheduler.of(Main.getInstance()).executeFor(player, () -> this.updatePlayer(player));
+	}
+
+	private void updatePlayer(Player player) {
+		{
 			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
-				this.player.setPlayerListName(this.getTablistName());
+				player.setPlayerListName(this.getTablistName());
 			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
-				boolean potion = this.player.hasPotionEffect(PotionEffectType.INVISIBILITY);
+				boolean potion = player.hasPotionEffect(PotionEffectType.INVISIBILITY);
 				boolean visible = ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean() && !potion;
 				String name = this.getNametagName();
 				String prefix = this.getNametagPrefix();
 				String suffix = this.getNametagSuffix();
 
 				// always update default group
-				Main.getDataManager().getDefaultNameTagGroup().update(this.player, visible, name, prefix, suffix);
+				Main.getDataManager().getDefaultNameTagGroup().update(player, visible, name, prefix, suffix);
 
 				// only update spectator and team groups if necessary
 				if (!ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean()) {
 					if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean())
-						Main.getDataManager().getSpectatorNameTagGroup().update(this.player, true, name, prefix, suffix);
+						Main.getDataManager().getSpectatorNameTagGroup().update(player, true, name, prefix, suffix);
 					if (ConfigSetting.NAMETAGS_VISIBLE_TEAM.getValueAsBoolean())
 						for (VaroTeam team : VaroTeam.getOnlineTeams())
-							team.getNameTagGroup().update(this.player, team == this.team && !potion, name, prefix, suffix);
+							team.getNameTagGroup().update(player, team == this.team && !potion, name, prefix, suffix);
 				}
 			}
 		}
@@ -549,7 +567,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
 
-			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean()) {
+			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean() && this.scoreboardInstance != null) { // scoreboardInstance is null if scoreboards are not supported (Folia)
 				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, new AnimationData<String>() {
                     
                     @Override
@@ -665,7 +683,7 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	private void registerNametag(ScoreboardInstance scoreboardInstance) {
-		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
+		if (scoreboardInstance != null && ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 			String name = this.getNametagName();
 			String prefix = this.getNametagPrefix();
 			String suffix = this.getNametagSuffix();
@@ -739,7 +757,7 @@ public class VaroPlayer implements VaroSerializeable {
 		try {
 			if (ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
 				if (Main.getBotLauncher() == null)
-					new BukkitRunnable() {
+					new TaskRunnable() {
 						@Override
 						public void run() {
 							updateDiscordTeam(oldTeam);

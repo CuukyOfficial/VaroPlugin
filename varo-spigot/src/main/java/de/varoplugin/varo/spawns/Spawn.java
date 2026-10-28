@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import org.bukkit.entity.EntityType;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -28,7 +30,7 @@ import io.github.almightysatan.slams.Placeholder;
 
 public class Spawn implements VaroSerializeable {
 
-    private static List<Spawn> spawns = new ArrayList<>();
+    private static List<Spawn> spawns = new CopyOnWriteArrayList<>();
 
     @VaroSerializeField(path = "location")
     private Location location;
@@ -99,12 +101,14 @@ public class Spawn implements VaroSerializeable {
     	return !VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
     }
     
-    private Entity createNameTag() {
-        Entity armorStand = this.location.getWorld().spawnEntity(
-        		this.location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0), EntityType.ARMOR_STAND);
-        this.nametagUuid = armorStand.getUniqueId().toString();
-        this.updateNameTag(armorStand);
-		return armorStand;
+    private void createNameTag() {
+        // Entities and blocks can only be accessed from the thread owning the region on Folia
+        TaskScheduler.of(Main.getInstance()).executeAt(this.location, () -> {
+            Entity armorStand = this.location.getWorld().spawnEntity(
+                    this.location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0), EntityType.ARMOR_STAND);
+            this.nametagUuid = armorStand.getUniqueId().toString();
+            this.updateNameTag(armorStand);
+        });
     }
     
     private void updateNameTag(Entity armorStand) {
@@ -113,19 +117,23 @@ public class Spawn implements VaroSerializeable {
     }
     
     private void updateNameTag() {
-    	this.findNameTag().ifPresent(this::updateNameTag);
+        TaskScheduler.of(Main.getInstance()).executeAt(this.location, () -> this.findNameTag().ifPresent(this::updateNameTag));
     }
     
     private void removeNameTag() {
-    	this.findNameTag().ifPresent(Entity::remove);
-    	this.nametagUuid = null;
+        final String uuid = this.nametagUuid;
+        this.nametagUuid = null;
+        TaskScheduler.of(Main.getInstance()).executeAt(this.location, () -> this.findNameTag(uuid).ifPresent(Entity::remove));
     }
 
     private Optional<Entity> findNameTag() {
-    	if (this.nametagUuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8))
+        return this.findNameTag(this.nametagUuid);
+    }
+
+    private Optional<Entity> findNameTag(String uuid) {
+    	if (uuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8))
     		return Optional.empty();
     	
-    	String uuid = this.nametagUuid.toString();
     	return Arrays.stream(location.getChunk().getEntities()).
     			filter(entity -> EntityType.ARMOR_STAND.equals(entity.getType()) && uuid.equals(entity.getUniqueId().toString())).findAny();
     }
@@ -142,6 +150,11 @@ public class Spawn implements VaroSerializeable {
     }
 
     public void delete() {
+        TaskScheduler.of(Main.getInstance()).executeAt(this.location, this::resetBlocks);
+        remove();
+    }
+
+    private void resetBlocks() {
         location.getBlock().setType(XMaterial.GRASS_BLOCK.get());
         location.clone().add(0, -1, 0).getBlock().setType(XMaterial.DIRT.get());
         location.clone().add(1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
@@ -152,8 +165,6 @@ public class Spawn implements VaroSerializeable {
         location.clone().add(-1, 1, 0).getBlock().setType(XMaterial.AIR.get());
         location.clone().add(0, 1, 1).getBlock().setType(XMaterial.AIR.get());
         location.clone().add(0, 1, -1).getBlock().setType(XMaterial.AIR.get());
-
-        remove();
     }
 
     @Override
@@ -167,8 +178,9 @@ public class Spawn implements VaroSerializeable {
         // legacy support
         this.nameTagName = null;
         if (this.nameTagLocation != null) {
-        	this.nameTagLocation.getWorld().getNearbyEntities(this.nameTagLocation, 1d, 1d, 1d).stream()
-        		.filter(entity -> EntityType.ARMOR_STAND.equals(entity.getType())).findAny().ifPresent(Entity::remove);
+        	final Location legacyLocation = this.nameTagLocation;
+        	TaskScheduler.of(Main.getInstance()).executeAt(legacyLocation, () -> legacyLocation.getWorld().getNearbyEntities(legacyLocation, 1d, 1d, 1d).stream()
+        		.filter(entity -> EntityType.ARMOR_STAND.equals(entity.getType())).findAny().ifPresent(Entity::remove));
         	this.nameTagLocation = null;
         }
         // legacy support end
@@ -182,7 +194,7 @@ public class Spawn implements VaroSerializeable {
                 forceLoadMethod.invoke(this.location.getChunk(), true);
 
                 this.location.getChunk().load();
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                TaskScheduler.of(Main.getInstance()).runAtLater(this.location, () -> {
                     this.checkNameTag();
                     try {
                         forceLoadMethod.invoke(this.location.getChunk(), false);
@@ -194,7 +206,7 @@ public class Spawn implements VaroSerializeable {
                 e.printStackTrace();
             }
         else {
-            this.checkNameTag();
+            TaskScheduler.of(Main.getInstance()).executeAt(this.location, this::checkNameTag);
         }
     }
 

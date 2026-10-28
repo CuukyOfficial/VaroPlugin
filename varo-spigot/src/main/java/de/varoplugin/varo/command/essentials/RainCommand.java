@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
+import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 
 public class RainCommand implements CommandExecutor {
@@ -20,8 +22,10 @@ public class RainCommand implements CommandExecutor {
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : Bukkit.getWorlds().get(0);
 
-		world.setStorm(true);
-		world.setThundering(false);
+		TaskScheduler.of(Main.getInstance()).execute(() -> {
+			world.setStorm(true);
+			world.setThundering(false);
+		});
 		Messages.COMMANDS_WEATHER_RAIN.send(sender);
 		return false;
 	}

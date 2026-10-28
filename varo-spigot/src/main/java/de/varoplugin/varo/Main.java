@@ -19,6 +19,8 @@ import org.geysermc.floodgate.api.FloodgateApi;
 
 import com.google.common.io.BaseEncoding;
 
+import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
@@ -168,8 +170,9 @@ public class Main extends JavaPlugin {
 		}
 
 		if (!this.failed) {
-            VersionUtils.getVersionAdapter().getOnlinePlayers()
-                .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+            if (ScoreboardInstance.isSupported())
+                VersionUtils.getVersionAdapter().getOnlinePlayers()
+                    .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
             dataManager.cleanUp();
         } else {
 			File bugReport = BugReport.createBugReport();
@@ -178,7 +181,7 @@ public class Main extends JavaPlugin {
 			else
 			    this.getLogger().log(Level.SEVERE, "Unable to create crash-report");
 		}
-		Bukkit.getScheduler().cancelTasks(this);
+		TaskScheduler.of(this).cancelTasks();
 
 		this.getLogger().log(Level.INFO, "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		this.getLogger().log(Level.INFO, " ");

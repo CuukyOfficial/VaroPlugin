@@ -16,6 +16,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class VaroWorld {
 
         if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_11))
             // Versions < 1.12 don't have this game rule and use a server property instead (see DataManager) 
-            XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean());
+            TaskScheduler.of(Main.getInstance()).execute(() -> XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()));
 
 		if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 			this.varoWorldBorder = new DefaultVaroBorder(world);
@@ -57,6 +59,10 @@ public class VaroWorld {
 	}
 
 	public void fillChests() {
+		TaskScheduler.of(Main.getInstance()).executeAt(this.world.getSpawnLocation(), this::fillChests0);
+	}
+
+	private void fillChests0() {
 		if (!ConfigSetting.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
 

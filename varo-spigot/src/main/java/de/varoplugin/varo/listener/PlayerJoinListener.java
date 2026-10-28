@@ -6,9 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import de.varoplugin.cfw.version.VersionUtils;
+import de.varoplugin.cfw.player.hud.ScoreboardInstance;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -33,7 +34,8 @@ public class PlayerJoinListener implements Listener {
 		Player player = event.getPlayer();
 		VaroPlayer vplayer = VaroPlayer.getPlayer(player);
 
-		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+		if (ScoreboardInstance.isSupported())
+			player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
 		vplayer.setPlayer(player);
 		vplayer.onEvent(BukkitEventType.JOINED);
@@ -125,7 +127,7 @@ public class PlayerJoinListener implements Listener {
 					Messages.LOG_PLAYER_JOIN_MASSREC.log(LogType.JOIN_LEAVE, vplayer);
 					vplayer.setalreadyHadMassProtectionTime(true);
 					vplayer.setinMassProtectionTime(true);
-					new BukkitRunnable() {
+					new TaskRunnable() {
 						@Override
 						public void run() {
 							vplayer.setinMassProtectionTime(false);

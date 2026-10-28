@@ -1,7 +1,7 @@
 package de.varoplugin.varo.game.world.border.decrease;
 
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -11,7 +11,7 @@ import io.github.almightysatan.slams.PlaceholderResolver;
 
 public class BorderDecreaseMinuteTimer {
 
-	private BukkitTask decreaseScheduler;
+	private Task decreaseScheduler;
 	private int secondsPassed, timer;
 
 	public BorderDecreaseMinuteTimer() {
@@ -24,7 +24,7 @@ public class BorderDecreaseMinuteTimer {
 	}
 
 	private void startScheduling() {
-		decreaseScheduler = new BukkitRunnable() {
+		decreaseScheduler = new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!Main.getVaroGame().isRunning() && !Main.getVaroGame().isStarting() || !DecreaseReason.TIME_MINUTES.isEnabled()) {

@@ -1,6 +1,7 @@
 package de.varoplugin.varo.utils;
 
 import com.cryptomorin.xseries.XGameRule;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -13,6 +14,7 @@ import net.luckperms.api.model.user.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -25,7 +27,19 @@ public final class VaroUtils {
 
     private static Object luckPermsUserManager;
 	
+	/**
+	 * Kicks a player. On Folia this has to be done by the thread owning the player.
+	 */
+	public static void kickPlayer(Player player, String message) {
+	    TaskScheduler.of(Main.getInstance()).executeFor(player, () -> player.kickPlayer(message));
+	}
+
 	public static void updateWorldTime() {
+	    // On Folia world settings can only be changed from the global region
+	    TaskScheduler.of(Main.getInstance()).execute(VaroUtils::updateWorldTime0);
+	}
+
+	private static void updateWorldTime0() {
 	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
         boolean legacyWorldClocks = VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_26_1);
 

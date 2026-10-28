@@ -1,5 +1,6 @@
 package de.varoplugin.varo.tasks;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.tasks.checks.*;
@@ -43,7 +44,7 @@ public final class DailyTasks {
 
 	private void startTimer(@NotNull OffsetDateTime next) {
 		Main.getInstance().getLogger().log(Level.INFO, "Next daily task: " + next);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+		TaskScheduler.of(Main.getInstance()).runLater(() -> {
 			try {
 				Main.getInstance().getLogger().log(Level.INFO, "Running daily timer...");
 				Main.getDataManager().createBackup(null);

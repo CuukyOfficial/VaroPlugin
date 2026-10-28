@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.spawns.Spawn;
@@ -31,8 +32,10 @@ public class SpawnGenerator {
         for (Location loc : generateSpawns(location, radius, amount)) {
             i++;
             Location newLoc = loc.clone();
+            final int number = i;
 
-            new Spawn(i, setSpawnAt(newLoc));
+            // Blocks can only be accessed by the thread owning the region on Folia
+            TaskScheduler.of(Main.getInstance()).executeAt(newLoc, () -> new Spawn(number, setSpawnAt(newLoc)));
         }
     }
 
@@ -48,7 +51,8 @@ public class SpawnGenerator {
                     if (!player.getStats().isAlive() || i >= locations.length)
                         continue;
 
-                    new Spawn(player, this.setSpawnAt(locations[i]));
+                    final Location spawnLocation = locations[i];
+                    TaskScheduler.of(Main.getInstance()).executeAt(spawnLocation, () -> new Spawn(player, this.setSpawnAt(spawnLocation)));
                     i++;
                 }
             }
@@ -58,7 +62,8 @@ public class SpawnGenerator {
             if (Spawn.getSpawn(player) != null || i >= locations.length)
                 continue;
 
-            new Spawn(player, this.setSpawnAt(locations[i]));
+            final Location spawnLocation = locations[i];
+            TaskScheduler.of(Main.getInstance()).executeAt(spawnLocation, () -> new Spawn(player, this.setSpawnAt(spawnLocation)));
             i++;
         }
     }
@@ -77,7 +82,7 @@ public class SpawnGenerator {
     private Location setSpawnAt(Location location) {
         final Location location0 = VaroUtils.isNotSolidTerrainOrLiquid(location.getBlock()) ? this.searchNext(location, -1, false) : this.searchNext(location, 1, true);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+        TaskScheduler.of(Main.getInstance()).runAtLater(location0, () -> {
             XBlock.setType(location0.getBlock(), XMaterial.AIR);
             XBlock.setType(location0.clone().add(0, -1, 0).getBlock(), XMaterial.AIR);
             

@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.game.world.schematic.SchematicLoader;
@@ -39,16 +40,21 @@ public class LobbyGenerator {
 		    Main.getInstance().getLogger().log(Level.SEVERE, "Worldedit is required to load schematics!");
 		    return;
 		}
-		schematicLoader.paste(file, loc);
-		Main.getInstance().getLogger().log(Level.INFO, "Autosetup: Loaded schematic " + file.getName());
+		TaskScheduler.of(Main.getInstance()).executeAt(loc, () -> {
+			schematicLoader.paste(file, loc);
+			Main.getInstance().getLogger().log(Level.INFO, "Autosetup: Loaded schematic " + file.getName());
+		});
 	}
 
 	public LobbyGenerator(Location curr, int height, int size) {
-		makeWall(curr.clone().add(-5, -2, -5), size, 0, size);
-		makeWall(curr, 0, height, -size);
-		makeWall(curr, -size, -height, 0);
-		makeWall(curr, 0, height, size);
-		makeWall(curr, size, -height, 0);
+		// Blocks can only be modified by the thread owning the region on Folia
+		TaskScheduler.of(Main.getInstance()).executeAt(curr, () -> {
+			makeWall(curr.clone().add(-5, -2, -5), size, 0, size);
+			makeWall(curr, 0, height, -size);
+			makeWall(curr, -size, -height, 0);
+			makeWall(curr, 0, height, size);
+			makeWall(curr, size, -height, 0);
+		});
 	}
 
 	private void makeWall(Location one, int x1, int y1, int z1) {

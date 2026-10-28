@@ -1,5 +1,6 @@
 package de.varoplugin.varo.data;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -30,7 +31,7 @@ import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.InvalidTypeException;
 import io.github.almightysatan.slams.MissingTranslationException;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,7 +127,7 @@ public class DataManager {
 
 	private void startAutoSave() {
 
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				DataManager.this.saveSync(); // TODO This can cause concurrency issues
@@ -170,14 +171,14 @@ public class DataManager {
 
 	public void createBackup(Consumer<VaroBackup> callback) {
 	    this.saveSync();
-	    Bukkit.getScheduler().runTaskAsynchronously(this.instance, () -> {
+	    TaskScheduler.of(Main.getInstance()).runAsync(() -> {
 	        VaroBackup backup = VaroBackup.createBackup();
 	        if (backup != null)
 	            synchronized (this.backups) {
                     this.backups.add(backup);
                 }
 	        if (callback != null)
-	            Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, () -> callback.accept(backup));
+	            TaskScheduler.of(Main.getInstance()).run(() -> callback.accept(backup));
 	    });
 	}
 	
@@ -193,7 +194,7 @@ public class DataManager {
 	        removed = this.backups.remove(backup);
         }
 	    if (removed)
-	        Bukkit.getScheduler().runTaskAsynchronously(this.instance, backup::delete);
+	        TaskScheduler.of(Main.getInstance()).runAsync(backup::delete);
 	}
 
 	public void setDoSave(boolean doSave) {

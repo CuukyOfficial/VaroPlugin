@@ -12,7 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.scheduler.BukkitRunnable;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
@@ -31,7 +31,7 @@ public class FancyEffectListener implements Listener {
 	public FancyEffectListener() {
 		effectEntities = new HashMap<>();
 
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (effectEntities.isEmpty())

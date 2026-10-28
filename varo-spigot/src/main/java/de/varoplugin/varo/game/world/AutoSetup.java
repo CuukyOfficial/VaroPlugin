@@ -12,8 +12,8 @@ import de.varoplugin.varo.spawns.spawn.SpawnChecker;
 import de.varoplugin.varo.utils.VaroUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.scheduler.Task;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +25,7 @@ public class AutoSetup {
 
     private static final Path SCHEMATIC_PATH = Paths.get("plugins/Varo/schematics/");
 
-    private BukkitTask task;
+    private Task task;
     private VaroWorld world;
     private int x, z;
     private Runnable onFinish;
@@ -36,7 +36,7 @@ public class AutoSetup {
 
         this.onFinish = onFinish;
         world = Main.getVaroGame().getVaroWorldHandler().getMainWorld();
-        task = new BukkitRunnable() {
+        task = new TaskRunnable() {
             @Override
             public void run() {
                 searchTerrain();

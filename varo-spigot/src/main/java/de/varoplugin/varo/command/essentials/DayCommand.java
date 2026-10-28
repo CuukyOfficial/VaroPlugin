@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 
@@ -19,7 +20,7 @@ public class DayCommand implements CommandExecutor {
 		}
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : Main.getVaroGame().getVaroWorldHandler().getMainWorld().getWorld();
-		world.setTime(1000);
+		TaskScheduler.of(Main.getInstance()).execute(() -> world.setTime(1000));
 		Messages.COMMANDS_TIME_DAY.send(sender);
 		return false;
 	}
