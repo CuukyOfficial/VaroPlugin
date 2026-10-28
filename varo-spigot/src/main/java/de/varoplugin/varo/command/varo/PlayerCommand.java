@@ -98,7 +98,7 @@ public class PlayerCommand extends VaroCommand {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
 				for (VaroPlayer pl : VaroPlayer.getVaroPlayers())
 					if (pl.isOnline())
-						pl.getPlayer().setHealth(0);
+						Main.scheduler().executeFor(pl.getPlayer(), () -> pl.getPlayer().setHealth(0));
 					else
 						pl.getStats().setState(PlayerState.DEAD);
 				return;
@@ -114,8 +114,10 @@ public class PlayerCommand extends VaroCommand {
 				return;
 			}
 
-			if (vps.isOnline())
-				vps.getPlayer().setHealth(0);
+			if (vps.isOnline()) {
+				final Player target = vps.getPlayer();
+				Main.scheduler().executeFor(target, () -> target.setHealth(0));
+			}
 			else
 				vps.getStats().setState(PlayerState.DEAD);
 
