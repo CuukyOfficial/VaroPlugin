@@ -2,6 +2,7 @@ package de.varoplugin.varo.listener.helper.cancelable;
 
 import java.util.ArrayList;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
 
 import de.varoplugin.varo.Main;
@@ -13,7 +14,7 @@ public class VaroCancelable {
 	private static ArrayList<VaroCancelable> cancelables;
 
 	static {
-		cancelables = new ArrayList<>();
+		cancelables = new SynchronizedArrayList<>();
 	}
 
 	protected VaroPlayer player;

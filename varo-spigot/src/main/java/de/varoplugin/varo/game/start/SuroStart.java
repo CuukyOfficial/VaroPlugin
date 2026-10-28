@@ -1,5 +1,7 @@
 package de.varoplugin.varo.game.start;
 
+import java.util.function.Consumer;
+
 import com.cryptomorin.xseries.XSound;
 import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -7,7 +9,6 @@ import de.varoplugin.varo.config.language.Contexts;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.VaroGame;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -44,12 +45,12 @@ public class SuroStart extends AbstractStartSequence {
 				Contexts.PlayerContext context = new Contexts.PlayerContext(vp); // Setting the context manually forces the default language
 				String title = Messages.GAME_START_SURO_TITLE.value(this.titleSize - this.countdown, context);
 				if (StringUtils.isNotBlank(title))
-					TaskScheduler.of(Main.getInstance()).executeFor(vp.getPlayer(), () -> VersionUtils.getVersionAdapter().sendTitle(vp.getPlayer(), title, ""));
+					this.executeForPlayer(vp, p -> VersionUtils.getVersionAdapter().sendTitle(p, title, ""));
 			}
 
 			if (this.countdown == 0) {
 				for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer())
-					TaskScheduler.of(Main.getInstance()).executeFor(vp.getPlayer(), () -> vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1));
+					this.executeForPlayer(vp, p -> p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1));
 
 				this.game.start();
 				return;
@@ -63,6 +64,13 @@ public class SuroStart extends AbstractStartSequence {
 		super.abort();
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-			TaskScheduler.of(Main.getInstance()).executeFor(vp.getPlayer(), () -> vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS));
+			this.executeForPlayer(vp, p -> p.removePotionEffect(PotionEffectType.BLINDNESS));
+	}
+
+	private void executeForPlayer(VaroPlayer vp, Consumer<Player> action) {
+		// Capture the player now as it might be gone by the time the task runs
+		Player player = vp.getPlayer();
+		if (player != null)
+			TaskScheduler.of(Main.getInstance()).executeFor(player, () -> action.accept(player));
 	}
 }

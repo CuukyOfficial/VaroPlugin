@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
 
-import de.varoplugin.varo.utils.VaroUtils;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.location.LocationFormat;
@@ -17,6 +16,7 @@ import de.varoplugin.varo.gui.savable.PlayerSavableChooseGUI;
 import de.varoplugin.varo.gui.strike.StrikeListGUI;
 import de.varoplugin.varo.gui.youtube.YouTubeVideoListGUI;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class PlayerGUI extends VaroInventory {
     

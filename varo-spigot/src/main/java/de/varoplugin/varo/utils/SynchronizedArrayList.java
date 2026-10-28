@@ -79,6 +79,51 @@ public class SynchronizedArrayList<E> extends ArrayList<E> {
     }
 
     @Override
+    public synchronized E set(int index, E element) {
+        return super.set(index, element);
+    }
+
+    @Override
+    public synchronized boolean addAll(int index, Collection<? extends E> c) {
+        return super.addAll(index, c);
+    }
+
+    @Override
+    public synchronized boolean retainAll(Collection<?> c) {
+        return super.retainAll(c);
+    }
+
+    @Override
+    public synchronized int indexOf(Object o) {
+        return super.indexOf(o);
+    }
+
+    @Override
+    public synchronized int lastIndexOf(Object o) {
+        return super.lastIndexOf(o);
+    }
+
+    @Override
+    public synchronized Object[] toArray() {
+        return super.toArray();
+    }
+
+    @Override
+    public synchronized <T> T[] toArray(T[] a) {
+        return super.toArray(a);
+    }
+
+    @Override
+    public synchronized void sort(java.util.Comparator<? super E> c) {
+        super.sort(c);
+    }
+
+    @Override
+    public void forEach(java.util.function.Consumer<? super E> action) {
+        this.snapshot().forEach(action);
+    }
+
+    @Override
     public Iterator<E> iterator() {
         return readOnly(this.snapshot().iterator());
     }

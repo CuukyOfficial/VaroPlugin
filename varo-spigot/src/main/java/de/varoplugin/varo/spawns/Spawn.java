@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Optional;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -59,22 +58,25 @@ public class Spawn implements VaroSerializeable {
     }
 
     private Spawn(VaroPlayer player, int number, Location location) {
-        if (number == -1) {
-            number = generateId();
-        } else {
-            Spawn spawn = getSpawn(number);
-            if (spawn != null)
-                spawn.remove();
-        }
-
-        this.number = number;
         this.location = location;
         this.player = player;
-        
+
+        // Spawns might be created by multiple threads at the same time on Folia
+        synchronized (Spawn.class) {
+            if (number == -1) {
+                number = generateId();
+            } else {
+                Spawn spawn = getSpawn(number);
+                if (spawn != null)
+                    spawn.remove();
+            }
+
+            this.number = number;
+            spawns.add(this);
+        }
+
         if (shouldHaveNameTag())
         	this.createNameTag();
-        
-        spawns.add(this);
     }
 
     public Spawn(VaroPlayer player, Location location) {

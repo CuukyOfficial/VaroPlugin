@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.bukkit.entity.Player;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.combatlog.PlayerHit;
 import de.varoplugin.varo.config.language.Messages;
@@ -66,9 +67,12 @@ public class KillEvent extends BukkitEvent {
 	private void checkHealth(Player killer) {
 		int healthAdd = ConfigSetting.KILLER_ADD_HEALTH_ON_KILL.getValueAsInt();
 		if (healthAdd > 0) {
-			double hearts = killer.getHealth() + healthAdd;
-			killer.setHealth(Math.min(hearts, killer.getMaxHealth()));
-			killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
+			// The killer might be owned by a different region than the victim on Folia
+			TaskScheduler.of(Main.getInstance()).executeFor(killer, () -> {
+				double hearts = killer.getHealth() + healthAdd;
+				killer.setHealth(Math.min(hearts, killer.getMaxHealth()));
+				killer.sendMessage(Main.getPrefix() + "§7Du hast durch den Kill an §4" + healthAdd / 2 + "§7 Herzen regeneriert bekommen!");
+			});
 		}
 	}
 }

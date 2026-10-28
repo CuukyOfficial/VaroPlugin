@@ -5,11 +5,11 @@ import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
 
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.location.LocationFormat;
 import de.varoplugin.cfw.location.SimpleLocationFormat;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.gui.VaroInventory;
@@ -61,7 +61,10 @@ public class GameOptionsGUI extends VaroInventory {
                 .build(),
                 (event) -> {
                     Location spawn = getPlayer().getLocation();
-                    TaskScheduler.of(Main.getInstance()).execute(() -> getPlayer().getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ()));
+                    TaskScheduler.of(Main.getInstance()).execute(() -> {
+                        getPlayer().getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
+                        Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(getPlayer().getWorld());
+                    });
                 });
     }
 }

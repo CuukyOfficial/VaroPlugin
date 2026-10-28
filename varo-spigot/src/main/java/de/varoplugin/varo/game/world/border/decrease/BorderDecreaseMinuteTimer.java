@@ -1,8 +1,7 @@
 package de.varoplugin.varo.game.world.border.decrease;
 
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
-
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;

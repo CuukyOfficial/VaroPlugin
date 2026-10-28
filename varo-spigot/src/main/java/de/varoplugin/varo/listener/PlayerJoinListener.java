@@ -6,10 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-
-import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -23,8 +22,8 @@ import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.event.BukkitEventType;
 import de.varoplugin.varo.spawns.Spawn;
-import de.varoplugin.varo.spigot.VaroUpdateResultSet;
 import de.varoplugin.varo.spigot.VaroUpdateResultSet.UpdateResult;
+import de.varoplugin.varo.spigot.VaroUpdateResultSet;
 import io.github.almightysatan.slams.Placeholder;
 
 public class PlayerJoinListener implements Listener {

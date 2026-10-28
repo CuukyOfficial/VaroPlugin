@@ -34,7 +34,10 @@ public class SetWorldspawnCommand implements CommandExecutor {
 		}
 
 		final Location spawn = p.getLocation();
-		TaskScheduler.of(Main.getInstance()).execute(() -> p.getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ()));
+		TaskScheduler.of(Main.getInstance()).execute(() -> {
+			p.getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
+			Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(p.getWorld());
+		});
 		VaroBorder border = Main.getVaroGame().getVaroWorldHandler().getVaroWorld(p.getWorld()).getVaroBorder();
 		if(border != null)
 			border.setCenter(p.getLocation());

@@ -3,9 +3,8 @@ package de.varoplugin.varo.command.essentials;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
-
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import io.github.almightysatan.slams.Placeholder;

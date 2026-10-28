@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 
@@ -25,9 +26,9 @@ public class HealCommand implements CommandExecutor {
 			}
 
 			Player p = (Player) sender;
-			p.setHealth(p.getMaxHealth());
-			p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
-			p.setFoodLevel(20);
+			TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setHealth(p.getMaxHealth()));
+			TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType())));
+			TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setFoodLevel(20));
             Bukkit.broadcastMessage("§a" + p.getName() + " §7hat sich geheilt!");
 		} else if (args.length == 1) {
 			if (Bukkit.getPlayerExact(args[0]) == null) {
@@ -37,18 +38,18 @@ public class HealCommand implements CommandExecutor {
 
 			if (args[0].equalsIgnoreCase("@a")) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					p.setHealth(p.getMaxHealth());
-					p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
-					p.setFoodLevel(20);
+					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setHealth(p.getMaxHealth()));
+					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType())));
+					TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setFoodLevel(20));
 				}
                 Bukkit.broadcastMessage("§aAlle Spieler §7wurden geheilt!");
 				return false;
 			}
 
 			Player p = Bukkit.getPlayerExact(args[0]);
-			p.setHealth(p.getMaxHealth());
-			p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
-			p.setFoodLevel(20);
+			TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setHealth(p.getMaxHealth()));
+			TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType())));
+			TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.setFoodLevel(20));
             Bukkit.broadcastMessage("§a" + p.getName() + " §7wurde von §a" + sender.getName() + "§7 geheilt!");
 		} else
 			sender.sendMessage(Main.getPrefix() + "§7/heal [Player]");

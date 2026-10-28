@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
 import de.varoplugin.cfw.player.hud.NameTagGroup;
@@ -19,6 +18,7 @@ import de.varoplugin.varo.player.stats.stat.PlayerState;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import io.github.almightysatan.slams.Placeholder;
 
 public class VaroTeam implements VaroSerializeable {

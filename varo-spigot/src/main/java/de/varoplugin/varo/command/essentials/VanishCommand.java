@@ -2,7 +2,6 @@ package de.varoplugin.varo.command.essentials;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
-import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

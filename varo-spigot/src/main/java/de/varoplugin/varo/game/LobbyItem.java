@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.item.ItemBuilder;
 import de.varoplugin.cfw.player.hook.item.HookItemHitEvent;
 import de.varoplugin.cfw.player.hook.item.HookItemInteractEntityEvent;
@@ -27,7 +29,7 @@ import de.varoplugin.varo.team.VaroTeamRequest;
 
 public class LobbyItem {
 
-    private static List<ItemHook> lobbyItems = new ArrayList<>();
+    private static List<ItemHook> lobbyItems = new SynchronizedArrayList<>();
 
     private static void hookItem(Player player, ItemHookBuilder hookBuilder) {
         hookBuilder.droppable(false).movable(false);
@@ -79,7 +81,16 @@ public class LobbyItem {
     }
 
     public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
+        Player player = varoPlayer.getPlayer();
+        if (player == null)
+            return;
+
+        // The inventory can only be modified by the thread owning the player on Folia
+        TaskScheduler.of(Main.getInstance()).executeFor(player, () -> giveOrRemoveTeamItems0(varoPlayer));
+    }
+
+    private static void giveOrRemoveTeamItems0(VaroPlayer varoPlayer) {
+        if (varoPlayer.getPlayer() == null || !ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
         if (varoPlayer.getTeam() == null) {

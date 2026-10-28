@@ -27,7 +27,7 @@ public class VaroWorldHandler {
     private final VaroWorld mainVaroWorld;
     private final ArrayList<VaroWorld> worlds = new ArrayList<>();
     private final Queue<BorderDecrease> borderDecreases = new LinkedList<>();
-    private BorderDecrease activeBorderDecrease;
+    private volatile BorderDecrease activeBorderDecrease;
     private final Map<World, Location> cachedSpawns = new ConcurrentHashMap<>();
 
     public VaroWorldHandler() {
@@ -85,10 +85,13 @@ public class VaroWorldHandler {
         if (!reason.isEnabled())
             return;
 
-        if (!isBorderMinimumSize()) {
-            this.borderDecreases.add(new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed(), reason));
-            runBorderCheck();
-        }
+        // Can be called by any thread (e.g. a player's region thread on Folia). The queue is only accessed by the main/global thread
+        TaskScheduler.of(Main.getInstance()).execute(() -> {
+            if (!isBorderMinimumSize()) {
+                this.borderDecreases.add(new BorderDecrease(reason.getSize(), reason.getDecreaseSpeed(), reason));
+                runBorderCheck();
+            }
+        });
     }
     
     private boolean isBorderMinimumSize() {
@@ -180,6 +183,15 @@ public class VaroWorldHandler {
         }
 
         return this.calculateWorldSpawn(world);
+    }
+
+    /**
+     * Recalculates the cached world spawn after it has been changed. Only required on Folia.
+     */
+    public void refreshWorldSpawn(World world) {
+        TaskScheduler scheduler = TaskScheduler.of(Main.getInstance());
+        if (scheduler.isFolia())
+            scheduler.runAt(world.getSpawnLocation(), () -> this.cachedSpawns.put(world, this.calculateWorldSpawn(world)));
     }
 
     private Location calculateWorldSpawn(World world) {

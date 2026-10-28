@@ -19,7 +19,9 @@ import org.bukkit.inventory.ItemStack;
 import de.varoplugin.cfw.scheduler.TaskScheduler;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VaroWorld {
 
@@ -59,10 +61,6 @@ public class VaroWorld {
 	}
 
 	public void fillChests() {
-		TaskScheduler.of(Main.getInstance()).executeAt(this.world.getSpawnLocation(), this::fillChests0);
-	}
-
-	private void fillChests0() {
 		if (!ConfigSetting.RANDOM_CHEST_FILL_RADIUS.isIntActivated())
 			return;
 
@@ -70,12 +68,25 @@ public class VaroWorld {
 		Location loc = world.getSpawnLocation().clone().add(radius, radius, radius);
 		Location loc2 = world.getSpawnLocation().clone().add(-radius, -radius, -radius);
 
-		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		List<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
 		if (chestItems.isEmpty())
 			return;
 
-		for (Block block : getBlocksBetweenPoints(loc, loc2)) {
+		// Blocks can only be accessed by the thread owning the region on Folia. Therefore all blocks are grouped by chunk.
+		Map<Long, List<Block>> chunks = new LinkedHashMap<>();
+		for (Block block : getBlocksBetweenPoints(loc, loc2))
+			chunks.computeIfAbsent(((long) (block.getX() >> 4) << 32) | ((block.getZ() >> 4) & 0xFFFFFFFFL), k -> new ArrayList<>()).add(block);
+
+		for (List<Block> blocks : chunks.values())
+			TaskScheduler.of(Main.getInstance()).executeAt(blocks.get(0).getLocation(), () -> fillChests(blocks, chestItems));
+
+		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
+	}
+
+	private void fillChests(List<Block> blocks, List<ItemStack> chestItems) {
+		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
+
+		for (Block block : blocks) {
 			if (!(block.getState() instanceof Chest))
 				continue;
 
@@ -89,8 +100,6 @@ public class VaroWorld {
 				chest.getBlockInventory().setItem(random, chestItems.get(JavaUtils.randomInt(0, chestItems.size() - 1)));
 			}
 		}
-
-		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
 	}
 
 	public World getWorld() {

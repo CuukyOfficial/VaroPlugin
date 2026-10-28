@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import io.github.almightysatan.slams.Placeholder;
@@ -52,9 +53,9 @@ public class SpeedCommand implements CommandExecutor {
 			}
 
 			if (p.isFlying())
-				p.setFlySpeed(speed);
+				setSpeed(p, speed, true);
 			else
-				p.setWalkSpeed(speed);
+				setSpeed(p, speed, false);
 			sender.sendMessage(Main.getPrefix() + "§7Deine " + Main.getColorCode() + (p.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7betraegt nun " + args[0] + "!");
 		} else if (args.length == 2) {
 			try {
@@ -79,9 +80,9 @@ public class SpeedCommand implements CommandExecutor {
 					}
 
 					if (pl.isFlying())
-						pl.setFlySpeed(speed);
+						setSpeed(pl, speed, true);
 					else
-						pl.setWalkSpeed(speed);
+						setSpeed(pl, speed, false);
 				}
 				sender.sendMessage(Main.getPrefix() + "§7Speed erfolgreich fuer alle gesetzt!");
 				return false;
@@ -103,12 +104,22 @@ public class SpeedCommand implements CommandExecutor {
 			}
 
 			if (to.isFlying())
-				to.setFlySpeed(speed);
+				setSpeed(to, speed, true);
 			else
-				to.setWalkSpeed(speed);
+				setSpeed(to, speed, false);
 			sender.sendMessage(Main.getPrefix() + "§7" + to.getName() + "'s " + Main.getColorCode() + (to.isFlying() ? "Flug" : "Lauf") + "-Geschwindigkeit §7betraegt nun " + args[0] + "!");
 		} else
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + "/speed §7<Speed> [Player]");
 		return false;
+	}
+
+	private static void setSpeed(Player player, float speed, boolean fly) {
+		// Players can only be modified by the thread owning them on Folia
+		TaskScheduler.of(Main.getInstance()).executeFor(player, () -> {
+			if (fly)
+				player.setFlySpeed(speed);
+			else
+				player.setWalkSpeed(speed);
+		});
 	}
 }

@@ -28,6 +28,7 @@ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.utils.EventUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -52,7 +53,7 @@ public class SpectatorListener implements Listener {
                     Player damaged = (Player) entityDamaged;
 
                     if (Vanish.getVanish((Player) entityDamaged) != null) {
-                        damaged.teleport(entityDamaged.getLocation().add(0, 5, 0));
+                        TaskScheduler.teleportAsync(damaged, entityDamaged.getLocation().add(0, 5, 0));
 
                         Projectile newProjectile = (Projectile) projectile.getWorld().spawnEntity(projectile.getLocation(), projectile.getType());
                         newProjectile.setShooter(shooter);

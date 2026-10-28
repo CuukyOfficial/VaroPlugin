@@ -3,7 +3,6 @@ package de.varoplugin.varo.command.essentials;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;

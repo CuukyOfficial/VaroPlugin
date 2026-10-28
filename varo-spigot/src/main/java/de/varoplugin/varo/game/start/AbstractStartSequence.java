@@ -18,8 +18,8 @@
 
 package de.varoplugin.varo.game.start;
 
-import de.varoplugin.varo.game.VaroGame;
 import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.varo.game.VaroGame;
 
 public abstract class AbstractStartSequence implements StartSequence {
 

@@ -5,12 +5,13 @@ import java.util.Date;
 
 import org.bukkit.entity.Player;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.logger.logger.ChatLogger.ChatLogType;
 
 public class PrivateMessage {
 
-	private static ArrayList<PrivateMessage> messages = new ArrayList<>();
+	private static ArrayList<PrivateMessage> messages = new SynchronizedArrayList<>();
 
 	private String message;
 	private Player reciever;

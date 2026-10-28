@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.utils.VaroUtils;
 import de.varoplugin.cfw.chat.PageableChatBuilder;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
@@ -18,6 +17,7 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.gui.player.PlayerGUI;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class PlayerCommand extends VaroCommand {
 

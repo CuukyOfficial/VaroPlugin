@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.VaroInventory;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
@@ -17,7 +18,7 @@ public class InventoryBackup implements VaroSerializeable {
 	private static ArrayList<InventoryBackup> allBackups;
 
 	static {
-		allBackups = new ArrayList<>();
+		allBackups = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "date")

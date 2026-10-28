@@ -25,7 +25,6 @@ import io.github.almightysatan.jaskl.*;
 import io.github.almightysatan.jaskl.entries.BooleanConfigEntry;
 import io.github.almightysatan.jaskl.entries.ListConfigEntry;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.IOException;

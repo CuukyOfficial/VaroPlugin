@@ -10,14 +10,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.utils.VaroUtils;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.inventory.inbuilt.ConfirmInventory;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.command.VaroCommand;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class ResetCommand extends VaroCommand {
 
@@ -97,6 +97,6 @@ public class ResetCommand extends VaroCommand {
 
 	        if (!success.isEmpty())
 	            Bukkit.getServer().shutdown();
-		}, 1);
+		}, TaskScheduler.of(Main.getInstance()).isFolia() ? 20L : 1L);
 	}
 }

@@ -8,7 +8,6 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
 import de.varoplugin.varo.tasks.Task;
-import org.bukkit.Bukkit;
 
 import java.net.URL;
 import java.net.URLConnection;

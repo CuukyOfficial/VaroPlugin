@@ -1,6 +1,12 @@
 package de.varoplugin.varo.game.world.generators;
 
-import org.bukkit.Bukkit;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+
 import org.bukkit.Location;
 
 import com.cryptomorin.xseries.XBlock;
@@ -16,6 +22,7 @@ import de.varoplugin.varo.utils.VaroUtils;
 public class SpawnGenerator {
 
     private final XMaterial blockMaterial, sideBlockMaterial;
+    private final List<CompletableFuture<Void>> pending = new ArrayList<>();
 
     private SpawnGenerator(XMaterial blockMaterial, XMaterial sideBlockMaterial) {
         this.blockMaterial = blockMaterial == null ? XMaterial.STONE_BRICK_SLAB : blockMaterial;
@@ -34,8 +41,7 @@ public class SpawnGenerator {
             Location newLoc = loc.clone();
             final int number = i;
 
-            // Blocks can only be accessed by the thread owning the region on Folia
-            TaskScheduler.of(Main.getInstance()).executeAt(newLoc, () -> new Spawn(number, setSpawnAt(newLoc)));
+            this.createSpawn(newLoc, spawnLocation -> new Spawn(number, spawnLocation));
         }
     }
 
@@ -43,6 +49,7 @@ public class SpawnGenerator {
         this(blockMaterial, sideBlockMaterial);
 
         Location[] locations = generateSpawns(location, radius, VaroPlayer.getAlivePlayer().size());
+        Set<VaroPlayer> assigned = new HashSet<>();
         int i = 0;
 
         if (withTeams) {
@@ -51,21 +58,44 @@ public class SpawnGenerator {
                     if (!player.getStats().isAlive() || i >= locations.length)
                         continue;
 
-                    final Location spawnLocation = locations[i];
-                    TaskScheduler.of(Main.getInstance()).executeAt(spawnLocation, () -> new Spawn(player, this.setSpawnAt(spawnLocation)));
+                    assigned.add(player);
+                    this.createSpawn(locations[i], spawnLocation -> new Spawn(player, spawnLocation));
                     i++;
                 }
             }
         }
 
         for (VaroPlayer player : VaroPlayer.getAlivePlayer()) {
-            if (Spawn.getSpawn(player) != null || i >= locations.length)
+            if (assigned.contains(player) || Spawn.getSpawn(player) != null || i >= locations.length)
                 continue;
 
-            final Location spawnLocation = locations[i];
-            TaskScheduler.of(Main.getInstance()).executeAt(spawnLocation, () -> new Spawn(player, this.setSpawnAt(spawnLocation)));
+            this.createSpawn(locations[i], spawnLocation -> new Spawn(player, spawnLocation));
             i++;
         }
+    }
+
+    /**
+     * Creates a spawn at the given location. Blocks can only be accessed by the thread owning the region on Folia, therefore this might happen
+     * asynchronously. Use {@link #getFuture()} to wait for all spawns to be created.
+     */
+    private void createSpawn(Location location, Function<Location, Spawn> factory) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        this.pending.add(future);
+        TaskScheduler.of(Main.getInstance()).executeAt(location, () -> {
+            try {
+                factory.apply(this.setSpawnAt(location));
+                future.complete(null);
+            } catch (Throwable t) {
+                future.completeExceptionally(t);
+            }
+        });
+    }
+
+    /**
+     * @return Future that completes once all spawns have been created (immediately on all servers except Folia)
+     */
+    public CompletableFuture<Void> getFuture() {
+        return CompletableFuture.allOf(this.pending.toArray(new CompletableFuture[0]));
     }
 
     private Location searchNext(Location location, int add, boolean needsAir) {

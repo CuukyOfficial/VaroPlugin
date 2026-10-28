@@ -1,5 +1,6 @@
 package de.varoplugin.varo.player.stats.stat.offlinevillager;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
@@ -11,9 +12,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
-
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -31,7 +32,7 @@ public class OfflineVillager implements VaroSerializeable {
 	private static ArrayList<OfflineVillager> villagers;
 
 	static {
-		villagers = new ArrayList<>();
+		villagers = new SynchronizedArrayList<>();
 		Bukkit.getPluginManager().registerEvents(new VillagerListener(), Main.getInstance());
 	}
 
@@ -102,8 +103,9 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	public void remove() {
+		final Zombie zombie = this.zombie;
 		if (zombie != null)
-			zombie.remove();
+			TaskScheduler.of(Main.getInstance()).executeFor(zombie, zombie::remove);
 
 		villagers.remove(this);
 	}
@@ -114,17 +116,21 @@ public class OfflineVillager implements VaroSerializeable {
 		if (vp == null)
 			remove();
 
-		for (Entity ent : location.getWorld().getEntities())
-			if (ent.getType().toString().contains("ZOMBIE")) {
-				Zombie zombie = (Zombie) ent;
-				if (zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {
-					this.zombie = (Zombie) ent;
-					this.entity = ent;
+		// Entities can only be accessed by the thread owning their region on Folia. There only the entities in the villager's chunk are searched.
+		TaskScheduler.of(Main.getInstance()).executeAt(location, () -> {
+			TaskScheduler scheduler = TaskScheduler.of(Main.getInstance());
+			for (Entity ent : scheduler.isFolia() ? Arrays.asList(location.getChunk().getEntities()) : location.getWorld().getEntities())
+				if (ent.getType().toString().contains("ZOMBIE")) {
+					Zombie zombie = (Zombie) ent;
+					if (zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {
+						this.zombie = (Zombie) ent;
+						this.entity = ent;
+					}
 				}
-			}
 
-		if (zombie == null)
-			create();
+			if (zombie == null)
+				create();
+		});
 	}
 
 	@Override

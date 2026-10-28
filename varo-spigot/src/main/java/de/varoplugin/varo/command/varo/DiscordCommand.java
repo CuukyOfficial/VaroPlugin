@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.utils.VaroUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.bot.discord.BotRegister;
 import de.varoplugin.varo.command.VaroCommand;
@@ -15,6 +14,7 @@ import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.gui.admin.discordbot.DiscordBotGUI;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
 import io.github.almightysatan.slams.PlaceholderResolver;
 import net.dv8tion.jda.api.entities.User;

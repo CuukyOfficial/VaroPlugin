@@ -2,6 +2,7 @@ package de.varoplugin.varo.report;
 
 import java.util.ArrayList;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
@@ -12,7 +13,7 @@ public class Report implements VaroSerializeable {
 	private static ArrayList<Report> reports;
 
 	static {
-		reports = new ArrayList<>();
+		reports = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "id")

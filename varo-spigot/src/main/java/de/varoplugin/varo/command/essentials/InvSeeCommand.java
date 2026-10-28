@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import io.github.almightysatan.slams.Placeholder;
@@ -35,7 +36,7 @@ public class InvSeeCommand implements CommandExecutor {
 		}
 
 		Player p = (Player) sender;
-		p.openInventory(Bukkit.getPlayerExact(args[0]).getInventory());
+		TaskScheduler.of(Main.getInstance()).executeFor(p, () -> p.openInventory(Bukkit.getPlayerExact(args[0]).getInventory()));
 		return false;
 	}
 

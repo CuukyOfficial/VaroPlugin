@@ -1,5 +1,7 @@
 package de.varoplugin.varo.player;
 
+import java.util.logging.Level;
+import java.util.concurrent.CompletableFuture;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -108,7 +110,7 @@ public class VaroPlayer implements VaroSerializeable {
 
 	private VaroTeam team;
 	private XSound guiSound = XSound.UI_BUTTON_CLICK;
-	private Player player;
+	private volatile Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 	private ChatMessage lastMessage;
@@ -407,8 +409,19 @@ public class VaroPlayer implements VaroSerializeable {
 		return suffix;
 	}
 
-	public void saveTeleport(Location location) {
-		SafeTeleport.tp(this.player, location);
+	/**
+	 * Teleports the player. On Folia the teleport is performed asynchronously, so the player might not have arrived when this method returns.
+	 * 
+	 * @return Future that completes with whether the teleport was successful
+	 */
+	public CompletableFuture<Boolean> saveTeleport(Location location) {
+		final Player player = this.player;
+		CompletableFuture<Boolean> future = SafeTeleport.tp(player, location);
+		future.whenComplete((success, throwable) -> {
+			if (throwable != null || !Boolean.TRUE.equals(success))
+				Main.getInstance().getLogger().log(Level.WARNING, "Failed to teleport " + this.name + " to " + location, throwable);
+		});
+		return future;
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {

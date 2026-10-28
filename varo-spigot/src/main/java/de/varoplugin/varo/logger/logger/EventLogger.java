@@ -6,10 +6,8 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.scheduler.TaskRunnable;
-
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.logger.CachedVaroLogger;

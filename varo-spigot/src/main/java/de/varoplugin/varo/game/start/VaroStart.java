@@ -27,7 +27,6 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.VaroGame;
 import de.varoplugin.varo.player.VaroPlayer;
 import io.github.almightysatan.slams.Placeholder;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

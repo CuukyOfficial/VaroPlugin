@@ -13,7 +13,6 @@ import de.varoplugin.cfw.scheduler.Task;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class VaroPlayerDisconnect {

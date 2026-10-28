@@ -1,7 +1,6 @@
 package de.varoplugin.varo.combatlog;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.scheduler.Task;
-
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.utils.EventUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;

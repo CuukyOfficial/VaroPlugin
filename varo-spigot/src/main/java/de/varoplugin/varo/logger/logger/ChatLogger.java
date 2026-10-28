@@ -2,7 +2,6 @@ package de.varoplugin.varo.logger.logger;
 
 import java.io.IOException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;

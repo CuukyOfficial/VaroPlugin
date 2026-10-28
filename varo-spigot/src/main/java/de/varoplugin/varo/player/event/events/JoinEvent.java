@@ -1,5 +1,6 @@
 package de.varoplugin.varo.player.event.events;
 
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
@@ -58,8 +59,9 @@ public class JoinEvent extends BukkitEvent {
 			player.sendMessage(Main.getPrefix() + "Da Du §c" + (player.isAdminIgnore() ? "als Admin gejoint bist und keine Folgen mehr produzieren darfst" : "Spectator bist") + " §7wurdest du in den Zuschauer-Modus gesetzt!");
 		} else {
 			player.getPlayer().setGameMode(GameMode.SURVIVAL);
+			final Player joined = player.getPlayer();
 			for (Player pl1 : VersionUtils.getVersionAdapter().getOnlinePlayers())
-				pl1.showPlayer(player.getPlayer());
+				TaskScheduler.of(Main.getInstance()).executeFor(pl1, () -> pl1.showPlayer(joined));
 		}
 
 		VaroPlayerDisconnect.joinedAgain(player.getPlayer());

@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
-
 import de.varoplugin.cfw.player.SafeTeleport;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;

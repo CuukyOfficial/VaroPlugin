@@ -12,13 +12,12 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import de.varoplugin.varo.utils.VaroUtils;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-
 import de.varoplugin.cfw.configuration.YamlConfigurationUtil;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
+import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;

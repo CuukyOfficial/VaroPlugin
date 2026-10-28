@@ -3,11 +3,11 @@ package de.varoplugin.varo.team;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.Task;
-
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
@@ -20,7 +20,7 @@ public class VaroTeamRequest {
 	private static ArrayList<VaroTeamRequest> requests;
 
 	static {
-		requests = new ArrayList<>();
+		requests = new SynchronizedArrayList<>();
 	}
 
 	private VaroPlayer invited, inviter;

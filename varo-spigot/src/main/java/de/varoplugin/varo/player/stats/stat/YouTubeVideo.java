@@ -3,6 +3,7 @@ package de.varoplugin.varo.player.stats.stat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
@@ -12,7 +13,7 @@ public class YouTubeVideo implements VaroSerializeable, Comparable<YouTubeVideo>
 	private static ArrayList<YouTubeVideo> videos;
 
 	static {
-		videos = new ArrayList<YouTubeVideo>();
+		videos = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "detectedAt")

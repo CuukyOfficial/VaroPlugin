@@ -21,9 +21,9 @@ import com.google.common.io.BaseEncoding;
 
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
 import de.varoplugin.cfw.scheduler.TaskScheduler;
-import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
+import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.version.ServerSoftware;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -96,6 +96,8 @@ public class Main extends JavaPlugin {
     		this.getLogger().log(Level.INFO, 
     				"	Other plugins enabled: " + (Bukkit.getPluginManager().getPlugins().length - 1));
     		this.getLogger().log(Level.INFO, "Forge-Support: " + VersionUtils.hasForgeSupport());
+    		if (TaskScheduler.of(this).isFolia())
+    		    this.getLogger().log(Level.WARNING, "Folia support is experimental: Bukkit scoreboards are unavailable, so the sidebar scoreboard and nametag teams are disabled. AutoSetup is not supported and teleports are asynchronous.");
 
     		if (VersionUtils.getServerSoftware() == ServerSoftware.BUKKIT)
     			this.getLogger().log(Level.SEVERE,

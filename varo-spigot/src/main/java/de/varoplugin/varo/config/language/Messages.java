@@ -29,7 +29,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.varoplugin.varo.utils.VaroUtils;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
@@ -38,6 +37,7 @@ import de.varoplugin.varo.config.language.Contexts.PlayerContext;
 import de.varoplugin.varo.config.language.Contexts.VaroContext;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.jaskl.Resource;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
 import io.github.almightysatan.slams.InvalidTypeException;
