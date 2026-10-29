@@ -43,7 +43,7 @@ public class Spawn implements VaroSerializeable {
     private String nameTagName;
     
     @VaroSerializeField(path = "nameTagUuid")
-    private String nametagUuid;
+    private volatile String nametagUuid;
 
     @VaroSerializeField(path = "number")
     private int number;

@@ -69,7 +69,7 @@ public class BlockEditor {
                 }
             };
 
-            if (delay > 0)
+            if (delay > 0 && Main.scheduler().isRegionized())
                 Main.scheduler().runAtLater(chunk, task, delay);
             else
                 Main.scheduler().executeAt(chunk, task);
