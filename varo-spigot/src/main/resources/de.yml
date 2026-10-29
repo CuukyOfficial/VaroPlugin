@@ -405,7 +405,7 @@ player:
         - "§7oO    <projectname>    §7Oo"
         - " "
     format: "<displayname> §c<kills>"
-  video: "<prefix>Video: <colorcode><video-link>"
+  video: "<prefix>Video: <colorcode><click_open_url:<video-link>:<video-link>>"
   chests:
     removed: "<prefix>Container erfolgreich entfernt!"
     disallowed: "<prefix>Dieser Container gehört <colorcode><owner-name>§7!"

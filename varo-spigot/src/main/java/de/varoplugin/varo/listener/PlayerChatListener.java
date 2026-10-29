@@ -107,6 +107,6 @@ public class PlayerChatListener implements Listener {
 		Main.getDataManager().getVaroLoggerManager().getChatLogger().println(ChatLogType.CHAT, player, null, message);
 
 		event.setCancelled(true);
-        Messages.CHAT_DEFAULT.broadcast(vp, Placeholder.constant("message", message), vp.getStats().getYoutubeLink());
+        Messages.CHAT_DEFAULT.broadcast(vp, Placeholder.constant("message", message)); // TODO change message to open vp.getStats().getYoutubeLink() when clicking player name
 	}
 }
