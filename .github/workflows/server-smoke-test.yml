@@ -1,0 +1,50 @@
+name: Server Smoke Test
+
+on: [push, pull_request]
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        lfs: 'true'
+    - uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Gradlew build
+      run: ./gradlew build -x test
+    - uses: actions/upload-artifact@v4
+      with:
+        name: plugin
+        path: build/libs/VaroPlugin-*[0-9].jar
+
+  smoke-test:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { project: folia, version: 1.19.4, java: 17 }
+          - { project: folia, version: 1.20.1, java: 17 }
+          - { project: folia, version: 1.20.4, java: 17 }
+          - { project: folia, version: 1.21.8, java: 21 }
+          - { project: folia, version: 26.1.2, java: 25 }
+          - { project: paper, version: 1.21.8, java: 21 }
+          - { project: paper, version: 26.1.2, java: 25 }
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'temurin'
+    - uses: actions/download-artifact@v4
+      with:
+        name: plugin
+        path: build/libs
+    - name: Start ${{ matrix.project }} ${{ matrix.version }}
+      run: scripts/smoke-test.sh ${{ matrix.project }} ${{ matrix.version }} java
