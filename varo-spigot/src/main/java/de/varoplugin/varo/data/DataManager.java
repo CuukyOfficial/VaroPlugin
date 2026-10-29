@@ -1,7 +1,7 @@
 package de.varoplugin.varo.data;
 
 import de.varoplugin.cfw.player.hud.NameTagGroup;
-import de.varoplugin.cfw.scheduler.TaskRunnable;
+import de.varoplugin.varo.serialize.VaroSerializeObject;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -126,12 +126,11 @@ public class DataManager {
 
 	private void startAutoSave() {
 
-		new TaskRunnable() {
-			@Override
-			public void run() {
-				DataManager.this.saveSync(); // TODO This can cause concurrency issues
-			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), SAVE_DELAY, SAVE_DELAY);
+		// The live state is serialized by the global region (main thread), only the file writes happen asynchronously
+		Main.scheduler().runTimer(task -> {
+			List<Runnable> writes = VaroSerializeObject.deferWrites(this::saveSync);
+			Main.scheduler().runAsync(() -> writes.forEach(Runnable::run));
+		}, SAVE_DELAY, SAVE_DELAY);
 	}
 
 	public void reloadConfig() {

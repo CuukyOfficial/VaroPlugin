@@ -96,6 +96,6 @@ public class ResetCommand extends VaroCommand {
 
 	        if (!success.isEmpty())
 	            Bukkit.getServer().shutdown();
-		}, Main.scheduler().isRegionized() ? 20L : 1L);
+		}, VaroUtils.getWorldSettleDelay());
 	}
 }

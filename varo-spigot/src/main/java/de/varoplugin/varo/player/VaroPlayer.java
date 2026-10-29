@@ -593,7 +593,7 @@ public class VaroPlayer implements VaroSerializeable {
 		if (player != null) {
 			this.versionAdapter = new PlayerVersionAdapter(player);
 
-			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
+			this.scoreboardInstance = ScoreboardInstance.isSupported() ? ScoreboardInstance.newInstance(player) : null;
 
 			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean() && this.scoreboardInstance != null) { // scoreboardInstance is null if scoreboards are not supported
 				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, new AnimationData<String>() {

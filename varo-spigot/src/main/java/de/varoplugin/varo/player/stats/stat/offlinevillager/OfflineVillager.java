@@ -1,7 +1,6 @@
 package de.varoplugin.varo.player.stats.stat.offlinevillager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -14,7 +13,6 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
 import de.varoplugin.cfw.scheduler.TaskRunnable;
-import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -27,6 +25,7 @@ import de.varoplugin.varo.player.stats.stat.inventory.InventoryBackup;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.varo.utils.SynchronizedArrayList;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class OfflineVillager implements VaroSerializeable {
 
@@ -119,8 +118,7 @@ public class OfflineVillager implements VaroSerializeable {
 
 		// Entities can only be accessed by the thread owning their region on Folia. There only the entities in the villager's chunk are searched.
 		Main.scheduler().executeAt(location, () -> {
-			TaskScheduler scheduler = Main.scheduler();
-			for (Entity ent : scheduler.isRegionized() ? Arrays.asList(location.getChunk().getEntities()) : location.getWorld().getEntities())
+			for (Entity ent : VaroUtils.getEntitiesNear(location))
 				if (ent.getType().toString().contains("ZOMBIE")) {
 					Zombie zombie = (Zombie) ent;
 					if (zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {

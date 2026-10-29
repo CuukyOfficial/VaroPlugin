@@ -119,6 +119,78 @@ public class SynchronizedArrayList<E> extends ArrayList<E> {
     }
 
     @Override
+    public synchronized void replaceAll(java.util.function.UnaryOperator<E> operator) {
+        super.replaceAll(operator);
+    }
+
+    @Override
+    public synchronized boolean containsAll(Collection<?> c) {
+        return super.containsAll(c);
+    }
+
+    @Override
+    public synchronized void ensureCapacity(int minCapacity) {
+        super.ensureCapacity(minCapacity);
+    }
+
+    @Override
+    public synchronized void trimToSize() {
+        super.trimToSize();
+    }
+
+    @Override
+    public synchronized Object clone() {
+        return super.clone();
+    }
+
+    @Override
+    public synchronized boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public synchronized int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public synchronized String toString() {
+        return super.toString();
+    }
+
+    /**
+     * @return A copy of the range, changes are not reflected in this list
+     */
+    @Override
+    public synchronized java.util.List<E> subList(int fromIndex, int toIndex) {
+        return new ArrayList<>(super.subList(fromIndex, toIndex));
+    }
+
+    @Override
+    public java.util.ListIterator<E> listIterator() {
+        return readOnly(this.snapshot().listIterator());
+    }
+
+    @Override
+    public java.util.ListIterator<E> listIterator(int index) {
+        return readOnly(this.snapshot().listIterator(index));
+    }
+
+    private static <T> java.util.ListIterator<T> readOnly(java.util.ListIterator<T> iterator) {
+        return new java.util.ListIterator<T>() {
+            @Override public boolean hasNext() { return iterator.hasNext(); }
+            @Override public T next() { return iterator.next(); }
+            @Override public boolean hasPrevious() { return iterator.hasPrevious(); }
+            @Override public T previous() { return iterator.previous(); }
+            @Override public int nextIndex() { return iterator.nextIndex(); }
+            @Override public int previousIndex() { return iterator.previousIndex(); }
+            @Override public void remove() { throw new UnsupportedOperationException(); }
+            @Override public void set(T t) { throw new UnsupportedOperationException(); }
+            @Override public void add(T t) { throw new UnsupportedOperationException(); }
+        };
+    }
+
+    @Override
     public void forEach(java.util.function.Consumer<? super E> action) {
         this.snapshot().forEach(action);
     }

@@ -128,4 +128,21 @@ public final class VaroUtils {
         String suffix = luckPerms.getUser(player.getRealUUID()).getCachedData().getMetaData().getSuffix();
         return suffix == null ? "" : suffix;
     }
+
+    /**
+     * @return The entities that may be accessed from the thread owning the given location: The entities of the chunk on regionized servers (Folia),
+     *         the entities of the whole world otherwise
+     */
+    public static Collection<org.bukkit.entity.Entity> getEntitiesNear(org.bukkit.Location location) {
+        if (Main.scheduler().isRegionized())
+            return java.util.Arrays.asList(location.getChunk().getEntities());
+        return location.getWorld().getEntities();
+    }
+
+    /**
+     * @return The delay in ticks to wait for pending world operations (like unloading) to settle
+     */
+    public static long getWorldSettleDelay() {
+        return Main.scheduler().isRegionized() ? 20L : 1L;
+    }
 }
