@@ -19,6 +19,8 @@ import org.geysermc.floodgate.api.FloodgateApi;
 
 import com.google.common.io.BaseEncoding;
 
+import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.cfw.utils.PlayerProfileUtils;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.PlayerLookup;
 import de.varoplugin.cfw.utils.PlayerProfileUtils.Result;
@@ -35,6 +37,7 @@ import de.varoplugin.varo.data.DataManager;
 import de.varoplugin.varo.data.Dependencies;
 import de.varoplugin.varo.game.VaroGame;
 import de.varoplugin.varo.gui.VaroInventoryManager;
+import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.spigot.VaroUpdater;
 
 public class Main extends JavaPlugin {
@@ -48,6 +51,7 @@ public class Main extends JavaPlugin {
 	public static final String DISCORD_INVITE = "https://discord.varoplugin.de/";
 
 	private static Main instance;
+	private TaskScheduler scheduler;
 	private static boolean paper;
 
 	private static VaroInventoryManager inventoryManager;
@@ -62,6 +66,7 @@ public class Main extends JavaPlugin {
 	public void onLoad() {
 		this.failed = false;
 		instance = this;
+		this.scheduler = TaskScheduler.of(this);
 
 		super.onLoad();
 	}
@@ -168,8 +173,11 @@ public class Main extends JavaPlugin {
 		}
 
 		if (!this.failed) {
-            VersionUtils.getVersionAdapter().getOnlinePlayers()
-                .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
+            if (ScoreboardInstance.isPacketBased())
+                VaroPlayer.getOnlinePlayer().forEach(VaroPlayer::destroyScoreboard);
+            else
+                VersionUtils.getVersionAdapter().getOnlinePlayers()
+                    .forEach(pl -> pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()));
             dataManager.cleanUp();
         } else {
 			File bugReport = BugReport.createBugReport();
@@ -178,7 +186,7 @@ public class Main extends JavaPlugin {
 			else
 			    this.getLogger().log(Level.SEVERE, "Unable to create crash-report");
 		}
-		Bukkit.getScheduler().cancelTasks(this);
+		this.scheduler.cancelTasks();
 
 		this.getLogger().log(Level.INFO, "Disabled! (" + (System.currentTimeMillis() - timestamp) + "ms)");
 		this.getLogger().log(Level.INFO, " ");
@@ -301,6 +309,13 @@ public class Main extends JavaPlugin {
 
 	public static boolean isBootedUp() {
 		return enabled;
+	}
+
+	/**
+	 * @return The scheduler of this plugin. All tasks must be scheduled through it, as the Bukkit scheduler is not available on Folia.
+	 */
+	public static TaskScheduler scheduler() {
+		return instance.scheduler;
 	}
 
 	public static Main getInstance() {

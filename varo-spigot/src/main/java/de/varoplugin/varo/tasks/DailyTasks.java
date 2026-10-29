@@ -4,7 +4,6 @@ import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.tasks.checks.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +42,7 @@ public final class DailyTasks {
 
 	private void startTimer(@NotNull OffsetDateTime next) {
 		Main.getInstance().getLogger().log(Level.INFO, "Next daily task: " + next);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+		Main.scheduler().runLater(() -> {
 			try {
 				Main.getInstance().getLogger().log(Level.INFO, "Running daily timer...");
 				Main.getDataManager().createBackup(null);

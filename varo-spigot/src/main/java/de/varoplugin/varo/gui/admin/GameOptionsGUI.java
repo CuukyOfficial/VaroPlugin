@@ -1,5 +1,6 @@
 package de.varoplugin.varo.gui.admin;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -57,6 +58,12 @@ public class GameOptionsGUI extends VaroInventory {
         addItem(13, ItemBuilder.material(XMaterial.BEACON).displayName("§2Set World Spawn")
                 .lore(new String[]{"§7Current: " + (getPlayer().getWorld().getSpawnLocation() != null ? LOCATION_FORMAT.format(getPlayer().getWorld().getSpawnLocation()) : "§c-")})
                 .build(),
-                (event) -> getPlayer().getWorld().setSpawnLocation(getPlayer().getLocation().getBlockX(), getPlayer().getLocation().getBlockY(), getPlayer().getLocation().getBlockZ()));
+                (event) -> {
+                    Location spawn = getPlayer().getLocation();
+                    Main.scheduler().execute(() -> {
+                        getPlayer().getWorld().setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
+                        Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(getPlayer().getWorld());
+                    });
+                });
     }
 }

@@ -1,6 +1,8 @@
 package de.varoplugin.varo.player;
 
 import de.varoplugin.cfw.player.PlayerVersionAdapter;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.AlertType;
 import de.varoplugin.varo.config.language.Messages;
@@ -8,11 +10,10 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class VaroPlayerDisconnect {
 
@@ -20,8 +21,8 @@ public class VaroPlayerDisconnect {
 	 * OLD CODE
 	 */
 
-	private static HashMap<UUID, VaroPlayerDisconnect> disconnects = new HashMap<>();
-	private static HashMap<UUID, BukkitTask> scheds = new HashMap<>();
+	private static Map<UUID, VaroPlayerDisconnect> disconnects = new ConcurrentHashMap<>();
+	private static Map<UUID, Task> scheds = new ConcurrentHashMap<>();
 
 	private final UUID uuid;
 	private int amount;
@@ -105,7 +106,7 @@ public class VaroPlayerDisconnect {
 		if (!vp.getStats().isAlive())
 			return;
 
-		scheds.put(vp.getRealUUID(), new BukkitRunnable() {
+		scheds.put(vp.getRealUUID(), new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!Main.getVaroGame().isRunning() || vp.isOnline())
@@ -128,7 +129,7 @@ public class VaroPlayerDisconnect {
 
 	public static void clearDisconnects() {
 		disconnects.clear();
-		for (BukkitTask task : scheds.values())
+		for (Task task : scheds.values())
 			task.cancel();
 		scheds.clear();
 	}
@@ -138,7 +139,7 @@ public class VaroPlayerDisconnect {
 	    if (disconnect != null)
 	        disconnect.setKick(false);
 	    
-		BukkitTask scheduler = scheds.remove(player.getUniqueId());
+		Task scheduler = scheds.remove(player.getUniqueId());
 		if (scheduler != null)
 		    scheduler.cancel();
 	}

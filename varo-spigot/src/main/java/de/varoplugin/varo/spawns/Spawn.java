@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -24,11 +24,12 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.BlockEditor;
 import io.github.almightysatan.slams.Placeholder;
 
 public class Spawn implements VaroSerializeable {
 
-    private static List<Spawn> spawns = new ArrayList<>();
+    private static List<Spawn> spawns = new CopyOnWriteArrayList<>();
 
     @VaroSerializeField(path = "location")
     private Location location;
@@ -42,7 +43,7 @@ public class Spawn implements VaroSerializeable {
     private String nameTagName;
     
     @VaroSerializeField(path = "nameTagUuid")
-    private String nametagUuid;
+    private volatile String nametagUuid;
 
     @VaroSerializeField(path = "number")
     private int number;
@@ -57,22 +58,25 @@ public class Spawn implements VaroSerializeable {
     }
 
     private Spawn(VaroPlayer player, int number, Location location) {
-        if (number == -1) {
-            number = generateId();
-        } else {
-            Spawn spawn = getSpawn(number);
-            if (spawn != null)
-                spawn.remove();
-        }
-
-        this.number = number;
         this.location = location;
         this.player = player;
-        
+
+        // Spawns might be created by multiple threads at the same time on Folia
+        synchronized (Spawn.class) {
+            if (number == -1) {
+                number = generateId();
+            } else {
+                Spawn spawn = getSpawn(number);
+                if (spawn != null)
+                    spawn.remove();
+            }
+
+            this.number = number;
+            spawns.add(this);
+        }
+
         if (shouldHaveNameTag())
         	this.createNameTag();
-        
-        spawns.add(this);
     }
 
     public Spawn(VaroPlayer player, Location location) {
@@ -99,12 +103,14 @@ public class Spawn implements VaroSerializeable {
     	return !VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8) && ConfigSetting.NAMETAGS_OVER_SPAWN.getValueAsBoolean();
     }
     
-    private Entity createNameTag() {
-        Entity armorStand = this.location.getWorld().spawnEntity(
-        		this.location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0), EntityType.ARMOR_STAND);
-        this.nametagUuid = armorStand.getUniqueId().toString();
-        this.updateNameTag(armorStand);
-		return armorStand;
+    private void createNameTag() {
+        // Entities and blocks can only be accessed from the thread owning the region on Folia
+        Main.scheduler().executeAt(this.location, () -> {
+            Entity armorStand = this.location.getWorld().spawnEntity(
+                    this.location.clone().add(0, ConfigSetting.NAMETAG_SPAWN_HEIGHT.getValueAsInt(), 0), EntityType.ARMOR_STAND);
+            this.nametagUuid = armorStand.getUniqueId().toString();
+            this.updateNameTag(armorStand);
+        });
     }
     
     private void updateNameTag(Entity armorStand) {
@@ -113,19 +119,26 @@ public class Spawn implements VaroSerializeable {
     }
     
     private void updateNameTag() {
-    	this.findNameTag().ifPresent(this::updateNameTag);
+        Main.scheduler().executeAt(this.location, () -> this.findNameTag().ifPresent(this::updateNameTag));
     }
     
     private void removeNameTag() {
-    	this.findNameTag().ifPresent(Entity::remove);
-    	this.nametagUuid = null;
+        final String uuid = this.nametagUuid;
+        this.nametagUuid = null;
+        if (uuid == null || this.location == null)
+            return;
+
+        Main.scheduler().executeAt(this.location, () -> this.findNameTag(uuid).ifPresent(Entity::remove));
     }
 
     private Optional<Entity> findNameTag() {
-    	if (this.nametagUuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8))
+        return this.findNameTag(this.nametagUuid);
+    }
+
+    private Optional<Entity> findNameTag(String uuid) {
+    	if (uuid == null || VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_1_8))
     		return Optional.empty();
     	
-    	String uuid = this.nametagUuid.toString();
     	return Arrays.stream(location.getChunk().getEntities()).
     			filter(entity -> EntityType.ARMOR_STAND.equals(entity.getType()) && uuid.equals(entity.getUniqueId().toString())).findAny();
     }
@@ -142,18 +155,27 @@ public class Spawn implements VaroSerializeable {
     }
 
     public void delete() {
-        location.getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(0, -1, 0).getBlock().setType(XMaterial.DIRT.get());
-        location.clone().add(1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(-1, 0, 0).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(0, 0, 1).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(0, 0, -1).getBlock().setType(XMaterial.GRASS_BLOCK.get());
-        location.clone().add(1, 1, 0).getBlock().setType(XMaterial.AIR.get());
-        location.clone().add(-1, 1, 0).getBlock().setType(XMaterial.AIR.get());
-        location.clone().add(0, 1, 1).getBlock().setType(XMaterial.AIR.get());
-        location.clone().add(0, 1, -1).getBlock().setType(XMaterial.AIR.get());
-
+        this.resetBlocks();
         remove();
+    }
+
+    private void resetBlocks() {
+        if (this.location == null)
+            return;
+
+        final int x = this.location.getBlockX(), y = this.location.getBlockY(), z = this.location.getBlockZ();
+        new BlockEditor(this.location.getWorld())
+                .set(x, y, z, XMaterial.GRASS_BLOCK)
+                .set(x, y - 1, z, XMaterial.DIRT)
+                .set(x + 1, y, z, XMaterial.GRASS_BLOCK)
+                .set(x - 1, y, z, XMaterial.GRASS_BLOCK)
+                .set(x, y, z + 1, XMaterial.GRASS_BLOCK)
+                .set(x, y, z - 1, XMaterial.GRASS_BLOCK)
+                .set(x + 1, y + 1, z, XMaterial.AIR)
+                .set(x - 1, y + 1, z, XMaterial.AIR)
+                .set(x, y + 1, z + 1, XMaterial.AIR)
+                .set(x, y + 1, z - 1, XMaterial.AIR)
+                .apply();
     }
 
     @Override
@@ -167,8 +189,9 @@ public class Spawn implements VaroSerializeable {
         // legacy support
         this.nameTagName = null;
         if (this.nameTagLocation != null) {
-        	this.nameTagLocation.getWorld().getNearbyEntities(this.nameTagLocation, 1d, 1d, 1d).stream()
-        		.filter(entity -> EntityType.ARMOR_STAND.equals(entity.getType())).findAny().ifPresent(Entity::remove);
+        	final Location legacyLocation = this.nameTagLocation;
+        	Main.scheduler().executeAt(legacyLocation, () -> legacyLocation.getWorld().getNearbyEntities(legacyLocation, 1d, 1d, 1d).stream()
+        		.filter(entity -> EntityType.ARMOR_STAND.equals(entity.getType())).findAny().ifPresent(Entity::remove));
         	this.nameTagLocation = null;
         }
         // legacy support end
@@ -182,7 +205,7 @@ public class Spawn implements VaroSerializeable {
                 forceLoadMethod.invoke(this.location.getChunk(), true);
 
                 this.location.getChunk().load();
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                Main.scheduler().runAtLater(this.location, () -> {
                     this.checkNameTag();
                     try {
                         forceLoadMethod.invoke(this.location.getChunk(), false);
@@ -194,7 +217,7 @@ public class Spawn implements VaroSerializeable {
                 e.printStackTrace();
             }
         else {
-            this.checkNameTag();
+            Main.scheduler().executeAt(this.location, this::checkNameTag);
         }
     }
 

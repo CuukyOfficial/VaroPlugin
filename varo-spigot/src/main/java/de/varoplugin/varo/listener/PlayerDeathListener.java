@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.combatlog.PlayerHit;
 import de.varoplugin.varo.config.language.Contexts;
@@ -24,7 +24,7 @@ import io.github.almightysatan.slams.Placeholder;
 public class PlayerDeathListener implements Listener {
 
     private void kickDeadPlayer(VaroPlayer deadPlayer, VaroPlayer killerPlayer, String cause) {
-        new BukkitRunnable() {
+        new TaskRunnable() {
             @Override
             public void run() {
                 if (!deadPlayer.isOnline())
@@ -72,7 +72,7 @@ public class PlayerDeathListener implements Listener {
                         Messages.PLAYER_DISCONNECT_KICK_IN_SECONDS.broadcast(deadP, Placeholder.constant("kick-delay", String.valueOf(ConfigSetting.KICK_DELAY_AFTER_DEATH.getValueAsInt())));
                         deadP.getStats().setState(PlayerState.SPECTATOR, ConfigSetting.PLAYER_SHOW_DEATH_SCREEN.getValueAsBoolean());
                         deadP.update();
-                        new BukkitRunnable() {
+                        new TaskRunnable() {
                             @Override
                             public void run() {
                             	if (!deadP.getStats().isAlive()) {

@@ -78,8 +78,9 @@ public class GamemodeCommand implements CommandExecutor {
 			    }
 			}
 
+			final GameMode finalGm = gm;
 			if (player != null) {
-				player.setGameMode(gm);
+				Main.scheduler().executeFor(player, () -> player.setGameMode(finalGm));
 
 				if (args.length == 1) {
 					sender.sendMessage(Main.getPrefix() + "§7Du bist nun im Gamemode " + Main.getColorCode() + gm.toString() + "§7!");
@@ -88,7 +89,7 @@ public class GamemodeCommand implements CommandExecutor {
 				}
 			} else {
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					p.setGameMode(gm);
+					Main.scheduler().executeFor(p, () -> p.setGameMode(finalGm));
 				}
 				sender.sendMessage(Main.getPrefix() + "§7Alle Spieler sind nun im Gamemode " + Main.getColorCode() + gm.toString() + "§7!");
 			}

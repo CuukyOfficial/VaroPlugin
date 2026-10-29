@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.bot.discord.BotRegister;
 import de.varoplugin.varo.bot.discord.DiscordBotCommand;
@@ -42,7 +42,7 @@ public class ShutdownCommand extends DiscordBotCommand {
         }
 
         getDiscordBot().reply("Shutting down", "Success", Color.GREEN, event);
-        new BukkitRunnable() {
+        new TaskRunnable() {
             @Override
             public void run() {
                 getDiscordBot().disconnect();

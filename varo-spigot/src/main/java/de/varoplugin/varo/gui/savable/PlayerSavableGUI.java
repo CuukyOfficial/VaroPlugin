@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import com.cryptomorin.xseries.XMaterial;
 
 import de.varoplugin.cfw.item.ItemBuilder;
+import de.varoplugin.cfw.scheduler.TaskScheduler;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.gui.VaroInventory;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable;
@@ -33,7 +34,7 @@ public class PlayerSavableGUI extends VaroInventory {
     public void refreshContent() {
         if (getPlayer().hasPermission("varo.setup"))
             addItem(this.getUsableSize(), ItemBuilder.material(XMaterial.ENDER_PEARL).displayName("§bTeleport").build(),
-                    (event) -> getPlayer().teleport(savable.getBlock().getLocation()));
+                    (event) -> TaskScheduler.teleportAsync(getPlayer(), savable.getBlock().getLocation()));
 
         addItem(this.getCenter(), ItemBuilder.material(XMaterial.RED_DYE).displayName("§cDelete").build(), (event) -> {
             savable.remove();

@@ -11,13 +11,14 @@ import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.VaroInventory;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class InventoryBackup implements VaroSerializeable {
 
 	private static ArrayList<InventoryBackup> allBackups;
 
 	static {
-		allBackups = new ArrayList<>();
+		allBackups = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "date")

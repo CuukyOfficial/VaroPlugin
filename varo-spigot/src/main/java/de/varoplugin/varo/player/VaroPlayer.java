@@ -2,6 +2,9 @@ package de.varoplugin.varo.player;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -10,7 +13,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.cryptomorin.xseries.XSound;
 
@@ -21,6 +23,7 @@ import de.varoplugin.cfw.player.hud.AnimatedScoreboard;
 import de.varoplugin.cfw.player.hud.AnimatedTablist;
 import de.varoplugin.cfw.player.hud.AnimationData;
 import de.varoplugin.cfw.player.hud.ScoreboardInstance;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -46,6 +49,7 @@ import de.varoplugin.varo.player.stats.stat.offlinevillager.OfflineVillager;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
 import de.varoplugin.varo.team.VaroTeam;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.utils.Vanish;
 import io.github.almightysatan.slams.Placeholder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -59,7 +63,7 @@ public class VaroPlayer implements VaroSerializeable {
 	private static ArrayList<VaroPlayer> varoplayer;
 
 	static {
-		varoplayer = new ArrayList<>();
+		varoplayer = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "id")
@@ -99,14 +103,14 @@ public class VaroPlayer implements VaroSerializeable {
 	@VaroSerializeField(path = "guiAnimation")
 	private boolean guiAnimation = true;
 
-	private AnimatedScoreboard scoreboard;
-	private AnimatedTablist tablist;
-	private AnimatedActionbar actionbar;
+	private volatile AnimatedScoreboard scoreboard;
+	private volatile AnimatedTablist tablist;
+	private volatile AnimatedActionbar actionbar;
 	private PlayerVersionAdapter versionAdapter;
 
 	private VaroTeam team;
 	private XSound guiSound = XSound.UI_BUTTON_CLICK;
-	private Player player;
+	private volatile Player player;
 	private ScoreboardInstance scoreboardInstance;
 	private boolean alreadyHadMassProtectionTime, inMassProtectionTime, massRecordingKick;
 	private ChatMessage lastMessage;
@@ -182,6 +186,21 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	/**
+	 * Checks whether the player can be kicked. The check is performed by the thread owning the player (this is required on Folia). Therefore
+	 * the result is passed to the callback, which is executed immediately on all other servers.
+	 *
+	 * @param noKickDistance Distance in which other players prevent a kick
+	 * @param callback       Callback that receives the result of {@link #canBeKicked(int)}
+	 */
+	public void checkCanBeKicked(int noKickDistance, Consumer<Boolean> callback) {
+		final Player player = this.player;
+		if (player == null)
+			return;
+
+		Main.scheduler().executeFor(player, () -> callback.accept(this.canBeKicked(noKickDistance)));
+	}
+
+	/**
 	 * @return Returns if a player is nearby
 	 */
 	public boolean canBeKicked(int noKickDistance) {
@@ -210,12 +229,17 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void cleanUpPlayer() {
-		player.setHealth(player.getMaxHealth());
-		player.setFoodLevel(20);
-		player.getInventory().clear();
-		player.getInventory().setArmorContents(null);
-		player.setExp(0);
-		player.setLevel(0);
+		final Player player = this.player;
+		if (player == null)
+			return;
+		Main.scheduler().executeFor(player, () -> {
+			player.setHealth(player.getMaxHealth());
+			player.setFoodLevel(20);
+			player.getInventory().clear();
+			player.getInventory().setArmorContents(null);
+			player.setExp(0);
+			player.setLevel(0);
+		});
 	}
 
 	public void delete() {
@@ -271,7 +295,10 @@ public class VaroPlayer implements VaroSerializeable {
 	}
 
 	public void setSpectacting() {
-		new BukkitRunnable() {
+		if (this.player == null)
+			return;
+
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!isOnline())
@@ -293,11 +320,14 @@ public class VaroPlayer implements VaroSerializeable {
 				unregisterNametag(player, team);
 				registerNametag(scoreboardInstance);
 			}
-		}.runTask(Main.getInstance());
+		}.runTaskFor(Main.getInstance(), this.player);
 	}
 
 	public void setAlive() {
-		new BukkitRunnable() {
+		if (this.player == null)
+			return;
+
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!isOnline())
@@ -316,7 +346,7 @@ public class VaroPlayer implements VaroSerializeable {
 				unregisterNametag(player, team);
 				registerNametag(scoreboardInstance);
 			}
-		}.runTask(Main.getInstance());
+		}.runTaskFor(Main.getInstance(), this.player);
 	}
 
 	public void update() {
@@ -329,28 +359,33 @@ public class VaroPlayer implements VaroSerializeable {
 		if (this.actionbar != null)
 			this.actionbar.queueUpdate();
 
-		if (this.player != null) {
-			if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
-				this.player.setPlayerListName(this.getTablistName());
-			if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
-				// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
-				boolean potion = this.player.hasPotionEffect(PotionEffectType.INVISIBILITY);
-				boolean visible = ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean() && !potion;
-				String name = this.getNametagName();
-				String prefix = this.getNametagPrefix();
-				String suffix = this.getNametagSuffix();
+		final Player player = this.player;
+		if (player != null)
+			// Players can only be modified by the thread owning them on Folia
+			Main.scheduler().executeFor(player, () -> this.updatePlayer(player));
+	}
 
-				// always update default group
-				Main.getDataManager().getDefaultNameTagGroup().update(this.player, visible, name, prefix, suffix);
+	private void updatePlayer(Player player) {
+		if (ConfigSetting.TABLIST_CHANGE_NAMES.getValueAsBoolean() && VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
+			player.setPlayerListName(this.getTablistName());
+		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
+			// afaik there is no event in Bukkit 1.8 that is executed when a player is given/removed a potion effect. Therefore this has to be executed on a regular basis (every second?) to avoid showing nametags when a player has the invisibility effect
+			boolean potion = player.hasPotionEffect(PotionEffectType.INVISIBILITY);
+			boolean visible = ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean() && !potion;
+			String name = this.getNametagName();
+			String prefix = this.getNametagPrefix();
+			String suffix = this.getNametagSuffix();
 
-				// only update spectator and team groups if necessary
-				if (!ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean()) {
-					if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean())
-						Main.getDataManager().getSpectatorNameTagGroup().update(this.player, true, name, prefix, suffix);
-					if (ConfigSetting.NAMETAGS_VISIBLE_TEAM.getValueAsBoolean())
-						for (VaroTeam team : VaroTeam.getOnlineTeams())
-							team.getNameTagGroup().update(this.player, team == this.team && !potion, name, prefix, suffix);
-				}
+			// always update default group
+			Main.getDataManager().getDefaultNameTagGroup().update(player, visible, name, prefix, suffix);
+
+			// only update spectator and team groups if necessary
+			if (!ConfigSetting.NAMETAGS_VISIBLE_DEFAULT.getValueAsBoolean()) {
+				if (ConfigSetting.NAMETAGS_VISIBLE_SPECTATOR.getValueAsBoolean())
+					Main.getDataManager().getSpectatorNameTagGroup().update(player, true, name, prefix, suffix);
+				if (ConfigSetting.NAMETAGS_VISIBLE_TEAM.getValueAsBoolean())
+					for (VaroTeam team : VaroTeam.getOnlineTeams())
+						team.getNameTagGroup().update(player, team == this.team && !potion, name, prefix, suffix);
 			}
 		}
 	}
@@ -389,8 +424,19 @@ public class VaroPlayer implements VaroSerializeable {
 		return suffix;
 	}
 
-	public void saveTeleport(Location location) {
-		SafeTeleport.tp(this.player, location);
+	/**
+	 * Teleports the player. On Folia the teleport is performed asynchronously, so the player might not have arrived when this method returns.
+	 * 
+	 * @return Future that completes with whether the teleport was successful
+	 */
+	public CompletableFuture<Boolean> saveTeleport(Location location) {
+		final Player player = this.player;
+		CompletableFuture<Boolean> future = SafeTeleport.teleport(player, location);
+		future.whenComplete((success, throwable) -> {
+			if (throwable != null)
+				Main.getInstance().getLogger().log(Level.WARNING, "Failed to teleport " + this.name + " to " + location, throwable);
+		});
+		return future;
 	}
 
 	public boolean getalreadyHadMassProtectionTime() {
@@ -547,9 +593,9 @@ public class VaroPlayer implements VaroSerializeable {
 		if (player != null) {
 			this.versionAdapter = new PlayerVersionAdapter(player);
 
-			this.scoreboardInstance = ScoreboardInstance.newInstance(player);
+			this.scoreboardInstance = ScoreboardInstance.isSupported() ? ScoreboardInstance.newInstance(player) : null;
 
-			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean()) {
+			if (ConfigSetting.SCOREBOARD_ENABLED.getValueAsBoolean() && this.scoreboardInstance != null) { // scoreboardInstance is null if scoreboards are not supported
 				this.scoreboard = new AnimatedScoreboard(Main.getInstance(), this.scoreboardInstance, new AnimationData<String>() {
                     
                     @Override
@@ -664,8 +710,17 @@ public class VaroPlayer implements VaroSerializeable {
 		}
 	}
 
+	/**
+	 * Removes the scoreboard from the client of the player
+	 */
+	public void destroyScoreboard() {
+		ScoreboardInstance instance = this.scoreboardInstance;
+		if (instance != null)
+			instance.destroy();
+	}
+
 	private void registerNametag(ScoreboardInstance scoreboardInstance) {
-		if (ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
+		if (scoreboardInstance != null && ConfigSetting.NAMETAGS_ENABLED.getValueAsBoolean()) {
 			String name = this.getNametagName();
 			String prefix = this.getNametagPrefix();
 			String suffix = this.getNametagSuffix();
@@ -739,7 +794,7 @@ public class VaroPlayer implements VaroSerializeable {
 		try {
 			if (ConfigSetting.DISCORDBOT_SET_TEAM_AS_GROUP.getValueAsBoolean()) {
 				if (Main.getBotLauncher() == null)
-					new BukkitRunnable() {
+					new TaskRunnable() {
 						@Override
 						public void run() {
 							updateDiscordTeam(oldTeam);

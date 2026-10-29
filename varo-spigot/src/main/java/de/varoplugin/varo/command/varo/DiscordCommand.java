@@ -14,6 +14,7 @@ import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.gui.admin.discordbot.DiscordBotGUI;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
 import io.github.almightysatan.slams.PlaceholderResolver;
 import net.dv8tion.jda.api.entities.User;
@@ -141,7 +142,7 @@ public class DiscordCommand extends VaroCommand {
 
 			Player target = Bukkit.getPlayerExact(reg.getPlayerName());
 			if (target != null)
-				Bukkit.getPlayerExact(reg.getPlayerName()).kickPlayer(Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
+				VaroUtils.kickPlayer(Bukkit.getPlayerExact(reg.getPlayerName()), Messages.PLAYER_KICK_DISCORD_NOT_REGISTERED.value(Placeholder.constant("discord-code", String.valueOf(reg.getCode()))));
 		} else if (args[0].equalsIgnoreCase("bypassRegister") || args[0].equalsIgnoreCase("bypass")) {
 			if (!ConfigSetting.DISCORDBOT_VERIFYSYSTEM.getValueAsBoolean()) {
 				Messages.COMMANDS_VARO_DISCORD_VERIFY_DISABLED.send(sender);

@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.Collection;
@@ -25,15 +26,48 @@ public final class VaroUtils {
 
     private static Object luckPermsUserManager;
 	
+	/**
+	 * Kicks a player. On Folia this has to be done by the thread owning the player.
+	 */
+	public static void kickPlayer(Player player, String message) {
+	    Main.scheduler().executeFor(player, () -> player.kickPlayer(message));
+	}
+
 	public static void updateWorldTime() {
+	    // On Folia world settings can only be changed from the global region
+	    Main.scheduler().execute(VaroUtils::updateWorldTime0);
+	}
+
+	public static void setAdvanceTime(World world, boolean value) {
+	    try {
+	        XGameRule.ADVANCE_TIME.setValue(world, value);
+	    } catch (Throwable t) { // XSeries is unable to access game rules on some versions
+	        setLegacyGameRule(world, "doDaylightCycle", value);
+	    }
+	}
+
+	public static void setShowAdvancementMessages(World world, boolean value) {
+	    try {
+	        XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, value);
+	    } catch (Throwable t) {
+	        setLegacyGameRule(world, "announceAdvancements", value);
+	    }
+	}
+
+	@SuppressWarnings("deprecation")
+	private static void setLegacyGameRule(World world, String rule, boolean value) {
+	    world.setGameRuleValue(rule, String.valueOf(value));
+	}
+
+	private static void updateWorldTime0() {
 	    int time = ConfigSetting.ALWAYS_TIME.getValueAsInt();
         boolean legacyWorldClocks = VersionUtils.getVersion().isLowerThan(ServerVersion.VERSION_26_1);
 
 	    for (World world : Bukkit.getWorlds())
 	        if (!ConfigSetting.ALWAYS_TIME.isIntActivated() || (Main.getVaroGame().hasStarted() && !ConfigSetting.ALWAYS_TIME_USE_AFTER_START.getValueAsBoolean()))
-                XGameRule.ADVANCE_TIME.setValue(world, true);
+                setAdvanceTime(world, true);
 	        else {
-                XGameRule.ADVANCE_TIME.setValue(world, false);
+                setAdvanceTime(world, false);
 	            if (world.getTime() != time && (legacyWorldClocks || world.getEnvironment() == World.Environment.NORMAL)) // Workaround until Paper 26.1 adds a clock API
 	                world.setTime(time);
 	            world.setStorm(false);
@@ -93,5 +127,22 @@ public final class VaroUtils {
             return "";
         String suffix = luckPerms.getUser(player.getRealUUID()).getCachedData().getMetaData().getSuffix();
         return suffix == null ? "" : suffix;
+    }
+
+    /**
+     * @return The entities that may be accessed from the thread owning the given location: The entities of the chunk on regionized servers (Folia),
+     *         the entities of the whole world otherwise
+     */
+    public static Collection<org.bukkit.entity.Entity> getEntitiesNear(org.bukkit.Location location) {
+        if (Main.scheduler().isRegionized())
+            return java.util.Arrays.asList(location.getChunk().getEntities());
+        return location.getWorld().getEntities();
+    }
+
+    /**
+     * @return The delay in ticks to wait for pending world operations (like unloading) to settle
+     */
+    public static long getWorldSettleDelay() {
+        return Main.scheduler().isRegionized() ? 20L : 1L;
     }
 }

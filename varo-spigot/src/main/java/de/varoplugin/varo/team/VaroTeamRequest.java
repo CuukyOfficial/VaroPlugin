@@ -3,15 +3,16 @@ package de.varoplugin.varo.team;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import de.varoplugin.cfw.player.hook.chat.ChatHookTriggerEvent;
 import de.varoplugin.cfw.player.hook.chat.PlayerChatHookBuilder;
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.Placeholder;
 
@@ -20,11 +21,11 @@ public class VaroTeamRequest {
 	private static ArrayList<VaroTeamRequest> requests;
 
 	static {
-		requests = new ArrayList<>();
+		requests = new SynchronizedArrayList<>();
 	}
 
 	private VaroPlayer invited, inviter;
-	private BukkitTask sched;
+	private Task sched;
 
 	public VaroTeamRequest(VaroPlayer invitor, VaroPlayer invited) {
 		this.inviter = invitor;
@@ -80,7 +81,7 @@ public class VaroTeamRequest {
 		if (!ConfigSetting.TEAMREQUEST_EXPIRETIME.isIntActivated())
 			return;
 
-		this.sched = new BukkitRunnable() {
+		this.sched = new TaskRunnable() {
 			@Override
 			public void run() {
 				if (!invited.isOnline())

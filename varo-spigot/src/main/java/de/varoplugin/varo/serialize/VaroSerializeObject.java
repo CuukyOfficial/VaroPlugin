@@ -1,6 +1,7 @@
 package de.varoplugin.varo.serialize;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -15,6 +16,8 @@ import de.varoplugin.varo.serialize.serializer.VaroDeserializer;
 import de.varoplugin.varo.serialize.serializer.VaroSerializer;
 
 public class VaroSerializeObject extends VaroSerializeHandler {
+
+	private static final ThreadLocal<List<Runnable>> DEFERRED_WRITES = new ThreadLocal<>();
 
 	/*
 	 * Pls dont look too close at this class. I made this withing like 4 hours and it works so I don't wanna change anything. I know, this is pretty ugly and too much code in one class but I'm really happy it works like this
@@ -74,7 +77,32 @@ public class VaroSerializeObject extends VaroSerializeHandler {
 	}
 
 	protected void saveFile() {
+		List<Runnable> deferred = DEFERRED_WRITES.get();
+		if (deferred != null) {
+			// Serialize the (live) state on the calling thread but only write it to disk later
+			String content = this.configuration.saveToString();
+			File target = this.file;
+			deferred.add(() -> de.varoplugin.cfw.configuration.YamlConfigurationUtil.saveString(content, target));
+			return;
+		}
+
 		YamlConfigurationUtil.save(this.configuration, this.file);
+	}
+
+	/**
+	 * Runs the given task, collecting the writes of all files that are saved by it instead of executing them
+	 *
+	 * @return The collected writes, to be executed by the caller (e.g. on another thread)
+	 */
+	public static List<Runnable> deferWrites(Runnable task) {
+		List<Runnable> writes = new java.util.ArrayList<>();
+		DEFERRED_WRITES.set(writes);
+		try {
+			task.run();
+		} finally {
+			DEFERRED_WRITES.remove();
+		}
+		return writes;
 	}
 
 	public Class<? extends VaroSerializeable> getClazz() {

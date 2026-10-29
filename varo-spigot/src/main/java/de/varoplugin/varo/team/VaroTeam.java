@@ -18,6 +18,7 @@ import de.varoplugin.varo.player.stats.stat.PlayerState;
 import de.varoplugin.varo.player.stats.stat.inventory.VaroSaveable;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 import io.github.almightysatan.slams.Placeholder;
 
 public class VaroTeam implements VaroSerializeable {
@@ -28,7 +29,7 @@ public class VaroTeam implements VaroSerializeable {
 	private static ArrayList<VaroTeam> teams;
 
 	static {
-		teams = new ArrayList<>();
+		teams = new SynchronizedArrayList<>();
 		highestNumber = 1;
 	}
 

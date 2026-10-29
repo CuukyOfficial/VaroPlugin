@@ -1,6 +1,7 @@
 package de.varoplugin.varo.data;
 
 import de.varoplugin.cfw.player.hud.NameTagGroup;
+import de.varoplugin.varo.serialize.VaroSerializeObject;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -30,7 +31,6 @@ import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.slams.InvalidTypeException;
 import io.github.almightysatan.slams.MissingTranslationException;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,12 +126,11 @@ public class DataManager {
 
 	private void startAutoSave() {
 
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				DataManager.this.saveSync(); // TODO This can cause concurrency issues
-			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), SAVE_DELAY, SAVE_DELAY);
+		// The live state is serialized by the global region (main thread), only the file writes happen asynchronously
+		Main.scheduler().runTimer(task -> {
+			List<Runnable> writes = VaroSerializeObject.deferWrites(this::saveSync);
+			Main.scheduler().runAsync(() -> writes.forEach(Runnable::run));
+		}, SAVE_DELAY, SAVE_DELAY);
 	}
 
 	public void reloadConfig() {
@@ -170,14 +169,14 @@ public class DataManager {
 
 	public void createBackup(Consumer<VaroBackup> callback) {
 	    this.saveSync();
-	    Bukkit.getScheduler().runTaskAsynchronously(this.instance, () -> {
+	    Main.scheduler().runAsync(() -> {
 	        VaroBackup backup = VaroBackup.createBackup();
 	        if (backup != null)
 	            synchronized (this.backups) {
                     this.backups.add(backup);
                 }
 	        if (callback != null)
-	            Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, () -> callback.accept(backup));
+	            Main.scheduler().run(() -> callback.accept(backup));
 	    });
 	}
 	
@@ -193,7 +192,7 @@ public class DataManager {
 	        removed = this.backups.remove(backup);
         }
 	    if (removed)
-	        Bukkit.getScheduler().runTaskAsynchronously(this.instance, backup::delete);
+	        Main.scheduler().runAsync(backup::delete);
 	}
 
 	public void setDoSave(boolean doSave) {

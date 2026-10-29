@@ -1,5 +1,6 @@
 package de.varoplugin.varo.listener;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +23,11 @@ public class PlayerTeleportListener implements Listener {
 			    }
 			    
 				if (event.getFrom().distance(event.getFrom().getWorld().getSpawnLocation()) < 500) {
-					event.getTo().getWorld().setSpawnLocation(event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ());
+					final Location to = event.getTo();
+					Main.scheduler().execute(() -> {
+						to.getWorld().setSpawnLocation(to.getBlockX(), to.getBlockY(), to.getBlockZ());
+						Main.getVaroGame().getVaroWorldHandler().refreshWorldSpawn(to.getWorld());
+					});
 				}
 			}
 		}

@@ -2,10 +2,11 @@ package de.varoplugin.varo.listener.helper.cancelable;
 
 import java.util.ArrayList;
 
-import org.bukkit.scheduler.BukkitRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 // TODO this belongs in the trash and should be replaced by a system that is able to freeze/mute/protect all players at once
 public class VaroCancelable {
@@ -13,7 +14,7 @@ public class VaroCancelable {
 	private static ArrayList<VaroCancelable> cancelables;
 
 	static {
-		cancelables = new ArrayList<>();
+		cancelables = new SynchronizedArrayList<>();
 	}
 
 	protected VaroPlayer player;
@@ -48,7 +49,7 @@ public class VaroCancelable {
 	}
 
 	private void schedule(int time) {
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				timerHook.run();

@@ -7,10 +7,11 @@ import org.bukkit.entity.Player;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.logger.logger.ChatLogger.ChatLogType;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class PrivateMessage {
 
-	private static ArrayList<PrivateMessage> messages = new ArrayList<>();
+	private static ArrayList<PrivateMessage> messages = new SynchronizedArrayList<>();
 
 	private String message;
 	private Player reciever;

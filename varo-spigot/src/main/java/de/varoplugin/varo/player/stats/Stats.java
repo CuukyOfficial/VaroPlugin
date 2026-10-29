@@ -1,6 +1,7 @@
 package de.varoplugin.varo.player.stats;
 
 import de.varoplugin.cfw.location.SimpleLocationFormat;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.alert.Alert;
@@ -31,7 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
@@ -155,16 +155,20 @@ public class Stats implements VaroSerializeable {
 	}
 
 	public void clearInventory() {
-		if (owner.isOnline()) {
-			owner.getPlayer().getInventory().clear();
+		final Player player = owner.getPlayer();
+		if (player != null) {
+			// The inventory can only be modified by the thread owning the player on Folia
+			Main.scheduler().executeFor(player, () -> {
+				player.getInventory().clear();
 
-			if (VaroConfig.STRIKE_CLEAR_ARMOR.getValue()) {
-				for (ItemStack stack : owner.getPlayer().getInventory().getArmorContents())
-					if (stack != null)
-						stack.setType(Material.AIR);
-			}
+				if (VaroConfig.STRIKE_CLEAR_ARMOR.getValue()) {
+					for (ItemStack stack : player.getInventory().getArmorContents())
+						if (stack != null)
+							stack.setType(Material.AIR);
+				}
 
-			owner.getPlayer().getInventory().setArmorContents(new ItemStack[] {}); // TODO ???
+				player.getInventory().setArmorContents(new ItemStack[] {}); // TODO ???
+			});
 		} else
 			setWillClear(true);
 
@@ -421,14 +425,14 @@ public class Stats implements VaroSerializeable {
 
 		lastLocation = null;
 		if (owner.isOnline()) {
-			new BukkitRunnable() {
+			new TaskRunnable() {
 				@Override
 				public void run() {
 				    Player player = owner.getPlayer();
 				    if (player != null)
 				        lastLocation = player.getLocation();
 				}
-			}.runTaskLater(Main.getInstance(), 1L);
+			}.runTaskForLater(Main.getInstance(), owner.getPlayer(), 1L);
 		}
 
 	}

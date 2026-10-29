@@ -1,10 +1,8 @@
 package de.varoplugin.varo.game.start;
 
+import de.varoplugin.cfw.scheduler.Task;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -16,7 +14,7 @@ public class ProtectionTime implements VaroSerializeable {
     @VaroSerializeField(path = "borderDecrease")
 	private int protectionTimer;
 
-    private BukkitTask scheduler;
+    private Task scheduler;
     
     public ProtectionTime() {}
 
@@ -29,9 +27,9 @@ public class ProtectionTime implements VaroSerializeable {
 		if (this.protectionTimer <= 0)
             return;
 
-        this.scheduler = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+        this.scheduler = Main.scheduler().runTimer(task -> {
             if (!Main.getVaroGame().isRunning()) {
-                this.scheduler.cancel();
+                task.cancel();
                 return;
             }
 

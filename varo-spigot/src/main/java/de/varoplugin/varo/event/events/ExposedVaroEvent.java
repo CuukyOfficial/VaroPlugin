@@ -7,12 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import com.cryptomorin.xseries.XEntityType;
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.event.VaroEvent;
@@ -21,7 +21,7 @@ import de.varoplugin.varo.player.VaroPlayer;
 
 public class ExposedVaroEvent extends VaroEvent {
 
-	private BukkitTask scheduler;
+	private Task scheduler;
 	private PotionEffectType type;
 
 	public ExposedVaroEvent() {
@@ -34,7 +34,7 @@ public class ExposedVaroEvent extends VaroEvent {
 	public void onDisable() {
 		if (type != null)
 			for (Player pl : VersionUtils.getVersionAdapter().getOnlinePlayers())
-				pl.removePotionEffect(type);
+				Main.scheduler().executeFor(pl, () -> pl.removePotionEffect(type));
 
 		scheduler.cancel();
 		super.onDisable();
@@ -42,7 +42,7 @@ public class ExposedVaroEvent extends VaroEvent {
 
 	@Override
 	public void onEnable() {
-		scheduler = new BukkitRunnable() {
+		scheduler = new TaskRunnable() {
 			@Override
 			public void run() {
 				FireworkEffect effect = FireworkEffect.builder().withColor(Color.RED, Color.WHITE).withFade(Color.PURPLE).with(FireworkEffect.Type.BURST).trail(false).flicker(true).build();
@@ -50,15 +50,17 @@ public class ExposedVaroEvent extends VaroEvent {
 				for (VaroPlayer vpl : VaroPlayer.getOnlineAndAlivePlayer()) {
 					Player pl = vpl.getPlayer();
 
-					if (type != null)
-						pl.getPlayer().addPotionEffect(new PotionEffect(type, 11, 1));
-					else {
-						Firework fw = (Firework) pl.getWorld().spawnEntity(pl.getLocation(), XEntityType.FIREWORK_ROCKET.get());
-						FireworkMeta meta = fw.getFireworkMeta();
-						meta.addEffect(effect);
-						meta.setPower(1);
-						fw.setFireworkMeta(meta);
-					}
+					Main.scheduler().executeFor(pl, () -> {
+						if (type != null)
+							pl.getPlayer().addPotionEffect(new PotionEffect(type, 11, 1));
+						else {
+							Firework fw = (Firework) pl.getWorld().spawnEntity(pl.getLocation(), XEntityType.FIREWORK_ROCKET.get());
+							FireworkMeta meta = fw.getFireworkMeta();
+							meta.addEffect(effect);
+							meta.setPower(1);
+							fw.setFireworkMeta(meta);
+						}
+					});
 				}
 			}
 		}.runTaskTimer(Main.getInstance(), 10 * 20, 10 * 20);

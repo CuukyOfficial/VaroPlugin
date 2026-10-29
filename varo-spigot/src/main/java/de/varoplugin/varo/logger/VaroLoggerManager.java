@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.scheduler.BukkitRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.logger.logger.BlockLogger;
 import de.varoplugin.varo.logger.logger.ChatLogger;
@@ -36,7 +36,7 @@ public class VaroLoggerManager {
 	}
 
 	private void startQueue() {
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				VaroLoggerManager.this.loggers.forEach(VaroLogger::processQueue);

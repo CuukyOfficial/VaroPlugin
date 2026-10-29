@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -24,10 +23,11 @@ import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.team.VaroTeamRequest;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class LobbyItem {
 
-    private static List<ItemHook> lobbyItems = new ArrayList<>();
+    private static List<ItemHook> lobbyItems = new SynchronizedArrayList<>();
 
     private static void hookItem(Player player, ItemHookBuilder hookBuilder) {
         hookBuilder.droppable(false).movable(false);
@@ -37,6 +37,11 @@ public class LobbyItem {
     }
 
     public static void giveItems(VaroPlayer varoPlayer, Player player) {
+        // The inventory can only be modified by the thread owning the player on Folia
+        Main.scheduler().executeFor(player, () -> giveItems0(varoPlayer, player));
+    }
+
+    private static void giveItems0(VaroPlayer varoPlayer, Player player) {
         if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
@@ -79,7 +84,16 @@ public class LobbyItem {
     }
 
     public static void giveOrRemoveTeamItems(VaroPlayer varoPlayer) {
-        if (!ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
+        Player player = varoPlayer.getPlayer();
+        if (player == null)
+            return;
+
+        // The inventory can only be modified by the thread owning the player on Folia
+        Main.scheduler().executeFor(player, () -> giveOrRemoveTeamItems0(varoPlayer));
+    }
+
+    private static void giveOrRemoveTeamItems0(VaroPlayer varoPlayer) {
+        if (varoPlayer.getPlayer() == null || !ConfigSetting.TEAMREQUEST_ENABLED.getValueAsBoolean() || !ConfigSetting.TEAMREQUEST_LOBBYITEMS.getValueAsBoolean() || Main.getVaroGame() == null || Main.getVaroGame().hasStarted() || Main.getVaroGame().isStarting())
             return;
 
         if (varoPlayer.getTeam() == null) {

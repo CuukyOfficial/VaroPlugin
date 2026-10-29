@@ -60,11 +60,12 @@ public class Vanish {
 	}
 
 	public void hideFor(Player player) {
-		player.hidePlayer(this.player);
+		// The viewer's entity tracker can only be modified by the thread owning the viewer on Folia
+		Main.scheduler().executeFor(player, () -> player.hidePlayer(this.player));
 	}
 
 	public void unHideFor(Player player) {
-		player.showPlayer(this.player);
+		Main.scheduler().executeFor(player, () -> player.showPlayer(this.player));
 	}
 
 	public void remove() {

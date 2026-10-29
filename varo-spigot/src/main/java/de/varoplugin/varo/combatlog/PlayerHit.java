@@ -1,17 +1,17 @@
 package de.varoplugin.varo.combatlog;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
+import de.varoplugin.cfw.scheduler.Task;
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.utils.EventUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
@@ -54,9 +54,9 @@ public class PlayerHit {
 		}
 	}
 
-	private static final List<PlayerHit> hits = new ArrayList<>();
+	private static final List<PlayerHit> hits = new CopyOnWriteArrayList<>();
 
-	private BukkitTask task;
+	private Task task;
 	private final Player player, opponent;
 
 	public PlayerHit(Player player, Player opponent) {
@@ -72,7 +72,7 @@ public class PlayerHit {
 	}
 
 	private void scheduleOvertime() {
-		task = new BukkitRunnable() {
+		task = new TaskRunnable() {
 			@Override
 			public void run() {
 				over();

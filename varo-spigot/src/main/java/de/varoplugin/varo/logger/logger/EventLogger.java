@@ -6,9 +6,8 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.logger.CachedVaroLogger;
@@ -63,7 +62,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 	}
 
 	private void startSendQueue() {
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (Main.getBotLauncher() == null)
@@ -94,7 +93,7 @@ public class EventLogger extends CachedVaroLogger<String> {
 
 	public void println(LogType type, String message, UUID playerUuid) {
 	    String log = getCurrentDate() + " || " + "[" + type.getName() + "] " + message.replace("%noDiscord%", "").replace("%noBot%", "");
-        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+        Main.scheduler().run(() -> {
             this.queueLog(log);
         });
 

@@ -26,7 +26,7 @@ public class Broadcaster {
 
 	private void startSchedule() {
 		int interval = ConfigSetting.BROADCAST_INTERVAL_IN_SECONDS.getValueAsInt() * 20;
-		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		Main.scheduler().runTimer(() -> {
 		    for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
                 int size = Messages.BROADCAST.size(player);
                 player.sendMessage(Messages.BROADCAST.value((int) (this.count % size), player));
@@ -37,7 +37,7 @@ public class Broadcaster {
 
 	private void startPluginAd() {
 		int delay = (Main.getVaroGame().getPlayTime() * 60) > 0 ? (((Main.getVaroGame().getPlayTime() * 60) - 30) > 0 ? ((Main.getVaroGame().getPlayTime() * 60) - 30) * 20 : 900 * 20) : 900 * 20;
-		Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		Main.scheduler().runTimer(() -> {
             if (VersionUtils.getVersionAdapter().getOnlinePlayers().size() == 0)
                 return;
 

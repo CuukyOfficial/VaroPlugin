@@ -26,14 +26,22 @@ public class FlyCommand implements CommandExecutor {
 			}
 
 			Player p = (Player) sender;
-			p.setAllowFlight(true);
-			p.setFlying(true);
+			Main.scheduler().executeFor(p, () -> {
+				p.setAllowFlight(true);
+				p.setFlying(true);
+			});
 			sender.sendMessage(Main.getPrefix() + "§7Du kannst jetzt §afliegen§7!");
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("@a")) {
-				for (VaroPlayer player : VaroPlayer.getOnlinePlayer()) {
-					player.getPlayer().setAllowFlight(true);
-					player.getPlayer().setFlying(true);
+				for (VaroPlayer varoPlayer : VaroPlayer.getOnlinePlayer()) {
+					final Player player = varoPlayer.getPlayer();
+					if (player == null)
+						continue;
+
+					Main.scheduler().executeFor(player, () -> {
+						player.setAllowFlight(true);
+						player.setFlying(true);
+					});
 				}
 
 				sender.sendMessage(Main.getPrefix() + "Jeder kann jetzt fliegen!");
@@ -46,8 +54,10 @@ public class FlyCommand implements CommandExecutor {
 				return false;
 			}
 
-			to.setAllowFlight(true);
-			to.setFlying(true);
+			Main.scheduler().executeFor(to, () -> {
+				to.setAllowFlight(true);
+				to.setFlying(true);
+			});
 			sender.sendMessage(Main.getPrefix() + Main.getColorCode() + to.getName() + " §7kann jetzt §afliegen§7!");
 		} else {
 			sender.sendMessage(Main.getPrefix() + "§7/fly [Player/@a]");

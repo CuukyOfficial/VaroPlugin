@@ -2,13 +2,14 @@ package de.varoplugin.varo.player.stats.stat.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
@@ -45,7 +46,7 @@ public class VaroSaveable implements VaroSerializeable {
         }
     }
 
-    private static List<VaroSaveable> saveables = new ArrayList<>();
+    private static List<VaroSaveable> saveables = new CopyOnWriteArrayList<>();
 
     @VaroSerializeField(path = "id")
     private int id;
@@ -112,7 +113,7 @@ public class VaroSaveable implements VaroSerializeable {
 
     @Override
     public void onDeserializeEnd() {
-        new BukkitRunnable() {
+        TaskRunnable task = new TaskRunnable() {
             @Override
             public void run() {
                 if (blockLocation == null) {
@@ -126,7 +127,12 @@ public class VaroSaveable implements VaroSerializeable {
                 if (player == null || block == null || !VaroSaveable.this.exists())
                     remove();
             }
-        }.runTaskLater(Main.getInstance(), 1L);
+        };
+        // Blocks can only be accessed by the thread owning the region on Folia
+        if (blockLocation != null)
+            task.runTaskAtLater(Main.getInstance(), blockLocation, 1L);
+        else
+            task.runTaskLater(Main.getInstance(), 1L);
     }
 
     @Override

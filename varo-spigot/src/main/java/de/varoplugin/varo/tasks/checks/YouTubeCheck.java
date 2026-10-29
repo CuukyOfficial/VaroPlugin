@@ -7,7 +7,6 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.YouTubeVideo;
 import de.varoplugin.varo.tasks.Task;
-import org.bukkit.Bukkit;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -21,7 +20,7 @@ public class YouTubeCheck implements Task {
 	@Override
 	public void check() {
 		if (ConfigSetting.YOUTUBE_ENABLED.getValueAsBoolean()) {
-            Bukkit.getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            Main.scheduler().runAsync(() -> {
                 Main.getInstance().getLogger().log(Level.INFO, "Checking for new Youtube Videos...");
                 try {
                     for (VaroPlayer vp : VaroPlayer.getAlivePlayer()) {

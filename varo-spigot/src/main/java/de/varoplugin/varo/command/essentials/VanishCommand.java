@@ -1,6 +1,5 @@
 package de.varoplugin.varo.command.essentials;
 
-import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,10 +11,12 @@ import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.utils.Vanish;
 import io.github.almightysatan.slams.Placeholder;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class VanishCommand implements CommandExecutor {
 
-	public static ArrayList<String> vanished = new ArrayList<>();
+	public static List<String> vanished = new CopyOnWriteArrayList<>();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

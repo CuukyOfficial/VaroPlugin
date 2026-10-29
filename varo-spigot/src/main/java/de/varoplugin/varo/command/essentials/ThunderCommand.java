@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.varoplugin.varo.Main;
 import de.varoplugin.varo.config.language.Messages;
 
 public class ThunderCommand implements CommandExecutor {
@@ -20,8 +21,10 @@ public class ThunderCommand implements CommandExecutor {
 
 		World world = sender instanceof Player ? ((Player) sender).getWorld() : Bukkit.getWorlds().get(0);
 
-		world.setStorm(true);
-		world.setThundering(true);
+		Main.scheduler().execute(() -> {
+			world.setStorm(true);
+			world.setThundering(true);
+		});
 		Messages.COMMANDS_WEATHER_THUNDER.send(sender);
 		return false;
 	}

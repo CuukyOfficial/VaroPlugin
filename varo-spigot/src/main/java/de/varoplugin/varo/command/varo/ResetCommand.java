@@ -16,6 +16,7 @@ import de.varoplugin.varo.Main;
 import de.varoplugin.varo.command.VaroCommand;
 import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class ResetCommand extends VaroCommand {
 
@@ -46,10 +47,10 @@ public class ResetCommand extends VaroCommand {
 
 	private void resetServer(String[] args) {
 		for (Player pl : Bukkit.getOnlinePlayers())
-			pl.kickPlayer("§cRESET");
+			VaroUtils.kickPlayer(pl, "§cRESET");
 
 		// Wait to ensure the players are actually disconnected
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+		Main.scheduler().runLater(() -> {
 		    Main.getDataManager().saveSync();
 	        List<Integer> success = new ArrayList<>();
 	        List<File> toDelete = new ArrayList<>();
@@ -95,6 +96,6 @@ public class ResetCommand extends VaroCommand {
 
 	        if (!success.isEmpty())
 	            Bukkit.getServer().shutdown();
-		}, 1);
+		}, VaroUtils.getWorldSettleDelay());
 	}
 }

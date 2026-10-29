@@ -1,28 +1,29 @@
 name: VaroPlugin
 authors: [Cuuky, Korne127, LeStegii, Almighty-Satan]
 version: ${version}
+# List format is understood by all Paper versions since 1.19.4 (the map format is not)
 dependencies:
-  server:
-    PlaceholderAPI:
-      load: BEFORE
-      required: false
-    LuckPerms:
-      load: BEFORE
-      required: false
-    PermissionsEx:
-      load: BEFORE
-      required: false
-    Multiverse-Core:
-      load: BEFORE
-      required: false
-    WorldEdit:
-      load: BEFORE
-      required: false
-    floodgate:
-      load: BEFORE
-      required: false
+  - name: PlaceholderAPI
+    load: BEFORE
+    required: false
+  - name: LuckPerms
+    load: BEFORE
+    required: false
+  - name: PermissionsEx
+    load: BEFORE
+    required: false
+  - name: Multiverse-Core
+    load: BEFORE
+    required: false
+  - name: WorldEdit
+    load: BEFORE
+    required: false
+  - name: floodgate
+    load: BEFORE
+    required: false
 api-version: "1.19"
 main: de.varoplugin.varo.Main
 bootstrapper: de.varoplugin.varo.VaroBootstrap
 loader: de.varoplugin.varo.VaroPluginLoader
 website: VaroPlugin.de
+folia-supported: true

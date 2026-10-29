@@ -17,6 +17,7 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.gui.player.PlayerGUI;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.player.stats.stat.PlayerState;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class PlayerCommand extends VaroCommand {
 
@@ -70,7 +71,7 @@ public class PlayerCommand extends VaroCommand {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
 				for (VaroPlayer pl : VaroPlayer.getVaroPlayers()) {
 					if (pl.isOnline())
-						pl.getPlayer().kickPlayer("§cDein Account wurde resettet!\n§7Joine erneut, um dich zu registrieren.");
+						VaroUtils.kickPlayer(pl.getPlayer(), "§cDein Account wurde resettet!\n§7Joine erneut, um dich zu registrieren.");
 					pl.getStats().loadDefaults();
 					if (pl.getTeam() != null)
 						pl.getTeam().removeMember(pl);
@@ -84,10 +85,10 @@ public class PlayerCommand extends VaroCommand {
 			}
 
 			if (vps.isOnline())
-				vps.getPlayer().kickPlayer("§7Dein Account wurde resettet!\nJoine erneut, um dich zu registrieren.");
+				VaroUtils.kickPlayer(vps.getPlayer(), "§7Dein Account wurde resettet!\nJoine erneut, um dich zu registrieren.");
 
 			if (vps.isOnline())
-				vps.getPlayer().kickPlayer("§cDein Account wurde resettet!\n§7Joine erneut, um dich zu registrieren.");
+				VaroUtils.kickPlayer(vps.getPlayer(), "§cDein Account wurde resettet!\n§7Joine erneut, um dich zu registrieren.");
 			vps.getStats().loadDefaults();
 			if (vps.getTeam() != null)
 				vps.getTeam().removeMember(vps);
@@ -97,7 +98,7 @@ public class PlayerCommand extends VaroCommand {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("@a")) {
 				for (VaroPlayer pl : VaroPlayer.getVaroPlayers())
 					if (pl.isOnline())
-						pl.getPlayer().setHealth(0);
+						Main.scheduler().executeFor(pl.getPlayer(), () -> pl.getPlayer().setHealth(0));
 					else
 						pl.getStats().setState(PlayerState.DEAD);
 				return;
@@ -113,8 +114,10 @@ public class PlayerCommand extends VaroCommand {
 				return;
 			}
 
-			if (vps.isOnline())
-				vps.getPlayer().setHealth(0);
+			if (vps.isOnline()) {
+				final Player target = vps.getPlayer();
+				Main.scheduler().executeFor(target, () -> target.setHealth(0));
+			}
 			else
 				vps.getStats().setState(PlayerState.DEAD);
 

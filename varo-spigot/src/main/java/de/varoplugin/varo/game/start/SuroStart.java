@@ -6,7 +6,6 @@ import de.varoplugin.varo.config.language.Contexts;
 import de.varoplugin.varo.config.language.Messages;
 import de.varoplugin.varo.game.VaroGame;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -14,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import de.varoplugin.varo.Main;
 import de.varoplugin.varo.player.VaroPlayer;
+import java.util.function.Consumer;
 
 public class SuroStart extends AbstractStartSequence {
 
@@ -29,24 +29,28 @@ public class SuroStart extends AbstractStartSequence {
 	public void start() {
 		for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 			Player player = vp.getPlayer();
-			player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
-			player.setGameMode(GameMode.ADVENTURE);
+			if (player == null)
+				continue;
+			Main.scheduler().executeFor(player, () -> {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 9999, 3));
+				player.setGameMode(GameMode.ADVENTURE);
+			});
 			vp.cleanUpPlayer();
 		}
 
-		this.task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		this.task = Main.scheduler().runTimer(() -> {
 			VersionUtils.getVersionAdapter().getOnlinePlayers().stream().findFirst().ifPresent(player -> player.getWorld().setTime(1000));
 
 			for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer()) {
 				Contexts.PlayerContext context = new Contexts.PlayerContext(vp); // Setting the context manually forces the default language
 				String title = Messages.GAME_START_SURO_TITLE.value(this.titleSize - this.countdown, context);
 				if (StringUtils.isNotBlank(title))
-					VersionUtils.getVersionAdapter().sendTitle(vp.getPlayer(), title, "");
+					this.executeForPlayer(vp, p -> VersionUtils.getVersionAdapter().sendTitle(p, title, ""));
 			}
 
 			if (this.countdown == 0) {
 				for (VaroPlayer vp : VaroPlayer.getOnlineAndAlivePlayer())
-					vp.getPlayer().playSound(vp.getPlayer().getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1);
+					this.executeForPlayer(vp, p -> p.playSound(p.getLocation(), XSound.BLOCK_NOTE_BLOCK_PLING.get(), 1, 1));
 
 				this.game.start();
 				return;
@@ -60,6 +64,13 @@ public class SuroStart extends AbstractStartSequence {
 		super.abort();
 
 		for (VaroPlayer vp : VaroPlayer.getOnlinePlayer())
-			vp.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
+			this.executeForPlayer(vp, p -> p.removePotionEffect(PotionEffectType.BLINDNESS));
+	}
+
+	private void executeForPlayer(VaroPlayer vp, Consumer<Player> action) {
+		// Capture the player now as it might be gone by the time the task runs
+		Player player = vp.getPlayer();
+		if (player != null)
+			Main.scheduler().executeFor(player, () -> action.accept(player));
 	}
 }

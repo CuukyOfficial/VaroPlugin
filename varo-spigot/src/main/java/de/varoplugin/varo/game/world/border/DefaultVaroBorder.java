@@ -2,6 +2,7 @@ package de.varoplugin.varo.game.world.border;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import de.varoplugin.varo.Main;
 
 public class DefaultVaroBorder implements RectangularVaroBorder {
 
@@ -18,7 +19,7 @@ public class DefaultVaroBorder implements RectangularVaroBorder {
 
     @Override
     public void setSize(double size, long time) {
-        this.world.getWorldBorder().setSize(size, time);
+        Main.scheduler().execute(() -> this.world.getWorldBorder().setSize(size, time));
     }
     
     @Override
@@ -28,6 +29,6 @@ public class DefaultVaroBorder implements RectangularVaroBorder {
 
     @Override
     public void setCenter(Location location) {
-        this.world.getWorldBorder().setCenter(location);
+        Main.scheduler().execute(() -> this.world.getWorldBorder().setCenter(location));
     }
 }

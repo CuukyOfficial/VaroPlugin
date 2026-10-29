@@ -1,9 +1,11 @@
 package de.varoplugin.varo.list.item.lists;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import de.varoplugin.varo.Main;
 import de.varoplugin.varo.list.item.ItemList;
 import de.varoplugin.varo.player.VaroPlayer;
 
@@ -19,8 +21,15 @@ public class StartItems extends ItemList {
 	}
 
 	public void giveToAll() {
-		for (VaroPlayer player : VaroPlayer.getOnlineAndAlivePlayer())
-			for (ItemStack item : getItems())
-				player.getPlayer().getInventory().addItem(item);
+		for (VaroPlayer varoPlayer : VaroPlayer.getOnlineAndAlivePlayer()) {
+			final Player player = varoPlayer.getPlayer();
+			if (player == null)
+				continue;
+
+			Main.scheduler().executeFor(player, () -> {
+				for (ItemStack item : getItems())
+					player.getInventory().addItem(item);
+			});
+		}
 	}
 }

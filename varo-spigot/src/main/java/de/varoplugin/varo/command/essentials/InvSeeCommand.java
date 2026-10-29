@@ -35,7 +35,12 @@ public class InvSeeCommand implements CommandExecutor {
 		}
 
 		Player p = (Player) sender;
-		p.openInventory(Bukkit.getPlayerExact(args[0]).getInventory());
+		Player target = Bukkit.getPlayerExact(args[0]);
+		if (target == null) {
+			sender.sendMessage(Main.getPrefix() + "§7Der Spieler ist nicht online!");
+			return false;
+		}
+		Main.scheduler().executeFor(p, () -> p.openInventory(target.getInventory()));
 		return false;
 	}
 

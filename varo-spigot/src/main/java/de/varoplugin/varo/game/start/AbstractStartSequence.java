@@ -18,14 +18,14 @@
 
 package de.varoplugin.varo.game.start;
 
+import de.varoplugin.cfw.scheduler.Task;
 import de.varoplugin.varo.game.VaroGame;
-import org.bukkit.scheduler.BukkitTask;
 
 public abstract class AbstractStartSequence implements StartSequence {
 
     protected final VaroGame game;
     protected int countdown;
-    protected BukkitTask task;
+    protected Task task;
 
     protected AbstractStartSequence(VaroGame game) {
         this.game = game;

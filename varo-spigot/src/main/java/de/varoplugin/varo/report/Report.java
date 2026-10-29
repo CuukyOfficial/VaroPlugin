@@ -6,13 +6,14 @@ import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.varo.player.VaroPlayer;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
 
 public class Report implements VaroSerializeable {
 
 	private static ArrayList<Report> reports;
 
 	static {
-		reports = new ArrayList<>();
+		reports = new SynchronizedArrayList<>();
 	}
 
 	@VaroSerializeField(path = "id")

@@ -83,10 +83,19 @@ public class SpawnsCommand extends VaroCommand {
             }
 
             try {
+                SpawnGenerator generator;
                 if (args[2].equalsIgnoreCase("player") || args[2].equalsIgnoreCase("team"))
-                    new SpawnGenerator(((Player) sender).getLocation(), Integer.parseInt(args[1]), args[2].equalsIgnoreCase("team"), material, sideBlockMaterial);
+                    generator = new SpawnGenerator(((Player) sender).getLocation(), Integer.parseInt(args[1]), args[2].equalsIgnoreCase("team"), material, sideBlockMaterial);
                 else
-                    new SpawnGenerator(((Player) sender).getLocation(), Integer.parseInt(args[1]), Integer.parseInt(args[2]), material, sideBlockMaterial);
+                    generator = new SpawnGenerator(((Player) sender).getLocation(), Integer.parseInt(args[1]), Integer.parseInt(args[2]), material, sideBlockMaterial);
+
+                // The spawns are generated asynchronously on Folia
+                generator.getFuture().whenComplete((result, throwable) -> {
+                    if (throwable != null) {
+                        sender.sendMessage(Main.getPrefix() + "Beim Erstellen der Spawns ist ein Fehler aufgetreten! Siehe Konsole.");
+                        Main.getInstance().getLogger().log(java.util.logging.Level.SEVERE, "Failed to generate spawns", throwable);
+                    }
+                });
             } catch (Exception e) {
                 sender.sendMessage(Main.getPrefix() + "Beim Erstellen der Spawns ist ein Fehler aufgetreten! Richtige Werte angegeben?");
                 e.printStackTrace();

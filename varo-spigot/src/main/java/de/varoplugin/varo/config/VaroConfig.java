@@ -24,7 +24,6 @@ import io.github.almightysatan.jaskl.*;
 import io.github.almightysatan.jaskl.entries.BooleanConfigEntry;
 import io.github.almightysatan.jaskl.entries.ListConfigEntry;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +67,7 @@ public class VaroConfig {
     }
     
     public static void write() {
-        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+        Main.scheduler().runAsync(() -> {
             for (Config config : CONFIGS)
                 write(config);
         });

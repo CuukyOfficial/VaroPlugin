@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -35,7 +34,7 @@ public class VaroUpdater {
 	}
 
 	private void checkUpdate() {
-	    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), this::checkForUpdates, 20L);
+	    Main.scheduler().runAsyncLater(this::checkForUpdates, 20L);
 	}
 
 	public void printResults() {
@@ -73,7 +72,7 @@ public class VaroUpdater {
 		this.lastResult = new VaroUpdateResultSet(result, version, id);
 
 		if (this.finishHook != null)
-		    Bukkit.getScheduler().runTask(Main.getInstance(), this.finishHook);
+		    Main.scheduler().run(this.finishHook);
 
 		return lastResult;
 	}

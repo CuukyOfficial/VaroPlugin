@@ -11,8 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import de.varoplugin.cfw.scheduler.TaskRunnable;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
 import de.varoplugin.varo.Main;
@@ -24,13 +24,15 @@ import de.varoplugin.varo.player.event.BukkitEventType;
 import de.varoplugin.varo.player.stats.stat.inventory.InventoryBackup;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeField;
 import de.varoplugin.varo.serialize.identifier.VaroSerializeable;
+import de.varoplugin.varo.utils.SynchronizedArrayList;
+import de.varoplugin.varo.utils.VaroUtils;
 
 public class OfflineVillager implements VaroSerializeable {
 
 	private static ArrayList<OfflineVillager> villagers;
 
 	static {
-		villagers = new ArrayList<>();
+		villagers = new SynchronizedArrayList<>();
 		Bukkit.getPluginManager().registerEvents(new VillagerListener(), Main.getInstance());
 	}
 
@@ -41,8 +43,8 @@ public class OfflineVillager implements VaroSerializeable {
 	private Location location;
 
 	private VaroPlayer vp;
-	private Zombie zombie;
-	private Entity entity;
+	private volatile Zombie zombie;
+	private volatile Entity entity;
 
 	public OfflineVillager() {
 		villagers.add(this);
@@ -63,11 +65,11 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	public void create() {
-		new BukkitRunnable() {
+		new TaskRunnable() {
 			@Override
 			public void run() {
 				if (location.getWorld().getDifficulty() == Difficulty.PEACEFUL)
-					location.getWorld().setDifficulty(Difficulty.EASY);
+					Main.scheduler().execute(() -> location.getWorld().setDifficulty(Difficulty.EASY));
 
 				EntityType type = VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_9) ? EntityType.valueOf("ZOMBIE_VILLAGER") : EntityType.ZOMBIE;
 				zombie = (Zombie) location.getWorld().spawnEntity(location, type);
@@ -80,7 +82,7 @@ public class OfflineVillager implements VaroSerializeable {
 				freezeVillager();
 				entity = zombie;
 			}
-		}.runTaskLater(Main.getInstance(), 1L);
+		}.runTaskAtLater(Main.getInstance(), location, 1L);
 	}
 
 	public void kill(VaroPlayer killer, String cause) {
@@ -101,8 +103,9 @@ public class OfflineVillager implements VaroSerializeable {
 	}
 
 	public void remove() {
+		final Zombie zombie = this.zombie;
 		if (zombie != null)
-			zombie.remove();
+			Main.scheduler().executeFor(zombie, zombie::remove);
 
 		villagers.remove(this);
 	}
@@ -113,17 +116,20 @@ public class OfflineVillager implements VaroSerializeable {
 		if (vp == null)
 			remove();
 
-		for (Entity ent : location.getWorld().getEntities())
-			if (ent.getType().toString().contains("ZOMBIE")) {
-				Zombie zombie = (Zombie) ent;
-				if (zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {
-					this.zombie = (Zombie) ent;
-					this.entity = ent;
+		// Entities can only be accessed by the thread owning their region on Folia. There only the entities in the villager's chunk are searched.
+		Main.scheduler().executeAt(location, () -> {
+			for (Entity ent : VaroUtils.getEntitiesNear(location))
+				if (ent.getType().toString().contains("ZOMBIE")) {
+					Zombie zombie = (Zombie) ent;
+					if (zombie.isVillager() && zombie.getCustomName() != null && zombie.getCustomName().equals("§c" + vp.getName())) {
+						this.zombie = (Zombie) ent;
+						this.entity = ent;
+					}
 				}
-			}
 
-		if (zombie == null)
-			create();
+			if (zombie == null)
+				create();
+		});
 	}
 
 	@Override

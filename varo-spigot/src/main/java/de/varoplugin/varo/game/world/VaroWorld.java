@@ -1,6 +1,5 @@
 package de.varoplugin.varo.game.world;
 
-import com.cryptomorin.xseries.XGameRule;
 import de.varoplugin.cfw.utils.JavaUtils;
 import de.varoplugin.cfw.version.ServerVersion;
 import de.varoplugin.cfw.version.VersionUtils;
@@ -9,6 +8,7 @@ import de.varoplugin.varo.configuration.configurations.config.ConfigSetting;
 import de.varoplugin.varo.game.world.border.DefaultVaroBorder;
 import de.varoplugin.varo.game.world.border.NopVaroBorder;
 import de.varoplugin.varo.game.world.border.VaroBorder;
+import de.varoplugin.varo.utils.VaroUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -17,7 +17,9 @@ import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VaroWorld {
 
@@ -29,7 +31,7 @@ public class VaroWorld {
 
         if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_11))
             // Versions < 1.12 don't have this game rule and use a server property instead (see DataManager) 
-            XGameRule.SHOW_ADVANCEMENT_MESSAGES.setValue(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean());
+            Main.scheduler().execute(() -> VaroUtils.setShowAdvancementMessages(world, !ConfigSetting.BLOCK_ADVANCEMENTS.getValueAsBoolean()));
 
 		if (VersionUtils.getVersion().isHigherThan(ServerVersion.VERSION_1_7))
 			this.varoWorldBorder = new DefaultVaroBorder(world);
@@ -64,12 +66,25 @@ public class VaroWorld {
 		Location loc = world.getSpawnLocation().clone().add(radius, radius, radius);
 		Location loc2 = world.getSpawnLocation().clone().add(-radius, -radius, -radius);
 
-		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
 		List<ItemStack> chestItems = Main.getDataManager().getListManager().getChestItems().getItems();
 		if (chestItems.isEmpty())
 			return;
 
-		for (Block block : getBlocksBetweenPoints(loc, loc2)) {
+		// Blocks can only be accessed by the thread owning the region on Folia. Therefore all blocks are grouped by chunk.
+		Map<Long, List<Block>> chunks = new LinkedHashMap<>();
+		for (Block block : getBlocksBetweenPoints(loc, loc2))
+			chunks.computeIfAbsent(((long) (block.getX() >> 4) << 32) | ((block.getZ() >> 4) & 0xFFFFFFFFL), k -> new ArrayList<>()).add(block);
+
+		for (List<Block> blocks : chunks.values())
+			Main.scheduler().executeAt(blocks.get(0).getLocation(), () -> fillChests(blocks, chestItems));
+
+		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
+	}
+
+	private void fillChests(List<Block> blocks, List<ItemStack> chestItems) {
+		int itemsPerChest = ConfigSetting.RANDOM_CHEST_MAX_ITEMS_PER_CHEST.getValueAsInt();
+
+		for (Block block : blocks) {
 			if (!(block.getState() instanceof Chest))
 				continue;
 
@@ -83,8 +98,6 @@ public class VaroWorld {
 				chest.getBlockInventory().setItem(random, chestItems.get(JavaUtils.randomInt(0, chestItems.size() - 1)));
 			}
 		}
-
-		Bukkit.broadcastMessage("§7Alle Kisten um den " + Main.getColorCode() + "Spawn §7wurden " + Main.getColorCode() + "aufgefuellt§7!");
 	}
 
 	public World getWorld() {

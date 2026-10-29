@@ -37,6 +37,7 @@ import de.varoplugin.varo.config.language.Contexts.PlayerContext;
 import de.varoplugin.varo.config.language.Contexts.VaroContext;
 import de.varoplugin.varo.logger.logger.EventLogger.LogType;
 import de.varoplugin.varo.player.VaroPlayer;
+import de.varoplugin.varo.utils.VaroUtils;
 import io.github.almightysatan.jaskl.Resource;
 import io.github.almightysatan.jaskl.yaml.YamlConfig;
 import io.github.almightysatan.slams.InvalidTypeException;
@@ -592,7 +593,7 @@ public final class Messages {
                     if (player != null) {
                         VaroContext copy = context.copy();
                         copy.getMessageData().language = recipient.getLanguage();
-                        player.kickPlayer(message.value(copy));
+                        VaroUtils.kickPlayer(player, message.value(copy));
                     }
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
@@ -606,7 +607,7 @@ public final class Messages {
                     if (player != null) {
                         PlayerContext context = new PlayerContext(subject);
                         context.getMessageData().language = subject.getLanguage();
-                        player.kickPlayer(message.value(context, placeholders));
+                        VaroUtils.kickPlayer(player, message.value(context, placeholders));
                     }
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
@@ -620,7 +621,7 @@ public final class Messages {
                     if (player != null) {
                         PlayerContext context = new PlayerContext(subject);
                         context.getMessageData().language = subject.getLanguage();
-                        player.kickPlayer(message.value(context));
+                        VaroUtils.kickPlayer(player, message.value(context));
                     }
                 } catch (Throwable t) {
                     Main.getInstance().getLogger().log(Level.SEVERE, "Unable to send message " + message.path(), t);
