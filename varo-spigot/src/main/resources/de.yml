@@ -58,7 +58,7 @@ commands:
       disabled: "<prefix>Du kannst das Scoreboard jetzt nicht mehr sehen!"
       enabled: "<prefix>Du kannst das Scoreboard jetzt sehen!"
     randomteam:
-      sorted: "<prefix>Alle Spieler ohne Team sind jetzt in <colorcode><sort-size>§7er Teams!"
+      sorted: "<prefix>Alle Spieler ohne Team sind jetzt in Teams mit <colorcode><sort-size>§7 Mitgliedern!"
       help: "<prefix><colorcode>/varo randomTeam <Teamgröße>"
       teamsizetoosmall: "<prefix>§cDie Teamgröße muss mindestens 1 betragen!"
       nopartner: "<prefix>§cEs konnten nicht genügend Teampartner für dich gefunden werden!"
@@ -95,7 +95,7 @@ commands:
       entryset: "<prefix>Der Eintrag <colorcode><entry>§7 wurde erfolgreich auf <colorcode><value>§7 gesetzt."
       reloaded: "<prefix>Die Config wurde erfolgreich neu geladen."
       entrynotfound: "<prefix>§cDer Eintrag <colorcode><entry> §cwurde nicht gefunden."
-      noimgameset: "<prefix>§cDu kannst diese Einstellung nur in der Config Datei ändern!"
+      noimgameset: "<prefix>§cDu kannst diese Einstellung nur in der Config-Datei ändern!"
       errorset: "<prefix>§cEin Fehler ist aufgetreten: <error>"
       searchlistformat: "<prefix><colorcode><entry> §8- §7<description>"
       reset: "<prefix>Alle Einträge wurden erfolgreich zurückgesetzt."
@@ -160,7 +160,7 @@ game:
   sort:
     spectator: "<prefix>Du wurdest zum Welt-Spawn teleportiert!"
     number: "<prefix>Du wurdest zu Spawn <colorcode><spawn-id> §7teleportiert!"
-    noSpawnFound: "<prefix>§cEs wurde ein Spawn für dich gefunden!"
+    noSpawnFound: "<prefix>§cEs konnte kein Spawn für dich gefunden werden!"
     player: "<prefix>Du wurdest zu deinem Spawn teleportiert!"
     noSpawnFoundTeam: "<prefix>§cEs konnte kein Spawn in der Nähe deiner Teampartner gefunden werden!"
   lobby:
@@ -293,7 +293,7 @@ player:
       §7Link: §c<discord>
     serverClose: |-
       §cDie Spielzeit ist vorüber!
-      §7Versuche es morgen erneut!"
+      §7Versuche es morgen erneut!
     kill: "§cDu wurdest von §c<killer-name> §cgetötet!"
     death: "§cDu bist gestorben!"
     serverFull: |-
@@ -305,7 +305,7 @@ player:
     tooManyStrikes: "§cDu bist aufgrund zu vieler Strikes aus <projectname> §causgeschieden"
     noTimeLeft: |-
       §cDu darfst nur <config-JoinSystems-joinAfterHours> Stunden pro Tag spielen!
-      §7Du kannst in §c<join-hours>§7:§c<join-minues>§7:§c<join-seconds>§7 wieder beitreten!
+      §7Du kannst in §c<join-hours>§7:§c<join-minutes>§7:§c<join-seconds>§7 wieder beitreten!
     serverClosed: |-
       §cDer Server ist geschlossen!
       §7Bitte versuche es später erneut!

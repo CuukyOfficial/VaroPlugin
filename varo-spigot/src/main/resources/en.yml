@@ -76,7 +76,7 @@ commands:
       notsetupyet: "<prefix>§cAutoStart has not been set up!"
       dateinthepast: "<prefix>§cThe date must not be in the past!"
       nonumber: "<prefix>§cOne or more arguments are not a number!"
-      alreadysetup: "<prefix>§cEntferne erst den AutoStart, bevor du einen neuen setzt!"
+      alreadysetup: "<prefix>§cRemove the AutoStart first before setting a new one!"
       info: |-
         <prefix>AutoStart:
         <colorcode>Date: §7<autostart-date>
@@ -167,8 +167,8 @@ game:
     move: "<prefix>§cYou cannot move until the game has been started!"
   finale:
     noFreeze: "<prefix>The finale is about to begin!"
-    freeze: "<prefix>The finale is about to begin! All players have been freezed!"
-    countdown: "§7The finale starts in <colorcode><finale-countdown>§7 second<if_eq:1:<finale-countdown>::s>!"
+    freeze: "<prefix>The finale is about to begin! All players have been frozen!"
+    countdown: "§7The finale starts in <colorcode><finale-countdown>§7 second<if_ne:1:<finale-countdown>:s>!"
     start: "§7The finale starts now!<if_num_gt:<config-Finale-finaleProtectionTime>:0: Everybody is protected for <colorcode><config-Finale-finaleProtectionTime> §7seconds!:>"
   start:
     suro:
@@ -293,7 +293,7 @@ player:
       §7Link: §c<discord>
     serverClose: |-
       §cThe server is now closed!
-      §7Try again tomorrow!"
+      §7Try again tomorrow!
     kill: "§cYou were killed by §c<killer-name>§c!"
     death: "§cYou died!"
     serverFull: |-
